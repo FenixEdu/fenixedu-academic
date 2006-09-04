@@ -271,7 +271,7 @@
 <p>
     That inner <code>layout</code> tag allows you to both select and configure the layout. To set renderer's
     properties you can user the tag <code>property</code> that i to be used inside the tag <code>layout</code>.
-    The tag <code>property</code> only has two attributes, both required: name and value. And now an example:
+    The tag <code>property</code> can have two attributes: name and value. And now an example:
 </p>
 
 <div style="border-left: 1px solid #AAAAAA; padding-left: 10px;">
@@ -307,6 +307,36 @@
     <code>headerClasses</code>. Note that the value of <code>columnClasses</code> is 
     <code>"listClasses,&lt;blanck&gt;"</code> meaning that the first column as the specified class and
     the second has no class.
+</p>
+
+<p>
+    You can also ommit the <tt>value</tt> attribute. In this case the value of the property will be the
+    body of the property tag. This can be used and is usefull for complex values that span over multiple lines.
+    It is also usefull when combined with <tt>CDATA</tt> blocks. Note that you can use other tags inside the
+    property tag. They will be evaluated and the resulting text is used as the property value. The following
+    example is hipotetical as the renderer associated with the tabular layout for the Person domain object does 
+    not support the given property.
+</p>
+
+<div style="border-left: 1px solid #AAAAAA; padding-left: 10px;">
+    <!-- Code -->
+    <div>
+        <p><strong>Code</strong></p>
+        <pre>&lt;fr:view name=&quot;UserView&quot; property=&quot;person&quot; schema=&quot;person.simple-admin-info&quot;&gt;
+    &lt;fr:layout name=&quot;tabular&quot;&gt;
+        &lt;fr:property name=&quot;description&quot;&gt;
+            This is a description that includes &lt;acronym title=&quot;Hypertext Markup Language&quot;&gt;HTML&lt;/acronym&gt;
+            and the use of inner &lt;html:link href=&quot;http://java.sun.com/products/jsp/syntax/1.2/syntaxref1211.html&quot;&gt;TagLibs&lt;/html:link&gt;.
+        &lt;fr:property/&gt;
+    &lt;/fr:layout&gt;
+&lt;/fr:view&gt;</pre>
+    </div>
+</div>
+
+<p>
+    You must note that the body of the property is only evaluated once before any object is renderered
+    so if you are presenting several objects you can't include logic in the property value and expect it
+    to be evaluated when each object is being presented.
 </p>
 
 <a name="more-schemas"></a>
