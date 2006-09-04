@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 /**
  * {@inheritDoc}
  * 
- * This renderer can be used to edit a signel object using the same layout. The
+ * This renderer can be used to edit a single object using the same layout. The
  * object is wrapped in a list and then is edited as described above.
  * 
  * @author cfgi
