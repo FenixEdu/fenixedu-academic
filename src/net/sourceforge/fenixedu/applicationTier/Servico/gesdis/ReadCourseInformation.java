@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -72,10 +71,7 @@ public class ReadCourseInformation extends Service {
 
         InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();
 
-        InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
-                .newInfoFromDomain(executionCourse);
-        infoExecutionCourse.setNumberOfAttendingStudents(executionCourse.getAttendsCount());
-
+        InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
         infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
 
         final EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();

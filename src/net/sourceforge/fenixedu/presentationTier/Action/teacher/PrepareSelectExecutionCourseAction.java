@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -54,8 +53,6 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 		readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);
 		
 
-		InfoExecutionCourse executionCourse = new InfoExecutionCourse();
-
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.EXECUTION_PERIOD);
@@ -64,8 +61,6 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 			RequestUtils.getExecutionDegreeFromRequest(
 				request,
 				infoExecutionPeriod.getInfoExecutionYear());
-
-		executionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
 		Integer curricularYear = (Integer) request.getAttribute("curYear");
 

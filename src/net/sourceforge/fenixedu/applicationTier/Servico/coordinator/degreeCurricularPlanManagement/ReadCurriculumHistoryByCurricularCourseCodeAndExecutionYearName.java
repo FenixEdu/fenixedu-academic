@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Curriculum;
@@ -103,22 +102,11 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
         }, scopes);
         infoCurriculum.getInfoCurricularCourse().setInfoScopes(scopes);
 
-        List infoExecutionCourses = new ArrayList();
+        List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
         Iterator iterExecutionCourses = allExecutionCourses.iterator();
         while (iterExecutionCourses.hasNext()) {
             ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourses.next();
-
-            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
-                    .newInfoFromDomain(executionCourse);
-
-            Boolean hasSite;
-            if(executionCourse.getSite() != null)
-                hasSite = true;
-            else
-                hasSite = false;
-            
-            infoExecutionCourse.setHasSite(hasSite);
-            infoExecutionCourses.add(infoExecutionCourse);
+            infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         }
         infoCurriculum.getInfoCurricularCourse().setInfoAssociatedExecutionCourses(infoExecutionCourses);
         return infoCurriculum;

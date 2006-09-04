@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
@@ -525,7 +526,7 @@ public class ExecutionCourseForwardFilter implements Filter {
             final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
             for (final Iterator<InfoExecutionCourse> iterator = listExecutionCourses.iterator(); iterator.hasNext(); ) {
             	final InfoExecutionCourse infoExecutionCourse = iterator.next();
-            	final ExecutionCourse executionCourse = infoExecutionCourse.getExecutionCourse();
+            	final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
             	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
             	if (executionPeriod.compareTo(currentExecutionPeriod) > 0) {
             		iterator.remove();

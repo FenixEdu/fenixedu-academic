@@ -8,11 +8,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
@@ -24,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRe
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -86,8 +82,7 @@ public class ReadTeachersInformation extends Service {
 
         List<Teacher> teachers = (List<Teacher>) CollectionUtils.collect(professorships, new Transformer() {
             public Object transform(Object o) {
-                Professorship professorship = (Professorship) o;
-                return professorship.getTeacher();
+                return ((Professorship) o).getTeacher();
             }
         });
         teachers = removeDuplicates(teachers);
@@ -194,23 +189,7 @@ public class ReadTeachersInformation extends Service {
         List infoExecutionCourses = (List) CollectionUtils.collect(repersistentSupportonsiblesFor,
                 new Transformer() {
                     public Object transform(Object o) {
-                        Professorship repersistentSupportonsibleFor = (Professorship) o;
-                        ExecutionCourse executionCourse = repersistentSupportonsibleFor
-                                .getExecutionCourse();
-                        List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-                        List infoCurricularCourses = (List) CollectionUtils.collect(curricularCourses,
-                                new Transformer() {
-                                    public Object transform(Object o) {
-                                        CurricularCourse curricularCourse = (CurricularCourse) o;
-
-                                        return InfoCurricularCourse
-                                                .newInfoFromDomain(curricularCourse);
-                                    }
-                                });
-
-                        InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(executionCourse);
-                        infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
-                        return infoExecutionCourse;
+                        return InfoExecutionCourse.newInfoFromDomain(((Professorship) o).getExecutionCourse());
                     }
                 });
         return infoExecutionCourses;
@@ -247,23 +226,7 @@ public class ReadTeachersInformation extends Service {
         });
         List infoExecutionCourses = (List) CollectionUtils.collect(professorships, new Transformer() {
             public Object transform(Object o) {
-                Professorship professorship = (Professorship) o;
-                ExecutionCourse executionCourse = professorship.getExecutionCourse();
-                List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-                List infoCurricularCourses = (List) CollectionUtils.collect(curricularCourses,
-                        new Transformer() {
-                            public Object transform(Object o) {
-                                CurricularCourse curricularCourse = (CurricularCourse) o;
-
-                                return InfoCurricularCourse
-                                        .newInfoFromDomain(curricularCourse);
-                            }
-                        });
-
-                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
-                        .newInfoFromDomain(executionCourse);
-                infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
-                return infoExecutionCourse;
+                return InfoExecutionCourse.newInfoFromDomain(((Professorship) o).getExecutionCourse());
             }
         });
         return infoExecutionCourses;

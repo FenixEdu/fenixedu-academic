@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithNonAffiliatedTeachers;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -39,10 +39,9 @@ public class ReadTeacherInChargeAction extends FenixAction {
 
         Object args[] = { executionCourseId };
 
-        InfoExecutionCourseWithNonAffiliatedTeachers infoExecutionCourse = null;
-
+        InfoExecutionCourse infoExecutionCourse = null;
         try {
-            infoExecutionCourse = (InfoExecutionCourseWithNonAffiliatedTeachers) ServiceUtils.executeService(userView,
+            infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
                     "ReadExecutionCourseManagerByID", args);
 
         } catch (FenixServiceException fenixServiceException) {
@@ -61,7 +60,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
 
         List infoNonAffiliatedTeachers = infoExecutionCourse.getNonAffiliatedTeachers();
         if (infoTeachersList != null) {
-            List teachersIds = new ArrayList();
+            List<Integer> teachersIds = new ArrayList<Integer>();
             Integer teacherId;
             Iterator iter = infoTeachersList.iterator();
             while (iter.hasNext()) {
@@ -73,7 +72,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
             DynaActionForm newForm = (DynaActionForm) form;
             newForm.set("professorShipTeachersIds", professorShipTeachersIds);
 
-            List nonAffiliatedTeacherIDs = new ArrayList();
+            List<Integer> nonAffiliatedTeacherIDs = new ArrayList<Integer>();
             Integer nonAffiliatedTeacherID;
             
             if(infoNonAffiliatedTeachers != null){
@@ -86,10 +85,10 @@ public class ReadTeacherInChargeAction extends FenixAction {
                 Integer[] nonAffiliatedTeacherArrayIDs = (Integer[]) nonAffiliatedTeacherIDs.toArray(new Integer[] {});
                 newForm.set("nonAffiliatedTeachersIds", nonAffiliatedTeacherArrayIDs);
             }
-            List responsiblesIds = null;
 
+            List<Integer> responsiblesIds = null;
             try {
-                responsiblesIds = (List) ServiceUtils.executeService(userView,
+                responsiblesIds = (List<Integer>) ServiceUtils.executeService(userView,
                         "ReadExecutionCourseResponsiblesIds", args);
 
             } catch (FenixServiceException fenixServiceException) {

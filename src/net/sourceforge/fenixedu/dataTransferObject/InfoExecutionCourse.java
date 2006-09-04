@@ -5,74 +5,205 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.Shift;
 
 /**
  * @author tfc130
  */
 public class InfoExecutionCourse extends InfoObject {
 
-    protected String _nome;
+    private DomainReference<ExecutionCourse> executionCourseDomainReference;
 
-    protected String _sigla;
+    public InfoExecutionCourse(final ExecutionCourse executionCourse) {
+	executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
+    }
 
-    protected String _programa;
+    public static InfoExecutionCourse newInfoFromDomain(final ExecutionCourse executionCourse) {
+	return executionCourse == null ? null : new InfoExecutionCourse(executionCourse);
+    }
 
-    private Double _theoreticalHours;
+    private ExecutionCourse getExecutionCourse() {
+	return executionCourseDomainReference == null ? null : executionCourseDomainReference
+		.getObject();
+    }
 
-    private Double _praticalHours;
+    public boolean equals(Object obj) {
+	return obj instanceof InfoExecutionCourse
+		&& getExecutionCourse() == ((InfoExecutionCourse) obj).getExecutionCourse();
+    }
 
-    private Double _theoPratHours;
+    public int hashCode() {
+	return getExecutionCourse().hashCode();
+    }
+
+    @Override
+    public Integer getIdInternal() {
+	return getExecutionCourse().getIdInternal();
+    }
+
+    @Override
+    public void setIdInternal(Integer integer) {
+	throw new Error("Method should not be called!");
+    }
+
+    //=================== FIELDS RETRIEVED BY DOMAIN LOGIC =======================
+
+    public String getNome() {
+	return getExecutionCourse().getNome();
+    }
+
+    public String getSigla() {
+	return getExecutionCourse().getSigla();
+    }
+
+    public String getComment() {
+	return getExecutionCourse().getComment();
+    }
+
+    public Boolean getHasSite() {
+	return getExecutionCourse().hasSite();
+    }
+
+    public Double getTheoreticalHours() {
+	return getExecutionCourse().getTheoreticalHours();
+    }
+
+    public Double getPraticalHours() {
+	return getExecutionCourse().getPraticalHours();
+    }
+
+    public Double getTheoPratHours() {
+	return getExecutionCourse().getTheoPratHours();
+    }
+
+    public Double getLabHours() {
+	return getExecutionCourse().getLabHours();
+    }
+
+    public Double getFieldWorkHours() {
+	return getExecutionCourse().getFieldWorkHours();
+    }
+
+    public Double getProblemsHours() {
+	return getExecutionCourse().getProblemsHours();
+    }
+
+    public Double getSeminaryHours() {
+	return getExecutionCourse().getSeminaryHours();
+    }
+
+    public Double getTrainingPeriodHours() {
+	return getExecutionCourse().getTrainingPeriodHours();
+    }
+
+    public Double getTutorialOrientationHours() {
+	return getExecutionCourse().getTutorialOrientationHours();
+    }
+
+    public Integer getNumberOfAttendingStudents() {
+	return getExecutionCourse().getAttendsCount();
+    }
+
+    public String getCourseReportFilled() {
+	return getExecutionCourse().getCourseReport().getReport() == null ? "false" : "true";
+    }
+
+    public String getEqualLoad() {
+	return getExecutionCourse().getEqualLoad();
+    }
+
+    public InfoExecutionPeriod getInfoExecutionPeriod() {
+	return InfoExecutionPeriod.newInfoFromDomain(getExecutionCourse().getExecutionPeriod());
+    }
+
+    public List<InfoShift> getAssociatedInfoShifts() {
+	List<InfoShift> result = new ArrayList<InfoShift>();
+
+	for (final Shift shift : getExecutionCourse().getAssociatedShifts()) {
+	    result.add(InfoShift.newInfoFromDomain(shift));
+	}
+
+	return result;
+    }
+
+    public List<InfoNonAffiliatedTeacher> getNonAffiliatedTeachers() {
+	List<InfoNonAffiliatedTeacher> result = new ArrayList<InfoNonAffiliatedTeacher>();
+
+	for (final NonAffiliatedTeacher nonAffiliatedTeacher : getExecutionCourse()
+		.getNonAffiliatedTeachers()) {
+	    result.add(InfoNonAffiliatedTeacher.newInfoFromDomain(nonAffiliatedTeacher));
+	}
+
+	return result;
+    }
+
+    public List<InfoEvaluation> getAssociatedInfoEvaluations() {
+	List<InfoEvaluation> result = new ArrayList<InfoEvaluation>();
+
+	for (final Evaluation nonAffiliatedTeacher : getExecutionCourse().getAssociatedEvaluations()) {
+	    result.add(InfoEvaluation.newInfoFromDomain(nonAffiliatedTeacher));
+	}
+
+	return result;
+    }
+
+    public List<InfoCurricularCourse> getAssociatedInfoCurricularCourses() {
+	if (filteredAssociatedInfoCurricularCourses == null) {
+	    List<InfoCurricularCourse> result = new ArrayList<InfoCurricularCourse>();
+
+	    for (final CurricularCourse curricularCourse : getExecutionCourse()
+		    .getAssociatedCurricularCourses()) {
+		result.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+	    }
+
+	    return result;
+	} else {
+	    return getFilteredAssociatedInfoCurricularCourses();
+	}
+    }
+
+    public List getAssociatedInfoExams() {
+	if (filteredAssociatedInfoExams == null) {
+	    List<InfoExam> result = new ArrayList<InfoExam>();
+
+	    for (final Exam exam : getExecutionCourse().getAssociatedExams()) {
+		result.add(InfoExam.newInfoFromDomain(exam));
+	    }
+
+	    return result;
+	} else {
+	    return getFilteredAssociatedInfoExams();
+	}
+    }
+
+    public List<InfoGrouping> getInfoGroupings() {
+	if (filteredInfoGroupings == null) {
+	    List<InfoGrouping> result = new ArrayList<InfoGrouping>();
+
+	    for (final Grouping grouping : getExecutionCourse().getGroupings()) {
+		result.add(InfoGrouping.newInfoFromDomain(grouping));
+	    }
+
+	    return result;
+	} else {
+	    return getFilteredInfoGroupings();
+	}
+    }
     
-    private Double _labHours;
 
-    private Double _seminaryHours;
-    
-    private Double _problemsHours;
-    
-    private Double _fieldWorkHours;
-    
-    private Double _trainingPeriodHours;
-    
-    private Double _tutorialOrientationHours;      
-
-    private Double occupancy;
-
-    protected List associatedInfoCurricularCourses;
-
-    protected List associatedInfoExams;
-
-    protected List associatedInfoEvaluations;
-
-    protected Integer numberOfAttendingStudents;
-
-    protected List associatedInfoShifts;
-    
-    protected List nonAffiliatedTeachers;
-
-    protected List infoGroupings;
-
-    protected String comment;
-
-    // useful for coordinator portal
-    protected InfoSiteEvaluationStatistics infoSiteEvaluationStatistics;
-
-    protected String courseReportFilled;
-
-    /**
-     * Tells if all the associated Curricular Courses load are the same
-     */
-    protected String equalLoad;
-
-    // A chave do responsavel falta ainda porque ainda nao existe a respeciva
-    // ligacao
-    // na base de dados.
-    protected InfoExecutionPeriod infoExecutionPeriod;
-
-    private ExecutionCourse executionCourse;
+    //=================== FIELDS NOT RETRIEVED BY DOMAIN LOGIC =======================
 
     // The following variable serves the purpose of indicating the
     // the curricular year in which the execution course is given
@@ -83,188 +214,27 @@ public class InfoExecutionCourse extends InfoObject {
     // It has no meaning in the buisness logic.
     private Integer curricularYear;
 
-    private Boolean hasSite;
-
-    public InfoExecutionCourse() {
-    }
-
-    public InfoExecutionCourse(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-    
-    public InfoExecutionCourse(String nome, String sigla, String programa,
-            InfoExecutionDegree infoLicenciaturaExecucao, Double theoreticalHours, Double praticalHours,
-            Double theoPratHours, Double labHours) {
-        setNome(nome);
-        setSigla(sigla);
-        setPrograma(programa);
-        // setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
-        setTheoreticalHours(theoreticalHours);
-        setPraticalHours(praticalHours);
-        setTheoPratHours(theoPratHours);
-        setLabHours(labHours);
-    }
-
-    public InfoExecutionCourse(String nome, String sigla, String programa, Double theoreticalHours,
-            Double praticalHours, Double theoPratHours, Double labHours,
-            InfoExecutionPeriod infoExecutionPeriod) {
-        setNome(nome);
-        setSigla(sigla);
-        setPrograma(programa);
-        setTheoreticalHours(theoreticalHours);
-        setPraticalHours(praticalHours);
-        setTheoPratHours(theoPratHours);
-        setLabHours(labHours);
-        setInfoExecutionPeriod(infoExecutionPeriod);
-    }
-
-    public InfoExecutionCourse(String nome, String sigla, String programa,
-            InfoExecutionDegree infoLicenciaturaExecucao, Double theoreticalHours, Double praticalHours,
-            Double theoPratHours, Double labHours, Integer semester) {
-        setNome(nome);
-        setSigla(sigla);
-        setPrograma(programa);
-        // setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
-        setTheoreticalHours(theoreticalHours);
-        setPraticalHours(praticalHours);
-        setTheoPratHours(theoPratHours);
-        setLabHours(labHours);
-    }
-
-    public String getNome() {
-        return _nome;
-    }
-
-    public void setNome(String nome) {
-        _nome = nome;
-    }
-
-    public String getSigla() {
-        return _sigla;
-    }
-
-    public void setSigla(String sigla) {
-        _sigla = sigla;
-    }
-
-    public String getPrograma() {
-        return _programa;
-    }
-
-    public void setPrograma(String programa) {
-        _programa = programa;
-    }
-
-    public Double getTheoreticalHours() {
-        return _theoreticalHours;
-    }
-
-    public void setTheoreticalHours(Double theoreticalHours) {
-        _theoreticalHours = theoreticalHours;
-    }
-
-    public Double getPraticalHours() {
-        return _praticalHours;
-    }
-
-    public void setPraticalHours(Double praticalHours) {
-        _praticalHours = praticalHours;
-    }
-
-    public Double getTheoPratHours() {
-        return _theoPratHours;
-    }
-
-    public void setTheoPratHours(Double theoPratHours) {
-        _theoPratHours = theoPratHours;
-    }
-
-    public Double getLabHours() {
-        return _labHours;
-    }
-
-    public void setLabHours(Double labHours) {
-        _labHours = labHours;
-    }
-
-    public int hashCode() {
-        return 0;
-    }
-
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoExecutionCourse) {
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) obj;
-            resultado = (getIdInternal() != null && infoExecutionCourse.getIdInternal() != null && getIdInternal()
-                    .equals(infoExecutionCourse.getIdInternal()))
-                    || (getSigla().equals(infoExecutionCourse.getSigla()) && getInfoExecutionPeriod()
-                            .equals(infoExecutionCourse.getInfoExecutionPeriod()));
-        }
-        return resultado;
-    }
-
-    public String toString() {
-        String result = "[INFODISCIPLINAEXECUCAO";
-        result += ", nome=" + _nome;
-        result += ", sigla=" + _sigla;
-        result += ", programa=" + _programa;
-        result += ", theoreticalHours=" + _theoreticalHours;
-        result += ", praticalHours=" + _praticalHours;
-        result += ", theoPratHours=" + _theoPratHours;
-        result += ", labHours=" + _labHours;
-        result += ", infoExecutionPeriod=" + infoExecutionPeriod;
-        result += "]";
-        return result;
-    }
-
-    public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return infoExecutionPeriod;
-    }
-
-    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
-    }
-
-    public List getAssociatedInfoCurricularCourses() {
-        return associatedInfoCurricularCourses;
-    }
-
-    public List getAssociatedInfoExams() {
-        return associatedInfoExams;
-    }
-
-    public void setAssociatedInfoCurricularCourses(List list) {
-        associatedInfoCurricularCourses = list;
-    }
-
-    public void setAssociatedInfoExams(List list) {
-        associatedInfoExams = list;
-    }
-
     public Integer getCurricularYear() {
-        return curricularYear;
+	return curricularYear;
     }
 
     public void setCurricularYear(Integer integer) {
-        curricularYear = integer;
+	curricularYear = integer;
     }
 
-    public String getComment() {
-        return comment;
+    // useful for coordinator portal
+    protected InfoSiteEvaluationStatistics infoSiteEvaluationStatistics;
+
+    public InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics() {
+	return infoSiteEvaluationStatistics;
     }
 
-    public void setComment(String string) {
-        comment = string;
+    public void setInfoSiteEvaluationStatistics(InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
+	this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
     }
 
-    public List getAssociatedInfoEvaluations() {
-        return associatedInfoEvaluations;
-    }
-
-    public void setAssociatedInfoEvaluations(List list) {
-        associatedInfoEvaluations = list;
-    }
-
+    private Double occupancy;
+    
     public Double getOccupancy() {
         return occupancy;
     }
@@ -273,147 +243,39 @@ public class InfoExecutionCourse extends InfoObject {
         this.occupancy = occupancy;
     }
 
-    public Integer getNumberOfAttendingStudents() {
-        return numberOfAttendingStudents;
+    private List<InfoCurricularCourse> filteredAssociatedInfoCurricularCourses;
+
+    private List<InfoCurricularCourse> getFilteredAssociatedInfoCurricularCourses() {
+	return filteredAssociatedInfoCurricularCourses;
     }
 
-    public void setNumberOfAttendingStudents(Integer attendingStudents) {
-        this.numberOfAttendingStudents = attendingStudents;
+    public void setFilteredAssociatedInfoCurricularCourses(
+	    final List<InfoCurricularCourse> filteredAssociatedInfoCurricularCourses) {
+	this.filteredAssociatedInfoCurricularCourses = filteredAssociatedInfoCurricularCourses;
     }
 
-    public String getEqualLoad() {
-        return equalLoad;
+    private List<InfoExam> filteredAssociatedInfoExams;
+
+    private List<InfoExam> getFilteredAssociatedInfoExams() {
+	return filteredAssociatedInfoExams;
     }
 
-    public void setEqualLoad(String equalLoad) {
-        this.equalLoad = equalLoad;
-    }
-
-    public Boolean getHasSite() {
-        return hasSite;
-    }
-
-    public void setHasSite(Boolean hasSite) {
-        this.hasSite = hasSite;
-    }
-
-    public String getCourseReportFilled() {
-        return courseReportFilled;
-    }
-
-    public void setCourseReportFilled(String courseReportFilled) {
-        this.courseReportFilled = courseReportFilled;
-    }
-
-    public InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics() {
-        return infoSiteEvaluationStatistics;
-    }
-
-    public void setInfoSiteEvaluationStatistics(InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
-        this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
-    }
-
-    public List getAssociatedInfoShifts() {
-        return associatedInfoShifts;
-    }
-
-    public void setAssociatedInfoShifts(List associatedInfoShifts) {
-        this.associatedInfoShifts = associatedInfoShifts;
-    }
-
-    public void copyFromDomain(ExecutionCourse executionCourse) {
-        super.copyFromDomain(executionCourse);
-        if (executionCourse != null) {
-        	setExecutionCourse(executionCourse);
-            setNome(executionCourse.getNome());
-            setSigla(executionCourse.getSigla());
-            setTheoreticalHours(executionCourse.getTheoreticalHours());
-            setTheoPratHours(executionCourse.getTheoPratHours());
-            setLabHours(executionCourse.getLabHours());
-            setPraticalHours(executionCourse.getPraticalHours());
-            setSeminaryHours(executionCourse.getSeminaryHours());
-            setFieldWorkHours(executionCourse.getFieldWorkHours());
-            setProblemsHours(executionCourse.getProblemsHours());
-            setTrainingPeriodHours(executionCourse.getTrainingPeriodHours());
-            setTutorialOrientationHours(executionCourse.getTutorialOrientationHours());
-            setComment(executionCourse.getComment());
-			setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionCourse.getExecutionPeriod()));
-        }
-    }
-
-    public static InfoExecutionCourse newInfoFromDomain(ExecutionCourse executionCourse) {
-        InfoExecutionCourse infoExecutionCourse = null;
-        if (executionCourse != null) {
-            infoExecutionCourse = new InfoExecutionCourse();
-            infoExecutionCourse.copyFromDomain(executionCourse);
-        }
-        return infoExecutionCourse;
+    public void setFilteredAssociatedInfoExams(final List<InfoExam> filteredAssociatedInfoExams) {
+	this.filteredAssociatedInfoExams = filteredAssociatedInfoExams;
     }
     
-    public List getNonAffiliatedTeachers() {
-        return nonAffiliatedTeachers;
+    public String toString() {
+	return getExecutionCourse().toString();
     }
+
+    private List<InfoGrouping> filteredInfoGroupings;
     
-
-    public void setNonAffiliatedTeachers(List nonAffiliatedTeachers) {
-        this.nonAffiliatedTeachers = nonAffiliatedTeachers;
+    private List<InfoGrouping> getFilteredInfoGroupings() {
+	return filteredInfoGroupings;
     }
 
-    public List getInfoGroupings() {
-        return infoGroupings;
+    public void setFilteredInfoGroupings(List<InfoGrouping> filteredInfoGroupings) {
+	this.filteredInfoGroupings = filteredInfoGroupings;
     }
 
-    public void setInfoGroupings(List infoGroupings) {
-        this.infoGroupings = infoGroupings;
-    }
-
-    public Double getFieldWorkHours() {
-        return _fieldWorkHours;
-    }
-
-    public void setFieldWorkHours(Double workHours) {
-        _fieldWorkHours = workHours;
-    }
-
-    public Double getProblemsHours() {
-        return _problemsHours;
-    }
-
-    public void setProblemsHours(Double hours) {
-        _problemsHours = hours;
-    }
-
-    public Double getSeminaryHours() {
-        return _seminaryHours;
-    }
-
-    public void setSeminaryHours(Double hours) {
-        _seminaryHours = hours;
-    }
-
-    public Double getTrainingPeriodHours() {
-        return _trainingPeriodHours;
-    }
-
-    public void setTrainingPeriodHours(Double periodHours) {
-        _trainingPeriodHours = periodHours;
-    }
-
-    public Double getTutorialOrientationHours() {
-        return _tutorialOrientationHours;
-    }
-
-    public void setTutorialOrientationHours(Double orientationHours) {
-        _tutorialOrientationHours = orientationHours;
-    }
-
-	public ExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
-
-	public void setExecutionCourse(ExecutionCourse executionCourse) {
-		this.executionCourse = executionCourse;
-	}
-    
-    
 }

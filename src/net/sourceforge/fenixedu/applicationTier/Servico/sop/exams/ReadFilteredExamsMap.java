@@ -8,12 +8,10 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriodAndExams;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -86,17 +84,11 @@ public class ReadFilteredExamsMap extends Service {
         	
             // For each execution course obtain curricular courses and exams
             for (ExecutionCourse executionCourse : executionCourses) {
-                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriodAndExams.newInfoFromDomain(executionCourse);
+                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
                 infoExecutionCourse.setCurricularYear(curricularYear);
 
-                List<InfoCurricularCourse> associatedInfoCurricularCourses = new ArrayList<InfoCurricularCourse>();
-                for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-                    associatedInfoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
-                }
-                infoExecutionCourse.setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
-
                 List<InfoExam> associatedInfoExams = obtainInfoExams(executionDegree, infoExecutionPeriod.getIdInternal(), curricularYear, executionCourse);
-                infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);
+                infoExecutionCourse.setFilteredAssociatedInfoExams(associatedInfoExams);
 
                 result.add(infoExecutionCourse);
             }

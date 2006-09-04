@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -44,7 +44,7 @@ public class InsertExecutionCourseDA extends FenixDispatchAction {
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
-        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+        InfoExecutionCourseEditor infoExecutionCourse = new InfoExecutionCourseEditor();
 
         String name = (String) dynaForm.get("name");
         infoExecutionCourse.setNome(name);

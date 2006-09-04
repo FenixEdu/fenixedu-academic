@@ -16,8 +16,7 @@ public class InfoProfessorship extends InfoObject {
     }
 
     public InfoExecutionCourse getInfoExecutionCourse() {
-        return InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(this.getProfessorship()
-                .getExecutionCourse());
+        return InfoExecutionCourse.newInfoFromDomain(this.getProfessorship().getExecutionCourse());
     }
 
     public InfoTeacher getInfoTeacher() {

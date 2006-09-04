@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithInfoStudentAnd
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
@@ -81,7 +80,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 			List shiftIds) throws FenixServiceException, ExcepcaoPersistencia {
 
 		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-		InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(executionCourse);
+		InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 
 		final Site site = executionCourse.getSite();
 		List attends = executionCourse.getAttends();

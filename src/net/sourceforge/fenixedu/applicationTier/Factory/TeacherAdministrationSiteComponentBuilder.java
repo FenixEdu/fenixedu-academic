@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupations;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithAttends;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithExportGrouping;
@@ -33,7 +32,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithInfoSiteAndInfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
@@ -206,8 +204,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		component.setSections(infoSectionsList);
 
 		final ExecutionCourse executionCourse = site.getExecutionCourse();
-		final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
-				.newInfoFromDomain(executionCourse);
+		final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 		component.setExecutionCourse(infoExecutionCourse);
 
 		final List<CurricularCourse> curricularCourses = executionCourse
@@ -575,10 +572,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 			final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>(
 					exam.getAssociatedExecutionCoursesCount());
 			for (final ExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
-				final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
-						.newInfoFromDomain(executionCourse);
-				infoExecutionCourse.setNumberOfAttendingStudents(executionCourse.getAttendsCount());
-				infoExecutionCourses.add(infoExecutionCourse);
+			    infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 			}
 
 			final InfoSiteExamExecutionCourses infoSiteExamExecutionCourses = (InfoSiteExamExecutionCourses) component;

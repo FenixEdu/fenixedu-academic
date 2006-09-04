@@ -52,18 +52,17 @@ public class ReadEnroledExecutionCourses extends Service {
     }
 
     public List run(String username) throws ExcepcaoPersistencia {
-        List allInfoExecutionCourses = new ArrayList();
+        List<InfoExecutionCourse> allInfoExecutionCourses = new ArrayList<InfoExecutionCourse>();
 
         Registration registration = Registration.readByUsername(username);
         List allAttend = registration.getAssociatedAttends();
 
         Iterator iter = allAttend.iterator();
-        allInfoExecutionCourses = new ArrayList();
 
         while (iter.hasNext()) {
             ExecutionCourse executionCourse = ((Attends) iter.next()).getDisciplinaExecucao();
             if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
-                List allGroupProperties = executionCourse.getGroupings();
+                List<Grouping> allGroupProperties = executionCourse.getGroupings();
                 boolean result = checkPeriodEnrollment(allGroupProperties);
                 if (result && checkStudentInAttendsSet(allGroupProperties, registration)) {
                     final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
@@ -74,7 +73,7 @@ public class ReadEnroledExecutionCourses extends Service {
                             infoGroupings.add(InfoGrouping.newInfoFromDomain(grouping));
                         }
                     }
-                    infoExecutionCourse.setInfoGroupings(infoGroupings);
+                    infoExecutionCourse.setFilteredInfoGroupings(infoGroupings);
                     allInfoExecutionCourses.add(infoExecutionCourse);
                 }
             }

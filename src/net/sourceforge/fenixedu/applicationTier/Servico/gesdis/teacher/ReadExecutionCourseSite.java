@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionCourseSite extends Service {
 
-    public InfoSite run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException,
+    public InfoSite run(Integer executionCourseId) throws FenixServiceException,
             ExcepcaoPersistencia {
 
         InfoSite infoSite = null;
 
-    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         final Site site = executionCourse.getSite();
 
         if (site != null) {

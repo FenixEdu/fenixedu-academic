@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -21,8 +20,7 @@ public class ReadShiftsByExecutionCourseID extends Service {
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         final List<Shift> shifts = executionCourse.getAssociatedShifts();
 
-        infoExecutionCourseOccupancy.setInfoExecutionCourse(InfoExecutionCourse
-                .newInfoFromDomain(executionCourse));
+        infoExecutionCourseOccupancy.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 
         for (final Shift shift : shifts) {
             Integer capacity = Integer.valueOf(1);
@@ -34,8 +32,6 @@ public class ReadShiftsByExecutionCourseID extends Service {
 
             infoExecutionCourseOccupancy.getInfoShifts().add(infoShift);
         }
-        infoExecutionCourseOccupancy.getInfoExecutionCourse().setNumberOfAttendingStudents(
-                executionCourse.getAttendsCount());
 
         return infoExecutionCourseOccupancy;
     }

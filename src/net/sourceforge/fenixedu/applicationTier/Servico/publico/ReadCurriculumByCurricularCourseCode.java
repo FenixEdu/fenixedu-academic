@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -52,9 +51,7 @@ public class ReadCurriculumByCurricularCourseCode extends Service {
             final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
             if (executionPeriod.getState().equals(PeriodState.OPEN)
                     || executionPeriod.getState().equals(PeriodState.CURRENT)) {
-                final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
-                infoExecutionCourse.setHasSite(executionCourse.getSite() != null);
-                infoExecutionCourses.add(infoExecutionCourse);
+                infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
         }
         return infoExecutionCourses;

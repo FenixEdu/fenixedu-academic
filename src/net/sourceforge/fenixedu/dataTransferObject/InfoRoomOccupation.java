@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -15,129 +16,61 @@ import net.sourceforge.fenixedu.util.DiaSemana;
  */
 public class InfoRoomOccupation extends InfoObject {
 
-    protected Calendar startTime;
-
-    protected Calendar endTime;
-
-    protected DiaSemana dayOfWeek;
-
-    protected InfoRoom infoRoom;
-
-    protected InfoPeriod infoPeriod;
-
-    protected Integer frequency;
-
-    protected Integer weekOfQuinzenalStart;
-
+    private DomainReference<RoomOccupation> roomOccupationDomainReference;
+    
+    public InfoRoomOccupation(final RoomOccupation roomOccupation) {
+	roomOccupationDomainReference = new DomainReference<RoomOccupation>(roomOccupation);
+    }
+    
+    public static InfoRoomOccupation newInfoFromDomain(final RoomOccupation roomOccupation) {
+        return roomOccupation == null ? null : new InfoRoomOccupation(roomOccupation);
+    }
+    
+    private RoomOccupation getRoomOccupation() {
+	return roomOccupationDomainReference == null ? null : roomOccupationDomainReference.getObject();
+    }
+    
     public Integer getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(int frequency) {
-        this.frequency = new Integer(frequency);
-    }
-
-    public void setFrequency(Integer frequency) {
-        this.frequency = frequency;
+        return getRoomOccupation().getFrequency();
     }
 
     public Integer getWeekOfQuinzenalStart() {
-        return weekOfQuinzenalStart;
-    }
-
-    public void setWeekOfQuinzenalStart(Integer weekOfQuinzenalStart) {
-        this.weekOfQuinzenalStart = weekOfQuinzenalStart;
+        return getRoomOccupation().getWeekOfQuinzenalStart();
     }
 
     /**
      * @return
      */
     public DiaSemana getDayOfWeek() {
-        return dayOfWeek;
+        return getRoomOccupation().getDayOfWeek();
     }
 
     /**
      * @return
      */
     public Calendar getEndTime() {
-        return endTime;
+        return getRoomOccupation().getEndTime();
     }
 
     /**
      * @return
      */
     public Calendar getStartTime() {
-        return startTime;
-    }
-
-    /**
-     * @param semana
-     */
-    public void setDayOfWeek(DiaSemana semana) {
-        dayOfWeek = semana;
-    }
-
-    /**
-     * @param calendar
-     */
-    public void setEndTime(Calendar calendar) {
-        endTime = calendar;
-    }
-
-    /**
-     * @param calendar
-     */
-    public void setStartTime(Calendar calendar) {
-        startTime = calendar;
+        return getRoomOccupation().getStartTime();
     }
 
     /**
      * @return Returns the infoPeriod.
      */
     public InfoPeriod getInfoPeriod() {
-        return infoPeriod;
-    }
-
-    /**
-     * @param infoPeriod
-     *            The infoPeriod to set.
-     */
-    public void setInfoPeriod(InfoPeriod infoPeriod) {
-        this.infoPeriod = infoPeriod;
+        return InfoPeriod.newInfoFromDomain(getRoomOccupation().getPeriod());
     }
 
     /**
      * @return Returns the infoRoom.
      */
     public InfoRoom getInfoRoom() {
-        return infoRoom;
+        return InfoRoom.newInfoFromDomain(getRoomOccupation().getRoom());
     }
 
-    /**
-     * @param infoRoom
-     *            The infoRoom to set.
-     */
-    public void setInfoRoom(InfoRoom infoRoom) {
-        this.infoRoom = infoRoom;
-    }
-
-
-    public void copyFromDomain(RoomOccupation roomOccupation) {
-        super.copyFromDomain(roomOccupation);
-        if (roomOccupation != null) {
-            setDayOfWeek(roomOccupation.getDayOfWeek());
-            setStartTime(roomOccupation.getStartTime());
-            setEndTime(roomOccupation.getEndTime());
-            setFrequency(roomOccupation.getFrequency());
-        }
-    }
-
-    public static InfoRoomOccupation newInfoFromDomain(RoomOccupation roomOccupation) {
-        InfoRoomOccupation infoRoomOccupation = null;
-        if (roomOccupation != null) {
-            infoRoomOccupation = new InfoRoomOccupation();
-            infoRoomOccupation.copyFromDomain(roomOccupation);
-        }
-        return infoRoomOccupation;
-    }
 }

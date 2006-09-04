@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -60,16 +60,10 @@ public class TeachingReportAction extends FenixDispatchAction {
             DynaActionForm dynaForm = (DynaActionForm) form;
             InfoCourseReport infoCourseReport = new InfoCourseReport();
             BeanUtils.copyProperties(infoCourseReport, dynaForm);
+
             Integer executionCourseId = (Integer) dynaForm.get("executionCourseId");
-            Integer executionPeriodId = (Integer) dynaForm.get("executionPeriodId");
-
-            InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod(RootDomainObject.getInstance().readExecutionPeriodByOID(executionPeriodId));
-
-            InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-            infoExecutionCourse.setIdInternal(executionCourseId);
-            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
-
-            infoCourseReport.setInfoExecutionCourse(infoExecutionCourse);
+            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+            infoCourseReport.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 
             return infoCourseReport;
         } catch (Exception e) {

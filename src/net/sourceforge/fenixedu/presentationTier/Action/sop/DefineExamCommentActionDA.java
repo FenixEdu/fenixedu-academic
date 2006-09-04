@@ -83,12 +83,9 @@ public class DefineExamCommentActionDA extends
         String executionCourseCode = request.getParameter("executionCourseCode");
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
-        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-        infoExecutionCourse.setSigla(executionCourseCode);
-        infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
         // Define comment
-        Object argsDefineComment[] = { infoExecutionCourse.getSigla(), infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(), comment };
+        Object argsDefineComment[] = { executionCourseCode, infoExecutionPeriod.getIdInternal(), comment };
         try {
             ServiceUtils.executeService(userView, "DefineExamComment", argsDefineComment);
         } catch (ExistingServiceException ex) {

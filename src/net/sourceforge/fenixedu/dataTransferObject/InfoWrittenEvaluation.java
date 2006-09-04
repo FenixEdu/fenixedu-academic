@@ -38,11 +38,11 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
 
     protected Calendar enrollmentEndTime;
 
-    protected List associatedCurricularCourseScope;
+    protected List<InfoCurricularCourseScope> associatedCurricularCourseScope;
 
-    protected List associatedRoomOccupation;
+    protected List<InfoRoomOccupation> associatedRoomOccupation;
 
-    protected List associatedExecutionCourse;
+    protected List<InfoExecutionCourse> associatedExecutionCourse;
 
     protected Integer enrolledStudents;
 
@@ -82,11 +82,11 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
         return enrollmentEndTime;
     }
 
-    public void setAssociatedCurricularCourseScope(List list) {
+    public void setAssociatedCurricularCourseScope(List<InfoCurricularCourseScope> list) {
         associatedCurricularCourseScope = list;
     }
 
-    public void setAssociatedRoomOccupation(List list) {
+    public void setAssociatedRoomOccupation(List<InfoRoomOccupation> list) {
         associatedRoomOccupation = list;
     }
 
@@ -122,7 +122,7 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
         return associatedExecutionCourse;
     }
 
-    public void setAssociatedExecutionCourse(List list) {
+    public void setAssociatedExecutionCourse(List<InfoExecutionCourse> list) {
         associatedExecutionCourse = list;
     }
 
@@ -146,15 +146,14 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
         super.copyFromDomain(writtenEvaluation);
         if (writtenEvaluation != null) {
             setWrittenEvaluation(writtenEvaluation);
-            associatedExecutionCourse = new ArrayList();
-            associatedRoomOccupation = new ArrayList();
-            associatedCurricularCourseScope = new ArrayList();
+            associatedExecutionCourse = new ArrayList<InfoExecutionCourse>();
+            associatedRoomOccupation = new ArrayList<InfoRoomOccupation>();
+            associatedCurricularCourseScope = new ArrayList<InfoCurricularCourseScope>();
             for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
                 associatedExecutionCourse.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
             for (RoomOccupation roomOccupation : writtenEvaluation.getAssociatedRoomOccupation()) {
-                associatedRoomOccupation.add(InfoRoomOccupationWithInfoRoom
-                        .newInfoFromDomain(roomOccupation));
+                associatedRoomOccupation.add(InfoRoomOccupation.newInfoFromDomain(roomOccupation));
             }
             for (CurricularCourseScope curricularCourseScope : writtenEvaluation
                     .getAssociatedCurricularCourseScope()) {

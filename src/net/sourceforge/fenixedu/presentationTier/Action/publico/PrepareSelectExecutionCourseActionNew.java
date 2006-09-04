@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -35,14 +34,10 @@ public class PrepareSelectExecutionCourseActionNew extends FenixContextAction {
             e1.printStackTrace();
         }
 
-        InfoExecutionCourse executionCourse = new InfoExecutionCourse();
-
         InfoExecutionPeriod infoExecutionPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute(SessionConstants.EXECUTION_DEGREE);
-
-        executionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
         Integer curricularYear = (Integer) request.getAttribute("curYear");
 

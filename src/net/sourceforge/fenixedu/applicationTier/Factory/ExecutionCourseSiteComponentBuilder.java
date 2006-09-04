@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
@@ -218,8 +217,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
 		component.setInfoSummaries(result);
 		component.setInfoSite(copyISite2InfoSite(site));
-		component.setExecutionCourse(InfoExecutionCourseWithExecutionPeriod
-				.newInfoFromDomain(executionCourse));
+		component.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 
 		component.setLessonTypes(lessonTypes);
 		List infoShiftsOnlyType = infoShifts;
@@ -323,8 +321,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		component.setMail(site.getMail());
 		component.setSections(infoSectionsList);
 		InfoExecutionCourse infoExecutionCourse;
-		infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(site
-				.getExecutionCourse());
+		infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(site.getExecutionCourse());
 		component.setExecutionCourse(infoExecutionCourse);
 		return component;
 	}
@@ -701,8 +698,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	private InfoSite copyISite2InfoSite(Site site) {
 		InfoSite infoSite = InfoSite.newInfoFromDomain(site);
 		if (site != null) {
-			infoSite.setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
-					.newInfoFromDomain(site.getExecutionCourse()));
+			infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(site.getExecutionCourse()));
 		}
 		return infoSite;
 	}

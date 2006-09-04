@@ -89,7 +89,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
 
     public InfoRoomOccupation getInfoRoomOccupation() {
     	if (infoRoomOccupation == null) {
-    		infoRoomOccupation = InfoRoomOccupationWithInfoRoomAndInfoPeriod.newInfoFromDomain(getLesson().getRoomOccupation());
+    		infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(getLesson().getRoomOccupation());
     	}
     	return infoRoomOccupation;
 	}

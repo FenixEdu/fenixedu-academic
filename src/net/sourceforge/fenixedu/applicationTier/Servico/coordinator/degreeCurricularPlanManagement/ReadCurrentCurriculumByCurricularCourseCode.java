@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Curriculum;
@@ -96,18 +95,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
         Iterator iterExecutionCourses = associatedExecutionCourses.iterator();
         while (iterExecutionCourses.hasNext()) {
             ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourses.next();
-
-            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
-                    .newInfoFromDomain(executionCourse);
-
-            Boolean hasSite;
-            if(executionCourse.getSite() != null)
-                hasSite = Boolean.TRUE;
-            else
-                hasSite = Boolean.FALSE;
-            
-            infoExecutionCourse.setHasSite(hasSite);
-            infoExecutionCourses.add(infoExecutionCourse);
+            infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         }
         infoCurriculum.getInfoCurricularCourse().setInfoAssociatedExecutionCourses(infoExecutionCourses);
         return infoCurriculum;

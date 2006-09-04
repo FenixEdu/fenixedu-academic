@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -115,9 +114,6 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         }
         RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
         
-        InfoExecutionCourse executionCourse = new InfoExecutionCourse();
-        executionCourse.setInfoExecutionPeriod(selectedExecutionPeriod);
-
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
         infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));

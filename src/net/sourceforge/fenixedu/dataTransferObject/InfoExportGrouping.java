@@ -96,12 +96,8 @@ public class InfoExportGrouping extends InfoObject{
      */
     public void copyFromDomain(ExportGrouping groupingExecutionCourse) {
         super.copyFromDomain(groupingExecutionCourse);
-        InfoGrouping infoGroupProperties = new InfoGrouping();
-        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-        infoGroupProperties.copyFromDomain(groupingExecutionCourse.getGrouping());
-        infoExecutionCourse.copyFromDomain(groupingExecutionCourse.getExecutionCourse());
-        this.setInfoGrouping(infoGroupProperties);
-        this.setInfoExecutionCourse(infoExecutionCourse);
+        this.setInfoGrouping(InfoGrouping.newInfoFromDomain(groupingExecutionCourse.getGrouping()));
+        this.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(groupingExecutionCourse.getExecutionCourse()));
     }
     
     public static InfoExportGrouping newInfoFromDomain(ExportGrouping groupingExecutionCourse) {

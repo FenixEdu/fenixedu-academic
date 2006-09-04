@@ -26,10 +26,10 @@ public class InfoExamWithRoomOccupations extends InfoExam {
     }
     
     private List<InfoRoomOccupation> copyIRoomOccupation2InfoRoomOccupation(List associatedRoomOccupation) {
-        final List infoRoomOccupations = new ArrayList(associatedRoomOccupation.size());
+        final List<InfoRoomOccupation> infoRoomOccupations = new ArrayList<InfoRoomOccupation>(associatedRoomOccupation.size());
         for (final Iterator iterator = associatedRoomOccupation.iterator(); iterator.hasNext(); ) {
             final RoomOccupation roomOccupation = (RoomOccupation) iterator.next();
-            final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupationWithInfoRoom.newInfoFromDomain(roomOccupation);
+            final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
             if (infoRoomOccupation != null) {
                 infoRoomOccupations.add(infoRoomOccupation);
             }

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriodAndExams;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -80,25 +79,9 @@ public class ReadFilteredExamsMapList extends Service {
 	                // For each execution course obtain curricular courses and
 	                // exams
 	                for (int j = 0; j < executionCourses.size(); j++) {
-	                    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriodAndExams
-	                            .newInfoFromDomain((ExecutionCourse) executionCourses.get(j));
+	                    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) executionCourses.get(j));
 	
 	                    infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
-	
-	                    List associatedInfoCurricularCourses = new ArrayList();
-	                    List associatedCurricularCourses = ((ExecutionCourse) executionCourses.get(j))
-	                            .getAssociatedCurricularCourses();
-	
-	                    // Curricular courses
-	                    for (int k = 0; k < associatedCurricularCourses.size(); k++) {
-	                        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
-	                                .newInfoFromDomain((CurricularCourse) associatedCurricularCourses
-	                                        .get(k));
-	
-	                        associatedInfoCurricularCourses.add(infoCurricularCourse);
-	                    }
-	                    infoExecutionCourse
-	                            .setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
 	
 	                    List associatedInfoExams = new ArrayList();
 	                    List associatedExams = ((ExecutionCourse) executionCourses.get(j))
@@ -149,7 +132,7 @@ public class ReadFilteredExamsMapList extends Service {
 	                            }
 	                        }
 	                    }
-	                    infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);
+	                    infoExecutionCourse.setFilteredAssociatedInfoExams(associatedInfoExams);
 	
 	                    infoExecutionCourses.add(infoExecutionCourse);
 	                }

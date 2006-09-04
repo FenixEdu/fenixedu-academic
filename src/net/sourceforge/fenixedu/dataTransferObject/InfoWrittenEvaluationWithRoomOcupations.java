@@ -33,7 +33,7 @@ public class InfoWrittenEvaluationWithRoomOcupations extends InfoWrittenEvaluati
 
             public Object transform(Object arg0) {
                 RoomOccupation roomOccupation = (RoomOccupation) arg0;
-                return InfoRoomOccupationWithInfoRoom.newInfoFromDomain(roomOccupation);
+                return InfoRoomOccupation.newInfoFromDomain(roomOccupation);
             }
         });
 

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -29,7 +29,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         request.setAttribute("weeklyWorkLoadView", executionCourse.getWeeklyWorkLoadView());
 
         final InfoSiteCommon infoSiteCommon = new InfoSiteCommon();
-        infoSiteCommon.setExecutionCourse(InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(executionCourse));
+        infoSiteCommon.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         final ExecutionCourseSiteView executionCourseSiteView = new ExecutionCourseSiteView(infoSiteCommon, null);
         request.setAttribute("siteView", executionCourseSiteView);
 

@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.RoomAlphabeticComparator;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -121,8 +121,6 @@ public class ManageLessonDA extends
         fim.set(Calendar.MINUTE, Integer.parseInt((String) manageLessonForm.get("minutosFim")));
         fim.set(Calendar.SECOND, 0);
 
-        InfoRoom infoSala = new InfoRoom(OldRoom.findOldRoomByName((String) manageLessonForm.get("nomeSala")));
-
         Boolean quinzenal = (Boolean) manageLessonForm.get("quinzenal");
         Integer weekOfQuinzenalStart = null;
         if (quinzenal == null) {
@@ -190,7 +188,7 @@ public class ManageLessonDA extends
             }
 
             Collections.sort(emptyRoomsList, new RoomAlphabeticComparator());
-            List<LabelValueBean> listaSalas = new ArrayList();
+            List<LabelValueBean> listaSalas = new ArrayList<LabelValueBean>();
             for (int i = 0; i < emptyRoomsList.size(); i++) {
                 InfoRoom elem = emptyRoomsList.get(i);
                 listaSalas.add(new LabelValueBean(elem.getNome(), elem.getNome()));
@@ -243,9 +241,9 @@ public class ManageLessonDA extends
 
             InfoShift infoShift = (InfoShift) (request.getAttribute(SessionConstants.SHIFT));
 
-            InfoRoomOccupation infoRoomOccupation = null;
+            InfoRoomOccupationEditor infoRoomOccupation = null;
             if(infoSala != null) {
-                infoRoomOccupation = new InfoRoomOccupation();
+                infoRoomOccupation = new InfoRoomOccupationEditor();
                 infoRoomOccupation.setDayOfWeek(weekDay);
                 infoRoomOccupation.setEndTime(fim);
                 infoRoomOccupation.setStartTime(inicio);
@@ -418,9 +416,9 @@ public class ManageLessonDA extends
         if (actionErrors.isEmpty()) {
             InfoShift infoShift = (InfoShift) (request.getAttribute(SessionConstants.SHIFT));
 
-            InfoRoomOccupation infoRoomOccupation = null;
+            InfoRoomOccupationEditor infoRoomOccupation = null;
             if(infoSala != null) {
-                infoRoomOccupation = new InfoRoomOccupation();
+                infoRoomOccupation = new InfoRoomOccupationEditor();
                 infoRoomOccupation.setDayOfWeek(weekDay);
                 infoRoomOccupation.setEndTime(fim);
                 infoRoomOccupation.setStartTime(inicio);

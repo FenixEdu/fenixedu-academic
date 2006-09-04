@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
@@ -264,10 +265,10 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             executionCourseForm.set("executionCoursesNotLinked", executionCoursesNotLinked);
         }
 
-        InfoExecutionCourse infoExecutionCourse = fillInfoExecutionCourseFromForm(actionForm, request);
+        InfoExecutionCourseEditor infoExecutionCourse = fillInfoExecutionCourseFromForm(actionForm, request);
         Object args[] = { infoExecutionCourse };
         try {
-            infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
+            infoExecutionCourse = (InfoExecutionCourseEditor) ServiceManagerServiceFactory.executeService(
                     userView, "EditExecutionCourseByManager", args);
         } catch (FenixServiceException e) {
             e.printStackTrace();
@@ -372,10 +373,10 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         return parameter;
     }
 
-    private InfoExecutionCourse fillInfoExecutionCourseFromForm(ActionForm actionForm,
+    private InfoExecutionCourseEditor fillInfoExecutionCourseFromForm(ActionForm actionForm,
             HttpServletRequest request) {
 
-        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+        InfoExecutionCourseEditor infoExecutionCourse = new InfoExecutionCourseEditor();
 
         DynaActionForm editExecutionCourseForm = (DynaActionForm) actionForm;
 

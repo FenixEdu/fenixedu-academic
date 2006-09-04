@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -50,7 +51,7 @@ public class ManageExecutionCourseDA extends
 
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
 
-        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+        InfoExecutionCourseEditor infoExecutionCourse = (InfoExecutionCourseEditor) request
                 .getAttribute(SessionConstants.EXECUTION_COURSE);
 
         DynaActionForm editExecutionCourseForm = (DynaActionForm) form;
@@ -65,7 +66,7 @@ public class ManageExecutionCourseDA extends
         infoExecutionCourse.setTutorialOrientationHours(new Double((String) editExecutionCourseForm.get("tutorialOrientationHours")));
 
         Object args[] = { infoExecutionCourse };
-        infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
+        infoExecutionCourse = (InfoExecutionCourseEditor) ServiceManagerServiceFactory.executeService(
                 userView, "EditExecutionCourse", args);
 
         if (infoExecutionCourse != null) {

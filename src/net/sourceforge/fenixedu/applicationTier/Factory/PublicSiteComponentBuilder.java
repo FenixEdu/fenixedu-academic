@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -110,10 +111,10 @@ public class PublicSiteComponentBuilder {
         return component;
     }
 
-    private InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(ExecutionCourse executionCourse) {
-        InfoExecutionCourse infoExecutionCourse = null;
+    private InfoExecutionCourseEditor copyIExecutionCourse2InfoExecutionCourse(ExecutionCourse executionCourse) {
+        InfoExecutionCourseEditor infoExecutionCourse = null;
         if (executionCourse != null) {
-            infoExecutionCourse = new InfoExecutionCourse();
+            infoExecutionCourse = new InfoExecutionCourseEditor();
             infoExecutionCourse.setIdInternal(executionCourse.getIdInternal());
             infoExecutionCourse.setNome(executionCourse.getNome());
             infoExecutionCourse.setSigla(executionCourse.getSigla());

@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.NumberUtils;
 
@@ -68,13 +67,7 @@ public class SearchExecutionCourses extends Service {
                     // Get the occupancy Levels
                     infoExecutionCourse = getOccupancyLevels(arg0);
 
-                    // Check if the curricular Loads are all the
-                    // same
-
-                    checkEqualLoads(arg0, infoExecutionCourse, executionPeriod);
-
                     // fill infomation regarding to teacher report
-
                     getTeacherReportInformation(infoExecutionCourse, arg0);
                 return infoExecutionCourse;
             }
@@ -105,13 +98,6 @@ public class SearchExecutionCourses extends Service {
                     infoSiteEvaluationStatistics.setApproved(new Integer(approved));
 
                     infoExecutionCourse.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
-
-                    CourseReport courseReport = executionCourse.getCourseReport();
-                    if (courseReport != null) {
-                        infoExecutionCourse
-                                .setCourseReportFilled(courseReport.getReport() != null ? "true"
-                                        : "false");
-                    }
                 }
             }
 
@@ -140,27 +126,6 @@ public class SearchExecutionCourses extends Service {
                     }
                 }
                 return new Integer(evaluated);
-            }
-
-            private void checkEqualLoads(Object arg0, InfoExecutionCourse infoExecutionCourse,
-                    ExecutionPeriod executionPeriod) {
-                ExecutionCourse executionCourse = (ExecutionCourse) arg0;
-                infoExecutionCourse.setEqualLoad(Boolean.TRUE.toString());
-
-                Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
-                while (iterator.hasNext()) {
-                    CurricularCourse curricularCourse = (CurricularCourse) iterator.next();
-
-                    if ((!executionCourse.getTheoPratHours().equals(curricularCourse.getTheoPratHours()))
-                            || (!executionCourse.getTheoreticalHours().equals(
-                                    curricularCourse.getTheoreticalHours()))
-                            || (!executionCourse.getPraticalHours().equals(
-                                    curricularCourse.getPraticalHours()))
-                            || (!executionCourse.getLabHours().equals(curricularCourse.getLabHours()))) {
-                        infoExecutionCourse.setEqualLoad(Boolean.FALSE.toString());
-                        break;
-                    }
-                }
             }
 
             private InfoExecutionCourse getOccupancyLevels(Object arg0) {
