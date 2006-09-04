@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import jvstm.CommitException;
+
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 
@@ -213,8 +215,7 @@ class DBChanges {
                 try {
                     stmt.execute(sqlCmd.toString());
                 } catch (SQLException ex) {
-                    System.out.println(sqlCmd.toString());
-                    throw ex;
+                    throw new CommitException();
                 }
 	    }
 	}
