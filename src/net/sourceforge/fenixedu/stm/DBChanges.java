@@ -215,6 +215,7 @@ class DBChanges {
                 try {
                     stmt.execute(sqlCmd.toString());
                 } catch (SQLException ex) {
+                    System.out.println("SqlException: " + ex.getMessage());
                     throw new CommitException();
                 }
 	    }
