@@ -18,6 +18,14 @@
     </html:link> &gt;
 </logic:iterate>
 
+<!-- error message -->
+
+<logic:messagesPresent message="true">
+    <html:messages id="error" message="true" bundle="FUNCTIONALITY_RESOURCES">
+        <bean:write name="error"/>
+    </html:messages>
+</logic:messagesPresent>
+
 <fr:view name="module" property="name"/>
 
 <!-- ======================

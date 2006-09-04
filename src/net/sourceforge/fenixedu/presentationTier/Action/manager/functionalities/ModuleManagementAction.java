@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
+import net.sourceforge.fenixedu.domain.functionalities.exceptions.PublicPathConflictException;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 
 import pt.ist.utl.fenix.utils.Pair;
 
@@ -65,8 +68,13 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
         // structure =~ "([0-9]+-[0-9]+,)+" 
         // each repeating block is a pair with <initial position of child>-<initial position of parent>
         // meaning that child is now a child of parent.
-        updateStructure(getTreeRoots(module), structure);
-        
+        try {
+            updateStructure(getTreeRoots(module), structure);
+        }
+        catch (PublicPathConflictException e) {
+            processException(request, mapping, null, e);
+        }
+
         return viewModule(module, mapping, actionForm, request, response);
     }
     

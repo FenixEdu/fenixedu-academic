@@ -172,15 +172,19 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         saveMessages(request, messages);
 
         IViewState viewState = RenderUtils.getViewState();
-        ViewDestination destination = viewState.getDestination("exception");
-        if (destination != null) {
-            return destination.getActionForward();
-        } else {
-            // show exception in output to ease finding the problem when
-            // messages are not shown in page
-            e.printStackTrace();
-            return input;
+        
+        if (viewState != null) {
+            ViewDestination destination = viewState.getDestination("exception");
+            
+            if (destination != null) {
+                return destination.getActionForward();
+            } 
         }
+        
+        // show exception in output to ease finding the problem when
+        // messages are not shown in page
+        e.printStackTrace();
+        return input;
     }
 
     protected Object executeFactoryMethod(final HttpServletRequest request) throws FenixFilterException,

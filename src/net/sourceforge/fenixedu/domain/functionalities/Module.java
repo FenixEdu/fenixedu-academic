@@ -27,6 +27,7 @@ public class Module extends Module_Base {
         ModuleHasSubModules.addListener(new ModuleIsFunctionalityListener());
         ModuleAggregatesFunctionalities.addListener(new SomeFunctionalitiesAreModulesListener());
         ModuleAggregatesFunctionalities.addListener(new FunctionalitiesHaveAnOrderListener());
+        ModuleAggregatesFunctionalities.addListener(new PublicPathChangeListener());
     }
 
     /**
@@ -53,6 +54,7 @@ public class Module extends Module_Base {
         }
 
         super.setPrefix(prefix);
+        Functionality.checkPublicPath();
     }
 
     /**
@@ -115,7 +117,7 @@ public class Module extends Module_Base {
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -296,6 +298,30 @@ public class Module extends Module_Base {
 
             functionality.setOrderInModule(Integer.MAX_VALUE); // ensures last
             pack(self);
+        }
+
+    }
+
+    /**
+     * This listener forces the public path conflict check to happen whenever
+     * there is a change in the module structure.
+     * 
+     * @author cfgi
+     */
+    private static class PublicPathChangeListener extends RelationAdapter<Module, Functionality> {
+
+        @Override
+        public void afterAdd(Module self, Functionality functionality) {
+            super.afterAdd(self, functionality);
+
+            Functionality.checkPublicPath();
+        }
+
+        @Override
+        public void afterRemove(Module self, Functionality functionality) {
+            super.afterRemove(self, functionality);
+
+            Functionality.checkPublicPath();
         }
 
     }

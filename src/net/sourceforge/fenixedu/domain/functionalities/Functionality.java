@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality.Movement;
@@ -13,6 +15,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
 import net.sourceforge.fenixedu.domain.functionalities.exceptions.IllegalOrderInModuleException;
+import net.sourceforge.fenixedu.domain.functionalities.exceptions.PublicPathConflictException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import pt.ist.utl.fenix.utils.Pair;
@@ -61,16 +64,12 @@ public abstract class Functionality extends Functionality_Base {
     }
 
     /**
-     * Creates a new functionality ensuring that the name and the path are not
-     * empty.
+     * Creates a new functionality ensuring that the name is not empty.
      * 
      * @see #setName()
-     * @see #setPath()
      */
     public Functionality(MultiLanguageString name) {
         this();
-
-        setName(name);
     }
 
     /**
@@ -90,11 +89,49 @@ public abstract class Functionality extends Functionality_Base {
     }
 
     @Override
+    public void setPath(String path) {
+        super.setPath(path);
+        
+        Functionality.checkPublicPath();
+    }
+
+    @Override
+    public void setRelative(Boolean relative) {
+        super.setRelative(relative);
+
+        Functionality.checkPublicPath();
+    }
+
+    /**
+     * Checks that the public of this functionality does not conflict with the
+     * public path of other functionalities.
+     * 
+     * @exception PublicPathConflictException
+     *                when the public path of this functionality conflicts with
+     *                the public path of another functionality, that is, when
+     *                there are two public paths that are equal
+     */
+    public static void checkPublicPath() {
+        Set<String> paths = new HashSet<String>();
+
+        for (Functionality functionality : RootDomainObject.getInstance().getFunctionalities()) {
+            String publicPath = functionality.getPublicPath();
+            
+            if (publicPath == null) {
+                continue;
+            }
+
+            if (! paths.add(publicPath)) {
+                throw new PublicPathConflictException(publicPath);
+            }
+        }
+    }
+
+    @Override
     public void setDescription(MultiLanguageString description) {
         if (description == null || description.isEmpty()) {
             super.setDescription(null);
-        }
-        else {
+        } else {
             super.setDescription(description);
         }
     }
@@ -103,8 +140,7 @@ public abstract class Functionality extends Functionality_Base {
     public void setTitle(MultiLanguageString title) {
         if (title == null || title.isEmpty()) {
             super.setTitle(null);
-        }
-        else {
+        } else {
             super.setTitle(title);
         }
     }
@@ -702,6 +738,10 @@ public abstract class Functionality extends Functionality_Base {
     public static List<Functionality> getOrderedTopLevelFunctionalities() {
         return sort(getTopLevelFunctionalities());
     }
+
+    //
+    // Auxiliary methods
+    //
 
     /**
      * Auxiliary method that invokes the real service that will delete the

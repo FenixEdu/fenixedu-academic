@@ -4,6 +4,14 @@
 
 <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/> //
 
+<!-- error message -->
+
+<logic:messagesPresent message="true">
+    <html:messages id="error" message="true" bundle="FUNCTIONALITY_RESOURCES">
+        <bean:write name="error"/>
+    </html:messages>
+</logic:messagesPresent>
+
 <!-- form used to submit the tree structure 
      search for: saveTree()
   -->

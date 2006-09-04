@@ -19,6 +19,14 @@
     <fr:view name="functionality" property="name"/>
 </html:link>
 
+<!-- error message -->
+
+<logic:messagesPresent message="true">
+    <html:messages id="error" message="true" bundle="FUNCTIONALITY_RESOURCES">
+        <bean:write name="error"/>
+    </html:messages>
+</logic:messagesPresent>
+
 <bean:define id="id" name="functionality" property="idInternal"/>
 
 <fr:edit name="functionality" layout="tabular" 

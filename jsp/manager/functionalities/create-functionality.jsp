@@ -16,6 +16,14 @@
     </html:link> &gt;
 </logic:iterate>
 
+<!-- error message -->
+
+<logic:messagesPresent message="true">
+    <html:messages id="error" message="true" bundle="FUNCTIONALITY_RESOURCES">
+        <bean:write name="error"/>
+    </html:messages>
+</logic:messagesPresent>
+
 <bean:define id="id" name="module" property="idInternal"/>
 
 <fr:create type="net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality" 
