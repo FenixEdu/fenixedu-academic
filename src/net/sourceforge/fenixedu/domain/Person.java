@@ -209,13 +209,15 @@ public class Person extends Person_Base {
     }
 
     public void editPersonalContactInformation(InfoPersonEditor personToEdit) {
-        setMobile(personToEdit.getTelemovel());
-        setWorkPhone(personToEdit.getWorkPhone());
-        setEmail(personToEdit.getEmail());
-        setAvailableEmail(personToEdit.getAvailableEmail());
-        setWebAddress(personToEdit.getEnderecoWeb());
-        setAvailableWebSite(personToEdit.getAvailableWebSite());
-        setAvailablePhoto(personToEdit.getAvailablePhoto());
+        if (personToEdit != null) {
+            setMobile(personToEdit.getTelemovel());
+            setWorkPhone(personToEdit.getWorkPhone());
+            setEmail(personToEdit.getEmail());
+            setAvailableEmail(personToEdit.getAvailableEmail());
+            setWebAddress(personToEdit.getEnderecoWeb());
+            setAvailableWebSite(personToEdit.getAvailableWebSite());
+            setAvailablePhoto(personToEdit.getAvailablePhoto());
+        }
     }
 
     public void edit(String name, String address, String phone, String mobile, String homepage,
