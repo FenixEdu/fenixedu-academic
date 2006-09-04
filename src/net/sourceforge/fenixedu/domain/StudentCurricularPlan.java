@@ -220,7 +220,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return setOfCurricularCoursesToEnroll;
     }
 
-    private void initEctsCreditsToEnrol(List<CurricularCourse2Enroll> setOfCurricularCoursesToEnroll,
+    public void initEctsCreditsToEnrol(List<CurricularCourse2Enroll> setOfCurricularCoursesToEnroll,
 	    ExecutionPeriod executionPeriod) {
 	for (CurricularCourse2Enroll curricularCourse2Enroll : setOfCurricularCoursesToEnroll) {
 	    curricularCourse2Enroll.setEctsCredits(this.getEctsCredits(curricularCourse2Enroll
