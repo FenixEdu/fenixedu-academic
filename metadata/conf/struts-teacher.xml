@@ -192,9 +192,10 @@
         </form-bean>
         
         <!-- Summaries Management -->
-        <form-bean name="summariesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">            	
-            <form-property name="shift" type="java.lang.String" initial=""/>                    
-            <form-property name="executionCourseID" type="java.lang.String" initial=""/>                    
+        <form-bean name="summariesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">            	            
+            <form-property name="teacher" type="java.lang.String" initial=""/>
+            <form-property name="teacherName" type="java.lang.String" initial=""/>
+            <form-property name="teacherNumber" type="java.lang.String" initial=""/>            
         </form-bean>
         
         <!-- evaluation form-->
@@ -855,14 +856,7 @@
 				dynamic="true">
 	   		<form-property name="method" type="java.lang.String"/>
 	   		<form-property name="executionCourseID" type="java.lang.Integer"/>
-		</form-bean>
-	
-		<form-bean name="manageExecutionCourseForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-				dynamic="true">
-	   		<form-property name="shiftID" type="java.lang.String"/>
-	   		<form-property name="executionCourseID" type="java.lang.String"/>
-		</form-bean>
+		</form-bean>		
 						
     </form-beans>
 
@@ -970,8 +964,7 @@
         </action>
         <action path="/manageExecutionCourse"
         		parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA"
-				name="manageExecutionCourseForm">				
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">				
 			<forward name="instructions" path="manage-execution-course-instructions"/>
 			<forward name="program" path="manage-execution-course-program"/>
 			<forward name="objectives" path="manage-execution-course-objectives"/>
@@ -1357,7 +1350,8 @@
             scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SummariesManagementDA" 
             validate="true" >
-            <forward name="prepareInsertSummary" path="prepare-insert-summary" />           
+            <forward name="prepareInsertSummary" path="prepare-insert-summary" />
+            <forward name="showSummaries" path="/showSummaries.do?method=showSummaries" />           
         </action>	
 
         <!-- Actions For Groups -->

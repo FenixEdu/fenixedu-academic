@@ -49,6 +49,10 @@ public class DiaSemana extends FenixUtil {
     public void setDiaSemana(Integer diaSemana) {
         this._diaSemana = diaSemana;
     }
+    
+    public String getDiaSemanaString() {
+        return toString();
+    }
 
     public boolean equals(Object obj) {
         boolean resultado = false;

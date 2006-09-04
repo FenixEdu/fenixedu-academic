@@ -554,7 +554,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             } else
                 summaryForm.set("summaryText", request.getAttribute("summaryTextFlag"));
                         
-            boolean loggedIsResponsible = (userView.getPerson().getTeacher().responsibleFor(executionCourse) != null);
+            boolean loggedIsResponsible = (userView.getPerson().getTeacher().isResponsibleFor(executionCourse) != null);
             request.setAttribute("loggedIsResponsible", new Boolean(loggedIsResponsible));
 
             if (!loggedIsResponsible) {

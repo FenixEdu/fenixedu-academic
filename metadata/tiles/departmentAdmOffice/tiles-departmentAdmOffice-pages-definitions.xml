@@ -327,5 +327,9 @@
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses.jsp"/>
 	</definition>
 
+	<!-- ==== Summaries Management === -->
+	<definition name="prepare-insert-summary" extends="definition.teacher.summaryPage">
+		<put name="body" value="/departmentAdmOffice/teacher/createSummary.jsp" />
+	</definition>		
 
 </tiles-definitions>

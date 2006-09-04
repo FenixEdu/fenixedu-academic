@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +27,6 @@ import net.sourceforge.fenixedu.domain.FileItem;
 import net.sourceforge.fenixedu.domain.FileItemPermittedGroupType;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Language;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -45,7 +43,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionError;
@@ -57,7 +54,6 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
-import org.apache.struts.util.LabelValueBean;
 
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
@@ -298,7 +294,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
         final Teacher teacher = getUserView(request).getPerson().getTeacher();
-        if (teacher.responsibleFor(executionCourse) == null) {
+        if (teacher.isResponsibleFor(executionCourse) == null) {
             ActionMessages messages = new ActionMessages();
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
             saveErrors(request, messages);
@@ -348,7 +344,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
         final Teacher teacher = getUserView(request).getPerson().getTeacher();
-        if (teacher.responsibleFor(executionCourse) == null) {
+        if (teacher.isResponsibleFor(executionCourse) == null) {
             ActionMessages messages = new ActionMessages();
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
             saveErrors(request, messages);
@@ -575,56 +571,51 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	importContent(request, "ImportBibliographicReferences");
         return mapping.findForward("bibliographicReference");
     }     
-
     
     // LESSON PLANNINGS
-
-    public ActionForward listExecutionCoursesToImportLessonPlannings(ActionMapping mapping,
+    public ActionForward submitDataToImportLessonPlannings(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
-        final IViewState viewState = RenderUtils.getViewState("importLessonPlanningBean");
+        final IViewState viewState = RenderUtils.getViewState();
         final ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) viewState.getMetaObject().getObject();        
         request.setAttribute("importLessonPlanningBean", bean);
         return mapping.findForward("importLessonPlannings");
     }
     
-    public ActionForward prepareImportLessonPlanningsPostBack(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {    
-        
-        IViewState viewState = RenderUtils.getViewState("importLessonPlanningBean");        
-        final ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) viewState.getMetaObject().getObject();                        
-        RenderUtils.invalidateViewState();        
-        request.setAttribute("importLessonPlanningBean", bean);        
-        return mapping.findForward("importLessonPlannings");
-    }
-    
-    public ActionForward prepareImportLessonPlanningsInvalid(ActionMapping mapping,
+    public ActionForward chooseExecutionPeriodToImportLessonPlannings(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
-        IViewState viewState = RenderUtils.getViewState("importLessonPlanningBeanWithExecutionCourse");
-        viewState = (viewState == null) ? RenderUtils.getViewState("importLessonPlanningBean") : viewState;
-        final ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) viewState.getMetaObject().getObject();  
-        request.setAttribute("importLessonPlanningBean", bean);        
+        final IViewState viewState = RenderUtils.getViewState();
+        final ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) viewState.getMetaObject().getObject();
+        if(bean.getCurricularYear() == null || bean.getExecutionPeriod() == null || bean.getExecutionDegree() == null) {
+            bean.setExecutionCourse(null);
+            bean.setImportType(null);
+            bean.setShift(null);
+        }
+        RenderUtils.invalidateViewState();
+        request.setAttribute("importLessonPlanningBean", bean);
         return mapping.findForward("importLessonPlannings");
     }
-    
+           
     public ActionForward prepareImportLessonPlannings(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
           
-        request.setAttribute("importLessonPlanningBean", new ImportLessonPlanningsBean());        
+        final ExecutionCourse executionCourseTo = (ExecutionCourse) request.getAttribute("executionCourse");        
+        request.setAttribute("importLessonPlanningBean", new ImportLessonPlanningsBean(executionCourseTo));        
         return mapping.findForward("importLessonPlannings");
     }
     
     public ActionForward importLessonPlannings(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
      
-        final ExecutionCourse executionCourseTo = (ExecutionCourse) request.getAttribute("executionCourse");
-        final IViewState viewState = RenderUtils.getViewState("importLessonPlanningBeanWithExecutionCourse");
+        final IViewState viewState = RenderUtils.getViewState();
         ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) viewState.getMetaObject().getObject();                
         request.setAttribute("importLessonPlanningBean", bean);
         
         ExecutionCourse executionCourseFrom = bean.getExecutionCourse();
-        ImportType importType = bean.getImportType();                          
+        ExecutionCourse executionCourseTo = bean.getExecutionCourseTo();
+        ImportType importType = bean.getImportType();                   
+        
         if(importType != null && importType.equals(ImportLessonPlanningsBean.ImportType.PLANNING)) {
             final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null};
             try {
@@ -632,67 +623,33 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
             }
-        } else if(importType.equals(ImportLessonPlanningsBean.ImportType.SUMMARIES)) {
-            readAndSaveExecutionCourseShifts(request, executionCourseFrom, executionCourseTo);  
+        } else if(importType != null && importType.equals(ImportLessonPlanningsBean.ImportType.SUMMARIES)) {        
             return mapping.findForward("importLessonPlannings");
         }
+        
         return lessonPlannings(mapping, form, request, response);
     }     
        
     public ActionForward importLessonPlanningsBySummaries(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-                        
-        Shift shiftFrom = rootDomainObject.readShiftByOID(Integer.valueOf(request.getParameter("shiftID")));
-        final ExecutionCourse executionCourseTo = (ExecutionCourse) request.getAttribute("executionCourse");            
+                       
+        final IViewState viewState = RenderUtils.getViewState();
+        ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) viewState.getMetaObject().getObject();                
+               
+        ExecutionCourse executionCourseTo = bean.getExecutionCourseTo();
+        Shift shiftFrom = bean.getShift();  
+        
         final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, shiftFrom.getDisciplinaExecucao(), shiftFrom};
         try {
             ServiceManagerServiceFactory.executeService(getUserView(request), "ImportLessonPlanning", args);
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
-        }        
+        }
+       
+        request.setAttribute("importLessonPlanningBean", bean);
         return lessonPlannings(mapping, form, request, response);
     }
-    
-    private void readAndSaveExecutionCourseShifts(HttpServletRequest request,
-            ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
         
-        Set<LabelValueBean> shiftsBean = new TreeSet<LabelValueBean>();
-        Set<ShiftType> shiftTypes = executionCourseTo.getShiftTypes();        
-        Set<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
-        shifts.addAll(executionCourseFrom.getAssociatedShiftsSet());        
-        for (Shift shift : executionCourseFrom.getAssociatedShiftsSet()) {
-            if (shiftTypes.contains(shift.getTipo())) {
-                final StringBuilder lessonsLabel = new StringBuilder();
-                int index = 0;
-                for (Lesson lesson : shift.getAssociatedLessonsSet()) {
-                    index++;
-                    lessonsLabel.append(lesson.getDiaSemana().toString());
-                    lessonsLabel.append(" (");
-                    lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getInicio().getTime()));
-                    lessonsLabel.append("-");
-                    lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime()));
-                    lessonsLabel.append(") ");
-                    if (lesson.getSala() != null) {
-                        lessonsLabel.append(lesson.getSala().getNome().toString());
-                    }
-                    lessonsLabel.append(" - " + RenderUtils.getEnumString(lesson.getTipo(), null));
-                    if (index < shift.getAssociatedLessonsCount()) {
-                        lessonsLabel.append(" , ");
-                    } else {
-                        lessonsLabel.append(" ");
-                    }
-                }
-                LabelValueBean shiftLabelValueBean = new LabelValueBean(lessonsLabel.toString(), shift
-                        .getIdInternal().toString());
-                shiftsBean.add(shiftLabelValueBean);
-            }
-        }
-        request.setAttribute("shifts", shiftsBean);
-        if(shifts.isEmpty()) {
-            request.setAttribute("noShifts", true);
-        }
-    }
-    
     public ActionForward lessonPlannings(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         
@@ -758,7 +715,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward createLessonPlanning(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
                
-        IViewState viewState = RenderUtils.getViewState("lessonPlanningBeanID");       
+        IViewState viewState = RenderUtils.getViewState();       
         final CreateLessonPlanningBean lessonPlanningBean = (CreateLessonPlanningBean) viewState.getMetaObject().getObject();
         final Object args[] = { lessonPlanningBean.getExecutionCourse().getIdInternal(), lessonPlanningBean.getTitle(), 
                 lessonPlanningBean.getPlanning(), lessonPlanningBean.getLessonType(), lessonPlanningBean.getExecutionCourse()};

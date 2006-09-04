@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
+import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Summary;
@@ -302,6 +303,8 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         if (arguments[1] instanceof InfoSummary) {
             infoSummary = (InfoSummary) arguments[1];
             summary = rootDomainObject.readSummaryByOID(infoSummary.getIdInternal());
+        } else if (arguments[1] instanceof SummariesManagementBean) {
+            summary = ((SummariesManagementBean)arguments[1]).getSummary();
         } else {
             summary = rootDomainObject.readSummaryByOID((Integer) arguments[1]);
         }

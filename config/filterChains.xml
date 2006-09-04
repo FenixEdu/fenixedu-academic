@@ -1076,4 +1076,18 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>ExecutionCourseAndSummaryLecturingTeacherAndDepartmentAdministrativeOfficeAuthorization</name>
+        <expression>ExecutionCourseAndSummaryLecturingTeacherAuthorization || DepartmentAdministrativeOfficeAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
+        <name>ExecutionCourseLecturingTeacherAndDepartmentAdministrativeOfficeAuthorization</name>
+        <expression>ExecutionCourseLecturingTeacherAuthorization || DepartmentAdministrativeOfficeAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 </filterChainsDefinitions>

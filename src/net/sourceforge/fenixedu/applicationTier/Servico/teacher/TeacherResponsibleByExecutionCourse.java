@@ -22,7 +22,7 @@ public class TeacherResponsibleByExecutionCourse extends Service {
             throws ExcepcaoPersistencia {
         final Teacher teacher = Teacher.readTeacherByUsername(teacherUserName);
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-        return teacher.responsibleFor(executionCourse) != null;
+        return teacher.isResponsibleFor(executionCourse) != null;
     }
 
     private boolean CurricularCourseNotBasic(Integer curricularCourseCode) throws ExcepcaoPersistencia {

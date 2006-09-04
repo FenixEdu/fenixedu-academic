@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -104,37 +106,7 @@ public class Shift extends Shift_Base {
             schoolClass.getAssociatedShifts().add(this);
         }
     }
-
-    public void transferSummary(Summary summary, Date summaryDate, Date summaryHour, OldRoom room, boolean newSummary) {
-        if(newSummary){
-            checkIfSummaryExistFor(summaryDate, summaryHour);
-        }
-        summary.modifyShift(this, summaryDate, summaryHour, room);
-    }
-
-    private void checkIfSummaryExistFor(final Date summaryDate, final Date summaryHour) {
-        final Iterator associatedSummaries = getAssociatedSummariesIterator();
-        Date summaryDateAux = prepareDate(summaryDate);               
-        while (associatedSummaries.hasNext()) {
-            Summary summary = (Summary) associatedSummaries.next();
-            Date iterSummaryDate = prepareDate(summary.getSummaryDate());
-            if (iterSummaryDate.equals(summaryDateAux)
-                    && summary.getSummaryHour().equals(summaryHour)) {
-                throw new DomainException("error.summary.already.exists");
-            }
-        }
-    }
-  
-    private Date prepareDate(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTime();
-    }
-    
+            
     public Double getAvailableShiftPercentageForTeacher(Teacher teacher) {
         Double availablePercentage = 100.0;
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
@@ -173,4 +145,66 @@ public class Shift extends Shift_Base {
             return false;
         }
     }
+    
+    public Lesson getLessonByBeginTime(HourMinuteSecond time) {
+        for (Lesson lesson : getAssociatedLessonsSet()) {
+            if(lesson.getBeginHourMinuteSecond().isEqual(time)) {
+                return lesson;
+            }
+        }
+        return null;
+    }
+    
+    //OLD FUNCTIONS    
+    public void transferSummary(Summary summary, Date summaryDate, Date summaryHour, OldRoom room, boolean newSummary) {
+        if(newSummary){
+            checkIfSummaryExistFor(summaryDate, summaryHour);
+        }
+        summary.modifyShift(this, summaryDate, summaryHour, room);
+    }
+
+    private void checkIfSummaryExistFor(final Date summaryDate, final Date summaryHour) {
+        final Iterator associatedSummaries = getAssociatedSummariesIterator();
+        Date summaryDateAux = prepareDate(summaryDate);               
+        while (associatedSummaries.hasNext()) {
+            Summary summary = (Summary) associatedSummaries.next();
+            Date iterSummaryDate = prepareDate(summary.getSummaryDate());
+            if (iterSummaryDate.equals(summaryDateAux)
+                    && summary.getSummaryHour().equals(summaryHour)) {
+                throw new DomainException("error.summary.already.exists");
+            }
+        }
+    }
+  
+    private Date prepareDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    } 
+    
+    public String getShiftLabel() {
+        final StringBuilder lessonsLabel = new StringBuilder();
+        int index = 0;
+        for (Lesson lesson : getAssociatedLessonsSet()) {
+            index++;
+            lessonsLabel.append(lesson.getDiaSemana().toString()).append(" (");
+            lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getInicio().getTime()))
+                    .append("-");
+            lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime())).append(") ");
+            if (lesson.getSala() != null) {
+                lessonsLabel.append(lesson.getSala().getName().toString());
+            }
+            if (index < getAssociatedLessonsCount()) {
+                lessonsLabel.append(" , ");
+            } else {
+                lessonsLabel.append(" ");
+            }
+        }
+        return lessonsLabel.toString();
+    }
+    
 }

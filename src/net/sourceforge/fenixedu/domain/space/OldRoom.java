@@ -1,11 +1,15 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -19,6 +23,8 @@ import net.sourceforge.fenixedu.util.TipoSala;
 
 public class OldRoom extends OldRoom_Base {
 
+    public static final Comparator OLD_ROOM_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
+    
     public OldRoom() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());

@@ -2824,12 +2824,12 @@ class net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion extends ne
 class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer studentsNumber;
 	Integer keyProfessorship;
-	String title;
+	MultiLanguageString title;
+	MultiLanguageString summaryText;
 	Integer keyExecutionCourse;
 	Integer keyTeacher;
 	Integer keyRoom;
 	String teacherName;
-	String summaryText;
 	DateTime lastModifiedDateDateTime;
 	Integer keyShift;
 	Boolean isExtraLesson;

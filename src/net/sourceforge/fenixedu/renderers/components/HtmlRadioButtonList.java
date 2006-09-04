@@ -165,7 +165,7 @@ public class HtmlRadioButtonList extends HtmlSimpleValueComponent {
         this.list.setVisible(visible);
     }
 
-    protected List<HtmlRadioButton> getRadioButtons() {
+    public List<HtmlRadioButton> getRadioButtons() {
         return this.radioButtons;
     }
 

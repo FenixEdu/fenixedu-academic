@@ -408,9 +408,16 @@
 			<form-property name="courseName" type="java.lang.String"/>
 			<form-property name="degreeCurricularPlan" type="java.lang.Integer"/>
 		</form-bean>
-		
+						
 		<form-bean name="globalTeacherServiceDistributionValuationForm" type="net.sourceforge.fenixedu.presentationTier.formbeans.teacherServiceDistribution.GlobalTeacherServiceDistributionValuationForm"/>				  		  
 
+		<!-- Summaries Management -->
+        <form-bean name="summariesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">            	
+            <form-property name="teacher" type="java.lang.String" initial=""/>
+            <form-property name="teacherName" type="java.lang.String" initial=""/>
+            <form-property name="teacherNumber" type="java.lang.String" initial=""/>            
+        </form-bean>
+        
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -609,6 +616,17 @@
             <forward name="insertSummary" path="insertSummary" />
             <forward name="editSummary" path="editSummary" />
         </action>
+         
+        <!-- Summaries Management -->
+		<action path="/summariesManagement" 
+		    name="summariesManagementForm"
+            parameter="method" 
+            scope="request" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SummariesManagementDA" 
+            validate="true" >
+            <forward name="prepareInsertSummary" path="prepare-insert-summary" />
+            <forward name="showSummaries" path="/showSummaries.do?method=showSummaries" />           
+        </action>	       
                 
         <!-- ======================================================================== -->
         <!-- =======  USE CASE : Edit Teacher execution course professor ship =========== -->
@@ -996,6 +1014,7 @@
     <message-resources parameter="resources.DepartmentAdmOfficeResources" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>    
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

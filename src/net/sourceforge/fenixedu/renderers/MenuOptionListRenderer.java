@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenu;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenuOption;
+import net.sourceforge.fenixedu.renderers.components.converters.BiDirectionalConverter;
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
@@ -204,8 +205,7 @@ public class MenuOptionListRenderer extends InputRenderer {
     
     protected Converter getConverter() {
         DataProvider provider = getProvider();
-        
-        return provider.getConverter();
+        return provider == null ? null : provider.getConverter();
     }
     
     protected Collection getPossibleObjects() {
@@ -250,8 +250,7 @@ public class MenuOptionListRenderer extends InputRenderer {
             if (hasSavedPossibleMetaObjects()) {
                 possibleMetaObjects = getPossibleMetaObjects();
             } else {
-                possibleMetaObjects = new ArrayList<MetaObject>();
-                
+                possibleMetaObjects = new ArrayList<MetaObject>();                
                 for (Object possibility : getPossibleObjects()) {
                     possibleMetaObjects.add(MetaObjectFactory.createObject(possibility, schema));
                 }
@@ -259,10 +258,13 @@ public class MenuOptionListRenderer extends InputRenderer {
             
             for (MetaObject metaObject : possibleMetaObjects) {
                 Object obj = metaObject.getObject();
-                MetaObjectKey key = metaObject.getKey();
-
                 HtmlMenuOption option = menu.createOption(null);
-                option.setValue(key.toString());
+                if (getConverter() instanceof BiDirectionalConverter) {
+                    option.setValue(((BiDirectionalConverter) getConverter()).deserialize(obj)); 
+                } else {
+                    MetaObjectKey key = metaObject.getKey();
+                    option.setValue(key.toString());
+                }
 
                 if (getEachLayout() == null) {
                     option.setText(getObjectLabel(obj));
@@ -272,16 +274,21 @@ public class MenuOptionListRenderer extends InputRenderer {
                     newContext.setLayout(getEachLayout());
                     newContext.setRenderMode(RenderMode.getMode("output"));
                     
-                    HtmlComponent component = kit.render(newContext, obj);
-                    
+                    HtmlComponent component = kit.render(newContext, obj);                    
                     option.setBody(component);
                 }
 
                 // select the option
                 if (provider != null) {
-                    final Object convertedObject = provider.getConverter().convert(type, key.toString());
+                    final Object convertedObject;
+                    if (getConverter() instanceof BiDirectionalConverter) {
+                        convertedObject = obj;
+                    } else {
+                        MetaObjectKey key = metaObject.getKey();
+                        convertedObject = provider.getConverter().convert(type, key.toString());                        
+                    }
                     if (convertedObject.equals(object)) {
-                	option.setSelected(true);
+                        option.setSelected(true);
                     }
                 }
                 if (obj.equals(object)) {

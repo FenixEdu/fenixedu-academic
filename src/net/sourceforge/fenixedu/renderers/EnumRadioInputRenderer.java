@@ -48,10 +48,10 @@ public class EnumRadioInputRenderer extends EnumInputRenderer {
                     newContext.setRenderMode(RenderMode.getMode("output"));
                     
                     HtmlComponent component = RenderKit.getInstance().render(newContext, oneEnum);
-                    HtmlRadioButton button = radioList.addOption(component, oneEnum.toString());
-                    
+                    HtmlRadioButton radioButton = radioList.addOption(component, oneEnum.toString());
+                                       
                     if (oneEnum.equals(enumerate)) {
-                        button.setChecked(true);
+                        radioButton.setChecked(true);
                     }
                 }
                 

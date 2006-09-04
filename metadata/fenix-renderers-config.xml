@@ -278,16 +278,24 @@ Documentation:
     <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
           The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
     <renderer mode="input" type="java.lang.Boolean" layout="radio" class="net.sourceforge.fenixedu.renderers.BooleanRadioInputRenderer"/>
+    <renderer mode="input" type="java.lang.Boolean" layout="radio-postback" class="net.sourceforge.fenixedu.renderers.BooleanRadioInputRendererWithPostBack"/>    
+    
     <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
           The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
     <renderer mode="input" type="boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
     
     <!--@ The default input layout for an enumeration presents an html menu with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->
-    <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>      
+    <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/> 
+    <!--@ The input layout for an enumeration presents radio buttons with all the values of the enumeration
+          as options. The option labels are fetched from the resources using the enum name as key.  -->     
     <renderer mode="input" type="java.lang.Enum" layout="radio" class="net.sourceforge.fenixedu.renderers.EnumRadioInputRenderer">
     	<property name="style" value="list-style:none"/>
     </renderer>
+    <!--@ The input layout (with postback) for an enumeration presents radio buttons with all the values of the enumeration
+          as options. The option labels are fetched from the resources using the enum name as key. -->     
+    <renderer mode="input" type="java.lang.Enum" layout="radio-postback" class="net.sourceforge.fenixedu.presentationTier.renderers.EnumRadioInputRendererWithPostBack"/>
+
     <renderer mode="input" type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateInputRenderer"/>
     <renderer mode="input" type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeInputRenderer"/>
 
@@ -314,6 +322,12 @@ Documentation:
 		<property name="hour" value="true"/>
 		<property name="minute" value="true"/>
 		<property name="second" value="true"/>
+	</renderer>
+	
+	<!--@ The default layout for a TimeOfDay automatically includes the hour, minute, and second in the partial -->
+	<renderer mode="input" type="org.joda.time.Partial" layout="hour-minute" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+		<property name="hour" value="true"/>
+		<property name="minute" value="true"/>
 	</renderer>
 	
 	<!--@ The default layout for a YearMonthDay automatically includes the hour, minute, and second in the partial -->

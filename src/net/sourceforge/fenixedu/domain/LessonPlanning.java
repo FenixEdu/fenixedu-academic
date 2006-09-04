@@ -4,10 +4,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.lang.StringUtils;
 
 public class LessonPlanning extends LessonPlanning_Base {
     
@@ -66,10 +66,10 @@ public class LessonPlanning extends LessonPlanning_Base {
     }
     
     private void checkParameters(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType, ExecutionCourse executionCourse) {
-        if(StringUtils.isEmpty(title.getContent())) {
+        if(title == null || title.getAllContents().isEmpty()) {
             throw new DomainException("error.LessonPlanning.no.title");
         }
-        if(StringUtils.isEmpty(planning.getContent())) {
+        if(planning == null || planning.getAllContents().isEmpty()) {
             throw new DomainException("error.LessonPlanning.no.planning");
         }
         if(lessonType == null) {
@@ -78,5 +78,12 @@ public class LessonPlanning extends LessonPlanning_Base {
         if(executionCourse == null) {
             throw new DomainException("error.LessonPlanning.no.executionCourse");
         }       
+    }
+    
+    public String getLessonPlanningLabel() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Aula ").append(getOrderOfPlanning()).append(" (").
+            append(RenderUtils.getEnumString(getLessonType(), null)).append(")");
+        return builder.toString();
     }
 }

@@ -9,10 +9,21 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean.SummaryType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Partial;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author Jo�o Mota
@@ -23,19 +34,114 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class Summary extends Summary_Base {
 
-	public static final Comparator<Summary> COMPARATOR_BY_DATE_AND_HOUR = new ComparatorChain();
-	static {
-		((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("summaryDateYearMonthDay"), true);
-		((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("summaryHourHourMinuteSecond"), true);
-		((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("idInternal"));
-	}
+    public static final Comparator<Summary> COMPARATOR_BY_DATE_AND_HOUR = new ComparatorChain();
+    static {
+        ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator(
+                "summaryDateYearMonthDay"), true);
+        ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator(
+                "summaryHourHourMinuteSecond"), true);
+        ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("idInternal"));
+    }
 
     public Summary() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public boolean compareTo(Object obj) {
+    public Summary(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
+            Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher,
+            Shift shift, Lesson lesson, YearMonthDay date, OldRoom room, Partial hour) {
+
+        this();
+        setInfoToSummary(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName,
+                teacher, shift, lesson, date, room, hour);
+    }
+
+    public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
+            Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher,
+            Shift shift, Lesson lesson, YearMonthDay date, OldRoom room, Partial hour) {
+
+        setInfoToSummary(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName,
+                teacher, shift, lesson, date, room, hour);
+    }
+
+    private void setInfoToSummary(MultiLanguageString title, MultiLanguageString summaryText,
+            Integer studentsNumber, Boolean isExtraLesson, Professorship professorship,
+            String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
+            OldRoom room, Partial hour) {
+
+        checkParameters(title, summaryText, isExtraLesson, professorship, teacherName, teacher, shift,
+                lesson, date, room, hour);
+        checkTeacher(teacher, shift.getDisciplinaExecucao());
+        checkDate(date);
+        setExecutionCourse(shift.getDisciplinaExecucao());
+        setTitle(title);
+        setSummaryText(summaryText);
+        setStudentsNumber(studentsNumber);
+        setIsExtraLesson(isExtraLesson);
+        setProfessorship(professorship);
+        setTeacherName(teacherName);
+        setTeacher(teacher);
+        setShift(shift);
+        setSummaryDateYearMonthDay(date);
+        setLastModifiedDateDateTime(new DateTime());
+        setSummaryType(shift.getTipo());
+        if (isExtraLesson) {
+            HourMinuteSecond hourMinuteSecond = new HourMinuteSecond(hour.get(DateTimeFieldType.hourOfDay()), hour.get(DateTimeFieldType.minuteOfHour()), 0);
+            setSummaryHourHourMinuteSecond(hourMinuteSecond);
+            setRoom(room);
+        } else {
+            setRoom(lesson.getSala());
+            setSummaryHourHourMinuteSecond(lesson.getBeginHourMinuteSecond());
+        }
+    }
+
+    private void checkDate(YearMonthDay date) {
+        if(date.isAfter(new YearMonthDay())) {
+            throw new DomainException("error.summary.date.after.current");
+        }
+    }
+
+    private void checkTeacher(Teacher teacher, ExecutionCourse executionCourse) {
+        if (teacher != null && teacher.getProfessorshipByExecutionCourse(executionCourse) != null) {
+            throw new DomainException("error.summary.teacher.is.executionCourse.professorship");
+        }
+    }
+
+    private void checkParameters(MultiLanguageString title, MultiLanguageString summaryText,
+            Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher,
+            Shift shift, Lesson lesson, YearMonthDay date, OldRoom room, Partial hour) {
+
+        if (title == null || title.getAllContents().isEmpty()) {
+            throw new DomainException("error.summary.no.title");
+        }
+        if (summaryText == null || summaryText.getAllContents().isEmpty()) {
+            throw new DomainException("error.summary.no.summaryText");
+        }
+        if (shift == null) {
+            throw new DomainException("error.summary.no.shift");
+        }
+        if (date == null) {
+            throw new DomainException("error.summary.no.date");
+        }
+        if (professorship == null && StringUtils.isEmpty(teacherName) && teacher == null) {
+            throw new DomainException("error.summary.no.teacher");
+        }
+        if (isExtraLesson) {
+            if (room == null) {
+                throw new DomainException("error.summary.no.room");
+            }
+            if (hour == null) {
+                throw new DomainException("error.summary.no.hour");
+            }
+        } else {
+            if (lesson == null) {
+                throw new DomainException("error.summary.no.lesson");
+            }
+        }
+    }
+
+    public boolean compareTo(Object obj) {
         boolean resultado = false;
         if (obj instanceof Summary) {
             Summary summary = (Summary) obj;
@@ -49,13 +155,68 @@ public class Summary extends Summary_Base {
         return resultado;
     }
 
+    public void delete() {
+        removeExecutionCourse();
+        removeProfessorship();
+        removeRoom();
+        removeShift();
+        removeTeacher();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
+
+    public Lesson getLesson() {
+        for (Lesson lesson : getShift().getAssociatedLessonsSet()) {
+            if (lesson.getBeginHourMinuteSecond().isEqual(getSummaryHourHourMinuteSecond())) {
+                return lesson;
+            }
+        }
+        return null;
+    }
+
+    public String getSummaryLabel() {
+        StringBuilder builder = new StringBuilder();
+        Lesson lesson = getLesson();
+        builder.append(getSummaryDateYearMonthDay().getDayOfMonth()).append("/").append(
+                getSummaryDateYearMonthDay().getMonthOfYear()).append("/").append(
+                getSummaryDateYearMonthDay().getYear()).append(" - Aula: ");
+        if (getIsExtraLesson()) {
+            builder.append(RenderUtils.getEnumString(SummaryType.EXTRA_SUMMARY, null)).append(" ");
+            builder.append(" (").append(getSummaryHourHourMinuteSecond().getHour()).append(":").append(
+                    getSummaryHourHourMinuteSecond().getMinuteOfHour()).append(") ");
+        } else {
+            builder.append(lesson.getDiaSemana().toString()).append(" (").append(
+                    DateFormatUtil.format("HH:mm", lesson.getInicio().getTime())).append("-").append(
+                    DateFormatUtil.format("HH:mm", lesson.getFim().getTime())).append(") ");
+            ;
+        }
+        if (lesson != null && lesson.getSala() != null) {
+            builder.append(lesson.getSala().getName().toString());
+        }
+        return builder.toString();
+    }
+    
+    
+    //OLD FUNCTIONS
     private void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson) {
 
         if (title == null || summaryText == null || isExtraLesson == null)
             throw new NullPointerException();
 
-        setTitle(title);
-        setSummaryText(summaryText);
+        MultiLanguageString titleMLS = getTitle();
+        if(titleMLS == null) {
+            setTitle(new MultiLanguageString(Language.pt, title));
+        } else {
+            titleMLS.setContent(Language.pt, title);
+            setTitle(titleMLS);
+        }
+        MultiLanguageString summaryTextMLS = getSummaryText();
+        if(summaryTextMLS == null) {
+            setSummaryText(new MultiLanguageString(Language.pt, summaryText));
+        }else {
+            summaryTextMLS.setContent(Language.pt, summaryText);
+            setSummaryText(summaryTextMLS);
+        }
         setStudentsNumber(studentsNumber);
         setIsExtraLesson(isExtraLesson);
         setLastModifiedDate(Calendar.getInstance().getTime());
@@ -104,15 +265,4 @@ public class Summary extends Summary_Base {
         setTeacher(null);
         setProfessorship(null);
     }
-
-    public void delete() {        
-        removeExecutionCourse();
-        removeProfessorship();
-        removeRoom();
-        removeShift();       
-        removeTeacher();
-        removeRootDomainObject();
-        super.deleteDomainObject();
-    }
-
 }

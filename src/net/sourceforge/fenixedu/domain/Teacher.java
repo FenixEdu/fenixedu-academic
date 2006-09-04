@@ -147,7 +147,7 @@ public class Teacher extends Teacher_Base {
         return result;
     }
 
-    public Professorship responsibleFor(ExecutionCourse executionCourse) {
+    public Professorship isResponsibleFor(ExecutionCourse executionCourse) {
         for (final Professorship professorship : this.getProfessorships()) {
             if (professorship.getResponsibleFor()
                     && professorship.getExecutionCourse() == executionCourse) {
@@ -1072,7 +1072,7 @@ public class Teacher extends Teacher_Base {
     public boolean isResponsibleFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
         for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
             if (executionCourse.getExecutionPeriod() == executionPeriod) {
-                return responsibleFor(executionCourse) != null;
+                return isResponsibleFor(executionCourse) != null;
             }
         }
         return false;

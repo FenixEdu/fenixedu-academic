@@ -41,9 +41,17 @@
 	</slot>
 </schema>
 <schema name="lessonPlanningAvailable" type="net.sourceforge.fenixedu.domain.Site" bundle="DEFAULT">	
-	<slot name="lessonPlanningAvailable" key="label.executionCourse.lessonPlanningAvailable" layout="radio">
+	<slot name="lessonPlanningAvailable" key="label.executionCourse.lessonPlanningAvailable" layout="radio-postback">
 		<property name="classes" value="list2 liinline" />
+		<property name="destination" value="postBack"/>
 	</slot>
+</schema>
+<schema name="ListShiftsToImportLessonPlannings" type="net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean" bundle="DEFAULT">	
+	<slot name="shift" key="label.shift" layout="menu-select" 
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ListShiftsToImportLessonPlanningsProvider" />				
+		<property name="format"	value="${shiftLabel}" />		
+	</slot>	
 </schema>
 <schema name="ChooseDegreePeriodAndCurricularYearToImportLessonPlannings" type="net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean" bundle="DEFAULT">		
 	<slot name="executionPeriod" key="label.executionPeriod" layout="menu-select-postback" 
@@ -52,15 +60,17 @@
 		<property name="format"	value="${executionYear.year} - ${semester}º Sem" />
 		<property name="destination" value="postBack"/>
 	</slot>	
-	<slot name="executionDegree" key="label.degree.name" layout="menu-select"
+	<slot name="executionDegree" key="label.degree.name" layout="menu-select-postback"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesToImportLessonPlanningsProvider" />
 		<property name="format" value="${degree.degreeType.name} em ${degree.name} ${degreeCurricularPlan.name}" />
+		<property name="destination" value="postBack"/>
 	</slot>
-	<slot name="curricularYear" key="label.curricularYear" layout="menu-select"
+	<slot name="curricularYear" key="label.curricularYear" layout="menu-select-postback"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularYearsProvider" />
 		<property name="format" value="${year}" />
+		<property name="destination" value="postBack"/>
 	</slot>
 </schema>
 <schema name="ListExecutionCoursesToImportLessonPlannings" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean" bundle="DEFAULT">
@@ -225,4 +235,83 @@
    		<property name="config" value="advanced" />
 	</slot>
 	<setter signature="edit(name,information,itemOrder)"/>
+</schema>
+<schema name="ChooseSummaryType" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
+	<slot name="summaryType" key="property.type" layout="radio-postback">
+		<property name="classes" value="list2 liinline dinline" />
+		<property name="destination" value="postBack"/>
+	</slot>
+</schema>
+<schema name="ListShiftLessonsToCreateSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
+	<slot name="lesson" key="label.lesson" layout="menu-select-postback" 
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ShiftLessonsToSummariesManagementProvider" />				
+		<property name="format"	value="${diaSemana.diaSemanaString} (${beginHourMinuteSecond.hour,02d}:${beginHourMinuteSecond.minuteOfHour,02d} - ${endHourMinuteSecond.hour,02d}:${endHourMinuteSecond.minuteOfHour,02d}) ${sala.name}" />
+		<property name="destination" value="postBack"/>
+	</slot>	
+</schema>
+<schema name="ListShiftsToCreateSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
+	<slot name="shift" key="label.shift" layout="menu-select-postback" 
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ListShiftsToSummariesManagementProvider" />				
+		<property name="format"	value="${shiftLabel}" />
+		<property name="destination" value="postBack"/>
+	</slot>	
+</schema>
+<schema name="LisPossibleDatesToCreateSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
+	<slot name="summaryDate" key="label.date" layout="menu-select-postback" 
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PossibleDatesToSummariesManagementProvider" />				
+		<property name="destination" value="postBack"/>
+	</slot>	
+</schema>
+<schema name="CreateSummaryToNormalSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
+	<slot name="studentsNumber" key="property.number.students.attending.course">
+		<property name="size" value="4"/>	
+	</slot>
+	<slot name="title" key="label.lessonPlanning.title">
+		<property name="size" value="50"/>	
+	</slot>
+	<slot name="summaryText" key="message.summaryText" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+	</slot>
+</schema>
+<schema name="CreateSummaryToExtraSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
+	<slot name="summaryDate" key="label.date" />
+	<slot name="summaryTime" layout="hour-minute" key="label.hour" />
+	<slot name="summaryRoom" layout="menu-select" key="label.room" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OldRoomsProvider" />
+		<property name="format" value="${name}" />
+	</slot>
+	<slot name="studentsNumber" key="property.number.students.attending.course">
+		<property name="size" value="4"/>	
+	</slot>
+	<slot name="title" key="label.lessonPlanning.title">
+		<property name="size" value="50"/>	
+	</slot>
+	<slot name="summaryText" key="message.summaryText" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+	</slot>
+</schema>
+<schema name="ListLessonPlanningsToSummariesManagement" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">
+	<slot name="lessonPlanning" key="label.lessonPlanning" layout="menu-select-postback" 
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LessonPlanningsToSummariesManagementProvider" />				
+		<property name="format"	value="${lessonPlanningLabel}" />
+		<property name="destination" value="postBack"/>
+	</slot>		
+</schema>
+<schema name="ListLastSummariesToSummariesManagement" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">
+	<slot name="lastSummary" key="message.summaryText.last" layout="menu-select-postback" 
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LastSummariesToSummariesManagementProvider" />				
+		<property name="format"	value="${summaryLabel}" />
+		<property name="destination" value="postBack"/>
+	</slot>	
 </schema>

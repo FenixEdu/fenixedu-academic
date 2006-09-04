@@ -25,8 +25,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class SummaryUtils {
 
-    public static boolean verifyValidDateSummary(Lesson lesson, Calendar summaryDate,
-            Calendar summaryHour) {
+    public static boolean verifyValidDateSummary(Lesson lesson, Calendar summaryDate, Calendar summaryHour) {
+        
         Calendar dateAndHourSummary = Calendar.getInstance();
         dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
         dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));

@@ -82,7 +82,7 @@
 
 <div class="gen-button">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link page="<%= "/summariesManager.do?method=prepareInsertSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+	<html:link page="<%= "/summariesManagement.do?method=prepareInsertSummary&amp;page=0&amp;executionCourseID=" + pageContext.findAttribute("objectCode") %>">
 			<bean:message key="label.insertSummary" />
 	</html:link>
 </div>
@@ -218,7 +218,7 @@
 		  	<td>
 				<div class="gen-button">
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-					<html:link page="<%= "/summariesManager.do?method=prepareEditSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode %>">
+					<html:link page="<%= "/summariesManagement.do?method=prepareEditSummary&amp;page=0&amp;executionCourseID=" + pageContext.findAttribute("objectCode") + "&amp;summaryID=" + summaryCode %>">
 						<bean:message key="button.edit" /> 
 					</html:link>
 				</div>

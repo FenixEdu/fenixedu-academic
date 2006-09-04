@@ -12,6 +12,7 @@ import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -594,9 +595,9 @@ public class InfoSummary extends InfoObject implements Comparable {
             summaryHour.setTime(summary.getSummaryHour());
             setSummaryHour(summaryHour);
             
-            setSummaryText(summary.getSummaryText());
+            setSummaryText(summary.getSummaryText().getContent(Language.pt));
             setTeacherName(summary.getTeacherName());
-            setTitle(summary.getTitle());
+            setTitle(summary.getTitle().getContent(Language.pt));
             setSummaryType(summary.getSummaryType());
         }
     }

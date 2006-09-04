@@ -10722,8 +10722,28 @@
         <filterChains>
         	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
         </filterChains>     
-    </service>      
+    </service>
+        
+    <service>
+        <name>CreateSummaryNew</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAndDepartmentAdministrativeOfficeAuthorization" />
+        </filterChains>
+    </service>  
     
+      <service>
+        <name>EditSummaryNew</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseAndSummaryLecturingTeacherAndDepartmentAdministrativeOfficeAuthorization" />
+        </filterChains>
+    </service>      
+
     <service>
     	<name>ReadActiveOrLastStudentCurricularPlanByNumberAndDegreeType</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadActiveOrLastStudentCurricularPlanByNumberAndDegreeType</implementationClass>

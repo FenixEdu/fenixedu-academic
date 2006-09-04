@@ -29,19 +29,19 @@
 		
 	<bean:define id="uri" toScope="page" type="java.lang.String">/manageExecutionCourse.do?method=lessonPlannings&executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 	
-	<fr:form action="<%= uri %>">
-	<table class="tstyle5">
-		<tr>
-		<td>
-			<fr:edit id="lessonPlanningAvailable" name="executionCourse" property="site" schema="lessonPlanningAvailable" nested="true">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstylenone vamiddle thlight" />
-				</fr:layout>		
-			</fr:edit>
-		</td>
-		<td><html:submit><bean:message key="label.submit"/></html:submit></td>
-		</tr>
-	</table>
+	<fr:form>
+		<table class="tstyle5">
+			<tr>
+				<td>				
+					<fr:edit id="lessonPlanningAvailable" name="executionCourse" property="site" schema="lessonPlanningAvailable" nested="true">
+						<fr:destination name="postBack" path="<%= uri %>"/>
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstylenone vamiddle thlight" />
+						</fr:layout>		
+					</fr:edit>			
+				</td>		
+			</tr>
+		</table>
 	</fr:form>
 
 	<bean:define id="edit">/manageExecutionCourse.do?method=prepareEditLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&page=0</bean:define>	

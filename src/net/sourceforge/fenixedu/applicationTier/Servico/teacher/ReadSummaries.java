@@ -182,7 +182,7 @@ public class ReadSummaries extends Service {
 
         if ((professorship != null) && (professorShiftId != null) && (professorShiftId.intValue() > 0)) {
 
-            Professorship responsibleFor = professorship.getTeacher().responsibleFor(executionCourse);
+            Professorship responsibleFor = professorship.getTeacher().isResponsibleFor(executionCourse);
 
             if (responsibleFor != null && responsibleFor.getResponsibleFor()) {
                 List<Summary> summariesByTeacher = executionCourse.readSummariesOfTeachersWithoutProfessorship();
