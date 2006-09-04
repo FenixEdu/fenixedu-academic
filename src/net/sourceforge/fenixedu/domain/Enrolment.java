@@ -516,15 +516,17 @@ public class Enrolment extends Enrolment_Base {
     }
 
     public List<EnrolmentEvaluation> getAllFinalEnrolmentEvaluations() {
-        return (List<EnrolmentEvaluation>) CollectionUtils.select(getEvaluations(), new Predicate() {
+	return (List<EnrolmentEvaluation>) CollectionUtils.select(getEvaluations(), new Predicate() {
 
-            public boolean evaluate(Object arg0) {
-                EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
-                return enrolmentEvaluation.getEnrolmentEvaluationState().equals(
-                        EnrolmentEvaluationState.FINAL_OBJ);
-            }
+	    public boolean evaluate(Object arg0) {
+		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
+		return enrolmentEvaluation.getEnrolmentEvaluationState().equals(
+			EnrolmentEvaluationState.FINAL_OBJ)
+			|| enrolmentEvaluation.getEnrolmentEvaluationState().equals(
+				EnrolmentEvaluationState.RECTIFICATION_OBJ);
+	    }
 
-        });
+	});
     }
     
     private boolean hasEnrolmentEvaluationByType(EnrolmentEvaluationType enrolmentEvaluationType) {
