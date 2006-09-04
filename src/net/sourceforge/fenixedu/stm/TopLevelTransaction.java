@@ -81,7 +81,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
             return TransactionChangeLogs.updateFromTxLogsOnDatabase(getOJBBroker(), currentNumber);
         } catch (Exception sqle) {
             sqle.printStackTrace();
-            throw new Error("Error while updating from TX_CHANGE_LOGS: Cannot proceed.");
+            throw new Error("Error while updating from TX_CHANGE_LOGS: Cannot proceed.", sqle);
         }
     }
 
@@ -202,7 +202,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
             pb = null;
             return txNumber;
         } catch (LookupException le) {
-            throw new Error("Error while obtaining database connection");
+            throw new Error("Error while obtaining database connection", le);
         } finally {
             if (pb != null) {
                 pb.abortTransaction();
@@ -216,9 +216,9 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
             dbChanges.cache();
             super.doCommit(newTxNumber);
         } catch (SQLException sqle) {
-            throw new Error("Error while accessing database");
+            throw new Error("Error while accessing database", sqle);
         } catch (LookupException le) {
-            throw new Error("Error while obtaining database connection");
+            throw new Error("Error while obtaining database connection", le);
         }
     }
 }
