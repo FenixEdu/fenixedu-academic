@@ -327,7 +327,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 
         CurricularYear curricularYearToReturn = null;
         List<CurricularCourseScope> curricularCourseScopesFound = null;
-        CurricularCourseScope curricularCourseScopeFound = null;
         boolean foundInBranchButNotInSemester = false;
         boolean notFoundInBranch = false;
         boolean notFoundInSemester = false;
@@ -343,7 +342,8 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (curricularCourseScopesFound != null && !curricularCourseScopesFound.isEmpty()) {
 
                 if (semester != null) {
-                    curricularCourseScopesFound = (List) CollectionUtils.select(
+                    
+                    final List<CurricularCourseScope> newCurricularCourseScopesFound = (List) CollectionUtils.select(
                             curricularCourseScopesFound, new Predicate() {
                                 public boolean evaluate(Object arg0) {
                                     return ((CurricularCourseScope) arg0).getCurricularSemester()
@@ -351,8 +351,8 @@ public class CurricularCourse extends CurricularCourse_Base {
                                 }
                             });
 
-                    if (curricularCourseScopesFound != null && !curricularCourseScopesFound.isEmpty()) {
-                	curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound, date);
+                    if (newCurricularCourseScopesFound != null && !newCurricularCourseScopesFound.isEmpty()) {
+                	curricularYearToReturn = getCurricularYearWithLowerYear(newCurricularCourseScopesFound, date);
                     } else {
                         foundInBranchButNotInSemester = true;
                     }
@@ -951,9 +951,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public List<Enrolment> getEnrolmentsByYear(String year) {
-        ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
-
-        return getEnrolmentsByExecutionYear(executionYear);
+        return getEnrolmentsByExecutionYear(ExecutionYear.readExecutionYearByName(year));
     }
 
     public List<Enrolment> getEnrolmentsByExecutionYear(ExecutionYear executionYear) {
