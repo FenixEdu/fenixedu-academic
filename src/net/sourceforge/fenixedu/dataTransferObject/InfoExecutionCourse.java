@@ -34,7 +34,7 @@ public class InfoExecutionCourse extends InfoObject {
 	return executionCourse == null ? null : new InfoExecutionCourse(executionCourse);
     }
 
-    private ExecutionCourse getExecutionCourse() {
+    public ExecutionCourse getExecutionCourse() {
 	return executionCourseDomainReference == null ? null : executionCourseDomainReference
 		.getObject();
     }
