@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -66,13 +65,9 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
             while (iterator.hasNext()) {
                 Lesson aula = (Lesson) iterator.next();
                 RoomOccupation roomOccupation = aula.getRoomOccupation();
-                InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
 
                 OccupationPeriod period = roomOccupation.getPeriod();
                 InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
-                infoRoomOccupation.setInfoPeriod(infoPeriod);
-
-                infoRoomOccupation.setInfoRoom(infoRoom);
 
                 if (this.intersectPeriods(day, endDay, infoPeriod)) {
 
