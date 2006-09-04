@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "alter Summary table" alterSummaryTextAndTitleToMultiLanguageString.sql
