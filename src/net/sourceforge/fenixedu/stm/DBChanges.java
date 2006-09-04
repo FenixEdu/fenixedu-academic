@@ -216,6 +216,7 @@ class DBChanges {
                     stmt.execute(sqlCmd.toString());
                 } catch (SQLException ex) {
                     System.out.println("SqlException: " + ex.getMessage());
+                    System.out.println("Deadlock trying to insert: " + sqlCmd.toString());
                     throw new CommitException();
                 }
 	    }
