@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 public class EditLesson extends Service {
 
     public Object run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, Integer frequency, 
-    		Integer weekOfQuinzenalStart, InfoRoomOccupation infoRoomOccupation, InfoShift infoShift)
+    		Integer weekOfQuinzenalStart, InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift)
             throws FenixServiceException {
         
         InfoLessonServiceResult result = null;        
