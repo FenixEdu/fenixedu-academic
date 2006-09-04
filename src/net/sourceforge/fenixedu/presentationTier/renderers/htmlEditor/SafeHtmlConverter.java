@@ -95,15 +95,22 @@ public class SafeHtmlConverter extends TidyConverter {
 
         if (name.equals("img")) {
             String source = element.getAttribute("src");
-                    
+            
             if (! isRelative(source)) {
                 return false;
             }
+
             
-            if (! source.contains("/emotions/")) {
+            try {
+                URL url = new URL(source);
+
+                if (! (url.getPath().contains("/emotions/") || url.getPath().startsWith("/images/"))) {
+                    return false;
+                }
+            } catch (MalformedURLException e) {
                 return false;
             }
-            
+                        
             element.removeAttribute("longdesc");
             element.removeAttribute("usemap");
             element.removeAttribute("ismap");
@@ -113,7 +120,20 @@ public class SafeHtmlConverter extends TidyConverter {
     }
 
     private boolean isRelative(String uri) {
-        return ! (uri.startsWith("http://") || uri.startsWith("ftp://") || uri.startsWith("mailto:"));
+        if (! (uri.startsWith("https://") || uri.startsWith("http://") || uri.startsWith("ftp://") || uri.startsWith("mailto:"))) {
+            return true;
+        }
+        else {
+            HttpServletRequest currentRequest = RenderersRequestProcessor.getCurrentRequest();
+            String serverName = currentRequest.getServerName();
+
+            try {
+                URL url = new URL(uri);
+                return serverName.equals(url.getHost());
+            } catch (MalformedURLException e) {
+                return false;
+            }
+        }
     }
     
     private boolean isThrustedAttribute(Node parent, Attr attribute) {
@@ -137,42 +157,36 @@ public class SafeHtmlConverter extends TidyConverter {
             return false;
         }
 
-        if (name.equals("href")) { 
-            if (! isRelative(value)) { // protect links to private places of the application
-                HttpServletRequest currentRequest = RenderersRequestProcessor.getCurrentRequest();
-                String serverName = currentRequest.getServerName();
-                
+        if (name.equals("href")) {
+            if (isRelative(value)) { // protect links to private places of the application
                 try {
                     URL url = new URL(value);
-                    if (serverName.equals(url.getHost())) {
-                        if (url.getPath().contains("/publico/")) {
-                            return true;
+
+                    if (url.getPath().contains("/publico/")) {
+                        return true;
+                    } else if (url.getPath().contains("/emotions/")) {
+                        return true;
+                    } else {
+                        NodeList list = parent.getChildNodes();
+                        for (int i = 0; i < list.getLength(); i++) {
+                            Node node = list.item(i);
+
+                            parent.removeChild(node);
                         }
-                        else {
-                            NodeList list = parent.getChildNodes();
-                            for (int i = 0; i<list.getLength(); i++) {
-                                Node node = list.item(i);
-                                
-                                parent.removeChild(node);
-                            }
-                            
-                            parent.appendChild(parent.getOwnerDocument().createTextNode(value));
-                            return false;
-                        }
+
+                        parent.appendChild(parent.getOwnerDocument().createTextNode(value));
+                        return false;
                     }
-                    
-                    return true;
                 } catch (MalformedURLException e) {
                     return false;
                 }
-            }
-            else {
+
+            } else {
                 return false;
             }
         }
         
         return true;
     }
-
     
 }
