@@ -210,7 +210,12 @@ class DBChanges {
 		}
 	    }
 	    if (addedRecord) {
-		stmt.execute(sqlCmd.toString());
+                try {
+                    stmt.execute(sqlCmd.toString());
+                } catch (SQLException ex) {
+                    System.out.println(sqlCmd.toString());
+                    throw ex;
+                }
 	    }
 	}
     }
