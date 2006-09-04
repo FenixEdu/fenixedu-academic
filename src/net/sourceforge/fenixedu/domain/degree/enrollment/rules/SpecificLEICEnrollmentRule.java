@@ -273,6 +273,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 			
 			curricularCoursesToEnroll = studentCurricularPlan.initAcumulatedEnrollments(curricularCoursesToEnroll);
 		}
+		studentCurricularPlan.initEctsCreditsToEnrol(curricularCoursesToEnroll, executionPeriod);
 		return curricularCoursesToEnroll;
 	}
 
