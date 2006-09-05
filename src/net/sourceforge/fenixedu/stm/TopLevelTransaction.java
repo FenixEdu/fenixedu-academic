@@ -208,6 +208,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
             try {
                 pb.commitTransaction();
             } catch (Throwable t) {
+                t.printStackTrace();
                 System.out.println("Error while commiting exception. Terminating server.");
                 System.err.flush();
                 System.out.flush();
