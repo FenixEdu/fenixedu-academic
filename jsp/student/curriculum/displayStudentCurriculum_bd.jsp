@@ -154,7 +154,7 @@
 							</logic:notEqual>
 							
 							<logic:equal name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
-								<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>
+								<bean:write name="enrolment" property="grade"/>
 							</logic:equal>
 						  </td>
 				  		</tr>
