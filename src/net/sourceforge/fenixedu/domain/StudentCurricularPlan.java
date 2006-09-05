@@ -1065,7 +1065,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private void createStudentCurriculumStructureFor(final ExecutionPeriod executionPeriod) {
-	new CurriculumGroup(this, getDegreeCurricularPlan().getRoot(), executionPeriod);
+	if (getDegreeCurricularPlan().isBolonha()) {
+	    new CurriculumGroup(this, getDegreeCurricularPlan().getRoot(), executionPeriod);
+	}
     }
 
     private void init(Registration registration, DegreeCurricularPlan degreeCurricularPlan,
