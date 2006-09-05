@@ -342,6 +342,10 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                     if (beanObject != null) { // protect from a creation context
                         String rawText = (String) RendererPropertyUtils.getProperty(beanObject, getRawSlotName(), false);
                         textField.setValue(rawText);
+                        
+                        if (rawText != null) {
+                            valueField.setValue(TYPING_VALUE);
+                        }
                     }
                 }
                 
