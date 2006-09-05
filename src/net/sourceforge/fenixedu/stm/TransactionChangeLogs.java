@@ -327,7 +327,7 @@ public class TransactionChangeLogs {
 						 + (2 * SECONDS_BETWEEN_UPDATES));
 		int min = (rs.next() ? rs.getInt(1) : 0);
 		if (min > 0) {
-		    stmt.executeUpdate("DELETE FROM TX_CHANGE_LOGS WHERE TX_NUMBER < " + min);
+		    //stmt.executeUpdate("DELETE FROM TX_CHANGE_LOGS WHERE TX_NUMBER < " + min);
 		}
 
 		broker.commitTransaction();
