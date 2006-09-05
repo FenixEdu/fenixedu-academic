@@ -1,7 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+<html:xhtml/>
 
 <!-- Title and TOC -->
 <a name="top"></a>
@@ -14,6 +15,12 @@
         <li><a href="#nested">I need to control the form</a></li>
         <li><a href="#controllers">Intercepting the submission and changing the destination</a></li>
         <li><a href="#attributes">Controllers and renderer's can save it's own attributes in the <code>ViewState</code></a></li>
+        <li><a href="#components">Creating components directly in the actions</a></li>
+        <li><a href="#viewstate">Specialized ViewState</a></li>
+        <li><a href="#metaobject">Creating a MetaObject as an abstraction of the real object</a></li>
+        <li><a href="#binding">Binding slots to components</a></li>
+        <li><a href="#bean">Do we really nead a bean?</a></li>
+        <li><a href="#controllers-custom">Converters and controllers in custom components</a></li>
     </ul>
 </div>
 
@@ -370,9 +377,205 @@ SearchBean bean = (SearchBean) viewState.getMetaObject().getObject();
     </div>
 </div>
 
+<a name="components"></a>
+<h3>Creating components directly in the actions</h3>
+
+<p>
+    There is another form of collection random pieces of data from the user but it probably still requires a bean to hold those
+    random pieces. Nevertheless this new aproach allows you to have more control of some of the presentation aspects behind the
+    renderers framework.
+</p>
+
+<p>
+    The idea is to allow components to be created directly from the action. This way, in the action, we can create custom components,
+    compose them at will, and use them directly in the JSP to form the presentation. This use of components is always composed of 
+    three steps:
+</p>
+
+<ol>
+  <li>Creating a <code>ViewState</code></li>
+  <li>Obtaining a schema</li>
+  <li>Wrapping the bean or holder of the information in a <code>MetaObject</code></li>
+  <li>Creating components and compose them</li>
+  <li>Binding input components to specific slots</li>
+  <li>Setup controllers and converters</li>
+  <li>Make the <code>ViewState</code> available in the request</li>
+</ol>
+
+<p>
+    Let't watch a simple but complete example and then explain the details:
+</p>
+
+<div style="border-left: 1px solid #AAAAAA; padding-left: 10px;">
+    <!-- Code -->
+    <div>
+        <p><strong>Code in action</strong></p>
+        <pre>// 1
+ActionViewState viewState = new ActionViewState(&quot;testing&quot;);
+
+// 2
+Schema schema = RenderKit.getInstance().findSchema(&quot;schema&quot;);
+
+// 3
+MetaObject metaObject = MetaObjectFactory.createObject(bean, schema);
+viewState.setMetaObject(metaObject);
+
+// 4
+final HtmlTextInput input = new HtmlTextInput();
+
+// 5
+String aSlotName = schema.getSlotDescriptions().get(0).getSlotName();
+input.bind(metaObject.getSlot(aSlotName));
+
+// 6
+input.setController(new HtmlController() {
+
+    @Override
+    public void execute(IViewState viewState) {
+        System.out.println(&quot;changing the text to lowercase&quot;);
+        
+        if (input.getValue() != null) {
+            input.setValue(input.getValue().toLowerCase());
+        }
+    }
+    
+});
+
+input.setConverter(new Converter() {
+
+    @Override
+    public List&lt;String&gt; convert(Class type, Object value) {
+        if (value == null) {
+            return null;
+        }
+        else {
+            return Arrays.asList(((String) value).split(&quot;\\p{Space}+&quot;));
+        }
+    }
+    
+});
+
+// 7
+request.setAttribute(&quot;customNamesInput&quot;, viewState);</pre>
+    </div>
+    
+    <!-- Code -->
+    <div>
+        <p><strong>Code in JSP</strong></p>
+        <pre>&lt;fr:viewstate name="customNamesInput" action="/example.do?method=collect"/&gt;</pre>
+    </div>
+    
+    <!-- Code -->
+    <div>
+        <p><strong>Code in Action (handle submit)</strong></p>
+        <pre>ViewState viewState = RenderUtils.getViewState(&quot;testing&quot;);
+HtmlTextInput component = (HtmlTextInput) viewState.getComponent();
+UsedBean bean = (UsedBean) viewState.getMetaObject().getObject();
+
+List&lt;String&gt; names1 = (List&lt;String&lt;) component.getConvertedValue();
+List&lt;String&gt; names2 = bean.getNamesList();</pre>
+    </div>
+</div>
+
+<a name="viewstate"></a>
+<h3>Specialized ViewState</h3>
+
+<p>
+    As you may notice we started by creating a specific <code>ViewState</code>. The <code>ActionViewState</code>
+    is a specialization of the <code>ViewState</code> commonly available, that can be used directly by actions
+    and that skips some steps in the renderers lifecycle.
+</p>
+
+<p>
+    This <code>ViewState</code> has the same role as the other automatically created by the <code>fr:edit</code> 
+    and <code>fr:create</code> tags. The essential about the <code>ViewState</code> is that it must contain a
+    component. Optionally it can contain a meta object if some component is bound to a slot, that is, the 
+    <code>ViewState</code> must contain the meta object containing the slots to wich component were bound.
+</p>
+
+<p>
+    There aren't other requirements over the <code>ViewState</code>. After setting it up you just need to make it
+    available to a JSP, usually by setting a request attribute.
+</p>
+
+<a name="metaobject"></a>
+<h3>Creating a MetaObject as an abstraction of the real object</h3>
+
+<p>
+    When you have an object and want to associate some input components to slots of that object then you need to
+    create an abstraction of that object called the meta object. This meta object it the one used by the renderers
+    framework and is usefull to help serializing objects and prevent changes to object until they really need to be made.
+</p>
+
+<p>
+    To create a meta object you normally should obtain a schema. The schema limits the slots that the meta object
+    will contain but you don't really need the schema. If you pass <code>null</code> as a schema then all the
+    object's slots are available in the meta object. Schemas can be obtained through the <code>RenderKit</code> object.
+    Schemas are found by their name in the configuration.
+</p>
+
+<p>
+    After you created the meta object don't forget to set the <code>ViewState</code> with it.
+</p>
+
+<a name="binding"></a>
+<h3>Binding slots to components</h3>
+
+<p>
+    When you want to associate some input component's value to a slot as it normally happens in the <code>fr:edit</code>
+    and <code>fr:create</code> tags you just need to select the desired meta slot from the create meta object and
+    bind the input component to it. After doing this, the final value of the component, after the user submited the form,
+    will be set in the object.
+</p>
+
+<p>
+    Off course, you can only by one input component to a meta slot. You can bind several input component to the same slot
+    but all well get is having the setter being called several times.
+</p>
+
+<a name="bean"></a>
+<h3>Do we really nead a bean?</h3>
+
+<p>
+    As you may have noticed, you don't really need the bean in the example. If you don't bind any input component to a slot 
+    then you don't need to create the meta object and so you won't need the object/bean. Nevertheless you will have to 
+    obtain the value directly from the input component and probably have to take measures to make them easy to find like
+    giving them specific ids.
+</p>
+
+<p>
+    You may need a bean when you want some logic associated with the retrievel or processing of the information or just to 
+    concentrate all the information in an object easy to pass to other parts of the program but it's never required.
+</p>
+
+<a name="controllers-custom"></a>
+<h3>Converters and controllers in custom components</h3>
+
+<p>
+    The converter and controller you see in the example are just ther to make a point, they don't really make anything 
+    usefull. But as you can see you can associate any piece of code that is executed afer the input of the user is 
+    processed. This can be used, for example, to make a preprocessing of values or to copy some intermediate values to 
+    a final location. Controllers can also change the lifecycle through the <code>ViewState</code> provided so they can
+    be used for a lot of purposes.
+</p>
+
+<p>
+    As mentioned a typical use is to use the values of several fields and put a computed value in a final field that
+    normally has converter associated. For example you can provide 3 input fields and grab those three values to make
+    a parseable time that you put in a 4th field.
+</p>
+
+<p>
+    Convertes are used because all the values of the components are strings or arrays of strings. The converter allows
+    to request the final value for the slot having the conversion been specified beforehand. The converter is specially
+    usefull when an input component is bound to a slot. You need to add a converter whenever the value of the component
+    cannot be trivially converter into the slot's type.
+</p>
+
 <p style="margin-top: 50px; padding-top: 10px; border-top: 1px solid #AAAAAA">
     <span style="float: left;"><a href="#top">Top</a></span>
     <span style="float: right;">
         Next: <html:link page="/renderers/new.do">The fourth situation: a new renderer</html:link>
     </span>
 </p>
+
