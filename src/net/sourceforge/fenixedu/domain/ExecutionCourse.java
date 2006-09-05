@@ -890,28 +890,22 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public void createForum(String name, String description) {
-
 	if (hasForumWithName(name)) {
 	    throw new DomainException("executionCourse.already.existing.forum");
 	}
-
-	ExecutionCourseForum executionCourseForum = new ExecutionCourseForum(name, description);
-	this.addForuns(executionCourseForum);
+	this.addForuns(new ExecutionCourseForum(name, description));
     }
 
     public boolean hasForumWithName(String name) {
-	ExecutionCourseForum executionCourseForum = getForumByName(name);
-
-	return (executionCourseForum == null) ? false : true;
+	return getForumByName(name) != null;
     }
 
     public ExecutionCourseForum getForumByName(String name) {
-	for (ExecutionCourseForum executionCourseForum : getForuns()) {
+	for (final ExecutionCourseForum executionCourseForum : getForunsSet()) {
 	    if (executionCourseForum.getName().equalsIgnoreCase(name)) {
 		return executionCourseForum;
 	    }
 	}
-
 	return null;
     }
 
