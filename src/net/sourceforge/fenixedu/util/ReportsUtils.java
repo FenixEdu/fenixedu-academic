@@ -66,6 +66,8 @@ public class ReportsUtils extends PropertiesManager {
                 return false;
             }
         } catch (JRException e) {
+            System.out.println("Unable to print");
+            e.printStackTrace();
             return false;
         }
 
