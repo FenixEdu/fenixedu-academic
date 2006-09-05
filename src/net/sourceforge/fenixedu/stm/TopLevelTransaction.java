@@ -179,10 +179,21 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
         // in memory everything is ok, but we need to check against the db
         PersistenceBroker pb = getOJBBroker();
 
+        long time1 = System.currentTimeMillis();
+        long time2 = 0;
+        long time3 = 0;
+        long time4 = 0;
+        long time5 = 0;
+        long time6 = 0;
+        long time7 = 0;
+        long time8 = 0;
+        long time9 = 0;
+
         try {
             if (!pb.isInTransaction()) {
                 pb.beginTransaction();
             }
+            time2 = System.currentTimeMillis();
             int txNumber = getNumber();
             try {
                 // the updateFromTxLogs is made with the txNumber minus 1 to ensure that the select
@@ -190,12 +201,15 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
                 // otherwise, the mysql server may allow the select for update to continue
                 // concurrently with other executing commits in other servers
                 //if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber - 1, true) != txNumber) {
+                time3 = System.currentTimeMillis();
                 if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber, true) != txNumber) {
                     // the cache may have been updated, so perform the
                     // tx-validation again
+                    time4 = System.currentTimeMillis();
                     if (!validateCommit()) {
                         throw new jvstm.CommitException();
                     }
+                    time5 = System.currentTimeMillis();
                 }
             } catch (SQLException sqlex) {
                 throw new CommitException();
@@ -203,11 +217,14 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
                 throw new Error("Error while obtaining database connection", le);
             }
 
+            time6 = System.currentTimeMillis();
             txNumber = super.performValidCommit();
+            time7 = System.currentTimeMillis();
             // ensure that changes are visible to other TXs before releasing
             // lock
             try {
                 pb.commitTransaction();
+                time8 = System.currentTimeMillis();
             } catch (Throwable t) {
                 t.printStackTrace();
                 System.out.println("Error while commiting exception. Terminating server.");
@@ -220,7 +237,19 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
         } finally {
             if (pb != null) {
                 pb.abortTransaction();
+                time9 = System.currentTimeMillis();
             }
+
+            System.out.println(
+                      ",1: " + (time1 == 0 || time2 == 0 ? "" : (time2 - time1))
+                    + ",2: " + (time2 == 0 || time3 == 0 ? "" : (time3 - time2))
+                    + ",3: " + (time3 == 0 || time4 == 0 ? "" : (time4 - time3))
+                    + ",4: " + (time4 == 0 || time5 == 0 ? "" : (time5 - time4))
+                    + ",5: " + (time5 == 0 || time6 == 0 ? "" : (time6 - time5))
+                    + ",6: " + (time6 == 0 || time7 == 0 ? "" : (time7 - time6))
+                    + ",7: " + (time7 == 0 || time8 == 0 ? "" : (time8 - time7))
+                    + ",8: " + (time8 == 0 || time9 == 0 ? "" : (time9 - time8))
+                    );
         }
     }
 
