@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
+import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 
 import org.joda.time.DateTime;
@@ -54,26 +55,64 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         return Duration.ZERO;
     }
 
-    public Duration checkMealDurationAccordingToRules(TimeInterval lunchBreak, boolean justification) {
+    public Duration checkMealDurationAccordingToRules(TimeInterval lunchBreak, boolean justification,
+            Timeline timeline, TimePoint firstClocking) {
         if (definedMeal()) {
             if (!justification
                     && lunchBreak.getDuration().isShorterThan(getMeal().getMinimumMealBreakInterval())) {
                 return null;
             } else {
+                Duration discount = calculateNotWorkedMealDuration(timeline, lunchBreak.getStartTime(),
+                        lunchBreak.getEndTime(), firstClocking);
+                if (discount.isLongerThan(getMeal().getMandatoryMealDiscount())
+                        || discount.isEqual(getMeal().getMandatoryMealDiscount())) {
+                    return Duration.ZERO;
+                }
                 // /////////remove in 2007
                 if (getMeal().getMinimumMealBreakInterval() != Duration.ZERO) {
                     if (getMeal().getMealBreak().overlap(lunchBreak) == null) {
                         return Duration.ZERO;
                     }
-                    return getMeal().calculateMealDiscount(
+                    Duration mealDiscount = getMeal().calculateMealDiscount(
                             getMeal().getMealBreak().overlap(lunchBreak).toDuration());
+                    if (discount.isLongerThan(mealDiscount)) {
+                        return Duration.ZERO;
+                    }
+                    return mealDiscount.minus(discount);
                 }
                 // /////////////////////////
-                return getMeal().calculateMealDiscount(lunchBreak.getDuration());
-
+                Duration mealDiscount = getMeal().calculateMealDiscount(lunchBreak.getDuration());
+                if (discount.isLongerThan(mealDiscount)) {
+                    return Duration.ZERO;
+                }
+                return mealDiscount.minus(discount);
             }
         }
         return Duration.ZERO;
+    }
+
+    private Duration calculateNotWorkedMealDuration(Timeline timeline, TimeOfDay beginLunch,
+            TimeOfDay endLunch, TimePoint firstClocking) {
+        Duration totalDuration = Duration.ZERO;
+        Interval scheduleMealBreak = getMeal().getMealBreak().toInterval(
+                new YearMonthDay().toDateTimeAtMidnight());
+        for (TimePoint timePoint : timeline.getTimePoints()) {
+            DateTime timePointDateTime = timePoint.getDateTime(new YearMonthDay());
+            if (scheduleMealBreak.contains(timePointDateTime)
+                    && (!timePoint.getTime().isEqual(beginLunch))
+                    && (timeline.isOpeningAndNotClosingWorkedPeriod(timePoint)
+                            || timeline.isClosingAnyWorkedPeriod(timePoint) || timePoint
+                            .isAtSameTime(firstClocking))) {
+                if (!timePoint.getTime().isAfter(beginLunch)) {
+                    totalDuration = totalDuration.plus(new Duration(scheduleMealBreak.getStart(),
+                            timePointDateTime));
+                } else if (!timePoint.getTime().isBefore(endLunch)) {
+                    totalDuration = totalDuration.plus(new Duration(timePointDateTime, scheduleMealBreak
+                            .getEnd()));
+                }
+            }
+        }
+        return totalDuration;
     }
 
     public void delete() {

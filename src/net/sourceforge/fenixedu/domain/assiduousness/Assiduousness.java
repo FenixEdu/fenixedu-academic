@@ -99,8 +99,8 @@ public class Assiduousness extends Assiduousness_Base {
                 if (!workDaySheet.getAssiduousnessRecords().isEmpty() || !timeLeaves.isEmpty()) {
                     Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES
                             .getAttributes().iterator();
-                    timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
-                            .getLeaves(), attributesIt, day);
+                    timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), timeLeaves,
+                            attributesIt, day);
                     workDaySheet = workDaySheet.getWorkSchedule().calculateWorkingPeriods(workDaySheet,
                             day, timeline, timeLeaves);
                 } else {

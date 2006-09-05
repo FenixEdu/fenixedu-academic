@@ -303,6 +303,28 @@ public class Timeline {
         return null;
     }
 
+    public boolean isOpeningAndNotClosingWorkedPeriod(TimePoint point) {
+        for (AttributeType attributeType : point.getPointAttributes().getAttributes()) {
+            if (DomainConstants.WORKED_ATTRIBUTES.contains(attributeType)
+                    && point.getIntervalAttributes().contains(attributeType)) {
+                if (findIntervalEndPointByAttribute(attributeType) == null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isClosingAnyWorkedPeriod(TimePoint point) {
+        for (AttributeType attributeType : point.getPointAttributes().getAttributes()) {
+            if (DomainConstants.WORKED_ATTRIBUTES.contains(attributeType)
+                    && !point.getIntervalAttributes().contains(attributeType)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Finds the end point of the interval before a given TimePoint. The end point must have attribute as
     // point attributes and attribute must not be in its interval attributes
     private TimePoint findIntervalEndPointBetweenPointsByAttribute(TimePoint startPoint,
@@ -410,15 +432,19 @@ public class Timeline {
             TimePoint point = pointListIt.next();
             TimePoint point2 = null;
             do {
+                if (point2 != null) {
+                    point = point2;
+                }
                 if (pointListIt.hasNext()) {
                     point2 = pointListIt.next();
                     totalDuration = totalDuration.plus(new TimeInterval(point.getTime(), point2
                             .getTime(), point2.isNextDay()).getDuration());
-                    point = point2;
                 } else {
                     return totalDuration;
                 }
-            } while (countNumberOfWorkedAttributes(point2) > 1);
+            } while ((countNumberOfWorkedAttributes(point2) > 1)
+                    || (point.getPointAttributes().contains(AttributeType.JUSTIFICATION))
+                    || (point2.getPointAttributes().contains(AttributeType.JUSTIFICATION)));
         }
 
         // Iterator<TimePoint> pointListIt = pointList.iterator();
@@ -492,7 +518,6 @@ public class Timeline {
                 break;
             }
         }
-
         for (Interval justificationInterval : justificationsIntervals) {
             for (Interval workedInterval : timePointIntervals) {
                 Interval overlap = justificationInterval.overlap(workedInterval);
@@ -736,9 +761,9 @@ public class Timeline {
         while (clockingIt.hasNext()) {
             final AssiduousnessRecord clockIn = clockingIt.next();
             for (Leave leave : leaveList) {
-                if (leave.getJustificationMotive().getJustificationType() != JustificationType.BALANCE
-                        && (lastClock == null || leave.getDate().isAfter(lastClock) || leave.getDate()
-                                .isEqual(lastClock)) && leave.getDate().isBefore(clockIn.getDate())) {
+                if ((lastClock == null || leave.getDate().isAfter(lastClock) || leave.getDate().isEqual(
+                        lastClock))
+                        && leave.getDate().isBefore(clockIn.getDate())) {
                     pointList.addAll(leave.toTimePoints((AttributeType) attributesIt.next()));
                 }
             }
@@ -750,13 +775,11 @@ public class Timeline {
                 final AssiduousnessRecord clockOut = clockingIt.next();
                 final TimePoint timePointOut = constructTimePoint(clockOut, day, attribute);
                 pointList.add(timePointOut);
-                lastClock = timePointOut.getTime().toDateTime(clockOut.getDate());
             }
         }
         for (Leave leave : leaveList) {
-            if (leave.getJustificationMotive().getJustificationType() != JustificationType.BALANCE
-                    && (lastClock == null || leave.getDate().isAfter(lastClock) || leave.getDate()
-                            .isEqual(lastClock))) {
+            if ((lastClock == null || leave.getDate().isAfter(lastClock) || leave.getDate().isEqual(
+                    lastClock))) {
                 pointList.addAll(leave.toTimePoints((AttributeType) attributesIt.next()));
             }
         }
