@@ -13,7 +13,7 @@ public class HtmlText extends HtmlComponent {
     public HtmlText(String text, boolean escaped) {
         this.text = text;
         this.escaped = escaped;
-        this.newLineAware = true;
+        this.newLineAware = escaped;
     }
 
     public HtmlText(String text, boolean escaped, boolean newLineAware) {
@@ -25,6 +25,7 @@ public class HtmlText extends HtmlComponent {
     public HtmlText(String text) {
         this.text = text;
         this.escaped = true;
+        this.newLineAware = true;
     }
 
     public HtmlText() {
