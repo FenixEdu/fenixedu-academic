@@ -51,22 +51,30 @@ public class ManageExecutionCourseDA extends
 
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
 
-        InfoExecutionCourseEditor infoExecutionCourse = (InfoExecutionCourseEditor) request
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
                 .getAttribute(SessionConstants.EXECUTION_COURSE);
 
-        DynaActionForm editExecutionCourseForm = (DynaActionForm) form;
-        infoExecutionCourse.setTheoreticalHours(new Double((String) editExecutionCourseForm.get("theoreticalHours")));
-        infoExecutionCourse.setTheoPratHours(new Double((String) editExecutionCourseForm.get("theoPratHours")));
-        infoExecutionCourse.setPraticalHours(new Double((String) editExecutionCourseForm.get("praticalHours")));
-        infoExecutionCourse.setLabHours(new Double((String) editExecutionCourseForm.get("labHours")));        
-        infoExecutionCourse.setSeminaryHours(new Double((String) editExecutionCourseForm.get("seminaryHours")));        
-        infoExecutionCourse.setProblemsHours(new Double((String) editExecutionCourseForm.get("problemsHours")));
-        infoExecutionCourse.setFieldWorkHours(new Double((String) editExecutionCourseForm.get("fieldWorkHours")));
-        infoExecutionCourse.setTrainingPeriodHours(new Double((String) editExecutionCourseForm.get("trainingPeriodHours")));
-        infoExecutionCourse.setTutorialOrientationHours(new Double((String) editExecutionCourseForm.get("tutorialOrientationHours")));
+        InfoExecutionCourseEditor infoExecutionCourseEditor = new InfoExecutionCourseEditor();
+        infoExecutionCourseEditor.setAssociatedInfoCurricularCourses(infoExecutionCourse.getAssociatedInfoCurricularCourses());
+        infoExecutionCourseEditor.setComment(infoExecutionCourse.getComment());
+        infoExecutionCourseEditor.setIdInternal(infoExecutionCourse.getIdInternal());
+        infoExecutionCourseEditor.setInfoExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod());
+        infoExecutionCourseEditor.setNome(infoExecutionCourse.getNome());
+        infoExecutionCourseEditor.setSigla(infoExecutionCourse.getSigla());
 
-        Object args[] = { infoExecutionCourse };
-        infoExecutionCourse = (InfoExecutionCourseEditor) ServiceManagerServiceFactory.executeService(
+        DynaActionForm editExecutionCourseForm = (DynaActionForm) form;
+        infoExecutionCourseEditor.setTheoreticalHours(new Double((String) editExecutionCourseForm.get("theoreticalHours")));
+        infoExecutionCourseEditor.setTheoPratHours(new Double((String) editExecutionCourseForm.get("theoPratHours")));
+        infoExecutionCourseEditor.setPraticalHours(new Double((String) editExecutionCourseForm.get("praticalHours")));
+        infoExecutionCourseEditor.setLabHours(new Double((String) editExecutionCourseForm.get("labHours")));        
+        infoExecutionCourseEditor.setSeminaryHours(new Double((String) editExecutionCourseForm.get("seminaryHours")));        
+        infoExecutionCourseEditor.setProblemsHours(new Double((String) editExecutionCourseForm.get("problemsHours")));
+        infoExecutionCourseEditor.setFieldWorkHours(new Double((String) editExecutionCourseForm.get("fieldWorkHours")));
+        infoExecutionCourseEditor.setTrainingPeriodHours(new Double((String) editExecutionCourseForm.get("trainingPeriodHours")));
+        infoExecutionCourseEditor.setTutorialOrientationHours(new Double((String) editExecutionCourseForm.get("tutorialOrientationHours")));
+
+        Object args[] = { infoExecutionCourseEditor };
+        infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
                 userView, "EditExecutionCourse", args);
 
         if (infoExecutionCourse != null) {
