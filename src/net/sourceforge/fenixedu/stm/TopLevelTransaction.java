@@ -185,7 +185,11 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
             }
             int txNumber = getNumber();
             try {
-                if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber, true) != txNumber) {
+                // the updateFromTxLogs is made with the txNumber minus 1 to ensure that the select
+                // for update will return at least a record, and, therefore, lock the record
+                // otherwise, the mysql server may allow the select for update to continue
+                // concurrently with other executing commits in other servers
+                if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber - 1, true) != txNumber) {
                     // the cache may have been updated, so perform the
                     // tx-validation again
                     if (!validateCommit()) {
@@ -194,15 +198,20 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
                 }
             } catch (SQLException sqlex) {
                 throw new CommitException();
+            } catch (LookupException le) {
+                throw new Error("Error while obtaining database connection", le);
             }
+
             txNumber = super.performValidCommit();
             // ensure that changes are visible to other TXs before releasing
             // lock
-            pb.commitTransaction();
+            try {
+                pb.commitTransaction();
+            } catch (Throwable t) {
+                System.exit(-1);
+            }
             pb = null;
             return txNumber;
-        } catch (LookupException le) {
-            throw new Error("Error while obtaining database connection", le);
         } finally {
             if (pb != null) {
                 pb.abortTransaction();
@@ -213,12 +222,12 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     protected void doCommit(int newTxNumber) {
         try {
             dbChanges.makePersistent(getOJBBroker(), newTxNumber);
-            dbChanges.cache();
-            super.doCommit(newTxNumber);
         } catch (SQLException sqle) {
             throw new Error("Error while accessing database", sqle);
         } catch (LookupException le) {
             throw new Error("Error while obtaining database connection", le);
         }
+        dbChanges.cache();
+        super.doCommit(newTxNumber);
     }
 }
