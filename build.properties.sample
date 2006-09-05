@@ -422,6 +422,20 @@ cas.logoutUrl=https://localhost:8443/cas/logout
 cas.serviceUrl.localhost=https://localhost:8443/ciapl/loginCAS.do
 cas.serviceUrl.salad21=https://salad21.ist.utl.pt:8443/ciapl/loginCAS.do
 
+
+#------------------------------------------------------------------------------
+# External Services
+#------------------------------------------------------------------------------
+#
+# email.admin.allowed.hosts: comma seperated values of hosts and/or ip addresses
+#                            that are allowed to call external email administration
+# email.admin.password: password required to call external email administration
+#
+email.admin.allowed.hosts=127.0.0.1,localhost
+email.admin.password=xPtO!)&#.
+
+
+
 #------------------------------------------------------------------------------
 # Miscellaneous 
 #------------------------------------------------------------------------------

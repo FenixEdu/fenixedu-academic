@@ -10752,4 +10752,14 @@
         <filterChains>
         </filterChains>     
     </service>      
+
+    <service>
+    	<name>SetEmail</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>      
+
 </serviceDefinitions>

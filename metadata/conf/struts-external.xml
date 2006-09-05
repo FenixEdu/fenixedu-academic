@@ -66,6 +66,13 @@
 			validate="false"
 			>
 		</action>		
+
+    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.SetEmail"
+            path="/setEmail"
+	        scope="request"
+	        parameter="method"
+			validate="true">
+    	</action>
     	   		
 	</action-mappings>
   
