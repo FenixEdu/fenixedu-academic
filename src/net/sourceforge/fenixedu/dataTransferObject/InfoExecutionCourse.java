@@ -117,7 +117,8 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public String getCourseReportFilled() {
-	return getExecutionCourse().getCourseReport().getReport() == null ? "false" : "true";
+	return (!getExecutionCourse().hasCourseReport() || getExecutionCourse().getCourseReport()
+		.getReport() == null) ? "false" : "true";
     }
 
     public String getEqualLoad() {
