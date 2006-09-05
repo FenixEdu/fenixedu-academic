@@ -66,6 +66,10 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
         this.converter = converter;
     }
     
+    public Object getConvertedValue() {
+        return null;
+    }
+    
     public Object getConvertedValue(MetaSlot slot) {
         return null;
     }

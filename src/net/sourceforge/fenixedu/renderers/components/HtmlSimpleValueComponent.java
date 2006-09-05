@@ -32,6 +32,15 @@ public abstract class HtmlSimpleValueComponent extends HtmlFormComponent {
     }
     
     @Override
+    public Object getConvertedValue() {
+        if (hasConverter()) {
+            return getConverter().convert(Object.class, getValue());
+        }
+        
+        return ConvertUtils.convert(getValue(), Object.class);
+    }
+    
+    @Override
     public Object getConvertedValue(MetaSlot slot) {
         if (hasConverter()) {
             return getConverter().convert(slot.getType(), getValue());
