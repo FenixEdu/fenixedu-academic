@@ -358,6 +358,12 @@ public class ComponentLifeCycle {
         viewState.setPostBack(true);
         
         MetaObject metaObject = viewState.getMetaObject();
+        
+        if (metaObject == null) {
+            viewState.setMetaObject(MetaObjectFactory.createObject(null, null));
+            metaObject = viewState.getMetaObject();
+        }
+        
         metaObject.setUser(viewState.getUser());
     
         Class contextClass = viewState.getContextClass();
