@@ -196,12 +196,12 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
             time2 = System.currentTimeMillis();
             int txNumber = getNumber();
             try {
+                time3 = System.currentTimeMillis();
                 // the updateFromTxLogs is made with the txNumber minus 1 to ensure that the select
                 // for update will return at least a record, and, therefore, lock the record
                 // otherwise, the mysql server may allow the select for update to continue
                 // concurrently with other executing commits in other servers
                 //if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber - 1, true) != txNumber) {
-                time3 = System.currentTimeMillis();
                 if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber, true) != txNumber) {
                     // the cache may have been updated, so perform the
                     // tx-validation again
@@ -242,13 +242,13 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 
             System.out.println(
                       ",1: " + (time1 == 0 || time2 == 0 ? "" : (time2 - time1))
-                    + ",2: " + (time2 == 0 || time3 == 0 ? "" : (time3 - time2))
-                    + ",3: " + (time3 == 0 || time4 == 0 ? "" : (time4 - time3))
-                    + ",4: " + (time4 == 0 || time5 == 0 ? "" : (time5 - time4))
-                    + ",5: " + (time5 == 0 || time6 == 0 ? "" : (time6 - time5))
-                    + ",6: " + (time6 == 0 || time7 == 0 ? "" : (time7 - time6))
-                    + ",7: " + (time7 == 0 || time8 == 0 ? "" : (time8 - time7))
-                    + ",8: " + (time8 == 0 || time9 == 0 ? "" : (time9 - time8))
+                    + "   ,2: " + (time2 == 0 || time3 == 0 ? "" : (time3 - time2))
+                    + "   ,3: " + (time3 == 0 || time4 == 0 ? "" : (time4 - time3))
+                    + "   ,4: " + (time4 == 0 || time5 == 0 ? "" : (time5 - time4))
+                    + "   ,5: " + (time5 == 0 || time6 == 0 ? "" : (time6 - time5))
+                    + "   ,6: " + (time6 == 0 || time7 == 0 ? "" : (time7 - time6))
+                    + "   ,7: " + (time7 == 0 || time8 == 0 ? "" : (time8 - time7))
+                    + "   ,8: " + (time8 == 0 || time9 == 0 ? "" : (time9 - time8))
                     );
         }
     }
