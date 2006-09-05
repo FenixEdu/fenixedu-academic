@@ -10,7 +10,6 @@
 <%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="net.sourceforge.fenixedu.util.SituationName" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoRole" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate" %>
 <html:form action="/editCandidate?method=change">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>  

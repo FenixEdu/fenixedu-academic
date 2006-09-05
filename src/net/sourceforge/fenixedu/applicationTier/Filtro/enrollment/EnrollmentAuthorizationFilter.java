@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
@@ -172,7 +173,11 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
     }
 
     protected Registration readStudent(IUserView userView) {
-        return userView.getPerson().getStudentByUsername();
+	Registration registration = userView.getPerson().getStudentByUsername();
+	if (registration == null) {
+	    return userView.getPerson().getStudentByType(DegreeType.DEGREE);
+	}
+	return registration;
     }
 
     protected Registration readStudent(Object[] arguments) {
