@@ -158,13 +158,13 @@ public class TransactionChangeLogs {
 
 	// read tx logs
 	int maxTxNumber = txNumber;
-        final long start = System.currentTimeMillis();
+        //final long start = System.currentTimeMillis();
 	ResultSet rs = stmt.executeQuery("SELECT OBJ_CLASS,OBJ_ID,OBJ_ATTR,TX_NUMBER FROM TX_CHANGE_LOGS WHERE TX_NUMBER > " 
 					 + maxTxNumber 
 					 + " ORDER BY TX_NUMBER"
 					 + (forUpdate ? " FOR UPDATE" : ""));
-        final long end = System.currentTimeMillis();
-        System.out.println("select for update took: " + (end - start));
+        //final long end = System.currentTimeMillis();
+        //System.out.println("select for update took: " + (end - start));
 
 	int previousTxNum = -1;
 	ChangeLogSet clSet = null;
