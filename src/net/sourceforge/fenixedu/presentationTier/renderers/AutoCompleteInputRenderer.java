@@ -336,6 +336,11 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                     String label = (String) RendererPropertyUtils.getProperty(object, getLabelField(), false);
                     textField.setValue(label);
                 }
+                else if (getRawSlotName() != null) {
+                    Object beanObject = getInputContext().getMetaObject().getObject();
+                    String rawText = (String) RendererPropertyUtils.getProperty(beanObject, getRawSlotName(), false);
+                    textField.setValue(rawText);
+                }
                 
                 if (getRawSlotName() != null) {
                     textField.setController(new UpdateRawNameController(getRawSlotName()));
