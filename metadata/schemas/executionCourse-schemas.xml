@@ -204,7 +204,7 @@
 		bundle="DEFAULT"
 		>
 	<slot name="section" hidden="true"/>
-	<slot name="name"/>
+	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
 	<slot name="itemOrder" key="label.itemOrder.before" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemOrderProvider" />
 		<property name="format" value="${name}" />
@@ -222,7 +222,7 @@
 		type="net.sourceforge.fenixedu.domain.Item"
 		bundle="DEFAULT"
 		>
-	<slot name="name"/>
+	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
 	<slot name="itemOrder" key="label.itemOrder.before" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemOrderProvider" />
 		<property name="format" value="${name}" />
