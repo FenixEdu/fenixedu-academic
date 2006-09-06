@@ -16,14 +16,17 @@ public class MultiLanguageString2SqlMultiLanguageStringConversion implements Fie
     }
 
     public Object sqlToJava(Object source) throws ConversionException {
-        if (source == null || source.equals("")) {
+        if (source == null) {
             return null;
+        } 
+	if (source.equals("")) {
+            return new MultiLanguageString();
         }
         if (source instanceof String) {
             return MultiLanguageString.importFromString((String) source);
         }
         
         return null;
-
     }
+
 }
