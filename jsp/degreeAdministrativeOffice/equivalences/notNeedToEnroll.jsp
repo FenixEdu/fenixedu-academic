@@ -16,7 +16,7 @@
 		<html:link page="/showNotNeedToEnroll.do?method=prepareNotNeedToEnroll&amp;insert=true" paramId="studentNumber" paramName="equivalencesForm" 
 			paramProperty="studentNumber"><bean:message bundle="DEGREE_ADM_OFFICE" key="link.notNeedToEnroll.insert"/></html:link>
 		<br/><br/>
-		<bean:define id="notNeedToEnrollList" name="infoStudentCurricularPlan" property="infoNotNeedToEnrollCurricularCourses"/>
+		
 		<bean:define id="infoDegreeCurricularPlan" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan"/>
 		<h3><bean:message bundle="DEGREE_ADM_OFFICE" key="title.student.notNeedToEnroll.current"/></h3>
 		<table cellpadding=3>
@@ -27,7 +27,7 @@
 			</tr>
 		
 		<bean:define id="studentNumber" name="equivalencesForm" property="studentNumber" type="java.lang.String"/>
-		<logic:iterate id="infoNotNeedToEnroll" name="notNeedToEnrollList">
+		<logic:iterate id="infoNotNeedToEnroll" name="infoNotNeedToEnrollCurricularCourses">
 			<tr>
 				<td class="listClasses"><bean:write name="infoDegreeCurricularPlan" property="name"/></td>
 				<td class="listClasses">
@@ -54,7 +54,7 @@
 					<th class="listClasses-header"><bean:message bundle="DEGREE_ADM_OFFICE" key="label.curricular.course.name"/></th>
 					<td class="listClasses-header"></td>
 				</tr>
-			<logic:iterate id="infoCurricularCourse" name="infoDegreeCurricularPlan" property="curricularCourses" indexId="index">
+			<logic:iterate id="infoCurricularCourse" name="infoDegreeCurricularPlanCurricularCourses" indexId="index">
 				<tr>
 					<td class="listClasses"><bean:write name="infoDegreeCurricularPlan" property="name"/></td>
 					<td class="listClasses">

@@ -1,7 +1,3 @@
-/**
- * Jul 26, 2005
- */
-
 package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.equivalences;
 
 import java.text.Collator;
@@ -15,12 +11,12 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -30,11 +26,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
-/**
- * @author Ricardo Rodrigues
- * 
- */
 
 public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
 
@@ -52,11 +43,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
     public ActionForward prepareNotNeedToEnroll(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        IUserView userView = getUserView(request);
-
-        String insert = (String) request.getParameter("insert");
+        final String insert = (String) request.getParameter("insert");
         if (insert != null) {
             request.setAttribute("insert", insert);
         }
@@ -69,25 +56,24 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
             studentNumber = new Integer((String) request.getAttribute("studentNumer"));
         }
 
-        Object args[] = { studentNumber, DegreeType.DEGREE };
-
-        InfoStudentCurricularPlan infoSCP = readStudentCurricularPlan(userView, args);
-        Collections.sort(infoSCP.getInfoNotNeedToEnrollCurricularCourses(), enrolmentCurricularCourseComparator);
-        Collections.sort(infoSCP.getInfoDegreeCurricularPlan().getCurricularCourses(), curricularCourseComparator);
+        final Object args[] = { studentNumber, DegreeType.DEGREE };
+        InfoStudentCurricularPlan infoSCP = readStudentCurricularPlan(getUserView(request), args);
+        
+        final List<InfoNotNeedToEnrollInCurricularCourse> infoNotNeedToEnrollCurricularCourses = infoSCP
+		.getInfoNotNeedToEnrollCurricularCourses();
+	Collections.sort(infoNotNeedToEnrollCurricularCourses, enrolmentCurricularCourseComparator);
+        
+        final List<InfoCurricularCourse> curricularCourses = infoSCP.getInfoDegreeCurricularPlan().getCurricularCourses();
+        Collections.sort(curricularCourses, curricularCourseComparator);
 
         request.setAttribute("infoStudentCurricularPlan", infoSCP);
+        request.setAttribute("infoNotNeedToEnrollCurricularCourses", infoNotNeedToEnrollCurricularCourses);
+        request.setAttribute("infoDegreeCurricularPlanCurricularCourses", curricularCourses);
         notNeedToEnrollForm.set("studentNumber", studentNumber.toString());
 
         return mapping.findForward("showNotNeedToEnroll");
     }
 
-    /**
-     * @param userView
-     * @param args
-     * @return
-     * @throws FenixServiceException
-     * @throws FenixFilterException
-     */
     private InfoStudentCurricularPlan readStudentCurricularPlan(
             IUserView userView, Object[] args) throws FenixServiceException, FenixFilterException {
         InfoStudentCurricularPlan infoSCP = 
@@ -110,16 +96,13 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
     public ActionForward insertNotNeedToEnroll(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-        IUserView userView = getUserView(request);
-
         DynaActionForm notNeedToEnrollForm = (DynaActionForm) form;
         Integer[] curricularCoursesID = (Integer[]) notNeedToEnrollForm.get("curricularCoursesID");
         Integer studentCurricularPlanID = new Integer((String) notNeedToEnrollForm
                 .get("studentCurricularPlanID"));
 
         Object[] args = { studentCurricularPlanID, curricularCoursesID };
-        ServiceManagerServiceFactory.executeService(userView,
+        ServiceManagerServiceFactory.executeService(getUserView(request),
                 "InsertNotNeedToEnrollInCurricularCourses", args);
 
         request.setAttribute("insert", "insert");
@@ -130,22 +113,14 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
     public ActionForward deleteNotNeedToEnroll(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-        IUserView userView = getUserView(request);
+        final IUserView userView = getUserView(request);
 
-        Integer notNeedToEnrollID = new Integer((String) request.getParameter("notNeedToEnrollID"));
-        Object[] args = { notNeedToEnrollID };
-        ServiceManagerServiceFactory.executeService(userView, "DeleteNotNeedToEnrollInCurricularCourse",
-                args);
+        final Object[] args = { Integer.valueOf((String) request.getParameter("notNeedToEnrollID")) };
+        ServiceManagerServiceFactory.executeService(userView, "DeleteNotNeedToEnrollInCurricularCourse", args);
         
-        Integer studentNumber = new Integer((String) request.getParameter("studentNumber"));
-       
-        Object[] args1 = { studentNumber, DegreeType.DEGREE };
-        InfoStudentCurricularPlan infoSCP = readStudentCurricularPlan(
-                userView, args1);
-
-        request.setAttribute("infoStudentCurricularPlan", infoSCP);
-        
+        final Integer studentNumber = Integer.valueOf((String) request.getParameter("studentNumber"));
+	request.setAttribute("infoStudentCurricularPlan", readStudentCurricularPlan(userView,
+		new Object[] { studentNumber, DegreeType.DEGREE }));
 
         return mapping.findForward("showNotNeedToEnroll");
     }
