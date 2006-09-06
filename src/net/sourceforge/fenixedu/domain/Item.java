@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -164,11 +165,13 @@ public class Item extends Item_Base {
 	    return new Item(section, getName(), getInformation(), getItemOrder());
 	}
     }
-    
-    public List<FileItem> getSortedFileItems() {
-	final Set<FileItem> sortedFileItems = new TreeSet<FileItem>(FileItem.COMPARATOR_BY_DISPLAY_NAME);
-	
-	return new ArrayList<FileItem>(sortedFileItems);
+
+    public SortedSet<FileItem> getSortedFileItems() {
+	final SortedSet<FileItem> sortedFileItems = new TreeSet<FileItem>(
+		FileItem.COMPARATOR_BY_DISPLAY_NAME);
+	sortedFileItems.addAll(getFileItems());
+
+	return sortedFileItems;
     }
 
 }
