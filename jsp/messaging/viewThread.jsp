@@ -16,12 +16,12 @@
 		<logic:present name="person">
 			<logic:present name="messages">			
 				<bean:define id="conversationMessages" name="thread" property="conversationMessages" />
-					<em>F�rum <bean:write name="forum" property="name"/></em>
+					<em><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.executionCourse.forum" />&nbsp;<bean:write name="forum" property="name"/></em>
 					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.title"/></h2>
 					
 					<p class="mbottom0">
 					<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId="+ forumId %>">
-						Voltar ao f�rum
+						<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.executionCourse.backToForum" />
 					</html:link>
 					</p>
 <!--					
