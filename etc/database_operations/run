@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Alter table WebsiteItem, change Title" alterTableWebSiteItemChangeTitle.sql
+execute "Correct value 0 in key begin executionPeriod" updateContextTable.sql
