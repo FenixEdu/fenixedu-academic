@@ -207,11 +207,13 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
                     // tx-validation again
                     time4 = System.currentTimeMillis();
                     if (!validateCommit()) {
+                        System.out.println("Invalid commit. Restarting.");
                         throw new jvstm.CommitException();
                     }
                     time5 = System.currentTimeMillis();
                 }
             } catch (SQLException sqlex) {
+                System.out.println("SqlException: " + sqlex.getMessage());
                 throw new CommitException();
             } catch (LookupException le) {
                 throw new Error("Error while obtaining database connection", le);
