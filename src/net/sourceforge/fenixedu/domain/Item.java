@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -160,6 +163,12 @@ public class Item extends Item_Base {
 	public Item execute(final Section section) {
 	    return new Item(section, getName(), getInformation(), getItemOrder());
 	}
+    }
+    
+    public List<FileItem> getSortedFileItems() {
+	final Set<FileItem> sortedFileItems = new TreeSet<FileItem>(FileItem.COMPARATOR_BY_DISPLAY_NAME);
+	
+	return new ArrayList<FileItem>(sortedFileItems);
     }
 
 }

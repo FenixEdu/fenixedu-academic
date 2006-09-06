@@ -1,10 +1,16 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
+
+import org.apache.commons.beanutils.BeanComparator;
+
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class FileItem extends FileItem_Base {
 
+    public static final Comparator<FileItem> COMPARATOR_BY_DISPLAY_NAME = new BeanComparator("displayName");
+    
     static {
         ItemFileItem.addListener(new ItemFileItemListener());
     }

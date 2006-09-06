@@ -20,7 +20,7 @@
 			<br/>
 			<br/>
 		</logic:notEmpty>
-		<logic:notEmpty name="item" property="fileItems">
+		<logic:notEmpty name="item" property="sortedFileItems">
 			<br/>
 			<table>
 				<logic:iterate id="fileItem" name="item" property="fileItems">

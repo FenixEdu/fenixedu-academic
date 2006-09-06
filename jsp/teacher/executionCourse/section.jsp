@@ -83,7 +83,7 @@
 			<br/>
 			<br/>
 			<table>
-				<logic:iterate id="fileItem" name="item" property="fileItems">
+				<logic:iterate id="fileItem" name="item" property="sortedFileItems">
 					<bean:define id="itemCode" name="item" property="idInternal" type="java.lang.Integer"/>
 					<bean:define id="displayName" name="fileItem" property="displayName" type="java.lang.String"/>
 					<bean:define id="externalStorageIdentification" name="fileItem" property="externalStorageIdentification" type="java.lang.String"/>
