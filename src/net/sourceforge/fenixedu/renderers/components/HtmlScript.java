@@ -106,18 +106,27 @@ public class HtmlScript extends HtmlComponent {
     }
 
     private boolean wasIncluded(PageContext context) {
-        if (getSource() == null) {
-            return false;
+        String includeId = null;
+        
+        if (getSource() != null) {
+            includeId = getSource();
+        }
+        else if (getScript() != null) {
+            includeId = String.valueOf(getScript().hashCode());
         }
 
-        ServletRequest request = context.getRequest();
-        String sourceName = getClass().getName() + "/included/" + getSource();
+        if (includeId == null) {
+            return false;
+        }
         
-        if (request.getAttribute(sourceName) != null) {
+        ServletRequest request = context.getRequest();
+        String conditionalName = getClass().getName() + "/included/" + includeId;
+        
+        if (request.getAttribute(conditionalName) != null) {
             return true;
         }
         else {
-            request.setAttribute(sourceName, true);
+            request.setAttribute(conditionalName, true);
             return false;
         }
     }
