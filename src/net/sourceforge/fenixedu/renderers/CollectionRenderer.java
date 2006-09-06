@@ -121,6 +121,8 @@ public class CollectionRenderer extends OutputRenderer {
 
     private String sortBy;
     
+    private boolean selectAllShown;
+    
     public CollectionRenderer() {
         super();
         
@@ -599,6 +601,21 @@ public class CollectionRenderer extends OutputRenderer {
 
     protected int getNumberOfLinks() {
         return this.links.size();
+    }
+    
+    
+    public boolean isSelectAllShown() {
+        return this.selectAllShown;
+    }
+
+    /**
+     * Makes the renderer add and option that selects and unselects 
+     * all the remaining options.
+     * 
+     * @property
+     */
+    public void setSelectAllShown(boolean selectAllShown) {
+        this.selectAllShown = selectAllShown;
     }
 
     @Override
