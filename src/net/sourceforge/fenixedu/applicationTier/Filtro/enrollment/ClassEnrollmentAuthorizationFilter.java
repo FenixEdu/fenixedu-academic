@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -30,7 +31,11 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
-        final Registration registration = getRemoteUser(request).getPerson().getStudentByUsername();
+        Registration registration = getRemoteUser(request).getPerson().getStudentByUsername();
+        if(registration == null){
+            registration = getRemoteUser(request).getPerson().getStudentByType(DegreeType.DEGREE);
+        }
+        
         final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan(); 
         
         if (studentCurricularPlan != null) {

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -34,7 +36,12 @@ public class ViewStudentTimeTable extends FenixAction {
 
         IUserView userView = getUserView(request);
 
-        Object[] args = { userView.getPerson().getStudentByUsername() };
+        Registration registration = userView.getPerson().getStudentByUsername();
+	if (registration == null) {
+	    registration = userView.getPerson().getStudentByType(DegreeType.DEGREE);
+	}        
+        
+	Object[] args = { registration };
         List infoLessons;
         try {
             infoLessons = (List) ServiceUtils.executeService(userView, "ReadStudentTimeTable", args);
