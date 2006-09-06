@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 public class CreateLesson extends Service {
 
     public InfoLessonServiceResult run(DiaSemana weekDay, Calendar begin, Calendar end, Integer frequency, 
-    		Integer weekOfQuinzenalStart, InfoRoomOccupation infoRoomOccupation, InfoShift infoShift)
+    		Integer weekOfQuinzenalStart, InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift)
             throws FenixServiceException {
     	
         final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(
@@ -90,7 +90,7 @@ public class CreateLesson extends Service {
         return result;
     }
 
-    private boolean validNoInterceptingLesson(InfoRoomOccupation infoRoomOccupation) {
+    private boolean validNoInterceptingLesson(InfoRoomOccupationEditor infoRoomOccupation) {
         final OldRoom room = OldRoom.findOldRoomByName(infoRoomOccupation.getInfoRoom().getNome());
         final List<RoomOccupation> roomOccupations = room.getRoomOccupations();
 
