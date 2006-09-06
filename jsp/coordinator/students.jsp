@@ -55,9 +55,7 @@
 			</h:panelGroup>
 
 			<h:outputText value="#{bundle['label.viewPhoto']}: " />
-			<h:selectBooleanCheckbox id="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}">
-				true
-			</h:selectBooleanCheckbox>
+			<h:selectBooleanCheckbox id="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}" />
 		</h:panelGrid>
 
 		<h:commandButton alt="#{htmlAltBundle['commandButton.search']}" styleClass="inputbutton" value="#{bundle['button.search']}"/>
@@ -73,25 +71,26 @@
 	<f:verbatim>
 		<c:forEach items="${CoordinatorStudentsBackingBean.indexes}" var="pageIndex" varStatus="status">
 			<c:if test="${status.first}">
-			<c:if test="${pageIndex != CoordinatorStudentsBackingBean.minIndex}">
-				<c:url value="students.faces" var="pageURL">
-					<c:param name="degreeCurricularPlanID" value="${CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
-					<c:param name="sortBy" value="${CoordinatorStudentsBackingBean.sortBy}"/>
-					<c:param name="studentCurricularPlanStateString" value="${CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
-					<c:param name="minGradeString" value="${CoordinatorStudentsBackingBean.minGradeString}"/>
-					<c:param name="maxGradeString" value="${CoordinatorStudentsBackingBean.maxGradeString}"/>
-					<c:param name="minNumberApprovedString" value="${CoordinatorStudentsBackingBean.minNumberApprovedString}"/>
-					<c:param name="maxNumberApprovedString" value="${CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
-					<c:param name="minStudentNumberString" value="${CoordinatorStudentsBackingBean.minStudentNumberString}"/>
-					<c:param name="maxStudentNumberString" value="${CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
-					<c:param name="showPhoto" value="${CoordinatorStudentsBackingBean.showPhoto}"/>
-					<c:param name="minIndex" value="${CoordinatorStudentsBackingBean.minIndex - CoordinatorStudentsBackingBean.resultsPerPage}"/>
-					<c:param name="maxIndex" value="${CoordinatorStudentsBackingBean.maxIndex - CoordinatorStudentsBackingBean.resultsPerPage}"/>
-				</c:url>
-				<a href='<c:out value="${pageURL}"/>'>
-					<c:out value="<< "/>
-				</a>
-			</c:if>
+				<c:if test="${pageIndex != CoordinatorStudentsBackingBean.minIndex}">
+					<c:url value="students.faces" var="pageURL">
+						<c:param name="degreeCurricularPlanID" value="${CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
+						<c:param name="sortBy" value="${CoordinatorStudentsBackingBean.sortBy}"/>
+						<c:param name="studentCurricularPlanStateString" value="${CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
+						<c:param name="minGradeString" value="${CoordinatorStudentsBackingBean.minGradeString}"/>
+						<c:param name="maxGradeString" value="${CoordinatorStudentsBackingBean.maxGradeString}"/>
+						<c:param name="minNumberApprovedString" value="${CoordinatorStudentsBackingBean.minNumberApprovedString}"/>
+						<c:param name="maxNumberApprovedString" value="${CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
+						<c:param name="minStudentNumberString" value="${CoordinatorStudentsBackingBean.minStudentNumberString}"/>
+						<c:param name="maxStudentNumberString" value="${CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+						<c:param name="showPhoto" value="${CoordinatorStudentsBackingBean.showPhoto}"/>
+						<c:param name="minIndex" value="${CoordinatorStudentsBackingBean.minIndex - CoordinatorStudentsBackingBean.resultsPerPage}"/>
+						<c:param name="maxIndex" value="${CoordinatorStudentsBackingBean.maxIndex - CoordinatorStudentsBackingBean.resultsPerPage}"/>
+					</c:url>
+					<a href='<c:out value="${pageURL}"/>'>
+						<c:out value="<<" />
+					</a>
+					<c:out value="&nbsp;&nbsp;" escapeXml="false" />
+				</c:if>
 			</c:if>
 			<c:if test="${pageIndex == CoordinatorStudentsBackingBean.minIndex}">
 				<c:out value="${status.index + 1}"/>
@@ -134,8 +133,9 @@
 					<c:param name="minIndex" value="${CoordinatorStudentsBackingBean.minIndex + CoordinatorStudentsBackingBean.resultsPerPage}"/>
 					<c:param name="maxIndex" value="${CoordinatorStudentsBackingBean.maxIndex + CoordinatorStudentsBackingBean.resultsPerPage}"/>
 				</c:url>
+				<c:out value="&nbsp;&nbsp;" escapeXml="false" />
 				<a href='<c:out value="${pageURL}"/>'>
-					<c:out value=" >>"/>
+					<c:out value=">>"/>
 				</a>
 			</c:if>
 			</c:if>
