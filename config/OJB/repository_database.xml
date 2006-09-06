@@ -32,6 +32,7 @@ using the MetadataManager.
 
         <connection-pool
             maxActive="21"
+            maxIdle="5"
             validationQuery="select 1"
             whenExhaustedAction="2"/>
 
