@@ -201,8 +201,8 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
                 // for update will return at least a record, and, therefore, lock the record
                 // otherwise, the mysql server may allow the select for update to continue
                 // concurrently with other executing commits in other servers
-                if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber - 1, true) != txNumber) {
-                //if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber, true) != txNumber) {
+                //if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber - 1, true) != txNumber) {
+                if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber, true) != txNumber) {
                     // the cache may have been updated, so perform the
                     // tx-validation again
                     time4 = System.currentTimeMillis();
