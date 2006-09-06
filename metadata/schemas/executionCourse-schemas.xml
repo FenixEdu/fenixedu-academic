@@ -179,7 +179,7 @@
 		>
 	<slot name="site" hidden="true"/>
 	<slot name="superiorSection" hidden="true"/>
-	<slot name="name"/>
+	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
 	<slot name="sectionOrder" key="label.sectionOrder.before" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionOrderProvider" />
 		<property name="format" value="${name}" />
@@ -191,7 +191,7 @@
 		type="net.sourceforge.fenixedu.domain.Section"
 		bundle="DEFAULT"
 		>
-	<slot name="name"/>
+	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
 	<slot name="sectionOrder" key="label.sectionOrder.before" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionOrderProvider" />
 		<property name="format" value="${name}" />
