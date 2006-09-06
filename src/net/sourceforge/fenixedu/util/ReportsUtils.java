@@ -61,8 +61,16 @@ public class ReportsUtils extends PropertiesManager {
                         printRequestAttributeSet);
                 exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE, printService);
                 exporter.exportReport();
+                System.out.println("Printer Job Sended");
                 return true;
             } else {
+        	if(jasperPrint == null) {
+        	    System.out.println("Couldn't find report " + key);
+        	}
+        	if(printService == null) {
+        	    System.out.println("Couldn't find print service " + printerName);
+        	}
+        	
                 return false;
             }
         } catch (JRException e) {
