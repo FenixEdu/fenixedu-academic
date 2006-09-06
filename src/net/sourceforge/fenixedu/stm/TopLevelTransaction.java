@@ -80,8 +80,8 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
         try {
             return TransactionChangeLogs.updateFromTxLogsOnDatabase(getOJBBroker(), currentNumber);
         } catch (Exception sqle) {
-            sqle.printStackTrace();
-            throw new Error("Error while updating from TX_CHANGE_LOGS: Cannot proceed.", sqle);
+//            sqle.printStackTrace();
+            throw new Error("Error while updating from TX_CHANGE_LOGS: Cannot proceed: " + sqle.getMessage(), sqle);
         }
     }
 
