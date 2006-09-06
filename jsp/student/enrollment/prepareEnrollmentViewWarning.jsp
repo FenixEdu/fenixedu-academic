@@ -4,7 +4,7 @@
 <html:xhtml/>
 
 <div  align="center"  >
-	<span class="error"><!-- Error messages go here --><html:errors /></span>
+	<span class="error"><!-- Error messages go here --><html:errors />Reservas de turmas do 1º Ano só a partir de 25 de Setembro de 2006</span>
 	<logic:messagesPresent message="true">
 		<ul>
 			<html:messages id="messages" message="true">
