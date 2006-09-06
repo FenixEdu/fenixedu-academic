@@ -70,9 +70,9 @@ public class DegreeCurricularPlanLEIC extends DegreeCurricularPlanLEIC_Base {
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears(
                 studentCurricularPlan, executionPeriod, 4));        
-        result.add(new LEICBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
         result.add(new SpecificLEICEnrollmentRule(studentCurricularPlan, executionPeriod));
-
+        result.add(new LEICBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
+        
         return result;
     }
     

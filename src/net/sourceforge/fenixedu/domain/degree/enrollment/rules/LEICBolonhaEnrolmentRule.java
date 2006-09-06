@@ -16,8 +16,10 @@ public class LEICBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private static final String[] DEGREE = {"B63"};
 
-    private static final String[] MASTER_DEGREE = {"$38", "$129"};
-
+    private static final String[] MASTER_DEGREE = {"$129"};
+    
+    private static final String[] INVESTIGACAO = {"$38"};
+    
     public LEICBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
 	    ExecutionPeriod executionPeriod) {
 	super(studentCurricularPlan, executionPeriod);
@@ -28,10 +30,11 @@ public class LEICBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    throws EnrolmentRuleDomainException {
 
 	if(studentCurricularPlan.getBranch() != null && studentCurricularPlan.getSecundaryBranch() != null) {
-	    if (countEnrolments(DEGREE) == 1) {
+	    if (countEnroledOrAprovedEnrolments(DEGREE) == 1) {
 		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(MASTER_DEGREE));
+		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(INVESTIGACAO));
 	    }
-	    if (countEnrolments(MASTER_DEGREE) >= 1) {
+	    if (countEnroledOrAprovedEnrolments(MASTER_DEGREE) == 1) {
 		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(DEGREE));
 	    }
 	} else {
