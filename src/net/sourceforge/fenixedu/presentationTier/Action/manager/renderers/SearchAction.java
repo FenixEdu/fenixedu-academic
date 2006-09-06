@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.renderers.components.state.ViewState;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -40,7 +40,7 @@ public class SearchAction extends FenixDispatchAction {
     }
 
     private SearchBean getBean(HttpServletRequest request) {
-        ViewState viewState = (ViewState) RenderUtils.getViewState();
+        IViewState viewState = (IViewState) RenderUtils.getViewState();
         return (SearchBean) viewState.getMetaObject().getObject();
     }
 }
