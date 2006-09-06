@@ -699,16 +699,16 @@ public class CollectionRenderer extends OutputRenderer {
             if (isCheckable() && isSelectAllShown()) {
                 HtmlInlineContainer container = new HtmlInlineContainer();
                 
-                HtmlLink link = createInvertSelectionLink();
+                HtmlComponent selectAllComponent = createInvertSelectionLink();
                 
                 if (String.valueOf(getSelectAllLocation()).contains(LOCATION_TOP) || String.valueOf(getSelectAllLocation()).contains(LOCATION_BOTH)) {
-                    container.addChild(link);
+                    container.addChild(selectAllComponent);
                 }
 
                 container.addChild(component);
                 
                 if (String.valueOf(getSelectAllLocation()).contains(LOCATION_BOTTOM) || String.valueOf(getSelectAllLocation()).contains(LOCATION_BOTH)) {
-                    container.addChild(link);
+                    container.addChild(selectAllComponent);
                 }
                 
                 return container;
@@ -718,7 +718,8 @@ public class CollectionRenderer extends OutputRenderer {
             }
         }
 
-        private HtmlLink createInvertSelectionLink() {
+        private HtmlComponent createInvertSelectionLink() {
+            HtmlInlineContainer container = new HtmlInlineContainer();
             HtmlScript script = new HtmlScript();
             
             script.setContentType("text/javascript");
@@ -745,14 +746,18 @@ public class CollectionRenderer extends OutputRenderer {
                 "}"
             );
             
+            container.addChild(script);
+            
             String selectAllScript = "invertSelectionAll('" + getCheckboxName() + "')"; 
 
             HtmlLink link = new HtmlLink();
+            link.setContextRelative(false);
             link.setText(RenderUtils.getResourceString("renderers.table.selectAll"));
             link.setOnClick(selectAllScript);
             link.setOnDblClick(selectAllScript);
+            container.addChild(link);
             
-            return link;
+            return container;
         }
 
         @Override
