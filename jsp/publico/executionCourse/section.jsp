@@ -10,15 +10,17 @@
 <logic:notEmpty name="section" property="associatedItems">
 	<logic:iterate id="item" name="section" property="orderedItems">
 		<h3><fr:view name="item" property="name"/></h3>
-		<fr:view name="item" property="information">
-			<fr:layout>
-				<fr:property name="escaped" value="false" />
-				<fr:property name="newlineAware" value="false" />
-			</fr:layout>
-		</fr:view>
-		<br/>
-		<logic:notEmpty name="item" property="fileItems">
+		<logic:notEmpty name="item" property="information">
+			<fr:view name="item" property="information">
+				<fr:layout>
+					<fr:property name="escaped" value="false" />
+					<fr:property name="newlineAware" value="false" />
+				</fr:layout>
+			</fr:view>
 			<br/>
+			<br/>
+		</logic:notEmpty>
+		<logic:notEmpty name="item" property="fileItems">
 			<br/>
 			<table>
 				<logic:iterate id="fileItem" name="item" property="fileItems">
