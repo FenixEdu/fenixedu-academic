@@ -191,7 +191,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         final String sortBy = (getSortBy() != null) ? getSortBy() : "student.number";
         Collections.sort(studentCurricularPlans, new BeanComparator(sortBy));
 
-        return studentCurricularPlans.subList(getMinIndex() - 1, Math.min(getMaxIndex() - 1, studentCurricularPlans.size()));
+        return studentCurricularPlans.subList(getMinIndex() - 1, Math.min(getMaxIndex(), studentCurricularPlans.size()));
     }
 
     private boolean matchesSelectCriteria(final StudentCurricularPlan studentCurricularPlan) {
@@ -280,13 +280,13 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         return Integer.valueOf(RESULTS_PER_PAGE);
     }
 
-	public Boolean getShowPhoto() {
-        final String showPhotoString = getAndHoldStringParameter("showPhoto");
-        return ("true".equals(showPhotoString)) ? Boolean.TRUE : showPhoto;
-	}
+    public Boolean getShowPhoto() {
+	final String showPhotoString = getAndHoldStringParameter("showPhoto");
+	return ("true".equals(showPhotoString)) ? Boolean.TRUE : showPhoto;
+    }
 
-	public void setShowPhoto(Boolean showPhoto) {
-		this.showPhoto = showPhoto;
-	}
+    public void setShowPhoto(Boolean showPhoto) {
+	this.showPhoto = showPhoto;
+    }
 
 }
