@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
 
 import org.w3c.dom.Attr;
@@ -17,6 +19,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.w3c.tidy.Tidy;
 
 public class SafeHtmlConverter extends TidyConverter {
@@ -96,15 +99,9 @@ public class SafeHtmlConverter extends TidyConverter {
         if (name.equals("img")) {
             String source = element.getAttribute("src");
             
-            if (! isRelative(source)) {
-                return false;
-            }
-
-            
             try {
                 URL url = new URL(source);
-
-                if (! (url.getPath().contains("/emotions/") || url.getPath().startsWith("/images/"))) {
+                if (isPrivateURL(url)) {
                     return false;
                 }
             } catch (MalformedURLException e) {
@@ -119,21 +116,11 @@ public class SafeHtmlConverter extends TidyConverter {
         return true;
     }
 
-    private boolean isRelative(String uri) {
-        if (! (uri.startsWith("https://") || uri.startsWith("http://") || uri.startsWith("ftp://") || uri.startsWith("mailto:"))) {
-            return true;
-        }
-        else {
-            HttpServletRequest currentRequest = RenderersRequestProcessor.getCurrentRequest();
-            String serverName = currentRequest.getServerName();
+    private boolean isRelative(URL url) {
+        HttpServletRequest currentRequest = RenderersRequestProcessor.getCurrentRequest();
+        String serverName = currentRequest.getServerName();
 
-            try {
-                URL url = new URL(uri);
-                return serverName.equals(url.getHost());
-            } catch (MalformedURLException e) {
-                return false;
-            }
-        }
+        return serverName.equals(url.getHost()) && url.getPath().startsWith(currentRequest.getContextPath());
     }
     
     private boolean isThrustedAttribute(Node parent, Attr attribute) {
@@ -158,35 +145,66 @@ public class SafeHtmlConverter extends TidyConverter {
         }
 
         if (name.equals("href")) {
-            if (isRelative(value)) { // protect links to private places of the application
-                try {
-                    URL url = new URL(value);
+            try {
+                URL url = new URL(value);
+                
+                if (isPrivateURL(url)) {
+                    NodeList list = parent.getChildNodes();
+                    for (int i = 0; i < list.getLength(); i++) {
+                        Node node = list.item(i);
 
-                    if (url.getPath().contains("/publico/")) {
-                        return true;
-                    } else if (url.getPath().contains("/emotions/")) {
-                        return true;
-                    } else {
-                        NodeList list = parent.getChildNodes();
-                        for (int i = 0; i < list.getLength(); i++) {
-                            Node node = list.item(i);
-
-                            parent.removeChild(node);
-                        }
-
-                        parent.appendChild(parent.getOwnerDocument().createTextNode(value));
-                        return false;
+                        parent.removeChild(node);
                     }
-                } catch (MalformedURLException e) {
+
+                    Text newNode = parent.getOwnerDocument().createTextNode(value);
+                    Node linkParent = parent.getParentNode();
+                    linkParent.replaceChild(newNode, parent);
+                    
                     return false;
                 }
-
-            } else {
+                else {
+                    return true;
+                }
+            } catch (MalformedURLException e) {
                 return false;
             }
         }
         
         return true;
+    }
+
+    private boolean isPrivateURL(URL url) {
+        if (! isRelative(url)) {
+            return false;
+        }
+        
+        String path = url.getPath();
+
+        HttpServletRequest currentRequest = RenderersRequestProcessor.getCurrentRequest();
+        String contextPath = currentRequest.getContextPath();
+        
+        if (path.startsWith(contextPath)) {
+            path = path.substring(contextPath.length());
+        }
+        
+        for (Role role : RootDomainObject.getInstance().getRoles()) {
+            if (path.startsWith(role.getPortalSubApplication())) {
+                return true;
+            }
+        }
+        
+        String[] forbiddenPaths = new String[] {
+                "^/dotIstPortal\\.do.*",
+                "^/home\\.do.*"
+        };
+        
+        for (String forbiddenPath : forbiddenPaths) {
+            if (path.matches(forbiddenPath)) {
+                return true;
+            }
+        }
+
+        return false;
     }
     
 }
