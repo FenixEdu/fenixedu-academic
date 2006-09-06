@@ -36,7 +36,6 @@ public class Script {
 		cmd.append(user);
 		
 		ScriptResult scriptResult = runCmd(cmd.toString(), pass);
-		
 		if(scriptResult.getExitCode() == -1) {
 			throw new ExcepcaoPersistencia(scriptResult.getReturnCode());
 		} else {
@@ -94,6 +93,7 @@ public class Script {
 			return new ScriptResult(exitCode, returnCode);
 			
 		} catch(Exception e) {
+		    	e.printStackTrace();
 			return new ScriptResult(-1, e.getMessage());
 		} finally {
 			try {
