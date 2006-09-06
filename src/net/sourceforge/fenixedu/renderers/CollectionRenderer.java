@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
+import net.sourceforge.fenixedu.renderers.components.HtmlScript;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
@@ -115,19 +116,26 @@ public class CollectionRenderer extends OutputRenderer {
     
     private String checkboxValue;
     
+    private boolean selectAllShown;
+    
+    private String selectAllLocation;
+    
+    private static final String LOCATION_BOTTOM = "bottom";
+    private static final String LOCATION_TOP = "top";
+    private static final String LOCATION_BOTH = "both";
+    
     private Map<String, TableLink> links;
     
     private List<TableLink> sortedLinks;
 
     private String sortBy;
     
-    private boolean selectAllShown;
-    
     public CollectionRenderer() {
         super();
         
         this.links = new Hashtable<String, TableLink>();
         this.sortedLinks = new ArrayList<TableLink>();
+        this.selectAllLocation = "bottom";
     }
 
     public String getCaption() {
@@ -539,6 +547,45 @@ public class CollectionRenderer extends OutputRenderer {
         this.checkboxValue = checkboxValue;
     }
 
+    public boolean isSelectAllShown() {
+        return this.selectAllShown;
+    }
+
+    /**
+     * Indicates that a link to select all checkboxes should be included in the
+     * presentation. This property is only valid when the
+     * {@link #setCheckable(boolean) checkable} is <code>true</code>.
+     * 
+     * @property
+     */
+    public void setSelectAllShown(boolean selectAllShown) {
+        this.selectAllShown = selectAllShown;
+    }
+
+    public String getSelectAllLocation() {
+        return this.selectAllLocation;
+    }
+
+    /**
+     * Chooses where the link should be placed. You can indicate the locations as text and the 
+     * options are <code>top</code>, <code>bottom</code>, or <code>both</code>.
+     * 
+     * <p>
+     * Example: <br/>
+     * <code>selectAllLocation=both</code> <br/>
+     * <code>selectAllLocation=top, bottom</code> <br/>
+     * <code>selectAllLocation=bottom</code> (the default)<br/>
+     * 
+     * @property
+     */
+    public void setSelectAllLocation(String selectAllLocation) {
+        this.selectAllLocation = selectAllLocation;
+        
+        if (this.selectAllLocation != null) {
+            this.selectAllLocation = this.selectAllLocation.toLowerCase();
+        }
+    }
+
     public String getLinkFormat(String name) {
         return getTableLink(name).getLinkFormat();
     }
@@ -603,21 +650,6 @@ public class CollectionRenderer extends OutputRenderer {
         return this.links.size();
     }
     
-    
-    public boolean isSelectAllShown() {
-        return this.selectAllShown;
-    }
-
-    /**
-     * Makes the renderer add and option that selects and unselects 
-     * all the remaining options.
-     * 
-     * @property
-     */
-    public void setSelectAllShown(boolean selectAllShown) {
-        this.selectAllShown = selectAllShown;
-    }
-
     @Override
     protected Layout getLayout(Object object, Class type) {
         Collection sortedCollection = RenderUtils.sortCollectionWithCriteria((Collection) object, getSortBy());
@@ -658,6 +690,69 @@ public class CollectionRenderer extends OutputRenderer {
             }
             
             return metaObjects;
+        }
+
+        @Override
+        public HtmlComponent createLayout(Object object, Class type) {
+            HtmlComponent component = super.createLayout(object, type);
+            
+            if (isCheckable() && isSelectAllShown()) {
+                HtmlInlineContainer container = new HtmlInlineContainer();
+                
+                HtmlLink link = createInvertSelectionLink();
+                
+                if (String.valueOf(getSelectAllLocation()).contains(LOCATION_TOP) || String.valueOf(getSelectAllLocation()).contains(LOCATION_BOTH)) {
+                    container.addChild(link);
+                }
+
+                container.addChild(component);
+                
+                if (String.valueOf(getSelectAllLocation()).contains(LOCATION_BOTTOM) || String.valueOf(getSelectAllLocation()).contains(LOCATION_BOTH)) {
+                    container.addChild(link);
+                }
+                
+                return container;
+            }
+            else {
+                return component;
+            }
+        }
+
+        private HtmlLink createInvertSelectionLink() {
+            HtmlScript script = new HtmlScript();
+            
+            script.setContentType("text/javascript");
+            script.setConditional(true);
+            script.setScript(
+                "function invertSelectionAll(n) {" +
+                "    var allChecked = true;" +
+                "    var elements = document.getElementsByName(n);" +
+                "\n" +
+                "    for (var index=0; index<elements.length; index++) {" +
+                "        var element = elements[index];" +
+                "\n" +
+                "        if (! element.checked) {" +
+                "            allChecked = false;" +
+                "            element.checked = true;" +
+                "        }" + 
+                "    }" +
+                "\n" +
+                "    if (allChecked) {" +
+                "        for (var index=0; index<elements.length; index++) {" +
+                "            elements[index].checked = false;" +
+                "        }" +
+                "    }" +
+                "}"
+            );
+            
+            String selectAllScript = "invertSelectionAll('" + getCheckboxName() + "')"; 
+
+            HtmlLink link = new HtmlLink();
+            link.setText(RenderUtils.getResourceString("renderers.table.selectAll"));
+            link.setOnClick(selectAllScript);
+            link.setOnDblClick(selectAllScript);
+            
+            return link;
         }
 
         @Override
