@@ -32,9 +32,10 @@ public class AddContextToCourseGroup extends Service {
             final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
             final ExecutionYear nextExecutionYear = currentExecutionYear.getNextExecutionYear();
             if (nextExecutionYear == null) {
-                throw new FenixServiceException("error.no.next.execution.year");
+        	beginExecutionPeriod = currentExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
+            } else {
+        	beginExecutionPeriod = nextExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
             }
-            beginExecutionPeriod = nextExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
         } else {
             beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
         }
