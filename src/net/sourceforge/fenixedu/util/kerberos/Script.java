@@ -5,10 +5,9 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import pt.utl.ist.fenix.tools.util.StringAppender;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class Script {
 
@@ -34,16 +33,19 @@ public class Script {
 
     public static void changeKerberosPass(String user, String pass) throws ExcepcaoPersistencia,
 	    KerberosException {
+        System.out.println("Calling change password script.");
 	runCommand("changePassScript", user, pass);
     }
 
     public static void createUser(String user, String pass) throws ExcepcaoPersistencia,
 	    KerberosException {
+        System.out.println("Calling create user script.");
 	runCommand("createUserScript", user, pass);
     }
 
     public static void verifyPass(String user, String pass) throws ExcepcaoPersistencia,
 	    KerberosException {
+        System.out.println("Calling verify password script.");
 	runCommand("verifyPassScript", user, pass);
     }
 
