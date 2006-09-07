@@ -200,6 +200,7 @@ input { font-size: 11px; }
 	<table class="style1">
 		<tr class="header">
 		<th class="listClasses-header"><bean:message key="label.courses" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.degree.name" bundle="STUDENT_RESOURCES"/></th>		
 		<th class="listClasses-header"><bean:message key="label.course.type" bundle="STUDENT_RESOURCES"/></th>		
 		<th class="listClasses-header"><bean:message key="label.course.enrollment.ectsCredits" bundle="STUDENT_RESOURCES"/></th>
 		<th class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></th>
@@ -208,6 +209,8 @@ input { font-size: 11px; }
 		<logic:iterate id="enrollmentElem" name="studentCurrentSemesterEnrollments" type="net.sourceforge.fenixedu.domain.Enrolment">
 			<tr>
 				<td class="listClasses courses"><bean:write name="enrollmentElem" property="curricularCourse.name"/></td>
+				
+				<td class="listClasses courses"><bean:write name="enrollmentElem" property="curricularCourse.degreeCurricularPlan.degree.sigla"/></td>
 				
 				<% if (enrollmentElem instanceof net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse) { %>
 					<td class="listClasses"><bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.extra"/></td>
@@ -251,6 +254,7 @@ input { font-size: 11px; }
 		</logic:present>	
 		<tr class="header">
 		<th class="listClasses-header"><bean:message key="label.course" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.degree.name" bundle="STUDENT_RESOURCES"/></th>				
 		<th class="listClasses-header"><bean:message key="label.course.type" bundle="STUDENT_RESOURCES"/></th>	
 		<th class="listClasses-header"><bean:message key="label.course.enrollment.ectsCredits" bundle="STUDENT_RESOURCES"/></th>
 		<th class="listClasses-header"><bean:message key="label.course.enrollment.curricularYear" bundle="STUDENT_RESOURCES"/></th>
@@ -261,6 +265,7 @@ input { font-size: 11px; }
 			<bean:define id="curricularCourse2EnrolIndex" name="curricularCourse2Enrol" property="curricularCourse.idInternal"/>
 			<tr>
 				<td class="listClasses courses"><bean:write name="curricularCourse2Enrol" property="curricularCourse.name"/></td>
+				<td class="listClasses courses"><bean:write name="curricularCourse2Enrol" property="curricularCourse.degreeCurricularPlan.degree.sigla"/></td>
 				<td class="listClasses">
 					<% if (curricularCourse2Enrol.isOptionalCurricularCourse()) {%>
 						<bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.optional" />
