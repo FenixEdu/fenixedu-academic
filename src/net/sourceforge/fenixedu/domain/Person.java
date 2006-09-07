@@ -1490,4 +1490,10 @@ public class Person extends Person_Base {
 	return super.getPais();
     }
 
+    @Override
+    public String getEmail() {
+        final String institutionalEmail = getInstitutionalEmail();
+        return institutionalEmail != null && institutionalEmail.length() > 0 ? institutionalEmail : super.getEmail();
+    }
+
 }

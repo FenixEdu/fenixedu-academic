@@ -59,9 +59,9 @@ public class SetEmail extends Service {
 	if (person == null) {
 	    throw new UserDoesNotExistException();
 	}
-	final String currentEmail = person.getEmail();
+	final String currentEmail = person.getInstitutionalEmail();
 	if (currentEmail == null || currentEmail.length() == 0) {
-	    person.setEmail(email);
+	    person.setInstitutionalEmail(email);
 	} else {
 	    throw new UserAlreadyHasEmailException(currentEmail);
 	}

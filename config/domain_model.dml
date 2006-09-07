@@ -2980,6 +2980,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		String workPhone;
 		String mobile;
 		String email;
+		String institutionalEmail;
 		Boolean availableEmail;
 		Boolean availableWebSite;
 		Boolean availablePhoto;
