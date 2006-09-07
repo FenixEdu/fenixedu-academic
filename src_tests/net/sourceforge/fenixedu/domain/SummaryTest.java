@@ -10,6 +10,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class SummaryTest extends DomainTestBase {
 
@@ -47,8 +48,8 @@ public class SummaryTest extends DomainTestBase {
 
         summary = new Summary();
         summary.setIdInternal(1);
-        summary.setTitle("title");
-        summary.setSummaryText("summaryText");
+        summary.setTitle(new MultiLanguageString("title"));
+        summary.setSummaryText(new MultiLanguageString("summaryText"));
         summary.setStudentsNumber(20);
         summary.setIsExtraLesson(true);
         summary.setLastModifiedDate(Calendar.getInstance().getTime());
