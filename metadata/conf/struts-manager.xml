@@ -1834,6 +1834,9 @@
 			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException"
 					key="student.curricular.plan.already.exists"
 					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException"
+					key="error.enrolmentEvaluation.cannot.be.deleted"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="show" path="show-student-curricular-plan"/>
 			<forward name="createStudentCurricularPlan" path="create-student-curricular-plan"/>
 			<forward name="transferEnrollments" path="transfer-enrollments"/>
