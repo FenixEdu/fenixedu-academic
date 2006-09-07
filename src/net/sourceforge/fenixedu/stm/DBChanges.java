@@ -189,7 +189,10 @@ class DBChanges {
 	    Statement stmt = conn.createStatement();
 
 	    boolean addedRecord = false;
+            long appendTime = 0;
+            long statementTime = 0;
 	    for (AttrChangeLog log : attrChangeLogs) {
+                long marker1 = System.currentTimeMillis();
 		if (addedRecord) {
 		    sqlCmd.append(",");
 		}
@@ -203,23 +206,33 @@ class DBChanges {
 		sqlCmd.append(txNumber);
 		sqlCmd.append(")");
 		addedRecord = true;
+                long marker2 = System.currentTimeMillis();
 
 		if ((bufferCapacity - sqlCmd.length()) < BUFFER_THRESHOLD) {
 		    stmt.execute(sqlCmd.toString());
+                    long marker3 = System.currentTimeMillis();
 		    sqlCmd.setLength(0);
 		    sqlCmd.append(SQL_CHANGE_LOGS_CMD_PREFIX);
 		    addedRecord = false;
+                    long marker4 = System.currentTimeMillis();
+                    statementTime += marker3 - marker2;
+                    appendTime += marker4 - marker3;
 		}
+                appendTime += marker2 - marker1;
 	    }
 	    if (addedRecord) {
                 try {
+                    long startTime = System.currentTimeMillis();
                     stmt.execute(sqlCmd.toString());
+                    long endTime = System.currentTimeMillis();
+                    statementTime += endTime - startTime;
                 } catch (SQLException ex) {
                     System.out.println("SqlException: " + ex.getMessage());
                     System.out.println("Deadlock trying to insert: " + sqlCmd.toString());
                     throw new CommitException();
                 }
 	    }
+            System.out.println("Appends took: " + appendTime + " statements took: " + statementTime);
 	}
     }
 
