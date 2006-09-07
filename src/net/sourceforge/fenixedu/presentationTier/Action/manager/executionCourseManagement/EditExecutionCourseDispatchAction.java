@@ -265,10 +265,11 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             executionCourseForm.set("executionCoursesNotLinked", executionCoursesNotLinked);
         }
 
-        InfoExecutionCourseEditor infoExecutionCourse = fillInfoExecutionCourseFromForm(actionForm, request);
-        Object args[] = { infoExecutionCourse };
+        final InfoExecutionCourseEditor infoExecutionCourseEditor = fillInfoExecutionCourseFromForm(actionForm, request);
+        InfoExecutionCourse infoExecutionCourse = null;
+        Object args[] = { infoExecutionCourseEditor };
         try {
-            infoExecutionCourse = (InfoExecutionCourseEditor) ServiceManagerServiceFactory.executeService(
+            infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
                     userView, "EditExecutionCourseByManager", args);
         } catch (FenixServiceException e) {
             e.printStackTrace();
