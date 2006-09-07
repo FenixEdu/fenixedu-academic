@@ -255,8 +255,10 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
     //FIXME
     protected boolean allTemporaryOrNotOptional(List<CurricularCourse2Enroll> result) {
 	List<String> notOptional5Courses = getNotOptional5Courses();
+	List<CurricularCourse> secundaryCourses = getSecundaryAreaCurricularCourses(studentCurricularPlan);
+	List<CurricularCourse> specializationCourses = getSpecializationAreaCurricularCourses(studentCurricularPlan);
 	for (CurricularCourse2Enroll enroll : result) {
-	    if (!notOptional5Courses.contains(enroll.getCurricularCourse().getCode()) && !enroll.getEnrollmentType().equals(CurricularCourseEnrollmentType.TEMPORARY)) {
+	    if ((!secundaryCourses.contains(enroll.getCurricularCourse()) || specializationCourses.contains(enroll.getCurricularCourse())) && !notOptional5Courses.contains(enroll.getCurricularCourse().getCode()) && !enroll.getEnrollmentType().equals(CurricularCourseEnrollmentType.TEMPORARY)) {
 		return false;
 	    }
 	}
@@ -332,6 +334,9 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	    addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
 	}
 	allCurricularCourses.removeAll(specializationAndSecundaryAreaCurricularCoursesToCountForCredits);
+	if(!isSecAreaDone) {
+	    allCurricularCourses.removeAll(getSecundaryAreaCurricularCourses(studentCurricularPlan));
+	}
 	addOldCurricularCourses(allCurricularCourses, studentCurricularPlan.getDegreeCurricularPlan()
 		.getAllOptionalCurricularCourseGroups());
 

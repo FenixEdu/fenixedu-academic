@@ -60,6 +60,10 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 	}
 
 	allCurricularCourses.removeAll(specializationAndSecundaryAreaCurricularCoursesToCountForCredits);
+	
+	if(!isSecAreaDone) {
+	    allCurricularCourses.removeAll(getSecundaryAreaCurricularCourses(studentCurricularPlan));
+	}
 
 	for (CurricularCourse curricularCourse : allCurricularCourses) {
 	    if(!studentCurricularPlan.isCurricularCourseApproved(curricularCourse) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod)) {
