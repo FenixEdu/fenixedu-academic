@@ -44,6 +44,9 @@ public class DateTimeInputRenderer extends InputRenderer {
     private String dateBundle;
     private boolean dateKey;
     
+    private String dateSize;
+    private Integer dateMaxLength;
+    
     public String getDateFormat() {
         return this.dateFormat == null ? DateConverter.DEFAULT_FORMAT : dateFormat;
     }
@@ -104,6 +107,31 @@ public class DateTimeInputRenderer extends InputRenderer {
     public void setDateKey(boolean dateKey) {
         this.dateKey = dateKey;
     }
+    
+    public Integer getDateMaxLength() {
+        return this.dateMaxLength;
+    }
+
+    /**
+     * Sets the max length of the date field.
+     * @property
+     */
+    public void setDateMaxLength(Integer dateMaxLength) {
+        this.dateMaxLength = dateMaxLength;
+    }
+
+    public String getDateSize() {
+        return this.dateSize;
+    }
+
+    /**
+     * Chooses the size of the date field.
+     * 
+     * @property
+     */
+    public void setDateSize(String dateSize) {
+        this.dateSize = dateSize;
+    }
 
     private Locale getLocale() {
         HttpServletRequest request = getInputContext().getViewState().getRequest();
@@ -137,6 +165,8 @@ public class DateTimeInputRenderer extends InputRenderer {
                 
                 HtmlTextInput dateField = new HtmlTextInput();
                 dateField.setName(key.toString() + "_date");
+                dateField.setSize(getDateSize());
+                dateField.setMaxLength(getDateMaxLength());
                 container.addChild(dateField);
                 
                 container.addChild(new HtmlText(getFormatLabel()));
