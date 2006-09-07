@@ -243,7 +243,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
             }
 
             System.out.println(
-                      ",1: " + (time1 == 0 || time2 == 0 ? "" : (time2 - time1))
+                      "performValidCommit: ,1: " + (time1 == 0 || time2 == 0 ? "" : (time2 - time1))
                     + "   ,2: " + (time2 == 0 || time3 == 0 ? "" : (time3 - time2))
                     + "   ,3: " + (time3 == 0 || time4 == 0 ? "" : (time4 - time3))
                     + "   ,4: " + (time4 == 0 || time5 == 0 ? "" : (time5 - time4))
@@ -256,14 +256,35 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     }
 
     protected void doCommit(int newTxNumber) {
+        long time1 = System.currentTimeMillis();
+        long time2 = 0;
+        long time3 = 0;
+        long time4 = 0;
+        long time5 = 0;
+        long time6 = 0;
+
         try {
+            time2 = System.currentTimeMillis();
             dbChanges.makePersistent(getOJBBroker(), newTxNumber);
+            time3 = System.currentTimeMillis();
         } catch (SQLException sqle) {
             throw new Error("Error while accessing database", sqle);
         } catch (LookupException le) {
             throw new Error("Error while obtaining database connection", le);
         }
+        time4 = System.currentTimeMillis();
         dbChanges.cache();
+        time5 = System.currentTimeMillis();
         super.doCommit(newTxNumber);
+        time6 = System.currentTimeMillis();
+
+        System.out.println(
+                "doCommit: ,1: " + (time1 == 0 || time2 == 0 ? "" : (time2 - time1))
+              + "   ,2: " + (time2 == 0 || time3 == 0 ? "" : (time3 - time2))
+              + "   ,3: " + (time3 == 0 || time4 == 0 ? "" : (time4 - time3))
+              + "   ,4: " + (time4 == 0 || time5 == 0 ? "" : (time5 - time4))
+              + "   ,5: " + (time5 == 0 || time6 == 0 ? "" : (time6 - time5))
+              );
+
     }
 }
