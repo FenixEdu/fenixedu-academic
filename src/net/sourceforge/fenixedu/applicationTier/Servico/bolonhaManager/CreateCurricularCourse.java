@@ -101,10 +101,12 @@ public class CreateCurricularCourse extends Service {
         if (curricularCourseArgs.getBeginExecutionPeriodID() == null) {
             final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
             final ExecutionYear nextExecutionYear = currentExecutionYear.getNextExecutionYear();
+
             if (nextExecutionYear == null) {
-                throw new FenixServiceException("error.no.next.execution.year");
+        	return currentExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
+            } else {
+        	return nextExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
             }
-            return nextExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
         } else {
             return rootDomainObject.readExecutionPeriodByOID(curricularCourseArgs.getBeginExecutionPeriodID());
         }
