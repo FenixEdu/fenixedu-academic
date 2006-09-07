@@ -1192,6 +1192,43 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	for (Shift shift : getAssociatedShiftsSet()) {
 	    shiftTypes.add(shift.getTipo());
 	}
+	
+	if (this.getTheoreticalHours() != null && this.getTheoreticalHours().doubleValue() != 0.0) {
+	    shiftTypes.add(ShiftType.TEORICA);
+	}
+	
+	if (this.getPraticalHours() != null && this.getPraticalHours().doubleValue() != 0.0) {
+	    shiftTypes.add(ShiftType.PRATICA);
+	}
+	
+	if (this.getTheoPratHours() != null && this.getTheoPratHours().doubleValue() != 0.0) {
+	    shiftTypes.add(ShiftType.TEORICO_PRATICA);
+	}
+	
+	if (this.getLabHours() != null && this.getLabHours().doubleValue() != 0.0) {
+	    shiftTypes.add(ShiftType.LABORATORIAL);
+	}
+	
+	if (this.getSeminaryHours() != null && this.getSeminaryHours().doubleValue() != 0.0) {
+	    shiftTypes.add(ShiftType.SEMINARY);
+	}
+	
+	if (this.getProblemsHours() != null && this.getProblemsHours().doubleValue() != 0.0) {
+	    shiftTypes.add(ShiftType.PROBLEMS);
+	}
+	
+	if (this.getFieldWorkHours() != null && this.getFieldWorkHours().doubleValue() != 0.0) {
+	    shiftTypes.add(ShiftType.FIELD_WORK);
+	}
+	
+	if (this.getTrainingPeriodHours() != null && this.getTrainingPeriodHours().doubleValue() != 0.0) {
+	    shiftTypes.add(ShiftType.TRAINING_PERIOD);
+	}
+	
+	if (this.getTutorialOrientationHours() != null && this.getTutorialOrientationHours().doubleValue() != 0.0) {
+	    shiftTypes.add(ShiftType.TUTORIAL_ORIENTATION);
+	}
+	
 	return shiftTypes;
     }
 
