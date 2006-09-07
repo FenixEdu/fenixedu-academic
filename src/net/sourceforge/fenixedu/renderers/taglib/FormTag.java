@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 public class FormTag extends ContextTag {
 
     private String action;
+    private String target;
     private String encoding;
     
     public String getAction() {
@@ -25,6 +26,14 @@ public class FormTag extends ContextTag {
 
     public void setEncoding(String encoding) {
         this.encoding = encoding;
+    }
+
+    public String getTarget() {
+        return this.target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 
     @Override
@@ -57,6 +66,10 @@ public class FormTag extends ContextTag {
         
         if (getEncoding() != null) {
             formHead.append("enctype=\"" + getEncoding() + "\" ");
+        }
+        
+        if (getTarget() != null) {
+            formHead.append("target=\"" + getTarget() +"\" ");
         }
         
         formHead.append("method=\"post\">\n");

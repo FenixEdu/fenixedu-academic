@@ -765,6 +765,16 @@
         Selects the encoding of the form.
       </description>
     </attribute>
+
+    <attribute>
+      <name>target</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Selects the target of the form.
+      </description>
+    </attribute>
   </tag>
   
   <tag>
