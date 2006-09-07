@@ -71,7 +71,8 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    int specific = countEnrolments(GROUP_320);
 	    if(common == 0) {
 		if(specific == 1) {
-		    List<String> coursesToRemove = Arrays.asList(GROUP_320);
+		    List<String> coursesToRemove = new ArrayList<String>(GROUP_320.length);
+		    coursesToRemove.addAll(Arrays.asList(GROUP_320));
 		    coursesToRemove.removeAll(Arrays.asList(GROUP_320_COMMON));
 		    removeCurricularCourses(curricularCoursesToBeEnrolledIn, coursesToRemove);
 		}
@@ -89,7 +90,8 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    int specific = countEnrolments(GROUP_320);
 	    if(common == 0) {
 		if(specific == 2) {
-		    List<String> coursesToRemove = Arrays.asList(GROUP_320);
+		    List<String> coursesToRemove = new ArrayList<String>(GROUP_320.length);
+		    coursesToRemove.addAll(Arrays.asList(GROUP_320));
 		    coursesToRemove.removeAll(Arrays.asList(GROUP_320_COMMON));
 		    removeCurricularCourses(curricularCoursesToBeEnrolledIn, coursesToRemove);
 		    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
