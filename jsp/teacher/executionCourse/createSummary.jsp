@@ -28,23 +28,23 @@ function check(e,v){
 	<logic:notEmpty name="summariesManagementBean" property="summary">			
 		<h2><bean:message key="title.summary.edit"/></h2>
 	</logic:notEmpty>
-	
+
+
 	<div class="infoop2">
-		<table>
-			<tr>
-				<td><b><bean:message key="link.home"/></b></td>
-				<td><input indexed="true" class="dnone" id="instructionsButton" type="button" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));" value="+"></td>				
-			</tr>
-		</table>		
+		<a href="#" class="dnone" id="instructionsButton" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));"><bean:message key="link.home"/></a>
+		<%--<input indexed="true" class="dnone" id="instructionsButton" type="button" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));" value="+">--%>
+
 		<div id="instructions" class="dblock">
 			<ul class="mvert025">
 				<li><bean:message key="label.summary.management.instructions1" /></li>
 				<li><bean:message key="label.summary.management.instructions2" /></li>
 				<li><bean:message key="label.summary.management.instructions3" /></li>
+				<li><bean:message key="label.summary.management.instructions4" /></li>
 			</ul>
 		</div>
 	</div>
-	
+
+
 	<script>
 		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
 		document.getElementById('instructionsButton').className="dblock";
@@ -164,7 +164,7 @@ function check(e,v){
 		</fr:form>
 	</logic:equal>	
 		
-	<h3 class="mbottom0"> <bean:message key="label.use"/></h3>
+	<h3 class="mbottom0"> <bean:message key="label.associate"/></h3>
 	<table class="tstyle5">
 		<%-- LessonPlannings --%>
 		<tr>
