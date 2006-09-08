@@ -57,7 +57,8 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
             yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
             request.setAttribute("yearMonth", yearMonth);
             return mapping.getInputForward();
-        } else if (yearMonth.getYear() < 2006) {
+        } else if (yearMonth.getYear() < 2006
+                || (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
             saveErrors(request, "error.invalidPastDate");
             request.setAttribute("yearMonth", yearMonth);
             return mapping.getInputForward();
@@ -127,7 +128,8 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
             employeeWorkSheet.setEmployee(employee);
             request.setAttribute("employeeWorkSheet", employeeWorkSheet);
             return mapping.findForward("show-employee-work-sheet");
-        } else if (yearMonth.getYear() < 2006) {
+        } else if (yearMonth.getYear() < 2006
+                || (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
             saveErrors(request, "error.invalidPastDate");
             EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
             employeeWorkSheet.setEmployee(employee);

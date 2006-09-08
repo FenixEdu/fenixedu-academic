@@ -117,29 +117,31 @@ public class Assiduousness extends Assiduousness_Base {
                 }
                 workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
             }
-        } else {
-            if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
-                final Timeline timeline = new Timeline(day);
-                Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
-                        .iterator();
-                timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
-                        .getLeaves(), attributesIt, day);
-                Duration worked = timeline.calculateWorkPeriodDuration(null, timeline.getTimePoints()
-                        .iterator().next(), new TimePoint(defaultStartWorkDay, AttributeType.NULL),
-                        new TimePoint(defaultEndWorkDay, AttributeType.NULL), null);
-                Duration weeklyRestDuration = worked;
-                if (worked.isLongerThan(normalWorkDayDuration)) {
-                    weeklyRestDuration = normalWorkDayDuration;
-                }
-                final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
-                if (dayOfWeek.equals(WeekDay.SATURDAY) || isDayHoliday) {
-                    workDaySheet.setComplementaryWeeklyRest(weeklyRestDuration);
-                } else if (dayOfWeek.equals(WeekDay.SUNDAY)) {
-                    workDaySheet.setWeeklyRest(weeklyRestDuration);
-                }
-                workDaySheet.setBalanceTime(worked.toPeriod());
-            }
-        }
+        } 
+//      TODO remove comment in 2007
+//        else {
+//            if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
+//                final Timeline timeline = new Timeline(day);
+//                Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
+//                        .iterator();
+//                timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
+//                        .getLeaves(), attributesIt, day);
+//                Duration worked = timeline.calculateWorkPeriodDuration(null, timeline.getTimePoints()
+//                        .iterator().next(), new TimePoint(defaultStartWorkDay, AttributeType.NULL),
+//                        new TimePoint(defaultEndWorkDay, AttributeType.NULL), null);
+//                Duration weeklyRestDuration = worked;
+//                if (worked.isLongerThan(normalWorkDayDuration)) {
+//                    weeklyRestDuration = normalWorkDayDuration;
+//                }
+//                final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
+//                if (dayOfWeek.equals(WeekDay.SATURDAY) || isDayHoliday) {
+//                    workDaySheet.setComplementaryWeeklyRest(weeklyRestDuration);
+//                } else if (dayOfWeek.equals(WeekDay.SUNDAY)) {
+//                    workDaySheet.setWeeklyRest(weeklyRestDuration);
+//                }
+//                workDaySheet.setBalanceTime(worked.toPeriod());
+//            }
+//        }
         return workDaySheet;
     }
 

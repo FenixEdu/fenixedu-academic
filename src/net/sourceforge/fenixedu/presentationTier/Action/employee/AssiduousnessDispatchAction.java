@@ -120,15 +120,16 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         } else if (yearMonth.getYear() > new YearMonthDay().getYear()
                 || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
                         .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
-            saveErrors(request, yearMonth,"error.invalidFutureDate");
+            saveErrors(request, yearMonth, "error.invalidFutureDate");
             request.setAttribute("employee", employee);
             return mapping.findForward("show-clockings");
-        } else if (yearMonth.getYear() < 2006) {            
-            saveErrors(request, yearMonth,"error.invalidPastDate"); 
+        } else if (yearMonth.getYear() < 2006
+                || (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
+            saveErrors(request, yearMonth, "error.invalidPastDate");
             request.setAttribute("employee", employee);
             return mapping.findForward("show-clockings");
         }
-        
+
         YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
                 yearMonth.getMonth().ordinal() + 1, 01);
         YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
@@ -183,15 +184,16 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         } else if (yearMonth.getYear() > new YearMonthDay().getYear()
                 || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
                         .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
-            saveErrors(request, yearMonth,"error.invalidFutureDate");
+            saveErrors(request, yearMonth, "error.invalidFutureDate");
             request.setAttribute("employee", employee);
             return mapping.findForward("show-justifications");
-        } else if (yearMonth.getYear() < 2006) {            
-            saveErrors(request, yearMonth,"error.invalidPastDate");
+        } else if (yearMonth.getYear() < 2006
+                || (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
+            saveErrors(request, yearMonth, "error.invalidPastDate");
             request.setAttribute("employee", employee);
             return mapping.findForward("show-justifications");
         }
-        
+
         if (employee.getAssiduousness() != null) {
             YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth()
                     .ordinal() + 1, 01);
@@ -232,13 +234,14 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         } else if (yearMonth.getYear() > new YearMonthDay().getYear()
                 || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
                         .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
-            saveErrors(request, yearMonth,"error.invalidFutureDate");
+            saveErrors(request, yearMonth, "error.invalidFutureDate");
             EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
             employeeWorkSheet.setEmployee(employee);
             request.setAttribute("employeeWorkSheet", employeeWorkSheet);
             return mapping.findForward("show-work-sheet");
-        } else if (yearMonth.getYear() < 2006) {            
-            saveErrors(request, yearMonth,"error.invalidPastDate");   
+        } else if (yearMonth.getYear() < 2006
+                || (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
+            saveErrors(request, yearMonth, "error.invalidPastDate");
             EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
             employeeWorkSheet.setEmployee(employee);
             request.setAttribute("employeeWorkSheet", employeeWorkSheet);
@@ -251,7 +254,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         if (yearMonth.getYear() == new YearMonthDay().getYear()
                 && yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
             endDay = new YearMonthDay().getDayOfMonth();
-            request.setAttribute("displayCurrentDayNote","true");
+            request.setAttribute("displayCurrentDayNote", "true");
         }
         YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
                 endDay);
@@ -269,6 +272,6 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         ActionMessages actionMessages = new ActionMessages();
         actionMessages.add("message", new ActionMessage(message));
         saveMessages(request, actionMessages);
-        request.setAttribute("yearMonth", yearMonth);        
+        request.setAttribute("yearMonth", yearMonth);
     }
 }
