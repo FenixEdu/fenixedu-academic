@@ -121,13 +121,15 @@ public class Timeline {
                                 && workedPoints != 0) {
                             TimePoint mealStart = findIntervalStartPointByAttribute(AttributeType.MEAL);
                             TimePoint newMealStart = findStartLunchBreak(null);
+                            TimePoint mealEnd = findIntervalEndPointByAttribute(AttributeType.MEAL);
                             if (!mealStart.getPointAttributes().contains(
                                     DomainConstants.WORKED_ATTRIBUTES)
-                                    && newMealStart != null && newMealStart.isBefore(mealStart)) {
+                                    && newMealStart != null
+                                    && newMealStart.isBefore(mealStart)
+                                    && !isPointStartingAttributeInterval(newMealStart,
+                                            AttributeType.MEAL)) {
                                 int newMealIndex = getTimePointIndex(newMealStart);
                                 if (newMealIndex != -1) {
-                                    newMealStart.getPointAttributes()
-                                            .removeAttribute(AttributeType.MEAL);
                                     newMealStart.getPointAttributes().addAttribute(AttributeType.MEAL);
                                     newMealStart.getIntervalAttributes()
                                             .addAttribute(AttributeType.MEAL);
@@ -135,7 +137,6 @@ public class Timeline {
                                             AttributeType.MEAL));
                                 }
                             }
-                            TimePoint mealEnd = findIntervalEndPointByAttribute(AttributeType.MEAL);
                             if (mealEnd != null) {
                                 TimePoint pointBeforeMeal = findWorkedPointBefore(newPoint);
                                 if (!mealEnd.getPointAttributes().contains(
