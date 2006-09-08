@@ -1,7 +1,7 @@
 /* transitional.css - 01.2006 by João Alfaiate @ Fenix */
 
 /* ----------------------
- ---- Headings ----------
+ ---- Headings ---------
 ----------------------- */
 
 h2 { margin: 0.5em 0 0.75em 0; }
@@ -23,7 +23,7 @@ background: url(../images/transitional/bullet07.gif) left no-repeat;
 
 .breadcumbs { color: #000; margin-top: 2em; margin-bottom: 2em;}
 .breadcumbs span { border-bottom: 1px dotted #000;}
-.breadcumbs span.actual { background-color: #fafac0; background-color: #ffa;}
+.breadcumbs span.actual { background-color: #fff7bb;}
 
 .infoop2 { margin: 0.5em 0;}
 
@@ -82,6 +82,7 @@ padding: 0.5em 1em 0.1em 1em;
 font-style: italic;
 }
 table.thtop th { vertical-align: top; }
+table.tdtop td { vertical-align: top; }
 
 /* ordenamento das colunas*/
 table.thlight th { font-weight: normal; }
@@ -307,7 +308,7 @@ padding: 0.2em 0.5em 0.2em 0em;
 .success3 { padding: 0.2em 0.5em 0.2em 28px; background: #efe url(../../pics/success01.gif) 6px 50% no-repeat; }
 .success4 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 28px; background: #dfd url(../../pics/success01.gif) 6px 50% no-repeat; color: #070; }
 
-.warning0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #fff8bb; color: #996600; }
+.warning0 { margin: 1em 0; padding: 0.1em 0.3em 0.15em 0.3em; background-color: #fff8bb; color: #996600; }
 
 /* ----------------------
  ---- Forms ------------
@@ -348,7 +349,7 @@ padding-right: 0.5em;
 .color2 { color: #806d5b; }
 .color3 { color: #336699; }
 
-.highlight1 { background-color: #ffb; } /* amarelo */
+.highlight1 { background-color: #fff7bb; } /* amarelo */
 .highlight2 { background-color: #f5f5f5; } 
 .highlight3 { background-color: #def; } /* azul */
 .highlight4 { background-color: #dfb ; } /* verde */
@@ -373,13 +374,14 @@ padding-right: 0.5em;
 .pbottom1 { padding-bottom: 1em;}
 .pbottom2 { padding-bottom: 2em;}
 .pbottom3 { padding-bottom: 3em;}
-.pleft1 { padding-left: 2em; }
+.pleft1 { padding-left: 1em; }
 .pleft2 { padding-left: 2em; }
 .nomargin { margin: 0; }
 .nopadding { padding: 0; }
 .mtop0 { margin-top: 0;}
 .mtop05 { margin-top: 0.5em;}
 .mtop1 { margin-top: 1em;}
+.mtop15 { margin-top: 1.5em;}
 .mtop2 { margin-top: 2em;}
 .mtop3 { margin-top: 3em;}
 .mbottom0 { margin-bottom: 0;}
@@ -424,6 +426,8 @@ td.pleft6 { padding-left: 6em; }
 .width100 { width: 100%; }
 .width8em { width: 8em; } /*used in forums*/
 .width10em { width: 10em; }
+.width100px { width: 100px; }
+.width250px { width: 250px; }
 
 .toprint { display: none;}
 .dnone { display: none; }
@@ -847,3 +851,8 @@ ul.cd_block li {
 ul.cd_nostyle {
 list-style: none;
 }
+
+
+/* Vigilância */
+.mvert15 { margin-top: 1.5em; margin-bottom: 1.5em; }
+.greytxt2 { color: #777; }
