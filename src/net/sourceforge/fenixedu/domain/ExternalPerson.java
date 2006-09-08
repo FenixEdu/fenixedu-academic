@@ -62,16 +62,18 @@ public class ExternalPerson extends ExternalPerson_Base {
     private boolean externalPersonsAlreadyExists(String name, String address, Unit institution,
             List<ExternalPerson> allExternalPersons) {
         for (ExternalPerson externalPerson : allExternalPersons) {
-            Person person = externalPerson.getPerson();
-            if (((person.getNome() != null && person.getNome().equals(name)) || ((person.getNome() == null || person
-                    .getNome().equals("")) && name.equals("")))
-                    && ((person.getAddress() != null && person.getAddress().equals(address)) || ((person
-                            .getAddress() == null || person.getAddress().equals("")) && address
-                            .equals("")))
-                    && externalPerson.getInstitutionUnit().equals(institution)
-                    && !externalPerson.equals(this))
+            if (externalPerson.hasPerson()) {
+                Person person = externalPerson.getPerson();
+                if (((person.getNome() != null && person.getNome().equals(name)) || ((person.getNome() == null || person
+                        .getNome().equals("")) && name.equals("")))
+                        && ((person.getAddress() != null && person.getAddress().equals(address)) || ((person
+                                .getAddress() == null || person.getAddress().equals("")) && address
+                                .equals("")))
+                        && externalPerson.getInstitutionUnit().equals(institution)
+                        && !externalPerson.equals(this))
 
-                return true;
+                    return true;
+            }
         }
         return false;
     }
@@ -84,7 +86,7 @@ public class ExternalPerson extends ExternalPerson_Base {
         final String nameToMatch = (name == null) ? null : name.replaceAll("%", ".*").toLowerCase();
         List<ExternalPerson> allExternalPersons = new ArrayList<ExternalPerson>();
         for (ExternalPerson externalPerson : RootDomainObject.getInstance().getExternalPersons()) {
-            if (externalPerson.getPerson().getName().toLowerCase().matches(nameToMatch)) {
+            if (externalPerson.hasPerson() && externalPerson.getPerson().getName().toLowerCase().matches(nameToMatch)) {
                 allExternalPersons.add(externalPerson);
             }
         }
@@ -94,7 +96,7 @@ public class ExternalPerson extends ExternalPerson_Base {
     public static ExternalPerson readByNameAndAddressAndInstitutionID(String name, String address,
             Integer institutionID) {
         for (ExternalPerson externalPerson : RootDomainObject.getInstance().getExternalPersons()) {
-            if (externalPerson.getPerson().getName().equals(name)
+            if (externalPerson.hasPerson() && externalPerson.getPerson().getName().equals(name)
                     && externalPerson.getInstitutionUnit().equals(institutionID)
                     && externalPerson.getPerson().getAddress().equals(address)) {
                 return externalPerson;
