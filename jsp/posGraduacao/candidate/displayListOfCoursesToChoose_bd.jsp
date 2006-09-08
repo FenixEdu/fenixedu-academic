@@ -149,28 +149,28 @@
 					<tr>
 						<td>
 						<bean:define id="offset" value="0"/>
-							<bean:size id="ccsSize" name="curricularCourseElem" property="infoScopes" />
-							<logic:iterate id="curricularCourseScope" name="curricularCourseElem"  indexId="scopeID" property="infoScopes" 
+							<bean:size id="ccsSize" name="curricularCourseElem" property="curricularCourse.scopes" />
+							<logic:iterate id="curricularCourseScope" name="curricularCourseElem"  indexId="scopeID" property="curricularCourse.scopes" 
 									  offset="0" length="1">
-		        						<logic:equal name="curricularCourseScope" property="infoBranch.name"  value='<%= new String("") %>'>
+		        						<logic:equal name="curricularCourseScope" property="branch.name"  value='<%= new String("") %>'>
 		        							<bean:define id="offset" value="1"/>
 		            						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selection" property="selection">
-		                						<bean:write name="curricularCourseScope" property="infoCurricularCourse.idInternal"/>
+		                						<bean:write name="curricularCourseScope" property="curricularCourse.idInternal"/>
 		            						</html:multibox>
 		        						</logic:equal>
-		        						<logic:notEqual name="curricularCourseScope" property="infoBranch.name"  value='<%= new String("") %>'>
+		        						<logic:notEqual name="curricularCourseScope" property="branch.name"  value='<%= new String("") %>'>
 		        							<bean:define id="offset" value="0"/>
 		        						</logic:notEqual>
 		        						<strong><bean:write name="curricularCourseElem" property="name"/></strong><br />
 							</logic:iterate>
 							
 						    <blockquote>
-		            			<logic:iterate id="curricularCourseScope" name="curricularCourseElem"  indexId="scopeID" property="infoScopes" 
+		            			<logic:iterate id="curricularCourseScope" name="curricularCourseElem"  indexId="scopeID" property="curricularCourse.scopes" 
 		            						    offset="<%= new String(offset) %>" length="<%= String.valueOf(ccsSize.intValue() - Integer.parseInt(offset)) %>">
 		                						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selection" property="selection">
 		                    						<bean:write name="curricularCourseElem" property="idInternal"/>
 		                						</html:multibox>
-		               							<bean:write name="curricularCourseScope" property="infoBranch.name"/> <br/>
+		               							<bean:write name="curricularCourseScope" property="branch.name"/> <br/>
 								</logic:iterate>	
 						    </blockquote>
 						</td>
