@@ -2,7 +2,7 @@
 * ################################################################
 * 
 * FenixEdu: The Java(TM) Object-Oriented Framework for University 
-*	    Academic Applications
+*       Academic Applications
 * 
 * Copyright (C) 2002-2003 IST/Technical University of Lisbon
 * Contact: suporte@dot.ist.utl.pt
@@ -104,8 +104,8 @@ public class DomainBrowserServlet extends HttpServlet {
         }
         
 
-	out.println("</BODY>\n");
-	out.close();
+        out.println("</BODY>\n");
+        out.close();
     }
 
 
@@ -167,34 +167,34 @@ public class DomainBrowserServlet extends HttpServlet {
                         out.println("null collection");
                     } else {
                         Collection col = (Collection)roleValue;
-			int colSize = -1;
-			try {
-			    colSize = col.size();
-			} catch (Exception e) {
-			    // ignore it
-			}
-
-			if (colSize == -1) {
-			    out.println("THIS IS NULL: missing from OJB mapping?");
-			} else {
-			    out.println("<A HREF=\"listRole?domainClass=");
-			    out.println(domObj.getClass().getName());
-			    out.println("&objId=");
-			    out.println(domObj.getIdInternal());
-			    out.println("&role=");
-			    out.println(role.getName());
-			    out.println("\">");
-			    out.println(role.getType().getFullName());
-			    out.println("[");
-			    out.println(colSize);
-			    out.println("]</A>");
-			}
+                        int colSize = -1;
+                        try {
+                            colSize = col.size();
+                        } catch (Exception e) {
+                            // ignore it
+                        }
+                        
+                        if (colSize == -1) {
+                            out.println("THIS IS NULL: missing from OJB mapping?");
+                        } else {
+                            out.println("<A HREF=\"listRole?domainClass=");
+                            out.println(domObj.getClass().getName());
+                            out.println("&objId=");
+                            out.println(domObj.getIdInternal());
+                            out.println("&role=");
+                            out.println(role.getName());
+                            out.println("\">");
+                            out.println(role.getType().getFullName());
+                            out.println("[");
+                            out.println(colSize);
+                            out.println("]</A>");
+                        }
                     }
                 }
                 
                 out.println("</TD><TR>");
             }
-            out.println("</TABLE>\n");            
+            out.println("</TABLE>\n");
         } finally {
             supPers.abortTransaction();
         }
@@ -551,7 +551,10 @@ public class DomainBrowserServlet extends HttpServlet {
                 DomainClass dClass = (DomainClass)domEntity;
                 Iterator roleSlots = dClass.getRoleSlots();
                 while (roleSlots.hasNext()) {
-                    roles.add((Role)roleSlots.next());
+                    Role role = (Role)roleSlots.next();
+                    if (role.getName() != null) {
+                        roles.add(role);
+                    }
                 }
                 domEntity = dClass.getSuperclass();
             }
@@ -572,10 +575,10 @@ public class DomainBrowserServlet extends HttpServlet {
                 allDomainClasses.add((DomainClass)iter.next());
             }
             Collections.sort(allDomainClasses, new Comparator<DomainClass>() {
-                public int compare(DomainClass dc1, DomainClass dc2) {
-                    return dc1.getName().compareTo(dc2.getName());
-                }
-            });
+                    public int compare(DomainClass dc1, DomainClass dc2) {
+                        return dc1.getName().compareTo(dc2.getName());
+                    }
+                });
         }
         return allDomainClasses;
     }
