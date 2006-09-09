@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.util.kerberos;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
@@ -79,9 +80,14 @@ public class Script {
 	    }
 	    return new ScriptResult(exitCode, returnCode);
 
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    return new ScriptResult(-1, e.getMessage());
+	} catch (IOException ex) {
+	    System.out.println(Runtime.getRuntime().freeMemory());
+	    System.out.println(Runtime.getRuntime().totalMemory());
+	    ex.printStackTrace();
+	    return new ScriptResult(-1, ex.getMessage());
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	    return new ScriptResult(-1, ex.getMessage());
 	} finally {
 	    try {
 		if (outCommand != null)
