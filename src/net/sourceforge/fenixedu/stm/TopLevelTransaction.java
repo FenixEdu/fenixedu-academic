@@ -107,9 +107,25 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     }
 
     protected void doCommit() {
+        if (isWriteTransaction()) {
+            Transaction.STATISTICS.incWrites();
+        } else {
+            Transaction.STATISTICS.incReads();
+        }
+
         notifyBeforeCommit(this);
         super.doCommit();
         notifyAfterCommit(this);
+    }
+
+    protected boolean validateCommit() {
+        boolean result = super.validateCommit();
+
+        if (! result) {
+            Transaction.STATISTICS.incConflicts();
+        }
+
+        return result;
     }
 
     public ReadSet getReadSet() {

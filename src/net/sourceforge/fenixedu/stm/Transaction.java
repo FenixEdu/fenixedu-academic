@@ -7,6 +7,12 @@ import org.apache.ojb.broker.PersistenceBroker;
 
 public abstract class Transaction extends jvstm.Transaction {
 
+    public final static TransactionStatistics STATISTICS = new TransactionStatistics();
+
+    static {
+        new StatisticsThread().start();
+    }
+
     private static final FenixCache cache = new FenixCache();
     private static boolean initialized = false;
 
@@ -53,7 +59,9 @@ public abstract class Transaction extends jvstm.Transaction {
 	}
     }
 
-    public static void abort(){
+    public static void abort() {
+        STATISTICS.incAborts();
+
         jvstm.Transaction.abort();
         Transaction.begin();
         Transaction.currentFenixTransaction().setReadOnly();
