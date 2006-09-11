@@ -1,9 +1,10 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@page import="net.sourceforge.fenixedu.domain.Language"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
+<html:xhtml/>
 
 <bean:define id="sections_temp" name="sections"/>
 <logic:iterate id="section" name="sections_temp" type="net.sourceforge.fenixedu.domain.Section">
@@ -20,7 +21,7 @@
 		<bean:define id="url">/manageExecutionCourse.do?method=section&amp;sectionID=<bean:write name="section" property="idInternal"/></bean:define>
 		<html:link page="<%= url %>"
 				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-			<%= section.getName().getContent(Language.pt) %>
+			<fr:view name="section" property="name" />
 		</html:link>
 
 	<logic:notPresent name="section" property="superiorSection">

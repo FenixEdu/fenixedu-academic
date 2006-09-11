@@ -10,7 +10,7 @@
 <bean:define id="item" type="net.sourceforge.fenixedu.domain.Item" name="item"/>
 <bean:define id="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse" name="executionCourse"/>
 <h2>
-	<%= item.getName().getContent(Language.pt) %>
+	<fr:view name="item" property="name" />
 </h2>
 
 <h3><bean:message key="label.teacher.siteAdministration.editItemFilePermissions.editPermissions"/></h3>

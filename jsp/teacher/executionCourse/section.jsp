@@ -1,14 +1,16 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ page import="net.sourceforge.fenixedu.domain.Language"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
+<html:xhtml/>
 
 <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 <h2>
 	<bean:message key="label.section"/>
-	<%= section.getName().getContent(Language.pt) %>
+	<fr:view name="section" property="name" />
 </h2>
 
 <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
@@ -48,9 +50,9 @@
 	<logic:iterate id="item" name="section" property="orderedItems" type="net.sourceforge.fenixedu.domain.Item">
 		<h3>
 			<bean:message key="label.item"/>:&nbsp;
-			<%= item.getName().getContent(Language.pt) %>
+			<fr:view name="item" property="name" />
 		</h3>
-
+		
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=editItem&itemID=<bean:write name="item" property="idInternal"/></bean:define>
 		<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
@@ -77,7 +79,12 @@
 		<br/>
 
 		<logic:present name="item" property="information">
-			<%= item.getInformation().getContent(Language.pt) %>
+			<fr:view name="item" property="information">
+				<fr:layout>
+					<fr:property name="escaped" value="false" />
+					<fr:property name="newlineAware" value="false" />
+				</fr:layout>
+			</fr:view>
 		</logic:present>
 		<logic:notEmpty name="item" property="fileItems">
 			<br/>
