@@ -23,7 +23,7 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
 /**
  * @author jpvl
  */
-public abstract class DomainObject extends DomainObject_Base {
+public abstract class DomainObject extends DomainObject_Base implements dml.runtime.FenixDomainObject {
 
     public class UnableToDetermineIdException extends DomainException {
         public UnableToDetermineIdException(Throwable cause) {

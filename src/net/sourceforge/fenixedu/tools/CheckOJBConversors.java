@@ -34,7 +34,7 @@ public class CheckOJBConversors {
     public static void main(String[] args) throws ANTLRException, FileNotFoundException {
 
         String[] dmlFilesArray = { args[0] };
-        DomainModel domainModel = DmlCompiler.getDomainModel(dmlFilesArray);
+        DomainModel domainModel = DmlCompiler.getFenixDomainModel(dmlFilesArray);
         Map ojbMetadata = MetadataManager.getInstance().getGlobalRepository().getDescriptorTable();
 
         Map<String, Set<String>> typeConversions = checkDataTypes(ojbMetadata, domainModel);

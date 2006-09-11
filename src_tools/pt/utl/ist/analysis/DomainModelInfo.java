@@ -14,7 +14,7 @@ public class DomainModelInfo {
 
     public DomainModelInfo(String[] dmlFiles) {
         try {
-            this.domainModel = DmlCompiler.getDomainModel(dmlFiles);
+            this.domainModel = DmlCompiler.getFenixDomainModel(dmlFiles);
         } catch (antlr.ANTLRException ae) {
             System.err.println("Error parsing the DML files, leaving the domain empty");
         }

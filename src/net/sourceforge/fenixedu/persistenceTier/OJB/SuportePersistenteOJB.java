@@ -132,7 +132,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         for (ClassDescriptor classDescriptor : classDescriptors) {
             for (ObjectReferenceDescriptor rd : (Collection<ObjectReferenceDescriptor>) classDescriptor
                     .getObjectReferenceDescriptors()) {
-				rd.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
+				rd.setCascadingStore(ObjectReferenceDescriptor.CASCADE_NONE);
 				rd.setCascadeRetrieve(false);
 				rd.setLazy(false);
 			}

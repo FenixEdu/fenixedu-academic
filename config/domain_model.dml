@@ -162,7 +162,7 @@ valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationVa
 
 class net.sourceforge.fenixedu.domain.DomainObject {
 	Integer idInternal;
-	Integer keyRootDomainObject;
+        Integer keyRootDomainObject;
 }
 
 class net.sourceforge.fenixedu.domain.RootDomainObject extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -340,7 +340,7 @@ class net.sourceforge.fenixedu.domain.homepage.BlogEntry extends net.sourceforge
 }
 
 class net.sourceforge.fenixedu.domain.homepage.BlogEntryComment extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyBlogEntries;
+        Integer keyBlogEntry;
 	DateTime postedDateTime;
 	String comment;
 }
@@ -543,6 +543,7 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
     
     class net.sourceforge.fenixedu.domain.cms.website.Website extends net.sourceforge.fenixedu.domain.cms.Bin {
           Integer keyWebsiteType;
+          Integer keyTarget;
     }
     class net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite extends net.sourceforge.fenixedu.domain.cms.website.Website {
       Integer keyExecutionCourse;

@@ -61,7 +61,7 @@ public class OJBMetadataGenerator {
             classToDebug = args[1];
         }
 
-        DomainModel domainModel = DmlCompiler.getDomainModel(dmlFilesArray);
+        DomainModel domainModel = DmlCompiler.getFenixDomainModel(dmlFilesArray);
         Map ojbMetadata = MetadataManager.getInstance().getGlobalRepository().getDescriptorTable();
 
         updateOJBMappingFromDomainModel(ojbMetadata, domainModel);
@@ -306,7 +306,7 @@ public class OJBMetadataGenerator {
         referenceDescriptor.addForeignKeyField(foreignKeyField);
         referenceDescriptor.setPersistentField(persistentFieldClass, roleName);
         referenceDescriptor.setCascadeRetrieve(false);
-        referenceDescriptor.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
+        referenceDescriptor.setCascadingStore(ObjectReferenceDescriptor.CASCADE_NONE);
         referenceDescriptor.setLazy(false);
 
         classDescriptor.addObjectReferenceDescriptor(referenceDescriptor);

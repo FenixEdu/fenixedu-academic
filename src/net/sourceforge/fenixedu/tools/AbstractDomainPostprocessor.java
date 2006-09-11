@@ -70,7 +70,7 @@ public abstract class AbstractDomainPostprocessor extends ClassLoader implements
                 throw new Error("No DML files specified");
             } else {
                 try {
-                    domainModel = DmlCompiler.getDomainModel(dmlFiles.toArray(new String[dmlFiles.size()]));
+                    domainModel = DmlCompiler.getFenixDomainModel(dmlFiles.toArray(new String[dmlFiles.size()]));
                 } catch (antlr.ANTLRException ae) {
                     System.err.println("Error parsing the DML files, leaving the domain empty");
                 }

@@ -30,7 +30,7 @@ public class FindMissingOJBMappings {
 	private static final Set<String> unmappedCollectionReferenceAttributes = new TreeSet<String>();
 
 	public static void main(final String[] args) throws antlr.ANTLRException, Exception {
-		DomainModel domainModel = DmlCompiler.getDomainModel(args);
+		DomainModel domainModel = DmlCompiler.getFenixDomainModel(args);
 		Map ojbMetadata = getDescriptorTable();
 
 		verifyOJBMappingFromDomainModel(ojbMetadata, domainModel);
