@@ -90,7 +90,7 @@ public class Section extends Section_Base {
     private int getNewOrder(Integer order) {
 	if (order == null) {
 	    if (getSuperiorSection() == null) {
-		return getSite().getNumberOfTopLevelSections() - 1;
+		return getSite().getNumberOfTopLevelSections();
 	    } else {
 		return getSuperiorSection().getAssociatedSectionsSet().size() - 1;
 	    }
