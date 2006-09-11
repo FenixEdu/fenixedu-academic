@@ -81,3 +81,4 @@ addRootDomainObjectKeys.sql
 build.properties.iscte
 simian-log.txt
 .rsync-rules
+build.properties.lt
