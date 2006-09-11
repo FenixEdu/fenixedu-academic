@@ -51,16 +51,20 @@ public class SummariesManagementBean implements Serializable {
     
     private DomainReference<Summary> summaryReference;
     
+    private DomainReference<Professorship> professorshipLoggedReference;
+    
 
     public SummariesManagementBean(SummaryType summaryType, ExecutionCourse executionCourse, Professorship professorship) {        
         setSummaryType(summaryType);
         setExecutionCourse(executionCourse);
         setProfessorship(professorship);                    
+        setProfessorshipLogged(professorship);
     }
     
     public SummariesManagementBean(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, SummaryType summaryType,
             Professorship professorship, String teacherName, Teacher teacher, Shift shift,
-            Lesson lesson, YearMonthDay summaryDate, OldRoom summaryRoom, Partial summaryTime, Summary summary) {
+            Lesson lesson, YearMonthDay summaryDate, OldRoom summaryRoom, Partial summaryTime, Summary summary,
+            Professorship professorshipLogged) {
         
         setTitle(title);
         setSummaryText(summaryText);
@@ -76,6 +80,7 @@ public class SummariesManagementBean implements Serializable {
         setSummaryTime(summaryTime);
         setStudentsNumber(studentsNumber);
         setExecutionCourse(shift.getDisciplinaExecucao());
+        setProfessorshipLogged(professorshipLogged);
     }
 
     public String getTeacherName() {
@@ -119,6 +124,15 @@ public class SummariesManagementBean implements Serializable {
     public void setTeacher(Teacher teacher) {
         this.teacherReference = (teacher != null) ? new DomainReference<Teacher>(
                 teacher) : null;
+    }
+    
+    public Professorship getProfessorshipLogged() {
+        return (this.professorshipLoggedReference != null) ? this.professorshipLoggedReference.getObject() : null;
+    }
+
+    public void setProfessorshipLogged(Professorship professorship) {
+        this.professorshipLoggedReference = (professorship != null) ? new DomainReference<Professorship>(
+        	professorship) : null;
     }
     
     public Summary getLastSummary() {

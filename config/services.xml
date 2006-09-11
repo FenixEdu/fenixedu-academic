@@ -3949,34 +3949,7 @@
 		<filterChains>
 			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
 		</filterChains>
-	</service>
-	<service>
-		<name>InsertSummary</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertSummary</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>DeleteSummary</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteSummary</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseAndSummaryLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>EditSummary</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditSummary</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseAndSummaryLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
+	</service>		
 	<service>
 		<name>ReadSummary</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadSummary</implementationClass>
@@ -7288,31 +7261,7 @@
         </implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-	</service>
-	<service>
-		<name>InsertSummaryDepartment</name>
-		<implementationClass>
-        	net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.InsertSummary
-        </implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>
-	<service>
-		<name>DeleteSummaryDepartment</name>
-		<implementationClass>
-        	net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteSummary
-        </implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>
-	<service>
-		<name>EditSummaryDepartment</name>
-		<implementationClass>
-        	net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.EditSummary
-        </implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>
+	</service>	
 	<service>
 		<name>ReadSummaryDepartment</name>
 		<implementationClass>
@@ -10722,28 +10671,34 @@
         <filterChains>
         	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
         </filterChains>     
-    </service>
-        
+    </service>        
     <service>
-        <name>CreateSummaryNew</name>
+        <name>CreateSummary</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary</implementationClass>
         <description />
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ExecutionCourseLecturingTeacherAndDepartmentAdministrativeOfficeAuthorization" />
-        </filterChains>
-    </service>  
-    
-      <service>
-        <name>EditSummaryNew</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ExecutionCourseAndSummaryLecturingTeacherAndDepartmentAdministrativeOfficeAuthorization" />
+            <chain name="ExecutionCourseLecturingTeacherOrDepartmentAdministrativeOfficeAuthorization" />
         </filterChains>
     </service>      
-
+    <service>
+        <name>EditSummary</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="SummaryManagementAuthorization" />
+        </filterChains>
+    </service>      
+    <service>
+		<name>DeleteSummary</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteSummary</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="SummaryManagementAuthorization" />
+		</filterChains>
+	</service>	
     <service>
     	<name>ReadActiveOrLastStudentCurricularPlanByNumberAndDegreeType</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadActiveOrLastStudentCurricularPlanByNumberAndDegreeType</implementationClass>

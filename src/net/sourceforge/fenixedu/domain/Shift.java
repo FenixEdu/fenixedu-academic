@@ -1,16 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.text.Collator;
-import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -155,37 +151,6 @@ public class Shift extends Shift_Base {
         return null;
     }
     
-    //OLD FUNCTIONS    
-    public void transferSummary(Summary summary, Date summaryDate, Date summaryHour, OldRoom room, boolean newSummary) {
-        if(newSummary){
-            checkIfSummaryExistFor(summaryDate, summaryHour);
-        }
-        summary.modifyShift(this, summaryDate, summaryHour, room);
-    }
-
-    private void checkIfSummaryExistFor(final Date summaryDate, final Date summaryHour) {
-        final Iterator associatedSummaries = getAssociatedSummariesIterator();
-        Date summaryDateAux = prepareDate(summaryDate);               
-        while (associatedSummaries.hasNext()) {
-            Summary summary = (Summary) associatedSummaries.next();
-            Date iterSummaryDate = prepareDate(summary.getSummaryDate());
-            if (iterSummaryDate.equals(summaryDateAux)
-                    && summary.getSummaryHour().equals(summaryHour)) {
-                throw new DomainException("error.summary.already.exists");
-            }
-        }
-    }
-  
-    private Date prepareDate(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTime();
-    } 
-    
     public String getShiftLabel() {
         final StringBuilder lessonsLabel = new StringBuilder();
         int index = 0;
@@ -205,6 +170,5 @@ public class Shift extends Shift_Base {
             }
         }
         return lessonsLabel.toString();
-    }
-    
+    }  
 }

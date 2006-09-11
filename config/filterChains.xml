@@ -359,13 +359,6 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>ExecutionCourseAndSummaryLecturingTeacherAuthorization</name>
-        <expression>ExecutionCourseAndSummaryLecturingTeacherAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
         <name>ExecutionCourseAndAnnouncementLecturingTeacherAuthorization</name>
         <expression>ExecutionCourseAndAnnouncementLecturingTeacherAuthorization</expression>
         <description/>
@@ -1077,15 +1070,15 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>ExecutionCourseAndSummaryLecturingTeacherAndDepartmentAdministrativeOfficeAuthorization</name>
-        <expression>ExecutionCourseAndSummaryLecturingTeacherAuthorization || DepartmentAdministrativeOfficeAuthorization</expression>
+        <name>SummaryManagementAuthorization</name>
+        <expression>SummaryManagementToTeacherAuthorization || SummaryManagementToDepartmentAdmOfficeAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>ExecutionCourseLecturingTeacherAndDepartmentAdministrativeOfficeAuthorization</name>
-        <expression>ExecutionCourseLecturingTeacherAuthorization || DepartmentAdministrativeOfficeAuthorization</expression>
+        <name>ExecutionCourseLecturingTeacherOrDepartmentAdministrativeOfficeAuthorization</name>
+        <expression>ExecutionCourseLecturingTeacherAuthorization || ExecutionCourseLecturingDepartmentAdmOfficeAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

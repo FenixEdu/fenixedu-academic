@@ -8,8 +8,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.domain.Teacher;
 
 /**
  * @author João Mota
@@ -20,14 +21,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteSummary extends Service {
 
-    public boolean run(Integer executionCourseId, Integer summaryID) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        final Summary summary = rootDomainObject.readSummaryByOID(summaryID);
+    public boolean run(ExecutionCourse executionCourse, Summary summary, Teacher loggedTeacher) throws FenixServiceException {
+	        
         if (summary == null)
             throw new InvalidArgumentsServiceException();
 
-        summary.delete();
-                
+        summary.delete();             
         return true;
     }
 

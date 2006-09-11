@@ -153,7 +153,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	site.setExecutionCourse(this);
     }
 
-    public void copySectionsAndItemsFrom(final ExecutionCourse executionCourseFrom) throws DomainException {
+    public void copySectionsAndItemsFrom(final ExecutionCourse executionCourseFrom)
+	    throws DomainException {
 	this.getSite().copySectionsAndItemsFrom(executionCourseFrom.getSite());
     }
 
@@ -192,10 +193,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	bibliographicReference.setExecutionCourse(this);
     }
 
-    public List<BibliographicReference> copyBibliographicReferencesFrom(final ExecutionCourse executionCourseFrom) {
+    public List<BibliographicReference> copyBibliographicReferencesFrom(
+	    final ExecutionCourse executionCourseFrom) {
 	final List<BibliographicReference> notCopiedBibliographicReferences = new ArrayList<BibliographicReference>();
 
-        for (final BibliographicReference bibliographicReference : executionCourseFrom.getAssociatedBibliographicReferences()) {
+	for (final BibliographicReference bibliographicReference : executionCourseFrom
+		.getAssociatedBibliographicReferences()) {
 	    if (canAddBibliographicReference(bibliographicReference)) {
 		this.createBibliographicReference(bibliographicReference.getTitle(),
 			bibliographicReference.getAuthors(), bibliographicReference.getReference(),
@@ -209,7 +212,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     private boolean canAddBibliographicReference(final BibliographicReference bibliographicReferenceToAdd) {
-        for (final BibliographicReference bibliographicReference : this.getAssociatedBibliographicReferences()) {
+	for (final BibliographicReference bibliographicReference : this
+		.getAssociatedBibliographicReferences()) {
 	    if (bibliographicReference.getTitle().equals(bibliographicReferenceToAdd.getTitle())) {
 		return false;
 	    }
@@ -367,7 +371,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 			    .getStudentCurricularPlan();
 		    int numberOfEnrolmentsForThatExecutionCourse = 0;
 
-                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolments()) {
+		    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry
+			    .getEnrolments()) {
 			if (enrolmentsFromStudentCPEntry.getCurricularCourse() == curricularCourseFromExecutionCourseEntry
 				&& (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(
 					courseExecutionPeriod) <= 0)) {
@@ -1191,44 +1196,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	Set<ShiftType> shiftTypes = new TreeSet<ShiftType>();
 	for (Shift shift : getAssociatedShiftsSet()) {
 	    shiftTypes.add(shift.getTipo());
-	}
-	
-	if (this.getTheoreticalHours() != null && this.getTheoreticalHours().doubleValue() != 0.0) {
-	    shiftTypes.add(ShiftType.TEORICA);
-	}
-	
-	if (this.getPraticalHours() != null && this.getPraticalHours().doubleValue() != 0.0) {
-	    shiftTypes.add(ShiftType.PRATICA);
-	}
-	
-	if (this.getTheoPratHours() != null && this.getTheoPratHours().doubleValue() != 0.0) {
-	    shiftTypes.add(ShiftType.TEORICO_PRATICA);
-	}
-	
-	if (this.getLabHours() != null && this.getLabHours().doubleValue() != 0.0) {
-	    shiftTypes.add(ShiftType.LABORATORIAL);
-	}
-	
-	if (this.getSeminaryHours() != null && this.getSeminaryHours().doubleValue() != 0.0) {
-	    shiftTypes.add(ShiftType.SEMINARY);
-	}
-	
-	if (this.getProblemsHours() != null && this.getProblemsHours().doubleValue() != 0.0) {
-	    shiftTypes.add(ShiftType.PROBLEMS);
-	}
-	
-	if (this.getFieldWorkHours() != null && this.getFieldWorkHours().doubleValue() != 0.0) {
-	    shiftTypes.add(ShiftType.FIELD_WORK);
-	}
-	
-	if (this.getTrainingPeriodHours() != null && this.getTrainingPeriodHours().doubleValue() != 0.0) {
-	    shiftTypes.add(ShiftType.TRAINING_PERIOD);
-	}
-	
-	if (this.getTutorialOrientationHours() != null && this.getTutorialOrientationHours().doubleValue() != 0.0) {
-	    shiftTypes.add(ShiftType.TUTORIAL_ORIENTATION);
-	}
-	
+	}	
 	return shiftTypes;
     }
 
@@ -1236,10 +1204,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	Set<ShiftType> shiftTypes = getShiftTypes();
 	for (ShiftType shiftType : executionCourseFrom.getShiftTypes()) {
 	    if (shiftTypes.contains(shiftType)) {
-                List<LessonPlanning> lessonPlanningsFrom = executionCourseFrom.getLessonPlanningsOrderedByOrder(shiftType);
+		List<LessonPlanning> lessonPlanningsFrom = executionCourseFrom
+			.getLessonPlanningsOrderedByOrder(shiftType);
 		if (!lessonPlanningsFrom.isEmpty()) {
 		    for (LessonPlanning planning : lessonPlanningsFrom) {
-                        new LessonPlanning(planning.getTitle(), planning.getPlanning(), planning.getLessonType(), this);
+			new LessonPlanning(planning.getTitle(), planning.getPlanning(), planning
+				.getLessonType(), this);
 		    }
 		}
 	    }
@@ -1247,12 +1217,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public void createLessonPlanningsUsingSummariesFrom(Shift shift) {
-        List<Summary> summaries = new ArrayList<Summary>();
-        summaries.addAll(shift.getAssociatedSummaries());
-        Collections.sort(summaries, new ReverseComparator(Summary.COMPARATOR_BY_DATE_AND_HOUR));
-        for (Summary summary : summaries) {
-            new LessonPlanning(summary.getTitle(), summary.getSummaryText(), shift.getTipo(), this);
-        }
+	List<Summary> summaries = new ArrayList<Summary>();
+	summaries.addAll(shift.getAssociatedSummaries());
+	Collections.sort(summaries, new ReverseComparator(Summary.COMPARATOR_BY_DATE_AND_HOUR));
+	for (Summary summary : summaries) {
+	    new LessonPlanning(summary.getTitle(), summary.getSummaryText(), shift.getTipo(), this);
+	}
     }
 
     public void deleteLessonPlanningsByLessonType(ShiftType shiftType) {
@@ -1277,108 +1247,109 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public Double getCurricularCourseEnrolmentsWeight(CurricularCourse curricularCourse) {
 	Double totalEnrolmentStudentNumber = new Double(getTotalEnrolmentStudentNumber());
 	if (totalEnrolmentStudentNumber > 0d) {
-    		return  curricularCourse.getTotalEnrolmentStudentNumber(getExecutionPeriod()) / totalEnrolmentStudentNumber;
-    	} else {
-    		return 0d;
-    	}
-    }  
-    
+	    return curricularCourse.getTotalEnrolmentStudentNumber(getExecutionPeriod())
+		    / totalEnrolmentStudentNumber;
+	} else {
+	    return 0d;
+	}
+    }
+
     public Set<ShiftType> getOldShiftTypesToEnrol() {
-        final List<ShiftType> validShiftTypes = Arrays.asList(new ShiftType[] { ShiftType.TEORICA,
-            ShiftType.PRATICA, ShiftType.LABORATORIAL, ShiftType.TEORICO_PRATICA });
+	final List<ShiftType> validShiftTypes = Arrays.asList(new ShiftType[] { ShiftType.TEORICA,
+		ShiftType.PRATICA, ShiftType.LABORATORIAL, ShiftType.TEORICO_PRATICA });
 
-        final Set<ShiftType> result = new HashSet<ShiftType>(4);
-        for (final Shift shift : getAssociatedShiftsSet()) {
-            if (validShiftTypes.contains(shift.getTipo())) {
-            result.add(shift.getTipo());
-            }
-        }
-        return result;
-        }
+	final Set<ShiftType> result = new HashSet<ShiftType>(4);
+	for (final Shift shift : getAssociatedShiftsSet()) {
+	    if (validShiftTypes.contains(shift.getTipo())) {
+		result.add(shift.getTipo());
+	    }
+	}
+	return result;
+    }
 
-        /**
+    /**
          * Tells if all the associated Curricular Courses load are the same
          */
-        public String getEqualLoad() {
-        for (final CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            if ((!this.getTheoPratHours().equals(curricularCourse.getTheoPratHours()))
-                || (!this.getTheoreticalHours().equals(curricularCourse.getTheoreticalHours()))
-                || (!this.getPraticalHours().equals(curricularCourse.getPraticalHours()))
-                || (!this.getLabHours().equals(curricularCourse.getLabHours()))) {
-            return Boolean.FALSE.toString();
-            }
-        }
+    public String getEqualLoad() {
+	for (final CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
+	    if ((!this.getTheoPratHours().equals(curricularCourse.getTheoPratHours()))
+		    || (!this.getTheoreticalHours().equals(curricularCourse.getTheoreticalHours()))
+		    || (!this.getPraticalHours().equals(curricularCourse.getPraticalHours()))
+		    || (!this.getLabHours().equals(curricularCourse.getLabHours()))) {
+		return Boolean.FALSE.toString();
+	    }
+	}
 
-        return Boolean.TRUE.toString();
-        }
-    
-    public List<Summary> getSummariesByShiftType(ShiftType shiftType){
-        List<Summary> summaries = new ArrayList<Summary>();
-        for (Summary summary : getAssociatedSummariesSet()) {
-            if(summary.getShift().getTipo().equals(shiftType)) {
-                summaries.add(summary);
-            }
-        }
-        return summaries;
+	return Boolean.TRUE.toString();
     }
-    
-    //OLD FUNCTIONS
+
+    public List<Summary> getSummariesByShiftType(ShiftType shiftType) {
+	List<Summary> summaries = new ArrayList<Summary>();
+	for (Summary summary : getAssociatedSummariesSet()) {
+	    if (summary.getShift().getTipo().equals(shiftType)) {
+		summaries.add(summary);
+	    }
+	}
+	return summaries;
+    }
+
+    // OLD FUNCTIONS
     private Summary createSummary(String title, String summaryText, Integer studentsNumber,
-            Boolean isExtraLesson) {
+	    Boolean isExtraLesson) {
 
-        if (title == null || summaryText == null || isExtraLesson == null)
-            throw new NullPointerException();
+	if (title == null || summaryText == null || isExtraLesson == null)
+	    throw new NullPointerException();
 
-        final Summary summary = new Summary();
-        summary.setTitle(new MultiLanguageString(Language.pt, title));
-        summary.setSummaryText(new MultiLanguageString(Language.pt, summaryText));
-        summary.setStudentsNumber(studentsNumber);
-        summary.setIsExtraLesson(isExtraLesson);
-        summary.setLastModifiedDate(Calendar.getInstance().getTime());
-        summary.setExecutionCourse(this);
+	final Summary summary = new Summary();
+	summary.setTitle(new MultiLanguageString(Language.pt, title));
+	summary.setSummaryText(new MultiLanguageString(Language.pt, summaryText));
+	summary.setStudentsNumber(studentsNumber);
+	summary.setIsExtraLesson(isExtraLesson);
+	summary.setLastModifiedDate(Calendar.getInstance().getTime());
+	summary.setExecutionCourse(this);
 
-        return summary;
+	return summary;
     }
 
     public Summary createSummary(String title, String summaryText, Integer studentsNumber,
-            Boolean isExtraLesson, Professorship professorship) {
+	    Boolean isExtraLesson, Professorship professorship) {
 
-        if (professorship == null)
-            throw new NullPointerException();
+	if (professorship == null)
+	    throw new NullPointerException();
 
-        final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
-        summary.setProfessorship(professorship);
-        summary.setTeacher(null);
-        summary.setTeacherName(null);
+	final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
+	summary.setProfessorship(professorship);
+	summary.setTeacher(null);
+	summary.setTeacherName(null);
 
-        return summary;
+	return summary;
     }
 
     public Summary createSummary(String title, String summaryText, Integer studentsNumber,
-            Boolean isExtraLesson, Teacher teacher) {
+	    Boolean isExtraLesson, Teacher teacher) {
 
-        if (teacher == null)
-            throw new NullPointerException();
+	if (teacher == null)
+	    throw new NullPointerException();
 
-        final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
-        summary.setTeacher(teacher);
-        summary.setProfessorship(null);
-        summary.setTeacherName(null);
+	final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
+	summary.setTeacher(teacher);
+	summary.setProfessorship(null);
+	summary.setTeacherName(null);
 
-        return summary;
+	return summary;
     }
 
     public Summary createSummary(String title, String summaryText, Integer studentsNumber,
-            Boolean isExtraLesson, String teacherName) {
+	    Boolean isExtraLesson, String teacherName) {
 
-        if (teacherName == null)
-            throw new NullPointerException();
+	if (teacherName == null)
+	    throw new NullPointerException();
 
-        final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
-        summary.setTeacherName(teacherName);
-        summary.setTeacher(null);
-        summary.setProfessorship(null);
+	final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
+	summary.setTeacherName(teacherName);
+	summary.setTeacher(null);
+	summary.setProfessorship(null);
 
-        return summary;
+	return summary;
     }
 }

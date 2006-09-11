@@ -22,8 +22,8 @@ public class PossibleDatesToSummariesManagementProvider implements DataProvider 
         List<YearMonthDay> possibleSummaryDates = new ArrayList<YearMonthDay>();
         if (lesson != null && summaryType.equals(SummaryType.NORMAL_SUMMARY)) {
              possibleSummaryDates.addAll(lesson.getPossibleDatesToInsertSummary());
-        }
-        if(bean.getSummary() != null && bean.getSummaryDate() != null) {
+        }        
+        if(bean.getSummary() != null && bean.getSummaryDate() != null && lesson.isDateValid(bean.getSummaryDate())) {
             possibleSummaryDates.add(bean.getSummaryDate());
         }
         Collections.reverse(possibleSummaryDates);

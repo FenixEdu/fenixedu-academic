@@ -30,17 +30,15 @@ function check(e,v){
 	</logic:notEmpty>
 	
 	<div class="infoop2">
-		<table>
-			<tr>
-				<td><b><bean:message key="link.home" bundle="DEFAULT"/></b></td>
-				<td><input indexed="true" class="dnone" id="instructionsButton" type="button" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));" value="+"></td>				
-			</tr>
-		</table>		
+		<a href="#" class="dnone" id="instructionsButton" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));"><bean:message key="link.home" bundle="DEFAULT"/></a>
+		<%--<input indexed="true" class="dnone" id="instructionsButton" type="button" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));" value="+">--%>
+
 		<div id="instructions" class="dblock">
 			<ul class="mvert025">
 				<li><bean:message key="label.summary.management.instructions1" bundle="DEFAULT"/></li>
 				<li><bean:message key="label.summary.management.instructions2" bundle="DEFAULT"/></li>
 				<li><bean:message key="label.summary.management.instructions3" bundle="DEFAULT"/></li>
+				<li><bean:message key="label.summary.management.instructions4" bundle="DEFAULT"/></li>
 			</ul>
 		</div>
 	</div>
@@ -64,6 +62,7 @@ function check(e,v){
 		<p>
 	</logic:messagesPresent>
 		
+	<%-- Lesson --%>			
 	<h3 class="mbottom0"><bean:message key="label.lesson" bundle="DEFAULT"/></h3>
 	<table class="tstyle5">
 		<tr>
@@ -132,40 +131,7 @@ function check(e,v){
 		</logic:notEqual>
 	</table>	
 	
-	<%-- Teacher --%>
-	<logic:equal name="loggedIsResponsible" value="true">
-		<h3 class="mbottom0"><bean:message key="label.teacher" bundle="DEFAULT"/></h3>
-		<bean:define id="chooseTeacherURL">/summariesManagement.do?method=chooseTeacher&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
-		<fr:form action="<%= chooseTeacherURL %>">			
-			<fr:edit id="summariesManagementBeanWithTeacher" name="summariesManagementBean" visible="false" nested="true" />								
-			<table class="tstyle5">
-				 <logic:iterate id="professorship" name="summariesManagementBean" property="executionCourse.professorships">
-				 	<bean:define id="professorshipId" name="professorship" property="idInternal" />
-				 	<tr>
-				 		<td><html:radio name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>" onclick="this.form.submit();"/></td>				
-				 		<td><bean:write name="professorship" property="teacher.person.name"/></td>
-				 	</tr>
-				 </logic:iterate>
-				<tr>
-					<td><html:radio name="summariesManagementForm" property="teacher" value="0" /></td>
-					<td>
-						<bean:message key="label.teacher.in" />
-						<html:text name="summariesManagementForm" onchange="this.form.submit();" property="teacherNumber" size="4" />
-						(<bean:message key="label.number" />)
-					</td>
-				</tr>
-				<tr>
-					<td><html:radio name="summariesManagementForm" property="teacher" value="-1" /></td>
-					<td>
-						<bean:message key="label.teacher.out" />
-						<html:text name="summariesManagementForm" onchange="this.form.submit();" property="teacherName" size="40"/>
-						(<bean:message key="label.name" />)
-					</td>
-				</tr>									
-			</table>
-		</fr:form>
-	</logic:equal>	
-		
+	<%-- Associate --%>
 	<h3 class="mbottom0"> <bean:message key="label.use" bundle="DEFAULT"/></h3>
 	<table class="tstyle5">
 		<%-- LessonPlannings --%>
@@ -186,7 +152,7 @@ function check(e,v){
 		</tr>	
 		<%-- LastSummaries --%>
 		<tr>
-			<td><bean:message key="message.summaryText" bundle="DEFAULT"/>:</td>
+			<td><bean:message key="message.summaryText.last" bundle="DEFAULT"/>:</td>
 			<td>
 				<bean:define id="chooseLastSummaryURL">/summariesManagement.do?method=chooseLastSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 				<fr:form>
@@ -200,8 +166,51 @@ function check(e,v){
 				</fr:form>	
 			</td>
 		</tr>
-	</table>			
+	</table>	
 	
+	<%-- Teacher --%>
+	<logic:equal name="loggedIsResponsible" value="true">
+		<h3 class="mbottom0"><bean:message key="label.teacher" bundle="DEFAULT"/></h3>
+		<bean:define id="chooseTeacherURL">/summariesManagement.do?method=chooseTeacher&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+		<fr:form action="<%= chooseTeacherURL %>">			
+			<fr:edit id="summariesManagementBeanWithTeacher" name="summariesManagementBean" visible="false" nested="true" />								
+			<table class="tstyle5">
+				<logic:notEmpty name="summariesManagementBean" property="professorship">
+					<bean:define id="professorship" name="summariesManagementBean" property="professorship" />
+				 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorship.idInternal" />
+					<tr>
+				 		<td><html:radio name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>" onclick="this.form.submit();"/></td>				
+				 		<td><bean:write name="professorship" property="teacher.person.name"/></td>
+			 		</tr>
+				</logic:notEmpty>
+				<logic:empty name="summariesManagementBean" property="professorship">
+					<bean:define id="professorship" name="summariesManagementBean" property="professorshipLogged" />
+				 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorshipLogged.idInternal" />
+					<tr>
+				 		<td><html:radio name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>" onclick="this.form.submit();"/></td>				
+				 		<td><bean:write name="professorship" property="teacher.person.name"/></td>
+			 		</tr>
+				</logic:empty>
+				<tr>
+					<td><html:radio name="summariesManagementForm" property="teacher" value="0" /></td>
+					<td>
+						<bean:message key="label.teacher.in" />
+						<html:text name="summariesManagementForm" onchange="this.form.submit();" property="teacherNumber" size="4" />
+						(<bean:message key="label.number" />)
+					</td>
+				</tr>
+				<tr>
+					<td><html:radio name="summariesManagementForm" property="teacher" value="-1" /></td>
+					<td>
+						<bean:message key="label.teacher.out" />
+						<html:text name="summariesManagementForm" onchange="this.form.submit();" property="teacherName" size="40"/>
+						(<bean:message key="label.name" />)
+					</td>
+				</tr>									
+			</table>
+		</fr:form>
+	</logic:equal>	
+					
 	<%-- Summary --%>	
 	<h3 class="mbottom0"><bean:message key="message.summaryText" bundle="DEFAULT"/></h3>
 	<bean:define id="showSummaries">/showSummaries.do?method=showSummaries&page=0&objectCode=<bean:write name="executionCourseID"/>&teacherNumber=<bean:write name="teacherNumber"/></bean:define>			

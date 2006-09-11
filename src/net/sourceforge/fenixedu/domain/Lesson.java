@@ -151,6 +151,27 @@ public class Lesson extends Lesson_Base {
         }
         return lessonSummaries;
     }
+    
+    public boolean isDateValid(YearMonthDay date) {
+	YearMonthDay lessonEndDay = getLessonEndDay();
+	YearMonthDay currentDate = new YearMonthDay();
+
+	YearMonthDay startDateToSearch = getLessonStartDay();
+	YearMonthDay endDateToSearch = (lessonEndDay.isAfter(currentDate)) ? currentDate : lessonEndDay;
+
+	if (!startDateToSearch.isAfter(endDateToSearch)) {
+	    while (true) {
+		if (startDateToSearch.isEqual(date)) {
+		    return true;
+		}
+		startDateToSearch = startDateToSearch.plusDays(7);
+		if (startDateToSearch.isAfter(endDateToSearch)) {
+		    return false;
+		}
+	    }
+	}
+	return false;
+    }
 
     private YearMonthDay getLessonStartDay() {
         YearMonthDay periodStart = getRoomOccupation().getPeriod().getStartYearMonthDay();

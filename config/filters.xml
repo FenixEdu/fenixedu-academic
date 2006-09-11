@@ -141,6 +141,13 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
+        <name>ExecutionCourseLecturingDepartmentAdmOfficeAuthorization</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>    
+    <filter>
         <name>ExecutionCourseCoordinatorAuthorization</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter</implementationClass>
@@ -321,9 +328,16 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>ExecutionCourseAndSummaryLecturingTeacherAuthorization</name>
+        <name>SummaryManagementToTeacherAuthorization</name>
         <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToTeacherAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
+        <name>SummaryManagementToDepartmentAdmOfficeAuthorization</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToDepartmentAdmOfficeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>

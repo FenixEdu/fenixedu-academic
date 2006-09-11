@@ -5,9 +5,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean.SummaryType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -73,7 +71,7 @@ public class Summary extends Summary_Base {
         checkParameters(title, summaryText, isExtraLesson, professorship, teacherName, teacher, shift,
                 lesson, date, room, hour);
         checkTeacher(teacher, shift.getDisciplinaExecucao());
-        checkDate(date);
+        checkDate(date, shift.getDisciplinaExecucao().getExecutionPeriod());
         setExecutionCourse(shift.getDisciplinaExecucao());
         setTitle(title);
         setSummaryText(summaryText);
@@ -96,9 +94,9 @@ public class Summary extends Summary_Base {
         }
     }
 
-    private void checkDate(YearMonthDay date) {
-        if(date.isAfter(new YearMonthDay())) {
-            throw new DomainException("error.summary.date.after.current");
+    private void checkDate(YearMonthDay date, ExecutionPeriod period) {
+        if(date.isAfter(new YearMonthDay()) || date.isBefore(period.getBeginDateYearMonthDay())) {
+            throw new DomainException("error.summary.no.valid.date");
         }
     }
 
@@ -194,75 +192,5 @@ public class Summary extends Summary_Base {
             builder.append(lesson.getSala().getName().toString());
         }
         return builder.toString();
-    }
-    
-    
-    //OLD FUNCTIONS
-    private void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson) {
-
-        if (title == null || summaryText == null || isExtraLesson == null)
-            throw new NullPointerException();
-
-        MultiLanguageString titleMLS = getTitle();
-        if(titleMLS == null) {
-            setTitle(new MultiLanguageString(Language.pt, title));
-        } else {
-            titleMLS.setContent(Language.pt, title);
-            setTitle(titleMLS);
-        }
-        MultiLanguageString summaryTextMLS = getSummaryText();
-        if(summaryTextMLS == null) {
-            setSummaryText(new MultiLanguageString(Language.pt, summaryText));
-        }else {
-            summaryTextMLS.setContent(Language.pt, summaryText);
-            setSummaryText(summaryTextMLS);
-        }
-        setStudentsNumber(studentsNumber);
-        setIsExtraLesson(isExtraLesson);
-        setLastModifiedDate(Calendar.getInstance().getTime());
-    }
-    
-    public void modifyShift(Shift shift, Date summaryDate, Date summaryHour, OldRoom room) {        
-        setShift(shift);
-        setSummaryDate(summaryDate);
-        setSummaryHour(summaryHour);
-        setRoom(room);
-        setSummaryType(shift.getTipo());
-    }
-
-    public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
-            Professorship professorship) {
-
-        if (professorship == null)
-            throw new NullPointerException();
-        
-        edit(title, summaryText, studentsNumber, isExtraLesson);
-        setProfessorship(professorship);
-        setTeacher(null);
-        setTeacherName(null);
-    }
-
-    public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
-            Teacher teacher) {
-
-        if (teacher == null)
-            throw new NullPointerException();
-        
-        edit(title, summaryText, studentsNumber, isExtraLesson);
-        setTeacher(teacher);
-        setProfessorship(null);
-        setTeacherName(null);
-    }
-
-    public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
-            String teacherName) {
-
-        if (teacherName == null)
-            throw new NullPointerException();
-        
-        edit(title, summaryText, studentsNumber, isExtraLesson);
-        setTeacherName(teacherName);
-        setTeacher(null);
-        setProfessorship(null);
-    }
+    }        
 }

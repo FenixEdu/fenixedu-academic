@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -709,15 +710,19 @@ public class SummaryManagerAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         try {            
             IUserView userView = getUserView(request);
-
+            
             String summaryIdString = request.getParameter("summaryCode");
             Integer summaryId = new Integer(summaryIdString);
 
             Integer executionCourseId = getObjectCode(request);
             request.setAttribute("objectCode", executionCourseId);
-
-            Object[] args = { executionCourseId, summaryId };
-            ServiceUtils.executeService(userView, "DeleteSummaryDepartment", args);
+            
+            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+            Summary summary = rootDomainObject.readSummaryByOID(summaryId);
+            Teacher teacher = Teacher.readByNumber(getTeacherNumber(request));
+                      
+            Object[] args = { executionCourse, summary, teacher};
+            ServiceUtils.executeService(userView, "DeleteSummary", args);
         } catch (Exception e) {
             e.printStackTrace();
             ActionErrors actionErrors = new ActionErrors();

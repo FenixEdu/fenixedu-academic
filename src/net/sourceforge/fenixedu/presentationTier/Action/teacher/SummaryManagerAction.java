@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -735,7 +736,10 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             Integer executionCourseId = getObjectCode(request);
             request.setAttribute("objectCode", executionCourseId);
 
-            Object[] args = { executionCourseId, summaryId };
+            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+            Summary summary = rootDomainObject.readSummaryByOID(summaryId);
+            
+            Object[] args = { executionCourse, summary, userView.getPerson().getTeacher()};
             ServiceUtils.executeService(userView, "DeleteSummary", args);
         } catch (Exception e) {
 
