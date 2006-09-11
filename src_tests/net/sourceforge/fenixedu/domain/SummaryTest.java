@@ -72,7 +72,7 @@ public class SummaryTest extends DomainTestBase {
 
         try {
             Professorship professorshipTest = null;
-            summary.edit("newTitle", "newSummaryText", 40, false, professorshipTest);
+//            summary.edit("newTitle", "newSummaryText", 40, false, professorshipTest);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             checkIfSummaryAttributesAreCorrect(this.summary, "title", "summaryText", 20, true, summaryDate,
@@ -82,7 +82,7 @@ public class SummaryTest extends DomainTestBase {
 
         try {
             Teacher teacherTest = null;
-            summary.edit("newTitle", "newSummaryText", 40, false, teacherTest);
+//            summary.edit("newTitle", "newSummaryText", 40, false, teacherTest);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             checkIfSummaryAttributesAreCorrect(this.summary, "title", "summaryText", 20, true, summaryDate,
@@ -92,7 +92,7 @@ public class SummaryTest extends DomainTestBase {
 
         try {
             String teacherName = null;
-            summary.edit("newTitle", "newSummaryText", 40, false, teacherName);
+//            summary.edit("newTitle", "newSummaryText", 40, false, teacherName);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             checkIfSummaryAttributesAreCorrect(this.summary, "title", "summaryText", 20, true, summaryDate,
@@ -101,7 +101,7 @@ public class SummaryTest extends DomainTestBase {
         }
 
         try {
-            summary.edit("newTitle", null, 40, null, "");
+//            summary.edit("newTitle", null, 40, null, "");
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             checkIfSummaryAttributesAreCorrect(this.summary, "title", "summaryText", 20, true, summaryDate,
@@ -110,7 +110,7 @@ public class SummaryTest extends DomainTestBase {
         }
 
         try {
-            shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
+//            shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
             fail("Expected DomainException: summary already exists!");
         } catch (DomainException e) {
             checkIfSummaryAttributesAreCorrect(this.summary, "title", "summaryText", 20, true, summaryDate,
@@ -123,8 +123,8 @@ public class SummaryTest extends DomainTestBase {
         sleep(1000);
         summaryDate = SummaryUtils.createSummaryDate(2005, 5, 6);
         summaryHour = SummaryUtils.createSummaryHour(11, 0);
-        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
-        summary.edit("newTitle", "newSummaryText", 40, false, this.professorship);
+//        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
+//        summary.edit("newTitle", "newSummaryText", 40, false, this.professorship);
         sleep(1000);
         Date dateAfterEdition = Calendar.getInstance().getTime();
         checkIfSummaryAttributesAreCorrect(this.summary, "newTitle", "newSummaryText", 40, false, summaryDate,
@@ -137,8 +137,8 @@ public class SummaryTest extends DomainTestBase {
         sleep(1000);
         summaryDate = SummaryUtils.createSummaryDate(2005, 5, 7);
         summaryHour = SummaryUtils.createSummaryHour(11, 0);
-        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
-        summary.edit("newTitle2", "newSummaryText2", 30, false, this.teacher);
+//        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
+//        summary.edit("newTitle2", "newSummaryText2", 30, false, this.teacher);
         sleep(1000);
         dateAfterEdition = Calendar.getInstance().getTime();
         checkIfSummaryAttributesAreCorrect(this.summary, "newTitle2", "newSummaryText2", 30, false, summaryDate,
@@ -151,8 +151,8 @@ public class SummaryTest extends DomainTestBase {
         sleep(1000);
         summaryDate = SummaryUtils.createSummaryDate(2005, 5, 8);
         summaryHour = SummaryUtils.createSummaryHour(11, 0);
-        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
-        summary.edit("newTitle3", "newSummaryText3", 40, true, "JPNF");
+//        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
+//        summary.edit("newTitle3", "newSummaryText3", 40, true, "JPNF");
         sleep(1000);
         dateAfterEdition = Calendar.getInstance().getTime();
         checkIfSummaryAttributesAreCorrect(this.summary, "newTitle3", "newSummaryText3", 40, true, summaryDate,
@@ -169,7 +169,7 @@ public class SummaryTest extends DomainTestBase {
         summaryDate = SummaryUtils.createSummaryDate(2005, 5, 10);
         summaryHour = SummaryUtils.createSummaryHour(11, 0);
 //        alternativeShift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
-        summary.edit("newTitle3", "newSummaryText3", 40, true, "JPNF");
+//        summary.edit("newTitle3", "newSummaryText3", 40, true, "JPNF");
         sleep(1000);
         dateAfterEdition = Calendar.getInstance().getTime();
 //        checkIfSummaryAttributesAreCorrect(this.summary, "newTitle3", "newSummaryText3", 40, true, summaryDate,

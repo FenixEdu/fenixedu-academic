@@ -354,7 +354,7 @@ public class ExecutionCourseTest extends DomainTestBase {
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
         summary = executionCourse.createSummary("title", "summaryText", 20, true, this.professorship);
-        shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
+//        shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         checkIfSummaryAttributesAreCorrect(summary, "title", "summaryText", 20, true, summaryDate,
@@ -366,7 +366,7 @@ public class ExecutionCourseTest extends DomainTestBase {
 
         // Try to insert a summary to a shift that already exit
         try {
-            shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
+//            shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
             fail("Expected DomainException: summary already exist!");
         } catch (DomainException e) {
             assertEquals("Unexpected size in associated summaries!", 1, executionCourse
@@ -381,7 +381,7 @@ public class ExecutionCourseTest extends DomainTestBase {
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
         summary = executionCourse.createSummary("title", "summaryText", 20, true, this.teacher);
-        shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
+//        shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         checkIfSummaryAttributesAreCorrect(summary, "title", "summaryText", 20, true, summaryDate,
@@ -397,7 +397,7 @@ public class ExecutionCourseTest extends DomainTestBase {
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
         summary = executionCourse.createSummary("title", "summaryText", 20, true, "JPNF");
-        shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
+//        shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         checkIfSummaryAttributesAreCorrect(summary, "title", "summaryText", 20, true, summaryDate,
