@@ -55,6 +55,8 @@ class StatisticsThread extends Thread {
                                + stats.getNumAborts()
                                + ","
                                + stats.getNumConflicts()
+                               + ","
+                               + SECONDS_BETWEEN_REPORTS
                                // this last null is the timestamp
                                + ",null)");
             
