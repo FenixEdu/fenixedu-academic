@@ -37,6 +37,12 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse,
             Teacher teacher, Double hours) throws MaxResponsibleForExceed, InvalidCategory {
 
+        for (final Professorship otherProfessorship : executionCourse.getProfessorshipsSet()) {
+            if (teacher == otherProfessorship.getTeacher()) {
+                throw new DomainException("error.teacher.already.associated.to.professorship");
+            }
+        }
+
         if (responsibleFor == null || executionCourse == null || teacher == null)
             throw new NullPointerException();
 

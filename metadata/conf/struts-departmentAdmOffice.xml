@@ -512,6 +512,10 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.CreateProfessorshipDispatchAction" validate="true">
 
             <exception 
+                type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
+                key="" 
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>             			            
+            <exception 
                 type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
                 key="message.professorship.invalidCategory" 
                 path="/createProfessorship.do?method=showExecutionDegreeExecutionCourses"/>
