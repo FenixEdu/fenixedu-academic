@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -40,9 +41,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         Object args[] = {};
-        Collection infoExecutionYears = (List) ServiceUtils.executeService(null, "ReadExecutionYearsService",
-                args);
-        infoExecutionYears = CollectionUtils.collect(infoExecutionYears, new INFO_EXECUTION_YEAR_INCREMENTER());
+        Collection infoExecutionYears = (List) ServiceUtils.executeService(null, "ReadExecutionYearsService", args);
         request.setAttribute("infoExecutionYears", infoExecutionYears);
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String executionYearOID = (String) finalWorkForm.get("executionYearOID");
