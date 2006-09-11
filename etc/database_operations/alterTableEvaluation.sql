@@ -1,0 +1,1 @@
+alter table EVALUATION change column DESCRIPTION DESCRIPTION text default NULL;

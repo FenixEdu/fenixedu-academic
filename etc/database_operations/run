@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 
 execute "Create TransactionStatistics Table" createTransactionStatisticsTable.sql
+execute "Alter Evaluation Table" alterTableEvaluation.sql
