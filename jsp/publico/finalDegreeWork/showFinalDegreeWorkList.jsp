@@ -20,7 +20,7 @@
 								 size="1"
 								 onchange="this.form.submit();">
 						<html:options property="idInternal" 
-									  labelProperty="year" 
+									  labelProperty="nextExecutionYearYear" 
 									  collection="infoExecutionYears" />
 					</html:select>
 					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
