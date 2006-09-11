@@ -152,23 +152,31 @@ public class TransactionChangeLogs {
 
 	// read tx logs
 	int maxTxNumber = txNumber;
-        //final long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
 	ResultSet rs = stmt.executeQuery("SELECT OBJ_CLASS,OBJ_ID,OBJ_ATTR,TX_NUMBER FROM TX_CHANGE_LOGS WHERE TX_NUMBER > " 
 					 + maxTxNumber 
 					 + " ORDER BY TX_NUMBER"
 					 + (forUpdate ? " FOR UPDATE" : ""));
-        //final long end = System.currentTimeMillis();
-        //System.out.println("select for update took: " + (end - start));
+        final long end = System.currentTimeMillis();
+        final long diff = end - start;
+        if (diff > 1000) {
+            System.out.println("select for update took: " + diff);
+        }
 
 	int previousTxNum = -1;
 	ChangeLogSet clSet = null;
+
+        long dif2 = 0;
 
 	while (rs.next()) {
 	    int txNum = rs.getInt(4);
 
 	    if (txNum != previousTxNum) {
 		if (clSet != null) {
+                    long start2 = System.currentTimeMillis();
 		    registerChangeLogSet(pb, clSet);
+                    long end2 = System.currentTimeMillis();
+                    dif2 += end2 - start2;
 		}
 		maxTxNumber = Math.max(maxTxNumber, txNum);
 		clSet = new ChangeLogSet(txNum);
@@ -184,8 +192,15 @@ public class TransactionChangeLogs {
 
 	// add last built ChangeLogSet, if any
 	if (clSet != null) {
+            long start2 = System.currentTimeMillis();
 	    registerChangeLogSet(pb, clSet);
+            long end2 = System.currentTimeMillis();
+            dif2 += end2 - start2;
 	}
+    if (dif2 > 1000) {
+        System.out.println("registerChangeLogSet took: " + dif2 + "ms.");
+        System.out.println("TX change log set contains: " + CHANGE_LOGS.size() + " registers.");
+    }
 
 	Transaction.setCommitted(maxTxNumber);
 
