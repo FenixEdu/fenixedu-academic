@@ -29,7 +29,7 @@
 		<bean:define id="studentNumber" name="equivalencesForm" property="studentNumber" type="java.lang.String"/>
 		<logic:iterate id="infoNotNeedToEnroll" name="infoNotNeedToEnrollCurricularCourses">
 			<tr>
-				<td class="listClasses"><bean:write name="infoDegreeCurricularPlan" property="name"/></td>
+				<td class="listClasses"><bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.infoDegreeCurricularPlan.name"/></td>
 				<td class="listClasses">
 					<bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.name"/> - 
 					<bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.code"/>
