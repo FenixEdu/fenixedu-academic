@@ -37,10 +37,6 @@ public abstract class MetaObjectFactory {
             }
         }
         
-        if (object != null && !schema.getType().isAssignableFrom(object.getClass())) {
-            throw new RuntimeException(String.format("schema type '%s' does not match given object type '%s'", schema.getType(), object.getClass()));
-        }
-        
         return currentFactory.createMetaObject(object, usedSchema);
     }
     
