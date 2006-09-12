@@ -27,6 +27,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fix Seminary Tables" fixSeminaryTables.sql
 
 #
 # Don't create the seminaries just yet.
