@@ -1465,7 +1465,11 @@ public class Person extends Person_Base {
             String contributorAddress, String areaCode, String areaOfAreaCode, String area,
             String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence) {
         
-        ExternalPerson externalPerson = new ExternalPerson(
+        if (Party.readByContributorNumber(contributorNumber) != null) {
+            throw new DomainException("EXTERNAL_PERSON.createContributor.existing.contributor.number");
+        }
+	
+	ExternalPerson externalPerson = new ExternalPerson(
                 contributorName, 
                 Gender.MALE, 
                 contributorAddress,
