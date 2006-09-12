@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
@@ -135,7 +136,7 @@ public class CollectionRenderer extends OutputRenderer {
         
         this.links = new Hashtable<String, TableLink>();
         this.sortedLinks = new ArrayList<TableLink>();
-        this.selectAllLocation = "bottom";
+        this.selectAllLocation = LOCATION_BOTTOM;
     }
 
     public String getCaption() {
@@ -697,7 +698,7 @@ public class CollectionRenderer extends OutputRenderer {
             HtmlComponent component = super.createLayout(object, type);
             
             if (isCheckable() && isSelectAllShown()) {
-                HtmlInlineContainer container = new HtmlInlineContainer();
+                HtmlBlockContainer container = new HtmlBlockContainer();
                 
                 HtmlComponent selectAllComponent = createInvertSelectionLink();
                 
@@ -792,7 +793,7 @@ public class CollectionRenderer extends OutputRenderer {
             }
             else if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
                 String slotLabel = getLabel(columnIndex);
-                return new HtmlText(slotLabel);
+                return new HtmlText(slotLabel, false);
             }
             else {
                 return new HtmlText();

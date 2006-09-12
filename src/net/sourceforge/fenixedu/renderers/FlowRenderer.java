@@ -158,7 +158,7 @@ public class FlowRenderer extends OutputRenderer {
 				}
 
 				HtmlInlineContainer container = new HtmlInlineContainer();
-				HtmlText label = new HtmlText(addLabelTerminator(slot.getLabel()));
+				HtmlText label = new HtmlText(addLabelTerminator(slot.getLabel()), false);
 
 				HtmlInlineContainer labelContainer = new HtmlInlineContainer();
 				labelContainer.addChild(label);

@@ -141,7 +141,7 @@ public class StandardObjectRenderer extends OutputRenderer {
         protected HtmlComponent getComponent(int rowIndex, int columnIndex) {
             if (columnIndex == 0) {
                 MetaSlot slot = this.object.getSlots().get(rowIndex);
-                return new HtmlText(addLabelTerminator(slot.getLabel()));
+                return new HtmlText(addLabelTerminator(slot.getLabel()), false);
             }
             else {
                 return renderSlot(this.object.getSlots().get(rowIndex));

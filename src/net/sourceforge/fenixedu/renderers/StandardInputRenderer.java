@@ -186,7 +186,7 @@ public class StandardInputRenderer extends InputRenderer {
                 MetaSlot slot = this.object.getSlots().get(rowIndex);
 
                 if (slot.isReadOnly()) {
-                    component = new HtmlText(slot.getLabel()); 
+                    component = new HtmlText(slot.getLabel(), false); 
                 }
                 else {
                     HtmlLabel label = new HtmlLabel();

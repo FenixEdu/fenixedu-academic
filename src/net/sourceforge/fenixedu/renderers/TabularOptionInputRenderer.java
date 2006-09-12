@@ -199,7 +199,7 @@ public class TabularOptionInputRenderer extends InputRenderer {
                 if (columnIndex != 0) {
                     text = metaObjects.get(0).getSlots().get(columnIndex - 1).getLabel();
                 }
-                return new HtmlText(text);
+                return new HtmlText(text, false);
             }
 
             @Override
