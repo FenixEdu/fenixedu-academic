@@ -144,11 +144,13 @@ public class Lesson extends Lesson_Base {
         List<Summary> lessonSummaries = new ArrayList<Summary>();
         Set<Summary> shiftSummaries = new TreeSet<Summary>(new ReverseComparator(Summary.COMPARATOR_BY_DATE_AND_HOUR));
         shiftSummaries.addAll(getShift().getAssociatedSummariesSet());
+        int lessonWeekDay = getLessonWeekDayToYearMonthDayFormat();
         for (Summary summary : shiftSummaries) {
-            if (summary.getSummaryHourHourMinuteSecond().isEqual(getBeginHourMinuteSecond())) {
+            int summaryDayOfWeek = summary.getSummaryDateYearMonthDay().toDateTimeAtMidnight().getDayOfWeek();
+            if (summary.getSummaryHourHourMinuteSecond().isEqual(getBeginHourMinuteSecond()) && summaryDayOfWeek == lessonWeekDay) {
                 lessonSummaries.add(summary);
             }
-        }
+        }               
         return lessonSummaries;
     }
     
@@ -178,16 +180,16 @@ public class Lesson extends Lesson_Base {
         int weekOfQuinzenalStart = (getWeekOfQuinzenalStart() != null) ? getWeekOfQuinzenalStart().intValue() : 0;
         YearMonthDay lessonStart = periodStart.plusDays(7 * weekOfQuinzenalStart);      
         int lessonStartDayOfWeek = lessonStart.toDateTimeAtMidnight().getDayOfWeek();
-        return lessonStart.plusDays(getLessonWeekDay() - lessonStartDayOfWeek);
+        return lessonStart.plusDays(getLessonWeekDayToYearMonthDayFormat() - lessonStartDayOfWeek);
     }
 
     private YearMonthDay getLessonEndDay() {
         YearMonthDay periodEnd = getRoomOccupation().getPeriod().getEndYearMonthDay();   
         int lessonEndDayOfWeek = periodEnd.toDateTimeAtMidnight().getDayOfWeek();
-        return periodEnd.minusDays(lessonEndDayOfWeek - getLessonWeekDay());
+        return periodEnd.minusDays(lessonEndDayOfWeek - getLessonWeekDayToYearMonthDayFormat());
     }
 
-    private int getLessonWeekDay() {
+    private int getLessonWeekDayToYearMonthDayFormat() {
         return (getDiaSemana().getDiaSemana().intValue() == 1) ? 7 : (getDiaSemana()
                 .getDiaSemana().intValue() - 1);
     }
