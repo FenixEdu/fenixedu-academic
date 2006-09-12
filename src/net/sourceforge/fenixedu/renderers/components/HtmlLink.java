@@ -27,12 +27,12 @@ public class HtmlLink extends HtmlComponent {
     
     private HtmlComponent body;
     
-    private Map<String, String> parameters;
+    private Map<String, String[]> parameters;
     
     public HtmlLink() {
         super();
         
-        parameters = new Hashtable<String, String>();
+        parameters = new Hashtable<String, String[]>();
         setModuleRelative(true);
     }
 
@@ -83,7 +83,7 @@ public class HtmlLink extends HtmlComponent {
                         
                         String[] paramParts = part.split("=", -1);
                         if (paramParts.length == 2) {
-                            setParameter(paramParts[0], paramParts[1]);
+                            addParameter(paramParts[0], paramParts[1]);
                         }
                     }
                 }
@@ -102,14 +102,32 @@ public class HtmlLink extends HtmlComponent {
     }
 
     public void setParameter(String name, String value) {
-        this.parameters.put(name, value);
+        this.parameters.put(name, new String[] { value });
     }
     
     public void setParameter(String name, Object value) {
-        this.parameters.put(name, value == null ? "" : value.toString());
+        if (value != null) {
+            setParameter(name, value.toString());
+        }
     }
 
-    public Map<String, String> getParameters() {
+    public void addParameter(String name, Object value) {
+        String[] values = this.parameters.get(name);
+        
+        if (values == null) {
+            setParameter(name, value);
+        }
+        else {
+            if (value != null) {
+                String[] newValues = new String[values.length + 1];
+                System.arraycopy(values, 0, newValues, 0, values.length);
+                
+                newValues[values.length] = value.toString();
+            }
+        }
+    }
+    
+    public Map<String, String[]> getParameters() {
         return this.parameters;
     }
 
@@ -210,18 +228,25 @@ public class HtmlLink extends HtmlComponent {
                 }
                 
                 Set<String> keys = getParameters().keySet();
-                
                 int count = keys.size();
+                
                 for (String key : keys) {
-                    buffer.append(key);
-                    buffer.append("=");
+                    String[] values = getParameters().get(key);
+                    for (int i = 0; i < values.length; i++) {
+                        if (i > 0) {
+                            buffer.append("&");
+                        }
 
-                    try {
-                        buffer.append(URLEncoder.encode(getParameters().get(key), "UTF-8"));
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+                        buffer.append(key);
+                        buffer.append("=");
+    
+                        try {
+                            buffer.append(URLEncoder.encode(values[i], "UTF-8"));
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
                     }
-                   
+
                     count--;
                     if (count > 0) {
                         buffer.append("&");
