@@ -6,6 +6,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
+import net.sourceforge.fenixedu.stm.Transaction;
+
+
 public class RootDomainObject extends RootDomainObject_Base {
 
     private static RootDomainObject instance = null;
@@ -16,16 +19,14 @@ public class RootDomainObject extends RootDomainObject_Base {
 
     public static synchronized void init() {
         if (instance == null) {
-            final ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            try {
-                suportePersistente.iniciarTransaccao();
-                final IPersistentObject persistentObject = suportePersistente.getIPersistentObject();
-                instance = persistentObject.readRootDomainObject();
-                suportePersistente.confirmarTransaccao();
-                instance.initAccessClosures();
-            } catch (ExcepcaoPersistencia e) {
-                throw new Error("error.root.domain.object.not.retrieved", e);
-            }
+            Transaction.withTransaction(new jvstm.TransactionalCommand() {
+                    public void doIt() {
+                        final ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
+                        final IPersistentObject persistentObject = suportePersistente.getIPersistentObject();
+                        instance = persistentObject.readRootDomainObject();
+                        instance.initAccessClosures();
+                    }
+                });
         }
     }
     

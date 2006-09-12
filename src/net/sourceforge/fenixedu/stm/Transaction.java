@@ -7,6 +7,9 @@ import org.apache.ojb.broker.PersistenceBroker;
 
 public abstract class Transaction extends jvstm.Transaction {
 
+    private final static int WARN_TX_QUEUE_SIZE_LIMIT = 1000;
+    private final static int TRANSACTION_MAX_DURATION_MILLIS = 100 * 1000;
+
     public final static TransactionStatistics STATISTICS = new TransactionStatistics();
 
     static {
@@ -46,7 +49,13 @@ public abstract class Transaction extends jvstm.Transaction {
 
     public static jvstm.Transaction begin() {
 	initializeIfNeeded();	
-	return jvstm.Transaction.begin();
+        if (ACTIVE_TXS.getQueueSize() > WARN_TX_QUEUE_SIZE_LIMIT) {
+            System.out.printf("WARNING: the number of active transactions is %d\n", ACTIVE_TXS.getQueueSize());
+            System.out.printf("    The oldest active transaction is %s\n", ACTIVE_TXS.getOldestTx());
+        }
+	jvstm.Transaction tx = jvstm.Transaction.begin();
+        tx.setTimeoutMillis(TRANSACTION_MAX_DURATION_MILLIS);
+        return tx;
     }
 
     public static void forceFinish() {
@@ -107,4 +116,24 @@ public abstract class Transaction extends jvstm.Transaction {
 	return cache;
     }
 
+    public static void withTransaction(jvstm.TransactionalCommand command) {
+        while (true) {
+            Transaction.begin();
+            boolean txFinished = false;
+            try {
+                command.doIt();
+                Transaction.commit();
+                txFinished = true;
+                return;
+            } catch (jvstm.CommitException ce) {
+                System.out.println("Restarting TX because of a conflict");
+                Transaction.abort();
+                txFinished = true;
+            } finally {
+                if (! txFinished) {
+                    Transaction.abort();
+                }
+            }
+        }
+    }
 }
