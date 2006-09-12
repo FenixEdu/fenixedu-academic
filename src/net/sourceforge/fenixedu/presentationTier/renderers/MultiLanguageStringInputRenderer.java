@@ -290,7 +290,7 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
             container.addChild(addLink);
             
             Map<Integer, LanguageBean> map = getLanguageMap(false);
-            if (map == null && mls != null) {
+            if ((map == null || map.isEmpty()) && (mls != null && !mls.isEmpty())) {
                 map = getLanguageMap(true);
                 
                 int index = 0;
@@ -324,7 +324,7 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
                 }
             }
             else {
-                // defaul: present one entry without allowing to remove
+                // default: present one entry without allowing to remove
                 addLanguageInput(container, 0, "", null, false);
             }
 
