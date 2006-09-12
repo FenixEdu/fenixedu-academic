@@ -28,6 +28,7 @@ function executeWithTempFile() {
 }
 
 execute "Fix Seminary Tables" fixSeminaryTables.sql
+execute "add parking tables" parkingTables.sql
 
 #
 # Don't create the seminaries just yet.
@@ -35,3 +36,4 @@ execute "Fix Seminary Tables" fixSeminaryTables.sql
 # instead of moving it into a folder with a date.
 #
 #execute "Create 1st Semester 2006 Seminaries" create2006Sem1Seminaries.sql
+
