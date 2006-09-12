@@ -62,7 +62,12 @@
 				</td>
 	
 				<td class="listClasses">
-					<bean:write name="shift" property="percentage" />
+					<logic:equal name="shift" property="lotacao" value="0">
+						<em><bean:message key="not.applicable"/></em>
+					</logic:equal>
+					<logic:notEqual name="shift" property="lotacao" value="0">
+						<bean:write name="shift" property="percentage" />
+					</logic:notEqual>
 				</td>
 			</tr>
 		</logic:iterate> 		
@@ -85,7 +90,12 @@
 			</th>
 		
 			<th class="listClasses-header">
-				<bean:write name="infoShiftGroupStatistics" property="totalPercentage"  />
+				<logic:equal name="infoShiftGroupStatistics" property="totalCapacity" value="0">
+					<em><bean:message key="not.applicable"/></em>
+				</logic:equal>
+				<logic:notEqual name="infoShiftGroupStatistics" property="totalCapacity" value="0">
+					<bean:write name="infoShiftGroupStatistics" property="totalPercentage"  />
+				</logic:notEqual>
 			</th>		
 		</tr>
 	</table>
