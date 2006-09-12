@@ -42,6 +42,10 @@ public class StringRenderer extends OutputRenderer {
      */
     public void setEscaped(boolean escaped) {
         this.escaped = escaped;
+        
+        if (! escaped) {
+            setNewlineAware(false);
+        }
     }
 
     public boolean isNewlineAware() {
