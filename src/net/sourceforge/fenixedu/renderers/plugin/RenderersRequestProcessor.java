@@ -97,12 +97,6 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
         }
     }
 
-    @Override
-    protected void processPopulate(HttpServletRequest request, HttpServletResponse response, ActionForm form, ActionMapping mapping) throws ServletException {
-        super.processPopulate(request, response, form, mapping);
-        RenderersRequestProcessor.currentRequest.set(parseMultipartRequest(request, form));
-    }
-
     protected HttpServletRequest parseMultipartRequest(HttpServletRequest request, ActionForm form) {
         Hashtable<String, UploadedFile> itemsMap = getNewFileItemsMap();
 
@@ -200,6 +194,7 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
 
     @Override
     protected ActionForward processActionPerform(HttpServletRequest request, HttpServletResponse response, Action action, ActionForm form, ActionMapping mapping) throws IOException, ServletException {
+        RenderersRequestProcessor.currentRequest.set(parseMultipartRequest(request, form));
         HttpServletRequest initialRequest = RenderersRequestProcessor.currentRequest.get();
         
         if (hasViewState(initialRequest)) {
