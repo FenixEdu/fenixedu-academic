@@ -414,9 +414,9 @@
 
 								</tr>
 							</logic:iterate>
-							</table>
 					</logic:notEmpty>
 				</logic:present>
+				</table>
 			</html:form>
 			</logic:present>
 		</logic:present>
