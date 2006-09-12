@@ -259,6 +259,7 @@ public class MenuOptionListRenderer extends InputRenderer {
             for (MetaObject metaObject : possibleMetaObjects) {
                 Object obj = metaObject.getObject();
                 HtmlMenuOption option = menu.createOption(null);
+                
                 if (getConverter() instanceof BiDirectionalConverter) {
                     option.setValue(((BiDirectionalConverter) getConverter()).deserialize(obj)); 
                 } else {
@@ -278,19 +279,6 @@ public class MenuOptionListRenderer extends InputRenderer {
                     option.setBody(component);
                 }
 
-                // select the option
-                if (provider != null) {
-                    final Object convertedObject;
-                    if (getConverter() instanceof BiDirectionalConverter) {
-                        convertedObject = obj;
-                    } else {
-                        MetaObjectKey key = metaObject.getKey();
-                        convertedObject = provider.getConverter().convert(type, key.toString());                        
-                    }
-                    if (convertedObject.equals(object)) {
-                        option.setSelected(true);
-                    }
-                }
                 if (obj.equals(object)) {
                     option.setSelected(true);
                 }
