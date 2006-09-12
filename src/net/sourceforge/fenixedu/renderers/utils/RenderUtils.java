@@ -493,6 +493,11 @@ public class RenderUtils {
     
     public static boolean invalidateViewState(String id) {
         List<IViewState> viewStates = (List<IViewState>) RenderersRequestProcessor.getCurrentRequest().getAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+        
+        if (viewStates == null) {
+            return false;
+        }
+        
         for (Iterator<IViewState> iter = viewStates.iterator(); iter.hasNext();) {
             IViewState viewState = iter.next();
             
