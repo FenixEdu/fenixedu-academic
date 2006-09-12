@@ -153,6 +153,11 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	//FIXME
 	if (result.isEmpty() || allTemporaryOrNotOptional(result)) {
 	    result.addAll(getOptionalCourses(result));
+	    IEnrollmentRule enrollmentRule = new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod);
+	    try {
+		result = enrollmentRule.apply(result);
+	    } catch (EnrolmentRuleDomainException e) {
+	    }
 	} else {
 	    IEnrollmentRule enrollmentRule = new PreviousYearsCurricularCourseEnrollmentRule(
 		    studentCurricularPlan, executionPeriod);
@@ -288,6 +293,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 		    .initAcumulatedEnrollments(curricularCoursesToEnroll);
 	}
 	studentCurricularPlan.initEctsCreditsToEnrol(curricularCoursesToEnroll, executionPeriod);
+	
 	return curricularCoursesToEnroll;
     }
 
