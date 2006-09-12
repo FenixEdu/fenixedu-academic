@@ -3931,34 +3931,7 @@
 		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
 		</filterChains>
-	</service>
-	<service>
-		<name>ReadSummaries</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadSummaries</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>PrepareInsertSummary</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.PrepareInsertSummary</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>		
-	<service>
-		<name>ReadSummary</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadSummary</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
+	</service>			
 	<service>
 		<name>TransferCompetenceCourse</name>
 		<implementationClass> 
@@ -7156,18 +7129,7 @@
 		<filterChains>
 			<chain name="ReadCurriculumHistoricAuthorization" />
 		</filterChains>
-	</service>
-	<service>
-		<name>ReadProfessorshipByTeacherIDandExecutionCourseID</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadProfessorshipByTeacherIDandExecutionCourseID
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
+	</service>	
 	<service>
 		<name>ReadExecutionCourseOIDByCodeInLatestPeriod</name>
 		<implementationClass> 
@@ -7242,45 +7204,7 @@
 		<filterChains>
 			<chain name="ReadStudentCurricularPlansAccess" />
 		</filterChains>
-	</service>
-	<service>
-		<name>ReadSummariesDepartmentAdmOffice</name>
-		<implementationClass>
-        	net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.ReadSummaries
-        </implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="EmployeeBelongsToTeacherDepartment" />
-		</filterChains>
-	</service>
-	<service>
-		<name>PrepareInsertSummaryDepartment</name>
-		<implementationClass>
-        	net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.PrepareInsertSummary
-        </implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>	
-	<service>
-		<name>ReadSummaryDepartment</name>
-		<implementationClass>
-        	net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.ReadSummary
-        </implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="EmployeeBelongsToTeacherDepartment" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadProfessorshipByTeacherIDandExecutionCourseIDDepartment</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadProfessorshipByTeacherIDandExecutionCourseID
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>
+	</service>		
 	<service>
 		<name>FindTeachersServiceForDepartmentOffice</name>
 		<implementationClass> 
@@ -7290,14 +7214,7 @@
 		<filterChains>
 			<chain name="EmployeeBelongsToTeacherDepartment" />
 		</filterChains>
-	</service>
-	<service>
-		<name>ReadLastSummary</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.ReadLastSummary</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>
+	</service>	
 	<service>
 		<name>ReadDegreeIdInternalByDegreeCode</name>
 		<implementationClass> 
@@ -7313,15 +7230,7 @@
 		</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-	</service>
-	<service>
-		<name>ReadProfessorshipByTeacherNumberAndExecutionCourseID</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadProfessorshipByTeacherNumberAndExecutionCourseID</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>
-	
+	</service>	
 	
 	<!-- ================================= INQUIRIES ================================= -->	
 	

@@ -64,7 +64,7 @@ function check(e,v){
 	<table class="tstyle5">
 		<tr>
 			<%-- SummaryType --%>				
-			<td><bean:message key="label.type"/>:</td>
+			<td><bean:message key="label.type"/></td>
 			<td>
 				<div style="display: inline;">
 					<fr:form>
@@ -210,7 +210,7 @@ function check(e,v){
 					
 	<%-- Summary --%>	
 	<h3 class="mbottom0"><bean:message key="message.summaryText" bundle="DEFAULT"/></h3>
-	<bean:define id="showSummaries">/showSummaries.do?method=showSummaries&page=0&objectCode=<bean:write name="executionCourseID"/>&teacherNumber=<bean:write name="teacherNumber"/></bean:define>			
+	<bean:define id="showSummaries">/summariesManagement.do?method=prepareShowSummaries&page=0&executionCourseID=<bean:write name="executionCourseID"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>			
 	<bean:define id="createSummaryURL">/summariesManagement.do?teacherNumber_=<bean:write name="teacherNumber"/></bean:define>		
 	<logic:equal name="summariesManagementBean" property="summaryType" value="NORMAL_SUMMARY">		
 		<fr:form action="<%= createSummaryURL %>">
@@ -226,7 +226,7 @@ function check(e,v){
 				<html:submit titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>
 				<html:submit titleKey="message.button.save.equal" onclick="this.form.method.value='createSummaryAndSame';this.form.submit();"><bean:message key="button.save.equal" bundle="DEFAULT"/></html:submit>
 			</logic:empty>
-			<html:submit titleKey="message.button.save" onclick="this.form.method.value='showSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>
+			<html:submit titleKey="message.button.save" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>
 		</fr:form>
 	</logic:equal>
 	<logic:equal name="summariesManagementBean" property="summaryType" value="EXTRA_SUMMARY">		
@@ -243,7 +243,7 @@ function check(e,v){
 				<html:submit titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>
 				<html:submit titleKey="message.button.save.equal" onclick="this.form.method.value='createSummaryAndSame';this.form.submit();"><bean:message key="button.save.equal" bundle="DEFAULT"/></html:submit>
 			</logic:empty>
-			<html:submit titleKey="message.button.save" onclick="this.form.method.value='showSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>
+			<html:submit titleKey="message.button.save" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>
 		</fr:form>		
 	</logic:equal>		
 				

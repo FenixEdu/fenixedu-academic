@@ -71,8 +71,8 @@
 						<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 							<html:hidden alt='<%= "hours("+ executionCourseId +")" %>' property='<%= "hours("+ executionCourseId +")" %>' />							
 						</logic:present>
-						<% args.clear(); args.put("objectCode", executionCourseId); args.put("teacherNumber", teacherNumber); %>						
-						<html:link page="/showSummaries.do?method=showSummaries&amp;page=0" name="args" >
+						<% args.clear(); args.put("executionCourseID", executionCourseId); args.put("teacherNumber_", teacherNumber); %>						
+						<html:link page="/summariesManagement.do?method=prepareShowSummaries&amp;page=0" name="args" >
 							<bean:write name="infoExecutionCourse" property="nome"/>
 						</html:link>
 					</td>

@@ -315,7 +315,7 @@
 		<property name="destination" value="postBack"/>
 	</slot>	
 </schema>
-<schema name="ShowSummaries" type="net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean" bundle="DEFAULT">	
+<schema name="ShowSummariesFilterToExecutionCourseManagement" type="net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean" bundle="DEFAULT">	
 	<slot name="listSummaryType" layout="radio-postback"  key="label.type">
 		<property name="classes" value="list2 liinline" />
 		<property name="destination" value="postBack"/>
@@ -341,6 +341,28 @@
 		<property name="format"	value="${label}" />
 		<property name="destination" value="postBack"/>	
 		<property name="saveOptions" value="true" />
+		<property name="defaultText" value="label.summaries.all" />
+		<property name="key" value="true"/>
+		<property name="bundle" value="DEFAULT"/>
+	</slot>	
+</schema>
+<schema name="ShowSummariesFilterToDepartmentAdmOffice" type="net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean" bundle="DEFAULT">	
+	<slot name="listSummaryType" layout="radio-postback"  key="label.type">
+		<property name="classes" value="list2 liinline" />
+		<property name="destination" value="postBack"/>
+	</slot>
+	<slot name="shiftType" layout="menu-select-postback"  key="label.lessonPlanning.lessonType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesToShowSummariesProvider" />						
+		<property name="destination" value="postBack"/>
+		<property name="eachLayout" value=""/>		
+		<property name="defaultText" value="label.summaries.all" />
+		<property name="key" value="true"/>
+		<property name="bundle" value="DEFAULT"/>
+	</slot>
+	<slot name="shift" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ListShiftsToShowSummariesProvider" />				
+		<property name="format"	value="${shiftLabel}" />
+		<property name="destination" value="postBack"/>
 		<property name="defaultText" value="label.summaries.all" />
 		<property name="key" value="true"/>
 		<property name="bundle" value="DEFAULT"/>

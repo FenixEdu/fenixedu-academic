@@ -323,16 +323,6 @@
 		<put name="body" value="/teacher/onlineTests/removeExerciseVariation.jsp"></put>		
 	</definition>
 	<!-- END TESTS DEFINITIONS -->	
-	<definition name="showSummaries" extends="definition.teacher.summaryPage">
-		<put name="body" value="/teacher/showSummaries.jsp"></put>		
-	</definition>
-	<definition name="insertSummary" extends="definition.teacher.summaryPage">
-		<put name="body" value="/teacher/insertSummary.jsp"></put>		
-	</definition>	
-	<definition name="editSummary" extends="definition.teacher.summaryPage">
-		<put name="body" value="/teacher/editSummary.jsp"></put>		
-	</definition>
-	
 	
 	<!-- TJBF & PFON -->
 

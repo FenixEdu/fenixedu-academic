@@ -52,7 +52,7 @@ public class Summary extends Summary_Base {
 
 	this();
 	setInfoToSummary(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName,
-		teacher, shift, lesson, date, room, hour);
+		teacher, shift, lesson, date, room, hour, true);
     }
 
     public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
@@ -60,18 +60,18 @@ public class Summary extends Summary_Base {
 	    Shift shift, Lesson lesson, YearMonthDay date, OldRoom room, Partial hour) {
 
 	setInfoToSummary(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName,
-		teacher, shift, lesson, date, room, hour);
+		teacher, shift, lesson, date, room, hour, false);
     }
 
     private void setInfoToSummary(MultiLanguageString title, MultiLanguageString summaryText,
 	    Integer studentsNumber, Boolean isExtraLesson, Professorship professorship,
 	    String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
-	    OldRoom room, Partial hour) {
+	    OldRoom room, Partial hour, boolean toCreate) {
 
 	checkParameters(title, summaryText, isExtraLesson, professorship, teacherName, teacher, shift,
 		lesson, date, room, hour);
 	checkTeacher(teacher, shift.getDisciplinaExecucao());
-	checkDate(date, shift.getDisciplinaExecucao().getExecutionPeriod(), lesson);
+	checkDate(date, shift.getDisciplinaExecucao().getExecutionPeriod(), lesson, toCreate);
 	setExecutionCourse(shift.getDisciplinaExecucao());
 	setTitle(title);
 	setSummaryText(summaryText);
@@ -95,8 +95,8 @@ public class Summary extends Summary_Base {
 	}
     }
 
-    private void checkDate(YearMonthDay date, ExecutionPeriod period, Lesson lesson) {
-	if(lesson != null && lesson.getSummaryByDate(date) != null) {
+    private void checkDate(YearMonthDay date, ExecutionPeriod period, Lesson lesson, boolean toCreate) {
+	if(toCreate && lesson != null && lesson.getSummaryByDate(date) != null) {
 	    throw new DomainException("error.summary.already.exists");
 	}
 	if (date.isAfter(new YearMonthDay()) || date.isBefore(period.getBeginDateYearMonthDay())) {

@@ -19,12 +19,12 @@ public class PossibleDatesToSummariesManagementProvider implements DataProvider 
 
     public Object provide(Object source, Object currentValue) {
 	SummariesManagementBean bean = (SummariesManagementBean) source;
-	
+
 	Lesson lesson = bean.getLesson();
 	Shift shift = bean.getShift();
 	SummaryType summaryType = bean.getSummaryType();
 	Summary summary = bean.getSummary();
-	
+
 	List<YearMonthDay> possibleSummaryDates = new ArrayList<YearMonthDay>();
 	if (lesson != null && summaryType.equals(SummaryType.NORMAL_SUMMARY)) {
 	    possibleSummaryDates.addAll(lesson.getPossibleDatesToInsertSummary());

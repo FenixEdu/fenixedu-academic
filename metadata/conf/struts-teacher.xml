@@ -160,36 +160,6 @@
 	   		<form-property name="response" type="java.lang.String[]"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
-        <!-- summary form -->
-        <form-bean name="showSummaryForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-            <form-property name="bySummaryType" type="java.lang.String"/>  
-            <form-property name="byShift" type="java.lang.String"/>
-            <form-property name="byTeacher" type="java.lang.String"/>
-            <form-property name="objectCode" type="java.lang.String"/>
-            <form-property name="page" type="java.lang.Integer" initial="0"/>
-        </form-bean>                
-        <form-bean name="summaryForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-            <form-property name="forHidden" type="java.lang.String" initial=""/>
-            <form-property name="editor" type="java.lang.String" initial="true"/>
-            <form-property name="title" type="java.lang.String" initial=""/>
-            <form-property name="summaryText" type="java.lang.String" initial=""/>
-            <form-property name="dateEmpty" type="java.lang.String" initial=""/>
-            <form-property name="summaryDateInput" type="java.lang.String" initial=""/>
-            <form-property name="summaryDateInputOption" type="java.lang.String" initial=""/>
-            <form-property name="summaryHourInput" type="java.lang.String" initial=""/>
-            <form-property name="shift" type="java.lang.String" initial=""/>
-            <form-property name="lesson" type="java.lang.String" initial=""/>
-            <form-property name="room" type="java.lang.String" initial=""/>
-            <form-property name="studentsNumber" type="java.lang.String" initial=""/>
-            <form-property name="teacher" type="java.lang.String" initial=""/>
-            <form-property name="teacherName" type="java.lang.String" initial=""/>
-            <form-property name="teacherNumber" type="java.lang.String" initial=""/>
-            <form-property name="objectCode" type="java.lang.String" initial=""/>
-            <form-property name="page" type="java.lang.Integer" initial="0"/>
-            <form-property name="save" type="java.lang.Integer" initial="0"/>            
-            <form-property name="byTeacher" type="java.lang.String"/>            
-            <form-property name="lessonPlanning" type="java.lang.String"/>            
-        </form-bean>
         
         <!-- Summaries Management -->
         <form-bean name="summariesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">            	            
@@ -1300,49 +1270,7 @@
             <forward name="viewExams" path="/viewEvaluation.do?method=viewEvaluation"/>
         </action>
         <!-- End Marks List -->        
-        <!-- End LessonPlanning -->
-        <action name="showSummaryForm" path="/showSummaries" 
-            input="/teacherAdministrationViewer.do?method=instructions" parameter="method" 
-            scope="request" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SummaryManagerAction" 
-            validate="true" >
-            <exception type="java.lang.Exception" 
-                key="error.summary.impossible.show" 
-                handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-            <forward name="showSummaries" path="showSummaries" />
-        </action>        
-        <action name="summaryForm" path="/summariesManager" 
-            input="/summariesManager.do?method=showSummaries&amp;page=0" parameter="method" 
-            scope="request" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SummaryManagerAction" 
-            validate="true" >
-            <forward name="showSummaries" path="showSummaries" />
-            <forward name="doShowSummariesAction" path="/showSummaries.do?method=showSummaries&amp;page=0" />
-            <forward name="insertSummary" path="insertSummary" />
-            <forward name="editSummary" path="editSummary" />
-        </action>        
-        <action name="summaryForm" path="/summariesManagerInsertSummary" 
-            input="/summariesManager.do?method=prepareInsertSummary&amp;page=0" parameter="method" 
-            scope="request" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SummaryManagerAction" 
-            validate="true" >
-            <forward name="showSummaries" path="showSummaries" />
-            <forward name="doShowSummariesAction" path="/showSummaries.do?method=showSummaries&amp;page=0" />
-            <forward name="insertSummary" path="insertSummary" />
-            <forward name="doPrepareInsertSummary" path="/summariesManager.do?method=prepareInsertSummary&amp;page=0" />
-            <forward name="editSummary" path="editSummary" />
-        </action>        
-        <action name="summaryForm" path="/summariesManagerEditSummary" 
-            input="/summariesManager.do?method=prepareEditSummary&amp;page=0" parameter="method" 
-            scope="request" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SummaryManagerAction" 
-            validate="true" >
-            <forward name="showSummaries" path="showSummaries" />
-            <forward name="doShowSummariesAction" path="/showSummaries.do?method=showSummaries&amp;page=0" />
-            <forward name="insertSummary" path="insertSummary" />
-            <forward name="editSummary" path="editSummary" />
-        </action>
-
+                
         <!-- Summaries Management -->
 		<action path="/summariesManagement" 
 		    name="summariesManagementForm"

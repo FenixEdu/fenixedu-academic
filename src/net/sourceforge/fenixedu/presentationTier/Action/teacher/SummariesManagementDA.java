@@ -190,7 +190,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return submit(mapping, form, request, response);
 	} catch (NotAuthorizedFilterException e) {
-	    addActionMessage(request, null, null);
+	    addActionMessage(request, e.getMessage());
 	    return submit(mapping, form, request, response);
 	}
 
@@ -211,7 +211,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return submit(mapping, form, request, response);
 	} catch (NotAuthorizedFilterException e) {
-	    addActionMessage(request, null, null);
+	    addActionMessage(request, e.getMessage());
 	    return submit(mapping, form, request, response);
 	}
 
@@ -283,20 +283,12 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	bean.setLesson(null);
 	bean.setSummaryDate(null);
 	bean.setSummaryRoom(null);
-	bean.setSummaryTime(null);
-	bean.setShift(null);
+	bean.setSummaryTime(null);	
 	setLoggedTeacherToFormBean(request, dynaActionForm, bean);
 	request.setAttribute("summariesManagementBean", bean);
 	return mapping.findForward("prepareInsertSummary");
     }
-    
-    public ActionForward showSummaries(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
-	
-	return prepareShowSummaries(mapping, form, request, response);
-    }
-    
+        
     public ActionForward prepareShowSummaries(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	
@@ -321,6 +313,9 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteSummary", args);	    
 	} catch (DomainException e) {	  
 	    addActionMessage(request, e.getKey(), e.getArgs());
+	    return prepareShowSummaries(mapping, form, request, response);
+	} catch (NotAuthorizedFilterException e) {
+	    addActionMessage(request, e.getMessage());
 	    return prepareShowSummaries(mapping, form, request, response);
 	}	
 	return prepareShowSummaries(mapping, form, request, response);

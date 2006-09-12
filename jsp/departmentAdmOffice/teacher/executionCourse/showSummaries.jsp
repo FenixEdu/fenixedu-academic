@@ -6,9 +6,10 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 
 <logic:present name="showSummariesBean">
-	<h2><bean:message key="label.summaries.management"/></h2>
+	<h2><bean:message key="label.summaries.management" bundle="DEFAULT"/></h2>
 
 	<bean:define id="executionCourseID" name="showSummariesBean" property="executionCourse.idInternal" />
+	<bean:define id="teacherNumber" name="loggedTeacherProfessorship" property="teacher.teacherNumber" />
 	
 	<logic:messagesPresent message="true">
 		<p>
@@ -21,7 +22,7 @@
 	</logic:messagesPresent>
 		
 	<fr:form>
-		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToExecutionCourseManagement" nested="true">
+		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToDepartmentAdmOffice" nested="true">
 			<fr:destination name="postBack" path="/summariesManagement.do?method=showSummariesPostBack"/>		
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright"/>
@@ -29,11 +30,11 @@
 		</fr:edit>
 	</fr:form>
 	
-	<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>
+	<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
 	<div class="gen-button mtop1 mbottom2">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		<html:link page="<%= insertSummaryLink %>">
-			<bean:message key="label.insertSummary" />
+			<bean:message key="label.insertSummary" bundle="DEFAULT"/>
 		</html:link>	
 	</div>	
 	
@@ -55,12 +56,12 @@
 				<em>
 					<logic:empty name="summary" property="isExtraLesson">
 					  	<!-- Normal Summary -->
-						<bean:message key="label.lesson" />
+						<bean:message key="label.lesson" bundle="DEFAULT"/>
 					</logic:empty>				
 					<logic:notEmpty name="summary" property="isExtraLesson">
 						<logic:equal name="summary" property="isExtraLesson" value="false">		
 							<!-- Normal Summary -->
-						 	<bean:message key="label.lesson" />
+						 	<bean:message key="label.lesson" bundle="DEFAULT"/>
 						 	<logic:notEmpty name="summary" property="summaryType">
 								<bean:message name="summary" property="summaryType.name" bundle="ENUMERATION_RESOURCES"/>						   	
 							</logic:notEmpty>
@@ -68,7 +69,7 @@
 					
 						<logic:equal name="summary" property="isExtraLesson" value="true">		     
 					   		<!-- Extra Summary -->
-							<bean:message key="label.extra.lesson" />
+							<bean:message key="label.extra.lesson" bundle="DEFAULT"/>
 						</logic:equal>
 					</logic:notEmpty>
 									       	
@@ -82,33 +83,33 @@
 						<logic:notEmpty name="summary" property="studentsNumber">			
 							<bean:define id="studentsAttended" name="summary" property="studentsNumber" />
 							<logic:greaterThan name="studentsAttended" value="0">
-								<bean:message key="message.studentsnumber.attended.lesson" arg0="<%= studentsAttended.toString() %>"/>
+								<bean:message key="message.studentsnumber.attended.lesson" bundle="DEFAULT" arg0="<%= studentsAttended.toString() %>"/>
 							</logic:greaterThan>
 							<logic:lessEqual name="studentsAttended" value="0">
-								<bean:message key="message.studentsnumber.attended.lesson.no" />				
+								<bean:message key="message.studentsnumber.attended.lesson.no" bundle="DEFAULT"/>				
 							</logic:lessEqual>
 						</logic:notEmpty>
 						<logic:empty name="summary" property="studentsNumber">			
-								<bean:message key="message.studentsnumber.attended.lesson.no" />								
+								<bean:message key="message.studentsnumber.attended.lesson.no" bundle="DEFAULT"/>								
 						</logic:empty>
 					</logic:present>				
 					<logic:notPresent name="summary" property="studentsNumber">			
-						<bean:message key="message.studentsnumber.attended.lesson.no" />								
+						<bean:message key="message.studentsnumber.attended.lesson.no" bundle="DEFAULT"/>								
 					</logic:notPresent>
 					
 					 - 
 						
 					<%-- Teacher --%>						
 					<logic:notEmpty name="summary" property="professorship">
-						<bean:message key="label.teacher" />:&nbsp;				
+						<bean:message key="label.teacher" bundle="DEFAULT"/>:&nbsp;				
 						<bean:write name="summary" property="professorship.teacher.person.name" /> 
 					</logic:notEmpty>
 					<logic:notEmpty name="summary" property="teacher">
-						<bean:message key="label.teacher" />:&nbsp;								
+						<bean:message key="label.teacher" bundle="DEFAULT"/>:&nbsp;								
 						<bean:write name="summary" property="teacher.person.name" /> 
 					</logic:notEmpty>
 					<logic:notEmpty name="summary" property="teacherName">
-						<bean:message key="label.teacher" />:&nbsp;								
+						<bean:message key="label.teacher" bundle="DEFAULT"/>:&nbsp;								
 						<bean:write name="summary" property="teacherName" /> 
 					</logic:notEmpty>			
 
@@ -116,15 +117,15 @@
 					
 					<%-- Last Modification Date --%>	
 					<span class="px9">
-						<bean:message key="label.lastModificationDate"/>:&nbsp;	 				
+						<bean:message key="label.lastModificationDate" bundle="DEFAULT"/>:&nbsp;	 				
 						<bean:write name="summary" property="lastModifiedDateDateTime.dayOfMonth"/>/<bean:write name="summary" property="lastModifiedDateDateTime.monthOfYear"/>/<bean:write name="summary" property="lastModifiedDateDateTime.year"/>	<bean:write name="summary" property="lastModifiedDateDateTime.hourOfDay"/>:<bean:write name="summary" property="lastModifiedDateDateTime.minuteOfHour"/>											
 					</span>		
 				</em>
 			</p>
 			
 			<div class="gen-button">
-				<bean:define id="editSummaryLink">/summariesManagement.do?method=prepareEditSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/></bean:define>
-				<bean:define id="deleteSummaryLink">/summariesManagement.do?method=deleteSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/></bean:define>	
+				<bean:define id="editSummaryLink">/summariesManagement.do?method=prepareEditSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+				<bean:define id="deleteSummaryLink">/summariesManagement.do?method=deleteSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= editSummaryLink %>">
 					<bean:message key="button.edit" /> 
