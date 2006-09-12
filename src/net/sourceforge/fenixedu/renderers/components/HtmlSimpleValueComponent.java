@@ -43,18 +43,18 @@ public abstract class HtmlSimpleValueComponent extends HtmlFormComponent {
     @Override
     public Object getConvertedValue(MetaSlot slot) {
         if (hasConverter()) {
-            return getConverter().convert(slot.getType(), getValue());
+            return getConverter().convert(slot.getStaticType(), getValue());
         }
         
         if (slot.hasConverter()) {
             try {
-                return slot.getConverter().newInstance().convert(slot.getType(), getValue());
+                return slot.getConverter().newInstance().convert(slot.getStaticType(), getValue());
             } catch (Exception e) {
                 throw new RuntimeException("converter specified in meta slot generated an exception: " + e, e);
             }
         }
         
-        return ConvertUtils.convert(getValue(), slot.getType());
+        return ConvertUtils.convert(getValue(), slot.getStaticType());
     }
     
     @Override

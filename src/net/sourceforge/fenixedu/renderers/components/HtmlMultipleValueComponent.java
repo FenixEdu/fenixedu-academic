@@ -48,17 +48,17 @@ public abstract class HtmlMultipleValueComponent extends HtmlFormComponent {
     @Override
     public Object getConvertedValue(MetaSlot slot) {
         if (hasConverter()) {
-            return getConverter().convert(slot.getType(), getValues());
+            return getConverter().convert(slot.getStaticType(), getValues());
         }
         
         if (slot.hasConverter()) {
             try {
-                return slot.getConverter().newInstance().convert(slot.getType(), getValues());
+                return slot.getConverter().newInstance().convert(slot.getStaticType(), getValues());
             } catch (Exception e) {
                 throw new RuntimeException("converter specified in meta slot generated an exception", e);
             }
         }
         
-        return ConvertUtils.convert(getValues(), slot.getType());
+        return ConvertUtils.convert(getValues(), slot.getStaticType());
     }
 }

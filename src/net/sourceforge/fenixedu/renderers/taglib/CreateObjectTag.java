@@ -92,7 +92,7 @@ public class CreateObjectTag extends EditObjectTag {
     }
 
     private Object getConvertedValue(MetaSlot slot, Class<Converter> converterClass, Object value) {
-        Class type = slot.getType();
+        Class type = slot.getStaticType();
 
         if (converterClass == null) {
             if (value == null) {

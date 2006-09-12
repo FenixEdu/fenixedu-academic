@@ -105,13 +105,9 @@ public class MetaSlot extends MetaObject {
      * @see RenderUtils#getSlotLabel(Class, String, String, String)
      */
     public String getLabel() {
-        Schema schema = RenderKit.getInstance().findSchema(getSchema());
+        Class type = getStaticType();
         
-        Class type;
-        if (schema != null) {
-            type = schema.getType();
-        }
-        else {
+        if (type == null) {
             type = getMetaObject().getType();
         }
         
@@ -206,10 +202,17 @@ public class MetaSlot extends MetaObject {
             return getObject().getClass();
         }
         else {
-            return RendererPropertyUtils.getPropertyType(getMetaObject().getType(), getName());
+            return getStaticType();
         }
     }
 
+    /**
+     * @return this's slots static type, that is, does not use the current value to determine the type
+     */
+    public Class getStaticType() {
+        return RendererPropertyUtils.getPropertyType(getMetaObject().getType(), getName());
+    }
+    
     /**
      * Change this slot's value. 
      */
