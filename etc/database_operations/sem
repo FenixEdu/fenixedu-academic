@@ -1,0 +1,43 @@
+DEC  	Licenciatura em Arquitectura  	Design Ambiental 1  	Completa	3840
+- 	Licenciatura em Eng.ª Aerospacial 	Métodos e Técnicas de Gestão 	Completa	3769
+Vários 	Licenciatura em Eng.ª do Ambiente 	Ecologia Industrial 	Completa	3528
+Vários 	Licenciatura em Eng.ª do Ambiente 	Economia do Ambiente 	Completa	3418
+DEQ 	Licenciatura em Eng.ª Biológica 	Seminários 	Completa	11983
+DM 	Licenciatura em Matemática e Computação 	Tópicos Especiais 1 	Completa	2818
+DEC 	Licenciatura em Eng.ª Civil 	Seminários em Humanidades 	Seminário	4920
+DEEC 	Licenciatura em Eng.ª Electrotécnica e de Computadores 	Seminários sobre Desenvolvimento Sustentável da LEGI (como opção do 5ºano) 	Completa	4920
+DF 	Licenciatura em Eng.ª Física Tecnológica 	Seminários sobre Desenvolvimento Sustentável da LEGI (como opção do 5ºano) 	Completa	4920
+DEG 	Licenciatura em Eng.ª e Gestão Industrial 	Seminários sobre Desenvolvimento Sustentável 	Completa	4920
+DEI 	Licenciatura em Eng.ª Informática e de Computadores 	Seminários sobre Desenvolvimento Sustentável da LEGI (como opção do 5ºano) 	Completa	4920
+DEC 	Licenciatura em Eng.ª de Materiais 	Seminários sobre Desenvolvimento Sustentável da LEGI (como opção do 5ºano) 	Completa	4920
+DEM 	Licenciatura em Eng.ª Mecânica 	Seminários sobre Desenvolvimento Sustentável 	Completa	12018
+DEMG 	Licenciatura de Eng.ª de Minas e Georrecursos 	Seminários sobre Desenvolvimento Sustentável 	Completa	12231
+DEQ 	Licenciatura em Eng.ª Quimica 	Seminários 	Completa	11959
+DEC 	Licenciatura em Eng.ª do Território 	Seminários sobre Desenvolvimento Sustentável da LEGI (como opção do 5ºano) 	Completa	4920
+SAEN  	Mestrado em Eng.ª e Arquitectura Naval  	Tópicos Avançados de Engenharia e Arquitectura Naval  	Completa	15113
+DEC 	Mestrado em Construção 	Construção Sustentável e Inovação Tecnológica 	Completa	15048
+DEI 	Mestrado em Eng.ª Informática e de Computadores 	Tópicos Avançados 	Completa	14672
+DEM 	Mestrado em Eng.ª Mecânica 	Economia, Energia e Ambiente 	Completa	15253
+DEC 	Mestrado em Urbanística e Gestão do Território 	Seminário 	Completa	15588
+
+
+SAEN 	Licenciatura em Eng.ª e Arquitectura Naval 	Complementos de Engenharia Naval 	Completa	
+select DEGREE_MODULE.ID_INTERNAL, DEGREE_MODULE.NAME, DEGREE_CURRICULAR_PLAN.NAME from DEGREE_MODULE inner join DEGREE_CURRICULAR_PLAN on DEGREE_CURRICULAR_PLAN.ID_INTERNAL = DEGREE_MODULE.KEY_DEGREE_CURRICULAR_PLAN inner join DEGREE on DEGREE.ID_INTERNAL = DEGREE_CURRICULAR_PLAN.KEY_DEGREE where DEGREE.SIGLA like 'LEN-pB' and DEGREE_MODULE.NAME like '%Comp%';
+
+DEI 	Licenciatura em Eng.ª Informática e de Computadores 	Portfólio Pessoal 	Seminário	
+select DEGREE_MODULE.ID_INTERNAL, DEGREE_MODULE.NAME, DEGREE_CURRICULAR_PLAN.NAME from DEGREE_MODULE inner join DEGREE_CURRICULAR_PLAN on DEGREE_CURRICULAR_PLAN.ID_INTERNAL = DEGREE_MODULE.KEY_DEGREE_CURRICULAR_PLAN inner join DEGREE on DEGREE.ID_INTERNAL = DEGREE_CURRICULAR_PLAN.KEY_DEGREE where DEGREE.SIGLA like 'LEIC-pB' and DEGREE_MODULE.NAME like '%Port%Pes%';
+
+DEEC 	Mestrado em Eng.ª Electrotécnica e de Computadores 	Desenvolvimento Sustentável e de Inovação 	Completa	
+select DEGREE_MODULE.ID_INTERNAL, DEGREE_MODULE.NAME, DEGREE_CURRICULAR_PLAN.NAME from DEGREE_MODULE inner join DEGREE_CURRICULAR_PLAN on DEGREE_CURRICULAR_PLAN.ID_INTERNAL = DEGREE_MODULE.KEY_DEGREE_CURRICULAR_PLAN inner join DEGREE on DEGREE.ID_INTERNAL = DEGREE_CURRICULAR_PLAN.KEY_DEGREE where DEGREE.SIGLA like 'MEEC-pB' and DEGREE_MODULE.NAME like '%Des%Sus%Inov%';
+
+DEMG 	Mestrado em Georrecursos 	Seminários 	Completa	
+select DEGREE_MODULE.ID_INTERNAL, DEGREE_MODULE.NAME, DEGREE_CURRICULAR_PLAN.NAME from DEGREE_MODULE inner join DEGREE_CURRICULAR_PLAN on DEGREE_CURRICULAR_PLAN.ID_INTERNAL = DEGREE_MODULE.KEY_DEGREE_CURRICULAR_PLAN inner join DEGREE on DEGREE.ID_INTERNAL = DEGREE_CURRICULAR_PLAN.KEY_DEGREE where DEGREE.SIGLA like 'MG-pB' and DEGREE_MODULE.NAME like '%Sem%';
+
+DEG 	Mestrado em Eng.ª e Gestão de Tecnologia 	Politicas de Ciência, Tecnologia e Inovação 	Completa	
+select DEGREE_MODULE.ID_INTERNAL, DEGREE_MODULE.NAME, DEGREE_CURRICULAR_PLAN.NAME from DEGREE_MODULE inner join DEGREE_CURRICULAR_PLAN on DEGREE_CURRICULAR_PLAN.ID_INTERNAL = DEGREE_MODULE.KEY_DEGREE_CURRICULAR_PLAN inner join DEGREE on DEGREE.ID_INTERNAL = DEGREE_CURRICULAR_PLAN.KEY_DEGREE where DEGREE.SIGLA like 'MEGT-pB' and DEGREE_MODULE.NAME like '%Pol%Ci%Tec%In%';
+
+DEG 	Mestrado em Eng.ª e Gestão de Tecnologia 	Seminário em Gestão de Tecnologia 	Completa	
+select DEGREE_MODULE.ID_INTERNAL, DEGREE_MODULE.NAME, DEGREE_CURRICULAR_PLAN.NAME from DEGREE_MODULE inner join DEGREE_CURRICULAR_PLAN on DEGREE_CURRICULAR_PLAN.ID_INTERNAL = DEGREE_MODULE.KEY_DEGREE_CURRICULAR_PLAN inner join DEGREE on DEGREE.ID_INTERNAL = DEGREE_CURRICULAR_PLAN.KEY_DEGREE where DEGREE.SIGLA like 'MEGT-pB' and DEGREE_MODULE.NAME like '%Sem%';
+
+DM 	Mestrado em Matemática Aplicada 	Tópicos Especiais 1 	Completa	
+select DEGREE_MODULE.ID_INTERNAL, DEGREE_MODULE.NAME, DEGREE_CURRICULAR_PLAN.NAME from DEGREE_MODULE inner join DEGREE_CURRICULAR_PLAN on DEGREE_CURRICULAR_PLAN.ID_INTERNAL = DEGREE_MODULE.KEY_DEGREE_CURRICULAR_PLAN inner join DEGREE on DEGREE.ID_INTERNAL = DEGREE_CURRICULAR_PLAN.KEY_DEGREE where DEGREE.SIGLA like 'MMA-pB' and DEGREE_MODULE.NAME like '%T%Esp%%';

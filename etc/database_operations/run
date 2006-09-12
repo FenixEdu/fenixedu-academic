@@ -26,3 +26,12 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Fix Seminary Tables" fixSeminaryTables.sql
+
+#
+# Don't create the seminaries just yet.
+# Also this should only be run at IST. So once it is run in production delete
+# instead of moving it into a folder with a date.
+#
+#execute "Create 1st Semester 2006 Seminaries" create2006Sem1Seminaries.sql
