@@ -56,21 +56,14 @@
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeId" property="executionDegreeId">
 		
 	<logic:iterate id="executionDegree" name="executionDegrees" > 
-   <bean:define    id="executionDegreeId"   name="executionDegree" property="idInternal"/>
-   <bean:define id="degreeType"  name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/>
-       <logic:equal name="degreeType" value="DEGREE" >
-	   		<html:option value="<%= executionDegreeId.toString() %>"> 
-	   		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.degreeType" />
-	   		&nbsp;em&nbsp; <bean:write 
-			name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/> </html:option>
-		</logic:equal>    
-		<logic:equal name="degreeType" value="MASTER_DEGREE" >
-		    <html:option value="<%= executionDegreeId.toString() %>">
-		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.masterDegreeType" />
-		    	   		&nbsp;em&nbsp; <bean:write 
-			name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/> </html:option>
-		</logic:equal>   
-	  </logic:iterate>
+		<bean:define    id="executionDegreeId"   name="executionDegree" property="idInternal"/>
+		<bean:define id="degreeType"  name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/>
+		<html:option value="<%= executionDegreeId.toString() %>"> 
+		
+		<bean:message bundle="ENUMERATION_RESOURCES" name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name" />
+   		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
+   		<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/> </html:option>
+	</logic:iterate>
 	</html:select>
 	<html:submit>Submeter</html:submit>
 </html:form>

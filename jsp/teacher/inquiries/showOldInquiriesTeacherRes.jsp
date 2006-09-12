@@ -2,7 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="net.sourceforge.fenixedu.util.NumberUtils" %>
@@ -22,17 +21,9 @@
 		<tr>
 			<td>
 				<b>
-<bean:define id="degreeType"  name="oldInquiriesCoursesRes" property="degree.tipoCurso"/>
-
-   <logic:equal name="degreeType" value="DEGREE" >
-       <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.degreeType" />
-    </logic:equal>
-    <logic:equal name="degreeType" value="MASTER_DEGREE" >
-		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.masterDegreeType" />
-	</logic:equal>
-	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
-
-
+					<bean:message bundle="ENUMERATION_RESOURCES"
+						name="oldInquiriesCoursesRes" property="degree.tipoCurso.name" />
+					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
 					<bean:write name="oldInquiriesCoursesRes" property="degree.nome"/>
 				</b>
 			</td>

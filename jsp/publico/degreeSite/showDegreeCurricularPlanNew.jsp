@@ -29,14 +29,8 @@
 <p><span class="error"><!-- Error messages go here --><!-- Error messages go here. --><html:errors/></span></p>
 
 	<h1>
-	   <bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso.name"/>
-	
-	    <logic:equal name="degreeType" value="DEGREE" >
-		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.degreeType" />
-		</logic:equal>    
-		<logic:equal name="degreeType" value="MASTER_DEGREE" >
-		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.masterDegreeType" />
-		</logic:equal>   
+		<bean:message bundle="ENUMERATION_RESOURCES"
+			name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso.name" />
 		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 	</h1>

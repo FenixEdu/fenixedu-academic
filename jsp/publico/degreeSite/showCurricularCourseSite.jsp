@@ -33,13 +33,8 @@
 </div>	
 
 <h1>
-	<bean:define id="degreeType" name="infoDegree" property="tipoCurso.name"/>
-    <logic:equal name="degreeType" value="DEGREE" >
-	    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.degreeType" />
-	</logic:equal>    
-	<logic:equal name="degreeType" value="MASTER_DEGREE" >
-	    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.masterDegreeType" />
-	</logic:equal>  
+	<bean:message bundle="ENUMERATION_RESOURCES"
+		name="infoDegree" property="tipoCurso.name" />
 	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
 	<bean:write name="infoDegree" property="nome" />
 </h1>
