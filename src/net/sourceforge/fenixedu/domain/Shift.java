@@ -150,7 +150,8 @@ public class Shift extends Shift_Base {
         }
         return null;
     }
-    
+
+    //-- Labels to present summary in renderers --//
     public String getShiftLabel() {
         final StringBuilder lessonsLabel = new StringBuilder();
         int index = 0;

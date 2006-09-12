@@ -1,18 +1,25 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
+import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean.ListSummaryType;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean.SummaryType;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SummaryTeacherBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -36,16 +43,23 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	final IViewState viewState = RenderUtils.getViewState();
-	ExecutionCourse executionCourse = (viewState != null) ? ((SummariesManagementBean) viewState
-		.getMetaObject().getObject()).getExecutionCourse() : readAndSaveExecutionCourse(request);
+	ExecutionCourse executionCourse = null;
+	if(viewState != null && viewState.getMetaObject().getObject() instanceof SummariesManagementBean) {
+	    executionCourse = ((SummariesManagementBean) viewState.getMetaObject().getObject()).getExecutionCourse();
+	} else if(viewState != null && viewState.getMetaObject().getObject() instanceof ShowSummariesBean) {
+	    executionCourse = ((ShowSummariesBean) viewState.getMetaObject().getObject()).getExecutionCourse();
+	} else {
+	    executionCourse = readAndSaveExecutionCourse(request); 
+	}
+	 
 	String teacherNumber = request.getParameter("teacherNumber_");
-	Teacher loggedTeacher = (StringUtils.isEmpty(teacherNumber) ? getUserView(request).getPerson()
-		.getTeacher() : Teacher.readByNumber(Integer.valueOf(teacherNumber)));
-	Professorship loggedProfessorship = loggedTeacher
-		.getProfessorshipByExecutionCourse(executionCourse);
+	Teacher loggedTeacher = (StringUtils.isEmpty(teacherNumber) ? getUserView(request).getPerson().getTeacher() : Teacher.readByNumber(Integer.valueOf(teacherNumber)));
+	Professorship loggedProfessorship = loggedTeacher.getProfessorshipByExecutionCourse(executionCourse);
+	
 	request.setAttribute("loggedTeacherProfessorship", loggedProfessorship);
 	request.setAttribute("loggedIsResponsible", loggedProfessorship.isResponsibleFor());
 	request.setAttribute("executionCourse", executionCourse);
+	
 	return super.execute(mapping, actionForm, request, response);
     }
 
@@ -53,8 +67,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	Professorship loggedProfessorship = (Professorship) request
-		.getAttribute("loggedTeacherProfessorship");
+	Professorship loggedProfessorship = (Professorship) request.getAttribute("loggedTeacherProfessorship");
 	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 	dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
 	request.setAttribute("summariesManagementBean",
@@ -143,9 +156,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     public ActionForward createSummary(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
-
-	Teacher teacherLogged = ((Professorship) request.getAttribute("loggedTeacherProfessorship"))
-		.getTeacher();
+	
 	final IViewState viewState = RenderUtils.getViewState();
 	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
 	String service = "CreateSummary";
@@ -162,10 +173,8 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    addActionMessage(request, e.getMessage());
 	    return submit(mapping, form, request, response);
 	}
-
-	request.setAttribute("objectCode", bean.getExecutionCourse().getIdInternal().toString());
-	request.setAttribute("teacherNumber", teacherLogged.getTeacherNumber().toString());
-	return mapping.findForward("showSummaries");
+		
+	return prepareShowSummaries(mapping, form, request, response);	
     }
 
     public ActionForward createSummaryAndNew(ActionMapping mapping, ActionForm form,
@@ -218,19 +227,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	bean2.setTitle(bean.getTitle());
 	request.setAttribute("summariesManagementBean", bean2);
 	return mapping.findForward("prepareInsertSummary");
-    }
-
-    public ActionForward showSummaries(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
-
-	final IViewState viewState = RenderUtils.getViewState();
-	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
-	request.setAttribute("objectCode", bean.getExecutionCourse().getIdInternal().toString());
-	request.setAttribute("teacherNumber", ((Professorship) request
-		.getAttribute("loggedTeacherProfessorship")).getTeacher().getTeacherNumber().toString());
-	return mapping.findForward("showSummaries");
-    }
+    }  
 
     public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
@@ -292,9 +289,79 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	request.setAttribute("summariesManagementBean", bean);
 	return mapping.findForward("prepareInsertSummary");
     }
+    
+    public ActionForward showSummaries(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+	
+	return prepareShowSummaries(mapping, form, request, response);
+    }
+    
+    public ActionForward prepareShowSummaries(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	
+	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+	Professorship professorshipLogged = (Professorship) request.getAttribute("loggedTeacherProfessorship");
+	request.setAttribute("showSummariesBean", new ShowSummariesBean(new SummaryTeacherBean(professorshipLogged), executionCourse, ListSummaryType.ALL));
+	request.setAttribute("teacherNumber", professorshipLogged.getTeacher().getTeacherNumber().toString());
+	Set<Summary> professorshipSummaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
+	professorshipSummaries.addAll(professorshipLogged.getAssociatedSummaries());
+	request.setAttribute("summaries", professorshipSummaries);
+	return mapping.findForward("prepareShowSummaries");
+    }
+    
+    public ActionForward deleteSummary(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	
+	Summary summary = getSummaryFromParameter(request);
+	Professorship professorshipLogged = (Professorship) request.getAttribute("loggedTeacherProfessorship");
+	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+	final Object args[] = { executionCourse, summary, professorshipLogged.getTeacher() };	
+	try {
+	    ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteSummary", args);	    
+	} catch (DomainException e) {	  
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	    return prepareShowSummaries(mapping, form, request, response);
+	}	
+	return prepareShowSummaries(mapping, form, request, response);
+    }
+        
+    public ActionForward showSummariesPostBack(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	
+	final IViewState viewState = RenderUtils.getViewState();
+	ShowSummariesBean bean = (ShowSummariesBean) viewState.getMetaObject().getObject();
+	
+	ExecutionCourse executionCourse = bean.getExecutionCourse();
+	ShiftType shiftType = bean.getShiftType();
+	Shift shift = bean.getShift();
+	
+	SummaryTeacherBean summaryTeacher = bean.getSummaryTeacher();
+	Professorship teacher = (summaryTeacher != null) ? bean.getSummaryTeacher().getProfessorship() : null;
+	Boolean otherTeachers = (summaryTeacher != null) ? bean.getSummaryTeacher().getOthers() : null;
+		
+	Set<Summary> result = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
+	for (Summary summary : executionCourse.getAssociatedSummariesSet()) {
+	    boolean insert = true;
+	    if((shift != null && !summary.getShift().equals(shift)) ||
+		    (teacher != null && !summary.getProfessorship().equals(teacher)) ||
+		    (shiftType != null && !summary.getSummaryType().equals(shiftType)) ||
+		    (otherTeachers != null && otherTeachers && summary.getProfessorship() != null)) {
+		insert = false;
+	    }
+	    if(insert) {
+		result.add(summary);
+	    }
+	}
+	
+	request.setAttribute("showSummariesBean", bean);
+	request.setAttribute("summaries", result);
+	return mapping.findForward("prepareShowSummaries");
+    }    
+    
 
     // -------- Private Methods --------- //
-
+    
     private void setLoggedTeacherToFormBean(HttpServletRequest request, DynaActionForm dynaActionForm,
 	    SummariesManagementBean bean) {
 	bean.setProfessorship((Professorship) request.getAttribute("loggedTeacherProfessorship"));

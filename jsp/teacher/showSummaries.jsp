@@ -152,14 +152,14 @@
 					<!-- normal lesson -->
 			 	<bean:message key="label.summary.lesson" />
 			 	<logic:notEmpty name="summary" property="summaryType">
-			<bean:write name="summary" property="summaryType.fullNameTipoAula" />						   	
-					</logic:notEmpty>
+					<bean:write name="summary" property="summaryType.fullNameTipoAula" />						   	
+				</logic:notEmpty>
 				</logic:equal>
 			
 				<logic:equal name="summary" property="isExtraLesson" value="true">		     
 			   		<!-- extra lesson -->
-			<bean:message key="label.extra.lesson" />
-					</logic:equal>
+					<bean:message key="label.extra.lesson" />
+				</logic:equal>
 				</logic:notEmpty>
 							       	
 				<bean:write name="summary" property="summaryDateInput"/>

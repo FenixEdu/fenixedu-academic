@@ -18,7 +18,7 @@ public class ShiftLessonsToSummariesManagementProvider implements DataProvider {
         Shift shift = bean.getShift();
         SummaryType summaryType = bean.getSummaryType();
         Set<Lesson> lessons = new TreeSet<Lesson>(Lesson.LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME);        
-        if(shift != null && summaryType.equals(SummaryType.NORMAL_SUMMARY)) {
+        if(shift != null && summaryType != null && summaryType.equals(SummaryType.NORMAL_SUMMARY)) {
            lessons.addAll(shift.getAssociatedLessons());
         }
         return lessons;

@@ -7,6 +7,4 @@
 <schema name="net.sourceforge.fenixedu.domain.ExecutionDegree.annotation" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
 	<slot name="anotation"/>
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean" type="net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean">
-	<slot name="showOtherProfessors"/>
-</schema>
+

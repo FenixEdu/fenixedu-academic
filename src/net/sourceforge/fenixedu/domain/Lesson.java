@@ -140,6 +140,15 @@ public class Lesson extends Lesson_Base {
         return 0.0;
     }
    
+    public Summary getSummaryByDate(YearMonthDay date) {
+	for (Summary summary : getSummaries()) {
+	    if(summary.getSummaryDateYearMonthDay().isEqual(date)) {
+		return summary;
+	    }
+	}
+	return null;
+    }
+    
     public List<Summary> getSummaries() {
         List<Summary> lessonSummaries = new ArrayList<Summary>();
         Set<Summary> shiftSummaries = new TreeSet<Summary>(new ReverseComparator(Summary.COMPARATOR_BY_DATE_AND_HOUR));
@@ -214,23 +223,27 @@ public class Lesson extends Lesson_Base {
                     }
                 }
             } else {
-                for (Summary summary : summaries) {
-                    while (true) {
-                        if (startDateToSearch.isBefore(summary.getSummaryDateYearMonthDay())) {
-                            datesToInsert.add(startDateToSearch);
-                            startDateToSearch = startDateToSearch.plusDays(7);
-                        } else if (startDateToSearch.isEqual(summary.getSummaryDateYearMonthDay())) {
-                            startDateToSearch = startDateToSearch.plusDays(7);
-                            break;
-                        } else {
-                            // ERROR
-                            System.out.println("Não é suposto entrar aqui....");
-                            startDateToSearch = startDateToSearch.plusDays(7);
+        	YearMonthDay dateBefore = null;
+                for (Summary summary : summaries) {                   
+                    if(dateBefore == null || !summary.getSummaryDateYearMonthDay().isEqual(dateBefore)) {                    	                       
+                        while (true) {
+                            if (startDateToSearch.isBefore(summary.getSummaryDateYearMonthDay())) {
+                                datesToInsert.add(startDateToSearch);
+                                startDateToSearch = startDateToSearch.plusDays(7);
+                            } else if (startDateToSearch.isEqual(summary.getSummaryDateYearMonthDay())) {
+                                startDateToSearch = startDateToSearch.plusDays(7);
+                                break;
+                            } else {
+                                // ERROR
+                                System.out.println("Não é suposto entrar aqui....");
+                                startDateToSearch = startDateToSearch.plusDays(7);
+                            }
+                            if (startDateToSearch.isAfter(endDateToSearch)) {
+                                break;
+                            }
                         }
-                        if (startDateToSearch.isAfter(endDateToSearch)) {
-                            break;
-                        }
-                    }                    
+                        dateBefore = summary.getSummaryDateYearMonthDay();
+                    }
                 }
                 if (!startDateToSearch.isAfter(endDateToSearch)) {
                     while(true) {

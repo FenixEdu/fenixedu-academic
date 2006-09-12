@@ -1,4 +1,3 @@
-<%@ page language="java" import="net.sourceforge.fenixedu.renderers.utils.RenderUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -32,8 +31,6 @@ function check(e,v){
 
 	<div class="infoop2">
 		<a href="#" class="dnone" id="instructionsButton" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));"><bean:message key="link.home"/></a>
-		<%--<input indexed="true" class="dnone" id="instructionsButton" type="button" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));" value="+">--%>
-
 		<div id="instructions" class="dblock">
 			<ul class="mvert025">
 				<li><bean:message key="label.summary.management.instructions1" /></li>

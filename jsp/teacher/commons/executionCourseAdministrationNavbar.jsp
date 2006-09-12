@@ -55,7 +55,7 @@
 
 	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.management"/></li>
 		<li>
-			<html:link page="/showSummaries.do?method=showSummaries&amp;page=0" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/summariesManagement.do?method=prepareShowSummaries&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.summaries"/>
 			</html:link>
 		</li>

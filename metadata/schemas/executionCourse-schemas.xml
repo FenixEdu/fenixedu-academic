@@ -1,7 +1,7 @@
 <schema name="CreateLessonPlanning" type="net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean" bundle="DEFAULT">	
 	<slot name="lessonType" key="label.lessonPlanning.lessonType" layout="menu-select" 
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesProviderWithBean"/>		
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesToCreateLessonPlanningProvider"/>		
 		<property name="eachLayout" value=""/>
 	</slot>				
 	<slot name="title" key="label.lessonPlanning.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -17,7 +17,7 @@
 <schema name="EditLessonPlanning" type="net.sourceforge.fenixedu.domain.LessonPlanning" bundle="DEFAULT">	
 	<slot name="lessonType" key="label.lessonPlanning.lessonType" layout="menu-select" 
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesProvider"/>				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesToEditLessonPlanningProvider"/>				
 		<property name="eachLayout" value=""/>		
 	</slot>				
 	<slot name="title" key="label.lessonPlanning.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -276,7 +276,7 @@
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
    		<property name="rows" value="20"/>
-   		<property name="config" value="intermediate" />
+   		<property name="config" value="intermediate" />	
 	</slot>
 </schema>
 <schema name="CreateSummaryToExtraSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
@@ -313,5 +313,36 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LastSummariesToSummariesManagementProvider" />				
 		<property name="format"	value="${summaryLabel}" />
 		<property name="destination" value="postBack"/>
+	</slot>	
+</schema>
+<schema name="ShowSummaries" type="net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean" bundle="DEFAULT">	
+	<slot name="listSummaryType" layout="radio-postback"  key="label.type">
+		<property name="classes" value="list2 liinline" />
+		<property name="destination" value="postBack"/>
+	</slot>
+	<slot name="shiftType" layout="menu-select-postback"  key="label.lessonPlanning.lessonType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesToShowSummariesProvider" />						
+		<property name="destination" value="postBack"/>
+		<property name="eachLayout" value=""/>		
+		<property name="defaultText" value="label.summaries.all" />
+		<property name="key" value="true"/>
+		<property name="bundle" value="DEFAULT"/>
+	</slot>
+	<slot name="shift" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ListShiftsToShowSummariesProvider" />				
+		<property name="format"	value="${shiftLabel}" />
+		<property name="destination" value="postBack"/>
+		<property name="defaultText" value="label.summaries.all" />
+		<property name="key" value="true"/>
+		<property name="bundle" value="DEFAULT"/>
+	</slot>
+	<slot name="summaryTeacher" layout="menu-select-postback" key="label.teacher">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ListExecutionCourseTeachersToShowSummariesProvider" />				
+		<property name="format"	value="${label}" />
+		<property name="destination" value="postBack"/>	
+		<property name="saveOptions" value="true" />
+		<property name="defaultText" value="label.summaries.all" />
+		<property name="key" value="true"/>
+		<property name="bundle" value="DEFAULT"/>
 	</slot>	
 </schema>
