@@ -23,8 +23,10 @@ public class PrinterManager {
 	
 	public static PrintService getPrintServiceByName(String name) {
 		if(name == null) {
+                    System.out.println("returning default printer: " + defaultPrinter);
 			return defaultPrinter;
 		} else {
+                    System.out.println("returning non default printer: " + printers.get(name));
 			return printers.get(name);
 		}
 	}
@@ -43,7 +45,7 @@ public class PrinterManager {
 				printerNames.put(function, names);
 			}
 		} catch (IOException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 		
 	}
