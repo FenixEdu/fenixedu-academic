@@ -32,39 +32,24 @@
 	</h3>
 	<blockquote>
 		<bean:define id="url" type="java.lang.String">/createProgram.do?method=createProgram&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
-		<fr:edit name="curricularCourse" property="curriculumFactoryEditCurriculum"
-				schema="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumProgram"
-				action="<%= url %>"
-				>
-			<fr:layout name="flow">
-			</fr:layout>
-		</fr:edit>
+		<logic:present name="curricularCourse" property="findLatestCurriculum">
+			<fr:edit name="curricularCourse" property="curriculumFactoryEditCurriculum"
+					schema="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumProgram"
+					action="<%= url %>"
+					>
+				<fr:layout name="flow">
+				</fr:layout>
+			</fr:edit>
+		</logic:present>
+		<logic:notPresent name="curricularCourse" property="findLatestCurriculum">
+			<fr:edit name="curricularCourse" property="curriculumFactoryInsertCurriculum"
+					schema="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumProgram"
+					action="<%= url %>"
+					>
+				<fr:layout name="flow">
+				</fr:layout>
+			</fr:edit>
+		</logic:notPresent>
 
-		<html:form action="/createProgram">
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createProgram"/>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-			<bean:define id="curricularCourseID" type="java.lang.Integer" name="curricularCourse" property="idInternal"/>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseID" property="curricularCourseID" value="<%= curricularCourseID.toString() %>"/>
-			<bean:define id="executionCourseID" type="java.lang.Integer" name="executionCourse" property="idInternal"/>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
-			<h4>
-				<bean:message key="title.program"/>
-			</h4>
-			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.program"  property="program" cols="50" rows="8"/>
-			<br/>
-			<h4>
-				<bean:message key="title.program.eng"/>
-			</h4>
-			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.programEn"  property="programEn" cols="50" rows="8"/>
-
-			<br/>
-			<br/>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-				<bean:message key="button.save"/>
-			</html:submit>
-			<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
-				<bean:message key="label.clear"/>
-			</html:reset>
-		</html:form>
 	</blockquote>
 </logic:present>
