@@ -19,6 +19,7 @@
     <!ENTITY functionalities SYSTEM "functionalities-schemas.xml">
     <!ENTITY degreeAdminOffice SYSTEM "degreeAdministrativeOffice-schemas.xml"> 
     <!ENTITY executionCourse SYSTEM "executionCourse-schemas.xml"> 
+    <!ENTITY parking SYSTEM "parking-schemas.xml"> 
 ]>
 
 <schemas>
@@ -759,6 +760,7 @@
     &functionalities;
     &degreeAdminOffice;
     &executionCourse;
+    &parking;
 
 
 <!-- Teacher Service Distribution -->

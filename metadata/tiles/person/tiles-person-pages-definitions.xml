@@ -65,6 +65,13 @@
 
 	<definition name="view-thread" extends="definition.person.masterPage">
 		 <put name="body" value="/messaging/viewThread.jsp"/>
-	</definition>	
-
+	</definition>
+		
+	<!--  ============== Parking ===================== -->
+	<definition name="prepare-parking" extends="definition.person.masterPage">
+		 <put name="body" value="/person/parking/parkingRequest.jsp"/>
+	</definition>
+	<definition name="edit-parking-request" extends="definition.person.masterPage">
+		 <put name="body" value="/person/parking/editParkingRequest.jsp"/>
+	</definition>
 </tiles-definitions>

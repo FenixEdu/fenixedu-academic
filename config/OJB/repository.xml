@@ -92,6 +92,7 @@
 <!ENTITY functionalities SYSTEM "repository_functionalities.xml">
 <!ENTITY material SYSTEM "repository_material.xml">
 <!ENTITY teacherServiceDistribution SYSTEM "repository_teacher_service_distribution.xml">
+<!ENTITY parking SYSTEM "repository_parking.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -188,5 +189,6 @@
     &functionalities;
     &material;
     &teacherServiceDistribution;
+    &parking;
     
 </descriptor-repository>

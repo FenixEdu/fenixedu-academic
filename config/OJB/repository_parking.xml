@@ -1,0 +1,8 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.parking.ParkingRequest" table="PARKING_REQUEST">
+</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.parking.ParkingGroup" table="PARKING_GROUP">
+</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.parking.ParkingParty" table="PARKING_PARTY">
+</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.parking.ParkingDocument" table="PARKING_DOCUMENT">
+</class-descriptor>

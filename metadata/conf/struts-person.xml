@@ -305,7 +305,14 @@
         		input="/manageHomepage.do?method=prepare">
           <forward name="show-manage-homepage" path="show-manage-homepage"/>
         </action>
-                             
+        <!-- ======== PARKING =========== -->
+        <action path="/parking"
+        		type="net.sourceforge.fenixedu.presentationTier.Action.person.ParkingDispatchAction"
+        		scope="request"
+        		parameter="method">
+          <forward name="prepareParking" path="prepare-parking"/>
+          <forward name="editParkingRequest" path="edit-parking-request"/>
+        </action>               
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
@@ -317,6 +324,8 @@
     <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.HomepageResources" key="HOMEPAGE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ParkingResources" key="PARKING_RESOURCES" null="false"/>
+    
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

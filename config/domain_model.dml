@@ -153,6 +153,8 @@ valueType net.sourceforge.fenixedu.util.Month																			as Month;
 
 valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhaseStatus		as ValuationPhaseStatus;
 valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationValueType		as ValuationValueType;
+valueType net.sourceforge.fenixedu.domain.parking.ParkingRequestState							as ParkingRequestState;
+valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentType							as ParkingDocumentType;
 
 /*
 *
@@ -1768,6 +1770,10 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyResult;
 	}
+	
+	class net.sourceforge.fenixedu.domain.parking.ParkingFile extends net.sourceforge.fenixedu.domain.File {
+		Integer keyParkingDocument;
+	}
 
 class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
@@ -2933,6 +2939,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	String parishOfResidence;
 	String districtSubdivisionOfResidence;	
 	String districtOfResidence;	
+	Integer keyParkingParty;
 }
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer costCenterCode;
@@ -3696,6 +3703,41 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
 				Integer keyExecutionYear;
 			}
+
+class net.sourceforge.fenixedu.domain.parking.ParkingGroup extends net.sourceforge.fenixedu.domain.DomainObject {
+	String groupName;
+}
+
+class net.sourceforge.fenixedu.domain.parking.ParkingRequest extends net.sourceforge.fenixedu.domain.DomainObject {
+	ParkingRequestState parkingRequestState;
+	Boolean firstRequest;
+	DateTime creationDate;
+	Integer keyParkingParty;	
+	String firstCarPlateNumber;
+	String firstCarMake;
+	String secondCarPlateNumber;
+	String secondCarMake;
+	String phone;
+	String mobile;
+	String email;
+}
+
+class net.sourceforge.fenixedu.domain.parking.ParkingDocument extends net.sourceforge.fenixedu.domain.DomainObject {
+	ParkingDocumentType parkingDocumentType;
+	Integer keyParkingRequest;
+	Integer keyParkingFile;
+}
+
+class net.sourceforge.fenixedu.domain.parking.ParkingParty extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer cardNumber;
+	Integer keyParkingGroup;
+	String firstCarPlateNumber;
+	String firstCarMake;
+	String secondCarPlateNumber;
+	String secondCarMake;
+	Boolean authorized;
+	Integer keyParty;
+}
 
 //
 // Functionalities
@@ -7555,6 +7597,32 @@ relation RegistrationDataStudentKind {
 	net.sourceforge.fenixedu.domain.StudentKind playsRole studentKind;
 }
 
+relation ParkingRequestParkingParty {
+	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParty;
+	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequests{
+		multiplicity *;
+	}
+}
+
+relation ParkingPartyParkingGroup {
+	net.sourceforge.fenixedu.domain.parking.ParkingGroup playsRole parkingGroup;
+	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParties{
+		multiplicity *;
+	}
+}
+
+relation PartyParkingParty {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParty;	
+}
+
+relation ParkingRequestParkingDocument {
+	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequest;
+	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocuments{
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectRegistrationData {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod playsRole registrationDataByPeriod {
@@ -7567,6 +7635,27 @@ relation RootDomainObjectRegistrationData {
  * 
  */
 
+
+relation RootDomainObjectParkingGroup {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.parking.ParkingGroup playsRole parkingGroups {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectParkingParty {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParties {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectParkingRequest {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequests {
+		multiplicity *;
+	}
+}
 
 relation RootDomainObjectHoliday {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
