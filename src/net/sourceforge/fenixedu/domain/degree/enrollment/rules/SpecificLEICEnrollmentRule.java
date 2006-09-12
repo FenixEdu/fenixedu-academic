@@ -281,7 +281,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	List<CurricularCourse2Enroll> curricularCoursesToEnroll = new ArrayList<CurricularCourse2Enroll>();
 
 	if (optionalCourses.intValue() < 2) {
-	    if (result.isEmpty()) {
+	    if (!hasSpecializationCourse(result)) {
 		curricularCoursesToEnroll.addAll(transformToCurricularCoursesToEnroll(curricularCourses,
 			false));
 	    } else {
@@ -295,6 +295,16 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	studentCurricularPlan.initEctsCreditsToEnrol(curricularCoursesToEnroll, executionPeriod);
 	
 	return curricularCoursesToEnroll;
+    }
+
+    private boolean hasSpecializationCourse(List<CurricularCourse2Enroll> result) {
+	List<CurricularCourse> specializationCourses = getSpecializationAreaCurricularCourses(studentCurricularPlan);
+	for (CurricularCourse2Enroll curricularCourse2Enroll : result) {
+	    if(specializationCourses.contains(curricularCourse2Enroll.getCurricularCourse())) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     protected List<CurricularCourse> getOptionalCurricularCourses() {
