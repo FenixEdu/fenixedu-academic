@@ -303,7 +303,7 @@
 					<logic:empty name="curricularCourseScopeElem" property="anotation" >
 						<td class="<%= rowColor %>"></td>
 					</logic:empty>
-					<td class="<%= rowColor %>"><bean:message name="curricularCourseScopeElem" property="infoCurricularCourse.type.keyName"/></td>
+					<td class="<%= rowColor %>"><bean:message bundle="ENUMERATION_RESOURCES" name="curricularCourseScopeElem" property="infoCurricularCourse.type.name"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.credits"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.ectsCredits"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.weigth"/></td>
