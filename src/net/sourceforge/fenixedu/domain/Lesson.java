@@ -149,17 +149,20 @@ public class Lesson extends Lesson_Base {
 	return null;
     }
 
-    public List<Summary> getSummaries() {	
+    public List<Summary> getSummaries() {
 	List<Summary> lessonSummaries = new ArrayList<Summary>();
 	Set<Summary> shiftSummaries = new TreeSet<Summary>(new ReverseComparator(Summary.COMPARATOR_BY_DATE_AND_HOUR));
 	shiftSummaries.addAll(getShift().getAssociatedSummariesSet());
 	int lessonWeekDay = getLessonWeekDayToYearMonthDayFormat();
 	for (Summary summary : shiftSummaries) {
-	    int summaryDayOfWeek = summary.getSummaryDateYearMonthDay().toDateTimeAtMidnight().getDayOfWeek();
-	    if (summary.getSummaryHourHourMinuteSecond().isEqual(getBeginHourMinuteSecond()) && summaryDayOfWeek == lessonWeekDay
-		    && ((summary.getRoom() == null && getSala() == null) || (summary.getRoom() != null
-			    && getSala() != null && summary.getRoom().equals(getSala())))) {
-		lessonSummaries.add(summary);
+	    if (!summary.getIsExtraLesson()) {
+		int summaryDayOfWeek = summary.getSummaryDateYearMonthDay().toDateTimeAtMidnight().getDayOfWeek();
+		if (summary.getSummaryHourHourMinuteSecond().isEqual(getBeginHourMinuteSecond())
+			&& summaryDayOfWeek == lessonWeekDay
+			&& ((summary.getRoom() == null && getSala() == null) || (summary.getRoom() != null
+				&& getSala() != null && summary.getRoom().equals(getSala())))) {
+		    lessonSummaries.add(summary);
+		}
 	    }
 	}
 	return lessonSummaries;
