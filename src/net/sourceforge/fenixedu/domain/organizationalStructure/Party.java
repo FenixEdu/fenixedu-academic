@@ -217,4 +217,8 @@ public abstract class Party extends Party_Base {
         setDistrictOfResidence(districtOfResidence);
     }
 
+    public boolean isPerson() {
+	return false;
+    }
+
 }

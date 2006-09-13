@@ -1500,4 +1500,9 @@ public class Person extends Person_Base {
         return institutionalEmail != null && institutionalEmail.length() > 0 ? institutionalEmail : super.getEmail();
     }
 
+    @Override
+    public boolean isPerson() {
+	return true;
+    }
+
 }
