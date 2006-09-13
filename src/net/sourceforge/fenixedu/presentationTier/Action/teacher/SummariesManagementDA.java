@@ -87,7 +87,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    bean.setTitle(lessonPlanning.getTitle());
 	    bean.setLastSummary(null);
 	}
-	return submit(mapping, form, request, response);
+	return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
     }
 
     public ActionForward chooseLastSummary(ActionMapping mapping, ActionForm form,
@@ -101,7 +101,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    bean.setTitle(lastSummary.getTitle());
 	    bean.setLessonPlanning(null);
 	}
-	return submit(mapping, form, request, response);
+	return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
     }
 
     public ActionForward chooseShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -111,9 +111,40 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
 	bean.setLesson(null);
 	bean.setSummaryDate(null);
-	return submit(mapping, form, request, response);
+	return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
     }
+    
+    public ActionForward chooseLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
+	final IViewState viewState = RenderUtils.getViewState();
+	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();	
+	bean.setSummaryDate(null);
+	return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
+    }
+    
+    public ActionForward chooseDate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
+	final IViewState viewState = RenderUtils.getViewState();
+	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
+	return goToSummaryManagementPage(mapping, request, dynaActionForm, bean);
+    }
+    
+    public ActionForward chooseSummaryType(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
+	final IViewState viewState = RenderUtils.getViewState();
+	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
+	bean.setLesson(null);
+	bean.setSummaryDate(null);
+	bean.setSummaryRoom(null);
+	bean.setSummaryTime(null);	
+	return goToSummaryManagementPage(mapping, request, dynaActionForm, bean);
+    }
+      
     public ActionForward chooseTeacher(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -139,8 +170,8 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    try {
 		teacher = Teacher.readByNumber(Integer.valueOf(dynaActionForm.getString("teacherNumber")));
 	    } catch (NumberFormatException e) {
-		addActionMessage(request, null, null);
-		return submit(mapping, form, request, response);
+		addActionMessage(request, e.getMessage());
+		return goToSummaryManagementPage(mapping, request, dynaActionForm, bean);
 	    }
 	    bean.setTeacher(teacher);
 	    bean.setTeacherName(null);
@@ -168,10 +199,10 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    ServiceManagerServiceFactory.executeService(getUserView(request), service, args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
-	    return submit(mapping, form, request, response);
+	    return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
 	} catch (NotAuthorizedFilterException e) {
 	    addActionMessage(request, e.getMessage());
-	    return submit(mapping, form, request, response);
+	    return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
 	}
 		
 	return prepareShowSummaries(mapping, form, request, response);	
@@ -188,10 +219,10 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    ServiceManagerServiceFactory.executeService(getUserView(request), "CreateSummary", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
-	    return submit(mapping, form, request, response);
+	    return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
 	} catch (NotAuthorizedFilterException e) {
 	    addActionMessage(request, e.getMessage());
-	    return submit(mapping, form, request, response);
+	    return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
 	}
 
 	RenderUtils.invalidateViewState();
@@ -209,10 +240,10 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    ServiceManagerServiceFactory.executeService(getUserView(request), "CreateSummary", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
-	    return submit(mapping, form, request, response);
+	    return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
 	} catch (NotAuthorizedFilterException e) {
 	    addActionMessage(request, e.getMessage());
-	    return submit(mapping, form, request, response);
+	    return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
 	}
 
 	RenderUtils.invalidateViewState();
@@ -258,36 +289,8 @@ public class SummariesManagementDA extends FenixDispatchAction {
 			.getSummaryDateYearMonthDay(), summary.getRoom(), timePartial, summary,
 		teacherLogged);
 
-	setTeacherDataToFormBean(dynaActionForm, bean);
-	request.setAttribute("summariesManagementBean", bean);
-	return mapping.findForward("prepareInsertSummary");
-    }
-
-    public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	final IViewState viewState = RenderUtils.getViewState();
-	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
-	setTeacherDataToFormBean(dynaActionForm, bean);
-	request.setAttribute("summariesManagementBean", bean);
-	return mapping.findForward("prepareInsertSummary");
-    }
-
-    public ActionForward chooseSummaryType(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	final IViewState viewState = RenderUtils.getViewState();
-	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
-	bean.setLesson(null);
-	bean.setSummaryDate(null);
-	bean.setSummaryRoom(null);
-	bean.setSummaryTime(null);	
-	setLoggedTeacherToFormBean(request, dynaActionForm, bean);
-	request.setAttribute("summariesManagementBean", bean);
-	return mapping.findForward("prepareInsertSummary");
-    }
+	return goToSummaryManagementPage(mapping, request, dynaActionForm, bean);
+    }    
         
     public ActionForward prepareShowSummaries(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
@@ -356,6 +359,12 @@ public class SummariesManagementDA extends FenixDispatchAction {
     
 
     // -------- Private Methods --------- //
+    
+    private ActionForward goToSummaryManagementPage(ActionMapping mapping, HttpServletRequest request, DynaActionForm dynaActionForm, SummariesManagementBean bean) {
+	setTeacherDataToFormBean(dynaActionForm, bean);
+	request.setAttribute("summariesManagementBean", bean);
+	return mapping.findForward("prepareInsertSummary");
+    }
     
     private void setLoggedTeacherToFormBean(HttpServletRequest request, DynaActionForm dynaActionForm,
 	    SummariesManagementBean bean) {

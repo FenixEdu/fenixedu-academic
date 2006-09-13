@@ -47,7 +47,6 @@ function check(e,v){
 	
 	<bean:define id="executionCourseID" name="summariesManagementBean" property="executionCourse.idInternal" />
 	<bean:define id="teacherNumber" name="loggedTeacherProfessorship" property="teacher.teacherNumber" />
-	<bean:define id="submitURL">/summariesManagement.do?method=submit&teacherNumber__=<bean:write name="teacherNumber"/></bean:define>
 	
 	<logic:messagesPresent message="true">
 		<p>
@@ -84,8 +83,9 @@ function check(e,v){
 			<td>
 				<%-- Shift --%>						
 				<fr:form>
+					<bean:define id="chooseShift">/summariesManagement.do?method=chooseShift&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 					<fr:edit id="summariesManagementBeanWithShifts" name="summariesManagementBean" schema="ListShiftsToCreateSummary" nested="true">
-						<fr:destination name="postBack" path="<%= submitURL %>"/>				
+						<fr:destination name="postBack" path="<%= chooseShift %>"/>				
 						<fr:layout name="flow">
 							<fr:property name="labelTerminator" value=""/>
 							<fr:property name="labelExcluded" value="true"/>
@@ -100,8 +100,9 @@ function check(e,v){
 				<td>
 					<%-- Lesson --%>
 					<fr:form>
+						<bean:define id="chooseLesson">/summariesManagement.do?method=chooseLesson&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 						<fr:edit id="summariesManagementBeanWithLessons" name="summariesManagementBean" schema="ListShiftLessonsToCreateSummary" nested="true">
-							<fr:destination name="postBack" path="<%= submitURL %>"/>				
+							<fr:destination name="postBack" path="<%= chooseLesson %>"/>				
 							<fr:layout name="flow">
 								<fr:property name="labelTerminator" value=""/>
 								<fr:property name="labelExcluded" value="true"/>
@@ -114,9 +115,10 @@ function check(e,v){
 				<td><bean:message key="label.date" bundle="DEFAULT"/>:</td>
 				<td>
 					<%-- Date --%>
-					<fr:form>
+					<fr:form>		
+						<bean:define id="chooseDate">/summariesManagement.do?method=chooseDate&teacherNumber__=<bean:write name="teacherNumber"/></bean:define>				
 						<fr:edit id="summariesManagementBeanWithDate" name="summariesManagementBean" schema="LisPossibleDatesToCreateSummary" nested="true">
-							<fr:destination name="postBack" path="<%= submitURL %>"/>	
+							<fr:destination name="postBack" path="<%= chooseDate %>"/>	
 							<fr:layout name="flow">
 								<fr:property name="labelTerminator" value=""/>
 								<fr:property name="labelExcluded" value="true"/>
@@ -134,9 +136,9 @@ function check(e,v){
 		<%-- LessonPlannings --%>
 		<tr>
 			<td><bean:message key="label.lessonPlanning" bundle="DEFAULT"/>:</td>
-			<td>
-				<bean:define id="chooseLessonPlanningURL">/summariesManagement.do?method=chooseLessonPlanning&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
+			<td>				
 				<fr:form>
+					<bean:define id="chooseLessonPlanningURL">/summariesManagement.do?method=chooseLessonPlanning&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 					<fr:edit id="summariesManagementBeanWithLessonPlanning" name="summariesManagementBean" schema="ListLessonPlanningsToSummariesManagement" nested="true">
 						<fr:destination name="postBack" path="<%= chooseLessonPlanningURL %>"/>	
 							<fr:layout name="flow">
@@ -150,9 +152,9 @@ function check(e,v){
 		<%-- LastSummaries --%>
 		<tr>
 			<td><bean:message key="message.summaryText.last" bundle="DEFAULT"/>:</td>
-			<td>
-				<bean:define id="chooseLastSummaryURL">/summariesManagement.do?method=chooseLastSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
+			<td>				
 				<fr:form>
+					<bean:define id="chooseLastSummaryURL">/summariesManagement.do?method=chooseLastSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 					<fr:edit id="summariesManagementBeanWithLastSummary" name="summariesManagementBean" schema="ListLastSummariesToSummariesManagement" nested="true">
 						<fr:destination name="postBack" path="<%= chooseLastSummaryURL %>"/>	
 							<fr:layout name="flow">

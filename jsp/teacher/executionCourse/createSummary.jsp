@@ -48,7 +48,6 @@ function check(e,v){
 	</script>
 
 	<bean:define id="executionCourseID" name="summariesManagementBean" property="executionCourse.idInternal" />
-	<bean:define id="submitURL" value="/summariesManagement.do?method=submit" />
 	
 	<logic:messagesPresent message="true">
 		<p>
@@ -86,7 +85,7 @@ function check(e,v){
 				<%-- Shift --%>						
 				<fr:form>
 					<fr:edit id="summariesManagementBeanWithShifts" name="summariesManagementBean" schema="ListShiftsToCreateSummary" nested="true">
-						<fr:destination name="postBack" path="<%= submitURL %>"/>				
+						<fr:destination name="postBack" path="/summariesManagement.do?method=chooseShift"/>				
 						<fr:layout name="flow">
 							<fr:property name="labelTerminator" value=""/>
 							<fr:property name="labelExcluded" value="true"/>
@@ -102,7 +101,7 @@ function check(e,v){
 					<%-- Lesson --%>
 					<fr:form>
 						<fr:edit id="summariesManagementBeanWithLessons" name="summariesManagementBean" schema="ListShiftLessonsToCreateSummary" nested="true">
-							<fr:destination name="postBack" path="<%= submitURL %>"/>				
+							<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLesson"/>				
 							<fr:layout name="flow">
 								<fr:property name="labelTerminator" value=""/>
 								<fr:property name="labelExcluded" value="true"/>
@@ -117,7 +116,7 @@ function check(e,v){
 					<%-- Date --%>
 					<fr:form>
 						<fr:edit id="summariesManagementBeanWithDate" name="summariesManagementBean" schema="LisPossibleDatesToCreateSummary" nested="true">
-							<fr:destination name="postBack" path="<%= submitURL %>"/>	
+							<fr:destination name="postBack" path="/summariesManagement.do?method=chooseDate"/>	
 							<fr:layout name="flow">
 								<fr:property name="labelTerminator" value=""/>
 								<fr:property name="labelExcluded" value="true"/>
@@ -135,11 +134,10 @@ function check(e,v){
 		<%-- LessonPlannings --%>
 		<tr>
 			<td><bean:message key="label.lessonPlanning" />:</td>
-			<td>
-				<bean:define id="chooseLessonPlanningURL" value="/summariesManagement.do?method=chooseLessonPlanning" />	
+			<td>				
 				<fr:form>
 					<fr:edit id="summariesManagementBeanWithLessonPlanning" name="summariesManagementBean" schema="ListLessonPlanningsToSummariesManagement" nested="true">
-						<fr:destination name="postBack" path="<%= chooseLessonPlanningURL %>"/>	
+						<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLessonPlanning"/>	
 							<fr:layout name="flow">
 								<fr:property name="labelTerminator" value=""/>
 								<fr:property name="labelExcluded" value="true"/>
@@ -151,11 +149,10 @@ function check(e,v){
 		<%-- LastSummaries --%>
 		<tr>
 			<td><bean:message key="message.summaryText.last"/>:</td>
-			<td>
-				<bean:define id="chooseLastSummaryURL" value="/summariesManagement.do?method=chooseLastSummary" />	
+			<td>				
 				<fr:form>
 					<fr:edit id="summariesManagementBeanWithLastSummary" name="summariesManagementBean" schema="ListLastSummariesToSummariesManagement" nested="true">
-						<fr:destination name="postBack" path="<%= chooseLastSummaryURL %>"/>	
+						<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLastSummary"/>	
 							<fr:layout name="flow">
 								<fr:property name="labelTerminator" value=""/>
 								<fr:property name="labelExcluded" value="true"/>
