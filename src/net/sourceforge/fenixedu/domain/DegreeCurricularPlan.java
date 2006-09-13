@@ -233,6 +233,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         newStructureFieldsChange(curricularStage, beginExecutionYear);
 
         this.setState(state);
+        
         this.getRoot().setName(name);
         this.getRoot().setNameEn(name);
     }
