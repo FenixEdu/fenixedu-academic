@@ -85,10 +85,8 @@
 
 <schema name="parkingRequestFactory.driverLicense"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryCreator">
-	<slot name="driverLicenseInputStream" key="label.driverLicense"
-		bundle="PARKING_RESOURCES"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="fileNameSlot" value="filename" />
+	<slot name="driverLicenseInputStream" key="label.driverLicense"	bundle="PARKING_RESOURCES">
+		<property name="fileNameSlot" value="driverLicenseFileName" />
 	</slot>
 	<slot name="parkingParty" hidden="true" />
 </schema>
@@ -126,9 +124,8 @@
 <schema name="edit.parkingRequestFactory.driverLicense"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 	<slot name="driverLicenseInputStream" key="label.driverLicense"
-		bundle="PARKING_RESOURCES"
-		>
-		<property name="fileNameSlot" value="filename" />
+		bundle="PARKING_RESOURCES">
+		<property name="fileNameSlot" value="driverLicenseFileName" />
 	</slot>
 	<slot name="parkingParty" hidden="true" />
 </schema>

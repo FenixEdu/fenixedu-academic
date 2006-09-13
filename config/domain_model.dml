@@ -7623,6 +7623,12 @@ relation ParkingRequestParkingDocument {
 	}
 }
 
+relation ParkingFileParkingDocument {
+	net.sourceforge.fenixedu.domain.parking.ParkingFile playsRole parkingFile;
+	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocument;
+}
+
+
 relation RootDomainObjectRegistrationData {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod playsRole registrationDataByPeriod {
@@ -7653,6 +7659,13 @@ relation RootDomainObjectParkingParty {
 relation RootDomainObjectParkingRequest {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequests {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectParkingDocument {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocuments {
 		multiplicity *;
 	}
 }
