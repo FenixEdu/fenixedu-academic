@@ -11,6 +11,7 @@ public abstract class DegreeModuleScope {
     public abstract Integer getCurricularSemester();
     public abstract Integer getCurricularYear();    
     public abstract String getBranch();
+    public abstract String getAnotation();
     public abstract CurricularCourse getCurricularCourse();
     public abstract boolean isActiveForExecutionPeriod(ExecutionPeriod executionPeriod);
     
@@ -32,4 +33,5 @@ public abstract class DegreeModuleScope {
         }
         return degreeModuleScopes;
     }
+    
 }

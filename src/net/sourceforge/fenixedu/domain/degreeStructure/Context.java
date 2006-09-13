@@ -213,5 +213,12 @@ public class Context extends Context_Base implements Comparable<Context> {
         public CurricularCourse getCurricularCourse() {            
             return (CurricularCourse) context.getChildDegreeModule();
         }
+
+	@Override
+	public String getAnotation() {
+	    return null;
+	}
+	
     }
+    
 }
