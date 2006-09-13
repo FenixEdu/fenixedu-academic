@@ -41,10 +41,15 @@
 	<slot name="person.name" key="label.name"/>
 	<slot name="person.documentIdNumber" key="label.identificationNumber"/>		
 	<slot name="person.idDocumentType" key="label.idDocumentType"/>	
-	<slot name="person.username" key="label.idDocumentType"/>				
+	<slot name="person.username" key="label.username"/>				
+</schema>
+<schema name="candidacy.show.candidacyWithIstUsername" extends="candidacy.show.candidady"
+		type="net.sourceforge.fenixedu.domain.candidacy.Candidacy" bundle="ADMIN_OFFICE_RESOURCES">
+	<remove name="person.username" />
+	<slot name="person.istUsername" key="label.username"/>				
 </schema>
 <schema name="candidacy.show.list.candidady"
-		type="net.sourceforge.fenixedu.domain.candidacy.Candidacy">
+		type="net.sourceforge.fenixedu.domain.candidacy.Candidacy" bundle="CANDIDATE_RESOURCES">
 	<slot name="number" key="label.candidacy.number"/>
 	<slot name="person.name" key="label.name"/>
 	<slot name="executionDegree" layout="format" key="label.degree" >
@@ -75,7 +80,8 @@
 	</slot>
 	<slot name="pais" layout="menu-select" key="label.nationality" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
-		<property name="format" value="${nationality}"/>
+		<property name="format" value="${nationality}" />
+		<property name="sortBy" value="nationality"/>
 	</slot>
 	<slot name="parishOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	<slot name="districtSubdivisionOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
@@ -83,6 +89,7 @@
 	<slot name="countryOfBirth" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>
 	</slot>
 	<slot name="nameOfFather" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	<slot name="nameOfMother" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />	
@@ -99,6 +106,7 @@
 	<slot name="countryOfResidence" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>		
 	</slot>	
 </schema>
 
@@ -131,6 +139,7 @@
 	<slot name="country" layout="menu-select" key="label.countryOfPrecedenceDegree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>
 	</slot>	
 </schema>
 
@@ -139,13 +148,25 @@
 	<slot name="description"/>
 </schema>
 
+<schema name="candidacy.short.withNumber" extends="candidacy.short" 
+	type="net.sourceforge.fenixedu.domain.candidacy.Candidacy" bundle="CANDIDATE_RESOURCES">
+	<slot name="registration.number" key="label.studentNumber"/>
+</schema>
+
+<schema name="registration.short" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="CANDIDATE_RESOURCES">
+	<slot name="number"/>
+	<slot name="activeStudentCurricularPlan.degreeCurricularPlan" layout="format" key="label.degree" >
+		<property name="format" value="${degree.name} - ${name}" />
+	</slot>		
+</schema>
+
 <schema name="candidacySituation.full" type="net.sourceforge.fenixedu.domain.candidacy.CandidacySituation" bundle="CANDIDATE_RESOURCES">
 	<slot name="situationDate"/>
 	<slot name="description"/>
 	<slot name="employee.person.name"/>
 </schema>
 
-<schema name="candidacyDocuments.full" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean">
+<schema name="candidacyDocuments.full" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
 	<slot name="documentDescription" read-only="true" />
 	<slot name="actualFile" read-only="true" />
 	<slot name="fileInputStream" >
@@ -243,6 +264,7 @@
 	<slot name="pais" layout="menu-select" key="label.nationality" >
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${nationality}"/>
+		<property name="sortBy" value="nationality"/>
 	</slot>
 	<slot name="parishOfBirth" />
 	<slot name="districtSubdivisionOfBirth" />
@@ -250,6 +272,7 @@
 	<slot name="countryOfBirth" layout="menu-select" >
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>
 	</slot>
 	<slot name="nameOfFather" />
 	<slot name="nameOfMother" />	
@@ -266,6 +289,7 @@
 	<slot name="countryOfResidence" layout="menu-select" >
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>
 	</slot>	
 </schema>
 
@@ -298,7 +322,23 @@
 	<slot name="country" layout="menu-select" key="label.countryOfPrecedenceDegree" >
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>
 	</slot>	
 </schema>
 
+<schema name="candidacy.show.listForSelection"
+		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="candidacy.number" key="label.candidacy.number" read-only="true"/>
+	<slot name="candidacy.person.name" key="label.name" read-only="true"/>	
+	<slot name="selectionSituation" key="label.selectionSituationState"	layout="menu-select">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SituationTypesForCandidacySelection" />
+		<property name="eachLayout" value=""/>	
+	</slot>		
+	<slot name="remarks" key="label.remarks" />
+</schema>
 
+<schema name="candidacy.show.listSubstitutesForSelection" extends="candidacy.show.listForSelection" 
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="order" key="label.candidacyOrder" />
+</schema>

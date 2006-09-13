@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -28,7 +29,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChoiceMadeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -63,31 +63,20 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         IUserView userView = getUserView(request);
         Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID",
                 request));
+        Integer executionDegreeID = Integer.valueOf(getFromRequest("executionDegreeID", request));        
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        
         ActionErrors errors = new ActionErrors();
-        Object[] args = { degreeCurricularPlanID, new Integer(1) };
-
-        InfoExecutionDegree infoExecutionDegree = null;
-        try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils
-                    .executeService(userView, "ReadExecutionDegreeByDegreeCurricularPlanID", args);
-        } catch (NonExistingServiceException e) {
+        if(executionDegree == null){
             errors.add("nonExisting", new ActionError(
-                    "error.exception.masterDegree.nonExistingExecutionDegree"));
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-
-        if (infoExecutionDegree == null) {
-            errors.add("nonExisting", new ActionError(
-                    "error.exception.masterDegree.nonExistingExecutionDegree"));
+            "error.exception.masterDegree.nonExistingExecutionDegree"));
         }
 
         String degree = getFromRequest("degree", request);
-        Integer executionDegree = infoExecutionDegree.getIdInternal();
-        String executionYear = infoExecutionDegree.getInfoExecutionYear().getYear();
+        String executionYear = executionDegree.getExecutionYear().getYear();
 
-        if (degree == null && infoExecutionDegree != null) {
-            degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
+        if (degree == null) {
+            degree = executionDegree.getDegreeCurricularPlan().getName();
         }
 
         List candidateList = null;
@@ -100,7 +89,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
-        Object args1[] = { executionDegree, admitedSituations };
+        Object args1[] = { executionDegreeID, admitedSituations };
 
         try {
             candidateList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
@@ -125,7 +114,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("executionYear", executionYear);
         request.setAttribute("degree", degree);
-        request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
+        request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegreeID));
         request.setAttribute("candidateList", candidateList);
 
         return mapping.findForward("PrepareSuccess");

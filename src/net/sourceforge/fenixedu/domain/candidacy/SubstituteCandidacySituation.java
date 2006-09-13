@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class StandByConfirmedDataCandidacySituation extends StandByConfirmedDataCandidacySituation_Base {
+public class SubstituteCandidacySituation extends SubstituteCandidacySituation_Base {
 
-    public StandByConfirmedDataCandidacySituation(Candidacy candidacy) {
+    public SubstituteCandidacySituation(Candidacy candidacy) {
 	super();
 	setCandidacy(candidacy);
 	Employee employee = AccessControl.getUserView().getPerson().getEmployee();
@@ -21,25 +21,15 @@ public class StandByConfirmedDataCandidacySituation extends StandByConfirmedData
 
     @Override
     public void checkConditionsToForward() {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void nextState() {
-	// TODO Auto-generated method stub
-
     }
 
     @Override
     public void checkConditionsToForward(String nextState) {
-	// TODO Auto-generated method stub
-
     }
 
     @Override
     public CandidacySituationType getCandidacySituationType() {
-	return CandidacySituationType.STAND_BY_CONFIRMED_DATA;
+	return CandidacySituationType.SUBSTITUTE;
     }
 
     @Override
@@ -47,8 +37,14 @@ public class StandByConfirmedDataCandidacySituation extends StandByConfirmedData
 	Set<String> nextStates = new HashSet<String>();
 	nextStates.add(CandidacySituationType.ADMITTED.toString());
 	nextStates.add(CandidacySituationType.NOT_ADMITTED.toString());
-	nextStates.add(CandidacySituationType.SUBSTITUTE.toString());	
+	nextStates.add(CandidacySituationType.SUBSTITUTE.toString());
 	return nextStates;
+    }
+
+    @Override
+    public void nextState() {
+	// TODO Auto-generated method stub
+
     }
 
     @Override
@@ -62,12 +58,10 @@ public class StandByConfirmedDataCandidacySituation extends StandByConfirmedData
 	    new NotAdmittedCandidacySituation(this.getCandidacy());
 	    break;
 	case SUBSTITUTE:
-	    new SubstituteCandidacySituation(this.getCandidacy());
 	    break;
 	default:
 	    break;
 	}
-
     }
 
 }

@@ -67,7 +67,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(
-                getDegree().getBolonhaDegreeType().name(), "enum").appendLabel(" - ").appendLabel(
+                getDegree().getDegreeType().name(), "enum").appendLabel(" - ").appendLabel(
                 getDegree().getName()).appendLabel(" - ").appendLabel(
                 getExecutionDegree().getExecutionYear().getYear()).appendLabel(")");
 

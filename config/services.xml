@@ -3931,7 +3931,7 @@
 		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
 		</filterChains>
-	</service>			
+	</service>
 	<service>
 		<name>TransferCompetenceCourse</name>
 		<implementationClass> 
@@ -7129,7 +7129,7 @@
 		<filterChains>
 			<chain name="ReadCurriculumHistoricAuthorization" />
 		</filterChains>
-	</service>	
+	</service>
 	<service>
 		<name>ReadExecutionCourseOIDByCodeInLatestPeriod</name>
 		<implementationClass> 
@@ -7204,7 +7204,7 @@
 		<filterChains>
 			<chain name="ReadStudentCurricularPlansAccess" />
 		</filterChains>
-	</service>		
+	</service>
 	<service>
 		<name>FindTeachersServiceForDepartmentOffice</name>
 		<implementationClass> 
@@ -7214,7 +7214,7 @@
 		<filterChains>
 			<chain name="EmployeeBelongsToTeacherDepartment" />
 		</filterChains>
-	</service>	
+	</service>
 	<service>
 		<name>ReadDegreeIdInternalByDegreeCode</name>
 		<implementationClass> 
@@ -7230,7 +7230,8 @@
 		</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-	</service>	
+	</service>
+	
 	
 	<!-- ================================= INQUIRIES ================================= -->	
 	
@@ -10580,7 +10581,8 @@
         <filterChains>
         	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
         </filterChains>     
-    </service>        
+    </service>      
+    
     <service>
         <name>CreateSummary</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary</implementationClass>
@@ -10589,8 +10591,9 @@
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherOrDepartmentAdministrativeOfficeAuthorization" />
         </filterChains>
-    </service>      
-    <service>
+    </service>  
+    
+      <service>
         <name>EditSummary</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary</implementationClass>
         <description />
@@ -10599,6 +10602,7 @@
             <chain name="SummaryManagementAuthorization" />
         </filterChains>
     </service>      
+
     <service>
 		<name>DeleteSummary</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteSummary</implementationClass>
@@ -10615,7 +10619,8 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
         </filterChains>     
-    </service>  
+    </service>    
+
     <service>
     	<name>SetEmail</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail</implementationClass>
@@ -10623,7 +10628,7 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
         </filterChains>     
-    </service>      
+    </service>  
     <service>
     	<name>CreateParkingParty</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty</implementationClass>
@@ -10632,5 +10637,15 @@
         <filterChains>
         </filterChains>     
     </service>  
-       
+
+    <service>
+    	<name>SelectCandidacies</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SelectCandidacies</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="MasterDegreeAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>          
+    
 </serviceDefinitions>

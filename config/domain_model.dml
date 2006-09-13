@@ -164,7 +164,7 @@ valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentType							as P
 
 class net.sourceforge.fenixedu.domain.DomainObject {
 	Integer idInternal;
-        Integer keyRootDomainObject;
+	Integer keyRootDomainObject;
 }
 
 class net.sourceforge.fenixedu.domain.RootDomainObject extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1770,7 +1770,7 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyResult;
 	}
-	
+
 	class net.sourceforge.fenixedu.domain.parking.ParkingFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyParkingDocument;
 	}
@@ -2734,6 +2734,7 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	Integer keyPersonalDataUseInquiryAnswers;
 	Integer keyPrecedentDegreeInformation;
 	Integer keyStudent;
+	Integer keyCandidacy;
 }
 
 class net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3627,6 +3628,7 @@ class net.sourceforge.fenixedu.domain.candidacy.Candidacy extends net.sourceforg
 	class net.sourceforge.fenixedu.domain.candidacy.DFACandidacy extends net.sourceforge.fenixedu.domain.candidacy.Candidacy {
 		Integer keyExecutionDegree;
 		Integer keyPrecedentDegreeInformation;
+		Integer keyRegistration;
 	}
 
 class net.sourceforge.fenixedu.domain.candidacy.CandidacySituation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3634,6 +3636,7 @@ class net.sourceforge.fenixedu.domain.candidacy.CandidacySituation extends net.s
 	DateTime situationDate;
 	Integer keyEmployee;
 	Integer keyCandidacy;
+	String remarks;	
 }
 
 	class net.sourceforge.fenixedu.domain.candidacy.PreCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
@@ -3647,6 +3650,20 @@ class net.sourceforge.fenixedu.domain.candidacy.CandidacySituation extends net.s
 	
 	class net.sourceforge.fenixedu.domain.candidacy.StandByConfirmedDataCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
 	}
+	
+	class net.sourceforge.fenixedu.domain.candidacy.AdmittedCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
+	}	
+
+	class net.sourceforge.fenixedu.domain.candidacy.NotAdmittedCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
+	}	
+
+	class net.sourceforge.fenixedu.domain.candidacy.SubstituteCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
+		Integer candidacyOrder;
+	}	
+
+	class net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
+	}	
+
 	
 class net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument extends net.sourceforge.fenixedu.domain.DomainObject {
 	String documentDescription;
@@ -6514,6 +6531,11 @@ relation RegistrationStudent {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.student.Student playsRole student;
+}
+
+relation RegistrationCandidacy {
+    net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+    net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole candidacy;
 }
 
 relation RootDomainObjectStudent {

@@ -13,12 +13,22 @@
 </fr:view>
 
 <h2><strong><bean:message key="label.candidacy.title.detail" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
-<fr:view name="candidacy" schema="candidacy.short" >
-	<fr:layout name="tabular" >
-		<fr:property name="classes" value="tstyle4"/>
-        <fr:property name="columnClasses" value="listClasses,,"/>
-	</fr:layout>
-</fr:view>
+<logic:empty name="candidacy" property="registration">
+	<fr:view name="candidacy" schema="candidacy.short" >
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
+	</fr:view>
+</logic:empty>
+<logic:notEmpty name="candidacy" property="registration">
+	<fr:view name="candidacy" schema="candidacy.short.withNumber" >
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
 
 <h2><strong><bean:message key="label.candidacy.title.activeSituation" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 <fr:view name="candidacy" property="activeCandidacySituation" schema="candidacySituation.full" >
@@ -45,6 +55,15 @@
 <bean:define id="candidacy_number" name="candidacy" property="number"/>
 <h2><strong><bean:message key="label.candidacy.title.operations" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 <table class="tstyle4">
+	<logic:equal name="candidacy" property="activeCandidacySituation.canRegister" value="true">
+		<tr>
+			<td class="listClasses">
+				<html:link action="<%= "/dfaCandidacy.do?method=prepareRegisterCandidacy&candidacyNumber=" + candidacy_number.toString() %>">
+					<bean:message key="link.candidacy.registerCandidacy" bundle="ADMIN_OFFICE_RESOURCES"/>				
+				</html:link>					
+			</td>
+		</tr>
+	</logic:equal>
 	<tr>
 		<td class="listClasses">
 			<html:link action="<%= "/dfaCandidacy.do?method=showCandidacyValidateData&candidacyNumber=" + candidacy_number.toString() %>">

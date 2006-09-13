@@ -315,7 +315,27 @@
 	<definition name="df.page.chooseCandidacy" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
 		<put name="body" value="/posGraduacao/candidacy/chooseCandidacy.jsp"/>
 	</definition>
-	
+
+	<definition name="df.page.listCandidaciesForSelection" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/listCandidaciesForSelection.jsp"/>
+	</definition>
+
+	<definition name="df.page.confirmCandidaciesForSelection" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/confirmCandidaciesForSelection.jsp"/>
+	</definition>
+
+	<definition name="df.page.showCandidaciesForSelectionSuccess" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/showCandidaciesForSelectionSuccess.jsp"/>
+	</definition>	
+
+	<definition name="df.page.candidacyRegistration" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/candidacyRegistration.jsp"/>
+	</definition>	
+
+	<definition name="df.page.candidacyRegistrationSuccess" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/candidacyRegistrationSuccess.jsp"/>
+	</definition>	
+
 	<!-- ************* Prices Management ************* -->
 	<definition name="prices.management.editPrice" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="body" value="/posGraduacao/pricesManagement/editPrice.jsp"/>
@@ -324,5 +344,5 @@
 	<definition name="prices.management.viewPrices" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="body" value="/posGraduacao/pricesManagement/viewPrices.jsp"/>
 	</definition>
-		
+	
 </tiles-definitions>

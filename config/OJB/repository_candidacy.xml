@@ -20,7 +20,11 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.PreCandidacySituation"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.StandByConfirmedDataCandidacySituation"/>
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.StandByFilledDataCandidacySituation"/>			
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.StandByFilledDataCandidacySituation"/>		
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.AdmittedCandidacySituation"/>			
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.NotAdmittedCandidacySituation"/>			
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.SubstituteCandidacySituation"/>		
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation"/>		
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.PreCandidacySituation" table="CANDIDACY_SITUATION">
@@ -38,6 +42,23 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.StandByFilledDataCandidacySituation" table="CANDIDACY_SITUATION">
 
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.AdmittedCandidacySituation" table="CANDIDACY_SITUATION">
+
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.NotAdmittedCandidacySituation" table="CANDIDACY_SITUATION">
+
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.SubstituteCandidacySituation" table="CANDIDACY_SITUATION">
+
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation" table="CANDIDACY_SITUATION">
+
+</class-descriptor>
+
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument -->

@@ -23,7 +23,7 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
         setSituationDate(new DateTime());
         setOjbConcreteClass(this.getClass().getName());
     }
-
+    
     public abstract void nextState();
 
     public abstract void checkConditionsToForward();
@@ -52,4 +52,9 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     public boolean getCanGeneratePass() {
         return true;
     }
+    
+    public boolean getCanRegister() {
+        return false;
+    }
+        
 }

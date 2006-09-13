@@ -27,6 +27,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Candidacy and Registration" alterCandidacyAndRegistrationTables.sql
 
 #
 # Don't create the seminaries just yet.

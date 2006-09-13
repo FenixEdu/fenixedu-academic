@@ -93,23 +93,23 @@
 		 <form-property name="executionYear" type="java.lang.String" />
       </form-bean>
       
-		<!-- Bean for The Creation of a Contributor -->
-		<form-bean name="createContributorForm" 
-	    		type="org.apache.struts.validator.DynaValidatorForm"
-	            dynamic="true">
-	
-	        <form-property name="page" type="java.lang.Integer" />
+      <!-- Bean for The Creation of a Contributor -->
+      <form-bean name="createContributorForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+
+         <form-property name="page" type="java.lang.Integer" />
 			<form-property name="contributorType" type="java.lang.String" />
-	        <form-property name="contributorNumber" type="java.lang.String" />
-	        <form-property name="contributorName" type="java.lang.String" />
-	        <form-property name="contributorAddress" type="java.lang.String" />
+         <form-property name="contributorNumber" type="java.lang.String" />
+         <form-property name="contributorName" type="java.lang.String" />
+         <form-property name="contributorAddress" type="java.lang.String" />
 	        <form-property name="areaCode" type="java.lang.String" />
 	        <form-property name="areaOfAreaCode" type="java.lang.String" />
 	        <form-property name="area" type="java.lang.String" />
 	        <form-property name="parishOfResidence" type="java.lang.String" />
 	        <form-property name="districtSubdivisionOfResidence" type="java.lang.String" />
 	        <form-property name="districtOfResidence" type="java.lang.String" />
-		</form-bean>
+      </form-bean>
 
 
       <!-- Bean for The Choosing of a Contributor -->
@@ -797,6 +797,7 @@
 	<form-bean name="dfaCandidacyForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 		<form-property name="method" type="java.lang.String" />
 		<form-property name="candidacyNumber" type="java.lang.Integer" />
+		<form-property name="areaID" type="java.lang.Integer" />
     </form-bean>
     
 	
@@ -2620,6 +2621,9 @@
 	         <forward name="viewCandidacyDetails" path="df.page.viewCandidacyDetails"/>
 	         <forward name="chooseCandidacy" path="df.page.chooseCandidacy"/>
 	         <forward name="alterSuccess" path="df.page.alterSuccessPersonalData"/>
+	         <forward name="candidacyRegistration" path="df.page.candidacyRegistration"/>
+	         <forward name="candidacyRegistrationSuccess" path="df.page.candidacyRegistrationSuccess"/>	         
+	         <forward name="printRegistrationInformation" path="/candidacy/candidacyRegistrationTemplate.jsp"/>	         
 	  </action>
 	  
 	  <action path="/listDFACandidacy"
@@ -2630,9 +2634,20 @@
 			  >
    	         <forward name="listCandidacies" path="df.page.listCandidacies"/>
    	         <forward name="viewCandidacyDetails" path="df.page.viewCandidacyDetails"/>   	         
-   	         
 	  </action>
-	  
+
+	  <action path="/selectDFACandidacies"
+		      parameter="method"
+		      scope="request"
+		      input="df.page.listCandidaciesForSelection"
+              type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.candidacy.SelectDFACandidaciesDispatchAction"
+			  >
+   	         <forward name="listCandidacies" path="df.page.listCandidaciesForSelection"/>
+   	         <forward name="confirmCandidaciesForSelection" path="df.page.confirmCandidaciesForSelection"/>
+   	         <forward name="showCandidaciesForSelectionSuccess" path="df.page.showCandidaciesForSelectionSuccess"/>
+   	         <forward name="printAcceptanceDispatch" path="/candidacy/acceptanceDispatchTemplate.jsp"/>
+	  </action>
+	
 	  
 	  <!-- Price Management -->
 	  <action path="/pricesManagement"
@@ -2643,6 +2658,7 @@
 	         <forward name="editPrice" path="prices.management.editPrice"/>
       </action>
 	  
+	
 	
     </action-mappings>
     

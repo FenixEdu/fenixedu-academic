@@ -96,7 +96,7 @@ public class Registration extends Registration_Base {
         setRequestedChangeDegree(Boolean.FALSE);
         setRequestedChangeBranch(Boolean.FALSE);
     }
-
+    
     public void delete() {
 
         for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
@@ -922,6 +922,11 @@ public class Registration extends Registration_Base {
             return null;
         }
         return getActualPeriodRegistrationData().getStudentKind();
+    }
+
+    @Override
+    public Integer getNumber() {
+	return (super.getNumber() != null) ? super.getNumber() : getStudent().getNumber();
     }
 
 }

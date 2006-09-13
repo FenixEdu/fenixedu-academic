@@ -358,4 +358,61 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
         return mapping.findForward("viewCandidacyDetails");
     }
 
+    public ActionForward prepareRegisterCandidacy(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        Integer candidacyNumber = Integer.valueOf((String) getFromRequest(request, "candidacyNumber"));
+
+        Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
+        if (candidacy == null) {
+            throw new FenixActionException("error.invalid.candidacy.number");
+        }
+
+        request.setAttribute("candidacy", candidacy);
+        ((DynaActionForm) actionForm).set("candidacyNumber", candidacyNumber);
+        
+        return mapping.findForward("candidacyRegistration");
+    }
+
+    public ActionForward registerCandidacy(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+
+        DynaActionForm candidacyForm = (DynaActionForm) actionForm;
+        Integer candidacyNumber = (Integer) candidacyForm.get("candidacyNumber");
+        Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
+        
+        Object[] args = { new StateMachineRunner.RunnerArgs(candidacy.getActiveCandidacySituation(),
+                CandidacySituationType.REGISTERED.toString()) };
+        try {
+            ServiceUtils.executeService(getUserView(request), "StateMachineRunner", args);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getMessage(), null);
+            request.setAttribute("candidacy", candidacy);
+            return mapping.findForward("candidacyRegistration");
+        }
+        
+        request.setAttribute("candidacy", candidacy);
+        return mapping.findForward("candidacyRegistrationSuccess");
+    }
+    
+    public ActionForward cancelRegisterCandidacy(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+
+        DynaActionForm candidacyForm = (DynaActionForm) actionForm;
+        Integer candidacyNumber = (Integer) candidacyForm.get("candidacyNumber");
+        Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
+        
+        storeCandidacyDataInRequest(request, candidacy);
+        return mapping.findForward("viewCandidacyDetails");
+    }
+    
+    public ActionForward printRegistrationInformation(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+
+        DynaActionForm candidacyForm = (DynaActionForm) actionForm;
+        Integer candidacyNumber = (Integer) candidacyForm.get("candidacyNumber");
+        
+        request.setAttribute("candidacy", Candidacy.readByCandidacyNumber(candidacyNumber));
+        return mapping.findForward("printRegistrationInformation");
+    }
+    
 }
