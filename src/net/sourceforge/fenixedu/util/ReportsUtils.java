@@ -61,7 +61,7 @@ public class ReportsUtils extends PropertiesManager {
                         printRequestAttributeSet);
                 exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE, printService);
                 exporter.exportReport();
-                System.out.println("Printer Job Sended");
+                System.out.println("Printer Job Sent");
                 return true;
             } else {
         	if(jasperPrint == null) {
