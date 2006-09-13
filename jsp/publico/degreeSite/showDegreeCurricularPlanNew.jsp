@@ -26,8 +26,6 @@
 	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.curriculum"/>		
 </div>	
 
-<p><span class="error"><!-- Error messages go here --><!-- Error messages go here. --><html:errors/></span></p>
-
 	<h1>
 		<bean:message bundle="ENUMERATION_RESOURCES"
 			name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso.name" />
@@ -94,6 +92,8 @@
 	
 	<br/>
 	
+	<em><span class="error"><html:errors/></span></em>
+	
 	<logic:present name="allActiveCurricularCourseScopes">
 	<logic:notEmpty name="allActiveCurricularCourseScopes">
 
@@ -118,7 +118,7 @@
 				</logic:equal>
 				</th>
 			<%}else{ %>
-				<th colspan="10" scope="col">
+				<th colspan="11" scope="col">
 				<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="en">
 					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>&nbsp;<bean:write name="currentYear"/>
 				</logic:equal>
@@ -134,7 +134,7 @@
 					 <center><!--Branch name goes here--><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
 				</th>
 			<%}else{ %>
-				<th colspan="10" scope="col">
+				<th colspan="11" scope="col">
 					 <center><!--Branch name goes here--><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
 				</th>
 			<%}%>
@@ -144,7 +144,7 @@
 				<td colspan="7" class="subheader">&nbsp;</td>
 				<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
 			<%}else{ %>
-				<td colspan="6" class="subheader">&nbsp;</td>
+				<td colspan="7" class="subheader">&nbsp;</td>
 				<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
 			<%}%>
 		</tr>
@@ -325,11 +325,8 @@
 </logic:notEmpty>
 </logic:present>
 
-<logic:notPresent name="allActiveCurricularCourseScopes">
-	<p><span class="error"><!-- Error messages go here --><!-- Error messages go here. --><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
-</logic:notPresent>
 <logic:empty name="allActiveCurricularCourseScopes">
-	<p><span class="error"><!-- Error messages go here --><!-- Error messages go here. --><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
+	<em><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></em>
 </logic:empty>
 	
 </logic:present>
