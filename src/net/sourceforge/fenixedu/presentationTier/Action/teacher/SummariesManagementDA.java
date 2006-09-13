@@ -87,6 +87,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    bean.setTitle(lessonPlanning.getTitle());
 	    bean.setLastSummary(null);
 	}
+	RenderUtils.invalidateViewState();
 	return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
     }
 
@@ -101,6 +102,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    bean.setTitle(lastSummary.getTitle());
 	    bean.setLessonPlanning(null);
 	}
+	RenderUtils.invalidateViewState();
 	return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
     }
 
@@ -111,6 +113,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
 	bean.setLesson(null);
 	bean.setSummaryDate(null);
+	RenderUtils.invalidateViewState();
 	return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
     }
     
@@ -120,6 +123,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	final IViewState viewState = RenderUtils.getViewState();
 	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();	
 	bean.setSummaryDate(null);
+	RenderUtils.invalidateViewState();
 	return goToSummaryManagementPage(mapping, request, (DynaActionForm)form, bean);
     }
     
@@ -129,6 +133,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
 	final IViewState viewState = RenderUtils.getViewState();
 	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
+	RenderUtils.invalidateViewState();	
 	return goToSummaryManagementPage(mapping, request, dynaActionForm, bean);
     }
     
@@ -141,7 +146,8 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	bean.setLesson(null);
 	bean.setSummaryDate(null);
 	bean.setSummaryRoom(null);
-	bean.setSummaryTime(null);	
+	bean.setSummaryTime(null);
+	RenderUtils.invalidateViewState();
 	return goToSummaryManagementPage(mapping, request, dynaActionForm, bean);
     }
       
@@ -248,12 +254,10 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	RenderUtils.invalidateViewState();
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	Professorship loggedProfessorship = (Professorship) request
-		.getAttribute("loggedTeacherProfessorship");
+	Professorship loggedProfessorship = (Professorship) request.getAttribute("loggedTeacherProfessorship");
 	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 	dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
-	SummariesManagementBean bean2 = new SummariesManagementBean(
-		SummariesManagementBean.SummaryType.NORMAL_SUMMARY, executionCourse, loggedProfessorship);
+	SummariesManagementBean bean2 = new SummariesManagementBean(SummariesManagementBean.SummaryType.NORMAL_SUMMARY, executionCourse, loggedProfessorship);
 	bean2.setSummaryText(bean.getSummaryText());
 	bean2.setTitle(bean.getTitle());
 	request.setAttribute("summariesManagementBean", bean2);
@@ -291,20 +295,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	return goToSummaryManagementPage(mapping, request, dynaActionForm, bean);
     }    
-        
-    public ActionForward prepareShowSummaries(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-	
-	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-	Professorship professorshipLogged = (Professorship) request.getAttribute("loggedTeacherProfessorship");
-	request.setAttribute("showSummariesBean", new ShowSummariesBean(new SummaryTeacherBean(professorshipLogged), executionCourse, ListSummaryType.ALL));
-	request.setAttribute("teacherNumber", professorshipLogged.getTeacher().getTeacherNumber().toString());
-	Set<Summary> professorshipSummaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
-	professorshipSummaries.addAll(professorshipLogged.getAssociatedSummaries());
-	request.setAttribute("summaries", professorshipSummaries);
-	return mapping.findForward("prepareShowSummaries");
-    }
-    
+               
     public ActionForward deleteSummary(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	
@@ -323,7 +314,20 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	}	
 	return prepareShowSummaries(mapping, form, request, response);
     }
-        
+    
+    public ActionForward prepareShowSummaries(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	
+	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+	Professorship professorshipLogged = (Professorship) request.getAttribute("loggedTeacherProfessorship");
+	request.setAttribute("showSummariesBean", new ShowSummariesBean(new SummaryTeacherBean(professorshipLogged), executionCourse, ListSummaryType.ALL));
+	request.setAttribute("teacherNumber", professorshipLogged.getTeacher().getTeacherNumber().toString());
+	Set<Summary> professorshipSummaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
+	professorshipSummaries.addAll(professorshipLogged.getAssociatedSummaries());
+	request.setAttribute("summaries", professorshipSummaries);
+	return mapping.findForward("prepareShowSummaries");
+    }
+    
     public ActionForward showSummariesPostBack(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	
@@ -338,7 +342,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	Professorship teacher = (summaryTeacher != null) ? bean.getSummaryTeacher().getProfessorship() : null;
 	Boolean otherTeachers = (summaryTeacher != null) ? bean.getSummaryTeacher().getOthers() : null;
 		
-	Set<Summary> result = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
+	Set<Summary> summariesToShow = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
 	for (Summary summary : executionCourse.getAssociatedSummariesSet()) {
 	    boolean insert = true;
 	    if((shift != null && !summary.getShift().equals(shift)) ||
@@ -348,16 +352,18 @@ public class SummariesManagementDA extends FenixDispatchAction {
 		insert = false;
 	    }
 	    if(insert) {
-		result.add(summary);
+		summariesToShow.add(summary);
 	    }
 	}
 	
+	RenderUtils.invalidateViewState();
 	request.setAttribute("showSummariesBean", bean);
-	request.setAttribute("summaries", result);
+	request.setAttribute("summaries", summariesToShow);
 	return mapping.findForward("prepareShowSummaries");
     }    
     
-
+    
+    
     // -------- Private Methods --------- //
     
     private ActionForward goToSummaryManagementPage(ActionMapping mapping, HttpServletRequest request, DynaActionForm dynaActionForm, SummariesManagementBean bean) {

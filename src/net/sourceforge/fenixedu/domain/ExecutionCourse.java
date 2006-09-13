@@ -1026,7 +1026,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public SortedSet<Shift> getShiftsByTypeOrderedByShiftName(final ShiftType shiftType) {
 	final SortedSet<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_NAME);
 	for (final Shift shift : getAssociatedShiftsSet()) {
-	    shifts.add(shift);
+	    if(shift.getTipo().equals(shiftType)) {
+		shifts.add(shift);
+	    }
 	}
 	return shifts;
     }
