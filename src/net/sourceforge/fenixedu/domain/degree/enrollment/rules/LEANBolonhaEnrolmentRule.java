@@ -21,9 +21,9 @@ public class LEANBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private static final String DISSERTACAO_CODE = "$64";
 
-    private static final String[] COMMONS_810 = { "MD", "L1", "72", "B1W", "AVI", "LT", "A3Q", "A7B" };
+    private static final String[] COMMONS_810 = { "MD", "L1", "72", "AVI", "LT", "A3Q", "A7B" };
 
-    private static final String[] COMMONS_820 = { "L1", "72", "B1V", "B1W", "AVI", "LT", "A7B" };
+    private static final String[] COMMONS_820 = { "L1", "72", "B1V", "AVI", "LT", "A7B" };
 
     private static final String[] DEGREE_810 = {"A2I", "L7", "A2J", "BO", "XG" };
     
