@@ -344,6 +344,16 @@ Documentation:
 	<renderer type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}"/>
 	</renderer>	
+
+	<!--@ The default layout for a HourMinuteSecond automatically includes the hour and minute -->	
+	<renderer type="net.sourceforge.fenixedu.util.HourMinuteSecond" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+		<property name="format" value="${hour,02d}:${minuteOfHour,02d}"/>
+	</renderer>	
+	
+	<!--@ The default layout for a YearMonthDay automatically includes the day, month, and year -->
+	<renderer type="org.joda.time.YearMonthDay" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
+	</renderer>	
 	
     <!--@ Allows to present a collection in a table were rows can be sorted by pressing the table headers. -->
     <renderer type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer"/>

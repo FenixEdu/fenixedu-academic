@@ -73,9 +73,9 @@
 						</logic:equal>
 					</logic:notEmpty>
 									       	
-					<bean:write name="summary" property="summaryDateYearMonthDay.dayOfMonth"/>/<bean:write name="summary" property="summaryDateYearMonthDay.monthOfYear"/>/<bean:write name="summary" property="summaryDateYearMonthDay.year"/>				
-					<bean:write name="summary" property="summaryHourHourMinuteSecond.hour"/>:<bean:write name="summary" property="summaryHourHourMinuteSecond.minuteOfHour"/>						
-	
+					<fr:view name="summary" property="summaryDateYearMonthDay" />
+					<fr:view name="summary" property="summaryHourHourMinuteSecond" />
+					
 					 - 															 
 	
 					<%-- Students Number --%>
@@ -118,7 +118,7 @@
 					<%-- Last Modification Date --%>	
 					<span class="px9">
 						<bean:message key="label.lastModificationDate" bundle="DEFAULT"/>:&nbsp;	 				
-						<bean:write name="summary" property="lastModifiedDateDateTime.dayOfMonth"/>/<bean:write name="summary" property="lastModifiedDateDateTime.monthOfYear"/>/<bean:write name="summary" property="lastModifiedDateDateTime.year"/>	<bean:write name="summary" property="lastModifiedDateDateTime.hourOfDay"/>:<bean:write name="summary" property="lastModifiedDateDateTime.minuteOfHour"/>											
+						<fr:view name="summary" property="lastModifiedDateDateTime" />		
 					</span>		
 				</em>
 			</p>
