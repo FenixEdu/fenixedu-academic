@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
@@ -75,7 +76,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
             throw new FenixActionException(e);
         }
 
-        List<LabelValueBean> anosCurriculares = constructCurricularYearLabelValueBeans();
+        List<LabelValueBean> anosCurriculares = constructCurricularYearLabelValueBeans(infoExecutionDegree1.getExecutionDegree().getDegree());
         request.setAttribute("curricularYearList", anosCurriculares);
 
         DynaActionForm indexForm = (DynaActionForm) actionForm;
@@ -144,14 +145,13 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         return mapping.findForward("showDegreeCurricularPlan");
     }
 
-    private List<LabelValueBean> constructCurricularYearLabelValueBeans() {
-        List<LabelValueBean> anosCurriculares = new ArrayList<LabelValueBean>();
-        anosCurriculares.add(new LabelValueBean("---------", ""));
-        anosCurriculares.add(new LabelValueBean("1", "1"));
-        anosCurriculares.add(new LabelValueBean("2", "2"));
-        anosCurriculares.add(new LabelValueBean("3", "3"));
-        anosCurriculares.add(new LabelValueBean("4", "4"));
-        anosCurriculares.add(new LabelValueBean("5", "5"));
+    private List<LabelValueBean> constructCurricularYearLabelValueBeans(final Degree degree) {
+	List<LabelValueBean> anosCurriculares = new ArrayList<LabelValueBean>();
+        anosCurriculares.add(new LabelValueBean("--", ""));
+        for (final Integer year : degree.buildFullCurricularYearList()) {
+            anosCurriculares.add(new LabelValueBean(String.valueOf(year), String.valueOf(year)));
+        }
+        
         return anosCurriculares;
     }
 
