@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.ProposalState;
 
@@ -1196,7 +1197,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	Set<ShiftType> shiftTypes = new TreeSet<ShiftType>();
 	for (Shift shift : getAssociatedShiftsSet()) {
 	    shiftTypes.add(shift.getTipo());
-	}	
+	}
 	return shiftTypes;
     }
 
@@ -1352,4 +1353,28 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	return summary;
     }
+
+    @Override
+    public String getNome() {
+	if (LanguageUtils.getUserLanguage() == Language.en && hasAnyAssociatedCurricularCourses()) {
+	    boolean unique = true;
+	    final String nameEn = getAssociatedCurricularCourses().get(0).getNameEn();
+	    
+	    for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+		if (!curricularCourse.getNameEn().equals(nameEn)) {
+		    unique = false;
+		    break;
+		}
+	    }
+	    
+	    if (unique) {
+		return nameEn;
+	    } else {
+		return super.getNome();
+	    }
+	} else {
+	    return super.getNome();
+	}
+    }
+    
 }
