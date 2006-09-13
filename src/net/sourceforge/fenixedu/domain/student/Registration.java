@@ -95,6 +95,8 @@ public class Registration extends Registration_Base {
         setFlunked(Boolean.FALSE);
         setRequestedChangeDegree(Boolean.FALSE);
         setRequestedChangeBranch(Boolean.FALSE);
+        
+        setRegistrationYear(ExecutionYear.readCurrentExecutionYear());
     }
     
     public void delete() {
