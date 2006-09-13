@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.renderers;
 
-/**
- * 
- * @author pcma
- */
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -29,82 +25,77 @@ import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+/**
+ * This renderer allows you choose several object from a list of choices. The list of choices is
+ * presented in a table but each row has a checkbox that allows you to select the object in that
+ * row.
+ * 
+ * <p>
+ * The list of options is given by a {@link net.sourceforge.fenixedu.renderers.DataProvider data provider}.
+ * 
+ * <p>
+ * Example:
+ * <table border="1">
+ *      <thead>
+ *          <th></th>
+ *          <th>Name</th>
+ *          <th>Age</th>
+ *          <th>Gender</th>
+ *      </thead>
+ *      <tr>
+ *          <td><input type="checkbox"/></td>
+ *          <td>Name A</td>
+ *          <td>20</td>
+ *          <td>Female</td>
+ *      </tr>
+ *      <tr>
+ *          <td><input type="checkbox" checked="checked"/></td>
+ *          <td>Name B</td>
+ *          <td>22</td>
+ *          <td>Male</td>
+ *      </tr>
+ *      <tr>
+ *          <td><input type="checkbox" checked="checked"/></td>
+ *          <td>Name C</td>
+ *          <td>21</td>
+ *          <td>Female</td>
+ *      </tr>
+ *  </table>
+ *  
+ * @author pcma
+ */
 public class TabularOptionInputRenderer extends InputRenderer {
 
     private String providerClass;
-
-    private String classes;
-
-    private String eachSchema;
-
     private DataProvider provider;
-
-    private String eachLayout;
 
     private String sortBy;
 
-    /**
-     * 
-     * @property
-     */
     public String getSortBy() {
         return sortBy;
     }
 
+    /**
+     * Selects the sorting criteria to apply to the collection of objects before presenting them.
+     * 
+     * @property
+     * @see {@link net.sourceforge.fenixedu.renderers.utils.RenderUtils#sortCollectionWithCriteria(Collection, String)}
+     */
     public void setSortBy(String sort) {
         sortBy = sort;
     }
-
-    /**
-     * 
-     * @property
-     */
-
-    public String getEachLayout() {
-        return eachLayout;
-    }
-
-    public void setEachLayout(String layout) {
-        eachLayout = layout;
-    }
-
-    /**
-     * 
-     * @property
-     */
-
-    public String getClasses() {
-        return classes;
-    }
-
-    public void setClasses(String classes) {
-        this.classes = classes;
-    }
-
-    /**
-     * 
-     * @property
-     */
 
     public String getProviderClass() {
         return providerClass;
     }
 
-    public void setProviderClass(String providerClass) {
-        this.providerClass = providerClass;
-    }
-
     /**
+     * Chooses the class of the provider that will be used to determine the list of options.
      * 
      * @property
      */
-
-    public String getEachSchema() {
-        return eachSchema;
-    }
-
-    public void setEachSchema(String schema) {
-        this.eachSchema = schema;
+    public void setProviderClass(String providerClass) {
+        this.providerClass = providerClass;
     }
 
     protected DataProvider getProvider() {
@@ -281,13 +272,7 @@ public class TabularOptionInputRenderer extends InputRenderer {
                 }
             }
         } else {
-
-            Schema schema = null;
-            if (eachSchema == null) {
-                schema = RenderKit.getInstance().findSchema(getContext().getSchema());
-            } else {
-                schema = RenderKit.getInstance().findSchema(eachSchema);
-            }
+            Schema schema = RenderKit.getInstance().findSchema(getContext().getSchema());
             for (Object object : collection) {
                 metaObjects.add(MetaObjectFactory.createObject(object, schema));
             }
