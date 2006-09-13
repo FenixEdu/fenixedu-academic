@@ -154,6 +154,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
                 result.add(new SelectItem(notClosedInfoExecutionYear.getIdInternal(), notClosedInfoExecutionYear.getYear()));
             }
         }
+        result.add(0, new SelectItem(currentInfoExecutionYear.getIdInternal(), currentInfoExecutionYear.getYear()));
         return result;
     }
     
