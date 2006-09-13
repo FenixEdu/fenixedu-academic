@@ -339,14 +339,14 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	Shift shift = bean.getShift();
 	
 	SummaryTeacherBean summaryTeacher = bean.getSummaryTeacher();
-	Professorship teacher = (summaryTeacher != null) ? bean.getSummaryTeacher().getProfessorship() : null;
-	Boolean otherTeachers = (summaryTeacher != null) ? bean.getSummaryTeacher().getOthers() : null;
+	Professorship teacher = (summaryTeacher != null) ? summaryTeacher.getProfessorship() : null;
+	Boolean otherTeachers = (summaryTeacher != null) ? summaryTeacher.getOthers() : null;
 		
 	Set<Summary> summariesToShow = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
 	for (Summary summary : executionCourse.getAssociatedSummariesSet()) {
 	    boolean insert = true;
-	    if((shift != null && !summary.getShift().equals(shift)) ||
-		    (teacher != null && !summary.getProfessorship().equals(teacher)) ||
+	    if((shift != null && (summary.getShift() == null || !summary.getShift().equals(shift))) ||
+		    (teacher != null && (summary.getProfessorship() == null || !summary.getProfessorship().equals(teacher))) ||
 		    (shiftType != null && !summary.getSummaryType().equals(shiftType)) ||
 		    (otherTeachers != null && otherTeachers && summary.getProfessorship() != null)) {
 		insert = false;
