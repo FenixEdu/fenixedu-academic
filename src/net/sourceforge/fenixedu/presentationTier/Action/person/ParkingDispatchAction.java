@@ -20,7 +20,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         ParkingParty parkingParty = userView.getPerson().getParkingParty();
         if (parkingParty == null) {
             parkingParty = (ParkingParty) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "CreateParkingRequest", new Object[] { userView.getPerson() });
+                    "CreateParkingParty", new Object[] { userView.getPerson() });
         }
         request.setAttribute("parkingParty", parkingParty);
         return mapping.findForward("prepareParking");

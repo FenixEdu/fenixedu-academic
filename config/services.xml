@@ -10625,8 +10625,8 @@
         </filterChains>     
     </service>      
     <service>
-    	<name>CreateParkingRequest</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingRequest</implementationClass>
+    	<name>CreateParkingParty</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>

@@ -6,9 +6,16 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.file.FileDescriptor;
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.FileMetadata;
+import pt.utl.ist.fenix.tools.file.FilePath;
+import pt.utl.ist.fenix.tools.file.Node;
 
 public class ParkingRequest extends ParkingRequest_Base {
 
@@ -41,17 +48,14 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     public ParkingRequestFactoryEditor getParkingRequestFactoryEditor() {
         return new ParkingRequestFactoryEditor(this);
-    }
-
+    }    
+    
     public static abstract class ParkingRequestFactory implements Serializable, FactoryExecutor {
         private DomainReference<ParkingParty> parkingParty;
         private String firstCarPlateNumber;
         private String firstCarMake;
         private String secondCarPlateNumber;
         private String secondCarMake;
-        private String phone;
-        private String mobile;
-        private String email;
         private String driverLicenseFileName;
         private InputStream driverLicenseInputStream;
         private String firstCarPropertyRegistryFileName;
@@ -62,7 +66,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         private InputStream secondCarPropertyRegistryInputStream;
         private String secondCarOwnerIdFileName;
         private InputStream secondCarOwnerIdInputStream;
-
+        
         public ParkingRequestFactory(ParkingParty parkingParty) {
             super();
             setParkingParty(parkingParty);
@@ -82,15 +86,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
         public void setDriverLicenseInputStream(InputStream driverLicenseInputStream) {
             this.driverLicenseInputStream = driverLicenseInputStream;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
+        }       
 
         public String getFirstCarMake() {
             return firstCarMake;
@@ -139,15 +135,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         public void setFirstCarPropertyRegistryInputStream(
                 InputStream firstCarPropertyRegistryInputStream) {
             this.firstCarPropertyRegistryInputStream = firstCarPropertyRegistryInputStream;
-        }
-
-        public String getMobile() {
-            return mobile;
-        }
-
-        public void setMobile(String mobile) {
-            this.mobile = mobile;
-        }
+        }        
 
         public ParkingParty getParkingParty() {
             return parkingParty == null ? null : parkingParty.getObject();
@@ -157,15 +145,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             if (parkingParty != null) {
                 this.parkingParty = new DomainReference<ParkingParty>(parkingParty);
             }
-        }
-
-        public String getPhone() {
-            return phone;
-        }
-
-        public void setPhone(String phone) {
-            this.phone = phone;
-        }
+        }        
 
         public String getSecondCarMake() {
             return secondCarMake;
@@ -215,7 +195,6 @@ public class ParkingRequest extends ParkingRequest_Base {
                 InputStream secondCarPropertyRegistryInputStream) {
             this.secondCarPropertyRegistryInputStream = secondCarPropertyRegistryInputStream;
         }
-
     }
 
     public static class ParkingRequestFactoryCreator extends ParkingRequestFactory {
@@ -225,23 +204,49 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
 
         public ParkingRequest execute() {
-            return new ParkingRequest(this);
+            ParkingRequest parkingRequest = new ParkingRequest(this);
+            FilePath filePath = getFilePath(parkingRequest.getIdInternal());
+            
+            if (getDriverLicenseInputStream() != null) {
+                String filename = getDriverLicenseFileName();
+                final FileMetadata fileMetadata = new FileMetadata(filename, getParkingParty().getParty().getName());
+                
+                final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
+                        filePath, filename, true, fileMetadata, getDriverLicenseInputStream());
+
+                final ParkingFile parkingFile = new ParkingFile(filename,
+                        filename, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(),
+                        fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
+                                .getUniqueId(), null);
+                
+                new ParkingDocument(ParkingDocumentType.DRIVER_LICENSE,parkingFile,parkingRequest);
+            }
+            return parkingRequest;
+        }
+        
+        private FilePath getFilePath(final Integer requestID) {
+            Party party = getParkingParty().getParty();
+            final FilePath filePath = new FilePath();
+
+            filePath.addNode(new Node("ParkingFiles", "Parking Files"));
+
+            filePath.addNode(new Node("Party" + party.getIdInternal(), party.getName()));
+            filePath.addNode(new Node("PR" + requestID, "Parking Request ID"));
+
+            return filePath;
         }
     }
 
     public static class ParkingRequestFactoryEditor extends ParkingRequestFactory {
         private DomainReference<ParkingRequest> parkingRequest;
-        
+
         public ParkingRequestFactoryEditor(ParkingParty parkingParty) {
             super(parkingParty);
         }
-        
+
         public ParkingRequestFactoryEditor(ParkingRequest parkingRequest) {
             super(parkingRequest.getParkingParty());
             setParkingRequest(parkingRequest);
-            setPhone(parkingRequest.getPhone());
-            setEmail(parkingRequest.getEmail());
-            setMobile(parkingRequest.getMobile());
             setFirstCarMake(parkingRequest.getFirstCarMake());
             setFirstCarPlateNumber(parkingRequest.getFirstCarPlateNumber());
             setSecondCarMake(parkingRequest.getSecondCarMake());
@@ -257,7 +262,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                 this.parkingRequest = new DomainReference<ParkingRequest>(parkingRequest);
             }
         }
-        
+
         public ParkingRequest execute() {
             getParkingRequest().edit(this);
             return null;
@@ -265,32 +270,54 @@ public class ParkingRequest extends ParkingRequest_Base {
     }
 
     public void edit(ParkingRequestFactoryEditor parkingRequestFactoryEditor) {
-        setPhone(parkingRequestFactoryEditor.getPhone());
-        setEmail(parkingRequestFactoryEditor.getEmail());
-        setMobile(parkingRequestFactoryEditor.getMobile());
         setFirstCarMake(parkingRequestFactoryEditor.getFirstCarMake());
         setFirstCarPlateNumber(parkingRequestFactoryEditor.getFirstCarPlateNumber());
         setSecondCarMake(parkingRequestFactoryEditor.getSecondCarMake());
-        setSecondCarPlateNumber(parkingRequestFactoryEditor.getSecondCarPlateNumber());        
+        setSecondCarPlateNumber(parkingRequestFactoryEditor.getSecondCarPlateNumber());
     }
-    
+
     public String getDriverLicenseFileName() {
-        return "getDriverLicenseFileName";
-    }    
+        for(ParkingDocument parkingDocument : getParkingDocuments()){
+            if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.DRIVER_LICENSE)){
+                return "driverLicense";
+            }
+        }
+        return "";
+    }
 
     public String getFirstCarPropertyRegistryFileName() {
-        return "getFirstCarPropertyRegistryFileName";
+        for(ParkingDocument parkingDocument : getParkingDocuments()){
+            if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER)){
+                return "firstCarPropertyRegistry";
+            }
+        }
+        return "";
     }
 
     public String getFirstCarOwnerIdFileName() {
-        return "getFirstCarOwnerIdFileName";
+        for(ParkingDocument parkingDocument : getParkingDocuments()){
+            if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_OWNER_ID)){
+                return "firstCarOwnerId";
+            }
+        }
+        return "";
     }
 
     public String getSecondCarPropertyRegistryFileName() {
-        return "getSecondCarPropertyRegistryFileName";
+        for(ParkingDocument parkingDocument : getParkingDocuments()){
+            if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER)){
+                return "secondCarPropertyRegistry";
+            }
+        }
+        return "";
     }
 
     public String getSecondCarOwnerIdFileName() {
-        return "getSecondCarOwnerIdFileName";
+        for(ParkingDocument parkingDocument : getParkingDocuments()){
+            if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.SECOND_CAR_OWNER_ID)){
+                return "secondCarOwnerId";
+            }
+        }
+        return "";
     }
 }
