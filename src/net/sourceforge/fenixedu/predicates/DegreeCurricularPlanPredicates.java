@@ -49,19 +49,8 @@ public class DegreeCurricularPlanPredicates {
     public static final AccessControlPredicate<DegreeCurricularPlan> scientificCouncilWritePredicate = new AccessControlPredicate<DegreeCurricularPlan>() {
 
         public boolean evaluate(DegreeCurricularPlan dcp) {
-
-            Person person = AccessControl.getUserView().getPerson();
-            if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
-                return true;
-            }
-            
-            if (!dcp.isBolonha()) {
-                return true;
-            }
-            
-
-
-            return false;
+            final Person person = AccessControl.getUserView().getPerson();
+            return person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || !dcp.isBolonha();
         }
 
     };
@@ -69,13 +58,7 @@ public class DegreeCurricularPlanPredicates {
     public static final AccessControlPredicate<DegreeCurricularPlan> curricularPlanMemberWritePredicate = new AccessControlPredicate<DegreeCurricularPlan>() {
 
         public boolean evaluate(DegreeCurricularPlan dcp) {
-            
-            if (!dcp.isBolonha()) {
-                return true;
-            }
-            
-            Person person = AccessControl.getUserView().getPerson();
-            return dcp.getCurricularPlanMembersGroup().isMember(person);
+            return !dcp.isBolonha() || dcp.getCurricularPlanMembersGroup().isMember(AccessControl.getUserView().getPerson());
         }
 
     };
