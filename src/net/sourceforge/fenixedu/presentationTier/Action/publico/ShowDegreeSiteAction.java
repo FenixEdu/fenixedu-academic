@@ -164,7 +164,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
             errors.add("impossibleDegreeSite", new ActionError("error.impossibleCurricularPlan"));
             saveErrors(request, errors);
         } else {
-            infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
             request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);            
         }
 

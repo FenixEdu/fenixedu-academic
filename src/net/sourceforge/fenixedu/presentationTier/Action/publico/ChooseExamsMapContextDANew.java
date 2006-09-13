@@ -134,7 +134,6 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
                 
                 // infoDegreeCurricularPlan
                 InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-                infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
                 request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
             }
 

@@ -3,15 +3,16 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 
 /**
@@ -23,7 +24,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
 
     private DomainReference<DegreeCurricularPlan> degreeCurricularPlanDomainReference;
 
-	private boolean showEnVersion = false;
+    private boolean showEnVersion = (LanguageUtils.getUserLanguage() == Language.en);
 
     public InfoDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
     	degreeCurricularPlanDomainReference = new DomainReference<DegreeCurricularPlan>(degreeCurricularPlan);
@@ -143,18 +144,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
      * @return InfoDegree
      */
     public InfoDegree getInfoDegree() {
-    	final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(getDegreeCurricularPlan().getDegree());
-    	if (showEnVersion) { 
-    		infoDegree.prepareEnglishPresentation(Locale.ENGLISH);
-    	}
-        return infoDegree;
-    }
-
-
-    public void prepareEnglishPresentation(Locale locale) {
-        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-        	showEnVersion = true;
-        }
+    	return InfoDegree.newInfoFromDomain(getDegreeCurricularPlan().getDegree());
     }
 
     /**

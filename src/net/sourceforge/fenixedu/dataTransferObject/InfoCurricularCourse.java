@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -30,8 +29,6 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     private List<InfoCurricularCourseScope> infoScopes;
 
     private List infoAssociatedExecutionCourses;
-
-    private CurricularCourseType type;
 
     private InfoUniversity infoUniversity;
 
@@ -88,12 +85,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-	final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
-		.newInfoFromDomain(getCurricularCourse().getDegreeCurricularPlan());
-	if (showEnVersion) {
-	    infoDegreeCurricularPlan.prepareEnglishPresentation(Locale.ENGLISH);
-	}
-	return infoDegreeCurricularPlan;
+	return InfoDegreeCurricularPlan.newInfoFromDomain(getCurricularCourse().getDegreeCurricularPlan());
     }
 
     public List getInfoScopes() {
@@ -236,16 +228,6 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 
     public String getNameEn() {
 	return getCurricularCourse().getNameEn();
-    }
-
-    public void prepareEnglishPresentation(Locale locale) {
-	if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-	    if (this.infoScopes != null) {
-		for (InfoCurricularCourseScope infoCurricularCourseScope : this.infoScopes) {
-		    infoCurricularCourseScope.prepareEnglishPresentation(locale);
-		}
-	    }
-	}
     }
 
     public String getNameAndCode() {

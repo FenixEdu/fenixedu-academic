@@ -11,6 +11,8 @@ import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 /**
  * @author tfc130
@@ -19,7 +21,7 @@ public class InfoCurricularCourseScope extends InfoObject {
 
     private final DomainReference<CurricularCourseScope> curricularCourseScopeDomainReference;
 
-	private boolean showEnVersion = false;
+    private boolean showEnVersion = (LanguageUtils.getUserLanguage() == Language.en);
 
     public InfoCurricularCourseScope(final CurricularCourseScope curricularCourseScope) {
     	curricularCourseScopeDomainReference = new DomainReference<CurricularCourseScope>(curricularCourseScope);
@@ -50,11 +52,7 @@ public class InfoCurricularCourseScope extends InfoObject {
     }
 
     public InfoBranch getInfoBranch() {
-    	final InfoBranch infoBranch = InfoBranch.newInfoFromDomain(getCurricularCourseScope().getBranch());
-    	if (showEnVersion) {
-    		infoBranch.prepareEnglishPresentation(Locale.ENGLISH);
-    	}
-    	return infoBranch;
+    	return InfoBranch.newInfoFromDomain(getCurricularCourseScope().getBranch());
     }
 
     public InfoCurricularCourse getInfoCurricularCourse() {
@@ -73,15 +71,11 @@ public class InfoCurricularCourseScope extends InfoObject {
         return getCurricularCourseScope().getAnotation();
     }
 
-    public void prepareEnglishPresentation(Locale locale) {
-    	showEnVersion = locale.getLanguage().equals(Locale.ENGLISH.getLanguage());        
+    @Override
+    public Integer getIdInternal() {
+    	return getCurricularCourseScope().getIdInternal();
     }
-
-	@Override
-	public Integer getIdInternal() {
-		return getCurricularCourseScope().getIdInternal();
-	}
-
+    
     @Override
     public void setIdInternal(Integer integer) {
         throw new Error("Method should not be called!");

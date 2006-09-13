@@ -117,7 +117,6 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-        infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
         
         List<InfoCurricularCourseScope> activeCurricularCourseScopes = null;
         if (curricularYear != 0) {

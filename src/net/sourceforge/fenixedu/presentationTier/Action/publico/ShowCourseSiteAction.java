@@ -108,8 +108,6 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
             comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
             Collections.sort(infoCurriculum.getInfoCurricularCourse().getInfoScopes(), comparatorChain);
         }
-        infoCurriculum.getInfoCurricularCourse().getInfoDegreeCurricularPlan().getInfoDegree().prepareEnglishPresentation(getLocale(request));
-        infoCurriculum.getInfoCurricularCourse().prepareEnglishPresentation(getLocale(request));
         infoCurriculum.prepareEnglishPresentation(getLocale(request));
         request.setAttribute("infoCurriculum", infoCurriculum);
 

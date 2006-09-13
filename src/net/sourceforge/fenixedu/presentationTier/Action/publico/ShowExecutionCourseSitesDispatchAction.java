@@ -43,7 +43,6 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
 	final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
 
 	final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
-	infoDegree.prepareEnglishPresentation(getLocale(request));
 	request.setAttribute("infoDegree", infoDegree);
 
 	return degree;

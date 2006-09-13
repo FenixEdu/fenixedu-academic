@@ -4,17 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class InfoDegree extends InfoObject implements Comparable {
 
     private final DomainReference<Degree> degreeDomainReference;
 
-    private boolean showEnVersion = false;
+    private boolean showEnVersion = (LanguageUtils.getUserLanguage() == Language.en);
 
     public InfoDegree(final Degree degree) {
 	degreeDomainReference = new DomainReference<Degree>(degree);
@@ -33,7 +37,7 @@ public class InfoDegree extends InfoObject implements Comparable {
     }
 
     public String getNome() {
-	return showEnVersion ? getDegree().getNameEn() : getDegree().getNome();
+	return showEnVersion && !StringUtils.isEmpty(getNameEn()) ? getNameEn() : getDegree().getNome();
     }
 
     public String getNameEn() {
@@ -80,14 +84,6 @@ public class InfoDegree extends InfoObject implements Comparable {
 
     public static InfoDegree newInfoFromDomain(final Degree degree) {
 	return degree == null ? null : new InfoDegree(degree);
-    }
-
-    public void prepareEnglishPresentation(Locale locale) {
-	if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-	    if (getNameEn() != null && getNameEn().length() != 0) {
-		showEnVersion = true;
-	    }
-	}
     }
 
     @Override

@@ -267,7 +267,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
             
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-            infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
             request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
         }
         
@@ -318,7 +317,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal().toString());
             RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
             
-            infoExecutionDegree.getInfoDegreeCurricularPlan().prepareEnglishPresentation(getLocale(request));
             request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree.getInfoDegreeCurricularPlan());
             request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree.getInfoDegreeCurricularPlan());
         }

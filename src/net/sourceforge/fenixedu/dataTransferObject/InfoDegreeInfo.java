@@ -89,8 +89,6 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
             
             this.qualificationLevel = this.qualificationLevelEn;
             this.recognitions = this.recognitionsEn;
-
-            this.infoDegree.prepareEnglishPresentation(locale);
         }
     }
 
