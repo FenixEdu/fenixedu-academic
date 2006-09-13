@@ -264,7 +264,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public void collectChildDegreeModules(Class<? extends DegreeModule> clazz,
 	    final Set<DegreeModule> result, ExecutionYear executionYear) {
-	for (final Context context : this.getChildContexts(clazz, executionYear)) {
+	for (final Context context : this.getChildContexts(executionYear)) {
 	    if (context.getChildDegreeModule().getClass().equals(clazz)) {
 		result.add(context.getChildDegreeModule());
 	    }
