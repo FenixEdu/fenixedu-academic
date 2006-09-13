@@ -25,144 +25,146 @@ public class Lesson extends Lesson_Base {
 
     public static final Comparator LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME = new ComparatorChain();
     static {
-        ((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator(
-                "diaSemana.diaSemana"));
-        ((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator(
-                "beginHourMinuteSecond"));
+	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator(
+		"diaSemana.diaSemana"));
+	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator(
+		"beginHourMinuteSecond"));
     }
 
     public Lesson() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, OldRoom sala,
-            RoomOccupation roomOccupation, Shift shift, Integer weekOfQuinzenalStart, Integer frequency) {
+	    RoomOccupation roomOccupation, Shift shift, Integer weekOfQuinzenalStart, Integer frequency) {
 
-        this();
-        setDiaSemana(diaSemana);
-        setInicio(inicio);
-        setFim(fim);
-        setTipo(tipo);
-        setSala(sala);
-        setRoomOccupation(roomOccupation);
-        setShift(shift);
-        setFrequency(frequency);
-        setWeekOfQuinzenalStart(weekOfQuinzenalStart);
+	this();
+	setDiaSemana(diaSemana);
+	setInicio(inicio);
+	setFim(fim);
+	setTipo(tipo);
+	setSala(sala);
+	setRoomOccupation(roomOccupation);
+	setShift(shift);
+	setFrequency(frequency);
+	setWeekOfQuinzenalStart(weekOfQuinzenalStart);
     }
 
     public void edit(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo,
-            OldRoom salaNova, Integer frequency, Integer weekOfQuinzenalStart) {
+	    OldRoom salaNova, Integer frequency, Integer weekOfQuinzenalStart) {
 
-        setDiaSemana(diaSemana);
-        setInicio(inicio);
-        setFim(fim);
-        setTipo(tipo);
-        setSala(salaNova);
-        setFrequency(frequency);
-        setWeekOfQuinzenalStart(weekOfQuinzenalStart);
+	setDiaSemana(diaSemana);
+	setInicio(inicio);
+	setFim(fim);
+	setTipo(tipo);
+	setSala(salaNova);
+	setFrequency(frequency);
+	setWeekOfQuinzenalStart(weekOfQuinzenalStart);
     }
 
     public void delete() {
-        removeExecutionPeriod();
-        removeSala();
-        removeShift();
-        getRoomOccupation().delete();
+	removeExecutionPeriod();
+	removeSala();
+	removeShift();
+	getRoomOccupation().delete();
 
-        removeRootDomainObject();
-        deleteDomainObject();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
     public Calendar getInicio() {
-        if (this.getBegin() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getBegin());
-            return result;
-        }
-        return null;
+	if (this.getBegin() != null) {
+	    Calendar result = Calendar.getInstance();
+	    result.setTime(this.getBegin());
+	    return result;
+	}
+	return null;
     }
 
     public void setInicio(Calendar inicio) {
-        if (inicio != null) {
-            this.setBegin(inicio.getTime());
-        } else {
-            this.setBegin(null);
-        }
+	if (inicio != null) {
+	    this.setBegin(inicio.getTime());
+	} else {
+	    this.setBegin(null);
+	}
     }
 
     public Calendar getFim() {
-        if (this.getEnd() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getEnd());
-            return result;
-        }
-        return null;
+	if (this.getEnd() != null) {
+	    Calendar result = Calendar.getInstance();
+	    result.setTime(this.getEnd());
+	    return result;
+	}
+	return null;
     }
 
     public void setFim(Calendar fim) {
-        if (fim != null) {
-            this.setEnd(fim.getTime());
-        } else {
-            this.setEnd(null);
-        }
+	if (fim != null) {
+	    this.setEnd(fim.getTime());
+	} else {
+	    this.setEnd(null);
+	}
     }
 
     public double hours() {
-        TimePeriod timePeriod = new TimePeriod(this.getInicio(), this.getFim());
-        return timePeriod.hours().doubleValue();
+	TimePeriod timePeriod = new TimePeriod(this.getInicio(), this.getFim());
+	return timePeriod.hours().doubleValue();
     }
 
     public String getInicioString() {
-        return String.valueOf(getInicio().get(Calendar.HOUR_OF_DAY));
+	return String.valueOf(getInicio().get(Calendar.HOUR_OF_DAY));
     }
 
     public double hoursAfter(int hour) {
 
-        final Calendar start = this.getInicio();
-        final Calendar end = this.getFim();
+	final Calendar start = this.getInicio();
+	final Calendar end = this.getFim();
 
-        final Calendar specifiedHour = Calendar.getInstance();
-        specifiedHour.setTime(this.getEnd());
-        specifiedHour.set(Calendar.HOUR_OF_DAY, hour);
-        specifiedHour.set(Calendar.MINUTE, 0);
-        specifiedHour.set(Calendar.SECOND, 0);
-        specifiedHour.set(Calendar.MILLISECOND, 0);
+	final Calendar specifiedHour = Calendar.getInstance();
+	specifiedHour.setTime(this.getEnd());
+	specifiedHour.set(Calendar.HOUR_OF_DAY, hour);
+	specifiedHour.set(Calendar.MINUTE, 0);
+	specifiedHour.set(Calendar.SECOND, 0);
+	specifiedHour.set(Calendar.MILLISECOND, 0);
 
-        if (!start.before(specifiedHour)) {
-            TimePeriod timePeriod = new TimePeriod(start, end);
-            return timePeriod.hours().doubleValue();
+	if (!start.before(specifiedHour)) {
+	    TimePeriod timePeriod = new TimePeriod(start, end);
+	    return timePeriod.hours().doubleValue();
 
-        } else if (end.after(specifiedHour)) {
-            TimePeriod timePeriod = new TimePeriod(specifiedHour, end);
-            return timePeriod.hours().doubleValue();
-        }
+	} else if (end.after(specifiedHour)) {
+	    TimePeriod timePeriod = new TimePeriod(specifiedHour, end);
+	    return timePeriod.hours().doubleValue();
+	}
 
-        return 0.0;
+	return 0.0;
     }
-   
+
     public Summary getSummaryByDate(YearMonthDay date) {
 	for (Summary summary : getSummaries()) {
-	    if(summary.getSummaryDateYearMonthDay().isEqual(date)) {
+	    if (summary.getSummaryDateYearMonthDay().isEqual(date)) {
 		return summary;
 	    }
 	}
 	return null;
     }
-    
-    public List<Summary> getSummaries() {
-        List<Summary> lessonSummaries = new ArrayList<Summary>();
-        Set<Summary> shiftSummaries = new TreeSet<Summary>(new ReverseComparator(Summary.COMPARATOR_BY_DATE_AND_HOUR));
-        shiftSummaries.addAll(getShift().getAssociatedSummariesSet());
-        int lessonWeekDay = getLessonWeekDayToYearMonthDayFormat();
-        for (Summary summary : shiftSummaries) {
-            int summaryDayOfWeek = summary.getSummaryDateYearMonthDay().toDateTimeAtMidnight().getDayOfWeek();
-            if (summary.getSummaryHourHourMinuteSecond().isEqual(getBeginHourMinuteSecond()) && summaryDayOfWeek == lessonWeekDay) {
-                lessonSummaries.add(summary);
-            }
-        }               
-        return lessonSummaries;
+
+    public List<Summary> getSummaries() {	
+	List<Summary> lessonSummaries = new ArrayList<Summary>();
+	Set<Summary> shiftSummaries = new TreeSet<Summary>(new ReverseComparator(Summary.COMPARATOR_BY_DATE_AND_HOUR));
+	shiftSummaries.addAll(getShift().getAssociatedSummariesSet());
+	int lessonWeekDay = getLessonWeekDayToYearMonthDayFormat();
+	for (Summary summary : shiftSummaries) {
+	    int summaryDayOfWeek = summary.getSummaryDateYearMonthDay().toDateTimeAtMidnight().getDayOfWeek();
+	    if (summary.getSummaryHourHourMinuteSecond().isEqual(getBeginHourMinuteSecond()) && summaryDayOfWeek == lessonWeekDay
+		    && ((summary.getRoom() == null && getSala() == null) || (summary.getRoom() != null
+			    && getSala() != null && summary.getRoom().equals(getSala())))) {
+		lessonSummaries.add(summary);
+	    }
+	}
+	return lessonSummaries;
     }
-    
+
     public boolean isDateValid(YearMonthDay date) {
 	YearMonthDay lessonEndDay = getLessonEndDay();
 	YearMonthDay currentDate = new YearMonthDay();
@@ -185,77 +187,78 @@ public class Lesson extends Lesson_Base {
     }
 
     private YearMonthDay getLessonStartDay() {
-        YearMonthDay periodStart = getRoomOccupation().getPeriod().getStartYearMonthDay();
-        int weekOfQuinzenalStart = (getWeekOfQuinzenalStart() != null) ? getWeekOfQuinzenalStart().intValue() : 0;
-        YearMonthDay lessonStart = periodStart.plusDays(7 * weekOfQuinzenalStart);      
-        int lessonStartDayOfWeek = lessonStart.toDateTimeAtMidnight().getDayOfWeek();
-        return lessonStart.plusDays(getLessonWeekDayToYearMonthDayFormat() - lessonStartDayOfWeek);
+	YearMonthDay periodStart = getRoomOccupation().getPeriod().getStartYearMonthDay();
+	int weekOfQuinzenalStart = (getWeekOfQuinzenalStart() != null) ? getWeekOfQuinzenalStart()
+		.intValue() : 0;
+	YearMonthDay lessonStart = periodStart.plusDays(7 * weekOfQuinzenalStart);
+	int lessonStartDayOfWeek = lessonStart.toDateTimeAtMidnight().getDayOfWeek();
+	return lessonStart.plusDays(getLessonWeekDayToYearMonthDayFormat() - lessonStartDayOfWeek);
     }
 
     private YearMonthDay getLessonEndDay() {
-        YearMonthDay periodEnd = getRoomOccupation().getPeriod().getEndYearMonthDay();   
-        int lessonEndDayOfWeek = periodEnd.toDateTimeAtMidnight().getDayOfWeek();
-        return periodEnd.minusDays(lessonEndDayOfWeek - getLessonWeekDayToYearMonthDayFormat());
+	YearMonthDay periodEnd = getRoomOccupation().getPeriod().getEndYearMonthDay();
+	int lessonEndDayOfWeek = periodEnd.toDateTimeAtMidnight().getDayOfWeek();
+	return periodEnd.minusDays(lessonEndDayOfWeek - getLessonWeekDayToYearMonthDayFormat());
     }
 
     private int getLessonWeekDayToYearMonthDayFormat() {
-        return (getDiaSemana().getDiaSemana().intValue() == 1) ? 7 : (getDiaSemana()
-                .getDiaSemana().intValue() - 1);
+	return (getDiaSemana().getDiaSemana().intValue() == 1) ? 7 : (getDiaSemana().getDiaSemana()
+		.intValue() - 1);
     }
-    
+
     public List<YearMonthDay> getPossibleDatesToInsertSummary() {
-        List<Summary> summaries = getSummaries();
-        List<YearMonthDay> datesToInsert = new ArrayList<YearMonthDay>();
+	List<Summary> summaries = getSummaries();
+	List<YearMonthDay> datesToInsert = new ArrayList<YearMonthDay>();
 
-        YearMonthDay lessonEndDay = getLessonEndDay();
-        YearMonthDay currentDate = new YearMonthDay();
+	YearMonthDay lessonEndDay = getLessonEndDay();
+	YearMonthDay currentDate = new YearMonthDay();
 
-        YearMonthDay startDateToSearch = getLessonStartDay();
-        YearMonthDay endDateToSearch = (lessonEndDay.isAfter(currentDate)) ? currentDate : lessonEndDay;
+	YearMonthDay startDateToSearch = getLessonStartDay();
+	YearMonthDay endDateToSearch = (lessonEndDay.isAfter(currentDate)) ? currentDate : lessonEndDay;
 
-        if (!startDateToSearch.isAfter(endDateToSearch)) {
-            if (summaries.isEmpty()) {
-                while(true) {
-                    datesToInsert.add(startDateToSearch);
-                    startDateToSearch = startDateToSearch.plusDays(7);
-                    if (startDateToSearch.isAfter(endDateToSearch)) {
-                        break;
-                    }
-                }
-            } else {
-        	YearMonthDay dateBefore = null;
-                for (Summary summary : summaries) {                   
-                    if(dateBefore == null || !summary.getSummaryDateYearMonthDay().isEqual(dateBefore)) {                    	                       
-                        while (true) {
-                            if (startDateToSearch.isBefore(summary.getSummaryDateYearMonthDay())) {
-                                datesToInsert.add(startDateToSearch);
-                                startDateToSearch = startDateToSearch.plusDays(7);
-                            } else if (startDateToSearch.isEqual(summary.getSummaryDateYearMonthDay())) {
-                                startDateToSearch = startDateToSearch.plusDays(7);
-                                break;
-                            } else {
-                                // ERROR
-                                System.out.println("Não é suposto entrar aqui....");
-                                startDateToSearch = startDateToSearch.plusDays(7);
-                            }
-                            if (startDateToSearch.isAfter(endDateToSearch)) {
-                                break;
-                            }
-                        }
-                        dateBefore = summary.getSummaryDateYearMonthDay();
-                    }
-                }
-                if (!startDateToSearch.isAfter(endDateToSearch)) {
-                    while(true) {
-                        datesToInsert.add(startDateToSearch);
-                        startDateToSearch = startDateToSearch.plusDays(7);
-                        if (startDateToSearch.isAfter(endDateToSearch)) {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        return datesToInsert;
+	if (!startDateToSearch.isAfter(endDateToSearch)) {
+	    if (summaries.isEmpty()) {
+		while (true) {
+		    datesToInsert.add(startDateToSearch);
+		    startDateToSearch = startDateToSearch.plusDays(7);
+		    if (startDateToSearch.isAfter(endDateToSearch)) {
+			break;
+		    }
+		}
+	    } else {
+		YearMonthDay dateBefore = null;
+		for (Summary summary : summaries) {
+		    if (dateBefore == null || !summary.getSummaryDateYearMonthDay().isEqual(dateBefore)) {
+			while (true) {
+			    if (startDateToSearch.isBefore(summary.getSummaryDateYearMonthDay())) {
+				datesToInsert.add(startDateToSearch);
+				startDateToSearch = startDateToSearch.plusDays(7);
+			    } else if (startDateToSearch.isEqual(summary.getSummaryDateYearMonthDay())) {
+				startDateToSearch = startDateToSearch.plusDays(7);
+				break;
+			    } else {
+				// ERROR
+				System.out.println("Não é suposto entrar aqui....");
+				startDateToSearch = startDateToSearch.plusDays(7);
+			    }
+			    if (startDateToSearch.isAfter(endDateToSearch)) {
+				break;
+			    }
+			}
+			dateBefore = summary.getSummaryDateYearMonthDay();
+		    }
+		}
+		if (!startDateToSearch.isAfter(endDateToSearch)) {
+		    while (true) {
+			datesToInsert.add(startDateToSearch);
+			startDateToSearch = startDateToSearch.plusDays(7);
+			if (startDateToSearch.isAfter(endDateToSearch)) {
+			    break;
+			}
+		    }
+		}
+	    }
+	}
+	return datesToInsert;
     }
 }

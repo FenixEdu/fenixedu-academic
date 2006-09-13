@@ -96,7 +96,7 @@ public class Summary extends Summary_Base {
     }
 
     private void checkDate(YearMonthDay date, ExecutionPeriod period, Lesson lesson, boolean toCreate) {
-	if(toCreate && lesson != null && lesson.getSummaryByDate(date) != null) {
+	if (toCreate && lesson != null && lesson.getSummaryByDate(date) != null) {
 	    throw new DomainException("error.summary.already.exists");
 	}
 	if (date.isAfter(new YearMonthDay()) || date.isBefore(period.getBeginDateYearMonthDay())) {
@@ -169,11 +169,21 @@ public class Summary extends Summary_Base {
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
+    
+    private int getWeekDayInDiaSemanaFormat() {	
+	int dayOfWeek = getSummaryDateYearMonthDay().toDateTimeAtMidnight().getDayOfWeek();
+	return (dayOfWeek == 7) ? 1 : dayOfWeek + 1;
+    }
 
     public Lesson getLesson() {
-	for (Lesson lesson : getShift().getAssociatedLessonsSet()) {
-	    if (lesson.getBeginHourMinuteSecond().isEqual(getSummaryHourHourMinuteSecond())) {
-		return lesson;
+	if (!getIsExtraLesson()) {	    
+	    for (Lesson lesson : getShift().getAssociatedLessonsSet()) {
+		if (lesson.getBeginHourMinuteSecond().isEqual(getSummaryHourHourMinuteSecond())
+			&& lesson.getDiaSemana().getDiaSemana().intValue() == getWeekDayInDiaSemanaFormat()			
+			&& ((lesson.getSala() == null && getRoom() == null) || (lesson.getSala() != null
+				&& getRoom() != null && lesson.getSala().equals(getRoom())))) {
+		    return lesson;
+		}
 	    }
 	}
 	return null;
@@ -187,6 +197,7 @@ public class Summary extends Summary_Base {
 		getSummaryDateYearMonthDay().getMonthOfYear()).append("/").append(
 		getSummaryDateYearMonthDay().getYear()).append(" - ").append(
 		RenderUtils.getResourceString("DEFAULT", "label.lesson") + ": ");
+
 	if (getIsExtraLesson()) {
 	    builder.append(RenderUtils.getEnumString(SummaryType.EXTRA_SUMMARY, null)).append(" ");
 	    builder.append(" (").append(getSummaryHourHourMinuteSecond().getHour()).append(":").append(
@@ -200,12 +211,12 @@ public class Summary extends Summary_Base {
 	}
 	if (lesson != null && lesson.getSala() != null) {
 	    builder.append(lesson.getSala().getName().toString());
-	}	
+	}
 	return builder.toString();
     }
 
     public String getSummaryTeacherLabel() {
 	return (getProfessorship() != null) ? getProfessorship().getTeacher().getPerson().getName()
 		: (getTeacher() != null) ? getTeacher().getPerson().getName() : getTeacherName();
-    }   
+    }
 }
