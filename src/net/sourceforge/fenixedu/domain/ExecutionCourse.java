@@ -1361,7 +1361,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    final String nameEn = getAssociatedCurricularCourses().get(0).getNameEn();
 	    
 	    for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-		if (!curricularCourse.getNameEn().equals(nameEn)) {
+		if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
 		    unique = false;
 		    break;
 		}
