@@ -1,10 +1,13 @@
 package pt.utl.ist.renderers;
 
+import java.io.Closeable;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 
 import org.jdom.Comment;
 import org.jdom.Document;
@@ -116,14 +119,20 @@ public class RenderersParser {
     private void collectLayoutsAndTypes(RootDoc root) {
         FileInputStream input = null;
         
+        final Set<Closeable> closeables = new HashSet<Closeable>();
+
         try {
             input = new FileInputStream(this.configuration.getConfiguration());
-        
+
+            closeables.add(input);
+
             SAXBuilder build = new SAXBuilder();
             build.setEntityResolver(new EntityResolver() {
 
                 public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-                    return new InputSource(new FileInputStream(RenderersParser.this.configuration.getDtd()));
+                    final FileInputStream fileInputStream = new FileInputStream(RenderersParser.this.configuration.getDtd());
+                    closeables.add(fileInputStream);
+                    return new InputSource(fileInputStream);
                 }
                 
             });
@@ -161,12 +170,16 @@ public class RenderersParser {
             throw new RuntimeException("unable to read configuration from " + this.configuration.getConfiguration(), e);
         }
         finally {
-            if (input != null) {
+            IOException e = null;
+            for (final Closeable closeable : closeables) {
                 try {
-                    input.close();
-                } catch (IOException e) {
-                    throw new RuntimeException("unable to close configuration input stream");
+                    closeable.close();
+                } catch (IOException ex) {
+                    e = ex;
                 }
+            }
+            if (e != null) {
+                throw new RuntimeException("unable to close configuration input stream", e);
             }
         }
     }

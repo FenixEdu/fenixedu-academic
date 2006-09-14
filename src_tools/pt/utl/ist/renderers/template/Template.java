@@ -71,16 +71,19 @@ public class Template {
 
     public void save(String filename) throws IOException {
         File file = new File(filename);
+        BufferedReader reader = null;
+        Writer writer = null;
+        try {
+            reader = new BufferedReader(getContentReader());
+            writer = new OutputStreamWriter(new FileOutputStream(file));
 
-        BufferedReader reader = new BufferedReader(getContentReader());
-        Writer writer = new OutputStreamWriter(new FileOutputStream(file));
-        
-        String line;
-        while ((line = reader.readLine()) != null) {
-            writer.write(line + System.getProperty("line.separator"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                writer.write(line + System.getProperty("line.separator"));
+            }
+        } finally {
+            if (reader != null) reader.close();
+            if (writer != null) writer.close();
         }
-        
-        reader.close();
-        writer.close();
     }
 }
