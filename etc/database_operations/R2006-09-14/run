@@ -13,5 +13,22 @@ echo Using database: $DB
 echo Enter password for $USER:
 read -s password
 
-mysql -u$USER -p$password $DB < CreateVigilancyTables.sql
+function execute() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password $DB < $2
+	echo
+}
+
+function executeWithTempFile() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password $DB < $2 > tmp.sql
+	mysql -u$USER -f -p$password $DB < tmp.sql	
+	rm tmp.sql
+	echo
+}
+
+
+execute "Alter parking tables" alterTableParking.sql
+execute "Create Vigilancy Tables" CreateVigilancyTables.sql
+
 
