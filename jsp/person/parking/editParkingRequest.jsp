@@ -24,12 +24,6 @@
 	</bean:define>
 
 	<logic:notEmpty name="parkingParty" property="parkingRequests">
-		<%--		<fr:edit name="parkingRequest"
-			type="net.sourceforge.fenixedu.domain.parking.ParkingRequest"
-			schema="input.parkingRequest" id="edit">
-			<fr:destination name="success"
-				path="/parking.do?method=prepareParking" />
-		</fr:edit> --%>
 
 		<fr:form action="/parking.do?method=editParkingRequest" encoding="multipart/form-data">
 			<bean:define id="parkingRequestFactoryEditor" name="parkingParty"
@@ -109,19 +103,6 @@
 			<input type="submit" value="<%= submit.toString() %>" />
 
 		</fr:form>
-		<%--
-		<fr:create type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryCreator"
-			schema="input.parkingRequestFactoryCreator"
-			action="/parking.do?method=createParkingRequest">
-		<fr:hidden slot="parkingParty" name="parkingParty"/>
-	</fr:create>
-	--%>
-		<%--
-		<fr:create
-			type="net.sourceforge.fenixedu.domain.parking.ParkingRequest"
-			schema="input.parkingRequest" id="create">
-			<fr:hidden slot="parkingParty" name="parkingParty" />
-		</fr:create>
-		--%>
+		
 	</logic:empty>
 </logic:present>

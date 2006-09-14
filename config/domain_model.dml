@@ -3735,7 +3735,8 @@ class net.sourceforge.fenixedu.domain.parking.ParkingRequest extends net.sourcef
 	ParkingRequestState parkingRequestState;
 	Boolean firstRequest;
 	DateTime creationDate;
-	Integer keyParkingParty;	
+	Integer keyParkingParty;
+	Integer driverLicenseNumber;	
 	String firstCarPlateNumber;
 	String firstCarMake;
 	String secondCarPlateNumber;
@@ -3754,6 +3755,7 @@ class net.sourceforge.fenixedu.domain.parking.ParkingDocument extends net.source
 class net.sourceforge.fenixedu.domain.parking.ParkingParty extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer cardNumber;
 	Integer keyParkingGroup;
+	Integer driverLicenseNumber;	
 	String firstCarPlateNumber;
 	String firstCarMake;
 	String secondCarPlateNumber;

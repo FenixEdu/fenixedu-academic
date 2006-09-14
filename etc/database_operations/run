@@ -34,3 +34,4 @@ function executeWithTempFile() {
 # instead of moving it into a folder with a date.
 #
 #execute "Create 1st Semester 2006 Seminaries" create2006Sem1Seminaries.sql
+execute "Alter parking tables" alterTableParking.sql

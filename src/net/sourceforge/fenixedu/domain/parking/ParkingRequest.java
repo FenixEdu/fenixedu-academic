@@ -62,10 +62,15 @@ public class ParkingRequest extends ParkingRequest_Base {
         private InputStream firstCarPropertyRegistryInputStream;
         private String firstCarOwnerIdFileName;
         private InputStream firstCarOwnerIdInputStream;
+        private String firstDeclarationAuthorizationFileName;
+        private InputStream firstDeclarationAuthorizationInputStream;        
         private String secondCarPropertyRegistryFileName;
         private InputStream secondCarPropertyRegistryInputStream;
         private String secondCarOwnerIdFileName;
         private InputStream secondCarOwnerIdInputStream;
+        private String secondDeclarationAuthorizationFileName;
+        private InputStream secondDeclarationAuthorizationInputStream;    
+        private Integer driverLicenseNumber;
         
         public ParkingRequestFactory(ParkingParty parkingParty) {
             super();
@@ -195,6 +200,48 @@ public class ParkingRequest extends ParkingRequest_Base {
                 InputStream secondCarPropertyRegistryInputStream) {
             this.secondCarPropertyRegistryInputStream = secondCarPropertyRegistryInputStream;
         }
+
+        public String getFirstDeclarationAuthorizationFileName() {
+            return firstDeclarationAuthorizationFileName;
+        }
+
+        public void setFirstDeclarationAuthorizationFileName(String firstDeclarationAuthorizationFileName) {
+            this.firstDeclarationAuthorizationFileName = firstDeclarationAuthorizationFileName;
+        }
+
+        public InputStream getFirstDeclarationAuthorizationInputStream() {
+            return firstDeclarationAuthorizationInputStream;
+        }
+
+        public void setFirstDeclarationAuthorizationInputStream(
+                InputStream firstDeclarationAuthorizationInputStream) {
+            this.firstDeclarationAuthorizationInputStream = firstDeclarationAuthorizationInputStream;
+        }
+
+        public String getSecondDeclarationAuthorizationFileName() {
+            return secondDeclarationAuthorizationFileName;
+        }
+
+        public void setSecondDeclarationAuthorizationFileName(String secondDeclarationAuthorizationFileName) {
+            this.secondDeclarationAuthorizationFileName = secondDeclarationAuthorizationFileName;
+        }
+
+        public InputStream getSecondDeclarationAuthorizationInputStream() {
+            return secondDeclarationAuthorizationInputStream;
+        }
+
+        public void setSecondDeclarationAuthorizationInputStream(
+                InputStream secondDeclarationAuthorizationInputStream) {
+            this.secondDeclarationAuthorizationInputStream = secondDeclarationAuthorizationInputStream;
+        }
+
+        public Integer getDriverLicenseNumber() {
+            return driverLicenseNumber;
+        }
+
+        public void setDriverLicenseNumber(Integer driverLicenseNumber) {
+            this.driverLicenseNumber = driverLicenseNumber;
+        }
     }
 
     public static class ParkingRequestFactoryCreator extends ParkingRequestFactory {
@@ -209,19 +256,47 @@ public class ParkingRequest extends ParkingRequest_Base {
             
             if (getDriverLicenseInputStream() != null) {
                 String filename = getDriverLicenseFileName();
-                final FileMetadata fileMetadata = new FileMetadata(filename, getParkingParty().getParty().getName());
-                
-                final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
-                        filePath, filename, true, fileMetadata, getDriverLicenseInputStream());
-
-                final ParkingFile parkingFile = new ParkingFile(filename,
-                        filename, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(),
-                        fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
-                                .getUniqueId(), null);
-                
-                new ParkingDocument(ParkingDocumentType.DRIVER_LICENSE,parkingFile,parkingRequest);
+                writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.DRIVER_LICENSE);
+            } 
+            if (getFirstCarOwnerIdInputStream() != null) {
+                String filename = getFirstCarOwnerIdFileName();
+                writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.FIRST_CAR_OWNER_ID);
+            }
+            if (getFirstCarPropertyRegistryInputStream() != null) {
+                String filename = getFirstCarPropertyRegistryFileName();
+                writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
+            }
+            if (getFirstDeclarationAuthorizationInputStream() != null) {
+                String filename = getFirstDeclarationAuthorizationFileName();
+                writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
+            }
+            if (getSecondCarOwnerIdInputStream() != null) {
+                String filename = getSecondCarOwnerIdFileName();
+                writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.SECOND_CAR_OWNER_ID);
+            }
+            if (getSecondCarPropertyRegistryInputStream() != null) {
+                String filename = getSecondCarPropertyRegistryFileName();
+                writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER);
+            }
+            if (getSecondDeclarationAuthorizationInputStream() != null) {
+                String filename = getSecondDeclarationAuthorizationFileName();
+                writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION);
             }
             return parkingRequest;
+        }
+
+        private void writeParkingFile(ParkingRequest parkingRequest, FilePath filePath, String filename, ParkingDocumentType documentType) {
+            final FileMetadata fileMetadata = new FileMetadata(filename, getParkingParty().getParty().getName());
+            
+            final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
+                    filePath, filename, true, fileMetadata, getDriverLicenseInputStream());
+
+            final ParkingFile parkingFile = new ParkingFile(filename,
+                    filename, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(),
+                    fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
+                            .getUniqueId(), null);
+            
+            new ParkingDocument(documentType,parkingFile,parkingRequest);
         }
         
         private FilePath getFilePath(final Integer requestID) {
@@ -279,7 +354,7 @@ public class ParkingRequest extends ParkingRequest_Base {
     public String getDriverLicenseFileName() {
         for(ParkingDocument parkingDocument : getParkingDocuments()){
             if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.DRIVER_LICENSE)){
-                return "driverLicense";
+                return "driverLicense.jpg";
             }
         }
         return "";
@@ -288,7 +363,7 @@ public class ParkingRequest extends ParkingRequest_Base {
     public String getFirstCarPropertyRegistryFileName() {
         for(ParkingDocument parkingDocument : getParkingDocuments()){
             if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER)){
-                return "firstCarPropertyRegistry";
+                return "firstCarPropertyRegistry.jpg";
             }
         }
         return "";
@@ -297,7 +372,7 @@ public class ParkingRequest extends ParkingRequest_Base {
     public String getFirstCarOwnerIdFileName() {
         for(ParkingDocument parkingDocument : getParkingDocuments()){
             if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_OWNER_ID)){
-                return "firstCarOwnerId";
+                return "firstCarOwnerId.jpg";
             }
         }
         return "";
@@ -306,7 +381,7 @@ public class ParkingRequest extends ParkingRequest_Base {
     public String getSecondCarPropertyRegistryFileName() {
         for(ParkingDocument parkingDocument : getParkingDocuments()){
             if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER)){
-                return "secondCarPropertyRegistry";
+                return "secondCarPropertyRegistry.jpg";
             }
         }
         return "";
@@ -315,7 +390,25 @@ public class ParkingRequest extends ParkingRequest_Base {
     public String getSecondCarOwnerIdFileName() {
         for(ParkingDocument parkingDocument : getParkingDocuments()){
             if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.SECOND_CAR_OWNER_ID)){
-                return "secondCarOwnerId";
+                return "secondCarOwnerId.jpg";
+            }
+        }
+        return "";
+    }
+ 
+    public String getFirstDeclarationAuthorizationFileName() {
+        for(ParkingDocument parkingDocument : getParkingDocuments()){
+            if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION)){
+                return "firstDeclarationAuthorization.jpg";
+            }
+        }
+        return "";
+    }
+    
+    public String getSecondDeclarationAuthorizationFileName() {
+        for(ParkingDocument parkingDocument : getParkingDocuments()){
+            if(parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION)){
+                return "secondDeclarationAuthorization.jpg";
             }
         }
         return "";

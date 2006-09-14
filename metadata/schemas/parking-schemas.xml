@@ -1,19 +1,3 @@
-<schema name="input.parkingRequest"
-	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest"
-	constructor="parkingParty">
-	<slot name="firstCarPlateNumber" key="label.firstCarPlateNumber"
-		bundle="PARKING_RESOURCES"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="firstCarMake" key="label.firstCarMake"
-		bundle="PARKING_RESOURCES"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="secondCarPlateNumber" key="label.secondCarPlateNumber"
-		bundle="PARKING_RESOURCES" />
-	<slot name="secondCarMake" key="label.secondCarMake"
-		bundle="PARKING_RESOURCES" />
-	<slot name="parkingParty" hidden="true" />
-</schema>
-
 <schema name="viewPersonInfo"
 	type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="name" key="label.name" bundle="PARKING_RESOURCES" />
@@ -22,69 +6,37 @@
 	<slot name="email" key="label.email" bundle="PARKING_RESOURCES" />
 </schema>
 
-<schema name="input.parkingRequestFactoryCreator"
-	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryCreator">
-	<slot name="firstCarPlateNumber" key="label.firstCarPlateNumber"
-		bundle="PARKING_RESOURCES"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="firstCarMake" key="label.firstCarMake"
-		bundle="PARKING_RESOURCES"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="secondCarPlateNumber" key="label.secondCarPlateNumber"
-		bundle="PARKING_RESOURCES" />
-	<slot name="secondCarMake" key="label.secondCarMake"
-		bundle="PARKING_RESOURCES" />
-	<slot name="parkingParty" hidden="true" />
-
-	<slot name="driverLicenseInputStream" bundle="PARKING_RESOURCES">
-		<property name="fileNameSlot" value="filename" />
-	</slot>
-	<slot name="firstCarPropertyRegistryInputStream"
-		bundle="PARKING_RESOURCES">
-		<property name="fileNameSlot" value="filename" />
-	</slot>
-	<slot name="firstCarOwnerIdInputStream"
-		bundle="PARKING_RESOURCES">
-		<property name="fileNameSlot" value="filename" />
-	</slot>
-	<slot name="secondCarPropertyRegistryInputStream"
-		bundle="PARKING_RESOURCES">
-		<property name="fileNameSlot" value="filename" />
-	</slot>
-	<slot name="secondCarOwnerIdInputStream"
-		bundle="PARKING_RESOURCES">
-		<property name="fileNameSlot" value="filename" />
-	</slot>
-</schema>
 
 <schema name="parkingRequest.driverLicense"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
-	<slot name="driverLicenseFileName" key="label.driverLicense"
-		bundle="PARKING_RESOURCES" />
+	<slot name="driverLicenseFileName" key="label.driverLicense" bundle="PARKING_RESOURCES" />
+	<slot name="driverLicenseNumber" key="label.driverLicenseNumber" bundle="PARKING_RESOURCES"/>
 </schema>
 
-<schema name="parkingRequest.firstCar"
-	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
+<schema name="parkingRequest.firstCar" type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
 	<slot name="firstCarMake" bundle="PARKING_RESOURCES" />
 	<slot name="firstCarPlateNumber" bundle="PARKING_RESOURCES" />
-	<slot name="firstCarPropertyRegistryFileName"
-		key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES" />
-	<slot name="firstCarOwnerIdFileName" key="label.firstCarOwnerId"
-		bundle="PARKING_RESOURCES" />
+	<slot name="firstCarPropertyRegistryFileName" key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES" />
+	<slot name="firstCarOwnerIdFileName" key="label.firstCarOwnerId" bundle="PARKING_RESOURCES" />
+	<slot name="firstDeclarationAuthorizationFileName" key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES" />	
 </schema>
 
-<schema name="parkingRequest.secondCar"
-	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
+<schema name="parkingRequest.secondCar"	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
 	<slot name="secondCarMake" bundle="PARKING_RESOURCES" />
 	<slot name="secondCarPlateNumber" bundle="PARKING_RESOURCES" />
-	<slot name="secondCarPropertyRegistryFileName"
-		key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES" />
-	<slot name="secondCarOwnerIdFileName" key="label.secondCarOwnerId"
-		bundle="PARKING_RESOURCES" />
+	<slot name="secondCarPropertyRegistryFileName" key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES" />
+	<slot name="secondCarOwnerIdFileName" key="label.secondCarOwnerId" bundle="PARKING_RESOURCES" />
+	<slot name="secondDeclarationAuthorizationFileName" key="label.secondDeclarationAuthorization" bundle="PARKING_RESOURCES" />		
 </schema>
 
 <schema name="parkingRequestFactory.driverLicense"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryCreator">
+	<slot name="driverLicenseNumber" key="label.driverLicenseNumber" bundle="PARKING_RESOURCES" 
+		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="maxLength" value="10" />
+		<property name="size" value="10" />
+		<property name="required" value="true"/>
+	</slot>
 	<slot name="driverLicenseInputStream" key="label.driverLicense"	bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="driverLicenseFileName" />
 	</slot>
@@ -99,12 +51,16 @@
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	<slot name="firstCarPropertyRegistryInputStream"
 		key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES">
-		<property name="fileNameSlot" value="filename" />
+		<property name="fileNameSlot" value="firstCarPropertyRegistryFileName" />
 	</slot>
 	<slot name="firstCarOwnerIdInputStream" key="label.firstCarOwnerId"
 		bundle="PARKING_RESOURCES">
-		<property name="fileNameSlot" value="filename" />
+		<property name="fileNameSlot" value="firstCarOwnerFileName" />
 	</slot>
+	<slot name="firstDeclarationAuthorizationInputStream" key="label.firstDeclarationAuthorization"
+		bundle="PARKING_RESOURCES">
+		<property name="fileNameSlot" value="firstDeclarationAuthorizationFileName" />
+	</slot>	
 </schema>
 
 <schema name="parkingRequestFactory.secondCar"
@@ -119,14 +75,24 @@
 		key="label.secondCarOwnerId" bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="filename" />
 	</slot>
+	<slot name="secondDeclarationAuthorizationInputStream" key="label.secondfirstDeclarationAuthorization"
+		bundle="PARKING_RESOURCES">
+		<property name="fileNameSlot" value="secondDeclarationAuthorizationFileName" />
+	</slot>	
 </schema>
 
 <schema name="edit.parkingRequestFactory.driverLicense"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
-	<slot name="driverLicenseInputStream" key="label.driverLicense"
-		bundle="PARKING_RESOURCES">
+	<slot name="driverLicenseNumber" key="label.driverLicenseNumber" bundle="PARKING_RESOURCES" 
+		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="maxLength" value="10" />
+		<property name="size" value="10" />
+		<property name="required" value="true"/>
+	</slot>
+	<slot name="driverLicenseInputStream" key="label.driverLicense"	bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="driverLicenseFileName" />
 	</slot>
+	<slot name="driverLicenseFileName" key="label.currentFile" bundle="PARKING_RESOURCES" read-only="true"/>
 	<slot name="parkingParty" hidden="true" />
 </schema>
 
@@ -140,10 +106,17 @@
 		key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="filename" />
 	</slot>
+	<slot name="firstCarPropertyRegistryFileName" key="label.currentFile" bundle="PARKING_RESOURCES" read-only="true"/>
 	<slot name="firstCarOwnerIdInputStream" key="label.firstCarOwnerId"
 		bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="filename" />
 	</slot>
+	<slot name="firstCarOwnerIdFileName" key="label.currentFile" bundle="PARKING_RESOURCES" read-only="true"/>
+	<slot name="firstDeclarationAuthorizationInputStream" key="label.firstDeclarationAuthorization"
+		bundle="PARKING_RESOURCES">
+		<property name="fileNameSlot" value="firstDeclarationAuthorizationFileName" />
+	</slot>	
+	<slot name="firstDeclarationAuthorizationFileName" key="label.currentFile" bundle="PARKING_RESOURCES" read-only="true"/>	
 </schema>
 
 <schema name="edit.parkingRequestFactory.secondCar"
@@ -154,8 +127,15 @@
 		key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="filename" />
 	</slot>
+	<slot name="secondCarPropertyRegistryFileName" key="label.currentFile" bundle="PARKING_RESOURCES" read-only="true"/>		
 	<slot name="secondCarOwnerIdInputStream"
 		key="label.secondCarOwnerId" bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="filename" />
 	</slot>
+	<slot name="secondCarOwnerIdFileName" key="label.currentFile" bundle="PARKING_RESOURCES" read-only="true"/>		
+	<slot name="secondDeclarationAuthorizationInputStream" key="label.secondDeclarationAuthorization"
+		bundle="PARKING_RESOURCES">
+		<property name="fileNameSlot" value="secondDeclarationAuthorizationFileName" />
+	</slot>	
+	<slot name="secondDeclarationAuthorizationFileName" key="label.currentFile" bundle="PARKING_RESOURCES" read-only="true"/>		
 </schema>
