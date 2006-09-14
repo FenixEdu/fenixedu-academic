@@ -21,13 +21,13 @@ public class Custodian {
                 final String line = lines[i].trim();
                 final String[] psParts = line.split(" ");
                 final String pid = psParts[0].trim();
-                final String command = psParts[6].trim();
-                for (int k = 0; k < psParts.length; k++) {
-                    System.out.println("psPart[" + k + "]: [" + psParts[k] + "]");
-                }
-                if (command.startsWith("java") || command.endsWith("/java") || command.endsWith("\\java")) {
-                    pids.add(Integer.valueOf(pid));
-                    System.out.println("Adding pid: " + pid + " to custodians register.");
+                
+                for (int k = 1; k < psParts.length; k++) {
+                    final String command = psParts[k].trim();
+                    if (command.startsWith("java") || command.endsWith("/java") || command.endsWith("\\java")) {
+                        pids.add(Integer.valueOf(pid));
+                        System.out.println("Adding pid: " + pid + " to custodians register.");
+                    }
                 }
             }
             if (pids.isEmpty()) {
