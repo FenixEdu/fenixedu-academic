@@ -24,7 +24,7 @@
 	<span class="error"><!-- Error messages go here --><bean:message key="message.credits.nonExisting.executionCourses"/></span>
 </logic:notPresent>
 <logic:present name="masterDegreeCoursesDTOs">
-	<table class="tstyle1c">
+	<table class="tstyle1">
 		<tr>
 			<th><bean:message key="label.credits.masterDegree.curricularCourse"/></th>
 			<th><bean:message key="label.credits.masterDegree.curricularCourse.type"/></th>

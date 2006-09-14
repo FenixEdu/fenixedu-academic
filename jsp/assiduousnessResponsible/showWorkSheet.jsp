@@ -34,7 +34,7 @@
 	<logic:notEmpty name="employeeWorkSheet" property="workDaySheetList">
 		<fr:view name="employeeWorkSheet" property="workDaySheetList" schema="show.workDaySheet">
 			<fr:layout name="tabular">
-			    <fr:property name="classes" value="tstyle1b printborder tpadding1"/>
+			    <fr:property name="classes" value="tstyle1 printborder tpadding1"/>
 				<fr:property name="columnClasses" value="bgcolor3 acenter,,acenter,aright,aright,aleft,aleft" />
 				<fr:property name="headerClasses" value="acenter" />
 			</fr:layout>

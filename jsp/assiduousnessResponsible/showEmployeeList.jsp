@@ -56,7 +56,7 @@
 			<br/><br/>
 			<fr:view name="unitEmployees" property="employeeList" schema="show.employeePersonalInformation2">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle1b printborder" />
+					<fr:property name="classes" value="tstyle1 printborder" />
 					<fr:property name="link(view)" value="<%="/assiduousnessResponsible.do?method=showEmployeeWorkSheet&month="+month.toString()+"&year="+year.toString()%>"/>
 					<fr:property name="key(view)" value="link.workSheet"/>
 					<fr:property name="param(view)" value="employeeNumber"/>

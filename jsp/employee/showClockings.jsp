@@ -59,7 +59,7 @@
 	<logic:notEmpty name="clockings">
 		<fr:view name="clockings" schema="show.clockingsDaySheet">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1b printborder" />
+				<fr:property name="classes" value="tstyle1 printborder" />
 				<fr:property name="columnClasses" value="bgcolor3 acenter,acenter,aleft" />
 				<fr:property name="headerClasses" value="acenter" />
 			</fr:layout>

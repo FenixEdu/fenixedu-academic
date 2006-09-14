@@ -27,7 +27,7 @@
     <%= ((List) contributorList).size()%> <bean:message key="label.masterDegree.administrativeOffice.contributorsFound"/>        
     <% if (((List) contributorList).size() != 0) { %>
     
-	    <table class="tstyle1a">
+	    <table class="tstyle1">
     		<tr>
 				<td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber" /></td>
 				<td><bean:message key="label.masterDegree.administrativeOffice.contributorName" /></td>

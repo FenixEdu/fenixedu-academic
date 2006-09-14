@@ -21,7 +21,7 @@
 
 
 <logic:present name="workScheduleDayList">
-	<table class="tstyle1b thtop thlight printborder">
+	<table class="tstyle1 thtop thlight printborder">
 		<tr>
 			<th class="cornerleft"></th><th><b><bean:message key="MONDAY_ACRONYM"/></b></th><th><b><bean:message key="TUESDAY_ACRONYM"/></b></th><th><b><bean:message key="WEDNESDAY_ACRONYM"/></b></th><th><b><bean:message key="THURSDAY_ACRONYM"/></b></th><th><b><bean:message key="FRIDAY_ACRONYM"/></b></th>
 		</tr>

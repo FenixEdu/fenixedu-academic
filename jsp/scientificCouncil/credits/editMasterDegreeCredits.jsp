@@ -22,7 +22,7 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeID" property="executionDegreeID"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseID" property="curricularCourseID"/>
 
-<table class="tstyle1c">
+<table class="tstyle1">
 	<tr>
 		<th><bean:message key="label.credits.masterDegree.curricularCourse"/></th>
 		<th><bean:message key="label.credits.masterDegree.curricularCourse.type"/></th>

@@ -59,7 +59,7 @@
 	<logic:notEmpty name="justifications">
 		<fr:view name="justifications" schema="show.justifications">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1b printborder" />
+				<fr:property name="classes" value="tstyle1 printborder" />
 				<fr:property name="columnClasses" value="acenter" />
 				<fr:property name="headerClasses" value="acenter" />
 			</fr:layout>

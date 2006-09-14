@@ -37,7 +37,7 @@
 		<logic:iterate id="creditsReportElement" name="teacherCreditsReportByUnit">
 			<h4 class="mbottom0"><bean:write name="creditsReportElement" property="key.name"/></h4>
 			<bean:define id="teacherCreditsReportList" name="creditsReportElement" property="value"/>
-			<table class="tstyle1b">
+			<table class="tstyle1">
 				<logic:present name="executionPeriodHeader">
 					<tr>
 						<th></th>
