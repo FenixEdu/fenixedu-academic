@@ -61,7 +61,7 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
     }
 
     private Table organizeClassViews(final Degree degree, final ExecutionPeriod executionPeriod) {
-        final Table classViewsTable = new Table(5);
+        final Table classViewsTable = new Table(degree.buildFullCurricularYearList().size());
 
         final SortedSet<SchoolClass> schoolClasses = new TreeSet<SchoolClass>(new BeanComparator("nome"));
         for (final SchoolClass schoolClass : executionPeriod.getSchoolClasses()) {
