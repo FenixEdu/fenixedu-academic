@@ -423,11 +423,11 @@ public class Degree extends Degree_Base {
     private DegreeCurricularPlan getMostRecentDegreeCurricularPlanByInitialDate() {
         DegreeCurricularPlan mostRecentDegreeCurricularPlan = null;
         for (final DegreeCurricularPlan degreeCurricularPlan : this.getActiveDegreeCurricularPlans()) {
-            final Date initialDate = degreeCurricularPlan.getInitialDate();
-            final Date mostRecentInitialDate = degreeCurricularPlan.getInitialDate();
-            if (mostRecentDegreeCurricularPlan == null || initialDate.after(mostRecentInitialDate)) {
-                mostRecentDegreeCurricularPlan = degreeCurricularPlan;
-            }
+            if (mostRecentDegreeCurricularPlan == null
+		    || degreeCurricularPlan.getInitialDateYearMonthDay().isAfter(
+			    mostRecentDegreeCurricularPlan.getInitialDateYearMonthDay())) {
+		mostRecentDegreeCurricularPlan = degreeCurricularPlan;
+	    }
         }
         return mostRecentDegreeCurricularPlan;
     }
@@ -459,7 +459,7 @@ public class Degree extends Degree_Base {
         }
     }
     private static void updateCache(final Degree degree, final String newLowerCaseSigla) {
-        final String currentLowerCaseSigla = degree.getSigla().toLowerCase();
+        final String currentLowerCaseSigla = (degree.getSigla() != null) ? degree.getSigla().toLowerCase() : "";
         synchronized (degrees) {
             degrees.remove(currentLowerCaseSigla);
             degrees.put(newLowerCaseSigla, new SoftReference<Degree>(degree));
