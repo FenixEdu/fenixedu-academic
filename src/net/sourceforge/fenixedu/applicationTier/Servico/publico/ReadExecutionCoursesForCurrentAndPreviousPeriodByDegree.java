@@ -39,17 +39,19 @@ public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends Ser
 	final Set<String> processedExecutionCourses = new HashSet<String>();
 	for (final ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod)) {
 	    for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
-		final String key = generateExecutionCourseKey(executionCourse, degreeModuleScope);
-
-		if (!processedExecutionCourses.contains(key)) {
-		    processedExecutionCourses.add(key);
-
-		    final ExecutionCourseView executionCourseView = new ExecutionCourseView(executionCourse);
-		    executionCourseView.setCurricularYear(degreeModuleScope.getCurricularYear());
-		    executionCourseView.setAnotation(degreeModuleScope.getAnotation());
-		    executionCourseView.setDegreeCurricularPlanAnotation(curricularCourse.getDegreeCurricularPlan().getAnotation());
-
-		    result.add(executionCourseView);
+		if (degreeModuleScope.isActiveForExecutionPeriod(executionPeriod)) {
+                    final String key = generateExecutionCourseKey(executionCourse, degreeModuleScope);
+                    
+                    if (!processedExecutionCourses.contains(key)) {
+                        processedExecutionCourses.add(key);
+                    
+                        final ExecutionCourseView executionCourseView = new ExecutionCourseView(executionCourse);
+                        executionCourseView.setCurricularYear(degreeModuleScope.getCurricularYear());
+                        executionCourseView.setAnotation(degreeModuleScope.getAnotation());
+                        executionCourseView.setDegreeCurricularPlanAnotation(curricularCourse.getDegreeCurricularPlan().getAnotation());
+                    
+                        result.add(executionCourseView);
+                    }
 		}
 	    }
 	}
