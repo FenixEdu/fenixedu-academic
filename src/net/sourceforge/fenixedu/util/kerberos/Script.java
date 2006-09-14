@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import net.sourceforge.fenixedu._development.Custodian;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -84,6 +85,11 @@ public class Script {
 	    System.out.println(Runtime.getRuntime().freeMemory());
 	    System.out.println(Runtime.getRuntime().totalMemory());
 	    ex.printStackTrace();
+            try {
+                Custodian.dumpThreadTrace();
+            } catch (Exception e) {
+                // do nothing. no log will be produced.
+            }
 	    return new ScriptResult(-1, ex.getMessage());
 	} catch (Exception ex) {
 	    ex.printStackTrace();

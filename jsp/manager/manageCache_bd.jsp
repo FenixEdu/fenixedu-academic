@@ -64,6 +64,11 @@
 </logic:present>
 <logic:notPresent name="<%= SessionConstants.NUMBER_CACHED_RESPONSES %>" scope="request">
 </logic:notPresent>
+<br/>
+<br />
+<html:link module="/manager" page="/manageCache.do?method=dumpThreadTrace">
+	<bean:message bundle="MANAGER_RESOURCES" key="label.dump.thread.trace"/>
+</html:link>
 
 <br/>
 <br />

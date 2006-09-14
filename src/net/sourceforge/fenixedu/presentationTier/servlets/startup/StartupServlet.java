@@ -10,6 +10,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+import net.sourceforge.fenixedu._development.Custodian;
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -31,6 +32,8 @@ public class StartupServlet extends HttpServlet {
      * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
      */
     public void init(ServletConfig config) throws ServletException {
+        Custodian.registerPID();
+
         super.init(config);
 
         MetadataManager.init(getServletContext().getRealPath(getInitParameter("domainmodel")));
