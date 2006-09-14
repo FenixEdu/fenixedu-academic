@@ -9,8 +9,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -140,36 +138,5 @@ public class Shift extends Shift_Base {
         } else {
             return false;
         }
-    }
-    
-    public Lesson getLessonByBeginTime(HourMinuteSecond time) {
-        for (Lesson lesson : getAssociatedLessonsSet()) {
-            if(lesson.getBeginHourMinuteSecond().isEqual(time)) {
-                return lesson;
-            }
-        }
-        return null;
-    }
-
-    //-- Labels to present summary in renderers --//
-    public String getShiftLabel() {
-        final StringBuilder lessonsLabel = new StringBuilder();
-        int index = 0;
-        for (Lesson lesson : getAssociatedLessonsSet()) {
-            index++;
-            lessonsLabel.append(lesson.getDiaSemana().toString()).append(" (");
-            lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getInicio().getTime()))
-                    .append("-");
-            lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime())).append(") ");
-            if (lesson.getSala() != null) {
-                lessonsLabel.append(lesson.getSala().getName().toString());
-            }
-            if (index < getAssociatedLessonsCount()) {
-                lessonsLabel.append(" , ");
-            } else {
-                lessonsLabel.append(" ");
-            }
-        }
-        return lessonsLabel.toString();
-    }  
+    }            
 }

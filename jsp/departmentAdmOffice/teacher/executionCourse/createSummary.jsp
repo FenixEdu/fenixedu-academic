@@ -165,58 +165,17 @@ function check(e,v){
 				</fr:form>	
 			</td>
 		</tr>
-	</table>	
-	
-	<%-- Teacher --%>
-	<logic:equal name="loggedIsResponsible" value="true">
-		<h3 class="mbottom0"><bean:message key="label.teacher" bundle="DEFAULT"/></h3>
-		<bean:define id="chooseTeacherURL">/summariesManagement.do?method=chooseTeacher&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
-		<fr:form action="<%= chooseTeacherURL %>">			
-			<fr:edit id="summariesManagementBeanWithTeacher" name="summariesManagementBean" visible="false" nested="true" />								
-			<table class="tstyle5">
-				<logic:notEmpty name="summariesManagementBean" property="professorship">
-					<bean:define id="professorship" name="summariesManagementBean" property="professorship" />
-				 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorship.idInternal" />
-					<tr>
-				 		<td><html:radio name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>" onclick="this.form.submit();"/></td>				
-				 		<td><bean:write name="professorship" property="teacher.person.name"/></td>
-			 		</tr>
-				</logic:notEmpty>
-				<logic:empty name="summariesManagementBean" property="professorship">
-					<bean:define id="professorship" name="summariesManagementBean" property="professorshipLogged" />
-				 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorshipLogged.idInternal" />
-					<tr>
-				 		<td><html:radio name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>" onclick="this.form.submit();"/></td>				
-				 		<td><bean:write name="professorship" property="teacher.person.name"/></td>
-			 		</tr>
-				</logic:empty>
-				<tr>
-					<td><html:radio name="summariesManagementForm" property="teacher" value="0" /></td>
-					<td>
-						<bean:message key="label.teacher.in" />
-						<html:text name="summariesManagementForm" onchange="this.form.submit();" property="teacherNumber" size="4" />
-						(<bean:message key="label.number" />)
-					</td>
-				</tr>
-				<tr>
-					<td><html:radio name="summariesManagementForm" property="teacher" value="-1" /></td>
-					<td>
-						<bean:message key="label.teacher.out" />
-						<html:text name="summariesManagementForm" onchange="this.form.submit();" property="teacherName" size="40"/>
-						(<bean:message key="label.name" />)
-					</td>
-				</tr>									
-			</table>
-		</fr:form>
-	</logic:equal>	
+	</table>			
 					
 	<%-- Summary --%>	
-	<h3 class="mbottom0"><bean:message key="message.summaryText" bundle="DEFAULT"/></h3>
-	<bean:define id="showSummaries">/summariesManagement.do?method=prepareShowSummaries&page=0&executionCourseID=<bean:write name="executionCourseID"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>			
 	<bean:define id="createSummaryURL">/summariesManagement.do?teacherNumber_=<bean:write name="teacherNumber"/></bean:define>		
-	<logic:equal name="summariesManagementBean" property="summaryType" value="NORMAL_SUMMARY">		
-		<fr:form action="<%= createSummaryURL %>">
-			<html:hidden property="method" name="summariesManagementForm" value="createSummary"/>
+	<fr:form action="<%= createSummaryURL %>">		
+		<html:hidden property="method" name="summariesManagementForm" value="createSummary"/>	
+		<bean:define id="showSummaries">/summariesManagement.do?method=prepareShowSummaries&page=0&executionCourseID=<bean:write name="executionCourseID"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>						
+		<logic:equal name="summariesManagementBean" property="summaryType" value="NORMAL_SUMMARY">				
+			<%-- Teacher --%>
+			<jsp:include page="../../../teacher/executionCourse/chooseTeacher.jsp"/>						
+			<h3 class="mbottom0"><bean:message key="message.summaryText" bundle="DEFAULT"/></h3>
 			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalSummary">
 				<fr:destination name="cancel" path="<%= showSummaries %>"/>
 				<fr:layout name="tabular">
@@ -228,25 +187,25 @@ function check(e,v){
 				<html:submit titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>
 				<html:submit titleKey="message.button.save.equal" onclick="this.form.method.value='createSummaryAndSame';this.form.submit();"><bean:message key="button.save.equal" bundle="DEFAULT"/></html:submit>
 			</logic:empty>
-			<html:submit titleKey="message.button.save" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>
-		</fr:form>
-	</logic:equal>
-	<logic:equal name="summariesManagementBean" property="summaryType" value="EXTRA_SUMMARY">		
-			<fr:form action="<%= createSummaryURL %>">
-				<html:hidden property="method" name="summariesManagementForm" value="createSummary"/>
-				<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToExtraSummary" >
-					<fr:destination name="cancel" path="<%= showSummaries %>"/>
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thlight"/>
-					</fr:layout>
-				</fr:edit>	
+			<html:submit titleKey="message.button.save" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>			
+		</logic:equal>
+		<logic:equal name="summariesManagementBean" property="summaryType" value="EXTRA_SUMMARY">		
+			<%-- Teacher --%>
+			<jsp:include page="../../../teacher/executionCourse/chooseTeacher.jsp"/>						
+			<h3 class="mbottom0"><bean:message key="message.summaryText" bundle="DEFAULT"/></h3>
+			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToExtraSummary" >
+				<fr:destination name="cancel" path="<%= showSummaries %>"/>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight"/>
+				</fr:layout>
+			</fr:edit>	
 			<html:submit titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>			
 			<logic:empty name="summariesManagementBean" property="summary">				
 				<html:submit titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>
 				<html:submit titleKey="message.button.save.equal" onclick="this.form.method.value='createSummaryAndSame';this.form.submit();"><bean:message key="button.save.equal" bundle="DEFAULT"/></html:submit>
 			</logic:empty>
-			<html:submit titleKey="message.button.save" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>
-		</fr:form>		
-	</logic:equal>		
-				
+			<html:submit titleKey="message.button.save" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>		
+		</logic:equal>		
+	</fr:form>
+	
 </logic:present>

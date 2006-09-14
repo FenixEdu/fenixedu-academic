@@ -68,7 +68,6 @@ public class Lesson extends Lesson_Base {
 	removeSala();
 	removeShift();
 	getRoomOccupation().delete();
-
 	removeRootDomainObject();
 	deleteDomainObject();
     }
@@ -152,20 +151,38 @@ public class Lesson extends Lesson_Base {
     public List<Summary> getSummaries() {
 	List<Summary> lessonSummaries = new ArrayList<Summary>();
 	Set<Summary> shiftSummaries = new TreeSet<Summary>(new ReverseComparator(Summary.COMPARATOR_BY_DATE_AND_HOUR));
-	shiftSummaries.addAll(getShift().getAssociatedSummariesSet());
-	int lessonWeekDay = getLessonWeekDayToYearMonthDayFormat();
+	shiftSummaries.addAll(getShift().getAssociatedSummariesSet());	
 	for (Summary summary : shiftSummaries) {
-	    if (!summary.getIsExtraLesson()) {
-		int summaryDayOfWeek = summary.getSummaryDateYearMonthDay().toDateTimeAtMidnight().getDayOfWeek();
-		if (summary.getSummaryHourHourMinuteSecond().isEqual(getBeginHourMinuteSecond())
-			&& summaryDayOfWeek == lessonWeekDay
-			&& ((summary.getRoom() == null && getSala() == null) || (summary.getRoom() != null
-				&& getSala() != null && summary.getRoom().equals(getSala())))) {
-		    lessonSummaries.add(summary);
-		}
+	    Lesson summaryLesson = summary.getLesson();
+	    if(summaryLesson != null && summaryLesson.equals(this)) {
+		lessonSummaries.add(summary);
 	    }
 	}
 	return lessonSummaries;
+    }
+    
+    private Summary getLastSummary() {
+	List<Summary> summaries = getSummaries();
+	return (summaries.isEmpty()) ? null : summaries.get(summaries.size() - 1);	
+    }
+    
+    public YearMonthDay getNextPossibleSummaryDate() {
+	YearMonthDay currentDate = new YearMonthDay();
+	YearMonthDay lessonEndDay = getLessonEndDay();
+	YearMonthDay endDateToSearch = (lessonEndDay.isAfter(currentDate)) ? currentDate : lessonEndDay;
+	
+	Summary lastSummary = getLastSummary();
+	if(lastSummary != null) {
+	    YearMonthDay summaryDateYearMonthDay = lastSummary.getSummaryDateYearMonthDay();
+	    YearMonthDay nextSummaryDate = summaryDateYearMonthDay.plusDays(7);
+	    if(!nextSummaryDate.isAfter(endDateToSearch)) {
+		return nextSummaryDate;
+	    }
+	} else {
+	    YearMonthDay lessonStartDay = getLessonStartDay();
+	    return (!lessonStartDay.isAfter(endDateToSearch)) ? lessonStartDay : null;	    
+	}
+	return null;
     }
 
     public boolean isDateValid(YearMonthDay date) {
@@ -191,8 +208,7 @@ public class Lesson extends Lesson_Base {
 
     private YearMonthDay getLessonStartDay() {
 	YearMonthDay periodStart = getRoomOccupation().getPeriod().getStartYearMonthDay();
-	int weekOfQuinzenalStart = (getWeekOfQuinzenalStart() != null) ? getWeekOfQuinzenalStart()
-		.intValue() : 0;
+	int weekOfQuinzenalStart = (getWeekOfQuinzenalStart() != null) ? getWeekOfQuinzenalStart().intValue() : 0;
 	YearMonthDay lessonStart = periodStart.plusDays(7 * weekOfQuinzenalStart);
 	int lessonStartDayOfWeek = lessonStart.toDateTimeAtMidnight().getDayOfWeek();
 	return lessonStart.plusDays(getLessonWeekDayToYearMonthDayFormat() - lessonStartDayOfWeek);
@@ -241,7 +257,7 @@ public class Lesson extends Lesson_Base {
 				break;
 			    } else {
 				// ERROR
-				System.out.println("Não é suposto entrar aqui....");
+				System.out.println("3 2 1 ... BOOOOOOMMMMMMMMM!!!");
 				startDateToSearch = startDateToSearch.plusDays(7);
 			    }
 			    if (startDateToSearch.isAfter(endDateToSearch)) {

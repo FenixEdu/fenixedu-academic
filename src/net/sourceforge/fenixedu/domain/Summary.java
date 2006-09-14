@@ -7,11 +7,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean.SummaryType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -41,7 +38,7 @@ public class Summary extends Summary_Base {
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("idInternal"));
     }
 
-    public Summary() {
+    private Summary() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
@@ -176,7 +173,7 @@ public class Summary extends Summary_Base {
     }
 
     public Lesson getLesson() {
-	if (!getIsExtraLesson()) {	    
+	if (!getIsExtraLesson() && getShift() != null) {	    
 	    for (Lesson lesson : getShift().getAssociatedLessonsSet()) {
 		if (lesson.getBeginHourMinuteSecond().isEqual(getSummaryHourHourMinuteSecond())
 			&& lesson.getDiaSemana().getDiaSemana().intValue() == getWeekDayInDiaSemanaFormat()			
@@ -187,36 +184,5 @@ public class Summary extends Summary_Base {
 	    }
 	}
 	return null;
-    }
-
-    // -- Labels to present summary in renderers --//
-    public String getSummaryLabel() {
-	StringBuilder builder = new StringBuilder();
-	Lesson lesson = null;
-	builder.append(getSummaryDateYearMonthDay().getDayOfMonth()).append("/").append(
-		getSummaryDateYearMonthDay().getMonthOfYear()).append("/").append(
-		getSummaryDateYearMonthDay().getYear()).append(" - ").append(
-		RenderUtils.getResourceString("DEFAULT", "label.lesson") + ": ");
-
-	if (getIsExtraLesson()) {
-	    builder.append(RenderUtils.getEnumString(SummaryType.EXTRA_SUMMARY, null)).append(" ");
-	    builder.append(" (").append(getSummaryHourHourMinuteSecond().getHour()).append(":").append(
-		    getSummaryHourHourMinuteSecond().getMinuteOfHour()).append(") ");
-	} else {
-	    lesson = getLesson();
-	    builder.append(lesson.getDiaSemana().toString()).append(" (").append(
-		    DateFormatUtil.format("HH:mm", lesson.getInicio().getTime())).append("-").append(
-		    DateFormatUtil.format("HH:mm", lesson.getFim().getTime())).append(") ");
-	    ;
-	}
-	if (lesson != null && lesson.getSala() != null) {
-	    builder.append(lesson.getSala().getName().toString());
-	}
-	return builder.toString();
-    }
-
-    public String getSummaryTeacherLabel() {
-	return (getProfessorship() != null) ? getProfessorship().getTeacher().getPerson().getName()
-		: (getTeacher() != null) ? getTeacher().getPerson().getName() : getTeacherName();
     }
 }

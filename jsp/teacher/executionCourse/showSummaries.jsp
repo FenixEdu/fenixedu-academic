@@ -19,6 +19,20 @@
 		</span>
 		<p>
 	</logic:messagesPresent>
+				
+	<logic:notEmpty name="nextPossibleLessonsDates">
+		<h3><bean:message key="label.last.lessons.without.summaries"/></h3>	
+		<html:form action="/summariesManagement.do?method=prepareCreateComplexSummary">			
+			<fr:view name="nextPossibleLessonsDates" schema="PossibleNextSummaryLessonAndDate">
+				<fr:layout name="tabular">
+					<fr:property name="checkable" value="true"/>
+					<fr:property name="checkboxName" value="selectedLessonAndDate"/>
+					<fr:property name="checkboxValue" value="checkBoxValue"/>								
+				</fr:layout>
+			</fr:view>
+			<html:submit><bean:message key="label.fill"/></html:submit>
+		</html:form>
+	</logic:notEmpty>
 		
 	<fr:form>
 		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToExecutionCourseManagement" nested="true">

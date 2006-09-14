@@ -639,5 +639,8 @@
 	<definition name="prepare-show-summaries" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/showSummaries.jsp" />
 	</definition>		
+	<definition name="prepare-insert-complex-summary" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/createComplexSummary.jsp" />
+	</definition>		
 	
 </tiles-definitions>

@@ -1296,66 +1296,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return summaries;
     }
 
-    // OLD FUNCTIONS
-    private Summary createSummary(String title, String summaryText, Integer studentsNumber,
-	    Boolean isExtraLesson) {
-
-	if (title == null || summaryText == null || isExtraLesson == null)
-	    throw new NullPointerException();
-
-	final Summary summary = new Summary();
-	summary.setTitle(new MultiLanguageString(Language.pt, title));
-	summary.setSummaryText(new MultiLanguageString(Language.pt, summaryText));
-	summary.setStudentsNumber(studentsNumber);
-	summary.setIsExtraLesson(isExtraLesson);
-	summary.setLastModifiedDate(Calendar.getInstance().getTime());
-	summary.setExecutionCourse(this);
-
-	return summary;
-    }
-
-    public Summary createSummary(String title, String summaryText, Integer studentsNumber,
-	    Boolean isExtraLesson, Professorship professorship) {
-
-	if (professorship == null)
-	    throw new NullPointerException();
-
-	final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
-	summary.setProfessorship(professorship);
-	summary.setTeacher(null);
-	summary.setTeacherName(null);
-
-	return summary;
-    }
-
-    public Summary createSummary(String title, String summaryText, Integer studentsNumber,
-	    Boolean isExtraLesson, Teacher teacher) {
-
-	if (teacher == null)
-	    throw new NullPointerException();
-
-	final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
-	summary.setTeacher(teacher);
-	summary.setProfessorship(null);
-	summary.setTeacherName(null);
-
-	return summary;
-    }
-
-    public Summary createSummary(String title, String summaryText, Integer studentsNumber,
-	    Boolean isExtraLesson, String teacherName) {
-
-	if (teacherName == null)
-	    throw new NullPointerException();
-
-	final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
-	summary.setTeacherName(teacherName);
-	summary.setTeacher(null);
-	summary.setProfessorship(null);
-
-	return summary;
-    }
-
     @Override
     public String getNome() {
 	if (LanguageUtils.getUserLanguage() == Language.en && hasAnyAssociatedCurricularCourses()) {

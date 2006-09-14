@@ -1,13 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import java.util.Calendar;
-
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class ShiftPlainRenderer extends OutputRenderer {
 
@@ -20,33 +19,27 @@ public class ShiftPlainRenderer extends OutputRenderer {
                 if (object == null) {
                     return new HtmlText();
                 }
-
-                StringBuilder shiftText = new StringBuilder();
-                boolean needsSeparator = false;
                 
                 Shift shift = (Shift) object;
-                String name = shift.getNome();
-                
-                shiftText.append(name + " (");
-                for (Lesson lesson : shift.getLessonsOrderedByWeekDayAndStartTime()) {
-                    if (needsSeparator) {
-                        shiftText.append("; ");
+                final StringBuilder lessonsLabel = new StringBuilder();
+                int index = 0;
+                for (Lesson lesson : shift.getAssociatedLessonsSet()) {
+                    index++;
+                    lessonsLabel.append(lesson.getDiaSemana().toString()).append(" (");
+                    lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getInicio().getTime()))
+                            .append("-");
+                    lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime())).append(") ");
+                    if (lesson.getSala() != null) {
+                        lessonsLabel.append(lesson.getSala().getName().toString());
                     }
-                    
-                    shiftText.append(lesson.getDiaSemana().toString() + " ");
-                    shiftText.append(lesson.getInicio().get(Calendar.HOUR_OF_DAY) + ":");
-                    shiftText.append(lesson.getInicio().get(Calendar.MINUTE) + "-");
-                    shiftText.append(lesson.getFim().get(Calendar.HOUR_OF_DAY) + ":");
-                    shiftText.append(lesson.getFim().get(Calendar.MINUTE) + " ");
-                    shiftText.append(lesson.getSala().getName());
-                    
-                    needsSeparator = true;
+                    if (index < shift.getAssociatedLessonsCount()) {
+                        lessonsLabel.append(" ; ");
+                    } else {
+                        lessonsLabel.append(" ");
+                    }
                 }
-                shiftText.append(")");
-                
-                return new HtmlText(shiftText.toString());
-            }
-            
+                return new HtmlText(lessonsLabel.toString());                               
+            }            
         };
     }
 

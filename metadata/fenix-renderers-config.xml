@@ -115,6 +115,8 @@ Documentation:
     </renderer>
     <renderer type="net.sourceforge.fenixedu.domain.Shift" layout="shift-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.ShiftPlainRenderer"/>
 
+	<renderer type="net.sourceforge.fenixedu.domain.Summary" layout="summary-plain-to-create-summary" class="net.sourceforge.fenixedu.presentationTier.renderers.SummaryPlainRenderer"/>
+
     <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer"/>
     <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer">
     	<property name="escaped" value="false"/>

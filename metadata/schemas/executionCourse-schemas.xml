@@ -50,7 +50,7 @@
 	<slot name="shift" key="label.shift" layout="menu-select" 
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ListShiftsToImportLessonPlanningsProvider" />				
-		<property name="format"	value="${shiftLabel}" />		
+		<property name="eachLayout"	value="shift-plain" />
 	</slot>	
 </schema>
 <schema name="ChooseDegreePeriodAndCurricularYearToImportLessonPlannings" type="net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean" bundle="DEFAULT">		
@@ -254,7 +254,7 @@
 	<slot name="shift" key="label.shift" layout="menu-select-postback" 
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ListShiftsToSummariesManagementProvider" />				
-		<property name="format"	value="${shiftLabel}" />
+		<property name="eachLayout"	value="shift-plain" />
 		<property name="destination" value="postBack"/>
 	</slot>	
 </schema>
@@ -310,6 +310,7 @@
 <schema name="ListLastSummariesToSummariesManagement" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">
 	<slot name="lastSummary" key="message.summaryText.last" layout="menu-select-postback" 
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="eachLayout" value="summary-plain-to-create-summary"/>	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LastSummariesToSummariesManagementProvider" />				
 		<property name="format"	value="${summaryLabel}" />
 		<property name="destination" value="postBack"/>
@@ -330,7 +331,7 @@
 	</slot>
 	<slot name="shift" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ListShiftsToShowSummariesProvider" />				
-		<property name="format"	value="${shiftLabel}" />
+		<property name="eachLayout" value="shift-plain" />
 		<property name="destination" value="postBack"/>
 		<property name="defaultText" value="label.summaries.all" />
 		<property name="key" value="true"/>
@@ -348,4 +349,16 @@
 		<property name="key" value="true"/>
 		<property name="bundle" value="DEFAULT"/>
 	</slot>	
+</schema>
+<schema name="PossibleNextSummaryLessonAndDate" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
+	<slot name="lesson">
+		<property name="format"	value="${diaSemana.diaSemanaString} (${beginHourMinuteSecond.hour,02d}:${beginHourMinuteSecond.minuteOfHour,02d} - ${endHourMinuteSecond.hour,02d}:${endHourMinuteSecond.minuteOfHour,02d}) ${sala.name}" />
+	</slot>			
+	<slot name="date" />
+</schema>
+<schema name="ShowPossibleNextSummaryLessonAndDate" extends="PossibleNextSummaryLessonAndDate" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
+	<slot name="lesson.tipo" layout=""/>
+</schema>
+<schema name="EditPossibleNextSummaryLessonAndDates" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
+	<slot name="studentsNumber" />
 </schema>
