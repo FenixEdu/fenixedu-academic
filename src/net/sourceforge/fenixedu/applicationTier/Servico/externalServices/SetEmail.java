@@ -40,17 +40,12 @@ public class SetEmail extends Service {
 	    final String[] allowedHostTokens = allowedHostString.split(",");
 	    for (int i = 0; i < allowedHostTokens.length; i++) {
 		allowedHosts.add(allowedHostTokens[i]);
-                System.out.println("SetEmail adding host: " + allowedHostTokens[i]);
 	    }
 	}
 	password = PropertiesManager.getProperty("email.admin.password");
-        System.out.println("SetEmail authorized password = " + password);
     }
 
     public static boolean isAllowed(final String host, final String ip, final String password) {
-        System.out.println("SetEmail host: " + host);
-        System.out.println("SetEmail ip: " + ip);
-        System.out.println("SetEmail password: " + password);
 	return SetEmail.password != null && SetEmail.password.equals(password) &&
 		(allowedHosts.contains(host) || allowedHosts.contains(ip));
     }
