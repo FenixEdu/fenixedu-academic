@@ -294,7 +294,6 @@ class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fen
 	Integer keyTeacher;
 	AdviseType adviseType;
 }
-
 class net.sourceforge.fenixedu.domain.Advisory extends net.sourceforge.fenixedu.domain.DomainObject {
 	DateTime createdDateTime;
 	String subject;
@@ -782,7 +781,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
-    
+
 	class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBL extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
     
@@ -800,7 +799,6 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAM extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
-
 
 class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyDegree;
@@ -1229,8 +1227,8 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 
 	class net.sourceforge.fenixedu.domain.Project extends net.sourceforge.fenixedu.domain.Evaluation {
 	    String name;
-		DateTime projectBeginDateTime;
-		DateTime projectEndDateTime;
+	DateTime projectBeginDateTime;
+	DateTime projectEndDateTime;
         String description;     
         Boolean onlineSubmissionsAllowed;
         Integer maxSubmissionsToKeep;
@@ -1300,6 +1298,7 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	Integer keyEvaluationMethod;
 	Integer keySite;
 	Integer keyExecutionCourseWebsite;
+	Integer keyVigilantGroup;
 	String comment;
 	Double theoreticalHours;
 	Double praticalHours;
@@ -1357,6 +1356,7 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	Integer keyInsuranceValue;
     PeriodState state;
 }
+
 
 class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -1694,14 +1694,15 @@ class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.
 }
 
 class net.sourceforge.fenixedu.domain.ExportGrouping extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keySenderExecutionCourse;
-    Integer keySenderPerson;
-    Integer keyExecutionCourse;
-    Integer keyReceiverPerson;
-    Integer keyGrouping;
+        Integer keySenderExecutionCourse;
+        Integer keySenderPerson;
+        Integer keyExecutionCourse;
+        Integer keyReceiverPerson;
+        Integer keyGrouping;
     ProposalState proposalState;
 }
-               
+        
+        
 class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyContributor;
 	Integer keyContributorParty;
@@ -1828,6 +1829,8 @@ class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fen
 		DateTime lastModifiedDate;
 		Integer keyModifiedBy;
 	}
+
+	
   
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
@@ -2581,15 +2584,15 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 		Integer keyPerson;
 	}
 
-class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyRoom;
-	Integer keyPeriod;
-    DiaSemana dayOfWeek;
-	HourMinuteSecond startTimeDateHourMinuteSecond;
-	HourMinuteSecond endTimeDateHourMinuteSecond;
-    Integer keyWrittenEvaluation;
-    Integer keyLesson;
-}
+	class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
+		Integer keyRoom;
+		Integer keyPeriod;
+	    DiaSemana dayOfWeek;
+		HourMinuteSecond startTimeDateHourMinuteSecond;
+		HourMinuteSecond endTimeDateHourMinuteSecond;
+	    Integer keyWrittenEvaluation;
+	    Integer keyLesson;
+	}
 
 class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.DomainObject {
 	YearMonthDay begin;
@@ -3140,10 +3143,12 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
     Boolean required;
 }
 
+
 class net.sourceforge.fenixedu.domain.Tutor extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
     Integer keyStudentCurricularPlan;
 }
+
 
 class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
@@ -3151,6 +3156,7 @@ class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.d
     String mail;
     String name;
 }
+
 
     class net.sourceforge.fenixedu.domain.SiteIST extends net.sourceforge.fenixedu.domain.WebSite {
     }
@@ -3958,6 +3964,196 @@ class net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipVa
 	Double laboratorialHoursManual;
 	ValuationValueType laboratorialHoursType;
 }
+
+
+/* 
+ * VIGILANCY
+ */ 
+
+class net.sourceforge.fenixedu.domain.vigilancy.Vigilant extends net.sourceforge.fenixedu.domain.DomainObject{
+	Integer keyPerson;
+	Integer keyIncompatiblePerson;
+	Integer keyExecutionYear;
+}
+
+class net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod extends net.sourceforge.fenixedu.domain.DomainObject{
+	DateTime beginDate;
+	DateTime endDate;
+	String justification;
+	Integer keyVigilant;
+}
+
+class net.sourceforge.fenixedu.domain.vigilancy.Convoke extends net.sourceforge.fenixedu.domain.DomainObject{
+	Boolean confirmed;
+	Boolean attendedToConvoke; 
+	Boolean active;
+	Integer keyVigilant;
+	Integer keyWrittenEvaluation;
+}
+
+
+class net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup extends net.sourceforge.fenixedu.domain.DomainObject{
+	String name;
+	String convokeStrategy;
+	DateTime beginOfFirstPeriodForUnavailablePeriods;
+	DateTime endOfFirstPeriodForUnavailablePeriods;
+	DateTime beginOfSecondPeriodForUnavailablePeriods;
+	DateTime endOfSecondPeriodForUnavailablePeriods;
+	Integer keyUnit;
+	Integer keyExecutionYear;
+}
+
+class net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator extends net.sourceforge.fenixedu.domain.DomainObject{
+	Boolean allowedToCreateGroups;
+	Integer keyUnit;
+	Integer keyPerson;
+	Integer keyExecutionYear;
+}
+
+/* 
+ * Relations for vigilancy
+ */
+
+relation VigilantBelongsToGroup {
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
+		multiplicity *;
+	}
+}
+
+relation VigilantIsUnavailable {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilant;
+	net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod playsRole unavailablePeriods {
+		multiplicity *;
+	}
+}
+
+relation VigilantInExecutionYear {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation VigilantPerson {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
+		multiplicity *;
+	}
+		net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation VigilantIncompatiblePerson {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole incompatibleVigilants {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole incompatiblePerson;
+}
+relation ConvokingVigilant {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilant;
+	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
+		multiplicity *;
+	}
+}
+
+relation ConvokeForWrittenEvaluation {
+	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
+}
+
+relation VigilantGroupInExecutionYear {
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation VigilantGroupBelongsToUnit {
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+}
+
+relation ExecutionCourseBelongsToGroup {
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroup;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourses {
+		multiplicity *;
+	}
+}
+
+relation ExamCoordinatorInExecutionYear {
+	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation ExamCoordinatorPerson {
+	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation ExamCoordinatorBelongToUnit {
+	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+}
+
+relation ExamCoordinatorManagesVigilantGroup {
+	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
+		multiplicity *;
+	}
+}
+relation RootDomainVigilant {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
+		multiplicity *;
+	}
+}
+
+relation RootDomainVigilantGroup {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
+		multiplicity *;
+	}
+}
+
+relation RootDomainConvoke {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainUnavailablePeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod playsRole unavailablePeriods {
+		multiplicity *;
+	}
+}
+
+
+relation RootDomainExamCoordinator {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
+		multiplicity *;
+	}
+}
+
+
+/*
+ * VIGILANCY END
+ */
 
 /*
  * Relations definitions
@@ -6457,6 +6653,7 @@ relation StudentCurricularPlanBranch {
     }
     net.sourceforge.fenixedu.domain.Branch playsRole branch;
 }
+
 
 
 relation StudentCurricularPlanCreditsInAnySecundaryArea {
@@ -10180,4 +10377,3 @@ relation ProfessorshipValuationCourseValuation {
 	
 	net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation playsRole courseValuation;
 }
-

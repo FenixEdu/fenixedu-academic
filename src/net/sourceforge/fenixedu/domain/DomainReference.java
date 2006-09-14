@@ -19,8 +19,8 @@ public class DomainReference<T extends DomainObject> implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
-    String className; // is also used to know when we are storing the null value
-    Integer oid;
+    private String className; // is also used to know when we are storing the null value
+    private Integer oid;
 
     transient Class type; // chached type, transient to protect from class hierarchy changes
     transient T object;
@@ -33,8 +33,8 @@ public class DomainReference<T extends DomainObject> implements Serializable {
             this.oid = null;
         }
         else {
-            	this.object = object;
-            	this.type = object.getClass();
+        	this.object = object;
+        	this.type = object.getClass();
             this.className = object.getClass().getName();
             this.oid = object.getIdInternal();
         }

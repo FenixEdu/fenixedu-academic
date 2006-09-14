@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.joda.time.YearMonthDay;
 
@@ -124,6 +125,10 @@ public class WrittenTest extends WrittenTest_Base {
 
     private boolean hasTimeTableManagerPrivledges(final IUserView requestor) {
         return requestor.hasRoleType(RoleType.TIME_TABLE_MANAGER);
+    }
+    
+    public EvaluationType getEvaluationType() {
+        return EvaluationType.TEST_TYPE;
     }
 
 }

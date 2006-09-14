@@ -57,6 +57,8 @@ public class TabularListRenderer extends CollectionRenderer {
     
     private String listTitleBundle;
     
+    private Boolean displayHeaders = Boolean.TRUE;
+    
     public TabularListRenderer() {
         super();
         
@@ -81,6 +83,19 @@ public class TabularListRenderer extends CollectionRenderer {
         return this.subSchema;
     }
 
+    /**
+     * With this property you can choose if you want to
+     * display headers or not in the table
+     * @property
+     */
+    public boolean getDisplayHeaders() {
+        return displayHeaders;
+    }
+
+    public void setDisplayHeaders(boolean displayHeaders) {
+        this.displayHeaders = displayHeaders;
+    }
+    
     /**
      * Specifies the schema that will be used when presenting
      * each sub object.
@@ -148,7 +163,7 @@ public class TabularListRenderer extends CollectionRenderer {
 
         @Override
         protected boolean hasHeader() {
-            return getListTitle() != null;
+            return (displayHeaders) ? getListTitle() != null : false;
         }
         
         @Override
@@ -178,4 +193,6 @@ public class TabularListRenderer extends CollectionRenderer {
             return renderValue(object.getObject(), schema, layout);
         }
     }
+
+
 }

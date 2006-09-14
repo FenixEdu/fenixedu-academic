@@ -285,5 +285,9 @@
 	
 	<definition name="documentRequests.management.editDocumentRequest" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/editDocumentRequest.jsp"/>
-	</definition>			
+	</definition>	
+	
+		<definition name="examCoordinator-management" extends="definition.degreeAdministrativeOffice.masterPage" >
+		<put name="body" value="/vigilancy/manageExamCoordinator.jsp" />
+    </definition>			
 </tiles-definitions>

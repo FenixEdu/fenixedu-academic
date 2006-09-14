@@ -747,6 +747,16 @@
     <body-content>JSP</body-content>
 
     <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        The form id;
+      </description>
+    </attribute>
+
+    <attribute>
       <name>action</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>

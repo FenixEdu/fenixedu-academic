@@ -13,14 +13,16 @@ import org.apache.commons.collections.Predicate;
 public class HtmlCheckBoxList extends HtmlMultipleValueComponent {
 
     private HtmlList list;
+
     private List<HtmlCheckBox> checkBoxes;
+
     private List<HtmlHiddenField> hiddenFields;
 
     private boolean selectAllShown;
-    
+
     public HtmlCheckBoxList() {
         super();
-        
+
         this.list = new HtmlList();
         this.checkBoxes = new ArrayList<HtmlCheckBox>();
         this.hiddenFields = new ArrayList<HtmlHiddenField>();
@@ -178,7 +180,7 @@ public class HtmlCheckBoxList extends HtmlMultipleValueComponent {
         this.selectAllShown = selectAllShown;
     }
 
-    protected List<HtmlCheckBox> getCheckBoxes() {
+    public List<HtmlCheckBox> getCheckBoxes() {
         return this.checkBoxes;
     }
 
@@ -194,31 +196,30 @@ public class HtmlCheckBoxList extends HtmlMultipleValueComponent {
     public void setValues(String... values) {
         super.setValues(values);
 
-        outter:
-        for (HtmlCheckBox checkBox : getCheckBoxes()) {
+        outter: for (HtmlCheckBox checkBox : getCheckBoxes()) {
             for (String value : values) {
                 if (value.equals(checkBox.getValue())) {
                     checkBox.setChecked(true);
                     continue outter;
                 }
             }
-            
+
             checkBox.setChecked(false);
         }
     }
 
     public HtmlCheckBox addOption(HtmlComponent component, String value) {
         HtmlCheckBox checkBox = addOption(component);
-        
+
         checkBox.setUserValue(value);
         return checkBox;
     }
-    
+
     public HtmlHiddenField addHiddenOption(String value) {
         HtmlHiddenField hiddenField = new HtmlHiddenField();
-        
+
         getHiddenFields().add(hiddenField);
-        
+
         hiddenField.setValue(value);
         return hiddenField;
     }
@@ -226,90 +227,92 @@ public class HtmlCheckBoxList extends HtmlMultipleValueComponent {
     public HtmlCheckBox addOption(HtmlComponent component) {
         HtmlCheckBox checkBox = new HtmlCheckBox();
         getCheckBoxes().add(checkBox);
-        
+
         HtmlListItem item = this.list.createItem();
         item.setBody(component);
-        
+
         return checkBox;
     }
 
     protected HtmlCheckBox addOption(HtmlComponent component, int index) {
         HtmlCheckBox checkBox = new HtmlCheckBox();
         getCheckBoxes().add(index, checkBox);
-        
+
         HtmlListItem item = this.list.createItem(index);
         item.setBody(component);
-        
+
         return checkBox;
     }
 
     @Override
     public HtmlTag getOwnTag(PageContext context) {
-    	int index = 0;
+        int index = 0;
         for (HtmlCheckBox checkBox : getCheckBoxes()) {
             checkBox.setName(getName());
-            
+
             if (getTargetSlot() != null) {
                 checkBox.setTargetSlot(getTargetSlot());
             }
-            
+
             checkBox.setId(checkBox.getName() + "/" + index++);
         }
 
         for (HtmlHiddenField hiddenField : getHiddenFields()) {
             hiddenField.setName(getName());
-            
+
             if (getTargetSlot() != null) {
                 hiddenField.setTargetSlot(getTargetSlot());
             }
         }
-        
+
         if (isSelectAllShown()) {
             StringBuilder selectAllScript = new StringBuilder();
             boolean allChecked = true;
-            
+
             String allCheckBoxId = getName() + "/all";
-            
-            for (HtmlCheckBox checkBox : getCheckBoxes()) {                
-                if (! checkBox.isChecked()) {
+
+            for (HtmlCheckBox checkBox : getCheckBoxes()) {
+                if (!checkBox.isChecked()) {
                     allChecked = false;
                 }
-                
-                selectAllScript.append("document.getElementById('" + checkBox.getId() + "').checked = this.checked; ");
-                
-                String eachScript = "if (! this.checked) document.getElementById('" + allCheckBoxId + "').checked = false;";
+
+                selectAllScript.append("document.getElementById('" + checkBox.getId()
+                        + "').checked = this.checked; ");
+
+                String eachScript = "if (! this.checked) document.getElementById('" + allCheckBoxId
+                        + "').checked = false;";
                 checkBox.setOnClick(eachScript);
                 checkBox.setOnDblClick(eachScript);
             }
-            
-            HtmlCheckBox checkAllBox = addOption(new HtmlText(RenderUtils.getResourceString("renderers.checkboxlist.selectAll")), 0);
+
+            HtmlCheckBox checkAllBox = addOption(new HtmlText(RenderUtils
+                    .getResourceString("renderers.checkboxlist.selectAll")), 0);
             checkAllBox.setId(allCheckBoxId);
             checkAllBox.setChecked(allChecked);
             checkAllBox.setOnClick(selectAllScript.toString());
             checkAllBox.setOnDblClick(selectAllScript.toString());
         }
-        
+
         for (int i = 0; i < this.list.getItems().size(); i++) {
             HtmlListItem item = this.list.getItems().get(i);
             HtmlInlineContainer container = new HtmlInlineContainer();
-            
+
             container.addChild(getCheckBoxes().get(i));
             container.addChild(item.getBody());
-            
+
             item.setBody(container);
         }
-        
+
         if (getHiddenFields().size() > 0) {
             HtmlContainer container = new HtmlInlineContainer();
-            
+
             container.addChild(list);
             for (HtmlHiddenField hiddenField : getHiddenFields()) {
                 container.addChild(hiddenField);
             }
-            
+
             return container.getOwnTag(context);
-        }
-        else {
+        } else {
             return this.list.getOwnTag(context);
         }
     }

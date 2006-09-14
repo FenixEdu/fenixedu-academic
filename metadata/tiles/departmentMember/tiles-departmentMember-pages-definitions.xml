@@ -187,5 +187,23 @@
  	<definition name="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses" extends="departmentMember.masterPage">
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses.jsp"/>
 	</definition>
-	
+	    
+	<definition name="display-convoke-map" extends="departmentMember.masterPage" >
+		<put name="body" value="/departmentMember/vigilancy/manageVigilant.jsp" />
+    </definition>	    
+
+	<definition name="edit-unavailable-periods" extends="departmentMember.masterPage" >
+		<put name="body" value="/departmentMember/vigilancy/editUnavailablePeriod.jsp" />
+    </definition>    
+
+	<definition name="prepare-incompatible-person" extends="departmentMember.masterPage" >
+		<put name="body" value="/departmentMember/vigilancy/editIncompatiblePerson.jsp" />
+    </definition>  
+
+   	<definition name="create-unavailablePeriod" extends="departmentMember.masterPage" >
+		<put name="body" value="/departmentMember/vigilancy/createUnavailable.jsp" />
+    </definition>	
+
+
+
 </tiles-definitions>

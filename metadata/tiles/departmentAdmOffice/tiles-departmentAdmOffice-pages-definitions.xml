@@ -321,9 +321,18 @@
 	<!-- ==== Summaries Management === -->
 	<definition name="prepare-insert-summary" extends="definition.teacher.summaryPage">
 		<put name="body" value="/departmentAdmOffice/teacher/executionCourse/createSummary.jsp" />
-	</definition>		
+	</definition>
 	<definition name="prepare-show-summaries" extends="definition.teacher.summaryPage">
 		<put name="body" value="/departmentAdmOffice/teacher/executionCourse/showSummaries.jsp" />
 	</definition>	
 
+	<definition name="examCoordinator-management" extends="departmentAdmOffice.masterPage" >
+		<put name="body" value="/departmentAdmOffice/vigilancy/manageExamCoordinator.jsp" />
+    </definition>
+    
+    <definition name="edit-examCoordinator" extends="departmentAdmOffice.masterPage" >
+		<put name="body" value="/departmentAdmOffice/vigilancy/editExamCoordinator.jsp" />
+    </definition>
+
+    
 </tiles-definitions>

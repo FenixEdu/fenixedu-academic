@@ -15,18 +15,18 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 public class InputMenuOptionListRendererWithPostback extends InputMenuOptionListRenderer {
 
     private final String HIDDEN_NAME = "postback";
-    
+
     private String destination;
-    
+
     public String getDestination() {
         return destination;
     }
 
     /**
-     * Allows to choose the postback destination. If this property is not 
-     * specified the default "postback" destination is used. 
+     * Allows to choose the postback destination. If this property is not
+     * specified the default "postback" destination is used.
      * 
-     * @property 
+     * @property
      */
     public void setDestination(String destination) {
         this.destination = destination;
@@ -35,9 +35,9 @@ public class InputMenuOptionListRendererWithPostback extends InputMenuOptionList
     @Override
     public HtmlComponent render(Object object, Class type) {
         HtmlInlineContainer container = new HtmlInlineContainer();
-        
+
         String prefix = ((MetaSlot) getInputContext().getMetaObject()).getName();
-        
+
         HtmlHiddenField hidden = new HtmlHiddenField(prefix + HIDDEN_NAME, "");
 
         HtmlMenu menu = (HtmlMenu) super.render(object, type);
@@ -48,11 +48,12 @@ public class InputMenuOptionListRendererWithPostback extends InputMenuOptionList
         container.addChild(menu);
 
         return container;
-    }    
-    
-    private static class PostBackController extends HtmlController{
+    }
+
+    private static class PostBackController extends HtmlController {
 
         private HtmlHiddenField hidden;
+
         private String destination;
 
         public PostBackController(HtmlHiddenField hidden, String destination) {
@@ -62,19 +63,20 @@ public class InputMenuOptionListRendererWithPostback extends InputMenuOptionList
 
         @Override
         public void execute(IViewState viewState) {
-            if(hidden.getValue() != null && hidden.getValue().length() != 0) {
-                ViewDestination destination = viewState.getDestination(this.destination);
-                
-                if (destination != null){
+            if (hidden.getValue() != null && hidden.getValue().length() != 0) {
+                String destinationName = this.destination == null ? "postback" : this.destination;
+                ViewDestination destination = viewState.getDestination(destinationName);
+
+                if (destination != null) {
                     viewState.setCurrentDestination(destination);
                 } else {
                     viewState.setCurrentDestination("postBack");
                 }
-                
+
                 viewState.setSkipValidation(true);
             }
-            
+
         }
-        
+
     }
 }

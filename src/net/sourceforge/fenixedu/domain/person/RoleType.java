@@ -81,8 +81,10 @@ public enum RoleType {
 
     PEDAGOGICAL_COUNCIL("Pedagogical Council"),
     
-    CANDIDATE("Candidate");
+    CANDIDATE("Candidate"),
 
+    EXAM_COORDINATOR("Exam Coordinator");
+    
     public String getName() {
         return name();    
     }
@@ -99,6 +101,7 @@ public enum RoleType {
         rolesImportance.add(RoleType.CANDIDATE);
         rolesImportance.add(RoleType.ALUMNI);
         rolesImportance.add(RoleType.PERSON);
+        rolesImportance.add(RoleType.EXAM_COORDINATOR);
         return rolesImportance;
     }
 

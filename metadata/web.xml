@@ -449,6 +449,10 @@
             <param-value>/WEB-INF/conf/struts-researcher.xml</param-value>
         </init-param>
         <init-param>
+            <param-name>config/examCoordination</param-name>
+            <param-value>/WEB-INF/conf/struts-examCoordinator.xml</param-value>
+        </init-param>
+        <init-param>
             <param-name>config/pedagogicalCouncil</param-name>
             <param-value>/WEB-INF/conf/struts-pedagogicalCouncil.xml</param-value>
         </init-param>

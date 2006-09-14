@@ -425,6 +425,19 @@ public class CurricularCourse extends CurricularCourse_Base {
         return !result.isEmpty();
     }
 
+    public boolean hasActiveScopeInGivenExecutionYear(ExecutionYear executionYear) {
+        List<ExecutionPeriod> executionPeriods = executionYear.getExecutionPeriods();
+        Set<Integer> semesters = new HashSet<Integer> ();
+        for(ExecutionPeriod executionPeriod : executionPeriods) {
+            semesters.add(executionPeriod.getSemester());
+        }
+        
+        for(Integer semester : semesters) {
+            if(this.hasActiveScopeInGivenSemester(semester)) return true;
+        }
+        
+        return false;
+    }
     public boolean hasScopeInGivenSemester(final Integer semester) {
         List scopes = this.getScopes();
 

@@ -20,6 +20,7 @@
     <!ENTITY degreeAdminOffice SYSTEM "degreeAdministrativeOffice-schemas.xml"> 
     <!ENTITY executionCourse SYSTEM "executionCourse-schemas.xml"> 
     <!ENTITY parking SYSTEM "parking-schemas.xml"> 
+	<!ENTITY vigilancy SYSTEM "vigilancy-schemas.xml">
 ]>
 
 <schemas>
@@ -525,69 +526,69 @@
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	       <property name="eachClasses" value="multi-language-line"/>
-    	       <property name="classes" value="pbottom3"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="objectives" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	       <property name="eachClasses" value="multi-language-line"/>
-    	       <property name="classes" value="pbottom3"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="designedFor" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	       <property name="eachClasses" value="multi-language-line"/>
-    	       <property name="classes" value="pbottom3"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="professionalExits" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	       <property name="eachClasses" value="multi-language-line"/>
-    	       <property name="classes" value="pbottom3"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="operationalRegime" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	       <property name="eachClasses" value="multi-language-line"/>
-    	       <property name="classes" value="pbottom3"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="gratuity" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	       <property name="eachClasses" value="multi-language-line"/>
-    	       <property name="classes" value="pbottom3"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="schoolCalendar" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
-    	       <property name="eachClasses" value="multi-language-line"/>
-    	       <property name="classes" value="pbottom3"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="candidacyPeriod" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
-    	       <property name="eachClasses" value="multi-language-line"/>
-    	       <property name="classes" value="pbottom3"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="selectionResultDeadline" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
-    	       <property name="eachClasses" value="multi-language-line"/>
-    	       <property name="classes" value="pbottom3"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="enrolmentPeriod" layout="rich-text">
 			<property name="safe" value="true"/>
@@ -600,8 +601,8 @@
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
-    	       <property name="eachClasses" value="multi-language-line"/>
-    	       <property name="classes" value="pbottom3"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="links" layout="rich-text">
 			<property name="safe" value="true"/>
@@ -761,7 +762,7 @@
     &degreeAdminOffice;
     &executionCourse;
     &parking;
-
+	&vigilancy;
 
 <!-- Teacher Service Distribution -->
     <schema name="omissionValuesValuation.details" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase">
@@ -854,5 +855,4 @@
         	<property name="maxLength" value="3"/>
         </slot>
     </schema>
-    
 </schemas>

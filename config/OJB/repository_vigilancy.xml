@@ -1,0 +1,35 @@
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.vigilancy.Vigilant 
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" table="VIGILANT">	
+  
+</class-descriptor>
+
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod" table="UNAVAILABLE_PERIOD">
+
+ 		      
+</class-descriptor>
+
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.vigilancy.Convoke
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.Convoke" table="CONVOKE">
+</class-descriptor>
+
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup
+     *********************************** -->
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup" table="VIGILANT_GROUP">
+	
+
+</class-descriptor>
+
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator" table="EXAM_COORDINATOR">	
+</class-descriptor>

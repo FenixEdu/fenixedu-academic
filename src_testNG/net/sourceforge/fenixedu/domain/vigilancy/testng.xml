@@ -1,0 +1,24 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+
+<suite name="Vigilancy">
+  <test name="Vigilant Logic Testing">
+    <classes>
+       <class name="net.sourceforge.fenixedu.domain.vigilancy.VigilantTest" />
+    </classes>
+  </test>
+  <test name="UnavailablePeriod Logic Testing">
+    <classes>
+       <class name="net.sourceforge.fenixedu.domain.vigilancy.UnavailableTest" />
+    </classes>
+  </test>
+    <test name="VigilantGroup Logic Testing">
+    <classes>
+       <class name="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroupTest" />
+    </classes>
+  </test>
+  <test name="Convoke Logic Testing">
+    <classes>
+       <class name="net.sourceforge.fenixedu.domain.vigilancy.ConvokeTest" />
+    </classes>
+  </test>
+</suite>

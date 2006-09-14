@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="/home/pcma/workspace/Fenix"  default="run-tests" name="Tests">
+
+        <property name="encoding" value="ISO-8859-1"/>
+
+    <property name="src_tests" location="src_testNG"/>
+
+        <property name="build.home" location="build"/>
+        <property name="build.home.webinf" value="${build.home}/WEB-INF"/>
+        <property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
+
+    <property name="docs" location="docs" />
+    <property name="report.tests" location="${docs}/tests" />
+    <property name="report.coverage" location="${report.tests}/coverage" />
+
+    <property name="lib" location="lib" />
+
+        <property name="compile.debug"       value="on"/>
+        <property name="compile.deprecation" value="off"/>
+        <property name="compile.optimize"    value="off"/>
+
+        <taskdef resource="testngtasks"
+               classpath="./lib/testng-4.7-jdk15.jar"/>
+
+    <target name="compile-tests"
+                description="Compile test code">
+                <javac destdir="${build.home.webinf.classes}"
+               extdirs="${lib}"
+               debug="${compile.debug}"
+               optimize="${compile.optimize}"
+               deprecation="${compile.deprecation}"
+               encoding="${encoding}"
+                           nowarn="true">
+                        <src path="${src_tests}"/>
+                </javac>
+    </target>
+
+     <target name="run-tests"
+                description="Run all tests"
+                depends="compile-tests">
+                <testng>
+
+                 <xmlfileset dir="${src_tests}/net/sourceforge/fenixedu/domain/vigilancy/" includes="testng.xml"/>
+
+            <classpath>
+                <pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </testng>
+    </target>
+
+
+</project>
+    

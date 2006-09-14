@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -20,6 +22,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -46,9 +49,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
     
     public WrittenEvaluation() {
-    	super();
+        super();
     }
-
+    
     public WrittenEvaluation(Date evaluationDay, Date evaluationBeginningTime, Date evaluationEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
             List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
@@ -58,6 +61,49 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
                 executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);
     }
 
+    public String getName() {
+        List<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
+        String name = "";
+        int i=0;
+        for(ExecutionCourse course : courses) {
+            if(i>0) name = name + ", ";
+            name = name + " " + course.getSigla(); 
+            i++;
+        }
+        return name;
+    }
+    
+    public Campus getCampus() {
+        List<OldRoom> rooms = this.getAssociatedRooms();
+        if(rooms.size()>0) {
+            return rooms.get(0).getBuilding().getCampus();
+        }
+        else return null;
+    }
+    
+    public Boolean getIsAfterCurrentDate() {
+        DateTime currentDate = new DateTime();
+        return currentDate.isBefore(this.getBeginningDateTime());
+    }
+    
+    public DateTime getBeginningDateTime() {
+        HourMinuteSecond begin = this.getBeginningDateHourMinuteSecond();
+        YearMonthDay yearMonthDay = this.getDayDateYearMonthDay();
+        return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(),
+                yearMonthDay.getDayOfMonth(), begin.getHour(), begin.getMinuteOfHour(), begin
+                .getSecondOfMinute(), 0);
+
+    }
+    
+    public DateTime getEndDateTime() {
+        HourMinuteSecond end = this.getEndDateHourMinuteSecond();
+        YearMonthDay yearMonthDay = this.getDayDateYearMonthDay();
+        return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(),
+                yearMonthDay.getDayOfMonth(), end.getHour(), end.getMinuteOfHour(), end
+                .getSecondOfMinute(), 0);
+
+    }
+    
 	public EvaluationType getEvaluationType() {
 		return EvaluationType.EXAM_TYPE;
 	}

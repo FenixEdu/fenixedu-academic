@@ -1,0 +1,17 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+#
+#   Runs sql scripts to update database from previous release.
+#
+# -----------------------------------------------------------------------------
+#
+
+DB=$1
+USER=$2
+
+echo Using database: $DB
+echo Enter password for $USER:
+read -s password
+
+mysql -u$USER -p$password $DB < CreateVigilancyTables.sql
+

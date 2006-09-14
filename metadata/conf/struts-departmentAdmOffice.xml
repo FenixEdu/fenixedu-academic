@@ -938,7 +938,17 @@
 			<forward name="showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses"/>
 		</action>
 
+	<!--  VIGILANCY -->
+	<action path="/vigilancy/examCoordinatorManagement" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ExamCoordinatorManagement"
+			parameter="method"
+			scope="request">
+			<forward name="prepareExamCoordinator" path="examCoordinator-management"/>
+			<forward name="editExamCoordinator" path="edit-examCoordinator"/>
+			
+		</action>
     </action-mappings>
+
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->

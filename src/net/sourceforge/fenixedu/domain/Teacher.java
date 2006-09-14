@@ -1095,7 +1095,7 @@ public class Teacher extends Teacher_Base {
                         .getExecutionYear());
     }
     
-    public Double getHoursLecturedOnExecutionCourseByShiftType(ExecutionCourse executionCourse, ShiftType shiftType) {
+     public Double getHoursLecturedOnExecutionCourseByShiftType(ExecutionCourse executionCourse, ShiftType shiftType) {
         double returnValue = 0;
 
         Professorship professorship = getProfessorshipByExecutionCourse(executionCourse);
@@ -1113,5 +1113,13 @@ public class Teacher extends Teacher_Base {
         }
         return returnValue;
     }
-    
+
+    public boolean teachesAny(final List<ExecutionCourse> executionCourses) {
+        for (final Professorship professorship : getProfessorshipsSet()) {
+            if (executionCourses.contains(professorship.getExecutionCourse())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

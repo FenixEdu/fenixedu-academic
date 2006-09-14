@@ -62,6 +62,17 @@ public class StandardInputRenderer extends InputRenderer {
     
     private String labelTerminator;
     
+    private boolean displayLabel = Boolean.TRUE;
+    
+    
+    public boolean isDisplayLabel() {
+        return displayLabel;
+    }
+
+    public void setDisplayLabel(boolean displayLabel) {
+        this.displayLabel = displayLabel;
+    }
+
     public StandardInputRenderer() {
         super();
         
@@ -184,18 +195,22 @@ public class StandardInputRenderer extends InputRenderer {
             switch (columnIndex) {
             case 0:
                 MetaSlot slot = this.object.getSlots().get(rowIndex);
+                if(displayLabel) {
 
-                if (slot.isReadOnly()) {
+                    if (slot.isReadOnly()) {
                     component = new HtmlText(slot.getLabel(), false); 
+                    }
+                    else {
+                        HtmlLabel label = new HtmlLabel();
+                        label.setFor(slot.getKey().toString());
+                        label.setText(addLabelTerminator(slot.getLabel()));
+                    
+                        component = label;
+                    }
                 }
                 else {
-                    HtmlLabel label = new HtmlLabel();
-                    label.setFor(slot.getKey().toString());
-                    label.setText(addLabelTerminator(slot.getLabel()));
-                    
-                    component = label;
+                    component = null;
                 }
-                
                 break;
             case 1:
                 slot = this.object.getSlots().get(rowIndex);

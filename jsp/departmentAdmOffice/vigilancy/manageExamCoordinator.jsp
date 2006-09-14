@@ -1,0 +1,53 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
+<h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.manageExamCoordinator"/></h2>
+
+<fr:form action="/vigilancy/examCoordinatorManagement.do?method=selectUnitForCoordinator">
+<fr:edit id="selectUnit" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" layout="tabular"
+name="bean" schema="selectUnitInVigilantGroup"/>
+</fr:form>
+<!--  selectUnitInVigilantGroup -->
+
+<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean"/>
+
+
+<logic:present name="bean" property="selectedUnit">		
+<logic:empty name="bean" property="selectedUnit.examCoordinators">
+	<p><em class="warning0"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.noExamCoordinatoresForUnit"/></em></p>
+</logic:empty>
+
+<logic:notEmpty name="bean" property="selectedUnit.examCoordinators">
+	<p class="mbottom0"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.coordinatorsForUnit"/></strong>:</p>
+<fr:view name="bean" property="selectedUnit.examCoordinators" schema="showExamCoordinators">
+<fr:layout name="tabular">
+	<fr:property name="classes" value="tstyle1a mvert05" />
+	<fr:property name="sortBy" value="executionYear" />
+	<fr:property name="link(apagar)" value="<%= "/vigilancy/examCoordinatorManagement.do?method=deleteExamCoordinator&unitId=" + bean.getSelectedUnit().getIdInternal() + "&deparmentId=" + bean.getSelectedDepartment().getIdInternal() %>"/>
+	<fr:property name="param(apagar)" value="idInternal/oid"/>
+	<fr:property name="visibleIf(apagar)" value="executionYear.current"/>
+</fr:layout>
+</fr:view>
+</logic:notEmpty>
+
+<p class="mtop05 mbottom2">
+	<html:link page="<%="/vigilancy/examCoordinatorManagement.do?method=editExamCoordinators&unitId=" + bean.getSelectedUnit().getIdInternal() + "&deparmentId=" + bean.getSelectedDepartment().getIdInternal() %>">
+	<bean:message key="label.vigilancy.editPreviledges" bundle="VIGILANCY_RESOURCES"/>
+	</html:link>
+</p>
+
+<p class="mbottom05"><strong><bean:message key="label.vigilancy.selectPersonToCoordinate" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
+<fr:form action="/vigilancy/examCoordinatorManagement.do?method=addExamCoordinator">
+<fr:edit name="bean" id="preserveState" schema="examCoordinator.create" 
+action="/vigilancy/examCoordinatorManagement.do?method=addExamCoordinator"/>
+
+<p><html:submit><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit></p>
+</fr:form>
+</logic:present>
+
+
+

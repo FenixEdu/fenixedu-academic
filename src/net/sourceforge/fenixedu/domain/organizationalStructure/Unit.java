@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -28,6 +29,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
+import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
@@ -36,7 +39,7 @@ public class Unit extends Unit_Base {
 
     public static final Comparator UNIT_COMPARATOR_BY_NAME = new BeanComparator("name", Collator
             .getInstance());
-
+	    
     private Unit() {
         super();
     }
@@ -150,7 +153,8 @@ public class Unit extends Unit_Base {
         }
         return new ArrayList<Unit>(allInactiveSubUnits);
     }
-        
+
+    
     public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate) {
         Set<Unit> allActiveSubUnits = new HashSet<Unit>();
         List<Unit> activeSubUnits = getActiveSubUnits(currentDate);
@@ -211,7 +215,8 @@ public class Unit extends Unit_Base {
         }
     }
 
-    private void checkAcronym(String acronym, PartyTypeEnum partyTypeEnum) {        
+
+    private void checkAcronym(String acronym, PartyTypeEnum partyTypeEnum) {
         Unit unit = readUnitByAcronymAndType(acronym, partyTypeEnum);
         if (unit != null && !unit.equals(this)) {
             throw new DomainException("error.existent.acronym");
@@ -228,14 +233,15 @@ public class Unit extends Unit_Base {
             throw new DomainException("error.unit.cannot.be.deleted");
         }
 
-        if (hasAnyParentUnits()) {
-            this.getParents().get(0).delete();
-        }
-        for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
+            if (hasAnyParentUnits()) {
+                this.getParents().get(0).delete();
+            }
+
+            for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
                 .get(0).delete())
             ;
-        removeDepartment();
-        removeDegree();
+            removeDepartment();
+            removeDegree();
         super.delete();
     }
 
@@ -271,7 +277,7 @@ public class Unit extends Unit_Base {
                 result.add(unit);
             }
         }
-
+        
         return new ArrayList<Unit>(result);
     }
 
@@ -302,13 +308,13 @@ public class Unit extends Unit_Base {
 
     public List<Unit> getCompetenceCourseGroupUnits() {
         final SortedSet<Unit> result = new TreeSet<Unit>(Unit.UNIT_COMPARATOR_BY_NAME);
-
+        
         for (Unit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.COMPETENCE_COURSE_GROUP)) {
                 result.add(unit);
             }
         }
-
+        
         return new ArrayList<Unit>(result);
     }
 
@@ -319,9 +325,10 @@ public class Unit extends Unit_Base {
         result.addAll(super.getCompetenceCourses());
         return new ArrayList<CompetenceCourse>(result);
     }
-
     // end SCIENTIFIC AREA UNITS, COMPETENCE COURSE GROUP UNITS AND RELATED
-
+    
+    
+    
     public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = getAllWorkingEmployees(begin, end);
@@ -333,8 +340,8 @@ public class Unit extends Unit_Base {
             }
         }
         return teachers;
-    }
-
+    }       
+    
     public List<Teacher> getAllTeachers() {
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = getAllWorkingEmployees();
@@ -347,7 +354,7 @@ public class Unit extends Unit_Base {
         return teachers;
     }
 
-    public List<Teacher> getAllCurrentTeachers() {        
+    public List<Teacher> getAllCurrentTeachers() {
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = getAllCurrentActiveWorkingEmployees();
         for (Employee employee : employees) {
@@ -361,7 +368,7 @@ public class Unit extends Unit_Base {
         }
         return teachers;
     }
-
+    
     public Teacher getTeacherByPeriod(Integer teacherNumber, YearMonthDay begin, YearMonthDay end) {
         for (Employee employee : getAllWorkingEmployees(begin, end)) {
             Teacher teacher = employee.getPerson().getTeacher();
@@ -374,28 +381,28 @@ public class Unit extends Unit_Base {
     }
 
     public List<Employee> getAllWorkingEmployees() {
-        Set<Employee> employees = new HashSet<Employee>();
+        Set<Employee> employees = new HashSet<Employee>();        
         for (Contract contract : getWorkingContracts()) {
             employees.add(contract.getEmployee());
         }
         for (Unit subUnit : getSubUnits()) {
             employees.addAll(subUnit.getAllWorkingEmployees());
-        }
+        }        
         return new ArrayList<Employee>(employees);
     }
-
+    
     public List<Employee> getAllWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
-        Set<Employee> employees = new HashSet<Employee>();
+        Set<Employee> employees = new HashSet<Employee>();        
         for (Contract contract : getWorkingContracts(begin, end)) {
             employees.add(contract.getEmployee());
         }
         for (Unit subUnit : getSubUnits()) {
             employees.addAll(subUnit.getAllWorkingEmployees(begin, end));
-        }
+        }        
         return new ArrayList<Employee>(employees);
     }
-
-    public List<Employee> getAllCurrentActiveWorkingEmployees() {
+    
+    public List<Employee> getAllCurrentActiveWorkingEmployees(){
         Set<Employee> employees = new HashSet<Employee>();
         YearMonthDay currentDate = new YearMonthDay();
         for (Contract contract : getWorkingContracts()) {
@@ -406,37 +413,37 @@ public class Unit extends Unit_Base {
         }
         for (Unit subUnit : getSubUnits()) {
             employees.addAll(subUnit.getAllCurrentActiveWorkingEmployees());
-        }
-        return new ArrayList<Employee>(employees);
+        }        
+        return new ArrayList<Employee>(employees);        
     }
 
     public List<Unit> getParentUnits() {
         return new ArrayList(getParentParties(getClass()));        
-    }
+            }
 
     public List<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
         return new ArrayList(getParentParties(accountabilityTypeEnum, getClass()));        
-    }
-    
+        }
+
     public List<Unit> getSubUnits() {
         return new ArrayList(getChildParties(getClass()));
-    }
+            }
     
     public List<Unit> getSubUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
         return new ArrayList(getChildParties(accountabilityTypeEnum, getClass()));        
-    }
+        }
     
     public List<Unit> getSubUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
         return new ArrayList(getChildParties(accountabilityTypeEnums, getClass()));        
     }
-     
+
     public boolean hasAnyParentUnits() {
         return !getParentUnits().isEmpty();
-    }    
-    
+            }
+
     public boolean hasAnySubUnits() {
         return !getSubUnits().isEmpty();
-    }
+            }
 
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
         if (parentUnit == null) {
@@ -444,8 +451,8 @@ public class Unit extends Unit_Base {
         }
         if (parentUnit.equals(this)) {
             throw new DomainException("error.unit.equals.parentUnit");
-        }
-   
+    }
+
         checkParentUnit(parentUnit);
         return new Accountability(parentUnit, this, accountabilityType);
     }
@@ -491,7 +498,7 @@ public class Unit extends Unit_Base {
         }
         return null;
     }
-   
+
     public Unit getChildUnitByAcronym(String acronym) {
         for (Unit subUnit : getSubUnits()) {
             if ((subUnit.getAcronym() != null) && (subUnit.getAcronym().equals(acronym))) {
@@ -521,6 +528,7 @@ public class Unit extends Unit_Base {
                 || partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
                 || partyTypeEnum.equals(PartyTypeEnum.ACADEMIC_SERVICES_SUPERVISION))) {
             for (Unit unit : readAllUnits()) {
+  
                 if (unit.getAcronym() != null && unit.getAcronym().equals(acronym)
                         && unit.getType() != null && unit.getType().equals(partyTypeEnum)) {
                     return unit;
@@ -529,7 +537,7 @@ public class Unit extends Unit_Base {
         }
         return null;
     }
-    
+
     public static Unit readByCostCenterCode(Integer costCenterCode) {
         if(costCenterCode != null) {                   
             for (Party party : RootDomainObject.getInstance().getPartys()) {
@@ -541,7 +549,7 @@ public class Unit extends Unit_Base {
         }
         return null;
     }
-
+    
     public List<CompetenceCourse> getDepartmentUnitCompetenceCourses(CurricularStage curricularStage) {
         List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
         if (isUnitDepartment(this)) {
@@ -550,7 +558,7 @@ public class Unit extends Unit_Base {
                     for (CompetenceCourse competenceCourse : competenceCourseGroupUnit
                             .getCompetenceCourses()) {
                         if (competenceCourse.getCurricularStage().equals(curricularStage)) {
-                            result.add(competenceCourse);
+                            result.add(competenceCourse);                        
                         }
                     }
                 }
@@ -574,11 +582,10 @@ public class Unit extends Unit_Base {
             AccountabilityType accountabilityType, String webAddress) throws FenixFilterException,
             FenixServiceException {
 
-        if (unitName == null) {
+        if(unitName == null) {
             throw new DomainException("error.unit.empty.name");
         }
-
-        Unit unit = new Unit();       
+ Unit unit = new Unit();       
         unit.checkUnitDates(beginDate, endDate);               
         unit.checkAcronym(acronym, type);        
         unit.setCostCenterCode(costCenterCode);
@@ -593,28 +600,28 @@ public class Unit extends Unit_Base {
         }
         return unit;
     }
-
+    
     public static Unit createNewExternalInstitution(String unitName) {
-
-        if (unitName == null) {
+        
+        if(unitName == null) {
             throw new DomainException("error.unit.empty.name");
         }
-
+        
         Unit externalInstitutionUnit = UnitUtils
                 .readUnitWithoutParentstByName(UnitUtils.EXTERNAL_INSTITUTION_UNIT_NAME);
         if (externalInstitutionUnit == null) {
             throw new DomainException("error.exception.commons.institution.rootInstitutionNotFound");
         }
-
+        
         Unit institutionUnit = new Unit();
         institutionUnit.setName(unitName);
         institutionUnit.setBeginDate(Calendar.getInstance().getTime());
         institutionUnit.setType(PartyTypeEnum.EXTERNAL_INSTITUTION);
         institutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
                 .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
-
+        
         return institutionUnit;
-    }  
+     }  
 
     public static Party createContributor(String contributorName, String contributorNumber,
             String contributorAddress, String areaCode, String areaOfAreaCode, String area,
@@ -638,17 +645,53 @@ public class Unit extends Unit_Base {
         return contributor;
     }
     
-    public boolean isDepartmentUnit() {
+     public boolean isDepartmentUnit() {
         return isUnitDepartment(this);
     }
-
-    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, YearMonthDay begin, YearMonthDay end) {
-        for (Contract contract : unit.getWorkingContracts(begin, end)) {
-            employees.add(contract.getEmployee());
+      
+    public List<CurricularCourse> getCurricularCourses() {
+        List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
+        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse> ();
+        
+        for(CompetenceCourse competenceCourse : competenceCourses) {
+            curricularCourses.addAll(competenceCourse.getAssociatedCurricularCourses());
         }
-        for (Unit subUnit : unit.getSubUnits()) {
-            readAndSaveEmployees(subUnit, employees, begin, end);
-        }
+        
+        return curricularCourses;
     }
 
-}
+    public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
+        List<VigilantGroup> vigilantGroups = this.getVigilantGroups();
+        List<VigilantGroup> vigilantGroupsInExecutionYear = new ArrayList<VigilantGroup> ();
+        
+        for(VigilantGroup group : vigilantGroups) {
+            if(group.getExecutionYear().equals(executionYear)) {
+                vigilantGroupsInExecutionYear.add(group);
+            }
+        }
+        
+        return vigilantGroupsInExecutionYear;
+    }
+    
+    public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {
+        List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
+        List<CompetenceCourse> competenceCoursesByExecutionYear = new ArrayList<CompetenceCourse>();
+        for (CompetenceCourse competenceCourse : competenceCourses) {
+            if (competenceCourse.hasActiveScopesInExecutionYear(executionYear)) {
+                competenceCoursesByExecutionYear.add(competenceCourse);
+            }
+
+        }
+        return competenceCoursesByExecutionYear;
+    }
+    
+    public List<ExamCoordinator> getExamCoordinatorsForGivenYear(ExecutionYear executionYear) {
+        List<ExamCoordinator> examCoordinators = new ArrayList<ExamCoordinator> ();
+        for(ExamCoordinator coordinator : this.getExamCoordinators()) {
+            if(coordinator.getExecutionYear().equals(executionYear)) {
+                examCoordinators.add(coordinator);
+            }
+        }
+        return examCoordinators;
+    }
+} 

@@ -47,6 +47,9 @@ import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.UsernameUtils;
@@ -245,7 +248,7 @@ public class Person extends Person_Base {
     private Login getLoginIdentification() {
         User personUser = getUser();
         return personUser == null ? null : personUser.readUserLoginIdentification();
-    }
+        }
 
     public String getUsername() {
         Login login = getLoginIdentification();
@@ -439,6 +442,59 @@ public class Person extends Person_Base {
             }
         }
         return result;
+    }
+    
+    public Boolean getIsExamCoordinatorInCurrentYear() {
+        ExamCoordinator examCoordinator = this.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
+        return (examCoordinator == null) ? false : true ;
+    }
+    
+    public Vigilant getVigilantForGivenExecutionYear(ExecutionYear executionYear) {
+        List<Vigilant> vigilants = this.getVigilants();
+        for (Vigilant vigilant : vigilants) {
+            if (vigilant.getExecutionYear().equals(executionYear)) {
+                return vigilant;
+
+            }
+        }
+        
+        return null;
+    }
+    
+    public Vigilant getLatestVigilant() {
+        List<Vigilant> vigilants = new ArrayList<Vigilant>(this.getVigilants());
+        Collections.sort(vigilants, new ReverseComparator(new BeanComparator("vigilant.executionYear")));
+        return vigilants.get(0);
+    }
+    
+    public ExamCoordinator getExamCoordinatorForGivenExecutionYear(ExecutionYear executionYear) {
+        List<ExamCoordinator> examCoordinators = this.getExamCoordinators();
+        for(ExamCoordinator examCoordinator : examCoordinators) {
+            if(examCoordinator.getExecutionYear().equals(executionYear)) {
+                return examCoordinator;
+            }
+        }
+        return null;
+    }
+    
+    public ExamCoordinator getCurrentExamCoordinator() {
+        return getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
+    }
+    
+    public Integer getVigilancyPointsForGivenYear(ExecutionYear executionYear) {
+        Vigilant vigilant = this.getVigilantForGivenExecutionYear(executionYear);
+        if(vigilant==null) return 0;
+        else return vigilant.getPoints();
+    }
+    
+    public Integer getTotalVigilancyPoints() {
+        List<Vigilant> vigilants = this.getVigilants();
+        
+        int points = 0;
+        for(Vigilant vigilant : vigilants) {
+            points += vigilant.getPoints();
+        }
+        return points;
     }
 
     /***************************************************************************
@@ -658,13 +714,13 @@ public class Person extends Person_Base {
         }
         return result;
     }
-    
+
     public boolean hasFunctionType(FunctionType functionType) {
         for (PersonFunction accountability : getActivePersonFunctions()) {
             if (accountability.getFunction().getFunctionType() == functionType) {
                 return true;
-            }
         }
+    }
         return false;
     }
 
@@ -672,7 +728,7 @@ public class Person extends Person_Base {
             Double credits) {
         return new PersonFunction(function.getUnit(), this, function, begin, end, credits);
     }
-
+ 
     /**
      * @return a group that only contains this person
      */
@@ -692,24 +748,26 @@ public class Person extends Person_Base {
             throw new DomainException("error.person.cannot.be.deleted");
         }
 
-        if (hasPersonalPhoto()) {
-            getPersonalPhoto().delete();
-        }
+            if (hasPersonalPhoto()) {
+                getPersonalPhoto().delete();
+            }
 
-        getPersonRoles().clear();
-        getManageableDepartmentCredits().clear();
-        getAdvisories().clear();
-        removeCms();
+            getPersonRoles().clear();
+
+            getManageableDepartmentCredits().clear();
+            getAdvisories().clear();
+            removeCms();
         removePais();
         removeCountryOfBirth();
         removeCountryOfResidence();
         if (hasUser()) {
-            getUser().delete();    
+            getUser().delete();     
         }
         super.delete();
     }
 
     private boolean canBeDeleted() {
+
         if (getStudentsCount() > 0) {
             return false;
         }
@@ -752,6 +810,7 @@ public class Person extends Person_Base {
         if (getPersonAuthorshipsCount() > 0) {
             return false;
         }
+
         if (getEmployee() != null) {
             return false;
         }
@@ -1224,7 +1283,7 @@ public class Person extends Person_Base {
         final Login login = Login.readLoginByUsername(username);
         final User user = login == null ? null : login.getUser();
         return user == null ? null : user.getPerson();
-    }
+        }
 
     public static Person readPersonByIstUsername(final String istUsername) {
         final User user = User.readUserByUserUId(istUsername);
@@ -1302,6 +1361,7 @@ public class Person extends Person_Base {
         return studentCurricularPlans;
     }
 
+
     public SortedSet<StudentCurricularPlan> getCompletedStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
         final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
                 StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
@@ -1343,6 +1403,7 @@ public class Person extends Person_Base {
         }
         return attends;
     }
+
 
     public boolean hasIstUsername() {
         if (this.getIstUsername() != null) {

@@ -65,7 +65,7 @@
 
 	<definition name="view-thread" extends="definition.person.masterPage">
 		 <put name="body" value="/messaging/viewThread.jsp"/>
-	</definition>
+	</definition>	
 		
 	<!--  ============== Parking ===================== -->
 	<definition name="prepare-parking" extends="definition.person.masterPage">

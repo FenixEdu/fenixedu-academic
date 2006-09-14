@@ -88,6 +88,10 @@ Documentation:
           default layout is set to the tabular presentation of the object. -->
     <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer"/>
 
+	<!--@ Same as the above link renderer but where you can specify when the link is visible. -->
+    
+	<renderer type="java.lang.Object" layout="conditional-link" class="net.sourceforge.fenixedu.presentationTier.renderers.ConditionalObjectLinkRenderer"/>
+
     <!--@ Presents the object's slots in a flow layout. With or without labels.  -->
     <renderer type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowRenderer">
     	<property name="labelTerminator" value=":" />
@@ -132,6 +136,11 @@ Documentation:
     
     <renderer type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanRenderer"/>
     <renderer type="boolean" class="net.sourceforge.fenixedu.renderers.BooleanRenderer"/>
+
+	<!--@ Specific renderer for a boolean. This renderer adds a control link to change the boolean state -->
+    <renderer type="java.lang.Boolean" layout="boolean-changer" class="net.sourceforge.fenixedu.presentationTier.renderers.BooleanLinkChangerRenderer"/>
+	<!--@ Specific renderer for a boolean. This renderer adds a control link to change the boolean state -->
+    <renderer type="boolean" layout="boolean-changer" class="net.sourceforge.fenixedu.presentationTier.renderers.BooleanLinkChangerRenderer"/>
 
     <!--@ The default presentation for an enum searches the bundle ENUMERATION_RESOURCES for a description
           of the enum value. The key used for seaching is the enum name. -->
@@ -197,6 +206,12 @@ Documentation:
         <property name="functionalityDisabledImage" value="/images/functionalities/sheet-disabled.gif"/>
         <property name="enabledClass" value="fEnabled"/>
         <property name="disabledClass" value="fDisabled"/>
+    </renderer>
+
+    <!--@ Special layout to present a vigilant table with a slightly different organization. -->
+    <renderer type="java.util.Collection" layout="vigilant-table" class="net.sourceforge.fenixedu.presentationTier.renderers.VigilantTableRender">
+    	<property name="convokeTitleKey" value="vigilantTable.convoke.title"/> 
+    	<property name="convokeTitleBundle" value="VIGILANCY_RESOURCES"/> 
     </renderer>
 
     <!--@ The default layout for a list really creates an html list were each object is presented in a list item. -->
@@ -409,4 +424,11 @@ Documentation:
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.material.Material" layout="extensionNumber-as-extension" class="net.sourceforge.fenixedu.presentationTier.renderers.ExtensionNumberStringInputRenderer"/>
 
 	<renderer mode="input" type="java.util.List" layout="tabular-option" class="net.sourceforge.fenixedu.renderers.TabularOptionInputRenderer"/>	
+
+	<!--@ Layout that allows you to render a list with checkboxes with postback -->
+	<renderer mode="input" type="java.util.List" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.CheckBoxOptionListRendererWithPostBack"/>
+
+	<!--@ Layout that allows you to render a boolean or Boolean with checkbox with postback -->
+	<renderer mode="input" type="boolean" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderWithPostBack"/>
+	<renderer mode="input" type="java.lang.Boolean" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderWithPostBack"/>
 </renderers-config>

@@ -532,6 +532,25 @@
 			<forward name="showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses"/>
 		</action>
 
+
+		<!--  VIGILANCY -->
+		<action path="/vigilancy/vigilantManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantManagement"
+			parameter="method"
+			scope="request">
+			<forward name="displayConvokeMap" path="display-convoke-map"/>			
+			<forward name="prepareEditIncompatiblePerson" path="prepare-incompatible-person"/>
+		</action>
+		<action path="/vigilancy/unavailablePeriodManagement" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.UnavailablePeriodManagement"
+			parameter="method"
+			scope="request"
+			>
+			<forward name="editUnavailablePeriod" path="edit-unavailable-periods"/>
+			<forward name="deleteUnavailablePeriod" path="display-convoke-map"/>
+			<forward name="addUnavailablePeriod" path="create-unavailablePeriod"/>
+			<forward name="addedUnavailablePeriod" path="display-convoke-map"/>
+		</action>
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>

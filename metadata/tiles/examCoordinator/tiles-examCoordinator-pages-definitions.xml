@@ -1,0 +1,76 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<tiles-definitions>
+	<definition name="vigilantGroup-create" extends="examCoordinator.masterPage" >
+	  <put name="body" value="/examCoordinator/vigilancy/createVigilantGroup.jsp" />
+	</definition>
+	
+	<definition name="edit-vigilant-group" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/editVigilantGroup.jsp" />
+    </definition>	       
+    
+     <definition name="prepare-generate-convokes" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/generateConvokes.jsp" />
+    </definition>  
+   
+    <definition name="prepare-attended-to-convoke" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/manageConvokes.jsp" />
+    </definition>  
+        
+    <definition name="display-groups-unavailablePeriods" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/manageGroupsUnavailablePeriods.jsp" />
+    </definition>      
+
+   <definition name="display-group-history" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/displayVigilantGroupHistory.jsp" />
+    </definition>  
+    
+    <definition name="edit-unavailable-period-of-vigilant" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/editUnavailablePeriodOfVigilant.jsp" />
+    </definition>      
+ 
+    <definition name="manage-vigilant-groups" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/manageVigilantGroups.jsp" />
+    </definition>  
+
+    <definition name="manage-incompatibilities" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/manageGroupsIncompatibilities.jsp" />
+    </definition>      
+    
+    <definition name="confirm-convokes" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/confirmConvokes.jsp" />
+    </definition>      
+
+    <definition name="prepare-add-period-to-vigilant" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/addUnavailablePeriodToVigilant.jsp" />
+    </definition>   
+   
+    <definition name="edit-vigilants" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/editVigilantsInVigilantGroup.jsp" />
+    </definition> 
+
+    <definition name="edit-attributes" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/editVigilantGroup.jsp" />
+    </definition> 	
+			
+    <definition name="edit-course-group" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/editVigilancyCourseGroup.jsp" />
+    </definition> 	
+    
+    <definition name="blank" extends="examCoordinator.masterPage" >
+		<put name="body" value="/commons/blank.jsp" />
+    </definition>     
+
+    <definition name="display-why-unavailable" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/displayWhyUnavailable.jsp"/>
+    </definition>     
+
+    <definition name="edit-coordinators" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/editCoordinatorsInVigilantGroup.jsp"/>
+    </definition>        
+
+    <definition name="add-IncompatiblePerson-To-Vigilant" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/addIncompatibilityToVigilant.jsp"/>
+    </definition>        
+
+</tiles-definitions>

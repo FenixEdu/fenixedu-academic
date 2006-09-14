@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -255,7 +256,7 @@ public class Assiduousness extends Assiduousness_Base {
         return null;
     }
 
-    public boolean isStatusActive(YearMonthDay beginDate, YearMonthDay endDate) {
+   public boolean isStatusActive(YearMonthDay beginDate, YearMonthDay endDate) {
         for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
             if (assiduousnessStatusHistory.getEndDate() != null) {
                 Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate()
@@ -278,5 +279,18 @@ public class Assiduousness extends Assiduousness_Base {
         }
         return false;
     }
-
+   
+    public List<Campus> getCampusForInterval(YearMonthDay begin, YearMonthDay end) {
+    
+           List<AssiduousnessCampusHistory> histories = this.getAssiduousnessCampusHistories();
+           List<Campus> campus = new ArrayList<Campus> ();
+           DateInterval targetInterval = new DateInterval(begin,end);
+           for(AssiduousnessCampusHistory history : histories) {
+               DateInterval historyInterval = new DateInterval(history.getBeginDate(),history.getEndDate());
+               if(historyInterval.containsInterval(targetInterval)) {
+                   campus.add(history.getCampus());
+               }
+           }
+           return campus;
+    }
 }

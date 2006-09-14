@@ -55,6 +55,7 @@
     		description="Removes any generated files">
 		<delete dir="${build.home}"/>
 		<delete dir="${deploy.home}"/>
+		<delete dir="${src_gen}"/>
 	</target>
 
 	<target name="check-dml-file" description="Checks if the dml file is still up to date">
@@ -702,7 +703,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 
 	<target name="compile-without-access-control" description="Compile application" depends="i18nDefault, write-all-properties, compile-domain,compile-renderers, generate, base-compile">
-		<ant antfile="build_accessControl.xml" target="void-inject"/>
+		<!-- <ant antfile="build_accessControl.xml" target="void-inject"/> -->
 	</target>
 
 	<target name="deploy-linux"

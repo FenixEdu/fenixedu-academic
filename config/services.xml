@@ -2948,7 +2948,7 @@
 			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
 		</filterChains>
 	</service>
-		<service>
+	<service>
 		<name>ImportSections</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportSections</implementationClass>
@@ -8114,8 +8114,8 @@
 			<chain name="StudentAuthorization" />
 			<chain name="ClassEnrollmentAuthorization" />
 		</filterChains>
-    </service>
-	<service>
+    </service>  
+    <service>
         <name>ReadActiveDegreeCurricularPlansByDegreeType</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.ReadActiveDegreeCurricularPlansByDegreeType</implementationClass>
         <description/>
@@ -8509,7 +8509,7 @@
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>
     </service>   
-     <service>
+    <service>
     	<name>EditUnit</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.EditUnit</implementationClass>
         <description></description>
@@ -8517,8 +8517,8 @@
         <filterChains>
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>
-    </service>   
-     <service>
+    </service> 
+    <service>
     	<name>AssociateParentUnit</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.AssociateParentUnit</implementationClass>
         <description></description>
@@ -9684,7 +9684,7 @@
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
-    </service>
+    </service>  
 	<service>
         <name>SearchPersonsForParticipations</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations</implementationClass>
@@ -10154,7 +10154,7 @@
             <chain name="ExecutionCourseLecturingTeacherAuthorization" />
         </filterChains>
     </service>
-    <service>
+      <service>
         <name>MoveLessonPlanning</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.MoveLessonPlanning</implementationClass>
         <description />
@@ -10163,7 +10163,7 @@
             <chain name="ExecutionCourseLecturingTeacherAuthorization" />
         </filterChains>
     </service>
-    <service>
+<service>
         <name>ImportLessonPlanning</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportLessonPlanning</implementationClass>
         <description />
@@ -10582,7 +10582,6 @@
         	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
         </filterChains>     
     </service>      
-    
     <service>
         <name>CreateSummary</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary</implementationClass>
@@ -10619,7 +10618,7 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
         </filterChains>     
-    </service>    
+    </service> 
 
     <service>
     	<name>SetEmail</name>
@@ -10628,7 +10627,7 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
         </filterChains>     
-    </service>  
+    </service> 
     <service>
     	<name>CreateParkingParty</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty</implementationClass>
@@ -10637,7 +10636,6 @@
         <filterChains>
         </filterChains>     
     </service>  
-
     <service>
     	<name>SelectCandidacies</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SelectCandidacies</implementationClass>
@@ -10646,6 +10644,163 @@
         <filterChains>
         	<chain name="MasterDegreeAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>          
+    </service>
     
-</serviceDefinitions>
+		<service>
+		<name>CreateUnavailablePeriod</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateUnavailablePeriod</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+
+		<service>
+		<name>EditUnavailablePeriod</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.EditUnavailablePeriod</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+		<service>
+		<name>DeleteUnavailablePeriodByOID</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteUnavailablePeriodByOID</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+			<service>
+		<name>CreateVigilants</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateVigilants</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+
+		<service>
+		<name>UpdateVigilantGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.UpdateVigilantGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+		<service>
+		<name>CreateConvokes</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateConvokes</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+		<service>
+		<name>ConvokesAttended</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ConvokesAttended</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+			<service>
+		<name>ChangeConvokeActive</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeActive</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+		<service>
+		<name>ConfirmConvokeByOID</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ConfirmConvokeByOID</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+		
+		
+
+			
+		<service>
+		<name>AddExecutionCourseToGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExecutionCourseToGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+			<service>
+		<name>RemoveExecutionCoursesFromGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveExecutionCoursesFromGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+					<service>
+		<name>CreateVigilantGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateVigilantGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+			<service>
+		<name>AddVigilantsToGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddVigilantsToGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+		<service>
+		<name>RemoveVigilantsFromGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveVigilantsFromGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+
+		<service>
+		<name>RemoveIncompatiblePerson</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveIncompatiblePerson</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+				<service>
+		<name>AddIncompatiblePerson</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddIncompatiblePerson</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+						<service>
+		<name>DeleteVigilantGroupByOID</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteVigilantGroupByOID</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+		<service>
+		<name>DeleteExamCoordinator</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteExamCoordinator</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+
+		<service>
+		<name>AddExamCoordinator</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExamCoordinator</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		<service>
+		<name>RemoveExamCoordinatorRole</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveExamCoordinatorRole</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+		<service>
+		<name>RemoveExamCoordinatorsFromVigilantGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveExamCoordinatorsFromVigilantGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+		
+		<service>
+		<name>AddExamCoordinatorsToVigilantGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExamCoordinatorsToVigilantGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		</service>
+
+</serviceDefinitions>		

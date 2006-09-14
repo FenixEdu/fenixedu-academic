@@ -5,6 +5,6 @@ public class Campus extends Campus_Base {
     public Campus() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    }
 
 }

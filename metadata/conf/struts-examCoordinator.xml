@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE struts-config PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <!-- ========== Data Source Configuration =============================== -->
+    
+    <!-- ========== Form Bean Definitions ================================== -->
+    <form-beans type="org.apache.struts.action.ActionFormBean">		
+	
+    </form-beans>
+
+    <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
+			/>
+	</global-exceptions>
+
+    <!-- ========== Global Forward Definitions =============================== -->
+    <global-forwards type="org.apache.struts.action.ActionForward">
+    </global-forwards>
+    
+    <!-- ========== Action Mapping Definitions =============================== -->
+    <action-mappings type="org.apache.struts.action.ActionMapping">
+        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+            <forward name="Success" path="/vigilancy/vigilantGroupManagement.do?method=checkExamCoordinatorPermissions"/>
+        </action>       
+    
+   			<action path="/vigilancy/vigilantGroupManagement" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupManagement"
+			parameter="method"
+			scope="request">
+			<forward name="prepareVigilantGroup" path="vigilantGroup-create"/>	
+			<forward name="displayGroupHistory" path="display-group-history" />
+			<forward name="manageVigilantGroups" path="manage-vigilant-groups"/>
+			<forward name="addVigilants" path="add-vigilants"/>
+			<forward name="removeVigilants" path="remove-vigilants"/>
+			<forward name="vigilants" path="edit-vigilants"/>
+			<forward name="attributes" path="edit-attributes"/>
+			<forward name="editCoordinators" path="edit-coordinators"/>
+			<forward name="incompatibilities" path="manage-incompatibilities"/>
+			<forward name="blank" path="blank"/>
+			<forward name="addIncompatiblePersonToVigilant" path="add-IncompatiblePerson-To-Vigilant"/>
+		</action>
+		
+		<action path="/vigilancy/convokeManagement" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeManagement"
+			parameter="method"
+			input="/vigilancy/convokeManagement?method=prepareEditConvoke"
+			scope="request">
+			<forward name="prepareEditConvoke" path="prepare-attended-to-convoke"/>
+			<forward name="prepareGenerateConvokes" path="prepare-generate-convokes" />
+			<forward name="sugestedConvokes" path="list-sugested-Convokes"/>
+			<forward name="confirmConvokes" path="confirm-convokes"/>			
+			<forward name="displayWhyUnavailable" path="display-why-unavailable"/>
+			
+		</action>
+		
+		<action path="/vigilancy/unavailablePeriodManagement" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.UnavailablePeriodManagement"
+			parameter="method"
+			scope="request">
+			<forward name="manageUnavailablePeriodsOfVigilants" path="display-groups-unavailablePeriods"/>	
+			<forward name="editPeriodOfVigilant" path="edit-unavailable-period-of-vigilant"/>	
+			<forward name="prepareAddPeriodToVigilant" path="prepare-add-period-to-vigilant"/>	
+		</action>
+
+		<action path="/vigilancy/vigilancyCourseGroupManagement" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupManagement"
+			parameter="method"
+			scope="request">
+			<forward name="editCourseGroup" path="edit-course-group"/>
+		</action>
+	</action-mappings>
+    
+    <!-- ========== Controller Configuration ================================ -->
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
+    
+    <!-- ========== Message Resources Definitions ============================ -->
+	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+	<message-resources parameter="resources.ResearcherResources" null="false"/>
+	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
+
+    <!-- ========== Plug Ins Configuration ================================= -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/examCoordinator/tiles-examCoordinator-definitions.xml,/WEB-INF/tiles/examCoordinator/tiles-examCoordinator-pages-definitions.xml" />
+        <set-property property="moduleAware" value="true" />
+        <set-property property="definitions-parser-validate" value="true" />
+    </plug-in>
+</struts-config>
