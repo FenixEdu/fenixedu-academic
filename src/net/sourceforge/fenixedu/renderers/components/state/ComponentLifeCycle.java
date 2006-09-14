@@ -229,7 +229,7 @@ public class ComponentLifeCycle {
             // because they were not validated and no controller was run
             // for them
             if (! viewState.isVisible()) {
-                break;
+                continue;
             }
             
             if (viewState.isCanceled()) {
