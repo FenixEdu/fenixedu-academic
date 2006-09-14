@@ -165,16 +165,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				    			   property="db.personFilter.errorFile"/>
 				<replacefilter token="@db.personFilter.log@" 
 				    			   property="db.personFilter.log"/>
-
-				<replacefilter token="@ldap.initial.context.factory@"
-							   property="ldap.initial.context.factory"/>
-				<replacefilter token="@ldap.provider.url@"
-							   property="ldap.provider.url"/>
-				<replacefilter token="@ldap.security.authentication@" 
-							   property="ldap.security.authentication"/>
-				<replacefilter token="@ldap.users.suffix@"
-							   property="ldap.users.suffix"/>
-				
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
@@ -427,16 +417,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 							   value="${login.page}"/>
 			</replace>
 
-			<replace encoding="${encoding}" dir="${build.home.webinf}"
-					 propertyFile="build.properties">
-				<include name="**/*.properties"/>
-				<include name="**/*.jsp"/>
-				<replacefilter token="@institution.name@" 
-			    			   property="institution.name"/>
-				<replacefilter token="@institution.acronym@" 
-			    			   property="institution.acronym"/>
-			</replace>
-			
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="logAnalyser.properties"/>
