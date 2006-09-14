@@ -501,7 +501,7 @@ public class PersonTest extends DomainTestBase {
 		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
-		person.getStudents().add(degreeStudent);
+		person.getStudent().getRegistrations().add(degreeStudent);
         person.setGrantOwner(grantOwner);
         person.setEmployee(employee);
         person.setTeacher(teacher);
@@ -523,8 +523,8 @@ public class PersonTest extends DomainTestBase {
 		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
-		person.getStudents().add(degreeStudent);
-		person.getStudents().add(masterDegreeStudent);
+		person.getStudent().getRegistrations().add(degreeStudent);
+		person.getStudent().getRegistrations().add(masterDegreeStudent);
         person.setGrantOwner(grantOwner);
         person.setEmployee(employee);
         person.setTeacher(teacher);
@@ -546,7 +546,7 @@ public class PersonTest extends DomainTestBase {
 		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
-		person.getStudents().add(degreeStudent);
+		person.getStudent().getRegistrations().add(degreeStudent);
         person.setGrantOwner(grantOwner);
         person.setEmployee(employee);
         person.setTeacher(teacher);
@@ -571,7 +571,7 @@ public class PersonTest extends DomainTestBase {
 		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
-        person.getStudents().add(degreeStudent);
+        person.getStudent().getRegistrations().add(degreeStudent);
         person.setGrantOwner(grantOwner);
 
 		assertEquals(person.getUsername(), username);

@@ -64,13 +64,14 @@ public class RegisterCandidate extends Service {
 
         // create new student
         if (registration == null) {
-            registration = createNewRegistration(studentNumber, person);
+            registration = createNewRegistration(studentNumber);
         }
         
         if(person.getStudent() == null){
             new Student(person, registration.getNumber());
         }
         person.getStudent().getRegistrations().add(registration);
+        person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
 
         checkDuplicateStudentCurricularPlan(masterDegreeCandidate, registration);
 
@@ -176,7 +177,7 @@ public class RegisterCandidate extends Service {
         return studentCurricularPlan;
     }
 
-    private Registration createNewRegistration(Integer studentNumber, Person person) throws ExcepcaoPersistencia {
+    private Registration createNewRegistration(Integer studentNumber) throws ExcepcaoPersistencia {
         Registration registration;
         if (studentNumber == null) {
             studentNumber = Registration.generateStudentNumber(DegreeType.MASTER_DEGREE);
@@ -184,11 +185,10 @@ public class RegisterCandidate extends Service {
 
         StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
         StudentState state = new StudentState(StudentState.INSCRITO);
-        registration = new Registration(person, studentNumber, studentKind, state, false, false,
+        registration = new Registration(studentNumber, studentKind, state, false, false,
                 EntryPhase.FIRST_PHASE_OBJ, DegreeType.MASTER_DEGREE);
         registration.setInterruptedStudies(false);
-
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
+        
         return registration;
     }
 

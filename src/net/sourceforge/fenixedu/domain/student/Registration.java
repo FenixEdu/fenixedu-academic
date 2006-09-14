@@ -79,7 +79,7 @@ public class Registration extends Registration_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Registration(Person person, Integer studentNumber, StudentKind studentKind,
+    public Registration(Integer studentNumber, StudentKind studentKind,
             StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
             DegreeType degreeType) {
         this();
@@ -87,7 +87,7 @@ public class Registration extends Registration_Base {
         setEnrollmentForbidden(enrolmentForbidden);
         setEntryPhase(entryPhase);
         setDegreeType(degreeType);
-        setPerson(person);
+        
         setState(state);
         setNumber(studentNumber);
         setStudentKind(studentKind);
@@ -104,9 +104,9 @@ public class Registration extends Registration_Base {
         for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
             ;
 
-        removePerson();
         for (; !getRegistrationDataByPeriod().isEmpty(); getRegistrationDataByPeriod().get(0).delete())
-            ;        
+            ;
+        removeStudent();
         removeRootDomainObject();
         super.deleteDomainObject();
     }
@@ -929,6 +929,10 @@ public class Registration extends Registration_Base {
     @Override
     public Integer getNumber() {
 	return (super.getNumber() != null) ? super.getNumber() : getStudent().getNumber();
+    }
+
+    public Person getPerson() {
+	return getStudent().getPerson();
     }
 
 }

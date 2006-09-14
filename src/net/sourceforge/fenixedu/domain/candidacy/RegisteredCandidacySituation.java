@@ -68,7 +68,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
 	StudentState state = new StudentState(StudentState.INSCRITO);
 	Person person = getCandidacy().getPerson();
-	Registration registration = new Registration(person, null, studentKind, state, false, false,
+	Registration registration = new Registration(null, studentKind, state, false, false,
 		EntryPhase.FIRST_PHASE_OBJ, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
 	registration.setInterruptedStudies(false);
 
