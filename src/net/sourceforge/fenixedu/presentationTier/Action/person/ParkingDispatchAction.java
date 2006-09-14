@@ -26,6 +26,17 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         return mapping.findForward("prepareParking");
     }
 
+    public ActionForward acceptRegulation(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        IUserView userView = SessionUtils.getUserView(request);
+        ParkingParty parkingParty = userView.getPerson().getParkingParty();
+        if (parkingParty != null) {
+            ServiceUtils.executeService(SessionUtils.getUserView(request), "AcceptRegulation",
+                    new Object[] { parkingParty });
+        }
+        return prepareParking(mapping, actionForm, request, response);
+    }
+
     public ActionForward prepareEditParking(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -47,7 +58,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         final Object serviceResult = executeFactoryMethod(request);
         return prepareParking(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward createParkingRequest(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 

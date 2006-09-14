@@ -25,7 +25,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         setParkingRequestState(ParkingRequestState.PENDING);
         setParkingParty(parkingParty);
         setCreationDate(new DateTime());
-        setPhone(((Person) parkingParty.getParty()).getPhone());
+        setPhone(((Person) parkingParty.getParty()).getWorkPhone());
         setMobile(((Person) parkingParty.getParty()).getMobile());
         setEmail(((Person) parkingParty.getParty()).getEmail());
         setFirstRequest(true);
@@ -36,7 +36,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         setParkingRequestState(ParkingRequestState.PENDING);
         setParkingParty(creator.getParkingParty());
         setCreationDate(new DateTime());
-        setPhone(((Person) creator.getParkingParty().getParty()).getPhone());
+        setPhone(((Person) creator.getParkingParty().getParty()).getWorkPhone());
         setMobile(((Person) creator.getParkingParty().getParty()).getMobile());
         setEmail(((Person) creator.getParkingParty().getParty()).getEmail());
         setFirstRequest(true);

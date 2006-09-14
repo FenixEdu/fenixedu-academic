@@ -10637,6 +10637,22 @@
         </filterChains>     
     </service>  
     <service>
+    	<name>AcceptRegulation</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.parking.AcceptRegulation</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>  
+     <service>
+    	<name>UpdateParkingRequestState</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.parking.UpdateParkingRequestState</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>   
+	<service>
     	<name>SelectCandidacies</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SelectCandidacies</implementationClass>
         <description></description>
