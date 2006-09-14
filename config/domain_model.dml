@@ -4010,151 +4010,6 @@ class net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator extends net.sour
 	Integer keyExecutionYear;
 }
 
-/* 
- * Relations for vigilancy
- */
-
-relation VigilantBelongsToGroup {
-	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
-		multiplicity *;
-	}
-}
-
-relation VigilantIsUnavailable {
-	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilant;
-	net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod playsRole unavailablePeriods {
-		multiplicity *;
-	}
-}
-
-relation VigilantInExecutionYear {
-	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
-}
-
-relation VigilantPerson {
-	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
-		multiplicity *;
-	}
-		net.sourceforge.fenixedu.domain.Person playsRole person;
-}
-
-relation VigilantIncompatiblePerson {
-	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole incompatibleVigilants {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Person playsRole incompatiblePerson;
-}
-relation ConvokingVigilant {
-	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilant;
-	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
-		multiplicity *;
-	}
-}
-
-relation ConvokeForWrittenEvaluation {
-	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
-}
-
-relation VigilantGroupInExecutionYear {
-	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
-}
-
-relation VigilantGroupBelongsToUnit {
-	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
-}
-
-relation ExecutionCourseBelongsToGroup {
-	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroup;
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourses {
-		multiplicity *;
-	}
-}
-
-relation ExamCoordinatorInExecutionYear {
-	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
-}
-
-relation ExamCoordinatorPerson {
-	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Person playsRole person;
-}
-
-relation ExamCoordinatorBelongToUnit {
-	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
-}
-
-relation ExamCoordinatorManagesVigilantGroup {
-	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
-		multiplicity *;
-	}
-}
-relation RootDomainVigilant {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
-		multiplicity *;
-	}
-}
-
-relation RootDomainVigilantGroup {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
-		multiplicity *;
-	}
-}
-
-relation RootDomainConvoke {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
-		multiplicity *;
-	}
-}
-
-relation RootDomainUnavailablePeriod {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod playsRole unavailablePeriods {
-		multiplicity *;
-	}
-}
-
-
-relation RootDomainExamCoordinator {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
-		multiplicity *;
-	}
-}
-
-
-/*
- * VIGILANCY END
- */
-
 /*
  * Relations definitions
  * 
@@ -10377,3 +10232,149 @@ relation ProfessorshipValuationCourseValuation {
 	
 	net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation playsRole courseValuation;
 }
+
+/* 
+ * Relations for vigilancy
+ */
+
+relation VigilantBelongsToGroup {
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
+		multiplicity *;
+	}
+}
+
+relation VigilantIsUnavailable {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilant;
+	net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod playsRole unavailablePeriods {
+		multiplicity *;
+	}
+}
+
+relation VigilantInExecutionYear {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation VigilantPerson {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
+		multiplicity *;
+	}
+		net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation VigilantIncompatiblePerson {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole incompatibleVigilants {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole incompatiblePerson;
+}
+relation ConvokingVigilant {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilant;
+	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
+		multiplicity *;
+	}
+}
+
+relation ConvokeForWrittenEvaluation {
+	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
+}
+
+relation VigilantGroupInExecutionYear {
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation VigilantGroupBelongsToUnit {
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+}
+
+relation ExecutionCourseBelongsToGroup {
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroup;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourses {
+		multiplicity *;
+	}
+}
+
+relation ExamCoordinatorInExecutionYear {
+	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation ExamCoordinatorPerson {
+	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation ExamCoordinatorBelongToUnit {
+	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+}
+
+relation ExamCoordinatorManagesVigilantGroup {
+	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
+		multiplicity *;
+	}
+}
+relation RootDomainVigilant {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
+		multiplicity *;
+	}
+}
+
+relation RootDomainVigilantGroup {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
+		multiplicity *;
+	}
+}
+
+relation RootDomainConvoke {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainUnavailablePeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod playsRole unavailablePeriods {
+		multiplicity *;
+	}
+}
+
+
+relation RootDomainExamCoordinator {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
+		multiplicity *;
+	}
+}
+
+
+/*
+ * VIGILANCY END
+ */
+
