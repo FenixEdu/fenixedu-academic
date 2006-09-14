@@ -265,10 +265,38 @@
 		<property name="destination" value="postBack"/>
 	</slot>	
 </schema>
+<schema name="CreateSummaryToExtraComplexSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">
+	<slot name="summaryDate" key="label.date" />
+	<slot name="summaryTime" layout="hour-minute" key="label.hour" />
+	<slot name="summaryRoom" layout="menu-select" key="label.room" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OldRoomsProvider" />
+		<property name="format" value="${name}" />
+	</slot>	
+	<slot name="title" key="label.lessonPlanning.title">
+		<property name="size" value="50"/>	
+	</slot>
+	<slot name="summaryText" key="message.summaryText" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+	</slot>
+</schema>
+<schema name="CreateSummaryToNormalComplexSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">		
+	<slot name="title" key="label.lessonPlanning.title">
+		<property name="size" value="50"/>	
+	</slot>
+	<slot name="summaryText" key="message.summaryText" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />	
+	</slot>
+</schema>
 <schema name="CreateSummaryToNormalSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
 	<slot name="studentsNumber" key="property.number.students.attending.course">
 		<property name="size" value="4"/>	
-	</slot>
+	</slot>	
 	<slot name="title" key="label.lessonPlanning.title">
 		<property name="size" value="50"/>	
 	</slot>
@@ -280,15 +308,15 @@
 	</slot>
 </schema>
 <schema name="CreateSummaryToExtraSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
+	<slot name="studentsNumber" key="property.number.students.attending.course">
+		<property name="size" value="4"/>	
+	</slot>
 	<slot name="summaryDate" key="label.date" />
 	<slot name="summaryTime" layout="hour-minute" key="label.hour" />
 	<slot name="summaryRoom" layout="menu-select" key="label.room" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OldRoomsProvider" />
 		<property name="format" value="${name}" />
-	</slot>
-	<slot name="studentsNumber" key="property.number.students.attending.course">
-		<property name="size" value="4"/>	
-	</slot>
+	</slot>	
 	<slot name="title" key="label.lessonPlanning.title">
 		<property name="size" value="50"/>	
 	</slot>
@@ -350,15 +378,27 @@
 		<property name="bundle" value="DEFAULT"/>
 	</slot>	
 </schema>
+<schema name="ShowSummariesFilterToExecutionCourseManagementToDepartmentAdmOffice" type="net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean" bundle="DEFAULT"
+	extends="ShowSummariesFilterToDepartmentAdmOffice">		
+	<slot name="summaryTeacher" layout="menu-select-postback" key="label.teacher">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ListExecutionCourseTeachersToShowSummariesInDepartmentAdmOfficeProvider" />				
+		<property name="format"	value="${label}" />
+		<property name="destination" value="postBack"/>	
+		<property name="saveOptions" value="true" />
+		<property name="defaultText" value="label.summaries.all" />
+		<property name="key" value="true"/>
+		<property name="bundle" value="DEFAULT"/>
+	</slot>	
+</schema>
 <schema name="PossibleNextSummaryLessonAndDate" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
-	<slot name="lesson">
+	<slot name="lesson" key="label.lesson">
 		<property name="format"	value="${diaSemana.diaSemanaString} (${beginHourMinuteSecond.hour,02d}:${beginHourMinuteSecond.minuteOfHour,02d} - ${endHourMinuteSecond.hour,02d}:${endHourMinuteSecond.minuteOfHour,02d}) ${sala.name}" />
 	</slot>			
+	<slot name="lesson.tipo" layout="" key="label.type"/>
 	<slot name="date" />
 </schema>
-<schema name="ShowPossibleNextSummaryLessonAndDate" extends="PossibleNextSummaryLessonAndDate" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
-	<slot name="lesson.tipo" layout=""/>
-</schema>
 <schema name="EditPossibleNextSummaryLessonAndDates" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
-	<slot name="studentsNumber" />
+	<slot name="studentsNumber" key="property.number.students.attending.course">
+		<property name="size" value="4"/>	
+	</slot>
 </schema>

@@ -20,10 +20,28 @@
 		</span>
 		<p>
 	</logic:messagesPresent>
-		
+	
+	<logic:notEmpty name="nextPossibleLessonsDates">
+		<p class="mbottom025"><strong><bean:message key="label.last.lessons.without.summaries" bundle="DEFAULT"/></strong></p>	
+		<bean:define id="createComplexSummaryUrl">/summariesManagement.do?method=prepareCreateComplexSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+		<fr:form action="<%= createComplexSummaryUrl %>">			
+			<fr:edit id="showSummariesBeanWithChoicesHidden" name="showSummariesBean" nested="true" visible="false" />
+			<fr:view name="nextPossibleLessonsDates" schema="PossibleNextSummaryLessonAndDate">
+				<fr:layout name="tabular">
+					<fr:property name="checkable" value="true"/>
+					<fr:property name="checkboxName" value="selectedLessonAndDate"/>
+					<fr:property name="checkboxValue" value="checkBoxValue"/>
+					<fr:property name="classes" value="tstyle1a mtop025"/>
+				</fr:layout>
+			</fr:view>
+			<html:submit><bean:message key="label.fill" bundle="DEFAULT"/></html:submit>
+		</fr:form>
+	</logic:notEmpty>	
+	
+	<bean:define id="showSummariesPostBackUrl">/summariesManagement.do?method=showSummariesPostBack&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 	<fr:form>
-		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToDepartmentAdmOffice" nested="true">
-			<fr:destination name="postBack" path="/summariesManagement.do?method=showSummariesPostBack"/>		
+		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToExecutionCourseManagementToDepartmentAdmOffice" nested="true">
+			<fr:destination name="postBack" path="<%= showSummariesPostBackUrl %>"/>		
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright"/>
 			</fr:layout>
@@ -36,6 +54,7 @@
 		<html:link page="<%= insertSummaryLink %>">
 			<bean:message key="label.insertSummary" bundle="DEFAULT"/>
 		</html:link>	
+		<bean:message key="link.summary.insert.info" bundle="DEFAULT"/>
 	</div>	
 	
 	<logic:notEmpty name="summaries">
@@ -124,12 +143,12 @@
 			</p>
 			
 			<div class="gen-button">
-				<bean:define id="editSummaryLink">/summariesManagement.do?method=prepareEditSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
-				<bean:define id="deleteSummaryLink">/summariesManagement.do?method=deleteSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+				<bean:define id="editSummaryLink">/summariesManagement.do?method=prepareEditSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>				
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= editSummaryLink %>">
 					<bean:message key="button.edit" /> 
 				</html:link>				 
+				<bean:define id="deleteSummaryLink">/summariesManagement.do?method=deleteSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= deleteSummaryLink %>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
 					<bean:message key="button.delete" />

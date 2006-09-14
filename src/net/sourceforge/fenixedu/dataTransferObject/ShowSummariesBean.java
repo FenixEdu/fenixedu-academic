@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SummaryTeacherBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
@@ -20,11 +21,22 @@ public class ShowSummariesBean implements Serializable {
     
     private DomainReference<ExecutionCourse> executionCourseReference;
     
+    private DomainReference<Professorship> professorshipLoggedReference;
     
-    public ShowSummariesBean(SummaryTeacherBean teacher, ExecutionCourse executionCourse, ListSummaryType type) {
+    public ShowSummariesBean(SummaryTeacherBean teacher, ExecutionCourse executionCourse, ListSummaryType type, Professorship loggedProfessorship) {
 	setSummaryTeacher(teacher);	
 	setExecutionCourse(executionCourse);
 	setListSummaryType(type);
+	setProfessorshipLogged(loggedProfessorship);
+    }
+    
+    public Professorship getProfessorshipLogged() {
+	return (this.professorshipLoggedReference != null) ? this.professorshipLoggedReference.getObject() : null;
+    }
+
+    public void setProfessorshipLogged(Professorship professorship) {
+	this.professorshipLoggedReference = (professorship != null) ? new DomainReference<Professorship>(
+		professorship) : null;
     }
     
     public SummaryTeacherBean getSummaryTeacher() {

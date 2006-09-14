@@ -22,12 +22,21 @@ public class LastSummariesToSummariesManagementProvider implements DataProvider 
             ShiftType tipo = shift.getTipo();
             ExecutionCourse executionCourse = bean.getExecutionCourse();
             List<Summary> summaries = new ArrayList<Summary>();
-            summaries.addAll(executionCourse.getSummariesByShiftType(tipo));
-            if(!summaries.isEmpty() && summaries.size() > 4) {
-                 return summaries.subList(0, 4);
-            }
+            summaries.addAll(executionCourse.getSummariesByShiftType(tipo));            
             Collections.sort(summaries, Summary.COMPARATOR_BY_DATE_AND_HOUR);
-            return summaries;
+            
+            List<Summary> result = new ArrayList<Summary>();
+            if(!summaries.isEmpty() && summaries.size() > 4) {
+                result = summaries.subList(0, 4);
+            } else {
+        	result = summaries;
+            }
+            
+            if(bean.getSummary() != null) {
+        	result.remove(bean.getSummary());
+            }
+            
+            return result;
         }      
         return new ArrayList<Summary>();
     }

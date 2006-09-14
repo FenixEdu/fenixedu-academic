@@ -21,17 +21,19 @@
 	</logic:messagesPresent>
 				
 	<logic:notEmpty name="nextPossibleLessonsDates">
-		<h3><bean:message key="label.last.lessons.without.summaries"/></h3>	
-		<html:form action="/summariesManagement.do?method=prepareCreateComplexSummary">			
+		<p class="mbottom025"><strong><bean:message key="label.last.lessons.without.summaries"/></strong></p>	
+		<fr:form action="/summariesManagement.do?method=prepareCreateComplexSummary">			
+			<fr:edit id="showSummariesBeanWithChoicesHidden" name="showSummariesBean" nested="true" visible="false" />
 			<fr:view name="nextPossibleLessonsDates" schema="PossibleNextSummaryLessonAndDate">
 				<fr:layout name="tabular">
 					<fr:property name="checkable" value="true"/>
 					<fr:property name="checkboxName" value="selectedLessonAndDate"/>
-					<fr:property name="checkboxValue" value="checkBoxValue"/>								
+					<fr:property name="checkboxValue" value="checkBoxValue"/>
+					<fr:property name="classes" value="tstyle1a mtop025"/>
 				</fr:layout>
 			</fr:view>
-			<html:submit><bean:message key="label.fill"/></html:submit>
-		</html:form>
+			<p class="mtop025 mbottom1"><html:submit><bean:message key="label.fill"/></html:submit></p>
+		</fr:form>
 	</logic:notEmpty>
 		
 	<fr:form>
@@ -49,6 +51,7 @@
 		<html:link page="<%= insertSummaryLink %>">
 			<bean:message key="label.insertSummary" />
 		</html:link>	
+		<bean:message key="link.summary.insert.info"/>
 	</div>	
 	
 	<logic:notEmpty name="summaries">

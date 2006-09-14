@@ -162,17 +162,16 @@ function check(e,v){
 			</td>
 		</tr>
 	</table>			
-				
-	<%-- Summary --%>	
+					
 	<fr:form action="/summariesManagement.do">		
 		<html:hidden property="method" name="summariesManagementForm" value="createSummary"/>	
-		<bean:define id="showSummaries">/summariesManagement.do?method=prepareShowSummaries&page=0&executionCourseID=<bean:write name="executionCourseID"/></bean:define>			
+		
 		<logic:equal name="summariesManagementBean" property="summaryType" value="NORMAL_SUMMARY">							
 			<%-- Teacher --%>
 			<jsp:include page="chooseTeacher.jsp"/>							
-			<h3 class="mbottom0"><bean:message key="message.summaryText"/></h3>
-			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalSummary">
-				<fr:destination name="cancel" path="<%= showSummaries %>"/>
+			<%-- Summary --%>	
+			<h3 class="mbottom0"><bean:message key="message.summaryText"/></h3>			
+			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalSummary">				
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thlight"/>
 				</fr:layout>
@@ -182,14 +181,15 @@ function check(e,v){
 				<html:submit titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>
 				<html:submit titleKey="message.button.save.equal" onclick="this.form.method.value='createSummaryAndSame';this.form.submit();"><bean:message key="button.save.equal" bundle="DEFAULT"/></html:submit>
 			</logic:empty>
-			<html:submit titleKey="message.button.save" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>	
+			<html:submit titleKey="message.button.cancel" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>	
 		</logic:equal>	
+		
 		<logic:equal name="summariesManagementBean" property="summaryType" value="EXTRA_SUMMARY">		
 			<%-- Teacher --%>
 			<jsp:include page="chooseTeacher.jsp"/>			
+			<%-- Summary --%>	
 			<h3 class="mbottom0"><bean:message key="message.summaryText"/></h3>								
-			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToExtraSummary" >
-				<fr:destination name="cancel" path="<%= showSummaries %>"/>
+			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToExtraSummary" >				
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thlight"/>
 				</fr:layout>
@@ -199,7 +199,7 @@ function check(e,v){
 				<html:submit titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>
 				<html:submit titleKey="message.button.save.equal" onclick="this.form.method.value='createSummaryAndSame';this.form.submit();"><bean:message key="button.save.equal" bundle="DEFAULT"/></html:submit>
 			</logic:empty>
-			<html:submit titleKey="message.button.save" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>
+			<html:submit titleKey="message.button.cancel" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>
 		</logic:equal>	
 	</fr:form>				
 	

@@ -556,6 +556,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SummariesManagementDA" 
             validate="true" >
             <forward name="prepareInsertSummary" path="prepare-insert-summary" />
+            <forward name="prepareInsertComplexSummary" path="prepare-insert-complex-summary" />            
             <forward name="prepareShowSummaries" path="prepare-show-summaries" />           
         </action>	       
                 

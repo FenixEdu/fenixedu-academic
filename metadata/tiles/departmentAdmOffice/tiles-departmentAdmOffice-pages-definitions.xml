@@ -325,6 +325,9 @@
 	<definition name="prepare-show-summaries" extends="definition.teacher.summaryPage">
 		<put name="body" value="/departmentAdmOffice/teacher/executionCourse/showSummaries.jsp" />
 	</definition>	
+	<definition name="prepare-insert-complex-summary" extends="definition.teacher.summaryPage">
+		<put name="body" value="/departmentAdmOffice/teacher/executionCourse/createComplexSummary.jsp" />
+	</definition>
 
 	<definition name="examCoordinator-management" extends="departmentAdmOffice.masterPage" >
 		<put name="body" value="/departmentAdmOffice/vigilancy/manageExamCoordinator.jsp" />
@@ -332,7 +335,5 @@
     
     <definition name="edit-examCoordinator" extends="departmentAdmOffice.masterPage" >
 		<put name="body" value="/departmentAdmOffice/vigilancy/editExamCoordinator.jsp" />
-    </definition>
-
-    
+    </definition>		            
 </tiles-definitions>
