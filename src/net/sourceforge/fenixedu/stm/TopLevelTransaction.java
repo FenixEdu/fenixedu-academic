@@ -41,7 +41,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     // Each TopLevelTx has its DBChanges
     // If this slot is changed to null, it is an indication that the
     // transaction does not allow more changes
-    private DBChanges dbChanges = new DBChanges();
+    private DBChanges dbChanges = null;
 
     private ServiceInfo serviceInfo = ServiceInfo.getCurrentServiceInfo();
 
@@ -52,15 +52,16 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     TopLevelTransaction(int number) {
         super(number);
 
-        // open a connection to the database and set this tx number to the
-        // number that
-        // corresponds to that connection number. The connection number should
-        // always be
-        // greater than the current number, because the current number is
-        // obtained from
-        // Transaction.getCommitted, which is set only after the commit to the
-        // database
-        setNumber(updateFromTxLogsOnDatabase(number));
+	// open a connection to the database and set this tx number to the number that
+	// corresponds to that connection number.  The connection number should always be 
+	// greater than the current number, because the current number is obtained from
+	// Transaction.getCommitted, which is set only after the commit to the database
+	setNumber(updateFromTxLogsOnDatabase(number));
+        initDbChanges();
+    }
+
+    protected void initDbChanges() {
+        this.dbChanges = new DBChanges();
     }
 
     public PersistenceBroker getOJBBroker() {
