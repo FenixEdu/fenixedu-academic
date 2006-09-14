@@ -5,6 +5,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.Degree" %>
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+
 <div class="breadcumbs mvert0">
 	<a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>
 	<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
@@ -54,7 +55,7 @@
 
 <bean:define id="currentSemester" name="execution_period" property="semester"/>
 <bean:define id="degree" name="degree" type="net.sourceforge.fenixedu.domain.Degree"/>
-<table class="tab_lay" cellspacing="0" width="75%">
+<table class="tab_lay" cellspacing="0">
 
 	<logic:equal value="true" name="renderCurrentExecutionPeriod">
 		<tr>
@@ -65,13 +66,15 @@
 			</th>	
 		</tr>
 	
+	
 		<tr>
 		<%  java.util.Iterator iter = degree.buildFullCurricularYearList().iterator();
 			while (iter.hasNext()) {
 				Integer curricularYear = (Integer)iter.next(); %>
-			<td class="subheader" width="75"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/> <%= String.valueOf(curricularYear) %></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/> <%= String.valueOf(curricularYear) %></td>
 		<% } %>
 		</tr>
+	
 	
 		<% for (int rowIndex=0; rowIndex < Integer.valueOf(pageContext.findAttribute("numberRowsCurrent").toString()).intValue(); rowIndex++) { %>
 		<% String rowColor = rowIndex % 2 == 0 ? "white" : "bluecell" ; %>
@@ -104,7 +107,6 @@
 					</logic:empty>
 				</td>
 			</logic:iterate>
-			
 		</tr>
 		<% } %>
 	</logic:equal>
