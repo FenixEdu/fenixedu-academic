@@ -58,7 +58,7 @@
 
 	<logic:equal value="true" name="renderCurrentExecutionPeriod">
 		<tr>
-			<th colspan="5" scope="col">
+			<th colspan="<%=degree.buildFullCurricularYearList().size() %>" scope="col">
 				<bean:write name="execution_period" property="infoExecutionYear.year"/>,
 				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/>
 				<bean:write name="execution_period" property="semester"/>
@@ -111,7 +111,7 @@
 
 	<logic:equal value="true" name="renderNextExecutionPeriod">
 		<tr>
-			<th colspan="5" scope="col">
+			<th colspan="<%=degree.buildFullCurricularYearList().size() %>" scope="col">
 				<bean:write name="nextInfoExecutionPeriod" property="infoExecutionYear.year"/>,
 				<bean:write name="nextInfoExecutionPeriod" property="semester"/>
 				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/>
