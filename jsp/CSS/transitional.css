@@ -5,17 +5,6 @@
 ----------------------- */
 
 h2 { margin: 0.5em 0 0.75em 0; }
-/* h3 { margin: 1.5em 0 0.5em 0; } */
-
-/* ----------------------
- ---- Anchors ----------
------------------------ */
-
-a.action1 {
-padding-left: 0.75em;
-margin-right: 0.75em;
-background: url(../images/transitional/bullet07.gif) left no-repeat;
-}
 
 /* ----------------------
  ---- Info Blocks ------
@@ -62,6 +51,7 @@ ul.list2 { padding-left: 0;}
 ul.list2 li { padding: 0.25em 0;}
 ul.list3 { }
 ul.list3 li { padding-left: 12px; background: url(../images/transitional/bullet08.gif) left no-repeat; }
+ul.list4 li { padding: 0.25em 0; }
 
 ul.liinline {
 margin: 0;
@@ -81,85 +71,118 @@ table caption {
 padding: 0.5em 1em 0.1em 1em;
 font-style: italic;
 }
+
+.tstyle1, .tstyle2, .tstyle3, .tstyle4, .tstyle5, .tstyle7 {
+border-collapse: collapse;
+margin: 1em 0;
+}
+
+/* -------------------- */
+/* GENERAL TABLE CLASSES*/
+
+/* vertical aligment */
 table.thtop th { vertical-align: top; }
 table.tdtop td { vertical-align: top; }
+.vamiddle { vertical-align: middle; }
+.vamiddle th { vertical-align: middle; }
+.vamiddle td { vertical-align: middle; }
 
-/* ordenamento das colunas*/
+/* font-weight */
 table.thlight th { font-weight: normal; }
 table.thbold th { font-weight: bold; }
+
+/* text-align */
 table.taleft th, table.taleft td { text-align: left; }
 table.taright th, table.taright td { text-align: right; }
-table .aleft  { text-align: left; }
-table .aright  { text-align: right; }
 table.thleft th { text-align: left; }
 table.thright th { text-align: right; }
 table.thcenter th { text-align: center; }
 table.tdleft td { text-align: left; }
 table.tdright td { text-align: right; }
-table th.cornerleft { background: none; border-left: none; border-top: none; }
-table td.cornerright { }
-.leftcol { text-align: right; vertical-align: top; }
+table.tdcenter td { text-align: right; }
 
+table .aleft  { text-align: left; }
+table .aright  { text-align: right; }
 
-/* largura da coluna th*/
+/* th width */
 table.th14 th { width: 14em; }
 
-.tstyle1a, .tstyle1b, .tstyle1c, .tstyle2, .tstyle3, .tstyle4, .tstyle5, .tstyle6, .tstyle7 {
-border-collapse: collapse;
-margin: 1em 0;
-}
+/* borders */ 
+table.noborder { padding-left: 1em; padding-bottom: 1em; }
+table.noborder tr td { border: none; }
+table.noborder tr td { padding: 0; margin: 0; }
 
-.tstyle1a { }
-.tstyle1b { }
-.tstyle1c { }
-.tstyle2 { }
-.tstyle3 { border: 2px solid #ccc; }
-.tstyle4 { }
-.tstyle6 { width: 100%; }
+		/* todo: separar noborder de nobackground */
+.tstylenone { border: none; background: none; }
+.tstylenone th { border: none; background: none; }
+.tstylenone td { border: none; background: none; }
 
-.tstyle1a th, .tstyle1b th, .tstyle1c th, .tstyle2 th, .tstyle3 th, .tstyle4 th {
-padding: 0.5em;
-text-align: center;
-}
-
-.tstyle1a th { border: 1px solid #ccc; }
-.tstyle1b th { border: 1px solid #ccccc2;}
-.tstyle1c th { border: 1px solid #c8cacc; }
-.tstyle2 th { border: none; border-bottom: 1px solid #ccc; }
-.tstyle3 th { padding: 0.5em 1em; border: 1px solid #ccc; }
-.tstyle4 th { border: 1px solid #ccc; }
-.tstyle5 th { padding: 0.3em; border: 1px solid #fff; vertical-align: top; }
-.tstyle6 th { padding: 0.5em; border: 1px solid #ccccc2; width: 35%; }
-.tstyle7 th { padding: 0.5em; border: 1px solid #eee; }
-
-.tstyle1a th { background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x; }
-.tstyle1b th { background: #fafaf6 url(../../pics/back_32yellow.gif) left bottom repeat-x;}
-.tstyle1c th { background: #f6f8fa url(../../pics/back_32blue.gif) left bottom repeat-x; }
-.tstyle3 th { background-color: #eee; }
-.tstyle2 th { background: #f5f5f5 /*url(../../pics/back_32gray.gif) left bottom repeat-x*/; }
-.tstyle4 th { background: #eee; }
-.tstyle5 th { background: #f5f5f5; }
-.tstyle6 th { background: #fafaf6 url(../../pics/back_32yellow.gif) left bottom repeat-x; }
-.tstyle7 th { background: #eee; }
-
-.tstyle1a td, .tstyle1b td, .tstyle1c td, .tstyle2 td, .tstyle3 td, .tstyle4 td  {
-padding: 0.5em; /*padding em "em" dá problemas de rendering no firefox, faz arredondamentos diferentes */
-}
-
-.tstyle1a td { border: 1px solid #cccccc; }
-.tstyle1b td { border: 1px solid #ccccc2; }
-.tstyle1c td { border: 1px solid #c8cacc; }
-.tstyle2 td { border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; }
-.tstyle3 td { border: 1px solid #ccc; background-color: #fafafa; }
-.tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
-.tstyle5 td { padding: 0.3em; border: 1px solid #fff; background: #f5f5f5; }
-.tstyle6 td { border: 1px solid #ccccc2; width: 65%;}
-.tstyle7 td { padding: 0.5em; border: 1px solid #eee; background: #eee; }
-
+/* paddings */
 .tpadding01 th, .tpadding01 td {
 padding: 0.5em 0.1em;
 }
 
+
+/* -------------------- */
+/* GENERAL CELL CLASSES */
+
+/* corners */
+table th.cornerleft { background: none; border-left: none; border-top: none; }
+table td.cornerright { }
+
+
+/* ------------------------- */
+/* TABLE CLASSES DEFENITIONS */
+
+/* table classes - general properties */
+.tstyle1 { }
+.tstyle2 { }
+.tstyle3 { border: 2px solid #ccc; }
+.tstyle4 { }
+.tstyle5 { }
+.tstyle7 { }
+
+
+/* table classes - th properties */
+
+.tstyle1 th, .tstyle2 th, .tstyle3 th, .tstyle4 th {
+padding: 5px;
+text-align: center;
+}
+
+.tstyle1 th { border: 1px solid #ccc; }
+.tstyle2 th { border: none; border-bottom: 1px solid #ccc; }
+.tstyle3 th { padding: 5px 10px; border: 1px solid #ccc; }
+.tstyle4 th { border: 1px solid #ccc; }
+.tstyle5 th { padding: 3px; border: 1px solid #fff; vertical-align: top; }
+.tstyle7 th { border: 1px solid #eee; }
+
+.tstyle1 th { background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x; }
+.tstyle3 th { background: #eee; }
+.tstyle2 th { background: #f5f5f5 /*url(../../pics/back_32gray.gif) left bottom repeat-x*/; }
+.tstyle4 th { background: #eee; }
+.tstyle5 th { background: #f5f5f5; }
+.tstyle7 th { background: #eee; }
+
+
+/* table classes - td properties */
+
+.tstyle1 td, .tstyle2 td, .tstyle3 td, .tstyle4 td  {
+padding: 5px; /*padding em "em" dá problemas de rendering no firefox, faz arredondamentos incoerentes */
+}
+
+.tstyle1 td { border: 1px solid #cccccc; }
+.tstyle2 td { border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; }
+.tstyle3 td { border: 1px solid #ccc; background-color: #fafafa; }
+.tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
+.tstyle5 td { padding: 3px; border: 1px solid #fff; background: #f5f5f5; }
+.tstyle7 td { border: 1px solid #eee; background: #eee; }
+
+
+/* ---- */
+/* MISC */
+
+.leftcol { text-align: right; vertical-align: top; }
 td.tdclear {
 border-right: none;
 border-bottom: none;
@@ -167,20 +190,17 @@ border-top: none;
 background: none;
 }
 
-.tstylenone { border: none; background: none; }
-.tstylenone th { border: none; background: none; }
-.tstylenone td { border: none; background: none; }
-
-.vamiddle { vertical-align: middle; }
-.vamiddle th { vertical-align: middle; }
-.vamiddle td { vertical-align: middle; }
-
-table.noborder { padding-left: 1em; padding-bottom: 1em; }
-table.noborder tr td { border: none; }
-table.noborder tr td { padding: 0; margin: 0; }
+table.mtop05 { margin-top: 0.5em; }
+table.smallmargin td { padding: 0.25em; }
+td.pleft1 { padding-left: 1em; }
+td.pleft2 { padding-left: 2em; }
+td.pleft3 { padding-left: 3em; }
+td.pleft4 { padding-left: 4em; }
+td.pleft5 { padding-left: 5em; }
+td.pleft6 { padding-left: 6em; }
 
 
-/* fichas */ /* to remove later? */
+/* FICHAS */ /* to remove later? */
 tr.bordernone td { border: none; }
 tr.rowbg1 td { background-color: #fafaf6; }
 tr.rowbg2 td { background-color: #f5f5ea; }
@@ -345,39 +365,33 @@ padding-right: 0.5em;
  ---- Classes ----------
 ----------------------- */
 
-.color1 { color: #808060; }
-.color2 { color: #806d5b; }
-.color3 { color: #336699; }
-
-.highlight1 { background-color: #fff7bb; } /* amarelo */
-.highlight2 { background-color: #f5f5f5; } 
-.highlight3 { background-color: #def; } /* azul */
-.highlight4 { background-color: #dfb ; } /* verde */
-
-.p_mvert015 p { margin: 0.15em 0; }
 .smalltxt { font-size: 0.85em;}
+.p_mvert015 p { margin: 0.15em 0; }
 .prenomargin { margin: 0; padding: 0; font-family: Verdana, Arial, Helvetica, sans-serif;}
-
 .aleft { text-align: left; }
 .aright { text-align: right; }
 .acenter { text-align: center; }
 .asterisk1 { color: #d42; }
-.hidden { display: none; }
 .bold { font-weight: bold; }
 .nobullet { list-style: none; }
 .noindent { margin-left: 0; padding-left: 0; }
-.attention { background-color: #ffa; padding: 0 0.25em;}
-.attention2 { background-color: #ffa; color: #d60;}
-.fright { float: right;}
+.attention { background-color: #ffa; padding: 0 0.25em; }
+.attention2 { background-color: #ffa; color: #d60; }
+.fright { float: right; }
+.valigntop { vertical-align: top; }
+.underline1 { border-bottom: 2px solid #ec8; padding-bottom: 0.1em; }
 
-.pbottom05 { padding-bottom: 0.5em;}
-.pbottom1 { padding-bottom: 1em;}
-.pbottom2 { padding-bottom: 2em;}
-.pbottom3 { padding-bottom: 3em;}
+/* paddings */
+.pbottom05 { padding-bottom: 0.5em; }
+.pbottom1 { padding-bottom: 1em; }
+.pbottom2 { padding-bottom: 2em; }
+.pbottom3 { padding-bottom: 3em; }
 .pleft1 { padding-left: 1em; }
 .pleft2 { padding-left: 2em; }
 .nomargin { margin: 0; }
 .nopadding { padding: 0; }
+
+/* margins */
 .mtop0 { margin-top: 0;}
 .mtop05 { margin-top: 0.5em;}
 .mtop1 { margin-top: 1em;}
@@ -390,14 +404,14 @@ padding-right: 0.5em;
 .mbottom1 { margin-bottom: 1em;}
 .mbottom2 { margin-bottom: 2em;}
 .mbottom3 { margin-bottom: 3em;}
-.mleft0 { margin-left: 0; }
-.mleft1 { margin-left: 1em; }
 .mvert0 { margin-top: 0; margin-bottom: 0; }
 .mvert025 { margin-top: 0.25em; margin-bottom: 0.25em; }
 .mvert05 { margin-top: 0.5em; margin-bottom: 0.5em; }
 .mvert1 { margin-top: 1em; margin-bottom: 1em; }
 .mvert2 { margin-top: 2em; margin-bottom: 2em; }
 .mvert3 { margin-top: 3em; margin-bottom: 3em; }
+.mleft0 { margin-left: 0; }
+.mleft1 { margin-left: 1em; }
 .indent0 { margin-left: 0; }
 .indent1 { margin-left: 1em; }
 .indent2 { margin-left: 2em; }
@@ -411,24 +425,18 @@ padding-right: 0.5em;
 .indent18 { margin-left: 18em; }
 .indent21 { margin-left: 21em; }
 .indent24 { margin-left: 24em; }
-.valigntop { vertical-align: top; }
 
 ul.indent0 { margin-left: 0; padding-left: 0; }
-table.mtop05 { margin-top: 0.5em; }
-table.smallmargin td { padding: 0.25em; }
-td.pleft1 { padding-left: 1em; }
-td.pleft2 { padding-left: 2em; }
-td.pleft3 { padding-left: 3em; }
-td.pleft4 { padding-left: 4em; }
-td.pleft5 { padding-left: 5em; }
-td.pleft6 { padding-left: 6em; }
 
+/* with's */
 .width100 { width: 100%; }
 .width8em { width: 8em; } /*used in forums*/
 .width10em { width: 10em; }
 .width100px { width: 100px; }
 .width250px { width: 250px; }
 
+/* display */
+.hidden { display: none; }
 .toprint { display: none;}
 .dnone { display: none; }
 .dinline { display: inline; }
@@ -436,30 +444,27 @@ td.pleft6 { padding-left: 6em; }
 .switchInline { display: none; }
 .switchBlock { display: none; }
 .switchNone { display: block; }
+.input_hidden { display: none; }
+.input_inline { display: inline; }
 
+/* colors */
+.color1 { color: #808060; }
+.color2 { color: #806d5b; }
+.color3 { color: #336699; }
+.highlight1 { background-color: #fff7bb; } /* amarelo */
+.highlight2 { background-color: #f5f5f5; } 
+.highlight3 { background-color: #def; } /* azul */
+.highlight4 { background-color: #dfb ; } /* verde */
 .lowlight1 { color: #999; }
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fbfbdd; }
 .bgcolor3 { background-color: #fafaf6; }
 .bgcolor4 { background-color: #f8f8f8; }
 
-.underline1 {
-border-bottom: 2px solid #fb5; /*old*/
-border-bottom: 2px solid #ec8;
-padding-bottom: 0.1em;
-}
-
 /* Multi Language */
-.multi-language-line {
-margin-bottom: 2em;
-}
-.multi-language-line select {
-margin-top: 0.5em;
-}
+.multi-language-line { margin-bottom: 2em; }
+.multi-language-line select { margin-top: 0.5em; }
 
-/* input elements display */
-.input_hidden { display: none; }
-.input_inline { display: inline; }
 
 /**********************************************
 	 navlateral list & links
@@ -859,6 +864,4 @@ list-style: none;
 .greytxt2 { color: #777; }
 
 
-td.noborder {
-border: none;
-}
+td.noborder { border: none; }
