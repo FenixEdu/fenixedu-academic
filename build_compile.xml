@@ -165,6 +165,16 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				    			   property="db.personFilter.errorFile"/>
 				<replacefilter token="@db.personFilter.log@" 
 				    			   property="db.personFilter.log"/>
+
+				<replacefilter token="@ldap.initial.context.factory@"
+							   property="ldap.initial.context.factory"/>
+				<replacefilter token="@ldap.provider.url@"
+							   property="ldap.provider.url"/>
+				<replacefilter token="@ldap.security.authentication@" 
+							   property="ldap.security.authentication"/>
+				<replacefilter token="@ldap.users.suffix@"
+							   property="ldap.users.suffix"/>
+				
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
@@ -417,6 +427,16 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 							   value="${login.page}"/>
 			</replace>
 
+			<replace encoding="${encoding}" dir="${build.home.webinf}"
+					 propertyFile="build.properties">
+				<include name="**/*.properties"/>
+				<include name="**/*.jsp"/>
+				<replacefilter token="@institution.name@" 
+			    			   property="institution.name"/>
+				<replacefilter token="@institution.acronym@" 
+			    			   property="institution.acronym"/>
+			</replace>
+			
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="logAnalyser.properties"/>
@@ -703,7 +723,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 
 	<target name="compile-without-access-control" description="Compile application" depends="i18nDefault, write-all-properties, compile-domain,compile-renderers, generate, base-compile">
-		<!-- <ant antfile="build_accessControl.xml" target="void-inject"/> -->
+		<ant antfile="build_accessControl.xml" target="void-inject"/>
 	</target>
 
 	<target name="deploy-linux"
