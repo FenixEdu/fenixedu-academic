@@ -531,10 +531,10 @@
 	</slot>
 	<slot name="publisher.name"/>
 	<slot name="year"/>
-	<slot name="authors" schema="result.participations" layout="values">
+	<slot name="authors" schema="person.name" layout="values">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
-	<slot name="editors" schema="result.participations" layout="values">
+	<slot name="editors" schema="person.name" layout="values">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
 </schema>
@@ -545,10 +545,10 @@
 	<slot name="bookPartType"/>
 	<slot name="publisher.name"/>
 	<slot name="year"/>
-	<slot name="authors" schema="result.participations" layout="values">
+	<slot name="authors" schema="person.name" layout="values">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
-	<slot name="editors" schema="result.participations" layout="values">
+	<slot name="editors" schema="person.name" layout="values">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
 </schema>
@@ -569,10 +569,10 @@
 	<slot name="bookTitle"/>
  	<slot name="year"/>
  	<slot name="event.name" key="label.event"/>
-	<slot name="authors" schema="result.participations" layout="values">
+	<slot name="authors" schema="person.name" layout="values">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
-	<slot name="editors" schema="result.participations" layout="values">
+	<slot name="editors" schema="person.name" layout="values">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
 </schema>
@@ -652,9 +652,9 @@
 	<slot name="address"/>
  	<slot name="year"/>
 	<slot name="month"/>
+	<slot name="edition"/>
 	<slot name="volume"/>
 	<slot name="series"/>
-	<slot name="edition"/>
 	<slot name="isbn"/>
 	<slot name="numberPages"/>
 	<slot name="language"/>
@@ -675,9 +675,9 @@
 	<slot name="address"/>
  	<slot name="year"/>	
 	<slot name="month"/>
+	<slot name="edition"/>
 	<slot name="volume"/>
 	<slot name="series"/>
-	<slot name="edition"/>
 	<slot name="firstPage"/>
 	<slot name="lastPage"/>
 	<slot name="country" layout="null-as-label">
@@ -741,13 +741,13 @@
 	<slot name="bookTitle"/>
  	<slot name="year"/>
 	<slot name="month"/>
-	<slot name="event.name" key="label.event"/>
 	<slot name="publisher" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
 	</slot>
 	<slot name="address"/>
+	<slot name="event.name" key="label.event"/>
 	<slot name="organization" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
@@ -763,13 +763,13 @@
 	<slot name="title"/>
  	<slot name="year"/>
 	<slot name="month"/>
-	<slot name="event.name" key="label.event"/>
 	<slot name="publisher" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
 	</slot>
 	<slot name="address"/>
+	<slot name="event.name" key="label.event"/>
 	<slot name="organization" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
@@ -886,13 +886,13 @@
 		<property name="size" value="5"/>
 	</slot>
 	<slot name="month"/>
+	<slot name="edition">
+		<property name="size" value="15"/>
+	</slot>
 	<slot name="volume">
 		<property name="size" value="40"/>
 	</slot>
 	<slot name="series">
-		<property name="size" value="15"/>
-	</slot>
-	<slot name="edition">
 		<property name="size" value="15"/>
 	</slot>
 	<slot name="isbn">
@@ -951,13 +951,13 @@
 		<property name="size" value="5"/>
 	</slot>
 	<slot name="month"/>
+	<slot name="edition">
+		<property name="size" value="15"/>
+	</slot>
 	<slot name="volume">
 		<property name="size" value="40"/>
 	</slot>
 	<slot name="series">
-		<property name="size" value="15"/>
-	</slot>
-	<slot name="edition">
 		<property name="size" value="15"/>
 	</slot>
 	<slot name="firstPage">
@@ -1115,16 +1115,6 @@
 		<property name="size" value="5"/>
 	</slot>	
 	<slot name="month"/>
-	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="40"/>
-		<property name="rawSlotName" value="eventNameAutoComplete"/>
-		<property name="labelField" value="name.content"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>				
-		<property name="minChars" value="3"/>
-	</slot>
 	<slot name="publisher" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="publisherName"/>
@@ -1137,6 +1127,16 @@
 	</slot>
 	<slot name="address">
 		<property name="size" value="40"/>
+	</slot>
+	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="rawSlotName" value="eventNameAutoComplete"/>
+		<property name="labelField" value="name.content"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>				
+		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="organization" layout="autoComplete">
 		<property name="size" value="40"/>
@@ -1192,16 +1192,6 @@
 		<property name="size" value="5"/>
 	</slot>	
 	<slot name="month"/>
-	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="40"/>
-		<property name="rawSlotName" value="eventNameAutoComplete"/>
-		<property name="labelField" value="name.content"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>
-		<property name="minChars" value="3"/>
-	</slot>
 	<slot name="publisher" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="publisherName"/>
@@ -1214,6 +1204,16 @@
 	</slot>
 	<slot name="address">
 		<property name="size" value="40"/>
+	</slot>
+	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="rawSlotName" value="eventNameAutoComplete"/>
+		<property name="labelField" value="name.content"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>
+		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="organization" layout="autoComplete">
 		<property name="size" value="40"/>
@@ -1431,7 +1431,6 @@
 		<property name="columns" value="60"/>
 	</slot>
 </schema>
-<schema name="result.publication.Unstructured" type="net.sourceforge.fenixedu.domain.research.result.publication.Unstructured" bundle="RESEARCHER_RESOURCES">
+<schema name="result.publication.details.Unstructured" type="net.sourceforge.fenixedu.domain.research.result.publication.Unstructured" bundle="RESEARCHER_RESOURCES">
 	<slot name="title"/>
- 	<slot name="year"/>	
 </schema>
