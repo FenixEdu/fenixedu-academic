@@ -79,7 +79,10 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCoursesToImportLessonPlanningsProvider" />
 		<property name="format" value="${nome}" />
 	</slot>
-	<slot name="importType" key="label.import.lessonPlannings.importType" layout="radio" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />		
+	<slot name="importType" key="label.import.lessonPlannings.importType" layout="radio" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+		<property name="classes" value="nomargin nopadding" />
+		<property name="eachClasses" value="nopadding" />
+	</slot>		
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.EvaluationMethod" type="net.sourceforge.fenixedu.domain.EvaluationMethod" bundle="DEFAULT">
 	<slot name="evaluationElements" layout="rich-text" key="no.title.evaluationElements">
