@@ -4,23 +4,25 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<em>Gestão de Espaços</em>
 <h2><bean:message key="label.space.blueprints.management" bundle="SPACE_RESOURCES"/></h2>
 
 <logic:present name="selectedSpaceInformation">
-
-	<br/>		
+	
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
-	<jsp:include page="spaceCrumbs.jsp"/>
-	<br/><br/>	
+	<div class="mbottom2">
+		<jsp:include page="spaceCrumbs.jsp"/>
+	</div>
 	
 	<logic:messagesPresent message="true">
-		<span class="error"><!-- Error messages go here -->
+	<p>
+		<em><!-- Error messages go here -->
 			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
 				<bean:write name="message"/>
 			</html:messages>
-		</span>
-		<br/>
+		</em>
+	</p>
 	</logic:messagesPresent>	
 	
 	<logic:notEmpty name="selectedSpaceBlueprint">					
@@ -51,19 +53,19 @@
 		</bean:define>
 		<html:link page="<%= editLink %>">
 			<bean:message key="link.edit.space.information" bundle="SPACE_RESOURCES"/>
-		</html:link>,&nbsp;	
+		</html:link>, 
 		
 		<bean:define id="deleteLink">
 			/manageBlueprints.do?method=deleteBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="selectedSpaceBlueprint" property="idInternal"/> 
 		</bean:define>
 		<html:link page="<%= deleteLink %>">
 			<bean:message key="link.delete.space.information" bundle="SPACE_RESOURCES"/>
-		</html:link>,&nbsp;											
+		</html:link>, 											
 				
 	</logic:notEmpty>
 	
 	<logic:empty name="selectedSpaceBlueprint">
-		<span class="error"><!-- Error messages go here -->
+		<span class="warning0"><!-- Error messages go here -->
 			<bean:message key="label.space.no.blueprints" bundle="SPACE_RESOURCES"/>
 		</span>	
 		<br/><br/>
@@ -72,7 +74,7 @@
 	<html:link page="/manageBlueprints.do?method=prepareCreateBlueprintVersion&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message key="link.edit.space.create.new.version" bundle="SPACE_RESOURCES"/>
 	</html:link>
-	,&nbsp;									
+	, 								
 	<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformationId">
 		<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
 	</html:link>	

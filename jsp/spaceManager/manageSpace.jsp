@@ -6,21 +6,27 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <logic:present name="selectedSpaceInformation">
-
+	
+	<em>Gestão de Espaços</em>
+	<h2>Gerir Espaço</h2>
+	
 	<bean:define id="selectedSpaceInformationIDString" type="java.lang.String"><bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>	
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
-	<jsp:include page="spaceCrumbs.jsp"/>
-	<br/><br/>
-			
+	<div class="mbottom2">
+		<jsp:include page="spaceCrumbs.jsp"/>
+	</div>
+				
 	<logic:messagesPresent message="true">
+		<p>
 		<span class="error"><!-- Error messages go here -->
 			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
 				<bean:write name="message"/>
 			</html:messages>
 		</span>
-		<br/>
+		</p>
 	</logic:messagesPresent>
 	
+	<div class="mtop1 mbottom0">
 	<bean:message bundle="SPACE_RESOURCES" key="label.versions"/>: 
 	<logic:iterate id="spaceInformation" name="selectedSpaceInformation" property="space.orderedSpaceInformations">
 		<bean:define id="spaceInformation" name="spaceInformation" toScope="request"/>
@@ -34,14 +40,14 @@
 			</html:link>
 		</logic:notEqual>
 	</logic:iterate>
-	<br/><br/>
+	</div>
 
-	<table>
+	<table class="tstyle4 thleft thlight">
 		<tr>
-			<th class="listClasses-header">
-				<bean:message bundle="SPACE_RESOURCES" key="title.space.type"/>
+			<th>
+				<bean:message bundle="SPACE_RESOURCES" key="title.space.type"/>:
 			</th>
-			<td class="listClasses">
+			<td>
 				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 					<bean:message bundle="SPACE_RESOURCES" key="select.item.campus"/>
 				</logic:equal>
@@ -57,84 +63,86 @@
 			</td>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
-				<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>
+			<th>
+				<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>:
 			</th>
-			<td class="listClasses">
+			<td>
 				<bean:write name="selectedSpaceInformation" property="presentationName"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
-				<bean:message bundle="SPACE_RESOURCES" key="title.space.last.version.date"/>
+			<th>
+				<bean:message bundle="SPACE_RESOURCES" key="title.space.last.version.date"/>:
 			</th>
-			<td class="listClasses">
+			<td>
 				<bean:define id="spaceInformation" name="spaceInformation2" toScope="request"/>
 				<jsp:include page="spaceInformationVersion.jsp"/>
 			</td>
 		</tr>
 		<tr>	
-			<th class="listClasses-header">
-				<bean:message bundle="SPACE_RESOURCES" key="title.space.number.subspaces"/>
+			<th>
+				<bean:message bundle="SPACE_RESOURCES" key="title.space.number.subspaces"/>:
 			</th>						
-			<td class="listClasses">
+			<td>
 				<bean:write name="selectedSpaceInformation" property="space.containedSpacesCount"/>
 			</td>
 		</tr>
 	</table>
-	<br/>
-	<html:link page="/manageSpaces.do?method=prepareEditSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-		<bean:message bundle="SPACE_RESOURCES" key="link.edit.space.information"/>
-	</html:link>,&nbsp;
-	<html:link page="/manageSpaces.do?method=deleteSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-		<bean:message bundle="SPACE_RESOURCES" key="link.delete.space.information"/>
-	</html:link>,&nbsp;
-	<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-		<bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/>
-	</html:link>,&nbsp;
-	<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal">
-		<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
-	</html:link>
-	<br/><br/>
 	
-	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.bluePrint"/></b></p>			
+	<p class="mtop0 mbottom2">
+		<html:link page="/manageSpaces.do?method=prepareEditSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+			<bean:message bundle="SPACE_RESOURCES" key="link.edit.space.information"/>
+		</html:link>&nbsp;,
+		<html:link page="/manageSpaces.do?method=deleteSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space.information"/>
+		</html:link>&nbsp;,
+		<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+			<bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/>
+		</html:link>&nbsp;,
+		<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal">
+			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
+		</html:link>
+	</p>
+
+	
+	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.bluePrint"/></h3>			
 	<logic:notEmpty name="selectedSpaceInformation" property="space.mostRecentBlueprint">		
 		<bean:define id="blueprint" name="selectedSpaceInformation" property="space.mostRecentBlueprint"/>		
 		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="blueprint" property="idInternal"/></bean:define>
 		<html:img align="middle" src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
 	</logic:notEmpty>	
-	<p><html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+	<p>
+		<html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.manage.blueprints"/>
-	</html:link></p>	
-	<br/>
+		</html:link>
+	</p>
 	
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-		<p><b><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></b></p>
+		<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
 		<fr:view name="selectedSpaceInformation" schema="RoomInformation" layout="tabular"/>
-		<br/><br/>
 	</logic:equal>		    
 
 	<logic:present name="spaces">
-		<p><b><bean:message bundle="SPACE_RESOURCES" key="title.subspaces"/></b></p>
+		<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="title.subspaces"/></h3>
 		<bean:size id="spacesSize" name="spaces"/>
 		<logic:greaterEqual name="spacesSize" value="1">
-			<table>				
+			<table class="tstyle4 thleft thlight mbottom05">				
 				<tr>
-					<th class="listClasses-header">
+					<th>
 						<bean:message bundle="SPACE_RESOURCES" key="title.space.type"/>
 					</th>
-					<th class="listClasses-header">
+					<th>
 						<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>
 					</th>
-					<th class="listClasses-header">
+					<th>
 						<bean:message bundle="SPACE_RESOURCES" key="title.space.number.subspaces"/>
 					</th>
-					<th class="listClasses-header">
+					<th>
 					</th>
 				</tr>
 				<logic:iterate id="space" name="spaces">
 					<tr>
-						<td class="listClasses">
+						<td>
 							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 								<bean:message bundle="SPACE_RESOURCES" key="select.item.campus"/>
 							</logic:equal>
@@ -148,15 +156,15 @@
 								<bean:message bundle="SPACE_RESOURCES" key="select.item.room"/>
 							</logic:equal>
 						</td>
-						<td class="listClasses">
+						<td>
 							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
 								<bean:write name="space" property="spaceInformation.presentationName"/>
 							</html:link>
 						</td>
-						<td class="listClasses">
+						<td>
 							<bean:write name="space" property="containedSpacesCount"/>
 						</td>
-						<td class="listClasses">
+						<td>
 							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
 								<bean:message bundle="SPACE_RESOURCES" key="label.view"/>
 							</html:link>,&nbsp; 
@@ -170,12 +178,14 @@
 		</logic:greaterEqual>
 	</logic:present>
 
-	<p><html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-		<bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/>
-	</html:link></p>
-	<br/>
+	<p class="mtop05">
+		<html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+			<bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/>
+		</html:link>
+	</p>
+
 	
-	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></b></p>
+	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></h3>
 	<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
@@ -183,12 +193,14 @@
    			<fr:property name="headerClasses" value="listClasses-header"/>	
    		</fr:layout>	
 	</fr:view>
-	<p><html:link page="/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-		<bean:message bundle="SPACE_RESOURCES" key="link.manage.space.responsibility"/>
-	</html:link></p>		
+	<p>
+		<html:link page="/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+			<bean:message bundle="SPACE_RESOURCES" key="link.manage.space.responsibility"/>
+		</html:link>
+	</p>
 	
-	<br/>	
-	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.active.occupations"/></b></p>
+
+	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.active.occupations"/></h3>
 	<fr:view schema="PersonSpaceOccupationsWithUsername" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
@@ -200,8 +212,7 @@
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.occupations"/>
 	</html:link></p>
 
-	<br/>	
-	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></b></p>
+	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></h3>
 	<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	

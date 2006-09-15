@@ -4,40 +4,35 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<H2><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></H2>
-<br/>
+<h2><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></h2>
 
-<html:link page="/showCreateSpaceForm.do">
-	<bean:message bundle="SPACE_RESOURCES" key="link.create.space"/>
-</html:link>
-<br/>
-<br/>
+<ul>
+	<li><html:link page="/showCreateSpaceForm.do"><bean:message bundle="SPACE_RESOURCES" key="link.create.space"/></html:link></li>
+</ul>
 
 <logic:present name="selectedSpace">
 	<bean:write name="selectedSpace" property="idInternal"/>
-	<br/>
-	<br/>
 </logic:present>
 
 <logic:present name="spaces">
-	<table>
+	<table class="tstyle4">
 		<tr>
-			<th class="listClasses-header">
+			<th>
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.type"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.number.subspaces"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 			</th>
 		</tr>
 		<logic:iterate id="space" name="spaces">
 			<logic:notPresent name="space" property="suroundingSpace">
 				<tr>
-					<td class="listClasses">
+					<td>
 						<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 							<bean:message bundle="SPACE_RESOURCES" key="select.item.campus"/>
 						</logic:equal>
@@ -45,7 +40,7 @@
 							<bean:message bundle="SPACE_RESOURCES" key="select.item.building"/>
 						</logic:equal>
 					</td>
-					<td class="listClasses">
+					<td>
 						<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
 							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 								<bean:write name="space" property="spaceInformation.presentationName"/>
@@ -55,10 +50,10 @@
 							</logic:equal>
 						</html:link>
 					</td>
-					<td class="listClasses">
+					<td>
 						<bean:write name="space" property="containedSpacesCount"/>
 					</td>
-					<td class="listClasses">
+					<td>
 						<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="space" paramProperty="idInternal">
 							<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 						</html:link>

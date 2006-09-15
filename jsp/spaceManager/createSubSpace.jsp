@@ -5,17 +5,17 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<H2><bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/></H2>
+<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
+<h2><bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/></h2>
 
 <bean:define id="selectedSpace" name="selectedSpaceInformation" property="space"/>
 <bean:define id="suroundingSpaceID" type="java.lang.Integer" name="selectedSpace" property="idInternal"/>
 <bean:define id="suroundingSpaceInformationID" type="java.lang.Integer" name="selectedSpace" property="spaceInformation.idInternal"/>
 
-<div class="infoop2">
-	<p><b><bean:message key="title.space.Space" bundle="SPACE_RESOURCES"/>:</b>&nbsp;<bean:write name="selectedSpace" property="spaceInformation.presentationName"/></p> 
-</div>
+<p><span class="warning0"><bean:message key="label.space.createIn" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="selectedSpace" property="spaceInformation.presentationName"/></strong></span></p>
 
-<H3><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/></H3>
+
+<p class="mbottom05"><strong><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/>:</strong></p>
 <html:form action="/manageSpaces">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showCreateSubSpaceForm"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.spaceInformationID" property="spaceInformationID" value="<%= suroundingSpaceInformationID.toString() %>"/>
@@ -29,36 +29,47 @@
 		<bean:message key="button.submit"/>
 	</html:submit>
 </html:form>
-<br/>
 
 <bean:define id="cancelPath">
 	/manageSpaces.do?method=manageSpace&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>
 </bean:define>	
 
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
-    <H3><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></H3>
+    <p class="mtop2 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/>:</strong></p>
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator"
 			schema="BuildingFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
 		<fr:destination name="cancel" path="<%= cancelPath %>"/>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="thlight mtop0 mbottom1"/>
+		</fr:layout>	
 	</fr:create>
 </logic:equal>
+
+
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Floor">
-	<H3><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></H3>
+	<p class="mtop2 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong>:</p>
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Floor$FloorFactoryCreator"
 			schema="FloorFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
-		<fr:destination name="cancel" path="<%= cancelPath %>"/>		
+		<fr:destination name="cancel" path="<%= cancelPath %>"/>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="thlight mtop0 mbottom1"/>
+		</fr:layout>		
 	</fr:create>
 </logic:equal>
+
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Room">
-    <H3><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></H3>
+    <p class="mtop2 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/>:</strong></p>
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator"
 			schema="RoomFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
-		<fr:destination name="cancel" path="<%= cancelPath %>"/>		
+		<fr:destination name="cancel" path="<%= cancelPath %>"/>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight mtop0"/>
+		</fr:layout>	
 	</fr:create>
 </logic:equal>
