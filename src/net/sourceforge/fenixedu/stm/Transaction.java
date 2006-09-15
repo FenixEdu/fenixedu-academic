@@ -8,7 +8,7 @@ import org.apache.ojb.broker.PersistenceBroker;
 public abstract class Transaction extends jvstm.Transaction {
 
     private static int WARN_TX_QUEUE_SIZE_LIMIT = 1000;
-    private static int TRANSACTION_MAX_DURATION_MILLIS = 100 * 1000;
+    private static int TRANSACTION_MAX_DURATION_MILLIS = 600 * 1000;
 
     public final static TransactionStatistics STATISTICS = new TransactionStatistics();
 
