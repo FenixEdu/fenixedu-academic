@@ -104,8 +104,6 @@ public class Registration extends Registration_Base {
         for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
             ;
 
-        for (; !getRegistrationDataByPeriod().isEmpty(); getRegistrationDataByPeriod().get(0).delete())
-            ;
         removeStudent();
         removeRootDomainObject();
         super.deleteDomainObject();
@@ -900,30 +898,6 @@ public class Registration extends Registration_Base {
         }
 
         return activeStudentCurricularPlan.getAssociatedTutor();
-    }
-
-    public RegistrationDataByPeriod getActualPeriodRegistrationData() {
-        ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        for (RegistrationDataByPeriod registrationDataByPeriod : getRegistrationDataByPeriod()) {
-            if (registrationDataByPeriod.getExecutionPeriod().equals(actualExecutionPeriod)) {
-                return registrationDataByPeriod;
-            }
-        }
-        return null;
-    }
-
-    public void setStudentKind(StudentKind studentKind) {
-        if (getActualPeriodRegistrationData() == null) {
-            getRegistrationDataByPeriod().add(new RegistrationDataByPeriod());
-        }
-        getActualPeriodRegistrationData().setStudentKind(studentKind);
-    }
-
-    public StudentKind getStudentKind() {
-        if (getActualPeriodRegistrationData() == null) {
-            return null;
-        }
-        return getActualPeriodRegistrationData().getStudentKind();
     }
 
     @Override

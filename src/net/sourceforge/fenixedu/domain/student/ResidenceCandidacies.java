@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
@@ -12,9 +14,15 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class ResidenceCandidacies extends ResidenceCandidacies_Base {
 
-	public ResidenceCandidacies() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public ResidenceCandidacies() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setCreationDateDateTime(new DateTime());
+    }
+    
+    public ResidenceCandidacies(String observations) {
+	this();
+	setObservations(observations);
+    }
 
 }

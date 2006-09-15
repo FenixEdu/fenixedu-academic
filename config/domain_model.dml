@@ -2357,6 +2357,7 @@ class net.sourceforge.fenixedu.domain.student.ResidenceCandidacies extends net.s
     String observations;
     Boolean candidate;
     Integer keyStudent;
+    Integer keyStudentDataByExecutionYear;
 }
 
 
@@ -2735,17 +2736,21 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	Integer keyPrecedentDegreeInformation;
 	Integer keyStudent;
 	Integer keyCandidacy;
-}
-
-class net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStudentKind;
-	Integer keyExecutionPeriod;
-	Integer keyRegistration;
 }
 
 class net.sourceforge.fenixedu.domain.student.Student extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Integer number;
+}
+
+class net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionYear;
+	Integer keyStudent;
+	Integer keyResidenceCandidacy;
+	Boolean workingStudent;
+	StudentPersonalDataAuthorizationChoice personalDataAuthorization;
+	
 }
 
 class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -7637,22 +7642,34 @@ relation AdministrativeOfficeUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
 
-relation RegistrationDataExecutionPeriod {
-	net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod playsRole registrationDataByPeriod {
+relation StudentDataByExecutionYearStudent {
+	net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear playsRole studentDataByExecutionYear {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.student.Student playsRole student;
 }
 
-relation RegistrationDataRegistration {
-	net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod playsRole registrationDataByPeriod {
+relation StudentDataByExecutionYearExecutionYear {
+	net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear playsRole studentDataByExecutionYear {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
-relation RegistrationDataStudentKind {
-	net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod playsRole registrationDataByPeriod {
+relation StudentDataByExecutionYearResidenceCandidacy {
+	net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear playsRole studentDataByExecutionYear;
+	net.sourceforge.fenixedu.domain.student.ResidenceCandidacies playsRole residenceCandidacy;
+}
+
+relation StudentDataByExecutionYearRootDomainObject {
+	net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear playsRole studentDataByExecutionYear {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+}
+
+relation RegistrationStudentKind {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registration {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.StudentKind playsRole studentKind;
@@ -7687,14 +7704,6 @@ relation ParkingRequestParkingDocument {
 relation ParkingFileParkingDocument {
 	net.sourceforge.fenixedu.domain.parking.ParkingFile playsRole parkingFile;
 	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocument;
-}
-
-
-relation RootDomainObjectRegistrationData {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod playsRole registrationDataByPeriod {
-		multiplicity *;
-	}
 }
 
 /*
