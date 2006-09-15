@@ -34,7 +34,7 @@
 
     <target name="compile"
     		description="Compiles standalone application">
-		<ant antfile="build_compile.xml" target="compile-without-access-control"/>
+		<ant antfile="build_compile.xml" target="compile"/>
     </target>
 
     <target name="war"
