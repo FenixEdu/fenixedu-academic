@@ -29,7 +29,7 @@
 					<fr:property name="checkable" value="true"/>
 					<fr:property name="checkboxName" value="selectedLessonAndDate"/>
 					<fr:property name="checkboxValue" value="checkBoxValue"/>
-					<fr:property name="classes" value="tstyle1a mtop025"/>
+					<fr:property name="classes" value="tstyle1 mtop025"/>
 				</fr:layout>
 			</fr:view>
 			<p class="mtop025 mbottom1"><html:submit><bean:message key="label.fill"/></html:submit></p>
