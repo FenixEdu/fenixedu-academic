@@ -114,17 +114,9 @@ public class Employee extends Employee_Base {
     }
 
     public Contract getLastContract() {
-        YearMonthDay date = null;
-        Contract contractToReturn = null;
-        for (Contract contract : this.getContracts()) {
-            if (contract.isActive(new YearMonthDay())) {
-                return contract;
-            } else if (date == null || date.isBefore(contract.getEndDateYearMonthDay())) {
-                date = contract.getEndDateYearMonthDay();
-                contractToReturn = contract;
-            }
-        }
-        return contractToReturn;
+        SortedSet<Contract> contracts = new TreeSet<Contract>(Contract.CONTRACT_COMPARATOR_BY_BEGIN_DATE);        
+        contracts.addAll(getContracts());
+        return (!contracts.isEmpty()) ? contracts.last() : null;  
     }
 
     public List<Contract> getContractsByPeriod(YearMonthDay begin, YearMonthDay end) {

@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.SummariesControlElementDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -244,7 +243,7 @@ public class SummariesControlAction extends FenixDispatchAction {
     private Double readSummaryHours(Professorship professorship, Shift shift, Double summaryHours) {
         for (Summary summary : shift.getAssociatedSummaries()) {
             if (summary.getProfessorship() != null && summary.getProfessorship().equals(professorship)) {
-                Lesson lesson = SummaryUtils.getSummaryLesson(summary);
+                Lesson lesson = summary.getLesson();
                 if (lesson != null) {
                     summaryHours += lesson.hours();
                 } else {
