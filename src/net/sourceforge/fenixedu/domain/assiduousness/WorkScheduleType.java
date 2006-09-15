@@ -101,7 +101,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
             if (scheduleMealBreak.contains(timePointDateTime)
                     && (!timePoint.getTime().isEqual(beginLunch))
                     && (timeline.isOpeningAndNotClosingWorkedPeriod(timePoint)
-                            || timeline.isClosingAnyWorkedPeriod(timePoint) || timePoint
+                            || timeline.isClosingAndNotOpeningWorkedPeriod(timePoint) || timePoint
                             .isAtSameTime(firstClocking))) {
                 if (!timePoint.getTime().isAfter(beginLunch)) {
                     totalDuration = totalDuration.plus(new Duration(scheduleMealBreak.getStart(),

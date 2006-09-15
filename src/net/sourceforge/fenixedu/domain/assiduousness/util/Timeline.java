@@ -316,10 +316,12 @@ public class Timeline {
         return false;
     }
 
-    public boolean isClosingAnyWorkedPeriod(TimePoint point) {
+    public boolean isClosingAndNotOpeningWorkedPeriod(TimePoint point) {
+        boolean isPointStartingAnyWorkedPeriod = isPointStartingAnyWorkedPeriod(point);
         for (AttributeType attributeType : point.getPointAttributes().getAttributes()) {
             if (DomainConstants.WORKED_ATTRIBUTES.contains(attributeType)
-                    && !point.getIntervalAttributes().contains(attributeType)) {
+                    && !point.getIntervalAttributes().contains(attributeType)
+                    && !isPointStartingAnyWorkedPeriod) {
                 return true;
             }
         }
@@ -362,6 +364,15 @@ public class Timeline {
             timePointList.add(endPoint);
         }
         return timePointList;
+    }
+
+    private boolean isPointStartingAnyWorkedPeriod(TimePoint point) {
+        for (AttributeType attributeType : DomainConstants.WORKED_ATTRIBUTES.getAttributes()) {
+            if (isPointStartingAttributeInterval(point, attributeType)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // A point starts an AttributeType attribute interval if its attribute contains attribute and if the
@@ -444,6 +455,7 @@ public class Timeline {
                     return totalDuration;
                 }
             } while ((countNumberOfWorkedAttributes(point2) > 1)
+                    || (countNumberOfWorkedAttributesInInterval(point2) > 1)
                     || (point.getPointAttributes().contains(AttributeType.JUSTIFICATION))
                     || (point2.getPointAttributes().contains(AttributeType.JUSTIFICATION)));
         }
@@ -470,6 +482,16 @@ public class Timeline {
     private int countNumberOfWorkedAttributes(TimePoint point2) {
         int result = 0;
         for (AttributeType attributeType : point2.getPointAttributes().getAttributes()) {
+            if (DomainConstants.WORKED_ATTRIBUTES.getAttributes().contains(attributeType)) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    private int countNumberOfWorkedAttributesInInterval(TimePoint point2) {
+        int result = 0;
+        for (AttributeType attributeType : point2.getIntervalAttributes().getAttributes()) {
             if (DomainConstants.WORKED_ATTRIBUTES.getAttributes().contains(attributeType)) {
                 result++;
             }

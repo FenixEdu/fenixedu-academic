@@ -42,7 +42,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
     private EmployeeWorkSheet getEmployeeWorkSheet(Assiduousness assiduousness, YearMonthDay beginDate,
             YearMonthDay endDate, YearMonthDay today) {
         final List<WorkDaySheet> workSheet = new ArrayList<WorkDaySheet>();
-
+        YearMonthDay lowerBeginDate = beginDate.minusDays(8);
         Duration totalBalance = Duration.ZERO;
         Duration totalUnjustified = Duration.ZERO;
 //      TODO remove comment in 2007
@@ -50,7 +50,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
 //        Duration totalWeeklyRestBalance = Duration.ZERO;
 
         HashMap<YearMonthDay, WorkSchedule> workScheduleMap = new HashMap<YearMonthDay, WorkSchedule>();
-        for (YearMonthDay thisDay = beginDate.minusDays(1); thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
+        for (YearMonthDay thisDay = lowerBeginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
                 .plusDays(1)) {
             final Schedule schedule = assiduousness.getSchedule(thisDay);
             if (schedule != null) {
@@ -60,10 +60,10 @@ public class ReadAssiduousnessWorkSheet extends Service {
             }
         }
 
-        DateTime init = beginDate.toDateTime(Assiduousness.defaultStartWorkDay);
-        WorkSchedule beginWorkSchedule = workScheduleMap.get(beginDate);
+        DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay);
+        WorkSchedule beginWorkSchedule = workScheduleMap.get(lowerBeginDate);
         if (beginWorkSchedule != null) {
-            init = beginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime());
+            init = lowerBeginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime());
         }
 
         DateTime end = endDate.toDateTime(Assiduousness.defaultEndWorkDay);
