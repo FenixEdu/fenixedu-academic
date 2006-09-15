@@ -81,7 +81,7 @@ public class ShowSummariesBean implements Serializable {
     }
     
     public static enum ListSummaryType {
-        ALL, SUMMARIZED;
+        ALL_CONTENT, SUMMARIZED;
         public String getName() {
             return name();
         }

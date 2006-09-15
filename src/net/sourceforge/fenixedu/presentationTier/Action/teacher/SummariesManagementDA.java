@@ -310,7 +310,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	teacherSummaries.addAll(professorshipLogged.getAssociatedSummaries());
 	readAndSaveNextPossibleSummaryLessonsAndDates(request, executionCourse);
 	request.setAttribute("showSummariesBean", new ShowSummariesBean(new SummaryTeacherBean(
-		professorshipLogged), executionCourse, ListSummaryType.ALL, professorshipLogged));
+		professorshipLogged), executionCourse, ListSummaryType.ALL_CONTENT, professorshipLogged));
 	request.setAttribute("teacherNumber", professorshipLogged.getTeacher().getTeacherNumber()
 		.toString());
 	request.setAttribute("summaries", teacherSummaries);

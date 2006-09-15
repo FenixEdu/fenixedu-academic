@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,10 +14,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
-import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;

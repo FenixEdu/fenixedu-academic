@@ -64,7 +64,7 @@
 			<h3 class="mtop2 mbottom05">
 				<fr:view name="summary" property="title" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" />
 			</h3>			
-			<logic:equal name="showSummariesBean" property="listSummaryType" value="ALL">				
+			<logic:equal name="showSummariesBean" property="listSummaryType" value="ALL_CONTENT">				
 				<p class="mvert05">
 					<fr:view name="summary" property="summaryText" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" />					
 				</p>
