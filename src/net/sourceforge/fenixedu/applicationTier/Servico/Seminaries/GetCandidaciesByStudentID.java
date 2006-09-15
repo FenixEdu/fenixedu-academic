@@ -5,14 +5,16 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
@@ -25,20 +27,20 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCandidaciesByStudentID extends Service {
 
-	public List run(Integer id) throws BDException, ExcepcaoPersistencia {
-		List candidaciesInfo = new LinkedList();
+	public List run(final Person person) throws BDException, ExcepcaoPersistencia {
+		final List candidaciesInfo = new LinkedList();
 
-		List candidacies = rootDomainObject.readRegistrationByOID(id).getAssociatedCandidancies();
-		for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
-			SeminaryCandidacy candidacy = (SeminaryCandidacy) iterator.next();
-
-			InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(candidacy);
-
-			Seminary seminary = candidacy.getSeminary();
+		final Student student = person.getStudent();
+		for (final Registration registration : student.getRegistrationsSet()) {
+		    for (final SeminaryCandidacy seminaryCandidacy : registration.getAssociatedCandidanciesSet()) {
+			final InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(seminaryCandidacy);
+			final Seminary seminary = seminaryCandidacy.getSeminary();
 			infoCandidacy.setSeminaryName(seminary.getName());
 			candidaciesInfo.add(infoCandidacy);
+		    }
 		}
 
 		return candidaciesInfo;
 	}
+
 }
