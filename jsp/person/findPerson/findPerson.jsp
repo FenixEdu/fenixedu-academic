@@ -183,14 +183,14 @@ function check(e,v){
 			<table class="ppid" cellpadding="0" cellspacing="0">
 				<tr>
 					<td width="70%"> 
-						<strong><bean:write name="personalInfo" property="nome"/> (<bean:write name="personalInfo" property="username"/>)</strong>
+						<strong><bean:write name="personalInfo" property="nome"/> (<bean:write name="personalInfo" property="username"/><logic:notEmpty name="personalInfo" property="istUsername"> | <bean:write name="personalInfo" property="istUsername"/></logic:notEmpty>)</strong>
 						<bean:size id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size> 
 						<logic:greaterThan name="mainRolesSize" value="0">
 							<logic:iterate id="role" name="personalInfo" property="mainRoles" indexId="i">
 								<em><bean:write name="role"/><logic:notEqual name="mainRolesSize" value="<%= String.valueOf(i.intValue() + 1) %>">, </logic:notEqual></em>
 							</logic:iterate>
 						</logic:greaterThan>
-						<logic:equal name="mainRolesSize" value="0"></logic:equal>
+						<logic:equal name="mainRolesSize" value="0"></logic:equal>						
 					</td>
 					<td width="30%" style="text-align: right;">
 						<bean:define id="aa" value="<%= "aa" + personIndex %>" />

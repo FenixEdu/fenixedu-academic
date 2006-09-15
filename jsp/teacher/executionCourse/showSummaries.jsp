@@ -77,17 +77,13 @@
 						<bean:message key="label.lesson" />
 					</logic:empty>				
 					<logic:notEmpty name="summary" property="isExtraLesson">
-						<logic:equal name="summary" property="isExtraLesson" value="false">		
-							<!-- Normal Summary -->
-						 	<bean:message key="label.lesson" />
-						 	<logic:notEmpty name="summary" property="summaryType">
-								<bean:message name="summary" property="summaryType.name" bundle="ENUMERATION_RESOURCES"/>						   	
-							</logic:notEmpty>
-						</logic:equal>
-					
+						<bean:message key="label.lesson" />
+					 	<logic:notEmpty name="summary" property="summaryType">
+							<bean:message name="summary" property="summaryType.name" bundle="ENUMERATION_RESOURCES"/>						   	
+						</logic:notEmpty>
 						<logic:equal name="summary" property="isExtraLesson" value="true">		     
 					   		<!-- Extra Summary -->
-							<bean:message key="label.extra.lesson" />
+							<bean:message key="label.extra" />
 						</logic:equal>
 					</logic:notEmpty>
 					
