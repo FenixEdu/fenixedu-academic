@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 
@@ -57,8 +56,6 @@ public class PublicTilesComponentController extends ControllerSupport {
         } else if (component instanceof InfoSiteCurricularCourse) {
 
             tileContext.putAttribute("body", "/publico/viewCurricularCourse_bd.jsp");
-        } else if (component instanceof InfoSiteSummaries) {
-            tileContext.putAttribute("body", "/publico/summaries_bd.jsp");
         } else if (component instanceof InfoSiteObjectives) {
             tileContext.putAttribute("body", "/publico/objectives_bd.jsp");
         } else if (component instanceof InfoSiteProgram) {

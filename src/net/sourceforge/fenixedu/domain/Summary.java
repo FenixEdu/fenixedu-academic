@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -99,7 +100,7 @@ public class Summary extends Summary_Base {
 	if (date.isAfter(new YearMonthDay()) || date.isBefore(period.getBeginDateYearMonthDay())) {
 	    throw new DomainException("error.summary.no.valid.date");
 	}
-	if (lesson != null && !lesson.isDateValid(date)) {
+	if (lesson != null && !lesson.isDateValidToInsertSummary(date)) {
 	    throw new DomainException("error.summary.no.valid.date.to.lesson");
 	}
     }
@@ -142,21 +143,7 @@ public class Summary extends Summary_Base {
 	    }
 	}
     }
-
-    public boolean compareTo(Object obj) {
-	boolean resultado = false;
-	if (obj instanceof Summary) {
-	    Summary summary = (Summary) obj;
-
-	    resultado = (summary != null) && this.getShift().equals(summary.getShift())
-		    && this.getSummaryDate().equals(summary.getSummaryDate())
-		    && this.getSummaryHour().equals(summary.getSummaryHour())
-		    && this.getSummaryText().equals(summary.getSummaryText())
-		    && this.getTitle().equals(summary.getTitle());
-	}
-	return resultado;
-    }
-
+    
     public void delete() {
 	removeExecutionCourse();
 	removeProfessorship();
@@ -166,17 +153,17 @@ public class Summary extends Summary_Base {
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
-    
-    private int getWeekDayInDiaSemanaFormat() {	
+
+    private int getWeekDayInDiaSemanaFormat() {
 	int dayOfWeek = getSummaryDateYearMonthDay().toDateTimeAtMidnight().getDayOfWeek();
 	return (dayOfWeek == 7) ? 1 : dayOfWeek + 1;
     }
 
     public Lesson getLesson() {
-	if (!getIsExtraLesson() && getShift() != null) {	    
+	if (!getIsExtraLesson() && getShift() != null) {
 	    for (Lesson lesson : getShift().getAssociatedLessonsSet()) {
 		if (lesson.getBeginHourMinuteSecond().isEqual(getSummaryHourHourMinuteSecond())
-			&& lesson.getDiaSemana().getDiaSemana().intValue() == getWeekDayInDiaSemanaFormat()			
+			&& lesson.getDiaSemana().getDiaSemana().intValue() == getWeekDayInDiaSemanaFormat()
 			&& ((lesson.getSala() == null && getRoom() == null) || (lesson.getSala() != null
 				&& getRoom() != null && lesson.getSala().equals(getRoom())))) {
 		    return lesson;
@@ -184,5 +171,21 @@ public class Summary extends Summary_Base {
 	    }
 	}
 	return null;
+    }
+
+    public String getOrder() {
+	StringBuilder stringBuilder = new StringBuilder();
+	Lesson lesson = getLesson();
+	if (lesson != null) {
+	    List<YearMonthDay> allLessonDates = lesson.getAllLessonDates();
+	    if (!allLessonDates.isEmpty()) {
+		int index = allLessonDates.indexOf(getSummaryDateYearMonthDay());
+		if (index != -1) {
+		    return stringBuilder.append("(").append(index + 1).append("/").append(
+			    allLessonDates.size()).append(")").toString();
+		}
+	    }
+	}
+	return "";
     }
 }

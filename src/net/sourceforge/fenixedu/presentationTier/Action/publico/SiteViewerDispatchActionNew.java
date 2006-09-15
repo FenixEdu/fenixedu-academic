@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.util.Collections;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,11 +26,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -156,41 +152,7 @@ public class SiteViewerDispatchActionNew extends FenixContextDispatchAction {
         readSiteView(request, sectionComponent, null, sectionIndex, null);
 
         return mapping.findForward("sucess");
-    }
-
-    public ActionForward summaries(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
-
-        ISiteComponent summariesComponent = new InfoSiteSummaries();
-
-        ShiftType lessonType = null;
-        if (request.getParameter("bySummaryType") != null
-                && request.getParameter("bySummaryType").length() > 0) {
-            lessonType = ShiftType.valueOf(request.getParameter("bySummaryType"));
-            ((InfoSiteSummaries) summariesComponent).setShiftType(lessonType);
-        }
-
-        Integer shiftId = null;
-        if (request.getParameter("byShift") != null && request.getParameter("byShift").length() > 0) {
-            shiftId = new Integer(request.getParameter("byShift"));
-            ((InfoSiteSummaries) summariesComponent).setShiftId(shiftId);
-        }
-
-        Integer professorShiftId = null;
-        if (request.getParameter("byTeacher") != null && request.getParameter("byTeacher").length() > 0) {
-            professorShiftId = new Integer(request.getParameter("byTeacher"));
-            ((InfoSiteSummaries) summariesComponent).setTeacherId(professorShiftId);
-        }
-
-        SiteView siteView = readSiteView(request, summariesComponent, null, null, null);
-
-        Collections.sort(((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent())
-                .getInfoSummaries(), Collections.reverseOrder());
-        request.setAttribute("siteView", siteView);
-
-        return mapping.findForward("sucess");
-
-    }
+    }   
 
     public ActionForward curricularCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {

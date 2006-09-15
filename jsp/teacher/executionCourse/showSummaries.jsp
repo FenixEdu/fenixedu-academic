@@ -55,11 +55,13 @@
 	</div>	
 	
 	<logic:notEmpty name="summaries">
-		<logic:iterate name="summaries" id="summary">
+		<logic:iterate name="summaries" id="summary">					
 			
 			<%-- Summary --%>
 			<h3 class="mtop2 mbottom05">
 				<fr:view name="summary" property="title" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" />
+				<%-- Order --%>	
+				<span class="greytxt1 fwnormal" style="font-size: 0.75em"><bean:write name="summary" property="order"/></span>
 			</h3>			
 			<logic:equal name="showSummariesBean" property="listSummaryType" value="ALL_CONTENT">				
 				<p class="mvert05">
@@ -136,6 +138,7 @@
 						<bean:message key="label.lastModificationDate"/>:&nbsp;	 										
 						<fr:view name="summary" property="lastModifiedDateDateTime" />					
 					</span>		
+															
 				</em>
 			</p>
 			

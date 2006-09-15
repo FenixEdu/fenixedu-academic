@@ -373,6 +373,7 @@ padding-right: 0.5em;
 .acenter { text-align: center; }
 .asterisk1 { color: #d42; }
 .bold { font-weight: bold; }
+.fwnormal { font-weight: normal; }
 .nobullet { list-style: none; }
 .noindent { margin-left: 0; padding-left: 0; }
 .attention { background-color: #ffa; padding: 0 0.25em; }
