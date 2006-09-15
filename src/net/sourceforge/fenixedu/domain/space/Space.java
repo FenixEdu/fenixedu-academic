@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -191,6 +193,16 @@ public abstract class Space extends Space_Base {
         return (!orderedBlueprints.isEmpty()) ? orderedBlueprints.last() : null;
     }
 
+    public static Set<Campus> getAllCampus(){
+	Set<Campus> campus = new HashSet<Campus>();
+	for (Space space : RootDomainObject.getInstance().getSpacesSet()) {
+	    if (space instanceof Campus) {		
+		campus.add((Campus) space);
+	    }
+	}
+	return campus;
+    }
+    
     public static class SpaceSpaceInformationListener extends RelationAdapter<Space, SpaceInformation> {
 
         @Override

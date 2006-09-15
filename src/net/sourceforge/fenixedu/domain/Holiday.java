@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
+import org.joda.time.YearMonthDay;
 
 public class Holiday extends Holiday_Base {
 
@@ -91,5 +93,19 @@ public class Holiday extends Holiday_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
-
+    
+    public static boolean isHoliday(YearMonthDay date) {
+	return isHoliday(date, null);
+    }
+    
+    public static boolean isHoliday(YearMonthDay date, Campus campus) {
+	for (Holiday holiday : RootDomainObject.getInstance().getHolidays()) {
+	    if ((holiday.getLocality() == null || (campus != null && holiday.getLocality() == campus
+		    .getSpaceInformation().getLocality()))
+		    && holiday.getDate().isMatch(date.toDateMidnight())) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

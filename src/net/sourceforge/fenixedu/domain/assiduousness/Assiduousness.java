@@ -233,16 +233,7 @@ public class Assiduousness extends Assiduousness_Base {
 
     public boolean isHoliday(YearMonthDay thisDay) {
         Campus campus = getAssiduousnessCampus(thisDay);
-        if (campus != null) {
-            for (Holiday holiday : getRootDomainObject().getHolidays()) {
-                if ((holiday.getLocality() == null || holiday.getLocality() == campus
-                        .getSpaceInformation().getLocality())
-                        && holiday.getDate().isMatch(thisDay.toDateMidnight())) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return Holiday.isHoliday(thisDay, campus);
     }
 
     private Campus getAssiduousnessCampus(YearMonthDay thisDay) {
