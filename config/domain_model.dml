@@ -2356,7 +2356,6 @@ class net.sourceforge.fenixedu.domain.student.ResidenceCandidacies extends net.s
 	DateTime creationDateDateTime;
     String observations;
     Boolean candidate;
-    Integer keyStudent;
     Integer keyStudentDataByExecutionYear;
 }
 
@@ -2750,7 +2749,6 @@ class net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear extends
 	Integer keyResidenceCandidacy;
 	Boolean workingStudent;
 	StudentPersonalDataAuthorizationChoice personalDataAuthorization;
-	
 }
 
 class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2807,12 +2805,6 @@ class net.sourceforge.fenixedu.domain.StudentKind extends net.sourceforge.fenixe
     Integer maxNACToEnrol;
     Integer maxCoursesToEnrol;
     StudentType studentType;
-}
-
-class net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyStudent;
-	Integer keyExecutionYear;
-	StudentPersonalDataAuthorizationChoice answer;
 }
 
 class net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -6284,14 +6276,6 @@ relation ReimbursementTransactionReimbursementGuideEntry {
 	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
 }
 
-
-relation ResidenceCandidaciesStudent {
-    net.sourceforge.fenixedu.domain.student.ResidenceCandidacies playsRole associatedResidenceCandidacies {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
-}
-
 relation RoomLesson {
 	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
 		multiplicity *;
@@ -7016,20 +7000,6 @@ relation WebSiteSectionWebSite {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.WebSite playsRole webSite;
-}
-
-relation StudentPersonalDataAuthorizationStudent {
-    net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization playsRole studentPersonalDataAuthorizations {
-    	multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
-}
-
-relation StudentPersonalDataAuthorizationExecutionYear {
-    net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization playsRole studentPersonalDataAuthorizations {
-    	multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 relation GroupingAttends {
@@ -8744,13 +8714,6 @@ relation RootDomainObjectProposal {
 relation RootDomainObjectContext {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole contexts {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectStudentPersonalDataAuthorization {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization playsRole studentPersonalDataAuthorizations {
 		multiplicity *;
 	}
 }

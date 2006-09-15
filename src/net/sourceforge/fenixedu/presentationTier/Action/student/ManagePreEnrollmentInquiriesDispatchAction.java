@@ -117,7 +117,7 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 
 	final Registration registration = getStudent(request);
 
-	if (registration.getActualPersonalDataAuthorizationAnswer() != null) {
+	if (registration.getStudent().getPersonalDataAuthorizationForCurrentExecutionYear() != null) {
 	    return mapping.findForward("proceedToEnrollment");
 	}
 

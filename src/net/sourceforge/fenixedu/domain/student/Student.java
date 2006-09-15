@@ -65,7 +65,7 @@ public class Student extends Student_Base {
 	}
 	return null;
     }
-    
+
     public StudentDataByExecutionYear getStudentDataByExecutionYear(ExecutionYear executionYear) {
 	for (StudentDataByExecutionYear studentData : getStudentDataByExecutionYear()) {
 	    if (studentData.getExecutionYear().equals(executionYear)) {
@@ -73,7 +73,7 @@ public class Student extends Student_Base {
 	    }
 	}
 	return null;
-    }    
+    }
 
     public ResidenceCandidacies getResidenceCandidacyForCurrentExecutionYear() {
 	if (getActualExecutionYearStudentData() == null) {
@@ -89,9 +89,10 @@ public class Student extends Student_Base {
     }
 
     public void setResidenceCandidacy(ResidenceCandidacies residenceCandidacy) {
-	ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(residenceCandidacy.getCreationDateDateTime().toYearMonthDay());
+	ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(residenceCandidacy
+		.getCreationDateDateTime().toYearMonthDay());
 	StudentDataByExecutionYear studentData = getStudentDataByExecutionYear(executionYear);
-	if(studentData == null){
+	if (studentData == null) {
 	    studentData = createStudentDataForExecutionYear(executionYear);
 	}
 	studentData.setResidenceCandidacy(residenceCandidacy);
@@ -109,8 +110,7 @@ public class Student extends Student_Base {
 	getActualExecutionYearStudentData().setWorkingStudent(true);
     }
 
-    public StudentPersonalDataAuthorizationChoice getPersonalDataAuthorizationForCurrentExecutionYear(
-	    StudentPersonalDataAuthorizationChoice personalDataAuthorization) {
+    public StudentPersonalDataAuthorizationChoice getPersonalDataAuthorizationForCurrentExecutionYear() {
 	if (getActualExecutionYearStudentData() == null) {
 	    return null;
 	}
@@ -122,11 +122,11 @@ public class Student extends Student_Base {
 	createCurrentYearStudentData();
 	getActualExecutionYearStudentData().setPersonalDataAuthorization(personalDataAuthorization);
     }
-    
+
     public void setPersonalDataAuthorizationForExecutionYear(
 	    StudentPersonalDataAuthorizationChoice personalDataAuthorization, ExecutionYear executionYear) {
 	StudentDataByExecutionYear studentData = getStudentDataByExecutionYear(executionYear);
-	if(studentData == null){
+	if (studentData == null) {
 	    studentData = createStudentDataForExecutionYear(executionYear);
 	}
 	studentData.setPersonalDataAuthorization(personalDataAuthorization);
@@ -137,7 +137,7 @@ public class Student extends Student_Base {
 	    new StudentDataByExecutionYear(this);
 	}
     }
-    
+
     private StudentDataByExecutionYear createStudentDataForExecutionYear(ExecutionYear executionYear) {
 	if (getStudentDataByExecutionYear(executionYear) == null) {
 	    return new StudentDataByExecutionYear(this, executionYear);

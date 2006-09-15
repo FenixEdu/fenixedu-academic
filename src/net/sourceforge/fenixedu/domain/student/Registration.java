@@ -56,7 +56,6 @@ import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 import net.sourceforge.fenixedu.util.StudentState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -122,6 +121,11 @@ public class Registration extends Registration_Base {
         return (StudentCurricularPlan) Collections.max(getStudentCurricularPlans(), new BeanComparator(
                 "startDateYearMonthDay"));
     }
+    
+    public StudentCurricularPlan getFirstStudentCurricularPlan() {
+        return (StudentCurricularPlan) Collections.min(getStudentCurricularPlans(), new BeanComparator(
+                "startDateYearMonthDay"));
+    }    
 
     public StudentCurricularPlan getActiveOrConcludedStudentCurricularPlan() {
         StudentCurricularPlan concludedStudentCurricularPlan = null;
@@ -620,16 +624,6 @@ public class Registration extends Registration_Base {
         }
 
         return result;
-    }
-
-    public StudentPersonalDataAuthorizationChoice getActualPersonalDataAuthorizationAnswer() {
-        for (final StudentPersonalDataAuthorization dataAuthorization : this
-                .getStudentPersonalDataAuthorizationsSet()) {
-            if (dataAuthorization.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
-                return dataAuthorization.getAnswer();
-            }
-        }
-        return null;
     }
 
     // Special Season
