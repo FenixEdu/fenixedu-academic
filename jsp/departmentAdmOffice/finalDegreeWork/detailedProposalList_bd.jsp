@@ -7,9 +7,9 @@
 <logic:iterate id="finalDegreeWorkProposal" name="proposals">
 	<h2><bean:message key="title.finalDegreeWorkProposal"/></h2>
 
-	<table class="tstyle3 taright th14 breakafter showborder">
+	<table class="tstyle3 taright breakafter showborder">
 		<tr>
-			<th>
+			<th class="width14em">
 				<bean:message key="finalDegreeWorkProposalHeader.year"/>:
 			</th>
 			<td>
