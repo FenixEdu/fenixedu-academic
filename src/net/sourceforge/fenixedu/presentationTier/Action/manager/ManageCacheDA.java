@@ -13,15 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.Custodian;
 import net.sourceforge.fenixedu._development.MetadataManager;
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.ResponseCacheOSCacheImpl;
-import net.sourceforge.fenixedu.stm.Transaction;
 import net.sourceforge.fenixedu.tools.Profiler;
 
 import org.apache.struts.action.ActionForm;
@@ -151,12 +148,6 @@ public class ManageCacheDA extends FenixDispatchAction {
                     + methodName);
         } catch (Throwable t) {
             System.out.println("Unable to load objects with method: " + methodName);
-        } finally {
-            final IUserView userView = AccessControl.getUserView();
-            Transaction.forceFinish();
-            Transaction.begin();
-            Transaction.currentFenixTransaction().setReadOnly();
-            AccessControl.setUserView(userView);
         }
         return numberOfReadDomainObjects;
     }
