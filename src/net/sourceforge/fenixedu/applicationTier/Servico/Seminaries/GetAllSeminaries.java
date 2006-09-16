@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,28 +10,28 @@ import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
+import org.joda.time.DateTime;
+
 public class GetAllSeminaries extends Service {
 
-	public List run(Boolean inEnrollmentPeriod) throws BDException, ExcepcaoPersistencia {
-		List<InfoSeminary> result = new LinkedList<InfoSeminary>();
+    public List run(Boolean inEnrollmentPeriod) throws BDException, ExcepcaoPersistencia {
+	List<InfoSeminary> result = new LinkedList<InfoSeminary>();
 
-		List<Seminary> seminaries = rootDomainObject.getSeminarys();
-		for (Seminary seminary : seminaries) {
-			Calendar now = new GregorianCalendar();
-			
-            Calendar beginDate = new GregorianCalendar();
-            beginDate.setTimeInMillis(seminary.getEnrollmentBeginTime().getTimeInMillis()
-                    + seminary.getEnrollmentBeginDate().getTimeInMillis());
-			
-            Calendar endDate = new GregorianCalendar();
-            endDate.setTimeInMillis(seminary.getEnrollmentEndTime().getTimeInMillis()
-					+ seminary.getEnrollmentEndDate().getTimeInMillis());
-			
-			if (!inEnrollmentPeriod || (endDate.after(now) && beginDate.before(now)))
-                result.add(InfoSeminaryWithEquivalencies.newInfoFromDomain(seminary));
+	List<Seminary> seminaries = rootDomainObject.getSeminarys();
+	for (Seminary seminary : seminaries) {
+	    
+	    if (!inEnrollmentPeriod) {
+		result.add(InfoSeminaryWithEquivalencies.newInfoFromDomain(seminary));
+	    } else {
+		final DateTime now = new DateTime();
+		if (!now.isBefore(seminary.getEnrollmentBeginYearMonthDay().toDateMidnight())
+			&& !now.isAfter(seminary.getEnrollmentEndYearMonthDay().toDateMidnight())) {
+		    result.add(InfoSeminaryWithEquivalencies.newInfoFromDomain(seminary));
 		}
-
-		return result;
+	    }
 	}
-    
+
+	return result;
+    }
+
 }

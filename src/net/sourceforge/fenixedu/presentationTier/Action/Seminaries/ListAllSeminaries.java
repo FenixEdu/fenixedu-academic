@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -67,7 +66,7 @@ public class ListAllSeminaries extends FenixAction {
                 }
             }
         } catch (Exception e) {
-            throw new FenixActionException();
+            throw new FenixActionException(e);
         }
         request.setAttribute("currentCandidacies", candidaciesToDisplay);
         destiny = mapping.findForward("listSeminaries");

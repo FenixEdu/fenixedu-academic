@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 /**
  * @author Fernanda Quitério
@@ -18,16 +16,12 @@ import org.apache.commons.collections.Transformer;
 public class InfoSeminaryWithEquivalenciesWithAll extends InfoSeminaryWithEquivalencies {
     public void copyFromDomain(Seminary seminary) {
         super.copyFromDomain(seminary);
-        if (seminary != null && seminary.getEquivalencies() != null
-                && !seminary.getEquivalencies().isEmpty()) {
-
-            setEquivalencies((List) CollectionUtils.collect(seminary.getEquivalencies(),
-                    new Transformer() {
-
-                        public Object transform(Object arg0) {
-                            return InfoEquivalencyWithAll.newInfoFromDomain((CourseEquivalency) arg0);
-                        }
-                    }));
+        final List list = new ArrayList();
+        setEquivalencies(list);
+        if (seminary != null && seminary.getEquivalencies() != null) {
+            for (final CourseEquivalency courseEquivalency : seminary.getEquivalenciesSet()) {
+        	list.add(InfoEquivalencyWithAll.newInfoFromDomain(courseEquivalency));
+            }
         }
     }
 
