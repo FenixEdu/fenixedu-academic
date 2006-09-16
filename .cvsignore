@@ -4,6 +4,7 @@ classes
 classes_tests
 output
 deploy
+deploy/*
 .classpath
 .project
 .metadata
