@@ -27,14 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Changing table CurriculumModule" AlterTableCurriculumModule.sql
-execute "Changing table PrecendentDegreeInformation" AlterTablePrecedentDegreeInformation.sql
-execute "Changing table Candidacy" AlterTableCandidacy.sql
-execute "Changing table PARTY (key_pais to key_nationality)" AlterTableParty.sql
-execute "Changing table CandidacySituation" AlterTableCandidacySituation.sql
-executeWithTempFile "Updating Candidacy Situation" UpdateCandidacySituation.sql
-execute "Changing table CandidacySituation" AlterTableCandidacySituation2.sql
-execute "Creating shift distribution tables" CreateShiftDistributionTables.sql
-execute "Changing table ExecutionYear" AlterTableExecutionYear.sql
-execute "Changing table Registration" AlterTableRegistration.sql
-execute "Add Codes for Bolonha Degrees" AddCodesForBolonhaDegrees.sql
