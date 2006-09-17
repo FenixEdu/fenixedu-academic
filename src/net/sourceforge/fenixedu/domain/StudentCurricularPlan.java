@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
@@ -35,6 +37,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.State;
@@ -76,7 +79,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     protected Integer creditsInSecundaryArea; // For enrollment purposes only
 
-    protected Integer creditsInSpecializationArea; // For enrollment purposes only
+    protected Integer creditsInSpecializationArea; // For enrollment
+
+    // purposes only
 
     public StudentCurricularPlan() {
 	super();
@@ -258,7 +263,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getStudentEnrollmentsWithEnrolledState().size();
     }
 
-    protected boolean isApproved(CurricularCourse curricularCourse, List<CurricularCourse> approvedCourses) {
+    protected boolean isApproved(CurricularCourse curricularCourse,
+	    List<CurricularCourse> approvedCourses) {
 	return hasEquivalenceIn(curricularCourse, approvedCourses)
 		|| hasEquivalenceInNotNeedToEnroll(curricularCourse);
     }
@@ -562,6 +568,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public boolean areNewAreasCompatible(Branch specializationArea, Branch secundaryArea)
 	    throws BothAreasAreTheSameServiceException, InvalidArgumentsServiceException {
+
 	return true;
     }
 
@@ -664,7 +671,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 				    .getCurricularCourse()));
 		    result.add(curricularCourse2Enroll);
 		    // FIXME is this correct? adding a
-                        // CurricularCourse2Enroll
+		    // CurricularCourse2Enroll
 		    // to a list of Enrolments?
 		}
 	    }
@@ -1019,8 +1026,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
 
     public StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan,
-	    Branch branch, YearMonthDay startDate, StudentCurricularPlanState currentState, Double givenCredits,
-	    Specialization specialization) {
+	    Branch branch, YearMonthDay startDate, StudentCurricularPlanState currentState,
+	    Double givenCredits, Specialization specialization) {
 
 	this(registration, degreeCurricularPlan, currentState, startDate);
 
@@ -1046,11 +1053,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    setCurrentState(studentCurricularPlanState);
 	}
     }
-    
+
     public static StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
 	    DegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState curricularPlanState,
 	    YearMonthDay startDate, ExecutionPeriod executionPeriod) {
-	
+
 	return new StudentCurricularPlan(registration, degreeCurricularPlan, curricularPlanState,
 		startDate, executionPeriod);
     }
@@ -1072,23 +1079,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void init(Registration registration, DegreeCurricularPlan degreeCurricularPlan,
 	    StudentCurricularPlanState curricularPlanState, YearMonthDay startDate) {
-	
+
 	checkParameters(registration, degreeCurricularPlan, curricularPlanState, startDate);
-	
+
 	if (curricularPlanState == StudentCurricularPlanState.ACTIVE) {
 	    inactivateTheActiveStudentCurricularPlanFor(registration, degreeCurricularPlan);
 	}
-	
+
 	setStudent(registration);
 	setDegreeCurricularPlan(degreeCurricularPlan);
 	setCurrentState(curricularPlanState);
 	setStartDateYearMonthDay(startDate);
 	setWhenDateTime(new DateTime());
+	setGivenCredits(Double.valueOf(0));
     }
 
     private void checkParameters(Registration registration, DegreeCurricularPlan degreeCurricularPlan,
 	    StudentCurricularPlanState curricularPlanState, YearMonthDay startDate) {
-	
+
 	if (registration == null) {
 	    throw new DomainException("error.studentCurricularPlan.registration.cannot.be.null");
 	}
@@ -1104,7 +1112,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public void changeState(StudentCurricularPlanState studentCurricularPlanState) {
-	if (studentCurricularPlanState.equals(StudentCurricularPlanState.ACTIVE) && !canSetStateToActive()) {
+	if (studentCurricularPlanState.equals(StudentCurricularPlanState.ACTIVE)
+		&& !canSetStateToActive()) {
 	    throw new DomainException("error.student.curricular.plan.state.conflict");
 	} else {
 	    setCurrentState(studentCurricularPlanState);
@@ -1112,18 +1121,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private boolean canSetStateToActive() {
-	for (final StudentCurricularPlan studentCurricularPlan : getStudent().getStudentCurricularPlans()) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudent()
+		.getStudentCurricularPlans()) {
 	    if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE
-		&& studentCurricularPlan.getDegreeCurricularPlan() == getDegreeCurricularPlan()) {
+		    && studentCurricularPlan.getDegreeCurricularPlan() == getDegreeCurricularPlan()) {
 		return false;
 	    }
 	}
 	return true;
     }
 
-    private void inactivateTheActiveStudentCurricularPlanFor(final Registration registration, final DegreeCurricularPlan degreeCurricularPlan) {
-	for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-	    if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE 
+    private void inactivateTheActiveStudentCurricularPlanFor(final Registration registration,
+	    final DegreeCurricularPlan degreeCurricularPlan) {
+	for (final StudentCurricularPlan studentCurricularPlan : registration
+		.getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE
 		    && studentCurricularPlan.getDegreeCurricularPlan() == degreeCurricularPlan) {
 		studentCurricularPlan.setCurrentState(StudentCurricularPlanState.INACTIVE);
 	    }
@@ -1615,5 +1627,41 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isActive() {
 	return getCurrentState() == StudentCurricularPlanState.ACTIVE;
     }
-    
+
+    public void createFirstTimeStudentEnrolmentsFor(ExecutionPeriod executionPeriod, String createdBy) {
+	internalCreateFirstTimeStudentEnrolmentsFor(getRoot(), getDegreeCurricularPlan()
+		.getCurricularPeriodFor(1, 1), executionPeriod, createdBy);
+    }
+
+    /**
+         * Note: This is enrolment without rules and should only be used for
+         * first time enrolments
+         * 
+         * @param curriculumGroup
+         * @param curricularPeriod
+         * @param executionPeriod
+         * @param createdBy
+         */
+    private void internalCreateFirstTimeStudentEnrolmentsFor(CurriculumGroup curriculumGroup,
+	    CurricularPeriod curricularPeriod, ExecutionPeriod executionPeriod, String createdBy) {
+
+	for (final Context context : curriculumGroup.getDegreeModule()
+		.getContextsWithCurricularCourseByCurricularPeriod(curricularPeriod, executionPeriod)) {
+	    new Enrolment(this, curriculumGroup, (CurricularCourse) context.getChildDegreeModule(),
+		    executionPeriod, EnrollmentCondition.FINAL, createdBy);
+	}
+
+	for (final CurriculumModule curriculumModule : curriculumGroup.getCurriculumModulesSet()) {
+	    if (!curriculumModule.isLeaf()) {
+		internalCreateFirstTimeStudentEnrolmentsFor((CurriculumGroup) curriculumModule,
+			curricularPeriod, executionPeriod, createdBy);
+	    }
+	}
+    }
+   
+    @Override
+    public List<Enrolment> getEnrolments() {
+	return getDegreeCurricularPlan().isBolonha() ? getRoot().getEnrolments() : super.getEnrolments(); 
+    }
+
 }

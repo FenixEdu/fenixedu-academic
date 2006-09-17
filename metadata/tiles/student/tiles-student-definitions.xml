@@ -50,4 +50,8 @@
 	<definition name="definition.student.administrativeOfficeServices" extends="definition.student.masterPage">
 		<put name="navLocal" value="/student/administrativeOfficeServices/administrativeOfficeServicesMenu.jsp"/>
 	</definition>
+
+	<definition name="student.print.masterPage" path="/layout/fenixPrint.jsp">
+      <put name="body" value="/commons/blank.jsp" />
+	</definition>
 </tiles-definitions>

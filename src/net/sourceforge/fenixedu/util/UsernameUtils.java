@@ -62,6 +62,9 @@ public class UsernameUtils extends FenixUtil {
 
     }
 
+    /*
+     * Rewrite method
+     */
     public static String updateIstUsername(Person person) {
 	if (person.getIstUsername() == null) {
 	    String ist = "ist";
@@ -80,8 +83,15 @@ public class UsernameUtils extends FenixUtil {
 	    } else if (username.startsWith("T")
 		    && person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) != null) {
 		istUsername = ist + sumNumber(username.substring(1), 100000);
-	    } else if (username.startsWith("L") && person.getStudentByType(DegreeType.DEGREE) != null) {
-		istUsername = ist + sumNumber(username.substring(1), 100000);
+	    } else if (username.startsWith("L")) {
+		
+		if (person.getStudentByType(DegreeType.DEGREE) != null
+			|| person.getStudentByType(DegreeType.BOLONHA_DEGREE) != null
+			|| person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) != null) {
+		    
+		    istUsername = ist + sumNumber(username.substring(1), 100000);
+		}
+		
 	    } else if (username.startsWith("C")) {
 		return person.getIstUsername();
 	    } else if (username.startsWith("P")) {
@@ -150,6 +160,30 @@ public class UsernameUtils extends FenixUtil {
 	    }
 
 	    registration = person.getStudentByType(DegreeType.DEGREE);
+	    if (registration != null) {
+		StudentType studentType = registration.getStudentKind().getStudentType();
+		if (studentType.equals(StudentType.NORMAL)) {
+		    return "L" + registration.getNumber();
+		} else if (studentType.equals(StudentType.FOREIGN_STUDENT)) {
+		    return "I" + registration.getNumber();
+		} else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
+		    return "A" + registration.getNumber();
+		}
+	    }
+
+	    registration = person.getStudentByType(DegreeType.BOLONHA_DEGREE);
+	    if (registration != null) {
+		StudentType studentType = registration.getStudentKind().getStudentType();
+		if (studentType.equals(StudentType.NORMAL)) {
+		    return "L" + registration.getNumber();
+		} else if (studentType.equals(StudentType.FOREIGN_STUDENT)) {
+		    return "I" + registration.getNumber();
+		} else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
+		    return "A" + registration.getNumber();
+		}
+	    }
+	    
+	    registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	    if (registration != null) {
 		StudentType studentType = registration.getStudentKind().getStudentType();
 		if (studentType.equals(StudentType.NORMAL)) {

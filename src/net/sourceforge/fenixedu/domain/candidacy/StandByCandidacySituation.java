@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
@@ -12,13 +11,12 @@ import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 public class StandByCandidacySituation extends StandByCandidacySituation_Base {
 
     public StandByCandidacySituation(Candidacy candidacy) {
+        this(candidacy, AccessControl.getUserView().getPerson());
+    }
+
+    public StandByCandidacySituation(Candidacy candidacy, Person person) {
         super();
-        setCandidacy(candidacy);
-        Employee employee = AccessControl.getUserView().getPerson().getEmployee();
-        if (employee == null) {
-            throw new DomainException("person is not an employee");
-        }
-        setEmployee(employee);
+        init(candidacy, person);
     }
 
     @Override
@@ -109,4 +107,8 @@ public class StandByCandidacySituation extends StandByCandidacySituation_Base {
         return true;
     }
 
+    @Override
+    public boolean canExecuteOperationAutomatically() {
+        return false;
+    }
 }

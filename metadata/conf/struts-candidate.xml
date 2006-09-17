@@ -7,7 +7,9 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
-
+		<form-bean name="candidacyForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+            <form-property name="method" type="java.lang.String" />
+        </form-bean>
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -46,10 +48,28 @@
 		<action path="/viewCandidacies"
 				scope="request"		
 		        parameter="method"
+		    	name="candidacyForm"
 			    type="net.sourceforge.fenixedu.presentationTier.Action.candidate.ViewCandidaciesDsipatchAction">
 			<forward name="view" path="viewCandidacies"/>
-			<forward name="viewDetail" path="viewCandidacyDetails"/>			
+			<forward name="viewDetail" path="viewCandidacyDetails"/>
+			<forward name="uploadDocuments" path="uploadDocuments" />
 		</action>		
+
+
+    <!-- ********************* DEGREE CANDIDACY ******************* -->	
+    	<action path="/degreeCandidacyManagement"
+			scope="request"
+   			parameter="method"
+   			type="net.sourceforge.fenixedu.presentationTier.Action.candidate.degree.DegreeCandidacyManagementDispatchAction">
+      	    <forward name="showWelcome" path="degreeCandidacy.show.welcome" />
+      	    <forward name="showCandidacyDetails" path="degreeCandidacy.show.candidacy.details" />
+       	    <forward name="fillData" path="degreeCandidacy.fill.data" />
+      	    <forward name="showData" path="degreeCandidacy.show.data" />
+      	    <forward name="showOperationFinished" path="degreeCandidacy.show.operation.finished" />
+      	    <forward name="printSchedule" path="degreeCandidacy.show.timeTable" />
+       	    <forward name="printRegistrationDeclaration" path="degreeCandidacy.print.registration.declaration" />
+       	    <forward name="printSystemAccessData" path="degreeCandidacy.print.system.access.data" />
+      	</action>
 	
     </action-mappings>
 
@@ -58,7 +78,7 @@
     
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>	
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.CandidateResources" null="false" />
 
     <!-- ========== Plug Ins Configuration ================================= -->

@@ -5,7 +5,7 @@
 <ul>
 	<li class="navheader"><bean:message key="consult"/></li>
   	<li><html:link page="/viewCurriculum.do?method=getStudentCP" titleKey="link.title.curriculum"><bean:message key="link.student.curriculum"/></html:link></li>
-	<li><html:link page="/studentTimeTable.do" target="_blank" titleKey="link.title.timetable"><bean:message key="link.my.timetable"/></html:link></li>
+	<li><html:link page="/studentTimeTable.do?method=prepare" titleKey="link.title.timetable"><bean:message key="link.my.timetable"/></html:link></li>
 	<li><html:link page="/studentCalendar.faces" titleKey="link.title.calendar"><bean:message key="link.title.calendar"/></html:link></li>
 <%-- 
 	<li><html:link page="/administrativeOfficeServicesSection.do" titleKey="administrative.office.services"><bean:message key="administrative.office.services"/></html:link></li>

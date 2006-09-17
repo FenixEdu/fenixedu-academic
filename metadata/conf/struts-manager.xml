@@ -424,14 +424,6 @@
 			<form-property name="degreeCurricularPlanId" type="java.lang.Integer"/>
 		</form-bean>
 
-		<form-bean name="generateNewPasswordsForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-      			dynamic="true">
-			<form-property name="fromNumber" type="java.lang.String"/>
-			<form-property name="toNumber" type="java.lang.String"/>
-			<form-property name="page" type="java.lang.Integer"/>
-	  	</form-bean>
-
 		<form-bean name="executionCourseTransferCurricularCourseForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="destinationExecutionDegreeId" type="java.lang.String"/>
@@ -1795,18 +1787,7 @@
 	>		
         <forward path="viewCurricularCourses" name="viewCurricularCourses"/>                      
      </action>
-        
-	 <action path="/generateNewStudentsPasswords"
-			parameter="method"
-			validate="true"
-			input="/generateNewStudentsPasswords.do?method=prepareGeneratePasswords&amp;page=0"
-			name="generateNewPasswordsForm"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.GenerateNewStudentsPasswordsAction"
-			scope="request">
-		<forward name="prepare" path="/password/generateNewStudentsPassword.jsp"/>
-		<forward name="success" path="/password/severalNewPasswordsTemplate.jsp"/>
-     </action>
-        
+               
         
 	<!-- ========== GUIDE MANAGEMENT ========== -->	
 	<action path="/guideManagement"
@@ -2059,6 +2040,7 @@
 
 	<!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
+	<message-resources parameter="resources.CandidateResources" key="CANDIDATE_RESOURCES" null="false"/>
     <message-resources parameter="resources.FunctionalityResources" key="FUNCTIONALITY_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>

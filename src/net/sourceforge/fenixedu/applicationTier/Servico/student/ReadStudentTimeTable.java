@@ -14,17 +14,17 @@ public class ReadStudentTimeTable extends Service {
 
     public List<InfoLesson> run(Registration registration) throws FenixServiceException {
 
-        if (registration == null) {
-        	throw new FenixServiceException("error.service.readStudentTimeTable.noStudent");
-        }
-        
-        final List<InfoLesson> result = new ArrayList<InfoLesson>();
-        for (final Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
-        	for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
-        		result.add(InfoLesson.newInfoFromDomain(lesson));
-        }
-        }
+	if (registration == null) {
+	    throw new FenixServiceException("error.service.readStudentTimeTable.noStudent");
+	}
 
-        return result;
+	final List<InfoLesson> result = new ArrayList<InfoLesson>();
+	for (final Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
+	    for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
+		result.add(InfoLesson.newInfoFromDomain(lesson));
+	    }
+	}
+
+	return result;
     }
 }

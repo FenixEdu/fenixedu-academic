@@ -17,6 +17,18 @@ public class StudentState extends FenixUtil {
 
     public static final int LICENCIADO = 6;
 
+    public static final StudentState BASE_OBJ = new StudentState(BASE);
+
+    public static final StudentState INSCRITO_OBJ = new StudentState(INSCRITO);
+
+    public static final StudentState PRESCRITO_OBJ = new StudentState(PRESCRITO);
+
+    public static final StudentState INTERRUPCAO_OBJ = new StudentState(INTERRUPCAO);
+
+    public static final StudentState AUSENTE_OBJ = new StudentState(AUSENTE);
+
+    public static final StudentState LICENCIADO_OBJ = new StudentState(LICENCIADO);
+
     private Integer state;
 
     /** Creates a new instance of StudentState */

@@ -1,0 +1,22 @@
+update DEGREE set DEGREE.CODE = '9029' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia de Materiais';
+update DEGREE set DEGREE.CODE = '9031' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia do Ambiente';
+update DEGREE set DEGREE.CODE = '9032' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia do Territ%rio';
+update DEGREE set DEGREE.CODE = '9033' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia e Arquitectura Naval';
+update DEGREE set DEGREE.CODE = '9036' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia Geol%gica e de Minas';
+update DEGREE set DEGREE.CODE = '9037' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Inform%tica e de Computadores - Alameda';
+update DEGREE set DEGREE.CODE = '9037' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Inform%tica e de Computadores - Taguspark';
+update DEGREE set DEGREE.CODE = '9345' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Matem%tica Aplicada e Computa%o';
+update DEGREE set DEGREE.CODE = '9223' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Qu%mica';
+update DEGREE set DEGREE.CODE = '9030' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia de Redes de Comunicações';
+update DEGREE set DEGREE.CODE = '9352' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia e Gest%o Industrial';
+update DEGREE set DEGREE.CODE = '9034' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia Electr%nica';
+
+update DEGREE set DEGREE.CODE = '9257' where DEGREE.TIPO_CURSO = 'BOLONHA_INTEGRATED_MASTER_DEGREE' and DEGREE.NOME like 'Arquitectura';
+update DEGREE set DEGREE.CODE = '9357' where DEGREE.TIPO_CURSO = 'BOLONHA_INTEGRATED_MASTER_DEGREE' and DEGREE.NOME like 'Engenharia Aeroespacial';
+update DEGREE set DEGREE.CODE = '9358' where DEGREE.TIPO_CURSO = 'BOLONHA_INTEGRATED_MASTER_DEGREE' and DEGREE.NOME like 'Engenharia Biol%gica';
+update DEGREE set DEGREE.CODE = '9359' where DEGREE.TIPO_CURSO = 'BOLONHA_INTEGRATED_MASTER_DEGREE' and DEGREE.NOME like 'Engenharia Biom%dica';
+update DEGREE set DEGREE.CODE = '9360' where DEGREE.TIPO_CURSO = 'BOLONHA_INTEGRATED_MASTER_DEGREE' and DEGREE.NOME like 'Engenharia Civil';
+update DEGREE set DEGREE.CODE = '9367' where DEGREE.TIPO_CURSO = 'BOLONHA_INTEGRATED_MASTER_DEGREE' and DEGREE.NOME like 'Engenharia Electrot%cnica e de Computadores';
+update DEGREE set DEGREE.CODE = '9458' where DEGREE.TIPO_CURSO = 'BOLONHA_INTEGRATED_MASTER_DEGREE' and DEGREE.NOME like 'Engenharia F%sica Tecnol%gica';
+update DEGREE set DEGREE.CODE = '9369' where DEGREE.TIPO_CURSO = 'BOLONHA_INTEGRATED_MASTER_DEGREE' and DEGREE.NOME like 'Engenharia Mec%nica';
+update DEGREE set DEGREE.CODE = '9461' where DEGREE.TIPO_CURSO = 'BOLONHA_INTEGRATED_MASTER_DEGREE' and DEGREE.NOME like 'Engenharia Qu%mica';

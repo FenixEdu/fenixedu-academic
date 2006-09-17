@@ -3,6 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
@@ -12,6 +13,17 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 
 	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.newPasswordForStudentRegistration" /></h3>
+
+	<fr:view name="studentCandidacies" schema="StudentCandidacyList.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thcenter" />
+			<fr:property name="checkable" value="true" />
+			<fr:property name="checkboxName" value="candidacyIdsToProcess" />
+			<fr:property name="checkboxValue" value="idInternal" />		
+			<fr:property name="sortBy" value="number=asc"/>
+		</fr:layout>
+	</fr:view>
+
 
 	<table>
 		<tr>

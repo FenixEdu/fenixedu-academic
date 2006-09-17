@@ -4,19 +4,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.Person;
 
 public class AdmittedCandidacySituation extends AdmittedCandidacySituation_Base {
     
-    public  AdmittedCandidacySituation(Candidacy candidacy) {
+    public AdmittedCandidacySituation(Candidacy candidacy) {
+        this(candidacy, AccessControl.getUserView().getPerson());
+    }
+
+    public AdmittedCandidacySituation(Candidacy candidacy, Person person) {
         super();
-        setCandidacy(candidacy);
-        Employee employee = AccessControl.getUserView().getPerson().getEmployee();
-        if (employee == null) {
-            throw new DomainException("person is not an employee");
-        }
-        setEmployee(employee);;
+        init(candidacy, person);
     }
 
     @Override
@@ -52,6 +50,14 @@ public class AdmittedCandidacySituation extends AdmittedCandidacySituation_Base 
     @Override
     public boolean getCanRegister() {
 	return true;
+    }
+    
+        @Override
+    public boolean canExecuteOperationAutomatically() {
+	if(getCandidacy() instanceof DegreeCandidacy){
+	    return true;
+	}
+	return false;
     }
     
 }

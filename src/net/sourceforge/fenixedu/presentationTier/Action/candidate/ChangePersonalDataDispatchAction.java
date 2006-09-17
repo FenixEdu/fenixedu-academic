@@ -32,55 +32,73 @@ import org.apache.struts.action.ActionMapping;
 public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+	    HttpServletResponse response) {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	final Candidacy candidacy = getCandidacy(request);
+	if (candidacy instanceof DFACandidacy
+		&& candidacy.getActiveCandidacySituation().canChangePersonalData()) {
 
-        for (Candidacy candidacy : userView.getPerson().getCandidacies()) {
-            if (candidacy.getActiveCandidacySituation().canChangePersonalData()) {
-                request.setAttribute("candidacy", candidacy);
-                if (candidacy instanceof DFACandidacy) {
-                    PrecedentDegreeInformation precedentDegreeInformation = ((DFACandidacy) candidacy)
-                            .getPrecedentDegreeInformation();
-                    request.setAttribute("precedentDegreeInformation",
-                            new PrecedentDegreeInformationBean(precedentDegreeInformation));
-                }
-                return mapping.findForward("change");
-            }
-        }
+	    request.setAttribute("candidacy", candidacy);
 
-        return mapping.findForward("cannotChange");
+	    PrecedentDegreeInformation precedentDegreeInformation = ((DFACandidacy) candidacy)
+		    .getPrecedentDegreeInformation();
+	    request.setAttribute("precedentDegreeInformation", new PrecedentDegreeInformationBean(
+		    precedentDegreeInformation));
+
+	    return mapping.findForward("change");
+	}
+
+	return mapping.findForward("cannotChange");
     }
 
     public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = SessionUtils.getUserView(request);
 
-        PrecedentDegreeInformationBean precedentDegreeInformation = (PrecedentDegreeInformationBean) RenderUtils
-                .getViewState("precedentDegreeInformation").getMetaObject().getObject();
+	PrecedentDegreeInformationBean precedentDegreeInformation = (PrecedentDegreeInformationBean) RenderUtils
+		.getViewState("precedentDegreeInformation").getMetaObject().getObject();
 
-        if (!precedentDegreeInformation.isInstitutionFilled()) {
-            request.setAttribute("precedentDegreeInformation", precedentDegreeInformation);
-            // TODO: put also some error message!
-            return mapping.findForward("change");
-        }
+	if (!precedentDegreeInformation.isInstitutionFilled()) {
+	    request.setAttribute("precedentDegreeInformation", precedentDegreeInformation);
 
-        if (precedentDegreeInformation.getNewInstitutionName() != null
-                || precedentDegreeInformation.getInstitution() != null) {
-            Object[] argsInstitution = { precedentDegreeInformation };
-            ServiceUtils.executeService(userView, "EditPrecedentDegreeInformation", argsInstitution);
-        }
+	    addActionMessage(request, "error.candidacy.institution.must.be.choosed.or.created",
+		    new String[] {});
 
-        Object[] argsStateMachine = { new StateMachineRunner.RunnerArgs(precedentDegreeInformation.getPrecedentDegreeInformation()
-                .getDfaCandidacy().getActiveCandidacySituation(), CandidacySituationType.STAND_BY_FILLED_DATA.toString()) };
-        try {
-            ServiceUtils.executeService(userView, "StateMachineRunner", argsStateMachine);
-        } catch (DomainException e) {
-            // Didn't move to next state
-        }
+	    return mapping.findForward("change");
+	}
 
-        return mapping.findForward("changeSuccess");
+	if (precedentDegreeInformation.getNewInstitutionName() != null
+		|| precedentDegreeInformation.getInstitution() != null) {
+	    Object[] argsInstitution = { precedentDegreeInformation };
+	    ServiceUtils.executeService(userView, "EditPrecedentDegreeInformation", argsInstitution);
+	}
+
+	Object[] argsStateMachine = { new StateMachineRunner.RunnerArgs(precedentDegreeInformation
+		.getPrecedentDegreeInformation().getStudentCandidacy().getActiveCandidacySituation(),
+		CandidacySituationType.STAND_BY_FILLED_DATA.toString()) };
+	try {
+	    ServiceUtils.executeService(userView, "StateMachineRunner", argsStateMachine);
+	} catch (DomainException e) {
+	    // Didn't move to next state
+	}
+
+	request.setAttribute("candidacy", precedentDegreeInformation.getPrecedentDegreeInformation()
+		.getStudentCandidacy());
+
+	return mapping.findForward("changeSuccess");
+    }
+
+    private Candidacy getCandidacy(HttpServletRequest request) {
+	final Integer candidacyId = getRequestParameterAsInteger(request, "candidacyID");
+
+	for (final Candidacy candidacy : getUserView(request).getPerson().getCandidaciesSet()) {
+	    if (candidacy.getIdInternal().equals(candidacyId)) {
+		return candidacy;
+	    }
+	}
+
+	return null;
     }
 
 }

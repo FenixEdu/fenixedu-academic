@@ -269,6 +269,10 @@ Documentation:
 
     <!--@ This layout indicates that we want to accept a text that can be very long and extend over multiple lines.  -->
     <renderer mode="input" type="java.lang.String" layout="longText" class="net.sourceforge.fenixedu.renderers.TextAreaInputRenderer"/>
+    
+    <!--@ This layout allows a string to be edited with the password field -->
+    <renderer mode="input" type="java.lang.String" layout="password" class="net.sourceforge.fenixedu.renderers.PasswordInputRenderer"/>
+    
     <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="area" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageTextInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="rich-text" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageRichTextInputRenderer"/>

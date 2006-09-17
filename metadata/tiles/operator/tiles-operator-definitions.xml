@@ -7,8 +7,9 @@
 	  <put name="serviceName" value="Operador" />	
 	  <put name="navLocal" value="/operator/operatorMainMenu.jsp" />	  
 	  <put name="navGeral" value="/operator/commonNavGeralOperator.jsp" />
-	  <put name="body-context" value=""/>  
-	  <put name="body" value="" />
+	  <put name="body-context" value="/commons/blank.jsp"/>  
+	  <put name="body" value="/commons/blank.jsp" />
 	  <put name="footer" value="/copyright.jsp" />
 	</definition>
+	
 </tiles-definitions>

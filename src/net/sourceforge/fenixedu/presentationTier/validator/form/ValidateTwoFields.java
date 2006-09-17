@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.validator.Field;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.commons.validator.ValidatorAction;
-import org.apache.commons.validator.ValidatorUtil;
+import org.apache.commons.validator.util.ValidatorUtils;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
@@ -23,9 +23,9 @@ public class ValidateTwoFields {
     public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
             HttpServletRequest request, ServletContext application) {
 
-        String value = ValidatorUtil.getValueAsString(bean, field.getProperty());
+        String value = ValidatorUtils.getValueAsString(bean, field.getProperty());
         String sProperty2 = field.getVarValue("secondProperty");
-        String value2 = ValidatorUtil.getValueAsString(bean, sProperty2);
+        String value2 = ValidatorUtils.getValueAsString(bean, sProperty2);
 
         if (!GenericValidator.isBlankOrNull(value)) {
             try {

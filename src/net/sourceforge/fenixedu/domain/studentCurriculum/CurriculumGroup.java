@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -92,6 +96,23 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     @Override
     public CourseGroup getDegreeModule() {
 	return (CourseGroup) super.getDegreeModule();
+    }
+
+    public List<Enrolment> getEnrolments() {
+	final List<Enrolment> result = new ArrayList<Enrolment>();
+	for (final CurriculumModule curriculumModule : this.getCurriculumModulesSet()) {
+	    result.addAll(curriculumModule.getEnrolments());
+	}
+	return result;
+    }
+    
+    public boolean isRoot() {
+	return hasParentStudentCurricularPlan();
+    }
+    
+    @Override
+    public StudentCurricularPlan getStudentCurricularPlan() {
+        return isRoot() ? getParentStudentCurricularPlan() : getCurriculumGroup().getStudentCurricularPlan();
     }
 
 }

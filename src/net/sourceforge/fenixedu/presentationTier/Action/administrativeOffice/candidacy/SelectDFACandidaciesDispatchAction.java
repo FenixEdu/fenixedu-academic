@@ -84,7 +84,7 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 		.getMetaObject().getObject();
 
 	List<SelectDFACandidacyBean> candidacies = new ArrayList<SelectDFACandidacyBean>();
-	for (DFACandidacy candidacy : dfaCandidacyBean.getExecutionDegree().getDfaCandidaciesSet()) {
+	for (DFACandidacy candidacy : dfaCandidacyBean.getExecutionDegree().getDfaCandidacies()) {
 	    CandidacySituationType candidacySituationType = candidacy.getActiveCandidacySituation()
 		    .getCandidacySituationType();
 	    if (candidacySituationType.equals(CandidacySituationType.STAND_BY_CONFIRMED_DATA)

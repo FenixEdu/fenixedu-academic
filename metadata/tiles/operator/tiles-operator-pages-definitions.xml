@@ -6,4 +6,14 @@
 		<put name="body" value="/operator/password/generateNewStudentsPassword_bd.jsp" />
 	</definition>
 
+	
+	<!-- ===================== Candidacy ====================== -->
+	<definition name="df.candidacy.password.chooseExecutionDegree" extends="definition.operator.two-column">
+		<put name="body" value="/operator/candidacy/password/chooseExecutionDegree.jsp"></put>
+	</definition>
+	<definition name="df.candidacy.password.generate" 
+		extends="definition.operator.two-column">
+		<put name="body" value="/operator/candidacy/password/chooseCandidacies.jsp"></put>
+	</definition>
+	
 </tiles-definitions>	

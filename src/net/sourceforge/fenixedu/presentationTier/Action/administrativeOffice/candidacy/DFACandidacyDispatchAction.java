@@ -287,7 +287,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 //        }
 
         request.setAttribute("candidacyID", precedentDegreeInformation.getPrecedentDegreeInformation()
-                .getDfaCandidacy().getIdInternal());
+                .getStudentCandidacy().getIdInternal());
 
         return mapping.findForward("alterSuccess");
     }
@@ -339,7 +339,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
         DFACandidacyBean dfaCandidacyBean = (DFACandidacyBean) RenderUtils.getViewState()
                 .getMetaObject().getObject();
-        Set<DFACandidacy> candidacies = dfaCandidacyBean.getExecutionDegree().getDfaCandidaciesSet();
+        Set<DFACandidacy> candidacies = dfaCandidacyBean.getExecutionDegree().getDfaCandidacies();
         request.setAttribute("candidacies", candidacies);
         request.setAttribute("candidacyBean", dfaCandidacyBean);
         return mapping.findForward("listCandidacies");

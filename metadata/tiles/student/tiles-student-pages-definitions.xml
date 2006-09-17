@@ -242,5 +242,13 @@
 	<definition name="df.page.documentRequest.viewDocumentRequest" extends="definition.student.administrativeOfficeServices">
 		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequest.jsp" />
 	</definition>
+
+	<!-- TimeTable -->
+	<definition name="df.timeTable.chooseRegistration" extends="definition.student.masterPage">
+		<put name="body" value="/student/timeTable/chooseRegistration.jsp" />
+	</definition>
+    <definition name="df.timeTable.show" extends="student.print.masterPage">
+        <put name="body" value="/commons/student/timeTable/classTimeTable.jsp"></put>
+    </definition>
 		
 </tiles-definitions>

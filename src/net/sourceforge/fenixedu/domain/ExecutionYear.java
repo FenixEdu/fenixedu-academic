@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -126,7 +127,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     // -------------------------------------------------------------
     public static ExecutionYear readCurrentExecutionYear() {
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.getState() == PeriodState.CURRENT) {
+	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
 		return executionYear;
 	    }
 	}
@@ -136,7 +137,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     public static List<ExecutionYear> readOpenExecutionYears() {
 	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.getState() == PeriodState.OPEN) {
+	    if (executionYear.getState().equals(PeriodState.OPEN)) {
 		result.add(executionYear);
 	    }
 	}
@@ -146,7 +147,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     public static List<ExecutionYear> readNotClosedExecutionYears() {
 	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.getState() != PeriodState.CLOSED) {
+	    if (!executionYear.getState().equals(PeriodState.CLOSED)) {
 		result.add(executionYear);
 	    }
 	}
@@ -195,7 +196,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     public boolean isCurrent() {
 	return this.getState() == PeriodState.CURRENT;
     }
-    
     public static ExecutionYear getExecutionYearByDate(YearMonthDay date){
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
 	    if (executionYear.containsDate(date.toDateTimeAtMidnight())) {
@@ -203,6 +203,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	    }
 	}
 	return null;
+    }
+
+    public ShiftDistribution createShiftDistribution() {
+	return new ShiftDistribution(this);
     }
     
 }

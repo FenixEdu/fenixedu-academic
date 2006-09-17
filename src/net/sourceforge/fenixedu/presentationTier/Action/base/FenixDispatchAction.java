@@ -1,6 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.base;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -200,15 +205,15 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     protected ActionMessages getActionMessages(HttpServletRequest request) {
         return (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
     }
-    
+
     protected boolean hasActionMessage(HttpServletRequest request) {
         return !this.getActionMessages(request).isEmpty();
     }
-    
+
     protected void addActionMessage(HttpServletRequest request, String key, String... args) {
         this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
     }
-    
+
     protected String[] solveLabelFormatterArgs(HttpServletRequest request,
             LabelFormatter[] labelFormatterArgs) {
         final String[] args = new String[labelFormatterArgs.length];
@@ -221,13 +226,22 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return args;
     }
 
-    protected StrutsMessageResourceProvider getMessageResourceProvider(HttpServletRequest request) {
+    private StrutsMessageResourceProvider getMessageResourceProvider(HttpServletRequest request) {
         final StrutsMessageResourceProvider strutsMessageResourceProvider = new StrutsMessageResourceProvider(
                 getLocale(request), getServlet().getServletContext(), request);
-        strutsMessageResourceProvider.addMapping("enum", "ENUMERATION_RESOURCES");
-        strutsMessageResourceProvider.addMapping("application", "DEFAULT");
+        for (final Entry<String, String> entry : getMessageResourceProviderBundleMappings().entrySet()) {
+            strutsMessageResourceProvider.addMapping(entry.getKey(), entry.getValue());
+        }
 
         return strutsMessageResourceProvider;
+    }
+
+    protected Map<String, String> getMessageResourceProviderBundleMappings() {
+        final Map<String, String> bundleMappings = new HashMap<String, String>();
+        bundleMappings.put("enum", "ENUMERATION_RESOURCES");
+        bundleMappings.put("application", "DEFAULT");
+
+        return bundleMappings;
     }
 
 }

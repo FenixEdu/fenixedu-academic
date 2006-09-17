@@ -1,15 +1,23 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 
 public class StandByFilledDataCandidacySituation extends StandByFilledDataCandidacySituation_Base {
 
     public StandByFilledDataCandidacySituation(Candidacy candidacy) {
+        this(candidacy, AccessControl.getUserView().getPerson());
+    }
+
+    public StandByFilledDataCandidacySituation(Candidacy candidacy, Person person) {
 	super();
-	setCandidacy(candidacy);
+        init(candidacy, person);
     }
 
     @Override
@@ -65,4 +73,13 @@ public class StandByFilledDataCandidacySituation extends StandByFilledDataCandid
 	return true;
     }
 
+    public Collection<Operation> getOperationsForPerson(Person person) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean canExecuteOperationAutomatically() {
+        return false;
+    }
 }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.util;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.workflow.IState;
 
 public class StateMachine {
 	public static void execute(IState state) {

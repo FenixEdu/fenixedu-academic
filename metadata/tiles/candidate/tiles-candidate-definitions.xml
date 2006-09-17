@@ -12,4 +12,7 @@
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>
+	<definition name="candidate.print.masterPage" path="/layout/fenixPrint.jsp">
+      <put name="body" value="/commons/blank.jsp" />
+	</definition>
 </tiles-definitions>

@@ -26,10 +26,10 @@ public class ValidateMultiBox {
                 return true;
             }
             if (feminin != null && feminin.equalsIgnoreCase("true")) {
-                errors.add(field.getKey(), new ActionError("errors.required.a.checkbox", field.getArg0()
+                errors.add(field.getKey(), new ActionError("errors.required.a.checkbox", field.getArg(0)
                         .getKey()));
             } else {
-                errors.add(field.getKey(), new ActionError("errors.required.checkbox", field.getArg0()
+                errors.add(field.getKey(), new ActionError("errors.required.checkbox", field.getArg(0)
                         .getKey()));
             }
 
@@ -37,7 +37,7 @@ public class ValidateMultiBox {
 
         } catch (Exception e) {
             errors.add(field.getKey(), new ActionError("errors.required.undefined.checkbox", field
-                    .getArg0().getKey()));
+                    .getArg(0).getKey()));
             return false;
         }
 

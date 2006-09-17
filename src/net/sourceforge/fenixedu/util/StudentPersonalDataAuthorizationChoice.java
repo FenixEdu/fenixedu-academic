@@ -19,10 +19,18 @@ public enum StudentPersonalDataAuthorizationChoice {
                      * cultural, etc)
                      */
     ALL_ENDS, /* all ends, including comercial ones */
-    
+
     NO_END; /* doesn't authorize the use of the data */
 
-    public String getName(){
+    public String getName() {
         return name();
+    }
+
+    public String getQualifiedName() {
+        return StudentPersonalDataAuthorizationChoice.class.getSimpleName() + "." + name();
+    }
+
+    public String getFullyQualifiedName() {
+        return StudentPersonalDataAuthorizationChoice.class.getName() + "." + name();
     }
 }

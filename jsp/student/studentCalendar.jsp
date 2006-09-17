@@ -10,14 +10,25 @@
 	<h:form>
 		<fc:viewState binding="#{studentCalendar.viewState}"/>
 		<h:outputText value="<h2>#{bundle['link.title.calendar']}</h2>" escape="false"/>
-
+		
 		<h:panelGrid styleClass="infoselected" columns="2">
+			<h:outputText value="#{bundle['label.choose.degreeCurricularPlan']}"/>
+			<h:panelGroup>
+				<h:selectOneMenu id="registrationID" value="#{studentCalendar.registrationID}"
+						onchange="this.form.submit();" valueChangeListener="#{studentCalendar.resetExecutionCourses}">
+					<f:selectItems value="#{studentCalendar.registrationsSelectItems}"/>
+				</h:selectOneMenu>
+				<%--<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>--%>
+			</h:panelGroup>
+
 			<h:outputText value="#{bundle['label.execution.period']}"/>
-			<h:selectOneMenu id="executionPeriodID" value="#{studentCalendar.executionPeriodID}"
-					onchange="this.form.submit();" valueChangeListener="#{studentCalendar.resetExecutionCourses}">
-				<f:selectItems value="#{studentCalendar.executionPeriodSelectItems}"/>
-			</h:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+			<h:panelGroup>
+				<h:selectOneMenu id="executionPeriodID" value="#{studentCalendar.executionPeriodID}"
+						onchange="this.form.submit();" valueChangeListener="#{studentCalendar.resetExecutionCourses}">
+					<f:selectItems value="#{studentCalendar.executionPeriodSelectItems}"/>
+				</h:selectOneMenu>
+				<%--<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>--%>
+			</h:panelGroup>
 
 			<h:outputText value="#{bundle['label.execution.course']}"/>
 			<h:selectOneMenu id="executionCourseID" value="#{studentCalendar.executionCourseID}"

@@ -33,58 +33,77 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
 
     private static final String FILE_DOWNLOAD_URL_FORMAT = FileManagerFactory.getFileManager()
-            .getDirectDownloadUrlFormat();
+	    .getDirectDownloadUrlFormat();
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        return mapping.findForward("view");
+	    HttpServletResponse response) {
+	return mapping.findForward("view");
     }
 
     public ActionForward viewDetail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+	    HttpServletResponse response) {
 
-        Integer candidacyID = Integer.valueOf(request.getParameter("candidacyID"));
-        Candidacy candidacy = RootDomainObject.getInstance().readCandidacyByOID(candidacyID);
+	final Candidacy candidacy = getCandidacy(request);
+	request.setAttribute("canChangePersonalData", candidacy.getActiveCandidacySituation()
+		.canChangePersonalData());
+	request.setAttribute("candidacy", candidacy);
 
-        fillRequest(request, candidacy);
+	return mapping.findForward("viewDetail");
+    }
 
-        return mapping.findForward("viewDetail");
+    private Candidacy getCandidacy(HttpServletRequest request) {
+	final Integer candidacyID = Integer.valueOf(request.getParameter("candidacyID"));
+	for (final Candidacy candidacy : getUserView(request).getPerson().getCandidaciesSet()) {
+	    if (candidacy.getIdInternal().equals(candidacyID)) {
+		return candidacy;
+	    }
+	}
+
+	return null;
+    }
+
+    public ActionForward prepareUploadDocuments(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	fillRequest(request, getCandidacy(request));
+
+	return mapping.findForward("uploadDocuments");
     }
 
     public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
 
-        List<CandidacyDocumentUploadBean> beans = (List<CandidacyDocumentUploadBean>) RenderUtils
-                .getViewState("candidacyDocuments").getMetaObject().getObject();
+	List<CandidacyDocumentUploadBean> beans = (List<CandidacyDocumentUploadBean>) RenderUtils
+		.getViewState("candidacyDocuments").getMetaObject().getObject();
 
-        Object[] args = { beans };
-        ServiceUtils.executeService(SessionUtils.getUserView(request), "SaveCandidacyDocumentFiles",
-                args);
+	Object[] args = { beans };
+	ServiceUtils.executeService(SessionUtils.getUserView(request), "SaveCandidacyDocumentFiles",
+		args);
 
-        fillRequest(request, getCandidacy(beans));
+	fillRequest(request, getCandidacy(beans));
 
-        return mapping.findForward("viewDetail");
+	return mapping.findForward("uploadDocuments");
     }
 
     private void fillRequest(HttpServletRequest request, Candidacy candidacy) {
-        if (RenderUtils.getViewState("candidacyDocuments") != null) {
-            RenderUtils.invalidateViewState("candidacyDocuments");
-        }
-        List<CandidacyDocumentUploadBean> candidacyDocuments = new ArrayList<CandidacyDocumentUploadBean>();
-        for (CandidacyDocument candidacyDocument : candidacy.getCandidacyDocuments()) {
-            candidacyDocuments.add(new CandidacyDocumentUploadBean(candidacyDocument));
-        }
+	if (RenderUtils.getViewState("candidacyDocuments") != null) {
+	    RenderUtils.invalidateViewState("candidacyDocuments");
+	}
+	List<CandidacyDocumentUploadBean> candidacyDocuments = new ArrayList<CandidacyDocumentUploadBean>();
+	for (CandidacyDocument candidacyDocument : candidacy.getCandidacyDocuments()) {
+	    candidacyDocuments.add(new CandidacyDocumentUploadBean(candidacyDocument));
+	}
 
-        request.setAttribute("candidacyDocuments", candidacyDocuments);
-        request.setAttribute("candidacy", candidacy);
-        request.setAttribute("fileDownloadUrlFormat", FILE_DOWNLOAD_URL_FORMAT);
+	request.setAttribute("candidacyDocuments", candidacyDocuments);
+	request.setAttribute("candidacy", candidacy);
+	request.setAttribute("fileDownloadUrlFormat", FILE_DOWNLOAD_URL_FORMAT);
     }
 
     private Candidacy getCandidacy(List<CandidacyDocumentUploadBean> beans) {
-        if (!beans.isEmpty()) {
-            return beans.get(0).getCandidacyDocument().getCandidacy();
-        }
-        return null;
+	if (!beans.isEmpty()) {
+	    return beans.get(0).getCandidacyDocument().getCandidacy();
+	}
+	return null;
     }
 }

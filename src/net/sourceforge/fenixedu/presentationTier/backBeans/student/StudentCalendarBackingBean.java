@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
@@ -117,22 +116,35 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	return executionPeriod;
     }
 
+    public List<SelectItem> getRegistrationsSelectItems() {
+	final List<SelectItem> result = new ArrayList<SelectItem>();
+	for (final Registration registration : getUserView().getPerson().getStudents()) {
+	    result.add(new SelectItem(registration.getIdInternal(), registration
+		    .getLastStudentCurricularPlan().getDegreeCurricularPlan().getPresentationName()));
+	}
+	if (!result.isEmpty()) {
+	    setRegistrationID((Integer) result.get(0).getValue());
+	}
+	return result;
+    }
+    
+    public Integer getRegistrationID() {
+	return (Integer) getViewState().getAttribute("registrationID");
+    }
+    
+    public void setRegistrationID(Integer registrationID) {
+	getViewState().setAttribute("registrationID", registrationID);
+    }
+
     public Registration getStudent() {
 	if (student == null) {
-	    final List<Registration> students = getUserView().getPerson().getStudents();
-	    for (final Registration registration : students) {
-		if (registration.getDegreeType() == DegreeType.MASTER_DEGREE) {
-		    this.student = registration;
-		    return this.student;
+	    for (final Registration registration : getUserView().getPerson().getStudents()) {
+		if (registration.getIdInternal().equals(getRegistrationID())) {
+		    student = registration;
+		    break;
 		}
 	    }
-	    for (final Registration registration : students) {
-		if (registration.getDegreeType() == DegreeType.DEGREE) {
-		    this.student = registration;
-		    return this.student;
 		}
-	    }
-	}
 	return student;
     }
 

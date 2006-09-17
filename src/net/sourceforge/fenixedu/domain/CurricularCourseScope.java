@@ -14,11 +14,13 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 
     public static Comparator<CurricularCourseScope> CURRICULAR_COURSE_NAME_COMPARATOR = new Comparator<CurricularCourseScope>() {
         public int compare(CurricularCourseScope c1, CurricularCourseScope c2) {
-            int nameComparation = c1.getCurricularCourse().getName().compareTo(c2.getCurricularCourse().getName());
+	    int nameComparation = c1.getCurricularCourse().getName().compareTo(
+		    c2.getCurricularCourse().getName());
             if(nameComparation != 0){
                 return nameComparation;                
             }            
-            return c1.getCurricularCourse().getIdInternal().compareTo(c2.getCurricularCourse().getIdInternal());
+	    return c1.getCurricularCourse().getIdInternal().compareTo(
+		    c2.getCurricularCourse().getIdInternal());
         }  
     };
     
@@ -27,10 +29,12 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 	
-	public CurricularCourseScope(Branch branch, CurricularCourse curricularCourse, CurricularSemester curricularSemester,
-								 Calendar beginDate, Calendar endDate, String Annotation){
+    public CurricularCourseScope(Branch branch, CurricularCourse curricularCourse,
+	    CurricularSemester curricularSemester, Calendar beginDate, Calendar endDate,
+	    String Annotation) {
 		this();
-        // check that there isn't another scope active with the same curricular course, branch and semester
+	// check that there isn't another scope active with the same curricular
+	// course, branch and semester
 		
         if (curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(curricularSemester, branch)) {
             throw new DomainException("error.curricular.course.scope.conflict.creation");
@@ -107,10 +111,9 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 		return !hasAnyAssociatedWrittenEvaluations();
 	}
 	
+    public void edit(Branch branch, CurricularSemester curricularSemester, Calendar beginDate,
+	    Calendar endDate, String Annotation) {
 	
-	public void edit(Branch branch, CurricularSemester curricularSemester,
-			 Calendar beginDate, Calendar endDate, String Annotation) {
-   	
 		setBranch(branch);
 		setCurricularSemester(curricularSemester);
 		setBeginDate(beginDate);
@@ -150,8 +153,8 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     }
 
     public boolean intersects(final Date begin, final Date end) {
-        return DateFormatUtil.compareDates("yyyyMMdd", getBegin(), end) < 0 &&
-                (getEnd() == null || DateFormatUtil.compareDates("yyyyMMdd", getEnd(), begin) > 0);
+	return DateFormatUtil.compareDates("yyyyMMdd", getBegin(), end) < 0
+		&& (getEnd() == null || DateFormatUtil.compareDates("yyyyMMdd", getEnd(), begin) > 0);
     }
     
     public boolean isActiveForExecutionPeriod(final ExecutionPeriod executionPeriod) {
@@ -222,5 +225,5 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	}        
 	
     }
-    
 }
+    

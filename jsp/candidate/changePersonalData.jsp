@@ -4,6 +4,14 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	<br />
+</logic:messagesPresent>
 
 <fr:form action="/changePersonalData.do?method=change">
 

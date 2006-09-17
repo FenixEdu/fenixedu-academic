@@ -29,16 +29,26 @@ public class CurricularYear extends CurricularYear_Base implements Comparable<Cu
         }
     }
 
-	public int compareTo(final CurricularYear curricularYear) {
-		return getYear().compareTo(curricularYear.getYear());
-	}
-    
+    public int compareTo(final CurricularYear curricularYear) {
+        return getYear().compareTo(curricularYear.getYear());
+    }
+
+    public CurricularSemester getCurricularSemester(final Integer semester) {
+        for (final CurricularSemester curricularSemester : getCurricularSemestersSet()) {
+            if (curricularSemester.getSemester().equals(semester)) {
+                return curricularSemester;
+            }
+        }
+
+        return null;
+    }
+
     public static CurricularYear readByYear(Integer year) {
         List<CurricularYear> curricularYears = RootDomainObject.getInstance().getCurricularYears();
         for (CurricularYear curricularYear : curricularYears) {
-            if(curricularYear.getYear().equals(year)) {
+            if (curricularYear.getYear().equals(year)) {
                 return curricularYear;
-            }    
+            }
         }
         return null;
     }

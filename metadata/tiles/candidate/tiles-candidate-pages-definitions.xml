@@ -23,6 +23,45 @@
     
     <definition name="viewCandidacyDetails" extends="candidate.masterPage">
         <put name="body" value="/candidate/viewCandidacyDetails.jsp"></put>
-    </definition>    
-        
+    </definition>
+    
+    <definition name="uploadDocuments" extends="candidate.masterPage">
+        <put name="body" value="/candidate/uploadDocuments.jsp"></put>
+    </definition>
+
+
+	<!-- Degree Appliance -->
+    <definition name="degreeCandidacy.show.welcome" extends="candidate.masterPage">
+        <put name="body" value="/candidate/degree/showWelcome.jsp"></put>
+    </definition>
+
+    <definition name="degreeCandidacy.show.candidacy.details" extends="candidate.masterPage">
+        <put name="body" value="/candidate/degree/showCandidacyDetails.jsp"></put>
+    </definition>
+    
+    <definition name="degreeCandidacy.show.data" extends="candidate.masterPage">
+        <put name="body" value="/candidate/degree/showData.jsp"></put>
+    </definition>
+    
+    <definition name="degreeCandidacy.fill.data" extends="candidate.masterPage">
+        <put name="body" value="/candidate/degree/fillData.jsp"></put>
+    </definition>
+    
+    <definition name="degreeCandidacy.show.operation.finished" extends="candidate.masterPage">
+        <put name="body" value="/candidate/degree/showOperationFinished.jsp"></put>
+    </definition>
+
+    <definition name="degreeCandidacy.show.timeTable" extends="candidate.print.masterPage">
+        <put name="body" value="/commons/student/timeTable/classTimeTable.jsp"></put>
+    </definition>
+    
+    <definition name="degreeCandidacy.print.registration.declaration" extends="candidate.print.masterPage">
+        <put name="body" value="/candidate/degree/printRegistrationDeclaration.jsp"></put>
+    </definition>
+    
+    <definition name="degreeCandidacy.print.system.access.data" extends="candidate.print.masterPage">
+        <put name="body" value="/candidate/degree/printSystemAccessData.jsp"></put>
+    </definition>
+    
+    
 </tiles-definitions>

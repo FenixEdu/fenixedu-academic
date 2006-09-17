@@ -105,11 +105,11 @@ public class MetaSlot extends MetaObject {
      * @see RenderUtils#getSlotLabel(Class, String, String, String)
      */
     public String getLabel() {
-        Class type = getStaticType();
+	Class type = getMetaObject().getType();
         
-        if (type == null) {
-            type = getMetaObject().getType();
-        }
+//        if (type == null) {
+//            type = getMetaObject().getType();
+//        }
         
         return RenderUtils.getSlotLabel(type, getName(), getBundle(), getLabelKey());
     }

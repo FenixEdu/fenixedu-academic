@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.validator.Field;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.commons.validator.ValidatorAction;
-import org.apache.commons.validator.ValidatorUtil;
+import org.apache.commons.validator.util.ValidatorUtils;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.validator.Resources;
@@ -38,9 +38,9 @@ public class ValidateCompareTwoFields {
      */
     private static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
             HttpServletRequest request, Comparator comparator) {
-        String greaterInputString = ValidatorUtil.getValueAsString(bean, field.getProperty());
+        String greaterInputString = ValidatorUtils.getValueAsString(bean, field.getProperty());
         String secondProperty = field.getVarValue("secondProperty");
-        String lowerInputString = ValidatorUtil.getValueAsString(bean, secondProperty);
+        String lowerInputString = ValidatorUtils.getValueAsString(bean, secondProperty);
 
         if (!GenericValidator.isBlankOrNull(lowerInputString)
                 && !GenericValidator.isBlankOrNull(greaterInputString)) {

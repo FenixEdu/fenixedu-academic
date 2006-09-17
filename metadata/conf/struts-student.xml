@@ -263,6 +263,14 @@
 			<form-property name="notes" type="java.lang.String" />
 			<form-property name="urgentRequest" type="java.lang.String" initial="false"/>
 		</form-bean>
+		
+		<form-bean 	name="studentTimeTableForm" 
+					type="org.apache.struts.validator.DynaValidatorForm"
+					dynamic="true">
+			<form-property name="registrationId" type="java.lang.Integer" />
+			<form-property name="page" type="java.lang.Integer" />
+			<form-property name="method" type="java.lang.String" />
+		</form-bean>
 
     </form-beans>
     
@@ -392,8 +400,14 @@
       
       <action 
         type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewStudentTimeTable"
-        path="/studentTimeTable">
-        <forward name="sucess" path="/classTimeTable.jsp"/>
+        path="/studentTimeTable"
+        name="studentTimeTableForm"
+        input="/studentTimeTable.do?page=0"
+        scope="request"
+        parameter="method" 
+        validate="true">
+        <forward name="chooseRegistration" path="df.timeTable.chooseRegistration" />
+        <forward name="showTimeTable" path="df.timeTable.show" />
       </action>
       
       <action 

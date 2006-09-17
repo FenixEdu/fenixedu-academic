@@ -10,7 +10,7 @@
 
 <body>
     
-    <logic:iterate id="infoPerson" name="infoPersonList">
+    <logic:iterate id="person" name="persons">
     <table width="100%" height="100%" border="0">
     <tr height="30"><td>
      <table width="100%" border="0" valign="top">
@@ -54,27 +54,27 @@
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.username"/> </td>
-            <td> <bean:write name="infoPerson" property="username"/> </td>
+            <td> <bean:write name="person" property="username"/> </td>
           </tr>
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.requesterName"/> </td>
-            <td> <bean:write name="infoPerson" property="nome"/> </td>
+            <td> <bean:write name="infoPerson" property="name"/> </td>
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.identificationDocumentNumber"/> </td>
-            <td> <bean:write name="infoPerson" property="numeroDocumentoIdentificacao"/> </td>
+            <td> <bean:write name="person" property="documentIdNumber"/> </td>
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.identificationDocumentType"/> </td>
             <td> 
-            	<bean:define id="idType" name="infoPerson" property="tipoDocumentoIdentificacao"/>
+            	<bean:define id="idType" name="person" property="idDocumentType"/>
             	<bean:message key='<%=idType.toString()%>'/> 
             </td>
           </tr>
           
 	      <tr>
 	        <td> <bean:message key="label.candidate.password"/> </td>
-	        <td> <font face="Verdana"><bean:write name="infoPerson" property="password"/> </font></td>
+	        <td> <font face="Verdana"><bean:write name="person" property="password"/> </font></td>
 	      </tr>
           
           <tr>

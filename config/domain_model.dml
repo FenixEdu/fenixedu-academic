@@ -1357,6 +1357,7 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	String year;
 	Integer keyInsuranceValue;
     PeriodState state;
+    Integer keyShiftDistribution;
 }
 
 class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2219,18 +2220,6 @@ class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.feni
 	Integer keyPerson;
 }
 
-
-class net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers extends net.sourceforge.fenixedu.domain.DomainObject {
-    Boolean answer5;
-    Boolean answer1;
-    Boolean answer3;
-    Boolean answer7;
-    Boolean answer6;
-    Integer keyStudent;
-    Boolean answer4;
-    Boolean answer2;
-}
-
 class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
 }
@@ -2243,7 +2232,7 @@ class net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation extends
     Integer keyStudent;
     Integer keyInstitution;    
     Integer keyCountry;    
-    Integer keyDfaCandidacy;    
+    Integer keyStudentCandidacy;    
 }
 
 class net.sourceforge.fenixedu.domain.Price extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2731,10 +2720,9 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
     Character arithmeticMeanClassification;        
     Integer keySenior;
     Integer keyAssociatedGaugingTestResult;
-	Integer keyPersonalDataUseInquiryAnswers;
 	Integer keyPrecedentDegreeInformation;
 	Integer keyStudent;
-	Integer keyCandidacy;
+	Integer keyStudentCandidacy;
 	Integer keyStudentKind;
 }
 
@@ -2749,6 +2737,7 @@ class net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear extends
 	Integer keyResidenceCandidacy;
 	Boolean workingStudent;
 	StudentPersonalDataAuthorizationChoice personalDataAuthorization;
+
 }
 
 class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2960,7 +2949,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyResearcher;
 		Integer keyUser;
 	    Integer keyHomepage;
-		Integer keyPais;
+		Integer keyNationality;
 		Integer keyCountryOfBirth;
 		Integer keyCountryOfResidence;		
 		Integer keyStudent;
@@ -3622,16 +3611,30 @@ class net.sourceforge.fenixedu.domain.candidacy.Candidacy extends net.sourceforg
 	Integer keyPerson;
 }
 
-	class net.sourceforge.fenixedu.domain.candidacy.DFACandidacy extends net.sourceforge.fenixedu.domain.candidacy.Candidacy {
+	class net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy extends net.sourceforge.fenixedu.domain.candidacy.Candidacy {
 		Integer keyExecutionDegree;
 		Integer keyPrecedentDegreeInformation;
 		Integer keyRegistration;
 	}
 
+	class net.sourceforge.fenixedu.domain.candidacy.DFACandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
+	}
+
+	class net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
+		StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
+		Double entryGrade;
+		Boolean applyForResidence;
+		String notesAboutResidenceAppliance;
+		String contigent;
+		String ingression;
+		String istUniversity;
+		EntryPhase entryPhase;		
+	}
+	
 class net.sourceforge.fenixedu.domain.candidacy.CandidacySituation extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
 	DateTime situationDate;
-	Integer keyEmployee;
+	Integer keyPerson;
 	Integer keyCandidacy;
 	String remarks;	
 }
@@ -3660,7 +3663,6 @@ class net.sourceforge.fenixedu.domain.candidacy.CandidacySituation extends net.s
 
 	class net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
 	}	
-
 	
 class net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument extends net.sourceforge.fenixedu.domain.DomainObject {
 	String documentDescription;
@@ -3754,6 +3756,19 @@ class net.sourceforge.fenixedu.domain.parking.ParkingParty extends net.sourcefor
 	Boolean authorized;
 	Integer keyParty;
 	Boolean acceptedRegulation;
+}
+
+
+class net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionYear;
+}
+
+class net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer abstractStudentNumber;
+	Integer keyShiftDistribution;
+	Integer keyShift;
+	Integer keyExecutionDegree;
+	Boolean distributed;
 }
 
 //
@@ -5995,18 +6010,11 @@ relation PersonAdvisory {
 	}
 }
 
-
-relation PersonalDataUseInquiryAnswersStudent {
-    net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers playsRole personalDataUseInquiryAnswers;
-    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
-}
-
-
 relation PersonCountry {
 	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Country playsRole pais;
+	net.sourceforge.fenixedu.domain.Country playsRole nationality;
 }
 
 relation PersonCountryOfBirth {
@@ -6087,9 +6095,9 @@ relation PrecedentDegreeInformationCountry {
 	net.sourceforge.fenixedu.domain.Country playsRole country;	
 }
 
-relation PrecedentDegreeInformationDFACandidacy {
+relation PrecedentDegreeInformationStudentCandidacy {
 	net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation playsRole precedentDegreeInformation;
-	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole dfaCandidacy;
+	net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy playsRole studentCandidacy;
 }
 
 
@@ -6569,9 +6577,9 @@ relation RegistrationStudent {
     net.sourceforge.fenixedu.domain.student.Student playsRole student;
 }
 
-relation RegistrationCandidacy {
+relation RegistrationStudentCandidacy {
     net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
-    net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole candidacy;
+    net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy playsRole studentCandidacy;
 }
 
 relation RootDomainObjectStudent {
@@ -7676,6 +7684,7 @@ relation ParkingFileParkingDocument {
 	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocument;
 }
 
+
 /*
  * Relations definitions of relations to RootDomainObject
  * 
@@ -8420,13 +8429,6 @@ relation RootDomainObjectSchedule {
 relation RootDomainObjectRegistration {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.student.Registration playsRole registrations {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectPersonalDataUseInquiryAnswers {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers playsRole personalDataUseInquiryAnswerss {
 		multiplicity *;
 	}
 }
@@ -9540,16 +9542,9 @@ relation CandidacySituationCandidacy {
 	}
 }
 
-relation CandidacySituationEmployee {
-    net.sourceforge.fenixedu.domain.Employee playsRole employee;
+relation CandidacySituationPerson {
+    net.sourceforge.fenixedu.domain.Person playsRole person;
 	net.sourceforge.fenixedu.domain.candidacy.CandidacySituation playsRole candidacySituations {
-		multiplicity *;
-	}
-}
-
-relation DFACandidacyExecutionDegree {
-    net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
-	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole dfaCandidacies {
 		multiplicity *;
 	}
 }
@@ -10192,9 +10187,52 @@ relation ProfessorshipValuationCourseValuation {
 	net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation playsRole courseValuation;
 }
 
-/* 
- * Relations for vigilancy
- */
+relation StudentCandidacyExecutionDegree {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy playsRole studentCandidacies {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectShiftDistribution {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution playsRole shiftDistributions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectShiftDistributionEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry playsRole shiftDistributionEntries {
+		multiplicity *;
+	}
+}
+
+relation ExecutionYearShiftDistribution {
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution playsRole shiftDistribution;	
+}
+
+relation ShiftDistributionShiftDistributionEntry {
+	net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution playsRole shiftDistribution;
+	net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry playsRole shiftDistributionEntries {
+		multiplicity *;
+	}
+}
+
+relation ShiftDistributionEntryShift {
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+	net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry playsRole shiftDistributionEntries {
+		multiplicity *;
+	}
+}
+
+relation ExecutionDegreeShiftDistributionEntry {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry playsRole shiftDistributionEntries {
+		multiplicity *;
+	}
+}
 
 relation VigilantBelongsToGroup {
 	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
@@ -10324,16 +10362,9 @@ relation RootDomainUnavailablePeriod {
 	}
 }
 
-
 relation RootDomainExamCoordinator {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
 		multiplicity *;
 	}
 }
-
-
-/*
- * VIGILANCY END
- */
-

@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
@@ -65,9 +66,9 @@ public class Person extends Person_Base {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
 
-    /***************************************************************************
+    /***********************************************************************
      * BUSINESS SERVICES *
-     **************************************************************************/
+         **********************************************************************/
 
     public String getNome() {
 	return super.getName();
@@ -381,6 +382,8 @@ public class Person extends Person_Base {
 	return null;
     }
 
+    // FIXME: Remove as soon as possible.
+    @Deprecated
     public Registration getStudentByUsername() {
 	for (final Registration registration : this.getStudents()) {
 	    if (getUsername().contains(registration.getNumber().toString())) {
@@ -445,7 +448,7 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public Boolean getIsExamCoordinatorInCurrentYear() {
+    	public Boolean getIsExamCoordinatorInCurrentYear() {
         ExamCoordinator examCoordinator = this.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
         return (examCoordinator == null) ? false : true ;
     }
@@ -500,7 +503,7 @@ public class Person extends Person_Base {
 
     /***************************************************************************
      * PRIVATE METHODS *
-     **************************************************************************/
+         **********************************************************************/
 
     private void setProperties(InfoPersonEditor infoPerson) {
 
@@ -630,9 +633,9 @@ public class Person extends Person_Base {
 
     }
 
-    /***************************************************************************
+    /***********************************************************************
      * OTHER METHODS *
-     **************************************************************************/
+         **********************************************************************/
 
     public String getSlideName() {
 	return "/photos/person/P" + getIdInternal();
@@ -758,7 +761,7 @@ public class Person extends Person_Base {
 	getManageableDepartmentCredits().clear();
 	getAdvisories().clear();
 	removeCms();
-	removePais();
+        removeNationality();
 	removeCountryOfBirth();
 	removeCountryOfResidence();
 	if (hasUser()) {
@@ -1020,6 +1023,22 @@ public class Person extends Person_Base {
 	return null;
     }
 
+    public DegreeCandidacy getDegreeCandidacyByExecutionDegree(final ExecutionDegree executionDegree) {
+        for (final Candidacy candidacy : this.getCandidaciesSet()) {
+            if (candidacy instanceof DegreeCandidacy) {
+                final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
+                if (degreeCandidacy.getExecutionDegree().equals(executionDegree)) {
+                    return degreeCandidacy;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean hasDegreeCandidacyForExecutionDegree(ExecutionDegree executionDegree) {
+        return (getDegreeCandidacyByExecutionDegree(executionDegree) != null);
+    }
+
     @Deprecated
     public String getCodigoFiscal() {
 	return super.getFiscalCode();
@@ -1248,6 +1267,16 @@ public class Person extends Person_Base {
     @Deprecated
     public void setTelemovel(String telemovel) {
 	super.setMobile(telemovel);
+    }
+
+    @Deprecated
+    public Country getPais() {
+        return super.getNationality();
+    }
+
+    @Deprecated
+    public void setPais(final Country nationality) {
+        super.setNationality(nationality);
     }
 
     @Override
@@ -1537,7 +1566,7 @@ public class Person extends Person_Base {
     }
 
     public Country getCountry() {
-	return super.getPais();
+	return super.getNationality();
     }
 
     @Override

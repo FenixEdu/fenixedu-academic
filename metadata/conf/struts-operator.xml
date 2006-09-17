@@ -33,6 +33,14 @@
 			<form-property name="toNumber" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
 	  </form-bean>
+	  
+	  <form-bean name="generatePasswordsForCandidaciesForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+     			dynamic="true">
+		<form-property name="executionDegreeId" type="java.lang.Integer"/>
+		<form-property name="candidacyIdsToProcess" type="java.lang.Integer[]" />
+		<form-property name="page" type="java.lang.Integer"/>
+  	  </form-bean>
 
      </form-beans>
     
@@ -98,17 +106,17 @@
 					scope="request">
 				<forward name="chooseFile" path="/photo/submitPhoto.jsp"/>
 			</action>
-
-			<action path="/generateNewStudentsPasswords"
+		    
+		   <action 	path="/generatePasswordsForCandidacies"
+					input="/generatePasswordForCandidacies.do?method=chooseExecutionDegree&amp;page=0"
 					parameter="method"
-					validate="true"
-					input="/generateNewStudentsPasswords.do?method=prepareGeneratePasswords&amp;page=0"
-					name="generateNewPasswordsForm"
-					type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.GenerateNewStudentsPasswordsAction"
+					name="generatePasswordsForCandidaciesForm"
+					type="net.sourceforge.fenixedu.presentationTier.Action.operator.GeneratePasswordsForCandidaciesAction"
 					scope="request">
-				<forward name="prepare" path="definition.operator.password"/>
-				<forward name="success" path="/password/severalNewPasswordsTemplate.jsp"/>
-		    </action>
+				<forward name="chooseExecutionDegree" path="df.candidacy.password.chooseExecutionDegree"/>
+				<forward name="prepare" path="df.candidacy.password.generate"/>
+				<forward name="success" path="/candidacy/password/severalNewPasswordsTemplate.jsp"/>
+		   </action>
 
      </action-mappings>     
 

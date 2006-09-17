@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.Data;
 import org.apache.commons.validator.Field;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.commons.validator.ValidatorAction;
-import org.apache.commons.validator.ValidatorUtil;
+import org.apache.commons.validator.util.ValidatorUtils;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.validator.Resources;
 
@@ -25,10 +25,10 @@ public class ValidateDate {
     public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
             HttpServletRequest request, ServletContext application) {
 
-        String valueString = ValidatorUtil.getValueAsString(bean, field.getProperty());
+        String valueString = ValidatorUtils.getValueAsString(bean, field.getProperty());
 
-        String sProperty2 = ValidatorUtil.getValueAsString(bean, field.getVarValue("month"));
-        String sProperty3 = ValidatorUtil.getValueAsString(bean, field.getVarValue("day"));
+        String sProperty2 = ValidatorUtils.getValueAsString(bean, field.getVarValue("month"));
+        String sProperty3 = ValidatorUtils.getValueAsString(bean, field.getVarValue("day"));
 
         if (((valueString == null) && (sProperty2 == null) && (sProperty3 == null))
                 || ((valueString.length() == 0) && (sProperty2.length() == 0) && (sProperty3.length() == 0))) {
@@ -65,10 +65,10 @@ public class ValidateDate {
     public static boolean threeArgsDate(Object bean, ValidatorAction va, Field field,
             ActionMessages errors, HttpServletRequest request, ServletContext application) {
 
-        String valueString1 = ValidatorUtil.getValueAsString(bean, field.getProperty());
+        String valueString1 = ValidatorUtils.getValueAsString(bean, field.getProperty());
 
-        String sProperty2 = ValidatorUtil.getValueAsString(bean, field.getVarValue("month"));
-        String sProperty3 = ValidatorUtil.getValueAsString(bean, field.getVarValue("day"));
+        String sProperty2 = ValidatorUtils.getValueAsString(bean, field.getVarValue("month"));
+        String sProperty3 = ValidatorUtils.getValueAsString(bean, field.getVarValue("day"));
 
         if (((valueString1 == null) && (sProperty2 == null) && (sProperty3 == null))
                 || ((valueString1.length() == 0) && (sProperty2.length() == 0) && (sProperty3.length() == 0))) {

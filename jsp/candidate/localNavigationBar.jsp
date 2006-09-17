@@ -6,7 +6,6 @@
 
 <logic:present role="CANDIDATE">
 	<ul>
-		<li><html:link page="/changePersonalData.do?method=prepare" ><bean:message key="link.changePersonalData"/></html:link></li>
-		<li><html:link page="/viewCandidacies.do?method=prepare" ><bean:message key="link.viewCandidacies"/></html:link></li>
+		<li><html:link page="/viewCandidacies.do?method=prepare" ><bean:message key="link.candidacies"/></html:link></li>
 	</ul>	
 </logic:present>

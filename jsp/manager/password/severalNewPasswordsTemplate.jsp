@@ -10,7 +10,7 @@
 
 <body>
     
-    <logic:iterate id="infoPerson" name="infoPersonList">
+    <logic:iterate id="passwordBean" name="passwordBeans">
     <table width="100%" height="100%" border="0">
     <tr height="30"><td>
      <table width="100%" border="0" valign="top">
@@ -54,27 +54,27 @@
           </tr>
           <tr>
             <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.username"/> </td>
-            <td> <bean:write name="infoPerson" property="username"/> </td>
+            <td> <bean:write name="passwordBean" property="person.username"/> </td>
           </tr>
           <tr>
             <td> <bean:message bundle="MANAGER_RESOURCES" key="label.masterDegree.administrativeOffice.requesterName"/> </td>
-            <td> <bean:write name="infoPerson" property="nome"/> </td>
+            <td> <bean:write name="passwordBean" property="person.name"/> </td>
           </tr>
           <tr>
             <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.identificationDocumentNumber"/> </td>
-            <td> <bean:write name="infoPerson" property="numeroDocumentoIdentificacao"/> </td>
+            <td> <bean:write name="passwordBean" property="person.documentIdNumber"/> </td>
           </tr>
           <tr>
             <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.identificationDocumentType"/> </td>
             <td> 
-            	<bean:define id="idType" name="infoPerson" property="tipoDocumentoIdentificacao"/>
+            	<bean:define id="idType" name="passwordBean" property="person.idDocumentType"/>
             	<bean:message bundle="MANAGER_RESOURCES" key='<%=idType.toString()%>' bundle="ENUMERATION_RESOURCES"/> 
             </td>
           </tr>
           
 	      <tr>
 	        <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.password"/> </td>
-	        <td> <font face="Verdana"><bean:write name="infoPerson" property="password"/> </font></td>
+	        <td> <font face="Verdana"><bean:write name="passwordBean" property="password"/> </font></td>
 	      </tr>
           
           <tr>

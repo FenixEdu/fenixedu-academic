@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.util.StateMachine;
+import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;

@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
@@ -29,4 +32,8 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public abstract boolean isLeaf();
 
     public abstract StringBuilder print(String tabs);
+    
+    public abstract List<Enrolment> getEnrolments();
+    
+    public abstract StudentCurricularPlan getStudentCurricularPlan();
 }

@@ -1,11 +1,14 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 
 public class DFACandidacy extends DFACandidacy_Base {
 
@@ -39,4 +42,20 @@ public class DFACandidacy extends DFACandidacy_Base {
                 + getExecutionDegree().getExecutionYear().getYear();
     }
 
+    @Override
+    public Set<Operation> getOperations(CandidacySituation candidacySituation) {
+        return new HashSet<Operation>();
+    }
+
+    @Override
+    void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public boolean isConcluded() {
+        return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
+                .getCandidacySituationType() == CandidacySituationType.CANCELED);
+    }
 }

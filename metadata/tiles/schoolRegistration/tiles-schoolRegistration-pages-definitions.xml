@@ -47,7 +47,7 @@
 		<put name="body" value="/student/schoolRegistration/declarations_bd.jsp" />
 	</definition>	
 	
-	<definition name="definition.schoolRegistration.schedule" path="/student/classTimeTable.jsp">				
+	<definition name="definition.schoolRegistration.schedule" path="/commons/student/timeTable/classTimeTable.jsp">				
 	</definition>		
 	
 	<definition name="definition.schoolRegistration.printDeclaration" 

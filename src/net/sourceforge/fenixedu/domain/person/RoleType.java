@@ -61,6 +61,7 @@ public enum RoleType {
 
     DELEGATE("Delegate"),
 
+    //FIXME: this role should be removed
     FIRST_TIME_STUDENT("First time student"),
 
     PROJECTS_MANAGER("Projects Management"),

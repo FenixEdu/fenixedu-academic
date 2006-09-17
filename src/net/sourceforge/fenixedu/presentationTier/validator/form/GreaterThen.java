@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.validator.Field;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.commons.validator.ValidatorAction;
-import org.apache.commons.validator.ValidatorUtil;
+import org.apache.commons.validator.util.ValidatorUtils;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.validator.Resources;
 
@@ -19,7 +19,7 @@ public class GreaterThen {
     public static boolean validateFloat(Object bean, ValidatorAction va, Field field,
             ActionMessages errors, HttpServletRequest request, ServletContext application) {
 
-        String inputString = ValidatorUtil.getValueAsString(bean, field.getProperty());
+        String inputString = ValidatorUtils.getValueAsString(bean, field.getProperty());
         String lowerValueString = field.getVarValue("value");
 
         if ((inputString == null) || (inputString.length() == 0)) {
@@ -49,7 +49,7 @@ public class GreaterThen {
     public static boolean validateFloat0(Object bean, ValidatorAction va, Field field,
             ActionMessages errors, HttpServletRequest request, ServletContext application) {
 
-        String inputString = ValidatorUtil.getValueAsString(bean, field.getProperty());
+        String inputString = ValidatorUtils.getValueAsString(bean, field.getProperty());
         String lowerValueString = field.getVarValue("value");
 
         if ((inputString == null) || (inputString.length() == 0)) {

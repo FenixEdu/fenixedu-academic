@@ -64,7 +64,7 @@ public class RegisterCandidate extends Service {
 
         // create new student
         if (registration == null) {
-            registration = createNewRegistration(studentNumber);
+		registration = createNewRegistration(person, studentNumber);
         }
         
         if(person.getStudent() == null){
@@ -75,8 +75,8 @@ public class RegisterCandidate extends Service {
 
         checkDuplicateStudentCurricularPlan(masterDegreeCandidate, registration);
 
-        StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(registration, branchID,
-                masterDegreeCandidate);
+	StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(registration,
+		branchID, masterDegreeCandidate);
 
         createEnrolments(userView, masterDegreeCandidate, studentCurricularPlan);
 
@@ -95,8 +95,7 @@ public class RegisterCandidate extends Service {
         InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
         infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
                 .newInfoFromDomain(masterDegreeCandidate));
-        infoCandidateRegistration
-                .setInfoStudentCurricularPlan(InfoStudentCurricularPlan
+	infoCandidateRegistration.setInfoStudentCurricularPlan(InfoStudentCurricularPlan
                         .newInfoFromDomain(studentCurricularPlan));
         infoCandidateRegistration.setEnrolments(new ArrayList<InfoEnrolment>());
         Iterator iteratorSCPs = studentCurricularPlan.getEnrolments().iterator();
@@ -165,8 +164,8 @@ public class RegisterCandidate extends Service {
         }
     }
 
-    private StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, Integer branchID,
-            MasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
+    private StudentCurricularPlan createNewStudentCurricularPlan(Registration registration,
+	    Integer branchID, MasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
         Branch branch = rootDomainObject.readBranchByOID(branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree()
                 .getDegreeCurricularPlan();
@@ -177,7 +176,8 @@ public class RegisterCandidate extends Service {
         return studentCurricularPlan;
     }
 
-    private Registration createNewRegistration(Integer studentNumber) throws ExcepcaoPersistencia {
+    private Registration createNewRegistration(Person person, Integer studentNumber)
+	    throws ExcepcaoPersistencia {
         Registration registration;
         if (studentNumber == null) {
             studentNumber = Registration.generateStudentNumber(DegreeType.MASTER_DEGREE);
@@ -185,7 +185,7 @@ public class RegisterCandidate extends Service {
 
         StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
         StudentState state = new StudentState(StudentState.INSCRITO);
-        registration = new Registration(studentNumber, studentKind, state, false, false,
+	registration = new Registration(person, studentNumber, studentKind, state, false, false,
                 EntryPhase.FIRST_PHASE_OBJ, DegreeType.MASTER_DEGREE);
         registration.setInterruptedStudies(false);
         

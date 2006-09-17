@@ -36,6 +36,8 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
+import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -71,31 +73,55 @@ public class Registration extends Registration_Base {
 
     private transient Integer approvedEnrollmentsNumber = 0;
 
-    public final static Comparator<Registration> NUMBER_COMPARATOR = new BeanComparator("number");
+    public final static Comparator<Registration> NUMBER_COMPARATOR = new Comparator<Registration>() {
+	public int compare(Registration o1, Registration o2) {
+	    return o1.getNumber().compareTo(o2.getNumber());
+	}};
 
     public Registration() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Registration(Integer studentNumber, StudentKind studentKind,
+    @Deprecated
+    // NOTE: use this for legacy code only
+    public Registration(Person person, Integer studentNumber, StudentKind studentKind,
             StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
             DegreeType degreeType) {
-        this();
-        setPayedTuition(payedTuition);
-        setEnrollmentForbidden(enrolmentForbidden);
-        setEntryPhase(entryPhase);
-        setDegreeType(degreeType);
-        
-        setState(state);
-        setNumber(studentNumber);
-        setStudentKind(studentKind);
+	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, degreeType,
+		false, null);
+	setEntryPhase(entryPhase);
+    }
 
-        setFlunked(Boolean.FALSE);
-        setRequestedChangeDegree(Boolean.FALSE);
-        setRequestedChangeBranch(Boolean.FALSE);
-        
-        setRegistrationYear(ExecutionYear.readCurrentExecutionYear());
+    public Registration(Person person, Integer studentNumber, StudentKind studentKind,
+	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, DegreeType degreeType,
+	    StudentCandidacy studentCandidacy) {
+	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, degreeType,
+		false, studentCandidacy);
+    }
+
+    public Registration(Person person, Integer studentNumber, StudentKind studentKind,
+	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, DegreeType degreeType,
+	    final Boolean interruptedStudies, StudentCandidacy studentCandidacy) {
+	this();
+	setPayedTuition(payedTuition);
+	setEnrollmentForbidden(enrolmentForbidden);
+	setDegreeType(degreeType);
+	if (person.hasStudent()) {
+	    setStudent(person.getStudent());
+	} else {
+	    setStudent(new Student(person, studentNumber));
+	}
+	setState(state);
+	//setNumber(studentNumber);
+	setStudentKind(studentKind);
+	setInterruptedStudies(interruptedStudies);
+
+	setFlunked(Boolean.FALSE);
+	setRequestedChangeDegree(Boolean.FALSE);
+	setRequestedChangeBranch(Boolean.FALSE);
+	setStudentCandidacy(studentCandidacy);
+	setRegistrationYear(ExecutionYear.readCurrentExecutionYear());
     }
     
     public void delete() {
@@ -784,7 +810,8 @@ public class Registration extends Registration_Base {
         final List<Shift> enroledShifts = getShiftsFor(executionPeriod);
         for (final ExecutionCourse executionCourse : getAttendingExecutionCoursesFor(executionPeriod)) {
             for (final ShiftType shiftType : executionCourse.getOldShiftTypesToEnrol()) {
-        	if (!enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(enroledShifts, executionCourse, shiftType)) {
+		if (!enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(enroledShifts,
+			executionCourse, shiftType)) {
                     result++;
                     break;
                 }
@@ -794,7 +821,8 @@ public class Registration extends Registration_Base {
     }
     
     private boolean enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(
-            final List<Shift> enroledShifts, final ExecutionCourse executionCourse, final ShiftType shiftType) {
+	    final List<Shift> enroledShifts, final ExecutionCourse executionCourse,
+	    final ShiftType shiftType) {
 
         return CollectionUtils.exists(enroledShifts, new Predicate() {
             public boolean evaluate(Object object) {
@@ -902,5 +930,101 @@ public class Registration extends Registration_Base {
     public Person getPerson() {
 	return getStudent().getPerson();
     }
+
+    // FIXME: remove this methods after migration to Candidacy
+    @Override
+    public EntryPhase getEntryPhase() {
+	if (isBolonhaDegreeOrIntegratedMaster()) {
+	    return getDegreeCandidacy().getEntryPhase();
+	}
+	return super.getEntryPhase();
+    }
+
+    @Override
+    public void setEntryPhase(EntryPhase entryPhase) {
+	if (isBolonhaDegreeOrIntegratedMaster()) {
+	    getDegreeCandidacy().setEntryPhase(entryPhase);
+	}
+	super.setEntryPhase(entryPhase);
+    }
+
+    @Override
+    public Double getEntryGrade() {
+	if (isBolonhaDegreeOrIntegratedMaster()) {
+	    return getDegreeCandidacy().getEntryGrade();
+	}
+	return super.getEntryGrade();
+    }
+
+    @Override
+    public void setEntryGrade(Double entryGrade) {
+	if (isBolonhaDegreeOrIntegratedMaster()) {
+	    getDegreeCandidacy().setEntryGrade(entryGrade);
+	}
+	super.setEntryGrade(entryGrade);
+    }
+
+    @Override
+    public String getIngression() {
+	if (isBolonhaDegreeOrIntegratedMaster()) {
+	    return getDegreeCandidacy().getIngression();
+	}
+	return super.getIngression();
+    }
+
+    @Override
+    public void setIngression(String ingression) {
+	if (isBolonhaDegreeOrIntegratedMaster()) {
+	    getDegreeCandidacy().setIngression(ingression);
+	}
+	super.setIngression(ingression);
+    }
+
+    @Override
+    public String getContigent() {
+	if (isBolonhaDegreeOrIntegratedMaster()) {
+	    return getDegreeCandidacy().getContigent();
+	}
+	return super.getContigent();
+    }
+
+    @Override
+    public void setContigent(String contigent) {
+	if (isBolonhaDegreeOrIntegratedMaster()) {
+	    getDegreeCandidacy().setContigent(contigent);
+	}
+	super.setContigent(contigent);
+    }
+
+    // FIXME: this should be deducted from Degree/DegreeCurricularPlan
+    @Override
+    public String getIstUniversity() {
+	if (isBolonhaDegreeOrIntegratedMaster()) {
+	    return getDegreeCandidacy().getIstUniversity();
+	}
+
+	return super.getIstUniversity();
+    }
+
+    @Override
+    public void setIstUniversity(String istUniversity) {
+	if (isBolonhaDegreeOrIntegratedMaster()) {
+	    getDegreeCandidacy().setIstUniversity(istUniversity);
+	}
+	super.setIstUniversity(istUniversity);
+    }
+
+    private DegreeCandidacy getDegreeCandidacy() {
+	return ((DegreeCandidacy) getStudentCandidacy());
+    }
+
+    private boolean isBolonhaDegreeOrIntegratedMaster() {
+	return (getDegreeType() == DegreeType.BOLONHA_DEGREE || getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)
+		&& (hasStudentCandidacy());
+
+    }
+
+    // FIXME: end of methods to remove after migration of this information
+    // to Candidacy
 
 }

@@ -4,19 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class SubstituteCandidacySituation extends SubstituteCandidacySituation_Base {
 
     public SubstituteCandidacySituation(Candidacy candidacy) {
 	super();
-	setCandidacy(candidacy);
-	Employee employee = AccessControl.getUserView().getPerson().getEmployee();
-	if (employee == null) {
-	    throw new DomainException("person is not an employee");
-	}
-	setEmployee(employee);
+	init(candidacy, AccessControl.getUserView().getPerson());
     }
 
     @Override
@@ -62,6 +55,12 @@ public class SubstituteCandidacySituation extends SubstituteCandidacySituation_B
 	default:
 	    break;
 	}
+    }
+    
+    @Override
+    public boolean canExecuteOperationAutomatically() {
+	// TODO Auto-generated method stub
+	return false;
     }
 
 }

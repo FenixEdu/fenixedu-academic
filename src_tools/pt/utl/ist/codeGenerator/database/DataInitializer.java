@@ -109,7 +109,7 @@ public class DataInitializer {
     	new Country("Angola", "Angolana", "ao");
     	new Country("Cabo Verde", "Cabo-Verdiana", "cv");
     	new Country("Guiné-Bissau", "Guineense-Bissau", "gw");
-    	new Country("Moçaambique", "Moçambicana", "mz");
+    	new Country("Moçambique", "Moçambicana", "mz");
     	new Country("São Tomé e Principe", "São Tomense", "st");
     	new Country("Brasil", "Brasileira", "br");
     	new Country("Bélgica", "Belga", "be");

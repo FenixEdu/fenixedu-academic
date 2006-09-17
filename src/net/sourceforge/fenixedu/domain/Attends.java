@@ -280,7 +280,7 @@ public class Attends extends Attends_Base {
             throw new DomainException("unsupported.execution.period.semester");
         }
     }
-    
+        
     public static List<Attends> readByDegreeCurricularPlanAndExecutionPeriod(
             DegreeCurricularPlan degreeCurricularPlan, ExecutionPeriod executionPeriod) {
         final Set<Attends> attends = new HashSet<Attends>();
@@ -295,6 +295,8 @@ public class Attends extends Attends_Base {
         }
         return new ArrayList<Attends>(attends);
     }
+    
+ 
     
 
 }

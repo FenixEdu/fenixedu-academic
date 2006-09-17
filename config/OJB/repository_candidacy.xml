@@ -2,7 +2,15 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.Candidacy -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.Candidacy" table="CANDIDACY">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy"/>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy" table="CANDIDACY">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.DFACandidacy"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy"/>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -10,6 +18,13 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.DFACandidacy" table="CANDIDACY">
 	
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy" table="CANDIDACY">
+
 </class-descriptor>
 
 
@@ -64,4 +79,18 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument" table="CANDIDACY_DOCUMENT">
+</class-descriptor>
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution" table="SHIFT_DISTRIBUTION">
+</class-descriptor>
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry" table="SHIFT_DISTRIBUTION_ENTRY">
 </class-descriptor>

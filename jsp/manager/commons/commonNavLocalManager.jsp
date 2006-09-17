@@ -104,6 +104,7 @@
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.personManagement" />
 	</html:link>
 </li>
+
 <li>
 	<html:link module="/manager" module="/manager" page="/manageHolidays.do?method=prepare&amp;page=0">
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manage.holidays" />

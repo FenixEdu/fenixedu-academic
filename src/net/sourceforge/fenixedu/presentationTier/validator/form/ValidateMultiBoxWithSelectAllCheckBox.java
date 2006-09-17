@@ -34,12 +34,12 @@ public class ValidateMultiBoxWithSelectAllCheckBox {
                     && (multiBox.length > 0)) {
                 return true;
             }
-            errors.add(field.getKey(), new ActionMessage("errors.required.checkbox", field.getArg0()
+            errors.add(field.getKey(), new ActionMessage("errors.required.checkbox", field.getArg(0)
                     .getKey()));
             return false;
 
         } catch (Exception e) {
-            errors.add(field.getKey(), new ActionMessage("errors.required.checkbox", field.getArg0()
+            errors.add(field.getKey(), new ActionMessage("errors.required.checkbox", field.getArg(0)
                     .getKey()));
             return false;
         }

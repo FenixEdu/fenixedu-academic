@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.util.resources.AbstractMessageResourceProvider;
 
+import org.apache.struts.Globals;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
@@ -41,9 +42,11 @@ public class StrutsMessageResourceProvider extends AbstractMessageResourceProvid
         ModuleConfig moduleConfig = ModuleUtils.getInstance().getModuleConfig(this.request,
                 this.servletContext);
 
-        // Return the requested message resources instance
-        return (MessageResources) this.servletContext
-                .getAttribute(bundleName + moduleConfig.getPrefix());
+        return (bundleName != null && bundleName.length() > 0) ? (MessageResources) this.servletContext
+                .getAttribute(bundleName + moduleConfig.getPrefix())
+                : (MessageResources) this.servletContext.getAttribute(Globals.MESSAGES_KEY
+                        + moduleConfig.getPrefix());
+
     }
 
     public String getMessage(String key, String bundle) {

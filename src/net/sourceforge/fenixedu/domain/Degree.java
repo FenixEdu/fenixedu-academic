@@ -529,6 +529,17 @@ public class Degree extends Degree_Base {
         return result;
     }
 
+    public static List<Degree> readAllByDegreeCode(final String degreeCode) {
+	final List<Degree> result = new ArrayList<Degree>();
+	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
+	    if (degree.getCode() != null && degree.getCode().equals(degreeCode)) {
+		result.add(degree);
+	    }
+	}
+
+	return result;
+    }
+    
     /**
      * @param executionYearToShow 
      * @return the most recent info of this degree.

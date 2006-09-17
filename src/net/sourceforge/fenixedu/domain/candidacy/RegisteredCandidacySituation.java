@@ -4,9 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Role;
@@ -26,14 +23,14 @@ import org.joda.time.YearMonthDay;
 
 public class RegisteredCandidacySituation extends RegisteredCandidacySituation_Base {
 
+
     public RegisteredCandidacySituation(Candidacy candidacy) {
+	this(candidacy, AccessControl.getUserView().getPerson());
+    }
+
+    public RegisteredCandidacySituation(Candidacy candidacy, Person person) {
 	super();
-	setCandidacy(candidacy);
-	Employee employee = AccessControl.getUserView().getPerson().getEmployee();
-	if (employee == null) {
-	    throw new DomainException("person is not an employee");
-	}
-	setEmployee(employee);
+	init(candidacy, AccessControl.getUserView().getPerson());
 
 	if (getCandidacy() instanceof DFACandidacy) {
 	    registerDFACandidacy(candidacy);
@@ -55,8 +52,6 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 		((DFACandidacy) candidacy).getExecutionDegree().getDegreeCurricularPlan(),
 		StudentCurricularPlanState.ACTIVE, new YearMonthDay());
 
-	createGratuitySituation(studentCurricularPlan);
-
 	createQualification();
 	
 	((DFACandidacy)getCandidacy()).setRegistration(registration);
@@ -68,7 +63,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
 	StudentState state = new StudentState(StudentState.INSCRITO);
 	Person person = getCandidacy().getPerson();
-	Registration registration = new Registration(null, studentKind, state, false, false,
+	Registration registration = new Registration(person, null, studentKind, state, false, false,
 		EntryPhase.FIRST_PHASE_OBJ, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
 	registration.setInterruptedStudies(false);
 
@@ -77,14 +72,6 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
 
 	return registration;
-    }
-
-    private void createGratuitySituation(StudentCurricularPlan studentCurricularPlan) {
-	GratuityValues gratuityValues = ((DFACandidacy) getCandidacy()).getExecutionDegree()
-		.getGratuityValues();
-	if (gratuityValues != null) {
-	    new GratuitySituation(gratuityValues, studentCurricularPlan);
-	}
     }
 
     private void createQualification() {
@@ -128,5 +115,10 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
     public void nextState(String nextState) {
 	throw new DomainException("error.impossible.to.forward.from.registered");
     }
-
+    
+    @Override
+    public boolean canExecuteOperationAutomatically() {
+	return false;
+    }
+    
 }

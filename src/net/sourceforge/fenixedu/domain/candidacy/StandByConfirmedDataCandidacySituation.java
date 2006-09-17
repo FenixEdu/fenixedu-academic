@@ -1,23 +1,23 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 
 public class StandByConfirmedDataCandidacySituation extends StandByConfirmedDataCandidacySituation_Base {
 
     public StandByConfirmedDataCandidacySituation(Candidacy candidacy) {
-	super();
-	setCandidacy(candidacy);
-	Employee employee = AccessControl.getUserView().getPerson().getEmployee();
-	if (employee == null) {
-	    throw new DomainException("person is not an employee");
-	}
-	setEmployee(employee);
+        this(candidacy, AccessControl.getUserView().getPerson());
     }
+
+    public StandByConfirmedDataCandidacySituation(Candidacy candidacy, Person person) {
+	super();
+        init(candidacy, person);
+	}
 
     @Override
     public void checkConditionsToForward() {
@@ -70,4 +70,13 @@ public class StandByConfirmedDataCandidacySituation extends StandByConfirmedData
 
     }
 
+    public Collection<Operation> getOperationsForPerson(Person person) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+    @Override
+    public boolean canExecuteOperationAutomatically() {
+        return false;
+    }
 }

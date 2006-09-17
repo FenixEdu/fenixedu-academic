@@ -129,6 +129,6 @@
         <arg0 key="title.weekly.work.load.other"/>
       </field>
     </form>
-
-  </formset>
+    
+</formset>
 </form-validation>

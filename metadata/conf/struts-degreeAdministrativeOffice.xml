@@ -368,7 +368,7 @@
 		<!-- ****************** View Student Schedule **************************** -->
 		<action path="/viewStudentSchedule"
 		      	type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.ViewStudentScheduleAction">
-			<forward name="sucess" path="/../student/classTimeTable.jsp"/>        	
+			<forward name="sucess" path="/../commons/student/timeTable/classTimeTable.jsp"/>        	
       	</action>
       	
       	
