@@ -398,42 +398,29 @@ public class Person extends Person_Base {
     }
 
     public List<ResultPublication> getResultPublications() {
-	List<ResultPublication> resultPublications = new ArrayList<ResultPublication>();
-	Result result = null;
-	for (ResultParticipation resultParticipation : getResultParticipations()) {
-	    result = resultParticipation.getResult();
-	    // filter only publication participations
-	    if (result instanceof ResultPublication) {
-		resultPublications.add((ResultPublication) result);
-	    }
-	}
-	return resultPublications;
+        List<ResultPublication> resultPublications = new ArrayList<ResultPublication>();
+        Result result = null;
+        for (ResultParticipation resultParticipation : this.getResultParticipations()) {
+            result = resultParticipation.getResult();
+            // filter only publication participations
+            if (result instanceof ResultPublication) {
+                resultPublications.add((ResultPublication) result);
+            }
+        }
+        return resultPublications;
     }
-
-    public List<ResultParticipation> getPersonParticipationsWithPublications() {
-
-	List<ResultParticipation> publicationParticipations = new ArrayList<ResultParticipation>();
-	for (ResultParticipation resultParticipation : getResultParticipations()) {
-	    Result result = resultParticipation.getResult();
-	    // filter only publication authorships
-	    if (result instanceof ResultPublication) {
-		publicationParticipations.add(resultParticipation);
-	    }
-	}
-	return publicationParticipations;
-    }
-
-    public List<ResultParticipation> getPersonParticipationsWithPatents() {
-
-	List<ResultParticipation> patentParticipations = new ArrayList<ResultParticipation>();
-	for (ResultParticipation resultParticipation : getResultParticipations()) {
-	    Result result = resultParticipation.getResult();
-	    // filter only patent authorships
-	    if (result instanceof ResultPatent) {
-		patentParticipations.add(resultParticipation);
-	    }
-	}
-	return patentParticipations;
+    
+    public List<ResultPatent> getResultPatents() {
+	List<ResultPatent> resultPatents = new ArrayList<ResultPatent>();
+        Result result = null;
+        for (ResultParticipation resultParticipation : this.getResultParticipations()) {
+            result = resultParticipation.getResult();
+            // filter only patent participations
+            if (result instanceof ResultPatent) {
+                resultPatents.add((ResultPatent) result);
+            }
+        }
+        return resultPatents;
     }
 
     @Override
