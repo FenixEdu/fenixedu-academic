@@ -27,7 +27,7 @@
 		schema="unavailableShowForCoordinator"
     >
     <fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1a" />
+		<fr:property name="classes" value="tstyle1" />
 		<fr:property name="columnClasses" value=",width100px acenter,width100px acenter,,," />
 		<fr:property name="link(edit)" value="/vigilancy/unavailablePeriodManagement.do?method=editUnavailablePeriodOfVigilant" />
 		<fr:property name="param(edit)" value="idInternal/oid" />

@@ -71,7 +71,7 @@
 
 <fr:view name="vigilants" layout="vigilant-table">
 	<fr:layout>                                
-		<fr:property name="classes" value="tstyle1a" />
+		<fr:property name="classes" value="tstyle1" />
 		<fr:property name="sortBy" value="person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
@@ -97,7 +97,7 @@
 <logic:equal name="bean" property="temporalInformation" value="PAST">
 <fr:view name="vigilants" layout="vigilant-table">
 	<fr:layout>                                
-		<fr:property name="classes" value="tstyle1a" />
+		<fr:property name="classes" value="tstyle1" />
 		<fr:property name="sortBy" value="person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
@@ -123,7 +123,7 @@
 <logic:equal name="bean" property="temporalInformation" value="ALL">
 <fr:view name="vigilants" layout="vigilant-table">
 	<fr:layout>                                
-		<fr:property name="classes" value="tstyle1a" />	
+		<fr:property name="classes" value="tstyle1" />	
 		<fr:property name="sortBy" value="person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
@@ -171,7 +171,7 @@
 <fr:view name="evaluation" property="convokes" schema="<%= bean.getWhatSchemaToUse() %>">
 <fr:layout name="tabular">
 	<fr:property name="sortBy" value="vigilant.person.username"/>
-	<fr:property name="classes" value="tstyle1a tdtop thleft mtop05 mbottom0"/>
+	<fr:property name="classes" value="tstyle1 tdtop thleft mtop05 mbottom0"/>
 </fr:layout>
 </fr:view>
 
@@ -181,7 +181,7 @@
 
 <fr:view name="evaluation" property="convokes" schema="<%= bean.getWhatSchemaToUse() %>">
 <fr:layout name="tabular">
-	<fr:property name="classes" value="tstyle1a tdtop thleft mtop05 mbottom0"/>
+	<fr:property name="classes" value="tstyle1 tdtop thleft mtop05 mbottom0"/>
 	<fr:property name="sortBy" value="vigilant.person.username"/>
 	
 		<fr:property name="link(confirmar)" value="<%= "/vigilancy/convokeManagement.do?method=convokeAttended&bool=true&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>" />
@@ -200,7 +200,7 @@
 <fr:view name="evaluation" property="convokes" schema="<%= bean.getWhatSchemaToUse() %>">
 <fr:layout name="tabular">
 	<fr:property name="sortBy" value="vigilant.person.username"/>
-		<fr:property name="classes" value="tstyle1a tdtop thleft mtop05 mbottom0"/>
+		<fr:property name="classes" value="tstyle1 tdtop thleft mtop05 mbottom0"/>
 		<fr:property name="link(Activar)" value="<%= "/vigilancy/convokeManagement.do?method=convokeActive&bool=true&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>" />
 		<fr:property name="param(Activar)" value="idInternal/oid" />
 		<fr:property name="visibleIf(Activar)" value="notActive" />

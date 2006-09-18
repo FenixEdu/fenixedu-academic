@@ -25,7 +25,7 @@ name="bean" schema="selectUnitInVigilantGroup"/>
 	<p class="mbottom0"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.coordinatorsForUnit"/></strong>:</p>
 <fr:view name="bean" property="selectedUnit.examCoordinators" schema="showExamCoordinators">
 <fr:layout name="tabular">
-	<fr:property name="classes" value="tstyle1a mvert05" />
+	<fr:property name="classes" value="tstyle1 mvert05" />
 	<fr:property name="sortBy" value="executionYear" />
 	<fr:property name="link(apagar)" value="<%= "/vigilancy/examCoordinatorManagement.do?method=deleteExamCoordinator&unitId=" + bean.getSelectedUnit().getIdInternal() + "&deparmentId=" + bean.getSelectedDepartment().getIdInternal() %>"/>
 	<fr:property name="param(apagar)" value="idInternal/oid"/>

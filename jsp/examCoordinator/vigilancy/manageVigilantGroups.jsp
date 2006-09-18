@@ -40,7 +40,7 @@
 <logic:iterate id="vigilantGroup" name="bean" property="vigilantGroups">
 <bean:define id="group" name="vigilantGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup"/>
 
-<table class="tstyle1a tdtop thleft">
+<table class="tstyle1 tdtop thleft">
 <tr>
 	<logic:equal name="bean" property="showVigilantColumn" value="true">
 	<logic:equal name="bean" property="showCourseColumn" value="true">

@@ -32,7 +32,7 @@
 		<fr:property name="sortBy" value="person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
-		<fr:property name="classes" value="tstyle1a mtop05" />
+		<fr:property name="classes" value="tstyle1 mtop05" />
 			<logic:equal name="bean" property="showIncompatibilities" value="true">
 			<logic:equal name="bean" property="showUnavailables" value="true">
 				<fr:property name="vigilantSchema" value="vigilantsWithAllInformation"/>	

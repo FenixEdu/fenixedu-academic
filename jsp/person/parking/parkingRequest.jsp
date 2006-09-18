@@ -15,7 +15,7 @@
 
 	<fr:view name="parkingParty" property="party" schema="viewPersonInfo">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1a thright thlight mtop025" />
+			<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
 		</fr:layout>
 	</fr:view>
 	<logic:empty name="parkingParty" property="parkingRequests">
@@ -69,7 +69,7 @@
 		<fr:view name="parkingParty" property="firstRequest"
 			schema="parkingRequest.driverLicense">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1a thright thlight mtop025" />
+				<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
 			</fr:layout>
 		</fr:view>
 
@@ -78,7 +78,7 @@
 		<fr:view name="parkingParty" property="firstRequest"
 			schema="parkingRequest.firstCar">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1a thright thlight mtop025" />
+				<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
 			</fr:layout>
 		</fr:view>
 
@@ -87,7 +87,7 @@
 		<fr:view name="parkingParty" property="firstRequest"
 			schema="parkingRequest.secondCar">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1a thright thlight mtop025" />
+				<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

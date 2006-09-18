@@ -52,7 +52,7 @@
 	<logic:equal name="bean" property="executionYear.current" value="true">
 	<fr:view name="vigilant" property="convokes" schema="present.convokes" layout="tabular">
 	<fr:layout>
-		<fr:property name="classes" value="tstyle1a mtop05" />
+		<fr:property name="classes" value="tstyle1 mtop05" />
 		<fr:property name="link(confirmar)" value="/vigilancy/vigilantManagement.do?method=vigilantAcceptsConvoke" />
 		<fr:property name="param(confirmar)" value="idInternal/oid" />
 		<fr:property name="visibleIf(confirmar)" value="notConfirmed" />
@@ -62,7 +62,7 @@
 	<logic:equal name="bean" property="executionYear.current" value="false">
 	<fr:view name="vigilant" property="convokes" schema="present.convokes" layout="tabular">
 		<fr:layout>
-		<fr:property name="classes" value="tstyle1a mtop05" />
+		<fr:property name="classes" value="tstyle1 mtop05" />
 		</fr:layout>
 	</fr:view>
 	</logic:equal>
@@ -74,7 +74,7 @@
 	<logic:equal name="vigilant" property="allowedToSpecifyUnavailablePeriod" value="true">
 	<fr:view name="vigilant" property="unavailablePeriods" schema="unavailableShow">
     <fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1a mtop05" />
+		<fr:property name="classes" value="tstyle1 mtop05" />
 		<fr:property name="link(edit)" value="/vigilancy/unavailablePeriodManagement.do?method=editUnavailablePeriod" />
 		<fr:property name="param(edit)" value="idInternal/oid" />
 		<fr:property name="link(delete)" value="/vigilancy/unavailablePeriodManagement.do?method=deleteUnavailablePeriod" />
@@ -87,7 +87,7 @@
 
 <fr:view name="vigilant" property="unavailablePeriods">
     <fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1a mtop05" />
+		<fr:property name="classes" value="tstyle1 mtop05" />
 	</fr:layout>
 	</fr:view>    
 	</logic:equal>
@@ -122,7 +122,7 @@
 
 <fr:view name="bean" property="selectedVigilantGroup.vigilants" layout="vigilant-table">
 	<fr:layout>                                
-		<fr:property name="classes" value="tstyle1a mtop05 acenter" />
+		<fr:property name="classes" value="tstyle1 mtop05 acenter" />
 		<fr:property name="sortBy" value="person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
