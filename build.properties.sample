@@ -307,7 +307,7 @@ enrollment.faq.url=http://fenix-ashes.ist.utl.pt:8080/confluence/display/FAQ/FAQ
 log.profile.dir=/tmp
 log.profile.filename=profileing.log
 log.image.directory=/home/gedl/workspace/fenix-head/build/standalone/ciapl/images/logs
-log4j.email.smtp.host=localhost
+log4j.email.smtp.host=
 log4j.email.smtp.from=Me
 log4j.email.smtp.to=You
 log4j.email.smtp.subject=Hello
@@ -366,9 +366,9 @@ struts.validation.doctype.url=file:///home/gedl/workspace/fenix-head/metadata/dt
 #-----------------------------------------------------------------------------
 cms.mailer.username=xptze
 cms.mailer.password=xptze
-mail.smtp.host=localhost
-mail.smtp.name=localhost
-mailingList.host.name=fenix.ist.utl.pt
+mail.smtp.host=
+mail.smtp.name=
+mailingList.host.name=
 #
 #
 #----------------------------------------------
@@ -431,7 +431,7 @@ cas.serviceUrl.salad21=https://salad21.ist.utl.pt:8443/ciapl/loginCAS.do
 #                            that are allowed to call external email administration
 # email.admin.password: password required to call external email administration
 #
-email.admin.allowed.hosts=127.0.0.1,localhost
+email.admin.allowed.hosts=
 email.admin.password=xPtO!)&#.
 
 
