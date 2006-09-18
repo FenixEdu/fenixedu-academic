@@ -365,13 +365,21 @@ public class SummariesManagementDA extends FenixDispatchAction {
     public ActionForward prepareCreateComplexSummary(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
+	Professorship loggedProfessorship = (Professorship) request
+		.getAttribute("loggedTeacherProfessorship");
+	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
 	String[] selectedLessons = request.getParameterValues("selectedLessonAndDate");
-	if (selectedLessons != null && selectedLessons.length != 0) {
-	    DynaActionForm dynaActionForm = (DynaActionForm) form;
-	    Professorship loggedProfessorship = (Professorship) request
-		    .getAttribute("loggedTeacherProfessorship");
-	    ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
+	if (selectedLessons == null || selectedLessons.length == 0) {
+	    final IViewState summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithSummary");
+	    if (summaryViewState != null) {
+		SummariesManagementBean summaryBean = (SummariesManagementBean) summaryViewState.getMetaObject().getObject();
+		request.setAttribute("nextPossibleLessonsDates", getNextPossibleLessonsAndDates(request, "nextPossibleLessonsDatesBean"));
+		request.setAttribute("summariesManagementBean", summaryBean);		
+		return mapping.findForward("prepareInsertComplexSummary");
+	    }
+	} else if (selectedLessons != null && selectedLessons.length != 0) {
 	    ShiftType shiftType = null;
 	    Shift shift = null;
 	    boolean uniqueType = true;
@@ -394,6 +402,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    SummariesManagementBean bean = new SummariesManagementBean(
 		    SummariesManagementBean.SummaryType.NORMAL_SUMMARY, executionCourse,
 		    loggedProfessorship);
+
 	    if (uniqueType && shift != null) {
 		bean.setShift(shift);
 	    }
