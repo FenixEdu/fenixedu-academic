@@ -83,9 +83,11 @@ public enum RoleType {
     PEDAGOGICAL_COUNCIL("Pedagogical Council"),
     
     CANDIDATE("Candidate"),
-
-    EXAM_COORDINATOR("Exam Coordinator");
     
+    EXAM_COORDINATOR("Exam Coordinator"),
+    
+    PARKING_MANAGER("Parking Manager");
+
     public String getName() {
         return name();    
     }

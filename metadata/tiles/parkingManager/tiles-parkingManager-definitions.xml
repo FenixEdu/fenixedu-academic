@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.parkingManager.masterPage" extends="df.layout.two-column">
+		<put name="title" value="Gestão do Estacionamento"/>
+		<put name="serviceName" value="Gestão do Estacionamento"/>
+		<put name="navLocal" value="/parkingManager/parkingManagerMenu.jsp"/>
+		<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp"/>
+	</definition>
+</tiles-definitions>

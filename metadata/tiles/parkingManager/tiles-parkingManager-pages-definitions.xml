@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="parkingManagerIndex" extends="definition.parkingManager.masterPage">
+	</definition>
+	<definition name="show-parking-requests" extends="definition.parkingManager.masterPage">
+		<put name="body" value="/parkingManager/showParkingRequests.jsp" />
+	</definition>
+	<definition name="show-parking-request" extends="definition.parkingManager.masterPage">
+		<put name="body" value="/parkingManager/showParkingRequest.jsp" />
+	</definition>
+	<definition name="search-parking-party" extends="definition.parkingManager.masterPage">
+		<put name="body" value="/parkingManager/searchParkingParty.jsp" />
+	</definition>
+</tiles-definitions>
