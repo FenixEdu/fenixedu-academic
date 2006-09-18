@@ -5,11 +5,6 @@
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>
-.alignright { text-align: right; }
-.valigntop { vertical-align: top; }
-</style>
-
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
 	<h:form>
@@ -23,7 +18,7 @@
 		<h:outputText styleClass="error" rendered="#{!empty CoordinatorEvaluationsBackingBean.errorMessage}"
 				value="#{bundle[CoordinatorEvaluationsBackingBean.errorMessage]}<br/>" escape="false" />
 
-		<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
+		<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
 			<h:outputText value="#{bundle['label.evaluation.type']}: "/>
 			<h:selectOneMenu value="#{CoordinatorEvaluationsBackingBean.evaluationType}" onchange="this.form.submit()">
 				<f:selectItem itemLabel="" itemValue=""/>
@@ -49,7 +44,7 @@
 			<h:outputText escape="false" value="<input alt='input.evaluationType' id='evaluationType' name='evaluationType' type='hidden' value='#{CoordinatorEvaluationsBackingBean.evaluationType}'/>"/>
 			<h:outputText escape="false" value="<input alt='input.executionCourseID' id='executionCourseID' name='executionCourseID' type='hidden' value='#{CoordinatorEvaluationsBackingBean.executionCourseID}'/>"/>
 
-			<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
+			<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
 				<h:outputText value="#{bundle['label.name']}: "/>
 				<h:inputText alt="#{htmlAltBundle['inputText.description']}" id="name" required="true" maxlength="100" size="20" value="#{CoordinatorEvaluationsBackingBean.description}"/>
 
@@ -86,7 +81,7 @@
 			<h:outputText escape="false" value="<input alt='input.evaluationType' id='evaluationType' name='evaluationType' type='hidden' value='#{CoordinatorEvaluationsBackingBean.evaluationType}'/>"/>
 			<h:outputText escape="false" value="<input alt='input.executionCourseID' id='executionCourseID' name='executionCourseID' type='hidden' value='#{CoordinatorEvaluationsBackingBean.executionCourseID}'/>"/>
 
-			<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
+			<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
 				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.name']}: "/>
 				<h:panelGroup>
 					<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="100" size="20" value="#{CoordinatorEvaluationsBackingBean.name}"/>

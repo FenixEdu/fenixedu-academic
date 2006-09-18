@@ -8,10 +8,7 @@
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>
-.boldFontClass { 
-	font-weight: bold
-}
+<style type="text/css">
 table.style2u {
 	margin-bottom: 1em;
 	border: 2px solid #ccc;
@@ -75,7 +72,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 		<h:outputText value="<div class='infoop' style='width: 30em'>" escape="false" />
 			<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}'/>"/>
 			<h:panelGrid columns="2">
-				<h:outputText value="#{bundle['label.coordinator.selectedExecutionPeriod']}:" styleClass="boldFontClass"/>
+				<h:outputText value="#{bundle['label.coordinator.selectedExecutionPeriod']}:" styleClass="bold"/>
 				<h:outputText value=""/>
 
 				<h:outputText value="#{bundle['property.executionPeriod']}: " escape="false"/>
@@ -120,7 +117,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 
 	</h:form>		
 
-	<h:outputText value="<br/><br/>" escape="false" styleClass="boldFontClass"/>
+	<h:outputText value="<br/><br/>" escape="false" styleClass="bold"/>
 	<f:verbatim>
 		<table class="style2u" width="80%">
 			<tr>			

@@ -1,20 +1,10 @@
-
 <%@ page language="java" %>
-
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<style>
-form {
-margin: 0;
-padding: 0;
-}
-</style>
-
 <logic:present name="infoSiteStudentGroup">
-
 
 <logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 	<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
@@ -24,7 +14,7 @@ padding: 0;
 	
 	<logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 
-	<html:form action="/removeGroupEnrolment" method="get">
+	<html:form action="/removeGroupEnrolment" method="get" style="margin: 0; padding: 0;">
 	
 	<h2><bean:message key="title.RemoveEnrolment"/></h2>
 
@@ -91,7 +81,7 @@ padding: 0;
 			</td>
 			
 			<td>
-				<html:form action="/viewStudentGroupInformation" method="get">
+				<html:form action="/viewStudentGroupInformation" method="get" style="margin: 0; padding: 0;">
 	
 				<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 				</html:cancel>

@@ -5,7 +5,7 @@
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>
+<style type="text/css">
 .tableClass {
 	background: #EBECED;
 	border: 1px solid #ccc;

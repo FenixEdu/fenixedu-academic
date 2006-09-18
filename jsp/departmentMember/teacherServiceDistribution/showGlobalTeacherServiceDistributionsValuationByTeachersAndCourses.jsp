@@ -9,74 +9,6 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<style>
-table.vtsbc {
-margin-bottom: 1em;
-border: 2px solid #aaa;
-text-align: center;
-border-collapse: collapse;
-}
-table.vtsbc th {
-padding: 0.2em 0.2em;
-border: 1px solid #bbb;
-border-bottom: 1px solid #aaa;
-background-color: #cacaca;
-font-weight: bold;
-}
-table.vtsbc td {
-background-color: #eaeaea;
-border: none;
-border: 1px solid #ccc;
-padding: 0.25em 0.5em;
-}
-table.vtsbc td.courses {
-background-color: #f4f4f8;
-width: 300px;
-padding: 0.25em 0.25em;
-text-align: left;
-}
-.center {
-text-align: center;
-}
-
-.right td {
-text-align: right;
-}
-
-.left td {
-text-align: left;
-}
-
-.backwhite {
-text-align: left;
-background-color: #fff;
-}
-.backwhite a {
-/*color: #888;*/
-}
-.backwhite ul {
-margin: 0.3em 0;
-}
-.backwhite ul li {
-padding: 0.2em 0.5em;
-color: #458;
-}
-.backwhite ul li a {
-/*text-decoration: none;*/
-/*border-bottom: 1px solid #ddd;*/
-}
-table.search {
-background-color: #f5f5f5;
-border-collapse: collapse;
-}
-table.search tr td {
-border: 1px solid #fff;
-padding: 0.3em;
-}
-.leftcolumn {
-text-align: right;
-}
-</style>
 
 <jsp:useBean id="globalTeacherServiceDistributionValuationForm" scope="request" class="net.sourceforge.fenixedu.presentationTier.formbeans.teacherServiceDistribution.GlobalTeacherServiceDistributionValuationForm" />
 
@@ -106,7 +38,7 @@ text-align: right;
 </logic:iterate>
 
 <table class='search'>
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td>
 			<b><bean:message key="label.teacherServiceDistribution.semester"/>:</b>
 		</td>
@@ -148,7 +80,7 @@ text-align: right;
 		</th>
 		<logic:iterate name="courseValuationDTOEntryList" id="courseValuationDTOEntry">
 		<bean:define id="courseValuationDTOEntry" name="courseValuationDTOEntry" type="net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.CourseValuationDTOEntry"/>
-		<td align="right">
+		<td class="aright">
 			<%
 				ProfessorshipValuationDTOEntry professorshipValuationDTOEntry = ((ValuationTeacherDTOEntry) valuationTeacherDTOEntry).getProfeshipValuationDTOEntryByCourseValuationDTOEntry((CourseValuationDTOEntry) courseValuationDTOEntry);
 				

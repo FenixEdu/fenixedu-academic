@@ -6,27 +6,18 @@
 		<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <bean:message key="title.login" bundle="GLOBAL_RESOURCES"/></title>
 		<link href="<%= request.getContextPath() %>/CSS/logdotist.css" rel="stylesheet" type="text/css" />
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+	<style type="text/css">
+		table.lp_table1 td { }
+		table.lp_table1 td.lp_leftcol {	width: 12em; }
+		table.lp_table2 { border-top: 1px solid #ccc; padding-top: 0.1em; }
+		table.lp_table2 td.lp_leftcol { width: 12em; }
+	</style>
+
 	</head>
 	<body>
-	<style>
 
-	table.lp_table1 td {
-	}
-	table.lp_table1 td.lp_leftcol {
-	width: 12em;
-	}
-	table.lp_table2 {
-	/*background-color: #dee;*/
-	border-top: 1px solid #ccc;
-	padding-top: 0.1em;
-	}
-	table.lp_table2 td.lp_leftcol {
-	width: 12em;
-	}
-	
-	</style>
-	
-		<div id="container">
+	<div id="container">
 			<div id="dotist_id">
 				<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
 						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>

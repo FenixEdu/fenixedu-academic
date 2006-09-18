@@ -7,16 +7,7 @@
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
-<style>
-.temp1 {
-clear: both;
-}
-.temp1 li span {
-float: left; 
-width: 100px;
-padding-right: 10px;
-}
-</style>	
+
 	<h:outputText value="<em>#{bolonhaBundle['competenceCourse']}</em>" escape="false" />
 	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name} " style="font-weight: bold" escape="false"/>	
 	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.acronym}" value="(#{CompetenceCourseManagement.competenceCourse.acronym})" style="font-weight: bold" escape="false"/>
@@ -183,17 +174,17 @@ padding-right: 10px;
 	</h:panelGroup>	
 	<fc:dataRepeater value="#{CompetenceCourseManagement.mainBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.mainBibliographicReferences}">
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'MAIN'}">
-			<h:outputText value="<ul class='nobullet temp1 mbottom2'>" escape="false"/>					
-			<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
+			<h:outputText value="<ul class='nobullet cboth mbottom2'>" escape="false"/>					
+			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{bolonhaBundle['title']}:</span>" escape="false"/>
 			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
+			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{bolonhaBundle['author']}:</span>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['year']}:</span>" escape="false"/>
+			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{bolonhaBundle['year']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.year}</li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['reference']}:</span>" escape="false"/>
+			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{bolonhaBundle['reference']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
 			
 
@@ -206,17 +197,17 @@ padding-right: 10px;
 	</h:panelGroup>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.secondaryBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.secondaryBibliographicReferences}">
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'SECONDARY'}">
-			<h:outputText value="<ul class='nobullet temp1 mbottom2'>" escape="false"/>					
-			<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
+			<h:outputText value="<ul class='nobullet cboth mbottom2'>" escape="false"/>					
+			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{bolonhaBundle['title']}:</span>" escape="false"/>
 			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
+			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{bolonhaBundle['author']}:</span>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['year']}:</span>" escape="false"/>
+			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{bolonhaBundle['year']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.year}</li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['reference']}:</span>" escape="false"/>
+			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{bolonhaBundle['reference']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
 			
 			<h:outputText value="</ul>" escape="false"/>

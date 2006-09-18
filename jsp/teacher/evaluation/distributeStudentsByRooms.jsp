@@ -6,12 +6,6 @@
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>
-.boldFontClass { 
-	font-weight: bold
-}
-</style>
-
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<h:form>	
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
@@ -21,20 +15,20 @@
 		<h:outputText value="<h2>#{bundle['label.distribute.information']}</h2>" escape="false" />
 
 		<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.evaluationRooms}">
-			<h:outputText value="#{bundle['label.distribute.students']}" styleClass="boldFontClass" />		
+			<h:outputText value="#{bundle['label.distribute.students']}" styleClass="bold" />		
 			<h:selectOneRadio id="distributeEnroledStudentsOption"
 					value="#{evaluationManagementBackingBean.distributeEnroledStudentsOption}" layout="pageDirection" >
 				<f:selectItem itemValue="true" itemLabel="#{bundle['label.distribute.enrolled']} (#{evaluationManagementBackingBean.evaluation.writtenEvaluationEnrolmentsCount})" />
 				<f:selectItem itemValue="false" itemLabel="#{bundle['label.distribute.attend']} (#{evaluationManagementBackingBean.numberOfAttendingStudents})" />
 			</h:selectOneRadio>
 			
-			<h:outputText value="<br/>#{bundle['label.distribute.rooms']}<br/>" styleClass="boldFontClass" escape="false" />
+			<h:outputText value="<br/>#{bundle['label.distribute.rooms']}<br/>" styleClass="bold" escape="false" />
 	
 	
 			
 			<h:dataTable value="#{evaluationManagementBackingBean.evaluationRooms}" var="room">
 				<h:column>
-					<h:outputText value="#{evaluationManagementBackingBean.evaluationRoomsPositions[room.idInternal]}. " styleClass="boldFontClass" />
+					<h:outputText value="#{evaluationManagementBackingBean.evaluationRoomsPositions[room.idInternal]}. " styleClass="bold" />
 				</h:column>
 				<h:column>
 					<h:outputText value="#{bundle['label.lesson.room']} " />

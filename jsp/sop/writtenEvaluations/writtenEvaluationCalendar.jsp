@@ -8,9 +8,9 @@
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
+<style type="text/css">@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
 
-<style>
+<style type="text/css">
 .boldFontClass { 
 	font-weight: bold
 }
@@ -77,8 +77,6 @@ table.executionCoursesWithoutWrittenEvaluations td {
 	border: 1px solid #ddd;
 	text-align: left;
 }
-
-
 </style>
 
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundleSOP"/>

@@ -5,11 +5,6 @@
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>
-.alignright { text-align: right; }
-.valigntop { vertical-align: top; }
-</style>
-
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
 	<h:form>
@@ -32,7 +27,7 @@
 		<h:outputText styleClass="error" rendered="#{!empty CoordinatorEvaluationsBackingBean.errorMessage}"
 				value="#{bundle[CoordinatorEvaluationsBackingBean.errorMessage]}<br/>" escape="false" />
 
-		<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
+		<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
 			<h:outputText value="#{bundle['label.evaluation.type']}: "/>
 			<h:outputText value="#{bundle['label.evaluation.type.writtenTest']}"
 					 rendered="#{CoordinatorEvaluationsBackingBean.evaluationType == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
@@ -45,7 +40,7 @@
 		<h:outputText value="<br/>" escape="false" />
 
 		<h:panelGroup rendered="#{CoordinatorEvaluationsBackingBean.evaluationType == 'net.sourceforge.fenixedu.domain.WrittenTest'}">
-			<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
+			<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
 				<h:outputText value="#{bundle['label.name']}: "/>
 				<h:outputText value="#{CoordinatorEvaluationsBackingBean.description}"/>
 
@@ -61,7 +56,7 @@
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{CoordinatorEvaluationsBackingBean.evaluationType == 'net.sourceforge.fenixedu.domain.Project'}">
-			<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
+			<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
 				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.name']}: "/>
 				<h:outputText value="#{CoordinatorEvaluationsBackingBean.name}"/>
 

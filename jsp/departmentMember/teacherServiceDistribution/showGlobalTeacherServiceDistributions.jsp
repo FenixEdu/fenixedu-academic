@@ -10,58 +10,6 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<style>
-table.vtsbc {
-margin-bottom: 1em;
-border: 2px solid #aaa;
-text-align: center;
-border-collapse: collapse;
-}
-table.vtsbc th {
-padding: 0.2em 0.2em;
-border: 1px solid #bbb;
-border-bottom: 1px solid #aaa;
-background-color: #cacaca;
-font-weight: bold;
-}
-table.vtsbc td {
-background-color: #eaeaea;
-border: none;
-border: 1px solid #ccc;
-padding: 0.25em 0.5em;
-}
-table.vtsbc td.courses {
-background-color: #f4f4f8;
-width: 300px;
-padding: 0.25em 0.25em;
-text-align: left;
-}
-.center {
-text-align: center;
-}
-
-.right td {
-text-align: right;
-}
-
-.left td {
-text-align: left;
-}
-
-table.search {
-background-color: #f5f5f5;
-border-collapse: collapse;
-}
-table.search tr td {
-border: 1px solid #fff;
-padding: 0.3em;
-}
-.leftcolumn {
-text-align: right;
-}
-</style>
-
-
 <h3>
 	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
 		<bean:message key="link.teacherServiceDistribution"/>
@@ -128,17 +76,17 @@ text-align: right;
 		String valuationGroupingProperty = "valuationGrouping(" + ((TeacherServiceDistribution) teacherServiceDistribution).getIdInternal().toString() + ")"; 
 	%>
 	<tr>
-		<td align="left">
+		<td class="aleft">
 			<html:checkbox property="<%= teacherServiceDistributionProperty %>" value="true"/>
 			<bean:write name="teacherServiceDistribution" property="name"/>
 		</td>
-		<td align="left">
+		<td class="aleft">
 			<bean:define name="teacherServiceDistribution" property="orderedPublishedValuationPhases" id="orderedPublishedValuationPhases"/>
 			<html:select property="<%= valuationPhaseProperty %>">
 				<html:options collection="orderedPublishedValuationPhases" property="idInternal" labelProperty="name"/>
 			</html:select>
 		</td>
-		<td align="left">
+		<td class="aleft">
 		
 		<%  request.setAttribute("groupings", ValuationGroupingDTOEntry.getValuationGroupingOptionEntries(((TeacherServiceDistribution)teacherServiceDistribution).getCurrentValuationPhase())); %>
 				

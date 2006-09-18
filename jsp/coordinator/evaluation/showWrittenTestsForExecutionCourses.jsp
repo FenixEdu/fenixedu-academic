@@ -7,10 +7,7 @@
 
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
-<style>
-.boldFontClass { 
-	font-weight: bold
-}
+<style type="text/css">
 table.style2u {
 	margin-bottom: 1em;
 	border: 2px solid #ccc;
@@ -72,7 +69,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 		<h:outputText value="<h2>#{bundle['label.coordinator.manageWrittenTests']}</h2>" escape="false" />		
 		<h:outputText value="<div class='infoop' style='width: 30em'>" escape="false" />		
 		<h:panelGrid columns="2">
-			<h:outputText value="#{bundle['label.coordinator.selectedExecutionPeriod']}:" styleClass="boldFontClass" />
+			<h:outputText value="#{bundle['label.coordinator.selectedExecutionPeriod']}:" styleClass="bold" />
 			<h:outputText value="" />
 			<h:outputText value="#{bundle['property.executionPeriod']}: " escape="false" />
 			<h:selectOneMenu value="#{coordinatorWrittenTestsInformationBackingBean.executionPeriodID}">
@@ -101,7 +98,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 			editLinkPage="editWrittenTest.faces"
 			editLinkParameters="#{coordinatorWrittenTestsInformationBackingBean.writtenTestsCalendarLink}"
 		/>
-		<h:outputText value="<br/><i>#{bundle['label.coordinator.definedWrittenTests']}</i><br/>" escape="false" styleClass="boldFontClass"/>
+		<h:outputText value="<br/><i>#{bundle['label.coordinator.definedWrittenTests']}</i><br/>" escape="false" styleClass="bold"/>
 		<h:panelGroup rendered="#{empty coordinatorWrittenTestsInformationBackingBean.executionCoursesWithWrittenTests}">
 			<h:outputText value="(#{bundle['label.coordinator.noExecutionCoursesWithWrittenTests']})<br/>" escape="false" />
 		</h:panelGroup>
@@ -193,7 +190,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 				</table>		
 			</f:verbatim>
 		</h:panelGroup>		
-		<h:outputText value="<br/><i>#{bundle['label.coordinator.executionCourseWithoutDefinedWrittenTests']}</i><br/>" escape="false" styleClass="boldFontClass"/>
+		<h:outputText value="<br/><i>#{bundle['label.coordinator.executionCourseWithoutDefinedWrittenTests']}</i><br/>" escape="false" styleClass="bold"/>
 		<h:panelGroup rendered="#{empty coordinatorWrittenTestsInformationBackingBean.executionCoursesWithoutWrittenTests}">
 			<h:outputText value="(#{bundle['label.coordinator.noExecutionCoursesWithoutWrittenTests']})<br/>" escape="false" />
 		</h:panelGroup>

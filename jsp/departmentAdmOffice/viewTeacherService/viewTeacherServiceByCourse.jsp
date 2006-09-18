@@ -11,60 +11,6 @@
 <ft:tilesView definition="departmentAdmOffice.masterPage"
 	attributeName="body-inline">
 	
-<style>
-table.vtsbc {
-margin-bottom: 1em;
-border: 2px solid #ccc;
-text-align: center;
-border-collapse: collapse;
-}
-table.vtsbc th {
-padding: 0.2em 0.2em;
-border: 1px solid #ddd;
-border-bottom: 1px solid #ccc;
-background-color: #eaeaea;
-font-weight: normal;
-}
-table.vtsbc td {
-background-color: #fafafa;
-border: none;
-border: 1px solid #eee;
-padding: 0.25em 0.5em;
-}
-table.vtsbc td.courses {
-background-color: #ffe;
-width: 300px;
-padding: 0.25em 0.25em;
-text-align: left;
-}
-.center {
-text-align: center;
-}
-.backwhite {
-text-align: left;
-background-color: #fff;
-}
-
-.backwhite ul {
-margin: 0.3em 0;
-}
-.backwhite ul li {
-padding: 0.2em 0.5em;
-}
-
-table.search {
-background-color: #f5f5f5;
-border-collapse: collapse;
-}
-table.search tr td {
-border: 1px solid #fff;
-padding: 0.3em;
-}
-.leftcolumn {
-text-align: right;
-}
-</style>
-
 	<f:loadBundle basename="resources/DepartmentMemberResources"
 		var="bundle" />
 	<f:loadBundle basename="resources/EnumerationResources"
@@ -77,13 +23,13 @@ text-align: right;
 	<h:form>
 		<h:panelGrid columns="1" styleClass="search">
 			<h:panelGrid columns="3" styleClass="search">
-				<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="leftColumn" />
+				<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="aright" />
 				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionYearID}"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionYearItems}"/>
 				</fc:selectOneMenu>
 				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
-			 	<h:outputText value="#{bundle['label.common.courseSemester']}&nbsp;" escape="false" styleClass="leftColumn" />
+			 	<h:outputText value="#{bundle['label.common.courseSemester']}&nbsp;" escape="false" styleClass="aright" />
 				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionPeriodID}"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionPeriodsItems}"/>
@@ -111,7 +57,7 @@ text-align: right;
 	<h:outputText value="<p /><b>#{bundle['label.teacherService.course.title']}</b><p />" escape="false"/>
 	
 	<h:outputText value="<table class='vtsbc'>" escape="false" />
-		<h:outputText value="<tr class='center'>" escape="false" />
+		<h:outputText value="<tr class='acenter'>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.course.name']}</th>" escape="false" />
 			
 			<h:panelGroup rendered="#{viewTeacherService.viewCourseInformation == true}">

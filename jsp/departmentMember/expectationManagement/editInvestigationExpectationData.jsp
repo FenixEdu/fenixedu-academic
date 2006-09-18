@@ -6,13 +6,6 @@
 <ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>
-	.alignTopRight {
-	vertical-align: top;
-	text-align: right;
-	}
-</style>
-
 	<f:loadBundle basename="resources/DepartmentMemberResources" var="bundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 	
@@ -33,7 +26,7 @@
 		<!-- Investigation Expectations -->
 		<!-- Research And Dev -->
 		<h:outputText value="<h2>#{bundle['label.personalExpectationsManagement.investigation']}</h2>" escape="false" />
-		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell">
+		<h:panelGrid columns="2" columnClasses="aright valigntop infocell,infocell">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.researchAndDevProjects']}" />
 			<h:panelGroup>
 				<h:inputText alt="#{htmlAltBundle['inputText.researchAndDevProjects']}" id="researchAndDevProjects" value="#{teacherExpectationManagement.researchAndDevProjects}" required="true" maxlength="3" size="3" />
@@ -97,7 +90,7 @@
 		<h:outputText value="<br/>" escape="false" />
 								
 		<h:outputText value="<p>#{bundle['label.personalExpectationsManagement.orientation']}</p>" style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
-		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell" >
+		<h:panelGrid columns="2" columnClasses="aright valigntop infocell,infocell" >
 				<h:outputText value="#{bundle['label.personalExpectationsManagement.phdOrientations']}" />
 				<h:panelGroup>
 				<h:inputText alt="#{htmlAltBundle['inputText.phdOrientations']}" id="phdOrientations" value="#{teacherExpectationManagement.phdOrientations}" required="true" maxlength="3" size="3" />
@@ -152,7 +145,7 @@
 		
 		<h:outputText value="<br/>" escape="false" />
 		
-		<h:panelGrid columns="4" columnClasses="alignTopRight infocell">
+		<h:panelGrid columns="4" columnClasses="aright valigntop infocell">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.finalDegreeWorkOrientations']}" />
 			<h:panelGroup>
 			<h:inputText alt="#{htmlAltBundle['inputText.finalDegreeWorkOrientations']}" id="finalDegreeWorkOrientations" value="#{teacherExpectationManagement.finalDegreeWorkOrientations}" required="true" maxlength="3" size="3" />

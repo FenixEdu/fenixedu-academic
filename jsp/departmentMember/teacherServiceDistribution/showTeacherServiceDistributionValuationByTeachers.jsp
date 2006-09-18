@@ -8,71 +8,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-<style>
-table.vtsbc {
-margin-bottom: 1em;
-border: 2px solid #aaa;
-text-align: center;
-border-collapse: collapse;
-}
-table.vtsbc th {
-padding: 0.2em 0.2em;
-border: 1px solid #bbb;
-border-bottom: 1px solid #aaa;
-background-color: #cacaca;
-font-weight: bold;
-}
-table.vtsbc td {
-background-color: #eaeaea;
-border: none;
-border: 1px solid #ccc;
-padding: 0.25em 0.5em;
-}
-table.vtsbc td.courses {
-background-color: #f4f4f8;
-width: 300px;
-padding: 0.25em 0.25em;
-text-align: left;
-}
-table.vtsbc td.green {
-background-color: #ccddcc;
-}
-table.vtsbc td.red {
-background-color: #ffddcc;
-}
-table.vtsbc td.yellow {
-background-color: #ffffdd;
-}
-.right td {
-text-align: right;
-}
-.left td {
-text-align: left;
-}
-.backwhite {
-text-align: left;
-background-color: #fff;
-}
-.backwhite ul {
-margin: 0.3em 0;
-}
-.backwhite ul li {
-padding: 0.2em 0.5em;
-color: #458;
-}
-table.search {
-background-color: #f5f5f5;
-border-collapse: collapse;
-}
-table.search tr td {
-border: 1px solid #fff;
-padding: 0.3em;
-}
-.leftcolumn {
-text-align: right;
-}
-</style>
-
 
 <h3>
 	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
@@ -98,7 +33,7 @@ text-align: right;
 <html:hidden property="viewStudentsEnrolmentsPerShift"/>
 
 <table class='search'>
-	<tr class='left'>
+	<tr class='aleft'>
 		<td>
 			<b><bean:message key="label.teacherServiceDistribution.valuationPhase"/>:</b>
 		</td>
@@ -116,7 +51,7 @@ text-align: right;
 			</html:select>
 		</td>
 	</tr>
-	<tr class='left'>
+	<tr class='aleft'>
 		<td>
 			<b><bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:</b>
 		</td>
@@ -205,32 +140,32 @@ text-align: right;
 		<td>
 			<bean:write name="valuationTeacherDTOEntry" property="category.code"/>
 		</td>
-		<td align='right'>
+		<td class="aright">
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="totalTheoreticalHoursLectured"/></fmt:formatNumber>
 		</td>	
-		<td align='right'>
+		<td class="aright">
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="totalPraticalHoursLectured"/></fmt:formatNumber>		
 		</td>		
-		<td align='right'>
+		<td class="aright">
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="totalTheoPratHoursLectured"/></fmt:formatNumber>
 		</td>
-		<td align='right'>
+		<td class="aright">
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="totalLaboratorialHoursLectured"/></fmt:formatNumber>
 		</td>
-		<td align='right'>
+		<td class="aright">
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="totalHoursLectured"/></fmt:formatNumber>
 		</td>
-		<td align='right'>	
+		<td class="aright">	
 			<bean:write name="valuationTeacherDTOEntry" property="requiredHours"/>
 		</td>
 		<logic:greaterThan name="valuationTeacherDTOEntry" property="availability" value="0.0"> 
-		<td align='right' class="yellow">
+		<td class="aright" class="yellow">
 		</logic:greaterThan>
 		<logic:lessThan  name="valuationTeacherDTOEntry" property="availability" value="0.0"> 
-		<td align='right' class="red">
+		<td class="aright" class="red">
 		</logic:lessThan>
 		<logic:equal name="valuationTeacherDTOEntry" property="availability" value="0.0"> 
-		<td align='right' class="green">
+		<td class="aright" class="green">
 		</logic:equal>
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="availability"/></fmt:formatNumber>
 		</td>

@@ -42,11 +42,6 @@
 </script>
 
 
-<style>
-input { font-size: 11px; }
-</style>
-
-
 <h2><bean:message key="title.student.enrollment.simple" bundle="STUDENT_RESOURCES"/></h2>
 <span class="error0"><html:errors/></span>
 <logic:messagesPresent message="true">

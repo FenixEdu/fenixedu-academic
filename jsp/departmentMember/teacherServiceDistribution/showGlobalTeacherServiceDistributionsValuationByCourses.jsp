@@ -6,72 +6,6 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<style>
-table.vtsbc {
-margin-bottom: 1em;
-border: 2px solid #aaa;
-text-align: center;
-border-collapse: collapse;
-}
-table.vtsbc th {
-padding: 0.2em 0.2em;
-border: 1px solid #bbb;
-border-bottom: 1px solid #aaa;
-background-color: #cacaca;
-font-weight: bold;
-}
-table.vtsbc td {
-background-color: #eaeaea;
-border: none;
-border: 1px solid #ccc;
-padding: 0.25em 0.5em;
-}
-table.vtsbc td.courses {
-background-color: #f4f4f8;
-width: 300px;
-padding: 0.25em 0.25em;
-text-align: left;
-}
-.center {
-text-align: center;
-}
-
-.right td {
-text-align: right;
-}
-
-.left td {
-text-align: left;
-}
-
-.backwhite {
-text-align: left;
-background-color: #fff;
-}
-.backwhite a {
-/*color: #888;*/
-}
-.backwhite ul {
-margin: 0.3em 0;
-}
-.backwhite ul li {
-padding: 0.2em 0.5em;
-color: #458;
-}
-
-table.search {
-background-color: #f5f5f5;
-border-collapse: collapse;
-}
-table.search tr td {
-border: 1px solid #fff;
-padding: 0.3em;
-}
-.leftcolumn {
-text-align: right;
-}
-</style>
-
 <jsp:useBean id="globalTeacherServiceDistributionValuationForm" scope="request" class="net.sourceforge.fenixedu.presentationTier.formbeans.teacherServiceDistribution.GlobalTeacherServiceDistributionValuationForm" />
 
 <h3>
@@ -214,7 +148,7 @@ text-align: right;
 	</tr>
 <logic:iterate name="courseValuationDTOEntryList" id="courseValuationDTOEntry">
 	<bean:define id="courseValuationId" name="courseValuationDTOEntry" property="courseValuation.idInternal"/>
-	<tr class='center' id=<%= courseValuationId %>>
+	<tr class='acenter' id=<%= courseValuationId %>>
 		<td class='courses'>
 				<bean:write name="courseValuationDTOEntry" property="courseValuation.name"/>
 		</td>
@@ -231,7 +165,7 @@ text-align: right;
 					<td align='left'>
 						<bean:write name="curricularCourseInformation" property="key"/>
 					</td>
-					<td width='5%' align='right'>
+					<td width='5%' class="aright">
 						<logic:iterate name="curricularCourseInformation" property="value" id="curricularYear">
 							<bean:write name="curricularYear"/>º&nbsp;
 						</logic:iterate>
@@ -242,57 +176,57 @@ text-align: right;
 		</td>
 </logic:equal>
 <logic:equal name="globalTeacherServiceDistributionValuationForm" property="viewStudentsEnrolments" value="true">					
-		<td align='right'>
+		<td class="aright">
 			<bean:write name="courseValuationDTOEntry" property="courseValuation.firstTimeEnrolledStudents"/>
 		</td>
-		<td align='right'>
+		<td class="aright">
 			<bean:write name="courseValuationDTOEntry" property="courseValuation.secondTimeEnrolledStudents"/>
 		</td>
 </logic:equal>		
-		<td align='right'>
+		<td class="aright">
 			<bean:write name="courseValuationDTOEntry" property="courseValuation.totalEnrolledStudents"/>		
 		</td>
 <logic:equal name="globalTeacherServiceDistributionValuationForm" property="viewShiftHours" value="true">								
-		<td align='right'>
+		<td class="aright">
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
 				<bean:write name="courseValuationDTOEntry" property="courseValuation.theoreticalHours"/>
 			</fmt:formatNumber>
 		</td>
-		<td align='right'>
+		<td class="aright">
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="courseValuationDTOEntry" property="courseValuation.praticalHours"/></fmt:formatNumber>
 		</td>
-		<td align='right'>
+		<td class="aright">
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="courseValuationDTOEntry" property="courseValuation.theoPratHours"/></fmt:formatNumber>
 		</td>
-		<td align='right'>
+		<td class="aright">
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="courseValuationDTOEntry" property="courseValuation.laboratorialHours"/></fmt:formatNumber>
 		</td>
 </logic:equal>
-		<td align='right'>
+		<td class="aright">
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="courseValuationDTOEntry" property="courseValuation.totalHours"/></fmt:formatNumber>
 		</td>
 		<logic:greaterThan name="courseValuationDTOEntry" property="courseValuation.totalHoursNotLectured" value="0.0"> 
-		<td align='right' class="yellow">
+		<td class="aright" class="yellow">
 		</logic:greaterThan>
 		<logic:lessThan  name="courseValuationDTOEntry" property="courseValuation.totalHoursNotLectured" value="0.0"> 
-		<td align='right' class="red">
+		<td class="aright" class="red">
 		</logic:lessThan>
 		<logic:equal name="courseValuationDTOEntry" property="courseValuation.totalHoursNotLectured" value="0.0"> 
-		<td align='right' class="green">
+		<td class="aright" class="green">
 		</logic:equal>
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="courseValuationDTOEntry" property="courseValuation.totalHoursNotLectured"/></fmt:formatNumber>
 		</td>
 <logic:equal name="globalTeacherServiceDistributionValuationForm" property="viewStudentsEnrolmentsPerShift" value="true">		
-		<td align='right'>
+		<td class="aright">
 			<bean:write name="courseValuationDTOEntry" property="courseValuation.studentsPerTheoreticalShift"/>
 		</td>
-		<td align='right'>
+		<td class="aright">
 			<bean:write name="courseValuationDTOEntry" property="courseValuation.studentsPerPraticalShift"/>
 		</td>
-		<td align='right'>
+		<td class="aright">
 			<bean:write name="courseValuationDTOEntry" property="courseValuation.studentsPerTheoPratShift"/>
 		</td>
-		<td align='right'>
+		<td class="aright">
 			<bean:write name="courseValuationDTOEntry" property="courseValuation.studentsPerLaboratorialShift"/>
 		</td>
 </logic:equal>

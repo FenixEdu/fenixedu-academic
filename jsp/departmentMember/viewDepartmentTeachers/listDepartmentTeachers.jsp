@@ -11,22 +11,6 @@
 	<f:loadBundle basename="resources/EnumerationResources"
 		var="bundleEnumeration" />
 		
-	<f:verbatim>
-		<style>
-		table.search {
-		background-color: #f5f5f5;
-		border-collapse: collapse;
-		}
-		table.search tr td {
-		border: 1px solid #fff;
-		padding: 0.3em;
-		}
-		.leftcolumn {
-		text-align: right;
-		}
-		</style>
-	</f:verbatim>
-	
 	<h:form>
 	
 		<h:outputText value="<h2>#{bundle['label.teacher.list.title']}</h2>" escape="false" />
@@ -35,7 +19,7 @@
 
 	
 		<h:panelGrid columns="2" styleClass="search">
-			<h:outputText value="#{bundle['label.common.executionYear']}:" styleClass="leftColumn"/>
+			<h:outputText value="#{bundle['label.common.executionYear']}:" styleClass="aright"/>
 			<fc:selectOneMenu id="dropDownListExecutionYearID" value="#{viewDepartmentTeachers.selectedExecutionYearID}" valueChangeListener="#{viewDepartmentTeachers.onSelectedExecutionYearChanged}" onchange="this.form.submit();">
 				<f:selectItems value="#{viewDepartmentTeachers.executionYears}" />
 			</fc:selectOneMenu>

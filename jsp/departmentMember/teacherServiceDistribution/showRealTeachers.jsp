@@ -5,29 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
-<style>
-table.vtsbc {
-margin-bottom: 1em;
-border: 2px solid #aaa;
-text-align: center;
-border-collapse: collapse;
-}
-table.vtsbc th {
-padding: 0.2em 0.2em;
-border: 1px solid #bbb;
-border-bottom: 1px solid #aaa;
-background-color: #cacaca;
-font-weight: bold;
-}
-table.vtsbc td {
-background-color: #eaeaea;
-border: none;
-border: 1px solid #ccc;
-padding: 0.25em 0.5em;
-}
-
-</style>
-
 <h3>
 	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
 		<bean:message key="link.teacherServiceDistribution"/>

@@ -6,10 +6,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <logic:present name="infoGroupPropertiesList">
+
 <style>
 td.listClasses p { margin: 6px 0; padding: 0; }
-#legend { margin-top: 2em; }
-#legend p { margin: 0; padding: 0; }
 </style>
 
 
@@ -66,22 +65,22 @@ td.listClasses p { margin: 6px 0; padding: 0; }
                      <td class="listClasses" >
                 	 
                 	 <logic:notEmpty name="infoGroupProperties" property="maximumCapacity">
-                	 <p> <abbr title="<bean:message key="label.projectTable.MaximumCapacity.title" />"><bean:message key="label.student.viewExecutionCourseProjects.MaximumCapacity"/></abbr>: <bean:write name="infoGroupProperties" property="maximumCapacity"/> <bean:message key="label.students.lowercase" /></p>
+                	 <p style="margin: 6px 0; padding: 0;"> <abbr title="<bean:message key="label.projectTable.MaximumCapacity.title" />"><bean:message key="label.student.viewExecutionCourseProjects.MaximumCapacity"/></abbr>: <bean:write name="infoGroupProperties" property="maximumCapacity"/> <bean:message key="label.students.lowercase" /></p>
                 	 </logic:notEmpty>
                 	 
                 	 <logic:notEmpty name="infoGroupProperties" property="idealCapacity">
-                	 <p> <abbr title="<bean:message key="label.projectTable.IdealCapacity.title" />"> <bean:message key="label.student.viewExecutionCourseProjects.IdealCapacity"/></abbr>: <bean:write name="infoGroupProperties" property="idealCapacity"/> <bean:message key="label.students.lowercase" /></p>
+                	 <p style="margin: 6px 0; padding: 0;"> <abbr title="<bean:message key="label.projectTable.IdealCapacity.title" />"> <bean:message key="label.student.viewExecutionCourseProjects.IdealCapacity"/></abbr>: <bean:write name="infoGroupProperties" property="idealCapacity"/> <bean:message key="label.students.lowercase" /></p>
                 	 </logic:notEmpty>
                 	 
                 	 <logic:notEmpty name="infoGroupProperties" property="minimumCapacity">
-                	 <p> <abbr title="<bean:message key="label.projectTable.MinimumCapacity.title" />"> <bean:message key="label.student.viewExecutionCourseProjects.MinimumCapacity"/></abbr>: <bean:write name="infoGroupProperties" property="minimumCapacity"/> <bean:message key="label.students.lowercase" /></p>
+                	 <p style="margin: 6px 0; padding: 0;"> <abbr title="<bean:message key="label.projectTable.MinimumCapacity.title" />"> <bean:message key="label.student.viewExecutionCourseProjects.MinimumCapacity"/></abbr>: <bean:write name="infoGroupProperties" property="minimumCapacity"/> <bean:message key="label.students.lowercase" /></p>
                 	 </logic:notEmpty>
                 	 
                 	 <logic:notEmpty name="infoGroupProperties" property="groupMaximumNumber">
-                	 <p> <abbr title="<bean:message key="label.projectTable.GroupMaximumNumber.title" />"> <bean:message key="label.student.viewExecutionCourseProjects.GroupMaximumNumber"/></abbr>: <bean:write name="infoGroupProperties" property="groupMaximumNumber"/></p>
+                	 <p style="margin: 6px 0; padding: 0;"> <abbr title="<bean:message key="label.projectTable.GroupMaximumNumber.title" />"> <bean:message key="label.student.viewExecutionCourseProjects.GroupMaximumNumber"/></abbr>: <bean:write name="infoGroupProperties" property="groupMaximumNumber"/></p>
                    	 </logic:notEmpty>
                    	 
-                   	 <p><b><bean:message key="label.student.viewExecutionCourseProjects.GroupEnrolmentPolicy"/>:</b>
+                   	 <p style="margin: 6px 0; padding: 0;"><b><bean:message key="label.student.viewExecutionCourseProjects.GroupEnrolmentPolicy"/>:</b>
                    	 <%if((((net.sourceforge.fenixedu.dataTransferObject.InfoGrouping) infoGroupProperties).getEnrolmentPolicy()).getType().intValue()==1){%>
                    	 <bean:message key="label.atomic"/>
                    	 <%}else{%>
@@ -107,13 +106,13 @@ td.listClasses p { margin: 6px 0; padding: 0; }
 
             </logic:iterate>
 </table>
-<div id="legend">
-	<p><strong><bean:message key="label.projectTable.properties"/>:</strong></p>
-	<p><em><bean:message key="label.student.viewExecutionCourseProjects.MaximumCapacity"/></em> - <bean:message key="label.projectTable.MaximumCapacity.title" /></p>
-	<p><em><bean:message key="label.student.viewExecutionCourseProjects.IdealCapacity"/></em> - <bean:message key="label.projectTable.IdealCapacity.title" /></p>
-	<p><em><bean:message key="label.student.viewExecutionCourseProjects.MinimumCapacity"/></em> - <bean:message key="label.projectTable.MinimumCapacity.title" /></p>
-	<p><em><bean:message key="label.student.viewExecutionCourseProjects.GroupMaximumNumber"/></em> - <bean:message key="label.projectTable.GroupMaximumNumber.title" /></p>
-	<p><em><bean:message key="label.student.viewExecutionCourseProjects.GroupEnrolmentPolicy"/></em> - <bean:message key="label.projectTable.GroupEnrolmentPolicy.title" /></p>
+<div id="legend" style="margin-top: 2em;">
+	<p style="margin: 0; padding: 0;"><strong><bean:message key="label.projectTable.properties"/>:</strong></p>
+	<p style="margin: 0; padding: 0;"><em><bean:message key="label.student.viewExecutionCourseProjects.MaximumCapacity"/></em> - <bean:message key="label.projectTable.MaximumCapacity.title" /></p>
+	<p style="margin: 0; padding: 0;"><em><bean:message key="label.student.viewExecutionCourseProjects.IdealCapacity"/></em> - <bean:message key="label.projectTable.IdealCapacity.title" /></p>
+	<p style="margin: 0; padding: 0;"><em><bean:message key="label.student.viewExecutionCourseProjects.MinimumCapacity"/></em> - <bean:message key="label.projectTable.MinimumCapacity.title" /></p>
+	<p style="margin: 0; padding: 0;"><em><bean:message key="label.student.viewExecutionCourseProjects.GroupMaximumNumber"/></em> - <bean:message key="label.projectTable.GroupMaximumNumber.title" /></p>
+	<p style="margin: 0; padding: 0;"><em><bean:message key="label.student.viewExecutionCourseProjects.GroupEnrolmentPolicy"/></em> - <bean:message key="label.projectTable.GroupEnrolmentPolicy.title" /></p>
 </div>
 
 <br />

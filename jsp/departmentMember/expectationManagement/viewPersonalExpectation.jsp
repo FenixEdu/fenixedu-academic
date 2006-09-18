@@ -9,27 +9,6 @@
 	<f:loadBundle basename="resources/DepartmentMemberResources" var="bundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 	
-	<f:verbatim>
-		<style>
-			.header {
-			background-color: #eee;
-			padding: 0.5em;
-			font-size: 1.4em;
-			}
-			.block {
-			padding: 0 0.5em;
-			}
-			.indent {
-			padding: 0 2em;
-			}
-			.limbottom li {
-			padding-bottom: 8px;			
-			
-			}
-		</style>
-		
-	</f:verbatim>
-		
 	<h:outputText value="<h2 class=\"invisible\">#{bundle['label.personalExpectationsManagement.title']}</h2>" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 
 	<h:form>
@@ -56,7 +35,7 @@
 		</h:panelGrid>
 		<h:panelGroup rendered="#{!teacherExpectationManagement.needsToCreateExpectation}">
 			<!-- Education Expectations -->
-			<h:outputText value="<p class='header'><strong>#{bundle['label.personalExpectationsManagement.education']}</strong></p>" escape="false" />
+			<h:outputText value="<p style='background-color: #eee; padding: 0.5em; font-size: 1.4em;'><strong>#{bundle['label.personalExpectationsManagement.education']}</strong></p>" escape="false" />
 			
 			<!-- Graduations -->
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.graduations']}" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
@@ -132,7 +111,7 @@
 					
 			<!-- Investigation Expectations -->
 			<!-- Investigation -->
-			<h:outputText value="<p class='header'><strong>#{bundle['label.personalExpectationsManagement.investigation']}</strong></p>" escape="false" />
+			<h:outputText value="<p style='background-color: #eee; padding: 0.5em; font-size: 1.4em;'><strong>#{bundle['label.personalExpectationsManagement.investigation']}</strong></p>" escape="false" />
 			<h:outputText value="<ul>" escape="false" />
 				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.researchAndDevProjects']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.researchAndDevProjects}</li>" escape="false" />
 				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.jornalArticlePublications']}</i>&nbsp;&nbsp;&nbsp;#{teacherExpectationManagement.jornalArticlePublications}</li>" escape="false" />								
@@ -173,8 +152,8 @@
 			<h:outputText value="<br/>" escape="false" />
 			
 			<!-- University Service Expectations -->
-			<h:outputText value="<p class='header'><strong>#{bundle['label.personalExpectationsManagement.universityService']}</strong></p>" escape="false" />
-			<h:outputText value="<ul class=\"limbottom\">" escape="false" />
+			<h:outputText value="<p style='background-color: #eee; padding: 0.5em; font-size: 1.4em;'><strong>#{bundle['label.personalExpectationsManagement.universityService']}</strong></p>" escape="false" />
+			<h:outputText value="<ul class=\"pbottom075\">" escape="false" />
 				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.departmentOrgans']}</i><br/>#{teacherExpectationManagement.departmentOrgans}</li>" escape="false" />
 				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.istOrgans']}</i><br/>#{teacherExpectationManagement.istOrgans}</li>" escape="false" />
 				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.utlOrgans']}</i><br/>#{teacherExpectationManagement.utlOrgans}</li>" escape="false"/>
@@ -195,8 +174,8 @@
 			<h:outputText value="<br/>" escape="false" />
 			
 			<!-- Professional Activity Expectations -->
-			<h:outputText value="<p class='header'><strong>#{bundle['label.personalExpectationsManagement.professionalActivity']}</strong></p>" escape="false" />
-			<h:outputText value="<ul class=\"limbottom\">" escape="false" />
+			<h:outputText value="<p style='background-color: #eee; padding: 0.5em; font-size: 1.4em;'><strong>#{bundle['label.personalExpectationsManagement.professionalActivity']}</strong></p>" escape="false" />
+			<h:outputText value="<ul class=\"pbottom075\">" escape="false" />
 				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.cientificComunityService']}</i><br/>#{teacherExpectationManagement.cientificComunityService}</li>" escape="false" />
 				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.societyService']}</i><br/>#{teacherExpectationManagement.societyService}</li>" escape="false" />
 				<h:outputText value="<li><i>#{bundle['label.personalExpectationsManagement.consulting']}</i><br/>#{teacherExpectationManagement.consulting}</li>" escape="false" />

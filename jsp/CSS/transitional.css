@@ -53,15 +53,6 @@ ul.list3 { }
 ul.list3 li { padding-left: 12px; background: url(../images/transitional/bullet08.gif) left no-repeat; }
 ul.list4 li { padding: 0.25em 0; }
 
-ul.liinline {
-margin: 0;
-padding: 0;
-}
-ul.liinline li {
-display: inline;
-margin: 0;
-padding: 0 0.25em;
-}
 
 /* ----------------------
  ---- Tables -----------
@@ -77,15 +68,14 @@ border-collapse: collapse;
 margin: 1em 0;
 }
 
-/* -------------------- */
-/* GENERAL TABLE CLASSES*/
+
+/* --------------------- */
+/* General table classes */
 
 /* vertical aligment */
 table.thtop th { vertical-align: top; }
 table.tdtop td { vertical-align: top; }
-.vamiddle { vertical-align: middle; }
-.vamiddle th { vertical-align: middle; }
-.vamiddle td { vertical-align: middle; }
+table.vamiddle td, table.vamiddle th { vertical-align: middle; }
 
 /* font-weight */
 table.thlight th { font-weight: normal; }
@@ -94,37 +84,34 @@ table.thbold th { font-weight: bold; }
 /* text-align */
 table.taleft th, table.taleft td { text-align: left; }
 table.taright th, table.taright td { text-align: right; }
+table.tacenter th, table.tacenter td { text-align: center; }
 table.thleft th { text-align: left; }
 table.thright th { text-align: right; }
 table.thcenter th { text-align: center; }
-table.tdleft td { text-align: left; }
-table.tdright td { text-align: right; }
-table.tdcenter td { text-align: right; }
+.tdleft td { text-align: left; }
+.tdright td { text-align: right; } /* take table from all, to work with tr ? */
+.tdcenter td { text-align: right; }
 
+	/* delete? */
 table .aleft  { text-align: left; }
 table .aright  { text-align: right; }
-
-/* th width */
-table.th14 th { width: 14em; }
-
-/* borders */ 
-table.noborder { padding-left: 1em; padding-bottom: 1em; }
-table.noborder tr td { border: none; }
-table.noborder tr td { padding: 0; margin: 0; }
-
-		/* todo: separar noborder de nobackground */
-.tstylenone { border: none; background: none; }
-.tstylenone th { border: none; background: none; }
-.tstylenone td { border: none; background: none; }
 
 /* paddings */
 .tpadding01 th, .tpadding01 td {
 padding: 0.5em 0.1em;
 }
+/* nostyle */
+.tstylenone th, .tstylenone td {
+border: none;
+background: none;
+}
+
+.emphasis1 th { background: #ffc; }
+.emphasis2 th { font-weight: bold; }
 
 
 /* -------------------- */
-/* GENERAL CELL CLASSES */
+/* General cell classes */
 
 /* corners */
 table th.cornerleft { background: none; border-left: none; border-top: none; }
@@ -132,7 +119,7 @@ table td.cornerright { }
 
 
 /* ------------------------- */
-/* TABLE CLASSES DEFENITIONS */
+/* Table classes definitions */
 
 /* table classes - general properties */
 .tstyle1 { }
@@ -150,19 +137,12 @@ padding: 5px;
 text-align: center;
 }
 
-.tstyle1 th { border: 1px solid #ccc; }
-.tstyle2 th { border: none; border-bottom: 1px solid #ccc; }
-.tstyle3 th { padding: 5px 10px; border: 1px solid #ccc; }
-.tstyle4 th { border: 1px solid #ccc; }
-.tstyle5 th { padding: 3px; border: 1px solid #fff; vertical-align: top; }
-.tstyle7 th { border: 1px solid #eee; }
-
-.tstyle1 th { background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x; }
-.tstyle3 th { background: #eee; }
-.tstyle2 th { background: #f5f5f5 /*url(../../pics/back_32gray.gif) left bottom repeat-x*/; }
-.tstyle4 th { background: #eee; }
-.tstyle5 th { background: #f5f5f5; }
-.tstyle7 th { background: #eee; }
+.tstyle1 th { border: 1px solid #ccc; background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x;}
+.tstyle2 th { border: none; border-bottom: 1px solid #ccc; background: #f5f5f5 /*url(../../pics/back_32gray.gif) left bottom repeat-x*/; }
+.tstyle3 th { padding: 5px 10px; border: 1px solid #ccc; background: #eee; }
+.tstyle4 th { border: 1px solid #ccc; background: #eee; }
+.tstyle5 th { padding: 3px; border: 1px solid #fff; vertical-align: top; background: #f5f5f5; }
+.tstyle7 th { border: 1px solid #eee; background: #eee; }
 
 
 /* table classes - td properties */
@@ -179,11 +159,11 @@ padding: 5px; /*padding em "em" dá problemas de rendering no firefox, faz arredo
 .tstyle7 td { border: 1px solid #eee; background: #eee; }
 
 
-/* ---- */
-/* MISC */
+/* ------------ */
+/* Miscelaneous */
 
 .leftcol { text-align: right; vertical-align: top; }
-td.tdclear {
+td.tdclear {  /* used in renderers column dedicated to feedback messages*/
 border-right: none;
 border-bottom: none;
 border-top: none;
@@ -192,6 +172,7 @@ background: none;
 
 table.mtop05 { margin-top: 0.5em; }
 table.smallmargin td { padding: 0.25em; }
+	/* não funcionava com indent ou padding normal? testar*/
 td.pleft1 { padding-left: 1em; }
 td.pleft2 { padding-left: 2em; }
 td.pleft3 { padding-left: 3em; }
@@ -200,51 +181,26 @@ td.pleft5 { padding-left: 5em; }
 td.pleft6 { padding-left: 6em; }
 
 
-/* FICHAS */ /* to remove later? */
-tr.bordernone td { border: none; }
-tr.rowbg1 td { background-color: #fafaf6; }
-tr.rowbg2 td { background-color: #f5f5ea; }
-tr.rowbg3 td, tr.rowbg3 th { background-color: #fff; }
-.thleft th { text-align: left;}
-.thright th { text-align: right;}
-.emphasis1 th { background: #ffc; }
-.emphasis2 th { font-weight: bold; }
-tr.blackheader1 th {
-background: none;
-background-color: #000;
-color: #fff;
-border: none;
-padding: 0.5em 1em;
-font-weight: normal;
-}
-
 /* ----------------------
  ---- Show Info --------
 ----------------------- */
 
-.showinfo1, .showinfo3 {
+.showinfo1 {
 border-collapse: collapse;
 margin: 1em 0;
 }
-.showinfo1 th, .showinfo3 th {
+.showinfo1 th {
 vertical-align: top;
 padding: 0.5em;
 font-weight: normal;
 }
 
-.showinfo1 td, .showinfo3 td {
+.showinfo1 td {
 padding: 0.5em;
 }
 
 .showinfo1 th { border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; }
 .showinfo1 td { border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; }
-.showinfo3 th { border-bottom: 1px solid #ccc; }
-.showinfo3 td { border-bottom: 1px solid #eee; }
-
-.thleft th { text-align: left;}
-.thright th { text-align: right;}
-.emphasis1 th { background: #ffc; }
-.emphasis2 th { font-weight: bold; }
 
 .showinfo2 {
 background-color: #f5f5f5;
@@ -256,22 +212,6 @@ border: 1px solid #fff;
 padding: 0.3em;
 }
 
-.sfloat {
-padding: 0.5em;
-background-color: #eee;
-}
-
-.sfloat label {
-float: left;
-text-align: right;
-width: 10em;
-display: block;
-padding-right: 0.5em;
-}
-.sfloat span{
-margin-left: 11em;
-display: block;
-}
 
 /* ----------------------
  ---- Tree -------------
@@ -378,15 +318,25 @@ padding-right: 0.5em;
 .noindent { margin-left: 0; padding-left: 0; }
 .attention { background-color: #ffa; padding: 0 0.25em; }
 .attention2 { background-color: #ffa; color: #d60; }
-.fright { float: right; }
-.valigntop { vertical-align: top; }
 .underline1 { border-bottom: 2px solid #ec8; padding-bottom: 0.1em; }
+
+/* vertical alignment */
+.valigntop { vertical-align: top; }
+
+/* floats */
+.fright { float: right; }
+.fleft { float: left; }
+
+/* clear */
+.cboth { clear: both; }
 
 /* paddings */
 .pbottom05 { padding-bottom: 0.5em; }
+.pbottom075 { padding-bottom: 0.75em; }
 .pbottom1 { padding-bottom: 1em; }
 .pbottom2 { padding-bottom: 2em; }
 .pbottom3 { padding-bottom: 3em; }
+.pvert0 { padding-top: 0; padding-bottom: 0; }
 .pleft1 { padding-left: 1em; }
 .pleft2 { padding-left: 2em; }
 .nomargin { margin: 0; }
@@ -432,10 +382,16 @@ padding-right: 0.5em;
 ul.indent0 { margin-left: 0; padding-left: 0; }
 
 /* with's */
+.wauto { width: auto; }
 .width100 { width: 100%; }
 .width8em { width: 8em; } /*used in forums*/
 .width10em { width: 10em; }
+<<<<<<< transitional.css
+.width14em { width: 14em; }
 .width30em { width: 30em; }
+=======
+.width30em { width: 30em; }
+>>>>>>> 1.50
 .width100px { width: 100px; }
 .width250px { width: 250px; }
 
@@ -862,11 +818,143 @@ list-style: none;
 }
 
 
+table.nospace label { width: auto; }
+
+.solidBorderClass {
+	border-style: solid;
+	border-width: 1px;
+}
+.solidBorderClass2 {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #CCCCCC;
+}
+
 /* Vigilância */
 .mvert15 { margin-top: 1.5em; margin-bottom: 1.5em; }
 .greytxt1 { color: #777; }
 .greytxt2 { color: #777; }
 
+td.noborder { border: none; }
+
+
+<<<<<<< transitional.css
+table.vtsbc {
+margin-bottom: 1em;
+border: 2px solid #ccc;
+text-align: center;
+border-collapse: collapse;
+}
+table.vtsbc th {
+padding: 0.2em 0.2em;
+border: 1px solid #ddd;
+border-bottom: 1px solid #ccc;
+background-color: #eaeaea;
+font-weight: normal;
+}
+table.vtsbc td {
+background-color: #fafafa;
+border: none;
+border: 1px solid #eee;
+padding: 0.25em 0.5em;
+}
+table.vtsbc td.courses {
+background-color: #ffe;
+width: 300px;
+padding: 0.25em 0.25em;
+text-align: center;
+}
+table.vtsbc td.error {
+color: red; 
+padding: 0.25em 0.25em;
+}
+table.vtsbc td.green { background-color: #ccddcc; }
+table.vtsbc td.red { background-color: #ffddcc; }
+table.vtsbc td.yellow { background-color: #ffffdd; }
+
+.backwhite {
+text-align: left;
+background-color: #fff;
+}
+.backwhite ul {
+margin: 0.3em 0;
+}
+.backwhite ul li {
+padding: 0.2em 0.5em;
+}
+.backwhite ul li a {
+text-decoration: none;
+border-bottom: 1px solid #ddd;
+}
+
+table.search {
+background-color: #f5f5f5;
+border-collapse: collapse;
+}
+table.search tr td {
+border: 1px solid #fff;
+padding: 0.3em;
+}
+input.btn{
+color:#005;
+font-family:'trebuchet ms',helvetica,sans-serif;
+font-size:74%;
+font-weight:normal;
+background-color:#eaeaea;
+border:1px solid;
+}
+
+/**********************************************
+	 unused ? delete ?
+***********************************************/
+
+/* lists */
+ul.liinline {
+margin: 0;
+padding: 0;
+}
+ul.liinline li {
+display: inline;
+margin: 0;
+padding: 0 0.25em;
+}
+
+/* showinfo */
+.sfloat {
+padding: 0.5em;
+background-color: #eee;
+}
+
+.sfloat label {
+float: left;
+text-align: right;
+width: 10em;
+display: block;
+padding-right: 0.5em;
+}
+.sfloat span{
+margin-left: 11em;
+display: block;
+}
+
+
+/* Fichas */ /* to remove later? */
+tr.bordernone td { border: none; }
+tr.rowbg1 td { background-color: #fafaf6; }
+tr.rowbg2 td { background-color: #f5f5ea; }
+tr.rowbg3 td, tr.rowbg3 th { background-color: #fff; }
+.thleft th { text-align: left;}
+.thright th { text-align: right;}
+.emphasis1 th { background: #ffc; }
+.emphasis2 th { font-weight: bold; }
+tr.blackheader1 th {
+background: none;
+background-color: #000;
+color: #fff;
+border: none;
+padding: 0.5em 1em;
+font-weight: normal;
+}
 
 td.noborder {
 border: none;
@@ -874,3 +962,4 @@ border: none;
 
 .tstylepark th { width: 8em; }
 .tstylepark td { width: 29em; }
+

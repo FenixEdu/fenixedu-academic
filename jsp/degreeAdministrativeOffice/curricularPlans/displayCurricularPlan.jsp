@@ -5,7 +5,6 @@
 <ft:tilesView definition="definition.degreeAdministrativeOffice.masterPage" attributeName="body-inline">
 
 <style type="text/css">
-.boldFontClass { font-weight: bold }
 .bluecell { background: #EDF3FE; width: 100% }
 .lightBluecell { background: #F9F9FF; width: 100% }
 .white { background: #FFFFFF; width: 100% }
@@ -21,9 +20,6 @@
 	border-color: #909090;
 	width: 100%	
 }
-.fullWidthClass {
-	width: 100%	
-}
 .dcpName { 
 	font: bold 15px "Trebuchet MS", Arial, Helvetica, sans-serif; 
 	width: 100%	
@@ -35,33 +31,30 @@
 .year {
 	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;	
 }
-.centerClass {
-	text-align: center
-}
 </style>
 
 	<f:loadBundle basename="resources/DegreeAdministrativeOfficeResources" var="bundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 
-	<h:dataTable value="#{displayCurricularPlan.scopes}" var="degreeCurricularPlans" styleClass="fullWidthClass">
+	<h:dataTable value="#{displayCurricularPlan.scopes}" var="degreeCurricularPlans" styleClass="width100">
 		<h:column>
-			<h:dataTable value="#{degreeCurricularPlans}" var="degreeCurricularPlan" styleClass="fullWidthClass">
+			<h:dataTable value="#{degreeCurricularPlans}" var="degreeCurricularPlan" styleClass="width100">
 				<h:column>
 					<h:panelGrid columns="2" columnClasses="dcpName" >
 						<h:outputText value="#{degreeCurricularPlan.degreeName}" /><h:outputText value="#{displayCurricularPlan.choosenExecutionYear}"/>
 					</h:panelGrid>					
-					<h:dataTable value="#{degreeCurricularPlan.years}" var="year" styleClass="fullWidthClass">
+					<h:dataTable value="#{degreeCurricularPlan.years}" var="year" styleClass="width100">
 						<h:column>
 							<h:panelGroup styleClass="year">
 								<h:outputText value="<br/>" escape="false"/><h:outputText value="#{bundle['label.year']}" /><h:outputText value=": " /><h:outputText value="#{year.year}" />
 							</h:panelGroup>										
 							<h:dataTable value="#{year.branches}" var="branch"  styleClass="lightBluecell" >
 								<h:column>									
-									<h:outputText value="#{(!empty branch.name) ? branch.name : bundle['label.commonBranch']} " styleClass="boldFontClass"/>
+									<h:outputText value="#{(!empty branch.name) ? branch.name : bundle['label.commonBranch']} " styleClass="bold"/>
 									<h:dataTable value="#{branch.semesters}" var="semester" styleClass="solidBorderClass" >
 										<h:column>
-											<h:outputText value="#{bundle['label.semester']}" styleClass="boldFontClass"/><h:outputText value=": " /><h:outputText value="#{semester.semester}" />
-											<h:dataTable value="#{semester.scopes}" var="scope" rowClasses="white, bluecell" columnClasses=",,,,,,centerClass" styleClass="greyBorderClass" headerClass="grey">
+											<h:outputText value="#{bundle['label.semester']}" styleClass="bold"/><h:outputText value=": " /><h:outputText value="#{semester.semester}" />
+											<h:dataTable value="#{semester.scopes}" var="scope" rowClasses="white, bluecell" columnClasses=",,,,,,acenter" styleClass="greyBorderClass" headerClass="grey">
 												<h:column>
 													<f:facet name="header"><h:outputText value="#{bundle['label.curricularCourse']}" /></f:facet>
 													<h:outputText value="#{scope.infoCurricularCourse.name}" />

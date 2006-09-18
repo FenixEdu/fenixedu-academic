@@ -7,16 +7,7 @@
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
-<style>
-.temp1 {
-clear: both;
-}
-.temp1 li span {
-float: left; 
-width: 100px;
-padding-right: 10px;
-}
-</style>
+
 	<h:outputText value="<em>#{CompetenceCourseManagement.competenceCourse.name}</em>" escape="false"/>
 	<h:outputText value="<h2>#{bolonhaBundle['bibliographicReference']}</h2>" escape="false"/>	
 	<h:messages infoClass="infoMsg" errorClass="error0" globalOnly="true" />
@@ -95,21 +86,21 @@ padding-right: 10px;
 		<h:dataTable style="line-height: 1.45em;" value="#{CompetenceCourseManagement.mainBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.mainBibliographicReferences}">
 			<h:column>
 				<h:panelGroup rendered="#{bibliographicReference.order != CompetenceCourseManagement.bibliographicReferenceID}">
-					<h:outputText value="<ul class='nobullet temp1 mbottom05'>" escape="false"/>					
-					<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
+					<h:outputText value="<ul class='nobullet cboth mbottom05'>" escape="false"/>					
+					<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px">#{bolonhaBundle['title']}:</span>" escape="false"/>
 					<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{bibliographicReference.url != 'http://'}" escape="false"/>
 					<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{bibliographicReference.url == 'http://'}" escape="false"/>
 					
-					<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
+					<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px">#{bolonhaBundle['author']}:</span>" escape="false"/>
 					<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
 					
-					<h:outputText value="<li><span>#{bolonhaBundle['year']}:</span>" escape="false"/>
+					<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px">#{bolonhaBundle['year']}:</span>" escape="false"/>
 					<h:outputText value="#{bibliographicReference.year}</li>" escape="false"/>
 					
-					<h:outputText value="<li><span>#{bolonhaBundle['reference']}:</span>" escape="false"/>
+					<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px">#{bolonhaBundle['reference']}:</span>" escape="false"/>
 					<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
 					
-					<h:outputText value="<li><span>#{bolonhaBundle['move.to']}:</span>" escape="false"/>
+					<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px">#{bolonhaBundle['move.to']}:</span>" escape="false"/>
 					<h:commandLink value="#{bolonhaBundle['up']}" action="#{CompetenceCourseManagement.switchBibliographicReferencePosition}">	
 						<f:param name="oldPosition" value="#{bibliographicReference.order}"/>
 						<f:param name="newPosition" value="#{bibliographicReference.order - 1}"/>
@@ -154,21 +145,21 @@ padding-right: 10px;
 		<h:dataTable style="line-height: 1.45em;" value="#{CompetenceCourseManagement.secondaryBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.secondaryBibliographicReferences}">
 			<h:column>
 				<h:panelGroup rendered="#{bibliographicReference.order != CompetenceCourseManagement.bibliographicReferenceID}">
-					<h:outputText value="<ul class='nobullet temp1 mbottom05'>" escape="false"/>					
-					<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
+					<h:outputText value="<ul class='nobullet cboth mbottom05'>" escape="false"/>					
+					<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px">#{bolonhaBundle['title']}:</span>" escape="false"/>
 					<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{bibliographicReference.url != 'http://'}" escape="false"/>
 					<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{bibliographicReference.url == 'http://'}" escape="false"/>
 					
-					<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
+					<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px">#{bolonhaBundle['author']}:</span>" escape="false"/>
 					<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
 					
-					<h:outputText value="<li><span>#{bolonhaBundle['year']}:</span>" escape="false"/>
+					<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px">#{bolonhaBundle['year']}:</span>" escape="false"/>
 					<h:outputText value="#{bibliographicReference.year}</li>" escape="false"/>
 					
-					<h:outputText value="<li><span>#{bolonhaBundle['reference']}:</span>" escape="false"/>
+					<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px">#{bolonhaBundle['reference']}:</span>" escape="false"/>
 					<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
 					
-					<h:outputText value="<li><span>#{bolonhaBundle['move.to']}:</span>" escape="false"/>
+					<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px">#{bolonhaBundle['move.to']}:</span>" escape="false"/>
 					<h:commandLink value="#{bolonhaBundle['up']}" action="#{CompetenceCourseManagement.switchBibliographicReferencePosition}">	
 						<f:param name="oldPosition" value="#{bibliographicReference.order}"/>
 						<f:param name="newPosition" value="#{bibliographicReference.order - 1}"/>

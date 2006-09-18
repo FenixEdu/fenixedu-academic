@@ -12,54 +12,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-<style>
-table.vtsbc {
-margin-bottom: 1em;
-border: 2px solid #aaa;
-text-align: center;
-border-collapse: collapse;
-}
-table.vtsbc th {
-padding: 0.2em 0.2em;
-border: 1px solid #bbb;
-border-bottom: 1px solid #aaa;
-background-color: #cacaca;
-font-weight: bold;
-}
-table.vtsbc td {
-background-color: #eaeaea;
-border: none;
-border: 1px solid #ccc;
-padding: 0.25em 0.5em;
-}
-table.vtsbc td.courses {
-background-color: #f4f4f8;
-width: 150px;
-padding: 0.25em 0.25em;
-text-align: left;
-}
-.center {
-text-align: center;
-}
-
-.right td {
-text-align: right;
-}
-
-.left td {
-text-align: left;
-}
-table.search {
-background-color: #f5f5f5;
-border-collapse: collapse;
-}
-table.search tr td {
-border: 1px solid #fff;
-padding: 0.3em;
-}
-</style>
-
-
 <h3>
 	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
 		<bean:message key="link.teacherServiceDistribution"/>
@@ -108,7 +60,7 @@ padding: 0.3em;
 <b><bean:message key="label.teacherServiceDistribution.associatedCourses"/>:</b>
 <br/>
 <table class='vtsbc'>
-	<tr class='center'>
+	<tr class='acenter'>
 		<th>
 			<bean:message key="label.teacherServiceDistribution.name"/>
 		</th>
@@ -146,7 +98,7 @@ padding: 0.3em;
 
 <logic:iterate name="selectedValuationTeacher" property="professorshipValuationDTOEntries" id="professorshipValuationDTOEntry">
 	<bean:define id="professorshipValuation" name="professorshipValuationDTOEntry" property="professorshipValuation" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation"/>
-	<tr class='right'>
+	<tr class='tdright'>
 		<td class='courses' style="width: 300px;">
 			<bean:write name="professorshipValuation" property="courseValuation.name"/>
 		</td>
@@ -196,7 +148,7 @@ padding: 0.3em;
 	</tr>
 </logic:iterate>
 <logic:equal name="selectedValuationTeacher" property="usingExtraCredits" value="true">
-	<tr class='right'>
+	<tr class='tdright'>
 		<td class='courses'>
 			<bean:write name="selectedValuationTeacher" property="extraCreditsName"/>
 		</td>
@@ -233,7 +185,7 @@ padding: 0.3em;
 		</td>
 	</tr>
 </logic:equal>
-	<tr class='right'>
+	<tr class='tdright'>
 		<td class='courses'>
 			&nbsp;
 		</td>
@@ -270,7 +222,7 @@ padding: 0.3em;
 			&nbsp;
 		</td>
 	</tr>	
-	<tr class='right'>
+	<tr class='tdright'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.total"/>
 		</td>
@@ -325,7 +277,7 @@ padding: 0.3em;
 <b><bean:message key="label.teacherServiceDistribution.extraCredits"/>:</b>
 <br/>
 <table class='vtsbc'>
-	<tr class='center'>
+	<tr class='acenter'>
 		<th>
 			<bean:message key="label.teacherServiceDistribution.extraCreditsName"/>
 		</th>
@@ -417,7 +369,7 @@ padding: 0.3em;
 <b><bean:message key="label.teacherServiceDistribution.associateTeacherToCourse"/>:</b>
 <br/>
 <table class='vtsbc'>
-	<tr class='center'>
+	<tr class='acenter'>
 		<th>
 		</th>
 		<th>
@@ -432,7 +384,7 @@ padding: 0.3em;
 	</tr>
 
 <logic:greaterThan name="selectedCourseValuation" property="theoreticalHoursPerShift" value="0.0">	
-	<tr class='right'>
+	<tr class='tdright'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.theoreticalHours"/>
 		</td>
@@ -464,7 +416,7 @@ padding: 0.3em;
 
 	
 <logic:greaterThan name="selectedCourseValuation" property="praticalHoursPerShift" value="0.0">			
-	<tr class='right'>
+	<tr class='tdright'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.praticalHours"/>
 		</td>
@@ -495,7 +447,7 @@ padding: 0.3em;
 
 	
 <logic:greaterThan name="selectedCourseValuation" property="theoPratHoursPerShift" value="0.0">				
-	<tr class='right'>
+	<tr class='tdright'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.theoPratHours"/>
 		</td>
@@ -526,7 +478,7 @@ padding: 0.3em;
 
 	
 <logic:greaterThan name="selectedCourseValuation" property="laboratorialHoursPerShift" value="0.0">					
-	<tr class='right'>
+	<tr class='tdright'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.laboratorialHours"/>
 		</td>

@@ -4,16 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <html:xhtml/>
 
-<style>
-.enrollment_confirmation {
-padding: 0.5em;
-background-color: #000;
-color: #efe;
-font-weight: bold;
-}
-</style>
-
-
 <h2><bean:message key="title.student.enrollment.resume" bundle="STUDENT_RESOURCES"/></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:messagesPresent message="true">
@@ -32,7 +22,7 @@ font-weight: bold;
 	</div>
 	
 	<br />	
-	<p><span class="enrollment_confirmation"><bean:message key="message.student.enrollment.confirmation" /></span></p>
+	<p><span style="padding: 0.5em; background-color: #000; color: #efe; font-weight: bold;"><bean:message key="message.student.enrollment.confirmation" /></span></p>
 	<br />
 	
 	

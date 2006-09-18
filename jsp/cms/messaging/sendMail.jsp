@@ -3,13 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<style>
-	.floatedli {
-	float: left;
-	width: 250px;
-	}
-</style>
-
 <bean:define id="sendMailActioName" name="sendMailForm" property="sendMailActioName"/>
 <jsp:include page="/cms/manager/context.jsp"/>
 
@@ -27,7 +20,7 @@
 	<div style="width:800px">
 		<ul>
 			<logic:iterate id="group" name="groups" type="net.sourceforge.fenixedu.domain.PersonalGroup">
-				<li class="floatedli">
+				<li class="fleft" style="width: 250px;">
 					<html:multibox property="selectedPersonalGroupsIds">
 	       				 <bean:write name="group" property="idInternal"/>
 				    </html:multibox>

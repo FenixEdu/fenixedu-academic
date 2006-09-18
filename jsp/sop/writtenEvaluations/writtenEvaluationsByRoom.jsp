@@ -7,9 +7,9 @@
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
+<style type="text/css">@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
 
-<style>
+<style type="text/css">
 .greyBorderClass {
 	background-color: #EBECED;
 	border-style: solid;

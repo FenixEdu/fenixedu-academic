@@ -5,11 +5,6 @@
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>
-.alignright { text-align: right; }
-.valigntop { vertical-align: top; }
-</style>
-
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	
 		<h:form>
@@ -20,7 +15,7 @@
 			<h:outputText styleClass="error" rendered="#{!empty projectManagementBackingBean.errorMessage}"
 				value="#{bundle[projectManagementBackingBean.errorMessage]}<br/>" escape="false" />
 			
-			<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
+			<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
 				<h:panelGroup>
 					<h:outputText value="* " style="color: red"/>
 					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.name']}: " />

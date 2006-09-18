@@ -160,7 +160,6 @@
 	<br />
 	<p class="infoop"><span class="emphasis-box">2</span>
 	<bean:message key="message.courseInformation.LecturingTeachers" /></p>
-	<style="margin-top:10px">
 	<bean:message key="message.courseInformation.numberOfStudents"/>:
 	<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.numberOfAttendingStudents"/>
 	<p><bean:message key="message.courseInformation.specialTeacherWarning"/></p>

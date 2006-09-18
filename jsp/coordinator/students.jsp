@@ -7,11 +7,6 @@
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>
-.alignright { text-align: right; }
-.valigntop { vertical-align: top; }
-</style>
-
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>
 
@@ -21,7 +16,7 @@
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.sortBy' id='sortBy' name='sortBy' type='hidden' value='#{CoordinatorStudentsBackingBean.sortBy}'/>"/>
 
-		<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
+		<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
 			<h:outputText value="#{bundle['label.student.curricular.plan.state']}: " />
 			<h:selectOneMenu value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}">
 				<f:selectItem itemLabel="#{bundle['message.all']}" itemValue=""/>

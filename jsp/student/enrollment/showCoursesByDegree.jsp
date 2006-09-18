@@ -32,11 +32,6 @@
 	</ul>
 
 
-<style>
-table { width: 100%; }
-table td { width: 50%; vertical-align: bottom; }
-</style>
-
 <bean:define id="studentIdToEnrollment" name="student" property="idInternal" />
 
 <logic:present name="selectedExecutionDegree">
@@ -44,9 +39,9 @@ table td { width: 50%; vertical-align: bottom; }
 	<bean:define id="degreeSelected" name="selectedExecutionDegree" property="idInternal" />
 	<logic:present name="executionDegrees">	
 
-		<table>
+		<table class="width100">
 		<tr>
-		<td class="infotable">
+		<td class="infotable" style="width: 50%; vertical-align: bottom;">
 		<div style="overflow: hidden;">		
 			<html:form action="/studentShiftEnrollmentManager" >
 
@@ -107,7 +102,7 @@ table td { width: 50%; vertical-align: bottom; }
 		</div>
 		</td>
 
-					<td class="infotable">
+					<td class="infotable" style="width: 50%; vertical-align: bottom;">
 						<div style="overflow: hidden;">
 							<p style="text-align:left; margin-bottom:0px"><b><bean:message key="label.attendCourses" />:</b></p>
 							<logic:present name="attendingCourses">

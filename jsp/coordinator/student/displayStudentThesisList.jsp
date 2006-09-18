@@ -4,16 +4,6 @@
 
 <ft:tilesView definition="definition.coordinator.two-column" attributeName="body-inline">
 
-<style type="text/css">
-.solidBorderClass {
-	border-style: solid;
-	border-width: 1px
-}
-.boldFontClass {
-	font-weight: bold
-}
-</style>
-
 <f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 <f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 
@@ -21,22 +11,22 @@
 		<h:column>
 			<h:panelGrid columns="1" styleClass="solidBorderClass" width="100%">
 				<h:panelGrid columns="3" width="100%">
-					<h:outputText value="#{bundle['label.coordinator.studentNumber']}" styleClass="boldFontClass" />
-					<h:outputText value="#{bundle['label.coordinator.studentName']}" styleClass="boldFontClass" />
-					<h:outputText value="#{bundle['label.coordinator.planState']}" styleClass="boldFontClass" />
+					<h:outputText value="#{bundle['label.coordinator.studentNumber']}" styleClass="bold" />
+					<h:outputText value="#{bundle['label.coordinator.studentName']}" styleClass="bold" />
+					<h:outputText value="#{bundle['label.coordinator.planState']}" styleClass="bold" />
 					<h:outputText value="#{masterDegreeThesisDataVersion.infoMasterDegreeThesis.infoStudentCurricularPlan.infoStudent.number}" />
 					<h:outputText value="#{masterDegreeThesisDataVersion.infoMasterDegreeThesis.infoStudentCurricularPlan.infoStudent.infoPerson.nome}" />
 					<h:outputText value="#{bundleEnumeration[masterDegreeThesisDataVersion.infoMasterDegreeThesis.infoStudentCurricularPlan.currentState.name]}" />				
 				</h:panelGrid>
 				<h:outputText value=" " />
 				<h:panelGrid columns="1" >
-					<h:outputText value="#{bundle['label.coordinator.title']}" styleClass="boldFontClass"/>
+					<h:outputText value="#{bundle['label.coordinator.title']}" styleClass="bold"/>
 					<h:outputText value="#{masterDegreeThesisDataVersion.dissertationTitle}" />
 				</h:panelGrid>
 				<h:outputText value=" " />
 				<h:dataTable value="#{masterDegreeThesisDataVersion.allGuiders}" var="guider" columnClasses="solidBorderClass" headerClass="solidBorderClass" cellspacing="0" width="100%">
 					<h:column>
-						<h:outputFormat value="#{bundleEnumeration[guider.guiderType]}" styleClass="boldFontClass"/>
+						<h:outputFormat value="#{bundleEnumeration[guider.guiderType]}" styleClass="bold"/>
 					</h:column>			
 					<h:column >
 						<f:facet name="header">

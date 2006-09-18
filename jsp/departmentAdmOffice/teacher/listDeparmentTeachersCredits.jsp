@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-<style>
+<style type="text/css">
 	table.ts01 {
 	border-collapse: collapse;
 	margin: 1em 0;

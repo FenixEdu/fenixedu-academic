@@ -4,7 +4,7 @@
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 
-<style>
+<style type="text/css">
 ul.links {
 list-style: none;
 padding-left: 2em;

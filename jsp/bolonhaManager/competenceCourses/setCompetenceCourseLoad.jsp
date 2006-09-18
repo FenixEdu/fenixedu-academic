@@ -5,9 +5,7 @@
 
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
-	<style>
-		table.nospace label { width: auto; }
-	</style>
+
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 

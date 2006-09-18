@@ -4,10 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<style>
-form { margin: 0; padding: 0; }
-</style>
-
 
 <h2><bean:message key="title.editStudentGroupShift"/></h2>
 
@@ -21,7 +17,7 @@ form { margin: 0; padding: 0; }
 
 	<br/>
 		
-<html:form action="/editStudentGroupShift" method="get">
+<html:form action="/editStudentGroupShift" method="get" style="margin: 0; padding: 0;" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -63,7 +59,7 @@ form { margin: 0; padding: 0; }
 			</html:form>
 		</td>
 		<td>
-			<html:form action="/viewStudentGroupInformation" method="get">
+			<html:form action="/viewStudentGroupInformation" method="get" style="margin: 0; padding: 0; ">
 			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="execute"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseCode"  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>

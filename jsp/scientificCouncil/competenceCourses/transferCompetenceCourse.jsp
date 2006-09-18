@@ -7,16 +7,7 @@
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
-<style>
-.temp1 {
-clear: both;
-}
-.temp1 li span {
-float: left; 
-width: 100px;
-padding-right: 10px;
-}
-</style>
+
 	<h:outputText value="<em>#{scouncilBundle['competenceCourse']}</em>" escape="false" />
 	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name}</h2>" escape="false"/>
 

@@ -11,32 +11,32 @@
 
 <head>
 	<title></title>
+	<style type="text/css" media="screen, print">
+	body {
+	font-family: Times New Roman, Times, serif;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-style: italic;
+	font-size: 14px;
+	}
+	#container {
+	line-height: 209%;  /* -------- */
+	margin-top: 13.96cm;  /* -------- */
+	margin-left: 4.70cm;  /* -------- */ 
+	width: 22.5cm;
+	}
+	#container p { margin: 0; padding: 0; }
+	#container span.hide {
+	color: #aaa;
+	text-transform: none;
+	font-size: 18px;
+	visibility: hidden;
+	}
+	</style>
 </head>
 
 <body>
-<style type="text/css" media="screen, print">
-body {
-font-family: Times New Roman, Times, serif;
-font-weight: bold;
-text-transform: uppercase;
-font-style: italic;
-font-size: 14px;
-}
-#container {
-line-height: 209%;  /* -------- */
-margin-top: 13.96cm;  /* -------- */
-margin-left: 4.70cm;  /* -------- */ 
-width: 22.5cm;
-}
-#container p { margin: 0; padding: 0; }
-#container span.hide {
-color: #aaa;
-text-transform: none;
-font-size: 18px;
-        visibility: hidden;
-}
 
-</style>
 
 <%
 	String parish = infoStudentCurricularPlan.getInfoStudent().getInfoPerson().getFreguesiaNaturalidade();

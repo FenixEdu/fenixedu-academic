@@ -10,57 +10,6 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-<style>
-table.vtsbc {
-margin-bottom: 1em;
-border: 2px solid #aaa;
-text-align: center;
-border-collapse: collapse;
-}
-table.vtsbc th {
-padding: 0.2em 0.2em;
-border: 1px solid #bbb;
-border-bottom: 1px solid #aaa;
-background-color: #cacaca;
-font-weight: bold;
-}
-table.vtsbc td {
-background-color: #eaeaea;
-border: none;
-border: 1px solid #ccc;
-padding: 0.25em 0.5em;
-}
-table.vtsbc td.courses {
-background-color: #f4f4f8;
-width: 300px;
-padding: 0.25em 0.25em;
-text-align: left;
-}
-.center {
-text-align: center;
-}
-
-.right td {
-text-align: right;
-}
-
-.left td {
-text-align: left;
-}
-table.search {
-background-color: #f5f5f5;
-border-collapse: collapse;
-}
-table.search tr td {
-border: 1px solid #fff;
-padding: 0.3em;
-}
-.leftcolumn {
-text-align: right;
-}
-</style>
-
-
 <h3>
 	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
 		<bean:message key="link.teacherServiceDistribution"/>
@@ -105,7 +54,7 @@ text-align: right;
 <b><bean:message key="label.teacherServiceDistribution.valuate"/>:</b>
 <br/>
 <table class='vtsbc'>
-	<tr class='center'>
+	<tr class='acenter'>
 		<td>
 			<html:radio property="courseValuationType" value="<%= CourseValuationType.COMPETENCE_COURSE_VALUATION.toString() %>" onclick="this.form.method.value='setCourseValuationType'; this.form.submit();"><bean:message key="label.teacherServiceDistribution.competenceCourseValuationType"/></html:radio>
 		</td>
@@ -159,7 +108,7 @@ text-align: right;
 <br/>
 
 <table class='vtsbc'>
-	<tr class='center'>
+	<tr class='acenter'>
 		<th>
 		</th>
 		<th>
@@ -179,7 +128,7 @@ text-align: right;
 		</th>
 	</tr>
 
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.firstTimeEnrolledStudents"/>
 		</td>
@@ -206,7 +155,7 @@ text-align: right;
 	</tr>
 
 	
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.secondTimeEnrolledStudents"/>
 		</td>
@@ -233,7 +182,7 @@ text-align: right;
 	</tr>
 
 <c:if test="${selectedCourseValuation.theoreticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.studentsPerTheoreticalShift"/>
 		</td>
@@ -270,7 +219,7 @@ text-align: right;
 </c:if>
 
 <c:if test="${selectedCourseValuation.praticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">		
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.studentsPerPraticalShift"/>
 		</td>
@@ -307,7 +256,7 @@ text-align: right;
 </c:if>
 
 <c:if test="${selectedCourseValuation.theoPratHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.studentsPerTheoPratShift"/>
 		</td>
@@ -344,7 +293,7 @@ text-align: right;
 </c:if>
 
 <c:if test="${selectedCourseValuation.laboratorialHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">				
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.studentsPerLaboratorialShift"/>
 		</td>
@@ -381,7 +330,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.theoreticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">	
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerTheoShift"/>
 		</td>
@@ -412,7 +361,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.praticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">			
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerPratShift"/>
 		</td>
@@ -443,7 +392,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.theoPratHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">					
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerTheoPratShift"/>
 		</td>
@@ -474,7 +423,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.laboratorialHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">							
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerLabShift"/>
 		</td>
@@ -505,7 +454,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.theoreticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">			
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerTheoShift"/>
 		</td>
@@ -536,7 +485,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.praticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">						
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerPratShift"/>
 		</td>
@@ -567,7 +516,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.theoPratHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">							
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerTheoPratShift"/>
 		</td>
@@ -598,7 +547,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.laboratorialHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">									
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerLabShift"/>
 		</td>
@@ -629,7 +578,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.theoreticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">							
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.theoreticalHours"/>
 			&nbsp;(<bean:write name="selectedCourseValuation" property="theoreticalHoursPerShift"/>h
@@ -667,7 +616,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.praticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">									
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.praticalHours"/>
 			&nbsp;(<bean:write name="selectedCourseValuation" property="praticalHoursPerShift"/>h
@@ -704,7 +653,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.theoPratHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">				
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.theoPratHours"/>
 			&nbsp;(<bean:write name="selectedCourseValuation" property="theoPratHoursPerShift"/>h
@@ -741,7 +690,7 @@ text-align: right;
 
 
 <c:if test="${selectedCourseValuation.laboratorialHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">	
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.laboratorialHours"/>
 			&nbsp;(<bean:write name="selectedCourseValuation" property="laboratorialHoursPerShift"/>h
@@ -777,7 +726,7 @@ text-align: right;
 </c:if>
 
 <logic:equal name="selectedCourseValuationType" value="<%= CourseValuationType.CURRICULAR_COURSE_VALUATION_GROUP.toString() %>">
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.usingCurricularCourseValuations"/>
 		</td>
@@ -788,7 +737,7 @@ text-align: right;
 		</td>
 	</tr>
 	
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.associatedCurricularCourse"/>
 		</td>
@@ -809,7 +758,7 @@ text-align: right;
 		</td>					
 	</tr>
 	<logic:notEmpty name="availableCurricularCourseValuationsToGroup">
-	<tr class='left'>
+	<tr class='tdleft'>
 		<td class='courses'>
 			<bean:message key="label.teacherServiceDistribution.availableCurricularCoursesToAssociate"/>
 		</td>

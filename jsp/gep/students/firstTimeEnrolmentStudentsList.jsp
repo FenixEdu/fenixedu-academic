@@ -4,14 +4,6 @@
 
 <ft:tilesView definition="definition.gep.two-column" attributeName="body-inline">
 
-<style type="text/css">
-.solidBorderClass {
-	border-style: solid;
-	border-width: 1px;
-	border-color: #CCCCCC
-}
-</style>
-
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 	<f:loadBundle basename="resources/GEPResources" var="bundleGEP"/>
 	
@@ -25,7 +17,7 @@
 		</html:submit>
 	</h:form>
 
-	<h:dataTable value="#{listFirstTimeEnrolmentMasterDegreeStudents.studentCurricularPlans}" var="studentCurricularPlan" columnClasses="solidBorderClass">
+	<h:dataTable value="#{listFirstTimeEnrolmentMasterDegreeStudents.studentCurricularPlans}" var="studentCurricularPlan" columnClasses="solidBorderClass2">
 		<h:column>
 			<f:facet name="header">
 				<h:outputText value="#{bundleGEP['label.gep.studentNumber']}" />		

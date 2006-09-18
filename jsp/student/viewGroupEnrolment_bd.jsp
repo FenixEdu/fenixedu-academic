@@ -4,14 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 
-<style>
-form {
-margin: 0;
-padding: 0;
-}
-</style>
-
-
 <h2><bean:message key="title.enrolmentGroup.insertNewGroup"/></h2>
 
 	<div class="infoop">
@@ -37,7 +29,7 @@ padding: 0;
 --%>
 
 
-	<html:form action="/groupEnrolment" method="get">
+	<html:form action="/groupEnrolment" method="get" style="margin: 0; padding: 0;">
 
 	<h2><span class="error"><!-- Error messages go here --><html:errors /></span></h2>		 
 
@@ -135,7 +127,7 @@ padding: 0;
 	</td>
 	
 	<td>
-		<html:form action="/viewShiftsAndGroups" method="get">
+		<html:form action="/viewShiftsAndGroups" method="get" style="margin: 0; padding: 0;">
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="execute"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseCode"  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>

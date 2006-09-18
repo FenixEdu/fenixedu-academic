@@ -7,67 +7,6 @@
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/DepartmentMemberResources" var="bundle"/>
 	
-
-<style>
-table.vtsbc {
-margin-bottom: 1em;
-border: 2px solid #ccc;
-text-align: center;
-border-collapse: collapse;
-}
-table.vtsbc th {
-padding: 0.2em 0.2em;
-border: 1px solid #ddd;
-border-bottom: 1px solid #ccc;
-background-color: #eaeaea;
-font-weight: normal;
-}
-table.vtsbc td {
-background-color: #fafafa;
-border: none;
-border: 1px solid #eee;
-padding: 0.25em 0.5em;
-}
-table.vtsbc td.courses {
-background-color: #ffe;
-width: 300px;
-padding: 0.25em 0.25em;
-text-align: left;
-}
-.center {
-text-align: center;
-}
-.backwhite {
-text-align: left;
-background-color: #fff;
-}
-.backwhite a {
-color: #888;
-}
-.backwhite ul {
-margin: 0.3em 0;
-}
-.backwhite ul li {
-padding: 0 0.5em;
-}
-.backwhite ul li a {
-text-decoration: none;
-border-bottom: 1px solid #ddd;
-}
-table.search {
-background-color: #f5f5f5;
-border-collapse: collapse;
-}
-table.search tr td {
-border: 1px solid #fff;
-padding: 0.3em;
-}
-.leftcolumn {
-text-align: right;
-}
-</style>
-
-	
 	<h:outputText value="<h2>#{bundle['label.courseStatistics.degreeStatistics']}</h2>" escape="false" />
 	<h:outputText value="<h3>#{courseStatistics.competenceCourse.name}</h3>" escape="false" />
 
@@ -75,7 +14,7 @@ text-align: right;
 		<fc:viewState binding="#{courseStatistics.viewState}" />
 
 		<h:panelGrid columns="2" styleClass="search">
-			<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="leftColumn" />
+			<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="aright" />
 			<fc:selectOneMenu
 				value="#{courseStatistics.executionPeriodId}"
 				valueChangeListener="#{courseStatistics.onExecutionPeriodChangeForDegreeCourses}"

@@ -5,7 +5,7 @@
 
 <ft:tilesView definition="df.executionDegreeManagement.default" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
-	<style>@import "<%= request.getContextPath() %>/CSS/transitional.css";</style>
+	<style type="text/css">@import "<%= request.getContextPath() %>/CSS/transitional.css";</style>
 	<f:loadBundle basename="resources/ManagerResources" var="managerResources"/>
 	
 	<h:outputText styleClass="success0" rendered="#{!empty createExecutionDegrees.createdDegreeCurricularPlans}" value="Os seguintes planos curriculares foram criados correctamente:"/>

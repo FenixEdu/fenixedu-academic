@@ -7,17 +7,12 @@
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>
-.alignright { text-align: right; }
-.valigntop { vertical-align: top; }
-</style>
-
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
 
 	<h:form>	
 		<h:outputText value="<h2>#{bundle['title.send.mails']}</h2><br/>" escape="false"/>
 
-		<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
+		<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
 			<h:outputText value="From: " escape="false"/>
 			<h:inputText alt="#{htmlAltBundle['inputText.from']}" id="from" value="#{SendMailBackingBean.from}"/>
 

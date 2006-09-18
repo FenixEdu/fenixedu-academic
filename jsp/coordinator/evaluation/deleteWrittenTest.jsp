@@ -5,10 +5,6 @@
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style>
-.boldFontClass { font-weight: bold; }
-</style>
-
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>	
 
 	<h:form>
@@ -27,9 +23,9 @@
 		<h:outputText value="#{coordinatorWrittenTestsManagementBackingBean.executionCourse.nome}<br/><br/>" escape="false"/>
 		
 		<h:panelGrid columns="2" styleClass="infoop">	
-			<h:outputText value="#{bundle['label.coordinator.identification']}: " styleClass="boldFontClass" />
+			<h:outputText value="#{bundle['label.coordinator.identification']}: " styleClass="bold" />
 			<h:outputText value="#{coordinatorWrittenTestsManagementBackingBean.evaluation.description}" />
-			<h:outputText value="#{bundle['label.coordinator.evaluationDate']}: " styleClass="boldFontClass" escape="false"/>
+			<h:outputText value="#{bundle['label.coordinator.evaluationDate']}: " styleClass="bold" escape="false"/>
 			<h:panelGroup>
 				<h:outputFormat value="{0, date, dd/MM/yyyy} - ">
 					<f:param value="#{coordinatorWrittenTestsManagementBackingBean.evaluation.dayDate}" />
