@@ -73,12 +73,14 @@
 		<property name="destination" value="postBack"/>
 	</slot>
 </schema>
-<schema name="ListExecutionCoursesToImportLessonPlannings" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean" bundle="DEFAULT">
+<schema name="ListExecutionCoursesToImportContent" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean" bundle="DEFAULT">
 	<slot name="executionCourse" key="label.import.lessonPlannings.course" layout="menu-select"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCoursesToImportLessonPlanningsProvider" />
 		<property name="format" value="${nome}" />
 	</slot>
+</schema>
+<schema name="ListExecutionCoursesToImportLessonPlannings" type="net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean" bundle="DEFAULT" extends="ListExecutionCoursesToImportContent">
 	<slot name="importType" key="label.import.lessonPlannings.importType" layout="radio" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
 		<property name="classes" value="nomargin nopadding" />
 		<property name="eachClasses" value="nopadding" />

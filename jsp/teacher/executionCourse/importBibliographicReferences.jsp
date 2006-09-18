@@ -33,7 +33,7 @@
 				<br/>
 				<bean:define id="importBibliographicReferencesUrl">/manageExecutionCourse.do?method=importBibliographicReferences&executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
 				<H3><bean:message key="label.choose.course"/></H3>			
-				<fr:edit id="importContentBeanWithExecutionCourse" name="importContentBean" schema="ListExecutionCoursesToImportLessonPlannings" 
+				<fr:edit id="importContentBeanWithExecutionCourse" name="importContentBean" schema="ListExecutionCoursesToImportContent" 
 					action="<%= importBibliographicReferencesUrl %>" >
 					<fr:destination name="cancel" path="<%= showBibliographicReferences %>"/>
 					<fr:destination name="invalid" path="<%= invalidLink %>"/>

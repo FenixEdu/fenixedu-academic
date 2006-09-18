@@ -33,7 +33,7 @@
 				<br/>
 				<bean:define id="importEvaluationMethodUrl">/manageExecutionCourse.do?method=importEvaluationMethod&executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
 				<H3><bean:message key="label.choose.course"/></H3>			
-				<fr:edit id="importContentBeanWithExecutionCourse" name="importContentBean" schema="ListExecutionCoursesToImportLessonPlannings" 
+				<fr:edit id="importContentBeanWithExecutionCourse" name="importContentBean" schema="ListExecutionCoursesToImportContent" 
 					action="<%= importEvaluationMethodUrl %>" >
 					<fr:destination name="cancel" path="<%= showEvaluationMethod %>"/>
 					<fr:destination name="invalid" path="<%= invalidLink %>"/>
