@@ -311,7 +311,8 @@ public class MarkSheet extends MarkSheet_Base {
     
     private void removeEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToRemove) {
         for (MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : enrolmentEvaluationBeansToRemove) {
-            enrolmentEvaluationBean.getEnrolmentEvaluation().delete();
+            enrolmentEvaluationBean.getEnrolmentEvaluation().removeFromMarkSheet();
+            enrolmentEvaluationBean.getEnrolmentEvaluation().setGrade(null);
         }
     }
 
@@ -367,9 +368,10 @@ public class MarkSheet extends MarkSheet_Base {
         
         if(hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED)) {
             changeRectifiedEnrolmentEvaluationToPreviowsState();
+            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().get(0).delete());
+        } else {
+            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().get(0).removeFromMarkSheet());
         }
-        
-        for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().get(0).removeFromMarkSheet());
         
         removeRootDomainObject();
         deleteDomainObject();
