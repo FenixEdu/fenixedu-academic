@@ -4,10 +4,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class InvalidMarksServiceException extends FenixServiceException {
+public class FenixServiceMultipleException extends FenixServiceException {
 	private List<DomainException> exceptionList;
 	
-	public InvalidMarksServiceException(List<DomainException> exceptionlist) {
+	public FenixServiceMultipleException(List<DomainException> exceptionlist) {
 		this.exceptionList = exceptionlist;
 	}
 	

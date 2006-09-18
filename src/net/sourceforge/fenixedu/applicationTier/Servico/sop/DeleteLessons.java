@@ -5,19 +5,30 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DeleteLessons extends Service {
 
-    public Boolean run(final List<Integer> lessonOIDs) throws ExcepcaoPersistencia {
-        for (final Integer lessonOID : lessonOIDs) {
-            rootDomainObject.readLessonByOID(lessonOID).delete();
-        }
+    public void run(final List<Integer> lessonOIDs) throws FenixServiceException {
+	final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
-        return Boolean.TRUE;
+	for (final Integer lessonOID : lessonOIDs) {
+	    try {
+		rootDomainObject.readLessonByOID(lessonOID).delete();
+	    } catch (DomainException e) {
+		exceptionList.add(e);
+	    }
+	}
+
+	if (!exceptionList.isEmpty()) {
+	    throw new FenixServiceMultipleException(exceptionList);
+	}
     }
 
 }

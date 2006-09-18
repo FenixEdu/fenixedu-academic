@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidMarksServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -54,7 +54,7 @@ public class WriteMarks extends Service {
             }
         }
         if(!exceptionList.isEmpty()) {
-        	throw new InvalidMarksServiceException(exceptionList);
+        	throw new FenixServiceMultipleException(exceptionList);
         }
    }
 

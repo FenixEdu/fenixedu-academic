@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
@@ -66,6 +67,14 @@ public class Lesson extends Lesson_Base {
     }
 
     public void delete() {
+	if (getShift().hasAnyAssociatedStudentGroups()) {
+	    throw new DomainException("error.deleteLesson.with.Shift.with.studentGroups", prettyPrint());
+	}
+
+	if (getShift().hasAnyStudents()) {
+	    throw new DomainException("error.deleteLesson.with.Shift.with.students", prettyPrint());
+	}
+
 	removeExecutionPeriod();
 	removeSala();
 	removeShift();
@@ -158,25 +167,26 @@ public class Lesson extends Lesson_Base {
 	SortedSet<Summary> lessonSummaries = new TreeSet<Summary>(comparator);
 	for (Summary summary : getShift().getAssociatedSummariesSet()) {
 	    Lesson summaryLesson = summary.getLesson();
-	    if (summaryLesson != null && summaryLesson.equals(this)) {
+	    if(summaryLesson != null && summaryLesson.equals(this)) {
 		lessonSummaries.add(summary);
 	    }
 	}
 	return lessonSummaries;
     }
-
+    
     public SortedSet<Summary> getSummariesSortedByNewestDate() {
 	return getSummaries(Summary.COMPARATOR_BY_DATE_AND_HOUR);
     }
-
+    
     private Summary getLastSummary() {
 	SortedSet<Summary> summaries = getSummariesSortedByNewestDate();
 	return (summaries.isEmpty()) ? null : summaries.first();
-    }
+	    }
 
     public boolean isDateValidToInsertSummary(YearMonthDay date) {
 	YearMonthDay lessonEndDay = getLessonEndDay();
 	YearMonthDay currentDate = new YearMonthDay();
+
 	YearMonthDay startDateToSearch = getLessonStartDay();
 	YearMonthDay endDateToSearch = (lessonEndDay.isAfter(currentDate)) ? currentDate : lessonEndDay;
 	Campus lessonCampus = getLessonCampus();
@@ -260,6 +270,7 @@ public class Lesson extends Lesson_Base {
 
 	YearMonthDay lessonEndDay = getLessonEndDay();
 	YearMonthDay currentDate = new YearMonthDay();
+
 	YearMonthDay startDateToSearch = getLessonStartDay();
 	YearMonthDay endDateToSearch = (lessonEndDay.isAfter(currentDate)) ? currentDate : lessonEndDay;
 
@@ -269,7 +280,7 @@ public class Lesson extends Lesson_Base {
 	    if (summaries.isEmpty()) {
 		while (true) {
 		    if (!Holiday.isHoliday(startDateToSearch, lessonCampus)) {
-			datesToInsert.add(startDateToSearch);
+		    datesToInsert.add(startDateToSearch);
 		    }
 		    startDateToSearch = startDateToSearch.plusDays(7);
 		    if (startDateToSearch.isAfter(endDateToSearch)) {
@@ -283,7 +294,7 @@ public class Lesson extends Lesson_Base {
 			while (true) {
 			    if (startDateToSearch.isBefore(summary.getSummaryDateYearMonthDay())) {
 				if (!Holiday.isHoliday(startDateToSearch, lessonCampus)) {
-				    datesToInsert.add(startDateToSearch);
+				datesToInsert.add(startDateToSearch);
 				}
 				startDateToSearch = startDateToSearch.plusDays(7);
 			    } else if (startDateToSearch.isEqual(summary.getSummaryDateYearMonthDay())) {
@@ -304,7 +315,7 @@ public class Lesson extends Lesson_Base {
 		if (!startDateToSearch.isAfter(endDateToSearch)) {
 		    while (true) {
 			if (!Holiday.isHoliday(startDateToSearch, lessonCampus)) {
-			    datesToInsert.add(startDateToSearch);
+			datesToInsert.add(startDateToSearch);
 			}
 			startDateToSearch = startDateToSearch.plusDays(7);
 			if (startDateToSearch.isAfter(endDateToSearch)) {
@@ -335,4 +346,19 @@ public class Lesson extends Lesson_Base {
 
 	return dates;
     }
+    
+    public String prettyPrint() {
+	final StringBuilder result = new StringBuilder();
+	
+	result.append(getDiaSemana().getDiaSemanaString());
+	result.append(", ");
+	result.append(getInicio().get(Calendar.HOUR_OF_DAY));
+	result.append(":");
+	result.append(getInicio().get(Calendar.MINUTE));
+	result.append(", ");
+	result.append(getSala().getName());
+	
+	return result.toString();
+    }
+    
 }

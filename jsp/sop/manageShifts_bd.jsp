@@ -1,11 +1,13 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.List"%>
+
+<html:xhtml/>
+
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
     	<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
@@ -13,15 +15,19 @@
      	</td>
     </tr>
 </table>
-<br />
-<h2><bean:message key="title.manage.turnos"/></h2>
-<br />
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+
+<br/><br/>
+<span class="error"><!-- Error messages go here -->
+	<html:errors/>
+</span>
+
+<br/><br/>
 <jsp:include page="createShift.jsp"/>
 
-<br />
-<br />
-<br />
+<br/><br/><br/><br/>
+<h2><bean:message key="title.manage.turnos"/></h2>
+
+<br/>
 <logic:present name="<%= SessionConstants.SHIFTS %>" scope="request">
   <html:form action="/deleteShifts">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteShifts"/>

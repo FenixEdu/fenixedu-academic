@@ -1,13 +1,13 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-<span class="error"><!-- Error messages go here -->
-	<html:errors/>
-</span>
+<html:xhtml/>
 
+<h2><bean:message key="title.create.shift"/></h2>
+
+<br/>
 <html:form action="/manageShifts" focus="nome">
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createShift"/>
@@ -69,4 +69,6 @@
 			</td>
 		</tr>
 	</table>
+
 </html:form>
+

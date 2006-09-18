@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateLesson;
 import net.sourceforge.fenixedu.applicationTier.Servico.sop.EditLesson;
@@ -24,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.RoomAlphabeticComparator;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -367,15 +369,24 @@ public class ManageLessonDA extends
         IUserView userView = (IUserView) sessao.getAttribute("UserView");
 
         List<Integer> lessons = new ArrayList<Integer>();
-        lessons.add(new Integer(request.getParameter(SessionConstants.LESSON_OID)));
+        lessons.add(Integer.valueOf(request.getParameter(SessionConstants.LESSON_OID)));
 
-        Object argsApagarAula[] = { lessons };
-        Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(userView,
-                "DeleteLessons", argsApagarAula);
+        final Object argsApagarAula[] = { lessons };
 
-        if (result != null && result.booleanValue()) {
-            request.removeAttribute(SessionConstants.LESSON_OID);
+        try {
+            ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteLessons", argsApagarAula);
+        } catch (FenixServiceMultipleException e) {
+            final ActionErrors actionErrors = new ActionErrors();
+            
+            for (final DomainException domainException: e.getExceptionList()) {
+        	actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
+            }
+            saveErrors(request, actionErrors);
+            
+            return mapping.findForward("LessonDeleted");
         }
+        
+        request.removeAttribute(SessionConstants.LESSON_OID);
 
         return mapping.findForward("LessonDeleted");
     }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.sop.EditarTurno.InvalidFinalAvailabilityException;
 import net.sourceforge.fenixedu.applicationTier.Servico.sop.EditarTurno.InvalidNewShiftCapacity;
 import net.sourceforge.fenixedu.applicationTier.Servico.sop.EditarTurno.InvalidNewShiftExecutionCourse;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
@@ -187,17 +189,25 @@ public class ManageShiftDA extends
 
         }
 
-        List lessonOIDs = new ArrayList();
+        final List<Integer> lessonOIDs = new ArrayList<Integer>();
         for (int i = 0; i < selectedLessons.length; i++) {
-            lessonOIDs.add(new Integer(selectedLessons[i]));
+            lessonOIDs.add(Integer.valueOf(selectedLessons[i]));
         }
 
-        Object args[] = { lessonOIDs };
+        final Object args[] = { lessonOIDs };
 
-        ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteLessons", args);
+        try {
+            ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteLessons", args);
+        } catch (FenixServiceMultipleException e) {
+            final ActionErrors actionErrors = new ActionErrors();
+            
+            for (final DomainException domainException: e.getExceptionList()) {
+        	actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
+            }
+            saveErrors(request, actionErrors);
+        }
 
         return mapping.findForward("EditShift");
-
     }
 
     public ActionForward viewStudentsEnroled(ActionMapping mapping, ActionForm form,

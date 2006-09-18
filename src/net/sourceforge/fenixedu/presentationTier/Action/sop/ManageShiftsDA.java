@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -17,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
@@ -126,7 +128,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
         } catch (FenixServiceException exception) {
             ActionErrors actionErrors = new ActionErrors();
             if (exception.getMessage() != null && exception.getMessage().length() > 0) {
-                actionErrors.add("errors.deleteshift", new ActionError(exception.getMessage()));
+                actionErrors.add("errors.deleteshift", new ActionError(exception.getMessage(), exception.getArgs()));
             } else {
                 actionErrors.add("errors.deleteshift", new ActionError("error.deleteShift"));
             }
@@ -149,23 +151,23 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
             return mapping.getInputForward();
         }
 
-        List shiftOIDs = new ArrayList();
+        final List<Integer> shiftOIDs = new ArrayList<Integer>();
         for (int i = 0; i < selectedShifts.length; i++) {
-            shiftOIDs.add(new Integer(selectedShifts[i]));
+            shiftOIDs.add(Integer.valueOf(selectedShifts[i]));
         }
 
-        Object args[] = { shiftOIDs };
+        final Object args[] = { shiftOIDs };
 
         try {
             ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteShifts", args);
-        } catch (FenixServiceException exception) {
-            ActionErrors actionErrors = new ActionErrors();
-            if (exception.getMessage() != null && exception.getMessage().length() > 0) {
-                actionErrors.add("errors.deleteshift", new ActionError(exception.getMessage()));
-            } else {
-                actionErrors.add("errors.deleteshift", new ActionError("error.deleteShift"));
+        } catch (FenixServiceMultipleException e) {
+            final ActionErrors actionErrors = new ActionErrors();
+            
+            for (final DomainException domainException: e.getExceptionList()) {
+        	actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
             }
             saveErrors(request, actionErrors);
+
             return mapping.getInputForward();
         }
 

@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.OutOfPeriodFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidMarksServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -548,7 +548,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         final Object[] args = { getExecutionCourseID(), getEvaluationID(), this.marks };
         try {
         	ServiceUtils.executeService(getUserView(), "WriteMarks", args);
-        } catch (InvalidMarksServiceException e) {
+        } catch (FenixServiceMultipleException e) {
 			for(DomainException domainException: e.getExceptionList()) {
 				addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException.getArgs()));
 			}
@@ -664,7 +664,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             
             return "success";
 
-        } catch (InvalidMarksServiceException e) {
+        } catch (FenixServiceMultipleException e) {
 			for(DomainException domainException: e.getExceptionList()) {
 				addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException.getArgs()));
 			}
