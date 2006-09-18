@@ -74,8 +74,8 @@ public class WorkSchedule extends WorkSchedule_Base {
                             firstWorkPeriod.plus(lastWorkPeriod).minus(lunchDiscount),
                             getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration())
                             .toPeriod());
-
                 } else {
+                    workDaySheet.addNote("IRREG");
                     workDaySheet.setBalanceTime(Duration.ZERO.minus(
                             wsType.getNormalWorkPeriod().getWorkPeriodDuration()).toPeriod());
                     if (wsType.getFixedWorkPeriod() != null) {
@@ -180,7 +180,7 @@ public class WorkSchedule extends WorkSchedule_Base {
                                 if (firstClockingDate.isBefore(wsType.getMeal().getBeginMealBreak())
                                         && new TimePoint(wsType.getMeal().getEndMealBreak(),
                                                 (Attributes) null).isBefore(lastWorkTimePoint)) {
-
+                                    workDaySheet.addNote("IRREG");
                                     workDaySheet.setBalanceTime(Duration.ZERO.minus(
                                             wsType.getNormalWorkPeriod().getWorkPeriodDuration())
                                             .toPeriod());

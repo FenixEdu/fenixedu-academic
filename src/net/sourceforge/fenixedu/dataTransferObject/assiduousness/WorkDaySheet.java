@@ -70,6 +70,13 @@ public class WorkDaySheet implements Serializable {
         this.notes = notes;
     }
 
+    public void addNote(String note) {
+        if (notes.length() != 0) {
+            this.notes = notes.concat(" / ");
+        }
+        this.notes = notes.concat(note);
+    }
+
     public Duration getUnjustifiedTime() {
         return unjustifiedTime;
     }

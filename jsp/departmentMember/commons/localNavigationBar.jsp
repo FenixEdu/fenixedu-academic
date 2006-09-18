@@ -58,16 +58,16 @@
 		  	</html:link>  
 		</li> 				
 		<% } %>
-		<%-- 
+		
 		<%IUserView user = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
             if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.ASSIDUOUSNESS_RESPONSIBLE)) {%>
             <br/>
 			<li class="navheader"><bean:message key="title.assiduousnessResponsible" bundle="ASSIDUOUSNESS_RESOURCES"/></li>
 			<li><html:link page="/assiduousnessResponsible.do?method=showEmployeeList">
-				<bean:message key="link.showEmployeeWorkSheet" bundle="ASSIDUOUSNESS_RESOURCES"/>
+				<bean:message key="label.employees" bundle="ASSIDUOUSNESS_RESOURCES"/>
 			</html:link></li>
 		<% } %>
-		--%>
+		
 		
 		<%-- TeacherServiceDistribution entry point
 		<br/>

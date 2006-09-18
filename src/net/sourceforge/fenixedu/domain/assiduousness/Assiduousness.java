@@ -115,31 +115,31 @@ public class Assiduousness extends Assiduousness_Base {
                 }
                 workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
             }
-        } 
-//      TODO remove comment in 2007
-//        else {
-//            if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
-//                final Timeline timeline = new Timeline(day);
-//                Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
-//                        .iterator();
-//                timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
-//                        .getLeaves(), attributesIt, day);
-//                Duration worked = timeline.calculateWorkPeriodDuration(null, timeline.getTimePoints()
-//                        .iterator().next(), new TimePoint(defaultStartWorkDay, AttributeType.NULL),
-//                        new TimePoint(defaultEndWorkDay, AttributeType.NULL), null);
-//                Duration weeklyRestDuration = worked;
-//                if (worked.isLongerThan(normalWorkDayDuration)) {
-//                    weeklyRestDuration = normalWorkDayDuration;
-//                }
-//                final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
-//                if (dayOfWeek.equals(WeekDay.SATURDAY) || isDayHoliday) {
-//                    workDaySheet.setComplementaryWeeklyRest(weeklyRestDuration);
-//                } else if (dayOfWeek.equals(WeekDay.SUNDAY)) {
-//                    workDaySheet.setWeeklyRest(weeklyRestDuration);
-//                }
-//                workDaySheet.setBalanceTime(worked.toPeriod());
-//            }
-//        }
+        }
+        // TODO remove comment in 2007
+        // else {
+        // if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
+        // final Timeline timeline = new Timeline(day);
+        // Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
+        // .iterator();
+        // timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
+        // .getLeaves(), attributesIt, day);
+        // Duration worked = timeline.calculateWorkPeriodDuration(null, timeline.getTimePoints()
+        // .iterator().next(), new TimePoint(defaultStartWorkDay, AttributeType.NULL),
+        // new TimePoint(defaultEndWorkDay, AttributeType.NULL), null);
+        // Duration weeklyRestDuration = worked;
+        // if (worked.isLongerThan(normalWorkDayDuration)) {
+        // weeklyRestDuration = normalWorkDayDuration;
+        // }
+        // final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
+        // if (dayOfWeek.equals(WeekDay.SATURDAY) || isDayHoliday) {
+        // workDaySheet.setComplementaryWeeklyRest(weeklyRestDuration);
+        // } else if (dayOfWeek.equals(WeekDay.SUNDAY)) {
+        // workDaySheet.setWeeklyRest(weeklyRestDuration);
+        // }
+        // workDaySheet.setBalanceTime(worked.toPeriod());
+        // }
+        // }
         return workDaySheet;
     }
 
@@ -244,14 +244,14 @@ public class Assiduousness extends Assiduousness_Base {
         return null;
     }
 
-   public boolean isStatusActive(YearMonthDay beginDate, YearMonthDay endDate) {
+    public boolean isStatusActive(YearMonthDay beginDate, YearMonthDay endDate) {
         for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
             if (assiduousnessStatusHistory.getEndDate() != null) {
                 Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate()
                         .toDateMidnight(), assiduousnessStatusHistory.getEndDate().toDateMidnight()
-                        .plus(3600));
+                        .plusDays(1));
                 Interval interval = new Interval(beginDate.toDateMidnight(), endDate.toDateMidnight()
-                        .plus(3600));
+                        .plusDays(1));
                 if (interval.overlaps(statusInterval)
                         && assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
                     return true;
@@ -267,18 +267,19 @@ public class Assiduousness extends Assiduousness_Base {
         }
         return false;
     }
-   
+
     public List<Campus> getCampusForInterval(YearMonthDay begin, YearMonthDay end) {
-    
-           List<AssiduousnessCampusHistory> histories = this.getAssiduousnessCampusHistories();
-           List<Campus> campus = new ArrayList<Campus> ();
-           DateInterval targetInterval = new DateInterval(begin,end);
-           for(AssiduousnessCampusHistory history : histories) {
-               DateInterval historyInterval = new DateInterval(history.getBeginDate(),history.getEndDate());
-               if(historyInterval.containsInterval(targetInterval)) {
-                   campus.add(history.getCampus());
-               }
-           }
-           return campus;
+
+        List<AssiduousnessCampusHistory> histories = this.getAssiduousnessCampusHistories();
+        List<Campus> campus = new ArrayList<Campus>();
+        DateInterval targetInterval = new DateInterval(begin, end);
+        for (AssiduousnessCampusHistory history : histories) {
+            DateInterval historyInterval = new DateInterval(history.getBeginDate(), history.getEndDate());
+            if (historyInterval.containsInterval(targetInterval)) {
+                campus.add(history.getCampus());
+            }
+        }
+        return campus;
     }
+
 }

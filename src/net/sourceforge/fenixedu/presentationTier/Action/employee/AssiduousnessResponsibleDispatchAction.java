@@ -97,7 +97,7 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
                 }
             }
         }
-        Collections.sort(unitEmployeesList, new BeanComparator("unit.name"));
+        Collections.sort(unitEmployeesList, new BeanComparator("unit.costCenterCode"));
         request.setAttribute("unitEmployeesList", unitEmployeesList);
         return mapping.findForward("show-employee-list");
     }

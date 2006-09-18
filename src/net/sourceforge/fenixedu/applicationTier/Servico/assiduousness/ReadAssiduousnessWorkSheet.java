@@ -45,9 +45,9 @@ public class ReadAssiduousnessWorkSheet extends Service {
         YearMonthDay lowerBeginDate = beginDate.minusDays(8);
         Duration totalBalance = Duration.ZERO;
         Duration totalUnjustified = Duration.ZERO;
-//      TODO remove comment in 2007
-//        Duration totalComplementaryWeeklyRestBalance = Duration.ZERO;
-//        Duration totalWeeklyRestBalance = Duration.ZERO;
+        // TODO remove comment in 2007
+        // Duration totalComplementaryWeeklyRestBalance = Duration.ZERO;
+        // Duration totalWeeklyRestBalance = Duration.ZERO;
 
         HashMap<YearMonthDay, WorkSchedule> workScheduleMap = new HashMap<YearMonthDay, WorkSchedule>();
         for (YearMonthDay thisDay = lowerBeginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
@@ -125,7 +125,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
 
             final Schedule schedule = assiduousness.getSchedule(thisDay);
 
-            if (schedule == null) {
+            if (schedule == null || !assiduousness.isStatusActive(thisDay, thisDay)) {
                 workDaySheet.setNotes("");
                 workDaySheet.setBalanceTime(new Period(0));
                 workDaySheet.setUnjustifiedTime(Duration.ZERO);
@@ -166,15 +166,15 @@ public class ReadAssiduousnessWorkSheet extends Service {
                     workDaySheet.setWorkScheduleAcronym(workSchedule.getWorkScheduleType().getAcronym());
                     workSheet.add(workDaySheet);
                 } else {
-//                  TODO remove comment in 2007
-//                    if (!thisDay.equals(today)) {
-//                        workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, thisDay,
-//                                isDayHoliday);
-//                        totalComplementaryWeeklyRestBalance = totalComplementaryWeeklyRestBalance
-//                                .plus(workDaySheet.getComplementaryWeeklyRest());
-//                        totalWeeklyRestBalance = totalWeeklyRestBalance.plus(workDaySheet
-//                                .getWeeklyRest());
-//                    }
+                    // TODO remove comment in 2007
+                    // if (!thisDay.equals(today)) {
+                    // workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, thisDay,
+                    // isDayHoliday);
+                    // totalComplementaryWeeklyRestBalance = totalComplementaryWeeklyRestBalance
+                    // .plus(workDaySheet.getComplementaryWeeklyRest());
+                    // totalWeeklyRestBalance = totalWeeklyRestBalance.plus(workDaySheet
+                    // .getWeeklyRest());
+                    // }
                     for (final Leave leave : leavesList) {
                         if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE
                                 && leave.getJustificationMotive().getDayType() != DayType.WORKDAY
@@ -214,9 +214,9 @@ public class ReadAssiduousnessWorkSheet extends Service {
         employeeWorkSheet.setTotalBalance(totalBalance);
         employeeWorkSheet.setUnjustifiedBalance(totalUnjustified);
 
-        //TODO remove comment in 2007
-//        employeeWorkSheet.setComplementaryWeeklyRest(totalComplementaryWeeklyRestBalance);
-//        employeeWorkSheet.setWeeklyRest(totalWeeklyRestBalance);
+        // TODO remove comment in 2007
+        // employeeWorkSheet.setComplementaryWeeklyRest(totalComplementaryWeeklyRestBalance);
+        // employeeWorkSheet.setWeeklyRest(totalWeeklyRestBalance);
         return employeeWorkSheet;
     } // if returns false the clocking belongs to the clocking date // if returns true it may
 

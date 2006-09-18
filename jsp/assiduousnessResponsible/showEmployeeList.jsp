@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <em class="invisible"><bean:message key="title.assiduousnessResponsible" bundle="ASSIDUOUSNESS_RESOURCES"/></em>
-<h2><bean:message key="link.showEmployeeWorkSheet" bundle="ASSIDUOUSNESS_RESOURCES"/></h2>
+<h2><bean:message key="label.employees" bundle="ASSIDUOUSNESS_RESOURCES"/></h2>
 <br/>
 <logic:messagesPresent message="true">
 	<html:messages id="message" message="true" bundle="ASSIDUOUSNESS_RESOURCES">
