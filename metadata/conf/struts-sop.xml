@@ -120,35 +120,12 @@
         <form-property name="selectedItems" type="java.lang.String[]" size="0"/>
       </form-bean>
 
-	  <!-- AULAS -->
-      <!-- Dynamic-FormBean para CriarAula -->
-      <form-bean name="aulaForm"
-                 type="org.apache.struts.validator.DynaValidatorActionForm"
-                 dynamic="true">
-        <form-property name="diaSemana" type="java.lang.String"/>
-        <form-property name="horaInicio" type="java.lang.String"/>
-        <form-property name="minutosInicio" type="java.lang.String"/>
-        <form-property name="horaFim" type="java.lang.String"/>
-        <form-property name="minutosFim" type="java.lang.String"/>
-        <form-property name="tipoAula" type="java.lang.String"/>
-        <form-property name="courseInitials" type="java.lang.String"/>
-        <form-property name="nomeSala" type="java.lang.String"/>
-        <form-property name="page" type="java.lang.Integer"/>
-      </form-bean>
-
       <!-- Dynamic-FormBean para EscolherDisciplinaExecucao -->
       <form-bean name="chooseExecutionCourseForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="courseInitials" type="java.lang.String"/>
         <form-property name="page" type="java.lang.Integer"/>        
-      </form-bean>
-
-      <!-- Dynamic-FormBean para ManipularAulas -->
-      <form-bean name="manipularAulasForm"
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="indexAula" type="java.lang.Integer"/>
       </form-bean>
 
 	  <!-- SALAS -->
@@ -206,16 +183,6 @@
 	  </form-bean>
 
 	  <!-- TURNOS -->
-      <!-- Dynamic-FormBean para CriarTurno -->
-      <form-bean name="criarTurnoForm"
-                          type="org.apache.struts.validator.DynaValidatorForm"
-                          dynamic="true">
-        <form-property name="nome" type="java.lang.String"/>
-        <form-property name="courseInitials" type="java.lang.String"/>
-        <form-property name="tipoAula" type="java.lang.String"/>
-        <form-property name="lotacao" type="java.lang.Integer"/>
-      </form-bean>
-      
       <form-bean name="shiftNameForm"
                 type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
@@ -235,13 +202,6 @@
         <form-property name="indexDisciplinaExecucao" type="java.lang.Integer"/>
       </form-bean>
 
-      <!-- Dynamic-FormBean para ManipularTurnos -->
-      <form-bean name="manipularTurnosForm"
-                          type="org.apache.struts.validator.DynaValidatorForm"
-                          dynamic="true">
-        <form-property name="indexTurno" type="java.lang.Integer"/>
-      </form-bean>
-
       <!-- Dynamic-FormBean para EditarTurno -->
       <form-bean name="editarTurnoForm"
                           type="org.apache.struts.validator.DynaValidatorForm"
@@ -250,15 +210,6 @@
         <form-property name="lotacao" type="java.lang.Integer"/>
       </form-bean>
       
-      
-      
-      <!-- Dynamic-FormBean para Editar Aulas De Turno -->
-      <form-bean name="editarAulasDeTurnoForm"
-                          type="org.apache.struts.validator.DynaValidatorForm"
-                          dynamic="true">
-        <form-property name="indexAula" type="java.lang.Integer"/>
-      </form-bean>
-
 	  <!-- TURMAS -->
 	      <!-- Dynamic-FormBean para Criar Turma -->
      <form-bean name="classForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -554,9 +505,7 @@
       <action path="/gestaoHorarios" forward="/gestaoHorarios.jsp"/>
       <action path="/principalAulas" forward="/principalAulas.jsp"/>
       <action path="/principalTurnos" forward="/principalTurnos.jsp"/>
-      <action path="/criarTurno" forward="/criarTurno.jsp"/>
       <action path="/escolherDisciplinaETipo" forward="/escolherDisciplinaETipo.jsp"/>
-      <action path="/manipularTurnos" forward="/manipularTurnos.jsp"/>
       <action path="/createExamComment" forward="/defineExamComment.jsp"/>
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
@@ -630,46 +579,6 @@
     	<forward name="choose" path="/choosePavillionsToViewRoomsSchedules.jsp"/>
     	<forward name="list" path="/viewAllRoomsSchedules.jsp"/>
 	</action>     
-
-	 <!-- AULAS -->
-      <action path="/prepararAula"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararAulaFormAction"
-              scope="request">
-          <forward name="Sucesso" path="/criarAula.jsp"/>
-      </action>
-
-      <action path="/escolherAulas"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.EscolherAulasFormAction"
-              scope="request">
-          <forward name="Sucesso" path="/manipularAulas.jsp"/>
-      </action>
-     
-      <action attribute="manipularAulasForm"
-              input="/manipularAulas.jsp"
-              name="manipularAulasForm"
-              path="/manipularAulasForm"
-              scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManipularAulasFormAction">
-         <forward name="Editar" path="/prepararEditarAula.do"/>
-         <forward name="Apagar" path="/apagarAula.do"/>
-         <forward name="Voltar" path="/gestaoHorarios.do"/>
-      </action>
-
-      <action path="/apagarAula"
-              input="/manipularAulas.jsp"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ApagarAulaFormAction">
-          <forward name="Sucesso" path="/manipularAulas.jsp"/>
-      </action>
-
-     <action path="/prepararEditarAula"
-     	     attribute="aulaForm"
-             name="aulaForm"
-             validate="false"
-             type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararEditarAulaFormAction"
-             input="manipularAulas.jsp"
-             scope="request">
-         <forward name="Sucesso" path="/editarAula.jsp"/>
-     </action>
 
       <!-- Gestao de Salas -->
       <action path="/prepararSalaForm"
@@ -798,112 +707,6 @@
      	 
    	</action>
       
-	  <!-- TURNOS -->
-      <action path="/prepararCriarTurno"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararCriarTurnoFormAction"
-              scope="request">
-          <forward name="Sucesso" path="/criarTurno.jsp"/>
-      </action>
-      <action attribute="criarTurnoForm"
-              input="/prepararCriarTurno.do"
-              name="criarTurnoForm"
-              path="/criarTurnoForm"
-              scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.CriarTurnoFormAction">
-		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-				   key="resources.Action.exceptions.ExistingActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-                   />              
-        <forward name="Sucesso" path="/gestaoHorarios.do"/> 
-      </action>
-
-         
-    <action path="/prepararManipularTurnos"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararManipularTurnosFormAction"
-              scope="request">
-          <forward name="Sucesso" path="/manipularTurnos.jsp"/>
-      </action>
-      
-      <action attribute="manipularTurnosForm"
-              input="/prepararManipularTurnos.do"
-              name="manipularTurnosForm"
-              path="/manipularTurnosForm"
-              scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManipularTurnosFormAction">
-        <forward name="Ver Turno" path="/prepararVerTurno.do"/>
-        <forward name="Editar Turno" path="/prepararEditarTurno.do"/>
-        <forward name="Apagar Turno" path="/apagarTurno.do"/>
-        <forward name="Ver Alunos Inscritos" path="/prepararVerAlunosDeTurno.do"/>
-        <forward name="Voltar" path="/gestaoHorarios.do"/>
-      </action>
-      
-     <action path="/prepararVerTurno"
-             input="/manipularTurnos.jsp"
-             type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararVerTurnoFormAction">
-         <forward name="Sucesso" path="/verTurno.jsp"/>
-     </action>
-
-     <action path="/prepararEditarTurno"
-      		  attribute="editarTurnoForm"
-      		  name="editarTurnoForm"
-      		  validate="false"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararEditarTurnoFormAction"
-              input="manipularTurnos.jsp"
-              scope="request">
-          <forward name="Sucesso" path="/editarTurno.jsp"/>
-      </action>
-
-      <action attribute="editarTurnoForm"
-              input="/prepararEditarTurno.do"
-              name="editarTurnoForm"
-              path="/editarTurnoForm"
-              scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.EditarTurnoFormAction">
-         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-         	   key="resources.Action.exceptions.ExistingActionException"
-               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-               />     
-        <forward name="Guardar" path="/prepararManipularTurnos.do"/>
-      </action>
-
-      <action path="/prepararEditarAulasDeTurno"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararEditarAulasDeTurnoFormAction"
-              scope="request">
-          <forward name="Sucesso" path="/editarAulasDeTurno.jsp"/>
-      </action>
-
-      <action attribute="editarAulasDeTurnoForm"
-              input="/editarAulasDeTurno.jsp"
-              name="editarAulasDeTurnoForm"
-              path="/editarAulasDeTurnoForm"
-              scope="session"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.EditarAulasDeTurnoFormAction"
-              validate="false"
-              >
-        <forward name="Adicionar Aulas" path="/prepararAdicionarAulasDeTurno.do"/>
-        <forward name="Remover Aula" path="/removerAulaDeTurno.do"/>        
-      </action>
-
-      <action attribute="editarAulasDeTurnoForm"
-              name="editarAulasDeTurnoForm"
-      		  path="/removerAulaDeTurno"
-              scope="request"      		  
-              input="/prepararEditarAulasDeTurno.do"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.RemoverAulaDeTurnoFormAction"
-              validate="true"
-              >
-          <forward name="Sucesso" path="/prepararEditarAulasDeTurno.do"/>
-      </action>
-
-              
-
-     <action path="/prepararVerAlunosDeTurno"
-             input="/manipularTurnos.jsp"
-             type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararVerAlunosDeTurnoFormAction">
-         <forward name="Sucesso" path="/verAlunosDeTurno.jsp"/>
-     </action>
-
-
      <!-- TURMAS -->      
       <action parameter="method"
 		      path="/ClassesManagerDA"
@@ -958,7 +761,6 @@
               type="net.sourceforge.fenixedu.presentationTier.Action.sop.ChooseExecutionCourseAction"
               validate="true"
               >
-        <forward name="forwardChoose" path="/prepararManipularTurnos.do"/>
       	<forward name="showForm" path="/escolherDisciplinaExecucao.jsp"/>	
       </action>
      
