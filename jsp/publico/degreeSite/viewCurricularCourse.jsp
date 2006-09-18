@@ -111,8 +111,7 @@
 	<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.parentContexts}" var="context">
 		<h:outputText value="<div class=''>" escape="false"/>
 		<h:outputText value="<p>#{publicDegreeInfoBundle['public.group']}: " escape="false"/>
-		<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{context.parentCourseGroup.oneFullName}</p>" escape="false"/>
-		<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{context.parentCourseGroup.oneFullNameEn}</p>" escape="false"/>
+		<h:outputText value="#{context.parentCourseGroup.oneFullName}</p>" escape="false"/>
 		<h:outputText value="<p class='mvert05'>#{publicDegreeInfoBundle['public.curricular.period']}: " escape="false"/>
 		<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
 		<h:outputText value="</div>" escape="false"/>

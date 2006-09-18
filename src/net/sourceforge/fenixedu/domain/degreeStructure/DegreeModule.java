@@ -8,10 +8,12 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 
 public abstract class DegreeModule extends DegreeModule_Base {
@@ -31,7 +33,9 @@ public abstract class DegreeModule extends DegreeModule_Base {
      * 
      * @return A string with one possible full name of this course group
      */
-    private String getOneFullName(boolean pt) {
+    public String getOneFullName() {
+	boolean pt = !(LanguageUtils.getUserLanguage() == Language.en);
+	
         StringBuilder result = new StringBuilder();
         
         DegreeModule iter = this; 
@@ -47,14 +51,6 @@ public abstract class DegreeModule extends DegreeModule_Base {
             
             return result.toString();
         }
-    }
-    
-    public String getOneFullName() {
-        return getOneFullName(true);
-    }
-
-    public String getOneFullNameEn() {
-        return getOneFullName(false);
     }
     
     public void delete() {

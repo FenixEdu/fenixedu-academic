@@ -64,8 +64,7 @@
 			</h:outputLink>
 			<h:outputText value=" > "/>
 			<h:outputLink value="../degreeSite/viewCurricularCourse.faces">
-				<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{curricularCourse.name}" escape="false"/>
-				<h:outputText rendered="#{CompetenceCourseManagement.renderInEnglish}" value="#{curricularCourse.nameEn}" escape="false"/>
+				<h:outputText value="#{curricularCourse.oneFullName}" escape="false"/>
 				<f:param name="degreeID" value="#{curricularCourse.parentDegreeCurricularPlan.degree.idInternal}"/>
 				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
 				<f:param name="curricularCourseID" value="#{curricularCourse.idInternal}"/>
