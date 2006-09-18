@@ -6,65 +6,55 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
-	<bean:define id="resultPublicationType" name="resultPublicationType" type="java.lang.String"/>
-	<bean:define id="publicationId" name="publication" property="idInternal" />
-	<bean:define id="documents" name="publication" property="resultDocumentFiles"/>
-	<bean:define id="resultType" name="publication" property="class.simpleName"/>
-	<bean:define id="newParticipationsSchema" value="result.participations" type="java.lang.String"/>
-	<logic:present name="participationsSchema">
-		<bean:define id="newParticipationsSchema" name="participationsSchema" type="java.lang.String"/>
-	</logic:present>
-	
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></h2>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.details.link"/></h3>
+	<bean:define id="resultPublicationType" name="resultPublicationType"/>
+	<bean:define id="resultId" name="result" property="idInternal"/>
+	<bean:define id="resultType" name="result" property="class.simpleName"/>
+	<bean:define id="result" name="result"/>	
+	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>"/>
 
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.details.link"/></h3>
+	
+	<%-- Last Modification Date --%>
+	<p class="mtop0 mbottom2">
+		<span style="background-color: #eee; padding: 0.25em;">
+			<bean:message key="label.lastModificationDate"/>:&nbsp;
+				<b><fr:view name="result" property="lastModificationDate"/></b> (<fr:view name="result" property="modifyedBy"/>)
+		</span>
+	</p>
+	
 	<%-- Participations --%>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>
-	<fr:view name="publication" property="resultParticipations" schema="<%=newParticipationsSchema%>" layout="tabular">
-		<fr:layout>
-			<fr:property name="sortBy" value="personOrder"/>
-		</fr:layout>
-	</fr:view>
-	<html:link page="<%="/result/resultParticipationManagement.do?method=prepareEditParticipation&resultId=" + publicationId %>">
+	<b><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></b>:
+	<html:link page="<%="/resultParticipations/prepareEdit.do?" + parameters %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.participations.link" />
 	</html:link>
-	<br/><br/>
+	<jsp:include page="../commons/viewParticipations.jsp"/>
 	
 	<%-- Data --%>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication"/>
-	&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+resultPublicationType%>"/>)</h3>
-	<fr:view name="publication" layout="tabular" schema="<%="result.publication.details."+resultPublicationType %>">
+	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/>
+		&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+resultPublicationType %>"/>)</b>:
+		<html:link page="<%="/resultPublications/prepareEditData.do?" + parameters %>">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data" />
+		</html:link>
+	</p>
+	<fr:view name="result" layout="tabular" schema="<%="result.publication.details."+resultPublicationType %>">
  		<fr:layout name="tabular">
-    	   	<fr:property name="classes" value="style1"/>
+    	    <fr:property name="classes" value="tstyle4"/>
 	       	<fr:property name="columnClasses" value="listClasses,,"/>
 		   </fr:layout>
 	</fr:view>
-	<html:link page="<%="/publications/publicationsManagement.do?method=prepareEditPublicationData&publicationId="+ publicationId%>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data" />
-	</html:link>
 	<br/>
 	
 	<%-- Documents --%>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></h3>
-	<logic:empty name="documents">
-		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.emptyList"/></em></p>
-	</logic:empty>
-	<logic:notEmpty name="documents">
-		<fr:view name="documents" schema="resultDocumentFile.summary">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4"/>
-				<fr:property name="columnClasses" value=",,,acenter"/>
-				<fr:property name="sortBy" value="uploadTime=desc"/>
-			</fr:layout>
-		</fr:view>
-	</logic:notEmpty>
-	<html:link page="<%="/resultDocumentFiles/prepareEdit.do?resultId=" + publicationId + "&resultType=" + resultType %>">
+	<b><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></b>:
+	<html:link page="<%="/resultDocumentFiles/prepareEdit.do?" + parameters %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.documents.link" />
 	</html:link>
+	<jsp:include page="../commons/viewDocumentFiles.jsp"/>
 	<br/>
 	<br/>
 	
-	<html:link page="/publications/publicationsManagement.do?method=listPublications">
+	<html:link page="/resultPublications/listPublications.do">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.backTo.link" />
 	</html:link>
 </logic:present>

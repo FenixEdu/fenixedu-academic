@@ -9,7 +9,7 @@
 	<h2/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.management.title"/></h2>
 		
 	<html:link module="/researcher" page="/resultPatents/prepareCreate.do">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.create.link" />
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.create.link"/>
 	</html:link>
 	
 	<%-- Action messages --%>
@@ -29,7 +29,7 @@
 		<fr:view name="resultPatents" layout="tabular" schema="result.patentShortList" >
 			<fr:layout>
 				<fr:property name="classes" value="tstyle4"/>
-				<fr:property name="columnClasses" value=",,,acenter"/>
+				<fr:property name="columnClasses" value=",acenter,acenter,acenter"/>
 				<fr:property name="sortBy" value="lastModificationDate=desc"/>
 				
 				<fr:property name="link(edit)" value="/resultPatents/prepareEdit.do"/>
@@ -47,4 +47,3 @@
 		</fr:view>
 	</logic:notEmpty>
 </logic:present>
-<br/>

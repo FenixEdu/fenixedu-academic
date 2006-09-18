@@ -7,12 +7,12 @@
 
 <logic:present role="RESEARCHER">
 	<!-- Titles -->
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.superUseCase.title"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.create.link"/></h2>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.management.title"/></em>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.create.link"/></h3>
 	
 	<!-- Author name -->
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>
-	<fr:view name="UserView" property="person.name"/>
+	<p><b>	<bean:message bundle="RESEARCHER_RESOURCES" key="label.author"/>:</b>
+			<fr:view name="UserView" property="person.name"/></p>
 	
 	<%-- Warning/Error messages --%>
 	<logic:messagesPresent name="messages" message="true">
@@ -21,18 +21,18 @@
 		</html:messages>
 	</logic:messagesPresent>
 	
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></h3>	
+	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></b></p>
 	<fr:create 	id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
 				schema="patent.create"
-				action="/patents/management.do?method=prepareEdit">
+				action="/resultPatents/prepareEdit.do">
 		<fr:hidden slot="participation" name="UserView" property="person"/>
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
-	    <fr:destination name="exception" path="/patents/management.do?method=prepareCreate"/>
-	    <fr:destination name="invalid" path="/patents/management.do?method=prepareCreate"/>
-	    <fr:destination name="cancel" path="/patents/management.do?method=management"/>
+	    <fr:destination name="exception" path="/resultPatents/prepareCreate.do"/>
+	    <fr:destination name="invalid" path="/resultPatents/prepareCreate.do"/>
+	    <fr:destination name="cancel" path="/resultPatents/management.do"/>
 	</fr:create>
 </logic:present>
 <br/>

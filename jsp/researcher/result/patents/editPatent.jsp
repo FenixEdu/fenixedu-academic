@@ -6,23 +6,21 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
-	<bean:define id="patentId" name="patent" property="idInternal"/>
-	<bean:define id="resultType" name="patent" property="class.simpleName"/>
-	<bean:define id="participations" name="patent" property="resultParticipations"/>
-	<bean:define id="documents" name="patent" property="resultDocumentFiles"/>	
-	<bean:define id="eventAssociations" name="patent" property="resultEventAssociations"/>
-	<bean:define id="unitAssociations" name="patent" property="resultUnitAssociations"/>
+	<bean:define id="resultId" name="result" property="idInternal"/>
+	<bean:define id="result" name="result"/>
+	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + result.getClass().getSimpleName()%>"/>
 	
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.superUseCase.title"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.edit.useCase.title"/></h2>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.management.title"/></em>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.edit.useCase.title"/></h3>
 	
 	<%-- Last Modification Date --%>
-	<fr:view name="patent" schema="result.modifyedBy">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4"/>
-		</fr:layout>
-	</fr:view>
-
+	<p class="mtop0 mbottom2">
+		<span style="background-color: #eee; padding: 0.25em;">
+			<bean:message key="label.lastModificationDate"/>:&nbsp;
+			<b><fr:view name="result" property="lastModificationDate"/></b> (<fr:view name="result" property="modifyedBy"/>)
+		</span>
+	</p>
+				
 	<%-- Warnings--%>
 	<logic:messagesPresent name="messages" message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
@@ -31,97 +29,48 @@
 	</logic:messagesPresent>
 
 	<%-- Participations --%>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>
-	<logic:empty name="participations">
-		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.emptyList"/></em></p>
-	</logic:empty>
-	<logic:notEmpty name="participations">
-		<fr:view name="participations" schema="result.participations">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4"/>
-				<fr:property name="columnClasses" value=",,,acenter"/>
-				<fr:property name="sortBy" value="personOrder"/>
-			</fr:layout>
-		</fr:view>
-	</logic:notEmpty>
-	<html:link page="<%="/resultParticipations/prepareEdit.do?resultId=" + patentId + "&resultType=" + resultType %>">
+	<b><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></b>:
+	<html:link page="<%="/resultParticipations/prepareEdit.do?" + parameters %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.participations.link" />
 	</html:link>
-	<br/>	
-
+	<jsp:include page="../commons/viewParticipations.jsp"/>
+	<br/>
+	
 	<%-- Data --%>		
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></h3>
-	<fr:view name="patent" schema="patent.viewEditData">
+	<b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></b>:
+	<html:link page="<%="/resultPatents/prepareEditData.do?" + parameters %>">
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data" />
+	</html:link>
+	<fr:view name="result" schema="patent.viewEditData">
 	    <fr:layout name="tabular">
     	    <fr:property name="classes" value="tstyle4"/>
         	<fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
 	</fr:view>
-	<html:link page="<%="/resultPatents/prepareEditData.do?resultId=" + patentId %>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data" />
-	</html:link>
 	<br/>
 	
 	<%-- Documents --%>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></h3>
-	<logic:empty name="documents">
-		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.emptyList"/></em></p>
-	</logic:empty>
-	<logic:notEmpty name="documents">
-		<fr:view name="documents" schema="resultDocumentFile.summary">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4"/>
-				<fr:property name="columnClasses" value=",,,acenter"/>
-				<fr:property name="sortBy" value="uploadTime=desc"/>
-			</fr:layout>
-		</fr:view>
-	</logic:notEmpty>
-	<html:link page="<%="/resultDocumentFiles/prepareEdit.do?resultId=" + patentId + "&resultType=" + resultType %>">
+	<b><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></b>:
+	<html:link page="<%="/resultDocumentFiles/prepareEdit.do?" + parameters %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.documents.link" />
 	</html:link>
+	<jsp:include page="../commons/viewDocumentFiles.jsp"/>
 	<br/>
 	
-	<%-- Event Associations --%>		
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.title.label"/></h3>
-	<logic:empty name="eventAssociations">
-		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.emptyList"/></em></p>
-	</logic:empty>
-	<logic:notEmpty name="eventAssociations">
-		<fr:view name="eventAssociations" schema="resultEventAssociation.summary">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4"/>
-				<fr:property name="columnClasses" value=",,,acenter"/>
-			</fr:layout>
-		</fr:view>
-	</logic:notEmpty>
-	<html:link page="<%="/resultAssociations/prepareEditEventAssociations.do?resultId=" + patentId + "&resultType=" + resultType %>">
+	<%-- Event Associations --%>
+	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.title.label"/></b>:
+	<html:link page="<%="/resultAssociations/prepareEditEventAssociations.do?" + parameters %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.eventAssociations.link" />
 	</html:link>
+	<jsp:include page="../commons/viewEventAssociations.jsp"/>
 	<br/>
 	
-	<%-- Unit Associations --%>		
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></h3>
-	<logic:empty name="unitAssociations">
-		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.emptyList"/></em></p>
-	</logic:empty>
-	<logic:notEmpty name="unitAssociations">
-		<fr:view name="unitAssociations" schema="resultUnitAssociation.summary">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4"/>
-				<fr:property name="columnClasses" value=",,,acenter"/>
-			</fr:layout>
-		</fr:view>
-	</logic:notEmpty>
-	<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?resultId=" + patentId + "&resultType=" + resultType %>">
+	<%-- Unit Associations --%>
+	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b>:
+	<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?" + parameters %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.unitAssociations.link" />
-	</html:link>
-	<br/>
-	<br/>
-	
-	<%-- Delete Result Patent --%>
-	<h3><html:link page="<%= "/resultPatents/prepareDelete.do?resultId=" + patentId + "&from=edit" %>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.delete.useCase.title" />
-	</html:link></h3>
+	</html:link>	
+	<jsp:include page="../commons/viewUnitAssociations.jsp"/>
 	<br/>
 	<br/>
 	

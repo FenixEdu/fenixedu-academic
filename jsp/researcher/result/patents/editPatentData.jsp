@@ -6,20 +6,12 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
-	<bean:define id="actionPath">
-		/resultPatents/prepareEdit.do?resultId=<bean:write name="patent" property="idInternal"/>
-	</bean:define>
-	<bean:define id="exceptionPath">
-		/resultPatents/prepareEditData.do?resultId=<bean:write name="patent" property="idInternal"/>
-	</bean:define>
-	<bean:define id="cancelPath">
-		<%= actionPath %>
-	</bean:define>
-
+	<bean:define id="resultId" name="result" property="idInternal"/>
+	<bean:define id="parameter" value="<%= "resultId=" + resultId %>"/>
+	
 	<%-- Title messages --%>
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.superUseCase.title"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.edit.useCase.title"/></h2>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></h3>	
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.management.title"/></em>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data"/></h3>
 	
 	<%-- Warning/Error messages --%>
 	<logic:messagesPresent name="messages" message="true">
@@ -28,16 +20,16 @@
 		</html:messages>
 	</logic:messagesPresent>
 	
-	<%-- Form edit Patent Data --%>		
-	<fr:edit 	id="editPatent" name="patent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
-				schema="patent.edit" action="<%= actionPath %>">
+	<%-- Form edit Patent Data --%>
+	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></b></p>
+	<fr:edit 	id="editPatent" name="result" schema="patent.edit" 
+				action="<%= "/resultPatents/prepareEdit.do?" + parameter %>">
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
-	    <fr:destination name="exception" path="<%= exceptionPath %>"/>
-	    <fr:destination name="invalid" path="<%= exceptionPath %>"/>
-   	    <fr:destination name="cancel" path="<%= cancelPath %>"/>
+	    <fr:destination name="exception" path="<%= "/resultPatents/prepareEditData.do?" + parameter %>"/>
+	    <fr:destination name="invalid" path="<%= "/resultPatents/prepareEditData.do?" + parameter %>"/>
+   	    <fr:destination name="cancel" path="<%= "/resultPatents/prepareEdit.do?" + parameter %>"/>
 	</fr:edit>
 </logic:present>
-<br/>

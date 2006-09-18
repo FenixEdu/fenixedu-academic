@@ -50,32 +50,35 @@
 			</fr:layout>
 		</fr:view>
 
-
 		<!-- Publications -->
-		
 		<h3 id='publicationsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.publicationsTitle"/> </span> </h3>
-		
-		<fr:view name="resultPublications">
-			<fr:layout>
-				<fr:property name="eachLayout" value="values-comma"/>
-				<fr:property name="eachSchema" value="result.simple.detail"/>
-			</fr:layout>
-		</fr:view>
+		<div style="padding: 00px 00px 00px 20px" >
+			<logic:notEmpty name="resultPublications">
+				<fr:view name="resultPublications">
+					<fr:layout name="tabular-list">
+						<fr:property name="subLayout" value="values"/>
+						<fr:property name="subSchema" value="result.simple.detail"/>
+					</fr:layout>
+				</fr:view>
+			</logic:notEmpty>
+			<logic:empty name="resultPublications">
+				<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.emptyList"/></em></p>
+			</logic:empty>
+		</div>		
 		
 		<!-- Patents -->
 		<h3 id='patentsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.patentsTitle"/> </span> </h3>
-		
-		<fr:view name="resultPatents" layout="tabular-list">
-			<fr:layout>
-				<fr:property name="subLayout" value="values"/>
-				<fr:property name="subSchema" value="result.simple.detail"/>
-			</fr:layout>
-		</fr:view>
-		<logic:empty name="resultPatents">
-			<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.emptyList"/></em></p>
-		</logic:empty>
-
+		<div style="padding: 00px 00px 00px 20px" >
+			<logic:notEmpty name="resultPatents">
+				<fr:view name="resultPatents">
+					<fr:layout name="tabular-list">
+						<fr:property name="subLayout" value="values"/>
+						<fr:property name="subSchema" value="result.simple.detail"/>
+					</fr:layout>
+				</fr:view>
+			</logic:notEmpty>
+			<logic:empty name="resultPatents">
+				<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.emptyList"/></em></p>
+			</logic:empty>
+		</div>
 </logic:present>
-		
-<br/>
-<br/>

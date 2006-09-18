@@ -8,10 +8,12 @@
 
 <logic:present role="RESEARCHER">		
 	<bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
+	<bean:define id="parameters" value="<%= "resultId=" + publicationBean.getIdInternal().toString() %>"/>
 	
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></h2>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.edit"/>
-	&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+publicationBean.getPublicationType().toString()%>"/>)</h3>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data"/></h3>
+	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/>
+	&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+publicationBean.getPublicationType().toString()%>"/>)</b></p>
 
 	<logic:messagesPresent message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
@@ -20,34 +22,35 @@
 		<br/><br/>
 	</logic:messagesPresent>
 	
-	<fr:form action="/publications/publicationsManagement.do">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="publicationsForm" property="method" />
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.publicationId" name="publicationsForm" property="publicationId" value="<%=publicationBean.getIdInternal().toString()%>"/>
-
+	<fr:form action="<%= "/resultPublications/editData.do?" + parameters %>">
 		<!-- Present publication fields -->
-		<fr:edit nested="true" id="editPublication" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"
-				schema="<%=publicationBean.getActiveSchema() %>">
+		<fr:edit id="editPublication" name="publicationBean" schema="<%= publicationBean.getActiveSchema() %>" nested="true">
 	 	    <fr:layout name="tabular">
 	    	    <fr:property name="classes" value="style1"/>
 	        	<fr:property name="columnClasses" value="listClasses,,"/>
 		    </fr:layout>
-		    <fr:destination name="bookPartPostBack" path="/publications/publicationsManagement.do?method=changeBookPartTypePostBack"/>
-	   		<fr:destination name="invalid" path="/publications/publicationsManagement.do?method=prepareEditPublicationData"/>
+		    <fr:destination name="bookPartPostBack" path="<%= "/resultPublications/changeBookPartTypePostBack.do?" + parameters %>"/>
+	   		<fr:destination name="invalid" path="<%= "/resultPublications/prepareEditData.do?" + parameters %>"/>
 		</fr:edit>
 
-		<!-- Create event in case of inproceedings or proceedings -->
+		<!-- Edit event in case of inproceedings or proceedings -->
 		<logic:equal name="publicationBean" property="createEvent" value="true">
-		<br/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createEvent"/>
-			<fr:edit nested="true" id="createEvent" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"
-					schema="result.publication.create.Event">
+			<br/>
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createEvent"/>
+			<fr:edit id="createEvent" name="publicationBean" schema="result.publication.create.Event" nested="true">
 		 	    <fr:layout name="tabular">
 		    	    <fr:property name="classes" value="style1"/>
 		        	<fr:property name="columnClasses" value="listClasses,,"/>
 			    </fr:layout>
-		   		<fr:destination name="invalid" path="/publications/publicationsManagement.do?method=prepareEditPublicationData"/>
+		   		<fr:destination name="invalid" path="<%= "/resultPublications/prepareEditData.do?" + parameters %>"/>
 			</fr:edit>
-		</logic:equal>	
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='editPublicationData';"><bean:message key="button.submit" /></html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareViewEditPublication';"><bean:message key="button.cancel" /></html:cancel>
+		</logic:equal>
+		
+		<html:submit property="confirm">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="button.submit"/>
+		</html:submit>
+		<html:cancel>
+			<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
+		</html:cancel>	
 	</fr:form>
 </logic:present>
