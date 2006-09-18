@@ -5,9 +5,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class ResultParticipation extends ResultParticipation_Base {
 
@@ -52,46 +54,57 @@ public class ResultParticipation extends ResultParticipation_Base {
 	}
     }
 
-    /**
-     * Default constructor
-     */
-    public ResultParticipation() {
+    private ResultParticipation() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     /**
-     * Constructor used to create a ResultParticipation at Result creation
-     * time.
+     * Constructor used to create a ResultParticipation.
      */
-    public ResultParticipation(Result result, Person participator, ResultParticipationRole role) {
+    ResultParticipation(Result result, Person participator, ResultParticipationRole role, Integer order) {
 	this();
-	checkParameters(result, participator, role);
-	fillAllAttributes(result, participator, role);
-    }
-
-    @Override
-    @Checked("ResultPredicates.participationWritePredicate")
-    public void setPersonOrder(Integer personOrder) {
-	super.setPersonOrder(personOrder);
+	checkParameters(result, participator, role, order);
+	fillAllAttributes(result, participator, role, order);
     }
 
     @Checked("ResultPredicates.participationWritePredicate")
-    public void setPersonOrder(OrderChange orderChange) {
+    public void setEditAll(Result result, Person participator, ResultParticipationRole role, Integer order) {
+	fillAllAttributes(result, participator, role, order);
+	setChangedBy();
+    }
+    
+    @Checked("ResultPredicates.participationWritePredicate")
+    public final void movePersonToDesiredOrder(OrderChange orderChange) {
 	if (orderChange == null) {
 	    throw new DomainException("error.researcher.ResultParticipation.orderChange.null");
 	}
 	move(orderChange);
 	setChangedBy();
     }
-
+    
+    @Override
     @Checked("ResultPredicates.participationWritePredicate")
-    public void setEditAll(Result result, Person participator, ResultParticipationRole role) {
-	fillAllAttributes(result, participator, role);
-	setChangedBy();
+    public void setRole(ResultParticipationRole role) {
+	if (role==null) {
+	    throw new DomainException("error.researcher.ResultEventAssociation.role.null");
+	}
+	if(!this.getRole().equals(role)) {
+	    if (!this.getResult().hasPersonParticipationWithRole(this.getPerson(), role)) {
+		super.setRole(role);
+		this.getResult().setModifyedByAndDate();
+	    } else {
+		throw new DomainException("error.researcher.ResultEventAssociation.association.exists",
+			this.getPerson().getName(), this.getRole().toString());
+	    }
+	}
+    }
+    
+    public boolean getIsLastParticipation() {
+	return (this.getResult().getResultParticipationsCount() == 1);
     }
 
-    public static ResultParticipation readByOid(Integer oid) {
+    public final static ResultParticipation readByOid(Integer oid) {
 	final ResultParticipation participation = RootDomainObject.getInstance()
 		.readResultParticipationByOID(oid);
 
@@ -105,7 +118,7 @@ public class ResultParticipation extends ResultParticipation_Base {
     /**
      * Verify required fields for constructor.
      */
-    private void checkParameters(Result result, Person participator, ResultParticipationRole role) {
+    private void checkParameters(Result result, Person participator, ResultParticipationRole role, Integer order) {
 	if (result == null) {
 	    throw new DomainException("error.researcher.ResultParticipation.result.null");
 	}
@@ -116,10 +129,14 @@ public class ResultParticipation extends ResultParticipation_Base {
 	    throw new DomainException("error.researcher.ResultParticipation.role.null");
 	}
 	if (!result.acceptsParticipationRole(role)) {
-	    throw new DomainException("error.researcher.ResultParticipation.result.invalid.participation.role");
+	    throw new DomainException(
+		    "error.researcher.ResultParticipation.result.invalid.participation.role");
 	}
 	if (result.hasPersonParticipationWithRole(participator, role)) {
 	    throw new DomainException("error.researcher.ResultParticipation.participation.exists");
+	}
+	if(order==0 && result.getResultParticipationsCount()>1) {
+	    throw new DomainException("error.researcher.ResultParticipation.invalid.order");
 	}
     }
 
@@ -132,10 +149,10 @@ public class ResultParticipation extends ResultParticipation_Base {
 
     private void move(OrderChange change) {
 	final int newOrder = this.getPersonOrder() + OrderChange.getOffset(change);
-	final List<ResultParticipation> originalList = this.getResult().getOrderedResultParticipations(); 
+	final List<ResultParticipation> originalList = this.getResult().getOrderedResultParticipations();
 	List<ResultParticipation> orderedParticipations = new ArrayList<ResultParticipation>();
 	orderedParticipations.addAll(originalList);
-	
+
 	orderedParticipations.remove(this);
 
 	// Participation will be the first element in list.
@@ -159,11 +176,11 @@ public class ResultParticipation extends ResultParticipation_Base {
 	}
     }
 
-    private void fillAllAttributes(Result result, Person participator, ResultParticipationRole role) {
+    private void fillAllAttributes(Result result, Person participator, ResultParticipationRole role, Integer order) {
 	super.setResult(result);
 	super.setPerson(participator);
-	super.setPersonOrder(result.getResultParticipationsCount());
-	super.setResultParticipationRole(role);
+	super.setPersonOrder(order);
+	super.setRole(role);
     }
 
     private void setPersonOrderAttribute(Integer personOrder) {
@@ -175,11 +192,17 @@ public class ResultParticipation extends ResultParticipation_Base {
 	super.setPerson(null);
     }
 
-    @Checked("ResultPredicates.participationWritePredicate")
-    public void delete() {
+    public final void delete() {
 	removeAssociations();
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+    
+    public final void deleteIfNotLast() {
+	if(getIsLastParticipation()) {
+	    throw new DomainException("error.researcher.ResultParticipation.last.one");
+	}
+	delete();
     }
 
     /**
@@ -196,12 +219,6 @@ public class ResultParticipation extends ResultParticipation_Base {
     }
 
     @Override
-    public void setResultParticipationRole(ResultParticipationRole role) {
-	throw new DomainException("error.researcher.ResultParticipation.call",
-		"setResultParticipationRole");
-    }
-
-    @Override
     public void removePerson() {
 	throw new DomainException("error.researcher.ResultParticipation.call", "removePerson");
     }
@@ -209,5 +226,27 @@ public class ResultParticipation extends ResultParticipation_Base {
     @Override
     public void removeResult() {
 	throw new DomainException("error.researcher.ResultParticipation.call", "removeResult");
+    }
+ 
+    /**
+     * TODO: Not domain logic!! WARNING
+     * @return
+     */
+    public Integer getVisualOrder() {
+	return this.getPersonOrder() + 1;
+    }
+
+    public String getAditionalInfo() {
+	final Person person = this.getPerson();
+	final ExternalPerson externalPerson = person.getExternalPerson();
+	final String username = person.getUsername();
+	
+	if (externalPerson != null) {
+	    final Unit unit = externalPerson.getInstitutionUnit();
+	    
+	    return (unit != null && unit.getName()!=null && !unit.getName().equals("")) ? 
+		    "(Org: " + unit.getName() + ")" : "(Org: ---)";
+	}
+	return ((username!=null && !username.equals(""))) ? "(User:" + username + ")" : "(User: ---)";
     }
 }

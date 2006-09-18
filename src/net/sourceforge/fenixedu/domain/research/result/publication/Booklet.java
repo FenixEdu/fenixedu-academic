@@ -23,7 +23,7 @@ public class Booklet extends Booklet_Base {
             String note, String url) {
         this();
         checkRequiredParameters(title);
-        super.setParticipation(participator, ResultParticipationRole.Author);
+        super.setCreatorParticipation(participator, ResultParticipationRole.Author);
         fillAllAttributes(title, howPublished, year, month, address, note, url);
     }
 
@@ -99,10 +99,5 @@ public class Booklet extends Booklet_Base {
     @Override
     public void setPublisher(Unit publisher) {
 	throw new DomainException("error.researcher.Booklet.call","setPublisher");
-    }
-    
-    @Override
-    public void setParticipation(Person creator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.Booklet.call","setParticipation");
-    }
+    } 
 }

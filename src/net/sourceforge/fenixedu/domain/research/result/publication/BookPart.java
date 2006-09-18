@@ -1,13 +1,10 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.util.Month;
 
@@ -38,7 +35,7 @@ public class BookPart extends BookPart_Base {
 	    String edition, Country country, String address, String note, Month month, String url) {
 	this();
 	checkInbookRequiredParameters(bookPartType, title, chapter, firstPage, lastPage, publisher, year);
-	super.setParticipation(participator, participatorRole);
+	super.setCreatorParticipation(participator, participatorRole);
 	fillAllInbookAttributes(bookPartType, title, chapter, firstPage, lastPage, publisher, year,
 		volume, series, edition, country, address, note, month, url);
     }
@@ -52,7 +49,7 @@ public class BookPart extends BookPart_Base {
 	    String note, Month month, String url) {
 	this();
 	checkIncollectionRequiredParameters(bookPartType, title, bookTitle, publisher, year);
-	super.setParticipation(participator, participatorRole);
+	super.setCreatorParticipation(participator, participatorRole);
 	fillAllIncollectionAttributes(bookPartType, title, bookTitle, publisher, year, firstPage,
 		lastPage, organization, country, address, note, month, url);
     }
@@ -257,10 +254,5 @@ public class BookPart extends BookPart_Base {
     @Override
     public void setOrganization(Unit organization) {
 	throw new DomainException("error.researcher.BookPart.call","setOrganization");
-    }
-    
-    @Override
-    public void setParticipation(Person creator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.BookPart.call","setParticipation");
     }
 }

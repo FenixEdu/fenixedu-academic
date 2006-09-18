@@ -26,7 +26,7 @@ public class TechnicalReport extends TechnicalReport_Base {
 	    String language, Month month, String url) {
 	this();
 	checkRequiredParameters(title, institution, year);
-	super.setParticipation(participator, ResultParticipationRole.Author);
+	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
 	fillAllAttributes(title, institution, year, technicalReportType, number, address, note,
 		numberPages, language, month, url);
     }
@@ -129,10 +129,5 @@ public class TechnicalReport extends TechnicalReport_Base {
     @Override
     public void setPublisher(Unit publisher) {
 	throw new DomainException("error.researcher.TechnicalReport.call","setPublisher");
-    }
-    
-    @Override
-    public void setParticipation(Person creator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.TechnicalReport.call","setParticipation");
     }
 }

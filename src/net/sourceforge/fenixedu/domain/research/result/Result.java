@@ -11,9 +11,11 @@ import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.event.Event;
+import net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile.FileResultPermittedGroupType;
 import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;
@@ -24,26 +26,81 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 
 import org.joda.time.DateTime;
 
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
-
-public class Result extends Result_Base {
-
-    static {
-	ResultParticipationResult.addListener(new ResultParticipationListener());
-	ResultEventAssociationResult.addListener(new ResultEventAssociationListener());
-	ResultUnitAssociationResult.addListener(new ResultUnitAssociationListener());
-	ResultDocumentFileResult.addListener(new ResultDocumentFileResultListener());
-    }
+public abstract class Result extends Result_Base {
 
     public Result() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setOnCreateAtributes();
     }
+    
+    @Checked("ResultPredicates.createPredicate")
+    private void setOnCreateAtributes() {
+	super.setOjbConcreteClass(getClass().getName());
+	super.setModifyedBy(AccessControl.getUserView().getPerson().getName());
+	super.setLastModificationDate(new DateTime());
+    }
+
+    @Checked("ResultPredicates.createPredicate")
+    public ResultParticipation setCreatorParticipation(Person participator, ResultParticipationRole role) {
+	return new ResultParticipation(this, participator, role, this.getResultParticipationsCount());
+    }
+    
+    @Checked("ResultPredicates.writePredicate")
+    public ResultParticipation addParticipation(Person participator, ResultParticipationRole role) {
+	final ResultParticipation participation = new ResultParticipation(this, participator, role, this.getResultParticipationsCount());
+	updateModifyedByAndDate();
+	return participation;
+    }
+    
+    @Checked("ResultPredicates.writePredicate")
+    public void removeParticipation(ResultParticipation participation) {
+	participation.deleteIfNotLast();
+	this.reOrderParticipations(this.getOrderedResultParticipations());
+	updateModifyedByAndDate();
+    }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setParticipation(Person participator, ResultParticipationRole role) {
-	new ResultParticipation(this, participator, role);
+    public ResultUnitAssociation addUnitAssociation(Unit unit, ResultUnitAssociationRole role) {
+	final ResultUnitAssociation association = new ResultUnitAssociation(this, unit, role);
+	updateModifyedByAndDate();
+	return association;
+    }
+    
+    @Checked("ResultPredicates.writePredicate")
+    public void removeUnitAssociation(ResultUnitAssociation association) {
+	association.delete();
+	updateModifyedByAndDate();
+    }
+
+    @Checked("ResultPredicates.writePredicate")
+    public ResultEventAssociation addEventAssociation(Event event, ResultEventAssociationRole role) {
+	final ResultEventAssociation association = new ResultEventAssociation(this, event, role);
+	updateModifyedByAndDate();
+	return association;
+    }
+    
+    @Checked("ResultPredicates.writePredicate")
+    public void removeEventAssociation(ResultEventAssociation association) {
+	association.delete();
+	updateModifyedByAndDate();
+    }
+
+    @Checked("ResultPredicates.writePredicate")
+    public ResultDocumentFile addDocumentFile(String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
+	    String mimeType, String checksum, String checksumAlgorithm,
+	    Integer size, String externalStorageId, Group permittedGroup) {
+	final ResultDocumentFile documentFile = new ResultDocumentFile(this, filename, displayName, 
+		permittedGroupType, mimeType, checksum, checksumAlgorithm, size, externalStorageId, 
+		permittedGroup);
+	updateModifyedByAndDate();
+	return documentFile;
+    }
+    
+    @Checked("ResultPredicates.writePredicate")
+    public void removeDocumentFile(ResultDocumentFile documentFile) {
+	documentFile.delete();
+	updateModifyedByAndDate();
     }
 
     @Checked("ResultPredicates.writePredicate")
@@ -51,39 +108,28 @@ public class Result extends Result_Base {
 	reOrderParticipations(newParticipationsOrder);
 	updateModifyedByAndDate();
     }
-    
+
     @Checked("ResultPredicates.writePredicate")
-    protected void setModifyedByAndDate() {
+    public void setModifyedByAndDate() {
 	updateModifyedByAndDate();
     }
 
-    @Checked("ResultPredicates.writePredicate")
-    private void setOnCreateAtributes() {
-	super.setOjbConcreteClass(getClass().getName());
-	updateModifyedByAndDate();
-    }
-    
-    private void updateModifyedByAndDate() {
-	super.setModifyedBy(AccessControl.getUserView().getPerson().getName());
-	super.setLastModificationDate(new DateTime());	
-    }
-    
     @Checked("ResultPredicates.writePredicate")
     public void delete() {
 	removeAssociations();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
-    public static Result readByOid(Integer oid) {
+
+    public final static Result readByOid(Integer oid) {
 	final Result result = RootDomainObject.getInstance().readResultByOID(oid);
-	
-	if (result==null) {
+
+	if (result == null) {
 	    throw new DomainException("error.researcher.Result.null");
 	}
 	return result;
     }
-    
+
     /**
      * Returns participations list ordered.
      */
@@ -99,7 +145,7 @@ public class Result extends Result_Base {
 	if (this.hasAnyResultParticipations()) {
 	    for (ResultParticipation participation : this.getResultParticipations()) {
 		if (participation.getPerson() != null && participation.getPerson().equals(person)
-			&& participation.getResultParticipationRole().equals(role)) {
+			&& participation.getRole().equals(role)) {
 		    return true;
 		}
 	    }
@@ -107,6 +153,10 @@ public class Result extends Result_Base {
 	return false;
     }
 
+    /**
+     * Returns true if already exists a result participation with the given person.
+     * (Role not relevant. Used for access control verification).
+     */
     public boolean hasPersonParticipation(Person person) {
 	if (this.hasAnyResultParticipations()) {
 	    for (ResultParticipation participation : this.getResultParticipations()) {
@@ -128,7 +178,7 @@ public class Result extends Result_Base {
 
 	    for (ResultEventAssociation association : list) {
 		if (association.getEvent() != null && association.getEvent().equals(event)
-			&& association.getRole().equals(role)) {
+			&& association.getRole().equals(role)  ) {
 		    return true;
 		}
 	    }
@@ -152,6 +202,35 @@ public class Result extends Result_Base {
 	    }
 	}
 	return false;
+    }
+    
+    public Boolean getIsResultPublicationRole() {
+	if ((this instanceof Book) || (this instanceof BookPart) || (this instanceof Inproceedings))
+	    return true;
+	return false;
+    }
+    
+    protected boolean acceptsParticipationRole(ResultParticipationRole role) {
+	if (this instanceof Proceedings) {
+	    if (role.equals(ResultParticipationRole.Editor)) {
+		return true;
+	    }
+	}
+	if (this instanceof Book || this instanceof BookPart || this instanceof Inproceedings) {
+	    if (role.equals(ResultParticipationRole.Editor)
+		    || role.equals(ResultParticipationRole.Author)) {
+		return true;
+	    }
+	}
+	if (role.equals(ResultParticipationRole.Author)) {
+	    return true;
+	}
+	return false;
+    }
+    
+    private void updateModifyedByAndDate() {
+	super.setModifyedBy(AccessControl.getUserView().getPerson().getName());
+	super.setLastModificationDate(new DateTime());
     }
 
     /**
@@ -182,48 +261,58 @@ public class Result extends Result_Base {
     private void removeAssociations() {
 	super.setCountry(null);
 
-	for (; hasAnyResultDocumentFiles(); getResultDocumentFiles().get(0).delete());
-	for (; hasAnyResultEventAssociations(); getResultEventAssociations().get(0).delete());
-	for (; hasAnyResultUnitAssociations(); getResultUnitAssociations().get(0).delete());
+	for (ResultDocumentFile documentFile : getResultDocumentFiles()) {
+	    documentFile.delete();
+	}
+	    
+	for (ResultEventAssociation association : getResultEventAssociations()){
+	    association.delete();
+	}
 	
+	for (ResultUnitAssociation association: getResultUnitAssociations()) {
+	    association.delete();
+	}
+
 	// These should be the last to remove, because of access control verifications.
-	for (; hasAnyResultParticipations(); getResultParticipations().get(0).delete());
+	for (ResultParticipation participation : getResultParticipations()) {
+	    participation.delete();
+	}
     }
-    
+
     /**
      * Block individual setters
      */
     @Override
     public void setOjbConcreteClass(String ojbConcreteClass) {
-	throw new DomainException("error.researcher.Result.call","setOjbConcreteClass");
+	throw new DomainException("error.researcher.Result.call", "setOjbConcreteClass");
     }
 
     @Override
     public void setModifyedBy(String modifyedBy) {
-	throw new DomainException("error.researcher.Result.call","setModifyedBy");
+	throw new DomainException("error.researcher.Result.call", "setModifyedBy");
     }
 
     @Override
     public void setLastModificationDate(DateTime lastModificationDate) {
-	throw new DomainException("error.researcher.Result.call","setLastModificationDate");
+	throw new DomainException("error.researcher.Result.call", "setLastModificationDate");
     }
 
     @Override
     public void removeCountry() {
-	throw new DomainException("error.researcher.Result.call","removeCountry");
+	throw new DomainException("error.researcher.Result.call", "removeCountry");
     }
 
     /**
-     * Block relation lists.
+     * Block operations on relation lists.
      */
     @Override
     public void addResultEventAssociations(ResultEventAssociation resultEventAssociations) {
-	throw new DomainException("error.researcher.Result.call","addResultEventAssociations");
+	throw new DomainException("error.researcher.Result.call", "addResultEventAssociations");
     }
 
     @Override
     public void removeResultEventAssociations(ResultEventAssociation resultEventAssociations) {
-	throw new DomainException("error.researcher.Result.call","removeResultEventAssociations");
+	throw new DomainException("error.researcher.Result.call", "removeResultEventAssociations");
     }
 
     @Override
@@ -243,12 +332,12 @@ public class Result extends Result_Base {
 
     @Override
     public void addResultParticipations(ResultParticipation resultParticipations) {
-	throw new DomainException("error.researcher.Result.call","addResultParticipations");
+	throw new DomainException("error.researcher.Result.call", "addResultParticipations");
     }
 
     @Override
     public void removeResultParticipations(ResultParticipation resultParticipations) {
-	throw new DomainException("error.researcher.Result.call","removeResultParticipations");
+	throw new DomainException("error.researcher.Result.call", "removeResultParticipations");
     }
 
     @Override
@@ -268,12 +357,12 @@ public class Result extends Result_Base {
 
     @Override
     public void addResultUnitAssociations(ResultUnitAssociation resultUnitAssociations) {
-	throw new DomainException("error.researcher.Result.call","addResultUnitAssociations");
+	throw new DomainException("error.researcher.Result.call", "addResultUnitAssociations");
     }
 
     @Override
     public void removeResultUnitAssociations(ResultUnitAssociation resultUnitAssociations) {
-	throw new DomainException("error.researcher.Result.call","removeResultUnitAssociations");
+	throw new DomainException("error.researcher.Result.call", "removeResultUnitAssociations");
     }
 
     @Override
@@ -290,129 +379,19 @@ public class Result extends Result_Base {
     public Set<ResultUnitAssociation> getResultUnitAssociationsSet() {
 	return Collections.unmodifiableSet(super.getResultUnitAssociationsSet());
     }
-    
+
     @Override
     public List<ResultDocumentFile> getResultDocumentFiles() {
-        return Collections.unmodifiableList(super.getResultDocumentFiles());
+	return Collections.unmodifiableList(super.getResultDocumentFiles());
     }
-    
+
     @Override
     public Iterator<ResultDocumentFile> getResultDocumentFilesIterator() {
-        return getResultDocumentFilesSet().iterator();
+	return getResultDocumentFilesSet().iterator();
     }
-    
+
     @Override
     public Set<ResultDocumentFile> getResultDocumentFilesSet() {
-        return Collections.unmodifiableSet(super.getResultDocumentFilesSet());
-    }
-
-    /**
-     * Relation <Result,ResultParticipation> listener.
-     */
-    private static class ResultParticipationListener extends
-	    dml.runtime.RelationAdapter<Result, ResultParticipation> {
-
-	@Override
-	public void afterAdd(Result result, ResultParticipation participation) {
-	    if (result != null) {
-		result.updateModifyedByAndDate();
-	    }
-	    super.afterAdd(result, participation);
-	}
-
-	@Override
-	public void afterRemove(Result result, ResultParticipation participation) {
-	    if (result != null) {
-		result.reOrderParticipations(result.getOrderedResultParticipations());
-		result.updateModifyedByAndDate();
-	    }
-	    super.afterRemove(result, participation);
-	}
-    }
-
-    /**
-     * Relation <Result,ResultEventAssociation> listener.
-     */
-    private static class ResultEventAssociationListener extends
-	    dml.runtime.RelationAdapter<Result, ResultEventAssociation> {
-
-	@Override
-	public void afterAdd(Result result, ResultEventAssociation association) {
-	    if (result != null) {
-		result.updateModifyedByAndDate();
-	    }
-	    super.afterAdd(result, association);
-	}
-
-	@Override
-	public void afterRemove(Result result, ResultEventAssociation association) {
-	    if (result != null) {
-		result.updateModifyedByAndDate();
-	    }
-	    super.afterRemove(result, association);
-	}
-    }
-
-    /**
-     * Relation <Result,ResultUnitAssociation> listener.
-     */
-    private static class ResultUnitAssociationListener extends
-	    dml.runtime.RelationAdapter<Result, ResultUnitAssociation> {
-
-	@Override
-	public void afterAdd(Result result, ResultUnitAssociation association) {
-	    if (result != null) {
-		result.updateModifyedByAndDate();
-	    }
-	    super.afterAdd(result, association);
-	}
-
-	@Override
-	public void afterRemove(Result result, ResultUnitAssociation association) {
-	    if (result != null) {
-		result.updateModifyedByAndDate();
-	    }
-	    super.afterRemove(result, association);
-	}
-    }
-
-    /**
-     * Relation <Result,ResultDocumentFile> listener.
-     */
-    private static class ResultDocumentFileResultListener extends
-	    dml.runtime.RelationAdapter<Result, ResultDocumentFile> {
-
-	@Override
-	public void afterAdd(Result result, ResultDocumentFile documentFile) {
-	    if (result != null) {
-		result.updateModifyedByAndDate();
-	    }
-	    super.afterAdd(result, documentFile);
-	}
-
-	@Override
-	public void afterRemove(Result result, ResultDocumentFile documentFile) {
-	    if (documentFile != null && result != null) {
-		result.updateModifyedByAndDate();
-	    }
-	    super.afterRemove(result, documentFile);
-	}
-    }
-
-    protected boolean acceptsParticipationRole(ResultParticipationRole role) {
-	if(this instanceof Proceedings) {
-	    if (role.equals(ResultParticipationRole.Editor)) {
-		return true;
-	    }
-	}
-	if(this instanceof Book || this instanceof BookPart || this instanceof Inproceedings) {
-	    if (role.equals(ResultParticipationRole.Editor) || role.equals(ResultParticipationRole.Author)) {
-		return true;
-	    }
-	}
-	if(role.equals(ResultParticipationRole.Author)) {
-	    return true;
-	}
-	return false;
+	return Collections.unmodifiableSet(super.getResultDocumentFilesSet());
     }
 }

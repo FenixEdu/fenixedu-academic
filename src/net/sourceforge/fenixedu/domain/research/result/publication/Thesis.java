@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.util.Month;
 
@@ -34,7 +35,7 @@ public class Thesis extends Thesis_Base {
 	    String address, String note, Integer numberPages, String language, Month month, String url) {
 	this();
 	checkRequiredParameters(thesisType, title, school, year);
-	super.setParticipation(participator, ResultParticipationRole.Author);
+	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
 	fillAllAttributes(thesisType, title, school, year, address, note, numberPages, language, month,
 		url);
     }
@@ -131,10 +132,5 @@ public class Thesis extends Thesis_Base {
     @Override
     public void setCountry(Country country) {
 	throw new DomainException("error.researcher.Thesis.call","setCountry");
-    }
-    
-    @Override
-    public void setParticipation(Person creator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.Thesis.call","setParticipation");
     }
 }

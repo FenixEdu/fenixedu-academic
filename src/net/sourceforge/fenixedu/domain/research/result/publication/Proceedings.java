@@ -27,7 +27,7 @@ public class Proceedings extends Proceedings_Base {
 	    Unit organization, String address, String note, Month month, String url) {
 	this();
 	checkRequiredParameters(title, year, event);
-	super.setParticipation(participator, ResultParticipationRole.Editor);
+	super.setCreatorParticipation(participator, ResultParticipationRole.Editor);
 	fillAllAttributes(title, year, event, publisher, organization, address, note, month, url);
     }
 
@@ -109,10 +109,5 @@ public class Proceedings extends Proceedings_Base {
     @Override
     public void setCountry(Country country) {
 	throw new DomainException("error.researcher.Proceedings.call","setCountry");
-    }
-    
-    @Override
-    public void setParticipation(Person participator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.Proceedings.call","setModifyedByAndDate");
     }
 }

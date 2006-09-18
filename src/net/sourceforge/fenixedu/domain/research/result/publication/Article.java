@@ -25,7 +25,7 @@ public class Article extends Article_Base {
 	    Integer issn, String language, Country country, ScopeType scope, Month month, String url) {
 	this();
 	checkRequiredParameters(title, journal, year);
-	super.setParticipation(participator, ResultParticipationRole.Author);
+	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
 	fillAllAttributes(title, journal, year, publisher, volume, number, firstPage, lastPage, note,
 		issn, language, country, scope, month, url);
     }
@@ -147,10 +147,5 @@ public class Article extends Article_Base {
     @Override
     public void setOrganization(Unit organization) {
 	throw new DomainException("error.researcher.Article.call","setOrganization");
-    }
-    
-    @Override
-    public void setParticipation(Person creator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.Article.call","setParticipation");
     }
 }

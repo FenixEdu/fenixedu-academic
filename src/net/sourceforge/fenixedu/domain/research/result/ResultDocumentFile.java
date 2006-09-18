@@ -12,59 +12,44 @@ import pt.utl.ist.fenix.tools.file.IFileManager;
 
 public class ResultDocumentFile extends ResultDocumentFile_Base {
     
-    public enum ResultDocumentFilePermissionType {
-	PUBLIC, RESEARCHER, INSTITUTION;
+    public enum FileResultPermittedGroupType {
+	PUBLIC, INSTITUTION, RESEARCHER;
 	
-	public String getName() {
-	    return name();
-	}
-	
-	public static ResultDocumentFilePermissionType getDefaultType() {
+	public static FileResultPermittedGroupType getDefaultType() {
 	    return PUBLIC;
 	}
     }
     
-    public ResultDocumentFile() {
+    private ResultDocumentFile() {
 	super();
     }
 
-    public ResultDocumentFile(Result result, String filename, String displayName, String mimeType,
-	    String checksum, String checksumAlgorithm, Integer size,
-	    String externalStorageIdentification, Group permittedGroup) {
-	this();
-	checkParameters(result, filename);
-	super.setResult(result);
-	initChecked(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
-		externalStorageIdentification, permittedGroup);
-    }
-
-    @Checked("ResultPredicates.documentFileWritePredicate")
-    private void initChecked(String filename, String displayName, String mimeType, String checksum,
-	    String checksumAlgorithm, Integer size, String externalStorageIdentification,
+    ResultDocumentFile(Result result, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
+	    String mimeType, String checksum, String checksumAlgorithm, Integer size, String externalStorageIdentification, 
 	    Group permittedGroup) {
+	this();
+	checkParameters(result, filename, displayName, permittedGroupType);
+	super.setResult(result);
+	super.setFileResultPermittedGroupType(permittedGroupType);
 	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
 		externalStorageIdentification, permittedGroup);
     }
-    
-    @Override
-    public void setResult(Result result) {
-	throw new DomainException("error.researcher.ResultDocumentFile.call","setResult");
-    }
-
-    @Override
-    public void removeResult() {
-	throw new DomainException("error.researcher.ResultDocumentFile.call","removeResult");
-    }
 
     @Checked("ResultPredicates.documentFileWritePredicate")
-    public void delete() {
+    public void setEdit(String displayName, FileResultPermittedGroupType fileResultPermittedGroupType) {
+	super.setDisplayName(displayName);
+	changeFilePermission(fileResultPermittedGroupType);
+	this.getResult().setModifyedByAndDate();
+    }
+
+    public final void delete() {
 	super.setResult(null);
 	removeRootDomainObject();
 	deleteDomainObject();
 	deleteFile();
     }
     
-    public static Group getPermittedGroup(ResultDocumentFilePermissionType permissionType) {
+    public final static Group getPermittedGroup(FileResultPermittedGroupType permissionType) {
 	switch (permissionType) {
 	case INSTITUTION:
 	    return new RoleGroup(Role.getRoleByRoleType(RoleType.PERSON));
@@ -80,7 +65,7 @@ public class ResultDocumentFile extends ResultDocumentFile_Base {
 	}
     }
     
-    public static ResultDocumentFile readByOID(Integer oid) {
+    public final static ResultDocumentFile readByOID(Integer oid) {
 	final ResultDocumentFile documentFile = (ResultDocumentFile) RootDomainObject.getInstance().readFileByOID(oid);
 	
 	if (documentFile==null) 
@@ -89,6 +74,48 @@ public class ResultDocumentFile extends ResultDocumentFile_Base {
 	return documentFile;
     }
     
+    private void deleteFile() {
+	final IFileManager fileManager = FileManagerFactory.getFileManager();
+	fileManager.deleteFile(getExternalStorageIdentification());
+    }
+
+    private void checkParameters(Result result, String filename, String displayName, FileResultPermittedGroupType permittedGroupType) {
+	if (result == null) 
+	    throw new DomainException("error.researcher.ResultDocumentFile.result.null");
+	if (filename==null||filename.equals(""))
+	    throw new DomainException("error.researcher.ResultDocumentFile.filename.null");
+	if (displayName==null||displayName.equals(""))
+	    throw new DomainException("error.researcher.ResultDocumentFile.displayName.null");
+	if (permittedGroupType == null) {
+	    throw new DomainException("error.researcher.ResultDocumentFile.permittedGroupType.null");
+	}
+    }
+    
+    private void changeFilePermission(FileResultPermittedGroupType fileResultPermittedGroupType) {
+	final Group group = getPermittedGroup(fileResultPermittedGroupType);
+	super.setFileResultPermittedGroupType(fileResultPermittedGroupType);
+	super.setPermittedGroup(group);
+	FileManagerFactory.getFileManager().changeFilePermissions(getExternalStorageIdentification(), (group != null) ? true : false);
+    }
+
+    @Override
+    public void setResult(Result result) {
+	throw new DomainException("error.researcher.ResultDocumentFile.call","setResult");
+    }
+
+    @Override
+    public void removeResult() {
+	throw new DomainException("error.researcher.ResultDocumentFile.call","removeResult");
+    }
+    
+    @Override
+    public void setFileResultPermittedGroupType(FileResultPermittedGroupType fileResultPermittedGroupType) {
+	throw new DomainException("error.researcher.ResultDocumentFile.call","setFileResultPermittedGroupType");
+    }
+
+    /**
+     * This is not domain logic. Is used only to simplify the access to the url on presentation.
+     */
     public String getDownloadUrl() {
 	StringBuilder downloadUrl = new StringBuilder();
 	downloadUrl.append(FileManagerFactory.getFileManager().getDirectDownloadUrlFormat());
@@ -97,17 +124,5 @@ public class ResultDocumentFile extends ResultDocumentFile_Base {
 	downloadUrl.append("/");
 	downloadUrl.append(getFilename());
 	return downloadUrl.toString();
-    }
-    
-    private void deleteFile() {
-	final IFileManager fileManager = FileManagerFactory.getFileManager();
-	fileManager.deleteFile(getExternalStorageIdentification());
-    }
-
-    private void checkParameters(Result result, String filename) {
-	if (result == null) 
-	    throw new DomainException("error.researcher.ResultDocumentFile.result.null");
-	if (filename==null||filename.equals(""))
-	    throw new DomainException("error.researcher.ResultDocumentFile.filename.null");
     }
 }

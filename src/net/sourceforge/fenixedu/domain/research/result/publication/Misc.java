@@ -26,7 +26,7 @@ public class Misc extends Misc_Base {
 	    String language, Country country, Month month, String url) {
 	this();
 	checkRequiredParameters(title);
-	super.setParticipation(participator, ResultParticipationRole.Author);
+	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
 	fillAllAttributes(title, publisher, year, howPublished, note, address, otherPublicationType,
 		numberPages, language, country, month, url);
     }
@@ -121,10 +121,5 @@ public class Misc extends Misc_Base {
     @Override
     public void setPublisher(Unit publisher) {
 	throw new DomainException("error.researcher.Misc.call","setPublisher");
-    }
-    
-    @Override
-    public void setParticipation(Person creator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.Misc.call","setParticipation");
     }
 }

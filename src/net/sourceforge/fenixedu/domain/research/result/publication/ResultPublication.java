@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
@@ -8,26 +11,43 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
-public class ResultPublication extends ResultPublication_Base {
+public abstract class ResultPublication extends ResultPublication_Base {
 
     public enum ScopeType {
 	LOCAL, NATIONAL, INTERNATIONAL;
+    }
+    
+    /**
+     * Comparator than can be used to order publications by Year.
+     */
+    static class OrderComparator implements Comparator<ResultPublication> {
+	public int compare(ResultPublication rp1, ResultPublication rp2) {
+	    Integer pub1 = rp1.getYear();
+            Integer pub2 = rp2.getYear();
+            if (pub1 == null) {
+                return 1;
+            } else if (pub2 == null) {
+                return -1;
+            }
+            return (-1) * pub1.compareTo(pub2);
+	}
+    }
+    
+    public static <T extends ResultPublication> List<T> sort(Collection<T> resultPublications) {
+	List<T> sorted = new ArrayList<T>(resultPublications);
+	Collections.sort(sorted, new ResultPublication.OrderComparator());
+
+	return sorted;
     }
 
     public ResultPublication() {
 	super();
     }
     
-    public Boolean hasResultPublicationRole() {
-	if ((this instanceof Book) || (this instanceof BookPart) || (this instanceof Inproceedings))
-	    return true;
-	return false;
-    }
-
     public List<ResultParticipation> getAuthors() {
 	ArrayList<ResultParticipation> authors = new ArrayList<ResultParticipation>();
 	for (ResultParticipation participation : this.getResultParticipations()) {
-	    if (participation.getResultParticipationRole().equals(ResultParticipationRole.Author))
+	    if (participation.getRole().equals(ResultParticipationRole.Author))
 		authors.add(participation);
 	}
 	return authors;
@@ -36,7 +56,7 @@ public class ResultPublication extends ResultPublication_Base {
     public List<ResultParticipation> getEditors() {
 	ArrayList<ResultParticipation> editors = new ArrayList<ResultParticipation>();
 	for (ResultParticipation participation : this.getResultParticipations()) {
-	    if (participation.getResultParticipationRole().equals(ResultParticipationRole.Editor))
+	    if (participation.getRole().equals(ResultParticipationRole.Editor))
 		editors.add(participation);
 	}
 	return editors;

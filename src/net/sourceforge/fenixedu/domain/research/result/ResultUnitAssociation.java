@@ -10,36 +10,39 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
     public enum ResultUnitAssociationRole {
 	Sponsor, Participant;
 
-	public String getName() {
-	    return name();
-	}
-
 	public static ResultUnitAssociationRole getDefaultRole() {
 	    return Sponsor;
 	}
     }
 
-    public ResultUnitAssociation() {
+    private ResultUnitAssociation() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public ResultUnitAssociation(Result result, Unit unit, ResultUnitAssociationRole role) {
+    ResultUnitAssociation(Result result, Unit unit, ResultUnitAssociationRole role) {
 	this();
 	checkParameters(result, unit, role);
-	// This set is made first in order to make access control verifications on ResultPredicates.
-	super.setResult(result);
-	setEditAll(result, unit, role);
+	fillAllAttributes(result, unit, role);
     }
 
     @Checked("ResultPredicates.unitWritePredicate")
-    public void setEditAll(Result result, Unit unit, ResultUnitAssociationRole role) {
-	super.setResult(result);
-	super.setUnit(unit);
-	super.setRole(role);
+    public void setRole(ResultUnitAssociationRole role) {
+	if (role==null) {
+	    throw new DomainException("error.researcher.ResultUnitAssociation.role.null");
+	}
+	if(!this.getRole().equals(role)) {
+	    if (!this.getResult().hasAssociationWithUnitRole(this.getUnit(), role)) {
+		super.setRole(role);
+		this.getResult().setModifyedByAndDate();
+	    } else {
+		throw new DomainException("error.researcher.ResultUnitAssociation.association.exists",
+			this.getUnit().getName(), this.getRole().toString());
+	    }
+	}
     }
     
-    public static ResultUnitAssociation readByOid(Integer oid) {
+    public final static ResultUnitAssociation readByOid(Integer oid) {
 	final ResultUnitAssociation association = RootDomainObject.getInstance().readResultUnitAssociationByOID(oid);
 	
 	if (association==null) {
@@ -48,40 +51,11 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
 	
 	return association;
     }
-
-    /**
-     * Setters block!
-     */
-    @Override
-    public void setResult(Result Result) {
-	throw new DomainException("error.researcher.ResultUnitAssociation.call","setResult");
-    }
-
-    @Override
-    public void setUnit(Unit Unit) {
-	throw new DomainException("error.researcher.ResultUnitAssociation.call","setUnit");
-    }
-
-    @Override
-    public void setRole(ResultUnitAssociationRole role) {
-	throw new DomainException("error.researcher.ResultUnitAssociation.call","setRole");
-    }
-
-    @Override
-    public void removeUnit() {
-	throw new DomainException("error.researcher.ResultUnitAssociation.call","removeUnit");
-    }
-
-    @Override
-    public void removeResult() {
-	throw new DomainException("error.researcher.ResultUnitAssociation.call","removeResult");
-    }
-
+    
     /**
      * Method responsible for deleting a ResultUnitAssociation
      */
-    @Checked("ResultPredicates.unitWritePredicate")
-    public void delete() {
+    public final void delete() {
 	removeReferences();
 	removeRootDomainObject();
 	deleteDomainObject();
@@ -90,6 +64,12 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
     private void removeReferences() {
 	super.setResult(null);
 	super.setUnit(null);
+    }
+    
+    private void fillAllAttributes(Result result, Unit unit, ResultUnitAssociationRole role) {
+	super.setResult(result);
+	super.setUnit(unit);
+	super.setRole(role);
     }
 
     private void checkParameters(Result result, Unit unit, ResultUnitAssociationRole role) {
@@ -105,5 +85,28 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
 	if (result.hasAssociationWithUnitRole(unit, role)) {
 	    throw new DomainException("error.researcher.ResultUnitAssociation.association.exists");
 	}
+    }
+    
+    /**
+     * Setters block!
+     */
+    @Override
+    public void setResult(Result Result) {
+	throw new DomainException("error.researcher.ResultUnitAssociation.call","setResult");
+    }
+
+    @Override
+    public void setUnit(Unit Unit) {
+	throw new DomainException("error.researcher.ResultUnitAssociation.call","setUnit");
+    }
+
+    @Override
+    public void removeUnit() {
+	throw new DomainException("error.researcher.ResultUnitAssociation.call","removeUnit");
+    }
+
+    @Override
+    public void removeResult() {
+	throw new DomainException("error.researcher.ResultUnitAssociation.call","removeResult");
     }
 }

@@ -23,7 +23,7 @@ public class Unpublished extends Unpublished_Base {
 	    String url) {
 	this();
 	checkRequiredParameters(title, note);
-	super.setParticipation(participator, ResultParticipationRole.Author);
+	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
 	fillAllAttributes(title, note, year, month, url);
     }
 
@@ -87,10 +87,5 @@ public class Unpublished extends Unpublished_Base {
     @Override
     public void setCountry(Country country) {
 	throw new DomainException("error.researcher.Unpublished.call","setCountry");
-    }
-    
-    @Override
-    public void setParticipation(Person creator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.Unpublished.call","setParticipation");
     }
 }

@@ -1,12 +1,9 @@
 package net.sourceforge.fenixedu.domain.research.result.patent;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 import org.joda.time.Partial;
@@ -38,7 +35,7 @@ public class ResultPatent extends ResultPatent_Base {
 	}
     }
 
-    public ResultPatent() {
+    private ResultPatent() {
 	super();
     }
 
@@ -50,7 +47,7 @@ public class ResultPatent extends ResultPatent_Base {
 	    Country country, String local, String patentNumber, String url) {
 	this();
 	checkRequiredParameters(title, registrationDate, approvalDate);
-	super.setParticipation(participation, ResultParticipationRole.Author);
+	super.setCreatorParticipation(participation, ResultParticipationRole.Author);
 	fillAllAttributes(title, note, patentType, patentStatus, registrationDate, approvalDate,
 		country, local, patentNumber, url);
     }
@@ -160,10 +157,5 @@ public class ResultPatent extends ResultPatent_Base {
     @Override
     public void setUrl(String url) {
 	throw new DomainException("error.researcher.ResultPatent.illegal.call","setUrl");
-    }
-
-    @Override
-    public void setParticipation(Person creator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.ResultPatent.illegal.call","setParticipation");
     }
 }

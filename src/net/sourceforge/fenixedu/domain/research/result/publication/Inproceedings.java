@@ -29,7 +29,7 @@ public class Inproceedings extends Inproceedings_Base {
 	    Month month, String url) {
 	this();
 	checkRequiredParameters(title, bookTitle, year, event);
-	super.setParticipation(participator, participatorRole);
+	super.setCreatorParticipation(participator, participatorRole);
 	fillAllAttributes(title, bookTitle, year, event, publisher, organization, address, firstPage,
 		lastPage, note, language, month, url);
     }
@@ -141,10 +141,5 @@ public class Inproceedings extends Inproceedings_Base {
     @Override
     public void setCountry(Country country) {
 	throw new DomainException("error.researcher.Inproceedings.call","setCountry");
-    }
-    
-    @Override
-    public void setParticipation(Person creator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.Inproceedings.call","setParticipation");
     }
 }

@@ -23,7 +23,7 @@ public class Manual extends Manual_Base {
             String edition, Month month, String url) {
         this();
         checkRequiredParameters(title);
-        super.setParticipation(participator, ResultParticipationRole.Author);
+        super.setCreatorParticipation(participator, ResultParticipationRole.Author);
         fillAllAttributes(title, organization, year, address, note, edition, month, url);
     }
 
@@ -100,10 +100,5 @@ public class Manual extends Manual_Base {
     @Override
     public void setEdition(String edition) {
 	throw new DomainException("error.researcher.Manual.call","setEdition");
-    }
-    
-    @Override
-    public void setParticipation(Person creator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.Manual.call","setParticipation");
     }
 }

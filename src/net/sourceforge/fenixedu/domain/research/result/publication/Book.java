@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.Month;
  */
 public class Book extends Book_Base {
 
-    public Book() {
+    private Book() {
 	super();
     }
 
@@ -27,7 +27,7 @@ public class Book extends Book_Base {
 	    String note, Month month, String url) {
 	this();
 	checkRequiredParameters(title, publisher, year);
-	super.setParticipation(participator, participatorRole);
+	super.setCreatorParticipation(participator, participatorRole);
 	fillAllAttributes(title, publisher, year, volume, series, address, edition, isbn, numberPages,
 		language, country, scope, note, month, url);
     }
@@ -149,10 +149,5 @@ public class Book extends Book_Base {
     @Override
     public void setOrganization(Unit organization) {
 	throw new DomainException("error.researcher.Book.call","setOrganization");
-    }
-    
-    @Override
-    public void setParticipation(Person creator, ResultParticipationRole role) {
-	throw new DomainException("error.researcher.Book.call","setParticipation");
     }
 }
