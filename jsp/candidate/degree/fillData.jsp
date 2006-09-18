@@ -75,7 +75,7 @@
 		</fr:edit>	
 	</logic:equal>	
 		
-	<html:submit><bean:message key="button.submit" /></html:submit>
+	<html:submit ><bean:message key="button.next" /></html:submit>
 	
 </fr:form>
 

@@ -49,6 +49,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		getLoggedPerson(request)));
 	request.setAttribute("operations", operations);
 
+	request.setAttribute("person", getUserView(request).getPerson());
+
 	return mapping.findForward("showCandidacyDetails");
     }
 
@@ -151,7 +153,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
 	    request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 	    request.setAttribute("candidacyID", candidacyOperation.getCandidacy().getIdInternal());
-	    
+
 	    return showCandidacyDetails(mapping, form, request, response);
 
 	} catch (DomainException ex) {

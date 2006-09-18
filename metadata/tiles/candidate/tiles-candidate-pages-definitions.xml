@@ -55,13 +55,5 @@
         <put name="body" value="/commons/student/timeTable/classTimeTable.jsp"></put>
     </definition>
     
-    <definition name="degreeCandidacy.print.registration.declaration" extends="candidate.print.masterPage">
-        <put name="body" value="/candidate/degree/printRegistrationDeclaration.jsp"></put>
-    </definition>
-    
-    <definition name="degreeCandidacy.print.system.access.data" extends="candidate.print.masterPage">
-        <put name="body" value="/candidate/degree/printSystemAccessData.jsp"></put>
-    </definition>
-    
     
 </tiles-definitions>

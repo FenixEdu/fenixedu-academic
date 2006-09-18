@@ -72,7 +72,8 @@
 <br/><br/>
 
 <logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType" value="REGISTERED">
-	<span class="error0"><bean:message  key="label.candidacy.institutional.email.creation.warning"/></span>
+	<bean:define id="istUsername" name="person" property="istUsername" />
+	<span class="error0"><bean:message  key="label.candidacy.institutional.email.creation.warning" arg0="<%=istUsername.toString()%>"/></span>
 </logic:equal>
 
 

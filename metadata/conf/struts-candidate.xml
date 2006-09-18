@@ -67,8 +67,8 @@
       	    <forward name="showData" path="degreeCandidacy.show.data" />
       	    <forward name="showOperationFinished" path="degreeCandidacy.show.operation.finished" />
       	    <forward name="printSchedule" path="degreeCandidacy.show.timeTable" />
-       	    <forward name="printRegistrationDeclaration" path="degreeCandidacy.print.registration.declaration" />
-       	    <forward name="printSystemAccessData" path="degreeCandidacy.print.system.access.data" />
+       	    <forward name="printRegistrationDeclaration" path="/degree/printRegistrationDeclaration.jsp" />
+       	    <forward name="printSystemAccessData" path="/degree/printSystemAccessData.jsp" />
       	</action>
 	
     </action-mappings>

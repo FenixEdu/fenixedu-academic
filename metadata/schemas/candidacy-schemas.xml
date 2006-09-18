@@ -359,7 +359,7 @@
 
 <schema name="DegreeCandidacy.view-with-person-details" type="net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy" bundle="CANDIDATE_RESOURCES">
 	<slot name="person.name" key="label.net.sourceforge.fenixedu.domain.Person.name"/>
-	<slot name="person.student.number" key="label.net.sourceforge.fenixedu.domain.student.Student.number"/>
+	<slot name="person.student.number" key="label.studentNumber"/>
 	<slot name="person.istUsername" key="label.net.sourceforge.fenixedu.domain.Person.istUsername"/>
 	<slot name="number" key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.number"/>
 	<slot name="executionDegree" key="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.executionDegree.degreeCurricularPlan.degree.name" layout="format">

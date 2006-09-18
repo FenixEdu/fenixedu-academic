@@ -1,17 +1,7 @@
-<%@ page language="java"%>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<html:html xhtml="true">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
-<link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
-</head>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
-<body>
-
-<table width="100%" height="100%" border="0">
+<table width="100%" height="90%" border="0">
 	<tr height="30">
 		<td>
 		<table width="100%" border="0" valign="top">
@@ -83,6 +73,4 @@
 	</tr>
 </table>
 
-<br/><br/><br/>
-</body>
-</html:html>
+<br/><br/>
