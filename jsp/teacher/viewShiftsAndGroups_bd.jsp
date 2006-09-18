@@ -311,6 +311,49 @@
 				<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>	
 				<bean:define id="shiftCode" name="infoShift" property="idInternal"/>	
 								
+			 		<logic:empty name="infoShift" property="infoLessons">
+							<tr>
+								<td  class="listClasses" rowspan="1">
+									<html:link page="<%="/viewStudentsAndGroupsByShift.do?method=viewStudentsAndGroupsByShift&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" >
+		               					<bean:write name="infoShift" property="nome"/>
+									</html:link>
+								</td>
+								<td class="listClasses">
+								---	
+								</td>
+								<td class="listClasses">
+								---	
+								</td>
+								<td class="listClasses">
+								---	
+								</td>
+									
+				               	<td class="listClasses">
+								---	
+						 		</td>
+						 		
+						 		<bean:define id="nrOfGroups" name="infoSiteShift" property="nrOfGroups"/>
+			
+								 <td class="listClasses" width="17%" rowspan="1" colspan="3">
+		                        <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
+		                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
+									<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
+		                        	<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		               					<bean:write name="infoStudentGroup" property="groupNumber"/>
+									</html:link>
+								</logic:iterate>]
+								</logic:notEmpty>
+								
+								<logic:empty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
+									<bean:message key="message.shift.without.groups"/>
+								</logic:empty>
+								
+								 </td>
+							
+						 						
+						 	</tr>
+					</logic:empty>
+								
 			 		<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
 		            		<% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>
 		                	<% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
