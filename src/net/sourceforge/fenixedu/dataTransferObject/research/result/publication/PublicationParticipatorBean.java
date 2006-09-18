@@ -10,7 +10,7 @@ public class PublicationParticipatorBean implements Serializable {
     
     private DomainReference<Person> person;
     private String personName;
-    private ResultParticipationRole resultParticipationRole;
+    private ResultParticipationRole role;
     
     private DomainReference<Unit> organization;
     private String organizationName;
@@ -40,10 +40,10 @@ public class PublicationParticipatorBean implements Serializable {
     public void setPersonName(String personName) {
         this.personName = personName;
     }
-    public ResultParticipationRole getResultParticipationRole() {
-        return resultParticipationRole;
+    public ResultParticipationRole getRole() {
+        return role;
     }
-    public void setResultParticipationRole(ResultParticipationRole resultParticipationRole) {
-        this.resultParticipationRole = resultParticipationRole;
+    public void setRole(ResultParticipationRole role) {
+        this.role = role;
     }
 }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
 
 public class InproceedingsBean extends ConferenceArticlesBean implements Serializable{
@@ -10,19 +11,30 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
     private String bookTitle;
     private String language;
 
-    public InproceedingsBean() {
+    private InproceedingsBean() {
+	this.setPublicationType(ResultPublicationType.Inproceedings);
+	this.setActiveSchema("result.publication.create."+this.getPublicationType());
+	this.setParticipationSchema("resultParticipation.simpleWithRole");
     }
 
     public InproceedingsBean(Inproceedings inproceedings) {
-        this.fillCommonFields(inproceedings);
-        this.setPublicationType(ResultPublicationType.Inproceedings);
-
-        this.setBookTitle(inproceedings.getBookTitle());
-        this.setAddress(inproceedings.getAddress());
-        this.setFirstPage(inproceedings.getFirstPage());
-        this.setLastPage(inproceedings.getLastPage());
-        this.setLanguage(inproceedings.getLanguage());
-        this.setEvent(inproceedings.getEvent());
+	this();
+	if(inproceedings!=null) {
+            this.fillCommonFields(inproceedings);
+            this.setPublicationType(ResultPublicationType.Inproceedings);
+            this.setBookTitle(inproceedings.getBookTitle());
+            this.setAddress(inproceedings.getAddress());
+            this.setFirstPage(inproceedings.getFirstPage());
+            this.setLastPage(inproceedings.getLastPage());
+            this.setLanguage(inproceedings.getLanguage());
+            this.setEvent(inproceedings.getEvent());
+	}
+    }
+    
+    @Override
+    public void setCreateEvent(Boolean createEvent) {
+	this.setActiveSchema("result.publication.create.InproceedingsAndEvent");
+        super.setCreateEvent(createEvent);
     }
     
     public String getAddress() {

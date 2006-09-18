@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType;
 
@@ -10,17 +11,22 @@ public class ThesisBean extends ResultPublicationBean implements Serializable{
     private String language;
     private ThesisType thesisType;
     
-    public ThesisBean() {
+    private ThesisBean() {
+	this.setPublicationType(ResultPublicationType.Thesis);
+	this.setActiveSchema("result.publication.create."+this.getPublicationType());
+	this.setParticipationSchema("resultParticipation.simple");
     }
     
     public ThesisBean(Thesis thesis) {
-        this.fillCommonFields(thesis);
-        this.setPublicationType(ResultPublicationType.Thesis);
-
-        this.setThesisType(thesis.getThesisType());
-        this.setAddress(thesis.getAddress());
-        this.setNumberPages(thesis.getNumberPages());
-        this.setLanguage(thesis.getLanguage());
+	this();
+	if(thesis!=null) {
+	    this.fillCommonFields(thesis);
+	    this.setPublicationType(ResultPublicationType.Thesis);
+	    this.setThesisType(thesis.getThesisType());
+	    this.setAddress(thesis.getAddress());
+	    this.setNumberPages(thesis.getNumberPages());
+	    this.setLanguage(thesis.getLanguage());
+	}
     }
     
     public String getAddress() {

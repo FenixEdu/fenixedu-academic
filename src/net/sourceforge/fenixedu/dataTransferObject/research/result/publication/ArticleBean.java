@@ -14,21 +14,26 @@ public class ArticleBean extends ResultPublicationBean implements Serializable{
     private Integer lastPage;
     private Integer issn;
     
-    public ArticleBean() {
+    private ArticleBean() {
+	this.setPublicationType(ResultPublicationType.Article);
+	this.setActiveSchema("result.publication.create."+this.getPublicationType());
+	this.setParticipationSchema("resultParticipation.simple");
     }
 
     public ArticleBean(Article article) {
-        this.fillCommonFields(article);
-        this.setPublicationType(ResultPublicationType.Article);
-
-        this.setJournal(article.getJournal());
-        this.setVolume(article.getVolume());
-        this.setNumber(article.getNumber());
-        this.setFirstPage(article.getFirstPage());
-        this.setLastPage(article.getLastPage());
-        this.setIssn(article.getIssn());
-        this.setLanguage(article.getLanguage());
-        this.setScope(article.getScope());
+	this();
+	if(article!=null) {
+            this.fillCommonFields(article);
+            this.setPublicationType(ResultPublicationType.Article);
+            this.setJournal(article.getJournal());
+            this.setVolume(article.getVolume());
+            this.setNumber(article.getNumber());
+            this.setFirstPage(article.getFirstPage());
+            this.setLastPage(article.getLastPage());
+            this.setIssn(article.getIssn());
+            this.setLanguage(article.getLanguage());
+            this.setScope(article.getScope());
+	}
     }
     
     public String getLanguage() {

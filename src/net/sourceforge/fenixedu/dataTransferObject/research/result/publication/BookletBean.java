@@ -1,21 +1,27 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.Booklet;
 
 public class BookletBean extends ResultPublicationBean implements Serializable{
     private String address;
     private String howPublished;
     
-    public BookletBean() {
+    private BookletBean() {
+	this.setPublicationType(ResultPublicationType.Booklet);
+	this.setActiveSchema("result.publication.create."+this.getPublicationType());
+	this.setParticipationSchema("resultParticipation.simple");
     }
     
     public BookletBean(Booklet booklet) {
-        this.fillCommonFields(booklet);
-        this.setPublicationType(ResultPublicationType.Booklet);
-
-        this.setHowPublished(booklet.getHowPublished());
-        this.setAddress(booklet.getAddress());
+	this();
+	if(booklet!=null) {
+            this.fillCommonFields(booklet);
+            this.setPublicationType(ResultPublicationType.Booklet);
+            this.setHowPublished(booklet.getHowPublished());
+            this.setAddress(booklet.getAddress());
+	}
     }
     
     public String getAddress() {

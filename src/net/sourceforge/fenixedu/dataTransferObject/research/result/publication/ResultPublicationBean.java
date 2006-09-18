@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Resul
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
 import net.sourceforge.fenixedu.util.Month;
 
-public class ResultPublicationBean implements Serializable {
+public abstract class ResultPublicationBean implements Serializable {
 
     private ResultPublicationType publicationType;
 
@@ -23,7 +23,7 @@ public class ResultPublicationBean implements Serializable {
 
     private DomainReference<Person> person;
 
-    private ResultParticipationRole resultParticipationRole = ResultParticipationRole.Author;
+    private ResultParticipationRole role = ResultParticipationRole.Author;
 
     private DomainReference<Unit> publisher;
 
@@ -55,11 +55,11 @@ public class ResultPublicationBean implements Serializable {
 	/*Types based on BibTex*/
 	Book, BookPart, Article, Inproceedings, Proceedings, Thesis, Manual, TechnicalReport, Booklet, Misc, Unpublished;
 
-	public static ResultPublicationType getDefaultResultPublicationType() {
+	public static ResultPublicationType getDefaultType() {
 	    return Book;
 	}
     }
-
+    
     public void fillCommonFields(ResultPublication publication) {
 	this.setIdInternal(publication.getIdInternal());
 	this.setTitle(publication.getTitle());
@@ -192,12 +192,12 @@ public class ResultPublicationBean implements Serializable {
 	this.idInternal = idInternal;
     }
 
-    public ResultParticipationRole getResultParticipationRole() {
-	return resultParticipationRole;
+    public ResultParticipationRole getRole() {
+	return role;
     }
 
-    public void setResultParticipationRole(ResultParticipationRole resultParticipationRole) {
-	this.resultParticipationRole = resultParticipationRole;
+    public void setRole(ResultParticipationRole role) {
+	this.role = role;
     }
 
     public String getParticipationSchema() {

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 
@@ -15,22 +16,29 @@ public class BookPartBean extends ResultPublicationBean implements Serializable{
     private String chapter;
     private String bookTitle;
 
-    public BookPartBean() {
+    private BookPartBean() {
+	this.setPublicationType(ResultPublicationType.BookPart);
+	this.setBookPartType(BookPartType.Inbook);
+	this.setActiveSchema("result.publication.create.BookPart.Inbook");
+	this.setParticipationSchema("resultParticipation.simpleWithRole");
     }
 
     public BookPartBean(BookPart bookPart) {
-        this.fillCommonFields(bookPart);
-        this.setPublicationType(ResultPublicationType.BookPart);
-
-        this.setBookPartType(bookPart.getBookPartType());
-        this.setChapter(bookPart.getChapter());
-        this.setBookTitle(bookPart.getBookTitle());
-        this.setFirstPage(bookPart.getFirstPage());
-        this.setLastPage(bookPart.getLastPage());
-        this.setAddress(bookPart.getAddress());
-        this.setVolume(bookPart.getVolume());
-        this.setSeries(bookPart.getSeries());
-        this.setEdition(bookPart.getEdition());
+	this();
+	if(bookPart!=null) {
+            this.fillCommonFields(bookPart);
+            this.setPublicationType(ResultPublicationType.BookPart);
+            this.setBookPartType(bookPart.getBookPartType());
+            this.setActiveSchema("result.publication.create.BookPart." + this.getBookPartType());
+            this.setChapter(bookPart.getChapter());
+            this.setBookTitle(bookPart.getBookTitle());
+            this.setFirstPage(bookPart.getFirstPage());
+            this.setLastPage(bookPart.getLastPage());
+            this.setAddress(bookPart.getAddress());
+            this.setVolume(bookPart.getVolume());
+            this.setSeries(bookPart.getSeries());
+            this.setEdition(bookPart.getEdition());
+	}
     }
     
     public String getAddress() {

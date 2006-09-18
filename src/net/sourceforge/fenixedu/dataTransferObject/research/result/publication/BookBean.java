@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
+
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType;
 
@@ -14,21 +16,26 @@ public class BookBean extends ResultPublicationBean implements Serializable{
     private String language;
     private ScopeType scope;
     
-    public BookBean() {
+    private BookBean() {
+        this.setPublicationType(ResultPublicationType.Book);
+	this.setActiveSchema("result.publication.create."+this.getPublicationType());
+	this.setParticipationSchema("resultParticipation.simpleWithRole");
     }
     
     public BookBean(Book book) {
-        this.fillCommonFields(book);
-        this.setPublicationType(ResultPublicationType.Book);
-
-        this.setAddress(book.getAddress());
-        this.setVolume(book.getVolume());
-        this.setSeries(book.getSeries());
-        this.setEdition(book.getEdition());
-        this.setIsbn(book.getIsbn());
-        this.setNumberPages(book.getNumberPages());
-        this.setLanguage(book.getLanguage());
-        this.setScope(book.getScope());
+	this();
+	if(book!=null) {
+            this.fillCommonFields(book);
+            this.setPublicationType(ResultPublicationType.Book);
+            this.setAddress(book.getAddress());
+            this.setVolume(book.getVolume());
+            this.setSeries(book.getSeries());
+            this.setEdition(book.getEdition());
+            this.setIsbn(book.getIsbn());
+            this.setNumberPages(book.getNumberPages());
+            this.setLanguage(book.getLanguage());
+            this.setScope(book.getScope());
+	}
     }
     
     public String getAddress() {
