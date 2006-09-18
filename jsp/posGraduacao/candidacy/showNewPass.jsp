@@ -30,7 +30,7 @@
               <td>
                 <table border="0" width="100%" height="100%">
                   <tr valign="top" align="left"> 
-                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br/>
+                    <td>&nbsp;<b><bean:message bundle="GLOBAL_RESOURCES" key="institution.nameUpperCase" /></b><br/>
                       &nbsp;<b>Secretaria da Pós-Graduação</b><br/>
                       <hr size="1">
                     </td>
@@ -84,7 +84,14 @@
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.username"/> </td>
-            <td> <bean:write name="candidate" property="person.username"/> </td>
+            <td>
+            	<logic:empty name="candidate" property="person.istUsername">
+	            	<bean:write name="candidate" property="person.username"/>             	
+            	</logic:empty>
+            	<logic:notEmpty name="candidate" property="person.istUsername">
+    	        	<bean:write name="candidate" property="person.istUsername"/> 
+            	</logic:notEmpty>
+            </td>
           </tr>
           
 	      <tr>
@@ -133,11 +140,11 @@
 	      <tr>
           <td colspan="2" valign="bottom" >
             <div align="center">
-              <font size="2"> Documento processado por computador.</font> 
+              <font size="2"><bean:message bundle="GLOBAL_RESOURCES" key="footer.computer.processedDocument"/></font> 
             </div>
             <hr size="1" color="#000000" width="100%">
             <div align="center">
-              <font size="2"> Av. Rovisco Pais, 1 1049-001 Lisboa Codex Telefone: 218417336 Fax: 218419531 Contribuinte Nº: 501507930</font>
+              <font size="2"><bean:message bundle="GLOBAL_RESOURCES" key="institution.address"/></font>
             </div>
           </td>
           </tr>
