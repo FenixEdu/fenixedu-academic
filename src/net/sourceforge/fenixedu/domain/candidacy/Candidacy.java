@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;

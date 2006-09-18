@@ -357,6 +357,17 @@
 	<slot name="activeCandidacySituation.candidacySituationType" key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.activeCandidacySituation.candidacySituationType"/>
 </schema>
 
+<schema name="DegreeCandidacy.view-with-person-details" type="net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy" bundle="CANDIDATE_RESOURCES">
+	<slot name="person.name" key="label.net.sourceforge.fenixedu.domain.Person.name"/>
+	<slot name="person.student.number" key="label.net.sourceforge.fenixedu.domain.student.Student.number"/>
+	<slot name="person.istUsername" key="label.net.sourceforge.fenixedu.domain.Person.istUsername"/>
+	<slot name="number" key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.number"/>
+	<slot name="executionDegree" key="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.executionDegree.degreeCurricularPlan.degree.name" layout="format">
+		<property name="format" value="${degreeCurricularPlan.degree.name} - ${degreeCurricularPlan.name}" />
+	</slot>
+	<slot name="activeCandidacySituation.candidacySituationType" key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.activeCandidacySituation.candidacySituationType"/>
+</schema>
+
 <schema name="FillPersonalDataWelcomeForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.FillPersonalDataWelcomeForm" bundle="CANDIDATE_RESOURCES">
     <slot name="formDescription" read-only="true"/>
 </schema>
@@ -400,7 +411,7 @@
     	<property name="size" value="9"/>
 		<property name="maxLength" value="9"/>
 		 <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
-            <property name="regexp" value="\d{9}"/>
+            <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.socialSecurityNumber.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>

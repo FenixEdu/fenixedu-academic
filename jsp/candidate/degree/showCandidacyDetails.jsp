@@ -9,11 +9,21 @@
 <h2><bean:message  key="label.candidacy.candidacyDetails"/></h2>
 <hr/>
 
-<fr:view name="candidacy" schema="DegreeCandidacy.view">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4" />
-	</fr:layout>
-</fr:view>
+<logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType.name" value="REGISTERED">
+	<fr:view name="candidacy" schema="DegreeCandidacy.view-with-person-details">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4" />
+		</fr:layout>
+	</fr:view>
+</logic:equal>
+
+<logic:notEqual name="candidacy" property="activeCandidacySituation.candidacySituationType.name" value="REGISTERED">
+	<fr:view name="candidacy" schema="DegreeCandidacy.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4" />
+		</fr:layout>
+	</fr:view>
+</logic:notEqual>
 
 <bean:define id="emptyOperations">
 	<bean:write name="operations" property="empty" />

@@ -14,6 +14,39 @@
 		<title><bean:message key="title.student.schedule"/></title>
 	</head>
 	<body>
+		<logic:present name="UserView">
+			
+			<table>
+				<tr>
+					<td align="right">
+						<strong>Nome:</strong>
+					</td>
+					<td>
+						<bean:write name="UserView" property="person.name" />
+					</td>
+				</tr>
+				<tr>
+					<td align="right">
+						<strong>Número:</strong>
+					</td>
+					<td>
+						<bean:write name="UserView" property="person.student.number" />
+					</td>
+				</tr>
+				<tr>
+					<td align="right" >
+						<strong>IST Username:</strong>
+					</td>
+					<td>
+						<bean:write name="UserView" property="person.istUsername" />
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<br/>
+			<br/>
+		</logic:present>
+		
 		<bean:define id="infoLessons" name="infoLessons"/>
 		<div align="center">
 			<app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE %>" application="<%= request.getContextPath() %>"/>

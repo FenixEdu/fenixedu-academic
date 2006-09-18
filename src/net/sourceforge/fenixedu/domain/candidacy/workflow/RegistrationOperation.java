@@ -44,6 +44,7 @@ public class RegistrationOperation extends CandidacyOperation {
 	getDegreeCandidacy().getPerson().addPersonRoleByRoleType(RoleType.PERSON);
 	getDegreeCandidacy().getPerson().addPersonRoleByRoleType(RoleType.STUDENT);
 
+	/*
 	boolean needsCandidateRole = false;
 	for (final Candidacy candidacy : getDegreeCandidacy().getPerson().getCandidaciesSet()) {
 	    if (candidacy.equals(getDegreeCandidacy())) {
@@ -59,6 +60,7 @@ public class RegistrationOperation extends CandidacyOperation {
 	if (!needsCandidateRole) {
 	    getDegreeCandidacy().getPerson().removeRoleByType(RoleType.CANDIDATE);
 	}
+	*/
     }
 
     protected void associateShiftsFor(final Registration registration) {
