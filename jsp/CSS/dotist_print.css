@@ -325,23 +325,27 @@ table.timetable .period-hours {
 *************************************/
 
 body.registration {
-	font: 11pt "Courier New", Courier, monospace;
+	font-size: 11pt;
+	font-family: "Courier New", Courier, monospace;
 	color: #000;
 	text-align: justify;
 	}
 	
 table.registration {	
-	font: 11pt Courier;
+	font-size: 11pt;
+	font-family: "Courier New", Courier, monospace;
 	text-align: justify;
 	}
 	
 h2.registration	{
-	font: 15pt Courier;
+	font-size: 15pt;
+	font-family: "Courier New", Courier, monospace;
 	color: #000;
 	}	
 	
 h3.registration	{
-	font: 13pt Courier;
+	font-size: 13pt;
+	font-family: "Courier New", Courier, monospace;
 	color: #000;
 	}
 	

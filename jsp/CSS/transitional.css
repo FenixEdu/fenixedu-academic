@@ -514,13 +514,7 @@ margin-top: 1em;
 width: 29em;
 float: left;
 }
-div.pass_req {
-background-color: #fafadd;
-margin-left: 1em;
-border: 1px solid #ccc;
-margin-left: 30em;
-padding: 0.5em;
-}
+
 .tdcheck {
 vertical-align: top;
 width: 0.5em;
