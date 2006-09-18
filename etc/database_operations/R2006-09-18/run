@@ -38,3 +38,8 @@ execute "Creating shift distribution tables" CreateShiftDistributionTables.sql
 execute "Changing table ExecutionYear" AlterTableExecutionYear.sql
 execute "Changing table Registration" AlterTableRegistration.sql
 execute "Add Codes for Bolonha Degrees" AddCodesForBolonhaDegrees.sql
+
+execute "add column KEY_LESSON in SUMMARY table" alterSummaryTable.sql
+execute "alter table Grouping, change column Name" alterTableGroupingChangeName.sql
+execute "Alter table result participation" alterTableResultParticipation.sql
+execute "Alter table Role" insertParkingManagerRole.sql

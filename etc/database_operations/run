@@ -26,9 +26,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-execute "add column KEY_LESSON in SUMMARY table" alterSummaryTable.sql
-execute "alter table Grouping, change column Name" alterTableGroupingChangeName.sql
-
-execute "Alter table result participation" alterTableResultParticipation.sql
-execute "Alter table Role" insertParkingManagerRole.sql
