@@ -32,8 +32,8 @@ public abstract class GenerateExecutionCourseRSS extends RSSAction{
         final String commonLocalUrl = StringAppender.append(context,
         		"/publico/executionCourse.do?method=",
         		getMethodName(),
-        		"&amp;executionCourseID=",
-        		executionCourse.getSite().getIdInternal().toString(),
+        		"&executionCourseID=",
+        		executionCourse.getIdInternal().toString(),
         		"#");
 
     	for (final DomainObject domainObject : ((Collection<DomainObject>) getObjects(executionCourse))) {
