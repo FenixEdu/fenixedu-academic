@@ -27,5 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
-
 execute "Create StudentDataByExecutionYear" createStudentDataByExecutionYear.sql
+execute "Set student numbers from registrations" SetStudentNumberFromRegistration.sql 
