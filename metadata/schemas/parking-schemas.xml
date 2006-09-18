@@ -115,7 +115,7 @@
 <!-- EDIT -->
 <schema name="edit.parkingRequestFactory.driverLicense"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryCreator">
-	<slot name="driverLicenseInputStream" key="label.driverLicense"	bundle="PARKING_RESOURCES">
+	<slot name="driverLicenseInputStream" key="label.driverLicenseDocument"	bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="driverLicenseFileName" />
 		<property name="size" value="30"/>
 	</slot>

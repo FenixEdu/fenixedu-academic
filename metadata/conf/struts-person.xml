@@ -327,7 +327,8 @@
         		scope="request"
         		parameter="method"
         		name="parkingForm"
-        		input="/parking.do?method=prepareParking">
+        		validate="false"
+        		input="/parking.do?method=prepareEditParking&amp;page=0">
           <forward name="prepareParking" path="prepare-parking"/>
           <forward name="editParkingRequest" path="edit-parking-request"/>
         </action>               

@@ -10,8 +10,12 @@
 
 function hide2ndPartForms(){
 
-	document.getElementById('ownCar1').style.display='none';
-	document.getElementById('ownCar2').style.display='none';
+	if(document.getElementById('ownCar1radio1').checked==true){
+		document.getElementById('ownCar1').style.display='none';
+	}
+	if(document.getElementById('ownCar2radio1').checked==true){
+		document.getElementById('ownCar2').style.display='none';
+	}
 }
 
 function enableDisableElement(checkbox, elementId){
@@ -28,13 +32,16 @@ function enableDisableElement(checkbox, elementId){
 </script>
 
 
-
 <em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.parking" bundle="PARKING_RESOURCES" /></h2>
 
 <div class="warning0">
 	<p class="mvert025"><bean:message key="title.regulation" bundle="PARKING_RESOURCES"/>:</p>
 	<ul>
+			<html:link page="/parking.do?method=downloadParkingRegulamentation">
+				<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
+			</html:link>
+
 		<li><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES"/></li>
 		
 		<li><bean:message key="title.forEachVehicle" bundle="PARKING_RESOURCES"/>
@@ -54,9 +61,6 @@ function enableDisableElement(checkbox, elementId){
 		<li><bean:message key="title.documentDeliveryOnline" bundle="PARKING_RESOURCES"/></li>
 		<li><bean:message key="title.documentDeliveryPaper" bundle="PARKING_RESOURCES"/></li>
 	</ul>
-	<html:link page="/parking.do?method=downloadParkingRegulamentation">
-		<bean:message key="label.parkingRegulation" />
-	</html:link>
 </div>	
 
 <logic:present name="parkingParty">
@@ -86,32 +90,43 @@ function enableDisableElement(checkbox, elementId){
 		</tr>
 		</table>
 			<div id="driverLicense">
-				<fr:edit name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.driverLicense"
+				<fr:edit id="driverLicenseFR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.driverLicense"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 tstylepark"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>
 				</fr:edit>
+				<span class="error0 mtop0"><html:messages id="message" property="driverLicenseFileName" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages></span>
 			</div>
-	
+			<br/>
 			
 	<!-- FIRST CAR BEGINING -->
 	<p class="mbottom0"><strong><bean:message key="label.firstCar" bundle="PARKING_RESOURCES" /></strong>:</p>
 		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
 		<tr>
 			<th><bean:message key="label.firstCarMake" bundle="PARKING_RESOURCES"/>:</th>
-			<td><fr:edit id="firstCarMake" name="parkingRequestFactoryEditor" slot="firstCarMake"
+			<td><fr:edit id="firstCarMakeFR" name="parkingRequestFactoryEditor" slot="firstCarMake" 
 				type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 			</fr:edit></td>
-			<td class="noborder"><html:messages id="firstCarMake"/></td>
+			<td class="noborder"><span class="error0 mtop025">
+				<html:messages id="message" property="firstCarMakePT" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages></span>
+			</td>
 		</tr>
 		<tr>
 			<th><bean:message key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
-			<td><fr:edit id="firstCarPlateNumber" name="parkingRequestFactoryEditor" slot="firstCarPlateNumber"
+			<td><fr:edit id="firstCarPlateNumberFR" name="parkingRequestFactoryEditor" slot="firstCarPlateNumber"
 				type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 			</fr:edit> (aa-bb-cc)</td>
-			<td class="noborder"><html:messages id="firstCarPlateNumber"/></td>
+			<td class="noborder"><span class="error0 mtop025">
+				<html:messages id="message" property="firstCarPlateNumberPT" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/></span>
+				</html:messages>
+			</td>
 		</tr>
 		<tr>
 			<th><div id="registry1Top" style="display:none"><bean:message key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
@@ -123,15 +138,18 @@ function enableDisableElement(checkbox, elementId){
 		</table>
 
 			<div id="registry1">
-				<fr:edit name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.firstCarRegistry"
+				<fr:edit id="registry1FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.firstCarRegistry"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>
 				</fr:edit>
+				<span class="error0 mtop025"><html:messages id="message" property="firstCarRegistryFileName" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages></span>				
 			</div>
-
+			
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
 		<tr>
 			<th><div id="insurance1Top" style="display:none"><bean:message key="label.firstInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
@@ -142,21 +160,24 @@ function enableDisableElement(checkbox, elementId){
 		</tr>
 		</table>
 			<div id="insurance1">
-				<fr:edit name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.firstCarInsurance"
+				<fr:edit id="insurance1FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.firstCarInsurance"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>				
 				</fr:edit>
+				<span class="error0 mtop025"><html:messages id="message" property="firstCarInsuranceFileName" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages></span>
 			</div>
 			
 			
 			<p>
 				<bean:message key="label.ownVehicle" bundle="PARKING_RESOURCES"/>
-				<html:radio name="parkingForm" property="ownVehicle1" value="true" onclick="document.getElementById('ownCar1').style.display='none'"/>
+				<html:radio styleId="ownCar1radio1" name="parkingForm" property="ownVehicle1" value="true" onclick="document.getElementById('ownCar1').style.display='none'"/>
 					<bean:message key="label.yes" bundle="PARKING_RESOURCES"/>
-				<html:radio name="parkingForm" property="ownVehicle1" value="false" onclick="document.getElementById('ownCar1').style.display='block'"/>
+				<html:radio styleId="ownCar1radio2" name="parkingForm" property="ownVehicle1" value="false" onclick="document.getElementById('ownCar1').style.display='block'"/>
 					<bean:message key="label.no" bundle="PARKING_RESOURCES"/>				
 			</p>
 			<div id="ownCar1">
@@ -168,13 +189,16 @@ function enableDisableElement(checkbox, elementId){
 		</tr>
 		</table>
 			<div id="Id1">
-				<fr:edit name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.firstCarId.notOwnCar"
+				<fr:edit id="Id1FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.firstCarId.notOwnCar"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>					
 				</fr:edit>
+				<span class="error0 mtop025"><html:messages id="message" property="firstCarOwnerIdFileName" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages></span>
 			</div>
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
 		<tr>
@@ -184,16 +208,20 @@ function enableDisableElement(checkbox, elementId){
 		</tr>
 		</table>
 			<div id="declaration1">
-				<fr:edit name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.firstCarAuthorization.notOwnCar"
+				<fr:edit id="declaration1FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.firstCarAuthorization.notOwnCar"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>				
 				</fr:edit>
+				<span class="error0 mtop025"><html:messages id="message" property="firstCarAuthorizationFileName" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages></span>
 			</div>
 		
 			</div>
+			<br/><br/>
 					
 	<!-- SECOND CAR BEGINING -->
 			
@@ -201,13 +229,13 @@ function enableDisableElement(checkbox, elementId){
 		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
 		<tr>
 			<th><bean:message key="label.secondCarMake" bundle="PARKING_RESOURCES"/>:</th>
-			<td><fr:edit name="parkingRequestFactoryEditor" slot="secondCarMake" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+			<td><fr:edit id="secondCarMakeFR" name="parkingRequestFactoryEditor" slot="secondCarMake" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
 				type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 			</fr:edit></td>
 		</tr>
 		<tr>
 			<th><bean:message key="label.secondCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
-			<td><fr:edit name="parkingRequestFactoryEditor" slot="secondCarPlateNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+			<td><fr:edit id="secondCarPlateNumberFR" name="parkingRequestFactoryEditor" slot="secondCarPlateNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
 				type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 			</fr:edit> (aa-bb-cc)</td>			
 		</tr>
@@ -221,13 +249,16 @@ function enableDisableElement(checkbox, elementId){
 		</table>
 
 			<div id="registry2">
-				<fr:edit name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.secondCarRegistry"
+				<fr:edit id="registry2FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.secondCarRegistry"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>
 				</fr:edit>
+				<span class="error0 mtop025"><html:messages id="message" property="secondCarRegistryFileName" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages></span>
 			</div>
 
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
@@ -240,21 +271,24 @@ function enableDisableElement(checkbox, elementId){
 		</tr>
 		</table>
 			<div id="insurance2">
-				<fr:edit name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.secondCarInsurance"
+				<fr:edit id="insurance2FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.secondCarInsurance"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>				
 				</fr:edit>
+				<span class="error0 mtop025"><html:messages id="message" property="secondCarInsuranceFileName" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages></span>
 			</div>
 			
 			
 			<p>
 				<bean:message key="label.ownVehicle" bundle="PARKING_RESOURCES"/>
-				<html:radio name="parkingForm" property="ownVehicle2" value="true" onclick="document.getElementById('ownCar2').style.display='none'"/>
+				<html:radio styleId="ownCar2radio1" name="parkingForm" property="ownVehicle2" value="true" onclick="document.getElementById('ownCar2').style.display='none'"/>
 					<bean:message key="label.yes" bundle="PARKING_RESOURCES"/>
-				<html:radio name="parkingForm" property="ownVehicle2" value="false" onclick="document.getElementById('ownCar2').style.display='block'"/>
+				<html:radio styleId="ownCar2radio2" name="parkingForm" property="ownVehicle2" value="false" onclick="document.getElementById('ownCar2').style.display='block'"/>
 					<bean:message key="label.no" bundle="PARKING_RESOURCES"/>	
 			</p>
 			<div id="ownCar2">
@@ -266,13 +300,16 @@ function enableDisableElement(checkbox, elementId){
 		</tr>
 		</table>
 			<div id="Id2">
-				<fr:edit name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.secondCarId.notOwnCar"
+				<fr:edit id="Id2FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.secondCarId.notOwnCar"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>					
 				</fr:edit>
+				<span class="error0 mtop025"><html:messages id="message" property="secondCarOwnerIdFileName" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages></span>
 			</div>
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
 		<tr>
@@ -282,17 +319,20 @@ function enableDisableElement(checkbox, elementId){
 		</tr>
 		</table>
 			<div id="declaration2">
-				<fr:edit name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.secondCarAuthorization.notOwnCar"
+				<fr:edit id="declaration2FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.secondCarAuthorization.notOwnCar"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>				
 				</fr:edit>
+				<span class="error0 mtop0"><html:messages id="message" property="secondCarAuthorizationFileName" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages></span>
 			</div>
 		
 			</div>
-			
+			<br/>
 		<input type="submit" value="<%= submit.toString() %>" />		
 
 		</fr:form>

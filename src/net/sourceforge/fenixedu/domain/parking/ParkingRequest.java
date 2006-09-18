@@ -68,41 +68,24 @@ public class ParkingRequest extends ParkingRequest_Base {
         private String secondCarMake;
 
         private String driverLicenseFileName;
-
-        private InputStream driverLicenseInputStream;
-
+        private transient InputStream driverLicenseInputStream;
         private String firstCarPropertyRegistryFileName;
-
-        private InputStream firstCarPropertyRegistryInputStream;
-
+        private transient InputStream firstCarPropertyRegistryInputStream;
         private String firstCarOwnerIdFileName;
-
-        private InputStream firstCarOwnerIdInputStream;
-
+        private transient InputStream firstCarOwnerIdInputStream;
         private String firstDeclarationAuthorizationFileName;
-
-        private InputStream firstDeclarationAuthorizationInputStream;
-
+        private transient InputStream firstDeclarationAuthorizationInputStream;    
         private String firstInsuranceFileName;
-
-        private InputStream firstInsuranceInputStream;
-
+        private transient InputStream firstInsuranceInputStream; 
         private String secondCarPropertyRegistryFileName;
-
-        private InputStream secondCarPropertyRegistryInputStream;
-
+        private transient InputStream secondCarPropertyRegistryInputStream;
         private String secondCarOwnerIdFileName;
-
-        private InputStream secondCarOwnerIdInputStream;
-
+        private transient InputStream secondCarOwnerIdInputStream;
         private String secondDeclarationAuthorizationFileName;
-
-        private InputStream secondDeclarationAuthorizationInputStream;
-
+        private transient InputStream secondDeclarationAuthorizationInputStream;
         private String secondInsuranceFileName;
-
-        private InputStream secondInsuranceInputStream;
-
+        private transient InputStream secondInsuranceInputStream;        
+        
         public ParkingRequestFactory(ParkingParty parkingParty) {
             super();
             setParkingParty(parkingParty);
