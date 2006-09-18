@@ -17,9 +17,9 @@ public class ResultPredicates {
     /**
      * Predicates to access Result objects.
      */
-    public static final AccessControlPredicate<Result> readPredicate = new AccessControlPredicate<Result>() {
+    public static final AccessControlPredicate<Result> createPredicate = new AccessControlPredicate<Result>() {
 	public boolean evaluate(Result result) {
-	    if (person.hasRole(RoleType.RESEARCHER)) {
+	    if (person.hasRole(RoleType.RESEARCHER) && !result.hasAnyResultParticipations()) {
 		return true;
 	    }
 	    return false;
@@ -28,12 +28,8 @@ public class ResultPredicates {
     
     public static final AccessControlPredicate<Result> writePredicate = new AccessControlPredicate<Result>() {
 	public boolean evaluate(Result result) {
-	    if (person.hasRole(RoleType.RESEARCHER)) {
-		//if we are creating a new object there are no participations yet.
-		//if we are changing an existing object then person must be a participator.
-		if(!result.hasAnyResultParticipations() || result.hasPersonParticipation(person)) {
-		    return true;
-		}
+	    if (person.hasRole(RoleType.RESEARCHER) && result.hasPersonParticipation(person)) {
+		return true;
 	    }
 	    return false;
 	}
@@ -44,8 +40,9 @@ public class ResultPredicates {
      */
     public static final AccessControlPredicate<ResultUnitAssociation> unitWritePredicate = new AccessControlPredicate<ResultUnitAssociation>() {
 	public boolean evaluate(ResultUnitAssociation association) {
-	    if (person.hasRole(RoleType.RESEARCHER) && association.getResult() != null
-		    && association.getResult().hasPersonParticipation(person)) {
+	    final Result result = association.getResult();
+	    
+	    if (person.hasRole(RoleType.RESEARCHER) && result.hasPersonParticipation(person)) {
 		return true;
 	    }
 	    return false;
@@ -57,8 +54,9 @@ public class ResultPredicates {
      */
     public static final AccessControlPredicate<ResultEventAssociation> eventWritePredicate = new AccessControlPredicate<ResultEventAssociation>() {
 	public boolean evaluate(ResultEventAssociation association) {
-	    if (person.hasRole(RoleType.RESEARCHER) && association.getResult() != null
-		    && association.getResult().hasPersonParticipation(person)) {
+	    final Result result = association.getResult();
+	    
+	    if (person.hasRole(RoleType.RESEARCHER) && result.hasPersonParticipation(person)) {
 		return true;
 	    }
 	    return false;
@@ -72,13 +70,8 @@ public class ResultPredicates {
 	public boolean evaluate(ResultParticipation participation) {
 	    final Result result = participation.getResult();
 	
-	    if (person.hasRole(RoleType.RESEARCHER) && result!=null) {
-		if(result.hasPersonParticipation(person)) {
+	    if (person.hasRole(RoleType.RESEARCHER) && result.hasPersonParticipation(person)) {
 		    return true;    
-		}
-		if(result.getResultParticipationsCount()==1 && result.getResultParticipations().get(0).getPerson()==null) {
-		    return true;
-		}
 	    }
 	    return false;
 	}
@@ -89,8 +82,9 @@ public class ResultPredicates {
      */
     public static final AccessControlPredicate<ResultDocumentFile> documentFileWritePredicate = new AccessControlPredicate<ResultDocumentFile>() {
 	public boolean evaluate(ResultDocumentFile documentFile) {
-	    if (person.hasRole(RoleType.RESEARCHER) && documentFile.getResult()!=null
-		    && documentFile.getResult().hasPersonParticipation(person)) {
+	    final Result result = documentFile.getResult();
+	    
+	    if (person.hasRole(RoleType.RESEARCHER) && result.hasPersonParticipation(person)) {
 		return true;
 	    }
 	    return false;
