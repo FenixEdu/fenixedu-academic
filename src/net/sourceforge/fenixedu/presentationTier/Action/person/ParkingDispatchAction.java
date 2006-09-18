@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.parking.ParkingDocumentType;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactory;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -61,12 +61,14 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         request.setAttribute("parkingParty", parkingParty);
 
         DynaActionForm parkingForm = (DynaActionForm) actionForm;
-        if (parkingParty.getFirstRequest().getFirstCarPropertyRegistryFileName() != null) {
+        if (parkingParty.getFirstRequest() != null
+                && parkingParty.getFirstRequest().getFirstCarPropertyRegistryFileName() != null) {
             parkingForm.set("ownVehicle1", false);
         } else {
             parkingForm.set("ownVehicle1", true);
         }
-        if (parkingParty.getFirstRequest().getSecondCarPropertyRegistryFileName() != null) {
+        if (parkingParty.getFirstRequest() != null
+                && parkingParty.getFirstRequest().getSecondCarPropertyRegistryFileName() != null) {
             parkingForm.set("ownVehicle2", false);
         } else {
             parkingForm.set("ownVehicle2", true);
@@ -160,7 +162,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                         "error.fileName.extension"));
                 result = false;
             }
-        }       
+        }
         return result;
     }
 
@@ -225,9 +227,14 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         ParkingRequestFactoryCreator parkingRequestFactoryCreator = (ParkingRequestFactoryCreator) getFactoryObject();
         DynaActionForm parkingForm = (DynaActionForm) actionForm;
         if (!isFirstCarDateValid(parkingRequestFactoryCreator, request)) {
+            RenderUtils.invalidateViewState();
             return mapping.getInputForward();
         }
         ajustParkingRequest(parkingForm, parkingRequestFactoryCreator);
+        if (!areFileNamesValid(parkingRequestFactoryCreator, request)) {
+            RenderUtils.invalidateViewState();
+            return mapping.getInputForward();
+        }
         executeService(request, "ExecuteFactoryMethod", new Object[] { parkingRequestFactoryCreator });
         return prepareParking(mapping, actionForm, request, response);
     }

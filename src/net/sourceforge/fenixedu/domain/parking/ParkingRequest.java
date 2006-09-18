@@ -489,4 +489,25 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
         return "";
     }
+
+    public boolean getHasFirstCar() {
+        return (getFirstCarMake() != null && getFirstCarMake().length() > 0)
+            || (getFirstCarPlateNumber() != null && getFirstCarPlateNumber().length() > 0)
+            || (getFirstCarPropertyRegistryFileName()  != null && getFirstCarPropertyRegistryFileName().length() > 0)
+            || (getFirstCarOwnerIdFileName() != null && getFirstCarOwnerIdFileName().length() > 0)
+            || (getFirstDeclarationAuthorizationFileName() != null && getFirstDeclarationAuthorizationFileName().length() > 0);
+    }
+
+    public boolean getHasSecondCar() {
+        return (getSecondCarMake() != null && getSecondCarMake().length() > 0)
+            || (getSecondCarPlateNumber() != null && getSecondCarPlateNumber().length() > 0)
+            || (getSecondCarPropertyRegistryFileName()  != null && getSecondCarPropertyRegistryFileName().length() > 0) 
+            || (getSecondCarOwnerIdFileName() != null && getSecondCarOwnerIdFileName().length() > 0)
+            || (getSecondDeclarationAuthorizationFileName() != null && getSecondDeclarationAuthorizationFileName().length() > 0);
+    }
+
+    public boolean getHasDriverLicense() {
+        return getDriverLicenseFileName() != null && getDriverLicenseFileName().length() > 0;
+    }
+    
 }

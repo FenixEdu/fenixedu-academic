@@ -27,7 +27,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public ParkingRequest getFirstRequest() {
-        return getParkingRequests().iterator().next();
+        return (getParkingRequests().isEmpty() ? null : getParkingRequests().iterator().next());
     }
 
     public ParkingRequestFactoryCreator getParkingRequestFactoryCreator() {

@@ -28,6 +28,11 @@
 		</logic:equal>
 		<logic:notEqual name="parkingParty"
 			property="hasAllNecessaryPersonalInfo" value="false">
+			
+			<html:link page="/parking.do?method=downloadParkingRegulamentation">
+				<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
+			</html:link>
+			<br/>
 			<logic:equal name="parkingParty" property="acceptedRegulation"
 				value="false">
 				<p class="infoop2"><bean:message
@@ -44,7 +49,9 @@
 			</logic:equal>
 			<logic:notEqual name="parkingParty" property="acceptedRegulation"
 				value="false">
+				<div class="simpleblock4">
 				<bean:write name="parkingParty" property="parkingAcceptedRegulationMessage" filter="false"/>
+				</div>
 				<ul>
 					<li><html:link page="/parking.do?method=prepareEditParking">
 						<bean:message key="label.editParkingDocuments"
@@ -63,32 +70,40 @@
 		</ul>
 
 
-		<p class="mbottom0"><strong><bean:message key="label.driverLicense"
-			bundle="PARKING_RESOURCES" /></strong>:</p>
+		
 
-		<fr:view name="parkingParty" property="firstRequest"
-			schema="parkingRequest.driverLicense">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
-			</fr:layout>
-		</fr:view>
+		<logic:equal name="parkingParty" property="firstRequest.hasDriverLicense" value="true">
+			<p class="mbottom0"><strong><bean:message key="label.driverLicense"
+				bundle="PARKING_RESOURCES" /></strong>:</p>
+			<fr:view name="parkingParty" property="firstRequest"
+				schema="parkingRequest.driverLicense">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
+				</fr:layout>
+			</fr:view>
+		</logic:equal>
 
-		<p class="mbottom0"><strong><bean:message key="label.firstCar"
-			bundle="PARKING_RESOURCES" /></strong>:</p>
-		<fr:view name="parkingParty" property="firstRequest"
-			schema="parkingRequest.firstCar">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
-			</fr:layout>
-		</fr:view>
+		<logic:equal name="parkingParty" property="firstRequest.hasFirstCar" value="true">
+			<p class="mbottom0"><strong><bean:message key="label.firstCar"
+				bundle="PARKING_RESOURCES" /></strong>:</p>
+			<fr:view name="parkingParty" property="firstRequest"
+				schema="parkingRequest.firstCar">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
+				</fr:layout>
+			</fr:view>
+		</logic:equal>
 
-		<p class="mbottom0"><strong><bean:message key="label.secondCar"
-			bundle="PARKING_RESOURCES" /></strong>:</p>
-		<fr:view name="parkingParty" property="firstRequest"
-			schema="parkingRequest.secondCar">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
-			</fr:layout>
-		</fr:view>
+		<logic:equal name="parkingParty" property="firstRequest.hasSecondCar" value="true">
+			<p class="mbottom0"><strong><bean:message key="label.secondCar"
+				bundle="PARKING_RESOURCES" /></strong>:</p>
+			<fr:view name="parkingParty" property="firstRequest"
+				schema="parkingRequest.secondCar">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
+				</fr:layout>
+			</fr:view>
+		</logic:equal>
+
 	</logic:notEmpty>
 </logic:present>
