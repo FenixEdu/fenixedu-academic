@@ -42,6 +42,13 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
+/**
+ * @author Manuel Pinto
+ * 
+ * Sep/2006 Fenix
+ * 
+ */
+
 public class SummariesManagementDA extends FenixDispatchAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
@@ -309,8 +316,10 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	Set<Summary> teacherSummaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
 	teacherSummaries.addAll(professorshipLogged.getAssociatedSummaries());
 	readAndSaveNextPossibleSummaryLessonsAndDates(request, executionCourse);
-	request.setAttribute("showSummariesBean", new ShowSummariesBean(new SummaryTeacherBean(
-		professorshipLogged), executionCourse, ListSummaryType.ALL_CONTENT, professorshipLogged));
+	request
+		.setAttribute("showSummariesBean", new ShowSummariesBean(new SummaryTeacherBean(
+			professorshipLogged), executionCourse, ListSummaryType.ALL_CONTENT,
+			professorshipLogged));
 	request.setAttribute("teacherNumber", professorshipLogged.getTeacher().getTeacherNumber()
 		.toString());
 	request.setAttribute("summaries", teacherSummaries);

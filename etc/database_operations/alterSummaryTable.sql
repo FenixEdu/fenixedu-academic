@@ -1,0 +1,1 @@
+alter table `SUMMARY` add column `KEY_LESSON` int(11) unsigned default NULL; 

@@ -39,11 +39,12 @@ public class SummaryPlainRenderer extends OutputRenderer {
 				    ") ");
 		} else {
 		    lesson = summary.getLesson();
-		    builder.append(lesson.getDiaSemana().toString()).append(" (").append(
-			    DateFormatUtil.format("HH:mm", lesson.getInicio().getTime())).append("-")
-			    .append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime())).append(
-				    ") ");
-		    ;
+		    if (lesson != null) {
+			builder.append(lesson.getDiaSemana().toString()).append(" (").append(
+			DateFormatUtil.format("HH:mm", lesson.getInicio().getTime())).append("-")
+				.append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime()))
+				.append(") ");
+		    }
 		}
 		if (lesson != null && lesson.getSala() != null) {
 		    builder.append(lesson.getSala().getName().toString());

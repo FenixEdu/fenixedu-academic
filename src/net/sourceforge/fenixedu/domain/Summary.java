@@ -87,7 +87,9 @@ public class Summary extends Summary_Base {
 		    .hourOfDay()), hour.get(DateTimeFieldType.minuteOfHour()), 0);
 	    setSummaryHourHourMinuteSecond(hourMinuteSecond);
 	    setRoom(room);
+	    removeLesson();
 	} else {
+	    setLesson(lesson);
 	    setRoom(lesson.getSala());
 	    setSummaryHourHourMinuteSecond(lesson.getBeginHourMinuteSecond());
 	}
@@ -153,26 +155,7 @@ public class Summary extends Summary_Base {
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
-
-    private int getWeekDayInDiaSemanaFormat() {
-	int dayOfWeek = getSummaryDateYearMonthDay().toDateTimeAtMidnight().getDayOfWeek();
-	return (dayOfWeek == 7) ? 1 : dayOfWeek + 1;
-    }
-
-    public Lesson getLesson() {
-	if (!getIsExtraLesson() && getShift() != null) {
-	    for (Lesson lesson : getShift().getAssociatedLessonsSet()) {
-		if (lesson.getBeginHourMinuteSecond().isEqual(getSummaryHourHourMinuteSecond())
-			&& lesson.getDiaSemana().getDiaSemana().intValue() == getWeekDayInDiaSemanaFormat()
-			&& ((lesson.getSala() == null && getRoom() == null) || (lesson.getSala() != null
-				&& getRoom() != null && lesson.getSala().equals(getRoom())))) {
-		    return lesson;
-		}
-	    }
-	}
-	return null;
-    }
-
+       
     public String getOrder() {
 	StringBuilder stringBuilder = new StringBuilder();
 	Lesson lesson = getLesson();
@@ -187,5 +170,26 @@ public class Summary extends Summary_Base {
 	    }
 	}
 	return "";
+    }
+
+    public int getWeekDayInDiaSemanaFormat() {
+	int dayOfWeek = getSummaryDateYearMonthDay().toDateTimeAtMidnight().getDayOfWeek();
+	return (dayOfWeek == 7) ? 1 : dayOfWeek + 1;
+    }
+    
+    @Override
+    public OldRoom getRoom() {
+	if(getLesson() != null) {
+	    return getLesson().getSala();
+	}
+	return super.getRoom();	
+    }
+
+    @Override
+    public HourMinuteSecond getSummaryHourHourMinuteSecond() {
+	if(getLesson() != null) {
+	    return getLesson().getBeginHourMinuteSecond();
+	}
+	return super.getSummaryHourHourMinuteSecond();	
     }
 }

@@ -2826,6 +2826,7 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
 	String teacherName;
 	DateTime lastModifiedDateDateTime;
 	Integer keyShift;
+	Integer keyLesson;
 	Boolean isExtraLesson;
 	YearMonthDay summaryDateYearMonthDay;
 	HourMinuteSecond summaryHourHourMinuteSecond;
@@ -6428,6 +6429,13 @@ relation ShiftSummary {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+}
+
+relation LessonSummary {
+	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Lesson playsRole lesson;
 }
 
 relation SibsPaymentFileEntrySibsPaymentFile {

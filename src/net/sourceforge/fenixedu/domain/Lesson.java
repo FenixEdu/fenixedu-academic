@@ -32,6 +32,7 @@ public class Lesson extends Lesson_Base {
 		"diaSemana.diaSemana"));
 	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator(
 		"beginHourMinuteSecond"));
+	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator("idInternal"));
     }
 
     public Lesson() {
@@ -165,12 +166,7 @@ public class Lesson extends Lesson_Base {
 
     private SortedSet<Summary> getSummaries(Comparator comparator) {
 	SortedSet<Summary> lessonSummaries = new TreeSet<Summary>(comparator);
-	for (Summary summary : getShift().getAssociatedSummariesSet()) {
-	    Lesson summaryLesson = summary.getLesson();
-	    if(summaryLesson != null && summaryLesson.equals(this)) {
-		lessonSummaries.add(summary);
-	    }
-	}
+	lessonSummaries.addAll(getAssociatedSummariesSet());
 	return lessonSummaries;
     }
     
@@ -189,6 +185,7 @@ public class Lesson extends Lesson_Base {
 
 	YearMonthDay startDateToSearch = getLessonStartDay();
 	YearMonthDay endDateToSearch = (lessonEndDay.isAfter(currentDate)) ? currentDate : lessonEndDay;
+	
 	Campus lessonCampus = getLessonCampus();
 
 	if (date != null && !Holiday.isHoliday(date, lessonCampus)
@@ -208,8 +205,7 @@ public class Lesson extends Lesson_Base {
 
     private YearMonthDay getLessonStartDay() {
 	YearMonthDay periodStart = getRoomOccupation().getPeriod().getStartYearMonthDay();
-	int weekOfQuinzenalStart = (getWeekOfQuinzenalStart() != null) ? getWeekOfQuinzenalStart()
-		.intValue() : 0;
+	int weekOfQuinzenalStart = (getWeekOfQuinzenalStart() != null) ? getWeekOfQuinzenalStart().intValue() : 0;
 	YearMonthDay lessonStart = periodStart.plusDays(7 * weekOfQuinzenalStart);
 	int lessonStartDayOfWeek = lessonStart.toDateTimeAtMidnight().getDayOfWeek();
 	return lessonStart.plusDays(getLessonWeekDayToYearMonthDayFormat() - lessonStartDayOfWeek);
@@ -242,6 +238,7 @@ public class Lesson extends Lesson_Base {
 	YearMonthDay currentDate = new YearMonthDay();
 	YearMonthDay lessonEndDay = getLessonEndDay();
 	YearMonthDay endDateToSearch = (lessonEndDay.isAfter(currentDate)) ? currentDate : lessonEndDay;
+	
 	Campus lessonCampus = getLessonCampus();
 	Summary lastSummary = getLastSummary();
 
