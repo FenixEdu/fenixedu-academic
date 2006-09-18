@@ -20,64 +20,78 @@ import org.apache.struts.action.ActionMessages;
 public class ResultsManagementAction extends FenixDispatchAction {
     public ActionForward backToResult(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	final Result result = readResultFromRequest(request);
+	final Result result = getResultFromRequest(request);
 	if (result == null) {
 	    return backToResultList(mapping, form, request, response);
 	}
 	
-	String forwardTo = null;
-
+	request.setAttribute("resultId", result.getIdInternal());
 	if (result instanceof ResultPatent) {
-	    request.setAttribute("patentId", result.getIdInternal());
-	    forwardTo = new String("editPatent");
+	    return mapping.findForward("editPatent");    
 	} else if (result instanceof ResultPublication) {
-	    request.setAttribute("publicationId", result.getIdInternal());
-	    forwardTo = new String("viewEditPublication");
+	    return mapping.findForward("viewEditPublication");	   
 	}
-
-	return mapping.findForward(forwardTo);
+	return null;
     }
 
     public ActionForward backToResultList(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	final String resultType = (String) getFromRequest(request, "resultType");
-	String forwardTo = null;
 
 	if (!(resultType == null || resultType.equals(""))) {
 	    if (resultType.compareTo(ResultPatent.class.getSimpleName()) == 0) {
-		forwardTo = new String("listPatents");
-	    } else {
-		forwardTo = new String("ListPublications");
-	    }
+		return mapping.findForward("listPatents");
+	    } 
+	    return mapping.findForward("ListPublications");
 	}
-	return mapping.findForward(forwardTo);
+	return null;
     }
 
-    public Result readResultFromRequest(HttpServletRequest request) {
-	String resultIdStr = (String) getFromRequest(request, "resultId");
+    private Result getResultByIdFromRequest(HttpServletRequest request) {
+	final Integer resultId = Integer.valueOf(getFromRequest(request, "resultId").toString());
 
-	if ((resultIdStr == null || resultIdStr.equals(""))
-		&& request.getParameterMap().containsKey("resultId")) {
-	    resultIdStr = request.getParameter("resultId");
-	}
-
-	Result result = null;
-	if (resultIdStr != null && !resultIdStr.equals("")) {
+	if(resultId!=null) {
 	    try {
-		result = Result.readByOid(Integer.valueOf(resultIdStr));
+		return Result.readByOid(resultId);
 	    } catch (DomainException e) {
 		addMessage(request, e.getKey(), e.getArgs());
 	    }
 	}
+	return null;
+    }
+    
+    public final Result getResultFromRequest(HttpServletRequest request) {
+	Result result = null;
+	try {
+	    result = getResultByIdFromRequest(request);
+	} catch (Exception e) {
+	}
+	
+	if (result==null) {
+	    try {
+		result = (Result)getRenderedObject(null);
+	    } catch (Exception e) {
+	    }
+	}
+
+	if (result != null)
+	    request.setAttribute("result", result);
+
 	return result;
     }
     
-    public Object getRenderedObject() {
-	if(RenderUtils.getViewState()==null) {
-	    return null;
+    public Object getRenderedObject(String id) {
+	if(id==null || id.equals("")){
+	    if (RenderUtils.getViewState()!=null) {
+		return RenderUtils.getViewState().getMetaObject().getObject();
+	    }
 	}
-	
-	return RenderUtils.getViewState().getMetaObject().getObject(); 
+	else {
+	    if(RenderUtils.getViewState(id)!=null) {
+		return RenderUtils.getViewState(id).getMetaObject().getObject();
+	    }
+	}
+	return null; 
     }
     
     public ActionForward processException(HttpServletRequest request, ActionMapping mapping,

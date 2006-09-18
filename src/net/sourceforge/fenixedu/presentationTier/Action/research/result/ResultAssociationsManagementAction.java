@@ -23,7 +23,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
     public ActionForward prepareEditUnitAssociations(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
-	final Result result = readResultFromRequest(request);
+	final Result result = getResultFromRequest(request);
 	if (result == null) {
 	    return backToResultList(mapping, form, request, response);
 	}
@@ -31,20 +31,28 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	setResUnitAssRequestAttributes(request, result);
 	return mapping.findForward("editUnitAssociations");
     }
+    
+    public ActionForward prepareEditUnitRole(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+	request.setAttribute("editExisting", "editExisting");
+	return prepareEditUnitAssociations(mapping, form, request, response);
+    }
 
     public ActionForward createUnitAssociation(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
-	final ResultUnitAssociationCreationBean bean = (ResultUnitAssociationCreationBean) getRenderedObject();
+	final ResultUnitAssociationCreationBean bean = (ResultUnitAssociationCreationBean) getRenderedObject("bean");
 	
 	try {
 	    final Object[] args = { bean };
 	    executeService(request, "CreateResultUnitAssociation", args);
-	    RenderUtils.invalidateViewState();
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 	    return processException(request, mapping, defaultForward, e);
 	}
+	
+	RenderUtils.invalidateViewState();
 
 	return prepareEditUnitAssociations(mapping, form, request, response);
     }
@@ -71,7 +79,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
     public ActionForward prepareEditEventAssociations(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
-	final Result result = readResultFromRequest(request);
+	final Result result = getResultFromRequest(request);
 	if (result == null) {
 	    return backToResultList(mapping, form, request, response);
 	}
@@ -79,11 +87,18 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	setResEventAssRequestAttributes(request, result);
 	return mapping.findForward("editEventAssociations");
     }
+    
+    public ActionForward prepareEditEventRole(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+	request.setAttribute("editExisting", "editExisting");
+	return prepareEditEventAssociations(mapping, form, request, response);
+    }
 
     public ActionForward createEventAssociation(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
-	final ResultEventAssociationCreationBean bean = (ResultEventAssociationCreationBean) getRenderedObject();
+	final ResultEventAssociationCreationBean bean = (ResultEventAssociationCreationBean) getRenderedObject("bean");
 	
 	if (!(bean.getEvent() == null && bean.getEventNameMLS() == null)) {
 	    try {

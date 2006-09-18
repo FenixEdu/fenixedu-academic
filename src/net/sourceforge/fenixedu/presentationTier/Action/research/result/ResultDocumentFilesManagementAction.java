@@ -15,29 +15,35 @@ import org.apache.struts.action.ActionMapping;
 
 public class ResultDocumentFilesManagementAction extends ResultsManagementAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final Result result = readResultFromRequest(request);
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	final Result result = getResultFromRequest(request);
 	if (result == null) {
 	    return backToResultList(mapping, form, request, response);
 	}
-
+	
 	setResDocFileRequestAttributes(request, result);
 	return mapping.findForward("editDocumentFiles");
+    }
+    
+    public ActionForward prepareAlter(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	request.setAttribute("editExisting", "editExisting");
+	return prepareEdit(mapping, form, request, response);
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final ResultDocumentFileSubmissionBean bean = getRenderedObject();
+	final ResultDocumentFileSubmissionBean bean = getRenderedObject("editBean");
 
 	try {
 	    final Object[] args = { bean };
 	    executeService(request, "CreateResultDocumentFile", args);
-	    RenderUtils.invalidateViewState();
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 	    return processException(request, mapping, defaultForward, e);
 	}
-
+	
+	RenderUtils.invalidateViewState("editBean");
 	return prepareEdit(mapping, form, request, response);
     }
 
@@ -47,8 +53,7 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
 
 	try {
 	    final Object[] args = { documentFileId };
-	    executeService(request, "DeleteResultDocumentFile", args);
-	    RenderUtils.invalidateViewState();
+	    executeService(request, "DeleteResultDocumentFile", args); 
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 	    return processException(request, mapping, defaultForward, e);
@@ -57,7 +62,7 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
 	return prepareEdit(mapping, form, request, response);
     }
 
-    private void setResDocFileRequestAttributes(HttpServletRequest request, final Result result)
+    private void setResDocFileRequestAttributes(HttpServletRequest request, Result result)
 	    throws FenixFilterException, FenixServiceException {
 	final ResultDocumentFileSubmissionBean bean = new ResultDocumentFileSubmissionBean(result);
 	request.setAttribute("bean", bean);
@@ -65,7 +70,7 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
     }
 
     @Override
-    public ResultDocumentFileSubmissionBean getRenderedObject() {
-	return (ResultDocumentFileSubmissionBean) super.getRenderedObject();
+    public ResultDocumentFileSubmissionBean getRenderedObject(String id) {
+	return (ResultDocumentFileSubmissionBean) super.getRenderedObject(id);
     }
 }
