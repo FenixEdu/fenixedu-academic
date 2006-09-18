@@ -147,7 +147,7 @@ valueType net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociati
 valueType net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole as ResultUnitAssociationRole;
 valueType net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole as ResultEventAssociationRole;
 valueType net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole as ResultParticipationRole;
-valueType net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile.ResultDocumentFilePermissionType as ResultDocumentFilePermissionType;
+valueType net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile.FileResultPermittedGroupType as FileResultPermittedGroupType;
 valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.EventParticipationRole as EventParticipationRole;
 valueType net.sourceforge.fenixedu.util.Month																			as Month;
 
@@ -1771,6 +1771,7 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 	
 	class net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyResult;
+		FileResultPermittedGroupType fileResultPermittedGroupType;
 	}
 
 	class net.sourceforge.fenixedu.domain.parking.ParkingFile extends net.sourceforge.fenixedu.domain.File {
@@ -3517,7 +3518,7 @@ class net.sourceforge.fenixedu.domain.research.result.ResultParticipation extend
 	Integer keyPerson;
 	Integer keyResult;
 	Integer personOrder;
-	ResultParticipationRole resultParticipationRole;
+	ResultParticipationRole role;
 }
 
 class net.sourceforge.fenixedu.domain.research.project.Project extends net.sourceforge.fenixedu.domain.DomainObject{
