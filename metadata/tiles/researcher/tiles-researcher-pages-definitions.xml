@@ -73,66 +73,59 @@
     </definition>    
 
     <!-- Result definitions -->
-    <definition name="result.participation" 
-        extends="researcher.masterPage">
-        <put name="body" value="/researcher/result/editResultParticipations.jsp"></put>
+    <definition name="results.management" extends="researcher.masterPage">
+    	<put name="body-context" value="/commons/blank.jsp"/>
     </definition>
-    <definition name="result.unitAssociations" 
-        extends="researcher.masterPage">
+    <definition name="result.participation" extends="results.management">
+        <put name="body" value="/researcher/result/participations/editResultParticipations.jsp"></put>
+    </definition>
+    <definition name="result.unitAssociations" extends="results.management">
         <put name="body" value="/researcher/result/editResultUnitAssociations.jsp"></put>
     </definition>
-    <definition name="result.eventAssociations" 
-        extends="researcher.masterPage">
+    <definition name="result.eventAssociations" extends="results.management">
         <put name="body" value="/researcher/result/editResultEventAssociations.jsp"></put>
     </definition>
-    <definition name="result.documentFiles" 
-        extends="researcher.masterPage">
-        <put name="body" value="/researcher/result/editResultDocumentFiles.jsp"></put>
+    <definition name="result.documentFiles" extends="results.management">
+        <put name="body" value="/researcher/result/documents/editResultDocumentFiles.jsp"></put>
     </definition>
 
     <!-- Result patents definitions -->
-    <definition name="patents.list" 
-    			extends="researcher.masterPage">
+    <definition name="patents.list" extends="results.management">
         <put name="body" value="/researcher/result/patents/managePatents.jsp"></put>
     </definition>
-    <definition name="patents.create" 
-        extends="researcher.masterPage">
+    <definition name="patents.create" extends="results.management">
         <put name="body" value="/researcher/result/patents/createPatent.jsp"></put>
     </definition>
-    <definition name="patents.edit" 
-        extends="researcher.masterPage">
+    <definition name="patents.edit" extends="results.management">
         <put name="body" value="/researcher/result/patents/editPatent.jsp"></put>
     </definition>
-    <definition name="patents.editData" 
-        extends="researcher.masterPage">
+    <definition name="patents.editData" extends="results.management">
         <put name="body" value="/researcher/result/patents/editPatentData.jsp"></put>
     </definition>
-    <definition name="patents.delete" 
-        extends="researcher.masterPage">
+    <definition name="patents.delete" extends="results.management">
         <put name="body" value="/researcher/result/patents/deletePatent.jsp"></put>
     </definition>
-    <definition name="patents.details" 
-        extends="researcher.masterPage">
+    <definition name="patents.details" extends="results.management">
         <put name="body" value="/researcher/result/patents/patentDetails.jsp"></put>
     </definition>
 
     <!-- Result publications definitions -->
-    <definition name="publications.publicationsManagement" extends="researcher.masterPage">
+    <definition name="publications.publicationsManagement" extends="results.management">
         <put name="body" value="/researcher/result/publications/publicationsManagement.jsp"></put>
     </definition>
-    <definition name="publications.createPublication" extends="researcher.masterPage">
+    <definition name="publications.createPublication" extends="results.management">
         <put name="body" value="/researcher/result/publications/createPublication.jsp"></put>
     </definition>
-    <definition name="publications.editPublicationData" extends="researcher.masterPage">
+    <definition name="publications.editPublicationData" extends="results.management">
         <put name="body" value="/researcher/result/publications/editPublicationData.jsp"></put>
     </definition>
-    <definition name="publications.viewPublication" extends="researcher.masterPage">
+    <definition name="publications.viewPublication" extends="results.management">
         <put name="body" value="/researcher/result/publications/viewPublication.jsp"></put>
     </definition>
-    <definition name="publications.viewEditPublication" extends="researcher.masterPage">
+    <definition name="publications.viewEditPublication" extends="results.management">
         <put name="body" value="/researcher/result/publications/viewEditPublication.jsp"></put>
     </definition>
-    <definition name="publications.deletePublication" extends="researcher.masterPage">
+    <definition name="publications.deletePublication" extends="results.management">
         <put name="body" value="/researcher/result/publications/deletePublication.jsp"></put>
     </definition>
 </tiles-definitions>
