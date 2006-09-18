@@ -16,7 +16,7 @@ public class ResultParticipationCreationBean implements Serializable {
 
     private DomainReference<Person> participator;
 
-    private ResultParticipationRole resultParticipationRole;
+    private ResultParticipationRole role;
 
     private String participatorName;
 
@@ -26,7 +26,7 @@ public class ResultParticipationCreationBean implements Serializable {
 
     public ResultParticipationCreationBean(Result result) {
 	setResult(new DomainReference<Result>(result));
-	setResultParticipationRole(ResultParticipationRole.getDefaultRole());
+	setRole(ResultParticipationRole.getDefaultRole());
 	setOrganization(null);
 	setOrganizationName(null);
 	setParticipator(null);
@@ -82,12 +82,12 @@ public class ResultParticipationCreationBean implements Serializable {
 	this.result = result;
     }
 
-    public ResultParticipationRole getResultParticipationRole() {
-	return resultParticipationRole;
+    public ResultParticipationRole getRole() {
+	return role;
     }
 
-    public void setResultParticipationRole(ResultParticipationRole resultParticipationRole) {
-	this.resultParticipationRole = resultParticipationRole;
+    public void setRole(ResultParticipationRole role) {
+	this.role = role;
     }
 
     public ExternalPerson getExternalPerson() {

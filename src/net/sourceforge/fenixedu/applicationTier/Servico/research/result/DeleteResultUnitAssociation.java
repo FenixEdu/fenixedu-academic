@@ -7,6 +7,6 @@ public class DeleteResultUnitAssociation extends Service {
 
     public void run(Integer oid) {
 	final ResultUnitAssociation association = ResultUnitAssociation.readByOid(oid);
-	association.delete();
+	association.getResult().removeUnitAssociation(association);
     }
 }

@@ -6,6 +6,6 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Order
 
 public class ChangeResultParticipationsOrder extends Service {    
     public void run(ResultParticipation participation, OrderChange orderChange) {
-	participation.setPersonOrder(orderChange);
+	participation.movePersonToDesiredOrder(orderChange);
     }
 }

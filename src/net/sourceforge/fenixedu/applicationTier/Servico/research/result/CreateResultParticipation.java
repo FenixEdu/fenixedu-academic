@@ -7,14 +7,13 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultPartici
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.Result;
-import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 public class CreateResultParticipation extends Service {
 
-    public ResultParticipation run(ResultParticipationCreationBean bean) throws FenixServiceException {
+    public void run(ResultParticipationCreationBean bean) throws FenixServiceException {
 	final Result result = bean.getResult();
-	final ResultParticipationRole role = bean.getResultParticipationRole();
+	final ResultParticipationRole role = bean.getRole();
 	final Unit organization = bean.getOrganization();
 	Person participator = bean.getParticipator();
 
@@ -29,7 +28,6 @@ public class CreateResultParticipation extends Service {
 		participator = (newPerson.run(participatorName, orgName)).getPerson();
 	    }
 	}
-
-	return new ResultParticipation(result, participator, role);
+	result.addParticipation(participator, role);
     }
 }

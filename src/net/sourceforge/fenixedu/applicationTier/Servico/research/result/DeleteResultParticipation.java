@@ -6,6 +6,6 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 
 public class DeleteResultParticipation extends Service {
     public void run(ResultParticipation participation) throws FenixServiceException {
-	participation.delete();
+	participation.getResult().removeParticipation(participation);
     }
 }

@@ -31,7 +31,7 @@ public class CreateResultPublication extends ResultPublicationService {
 	if (bean == null)
 	    throw new NullPointerException();
 	
-	return new Book(bean.getPerson(), bean.getResultParticipationRole(), bean.getTitle(), bean
+	return new Book(bean.getPerson(), bean.getRole(), bean.getTitle(), bean
 		.getPublisher(), bean.getYear(), bean.getVolume(), bean.getSeries(), bean.getAddress(),
 		bean.getEdition(), bean.getIsbn(), bean.getNumberPages(), bean.getLanguage(), bean
 			.getCountry(), bean.getScope(), bean.getNote(), bean.getMonth(), bean.getUrl());
@@ -42,13 +42,13 @@ public class CreateResultPublication extends ResultPublicationService {
 	    throw new NullPointerException();
 
 	if (bean.getBookPartType().equals(BookPartType.Inbook)) {
-	    return new BookPart(bean.getPerson(), bean.getResultParticipationRole(), bean
+	    return new BookPart(bean.getPerson(), bean.getRole(), bean
 		    .getBookPartType(), bean.getTitle(), bean.getChapter(), bean.getFirstPage(), bean
 		    .getLastPage(), getPublisher(bean), bean.getYear(), bean.getVolume(), bean
 		    .getSeries(), bean.getEdition(), bean.getCountry(), bean.getAddress(), bean
 		    .getNote(), bean.getMonth(), bean.getUrl());
 	}
-	return new BookPart(bean.getPerson(), bean.getResultParticipationRole(), bean.getBookPartType(),
+	return new BookPart(bean.getPerson(), bean.getRole(), bean.getBookPartType(),
 		bean.getTitle(), bean.getBookTitle(), getPublisher(bean), bean.getYear(), bean
 			.getFirstPage(), bean.getLastPage(), getOrganization(bean), bean.getCountry(),
 		bean.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
@@ -70,7 +70,7 @@ public class CreateResultPublication extends ResultPublicationService {
 
 	final Event event = getEventFromBean(bean);
 
-	return new Inproceedings(bean.getPerson(), bean.getResultParticipationRole(), bean.getTitle(),
+	return new Inproceedings(bean.getPerson(), bean.getRole(), bean.getTitle(),
 		bean.getBookTitle(), bean.getYear(), event, getPublisher(bean), getOrganization(bean),
 		bean.getAddress(), bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean
 			.getLanguage(), bean.getMonth(), bean.getUrl());

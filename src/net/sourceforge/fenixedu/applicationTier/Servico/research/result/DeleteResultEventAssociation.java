@@ -7,6 +7,6 @@ public class DeleteResultEventAssociation extends Service  {
 
     public void run(Integer oid) {
         final ResultEventAssociation association = ResultEventAssociation.readByOid(oid);
-        association.delete();
+        association.getResult().removeEventAssociation(association);
     }
 }

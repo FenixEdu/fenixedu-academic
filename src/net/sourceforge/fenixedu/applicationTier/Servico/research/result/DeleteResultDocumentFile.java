@@ -7,6 +7,6 @@ public class DeleteResultDocumentFile extends Service {
 
     public void run(Integer oid) {
 	final ResultDocumentFile documentFile = ResultDocumentFile.readByOID(oid);
-	documentFile.delete();
+	documentFile.getResult().removeDocumentFile(documentFile);
     }
 }
