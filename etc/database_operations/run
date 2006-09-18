@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "alter table Grouping, change column Name" alterTableGroupingChangeName.sql
