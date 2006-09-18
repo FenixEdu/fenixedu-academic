@@ -11,6 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 /**
@@ -18,7 +19,10 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class InfoTeacher extends InfoObject implements ISmsDTO {
 
-    private final DomainReference<Teacher> teacher;
+    private DomainReference<Teacher> teacher;
+
+    // This constructor is needed because of CRUDActionByOID. Do not delete it.
+    public InfoTeacher() { }
 
     public InfoTeacher(final Teacher teacher) {
         this.teacher = new DomainReference<Teacher>(teacher);
@@ -77,7 +81,8 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
 
     @Override
     public void setIdInternal(Integer integer) {
-        throw new Error("Method should not be called!");
+        // This attribution is needed because of CRUDActionByOID. Do not delete it.
+        this.teacher = new DomainReference<Teacher>(RootDomainObject.getInstance().readTeacherByOID(integer));
     }
 
     private Teacher getTeacher() {
