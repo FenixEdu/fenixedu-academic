@@ -868,4 +868,9 @@ list-style: none;
 .greytxt2 { color: #777; }
 
 
-td.noborder { border: none; }
+td.noborder {
+border: none;
+}
+
+.tstylepark th { width: 8em; }
+.tstylepark td { width: 29em; }

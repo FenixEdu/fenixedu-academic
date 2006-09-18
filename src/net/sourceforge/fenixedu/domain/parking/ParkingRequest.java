@@ -63,14 +63,17 @@ public class ParkingRequest extends ParkingRequest_Base {
         private String firstCarOwnerIdFileName;
         private InputStream firstCarOwnerIdInputStream;
         private String firstDeclarationAuthorizationFileName;
-        private InputStream firstDeclarationAuthorizationInputStream;        
+        private InputStream firstDeclarationAuthorizationInputStream;    
+        private String firstInsuranceFileName;
+        private InputStream firstInsuranceInputStream; 
         private String secondCarPropertyRegistryFileName;
         private InputStream secondCarPropertyRegistryInputStream;
         private String secondCarOwnerIdFileName;
         private InputStream secondCarOwnerIdInputStream;
         private String secondDeclarationAuthorizationFileName;
-        private InputStream secondDeclarationAuthorizationInputStream;    
-        private Integer driverLicenseNumber;
+        private InputStream secondDeclarationAuthorizationInputStream;
+        private String secondInsuranceFileName;
+        private InputStream secondInsuranceInputStream;        
         
         public ParkingRequestFactory(ParkingParty parkingParty) {
             super();
@@ -235,25 +238,39 @@ public class ParkingRequest extends ParkingRequest_Base {
             this.secondDeclarationAuthorizationInputStream = secondDeclarationAuthorizationInputStream;
         }
 
-        public Integer getDriverLicenseNumber() {
-            return driverLicenseNumber;
+        public String getFirstInsuranceFileName() {
+            return firstInsuranceFileName;
         }
 
-        public void setDriverLicenseNumber(Integer driverLicenseNumber) {
-            this.driverLicenseNumber = driverLicenseNumber;
-        }
-    }
-
-    public static class ParkingRequestFactoryCreator extends ParkingRequestFactory {
-
-        public ParkingRequestFactoryCreator(ParkingParty parkingParty) {
-            super(parkingParty);
+        public void setFirstInsuranceFileName(String firstInsuranceFileName) {
+            this.firstInsuranceFileName = firstInsuranceFileName;
         }
 
-        public ParkingRequest execute() {
-            ParkingRequest parkingRequest = new ParkingRequest(this);
-            FilePath filePath = getFilePath(parkingRequest.getIdInternal());
-            
+        public InputStream getFirstInsuranceInputStream() {
+            return firstInsuranceInputStream;
+        }
+
+        public void setFirstInsuranceInputStream(InputStream firstInsuranceInputStream) {
+            this.firstInsuranceInputStream = firstInsuranceInputStream;
+        }
+
+        public String getSecondInsuranceFileName() {
+            return secondInsuranceFileName;
+        }
+
+        public void setSecondInsuranceFileName(String secondInsuranceFileName) {
+            this.secondInsuranceFileName = secondInsuranceFileName;
+        }
+
+        public InputStream getSecondInsuranceInputStream() {
+            return secondInsuranceInputStream;
+        }
+
+        public void setSecondInsuranceInputStream(InputStream secondInsuranceInputStream) {
+            this.secondInsuranceInputStream = secondInsuranceInputStream;
+        }      
+        
+        protected void writeParkingFiles(ParkingRequest parkingRequest, FilePath filePath) {
             if (getDriverLicenseInputStream() != null) {
                 String filename = getDriverLicenseFileName();
                 writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.DRIVER_LICENSE);
@@ -270,6 +287,10 @@ public class ParkingRequest extends ParkingRequest_Base {
                 String filename = getFirstDeclarationAuthorizationFileName();
                 writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
             }
+            if (getFirstInsuranceInputStream() != null) {
+                String filename = getFirstInsuranceFileName();
+                writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.FIRST_CAR_INSURANCE);
+            }
             if (getSecondCarOwnerIdInputStream() != null) {
                 String filename = getSecondCarOwnerIdFileName();
                 writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.SECOND_CAR_OWNER_ID);
@@ -282,10 +303,13 @@ public class ParkingRequest extends ParkingRequest_Base {
                 String filename = getSecondDeclarationAuthorizationFileName();
                 writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION);
             }
-            return parkingRequest;
+            if (getSecondInsuranceInputStream() != null) {
+                String filename = getSecondInsuranceFileName();
+                writeParkingFile(parkingRequest, filePath, filename, ParkingDocumentType.SECOND_CAR_INSURANCE);
+            }
         }
 
-        private void writeParkingFile(ParkingRequest parkingRequest, FilePath filePath, String filename, ParkingDocumentType documentType) {
+        protected void writeParkingFile(ParkingRequest parkingRequest, FilePath filePath, String filename, ParkingDocumentType documentType) {
             final FileMetadata fileMetadata = new FileMetadata(filename, getParkingParty().getParty().getName());
             
             final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
@@ -299,7 +323,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             new ParkingDocument(documentType,parkingFile,parkingRequest);
         }
         
-        private FilePath getFilePath(final Integer requestID) {
+        protected FilePath getFilePath(final Integer requestID) {
             Party party = getParkingParty().getParty();
             final FilePath filePath = new FilePath();
 
@@ -312,8 +336,23 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
     }
 
+    public static class ParkingRequestFactoryCreator extends ParkingRequestFactory {
+
+        public ParkingRequestFactoryCreator(ParkingParty parkingParty) {
+            super(parkingParty);
+        }
+
+        public ParkingRequest execute() {
+            ParkingRequest parkingRequest = new ParkingRequest(this);
+            FilePath filePath = getFilePath(parkingRequest.getIdInternal());
+            
+            writeParkingFiles(parkingRequest, filePath);
+            return parkingRequest;
+        }
+    }
+
     public static class ParkingRequestFactoryEditor extends ParkingRequestFactory {
-        private DomainReference<ParkingRequest> parkingRequest;
+        private DomainReference<ParkingRequest> parkingRequest;        
 
         public ParkingRequestFactoryEditor(ParkingParty parkingParty) {
             super(parkingParty);
@@ -337,11 +376,16 @@ public class ParkingRequest extends ParkingRequest_Base {
                 this.parkingRequest = new DomainReference<ParkingRequest>(parkingRequest);
             }
         }
-
+        
         public ParkingRequest execute() {
-            getParkingRequest().edit(this);
-            return null;
+            ParkingRequest parkingRequest = getParkingRequest();
+            parkingRequest.edit(this);
+            FilePath filePath = getFilePath(parkingRequest.getIdInternal());
+            
+            writeParkingFiles(parkingRequest, filePath);
+            return parkingRequest;
         }
+
     }
 
     public void edit(ParkingRequestFactoryEditor parkingRequestFactoryEditor) {

@@ -107,6 +107,22 @@
         <form-property name="researchUnit" type="java.lang.String" />
         <form-property name="showCurrentAttendingExecutionCourses" type="java.lang.String" />
       </form-bean>
+      
+      <!-- ================= PARKING REQUEST FORM =================== -->
+      <form-bean name="parkingForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-property name="driverLicense" type="java.lang.Boolean"/>
+		<form-property name="registry1" type="java.lang.Boolean"/>
+		<form-property name="insurance1" type="java.lang.Boolean"/>		    		
+		<form-property name="Id1" type="java.lang.Boolean"/>
+		<form-property name="declaration1" type="java.lang.Boolean"/>
+		<form-property name="registry2" type="java.lang.Boolean"/>
+		<form-property name="insurance2" type="java.lang.Boolean"/>
+		<form-property name="Id2" type="java.lang.Boolean"/>
+		<form-property name="declaration2" type="java.lang.Boolean"/>
+        <form-property name="ownVehicle1" type="java.lang.Boolean"/>
+        <form-property name="ownVehicle2" type="java.lang.Boolean"/>  
+	  </form-bean> 	
+      			
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -309,7 +325,9 @@
         <action path="/parking"
         		type="net.sourceforge.fenixedu.presentationTier.Action.person.ParkingDispatchAction"
         		scope="request"
-        		parameter="method">
+        		parameter="method"
+        		name="parkingForm"
+        		input="/parking.do?method=prepareParking">
           <forward name="prepareParking" path="prepare-parking"/>
           <forward name="editParkingRequest" path="edit-parking-request"/>
         </action>               
