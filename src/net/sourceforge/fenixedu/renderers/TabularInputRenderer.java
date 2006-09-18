@@ -132,6 +132,10 @@ public class TabularInputRenderer extends InputRenderer {
     public String getVisibleIf(String name) {
         return this.collectionRenderer.getVisibleIf(name);
     }
+    
+    public String getVisibleIfNot(String name) {
+	return this.collectionRenderer.getVisibleIfNot(name);
+    }
 
     public String getLinkFormat(String name) {
         return this.collectionRenderer.getLinkFormat(name);
@@ -321,6 +325,15 @@ public class TabularInputRenderer extends InputRenderer {
      */
     public void setVisibleIf(String name, String value) {
         this.collectionRenderer.setVisibleIf(name, value);
+    }
+    
+    /**
+     * See {@link CollectionRenderer#setVisibleIfNot(String, String)}.
+     * 
+     * @property
+     */
+    public void setVisibleIfNot(String name, String value) {
+	this.collectionRenderer.setVisibleIfNot(name, value);
     }
 
     /**
