@@ -353,7 +353,10 @@ public class InfoEnrolment extends InfoObject {
 
     public String getGrade() {
         final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(getIdInternal());
-        final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) Collections.max(enrolment.getEvaluationsSet());
+        EnrolmentEvaluation enrolmentEvaluation = null;
+        if(!enrolment.getEvaluationsSet().isEmpty()) {
+            enrolmentEvaluation = (EnrolmentEvaluation) Collections.max(enrolment.getEvaluationsSet());
+        }
         return enrolmentEvaluation == null ? null : enrolmentEvaluation.getGrade();
     }
 
