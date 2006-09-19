@@ -159,16 +159,16 @@
 		<fc:dataRepeater value="#{competenceCourse.bibliographicReferences.bibliographicReferencesList}" var="bibliographicReference" rendered="#{!empty competenceCourse.bibliographicReferences}">
 			<h:panelGroup rendered="#{bibliographicReference.type.name == 'MAIN'}">
 				<h:outputText value="<ul class='nobullet cboth mbottom2'>" escape="false"/>					
-				<h:outputText value="<li><span class="fleft" style="width: 250px;">#{scouncilBundle['title']}:</span>" escape="false"/>
+				<h:outputText value="<li><span class='fleft' style='width: 250px;'>#{scouncilBundle['title']}:</span>" escape="false"/>
 				<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
 				
-				<h:outputText value="<li><span class="fleft" style="width: 250px;">#{scouncilBundle['author']}:</span>" escape="false"/>
+				<h:outputText value="<li><span class='fleft' style='width: 250px;'>#{scouncilBundle['author']}:</span>" escape="false"/>
 				<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
 				
-				<h:outputText value="<li><span class="fleft" style="width: 250px;">#{scouncilBundle['year']}:</span>" escape="false"/>
+				<h:outputText value="<li><span class='fleft' style='width: 250px;'>#{scouncilBundle['year']}:</span>" escape="false"/>
 				<h:outputText value="#{bibliographicReference.year}</li>" escape="false"/>
 				
-				<h:outputText value="<li><span class="fleft" style="width: 250px;">#{scouncilBundle['reference']}:</span>" escape="false"/>
+				<h:outputText value="<li><span class='fleft' style='width: 250px;'>#{scouncilBundle['reference']}:</span>" escape="false"/>
 				<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
 				
 				<h:outputText value="</ul>" escape="false"/>
@@ -182,16 +182,16 @@
 		<fc:dataRepeater value="#{competenceCourse.bibliographicReferences.bibliographicReferencesList}" var="bibliographicReference" rendered="#{!empty competenceCourse.bibliographicReferences}">
 			<h:panelGroup rendered="#{bibliographicReference.type.name == 'SECONDARY'}">
 				<h:outputText value="<ul class='nobullet cboth mbottom2'>" escape="false"/>					
-				<h:outputText value="<li><span class="fleft" style="width: 250px;">#{scouncilBundle['title']}:</span>" escape="false"/>
+				<h:outputText value="<li><span class='fleft' style='width: 250px;'>#{scouncilBundle['title']}:</span>" escape="false"/>
 				<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
 					
-				<h:outputText value="<li><span class="fleft" style="width: 250px;">#{scouncilBundle['author']}:</span>" escape="false"/>
+				<h:outputText value="<li><span class='fleft' style='width: 250px;'>#{scouncilBundle['author']}:</span>" escape="false"/>
 				<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
 				
-				<h:outputText value="<li><span class="fleft" style="width: 250px;">#{scouncilBundle['year']}:</span>" escape="false"/>
+				<h:outputText value="<li><span class='fleft' style='width: 250px;'>#{scouncilBundle['year']}:</span>" escape="false"/>
 				<h:outputText value="#{bibliographicReference.year}</li>" escape="false"/>
 				
-				<h:outputText value="<li><span class="fleft" style="width: 250px;">#{scouncilBundle['reference']}:</span>" escape="false"/>
+				<h:outputText value="<li><span class='fleft' style='width: 250px;'>#{scouncilBundle['reference']}:</span>" escape="false"/>
 				<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
 				
 				<h:outputText value="</ul>" escape="false"/>

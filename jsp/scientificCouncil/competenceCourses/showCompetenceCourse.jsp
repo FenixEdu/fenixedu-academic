@@ -192,17 +192,17 @@ padding-right: 10px;
 	<fc:dataRepeater value="#{CompetenceCourseManagement.secondaryBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.secondaryBibliographicReferences}">
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'SECONDARY'}">
 			<h:outputText value="<ul class='nobullet cboth mbottom2'>" escape="false"/>					
-			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{scouncilBundle['title']}:</span>" escape="false"/>
+			<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px;'>#{scouncilBundle['title']}:</span>" escape="false"/>
 			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{bibliographicReference.url != 'http://'}" escape="false"/>
 			<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{bibliographicReference.url == 'http://'}" escape="false"/>			
 				
-			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{scouncilBundle['author']}:</span>" escape="false"/>
+			<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px;'>#{scouncilBundle['author']}:</span>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
 			
-			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{scouncilBundle['year']}:</span>" escape="false"/>
+			<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px;'>#{scouncilBundle['year']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.year}</li>" escape="false"/>
 			
-			<h:outputText value="<li><span class="fleft width100px" style="padding-right: 10px;">#{scouncilBundle['reference']}:</span>" escape="false"/>
+			<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px;'>#{scouncilBundle['reference']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
 			
 			<h:outputText value="</ul>" escape="false"/>
