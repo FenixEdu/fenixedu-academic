@@ -119,7 +119,7 @@
 		<form-property name="insurance2" type="java.lang.Boolean"/>
 		<form-property name="Id2" type="java.lang.Boolean"/>
 		<form-property name="declaration2" type="java.lang.Boolean"/>
-        <form-property name="ownVehicle1" type="java.lang.Boolean"/>
+        <form-property name="ownVehicle1" type="java.lang.Boolean"/>        
         <form-property name="ownVehicle2" type="java.lang.Boolean"/>  
 	  </form-bean> 	
       			

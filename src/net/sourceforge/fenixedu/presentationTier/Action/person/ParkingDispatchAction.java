@@ -2,11 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.util.Enumeration;
-import java.util.Set;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.parking.ParkingFile;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
+import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactory;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryEditor;
@@ -76,21 +72,28 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             }
         }
 
-        DynaActionForm parkingForm = (DynaActionForm) actionForm;        
-        if (parkingParty.getFirstRequest() != null
+        prepareRadioButtonsForm(actionForm, parkingParty);
+        
+
+        return mapping.findForward("editParkingRequest");
+    }
+
+    private void prepareRadioButtonsForm(ActionForm actionForm, ParkingParty parkingParty) {
+        DynaActionForm parkingForm = (DynaActionForm) actionForm;   
+        ParkingRequest parkingRequest = parkingParty.getFirstRequest();
+        if ( parkingRequest != null
                 && parkingParty.getFirstRequest().getFirstCarPropertyRegistryFileName() != null) {
             parkingForm.set("ownVehicle1", false);
         } else {
             parkingForm.set("ownVehicle1", true);
         }
-        if (parkingParty.getFirstRequest() != null
+        if (parkingRequest != null
                 && parkingParty.getFirstRequest().getSecondCarPropertyRegistryFileName() != null) {
             parkingForm.set("ownVehicle2", false);
         } else {
             parkingForm.set("ownVehicle2", true);
         }
-
-        return mapping.findForward("editParkingRequest");
+        
     }
 
     public ActionForward editParkingRequest(ActionMapping mapping, ActionForm actionForm,
@@ -400,6 +403,6 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         if (parkingForm.get(elementName) != null) {
             return ((Boolean) parkingForm.get(elementName)).booleanValue();
         }
-        return false;
+        return true;
     }
 }
