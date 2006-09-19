@@ -6,5 +6,13 @@ public class Campus extends Campus_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
-
+    
+    public static Campus readCampusByName(final String name) {
+	for (final Campus campus : RootDomainObject.getInstance().getCampussSet()) {
+	    if (campus.getName().equals(name)) {
+		return campus;
+	    }
+	}
+	return null;
+    }
 }
