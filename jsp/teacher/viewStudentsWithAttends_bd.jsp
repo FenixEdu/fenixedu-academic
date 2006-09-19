@@ -155,15 +155,7 @@ function cleanSelect(checkboxes) {
 					<bean:define id="degree" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegree" name="dcp" property="infoDegree"/>
 					<tr>
 						<td>
-							<%
-								String sigla = degree.getSigla();
-								Date dataInicio = dcp.getInitialDate();
-								Calendar dataInicioCalendar = new GregorianCalendar();
-								dataInicioCalendar.setTime(dataInicio);						
-								int year = dataInicioCalendar.get(Calendar.YEAR);
-								
-								out.print(sigla + " " + year);
-							%>
+							<bean:write name="dcp" property="name"/>
 						</td>
 						<td>
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.coursesIDs" property="coursesIDs" value="<%= dcpID.toString() %>" onclick="cleanSelect(document.forms[0].coursesIDs)"/>
@@ -395,17 +387,8 @@ function cleanSelect(checkboxes) {
 				<td class="listClasses">
 					<bean:define id="infoDCP" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan" name="attend" property="attendingStudentInfoDCP"/>
 					<bean:define id="degree" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegree" name="infoDCP" property="infoDegree"/>
-					
-					<%
-						String sigla = degree.getSigla();
-						Date dataInicio = infoDCP.getInitialDate();
-						Calendar dataInicioCalendar = new GregorianCalendar();
-						dataInicioCalendar.setTime(dataInicio);						
-						int year = dataInicioCalendar.get(Calendar.YEAR);
-						
-						out.print(sigla + " " + year);					
-					%>
 
+					<bean:write name="infoDCP" property="name"/>
 				</td>
 				<td  class="listClasses" title="<bean:write name="attendacy" property="aluno.infoPerson.nome"/>">
 						<bean:define id="shortName" value="" type="java.lang.String"/>
