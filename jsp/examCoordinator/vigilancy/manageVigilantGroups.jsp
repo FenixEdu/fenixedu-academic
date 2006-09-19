@@ -24,6 +24,7 @@
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 		</fr:layout>
 		</fr:edit>
+	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 	</fr:form>
 </div>
 
@@ -176,3 +177,6 @@
 </logic:equal>
 
 </logic:present>
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

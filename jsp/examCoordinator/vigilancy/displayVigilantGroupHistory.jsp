@@ -14,6 +14,7 @@
 		<fr:property name="classes" value="tstyle5 thlight thright"/>
 	</fr:layout>
 	</fr:edit>
+		<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
 
@@ -29,7 +30,7 @@
 	
 	<fr:view name="bean" property="selectedVigilantGroup.vigilants" layout="vigilant-table">
 	<fr:layout>                                
-		<fr:property name="sortBy" value="person.username"/>
+		<fr:property name="sortBy" value="teacherCategoryCode, person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="classes" value="tstyle1 mtop05" />
@@ -66,3 +67,6 @@
 	</fr:view>
 </logic:notEmpty>
 
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

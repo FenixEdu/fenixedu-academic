@@ -14,7 +14,6 @@
 	<logic:equal name="vigilant" property="allowedToSpecifyUnavailablePeriod" value="true">
 		<li><html:link  page="/vigilancy/unavailablePeriodManagement.do?method=addUnavailablePeriod"><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.addUnavailablePeriod"/></html:link></li>
 	</logic:equal>
-	<li><html:link  page="/vigilancy/vigilantManagement.do?method=prepareEditIncompatiblePerson"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addIncompatiblePerson"/></html:link></li>
 </logic:equal>
 </logic:present>
 </ul>
@@ -31,6 +30,7 @@
 		<fr:property name="classes" value="tstyle5 thlight thright mbottom05"/>
 	</fr:layout>
 	</fr:edit>
+	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
 
@@ -123,29 +123,30 @@
 <fr:view name="bean" property="selectedVigilantGroup.vigilants" layout="vigilant-table">
 	<fr:layout>                                
 		<fr:property name="classes" value="tstyle1 mtop05 acenter" />
-		<fr:property name="sortBy" value="person.username"/>
+		<fr:property name="sortBy" value="teacherCategoryCode, person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
 		<logic:equal name="bean" property="showIncompatibilities" value="true">
 			<logic:equal name="bean" property="showUnavailables" value="true">
 				<fr:property name="vigilantSchema" value="vigilantsWithAllInformation"/>	
-				<fr:property name="columnClasses" value=",width250px aleft,,aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
+				<fr:property name="columnClasses" value=",,width250px aleft,width50px aleft,aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 			</logic:equal>
 		
 			<logic:equal name="bean" property="showUnavailables" value="false">
 				<fr:property name="vigilantSchema" value="vigilantsWithOutUnavailables"/>	
-				<fr:property name="columnClasses" value=",width250px aleft,aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
+				<fr:property name="columnClasses" value=",,width250px aleft,width50px aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 			</logic:equal>
 	    </logic:equal>
 		<logic:equal name="bean" property="showIncompatibilities" value="false">
-					<logic:equal name="bean" property="showUnavailables" value="true">
+			<logic:equal name="bean" property="showUnavailables" value="true">
 				<fr:property name="vigilantSchema" value="vigilantsWithoutIncompatibilities"/>	
+				<fr:property name="columnClasses" value=",,width250px aleft,width50px aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 			</logic:equal>
 		
 			<logic:equal name="bean" property="showUnavailables" value="false">
-						<fr:property name="columnClasses" value=",width250px aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 				<fr:property name="vigilantSchema" value="simpleVigilants"/>	
-			</logic:equal>
+				<fr:property name="columnClasses" value=",,width250px aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
+		</logic:equal>
 		</logic:equal>
 
 
@@ -161,6 +162,29 @@
 	</fr:layout>
 	</fr:view>
 
+<ul class="list2">
+<li>
+<em><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.category" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.totalpoints.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.totalPoints" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.points.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.attended.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.attended" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.confirmed.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.confirmed" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+
+
+</ul>
+
 </logic:notEmpty>
 </logic:present>
 
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

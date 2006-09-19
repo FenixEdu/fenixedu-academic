@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -86,24 +87,35 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
         return mapping.findForward("editCourseGroup");
     }
 
+    
     public ActionForward addExternalCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) RenderUtils.getViewState(
-                "addExternalCourse").getMetaObject().getObject();
-        ExecutionCourse course = bean.getAddExternalCourse();
-        VigilantGroup group = bean.getSelectedVigilantGroup();
-        List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
-        courses.add(course);
-
-        try {
-            Object[] args = { group, courses };
-            executeService(request, "AddExecutionCourseToGroup", args);
-        } catch (DomainException e) {
-            addActionMessage(request, e.getMessage(), null);
+         IViewState viewState = (IViewState) RenderUtils.getViewState("addExternalCourse");
+        if(viewState==null) {
+        	viewState= (IViewState) RenderUtils.getViewState("addExternalCourse-withoutjs");
         }
+        VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) viewState.getMetaObject().getObject();
+        
+        ExecutionCourse course = bean.getExternalCourse();
+        VigilantGroup group = bean.getSelectedVigilantGroup();
+        if(course!=null) {
+        	List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
+        	courses.add(course);
 
+        	try {
+        		Object[] args = { group, courses };
+        		executeService(request, "AddExecutionCourseToGroup", args);
+        	} catch (DomainException e) {
+        		addActionMessage(request, e.getMessage(), null);
+        	}
+        }
+        if(RenderUtils.getViewState("addExternalCourse-withoutjs")!=null) {
+        	RenderUtils.invalidateViewState("addExternalCourse-withoutjs");
+        }
+        
         request.setAttribute("bean", bean);
+        bean.setExternalCourse(null);
         return mapping.findForward("editCourseGroup");
     }
 }

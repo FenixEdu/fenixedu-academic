@@ -18,14 +18,12 @@ public class CreateConvokes extends Service {
             ExamCoordinator coordinator, String emailMessage) throws ExcepcaoPersistencia {
         group.convokeVigilants(vigilants, writtenEvaluation);
         if (emailMessage.length() != 0) {
-            for (Vigilant vigilant : vigilants) {
+        	Person person = coordinator.getPerson();
+        	for (Vigilant vigilant : vigilants) {
                 String emailTo = vigilant.getEmail();
                 final ArrayList<String> tos = new ArrayList<String>();
                 tos.add(emailTo);
-
-                Person person = coordinator.getPerson();
-
-                EmailSender.send(person.getName(), person.getEmail(), tos, null, null, "Convocatória",
+                EmailSender.send(person.getName(), person.getEmail(), tos, null, null, "ConvocatÃ³ria",
                         emailMessage);
             }
         }

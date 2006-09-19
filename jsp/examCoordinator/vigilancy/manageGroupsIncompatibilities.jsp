@@ -7,6 +7,16 @@
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.displayIncompatibleInformation"/></h2>
 
+
+<fr:form action="/vigilancy/vigilantGroupManagement.do?method=manageIncompatiblesOfVigilants">
+<fr:edit id="selectVigilantGroup" name="bean" schema="vigilantGroup.selectToEdit">
+</fr:edit>
+	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
+</fr:form>
+
+<logic:present name="bean" property="selectedVigilantGroup">
+<bean:define id="vigilantGroup" name="bean" property="selectedVigilantGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup"/>
+
 <logic:empty name="vigilants"> 
 <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.noIncompatibilitiesToManage"/> 
 </logic:empty>
@@ -19,7 +29,7 @@
 			<fr:view name="vigilant" property="person.name"/> 
 			<span class="greytxt2"><bean:message key="label.vigilancy.incompatibleWith" bundle="VIGILANCY_RESOURCES"/> </span>
 			<fr:view name="vigilant" property="incompatiblePerson.name"/> 
-			<a href="<%= "/vigilancy/vigilantGroupManagement.do?method=deleteIncompatibility&oid=" + vigilant.getIdInternal() %>">
+			<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteIncompatibility&oid=" + vigilant.getIdInternal() + "&gid=" + vigilantGroup.getIdInternal() %>">
 				<bean:message key="label.vigilancy.delete" bundle="VIGILANCY_RESOURCES"/>
 			</a>
 		</li>
@@ -28,7 +38,14 @@
 </logic:notEmpty>
 
 <p>
-	<html:link page="/vigilancy/vigilantGroupManagement.do?method=prepareAddIncompatiblePersonToVigilant">
+	<html:link page="<%= "/vigilancy/vigilantGroupManagement.do?method=prepareAddIncompatiblePersonToVigilant&gid=" + vigilantGroup.getIdInternal() %>">
 	<bean:message key="label.vigilancy.addIncompatibilityToVigilant" bundle="VIGILANCY_RESOURCES"/>
 	</html:link>
 </p>
+</logic:present>
+
+
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>
+

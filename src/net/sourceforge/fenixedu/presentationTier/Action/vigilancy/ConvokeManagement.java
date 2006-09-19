@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.ModuleUtils;
 import org.joda.time.DateTime;
 
 public class ConvokeManagement extends FenixDispatchAction {
@@ -162,10 +163,9 @@ public class ConvokeManagement extends FenixDispatchAction {
 
         vigilants.addAll(teachers);
         vigilants.addAll(unavailables);
-
         beanWithVigilants.setVigilants(vigilants);
-        beanWithVigilants.setSelectedUnavailableVigilants(unavailables);
-        beanWithVigilants.setSelectedTeachers(teachers);
+        
+        beanWithVigilants.setEmailMessage(RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.vigilancy.emailConvoke"));
         request.setAttribute("bean", beanWithVigilants);
         return mapping.findForward("confirmConvokes");
     }
@@ -209,8 +209,9 @@ public class ConvokeManagement extends FenixDispatchAction {
                 .getVigilantGroup();
         StrategySugestion sugestion = group.sugestVigilantsToConvoke(writtenEvaluation);
 
-        bean.setVigilants(sugestion.getVigilantSugestion());
+        bean.setVigilantsSugestion(sugestion.getVigilantSugestion());
         bean.setUnavailableVigilants(sugestion.getUnavailableVigilants());
+        bean.setTeachersForAGivenCourse(sugestion.getAssociatedTeachers());
         bean.setSelectedVigilantGroup(group);
 
         request.setAttribute("bean", bean);

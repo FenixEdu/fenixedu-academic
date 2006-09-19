@@ -16,7 +16,7 @@ public class VigilancyCourseGroupBean implements Serializable {
 
     private List<DomainReference<ExecutionCourse>> coursesToAdd;
 
-    private DomainReference<ExecutionCourse> addExternalCourse;
+    private DomainReference<ExecutionCourse> externalCourse;
 
     private DomainReference<Unit> selectedUnit;
 
@@ -32,17 +32,17 @@ public class VigilancyCourseGroupBean implements Serializable {
         setSelectedVigilantGroup(null);
         setSelectedDepartment(null);
         setSelectedCompetenceCourseGroupUnit(null);
-        setAddExternalCourse(null);
+        setExternalCourse(null);
         courses = new ArrayList<DomainReference<ExecutionCourse>>();
         coursesToAdd = new ArrayList<DomainReference<ExecutionCourse>>();
     }
 
-    public ExecutionCourse getAddExternalCourse() {
-        return addExternalCourse.getObject();
+    public ExecutionCourse getExternalCourse() {
+        return externalCourse.getObject();
     }
 
-    public void setAddExternalCourse(ExecutionCourse course) {
-        addExternalCourse = new DomainReference<ExecutionCourse>(course);
+    public void setExternalCourse(ExecutionCourse course) {
+        externalCourse = new DomainReference<ExecutionCourse>(course);
     }
 
     public VigilantGroup getSelectedVigilantGroup() {

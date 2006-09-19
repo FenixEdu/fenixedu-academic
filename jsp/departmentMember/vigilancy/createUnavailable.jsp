@@ -7,6 +7,14 @@
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.createUnavailablePeriod"/></h2>
 
+<logic:messagesPresent message="true">
+	<p>
+		<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
+			<span class="error"><bean:write name="messages"/></span>
+		</html:messages>
+	</p>
+</logic:messagesPresent>			   
+
 <fr:edit 
 id="createUnavailablePeriod"
 type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.UnavailablePeriodBean" layout="tabular"

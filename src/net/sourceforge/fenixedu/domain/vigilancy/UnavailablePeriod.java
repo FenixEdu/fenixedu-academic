@@ -27,6 +27,25 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
         this.setJustification(justification);
     }
 
+    public void setBeginDate(DateTime begin) {
+    	DateTime currentTime = new DateTime();
+    	if(begin.isAfter(currentTime) && (this.getEndDate()==null || this.getEndDate().isAfter(begin))) {
+    		super.setBeginDate(begin);
+    	}
+    	else { 
+    		throw new DomainException("label.vigilancy.error.invalidBeginDate");
+    	}
+    }
+    
+    public void setEndDate(DateTime end) {
+    	if(this.getBeginDate() == null || this.getBeginDate().isBefore(end)) {
+    		super.setEndDate(end);
+    	}
+    	else {
+    		throw new DomainException("label.vigilancy.error.invalidEndDate");
+    	}
+    }
+    
     public Boolean containsDate(DateTime date) {
         Interval interval = new Interval(this.getBeginDate(), this.getEndDate());
         return interval.contains(date);
@@ -130,8 +149,8 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 
         return String.format("%02d/%02d/%d (%02d:%02d) - %02d/%02d/%d (%02d:%02d): %s", begin
                 .getDayOfMonth(), begin.getMonthOfYear(), begin.getYear(), begin.getHourOfDay(), begin
-                .getMinuteOfHour(), end.getDayOfMonth(), end.getMonthOfYear(), end.getYear(), begin
-                .getHourOfDay(), begin.getMinuteOfHour(), this.getJustification());
+                .getMinuteOfHour(), end.getDayOfMonth(), end.getMonthOfYear(), end.getYear(), end
+                .getHourOfDay(), end.getMinuteOfHour(), this.getJustification());
     }
 
 }

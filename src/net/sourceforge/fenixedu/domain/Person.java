@@ -472,6 +472,10 @@ public class Person extends Person_Base {
         return getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
     }
     
+    public Vigilant getCurrentVigilant() {
+    	return getVigilantForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
+    }
+    
     public Integer getVigilancyPointsForGivenYear(ExecutionYear executionYear) {
         Vigilant vigilant = this.getVigilantForGivenExecutionYear(executionYear);
         if(vigilant==null) return 0;

@@ -76,23 +76,6 @@ public class ExamCoordinator extends ExamCoordinator_Base {
         return groups.contains(group);
     }
 
-    /*
-     * public List<Convoke> getConvokesThatCanManage(ExecutionCourse course) {
-     * List<Convoke> convokesForExecutionCourse = new ArrayList<Convoke> ();
-     * for(Convoke convoke : this.getConvokesThatCanManage()) {
-     * if(convoke.getAssociatedExecutionCourses().contains(course)) {
-     * convokesForExecutionCourse.add(convoke); } } return
-     * convokesForExecutionCourse; }
-     * 
-     * public List<Convoke>
-     * getConvokesThatCanManageAndAreBeforeCurrentDate(ExecutionCourse course) {
-     * List<Convoke> convokes = this.getConvokesThatCanManage(course); List<Convoke>
-     * convokesToReturn = new ArrayList<Convoke> (); DateTime currentDate = new
-     * DateTime(); for(Convoke convoke : convokes) {
-     * if(convoke.getBeginDateTime().isBefore(currentDate)) {
-     * convokesToReturn.add(convoke); }
-     *  } return convokesToReturn; }
-     */
     public List<ExecutionCourse> getAssociatedExecutionCourses() {
         List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
         for (VigilantGroup group : this.getVigilantGroups()) {
@@ -100,17 +83,6 @@ public class ExamCoordinator extends ExamCoordinator_Base {
         }
         return courses;
     }
-
-    /*
-     * public List<Convoke>
-     * getConvokesThatCanManageAndAreAfterCurrentDate(ExecutionCourse course) {
-     * List<Convoke> convokes = this.getConvokesThatCanManage(course); List<Convoke>
-     * convokesToReturn = new ArrayList<Convoke> (); DateTime currentDate = new
-     * DateTime(); for(Convoke convoke : convokes) {
-     * if(convoke.getBeginDateTime().isAfter(currentDate)) {
-     * convokesToReturn.add(convoke); }
-     *  } return convokesToReturn; }
-     */
 
     public List<WrittenEvaluation> getAssociatedWrittenEvaluations() {
         List<VigilantGroup> groups = this.getVigilantGroups();

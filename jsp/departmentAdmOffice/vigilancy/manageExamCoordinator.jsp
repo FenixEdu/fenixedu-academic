@@ -7,9 +7,19 @@
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.manageExamCoordinator"/></h2>
 
+
+<logic:messagesPresent message="true">
+	<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
+		<p>
+			<span class="error"><bean:write name="messages" /></span>
+		</p>
+	</html:messages>
+</logic:messagesPresent>
+
 <fr:form action="/vigilancy/examCoordinatorManagement.do?method=selectUnitForCoordinator">
 <fr:edit id="selectUnit" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" layout="tabular"
 name="bean" schema="selectUnitInVigilantGroup"/>
+	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 <!--  selectUnitInVigilantGroup -->
 
@@ -26,28 +36,35 @@ name="bean" schema="selectUnitInVigilantGroup"/>
 <fr:view name="bean" property="selectedUnit.examCoordinators" schema="showExamCoordinators">
 <fr:layout name="tabular">
 	<fr:property name="classes" value="tstyle1 mvert05" />
-	<fr:property name="sortBy" value="executionYear" />
+	<fr:property name="sortBy" value="executionYear=desc, person.name=asc" />
 	<fr:property name="link(apagar)" value="<%= "/vigilancy/examCoordinatorManagement.do?method=deleteExamCoordinator&unitId=" + bean.getSelectedUnit().getIdInternal() + "&deparmentId=" + bean.getSelectedDepartment().getIdInternal() %>"/>
 	<fr:property name="param(apagar)" value="idInternal/oid"/>
 	<fr:property name="visibleIf(apagar)" value="executionYear.current"/>
 </fr:layout>
 </fr:view>
-</logic:notEmpty>
-
 <p class="mtop05 mbottom2">
 	<html:link page="<%="/vigilancy/examCoordinatorManagement.do?method=editExamCoordinators&unitId=" + bean.getSelectedUnit().getIdInternal() + "&deparmentId=" + bean.getSelectedDepartment().getIdInternal() %>">
 	<bean:message key="label.vigilancy.editPreviledges" bundle="VIGILANCY_RESOURCES"/>
 	</html:link>
 </p>
+</logic:notEmpty>
+
+
 
 <p class="mbottom05"><strong><bean:message key="label.vigilancy.selectPersonToCoordinate" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
+
 <fr:form action="/vigilancy/examCoordinatorManagement.do?method=addExamCoordinator">
 <fr:edit name="bean" id="preserveState" schema="examCoordinator.create" 
 action="/vigilancy/examCoordinatorManagement.do?method=addExamCoordinator"/>
-
 <p><html:submit><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit></p>
 </fr:form>
+
+
+
+
 </logic:present>
 
 
-
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

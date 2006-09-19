@@ -52,4 +52,3 @@
 <logic:equal name="reason" value="UNKNOWN">
 	<bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.unknownCause"/>
 </logic:equal>
-

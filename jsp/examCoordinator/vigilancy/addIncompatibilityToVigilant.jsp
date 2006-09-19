@@ -9,13 +9,14 @@
 
 <ul>
 	<li>
-	<html:link page="/vigilancy/vigilantGroupManagement.do?method=manageIncompatiblesOfVigilants"><bean:message key="label.vigilancy.back" bundle="VIGILANCY_RESOURCES"/></html:link>
+	<html:link page="/vigilancy/vigilantGroupManagement.do?method=prepareManageIncompatiblesOfVigilants"><bean:message key="label.vigilancy.back" bundle="VIGILANCY_RESOURCES"/></html:link>
 	</li>
 </ul>
 
 <fr:form action="/vigilancy/vigilantGroupManagement.do?method=vigilantSelectedInIncompatibilityScreen">
 <fr:edit id="selectVigilant" name="bean" schema="selectVigilantsOfVigilantGroup" 
 action="/vigilancy/vigilantGroupManagement.do?method=vigilantSelectedInIncompatibilityScreen"/>
+	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
 
@@ -46,3 +47,7 @@ action="/vigilancy/vigilantGroupManagement.do?method=vigilantSelectedInIncompati
 	</fr:view>
 	
 </logic:present>
+
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

@@ -35,9 +35,10 @@ nested="true">
 	
 </fr:edit>
 <p class="mtop0">
-	<a href="javascript:document.getElementById('removeCoordinatorsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.remove"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>
-	<a href="javascript:checkall('removeCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>
-	<a href="javascript:uncheckall('removeCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>
+	<span class="switchInline"><a href="javascript:document.getElementById('removeCoordinatorsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.remove"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>, </span>
+	<span class="switchInline"><a href="javascript:checkall('removeCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>, </span>
+	<span class="switchInline"><a href="javascript:uncheckall('removeCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a></span>
+	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.remove" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 </fr:form>
 </div>
@@ -49,6 +50,7 @@ nested="true">
 			<fr:property name="classes" value="mtop15"/>
 		</fr:layout>
 </fr:edit>
+	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
 <div id="addCoordinatorsToGroup">
@@ -63,9 +65,14 @@ nested="true">
 			</fr:layout>
 </fr:edit>
 <p class="mtop0">
-	<a href="javascript:document.getElementById('addCoordinatorsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.add"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>
-	<a href="javascript:checkall('addCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>
-	<a href="javascript:uncheckall('addCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>
+	<span class="switchInline"><a href="javascript:document.getElementById('addCoordinatorsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.add"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>, </span>
+	<span class="switchInline"><a href="javascript:checkall('addCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>, </span>
+	<span class="switchInline"><a href="javascript:uncheckall('addCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a></span>
+	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 </fr:form>
 </div>
+
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

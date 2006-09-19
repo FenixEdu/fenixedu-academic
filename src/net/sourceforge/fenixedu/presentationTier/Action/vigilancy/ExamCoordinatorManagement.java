@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -42,8 +46,15 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         VigilantGroupBean bean = (VigilantGroupBean) viewState.getMetaObject().getObject();
         request.setAttribute("bean", bean);
 
-        Object args[] = { bean.getPerson(), bean.getExecutionYear(), bean.getSelectedUnit() };
-        executeService(request, "AddExamCoordinator", args);
+        String username = bean.getUsername();
+        User user = User.readUserByUserUId(username);
+		if (user != null && user.getPerson() != null) {
+			Object args[] = { user.getPerson(), bean.getExecutionYear(), bean.getSelectedUnit() };
+	        executeService(request, "AddExamCoordinator", args);
+		} else {
+			addActionMessage(request, "label.vigilancy.inexistingUsername",
+					null);
+		}
 
         return mapping.findForward("prepareExamCoordinator");
     }

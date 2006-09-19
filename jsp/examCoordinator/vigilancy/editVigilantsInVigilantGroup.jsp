@@ -9,6 +9,7 @@
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.editVigilantGroup"/></h2>
 <script type="text/javascript" language="javascript" src="<%= request.getContextPath() %>/examCoordinator/vigilancy/checkall.js"></script>
 
+
 <ul>
 	<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.back"/></html:link></li>
 </ul>
@@ -36,7 +37,7 @@
 
 
 <div id="vigilantsInGroup">
-<p class="mbottom0"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.vigilantGroup"/></strong></p>
+<p class="mbottom0"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.vigilantGroup"/> <fr:view name="bean" property="selectedVigilantGroup.name"/>:</strong></p>
 
 <fr:form id="removeVigilantsForm" action="/vigilancy/vigilantGroupManagement.do?method=removeVigilantsFromGroup">
 <fr:edit name="bean" id="removeVigilants" schema="removeVigilants" 
@@ -49,9 +50,10 @@ nested="true">
 </fr:edit>
 
 <p class="mtop0">
-	<a href="javascript:document.getElementById('removeVigilantsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.remove"/></a>, 
-	<a href="javascript:checkall('removeVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, 
-	<a href="javascript:uncheckall('removeVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a>
+	<span class="switchInline"><a href="javascript:document.getElementById('removeVigilantsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.remove"/></a>, </span>
+	<span class="switchInline"><a href="javascript:checkall('removeVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
+	<span class="switchInline"><a href="javascript:uncheckall('removeVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
+	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.remove" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 </fr:form>
 </div>
@@ -63,6 +65,7 @@ nested="true">
 			<fr:property name="classes" value="mtop15"/>
 		</fr:layout>
 	</fr:edit>
+	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
 <div id="addVigilantsToGroup">
@@ -76,21 +79,27 @@ nested="true">
 			</fr:layout>
 </fr:edit>
 <p class="mtop0">
-	<a href="javascript:document.getElementById('addVigilantsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.add"/></a>, 
-	<a href="javascript:checkall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, 
-	<a href="javascript:uncheckall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a>
+	<span class="switchInline"><a href="javascript:document.getElementById('addVigilantsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.add"/></a>, </span>
+	<span class="switchInline"><a href="javascript:checkall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
+	<span class="switchInline"><a href="javascript:uncheckall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a> </span>
+	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 </fr:form>
 </div>
 
 <p class="mtop15"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.externalPersonToGroup"/></strong></p>
 
-<fr:form action="/vigilancy/vigilantGroupManagement.do?method=addVigilantToGroupByUsername">
+<fr:form id="addSingleVigilant" action="/vigilancy/vigilantGroupManagement.do?method=addVigilantToGroupByUsername">
 <fr:edit name="bean" id="addExternalPersonToGroup" schema="addExternalPerson"
 	nested="true">
 	<fr:destination name="cancel" path="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement"/>
 </fr:edit>
-<p>
-	<html:submit value="Adicionar"/>
+<p class="mtop0">
+	<span class="switchInline"><a href="javascript:document.getElementById('addSingleVigilant').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.add"/></a></span>
+	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 </fr:form>
+
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

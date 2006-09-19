@@ -18,10 +18,14 @@
 		 schema="selectWrittenEvaluation"> 
 	<fr:destination name="cancel" path="/vigilancy/convokeManagement.do?method=prepareConvoke"/> 
 </fr:edit>
+	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
+<logic:present name="bean" property="selectedVigilantGroup">
 <logic:present name="bean" property="writtenEvaluation">
 <p class="mvert15 breadcumbs"><span class="actual"><bean:message key="label.vigilancy.firstStep" bundle="VIGILANCY_RESOURCES"/></span> > <span><bean:message key="label.vigilancy.secondStep" bundle="VIGILANCY_RESOURCES"/></span></p>
+
+<fr:view name="bean" property="writtenEvaluation.associatedRooms"/>
 
 <logic:notEmpty name="bean" property="writtenEvaluation.convokes"> 
 <p class="mtop2 mbottom05"><strong><bean:message key="label.vigilancy.alreadyConvoked" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
@@ -77,8 +81,8 @@
 
 
 <p>
-	<a href="javascript:checkall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>,
-	<a href="javascript:uncheckall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a>
+	<span class="switchInline"><a href="javascript:checkall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
+	<span class="switchInline"><a href="javascript:uncheckall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
 </p>
 
 <p class="mtop15">
@@ -88,3 +92,8 @@
 </fr:form>
 
 </logic:present>
+</logic:present>
+
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

@@ -10,7 +10,7 @@
 <logic:messagesPresent message="true">
 	<p>
 		<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
-			<span class="error"><bean:write name="messages" /></span>
+			<span class="error"><bean:write name="messages"/></span>
 		</html:messages>
 	</p>
 </logic:messagesPresent>
@@ -29,6 +29,7 @@
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 		</fr:layout>
 	</fr:edit>
+	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean"/>
@@ -72,7 +73,8 @@
 <fr:view name="vigilants" layout="vigilant-table">
 	<fr:layout>                                
 		<fr:property name="classes" value="tstyle1" />
-		<fr:property name="sortBy" value="person.username"/>
+		<fr:property name="sortBy" value="teacherCategoryCode, person.username"/>
+	
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="vigilantSchema" value="<%= bean.getWhatSchemaToUseInVigilants() %>"/>
@@ -84,7 +86,7 @@
 			<fr:property name="convokeSchema" value="presentSimpleConvokesWithLink"/>	
 		</logic:equal>
 
-		<fr:property name="columnClasses" value=",width250px,,,,,,,,,,,,,,,,,,,,,,"/>	
+		<fr:property name="columnClasses" value=",,width250px,,,,,,,,,,,,,,,,,,,,,,"/>	
 		<fr:property name="convokesToShow" value="future"/>
 	</fr:layout>
 	
@@ -98,7 +100,7 @@
 <fr:view name="vigilants" layout="vigilant-table">
 	<fr:layout>                                
 		<fr:property name="classes" value="tstyle1" />
-		<fr:property name="sortBy" value="person.username"/>
+ 	<fr:property name="sortBy" value="teacherCategoryCode, person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="vigilantSchema" value="<%= bean.getWhatSchemaToUseInVigilants() %>"/>
@@ -110,7 +112,7 @@
 			<fr:property name="convokeSchema" value="presentSimpleConvokesWithLink"/>	
 		</logic:equal>
 		
-		<fr:property name="columnClasses" value=",width250px,,,,,,,,,,,,,,,,,,,,,,"/>
+		<fr:property name="columnClasses" value=",,width250px,,,,,,,,,,,,,,,,,,,,,,"/>
 		<fr:property name="convokesToShow" value="past"/>
 	</fr:layout>
 	
@@ -124,7 +126,7 @@
 <fr:view name="vigilants" layout="vigilant-table">
 	<fr:layout>                                
 		<fr:property name="classes" value="tstyle1" />	
-		<fr:property name="sortBy" value="person.username"/>
+		<fr:property name="sortBy" value="teacherCategoryCode, person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="vigilantSchema" value="<%= bean.getWhatSchemaToUseInVigilants() %>"/>
@@ -136,12 +138,32 @@
 			<fr:property name="convokeSchema" value="presentSimpleConvokesWithLink"/>	
 		</logic:equal>
 
-		<fr:property name="columnClasses" value=",width250px,,,,,,,,,,,,,,,,,,,,,,"/>
+		<fr:property name="columnClasses" value=",,width250px,,,,,,,,,,,,,,,,,,,,,,"/>
 		<fr:property name="convokesToShow" value="all"/>
 	</fr:layout>
 
 </fr:view>
 </logic:equal>
+
+<ul class="list2">
+<li>
+<em><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.category" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.totalpoints.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.totalPoints" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.points.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.attended.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.attended" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.confirmed.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.confirmed" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+
+
+</ul>
 </logic:notEmpty>
 </logic:notPresent>
 
@@ -159,7 +181,17 @@
 <logic:notEmpty name="writtenEvaluations">
 
 <logic:iterate id="writtenEvaluation" name="writtenEvaluations">
-
+<ul class="list2">
+<li>
+<em><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.category" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.totalpoints.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.totalPoints" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.points.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+</ul>
 <bean:define id="evaluation" name="writtenEvaluation" type="net.sourceforge.fenixedu.domain.WrittenEvaluation"/>
 <bean:define id="executionCourse" name="writtenEvaluation" property="associatedExecutionCourses[0]" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean"/>
@@ -170,7 +202,7 @@
 
 <fr:view name="evaluation" property="convokes" schema="<%= bean.getWhatSchemaToUse() %>">
 <fr:layout name="tabular">
-	<fr:property name="sortBy" value="vigilant.person.username"/>
+	<fr:property name="sortBy" value="vigilant.teacherCategoryCode, vigilant.person.username"/>
 	<fr:property name="classes" value="tstyle1 tdtop thleft mtop05 mbottom0"/>
 </fr:layout>
 </fr:view>
@@ -182,7 +214,7 @@
 <fr:view name="evaluation" property="convokes" schema="<%= bean.getWhatSchemaToUse() %>">
 <fr:layout name="tabular">
 	<fr:property name="classes" value="tstyle1 tdtop thleft mtop05 mbottom0"/>
-	<fr:property name="sortBy" value="vigilant.person.username"/>
+		<fr:property name="sortBy" value="vigilant.teacherCategoryCode, vigilant.person.username"/>
 	
 		<fr:property name="link(confirmar)" value="<%= "/vigilancy/convokeManagement.do?method=convokeAttended&bool=true&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>" />
 		<fr:property name="param(confirmar)" value="idInternal/oid" />
@@ -199,7 +231,7 @@
 
 <fr:view name="evaluation" property="convokes" schema="<%= bean.getWhatSchemaToUse() %>">
 <fr:layout name="tabular">
-	<fr:property name="sortBy" value="vigilant.person.username"/>
+	<fr:property name="sortBy" value="vigilant.teacherCategoryCode, vigilant.person.username"/>
 		<fr:property name="classes" value="tstyle1 tdtop thleft mtop05 mbottom0"/>
 		<fr:property name="link(Activar)" value="<%= "/vigilancy/convokeManagement.do?method=convokeActive&bool=true&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>" />
 		<fr:property name="param(Activar)" value="idInternal/oid" />
@@ -215,8 +247,29 @@
 
 </logic:iterate>
 
+<ul class="list2">
+<li>
+<em><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.category" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.totalpoints.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.totalPoints" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.points.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.attended.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.attended" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.confirmed.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.confirmed" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
 
+
+</ul>
 </logic:notEmpty>
 </logic:present>
-
 </logic:equal>
+
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

@@ -7,9 +7,26 @@
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.displayUnavailableInformation"/></h2>
 
+<logic:messagesPresent message="true">
+	<p>
+		<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
+			<span class="error"><bean:write name="messages"/></span>
+		</html:messages>
+	</p>
+</logic:messagesPresent>
+
+<fr:form action="/vigilancy/unavailablePeriodManagement.do?method=manageUnavailablePeriodsOfVigilants">
+<fr:edit id="selectVigilantGroup" name="bean" schema="vigilantGroup.selectToEdit">
+</fr:edit>
+	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
+</fr:form>
+
+<logic:present name="bean" property="selectedVigilantGroup">
+<bean:define id="vigilantGroup" name="bean" property="selectedVigilantGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup"/>
+
 <ul>
 	<li>
-	<html:link page="/vigilancy/unavailablePeriodManagement.do?method=prepareAddPeriodToVigilant">
+	<html:link page="<%= "/vigilancy/unavailablePeriodManagement.do?method=prepareAddPeriodToVigilant&gid=" + vigilantGroup.getIdInternal() %>">
 		<bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addAnUnavailablePeriodOfVigilant"/>
 	</html:link>
 	</li>
@@ -29,11 +46,16 @@
     <fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1" />
 		<fr:property name="columnClasses" value=",width100px acenter,width100px acenter,,," />
-		<fr:property name="link(edit)" value="/vigilancy/unavailablePeriodManagement.do?method=editUnavailablePeriodOfVigilant" />
+		<fr:property name="link(edit)" value="<%= "/vigilancy/unavailablePeriodManagement.do?method=editUnavailablePeriodOfVigilant&gid=" + vigilantGroup.getIdInternal() %>"/>
 		<fr:property name="param(edit)" value="idInternal/oid" />
-		<fr:property name="link(delete)" value="/vigilancy/unavailablePeriodManagement.do?method=deleteUnavailablePeriodOfVigilant" />
+		<fr:property name="link(delete)" value="<%= "/vigilancy/unavailablePeriodManagement.do?method=deleteUnavailablePeriodOfVigilant&gid=" + vigilantGroup.getIdInternal() %>"/>
 		<fr:property name="param(delete)" value="idInternal/oid" />
 	</fr:layout>
 	</fr:view>
    
 </logic:notEmpty>
+</logic:present>
+
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

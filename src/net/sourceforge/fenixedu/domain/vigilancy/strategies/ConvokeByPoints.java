@@ -39,19 +39,13 @@ public class ConvokeByPoints extends Strategy {
                     && !incompatiblePersons.contains(vigilant.getIncompatiblePerson())) {
                 if (vigilant.getPerson().hasTeacher()) {
                     Teacher teacher = vigilant.getPerson().getTeacher();
-                    /*
-                     * Let's take out the Cathedratic teachers Cathedratic
-                     * teachers have Weight of 1, 2 or 3
-                     * 
-                     */
-                    if (teacher.getCategory().getWeight() > 3) {
                         if (teacher.teachesAny(executionCourses)) {
                             teachersThatTeachClass.add(vigilant);
                         } else {
                             vigilantSugestion.add(vigilant);
                         }
                         incompatiblePersons.add(vigilant.getPerson());
-                    }
+                    
                 } else {
                     vigilantSugestion.add(vigilant);
                     incompatiblePersons.add(vigilant.getPerson());

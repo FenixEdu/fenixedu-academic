@@ -150,45 +150,45 @@
 
 
 <schema name="present.convokes" type="net.sourceforge.fenixedu.domain.vigilancy.Convoke" bundle="VIGILANCY_RESOURCES">	
-		<slot name="writtenEvaluation.name" key="label.vigilancy.writtenEvaluation"/>
+		<slot name="writtenEvaluation.name" key="label.vigilancy.writtenEvaluation.header"/>
 		<slot name="writtenEvaluation.dayDateYearMonthDay" key="label.vigilancy.date">		
 		</slot>
 		<slot name="active" key="label.vigilancy.active" />
-		<slot name="confirmed" key="label.vigilancy.confirmed"/>
-		<slot name="attendedToConvoke" key="label.vigilancy.attended"/>
-		<slot name="points" key="label.vigilancy.points"/>
+		<slot name="confirmed" key="label.vigilancy.confirmed.header"/>
+		<slot name="attendedToConvoke" key="label.vigilancy.attended.header"/>
+		<slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 
 <schema name="present.convokesForCoordinator" type="net.sourceforge.fenixedu.domain.vigilancy.Convoke" bundle="VIGILANCY_RESOURCES">	
-		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation" layout="link">
+		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
 			<property name="linkFormat" value="/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
 			<property name="subLayout" value="values"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 		</slot>
 		<slot name="writtenEvaluation.dayDateYearMonthDay" key="label.vigilancy.date"/>		
-		<slot name="confirmed" key="label.vigilancy.confirmed"/>
-		<slot name="points" key="label.vigilancy.points"/>
+		<slot name="confirmed" key="label.vigilancy.confirmed.header"/>
+		<slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 
 <schema name="presentWrittenEvaluationName" type="net.sourceforge.fenixedu.domain.WrittenEvaluation" bundle="VIGILANCY_RESOURCES">	
-		<slot name="name" key="label.vigilancy.writtenEvaluation"/>
+		<slot name="name" key="label.vigilancy.writtenEvaluation.header"/>
 </schema>
 
 <schema name="presentSimpleConvokesWithLink" type="net.sourceforge.fenixedu.domain.vigilancy.Convoke" bundle="VIGILANCY_RESOURCES">	
-		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation" layout="conditional-link">
+		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="conditional-link">
 			<property name="linkFormat" value="/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
 			<property name="subLayout" value="values"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 			<property name="visibleIf" value="isAfterCurrentDate"/>
 		</slot>
-		<slot name="points" key="label.vigilancy.points"/>
+		<slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 
 <schema name="presentSimpleConvokes" type="net.sourceforge.fenixedu.domain.vigilancy.Convoke" bundle="VIGILANCY_RESOURCES">	
-		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation" layout="format">
+		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="format">
 			<property name="format" value="${name}"/>
 		</slot>		
-		<slot name="points" key="label.vigilancy.points"/>
+		<slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 
 <schema name="selectVigilantsThatAreTeachers" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
@@ -245,6 +245,7 @@
 </schema>
 	
 <schema name="convokesOrderedByVigilants" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES">
+		<slot name="teacherCategoryCode" key="label.vigilancy.category.header"/>
 		<slot name="person.username" key="label.vigilancy.username"/>
 		<slot name="person.name" key="label.vigilancy.name"/>
 		<slot name="unavailablePeriodsAsString" key="label.vigilancy.unavailablePeriodsShortLabel"/>
@@ -252,7 +253,7 @@
 </schema>
 
 <schema name="vigilantsWithAllInformation" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES" extends="convokesOrderedByVigilants">
-			<slot name="points" key="label.vigilancy.totalPoints"/>
+			<slot name="points" key="label.vigilancy.totalpoints.header"/>
 </schema>
 	
 <schema name="vigilantsWithOutUnavailables" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES" extends="vigilantsWithAllInformation">
@@ -270,7 +271,7 @@
 
 
 <schema name="present.convokesForFuture" type="net.sourceforge.fenixedu.domain.vigilancy.Convoke" bundle="VIGILANCY_RESOURCES">	
-		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation" layout="link">
+		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
 			<property name="linkFormat" value="/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
 			<property name="subLayout" value="values"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
@@ -288,7 +289,7 @@
 </schema>
 	
 <schema name="present.convokesForPast" type="net.sourceforge.fenixedu.domain.vigilancy.Convoke" bundle="VIGILANCY_RESOURCES">	
-		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation" layout="format">
+		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="format">
 			<property name="format" value="${name}"/>
 		</slot>		
 		<slot name="writtenEvaluation.dayDateYearMonthDay" key="label.vigilancy.date"/>		
@@ -331,15 +332,15 @@
 <schema name="selectWrittenEvaluation" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES" extends="selectVigilantGroupForConvokes">
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation" layout="menu-select-postback">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.WrittenEvaluationForGivenVigilantGroup" />
-			<property name="format" value="${name} (${evaluationType}) ${beginningDateTime}"/>
+			<property name="format" value="${name} (${degreesAsString} - ${evaluationType}) ${beginningDateTime.hourOfDay}:${beginningDateTime.minuteOfHour,02d} ${beginningDateTime.dayOfMonth}/${beginningDateTime.monthOfYear}/${beginningDateTime.year}"/>
 		</slot>
 </schema>
 
 <schema name="presentConvokesWithVigilant" type="net.sourceforge.fenixedu.domain.vigilancy.Convoke" bundle="VIGILANCY_RESOURCES">	
 		<slot name="vigilant.person.username" key="label.vigilancy.username"/>
 		<slot name="vigilant.person.name" key="label.vigilancy.vigilant"/>
-		<slot name="vigilant.points" key="label.vigilancy.totalPoints"/>
-		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation" layout="link">
+		<slot name="vigilant.points" key="label.vigilancy.totalPoints.header"/>
+		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
 			<property name="linkFormat" value="/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
 			<property name="subLayout" value="values"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
@@ -347,34 +348,35 @@
 		<slot name="writtenEvaluation.dayDateYearMonthDay" key="label.vigilancy.date">		
 		</slot>
 		<slot name="active" key="label.vigilancy.active" />
-		<slot name="confirmed" key="label.vigilancy.confirmed"/>
-		<slot name="attendedToConvoke" key="label.vigilancy.attended"/>
-		<slot name="points" key="label.vigilancy.points"/>
+		<slot name="confirmed" key="label.vigilancy.confirmed.header"/>
+		<slot name="attendedToConvoke" key="label.vigilancy.attended.header"/>
+		<slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 	 
  <schema name="presentConvokesWithoutLink" type="net.sourceforge.fenixedu.domain.vigilancy.Convoke" bundle="VIGILANCY_RESOURCES">	
-		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation" layout="format">
+		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="format">
 			<property name="format" value="${name}"/>
 		</slot>
 		<slot name="writtenEvaluation.dayDateYearMonthDay" key="label.vigilancy.date">		
 		</slot>
 		<slot name="active" key="label.vigilancy.active" />
-		<slot name="confirmed" key="label.vigilancy.confirmed"/>
-		<slot name="attendedToConvoke" key="label.vigilancy.attended"/>
-		<slot name="points" key="label.vigilancy.points"/>
+		<slot name="confirmed" key="label.vigilancy.confirmed.header"/>
+		<slot name="attendedToConvoke" key="label.vigilancy.attended.header"/>
+		<slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 	
 <schema name="convokesByVigilant.allInformation" type="net.sourceforge.fenixedu.domain.vigilancy.Convoke" bundle="VIGILANCY_RESOURCES" >
+		<slot name="vigilant.teacherCategoryCode" key="label.vigilancy.category.header"/>
 		<slot name="vigilant.person.username" key="label.vigilancy.username"/>
 		<slot name="vigilant.person.name" key="label.vigilancy.vigilant"/>
 		<slot name="vigilant.unavailablePeriodsAsString" key="label.vigilancy.unavailablePeriodsShortLabel"/>
 		<slot name="vigilant.incompatiblePersonName" key="label.person.vigilancy.displayIncompatibleInformation"/>
-		<slot name="vigilant.points" key="label.vigilancy.totalPoints"/>
+		<slot name="vigilant.points" key="label.vigilancy.totalpoints.header"/>
 		<slot name="writtenEvaluation.dayDateYearMonthDay" key="label.vigilancy.date"/>		
 		<slot name="active" key="label.vigilancy.active" />
-		<slot name="confirmed" key="label.vigilancy.confirmed"/>
-		<slot name="attendedToConvoke" key="label.vigilancy.attended"/>
-		<slot name="points" key="label.vigilancy.points"/>
+		<slot name="confirmed" key="label.vigilancy.confirmed.header"/>
+		<slot name="attendedToConvoke" key="label.vigilancy.attended.header"/>
+		<slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 
 <schema name="convokesByVigilant.simpleInformation" type="net.sourceforge.fenixedu.domain.vigilancy.Convoke" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
@@ -474,7 +476,7 @@
 </schema>
 
 <schema name="addExternalCourse" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
-		<slot name="addExternalCourse" key="label.vigilancy.name" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="externalCourse" key="label.vigilancy.name" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 			<property name="maxCount" value="30"/>
 			<property name="size" value="40"/>
 			<property name="labelField" value="nome"/>
@@ -483,6 +485,19 @@
 			<property name="className" value="net.sourceforge.fenixedu.domain.ExecutionCourse"/>				
 			<property name="minChars" value="3"/>	
 			<property name="format" value="${nome} (${degreePresentationString})"/>
+		</slot>
+</schema>
+
+<schema name="addExternalCourse-withoutjs" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
+		<slot name="selectedDepartment" key="label.vigilancy.department" layout="menu-select">
+			<property name="format" value="${realName}"/>
+			<property name="sortBy" value="realName"/>
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.Department"/>
+		</slot>
+		<slot name="externalCourse" key="label.vigilancy.name" layout="menu-select">
+			<property name="format" value="${nome} (${degreePresentationString})"/>
+			<property name="sortBy" value="nome"/>
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.SingleExecutionCourseForUnit"/>
 		</slot>
 </schema>
 
@@ -498,19 +513,11 @@
 </schema>
 
 
+
 <!--  examCoordinator -->
 
 <schema name="examCoordinator.create" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
-		<slot name="person" key="label.vigilancy.name" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-			<property name="maxCount" value="25"/>
-			<property name="size" value="40"/>
-			<property name="labelField" value="name"/>
-			<property name="serviceName" value="SearchObjects"/>
-			<property name="serviceArgs" value="slot=name"/>
-			<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
-			<property name="minChars" value="3"/>	
-			<property name="format" value="${name} (${username})"/>
-		</slot>
+		<slot name="username" key="label.vigilancy.personUsername" />
 </schema>
 
 <schema name="examCoordinators.edit" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
@@ -546,13 +553,16 @@
 </schema>
 
 <schema name="addUnavailablePeriodToVigilant" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.UnavailablePeriodBean" bundle="VIGILANCY_RESOURCES">
-		<slot name="vigilant" key="label.vigilancy.vigilant" layout="menu-select">
-			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantsForGivenCoordinator"/>
+		<slot name="vigilant" key="label.vigilancy.vigilants" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.SelectVigilantForUnavailable"/>
 			<property name="format" value="${person.name}"/>
-		</slot> 							    							
+		</slot>				
 		<slot name="beginDate" key="label.vigilancy.beginDate"/>
 		<slot name="endDate" key="label.vigilancy.endDate"/>
-		<slot name="justification" key="label.vigilancy.justification"/>
+		<slot name="justification" key="label.vigilancy.justification" layout="longText">
+				<property name="columns" value="50"/>
+				<property name="rows" value="10"/>
+		</slot>
 </schema>
 
 
@@ -575,7 +585,7 @@
 		<slot name="showCoordinators" key="label.vigilancy.examCoordinators" layout="option-select-postback"/>
 </schema>
 
-<schema name="selectVigilantsOfVigilantGroup" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES" extends="vigilantGroup.selectToEdit">
+<schema name="selectVigilantsOfVigilantGroup" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
 		<slot name="selectedVigilant" key="label.vigilancy.vigilants" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantOfVigilantGroup"/>
 			<property name="format" value="${person.name}"/>

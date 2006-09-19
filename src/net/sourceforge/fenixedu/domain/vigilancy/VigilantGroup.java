@@ -140,7 +140,8 @@ public class VigilantGroup extends VigilantGroup_Base {
     public List<Vigilant> getVigilantsWithIncompatiblePerson() {
         List<Vigilant> vigilants = new ArrayList<Vigilant>();
         for (Vigilant vigilant : this.getVigilants()) {
-            if (vigilant.hasIncompatiblePerson()) {
+        	Person incompatiblePerson = vigilant.getIncompatiblePerson();
+        	if (incompatiblePerson != null && !vigilants.contains(incompatiblePerson.getCurrentVigilant())) {
                 vigilants.add(vigilant);
             }
         }

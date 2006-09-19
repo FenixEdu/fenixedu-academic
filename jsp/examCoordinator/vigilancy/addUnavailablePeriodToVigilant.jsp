@@ -9,9 +9,9 @@
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.createUnavailablePeriod"/></h2>
 
 <fr:edit name="bean" id="periodCreation" schema="addUnavailablePeriodToVigilant"
-action="vigilancy/unavailablePeriodManagement.do?method=addUnavailablePeriodToVigilant"
+action="<%= "vigilancy/unavailablePeriodManagement.do?method=addUnavailablePeriodToVigilant&gid=" + request.getParameter("gid") %>"
 >
-<fr:destination name="cancel" path="/vigilancy/unavailablePeriodManagement.do?method=manageUnavailablePeriodsOfVigilants"/>
+<fr:destination name="cancel" path="/vigilancy/unavailablePeriodManagement.do?method=prepareManageUnavailablePeriodsOfVigilants"/>
     <fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright" />
 	</fr:layout>

@@ -553,5 +553,21 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public List<DegreeModuleScope> getDegreeModuleScopes(){
         return DegreeModuleScope.getDegreeModuleScopes(this);
-    }    
+    }   
+    
+    public String getDegreesAsString() {
+    	Set<Degree> degrees = new HashSet<Degree> ();
+    	for(ExecutionCourse course : this.getAssociatedExecutionCourses()) {
+    		degrees.addAll(course.getDegreesSortedByDegreeName());
+    	}
+    	String degreesAsString = "";
+    	int i = 0;
+    	for (Degree degree : degrees) {
+    	    if (i > 0)
+    	    degreesAsString += ", ";
+    	    degreesAsString += degree.getSigla();
+    	    i++;
+    	}
+    	return degreesAsString;
+    }
 }

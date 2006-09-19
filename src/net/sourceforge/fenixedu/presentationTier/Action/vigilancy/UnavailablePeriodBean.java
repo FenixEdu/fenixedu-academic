@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 
 import org.joda.time.DateTime;
 
@@ -26,11 +27,14 @@ public class UnavailablePeriodBean implements Serializable {
 
     private List<DomainReference<UnavailablePeriod>> unavailablePeriods = new ArrayList<DomainReference<UnavailablePeriod>>();;
 
+    private DomainReference<VigilantGroup> selectedVigilantGroup;
+    
     private Integer idInternal;
 
     public UnavailablePeriodBean() {
         setVigilant(null);
         setCoordinator(null);
+        setSelectedVigilantGroup(null);
     }
 
     public DateTime getBeginDate() {
@@ -98,4 +102,11 @@ public class UnavailablePeriodBean implements Serializable {
         }
     }
 
+    public VigilantGroup getSelectedVigilantGroup() {
+    	return this.selectedVigilantGroup.getObject();
+    }
+    
+    public void setSelectedVigilantGroup(VigilantGroup group) {
+    	this.selectedVigilantGroup = new DomainReference<VigilantGroup>(group);
+    }
 }

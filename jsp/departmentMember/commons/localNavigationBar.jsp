@@ -24,11 +24,11 @@
 				<bean:message key="link.teacherService"/>
 			</html:link>
 		</li>
-		<!--  Vigilancy Logic uncomment when in production
+		
 		<li><logic:notEmpty name="UserView" property="person.vigilants">
 		<li><html:link  page="/vigilancy/vigilantManagement.do?method=prepareMap"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></html:link></li>
 		</logic:notEmpty></li>
-		-->
+
 		<br/>
   		<li>
   		
@@ -83,4 +83,3 @@
 	
 	<br />
 </logic:present>
-

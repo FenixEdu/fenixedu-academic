@@ -9,6 +9,8 @@
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.editVigilantGroup"/></h2>
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean"/>
 
+<strong><fr:view name="bean" property="selectedVigilantGroup.name"/>:</strong>
+
 <fr:form action="/vigilancy/vigilantGroupManagement.do?method=applyChangesToVigilantGroup">
 <fr:edit 
 		   id="editVigilantGroup.block1"
