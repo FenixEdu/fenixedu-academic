@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.domain.candidacy.degree;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ShiftDistribution extends ShiftDistribution_Base {
@@ -51,6 +48,15 @@ public class ShiftDistribution extends ShiftDistribution_Base {
     @Override
     public void setExecutionYear(ExecutionYear executionYear) {
 	throw new DomainException("error.candidacy.degree.ShiftDistribution.cannot.modify.executionYear");
+    }
+
+    public boolean contains(int abstractStudentNumber, final ExecutionDegree executionDegree) {
+	for (final ShiftDistributionEntry distributionEntry : executionDegree.getShiftDistributionEntriesSet()) {
+	    if (distributionEntry.getAbstractStudentNumber().intValue() == abstractStudentNumber) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }
