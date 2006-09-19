@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Role;
@@ -23,14 +24,14 @@ import org.joda.time.YearMonthDay;
 
 public class RegisteredCandidacySituation extends RegisteredCandidacySituation_Base {
 
-
     public RegisteredCandidacySituation(Candidacy candidacy) {
-	this(candidacy, AccessControl.getUserView().getPerson());
+	this(candidacy, (AccessControl.getUserView() != null) ? AccessControl.getUserView().getPerson()
+		: null);
     }
 
     public RegisteredCandidacySituation(Candidacy candidacy, Person person) {
 	super();
-	init(candidacy, AccessControl.getUserView().getPerson());
+	init(candidacy, person);
 
 	if (getCandidacy() instanceof DFACandidacy) {
 	    registerDFACandidacy(candidacy);
@@ -48,14 +49,15 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	Registration registration = createNewRegistration();
 
 	// create scp
-	StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(registration,
+	StudentCurricularPlan.createBolonhaStudentCurricularPlan(registration,
 		((DFACandidacy) candidacy).getExecutionDegree().getDegreeCurricularPlan(),
-		StudentCurricularPlanState.ACTIVE, new YearMonthDay());
+		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
+			.readActualExecutionPeriod());
 
 	createQualification();
-	
-	((DFACandidacy)getCandidacy()).setRegistration(registration);
-	
+
+	((DFACandidacy) getCandidacy()).setRegistration(registration);
+
     }
 
     private Registration createNewRegistration() {
@@ -115,10 +117,10 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
     public void nextState(String nextState) {
 	throw new DomainException("error.impossible.to.forward.from.registered");
     }
-    
+
     @Override
     public boolean canExecuteOperationAutomatically() {
 	return false;
     }
-    
+
 }

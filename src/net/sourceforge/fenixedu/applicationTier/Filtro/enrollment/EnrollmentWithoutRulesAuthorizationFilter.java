@@ -12,50 +12,54 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
-	private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
+    private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
 
-	private static DegreeType MASTER_DEGREE_TYPE = DegreeType.MASTER_DEGREE;
+    private static DegreeType MASTER_DEGREE_TYPE = DegreeType.MASTER_DEGREE;
+
+    private static DegreeType DFA_TYPE = DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
 
     @Override
     protected Collection<RoleType> getNeededRoleTypes() {
-		final List<RoleType> roles = new ArrayList<RoleType>();
-        roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-        roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-        roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		return roles;
+	final List<RoleType> roles = new ArrayList<RoleType>();
+	roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+	roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
+	roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+	return roles;
+    }
+
+    protected String hasPrevilege(IUserView id, Object[] arguments) {
+	if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+
+	    if (!(checkDegreeType(arguments, MASTER_DEGREE_TYPE) || checkDegreeType(arguments, DFA_TYPE))) {
+		return new String("error.masterDegree.type");
+	    }
+
+	    if (!(checkStudentType(arguments, MASTER_DEGREE_TYPE) || checkStudentType(arguments,
+		    DFA_TYPE))) {
+		return new String("error.student.degree.master");
+	    }
 	}
 
-	protected String hasPrevilege(IUserView id, Object[] arguments) {
-			if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+	if (id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+		|| id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
 
-				if (!checkDegreeType(arguments, MASTER_DEGREE_TYPE)) {
-					return new String("error.masterDegree.type");
-				}
+	    if (!checkDegreeType(arguments, DEGREE_TYPE)) {
+		return new String("error.degree.type");
+	    }
 
-				if (!checkStudentType(arguments, MASTER_DEGREE_TYPE)) {
-					return new String("error.student.degree.master");
-				}
-			}
-
-			if (id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-					|| id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-
-				if (!checkDegreeType(arguments, DEGREE_TYPE)) {
-					return new String("error.degree.type");
-				}
-
-				if (!checkStudentType(arguments, DEGREE_TYPE)) {
-					return new String("error.student.degree.nonMaster");
-				}
-			}
-			return null;
+	    if (!checkStudentType(arguments, DEGREE_TYPE)) {
+		return new String("error.student.degree.nonMaster");
+	    }
 	}
+	return null;
+    }
 
-	private boolean checkDegreeType(Object[] args, DegreeType degreeType) {
-		return (args != null && args[1] != null && degreeType.equals(args[1]));
-	}
+    private boolean checkDegreeType(Object[] args, DegreeType degreeType) {
+	return (args != null && args[1] != null && degreeType.equals(args[1]));
+    }
 
-	private boolean checkStudentType(Object[] args, DegreeType degreeType) {
-		return (args != null && args[0] != null) ? ((Registration) args[0]).getDegreeType().equals(degreeType) : false;
-	}
+    private boolean checkStudentType(Object[] args, DegreeType degreeType) {
+	return (args != null && args[0] != null) ? ((Registration) args[0]).getDegreeType().equals(
+		degreeType) : false;
+    }
 }

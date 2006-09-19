@@ -21,56 +21,46 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 
 public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends
-        AuthorizationByManyRolesFilter {
+	AuthorizationByManyRolesFilter {
     private static DegreeType DEGREE_TYPE = DegreeType.MASTER_DEGREE;
 
     @Override
     protected Collection<RoleType> getNeededRoleTypes() {
-        List<RoleType> roles = new ArrayList<RoleType>();
-        roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-        return roles;
+	List<RoleType> roles = new ArrayList<RoleType>();
+	roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+	return roles;
     }
 
     protected String hasPrevilege(IUserView id, Object[] arguments) {
-        try {
-            if (!verifyDegreeTypeIsMasterDegree(arguments)) {
-                return new String("error.degree.type");
-            }
+	try {
+	    if (!verifyDegreeTypeIsMasterDegree(arguments)) {
+		return new String("error.degree.type");
+	    }
 
-            if (!verifyStudentIsFromMasterDegree(arguments)) {
-                return new String("error.student.degree.nonMaster");
-            }
+	    if (!verifyStudentIsFromMasterDegree(arguments)) {
+		return new String("error.student.degree.nonMaster");
+	    }
 
-            return null;
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return "noAuthorization";
-        }
+	    return null;
+	} catch (Exception exception) {
+	    exception.printStackTrace();
+	    return "noAuthorization";
+	}
     }
 
     private boolean verifyDegreeTypeIsMasterDegree(Object[] arguments) {
-        boolean isNonMaster = false;
+	boolean isNonMaster = false;
 
-        if (arguments != null && arguments[1] != null) {
-            isNonMaster = DEGREE_TYPE.equals(arguments[1]);
-        }
+	if (arguments != null && arguments[1] != null) {
+	    isNonMaster = DEGREE_TYPE.equals(arguments[1]);
+	}
 
-        return isNonMaster;
+	return isNonMaster;
     }
 
     private boolean verifyStudentIsFromMasterDegree(Object[] arguments) throws ExcepcaoPersistencia {
-        boolean isFromMasterDegree = false;
-
-        if (arguments != null && arguments[0] != null) {
-            Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
-            if (studentNumber != null) {
-                Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
-                if (registration != null) {
-                    isFromMasterDegree = true;
-                }
-            }
-        }
-
-        return isFromMasterDegree;
+	Registration registration = (Registration) arguments[0];
+	return (registration.getDegreeType().equals(DegreeType.MASTER_DEGREE) || registration
+		.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
     }
 }
