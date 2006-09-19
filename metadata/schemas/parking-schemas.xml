@@ -114,10 +114,11 @@
 
 <!-- EDIT -->
 <schema name="edit.parkingRequestFactory.driverLicense"
-	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryCreator">
+	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 	<slot name="driverLicenseInputStream" key="label.driverLicenseDocument"	bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="driverLicenseFileName" />
 		<property name="size" value="30"/>
+		<property name="fileSizeSlot" value="driverLicenseFileSize"/>
 	</slot>
 	<slot name="parkingParty" hidden="true" />
 </schema>
@@ -128,6 +129,7 @@
 		key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="firstCarPropertyRegistryFileName" />
 		<property name="size" value="30"/>
+		<property name="fileSizeSlot" value="firstCarPropertyRegistryFileSize"/>		
 	</slot>		
 </schema>
 
@@ -137,6 +139,7 @@
 		bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="firstInsuranceFileName" />
 		<property name="size" value="30"/>
+		<property name="fileSizeSlot" value="firstInsuranceFileSize"/>	
 	</slot>			
 </schema>
 
@@ -146,6 +149,7 @@
 		bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="firstCarOwnerIdFileName" />
 		<property name="size" value="30"/>		
+		<property name="fileSizeSlot" value="firstCarOwnerIdFileSize"/>		
 	</slot>
 </schema>
 
@@ -155,6 +159,7 @@
 		bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="firstDeclarationAuthorizationFileName" />
 		<property name="size" value="30"/>		
+		<property name="fileSizeSlot" value="firstDeclarationAuthorizationFileSize"/>		
 	</slot>
 </schema>
 
@@ -165,6 +170,7 @@
 		key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="secondCarPropertyRegistryFileName" />
 		<property name="size" value="30"/>
+		<property name="fileSizeSlot" value="secondCarPropertyRegistryFileSize"/>		
 	</slot>		
 </schema>
 
@@ -174,6 +180,7 @@
 		bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="secondInsuranceFileName" />
 		<property name="size" value="30"/>
+		<property name="fileSizeSlot" value="secondInsuranceFileSize"/>		
 	</slot>			
 </schema>
 
@@ -182,7 +189,8 @@
 	<slot name="secondCarOwnerIdInputStream" key="label.secondCarOwnerId"
 		bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="secondCarOwnerIdFileName" />
-		<property name="size" value="30"/>		
+		<property name="size" value="30"/>	
+		<property name="fileSizeSlot" value="secondCarOwnerIdFileSize"/>			
 	</slot>
 </schema>
 
@@ -191,7 +199,8 @@
 	<slot name="secondDeclarationAuthorizationInputStream" key="label.secondDeclarationAuthorization"
 		bundle="PARKING_RESOURCES">
 		<property name="fileNameSlot" value="secondDeclarationAuthorizationFileName" />
-		<property name="size" value="30"/>		
+		<property name="size" value="30"/>	
+		<property name="fileSizeSlot" value="secondDeclarationAuthorizationFileSize"/>			
 	</slot>
 </schema>
 

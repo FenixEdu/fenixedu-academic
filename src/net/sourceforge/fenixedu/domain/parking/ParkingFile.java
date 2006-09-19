@@ -4,6 +4,8 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 public class ParkingFile extends ParkingFile_Base {
     
+    public static final long MAX_FILE_SIZE = 3145728;
+    
     public  ParkingFile() {
         super();
     }

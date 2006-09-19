@@ -95,8 +95,8 @@ function enableDisableElement(checkbox, elementId){
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>
 				</fr:edit>
-				<span class="error0 mtop0"><html:messages id="message" property="driverLicenseFileName" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/>
+				<span class="error0 mtop0"><html:messages id="message" property="driverLicenseMessage" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/><br/>
 				</html:messages></span>
 			</div>
 			<br/>
@@ -111,7 +111,7 @@ function enableDisableElement(checkbox, elementId){
 			</fr:edit></td>
 			<td class="noborder"><span class="error0 mtop025">
 				<html:messages id="message" property="firstCarMakePT" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/>
+					<bean:write name="message"/><br/>
 				</html:messages></span>
 			</td>
 		</tr>
@@ -122,7 +122,7 @@ function enableDisableElement(checkbox, elementId){
 			</fr:edit> (aa-bb-cc)</td>
 			<td class="noborder"><span class="error0 mtop025">
 				<html:messages id="message" property="firstCarPlateNumberPT" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/></span>
+					<bean:write name="message"/><br/></span>
 				</html:messages>
 			</td>
 		</tr>
@@ -143,8 +143,8 @@ function enableDisableElement(checkbox, elementId){
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>
 				</fr:edit>
-				<span class="error0 mtop025"><html:messages id="message" property="firstCarRegistryFileName" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/>
+				<span class="error0 mtop025"><html:messages id="message" property="firstCarPropertyRegistryMessage" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/><br/>
 				</html:messages></span>				
 			</div>
 			
@@ -161,12 +161,12 @@ function enableDisableElement(checkbox, elementId){
 				<fr:edit id="insurance1FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.firstCarInsurance"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 tstylepark"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>				
 				</fr:edit>
-				<span class="error0 mtop025"><html:messages id="message" property="firstCarInsuranceFileName" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/>
+				<span class="error0 mtop025"><html:messages id="message" property="firstInsuranceMessage" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/><br/>
 				</html:messages></span>
 			</div>
 			
@@ -194,8 +194,8 @@ function enableDisableElement(checkbox, elementId){
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>					
 				</fr:edit>
-				<span class="error0 mtop025"><html:messages id="message" property="firstCarOwnerIdFileName" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/>
+				<span class="error0 mtop025"><html:messages id="message" property="firstCarOwnerIdMessage" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/><br/>
 				</html:messages></span>
 			</div>
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
@@ -209,12 +209,12 @@ function enableDisableElement(checkbox, elementId){
 				<fr:edit id="declaration1FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.firstCarAuthorization.notOwnCar"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 tstylepark"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>				
 				</fr:edit>
-				<span class="error0 mtop025"><html:messages id="message" property="firstCarAuthorizationFileName" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/>
+				<span class="error0 mtop025"><html:messages id="message" property="firstDeclarationAuthorizationMessage" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/><br/>
 				</html:messages></span>
 			</div>
 		
@@ -227,13 +227,13 @@ function enableDisableElement(checkbox, elementId){
 		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
 		<tr>
 			<th><bean:message key="label.secondCarMake" bundle="PARKING_RESOURCES"/>:</th>
-			<td><fr:edit id="secondCarMakeFR" name="parkingRequestFactoryEditor" slot="secondCarMake"
+			<td><fr:edit id="secondCarMakeFR" name="parkingRequestFactoryEditor" slot="secondCarMake" 
 				type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 			</fr:edit></td>
 		</tr>
 		<tr>
 			<th><bean:message key="label.secondCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
-			<td><fr:edit id="secondCarPlateNumberFR" name="parkingRequestFactoryEditor" slot="secondCarPlateNumber"
+			<td><fr:edit id="secondCarPlateNumberFR" name="parkingRequestFactoryEditor" slot="secondCarPlateNumber" 
 				type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 			</fr:edit> (aa-bb-cc)</td>			
 		</tr>
@@ -254,8 +254,8 @@ function enableDisableElement(checkbox, elementId){
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>
 				</fr:edit>
-				<span class="error0 mtop025"><html:messages id="message" property="secondCarRegistryFileName" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/>
+				<span class="error0 mtop025"><html:messages id="message" property="secondCarPropertyRegistryMessage" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/><br/><br/>
 				</html:messages></span>
 			</div>
 
@@ -272,12 +272,12 @@ function enableDisableElement(checkbox, elementId){
 				<fr:edit id="insurance2FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.secondCarInsurance"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 tstylepark"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>				
 				</fr:edit>
-				<span class="error0 mtop025"><html:messages id="message" property="secondCarInsuranceFileName" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/>
+				<span class="error0 mtop025"><html:messages id="message" property="secondInsuranceMessage" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/><br/><br/><br/>
 				</html:messages></span>
 			</div>
 			
@@ -305,8 +305,8 @@ function enableDisableElement(checkbox, elementId){
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>					
 				</fr:edit>
-				<span class="error0 mtop025"><html:messages id="message" property="secondCarOwnerIdFileName" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/>
+				<span class="error0 mtop025"><html:messages id="message" property="secondCarOwnerIdMessage" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/><br/><br/>
 				</html:messages></span>
 			</div>
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
@@ -320,12 +320,12 @@ function enableDisableElement(checkbox, elementId){
 				<fr:edit id="declaration2FR" name="parkingRequestFactoryEditor" schema="edit.parkingRequestFactory.secondCarAuthorization.notOwnCar"
 					type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 tstylepark"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
 						<fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>				
 				</fr:edit>
-				<span class="error0 mtop0"><html:messages id="message" property="secondCarAuthorizationFileName" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/>
+				<span class="error0 mtop0"><html:messages id="message" property="secondDeclarationAuthorizationMessage" message="true" bundle="PARKING_RESOURCES">
+					<bean:write name="message"/><br/><br/>
 				</html:messages></span>
 			</div>
 		
