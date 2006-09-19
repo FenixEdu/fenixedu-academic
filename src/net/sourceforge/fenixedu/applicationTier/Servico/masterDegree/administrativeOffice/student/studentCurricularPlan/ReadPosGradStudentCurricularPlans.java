@@ -17,30 +17,30 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadPosGradStudentCurricularPlans extends Service {
 
-	public List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException, ExcepcaoPersistencia {
-		List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
+    public List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException,
+	    ExcepcaoPersistencia {
+	List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
 
-		Registration registration = rootDomainObject.readRegistrationByOID(studentId);
-		if (registration == null) {
-			throw new InvalidArgumentsServiceException("invalidStudentId");
-		}
-        
-		if (registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
-			List<StudentCurricularPlan> resultTemp = new ArrayList<StudentCurricularPlan>();
-			resultTemp.addAll(registration.getStudentCurricularPlans());
-
-			Iterator iterator = resultTemp.iterator();
-			while (iterator.hasNext()) {
-				StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
-				result
-						.add(InfoStudentCurricularPlan
-								.newInfoFromDomain(studentCurricularPlan));
-			}
-		} else {
-			throw new NotAuthorizedException();
-		}
-
-		return result;
+	Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+	if (registration == null) {
+	    throw new InvalidArgumentsServiceException("invalidStudentId");
 	}
-    
+
+	if (registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)
+		|| registration.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+	    List<StudentCurricularPlan> resultTemp = new ArrayList<StudentCurricularPlan>();
+	    resultTemp.addAll(registration.getStudentCurricularPlans());
+
+	    Iterator iterator = resultTemp.iterator();
+	    while (iterator.hasNext()) {
+		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
+		result.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
+	    }
+	} else {
+	    throw new NotAuthorizedException();
+	}
+
+	return result;
+    }
+
 }

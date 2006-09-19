@@ -76,18 +76,19 @@ public class Registration extends Registration_Base {
     public final static Comparator<Registration> NUMBER_COMPARATOR = new Comparator<Registration>() {
 	public int compare(Registration o1, Registration o2) {
 	    return o1.getNumber().compareTo(o2.getNumber());
-	}};
+	}
+    };
 
     public Registration() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     @Deprecated
     // NOTE: use this for legacy code only
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
-            StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
-            DegreeType degreeType) {
+	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
+	    DegreeType degreeType) {
 	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, degreeType,
 		false, null);
 	setEntryPhase(entryPhase);
@@ -113,7 +114,7 @@ public class Registration extends Registration_Base {
 	    setStudent(new Student(person, studentNumber));
 	}
 	setState(state);
-	//setNumber(studentNumber);
+	// setNumber(studentNumber);
 	setStudentKind(studentKind);
 	setInterruptedStudies(interruptedStudies);
 
@@ -123,589 +124,590 @@ public class Registration extends Registration_Base {
 	setStudentCandidacy(studentCandidacy);
 	setRegistrationYear(ExecutionYear.readCurrentExecutionYear());
     }
-    
+
     public void delete() {
 
-        for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
-            ;
+	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
+	    ;
 
-        removeStudent();
-        removeRootDomainObject();
-        super.deleteDomainObject();
+	removeStudent();
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 
     public StudentCurricularPlan getActiveStudentCurricularPlan() {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-            if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
-                return studentCurricularPlan;
-            }
-        }
-        return null;
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
+	    if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
+		return studentCurricularPlan;
+	    }
+	}
+	return null;
     }
 
     public StudentCurricularPlan getLastStudentCurricularPlan() {
-        return (StudentCurricularPlan) Collections.max(getStudentCurricularPlans(), new BeanComparator(
-                "startDateYearMonthDay"));
+	return (StudentCurricularPlan) Collections.max(getStudentCurricularPlans(), new BeanComparator(
+		"startDateYearMonthDay"));
     }
-    
+
     public StudentCurricularPlan getFirstStudentCurricularPlan() {
-        return (StudentCurricularPlan) Collections.min(getStudentCurricularPlans(), new BeanComparator(
-                "startDateYearMonthDay"));
-    }    
+	return (StudentCurricularPlan) Collections.min(getStudentCurricularPlans(), new BeanComparator(
+		"startDateYearMonthDay"));
+    }
 
     public StudentCurricularPlan getActiveOrConcludedStudentCurricularPlan() {
-        StudentCurricularPlan concludedStudentCurricularPlan = null;
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-            if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
-                return studentCurricularPlan;
-            }
-            if (concludedStudentCurricularPlan == null
-                    && studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.SCHOOLPARTCONCLUDED) {
-                concludedStudentCurricularPlan = studentCurricularPlan;
-            }
-        }
-        return concludedStudentCurricularPlan;
+	StudentCurricularPlan concludedStudentCurricularPlan = null;
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
+	    if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
+		return studentCurricularPlan;
+	    }
+	    if (concludedStudentCurricularPlan == null
+		    && studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.SCHOOLPARTCONCLUDED) {
+		concludedStudentCurricularPlan = studentCurricularPlan;
+	    }
+	}
+	return concludedStudentCurricularPlan;
     }
 
     public boolean attends(final ExecutionCourse executionCourse) {
-        for (final Attends attends : getAssociatedAttends()) {
-            if (attends.getDisciplinaExecucao() == executionCourse) {
-                return true;
-            }
-        }
-        return false;
+	for (final Attends attends : getAssociatedAttends()) {
+	    if (attends.getDisciplinaExecucao() == executionCourse) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public List<WrittenEvaluation> getWrittenEvaluations(final ExecutionPeriod executionPeriod) {
-        final List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
-        for (final Attends attend : this.getAssociatedAttends()) {
-            if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-                for (final Evaluation evaluation : attend.getDisciplinaExecucao()
-                        .getAssociatedEvaluations()) {
-                    if (evaluation instanceof WrittenEvaluation && !result.contains(evaluation)) {
-                        result.add((WrittenEvaluation) evaluation);
-                    }
-                }
-            }
-        }
-        return result;
+	final List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
+	for (final Attends attend : this.getAssociatedAttends()) {
+	    if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+		for (final Evaluation evaluation : attend.getDisciplinaExecucao()
+			.getAssociatedEvaluations()) {
+		    if (evaluation instanceof WrittenEvaluation && !result.contains(evaluation)) {
+			result.add((WrittenEvaluation) evaluation);
+		    }
+		}
+	    }
+	}
+	return result;
     }
 
     public List<Exam> getEnroledExams(final ExecutionPeriod executionPeriod) {
-        final List<Exam> result = new ArrayList<Exam>();
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
-                .getWrittenEvaluationEnrolments()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof Exam
-                    && writtenEvaluationEnrolment.isForExecutionPeriod(executionPeriod)) {
-                result.add((Exam) writtenEvaluationEnrolment.getWrittenEvaluation());
-            }
-        }
-        return result;
+	final List<Exam> result = new ArrayList<Exam>();
+	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
+		.getWrittenEvaluationEnrolments()) {
+	    if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof Exam
+		    && writtenEvaluationEnrolment.isForExecutionPeriod(executionPeriod)) {
+		result.add((Exam) writtenEvaluationEnrolment.getWrittenEvaluation());
+	    }
+	}
+	return result;
     }
 
     public List<Exam> getUnenroledExams(final ExecutionPeriod executionPeriod) {
-        final List<Exam> result = new ArrayList<Exam>();
-        for (final Attends attend : this.getAssociatedAttends()) {
-            if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-                for (final Evaluation evaluation : attend.getDisciplinaExecucao()
-                        .getAssociatedEvaluations()) {
-                    if (evaluation instanceof Exam && !this.isEnroledIn(evaluation)) {
-                        result.add((Exam) evaluation);
-                    }
-                }
-            }
-        }
-        return result;
+	final List<Exam> result = new ArrayList<Exam>();
+	for (final Attends attend : this.getAssociatedAttends()) {
+	    if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+		for (final Evaluation evaluation : attend.getDisciplinaExecucao()
+			.getAssociatedEvaluations()) {
+		    if (evaluation instanceof Exam && !this.isEnroledIn(evaluation)) {
+			result.add((Exam) evaluation);
+		    }
+		}
+	    }
+	}
+	return result;
     }
 
     public List<WrittenTest> getEnroledWrittenTests(final ExecutionPeriod executionPeriod) {
-        final List<WrittenTest> result = new ArrayList<WrittenTest>();
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
-                .getWrittenEvaluationEnrolments()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof WrittenTest
-                    && writtenEvaluationEnrolment.isForExecutionPeriod(executionPeriod)) {
-                result.add((WrittenTest) writtenEvaluationEnrolment.getWrittenEvaluation());
-            }
-        }
-        return result;
+	final List<WrittenTest> result = new ArrayList<WrittenTest>();
+	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
+		.getWrittenEvaluationEnrolments()) {
+	    if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof WrittenTest
+		    && writtenEvaluationEnrolment.isForExecutionPeriod(executionPeriod)) {
+		result.add((WrittenTest) writtenEvaluationEnrolment.getWrittenEvaluation());
+	    }
+	}
+	return result;
     }
 
     public List<WrittenTest> getUnenroledWrittenTests(final ExecutionPeriod executionPeriod) {
-        final List<WrittenTest> result = new ArrayList<WrittenTest>();
-        for (final Attends attend : this.getAssociatedAttends()) {
-            if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-                for (final Evaluation evaluation : attend.getDisciplinaExecucao()
-                        .getAssociatedEvaluations()) {
-                    if (evaluation instanceof WrittenTest && !this.isEnroledIn(evaluation)) {
-                        result.add((WrittenTest) evaluation);
-                    }
-                }
-            }
-        }
-        return result;
+	final List<WrittenTest> result = new ArrayList<WrittenTest>();
+	for (final Attends attend : this.getAssociatedAttends()) {
+	    if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+		for (final Evaluation evaluation : attend.getDisciplinaExecucao()
+			.getAssociatedEvaluations()) {
+		    if (evaluation instanceof WrittenTest && !this.isEnroledIn(evaluation)) {
+			result.add((WrittenTest) evaluation);
+		    }
+		}
+	    }
+	}
+	return result;
     }
 
     public List<Project> getProjects(final ExecutionPeriod executionPeriod) {
-        final List<Project> result = new ArrayList<Project>();
-        for (final Attends attend : this.getAssociatedAttends()) {
-            if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-                for (final Evaluation evaluation : attend.getDisciplinaExecucao()
-                        .getAssociatedEvaluations()) {
-                    if (evaluation instanceof Project) {
-                        result.add((Project) evaluation);
-                    }
-                }
-            }
-        }
-        return result;
+	final List<Project> result = new ArrayList<Project>();
+	for (final Attends attend : this.getAssociatedAttends()) {
+	    if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+		for (final Evaluation evaluation : attend.getDisciplinaExecucao()
+			.getAssociatedEvaluations()) {
+		    if (evaluation instanceof Project) {
+			result.add((Project) evaluation);
+		    }
+		}
+	    }
+	}
+	return result;
     }
 
     public boolean isEnroledIn(final Evaluation evaluation) {
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
-                .getWrittenEvaluationEnrolments()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() == evaluation) {
-                return true;
-            }
-        }
-        return false;
+	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
+		.getWrittenEvaluationEnrolments()) {
+	    if (writtenEvaluationEnrolment.getWrittenEvaluation() == evaluation) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public OldRoom getRoomFor(final WrittenEvaluation writtenEvaluation) {
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
-                .getWrittenEvaluationEnrolments()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() == writtenEvaluation) {
-                return writtenEvaluationEnrolment.getRoom();
-            }
-        }
-        return null;
+	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
+		.getWrittenEvaluationEnrolments()) {
+	    if (writtenEvaluationEnrolment.getWrittenEvaluation() == writtenEvaluation) {
+		return writtenEvaluationEnrolment.getRoom();
+	    }
+	}
+	return null;
     }
 
     public Double getApprovationRatio() {
-        if (this.approvationRatio == null) {
-            calculateApprovationRatioAndArithmeticMeanIfActive(true);
-        }
-        return this.approvationRatio;
+	if (this.approvationRatio == null) {
+	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
+	}
+	return this.approvationRatio;
     }
 
     public Double getArithmeticMean() {
-        if (this.arithmeticMean == null) {
-            calculateApprovationRatioAndArithmeticMeanIfActive(true);
-        }
-        return this.arithmeticMean;
+	if (this.arithmeticMean == null) {
+	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
+	}
+	return this.arithmeticMean;
     }
 
     public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
 
-        int enrollmentsNumber = 0;
-        int approvedEnrollmentsNumber = 0;
-        int actualApprovedEnrollmentsNumber = 0;
-        int totalGrade = 0;
+	int enrollmentsNumber = 0;
+	int approvedEnrollmentsNumber = 0;
+	int actualApprovedEnrollmentsNumber = 0;
+	int totalGrade = 0;
 
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
 
-        for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-            for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
-                if (enrolment.getEnrolmentCondition() == EnrollmentCondition.INVISIBLE) {
-                    continue;
-                }
+	for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
+	    for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+		if (enrolment.getEnrolmentCondition() == EnrollmentCondition.INVISIBLE) {
+		    continue;
+		}
 
-                ExecutionYear enrolmentExecutionYear = enrolment.getExecutionPeriod().getExecutionYear();
-                if (onlyPreviousExecutionYear && (previousExecutionYear != enrolmentExecutionYear)) {
-                    continue;
-                }
+		ExecutionYear enrolmentExecutionYear = enrolment.getExecutionPeriod().getExecutionYear();
+		if (onlyPreviousExecutionYear && (previousExecutionYear != enrolmentExecutionYear)) {
+		    continue;
+		}
 
-                if (enrolmentExecutionYear != currentExecutionYear) {
+		if (enrolmentExecutionYear != currentExecutionYear) {
 
-                    enrollmentsNumber++;
-                    if (enrolment.getEnrollmentState() == EnrollmentState.APROVED) {
-                        actualApprovedEnrollmentsNumber++;
+		    enrollmentsNumber++;
+		    if (enrolment.getEnrollmentState() == EnrollmentState.APROVED) {
+			actualApprovedEnrollmentsNumber++;
 
-                        Integer finalGrade = enrolment.getFinalGrade();
-                        if (finalGrade != null) {
-                            approvedEnrollmentsNumber++;
-                            totalGrade += finalGrade;
-                        } else {
-                            enrollmentsNumber--;
-                        }
-                    }
-                }
-            }
-        }
+			Integer finalGrade = enrolment.getFinalGrade();
+			if (finalGrade != null) {
+			    approvedEnrollmentsNumber++;
+			    totalGrade += finalGrade;
+			} else {
+			    enrollmentsNumber--;
+			}
+		    }
+		}
+	    }
+	}
 
-        setApprovedEnrollmentsNumber(Integer.valueOf(actualApprovedEnrollmentsNumber));
+	setApprovedEnrollmentsNumber(Integer.valueOf(actualApprovedEnrollmentsNumber));
 
-        setApprovationRatio((enrollmentsNumber == 0) ? 0 : (double) approvedEnrollmentsNumber
-                / enrollmentsNumber);
-        setArithmeticMean((approvedEnrollmentsNumber == 0) ? 0 : (double) totalGrade
-                / approvedEnrollmentsNumber);
+	setApprovationRatio((enrollmentsNumber == 0) ? 0 : (double) approvedEnrollmentsNumber
+		/ enrollmentsNumber);
+	setArithmeticMean((approvedEnrollmentsNumber == 0) ? 0 : (double) totalGrade
+		/ approvedEnrollmentsNumber);
 
     }
 
     private void setApprovationRatio(Double approvationRatio) {
-        this.approvationRatio = approvationRatio;
+	this.approvationRatio = approvationRatio;
     }
 
     private void setArithmeticMean(Double arithmeticMean) {
-        this.arithmeticMean = arithmeticMean;
+	this.arithmeticMean = arithmeticMean;
     }
 
     public Integer getApprovedEnrollmentsNumber() {
-        if (this.approvedEnrollmentsNumber == null) {
-            calculateApprovationRatioAndArithmeticMeanIfActive(true);
-        }
-        return approvedEnrollmentsNumber;
+	if (this.approvedEnrollmentsNumber == null) {
+	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
+	}
+	return approvedEnrollmentsNumber;
     }
 
     private void setApprovedEnrollmentsNumber(Integer approvedEnrollmentsNumber) {
-        this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
+	this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
     }
 
     public List<Advise> getAdvisesByTeacher(final Teacher teacher) {
-        return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate() {
+	return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate() {
 
-            public boolean evaluate(Object arg0) {
-                Advise advise = (Advise) arg0;
-                return advise.getTeacher() == teacher;
-            }
-        });
+	    public boolean evaluate(Object arg0) {
+		Advise advise = (Advise) arg0;
+		return advise.getTeacher() == teacher;
+	    }
+	});
     }
 
     public List<Advise> getAdvisesByType(final AdviseType adviseType) {
-        return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate() {
-            public boolean evaluate(Object arg0) {
-                Advise advise = (Advise) arg0;
-                return advise.getAdviseType().equals(adviseType);
-            }
-        });
+	return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		Advise advise = (Advise) arg0;
+		return advise.getAdviseType().equals(adviseType);
+	    }
+	});
     }
 
     public Set<Attends> getOrderedAttends() {
-        final Set<Attends> result = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR);
-        result.addAll(getAssociatedAttends());
-        return result;
+	final Set<Attends> result = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR);
+	result.addAll(getAssociatedAttends());
+	return result;
     }
 
     public int countCompletedCoursesForActiveUndergraduateCurricularPlan() {
-        return getActiveStudentCurricularPlan().getAprovedEnrolments().size();
+	return getActiveStudentCurricularPlan().getAprovedEnrolments().size();
     }
 
     public List<StudentCurricularPlan> getStudentCurricularPlansByStateAndType(
-            StudentCurricularPlanState state, DegreeType type) {
-        List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
-            if (studentCurricularPlan.getCurrentState().equals(state)
-                    && studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso()
-                            .equals(type)) {
-                result.add(studentCurricularPlan);
-            }
-        }
-        return result;
+	    StudentCurricularPlanState state, DegreeType type) {
+	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+	    if (studentCurricularPlan.getCurrentState().equals(state)
+		    && studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso()
+			    .equals(type)) {
+		result.add(studentCurricularPlan);
+	    }
+	}
+	return result;
     }
 
     public List<StudentCurricularPlan> getStudentCurricularPlansBySpecialization(
-            Specialization specialization) {
-        List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
-            if (studentCurricularPlan.getSpecialization() != null
-                    && studentCurricularPlan.getSpecialization().equals(specialization)) {
-                result.add(studentCurricularPlan);
-            }
-        }
-        return result;
+	    Specialization specialization) {
+	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+	    if (studentCurricularPlan.getSpecialization() != null
+		    && studentCurricularPlan.getSpecialization().equals(specialization)) {
+		result.add(studentCurricularPlan);
+	    }
+	}
+	return result;
     }
 
     public List<StudentCurricularPlan> getStudentCurricularPlansBySpecializationAndState(
-            Specialization specialization, StudentCurricularPlanState state) {
-        List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
-            if (studentCurricularPlan.getSpecialization() != null
-                    && studentCurricularPlan.getSpecialization().equals(specialization)
-                    && studentCurricularPlan.getCurrentState() != null
-                    && studentCurricularPlan.getCurrentState().equals(state)) {
-                result.add(studentCurricularPlan);
-            }
-        }
-        return result;
+	    Specialization specialization, StudentCurricularPlanState state) {
+	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+	    if (studentCurricularPlan.getSpecialization() != null
+		    && studentCurricularPlan.getSpecialization().equals(specialization)
+		    && studentCurricularPlan.getCurrentState() != null
+		    && studentCurricularPlan.getCurrentState().equals(state)) {
+		result.add(studentCurricularPlan);
+	    }
+	}
+	return result;
     }
 
     public Set<DistributedTest> getDistributedTestsByExecutionCourse(ExecutionCourse executionCourse) {
-        Set<DistributedTest> result = new HashSet<DistributedTest>();
-        for (StudentTestQuestion studentTestQuestion : this.getStudentTestsQuestions()) {
-            if (studentTestQuestion.getDistributedTest().getTestScope().getClassName().equals(
-                    ExecutionCourse.class.getName())
-                    && studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
-                            executionCourse.getIdInternal())) {
-                result.add(studentTestQuestion.getDistributedTest());
-            }
-        }
-        return result;
+	Set<DistributedTest> result = new HashSet<DistributedTest>();
+	for (StudentTestQuestion studentTestQuestion : this.getStudentTestsQuestions()) {
+	    if (studentTestQuestion.getDistributedTest().getTestScope().getClassName().equals(
+		    ExecutionCourse.class.getName())
+		    && studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
+			    executionCourse.getIdInternal())) {
+		result.add(studentTestQuestion.getDistributedTest());
+	    }
+	}
+	return result;
     }
 
     public List<Attends> readAttendsInCurrentExecutionPeriod() {
-        final List<Attends> attends = new ArrayList<Attends>();
-        for (final Attends attend : this.getAssociatedAttendsSet()) {
-            if (attend.getDisciplinaExecucao().getExecutionPeriod().getState().equals(
-                    PeriodState.CURRENT)) {
-                attends.add(attend);
-            }
-        }
-        return attends;
+	final List<Attends> attends = new ArrayList<Attends>();
+	for (final Attends attend : this.getAssociatedAttendsSet()) {
+	    if (attend.getDisciplinaExecucao().getExecutionPeriod().getState().equals(
+		    PeriodState.CURRENT)) {
+		attends.add(attend);
+	    }
+	}
+	return attends;
     }
 
     public List<Attends> readAttendsByExecutionPeriod(ExecutionPeriod executionPeriod) {
-        List<Attends> attends = new ArrayList<Attends>();
-        for (Attends attend : this.getAssociatedAttends()) {
-            if (attend.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
-                attends.add(attend);
-            }
-        }
-        return attends;
+	List<Attends> attends = new ArrayList<Attends>();
+	for (Attends attend : this.getAssociatedAttends()) {
+	    if (attend.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
+		attends.add(attend);
+	    }
+	}
+	return attends;
     }
 
     public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
-        for (Attends attend : this.getAssociatedAttends()) {
-            if (attend.getDisciplinaExecucao().equals(executionCourse)) {
-                return attend;
-            }
-        }
-        return null;
+	for (Attends attend : this.getAssociatedAttends()) {
+	    if (attend.getDisciplinaExecucao().equals(executionCourse)) {
+		return attend;
+	    }
+	}
+	return null;
     }
 
     public static Registration readByUsername(String username) {
-        final Person person = Person.readPersonByUsername(username);
-        if (person != null) {
-            for (final Registration registration : person.getStudentsSet()) {
-                return registration;
-            }
-        }
-        return null;
+	final Person person = Person.readPersonByUsername(username);
+	if (person != null) {
+	    for (final Registration registration : person.getStudentsSet()) {
+		return registration;
+	    }
+	}
+	return null;
     }
 
     public static Registration readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType) {
-        for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-            if (registration.getNumber().equals(number)
-                    && registration.getDegreeType().equals(degreeType)) {
-                return registration;
-            }
-        }
-        return null;
+	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+	    if (registration.getNumber().equals(number)
+		    && registration.getDegreeType().equals(degreeType)) {
+		return registration;
+	    }
+	}
+	return null;
     }
 
     public static List<Registration> readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
-            String studentName, String docIdNumber, IDDocumentType idType, Integer studentNumber) {
+	    String studentName, String docIdNumber, IDDocumentType idType, Integer studentNumber) {
 
-        final List<Registration> students = new ArrayList();
-        final String studentNameToMatch = (studentName == null) ? null : studentName.replaceAll("%",
-                ".*").toLowerCase();
+	final List<Registration> students = new ArrayList();
+	final String studentNameToMatch = (studentName == null) ? null : studentName.replaceAll("%",
+		".*").toLowerCase();
 
-        for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-            Person person = registration.getPerson();
-            if (registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)
-                    && ((studentNameToMatch != null && person.getName().toLowerCase().matches(
-                            studentNameToMatch)) || studentNameToMatch == null)
-                    && ((docIdNumber != null && person.getDocumentIdNumber().equals(docIdNumber)) || docIdNumber == null)
-                    && ((idType != null && person.getIdDocumentType().equals(idType)) || idType == null)
-                    && ((studentNumber != null && registration.getNumber().equals(studentNumber)) || studentNumber == null)) {
+	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+	    Person person = registration.getPerson();
+	    if ((registration.getDegreeType().equals(DegreeType.MASTER_DEGREE) || registration
+		    .getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA))
+		    && ((studentNameToMatch != null && person.getName().toLowerCase().matches(
+			    studentNameToMatch)) || studentNameToMatch == null)
+		    && ((docIdNumber != null && person.getDocumentIdNumber().equals(docIdNumber)) || docIdNumber == null)
+		    && ((idType != null && person.getIdDocumentType().equals(idType)) || idType == null)
+		    && ((studentNumber != null && registration.getNumber().equals(studentNumber)) || studentNumber == null)) {
 
-                students.add(registration);
-            }
-        }
-        return students;
+		students.add(registration);
+	    }
+	}
+	return students;
     }
 
     public static List<Registration> readAllStudentsBetweenNumbers(Integer fromNumber, Integer toNumber) {
-        int fromNumberInt = fromNumber.intValue();
-        int toNumberInt = toNumber.intValue();
+	int fromNumberInt = fromNumber.intValue();
+	int toNumberInt = toNumber.intValue();
 
-        final List<Registration> students = new ArrayList<Registration>();
-        for (final Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
-            int studentNumberInt = registration.getNumber().intValue();
-            if (studentNumberInt >= fromNumberInt && studentNumberInt <= toNumberInt) {
-                students.add(registration);
-            }
-        }
-        return students;
+	final List<Registration> students = new ArrayList<Registration>();
+	for (final Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
+	    int studentNumberInt = registration.getNumber().intValue();
+	    if (studentNumberInt >= fromNumberInt && studentNumberInt <= toNumberInt) {
+		students.add(registration);
+	    }
+	}
+	return students;
     }
 
     public static List<Registration> readStudentsByDegreeType(DegreeType degreeType) {
-        final List<Registration> students = new ArrayList();
-        for (final Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
-            if (registration.getDegreeType().equals(degreeType)) {
-                students.add(registration);
-            }
-        }
-        return students;
+	final List<Registration> students = new ArrayList();
+	for (final Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
+	    if (registration.getDegreeType().equals(degreeType)) {
+		students.add(registration);
+	    }
+	}
+	return students;
     }
 
     public static Integer generateStudentNumber(DegreeType degreeType) {
-        Integer number = Integer.valueOf(0);
-        List<Registration> students = readStudentsByDegreeType(degreeType);
-        Collections.sort(students, new ReverseComparator(NUMBER_COMPARATOR));
+	Integer number = Integer.valueOf(0);
+	List<Registration> students = readStudentsByDegreeType(degreeType);
+	Collections.sort(students, new ReverseComparator(NUMBER_COMPARATOR));
 
-        if (!students.isEmpty()) {
-            number = students.get(0).getNumber();
-        }
+	if (!students.isEmpty()) {
+	    number = students.get(0).getNumber();
+	}
 
-        // FIXME: ISTO E UMA SOLUCAO TEMPORARIA DEVIDO A EXISTIREM ALUNOS
-        // NA SECRETARIA QUE
-        // POR UM MOTIVO OU OUTRO NAO SE ENCONTRAM NA BASE DE DADOS
-        if (degreeType.equals(DegreeType.MASTER_DEGREE) && (number.intValue() < 5411)) {
-            number = Integer.valueOf(5411);
-        }
+	// FIXME: ISTO E UMA SOLUCAO TEMPORARIA DEVIDO A EXISTIREM ALUNOS
+	// NA SECRETARIA QUE
+	// POR UM MOTIVO OU OUTRO NAO SE ENCONTRAM NA BASE DE DADOS
+	if (degreeType.equals(DegreeType.MASTER_DEGREE) && (number.intValue() < 5411)) {
+	    number = Integer.valueOf(5411);
+	}
 
-        return Integer.valueOf(number.intValue() + 1);
+	return Integer.valueOf(number.intValue() + 1);
     }
 
     public GratuitySituation readGratuitySituationByExecutionDegree(ExecutionDegree executionDegree) {
-        GratuityValues gratuityValues = executionDegree.getGratuityValues();
-        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
-            GratuitySituation gratuitySituation = studentCurricularPlan
-                    .getGratuitySituationByGratuityValues(gratuityValues);
-            if (gratuitySituation != null) {
-                return gratuitySituation;
-            }
-        }
-        return null;
+	GratuityValues gratuityValues = executionDegree.getGratuityValues();
+	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+	    GratuitySituation gratuitySituation = studentCurricularPlan
+		    .getGratuitySituationByGratuityValues(gratuityValues);
+	    if (gratuitySituation != null) {
+		return gratuitySituation;
+	    }
+	}
+	return null;
     }
 
     public Group findFinalDegreeWorkGroupForCurrentExecutionYear() {
-        for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
-            final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
-            final ExecutionDegree executionDegree = group.getExecutionDegree();
-            final ExecutionYear executionYear = executionDegree.getExecutionYear();
-            if (executionYear.getState().equals(PeriodState.CURRENT)) {
-                return group;
-            }
-        }
-        return null;
+	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
+	    final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
+	    final ExecutionDegree executionDegree = group.getExecutionDegree();
+	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
+	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
+		return group;
+	    }
+	}
+	return null;
     }
 
     public List readAllInsuranceTransactionByExecutionYear(ExecutionYear executionYear) {
-        List<InsuranceTransaction> insuranceTransactions = new ArrayList<InsuranceTransaction>();
-        for (InsuranceTransaction insuranceTransaction : this.getInsuranceTransactions()) {
-            if (insuranceTransaction.getExecutionYear().equals(executionYear)) {
-                insuranceTransactions.add(insuranceTransaction);
-            }
-        }
-        return insuranceTransactions;
+	List<InsuranceTransaction> insuranceTransactions = new ArrayList<InsuranceTransaction>();
+	for (InsuranceTransaction insuranceTransaction : this.getInsuranceTransactions()) {
+	    if (insuranceTransaction.getExecutionYear().equals(executionYear)) {
+		insuranceTransactions.add(insuranceTransaction);
+	    }
+	}
+	return insuranceTransactions;
     }
 
     public List<InsuranceTransaction> readAllNonReimbursedInsuranceTransactionsByExecutionYear(
-            ExecutionYear executionYear) {
-        List<InsuranceTransaction> nonReimbursedInsuranceTransactions = new ArrayList<InsuranceTransaction>();
-        for (InsuranceTransaction insuranceTransaction : this.getInsuranceTransactions()) {
-            if (insuranceTransaction.getExecutionYear().equals(executionYear)) {
-                GuideEntry guideEntry = insuranceTransaction.getGuideEntry();
-                if (guideEntry == null || guideEntry.getReimbursementGuideEntries().isEmpty()) {
-                    nonReimbursedInsuranceTransactions.add(insuranceTransaction);
-                } else {
-                    boolean isReimbursed = false;
-                    for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry
-                            .getReimbursementGuideEntries()) {
-                        if (reimbursementGuideEntry.getReimbursementGuide()
-                                .getActiveReimbursementGuideSituation().getReimbursementGuideState()
-                                .equals(ReimbursementGuideState.PAYED)) {
-                            isReimbursed = true;
-                            break;
-                        }
-                    }
-                    if (!isReimbursed) {
-                        nonReimbursedInsuranceTransactions.add(insuranceTransaction);
-                    }
-                }
-            }
-        }
-        return nonReimbursedInsuranceTransactions;
+	    ExecutionYear executionYear) {
+	List<InsuranceTransaction> nonReimbursedInsuranceTransactions = new ArrayList<InsuranceTransaction>();
+	for (InsuranceTransaction insuranceTransaction : this.getInsuranceTransactions()) {
+	    if (insuranceTransaction.getExecutionYear().equals(executionYear)) {
+		GuideEntry guideEntry = insuranceTransaction.getGuideEntry();
+		if (guideEntry == null || guideEntry.getReimbursementGuideEntries().isEmpty()) {
+		    nonReimbursedInsuranceTransactions.add(insuranceTransaction);
+		} else {
+		    boolean isReimbursed = false;
+		    for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry
+			    .getReimbursementGuideEntries()) {
+			if (reimbursementGuideEntry.getReimbursementGuide()
+				.getActiveReimbursementGuideSituation().getReimbursementGuideState()
+				.equals(ReimbursementGuideState.PAYED)) {
+			    isReimbursed = true;
+			    break;
+			}
+		    }
+		    if (!isReimbursed) {
+			nonReimbursedInsuranceTransactions.add(insuranceTransaction);
+		    }
+		}
+	    }
+	}
+	return nonReimbursedInsuranceTransactions;
     }
 
     public Enrolment findEnrolmentByEnrolmentID(final Integer enrolmentID) {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            final Enrolment enrolment = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);
-            if (enrolment != null) {
-                return enrolment;
-            }
-        }
-        return null;
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    final Enrolment enrolment = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);
+	    if (enrolment != null) {
+		return enrolment;
+	    }
+	}
+	return null;
     }
 
     public int countDistributedTestsByExecutionCourse(final ExecutionCourse executionCourse) {
-        return getDistributedTestsByExecutionCourse(executionCourse).size();
+	return getDistributedTestsByExecutionCourse(executionCourse).size();
     }
 
     public boolean hasSchoolRegistration(ExecutionYear executionYear) {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            if (studentCurricularPlan.hasSchoolRegistration(executionYear)) {
-                return true;
-            }
-        }
-        return false;
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.hasSchoolRegistration(executionYear)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public Collection<DocumentRequest> getDocumentRequests() {
-        final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
+	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            result.addAll(studentCurricularPlan.getDocumentRequests());
-        }
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.addAll(studentCurricularPlan.getDocumentRequests());
+	}
 
-        return result;
+	return result;
     }
 
     // Special Season
 
     public SpecialSeasonCode getSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {
-        for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
-            if (yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
-                return yearStudentSpecialSeasonCode.getSpecialSeasonCode();
-            }
-        }
-        return null;
+	for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
+	    if (yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
+		return yearStudentSpecialSeasonCode.getSpecialSeasonCode();
+	    }
+	}
+	return null;
     }
 
     public void setSpecialSeasonCode(ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) {
-        if (specialSeasonCode == null) {
-            if (!getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).isEmpty()) {
-                throw new DomainException("error.cannot.change.specialSeasonCode");
-            } else {
-                deleteYearSpecialSeasonCode(executionYear);
-            }
-        } else {
-            if (specialSeasonCode.getMaxEnrolments() < getActiveStudentCurricularPlan()
-                    .getSpecialSeasonEnrolments(executionYear).size()) {
-                throw new DomainException("error.cannot.change.specialSeasonCode");
-            } else {
-                changeYearSpecialSeasonCode(executionYear, specialSeasonCode);
-            }
-        }
+	if (specialSeasonCode == null) {
+	    if (!getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).isEmpty()) {
+		throw new DomainException("error.cannot.change.specialSeasonCode");
+	    } else {
+		deleteYearSpecialSeasonCode(executionYear);
+	    }
+	} else {
+	    if (specialSeasonCode.getMaxEnrolments() < getActiveStudentCurricularPlan()
+		    .getSpecialSeasonEnrolments(executionYear).size()) {
+		throw new DomainException("error.cannot.change.specialSeasonCode");
+	    } else {
+		changeYearSpecialSeasonCode(executionYear, specialSeasonCode);
+	    }
+	}
     }
 
     private void changeYearSpecialSeasonCode(ExecutionYear executionYear,
-            SpecialSeasonCode specialSeasonCode) {
-        YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode = getYearStudentSpecialSeasonCodeByExecutionYear(executionYear);
-        if (yearStudentSpecialSeasonCode != null) {
-            yearStudentSpecialSeasonCode.setSpecialSeasonCode(specialSeasonCode);
-        } else {
-            new YearStudentSpecialSeasonCode(this, executionYear, specialSeasonCode);
-        }
+	    SpecialSeasonCode specialSeasonCode) {
+	YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode = getYearStudentSpecialSeasonCodeByExecutionYear(executionYear);
+	if (yearStudentSpecialSeasonCode != null) {
+	    yearStudentSpecialSeasonCode.setSpecialSeasonCode(specialSeasonCode);
+	} else {
+	    new YearStudentSpecialSeasonCode(this, executionYear, specialSeasonCode);
+	}
     }
 
     private YearStudentSpecialSeasonCode getYearStudentSpecialSeasonCodeByExecutionYear(
-            ExecutionYear executionYear) {
-        for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
-            if (yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
-                return yearStudentSpecialSeasonCode;
-            }
-        }
-        return null;
+	    ExecutionYear executionYear) {
+	for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
+	    if (yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
+		return yearStudentSpecialSeasonCode;
+	    }
+	}
+	return null;
     }
 
     private void deleteYearSpecialSeasonCode(ExecutionYear executionYear) {
-        for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
-            if (yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
-                yearStudentSpecialSeasonCode.delete();
-            }
-        }
+	for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
+	    if (yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
+		yearStudentSpecialSeasonCode.delete();
+	    }
+	}
     }
 
     // end Special Season
@@ -714,212 +716,212 @@ public class Registration extends Registration_Base {
 
     public List<Enrolment> getEnrolmentsToImprov(ExecutionPeriod executionPeriod) {
 
-        if (executionPeriod == null) {
-            throw new DomainException("error.executionPeriod.notExist");
-        }
+	if (executionPeriod == null) {
+	    throw new DomainException("error.executionPeriod.notExist");
+	}
 
-        List<Enrolment> enrolmentsToImprov = new ArrayList<Enrolment>();
-        for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
-            if (scp.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
-                enrolmentsToImprov.addAll(scp.getEnrolmentsToImprov(executionPeriod));
-            }
-        }
-        return enrolmentsToImprov;
+	List<Enrolment> enrolmentsToImprov = new ArrayList<Enrolment>();
+	for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
+	    if (scp.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
+		enrolmentsToImprov.addAll(scp.getEnrolmentsToImprov(executionPeriod));
+	    }
+	}
+	return enrolmentsToImprov;
     }
 
     public List<Enrolment> getEnroledImprovements() {
-        List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
-        for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
-            if (scp.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
-                enroledImprovements.addAll(scp.getEnroledImprovements());
-            }
-        }
-        return enroledImprovements;
+	List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
+	for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
+	    if (scp.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
+		enroledImprovements.addAll(scp.getEnroledImprovements());
+	    }
+	}
+	return enroledImprovements;
     }
 
     public List<ExecutionCourse> getAttendingExecutionCoursesForCurrentExecutionPeriod() {
-        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        for (final Attends attends : getAssociatedAttendsSet()) {
-            if (attends.getDisciplinaExecucao().getExecutionPeriod().getState().equals(
-                    PeriodState.CURRENT)) {
-                result.add(attends.getDisciplinaExecucao());
-            }
-        }
-        return result;
+	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	for (final Attends attends : getAssociatedAttendsSet()) {
+	    if (attends.getDisciplinaExecucao().getExecutionPeriod().getState().equals(
+		    PeriodState.CURRENT)) {
+		result.add(attends.getDisciplinaExecucao());
+	    }
+	}
+	return result;
     }
 
     public List<ExecutionCourse> getAttendingExecutionCoursesFor(final ExecutionPeriod executionPeriod) {
-        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        for (final Attends attends : getAssociatedAttendsSet()) {
-            if (attends.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-                result.add(attends.getDisciplinaExecucao());
-            }
-        }
-        return result;
+	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	for (final Attends attends : getAssociatedAttendsSet()) {
+	    if (attends.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+		result.add(attends.getDisciplinaExecucao());
+	    }
+	}
+	return result;
     }
 
     public List<Shift> getShiftsForCurrentExecutionPeriod() {
-        final List<Shift> result = new ArrayList<Shift>();
-        for (final Shift shift : getShiftsSet()) {
-            if (shift.getDisciplinaExecucao().getExecutionPeriod().getState()
-                    .equals(PeriodState.CURRENT)) {
-                result.add(shift);
-            }
-        }
-        return result;
+	final List<Shift> result = new ArrayList<Shift>();
+	for (final Shift shift : getShiftsSet()) {
+	    if (shift.getDisciplinaExecucao().getExecutionPeriod().getState()
+		    .equals(PeriodState.CURRENT)) {
+		result.add(shift);
+	    }
+	}
+	return result;
     }
 
     public List<Shift> getShiftsFor(final ExecutionPeriod executionPeriod) {
-        final List<Shift> result = new ArrayList<Shift>();
-        for (final Shift shift : getShiftsSet()) {
-            if (shift.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-                result.add(shift);
-            }
-        }
-        return result;
+	final List<Shift> result = new ArrayList<Shift>();
+	for (final Shift shift : getShiftsSet()) {
+	    if (shift.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+		result.add(shift);
+	    }
+	}
+	return result;
     }
 
     public List<Shift> getShiftsFor(final ExecutionCourse executionCourse) {
-        final List<Shift> result = new ArrayList<Shift>();
-        for (final Shift shift : getShiftsSet()) {
-            if (shift.getDisciplinaExecucao() == executionCourse) {
-                result.add(shift);
-            }
-        }
-        return result;
+	final List<Shift> result = new ArrayList<Shift>();
+	for (final Shift shift : getShiftsSet()) {
+	    if (shift.getDisciplinaExecucao() == executionCourse) {
+		result.add(shift);
+	    }
+	}
+	return result;
     }
 
     private int countNumberOfDistinctExecutionCoursesOfShiftsFor(final ExecutionPeriod executionPeriod) {
-        final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
-        for (final Shift shift : getShiftsSet()) {
-            if (shift.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-                result.add(shift.getDisciplinaExecucao());
-            }
-        }
-        return result.size();
+	final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
+	for (final Shift shift : getShiftsSet()) {
+	    if (shift.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+		result.add(shift.getDisciplinaExecucao());
+	    }
+	}
+	return result.size();
     }
 
     public Integer getNumberOfExecutionCoursesWithEnroledShiftsFor(final ExecutionPeriod executionPeriod) {
-        return getAttendingExecutionCoursesFor(executionPeriod).size()
-                - countNumberOfDistinctExecutionCoursesOfShiftsFor(executionPeriod);
+	return getAttendingExecutionCoursesFor(executionPeriod).size()
+		- countNumberOfDistinctExecutionCoursesOfShiftsFor(executionPeriod);
     }
 
     public Integer getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(
-            final ExecutionPeriod executionPeriod) {
-        int result = 0;
-        final List<Shift> enroledShifts = getShiftsFor(executionPeriod);
-        for (final ExecutionCourse executionCourse : getAttendingExecutionCoursesFor(executionPeriod)) {
-            for (final ShiftType shiftType : executionCourse.getOldShiftTypesToEnrol()) {
+	    final ExecutionPeriod executionPeriod) {
+	int result = 0;
+	final List<Shift> enroledShifts = getShiftsFor(executionPeriod);
+	for (final ExecutionCourse executionCourse : getAttendingExecutionCoursesFor(executionPeriod)) {
+	    for (final ShiftType shiftType : executionCourse.getOldShiftTypesToEnrol()) {
 		if (!enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(enroledShifts,
 			executionCourse, shiftType)) {
-                    result++;
-                    break;
-                }
-            }
-        }
-        return Integer.valueOf(result);
+		    result++;
+		    break;
+		}
+	    }
+	}
+	return Integer.valueOf(result);
     }
-    
+
     private boolean enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(
 	    final List<Shift> enroledShifts, final ExecutionCourse executionCourse,
 	    final ShiftType shiftType) {
 
-        return CollectionUtils.exists(enroledShifts, new Predicate() {
-            public boolean evaluate(Object object) {
-                Shift enroledShift = (Shift) object;
-                return enroledShift.getDisciplinaExecucao() == executionCourse
-                        && enroledShift.getTipo() == shiftType;
-            }
-        });
+	return CollectionUtils.exists(enroledShifts, new Predicate() {
+	    public boolean evaluate(Object object) {
+		Shift enroledShift = (Shift) object;
+		return enroledShift.getDisciplinaExecucao() == executionCourse
+			&& enroledShift.getTipo() == shiftType;
+	    }
+	});
     }
 
     public Set<SchoolClass> getSchoolClassesToEnrol() {
-        final Set<SchoolClass> result = new HashSet<SchoolClass>();
-        for (final Attends attends : getAssociatedAttendsSet()) {
-            final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+	final Set<SchoolClass> result = new HashSet<SchoolClass>();
+	for (final Attends attends : getAssociatedAttendsSet()) {
+	    final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
 
-            if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
-                result.addAll(getSchoolClassesToEnrolBy(executionCourse));
-            }
-        }
-        return result;
+	    if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+		result.addAll(getSchoolClassesToEnrolBy(executionCourse));
+	    }
+	}
+	return result;
     }
 
     public Set<SchoolClass> getSchoolClassesToEnrolBy(final ExecutionCourse executionCourse) {
-        Set<SchoolClass> schoolClasses = executionCourse
-                .getSchoolClassesBy(getActiveStudentCurricularPlan().getDegreeCurricularPlan());
-        return schoolClasses.isEmpty() ? executionCourse.getSchoolClasses() : schoolClasses;
+	Set<SchoolClass> schoolClasses = executionCourse
+		.getSchoolClassesBy(getActiveStudentCurricularPlan().getDegreeCurricularPlan());
+	return schoolClasses.isEmpty() ? executionCourse.getSchoolClasses() : schoolClasses;
     }
 
     public void addAttendsTo(final ExecutionCourse executionCourse) {
 
-        checkIfReachedAttendsLimit();
+	checkIfReachedAttendsLimit();
 
-        if (readAttendByExecutionCourse(executionCourse) == null) {
-            final Attends attends = new Attends(this, executionCourse);
-            findAndSetEnrollmentForAttend(getActiveStudentCurricularPlan(), executionCourse, attends);
-        }
+	if (readAttendByExecutionCourse(executionCourse) == null) {
+	    final Attends attends = new Attends(this, executionCourse);
+	    findAndSetEnrollmentForAttend(getActiveStudentCurricularPlan(), executionCourse, attends);
+	}
     }
 
     private void findAndSetEnrollmentForAttend(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionCourse executionCourse, final Attends attends) {
+	    final ExecutionCourse executionCourse, final Attends attends) {
 
-        for (final CurricularCourse curricularCourse : executionCourse
-                .getAssociatedCurricularCoursesSet()) {
-            final Enrolment enrolment = studentCurricularPlan
-                    .getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionCourse
-                            .getExecutionPeriod());
-            if (enrolment != null) {
-                attends.setEnrolment(enrolment);
-                break;
-            }
-        }
+	for (final CurricularCourse curricularCourse : executionCourse
+		.getAssociatedCurricularCoursesSet()) {
+	    final Enrolment enrolment = studentCurricularPlan
+		    .getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionCourse
+			    .getExecutionPeriod());
+	    if (enrolment != null) {
+		attends.setEnrolment(enrolment);
+		break;
+	    }
+	}
     }
 
     private static final int MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD = 8;
 
     private void checkIfReachedAttendsLimit() {
-        if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
-            throw new DomainException("error.student.reached.attends.limit", String
-                    .valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
-        }
+	if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
+	    throw new DomainException("error.student.reached.attends.limit", String
+		    .valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
+	}
     }
 
     public void removeAttendFor(final ExecutionCourse executionCourse) {
-        final Attends attend = readAttendByExecutionCourse(executionCourse);
-        if (attend != null) {
-            checkIfHasEnrolmentFor(attend);
-            checkIfHasShiftsFor(executionCourse);
-            attend.delete();
-        }
+	final Attends attend = readAttendByExecutionCourse(executionCourse);
+	if (attend != null) {
+	    checkIfHasEnrolmentFor(attend);
+	    checkIfHasShiftsFor(executionCourse);
+	    attend.delete();
+	}
     }
 
     private void checkIfHasEnrolmentFor(final Attends attend) {
-        if (attend.hasEnrolment()) {
-            throw new DomainException("errors.student.already.enroled");
-        }
+	if (attend.hasEnrolment()) {
+	    throw new DomainException("errors.student.already.enroled");
+	}
     }
 
     private void checkIfHasShiftsFor(final ExecutionCourse executionCourse) {
-        if (!getShiftsFor(executionCourse).isEmpty()) {
-            throw new DomainException("errors.student.already.enroled.in.shift");
-        }
+	if (!getShiftsFor(executionCourse).isEmpty()) {
+	    throw new DomainException("errors.student.already.enroled.in.shift");
+	}
     }
 
     public boolean isActive() {
-        // FIXME: this sould not be hardcoded!!
-        return true;
+	// FIXME: this sould not be hardcoded!!
+	return true;
     }
 
     public Tutor getAssociatedTutor() {
 
-        StudentCurricularPlan activeStudentCurricularPlan = this
-                .getActiveOrConcludedStudentCurricularPlan();
-        if (activeStudentCurricularPlan == null) {
-            activeStudentCurricularPlan = this.getLastStudentCurricularPlan();
-        }
+	StudentCurricularPlan activeStudentCurricularPlan = this
+		.getActiveOrConcludedStudentCurricularPlan();
+	if (activeStudentCurricularPlan == null) {
+	    activeStudentCurricularPlan = this.getLastStudentCurricularPlan();
+	}
 
-        return activeStudentCurricularPlan.getAssociatedTutor();
+	return activeStudentCurricularPlan.getAssociatedTutor();
     }
 
     @Override
