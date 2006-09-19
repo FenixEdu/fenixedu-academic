@@ -70,9 +70,11 @@ function enableDisableElement(checkbox, elementId){
 
 
 	<fr:form action="/parking.do?method=editParkingRequest" encoding="multipart/form-data">
-		
+
+<%--
 		<bean:define id="parkingRequestFactoryEditor" name="parkingParty"
 				property="firstRequest.parkingRequestFactoryEditor" />
+--%>
 				
 				
 	<p class="mbottom0"><strong><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES" /></strong>:</p>	
@@ -340,8 +342,10 @@ function enableDisableElement(checkbox, elementId){
 
 	<logic:empty name="parkingParty" property="parkingRequests">
 		<fr:form action="/parking.do?method=createParkingRequest" encoding="multipart/form-data">
+<%--
 			<bean:define id="parkingRequestFactoryCreator" name="parkingParty"
 				property="parkingRequestFactoryCreator" />
+--%>
 
 			<p class="mbottom0"><strong><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES" /></strong>:</p>	
 		<table class="tstyle1 thright thlight mbottom0 tstylepark">

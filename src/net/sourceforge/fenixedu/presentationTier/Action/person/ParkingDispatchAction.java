@@ -60,6 +60,16 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         ParkingParty parkingParty = userView.getPerson().getParkingParty();
         request.setAttribute("parkingParty", parkingParty);
 
+        if (parkingParty.getParkingRequestsSet().isEmpty()) {
+            if (request.getAttribute("parkingRequestFactoryCreator") == null) {
+                request.setAttribute("parkingRequestFactoryCreator", parkingParty.getParkingRequestFactoryCreator());
+            }
+        } else {
+            if (request.getAttribute("parkingRequestFactoryEditor") == null) {
+                request.setAttribute("parkingRequestFactoryEditor", parkingParty.getFirstRequest().getParkingRequestFactoryEditor());
+            }
+        }
+
         DynaActionForm parkingForm = (DynaActionForm) actionForm;
         if (parkingParty.getFirstRequest() != null
                 && parkingParty.getFirstRequest().getFirstCarPropertyRegistryFileName() != null) {
@@ -81,6 +91,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ParkingRequestFactoryEditor parkingRequestFactoryEditor = (ParkingRequestFactoryEditor) getFactoryObject();
+        request.setAttribute("parkingRequestFactoryEditor", parkingRequestFactoryEditor);
         DynaActionForm parkingForm = (DynaActionForm) actionForm;
 
         if (!isFirstCarDateValid(parkingRequestFactoryEditor, request)) {
@@ -225,6 +236,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ParkingRequestFactoryCreator parkingRequestFactoryCreator = (ParkingRequestFactoryCreator) getFactoryObject();
+        request.setAttribute("parkingRequestFactoryCreator", parkingRequestFactoryCreator);
         DynaActionForm parkingForm = (DynaActionForm) actionForm;
         if (!isFirstCarDateValid(parkingRequestFactoryCreator, request)) {
             RenderUtils.invalidateViewState();
