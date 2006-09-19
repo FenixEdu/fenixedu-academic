@@ -1398,6 +1398,13 @@
           <forward name="Show" path="df.page.monitor-system"/>
       </action>
 
+      <action path="/transactionSystem"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.TransactionSystemDA"
+              parameter="method"
+              >
+          <forward name="Show" path="df.page.transaction-System"/>
+      </action>
+
 	<!-- ========== REQUEST MONITORING ========== -->
       <action path="/monitorRequestLogs"
               type="net.sourceforge.fenixedu.presentationTier.Action.manager.MonitorRequestLogsDA"

@@ -191,8 +191,18 @@
 
 <li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.system"/></li>
 <li> 
+	<html:link module="/manager" module="/manager" page="/monitorSystem.do?method=monitor">
+		<bean:message bundle="MANAGER_RESOURCES" key="title.system.information"/>
+	</html:link>
+</li>
+<li> 
 	<html:link module="/manager" module="/manager" page="/monitorServices.do?method=monitor">
 		<bean:message bundle="MANAGER_RESOURCES" key="title.services"/>
+	</html:link>
+</li>
+<li> 
+	<html:link module="/manager" module="/manager" page="/transactionSystem.do?method=view">
+		<bean:message bundle="MANAGER_RESOURCES" key="title.transaction.logs"/>
 	</html:link>
 </li>
 <li> 
@@ -203,11 +213,6 @@
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorUsers.do?method=monitor">
 		<bean:message bundle="MANAGER_RESOURCES" key="title.users"/>
-	</html:link>
-</li>
-<li> 
-	<html:link module="/manager" module="/manager" page="/monitorSystem.do?method=monitor">
-		<bean:message bundle="MANAGER_RESOURCES" key="title.system.information"/>
 	</html:link>
 </li>
 <li>

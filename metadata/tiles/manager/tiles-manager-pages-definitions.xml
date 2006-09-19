@@ -175,6 +175,10 @@
 	<definition name="df.page.monitor-system" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/monitorSystem_bd.jsp" />
 	</definition>
+	<!-- ========== TRANSACTION MONITORING MANIPULATION ========== -->
+	<definition name="df.page.transaction-System" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/transactionSystem_bd.jsp" />
+	</definition>
 	<!-- ========== REQUEST MONITORING ========== -->
 	<definition name="df.page.monitor-request" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/monitorRequests_bd.jsp" />
