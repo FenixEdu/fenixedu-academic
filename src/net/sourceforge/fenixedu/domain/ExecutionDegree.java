@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -788,6 +789,16 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 		    && shiftDistributionEntry.getAbstractStudentNumber().equals(studentNumber)) {
 		shiftDistributionEntry.setDistributed(Boolean.TRUE);
 		result.add(shiftDistributionEntry.getShift());
+	    }
+	}
+	return result;
+    }
+
+    public List<DegreeCandidacy> getDegreeCandidaciesBy(CandidacySituationType candidacySituationType) {
+	final List<DegreeCandidacy> result = new ArrayList<DegreeCandidacy>();
+	for (final DegreeCandidacy candidacy : getDegreeCandidacies()) {
+	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType() == candidacySituationType) {
+		result.add(candidacy);
 	    }
 	}
 	return result;
