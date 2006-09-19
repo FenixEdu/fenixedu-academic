@@ -50,7 +50,7 @@ public class Summary extends Summary_Base {
 
 	this();
 	setInfoToSummary(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName,
-		teacher, shift, lesson, date, room, hour, true);
+		teacher, shift, lesson, date, room, hour);
     }
 
     public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
@@ -58,18 +58,18 @@ public class Summary extends Summary_Base {
 	    Shift shift, Lesson lesson, YearMonthDay date, OldRoom room, Partial hour) {
 
 	setInfoToSummary(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName,
-		teacher, shift, lesson, date, room, hour, false);
+		teacher, shift, lesson, date, room, hour);
     }
 
     private void setInfoToSummary(MultiLanguageString title, MultiLanguageString summaryText,
 	    Integer studentsNumber, Boolean isExtraLesson, Professorship professorship,
 	    String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
-	    OldRoom room, Partial hour, boolean toCreate) {
+	    OldRoom room, Partial hour) {
 
 	checkParameters(title, summaryText, isExtraLesson, professorship, teacherName, teacher, shift,
 		lesson, date, room, hour);
 	checkTeacher(teacher, shift.getDisciplinaExecucao());
-	checkDate(date, shift.getDisciplinaExecucao().getExecutionPeriod(), lesson, toCreate);
+	checkDate(date, shift.getDisciplinaExecucao().getExecutionPeriod(), lesson);
 	setExecutionCourse(shift.getDisciplinaExecucao());
 	setTitle(title);
 	setSummaryText(summaryText);
@@ -95,15 +95,20 @@ public class Summary extends Summary_Base {
 	}
     }
 
-    private void checkDate(YearMonthDay date, ExecutionPeriod period, Lesson lesson, boolean toCreate) {
-	if (toCreate && lesson != null && lesson.getSummaryByDate(date) != null) {
-	    throw new DomainException("error.summary.already.exists");
-	}
-	if (date.isAfter(new YearMonthDay()) || date.isBefore(period.getBeginDateYearMonthDay())) {
+    private void checkDate(YearMonthDay date, ExecutionPeriod period, Lesson lesson) {
+	if (lesson != null) {	 
+	    Summary summaryByDate = lesson.getSummaryByDate(date);
+	    if (summaryByDate != null && !summaryByDate.equals(this)) {
+		throw new DomainException("error.summary.already.exists");
+	    }
+	    if (!lesson.isDateValidToInsertSummary(date)) {
+		throw new DomainException("error.summary.no.valid.date.to.lesson");
+	    }
+	    if (!lesson.isTimeValidToInsertSummary(new HourMinuteSecond())) {
+		throw new DomainException("error.summary.no.valid.time.to.lesson");
+	    }	    
+	} else if (date.isAfter(new YearMonthDay()) || date.isBefore(period.getBeginDateYearMonthDay())) {
 	    throw new DomainException("error.summary.no.valid.date");
-	}
-	if (lesson != null && !lesson.isDateValidToInsertSummary(date)) {
-	    throw new DomainException("error.summary.no.valid.date.to.lesson");
 	}
     }
 
@@ -145,7 +150,7 @@ public class Summary extends Summary_Base {
 	    }
 	}
     }
-    
+
     public void delete() {
 	removeExecutionCourse();
 	removeProfessorship();
@@ -156,7 +161,7 @@ public class Summary extends Summary_Base {
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
-       
+
     public String getOrder() {
 	StringBuilder stringBuilder = new StringBuilder();
 	Lesson lesson = getLesson();
@@ -173,24 +178,19 @@ public class Summary extends Summary_Base {
 	return "";
     }
 
-    public int getWeekDayInDiaSemanaFormat() {
-	int dayOfWeek = getSummaryDateYearMonthDay().toDateTimeAtMidnight().getDayOfWeek();
-	return (dayOfWeek == 7) ? 1 : dayOfWeek + 1;
-    }
-    
     @Override
     public OldRoom getRoom() {
-	if(getLesson() != null) {
+	if (getLesson() != null) {
 	    return getLesson().getSala();
 	}
-	return super.getRoom();	
+	return super.getRoom();
     }
 
     @Override
     public HourMinuteSecond getSummaryHourHourMinuteSecond() {
-	if(getLesson() != null) {
+	if (getLesson() != null) {
 	    return getLesson().getBeginHourMinuteSecond();
 	}
-	return super.getSummaryHourHourMinuteSecond();	
+	return super.getSummaryHourHourMinuteSecond();
     }
 }

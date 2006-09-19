@@ -2491,51 +2491,50 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 	String ojbConcreteClass;
 	Integer keySuroundingSpace;
 	YearMonthDay createdOn;
+	/*Group personOccupationsAccessGroup;
+	Group extensionOccupationsAccessGroup;*/
 }
+	class net.sourceforge.fenixedu.domain.space.Campus extends net.sourceforge.fenixedu.domain.space.Space {
+	}
+
+	class net.sourceforge.fenixedu.domain.space.Building extends net.sourceforge.fenixedu.domain.space.Space {
+	}
+		class net.sourceforge.fenixedu.domain.space.OldBuilding extends net.sourceforge.fenixedu.domain.space.Building {
+			String name;
+			Integer keyCampus;
+		}
+
+	class net.sourceforge.fenixedu.domain.space.Floor extends net.sourceforge.fenixedu.domain.space.Space {
+	}
+
+	class net.sourceforge.fenixedu.domain.space.Room extends net.sourceforge.fenixedu.domain.space.Space {
+	}
+		class net.sourceforge.fenixedu.domain.space.OldRoom extends net.sourceforge.fenixedu.domain.space.Room {
+			Integer keyBuilding;
+			String name;
+			Integer capacidadeNormal;
+			Integer capacidadeExame;
+			Integer piso;
+		    TipoSala tipo;
+		}
+
 
 class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
 	YearMonthDay validUntil;
 	Integer keySpace;
 }
-
-	class net.sourceforge.fenixedu.domain.space.Campus extends net.sourceforge.fenixedu.domain.space.Space {
-	}
-
 	class net.sourceforge.fenixedu.domain.space.CampusInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
 		String name;
 		Integer keyLocality;
-	}
-
-	class net.sourceforge.fenixedu.domain.space.Building extends net.sourceforge.fenixedu.domain.space.Space {
-	}
-
-	class net.sourceforge.fenixedu.domain.space.OldBuilding extends net.sourceforge.fenixedu.domain.space.Building {
-		String name;
-		Integer keyCampus;
 	}
 
 	class net.sourceforge.fenixedu.domain.space.BuildingInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
 		String name;
 	}
 
-	class net.sourceforge.fenixedu.domain.space.Floor extends net.sourceforge.fenixedu.domain.space.Space {
-	}
-
 	class net.sourceforge.fenixedu.domain.space.FloorInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
 		Integer level;
-	}
-
-	class net.sourceforge.fenixedu.domain.space.Room extends net.sourceforge.fenixedu.domain.space.Space {
-	}
-
-	class net.sourceforge.fenixedu.domain.space.OldRoom extends net.sourceforge.fenixedu.domain.space.Room {
-		Integer keyBuilding;
-		String name;
-		Integer capacidadeNormal;
-		Integer capacidadeExame;
-		Integer piso;
-	    TipoSala tipo;
 	}
 
 	class net.sourceforge.fenixedu.domain.space.RoomInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
@@ -2616,8 +2615,8 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sou
 	}
 	
 	class net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
-	HourMinuteSecond startTimeHourMinuteSecond;
-	HourMinuteSecond endTimeHourMinuteSecond;
+		HourMinuteSecond startTimeHourMinuteSecond;
+		HourMinuteSecond endTimeHourMinuteSecond;
 		WeekDay weekDay;
 	}	
 	
