@@ -72,6 +72,13 @@ function hideInputBoxes(){
 		<li><bean:message key="title.documentDeliveryOnline" bundle="PARKING_RESOURCES"/></li>
 		<li><bean:message key="title.documentDeliveryPaper" bundle="PARKING_RESOURCES"/></li>
 	</ul>
+	<p class="mvert025">Para submeter os documentos necessários:</p>
+	<ul>
+		<li>os ficheiros não podem exceder os 2MB de tamanho</li>
+		<li>os ficheiros têm de ser imagens no formato gif ou jpg</li>
+		<li>escreva o caminho completo na caixa de texto (ex: <i>c:\documentos\carta_condução.jpg</i>)	ou carregue em <i>Browse</i> 
+			e escolha o documento correspondente</li>
+	</ul>
 </div>	
 
 <logic:present name="parkingParty">
@@ -113,8 +120,8 @@ function hideInputBoxes(){
 	<p class="mbottom0"><strong><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES" /></strong>:</p>	
 		<table class="tstyle1 thright thlight mbottom0 tstylepark">
 		<tr>
-			<th><div id="driverLicenseDivTop" style="display:none"><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td>
+			<th class="parking"><div id="driverLicenseDivTop" style="display:none"><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td class="parking">
 				<html:radio name="parkingForm" property="driverLicense" value="true" onclick="changeElementDisplay('driverLicenseDiv', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=driverLicenseLabel%>"/>
 				</html:radio>
@@ -130,7 +137,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",,noborder"/>
+						<fr:property name="columnClasses" value=",parking,noborder"/>
 					</fr:layout>
 				</fr:edit>
 				<span class="error0 mtop0"><html:messages id="message" property="driverLicenseMessage" message="true" bundle="PARKING_RESOURCES">
@@ -143,8 +150,8 @@ function hideInputBoxes(){
 	<p class="mbottom0"><strong><bean:message key="label.firstCar" bundle="PARKING_RESOURCES" /></strong>:</p>
 		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
 		<tr>
-			<th><bean:message key="label.firstCarMake" bundle="PARKING_RESOURCES"/>:</th>
-			<td><fr:edit id="firstCarMakeFR" name="<%= factoryName %>" slot="firstCarMake" 
+			<th class="parking"><bean:message key="label.firstCarMake" bundle="PARKING_RESOURCES"/>:</th>
+			<td class="parking"><fr:edit id="firstCarMakeFR" name="<%= factoryName %>" slot="firstCarMake" 
 				type="<%= type %>">
 			</fr:edit></td>
 			<td class="noborder"><span class="error0 mtop025">
@@ -154,8 +161,8 @@ function hideInputBoxes(){
 			</td>
 		</tr>
 		<tr>
-			<th><bean:message key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
-			<td><fr:edit id="firstCarPlateNumberFR" name="<%= factoryName %>" slot="firstCarPlateNumber"
+			<th class="parking"><bean:message key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
+			<td class="parking"><fr:edit id="firstCarPlateNumberFR" name="<%= factoryName %>" slot="firstCarPlateNumber"
 				type="<%= type %>">
 			</fr:edit> (aa-bb-cc)</td>
 			<td class="noborder"><span class="error0 mtop025">
@@ -165,8 +172,8 @@ function hideInputBoxes(){
 			</td>
 		</tr>
 		<tr>
-			<th><div id="registry1DivTop" style="display:none"><bean:message key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td>
+			<th class="parking"><div id="registry1DivTop" style="display:none"><bean:message key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td class="parking">
 				<html:radio name="parkingForm" property="registry1" value="true" onclick="changeElementDisplay('registry1Div', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
@@ -183,7 +190,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",,noborder"/>
+						<fr:property name="columnClasses" value=",parking,noborder"/>
 					</fr:layout>
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="firstCarPropertyRegistryMessage" message="true" bundle="PARKING_RESOURCES">
@@ -193,8 +200,8 @@ function hideInputBoxes(){
 			
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
 		<tr>
-			<th><div id="insurance1DivTop" style="display:none"><bean:message key="label.firstInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td>
+			<th class="parking"><div id="insurance1DivTop" style="display:none"><bean:message key="label.firstInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td class="parking">
 				<html:radio name="parkingForm" property="insurance1" value="true" onclick="changeElementDisplay('insurance1Div', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
 				</html:radio>
@@ -210,7 +217,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",,noborder"/>
+						<fr:property name="columnClasses" value=",parking,noborder"/>
 					</fr:layout>				
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="firstInsuranceMessage" message="true" bundle="PARKING_RESOURCES">
@@ -229,8 +236,8 @@ function hideInputBoxes(){
 			<div id="ownCar1">
 		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
 		<tr>
-			<th><div id="Id1DivTop" style="display:none"><bean:message key="label.firstCarOwnerId" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td>
+			<th class="parking"><div id="Id1DivTop" style="display:none"><bean:message key="label.firstCarOwnerId" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td class="parking">
 				<html:radio name="parkingForm" property="Id1" value="true" onclick="changeElementDisplay('Id1Div', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
@@ -246,7 +253,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",,noborder"/>
+						<fr:property name="columnClasses" value=",parking,noborder"/>
 					</fr:layout>					
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="firstCarOwnerIdMessage" message="true" bundle="PARKING_RESOURCES">
@@ -255,8 +262,8 @@ function hideInputBoxes(){
 			</div>
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
 		<tr>
-			<th><div id="declaration1DivTop" style="display:none"><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td>
+			<th class="parking"><div id="declaration1DivTop" style="display:none"><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td class="parking">
 				<html:radio name="parkingForm" property="declaration1" value="true" onclick="changeElementDisplay('declaration1Div', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>
 				</html:radio>
@@ -273,7 +280,7 @@ function hideInputBoxes(){
 				
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",,noborder"/>
+						<fr:property name="columnClasses" value=",parking,noborder"/>
 					</fr:layout>				
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="firstDeclarationAuthorizationMessage" message="true" bundle="PARKING_RESOURCES">
@@ -289,20 +296,20 @@ function hideInputBoxes(){
 <p class="mbottom0"><strong><bean:message key="label.secondCar" bundle="PARKING_RESOURCES" /></strong>:</p>
 		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
 		<tr>
-			<th><bean:message key="label.secondCarMake" bundle="PARKING_RESOURCES"/>:</th>
-			<td><fr:edit id="secondCarMakeFR" name="<%= factoryName %>" slot="secondCarMake" 
+			<th class="parking"><bean:message key="label.secondCarMake" bundle="PARKING_RESOURCES"/>:</th>
+			<td class="parking"><fr:edit id="secondCarMakeFR" name="<%= factoryName %>" slot="secondCarMake" 
 					type="<%= type %>">
 			</fr:edit></td>
 		</tr>
 		<tr>
-			<th><bean:message key="label.secondCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
-			<td><fr:edit id="secondCarPlateNumberFR" name="<%= factoryName %>" slot="secondCarPlateNumber"
+			<th class="parking"><bean:message key="label.secondCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
+			<td class="parking"><fr:edit id="secondCarPlateNumberFR" name="<%= factoryName %>" slot="secondCarPlateNumber"
 					type="<%= type %>">
 			</fr:edit> (aa-bb-cc)</td>			
 		</tr>
 		<tr>
-			<th><div id="registry2DivTop" style="display:none"><bean:message key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td>
+			<th class="parking"><div id="registry2DivTop" style="display:none"><bean:message key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td class="parking">
 				<html:radio name="parkingForm" property="registry2" value="true" onclick="changeElementDisplay('registry2Div', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
@@ -319,7 +326,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",,noborder"/>
+						<fr:property name="columnClasses" value=",parking,noborder"/>
 					</fr:layout>
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="secondCarPropertyRegistryMessage" message="true" bundle="PARKING_RESOURCES">
@@ -329,8 +336,8 @@ function hideInputBoxes(){
 
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
 		<tr>
-			<th><div id="insurance2DivTop" style="display:none"><bean:message key="label.secondInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td>
+			<th class="parking"><div id="insurance2DivTop" style="display:none"><bean:message key="label.secondInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td class="parking">
 				<html:radio name="parkingForm" property="insurance2" value="true" onclick="changeElementDisplay('insurance2Div', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
 				</html:radio>
@@ -346,7 +353,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",,noborder"/>
+						<fr:property name="columnClasses" value=",parking,noborder"/>
 					</fr:layout>				
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="secondInsuranceMessage" message="true" bundle="PARKING_RESOURCES">
@@ -365,8 +372,8 @@ function hideInputBoxes(){
 			<div id="ownCar2">
 		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
 		<tr>
-			<th><div id="Id2DivTop" style="display:none"><bean:message key="label.secondCarOwnerId" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td>
+			<th class="parking"><div id="Id2DivTop" style="display:none"><bean:message key="label.secondCarOwnerId" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td class="parking">
 				<html:radio name="parkingForm" property="Id2" value="true" onclick="changeElementDisplay('Id2Div', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
@@ -382,7 +389,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",,noborder"/>
+						<fr:property name="columnClasses" value=",parking,noborder"/>
 					</fr:layout>					
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="secondCarOwnerIdMessage" message="true" bundle="PARKING_RESOURCES">
@@ -391,8 +398,8 @@ function hideInputBoxes(){
 			</div>
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
 		<tr>
-			<th><div id="declaration2DivTop" style="display:none"><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td>
+			<th class="parking"><div id="declaration2DivTop" style="display:none"><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td class="parking">
 				<html:radio name="parkingForm" property="declaration2" value="true" onclick="changeElementDisplay('declaration2Div', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>
 				</html:radio>
@@ -408,7 +415,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",,noborder"/>
+						<fr:property name="columnClasses" value=",parking,noborder"/>
 					</fr:layout>				
 				</fr:edit>
 				<span class="error0 mtop0"><html:messages id="message" property="secondDeclarationAuthorizationMessage" message="true" bundle="PARKING_RESOURCES">
