@@ -6,6 +6,63 @@
 
 h2 { margin: 0.5em 0 0.75em 0; }
 
+
+/* ----------------------
+ ---- Show Info --------
+----------------------- */
+
+.showinfo1, .showinfo3 {
+border-collapse: collapse;
+margin: 1em 0;
+}
+.showinfo1 th, .showinfo3 th {
+vertical-align: top;
+padding: 0.5em;
+font-weight: normal;
+}
+
+.showinfo1 td, .showinfo3 td {
+padding: 0.5em;
+}
+
+.showinfo1 th { border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; }
+.showinfo1 td { border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; }
+.showinfo3 th { border-bottom: 1px solid #ccc; }
+.showinfo3 td { border-bottom: 1px solid #eee; }
+
+.thleft th { text-align: left;}
+.thright th { text-align: right;}
+.emphasis1 th { background: #ffc; }
+.emphasis2 th { font-weight: bold; }
+
+.showinfo2 {
+background-color: #f5f5f5;
+border-collapse: collapse;
+margin: 0.5em 0;
+}
+.showinfo2 tr td {
+border: 1px solid #fff;
+padding: 0.3em;
+}
+
+.sfloat {
+padding: 0.5em;
+background-color: #eee;
+}
+
+.sfloat label {
+float: left;
+text-align: right;
+width: 10em;
+display: block;
+padding-right: 0.5em;
+}
+.sfloat span{
+margin-left: 11em;
+display: block;
+}
+
+
 /* ----------------------
  ---- Info Blocks ------
 ----------------------- */
