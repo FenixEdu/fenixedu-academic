@@ -137,7 +137,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",parking,noborder"/>
+						<fr:property name="columnClasses" value="parking,parking,noborder"/>
 					</fr:layout>
 				</fr:edit>
 				<span class="error0 mtop0"><html:messages id="message" property="driverLicenseMessage" message="true" bundle="PARKING_RESOURCES">
@@ -190,7 +190,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",parking,noborder"/>
+						<fr:property name="columnClasses" value="parking,parking,noborder"/>
 					</fr:layout>
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="firstCarPropertyRegistryMessage" message="true" bundle="PARKING_RESOURCES">
@@ -217,7 +217,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",parking,noborder"/>
+						<fr:property name="columnClasses" value="parking,parking,noborder"/>
 					</fr:layout>				
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="firstInsuranceMessage" message="true" bundle="PARKING_RESOURCES">
@@ -253,7 +253,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",parking,noborder"/>
+						<fr:property name="columnClasses" value="parking,parking,noborder"/>
 					</fr:layout>					
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="firstCarOwnerIdMessage" message="true" bundle="PARKING_RESOURCES">
@@ -280,7 +280,7 @@ function hideInputBoxes(){
 				
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",parking,noborder"/>
+						<fr:property name="columnClasses" value="parking,parking,noborder"/>
 					</fr:layout>				
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="firstDeclarationAuthorizationMessage" message="true" bundle="PARKING_RESOURCES">
@@ -326,7 +326,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",parking,noborder"/>
+						<fr:property name="columnClasses" value="parking,parking,noborder"/>
 					</fr:layout>
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="secondCarPropertyRegistryMessage" message="true" bundle="PARKING_RESOURCES">
@@ -353,7 +353,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",parking,noborder"/>
+						<fr:property name="columnClasses" value="parking,parking,noborder"/>
 					</fr:layout>				
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="secondInsuranceMessage" message="true" bundle="PARKING_RESOURCES">
@@ -389,7 +389,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",parking,noborder"/>
+						<fr:property name="columnClasses" value="parking,parking,noborder"/>
 					</fr:layout>					
 				</fr:edit>
 				<span class="error0 mtop025"><html:messages id="message" property="secondCarOwnerIdMessage" message="true" bundle="PARKING_RESOURCES">
@@ -415,7 +415,7 @@ function hideInputBoxes(){
 					type="<%= type %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value=",parking,noborder"/>
+						<fr:property name="columnClasses" value="parking,parking,noborder"/>
 					</fr:layout>				
 				</fr:edit>
 				<span class="error0 mtop0"><html:messages id="message" property="secondDeclarationAuthorizationMessage" message="true" bundle="PARKING_RESOURCES">
