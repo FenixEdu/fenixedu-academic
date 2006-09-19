@@ -419,6 +419,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
+    public SortedSet<DegreeModuleScope> getDegreeModuleScopes() {
+        final SortedSet<DegreeModuleScope> degreeModuleScopes = new TreeSet<DegreeModuleScope>(DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
+        for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
+            degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
+        }
+        return degreeModuleScopes;
+    }
+
     public void addExecutionCoursesForExecutionPeriod(final Set<ExecutionCourse> executionCourses,
             final ExecutionPeriod executionPeriod, final Set<Context> contexts) {
         for (final Context context : contexts) {

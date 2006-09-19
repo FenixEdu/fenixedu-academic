@@ -3,11 +3,9 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric;
 
-import java.text.Collator;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.SortedSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,11 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithCurricularCourseScopes;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -106,85 +101,27 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
     }
 
     public ActionForward showActiveCurricularCourseScope(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm actionForm = (DynaActionForm) form;
         String executionYearID = (String) actionForm.get("executionYearID");
+        request.setAttribute("executionYearID", executionYearID);
         String degreeCurricularPlanID = (String) actionForm.get("degreeCurricularPlanID");
         Object[] args2 = { new Integer(degreeCurricularPlanID), new Integer(executionYearID) };
 
-        InfoDegreeCurricularPlanWithCurricularCourseScopes result = null;
-        ActionErrors errors = new ActionErrors();
-        try {
-            result = (InfoDegreeCurricularPlanWithCurricularCourseScopes) ServiceUtils.executeService(
-                    userView, "ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear",
-                    args2);
-        } catch (FenixServiceException fse) {
-            throw new FenixActionException(fse);
-        }
-        if (result.getScopes() == null || result.getScopes().size() == 0) {
-            errors.add("noDegreeCurricularPlan", new ActionError(
-                    "error.nonExisting.AssociatedCurricularCourses"));
-            saveErrors(request, errors);
+        final SortedSet<DegreeModuleScope> degreeModuleScopes = (SortedSet<DegreeModuleScope>)
+                executeService(request, "ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args2);
+        final ActionErrors errors = new ActionErrors();
+        if (degreeModuleScopes.isEmpty()) {
+            errors.add("noDegreeCurricularPlan", new ActionError("error.nonExisting.AssociatedCurricularCourses"));
+            saveErrors(request, errors);            
+        } else {
+            request.setAttribute("degreeModuleScopes", degreeModuleScopes);
         }
 
-        request.setAttribute("degreeCurricularPlan", result.getInfoDegreeCurricularPlan());
+        request.setAttribute("degreeCurricularPlan", rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(degreeCurricularPlanID)));
 
-        if (errors.isEmpty()) {
-            List activeCurricularCourseScopes = groupScopesByCurricularYearAndCurricularCourse(result
-                    .getScopes());
-
-            request.setAttribute("allActiveCurricularCourseScopes", activeCurricularCourseScopes);
-            request.setAttribute("executionYearID", executionYearID);
-        }
         return mapping.findForward("showActiveCurricularCourses");
     }
 
-    private List groupScopesByCurricularYearAndCurricularCourse(List scopes) {
-        List result = new ArrayList();
-        List temp = new ArrayList();
-
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator(
-                "infoCurricularSemester.infoCurricularYear.year"));
-        comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
-        comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name", Collator
-                .getInstance()));
-        Collections.sort(scopes, comparatorChain);
-
-        if (scopes != null && scopes.size() > 0) {
-            ListIterator iter = scopes.listIterator();
-            InfoCurricularYear year = null;
-            InfoCurricularCourse curricularCourse = null;
-
-            while (iter.hasNext()) {
-                InfoCurricularCourseScope scope = (InfoCurricularCourseScope) iter.next();
-                InfoCurricularYear scopeYear = scope.getInfoCurricularSemester().getInfoCurricularYear();
-                InfoCurricularCourse scopeCurricularCourse = scope.getInfoCurricularCourse();
-                if (year == null) {
-                    year = scopeYear;
-                }
-                if (curricularCourse == null) {
-                    curricularCourse = scopeCurricularCourse;
-                }
-
-                if (scopeYear.equals(year) && scopeCurricularCourse.equals(curricularCourse)) {
-                    temp.add(scope);
-                } else {
-                    result.add(temp);
-                    temp = new ArrayList();
-                    year = scopeYear;
-                    curricularCourse = scopeCurricularCourse;
-                    temp.add(scope);
-                }
-
-                if (!iter.hasNext()) {
-                    result.add(temp);
-                }
-            }
-        }
-
-        return result;
-    }
 }

@@ -222,8 +222,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	@Override
 	public String getAnotation() {
 	    return curricularCourseScope.getAnotation();
-	}        
-	
+	}	
     }
 }
     
