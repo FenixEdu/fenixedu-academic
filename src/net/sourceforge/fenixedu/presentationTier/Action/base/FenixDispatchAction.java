@@ -2,9 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.base;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +26,7 @@ import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.plugin.ExceptionHandler;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.struts.action.ActionError;
@@ -43,6 +43,8 @@ import org.apache.struts.validator.DynaValidatorForm;
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
 
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+    
+    protected static final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
