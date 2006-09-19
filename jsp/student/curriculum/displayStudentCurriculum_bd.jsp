@@ -1,18 +1,12 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType" %>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
-<%@ page import="net.sourceforge.fenixedu.util.EnrollmentStateSelectionType" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
-<%@ page import="java.util.List" %>
 
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" %>
+<html:xhtml/>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
   
@@ -63,6 +57,12 @@
 		
 		<table width="100%">		
 			<logic:iterate id="infoStudentCurricularPlan" name="selectedStudentCPs">
+				<bean:define id="dateFormated">
+					<dt:format pattern="dd.MM.yyyy">
+						<bean:write name="infoStudentCurricularPlan" property="startDate.time"/>
+					</dt:format>
+				</bean:define>
+
 				<tr><td><br/><br/></td></tr>
 	
 				<tr>
@@ -72,7 +72,7 @@
 								<td bgcolor="#FFFFFF" class="infoselected">
 									<p><strong><bean:message key="label.person.name" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></p>
 									<p><strong><bean:message key="label.degree.name" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/></p>
-									<p><strong><bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />: </strong><bean:write name="infoStudentCurricularPlan" property="startDate"/> - <bean:define id="degreeType" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name"/> ( <bean:message name="degreeType" bundle="ENUMERATION_RESOURCES"/> )</p>
+									<p><strong><bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />: </strong> <bean:message bundle="ENUMERATION_RESOURCES" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name"/> <bean:message bundle="APPLICATION_RESOURCES" key="label.in"/> <bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/> - <bean:write name="dateFormated"/></p>
 									<p><logic:present name="infoStudentCurricularPlan" property="specialization"><bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/></logic:present><strong><bean:message key="label.number" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/></p>
 								</td>
 							</tr>

@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons.student;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -23,7 +22,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrollmentStateSelectionType;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -42,6 +43,8 @@ import org.apache.struts.util.LabelValueBean;
 
 public class CurriculumDispatchAction extends FenixDispatchAction {
 
+    private final static ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+    
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -235,31 +238,25 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
     }
 
     public static List getLabelValueBeanList(InfoStudentCurricularPlansWithSelectedEnrollments infoSCPs) {
-        ArrayList result = new ArrayList();
+	final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+	
+	result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.NEWEST_STRING, StudentCurricularPlanIDDomainType.NEWEST.toString()));
+        result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.ALL_STRING, StudentCurricularPlanIDDomainType.ALL.toString()));
 
-        List sCPs = infoSCPs.getInfoStudentCurricularPlans();
+        for (final InfoStudentCurricularPlan infoSCP : infoSCPs.getInfoStudentCurricularPlans()) {
+            StringBuilder label = new StringBuilder();
 
-        Iterator it = sCPs.iterator();
+            label.append(enumerationResources.getString(infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().name()));
+            label.append(" ").append(applicationResources.getString("label.in")).append(" ");
+            label.append(infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
 
-        // adiciona "todos" e "o mais recente"
-        result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.NEWEST_STRING,
-                StudentCurricularPlanIDDomainType.NEWEST.toString()));
-        result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.ALL_STRING,
-                StudentCurricularPlanIDDomainType.ALL.toString()));
+            if (infoSCP.getSpecialization() != null) {
+        	label.append(" - ").append(infoSCP.getSpecialization());
+            }
+                
+            label.append(" - ").append(DateFormatUtil.format("dd.MM.yyyy", infoSCP.getStartDate()));
 
-        while (it.hasNext()) {
-            InfoStudentCurricularPlan infoSCP = (InfoStudentCurricularPlan) it.next();
-            String label = "";
-
-            label += infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getNome() + " ";
-            label += "(" + infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso() + ")";
-
-            if (infoSCP.getSpecialization() != null)
-                label += " - " + infoSCP.getSpecialization();
-
-            label += " - " + infoSCP.getStartDate();
-
-            result.add(new LabelValueBean(label, String.valueOf(infoSCP.getIdInternal())));
+            result.add(new LabelValueBean(label.toString(), String.valueOf(infoSCP.getIdInternal())));
         }
 
         return result;
