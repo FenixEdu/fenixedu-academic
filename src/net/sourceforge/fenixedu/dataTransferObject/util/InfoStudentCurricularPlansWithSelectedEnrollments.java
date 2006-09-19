@@ -42,10 +42,10 @@ public class InfoStudentCurricularPlansWithSelectedEnrollments extends DataTranf
      * (+WithInfoStudentWithPersonAndDegree) e os valores sao List de
      * InfoEnrollment's
      */
-    private Map infoStudentCurricularPlans = new HashMap();
+    private Map<InfoStudentCurricularPlan, List> infoStudentCurricularPlans = new HashMap<InfoStudentCurricularPlan, List>();
 
-    public List getInfoStudentCurricularPlans() {
-        List studentCurricularPlans = new ArrayList(infoStudentCurricularPlans.keySet());
+    public List<InfoStudentCurricularPlan> getInfoStudentCurricularPlans() {
+        List<InfoStudentCurricularPlan> studentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>(infoStudentCurricularPlans.keySet());
         Collections.sort(studentCurricularPlans, STUDENT_CURRICULAR_PLAN_COMPARATOR);
         return studentCurricularPlans;
     }
