@@ -18,7 +18,7 @@
 						onchange="this.form.submit();" valueChangeListener="#{studentCalendar.resetExecutionCourses}">
 					<f:selectItems value="#{studentCalendar.registrationsSelectItems}"/>
 				</h:selectOneMenu>
-				<%--<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>--%>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</h:panelGroup>
 
 			<h:outputText value="#{bundle['label.execution.period']}"/>
@@ -27,7 +27,7 @@
 						onchange="this.form.submit();" valueChangeListener="#{studentCalendar.resetExecutionCourses}">
 					<f:selectItems value="#{studentCalendar.executionPeriodSelectItems}"/>
 				</h:selectOneMenu>
-				<%--<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>--%>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</h:panelGroup>
 
 			<h:outputText value="#{bundle['label.execution.course']}"/>
