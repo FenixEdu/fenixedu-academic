@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <h2><bean:message key="title.candidacies" /></h2>
-<hr/>
 
 
 <table class="tstyle4">

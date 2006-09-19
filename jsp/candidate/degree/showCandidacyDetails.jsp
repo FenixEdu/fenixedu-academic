@@ -7,12 +7,11 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <h2><bean:message  key="label.candidacy.candidacyDetails"/></h2>
-<hr/>
 
 <logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType.name" value="REGISTERED">
 	<fr:view name="candidacy" schema="DegreeCandidacy.view-with-person-details">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
+			<fr:property name="classes" value="tstyle4 thright" />
 		</fr:layout>
 	</fr:view>
 </logic:equal>
@@ -20,7 +19,7 @@
 <logic:notEqual name="candidacy" property="activeCandidacySituation.candidacySituationType.name" value="REGISTERED">
 	<fr:view name="candidacy" schema="DegreeCandidacy.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
+			<fr:property name="classes" value="tstyle4 thright" />
 		</fr:layout>
 	</fr:view>
 </logic:notEqual>
@@ -74,8 +73,8 @@
 <logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType" value="REGISTERED">
 	<bean:define id="istUsername" name="person" property="istUsername" />
 	<div class="warning0">
-		<p><strong><bean:message  key="label.attention"/></strong></p>
-		<p><span><bean:message  key="label.candidacy.institutional.email.creation.warning" arg0="<%=istUsername.toString()%>"/></span></p>
+		<p class="mvert025"><strong><bean:message  key="label.attention"/></strong>:</p>
+		<p class="mvert025"><span><bean:message  key="label.candidacy.institutional.email.creation.warning" arg0="<%=istUsername.toString()%>"/></span></p>
 	</div>
 </logic:equal>
 

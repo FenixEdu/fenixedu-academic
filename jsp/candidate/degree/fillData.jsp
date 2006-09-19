@@ -10,15 +10,15 @@
 <h2>
 	<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/> (<bean:write name="currentFormPosition"/>/<bean:write name="totalForms"/>)
 </h2>
-<hr/>
-<h3>
+
+<h3 class="mtop15">
 	<bean:message name="currentForm" property="formName" />
 </h3>
 
 <logic:notEmpty name="currentForm" property="formDescription">
-	<h5>
+	<div class="mvert1">
 		<bean:message name="currentForm" property="formDescription" />
-	</h5>
+	</div>
 </logic:notEmpty>
 
 <logic:present name="formMessages">
@@ -64,7 +64,8 @@
 			name="currentForm"
 			schema="<%=formClass.toString() + schemaSuffix%>">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4" />
+				<fr:property name="classes" value="tstyle4 thright" />
+				<fr:property name="columnClasses" value=",,tdclear tdwarning" />
 			</fr:layout>
 			<fr:destination name="invalid" path="<%="/degreeCandidacyManagement.do?method=showCurrentForm&currentFormPosition=" + currentFormPosition%>"/>
 		</fr:edit>	

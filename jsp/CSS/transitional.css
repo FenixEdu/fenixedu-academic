@@ -226,6 +226,10 @@ border-bottom: none;
 border-top: none;
 background: none;
 }
+td.tdwarning span {
+background-color: #fff8bb; color: #664400;
+}
+
 
 table.mtop05 { margin-top: 0.5em; }
 table.smallmargin td { padding: 0.25em; }
@@ -443,12 +447,8 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width100 { width: 100%; }
 .width8em { width: 8em; } /*used in forums*/
 .width10em { width: 10em; }
-<<<<<<< transitional.css
 .width14em { width: 14em; }
 .width30em { width: 30em; }
-=======
-.width30em { width: 30em; }
->>>>>>> 1.50
 .width100px { width: 100px; }
 .width250px { width: 250px; }
 
@@ -889,7 +889,6 @@ table.nospace label { width: auto; }
 td.noborder { border: none; }
 
 
-<<<<<<< transitional.css
 table.vtsbc {
 margin-bottom: 1em;
 border: 2px solid #ccc;
@@ -1013,3 +1012,4 @@ border: none;
 
 th.parking { width: 8em;}
 td.parking { width: 40em;}
+

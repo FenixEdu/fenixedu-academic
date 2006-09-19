@@ -50,10 +50,6 @@
     <definition name="degreeCandidacy.show.operation.finished" extends="candidate.masterPage">
         <put name="body" value="/candidate/degree/showOperationFinished.jsp"></put>
     </definition>
-
-    <definition name="degreeCandidacy.show.timeTable" extends="candidate.print.masterPage">
-        <put name="body" value="/commons/student/timeTable/classTimeTable.jsp"></put>
-    </definition>
-    
+   
     
 </tiles-definitions>

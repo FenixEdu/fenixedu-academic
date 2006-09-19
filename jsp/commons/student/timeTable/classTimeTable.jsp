@@ -11,40 +11,17 @@
 		<link href="<%= request.getContextPath() %>/CSS/dotist.css" rel="stylesheet" media="screen" type="text/css" />
 		<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 		<link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
-		<title><bean:message key="title.student.schedule"/></title>
+		<title><bean:message key="label.studentSchedule" bundle="APPLICATION_RESOURCES"/></title>
 	</head>
 	<body>
 		<logic:present name="UserView">
-			
-			<table>
-				<tr>
-					<td align="right">
-						<strong>Nome:</strong>
-					</td>
-					<td>
-						<bean:write name="UserView" property="person.name" />
-					</td>
-				</tr>
-				<tr>
-					<td align="right">
-						<strong>Número:</strong>
-					</td>
-					<td>
-						<bean:write name="UserView" property="person.student.number" />
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<strong>IST Username:</strong>
-					</td>
-					<td>
-						<bean:write name="UserView" property="person.istUsername" />
-					</td>
-				</tr>
-			</table>
-			<br/>
-			<br/>
-			<br/>
+		
+			<div class="mbottom2" style="font-size: 0.85em; margin-left: 3em;">
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: <bean:write name="UserView" property="person.name"/> </p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="UserView" property="person.student.number"/> </p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername" bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="UserView" property="person.istUsername"/> </p>
+			</div>	
+
 		</logic:present>
 		
 		<bean:define id="infoLessons" name="infoLessons"/>

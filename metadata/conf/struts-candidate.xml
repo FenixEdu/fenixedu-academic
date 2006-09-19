@@ -32,8 +32,9 @@
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
-        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
-            <forward name="Success" path="index"/>
+        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.candidate.IndexAction">
+            <forward name="showWelcome" path="index"/>
+            <forward name="showCandidacyDetails" path="/degreeCandidacyManagement.do?method=showCandidacyDetails"/>
         </action>
 
 		<action path="/changePersonalData"
@@ -66,7 +67,7 @@
        	    <forward name="fillData" path="degreeCandidacy.fill.data" />
       	    <forward name="showData" path="degreeCandidacy.show.data" />
       	    <forward name="showOperationFinished" path="degreeCandidacy.show.operation.finished" />
-      	    <forward name="printSchedule" path="degreeCandidacy.show.timeTable" />
+      	    <forward name="printSchedule" path="/../commons/student/timeTable/classTimeTable.jsp" />
        	    <forward name="printRegistrationDeclaration" path="/degree/printRegistrationDeclaration.jsp" />
        	    <forward name="printSystemAccessData" path="/degree/printSystemAccessData.jsp" />
       	</action>
