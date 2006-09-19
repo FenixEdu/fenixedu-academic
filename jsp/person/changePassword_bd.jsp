@@ -29,7 +29,7 @@
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Alterar" styleClass="inputbutton" property="ok" />
 		</html:form>
 	</div>
-	<div class="pass_req">
+	<div class="infoop2" style="margin-left: 30em;">
 		<strong><bean:message key="message.requirements"/>:</strong>
 		<ul>
 			<li><bean:message key="message.pass.size"/></li>

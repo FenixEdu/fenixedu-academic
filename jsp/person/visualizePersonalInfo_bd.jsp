@@ -28,7 +28,7 @@
 		<table width="100%">
           <!-- Nome -->
           <tr>
-            <td width="30%"><bean:message key="label.person.name" /></td>
+            <td width="30%"><bean:message key="label.person.name" />:</td>
             <td class="greytxt"><bean:write name="personalInfo" property="nome"/></td>
           </tr>
           <!-- Username -->
