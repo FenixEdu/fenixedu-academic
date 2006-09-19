@@ -119,111 +119,147 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             HttpServletRequest request) {
         ActionMessages actionMessages = getActionMessages(request);
         boolean result = true;
-        if (parkingRequestFactory.getDriverLicenseFileName() != null) {
+        if (parkingRequestFactory.getDriverLicenseInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getDriverLicenseFileName())) {
                 actionMessages.add("driverLicenseMessage",
                         new ActionMessage("error.file.extension"));
+                parkingRequestFactory.setDriverLicenseFileName(null);
+                parkingRequestFactory.setDriverLicenseInputStream(null);
                 result = false;
             }
             if(parkingRequestFactory.getDriverLicenseFileSize() > ParkingFile.MAX_FILE_SIZE){
                 actionMessages.add("driverLicenseMessage", new ActionMessage(
                 "error.file.size"));
-                result = false;
+                parkingRequestFactory.setDriverLicenseFileName(null);
+                parkingRequestFactory.setDriverLicenseInputStream(null);                
+                result = false;                
             }
         }
-        if (parkingRequestFactory.getFirstCarOwnerIdFileName() != null) {
+        if (parkingRequestFactory.getFirstCarOwnerIdInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getFirstCarOwnerIdFileName())) {
                 actionMessages.add("firstCarOwnerIdMessage", new ActionMessage(
                         "error.file.extension"));
+                parkingRequestFactory.setFirstCarOwnerIdFileName(null);
+                parkingRequestFactory.setFirstCarOwnerIdInputStream(null);
                 result = false;
             }
             if(parkingRequestFactory.getFirstCarOwnerIdFileSize() > ParkingFile.MAX_FILE_SIZE){
                 actionMessages.add("firstCarOwnerIdMessage", new ActionMessage(
                 "error.file.size"));
+                parkingRequestFactory.setFirstCarOwnerIdFileName(null);
+                parkingRequestFactory.setFirstCarOwnerIdInputStream(null);                
                 result = false;
             }
         }
-        if (parkingRequestFactory.getFirstCarPropertyRegistryFileName() != null) {
+        if (parkingRequestFactory.getFirstCarPropertyRegistryInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getFirstCarPropertyRegistryFileName())) {
                 actionMessages.add("firstCarPropertyRegistryMessage", new ActionMessage(
                         "error.file.extension"));
+                parkingRequestFactory.setFirstCarPropertyRegistryFileName(null);
+                parkingRequestFactory.setFirstCarPropertyRegistryInputStream(null);
                 result = false;
             }
             if(parkingRequestFactory.getFirstCarPropertyRegistryFileSize() > ParkingFile.MAX_FILE_SIZE){
                 actionMessages.add("firstCarPropertyRegistryMessage", new ActionMessage(
                 "error.file.size"));
+                parkingRequestFactory.setFirstCarPropertyRegistryFileName(null);
+                parkingRequestFactory.setFirstCarPropertyRegistryInputStream(null);                
                 result = false;
             }
         }
-        if (parkingRequestFactory.getFirstDeclarationAuthorizationFileName() != null) {
+        if (parkingRequestFactory.getFirstDeclarationAuthorizationInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getFirstDeclarationAuthorizationFileName())) {
                 actionMessages.add("firstDeclarationAuthorizationMessage", new ActionMessage(
                         "error.file.extension"));
+                parkingRequestFactory.setFirstDeclarationAuthorizationFileName(null);
+                parkingRequestFactory.setFirstDeclarationAuthorizationInputStream(null);
                 result = false;
             }
             if(parkingRequestFactory.getFirstDeclarationAuthorizationFileSize() > ParkingFile.MAX_FILE_SIZE){
                 actionMessages.add("firstDeclarationAuthorizationMessage", new ActionMessage(
                 "error.file.size"));
+                parkingRequestFactory.setFirstDeclarationAuthorizationFileName(null);
+                parkingRequestFactory.setFirstDeclarationAuthorizationInputStream(null);
                 result = false;
             }
         }
-        if (parkingRequestFactory.getFirstInsuranceFileName() != null) {
+        if (parkingRequestFactory.getFirstInsuranceInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getFirstInsuranceFileName())) {
                 actionMessages.add("firstInsuranceMessage", new ActionMessage(
                         "error.file.extension"));
+                parkingRequestFactory.setFirstInsuranceFileName(null);
+                parkingRequestFactory.setFirstInsuranceInputStream(null);
                 result = false;
             }
             if(parkingRequestFactory.getFirstInsuranceFileSize() > ParkingFile.MAX_FILE_SIZE){
                 actionMessages.add("firstInsuranceMessage", new ActionMessage(
                 "error.file.size"));
+                parkingRequestFactory.setFirstInsuranceFileName(null);
+                parkingRequestFactory.setFirstInsuranceInputStream(null);
                 result = false;
             }
         }
-        if (parkingRequestFactory.getSecondCarOwnerIdFileName() != null) {
+        if (parkingRequestFactory.getSecondCarOwnerIdInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getSecondCarOwnerIdFileName())) {
                 actionMessages.add("secondCarOwnerIdMessage", new ActionMessage(
                         "error.file.extension"));
+                parkingRequestFactory.setSecondCarOwnerIdFileName(null);
+                parkingRequestFactory.setSecondCarOwnerIdInputStream(null);
                 result = false;
             }
             if(parkingRequestFactory.getSecondCarOwnerIdFileSize() > ParkingFile.MAX_FILE_SIZE){
                 actionMessages.add("secondCarOwnerIdMessage", new ActionMessage(
                 "error.file.size"));
+                parkingRequestFactory.setSecondCarOwnerIdFileName(null);
+                parkingRequestFactory.setSecondCarOwnerIdInputStream(null);
                 result = false;
             }
         }
-        if (parkingRequestFactory.getSecondCarPropertyRegistryFileName() != null) {
+        if (parkingRequestFactory.getSecondCarPropertyRegistryInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getSecondCarPropertyRegistryFileName())) {
                 actionMessages.add("secondCarPropertyRegistryMessage", new ActionMessage(
                         "error.file.extension"));
+                parkingRequestFactory.setSecondCarPropertyRegistryFileName(null);
+                parkingRequestFactory.setSecondCarPropertyRegistryInputStream(null);
                 result = false;
             }
             if(parkingRequestFactory.getSecondCarPropertyRegistryFileSize() > ParkingFile.MAX_FILE_SIZE){
                 actionMessages.add("secondCarPropertyRegistryMessage", new ActionMessage(
                 "error.file.size"));
+                parkingRequestFactory.setSecondCarPropertyRegistryFileName(null);
+                parkingRequestFactory.setSecondCarPropertyRegistryInputStream(null);
                 result = false;
             }
         }
-        if (parkingRequestFactory.getSecondDeclarationAuthorizationFileName() != null) {
+        if (parkingRequestFactory.getSecondDeclarationAuthorizationInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getSecondDeclarationAuthorizationFileName())) {
                 actionMessages.add("secondDeclarationAuthorizationMessage", new ActionMessage(
                         "error.file.extension"));
+                parkingRequestFactory.setSecondDeclarationAuthorizationFileName(null);
+                parkingRequestFactory.setSecondDeclarationAuthorizationInputStream(null);
                 result = false;
             }
             if(parkingRequestFactory.getSecondDeclarationAuthorizationFileSize() > ParkingFile.MAX_FILE_SIZE){
                 actionMessages.add("secondDeclarationAuthorizationMessage", new ActionMessage(
                 "error.file.size"));
+                parkingRequestFactory.setSecondDeclarationAuthorizationFileName(null);
+                parkingRequestFactory.setSecondDeclarationAuthorizationInputStream(null);
                 result = false;
             }
         }
-        if (parkingRequestFactory.getSecondInsuranceFileName() != null) {
+        if (parkingRequestFactory.getSecondInsuranceInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getSecondInsuranceFileName())) {
                 actionMessages.add("secondInsuranceMessage", new ActionMessage(
                         "error.file.extension"));
+                parkingRequestFactory.setSecondInsuranceFileName(null);
+                parkingRequestFactory.setSecondInsuranceInputStream(null);
                 result = false;
             }
             if(parkingRequestFactory.getSecondInsuranceFileSize() > ParkingFile.MAX_FILE_SIZE){
                 actionMessages.add("secondInsuranceMessage", new ActionMessage(
                 "error.file.size"));
+                parkingRequestFactory.setSecondInsuranceFileName(null);
+                parkingRequestFactory.setSecondInsuranceInputStream(null);
                 result = false;
             }
         }
