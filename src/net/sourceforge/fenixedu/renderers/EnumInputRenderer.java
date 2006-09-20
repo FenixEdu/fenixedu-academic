@@ -92,6 +92,10 @@ public class EnumInputRenderer extends InputRenderer {
                 menu.createDefaultOption(defaultOptionTitle).setSelected(enumerate == null);
                 
                 Object[] constants = type.getEnumConstants();
+                if (constants == null) {
+                    constants = type.getDeclaringClass().getEnumConstants();
+                }
+                
                 for (Object object : constants) {
                     Enum oneEnum = (Enum) object;
                     String description = RenderUtils.getEnumString(oneEnum, getBundle());
