@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType;
 import net.sourceforge.fenixedu.domain.parking.ParkingFile;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
@@ -19,17 +20,15 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
-import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.protocol.DefaultProtocolSocketFactory;
-import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class ParkingDispatchAction extends FenixDispatchAction {
     public ActionForward prepareParking(ActionMapping mapping, ActionForm actionForm,
@@ -64,51 +63,65 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
         if (parkingParty.getParkingRequestsSet().isEmpty()) {
             if (request.getAttribute("parkingRequestFactoryCreator") == null) {
-                request.setAttribute("parkingRequestFactoryCreator", parkingParty.getParkingRequestFactoryCreator());
+                request.setAttribute("parkingRequestFactoryCreator", parkingParty
+                        .getParkingRequestFactoryCreator());
             }
         } else {
             if (request.getAttribute("parkingRequestFactoryEditor") == null) {
-                request.setAttribute("parkingRequestFactoryEditor", parkingParty.getFirstRequest().getParkingRequestFactoryEditor());
+                request.setAttribute("parkingRequestFactoryEditor", parkingParty.getFirstRequest()
+                        .getParkingRequestFactoryEditor());
             }
         }
 
         prepareRadioButtonsForm(actionForm, parkingParty);
-        
 
         return mapping.findForward("editParkingRequest");
     }
 
     private void prepareRadioButtonsForm(ActionForm actionForm, ParkingParty parkingParty) {
-        DynaActionForm parkingForm = (DynaActionForm) actionForm;   
+        DynaActionForm parkingForm = (DynaActionForm) actionForm;
         ParkingRequest parkingRequest = parkingParty.getFirstRequest();
-        if ( parkingRequest != null
-                && parkingParty.getFirstRequest().getFirstCarPropertyRegistryFileName() != null) {
-            parkingForm.set("ownVehicle1", false);
-        } else {
-            parkingForm.set("ownVehicle1", true);
+        if (parkingForm.get("ownVehicle1") == null) {
+            if (parkingRequest != null
+                    && parkingParty.getFirstRequest().getFirstCarPropertyRegistryFileName() != null) {
+                parkingForm.set("ownVehicle1", false);
+            } else {
+                parkingForm.set("ownVehicle1", true);
+            }
         }
-        if (parkingRequest != null
-                && parkingParty.getFirstRequest().getSecondCarPropertyRegistryFileName() != null) {
-            parkingForm.set("ownVehicle2", false);
-        } else {
-            parkingForm.set("ownVehicle2", true);
+        if (parkingForm.get("ownVehicle2") == null) {
+            if (parkingRequest != null
+                    && parkingParty.getFirstRequest().getSecondCarPropertyRegistryFileName() != null) {
+                parkingForm.set("ownVehicle2", false);
+            } else {
+                parkingForm.set("ownVehicle2", true);
+            }
         }
-        
+        if (parkingForm.get("vehicle2") == null) {
+            if (parkingRequest != null
+                    && (parkingParty.getSecondCarMake() != null && parkingParty.getSecondCarMake()
+                            .length() != 0)) {
+                parkingForm.set("vehicle2", true);
+            } else {
+                parkingForm.set("vehicle2", false);
+            }
+        }
     }
 
     public ActionForward editParkingRequest(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
         ParkingRequestFactoryEditor parkingRequestFactoryEditor = (ParkingRequestFactoryEditor) getFactoryObject();
         request.setAttribute("parkingRequestFactoryEditor", parkingRequestFactoryEditor);
         DynaActionForm parkingForm = (DynaActionForm) actionForm;
 
-        if (!isFirstCarDataValid(parkingRequestFactoryEditor, request)) {
+        if (!checkRequestFields(parkingRequestFactoryEditor, request, parkingForm)) {
             RenderUtils.invalidateViewState();
             return prepareEditParking(mapping, actionForm, request, response);
         }
 
         ajustParkingRequest(parkingForm, parkingRequestFactoryEditor);
+
         if (!areFileNamesValid(parkingRequestFactoryEditor, request)) {
             RenderUtils.invalidateViewState();
             return prepareEditParking(mapping, actionForm, request, response);
@@ -124,33 +137,29 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         boolean result = true;
         if (parkingRequestFactory.getDriverLicenseInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getDriverLicenseFileName())) {
-                actionMessages.add("driverLicenseMessage",
-                        new ActionMessage("error.file.extension"));
+                actionMessages.add("driverLicenseMessage", new ActionMessage("error.file.extension"));
                 parkingRequestFactory.setDriverLicenseFileName(null);
                 parkingRequestFactory.setDriverLicenseInputStream(null);
                 result = false;
             }
-            if(parkingRequestFactory.getDriverLicenseFileSize() > ParkingFile.MAX_FILE_SIZE){
-                actionMessages.add("driverLicenseMessage", new ActionMessage(
-                "error.file.size"));
+            if (parkingRequestFactory.getDriverLicenseFileSize() > ParkingFile.MAX_FILE_SIZE) {
+                actionMessages.add("driverLicenseMessage", new ActionMessage("error.file.size"));
                 parkingRequestFactory.setDriverLicenseFileName(null);
-                parkingRequestFactory.setDriverLicenseInputStream(null);                
-                result = false;                
+                parkingRequestFactory.setDriverLicenseInputStream(null);
+                result = false;
             }
         }
         if (parkingRequestFactory.getFirstCarOwnerIdInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getFirstCarOwnerIdFileName())) {
-                actionMessages.add("firstCarOwnerIdMessage", new ActionMessage(
-                        "error.file.extension"));
+                actionMessages.add("firstCarOwnerIdMessage", new ActionMessage("error.file.extension"));
                 parkingRequestFactory.setFirstCarOwnerIdFileName(null);
                 parkingRequestFactory.setFirstCarOwnerIdInputStream(null);
                 result = false;
             }
-            if(parkingRequestFactory.getFirstCarOwnerIdFileSize() > ParkingFile.MAX_FILE_SIZE){
-                actionMessages.add("firstCarOwnerIdMessage", new ActionMessage(
-                "error.file.size"));
+            if (parkingRequestFactory.getFirstCarOwnerIdFileSize() > ParkingFile.MAX_FILE_SIZE) {
+                actionMessages.add("firstCarOwnerIdMessage", new ActionMessage("error.file.size"));
                 parkingRequestFactory.setFirstCarOwnerIdFileName(null);
-                parkingRequestFactory.setFirstCarOwnerIdInputStream(null);                
+                parkingRequestFactory.setFirstCarOwnerIdInputStream(null);
                 result = false;
             }
         }
@@ -162,11 +171,11 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 parkingRequestFactory.setFirstCarPropertyRegistryInputStream(null);
                 result = false;
             }
-            if(parkingRequestFactory.getFirstCarPropertyRegistryFileSize() > ParkingFile.MAX_FILE_SIZE){
+            if (parkingRequestFactory.getFirstCarPropertyRegistryFileSize() > ParkingFile.MAX_FILE_SIZE) {
                 actionMessages.add("firstCarPropertyRegistryMessage", new ActionMessage(
-                "error.file.size"));
+                        "error.file.size"));
                 parkingRequestFactory.setFirstCarPropertyRegistryFileName(null);
-                parkingRequestFactory.setFirstCarPropertyRegistryInputStream(null);                
+                parkingRequestFactory.setFirstCarPropertyRegistryInputStream(null);
                 result = false;
             }
         }
@@ -178,9 +187,9 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 parkingRequestFactory.setFirstDeclarationAuthorizationInputStream(null);
                 result = false;
             }
-            if(parkingRequestFactory.getFirstDeclarationAuthorizationFileSize() > ParkingFile.MAX_FILE_SIZE){
+            if (parkingRequestFactory.getFirstDeclarationAuthorizationFileSize() > ParkingFile.MAX_FILE_SIZE) {
                 actionMessages.add("firstDeclarationAuthorizationMessage", new ActionMessage(
-                "error.file.size"));
+                        "error.file.size"));
                 parkingRequestFactory.setFirstDeclarationAuthorizationFileName(null);
                 parkingRequestFactory.setFirstDeclarationAuthorizationInputStream(null);
                 result = false;
@@ -188,15 +197,13 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         }
         if (parkingRequestFactory.getFirstInsuranceInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getFirstInsuranceFileName())) {
-                actionMessages.add("firstInsuranceMessage", new ActionMessage(
-                        "error.file.extension"));
+                actionMessages.add("firstInsuranceMessage", new ActionMessage("error.file.extension"));
                 parkingRequestFactory.setFirstInsuranceFileName(null);
                 parkingRequestFactory.setFirstInsuranceInputStream(null);
                 result = false;
             }
-            if(parkingRequestFactory.getFirstInsuranceFileSize() > ParkingFile.MAX_FILE_SIZE){
-                actionMessages.add("firstInsuranceMessage", new ActionMessage(
-                "error.file.size"));
+            if (parkingRequestFactory.getFirstInsuranceFileSize() > ParkingFile.MAX_FILE_SIZE) {
+                actionMessages.add("firstInsuranceMessage", new ActionMessage("error.file.size"));
                 parkingRequestFactory.setFirstInsuranceFileName(null);
                 parkingRequestFactory.setFirstInsuranceInputStream(null);
                 result = false;
@@ -204,15 +211,13 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         }
         if (parkingRequestFactory.getSecondCarOwnerIdInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getSecondCarOwnerIdFileName())) {
-                actionMessages.add("secondCarOwnerIdMessage", new ActionMessage(
-                        "error.file.extension"));
+                actionMessages.add("secondCarOwnerIdMessage", new ActionMessage("error.file.extension"));
                 parkingRequestFactory.setSecondCarOwnerIdFileName(null);
                 parkingRequestFactory.setSecondCarOwnerIdInputStream(null);
                 result = false;
             }
-            if(parkingRequestFactory.getSecondCarOwnerIdFileSize() > ParkingFile.MAX_FILE_SIZE){
-                actionMessages.add("secondCarOwnerIdMessage", new ActionMessage(
-                "error.file.size"));
+            if (parkingRequestFactory.getSecondCarOwnerIdFileSize() > ParkingFile.MAX_FILE_SIZE) {
+                actionMessages.add("secondCarOwnerIdMessage", new ActionMessage("error.file.size"));
                 parkingRequestFactory.setSecondCarOwnerIdFileName(null);
                 parkingRequestFactory.setSecondCarOwnerIdInputStream(null);
                 result = false;
@@ -226,9 +231,9 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 parkingRequestFactory.setSecondCarPropertyRegistryInputStream(null);
                 result = false;
             }
-            if(parkingRequestFactory.getSecondCarPropertyRegistryFileSize() > ParkingFile.MAX_FILE_SIZE){
+            if (parkingRequestFactory.getSecondCarPropertyRegistryFileSize() > ParkingFile.MAX_FILE_SIZE) {
                 actionMessages.add("secondCarPropertyRegistryMessage", new ActionMessage(
-                "error.file.size"));
+                        "error.file.size"));
                 parkingRequestFactory.setSecondCarPropertyRegistryFileName(null);
                 parkingRequestFactory.setSecondCarPropertyRegistryInputStream(null);
                 result = false;
@@ -242,9 +247,9 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 parkingRequestFactory.setSecondDeclarationAuthorizationInputStream(null);
                 result = false;
             }
-            if(parkingRequestFactory.getSecondDeclarationAuthorizationFileSize() > ParkingFile.MAX_FILE_SIZE){
+            if (parkingRequestFactory.getSecondDeclarationAuthorizationFileSize() > ParkingFile.MAX_FILE_SIZE) {
                 actionMessages.add("secondDeclarationAuthorizationMessage", new ActionMessage(
-                "error.file.size"));
+                        "error.file.size"));
                 parkingRequestFactory.setSecondDeclarationAuthorizationFileName(null);
                 parkingRequestFactory.setSecondDeclarationAuthorizationInputStream(null);
                 result = false;
@@ -252,15 +257,13 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         }
         if (parkingRequestFactory.getSecondInsuranceInputStream() != null) {
             if (!validateFileName(parkingRequestFactory.getSecondInsuranceFileName())) {
-                actionMessages.add("secondInsuranceMessage", new ActionMessage(
-                        "error.file.extension"));
+                actionMessages.add("secondInsuranceMessage", new ActionMessage("error.file.extension"));
                 parkingRequestFactory.setSecondInsuranceFileName(null);
                 parkingRequestFactory.setSecondInsuranceInputStream(null);
                 result = false;
             }
-            if(parkingRequestFactory.getSecondInsuranceFileSize() > ParkingFile.MAX_FILE_SIZE){
-                actionMessages.add("secondInsuranceMessage", new ActionMessage(
-                "error.file.size"));
+            if (parkingRequestFactory.getSecondInsuranceFileSize() > ParkingFile.MAX_FILE_SIZE) {
+                actionMessages.add("secondInsuranceMessage", new ActionMessage("error.file.size"));
                 parkingRequestFactory.setSecondInsuranceFileName(null);
                 parkingRequestFactory.setSecondInsuranceInputStream(null);
                 result = false;
@@ -274,15 +277,26 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         return filenameT.endsWith(".gif") || filenameT.endsWith(".jpg") || filenameT.endsWith(".jpeg");
     }
 
+    public ActionForward downloadAuthorizationDocument(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return downloadFile(mapping, actionForm, request, response, "anexoIV.pdf");
+    }
+
     public ActionForward downloadParkingRegulamentation(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return downloadFile(mapping, actionForm, request, response, "RegulamentoEstacionamento.pdf");
+    }
+
+    private ActionForward downloadFile(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response, String fileName) throws Exception {
         try {
             response.reset();
             response.setContentType("application/pdf");
-            response.setHeader("Content-disposition",
-                    "attachment; filename=RegulamentoEstacionamento.pdf");
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName);
             DataOutputStream dataOut = new DataOutputStream(response.getOutputStream());
-            dataOut.write(getParkingRegulationDocument("Reg.%20Acesso%20Parques%20Estacion.pdf"));
+            String filePath = getServlet().getServletContext().getRealPath("/").concat(
+                    "/person/parking/").concat(fileName);
+            dataOut.write(getParkingRegulationDocument(filePath));
             response.flushBuffer();
         } catch (java.io.IOException e) {
             throw new FenixActionException(e);
@@ -290,36 +304,154 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         return null;
     }
 
-    private static byte[] getParkingRegulationDocument(String documentName) throws HttpException,
+    private static byte[] getParkingRegulationDocument(String documentPath) throws HttpException,
             IOException {
-        final String host = "cd.ist.utl.pt";
-        final int port = 80;
-
-        final HttpClient httpClient = new HttpClient();
-        final Protocol protocol = new Protocol(host, new DefaultProtocolSocketFactory(), port);
-        httpClient.getHostConfiguration().setHost(host, port, protocol);
-
-        final GetMethod getMethod = new GetMethod();
-        getMethod.setFollowRedirects(false);
-        getMethod.setPath("http://cd.ist.utl.pt/documentos/" + documentName);
-        httpClient.executeMethod(getMethod);
-        return getMethod.getResponseBody();
+        return FileUtils.readFileInBytes(documentPath);
     }
 
-    private boolean isFirstCarDataValid(ParkingRequestFactory parkingRequestFactory,
-            HttpServletRequest request) {
+    private boolean checkRequestFields(ParkingRequestFactory parkingRequestFactory,
+            HttpServletRequest request, DynaActionForm parkingForm) {
+        final boolean isStudent = isStudent(SessionUtils.getUserView(request));
         ActionMessages actionMessages = new ActionMessages();
         boolean result = true;
+
         if (parkingRequestFactory.getFirstCarMake() == null
-                || parkingRequestFactory.getFirstCarMake().trim().equals("")) {
+                || parkingRequestFactory.getFirstCarMake().trim().length() == 0) {
             actionMessages.add("firstCarMakePT", new ActionMessage("error.requiredField"));
             result = false;
         }
         if (parkingRequestFactory.getFirstCarPlateNumber() == null
-                || parkingRequestFactory.getFirstCarPlateNumber().trim().equals("")) {
+                || parkingRequestFactory.getFirstCarPlateNumber().trim().length() == 0) {
             actionMessages.add("firstCarPlateNumberPT", new ActionMessage("error.requiredField"));
             result = false;
         }
+
+        if (hasNotDeliveryValue(parkingForm, "driverLicense")) {
+            actionMessages.add("driverLicenseDeliveryMessage", new ActionMessage(
+                    "error.requiredDocumentDelivery"));
+            result = false;
+        } else if ((isStudent || isElectronicDelivery(parkingForm, "driverLicense"))
+                && parkingRequestFactory.getDriverLicenseInputStream() == null) {
+            actionMessages.add("driverLicenseMessage", new ActionMessage("error.requiredStudentField"));
+            parkingForm.set("driverLicense", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
+            result = false;
+        }
+        // FirstCar
+        if (hasNotDeliveryValue(parkingForm, "registry1")) {
+            actionMessages.add("firstCarPropertyRegistryDeliveryMessage", new ActionMessage(
+                    "error.requiredDocumentDelivery"));
+            result = false;
+        } else if ((isStudent || isElectronicDelivery(parkingForm, "registry1"))
+                && parkingRequestFactory.getFirstCarPropertyRegistryInputStream() == null) {
+            actionMessages.add("firstCarPropertyRegistryMessage", new ActionMessage(
+                    "error.requiredStudentField"));
+            parkingForm.set("registry1", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
+            result = false;
+        }
+        if (hasNotDeliveryValue(parkingForm, "insurance1")) {
+            actionMessages.add("firstInsuranceDeliveryMessage", new ActionMessage(
+                    "error.requiredDocumentDelivery"));
+            result = false;
+        } else if ((isStudent || isElectronicDelivery(parkingForm, "insurance1"))
+                && parkingRequestFactory.getFirstInsuranceInputStream() == null) {
+            actionMessages.add("firstInsuranceMessage", new ActionMessage("error.requiredStudentField"));
+            parkingForm.set("insurance1", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
+            result = false;
+        }
+        if (!isOwner(parkingForm, "ownVehicle1")) {
+            parkingForm.set("ownVehicle1", false);
+            if (hasNotDeliveryValue(parkingForm, "Id1")) {
+                actionMessages.add("firstCarOwnerIdDeliveryMessage", new ActionMessage(
+                        "error.requiredDocumentDelivery"));
+                result = false;
+            } else if ((isStudent || isElectronicDelivery(parkingForm, "Id1"))
+                    && parkingRequestFactory.getFirstCarOwnerIdInputStream() == null) {
+                actionMessages.add("firstCarOwnerIdMessage", new ActionMessage(
+                        "error.requiredStudentField"));
+                parkingForm.set("Id1", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
+                result = false;
+            }
+            if (hasNotDeliveryValue(parkingForm, "declaration1")) {
+                actionMessages.add("firstDeclarationAuthorizationDeliveryMessage", new ActionMessage(
+                        "error.requiredDocumentDelivery"));
+                result = false;
+            } else if ((isStudent || isElectronicDelivery(parkingForm, "declaration1"))
+                    && parkingRequestFactory.getFirstDeclarationAuthorizationInputStream() == null) {
+                actionMessages.add("firstDeclarationAuthorizationMessage", new ActionMessage(
+                        "error.requiredStudentField"));
+                parkingForm.set("declaration1", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
+                result = false;
+            }
+        }
+        // SecondCar
+        if (isOwner(parkingForm, "vehicle2")) {
+            if ((parkingRequestFactory.getSecondCarMake() != null && parkingRequestFactory
+                    .getSecondCarMake().trim().length() != 0)
+                    || (parkingRequestFactory.getSecondCarPlateNumber() != null && parkingRequestFactory
+                            .getSecondCarPlateNumber().trim().length() != 0)) {
+
+                if (parkingRequestFactory.getSecondCarMake() == null
+                        || parkingRequestFactory.getSecondCarMake().trim().length() == 0) {
+                    actionMessages.add("secondCarMakePT", new ActionMessage("error.requiredField"));
+                    result = false;
+                }
+                if (parkingRequestFactory.getSecondCarPlateNumber() == null
+                        || parkingRequestFactory.getSecondCarPlateNumber().trim().length() == 0) {
+                    actionMessages.add("secondCarPlateNumberPT",
+                            new ActionMessage("error.requiredField"));
+                    result = false;
+                }
+
+                if (hasNotDeliveryValue(parkingForm, "registry2")) {
+                    actionMessages.add("secondCarPropertyRegistryDeliveryMessage", new ActionMessage(
+                            "error.requiredDocumentDelivery"));
+                    result = false;
+                } else if ((isStudent || isElectronicDelivery(parkingForm, "registry2"))
+                        && parkingRequestFactory.getSecondCarPropertyRegistryInputStream() == null) {
+                    actionMessages.add("secondCarPropertyRegistryMessage", new ActionMessage(
+                            "error.requiredStudentField"));
+                    parkingForm.set("registry2", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
+                    result = false;
+                }
+                if (hasNotDeliveryValue(parkingForm, "insurance2")) {
+                    actionMessages.add("secondInsuranceDeliveryMessage", new ActionMessage(
+                            "error.requiredDocumentDelivery"));
+                    result = false;
+                } else if ((isStudent || isElectronicDelivery(parkingForm, "insurance2"))
+                        && parkingRequestFactory.getSecondInsuranceInputStream() == null) {
+                    actionMessages.add("secondInsuranceMessage", new ActionMessage(
+                            "error.requiredStudentField"));
+                    parkingForm.set("insurance2", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
+                    result = false;
+                }
+                if (!isOwner(parkingForm, "ownVehicle2")) {
+                    parkingForm.set("ownVehicle2", false);
+                    if (hasNotDeliveryValue(parkingForm, "Id2")) {
+                        actionMessages.add("secondCarOwnerIdDeliveryMessage", new ActionMessage(
+                                "error.requiredDocumentDelivery"));
+                        result = false;
+                    } else if ((isStudent || isElectronicDelivery(parkingForm, "Id2"))
+                            && parkingRequestFactory.getSecondCarOwnerIdInputStream() == null) {
+                        actionMessages.add("secondCarOwnerIdMessage", new ActionMessage(
+                                "error.requiredStudentField"));
+                        parkingForm.set("Id2", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
+                        result = false;
+                    }
+                    if (hasNotDeliveryValue(parkingForm, "declaration2")) {
+                        actionMessages.add("secondDeclarationAuthorizationDeliveryMessage",
+                                new ActionMessage("error.requiredDocumentDelivery"));
+                        result = false;
+                    } else if ((isStudent || isElectronicDelivery(parkingForm, "declaration2"))
+                            && parkingRequestFactory.getSecondDeclarationAuthorizationInputStream() == null) {
+                        actionMessages.add("secondDeclarationAuthorizationMessage", new ActionMessage(
+                                "error.requiredStudentField"));
+                        parkingForm.set("declaration2", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
+                        result = false;
+                    }
+                }
+            }
+        }
+
         saveMessages(request, actionMessages);
         return result;
     }
@@ -330,11 +462,12 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         ParkingRequestFactoryCreator parkingRequestFactoryCreator = (ParkingRequestFactoryCreator) getFactoryObject();
         request.setAttribute("parkingRequestFactoryCreator", parkingRequestFactoryCreator);
         DynaActionForm parkingForm = (DynaActionForm) actionForm;
-        if (!isFirstCarDataValid(parkingRequestFactoryCreator, request)) {
-            RenderUtils.invalidateViewState();        
+        if (!checkRequestFields(parkingRequestFactoryCreator, request, parkingForm)) {
+            RenderUtils.invalidateViewState();
             return mapping.getInputForward();
         }
         ajustParkingRequest(parkingForm, parkingRequestFactoryCreator);
+
         if (!areFileNamesValid(parkingRequestFactoryCreator, request)) {
             RenderUtils.invalidateViewState();
             return mapping.getInputForward();
@@ -345,34 +478,34 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
     private void ajustParkingRequest(DynaActionForm parkingForm,
             ParkingRequestFactory parkingRequestFactory) {
-        if (getElement(parkingForm, "driverLicense")) {
+        if (!isElectronicDelivery(parkingForm, "driverLicense")) {
             parkingRequestFactory.setDriverLicenseFileName(null);
             parkingRequestFactory.setDriverLicenseInputStream(null);
         }
-        if (getElement(parkingForm, "registry1")) {
+        if (!isElectronicDelivery(parkingForm, "registry1")) {
             parkingRequestFactory.setFirstCarPropertyRegistryFileName(null);
             parkingRequestFactory.setFirstCarPropertyRegistryInputStream(null);
         }
-        if (getElement(parkingForm, "insurance1")) {
+        if (!isElectronicDelivery(parkingForm, "insurance1")) {
             parkingRequestFactory.setFirstInsuranceFileName(null);
             parkingRequestFactory.setFirstInsuranceInputStream(null);
         }
 
-        if (getElement(parkingForm, "registry2")) {
+        if (!isElectronicDelivery(parkingForm, "registry2")) {
             parkingRequestFactory.setSecondCarPropertyRegistryFileName(null);
             parkingRequestFactory.setSecondCarPropertyRegistryInputStream(null);
         }
-        if (getElement(parkingForm, "insurance2")) {
+        if (!isElectronicDelivery(parkingForm, "insurance2")) {
             parkingRequestFactory.setSecondInsuranceFileName(null);
             parkingRequestFactory.setSecondInsuranceInputStream(null);
         }
 
-        if (!getElement(parkingForm, "ownVehicle1")) {
-            if (getElement(parkingForm, "Id1")) {
+        if (!isOwner(parkingForm, "ownVehicle1")) {
+            if (!isElectronicDelivery(parkingForm, "Id1")) {
                 parkingRequestFactory.setFirstCarOwnerIdFileName(null);
                 parkingRequestFactory.setFirstCarOwnerIdInputStream(null);
             }
-            if (getElement(parkingForm, "declaration1")) {
+            if (!isElectronicDelivery(parkingForm, "declaration1")) {
                 parkingRequestFactory.setFirstDeclarationAuthorizationFileName(null);
                 parkingRequestFactory.setFirstDeclarationAuthorizationInputStream(null);
             }
@@ -382,12 +515,12 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             parkingRequestFactory.setFirstDeclarationAuthorizationFileName(null);
             parkingRequestFactory.setFirstDeclarationAuthorizationInputStream(null);
         }
-        if (!getElement(parkingForm, "ownVehicle2")) {
-            if (getElement(parkingForm, "Id2")) {
+        if (!isOwner(parkingForm, "ownVehicle2")) {
+            if (!isElectronicDelivery(parkingForm, "Id2")) {
                 parkingRequestFactory.setSecondCarOwnerIdFileName(null);
                 parkingRequestFactory.setSecondCarOwnerIdInputStream(null);
             }
-            if (getElement(parkingForm, "declaration2")) {
+            if (!isElectronicDelivery(parkingForm, "declaration2")) {
                 parkingRequestFactory.setSecondDeclarationAuthorizationFileName(null);
                 parkingRequestFactory.setSecondDeclarationAuthorizationInputStream(null);
             }
@@ -399,10 +532,24 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         }
     }
 
-    private boolean getElement(DynaActionForm parkingForm, String elementName) {
-        if (parkingForm.get(elementName) != null) {
-            return ((Boolean) parkingForm.get(elementName)).booleanValue();
-        }
-        return true;
+    private boolean isOwner(DynaActionForm parkingForm, String elementName) {
+        final Boolean elementValue = (Boolean) parkingForm.get(elementName);
+        return elementValue != null && elementValue.booleanValue();
+    }
+
+    private boolean isElectronicDelivery(DynaActionForm parkingForm, String elementName) {
+        String element = parkingForm.getString(elementName);
+        return element != null && element.length() != 0
+                && DocumentDeliveryType.valueOf(element) == DocumentDeliveryType.ELECTRONIC_DELIVERY;
+    }
+
+    private boolean hasNotDeliveryValue(DynaActionForm parkingForm, String elementName) {
+        String element = parkingForm.getString(elementName);
+        return element == null || element.length() == 0;
+    }
+
+    private boolean isStudent(IUserView userView) {
+        return (userView.getPerson().getTeacher() != null || userView.getPerson().getEmployee() != null) ? false
+                : true;
     }
 }

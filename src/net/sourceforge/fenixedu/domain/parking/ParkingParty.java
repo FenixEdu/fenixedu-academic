@@ -22,8 +22,10 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public boolean getHasAllNecessaryPersonalInfo() {
-        return ((((Person) getParty()).getWorkPhone().length() != 0 || ((Person) getParty()).getMobile()
-                .length() != 0) && ((Person) getParty()).getEmail().length() != 0);
+        Person person = (Person) getParty();
+        return (((person.getWorkPhone() != null && person.getWorkPhone().length() != 0) || (person
+                .getMobile() != null && person.getMobile().length() != 0)) && (person.getEmail() != null && person
+                .getEmail().length() != 0));
     }
 
     public ParkingRequest getFirstRequest() {
