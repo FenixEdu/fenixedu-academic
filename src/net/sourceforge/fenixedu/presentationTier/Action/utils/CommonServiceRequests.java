@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -67,7 +68,7 @@ public class CommonServiceRequests {
         return infoExecutionDegree;
     }
 
-	public static List getInfoExecutionYears() throws FenixFilterException, FenixServiceException {
+	public static List<InfoExecutionYear> getInfoExecutionYears() throws FenixFilterException, FenixServiceException {
 		return (List) ServiceUtils.executeService(null, "ReadExecutionYearsService", null);
 	}
 

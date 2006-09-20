@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -61,7 +62,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
         licenciaturas.add(new LabelValueBean("< Todos >", ""));
         Iterator iterator = executionDegreeList.iterator();
         int index = 0;
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
         
         while (iterator.hasNext()) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();

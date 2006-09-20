@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
@@ -86,7 +87,7 @@ public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
         List<InsuranceTransaction> payedInsurances = (List<InsuranceTransaction>) ServiceUtils
                 .executeService(SessionUtils.getUserView(request), "ListPayedInsurancesByDates", args);
 
-        ResourceBundle rb = ResourceBundle.getBundle("resources.ApplicationResources");
+        ResourceBundle rb = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
         String functionalityName = rb
                 .getString("link.masterDegree.administrativeOffice.gratuity.listPayedInsurances");
 

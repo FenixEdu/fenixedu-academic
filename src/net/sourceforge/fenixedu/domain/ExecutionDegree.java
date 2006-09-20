@@ -500,24 +500,12 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
             return Collections.EMPTY_LIST;
         }
 
-        final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
+        return getAllByExecutionYearAndDegreeType(executionYear, typeOfCourse);
+    }
 
-        for (final ExecutionDegree executionDegree : RootDomainObject.getInstance()
-                .getExecutionDegrees()) {
-            if (!year.equalsIgnoreCase(executionDegree.getExecutionYear().getYear())) {
-                continue;
-            }
-
-            if (!typeOfCourse.equals(executionDegree.getDegreeCurricularPlan().getDegree()
-                    .getTipoCurso())) {
-                continue;
-            }
-
-            result.add(executionDegree);
-        }
-        Collections.sort(result, COMPARATOR_BY_DEGREE_CURRICULAR_PLAN_ID_INTERNAL_DESC);
-
-        return result;
+    private DegreeType getDegreeType() {
+	return getDegree().getDegreeType();
     }
 
     public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(ExecutionYear executionYear,
@@ -528,15 +516,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         }
 
         final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-        for (final ExecutionDegree executionDegree : RootDomainObject.getInstance()
-                .getExecutionDegrees()) {
-
-            if (executionDegree.getExecutionYear() != executionYear) {
-                continue;
-            }
-
-            if (!typeOfCourse.equals(executionDegree.getDegreeCurricularPlan().getDegree()
-                    .getTipoCurso())) {
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+            if (!typeOfCourse.equals(executionDegree.getDegreeType())) {
                 continue;
             }
 

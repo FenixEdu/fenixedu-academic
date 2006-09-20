@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -60,7 +61,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             this.choosenExecutionYearID = Integer.valueOf(0);
         }
 
-        this.bundle = ResourceBundle.getBundle("resources.EnumerationResources");
+        this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
     }
 
     public List getExecutionYears() throws FenixFilterException, FenixServiceException {

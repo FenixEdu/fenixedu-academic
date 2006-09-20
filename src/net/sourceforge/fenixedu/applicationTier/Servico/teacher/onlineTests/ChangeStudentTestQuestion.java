@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
@@ -144,7 +145,7 @@ public class ChangeStudentTestQuestion extends Service {
                     studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
                     studentTestLog.setStudent(studentTestQuestion.getStudent());
                     studentTestLog.setDate(Calendar.getInstance().getTime());
-                    ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
+                    ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
                     studentTestLog.setEvent(MessageFormat.format(bundle
                             .getString("message.changeStudentQuestionLogMessage"),
                             new Object[] { studentTestQuestion.getTestQuestionOrder() }));
@@ -252,7 +253,7 @@ public class ChangeStudentTestQuestion extends Service {
     }
 
     private Advisory getAdvisory(DistributedTest distributedTest, String path) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
         // Create Advisory
         Advisory advisory = new Advisory();
         advisory.setCreated(Calendar.getInstance().getTime());

@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
@@ -1524,13 +1525,13 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     private String createDefaultDistributedTestInfo(InfoTest infoTest) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
         return MessageFormat.format(bundle.getString("message.distributeTest.evaluation"), new Object[] { infoTest.getTitle(),
                 infoTest.getNumberOfQuestions() });
     }
 
     private String createDefaultDistributedInquiryInfo() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
         return bundle.getString("message.distributeTest.inquiry");
     }
 }

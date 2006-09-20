@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.Duration;
@@ -141,7 +142,7 @@ public class WorkDaySheet implements Serializable {
         if (getDate() == null) {
             return "";
         }
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
         return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
                 .toString()
                 + "_ACRONYM");

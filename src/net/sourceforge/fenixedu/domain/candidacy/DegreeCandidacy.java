@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.util.EntryPhase;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -119,7 +120,7 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.CandidateResources").getString(
+	return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale()).getString(
 		"label.studentCandidacy")
 		+ " - "
 		+ getExecutionDegree().getDegreeCurricularPlan().getName()

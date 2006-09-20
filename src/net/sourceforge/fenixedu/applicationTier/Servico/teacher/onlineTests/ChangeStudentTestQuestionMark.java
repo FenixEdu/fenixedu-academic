@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseLID;
@@ -125,7 +126,7 @@ public class ChangeStudentTestQuestionMark extends Service {
             studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
             studentTestLog.setStudent(studentTestQuestion.getStudent());
             studentTestLog.setDate(Calendar.getInstance().getTime());
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
             studentTestLog.setEvent(MessageFormat.format(bundle
                     .getString("message.changeStudentMarkLogMessage"), new Object[] { newMark }));
             infoSiteDistributedTestAdvisory.setInfoStudentList(group);

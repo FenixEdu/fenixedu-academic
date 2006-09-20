@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -23,7 +24,7 @@ public abstract class TeacherServiceDistributionChart {
 
 	protected List<ExecutionPeriod> executionPeriodList = null;
 
-	protected ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DepartmentMemberResources");
+	protected ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());
 
 	public abstract void execute(final OutputStream outputStream) throws IOException;
 	

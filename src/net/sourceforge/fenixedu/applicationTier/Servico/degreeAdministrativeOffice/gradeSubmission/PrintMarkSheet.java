@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.UnableToPrint
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 
 
@@ -41,7 +42,7 @@ public class PrintMarkSheet extends Service{
 		Map parameters = new HashMap();
 		parameters.put("markSheet", markSheet);
 		parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
-		ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources");
+		ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", LanguageUtils.getLocale());
 		List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluations());
 		Collections.sort(evaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
 

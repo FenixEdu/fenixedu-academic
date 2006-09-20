@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class CreateTeacherServiceDistribution extends Service {
 	public TeacherServiceDistribution run(List<Integer> executionPeriodIdList,
@@ -19,7 +20,7 @@ public class CreateTeacherServiceDistribution extends Service {
 		List<ExecutionPeriod> executionPeriodList = getExecutionPeriods(executionPeriodIdList);
 
 		ResourceBundle rb = ResourceBundle
-				.getBundle("resources.DepartmentMemberResources");
+				.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());
 
 		Person creator = (Person) rootDomainObject.readPartyByOID(creatorId);
 

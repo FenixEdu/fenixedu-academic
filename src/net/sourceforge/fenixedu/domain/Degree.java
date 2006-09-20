@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -271,9 +272,9 @@ public class Degree extends Degree_Base {
 
     public String getPresentationName() {
         final ResourceBundle enumResourceBundle = ResourceBundle
-                .getBundle("resources.EnumerationResources");
+                .getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
         final ResourceBundle appResourceBundle = ResourceBundle
-                .getBundle("resources.ApplicationResources");
+                .getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
         return enumResourceBundle.getString(getTipoCurso().toString()) + " "
                 + appResourceBundle.getString("label.in") + " " + getNome();
     }

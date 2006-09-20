@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.State;
 
 import org.joda.time.YearMonthDay;
@@ -69,7 +70,7 @@ public class EditMasterDegreeCandidate extends Service {
 
     private void sendEmailToCandidate(MasterDegreeCandidate masterDegreeCandidate,
 	    CandidateSituation candidateSituation) {
-	ResourceBundle rb = ResourceBundle.getBundle("resources.ApplicationResources");
+	ResourceBundle rb = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
 	List<String> toList = new ArrayList<String>();
 	List CCList, BCCList;
 	CCList = new ArrayList();

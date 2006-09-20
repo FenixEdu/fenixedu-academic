@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class DFACandidacy extends DFACandidacy_Base {
 
@@ -37,7 +38,7 @@ public class DFACandidacy extends DFACandidacy_Base {
 
     @Override
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.CandidateResources").getString("label.dfaCandidacy")
+        return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale()).getString("label.dfaCandidacy")
                 + " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
                 + getExecutionDegree().getExecutionYear().getYear();
     }

@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -55,7 +56,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         HashMap<String, WorkScheduleDaySheet> workScheduleDays = new HashMap<String, WorkScheduleDaySheet>();
         if (employee.getAssiduousness() != null) {
             if (employee.getAssiduousness().getCurrentSchedule() != null) {
-                ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources");
+                ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
                 WorkWeek workWeek = new WorkWeek(EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY));
                 for (WorkSchedule workSchedule : employee.getAssiduousness().getCurrentSchedule()
                         .getWorkSchedules()) {

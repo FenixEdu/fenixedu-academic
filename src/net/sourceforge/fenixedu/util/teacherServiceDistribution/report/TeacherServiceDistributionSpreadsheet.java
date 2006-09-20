@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.Pr
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.ValuationTeacherDTOEntry;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationTeacher;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -32,7 +33,7 @@ public class TeacherServiceDistributionSpreadsheet {
 	private String spreadsheetName = null;
 
 	private HSSFWorkbook workbook = null;
-	private ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DepartmentMemberResources");
+	private ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());
 
 	public TeacherServiceDistributionSpreadsheet(
 			List<CourseValuationDTOEntry> _courseValuationDTOEntryList,

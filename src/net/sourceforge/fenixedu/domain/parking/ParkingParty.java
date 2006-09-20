@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class ParkingParty extends ParkingParty_Base {
 
@@ -37,7 +38,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public String getParkingAcceptedRegulationMessage() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils.getLocale());
         String name = getParty().getName();
         String number = "";
         if (getParty().isPerson()) {

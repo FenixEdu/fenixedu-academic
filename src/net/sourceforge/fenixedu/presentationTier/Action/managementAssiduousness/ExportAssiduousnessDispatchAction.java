@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 
@@ -83,11 +84,11 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
         YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
                 endDay);
 
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
         final IUserView userView = SessionUtils.getUserView(request);
         List<EmployeeWorkSheet> employeeWorkSheetList = null;
         Map parameters = new HashMap();
-        ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources");
+        ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
         String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
         StringBuilder stringBuilder = new StringBuilder(month).append(" ").append(yearMonth.getYear());
 

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.Distribu
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO.TeacherDistributionServiceEntryDTO;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -205,7 +206,7 @@ public class ViewTeacherService extends FenixBackingBean {
 	private List<SelectItem> getExecutionPeriods() throws FenixFilterException,
 			FenixServiceException {
 
-		ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources");
+		ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());
 		
 		List<SelectItem> result = new ArrayList<SelectItem>();
 		result.add(new SelectItem(BOTH_SEMESTERS_ID, rb.getString("label.teacherService.bothSemesters")));
@@ -370,7 +371,7 @@ public class ViewTeacherService extends FenixBackingBean {
 	private List<SelectItem> getViewOptions() throws FenixFilterException,
 			FenixServiceException {
 		
-		ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources");
+		ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());
 
 		List<SelectItem> result = new ArrayList<SelectItem>();
 		result.add(new SelectItem(VIEW_COURSE_INFORMATION, rb.getString("label.teacherService.viewCourseInfo")));
@@ -384,7 +385,7 @@ public class ViewTeacherService extends FenixBackingBean {
 	private List<SelectItem> getByTeacherViewOptions() throws FenixFilterException,
 		FenixServiceException {
 		
-		ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources");	
+		ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());	
 		List<SelectItem> result = new ArrayList<SelectItem>();
 		result.add(new SelectItem(VIEW_CREDITS_INFORMATION, rb.getString("label.teacherService.viewCreditsInfo")));
 		
