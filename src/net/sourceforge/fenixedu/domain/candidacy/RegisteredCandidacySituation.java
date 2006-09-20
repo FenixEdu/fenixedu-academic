@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentKind;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -66,7 +65,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	StudentState state = new StudentState(StudentState.INSCRITO);
 	Person person = getCandidacy().getPerson();
 	Registration registration = new Registration(person, null, studentKind, state, false, false,
-		EntryPhase.FIRST_PHASE_OBJ, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+		EntryPhase.FIRST_PHASE_OBJ);
 	registration.setInterruptedStudies(false);
 
 	person.getStudent().addRegistrations(registration);

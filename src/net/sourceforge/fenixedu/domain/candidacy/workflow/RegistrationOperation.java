@@ -112,7 +112,7 @@ public class RegistrationOperation extends CandidacyOperation {
 	final Registration registration = new Registration(getDegreeCandidacy().getPerson(), Student
 		.generateStudentNumber(), StudentKind.readByStudentType(StudentType.NORMAL),
 		new StudentState(StudentState.INSCRITO), Boolean.valueOf(false), Boolean.valueOf(false),
-		getExecutionDegree().getDegree().getDegreeType(), degreeCandidacy);
+		degreeCandidacy);
 
 	registration.getStudent().setPersonalDataAuthorizationForCurrentExecutionYear(
 		getDegreeCandidacy().getStudentPersonalDataAuthorizationChoice());

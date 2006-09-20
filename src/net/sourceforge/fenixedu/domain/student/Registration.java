@@ -87,15 +87,15 @@ public class Registration extends Registration_Base {
     @Deprecated
     // NOTE: use this for legacy code only
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
-	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
-	    DegreeType degreeType) {
+	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, 
+	    EntryPhase entryPhase) {
 	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, 
 		false, null);
 	setEntryPhase(entryPhase);
     }
 
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
-	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, DegreeType degreeType,
+	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden,
 	    StudentCandidacy studentCandidacy) {
 	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, 
 		false, studentCandidacy);

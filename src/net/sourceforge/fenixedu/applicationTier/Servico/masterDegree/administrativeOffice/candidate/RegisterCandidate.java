@@ -186,7 +186,7 @@ public class RegisterCandidate extends Service {
         StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
         StudentState state = new StudentState(StudentState.INSCRITO);
 	registration = new Registration(person, studentNumber, studentKind, state, false, false,
-                EntryPhase.FIRST_PHASE_OBJ, DegreeType.MASTER_DEGREE);
+                EntryPhase.FIRST_PHASE_OBJ);
         registration.setInterruptedStudies(false);
         
         return registration;
