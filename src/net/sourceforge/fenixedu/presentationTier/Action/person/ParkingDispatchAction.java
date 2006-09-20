@@ -239,7 +239,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             HttpServletRequest request) {
         ActionMessages actionMessages = getActionMessages(request);
         boolean result = true;
-        if (parkingRequestFactory.getDriverLicenseInputStream() != null) {
+        if (parkingRequestFactory.getDriverLicenseFileName() != null) {
             if (!validateFileName(parkingRequestFactory.getDriverLicenseFileName())) {
                 actionMessages.add("driverLicenseMessage", new ActionMessage("error.file.extension"));
                 parkingRequestFactory.setDriverLicenseFileName(null);
@@ -253,7 +253,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 result = false;
             }
         }
-        if (parkingRequestFactory.getFirstCarOwnerIdInputStream() != null) {
+        if (parkingRequestFactory.getFirstCarOwnerIdFileName() != null) {
             if (!validateFileName(parkingRequestFactory.getFirstCarOwnerIdFileName())) {
                 actionMessages.add("firstCarOwnerIdMessage", new ActionMessage("error.file.extension"));
                 parkingRequestFactory.setFirstCarOwnerIdFileName(null);
@@ -267,7 +267,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 result = false;
             }
         }
-        if (parkingRequestFactory.getFirstCarPropertyRegistryInputStream() != null) {
+        if (parkingRequestFactory.getFirstCarPropertyRegistryFileName() != null) {
             if (!validateFileName(parkingRequestFactory.getFirstCarPropertyRegistryFileName())) {
                 actionMessages.add("firstCarPropertyRegistryMessage", new ActionMessage(
                         "error.file.extension"));
@@ -283,7 +283,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 result = false;
             }
         }
-        if (parkingRequestFactory.getFirstDeclarationAuthorizationInputStream() != null) {
+        if (parkingRequestFactory.getFirstDeclarationAuthorizationFileName() != null) {
             if (!validateFileName(parkingRequestFactory.getFirstDeclarationAuthorizationFileName())) {
                 actionMessages.add("firstDeclarationAuthorizationMessage", new ActionMessage(
                         "error.file.extension"));
@@ -299,7 +299,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 result = false;
             }
         }
-        if (parkingRequestFactory.getFirstInsuranceInputStream() != null) {
+        if (parkingRequestFactory.getFirstInsuranceFileName() != null) {
             if (!validateFileName(parkingRequestFactory.getFirstInsuranceFileName())) {
                 actionMessages.add("firstInsuranceMessage", new ActionMessage("error.file.extension"));
                 parkingRequestFactory.setFirstInsuranceFileName(null);
@@ -313,7 +313,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 result = false;
             }
         }
-        if (parkingRequestFactory.getSecondCarOwnerIdInputStream() != null) {
+        if (parkingRequestFactory.getSecondCarOwnerIdFileName() != null) {
             if (!validateFileName(parkingRequestFactory.getSecondCarOwnerIdFileName())) {
                 actionMessages.add("secondCarOwnerIdMessage", new ActionMessage("error.file.extension"));
                 parkingRequestFactory.setSecondCarOwnerIdFileName(null);
@@ -327,7 +327,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 result = false;
             }
         }
-        if (parkingRequestFactory.getSecondCarPropertyRegistryInputStream() != null) {
+        if (parkingRequestFactory.getSecondCarPropertyRegistryFileName() != null) {
             if (!validateFileName(parkingRequestFactory.getSecondCarPropertyRegistryFileName())) {
                 actionMessages.add("secondCarPropertyRegistryMessage", new ActionMessage(
                         "error.file.extension"));
@@ -343,7 +343,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 result = false;
             }
         }
-        if (parkingRequestFactory.getSecondDeclarationAuthorizationInputStream() != null) {
+        if (parkingRequestFactory.getSecondDeclarationAuthorizationFileName() != null) {
             if (!validateFileName(parkingRequestFactory.getSecondDeclarationAuthorizationFileName())) {
                 actionMessages.add("secondDeclarationAuthorizationMessage", new ActionMessage(
                         "error.file.extension"));
@@ -359,7 +359,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 result = false;
             }
         }
-        if (parkingRequestFactory.getSecondInsuranceInputStream() != null) {
+        if (parkingRequestFactory.getSecondInsuranceFileName() != null) {
             if (!validateFileName(parkingRequestFactory.getSecondInsuranceFileName())) {
                 actionMessages.add("secondInsuranceMessage", new ActionMessage("error.file.extension"));
                 parkingRequestFactory.setSecondInsuranceFileName(null);
