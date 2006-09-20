@@ -60,12 +60,8 @@ public class ParkingParty extends ParkingParty_Base {
             }
 
         }
-        String id = "";
-        if (getParty().isPerson()) {
-            id = ((Person) getParty()).getDocumentIdNumber();
-        }
 
         return MessageFormat.format(bundle.getString("message.acceptedRegulation"), new Object[] { name,
-                number, id });
+                number});
     }
 }

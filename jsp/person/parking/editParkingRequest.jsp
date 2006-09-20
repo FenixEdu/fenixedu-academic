@@ -28,7 +28,7 @@ function hideInputBoxes(){
 		document.getElementById('registry1File').style.display='none';		
 		document.getElementById('registry1DivTop').style.display='block';
 	}
-	if(document.getElementsByName('insurance1')[2].checked==false){
+	if(document.getElementsByName('insurance1')[1].checked==false){
 		document.getElementById('insurance1Div').style.display='none';
 		document.getElementById('insurance1File').style.display='none';		
 		document.getElementById('insurance1DivTop').style.display='block';
@@ -38,7 +38,7 @@ function hideInputBoxes(){
 		document.getElementById('Id1File').style.display='none';		
 		document.getElementById('Id1DivTop').style.display='block';
 	}
-	if(document.getElementsByName('declaration1')[2].checked==false){	
+	if(document.getElementsByName('declaration1')[1].checked==false){	
 		document.getElementById('declaration1Div').style.display='none';
 		document.getElementById('declaration1File').style.display='none';		
 		document.getElementById('declaration1DivTop').style.display='block';
@@ -48,7 +48,7 @@ function hideInputBoxes(){
 		document.getElementById('registry2File').style.display='none';		
 		document.getElementById('registry2DivTop').style.display='block';
 	}
-	if(document.getElementsByName('insurance2')[2].checked==false){
+	if(document.getElementsByName('insurance2')[1].checked==false){
 		document.getElementById('insurance2Div').style.display='none';
 		document.getElementById('insurance2File').style.display='none';		
 		document.getElementById('insurance2DivTop').style.display='block';
@@ -58,7 +58,7 @@ function hideInputBoxes(){
 		document.getElementById('Id2File').style.display='none';		
 		document.getElementById('Id2DivTop').style.display='block';
 	}
-	if(document.getElementsByName('declaration2')[2].checked==false){
+	if(document.getElementsByName('declaration2')[1].checked==false){
 		document.getElementById('declaration2Div').style.display='none';
 		document.getElementById('declaration2File').style.display='none';		
 		document.getElementById('declaration2DivTop').style.display='block';
@@ -154,14 +154,14 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		<tr>
 			<th class="parking"><div id="driverLicenseDivTop" style="display:none"><bean:message key="label.driverLicenseDocument" bundle="PARKING_RESOURCES"/>:</div></th>
 			<td class="parking">
-				<html:radio name="parkingForm" property="driverLicense" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('driverLicenseDiv','driverLicenseFile', 'none', 'block')">
-					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=driverLicenseLabel%>"/>
-				</html:radio>
-				<br/>
 				<html:radio name="parkingForm" property="driverLicense" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('driverLicenseDiv','driverLicenseFile', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=driverLicenseLabel%>"/>
 				</html:radio>
 				<br/>
+				<html:radio name="parkingForm" property="driverLicense" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('driverLicenseDiv','driverLicenseFile', 'none', 'block')">
+					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=driverLicenseLabel%>"/>
+				</html:radio>
+				<br/>				
 				<html:radio name="parkingForm" property="driverLicense" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('driverLicenseDiv','driverLicenseFile', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=driverLicenseLabel%>"/>
 				</html:radio>
@@ -222,14 +222,14 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		<tr>
 			<th class="parking"><div id="registry1DivTop" style="display:none"><bean:message key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
 			<td class="parking">
-				<html:radio name="parkingForm" property="registry1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('registry1Div','registry1File', 'none', 'block')">
-					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
-				</html:radio>
-				<br/>
 				<html:radio name="parkingForm" property="registry1" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('registry1Div','registry1File', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
 				<br/>
+				<html:radio name="parkingForm" property="registry1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('registry1Div','registry1File', 'none', 'block')">
+					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
+				</html:radio>
+				<br/>				
 				<html:radio name="parkingForm" property="registry1" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('registry1Div','registry1File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
@@ -264,15 +264,11 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
 		<tr>
 			<th class="parking"><div id="insurance1DivTop" style="display:none"><bean:message key="label.firstInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">
+			<td class="parking">		
 				<html:radio name="parkingForm" property="insurance1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('insurance1Div','insurance1File', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
 				</html:radio>
-				<br/>			
-				<html:radio name="parkingForm" property="insurance1" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('insurance1Div','insurance1File', 'none', 'block')">
-					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
-				</html:radio>
-				<br/>
+				<br/>					
 				<html:radio name="parkingForm" property="insurance1" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('insurance1Div','insurance1File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
 				</html:radio>
@@ -313,15 +309,15 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
 		<tr>
 			<th class="parking"><div id="Id1DivTop" style="display:none"><bean:message key="label.firstCarOwnerId" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">
-				<html:radio name="parkingForm" property="Id1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('Id1Div','Id1File', 'none', 'block')">
-					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
-				</html:radio>
-				<br/>			
+			<td class="parking">	
 				<html:radio name="parkingForm" property="Id1" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('Id1Div','Id1File', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
 				<br/>
+				<html:radio name="parkingForm" property="Id1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('Id1Div','Id1File', 'none', 'block')">
+					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
+				</html:radio>
+				<br/>					
 				<html:radio name="parkingForm" property="Id1" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('Id1Div','Id1File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
@@ -354,15 +350,11 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
 		<tr>
 			<th class="parking"><div id="declaration1DivTop" style="display:none"><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">
-				<html:radio name="parkingForm" property="declaration1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('declaration1Div','declaration1File', 'none', 'block')">
-					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>
+			<td class="parking">	
+				<html:radio name="parkingForm" property="declaration1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('declaration1Div','Id1File', 'none', 'block')">
+					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
-				<br/>				
-				<html:radio name="parkingForm" property="declaration1" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('declaration1Div','declaration1File', 'none', 'block')">
-					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>
-				</html:radio>
-				<br/>
+				<br/>						
 				<html:radio name="parkingForm" property="declaration1" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('declaration1Div','declaration1File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>
 				</html:radio>
@@ -431,15 +423,15 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		</tr>
 		<tr>
 			<th class="parking"><div id="registry2DivTop" style="display:none"><bean:message key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">
-				<html:radio name="parkingForm" property="registry2" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('registry2Div','registry2File', 'none', 'block')">
-					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
-				</html:radio>
-				<br/>				
+			<td class="parking">		
 				<html:radio name="parkingForm" property="registry2" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('registry2Div','registry2File', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
 				<br/>
+				<html:radio name="parkingForm" property="registry2" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('registry2Div','registry2File', 'none', 'block')">
+					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
+				</html:radio>
+				<br/>						
 				<html:radio name="parkingForm" property="registry2" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('registry2Div','registry2File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
@@ -473,15 +465,11 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
 		<tr>
 			<th class="parking"><div id="insurance2DivTop" style="display:none"><bean:message key="label.secondInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">
+			<td class="parking">		
 				<html:radio name="parkingForm" property="insurance2" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('insurance2Div','insurance2File', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
-				<br/>			
-				<html:radio name="parkingForm" property="insurance2" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('insurance2Div','insurance2File', 'none', 'block')">
-					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
-				</html:radio>
-				<br/>
+				<br/>					
 				<html:radio name="parkingForm" property="insurance2" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('insurance2Div','insurance2File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
 				</html:radio>
@@ -523,15 +511,15 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
 		<tr>
 			<th class="parking"><div id="Id2DivTop" style="display:none"><bean:message key="label.secondCarOwnerId" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">
-				<html:radio name="parkingForm" property="Id2" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('Id2Div','Id2File', 'none', 'block')">
-					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
-				</html:radio>
-				<br/>			
+			<td class="parking">	
 				<html:radio name="parkingForm" property="Id2" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('Id2Div','Id2File', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
 				<br/>
+				<html:radio name="parkingForm" property="Id2" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('Id2Div','Id2File', 'none', 'block')">
+					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
+				</html:radio>
+				<br/>						
 				<html:radio name="parkingForm" property="Id2" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('Id2Div','Id2File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
@@ -564,15 +552,11 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
 		<tr>
 			<th class="parking"><div id="declaration2DivTop" style="display:none"><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">
+			<td class="parking">		
 				<html:radio name="parkingForm" property="declaration2" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('declaration2Div','declaration2File', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
-				<br/>			
-				<html:radio name="parkingForm" property="declaration2" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('declaration2Div','declaration2File', 'none', 'block')">
-					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>
-				</html:radio>
-				<br/>
+				<br/>					
 				<html:radio name="parkingForm" property="declaration2" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('declaration2Div','declaration2File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>
 				</html:radio>

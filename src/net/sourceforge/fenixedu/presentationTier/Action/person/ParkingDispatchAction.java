@@ -125,8 +125,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         ParkingRequest parkingRequest = parkingParty.getFirstRequest();
         if (parkingForm.get("ownVehicle1") == null) {
             if (parkingRequest != null
-                    && (parkingRequest.getFirstCarOwnerIdFileName() != null || parkingRequest
-                            .getFirstDeclarationAuthorizationFileName() != null)) {
+                    && (parkingRequest.getFirstCarOwnerIdDocumentState() != null || parkingRequest
+                            .getFirstCarDeclarationDocumentState() != null)) {
                 parkingForm.set("ownVehicle1", false);
             } else {
                 parkingForm.set("ownVehicle1", true);
@@ -134,8 +134,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         }
         if (parkingForm.get("ownVehicle2") == null) {
             if (parkingRequest != null
-                    && (parkingRequest.getSecondCarOwnerIdFileName() != null || parkingRequest
-                            .getSecondDeclarationAuthorizationFileName() != null)) {
+                    && (parkingRequest.getSecondCarOwnerIdDocumentState() != null || parkingRequest
+                            .getSecondCarDeclarationDocumentState() != null)) {
                 parkingForm.set("ownVehicle2", false);
             } else {
                 parkingForm.set("ownVehicle2", true);
@@ -188,49 +188,41 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 && getElementValue(parkingForm, "registry1").length() != 0) {
             parkingRequestFactory.setFirstCarPropertyRegistryDocumentState(ParkingDocumentState
                     .valueOf(getElementValue(parkingForm, "registry1")));
-            ;
         }
         if (getElementValue(parkingForm, "insurance1") != null
                 && getElementValue(parkingForm, "insurance1").length() != 0) {
             parkingRequestFactory.setFirstCarInsuranceDocumentState(ParkingDocumentState
                     .valueOf(getElementValue(parkingForm, "insurance1")));
-            ;
         }
         if (getElementValue(parkingForm, "Id1") != null
                 && getElementValue(parkingForm, "Id1").length() != 0) {
             parkingRequestFactory.setFirstCarOwnerIdDocumentState(ParkingDocumentState
                     .valueOf(getElementValue(parkingForm, "Id1")));
-            ;
         }
         if (getElementValue(parkingForm, "declaration1") != null
                 && getElementValue(parkingForm, "declaration1").length() != 0) {
             parkingRequestFactory.setFirstCarDeclarationDocumentState(ParkingDocumentState
                     .valueOf(getElementValue(parkingForm, "declaration1")));
-            ;
         }
         if (getElementValue(parkingForm, "registry2") != null
                 && getElementValue(parkingForm, "registry2").length() != 0) {
             parkingRequestFactory.setSecondCarPropertyRegistryDocumentState(ParkingDocumentState
                     .valueOf(getElementValue(parkingForm, "registry2")));
-            ;
         }
         if (getElementValue(parkingForm, "insurance2") != null
                 && getElementValue(parkingForm, "insurance2").length() != 0) {
             parkingRequestFactory.setSecondCarInsuranceDocumentState(ParkingDocumentState
                     .valueOf(getElementValue(parkingForm, "insurance2")));
-            ;
         }
         if (getElementValue(parkingForm, "Id2") != null
                 && getElementValue(parkingForm, "Id2").length() != 0) {
             parkingRequestFactory.setSecondCarOwnerIdDocumentState(ParkingDocumentState
                     .valueOf(getElementValue(parkingForm, "Id2")));
-            ;
         }
         if (getElementValue(parkingForm, "declaration2") != null
                 && getElementValue(parkingForm, "declaration2").length() != 0) {
             parkingRequestFactory.setSecondCarDeclarationDocumentState(ParkingDocumentState
                     .valueOf(getElementValue(parkingForm, "declaration2")));
-            ;
         }
 
     }
