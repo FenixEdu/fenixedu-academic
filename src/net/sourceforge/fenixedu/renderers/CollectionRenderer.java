@@ -898,6 +898,7 @@ public class CollectionRenderer extends OutputRenderer {
             } else {
                 return generateLinkComponent(object, rowIndex, columnIndex - (getNumberOfColumns() - getNumberOfLinks()));
             }
+        }
 
         protected HtmlComponent generateObjectComponent(int columnIndex, MetaObject object) {
             MetaSlot slot = getSlotUsingName(object, columnIndex);
@@ -1294,4 +1295,5 @@ public class CollectionRenderer extends OutputRenderer {
             return getOrder().compareTo(other.getOrder());
         }
     }
+    
 }
