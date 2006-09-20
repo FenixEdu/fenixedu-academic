@@ -15,18 +15,19 @@ read -s password
 
 function execute() {
 	echo ---------------------------------------- $1
-	mysql -u$USER -f -p$password $DB < $2
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2
 	echo
 }
 
 function executeWithTempFile() {
 	echo ---------------------------------------- $1
-	mysql -u$USER -f -p$password $DB < $2 > tmp.sql
-	mysql -u$USER -f -p$password $DB < tmp.sql	
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2 > tmp.sql
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < tmp.sql	
 	rm tmp.sql
 	echo
 }
 
 execute "Add some more fields the functionalities tables" AlterFunctionalitiesTables.sql
 execute "Add toplevel portals and manager functionalities to the model" AddManagerFuctionalities.sql
+execute "Set toplevel portals availability policy" UpdateAvailabilityPolicy.sql
 execute "Alter space table" alterSpaceTable.sql
