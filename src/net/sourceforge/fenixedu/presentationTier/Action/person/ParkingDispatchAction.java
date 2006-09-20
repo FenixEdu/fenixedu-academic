@@ -112,6 +112,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ParkingRequestFactoryEditor parkingRequestFactoryEditor = (ParkingRequestFactoryEditor) getFactoryObject();
+        parkingRequestFactoryEditor.saveInputStreams();
         request.setAttribute("parkingRequestFactoryEditor", parkingRequestFactoryEditor);
         DynaActionForm parkingForm = (DynaActionForm) actionForm;
 
@@ -469,6 +470,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ParkingRequestFactoryCreator parkingRequestFactoryCreator = (ParkingRequestFactoryCreator) getFactoryObject();
+        parkingRequestFactoryCreator.saveInputStreams();
         request.setAttribute("parkingRequestFactoryCreator", parkingRequestFactoryCreator);
         DynaActionForm parkingForm = (DynaActionForm) actionForm;
         if (!checkRequestFields(parkingRequestFactoryCreator, request, parkingForm)) {
