@@ -71,7 +71,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	request.setAttribute("selectedSpaceInformation", spaceInformation);
 	return mapping.findForward("ManageSpace");
     }
-   
+
     public ActionForward manageSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
@@ -167,20 +167,20 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	final Space space = spaceInformation.getSpace();
-	final SpaceAccessGroupType groupType = SpaceAccessGroupType.valueOf(request.getParameter("spaceAccessGroupType"));	
-		
+
 	final IViewState viewState = RenderUtils.getViewState();
 	AccessGroupPersonBean bean = (AccessGroupPersonBean) viewState.getMetaObject().getObject();
 	RenderUtils.invalidateViewState();
-		
-	final Object[] args = { space, groupType, (bean != null) ? bean.getPerson() : null, true};
+
+	final Object[] args = { space, (bean != null) ? bean.getAccessGroupType() : null,
+		(bean != null) ? bean.getPerson() : null, true };
 	try {
-	    executeService(request, "SpaceAccessGroupsManagement", args);   
+	    executeService(request, "SpaceAccessGroupsManagement", args);
 	} catch (FenixServiceException e) {
 	    addActionMessage(request, e.getMessage());
-	}	
+	}
 	return manageAccessGroups(mapping, form, request, response);
-    }    
+    }
 
     public ActionForward removePersonFromAccessGroup(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
@@ -188,26 +188,26 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	final Space space = spaceInformation.getSpace();
-	final SpaceAccessGroupType groupType = SpaceAccessGroupType.valueOf(request.getParameter("spaceAccessGroupType"));	
+	final SpaceAccessGroupType groupType = SpaceAccessGroupType.valueOf(request
+		.getParameter("spaceAccessGroupType"));
 	final Person person = getPersonFromParameter(request);
-		
+
 	final Object[] args = { space, groupType, person, false };
 	try {
-	    executeService(request, "SpaceAccessGroupsManagement", args);   
+	    executeService(request, "SpaceAccessGroupsManagement", args);
 	} catch (FenixServiceException e) {
 	    addActionMessage(request, e.getMessage());
-	}	
+	}
 	return manageAccessGroups(mapping, form, request, response);
-    }       
-    
-    
+    }
+
     // Private Methods
     private void saveMessages(HttpServletRequest request, DomainException e) {
 	ActionMessages actionMessages = new ActionMessages();
 	actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
 	saveMessages(request, actionMessages);
     }
-    
+
     private SpaceInformation getSpaceInformationFromParameter(final HttpServletRequest request) {
 	final String spaceInformationIDString = request.getParameterMap().containsKey(
 		"spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
@@ -216,16 +216,14 @@ public class ManageSpacesDA extends FenixDispatchAction {
 		.valueOf(spaceInformationIDString) : null;
 	return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
     }
-    
+
     private Person getPersonFromParameter(final HttpServletRequest request) {
-	final String personIDString = request.getParameterMap().containsKey(
-		"personID") ? request.getParameter("personID") : (String) request
-		.getAttribute("personID");
-	final Integer personID = personIDString != null ? Integer
-		.valueOf(personIDString) : null;
+	final String personIDString = request.getParameterMap().containsKey("personID") ? request
+		.getParameter("personID") : (String) request.getAttribute("personID");
+	final Integer personID = personIDString != null ? Integer.valueOf(personIDString) : null;
 	return (Person) rootDomainObject.readPartyByOID(personID);
     }
-    
+
     private Space getSpaceFromParameter(final HttpServletRequest request) {
 	final String spaceIDString = request.getParameter("spaceID");
 	final Integer spaceID = Integer.valueOf(spaceIDString);

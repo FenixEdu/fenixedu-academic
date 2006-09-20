@@ -39,19 +39,10 @@
 	    	</fr:layout>    	
 		</fr:view>		
 	</logic:notEmpty>		
-	<bean:define id="addPersonToPersonOccupationAccessGroupUrl">/manageSpaces.do?method=addPersonToAccessGroup&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&spaceAccessGroupType=<%=Space.SpaceAccessGroupType.PERSON_OCCUPATION.getName()%></bean:define>
-	<ul>
-		<li>
-			<fr:form action="<%= addPersonToPersonOccupationAccessGroupUrl %>">
-				<fr:create nested="true" id="addPersonToPersonOccupationAccessGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" schema="AddPersonToAccessGroup" />	   			
-				<html:submit><bean:message key="button.add" bundle="SPACE_RESOURCES"/></html:submit>
-			</fr:form>
-		</li>
-	</ul>
-	
-	<%-- Material: Extensions --%>	
+		
+	<%-- Material: Extensions --%>		
 	<h3 class="mtop2 mbottom0"><bean:message key="EXTENSION_OCCUPATION" bundle="ENUMERATION_RESOURCES"/></h3>				
-	<logic:notEmpty name="selectedSpace" property="extensionOccupationsAccessGroup">
+	<logic:notEmpty name="selectedSpace" property="extensionOccupationsAccessGroup">		
 		<fr:view schema="ViewPersonToListAccessGroups" name="selectedSpace" property="extensionOccupationsAccessGroup.elements">
 			<fr:layout name="tabular">      			
 	   			<fr:property name="rowClasses" value="listClasses"/>	
@@ -66,19 +57,17 @@
 	    	</fr:layout>    	
 		</fr:view>		
 	</logic:notEmpty>
-	<bean:define id="addPersonToExtensionOccupationAccessGroupUrl">/manageSpaces.do?method=addPersonToAccessGroup&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&spaceAccessGroupType=<%=Space.SpaceAccessGroupType.EXTENSION_OCCUPATION.getName()%></bean:define>
-	<ul>
-		<li>
-			<fr:form action="<%= addPersonToExtensionOccupationAccessGroupUrl %>">
-				<fr:create nested="true" id="addPersonToExtensionOccupationAccessGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" schema="AddPersonToAccessGroup" />	   			
-				<html:submit><bean:message key="button.add" bundle="SPACE_RESOURCES"/></html:submit>
-			</fr:form>
-		</li>
-	</ul>
-	
-	<p>
-		<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformationId">
+		
+	<%-- Add New Person --%>
+	<h3><bean:message key="label.add.person" bundle="SPACE_RESOURCES"/></h3>				
+	<bean:define id="addPersonToAccessGroupUrl">/manageSpaces.do?method=addPersonToAccessGroup&spaceInformationID=<bean:write name="selectedSpaceInformationId"/></bean:define>
+	<fr:form action="<%= addPersonToAccessGroupUrl %>">
+		<fr:create nested="true" id="addPersonToPersonOccupationAccessGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" schema="AddPersonToAccessGroup" />	   			
+		<html:submit><bean:message key="button.add" bundle="SPACE_RESOURCES"/></html:submit>
+	</fr:form>
+			
+	<p><html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformationId">
 			<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
-		</html:link>	
-	</p>
+	</html:link></p>
+	
 </logic:notEmpty>
