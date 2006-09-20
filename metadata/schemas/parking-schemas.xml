@@ -1,7 +1,7 @@
 <schema name="viewPersonInfo"
 	type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="name" key="label.name" bundle="PARKING_RESOURCES" />
-	<slot name="phone" key="label.phone" bundle="PARKING_RESOURCES" />
+	<slot name="workPhone" key="label.phone" bundle="PARKING_RESOURCES" />
 	<slot name="mobile" key="label.mobile" bundle="PARKING_RESOURCES" />
 	<slot name="email" key="label.email" bundle="PARKING_RESOURCES" />
 </schema>
@@ -16,6 +16,7 @@
 	<slot name="firstCarMake" bundle="PARKING_RESOURCES" />
 	<slot name="firstCarPlateNumber" bundle="PARKING_RESOURCES" />
 	<slot name="firstCarPropertyRegistryFileName" key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES" />
+	<slot name="firstCarInsuranceFileName" key="label.firstInsurance" bundle="PARKING_RESOURCES" />	
 	<slot name="firstCarOwnerIdFileName" key="label.firstCarOwnerId" bundle="PARKING_RESOURCES" />
 	<slot name="firstDeclarationAuthorizationFileName" key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES" />	
 </schema>
@@ -24,6 +25,7 @@
 	<slot name="secondCarMake" bundle="PARKING_RESOURCES" />
 	<slot name="secondCarPlateNumber" bundle="PARKING_RESOURCES" />
 	<slot name="secondCarPropertyRegistryFileName" key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES" />
+	<slot name="secondCarInsuranceFileName" key="label.secondInsurance" bundle="PARKING_RESOURCES" />	
 	<slot name="secondCarOwnerIdFileName" key="label.secondCarOwnerId" bundle="PARKING_RESOURCES" />
 	<slot name="secondDeclarationAuthorizationFileName" key="label.secondDeclarationAuthorization" bundle="PARKING_RESOURCES" />		
 </schema>

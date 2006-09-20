@@ -19,4 +19,9 @@ public class ParkingFile extends ParkingFile_Base {
                 externalStorageIdentification, permittedGroup);
 
     }
+
+    public void delete() {
+        setRootDomainObject(null);
+        super.deleteDomainObject();
+    }
 }

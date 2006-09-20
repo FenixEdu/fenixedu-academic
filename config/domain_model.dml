@@ -155,6 +155,7 @@ valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPh
 valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationValueType		as ValuationValueType;
 valueType net.sourceforge.fenixedu.domain.parking.ParkingRequestState							as ParkingRequestState;
 valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentType							as ParkingDocumentType;
+valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentState							as ParkingDocumentState;
 
 /*
 *
@@ -3737,7 +3738,16 @@ class net.sourceforge.fenixedu.domain.parking.ParkingRequest extends net.sourcef
 	String phone;
 	String mobile;
 	String email;
-}
+    ParkingDocumentState driverLicenseDocumentState;
+    ParkingDocumentState firstCarPropertyRegistryDocumentState;
+    ParkingDocumentState firstCarInsuranceDocumentState;
+    ParkingDocumentState firstCarOwnerIdDocumentState;
+    ParkingDocumentState firstCarDeclarationDocumentState;
+    ParkingDocumentState secondCarPropertyRegistryDocumentState;
+    ParkingDocumentState secondCarInsuranceDocumentState;
+    ParkingDocumentState secondCarOwnerIdDocumentState;    
+    ParkingDocumentState secondCarDeclarationDocumentState;
+   }
 
 class net.sourceforge.fenixedu.domain.parking.ParkingDocument extends net.sourceforge.fenixedu.domain.DomainObject {
 	ParkingDocumentType parkingDocumentType;
