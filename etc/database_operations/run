@@ -27,7 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add some more fields the functionalities tables" AlterFunctionalitiesTables.sql
-execute "Add toplevel portals and manager functionalities to the model" AddManagerFuctionalities.sql
-execute "Set toplevel portals availability policy" UpdateAvailabilityPolicy.sql
-execute "Alter space table" alterSpaceTable.sql
