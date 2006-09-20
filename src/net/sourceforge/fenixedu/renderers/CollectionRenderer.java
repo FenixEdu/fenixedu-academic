@@ -43,47 +43,47 @@ import org.apache.commons.beanutils.PropertyUtils;
  * action configured with data from the object in the row.
  * 
  * Example: <table border="1"> <thead>
- * <th>Name</th>
- * <th>Age</th>
- * <th>Gender</th>
- * <th></th>
- * <th></th>
- * </thead>
- * <tr>
- * <td>Name A</td>
- * <td>20</td>
- * <td>Female</td>
- * <td><a href="#">Edit</a></td>
- * <td><a href="#">Delete</a></td>
- * </tr>
- * <tr>
- * <td>Name B</td>
- * <td>22</td>
- * <td>Male</td>
- * <td><a href="#">Edit</a></td>
- * <td><a href="#">Delete</a></td>
- * </tr>
- * <tr>
- * <td>Name C</td>
- * <td>21</td>
- * <td>Female</td>
- * <td><a href="#">Edit</a></td>
- * <td><a href="#">Delete</a></td>
- * </tr>
- * </table>
+ *          <th>Name</th>
+ *          <th>Age</th>
+ *          <th>Gender</th>
+ *          <th></th>
+ *          <th></th>
+ *      </thead>
+ *      <tr>
+ *          <td>Name A</td>
+ *          <td>20</td>
+ *          <td>Female</td>
+ *          <td><a href="#">Edit</a></td>
+ *          <td><a href="#">Delete</a></td>
+ *      </tr>
+ *      <tr>
+ *          <td>Name B</td>
+ *          <td>22</td>
+ *          <td>Male</td>
+ *          <td><a href="#">Edit</a></td>
+ *          <td><a href="#">Delete</a></td>
+ *      </tr>
+ *      <tr>
+ *          <td>Name C</td>
+ *          <td>21</td>
+ *          <td>Female</td>
+ *          <td><a href="#">Edit</a></td>
+ *          <td><a href="#">Delete</a></td>
+ *      </tr>
+ *  </table>
  * 
  * <p>
  * Control links are an advanced feature of the collection renderer. A link can
  * be added and configured through a set of properties.
  * 
  * <ul>
- * <li>{@linkplain #setLink(String, String) link}</li>
- * <li>{@linkplain #setModule(String, String) module}</li>
- * <li>{@linkplain #setParam(String, String) param}</li>
- * <li>{@linkplain #setKey(String, String) key}</li>
- * <li>{@linkplain #setBundle(String, String) bundle}</li>
- * <li>{@linkplain #setText(String, String) text}</li>
- * <li>{@linkplain #setOrder(String, String) order}</li>
+ *  <li>{@linkplain #setLink(String, String) link}</li>
+ *  <li>{@linkplain #setModule(String, String) module}</li>
+ *  <li>{@linkplain #setParam(String, String) param}</li>
+ *  <li>{@linkplain #setKey(String, String) key}</li>
+ *  <li>{@linkplain #setBundle(String, String) bundle}</li>
+ *  <li>{@linkplain #setText(String, String) text}</li>
+ *  <li>{@linkplain #setOrder(String, String) order}</li>
  * </ul>
  * 
  * As you may want to specify a different value for each property and for each
@@ -106,36 +106,38 @@ public class CollectionRenderer extends OutputRenderer {
     private String headerClasses;
 
     private String prefixes;
-
+    
     private String suffixes;
-
+    
     private boolean checkable;
-
+    
     private String checkboxName;
-
+    
     private String checkboxValue;
-
+    
     private boolean selectAllShown;
-
+    
     private String selectAllLocation;
-
+    
     private static final String LOCATION_BOTTOM = "bottom";
-
     private static final String LOCATION_TOP = "top";
-
     private static final String LOCATION_BOTH = "both";
-
+    
     private Boolean displayHeaders = Boolean.TRUE;
 
     private Map<String, TableLink> links;
-
+    
     private List<TableLink> sortedLinks;
 
     private String sortBy;
-
+    
+    private boolean groupLinks;
+    
+    private String linkGroupSeparator;
+    
     public CollectionRenderer() {
         super();
-
+        
         this.links = new Hashtable<String, TableLink>();
         this.sortedLinks = new ArrayList<TableLink>();
         this.selectAllLocation = LOCATION_BOTTOM;
@@ -171,7 +173,7 @@ public class CollectionRenderer extends OutputRenderer {
      * 
      * @property
      */
-    public void setColumnClasses(String columnClasses) {
+   public void setColumnClasses(String columnClasses) {
         this.columnClasses = columnClasses;
     }
 
@@ -233,13 +235,13 @@ public class CollectionRenderer extends OutputRenderer {
      * rows like:
      * 
      * <table border="1">
-     * <tr>
-     * <td>Name A</td>
-     * <td>20 years old</td>
-     * <td>Female</td>
-     * <td><a href="#">Edit</a></td>
-     * <td><a href="#">Delete</a></td>
-     * </tr>
+     *  <tr>
+     *      <td>Name A</td>
+     *      <td>20 years old</td>
+     *      <td>Female</td>
+     *      <td><a href="#">Edit</a></td>
+     *      <td><a href="#">Delete</a></td>
+     *  </tr>
      * </table>
      * 
      * @property
@@ -247,7 +249,7 @@ public class CollectionRenderer extends OutputRenderer {
     public void setSuffixes(String suffixes) {
         this.suffixes = suffixes;
     }
-
+    
     public String getPrefixes() {
         return this.prefixes;
     }
@@ -256,7 +258,7 @@ public class CollectionRenderer extends OutputRenderer {
      * This property is similar to {@linkplain #setSuffixes(String) suffixes}
      * with the difference that the text is inlcuded as prefix of each cell
      * content.
-     * 
+     *
      * @property
      */
     public void setPrefixes(String prefixes) {
@@ -267,34 +269,34 @@ public class CollectionRenderer extends OutputRenderer {
         if (string == null) {
             return null;
         }
-
+        
         String[] stringParts = string.split(",");
         return stringParts[index % stringParts.length];
     }
-
+    
     private TableLink getTableLink(String name) {
         TableLink tableLink = this.links.get(name);
-
+        
         if (tableLink == null) {
             tableLink = new TableLink(name);
-
+    
             this.links.put(name, tableLink);
             this.sortedLinks.add(tableLink);
         }
-
+        
         return tableLink;
     }
-
+    
     private TableLink getTableLink(int order) {
         Collections.sort(this.sortedLinks);
-
+        
         return this.sortedLinks.get(order);
     }
 
     public String getLink(String name) {
         return getTableLink(name).getLink();
     }
-
+    
     /**
      * The link property indicates the page to were the control link will point.
      * All params will be appended to this link.
@@ -304,11 +306,11 @@ public class CollectionRenderer extends OutputRenderer {
     public void setLink(String name, String value) {
         getTableLink(name).setLink(value);
     }
-
+    
     public String getModule(String name) {
         return getTableLink(name).getModule();
     }
-
+    
     /**
      * By default the link property will be mapped to the current module. You
      * can override that with this property.
@@ -322,7 +324,7 @@ public class CollectionRenderer extends OutputRenderer {
     public String getParam(String name) {
         return getTableLink(name).getParam();
     }
-
+    
     /**
      * The <code>param</code> property allows you to indicate will values of
      * the object shown in a given row should be used to configure the link
@@ -337,9 +339,9 @@ public class CollectionRenderer extends OutputRenderer {
      * <pre>
      *   link(edit)  = &quot;/edit.do&quot;
      *   param(edit) = &quot;id&quot;
-     * </pre>
+     * </pre> 
      * 
-     * The result will be a link that will point to
+     * The result will be a link that will point to 
      * <code>&lt;module&gt;/edit.do?id=&lt;object id&gt:</code> were the id
      * param will be different for each object shown in the table.
      * 
@@ -354,16 +356,16 @@ public class CollectionRenderer extends OutputRenderer {
      * </pre>
      * 
      * <dl>
-     * <dt><code>slot</code></dt>
+     *  <dt><code>slot</code></dt>
      * <dd> specifies the name of the object's slot from were the value will be
      * retrieved. In the example above each object needed to have a
      * <code>getId()</code> method.</dd>
      * 
-     * <dt><code>name</code></dt>
+     *  <dt><code>name</code></dt>
      * <dd>specifies the name of the parameters that will appended to the link.
      * If this parts is not given the slot name will be used.</dd>
      * 
-     * <dt><code>value</code></dt>
+     *  <dt><code>value</code></dt>
      * <dd>allows you to override the value of the parameters. If you specify
      * this part then <code>slot</code> does not need to be a real slot of the
      * object.</dd>
@@ -378,21 +380,21 @@ public class CollectionRenderer extends OutputRenderer {
     public String getKey(String name) {
         return getTableLink(name).getKey();
     }
-
+    
     /**
      * The resource key that will be used to find the link name, that is, the
      * name that will appear in the table.
      * 
      * @property
      */
-    public void setKey(String name, String value) {
+   public void setKey(String name, String value) {
         getTableLink(name).setKey(value);
     }
 
     public String getBundle(String name) {
         return getTableLink(name).getBundle();
     }
-
+    
     /**
      * If the module's default bundle is not to be used you can indicate the
      * alternative bundle with this property.
@@ -406,7 +408,7 @@ public class CollectionRenderer extends OutputRenderer {
     public String getText(String name) {
         return getTableLink(name).getText();
     }
-
+    
     /**
      * An alternative to the {@link #setKey(String, String) key} property is
      * specifying the text to appear directly. Oviously this approach does not
@@ -421,7 +423,7 @@ public class CollectionRenderer extends OutputRenderer {
     public String getOrder(String name) {
         return getTableLink(name).getOrder();
     }
-
+    
     /**
      * As the container make no guarantees about the order properties are set in
      * the implementation we can't rely on the order links appear defined in the
@@ -445,7 +447,7 @@ public class CollectionRenderer extends OutputRenderer {
      *   order(a) = &quot;first&quot;
      *   order(b) = &quot;second&quot;
      *   order(c) = &quot;third&quot;
-     * </pre>
+     * </pre> 
      * 
      * @property
      */
@@ -456,7 +458,7 @@ public class CollectionRenderer extends OutputRenderer {
     public boolean isExcludedFromFirst(String name) {
         return getTableLink(name).isExcludeFromFirst();
     }
-
+    
     /**
      * This property allows you to exclude a control link from appearing in the
      * first line of the generated table.
@@ -466,7 +468,7 @@ public class CollectionRenderer extends OutputRenderer {
     public void setExcludedFromFirst(String name, String value) {
         getTableLink(name).setExcludeFromFirst(new Boolean(value));
     }
-
+    
     public boolean isExcludedFromLast(String name) {
         return getTableLink(name).isExcludeFromLast();
     }
@@ -475,18 +477,18 @@ public class CollectionRenderer extends OutputRenderer {
      * Specifies the name of the property that will consulted to determine if
      * the link should be visible or not. By default all links are visible.
      * <p>
-     * This can be used to have some links that depend on domain logic.
+     * This can be used to have some links that depend on domain logic. 
      * 
      * @property
      */
     public void setVisibleIf(String name, String value) {
         getTableLink(name).setVisibleIf(value);
     }
-
+    
     public String getVisibleIf(String name) {
         return getTableLink(name).getVisibleIf();
     }
-
+    
     /**
      * This property does the same work as visibleIf but does the opposite
      * logic. If <code>true</code> then the link will not be shown.
@@ -496,7 +498,7 @@ public class CollectionRenderer extends OutputRenderer {
     public void setVisibleIfNot(String name, String value) {
         getTableLink(name).setVisibleIfNot(value);
     }
-
+    
     public String getVisibleIfNot(String name) {
         return getTableLink(name).getVisibleIfNot();
     }
@@ -510,7 +512,7 @@ public class CollectionRenderer extends OutputRenderer {
     public void setExcludedFromLast(String name, String value) {
         getTableLink(name).setExcludeFromLast(new Boolean(value));
     }
-
+    
     public String getSortBy() {
         return this.sortBy;
     }
@@ -526,12 +528,39 @@ public class CollectionRenderer extends OutputRenderer {
         this.sortBy = sortBy;
     }
 
-    public boolean isCheckable() {
+    public boolean isGroupLinks() {
+		return groupLinks;
+	}
+
+    /**
+     * Specifies if the control links ares grouped in a single cell of the table.
+     * The linkGroupSeparator will be used to separate the control links.
+     * 
+     * @property
+     */
+	public void setGroupLinks(boolean groupLinks) {
+		this.groupLinks = groupLinks;
+	}
+
+	public String getLinkGroupSeparator() {
+		return linkGroupSeparator;
+	}
+
+    /**
+     * Specifies the separator between links when these are grouped
+     * 
+     * @property
+     */
+	public void setLinkGroupSeparator(String linkGroupSeparator) {
+		this.linkGroupSeparator = linkGroupSeparator;
+	}
+
+	public boolean isCheckable() {
         return this.checkable;
     }
 
     /**
-     * This property indicates that each element wil be checkable. This means
+     * This property indicates that each element wil be checkable. This means 
      * that a check box will be generated in each row allowing to select that
      * row. The user will be responsible for wrapping the whole table in a form
      * and submiting the form.
@@ -547,7 +576,7 @@ public class CollectionRenderer extends OutputRenderer {
     }
 
     /**
-     * Selects the name of the checkbox when it's generated.
+     * Selects the name of the checkbox when it's generated. 
      * 
      * @property
      */
@@ -603,7 +632,7 @@ public class CollectionRenderer extends OutputRenderer {
      */
     public void setSelectAllLocation(String selectAllLocation) {
         this.selectAllLocation = selectAllLocation;
-
+        
         if (this.selectAllLocation != null) {
             this.selectAllLocation = this.selectAllLocation.toLowerCase();
         }
@@ -622,14 +651,14 @@ public class CollectionRenderer extends OutputRenderer {
      * Example 1:
      * 
      * <pre>
-     *               someAction.do?method=viewDetails&amp;idInternal=${idInternal}
+     *              someAction.do?method=viewDetails&amp;idInternal=${idInternal}
      * </pre>
      * 
      * <p>
      * Example 2:
      * 
      * <pre>
-     *             someAction/${someProperty}/${otherProperty}
+     *            someAction/${someProperty}/${otherProperty}
      * </pre>
      * 
      * @property
@@ -645,7 +674,7 @@ public class CollectionRenderer extends OutputRenderer {
     /**
      * If this property is specified all the others are ignored. This property
      * allows you to specify the exact content to show as a link. Then content
-     * will be parsed with the same rules that apply to
+     * will be parsed with the same rules that apply to 
      * {@link #setLinkFormat(String, String) linkFormat}.
      * 
      * @property
@@ -653,7 +682,7 @@ public class CollectionRenderer extends OutputRenderer {
     public void setCustomLink(String name, String value) {
         getTableLink(name).setCustom(value);
     }
-
+    
     public String getContextRelative(String name) {
         return Boolean.toString(getTableLink(name).isContextRelative());
     }
@@ -670,17 +699,22 @@ public class CollectionRenderer extends OutputRenderer {
     }
 
     protected int getNumberOfLinks() {
-        return this.links.size();
+    	if (isGroupLinks() && this.links.size() > 0) {
+    		return 1;
+    	}
+    	else {
+    		return this.links.size();
+    	}
     }
-
+    
     @Override
     protected Layout getLayout(Object object, Class type) {
         Collection sortedCollection = RenderUtils.sortCollectionWithCriteria((Collection) object,
                 getSortBy());
-
+        
         return new CollectionTabularLayout(sortedCollection);
     }
-
+    
     public class CollectionTabularLayout extends TabularLayout {
 
         List<MetaObject> metaObjects;
@@ -691,13 +725,13 @@ public class CollectionRenderer extends OutputRenderer {
 
         private List<MetaObject> getMetaObjects(Collection collection) {
             List<MetaObject> metaObjects = new ArrayList<MetaObject>();
-
+            
             MetaObject contextMetaObject = getContext().getMetaObject();
             if (contextMetaObject instanceof MetaObjectCollection) {
                 // reuse meta objects
                 MetaObjectCollection multipleMetaObject = (MetaObjectCollection) getContext()
                         .getMetaObject();
-
+                
                 for (Object object : collection) {
                     for (MetaObject metaObject : multipleMetaObject.getAllMetaObjects()) {
                         if (object.equals(metaObject.getObject())) {
@@ -712,31 +746,31 @@ public class CollectionRenderer extends OutputRenderer {
                     metaObjects.add(MetaObjectFactory.createObject(object, schema));
                 }
             }
-
+            
             return metaObjects;
         }
 
         @Override
         public HtmlComponent createLayout(Object object, Class type) {
             HtmlComponent component = super.createLayout(object, type);
-
+            
             if (isCheckable() && isSelectAllShown()) {
                 HtmlBlockContainer container = new HtmlBlockContainer();
-
+                
                 HtmlComponent selectAllComponent = createInvertSelectionLink();
-
+                
                 if (String.valueOf(getSelectAllLocation()).contains(LOCATION_TOP)
                         || String.valueOf(getSelectAllLocation()).contains(LOCATION_BOTH)) {
                     container.addChild(selectAllComponent);
                 }
 
                 container.addChild(component);
-
+                
                 if (String.valueOf(getSelectAllLocation()).contains(LOCATION_BOTTOM)
                         || String.valueOf(getSelectAllLocation()).contains(LOCATION_BOTH)) {
                     container.addChild(selectAllComponent);
                 }
-
+                
                 return container;
             } else {
                 return component;
@@ -746,7 +780,7 @@ public class CollectionRenderer extends OutputRenderer {
         private HtmlComponent createInvertSelectionLink() {
             HtmlInlineContainer container = new HtmlInlineContainer();
             HtmlScript script = new HtmlScript();
-
+            
             script.setContentType("text/javascript");
             script.setConditional(true);
             script.setScript("function invertSelectionAll(n) {" + "    var allChecked = true;"
@@ -758,10 +792,10 @@ public class CollectionRenderer extends OutputRenderer {
                     + "    if (allChecked) {"
                     + "        for (var index=0; index<elements.length; index++) {"
                     + "            elements[index].checked = false;" + "        }" + "    }" + "}");
-
+            
             container.addChild(script);
-
-            String selectAllScript = "invertSelectionAll('" + getCheckboxName() + "')";
+            
+            String selectAllScript = "invertSelectionAll('" + getCheckboxName() + "')"; 
 
             HtmlLink link = new HtmlLink();
             link.setContextRelative(false);
@@ -769,7 +803,7 @@ public class CollectionRenderer extends OutputRenderer {
             link.setOnClick(selectAllScript);
             link.setOnDblClick(selectAllScript);
             container.addChild(link);
-
+            
             return container;
         }
 
@@ -777,7 +811,7 @@ public class CollectionRenderer extends OutputRenderer {
         protected boolean hasHeader() {
             return (displayHeaders) ? this.metaObjects.size() > 0 : false;
         }
-
+        
         @Override
         protected int getNumberOfColumns() {
             if (this.metaObjects.size() > 0) {
@@ -796,7 +830,7 @@ public class CollectionRenderer extends OutputRenderer {
         protected MetaObject getObject(int index) {
             return this.metaObjects.get(index);
         }
-
+        
         @Override
         protected HtmlComponent getHeaderComponent(int columnIndex) {
             if (columnIndex == 0 && isCheckable()) {
@@ -811,7 +845,7 @@ public class CollectionRenderer extends OutputRenderer {
 
         protected String getLabel(int columnIndex) {
             int realIndex = columnIndex - (isCheckable() ? 1 : 0);
-
+            
             if (realIndex >= 0) {
                 return getObject(0).getSlots().get(realIndex).getLabel();
             } else {
@@ -827,7 +861,7 @@ public class CollectionRenderer extends OutputRenderer {
             if (columnIndex == 0 && isCheckable()) {
                 HtmlCheckBox checkBox = new HtmlCheckBox();
                 checkBox.setName(getCheckboxName());
-
+                
                 if (getCheckboxValue() != null) {
                     Object realObject = object.getObject();
 
@@ -842,14 +876,14 @@ public class CollectionRenderer extends OutputRenderer {
                         if (existingValues != null) {
                             for (int i = 0; i < existingValues.length; i++) {
                                 String value = existingValues[i];
-
+                                
                                 if (value.equals(checkBoxValue)) {
                                     checked = true;
                                     break;
                                 }
                             }
                         }
-
+                        
                         checkBox.setChecked(checked);
                         checkBox.setUserValue(checkBoxValue);
                     } catch (Exception e) {
@@ -857,29 +891,27 @@ public class CollectionRenderer extends OutputRenderer {
                                 + getCheckboxValue() + "' from object " + realObject, e);
                     }
                 }
-
+                
                 return checkBox;
             } else if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
                 return generateObjectComponent(columnIndex - (isCheckable() ? 1 : 0), object);
             } else {
-                return generateLinkComponent(object, rowIndex, columnIndex
-                        - (getNumberOfColumns() - getNumberOfLinks()));
+                return generateLinkComponent(object, rowIndex, columnIndex - (getNumberOfColumns() - getNumberOfLinks()));
             }
-        }
 
         protected HtmlComponent generateObjectComponent(int columnIndex, MetaObject object) {
             MetaSlot slot = getSlotUsingName(object, columnIndex);
-
+            
             if (slot == null) {
                 return new HtmlText();
             }
-
+            
             HtmlComponent component = renderSlot(slot);
             component = wrapPrefixAndSuffix(component, columnIndex);
-
+         
             return component;
         }
-
+        
         /**
          * As the renderer uses the first object as a reference to build the
          * header and fecth the information from all the objects in the
@@ -893,55 +925,79 @@ public class CollectionRenderer extends OutputRenderer {
         protected MetaSlot getSlotUsingName(MetaObject object, int columnIndex) {
             MetaObject referenceObject = getObject(0);
             MetaSlot referenceSlot = referenceObject.getSlots().get(columnIndex);
-
+            
             MetaSlot directSlot = object.getSlots().get(columnIndex); // common
                                                                         // case
             if (directSlot.getName().equals(referenceSlot.getName())) {
                 return directSlot;
             }
-
+            
             for (MetaSlot slot : object.getSlots()) {
                 if (slot.getName().equals(referenceSlot.getName())) {
                     return slot;
                 }
             }
-
+            
             return null;
         }
 
         protected HtmlComponent generateLinkComponent(MetaObject object, int rowIndex, int number) {
+        	if (isGroupLinks()) {
+        		HtmlInlineContainer container = new HtmlInlineContainer();
+        		container.setIndented(false);
+        		
+        		for (int i = 0; i < CollectionRenderer.this.links.size(); i++) {
+        			HtmlComponent component = generateSingleLinkComponent(object, rowIndex, i);
+        			if (component != null) {
+        				if (i > 0) {
+        					container.addChild(new HtmlText(getLinkGroupSeparator(), false));
+        				}
+
+        				container.addChild(component);
+        			}
+        		}
+        		
+        		return container;
+        	}
+        	else {
+        		HtmlComponent component = generateSingleLinkComponent(object, rowIndex, number);
+        		return component == null ? new HtmlText() : component;
+        	}
+        }
+        
+        protected HtmlComponent generateSingleLinkComponent(MetaObject object, int rowIndex, int number) {
             TableLink tableLink = getTableLink(number);
-
-            if (rowIndex == 0 && tableLink.isExcludeFromFirst()) {
-                return new HtmlText();
+            
+            if (rowIndex == 0 && tableLink.isExcludeFromFirst() ) {
+                return null;
             }
-
+            
             if (rowIndex == getNumberOfRows() - 1 && tableLink.isExcludeFromLast()) {
-                return new HtmlText();
+                return null;
             }
-
+            
             Object realObject = object.getObject();
 
             if (tableLink.getVisibleIf() != null) {
                 try {
                     Boolean visible = (Boolean) RendererPropertyUtils.getProperty(realObject, tableLink
                             .getVisibleIf(), false);
-
+                    
                     if (visible != null && !visible) {
-                        return new HtmlText();
+                        return null;
                     }
                 } catch (ClassCastException e) {
                     e.printStackTrace();
                 }
             }
-
+            
             if (tableLink.getVisibleIfNot() != null) {
                 try {
                     Boolean notVisible = (Boolean) RendererPropertyUtils.getProperty(realObject,
                             tableLink.getVisibleIfNot(), false);
-
+                    
                     if (notVisible != null && notVisible) {
-                        return new HtmlText();
+                        return null;
                     }
                 } catch (ClassCastException e) {
                     e.printStackTrace();
@@ -953,14 +1009,14 @@ public class CollectionRenderer extends OutputRenderer {
                         .getFormattedProperties(tableLink.getCustom(), realObject));
             } else {
                 HtmlLink link = new HtmlLink();
-
+    
                 if (tableLink.isContextRelativeSet()) {
                     link.setContextRelative(tableLink.isContextRelative());
                 }
-
+    
                 link.setText(getLinkText(tableLink));
                 link.setModule(tableLink.getModule());
-
+    
                 if (tableLink.getLinkFormat() != null) {
                     link.setUrl(RenderUtils
                             .getFormattedProperties(tableLink.getLinkFormat(), realObject));
@@ -968,64 +1024,64 @@ public class CollectionRenderer extends OutputRenderer {
                     link.setUrl(tableLink.getLink());
                     setLinkParameters(object, link, tableLink);
                 }
-
+    
                 return link;
             }
         }
 
         protected String getLinkText(TableLink tableLink) {
             String text = tableLink.getText();
-
+            
             if (text != null) {
                 return text;
             }
-
+            
             String key = tableLink.getKey();
             String bundle = tableLink.getBundle();
-
+            
             if (key == null) {
                 return tableLink.getName();
             }
-
+            
             text = RenderUtils.getResourceString(bundle, key);
-
+            
             if (text != null) {
                 return text;
             }
-
+            
             return tableLink.getName();
         }
 
         protected void setLinkParameters(MetaObject metaObject, HtmlLink link, TableLink tableLink) {
             String linkParam = tableLink.getParam();
-
+            
             if (linkParam == null) {
                 return;
             }
-
+            
             Object object = metaObject.getObject();
             String parameters[] = tableLink.getParam().split(",");
 
-            // "a", "a=b", "a/b", "a/b=c"
+            // "a", "a=b", "a/b", "a/b=c" 
             for (int i = 0; i < parameters.length; i++) {
                 String name = parameters[i];
-
+         
                 String slotName;
                 String realName;
                 String customValue;
-
+                
                 String[] parameterParts = name.split("=", -1);
                 if (parameterParts.length >= 1) {
                     String[] nameParts = parameterParts[0].split("/");
-
+                    
                     slotName = nameParts[0];
-
+                    
                     if (nameParts.length == 2) {
                         realName = nameParts[1];
                     } else {
                         realName = slotName;
                     }
-
+                    
                     if (parameterParts.length > 1) {
                         customValue = parameterParts[1];
                     } else {
@@ -1036,7 +1092,7 @@ public class CollectionRenderer extends OutputRenderer {
                     realName = parameterParts[0];
                     customValue = null;
                 }
-
+                
                 try {
                     String value = customValue != null ? customValue : String.valueOf(PropertyUtils
                             .getProperty(object, slotName));
@@ -1049,14 +1105,14 @@ public class CollectionRenderer extends OutputRenderer {
 
         protected HtmlComponent wrapPrefixAndSuffix(HtmlComponent component, int columnIndex) {
             HtmlInlineContainer container = null;
-
+            
             String prefix = getStringPart(getPrefixes(), columnIndex);
             if (prefix != null) {
                 container = new HtmlInlineContainer();
                 container.addChild(new HtmlText(prefix));
                 container.addChild(component);
             }
-
+            
             String suffix = getStringPart(getSuffixes(), columnIndex);
             if (suffix != null) {
                 if (container != null) {
@@ -1067,47 +1123,33 @@ public class CollectionRenderer extends OutputRenderer {
                     container.addChild(new HtmlText(suffix));
                 }
             }
-
+            
             return container != null ? container : component;
         }
 
     }
-
+    
     protected class TableLink implements Comparable<TableLink> {
 
         private String name;
-
         private String link;
-
         private String module;
-
         private String param;
-
         private String text;
-
         private String key;
-
         private String bundle;
-
         private String order;
-
         private boolean excludeFromFirst;
-
         private boolean excludeFromLast;
-
         private String linkFormat;
-
         private Boolean contextRelative;
-
         private String custom;
-
         private String visibleIf;
-
         private String visibleIfNot;
 
         public TableLink() {
             super();
-
+            
             this.excludeFromFirst = false;
             this.excludeFromLast = false;
         }
@@ -1115,7 +1157,7 @@ public class CollectionRenderer extends OutputRenderer {
         public TableLink(String name) {
             this.name = name;
         }
-
+        
         public String getName() {
             return this.name;
         }
@@ -1127,43 +1169,43 @@ public class CollectionRenderer extends OutputRenderer {
         public String getBundle() {
             return this.bundle;
         }
-
+        
         public void setBundle(String bundle) {
             this.bundle = bundle;
         }
-
+        
         public String getKey() {
             return this.key;
         }
-
+        
         public void setKey(String key) {
             this.key = key;
         }
-
+        
         public String getLink() {
             return this.link;
         }
-
+        
         public void setLink(String link) {
             this.link = link;
         }
-
+        
         public String getModule() {
             return this.module;
         }
-
+        
         public void setModule(String module) {
             this.module = module;
         }
-
+        
         public String getParam() {
             return this.param;
         }
-
+        
         public void setParam(String param) {
             this.param = param;
         }
-
+        
         public String getText() {
             return this.text;
         }
@@ -1244,11 +1286,11 @@ public class CollectionRenderer extends OutputRenderer {
             if (getOrder() == null) {
                 return 0;
             }
-
+            
             if (other.getOrder() == null) {
                 return 0;
             }
-
+            
             return getOrder().compareTo(other.getOrder());
         }
     }
