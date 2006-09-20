@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
+import java.util.UUID;
+
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
@@ -14,11 +16,18 @@ public class ConcreteFunctionality extends ConcreteFunctionality_Base {
         super();
     }
     
-    public ConcreteFunctionality(MultiLanguageString name, String path) {
+    public ConcreteFunctionality(MultiLanguageString name) {
         this();
         
         setName(name);
-        setPath(path);
+        changeUuid(Functionality.generateUuid());
+    }
+
+    public ConcreteFunctionality(UUID uuid, MultiLanguageString name) {
+        this();
+        
+        setName(name);
+        changeUuid(uuid);
     }
 
     @Override

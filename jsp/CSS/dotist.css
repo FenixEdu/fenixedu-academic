@@ -170,7 +170,7 @@ border-bottom: 4px solid #c0a488;
 text-decoration: underline  /* show to IE5 */
 /* check bottom of the page for the hack */
 }
-#navgeral a.active, #navgeral a.active {
+#navgeral a.active, #navgeral li.active a {
 border-bottom: 4px solid #223D4A;
 }
 /* IE5 navgeral bug correction */

@@ -32,6 +32,14 @@
         <put name="body" value="/manager/functionalities/create-toplevel-module.jsp"/>
     </definition>
 
+    <definition name="functionalities.module.upload" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/upload-structure.jsp"/>
+    </definition>
+
+    <definition name="functionalities.module.upload.toplevel" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/upload-toplevel-structure.jsp"/>
+    </definition>
+
     <definition name="functionalities.functionality.view" extends="functionalities.master">
         <put name="body" value="/manager/functionalities/view-functionality.jsp"/>
     </definition>

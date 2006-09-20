@@ -48,6 +48,10 @@ public class FilterFunctionalityContext implements FunctionalityContext {
     }
 
     public Module getSelectedModule() {
+        if (this.functionality == null) {
+            return null;
+        }
+        
         if (this.functionality instanceof Module) { 
             return (Module) this.functionality;
         }

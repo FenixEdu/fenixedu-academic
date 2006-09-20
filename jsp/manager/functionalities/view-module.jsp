@@ -3,30 +3,37 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<bean:define id="thisModule" name="module" property="idInternal"/>
+<h2><bean:message key="title.module" bundle="FUNCTIONALITY_RESOURCES"/></h2>
 
 <!-- ======================
          bread crumbs
      ======================  -->
 
-<html:link page="/toplevel/view.do">
-    <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
-</html:link> //
-<logic:iterate id="crumb" name="crumbs">
-    <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
-        <fr:view name="crumb" property="name"/>
-    </html:link> &gt;
-</logic:iterate>
+<div>
+    <html:link page="/toplevel/view.do">
+        <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
+    </html:link> //
+    
+    <logic:iterate id="crumb" name="crumbs">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+            <fr:view name="crumb" property="name"/>
+        </html:link> &gt;
+    </logic:iterate>
+    
+    <fr:view name="module" property="name"/>
+</div>
 
-<!-- error message -->
+<!-- ======================
+         error message
+     ======================  -->
 
 <logic:messagesPresent message="true">
-    <html:messages id="error" message="true" bundle="FUNCTIONALITY_RESOURCES">
-        <bean:write name="error"/>
-    </html:messages>
+    <div>
+        <html:messages id="error" message="true" bundle="FUNCTIONALITY_RESOURCES">
+            <bean:write name="error"/>
+        </html:messages>
+    </div>
 </logic:messagesPresent>
-
-<fr:view name="module" property="name"/>
 
 <!-- ======================
           information
@@ -60,9 +67,20 @@
              tree
      ======================  -->
 
+<html:link page="/functionality/exportStructure.do" paramId="functionality" paramName="module" paramProperty="idInternal">
+    <bean:message key="link.functionality.export" bundle="FUNCTIONALITY_RESOURCES"/>
+</html:link>
+
+<html:link page="/module/uploadStructure.do" paramId="module" paramName="module" paramProperty="idInternal">
+    <bean:message key="link.module.import" bundle="FUNCTIONALITY_RESOURCES"/>
+</html:link>
+
+
 <!-- form used to submit the tree structure 
      search for: saveTree()
   -->
+<bean:define id="thisModule" name="module" property="idInternal"/>
+  
 <fr:form action="<%= "/module/organize.do?module=" + thisModule %>">
     <input id="tree-structure" type="hidden" name="tree" value="" />
 </fr:form>

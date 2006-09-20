@@ -14,16 +14,16 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  * 
  * @author cfgi
  */
-public class PublicPathConflictException extends DomainException {
+public class MatchPathConflictException extends DomainException {
 
     /**
      * Serialization id.
      */
     private static final long serialVersionUID = 1L;
 
-    private static final String MESSAGE = "functionalities.functionality.publicPath.conflict";
+    private static final String MESSAGE = "functionalities.functionality.matchPath.conflict";
 
-    public PublicPathConflictException(String path) {
+    public MatchPathConflictException(String path) {
         super(MESSAGE, path);
     }
 

@@ -3,30 +3,43 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
+<h2><bean:message key="title.delete.confirm" bundle="FUNCTIONALITY_RESOURCES"/></h2>
+
 <!-- ======================
          bread crumbs
      ======================  -->
 
-<html:link page="/toplevel/view.do">
-    <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
-</html:link> //
-<logic:iterate id="crumb" name="crumbs">
-    <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
-        <fr:view name="crumb" property="name"/>
-    </html:link> &gt;
-</logic:iterate>
+<div>
+    <html:link page="/toplevel/view.do">
+        <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
+    </html:link> //
+    
+    <logic:iterate id="crumb" name="crumbs">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+            <fr:view name="crumb" property="name"/>
+        </html:link> &gt;
+    </logic:iterate>
 
-<fr:view name="functionality" property="name"/>
+    <fr:view name="functionality" property="name"/>
+</div>
+
+<!-- ======================
+         message
+     ======================  -->
+     
+<bean:message key="functionalities.delete.confirm" bundle="FUNCTIONALITY_RESOURCES"/>
 
 <!-- ======================
          information
      ======================  -->
 
-<bean:message key="functionalities.delete.confirm" bundle="FUNCTIONALITY_RESOURCES"/>
-
 <fr:view name="functionality" layout="tabular" 
          schema="functionalities.functionality.view.simple"/>
 
+<!-- ======================
+         buttons
+     ======================  -->
+     
 <bean:define id="id" name="functionality" property="idInternal"/>
 
 <fr:form action="<%= "/functionality/delete.do?functionality=" + id %>">

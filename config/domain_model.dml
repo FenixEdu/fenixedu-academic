@@ -157,6 +157,8 @@ valueType net.sourceforge.fenixedu.domain.parking.ParkingRequestState							as P
 valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentType							as ParkingDocumentType;
 valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentState							as ParkingDocumentState;
 
+valueType java.util.UUID as UUID;
+
 /*
 *
 * Class definitions
@@ -3787,13 +3789,19 @@ class net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry ex
 class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
 
+	UUID uuid;
+
 	MultiLanguageString name;
 	MultiLanguageString title;
 	MultiLanguageString description;
 	Boolean enabled;
 	String path;
 	Boolean relative;
+	Boolean principal;
 	String parameters;
+
+	Boolean visible;
+	Boolean maximized;
 	
 	Integer orderInModule; /* used to allows ordering of functionalities in modules, see relation ModuleAggregatesFunctionalities */
 	

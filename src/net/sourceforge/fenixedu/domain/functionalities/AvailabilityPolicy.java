@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
@@ -19,19 +18,17 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
     }
 
     /**
-     * Determines if this policy allows the given person to access to the
-     * {@link #getFunctionality() referred} functionality. 
+     * Determines if this policy allows the functionality to be available in the
+     * given context.
      * 
      * @param context
      *            the context of the functionality
-     * @param person
-     *            the person trying to access the functionality
      * 
-     * @return <code>true</code> if the person may access the functionality
+     * @return <code>true</code> if the functionality is available
      * 
-     * @see Functionality#isAvailable(FunctionalityContext, Person)
+     * @see Functionality#isAvailable(FunctionalityContext)
      */
-    public abstract boolean isAvailable(FunctionalityContext context, Person person);
+    public abstract boolean isAvailable(FunctionalityContext context);
     
     /**
      * Deletes this object from persistent storage.

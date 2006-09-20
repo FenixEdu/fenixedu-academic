@@ -1,23 +1,38 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality.Movement;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
+import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+
+import pt.ist.utl.fenix.utils.Pair;
 
 public class FunctionalitiesDispatchAction extends FenixDispatchAction {
 
+    protected void addMessage(HttpServletRequest request, String name, String key, String ... args) {
+        ActionMessages messages = getMessages(request);
+        messages.add(name, new ActionMessage(key, args));
+        saveMessages(request, messages);
+    }
+    
     public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Functionality functionality) throws Exception {
         setBreadCrumbs(request, functionality);
         request.setAttribute("functionality", functionality);
@@ -107,7 +122,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
         
         if (request.getParameter("confirm") != null) {
             Module parent = functionality.getModule();
-            Functionality.deleteFunctionality(functionality);
+            deleteFunctionality(functionality);
             
             return viewModule(parent, mapping, actionForm, request, response);
         }
@@ -156,4 +171,116 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
         }
     }
 
+    //
+    // Auxiliary methods
+    //
+
+    /**
+     * Auxiliary method that invokes the real service that will delete the
+     * functionality.
+     * 
+     * @param functionality
+     *            the functionality that will be deleted
+     * @throws Exception
+     *             the exception throw by the service
+     */
+    public static void deleteFunctionality(Functionality functionality) throws Exception {
+        ServiceUtils.executeService(AccessControl.getUserView(), "DeleteFunctionality", functionality);
+    }
+
+    /**
+     * Auxiliary method that invokes the real service that will move the
+     * functionality.
+     * 
+     * @param functionality
+     *            the functionality to be moven
+     * @param movement
+     *            the type of movement
+     * @throws Exception
+     *             the exception thrown by the service
+     */
+    public static void moveFunctionality(Functionality functionality, Movement movement)
+            throws Exception {
+        ServiceUtils.executeService(AccessControl.getUserView(), "MoveFunctionality", functionality,
+                movement);
+    }
+
+    /**
+     * Auxiliary method that invokes the real service that will rearrange all
+     * the functionalities. All pairs passed as argument describe the new
+     * module/functionality relations. Relations will be broken and created
+     * between all the referred functionalities in one transaction.
+     * 
+     * @param arrangements
+     *            a list of pairs (parent, child)
+     * @throws Exception
+     *             the exception thrown by the service
+     */
+    public static void rearrangeFunctionalities(List<Pair<Module, Functionality>> arrangements)
+            throws Exception {
+        ServiceUtils.executeService(AccessControl.getUserView(), "ArrangeFunctionalities", arrangements);
+    }
+
+    /**
+     * Auxiliary method that invokes the service to enable the given
+     * functionality.
+     * 
+     * @param functionality
+     *            the functionality to enable
+     * @throws Exception
+     *             the exception thrown by the service
+     */
+    public static void enable(Functionality functionality) throws Exception {
+        ServiceUtils.executeService(AccessControl.getUserView(), "ChangeEnableInFunctionality",
+                functionality, true);
+    }
+
+    /**
+     * Auxiliary method that invokes the service to disable the given
+     * functionality.
+     * 
+     * @param functionality
+     *            the functionality to disable
+     * @throws Exception
+     *             the exception thrown by the service
+     */
+    public static void disable(Functionality functionality) throws Exception {
+        ServiceUtils.executeService(AccessControl.getUserView(), "ChangeEnableInFunctionality",
+                functionality, false);
+    }
+
+    /**
+     * Auxiliary method that invokes a service to create a
+     * {@link GroupAvailability} for the given functinolity
+     * 
+     * @param functionality
+     *            the functionality that will have it's availability changed
+     * @param expression
+     *            the group expression used to the create the new group
+     *            availability
+     */
+    public static void setGroupAvailability(Functionality functionality, String expression)
+            throws Exception {
+        ServiceUtils.executeService(AccessControl.getUserView(), "CreateGroupAvailability",
+                functionality, expression);
+    }
+
+    /**
+     * Auxiliary method that invokes a service to import functionalities from a
+     * file and include those functionalities in a module.
+     * 
+     * @param module
+     *            the module that will hold all the imported functionalities
+     * @param stream
+     *            the input stream corresponding to the XML document containing
+     *            the structure
+     * @param principalPreserved
+     *            if <code>false</code> then all functionalities will have the
+     *            value of <tt>principal</tt> set to false, possibly avoiding
+     *            conflicts with existing functionalities.
+     */
+    public static void importFunctionalities(Module module, InputStream stream, boolean principalPreserved) throws Exception {
+        ServiceUtils.executeService(AccessControl.getUserView(), "ImportFunctionalities",
+                module, stream, principalPreserved);
+    }
 }

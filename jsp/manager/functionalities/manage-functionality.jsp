@@ -3,22 +3,27 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
+<h2><bean:message key="title.functionality.manage" bundle="FUNCTIONALITY_RESOURCES"/></h2>
+
 <!-- ======================
          bread crumbs
      ======================  -->
 
-<html:link page="/toplevel/view.do">
-    <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
-</html:link> //
-
-<logic:iterate id="crumb" name="crumbs">
-    <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
-        <fr:view name="crumb" property="name"/>
-    </html:link> &gt;
-</logic:iterate>
-<html:link page="/functionality/view.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
-    <fr:view name="functionality" property="name"/>
-</html:link>
+<div>
+    <html:link page="/toplevel/view.do">
+        <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
+    </html:link> //
+    
+    <logic:iterate id="crumb" name="crumbs">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+            <fr:view name="crumb" property="name"/>
+        </html:link> &gt;
+    </logic:iterate>
+    
+    <html:link page="/functionality/view.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
+        <fr:view name="functionality" property="name"/>
+    </html:link>
+</div>
 
 <!-- ======================
          information

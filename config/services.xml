@@ -10101,6 +10101,15 @@
             <chain name="ManagerAuthorization" />
         </filterChains>
     </service>
+    <service>
+        <name>ImportFunctionalities</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ImportFunctionalities</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization" />
+        </filterChains>
+    </service>
 	<service>
         <name>CreateSpecialSeasonEvaluations</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.specialSeason.CreateSpecialSeasonEvaluations</implementationClass>

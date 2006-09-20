@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,18 +12,27 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality.Movement;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.util.ModuleUtils;
+import org.jdom.DocType;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.Text;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 
 public class FunctionalityManagementAction extends FunctionalitiesDispatchAction {
 
@@ -92,7 +105,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
             return viewModule(module, mapping, actionForm, request, response);
         }
 
-        Functionality.moveFunctionality(functionality, movement);
+        moveFunctionality(functionality, movement);
 
         return viewModule(module, mapping, actionForm, request, response);
     }
@@ -104,7 +117,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
             return viewTopLevel(mapping, actionForm, request, response);
         }
 
-        Functionality.enable(functionality);
+        enable(functionality);
 
         return manage(mapping, actionForm, request, response);
     }
@@ -116,7 +129,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
             return viewTopLevel(mapping, actionForm, request, response);
         }
 
-        Functionality.disable(functionality);
+        disable(functionality);
 
         return manage(mapping, actionForm, request, response);
     }
@@ -178,10 +191,10 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         }
 
         try {
-            Functionality.setGroupAvailability(functionality, bean.getExpression());
+            setGroupAvailability(functionality, bean.getExpression());
             RenderUtils.invalidateViewState();
 
-            addMessage(request, "expression", "functionalities.expression.success");
+            addMessage(request, "expression", "functionalities.expression.success", new String[0]);
             return manage(mapping, actionForm, request, response);
         } catch (GroupExpressionException e) {
             createParserReport(request, e, bean);
@@ -206,12 +219,6 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         saveMessages(request, messages);
     }
 
-    private void addMessage(HttpServletRequest request, String name, String key) {
-        ActionMessages messages = getMessages(request);
-        messages.add(name, new ActionMessage(key));
-        saveMessages(request, messages);
-    }
-    
     private void createParserReport(HttpServletRequest request, GroupExpressionException e, ExpressionBean bean) {
         createMessage(request, "error", e);
         
@@ -219,4 +226,129 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
             request.setAttribute("parserReport", new ParserReport(e, bean.getExpression()));
         }
     }
+    
+    public ActionForward exportStructure(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Functionality functionality = getFunctionality(request);
+
+        Element toplevel = new Element("structure").setAttribute("version", "1.0");
+        if (functionality != null) {
+            if (functionality.getModule() != null) {
+                toplevel.setAttribute("parent", functionality.getModule().getUuid().toString());
+            }
+            
+            toplevel.addContent(generateElement(functionality));
+        }
+        else {
+            for (Functionality topLevelFunctionality : Module.getOrderedTopLevelFunctionalities()) {
+                toplevel.addContent(generateElement(topLevelFunctionality));
+            }
+        }
+        
+        response.setContentType("text/xml");
+        response.setHeader("Content-Disposition", "attachment; filename=\"module-structure.xml\"");
+
+        Document document = new Document(toplevel);
+
+        DocType docType = getEmbeddedDocType(request);
+        if (docType != null) {
+            document.setDocType(docType);
+        }
+        
+        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat().setEncoding("ISO-8859-1"));
+        outputter.output(document, response.getWriter());
+        
+        return null;
+    }
+
+    private DocType getEmbeddedDocType(HttpServletRequest request) throws IOException {
+        String prefix = ModuleUtils.getInstance().getModuleConfig(request).getPrefix();
+        InputStream stream = getServlet().getServletContext().getResourceAsStream(prefix + "/dtd/structure-1.0.dtd");
+        
+        if (stream == null) {
+            return null;
+        }
+        
+        InputStreamReader reader = new InputStreamReader(stream);
+        BufferedReader buffered = new BufferedReader(reader);
+        
+        StringBuilder builder = new StringBuilder();
+        
+        String line = null;
+        while ((line = buffered.readLine()) != null) {
+            builder.append(line + "\n");
+        }
+        
+        DocType docType = new DocType("structure");
+        docType.setInternalSubset(builder.toString());
+        
+        return docType;
+    }
+
+    private Element generateElement(Functionality functionality) {
+        Element element = new Element("functionality");
+        
+        element.setAttribute("type", functionality.getClass().getName());
+        element.setAttribute("uuid", functionality.getUuid().toString());
+        
+        Element name = new Element("name");
+        generateMultiLanguageStringElement(name, functionality.getName());
+        
+        Element title = new Element("title");
+        generateMultiLanguageStringElement(title, functionality.getTitle());
+        
+        Element description = new Element("description");
+        generateMultiLanguageStringElement(description, functionality.getDescription());
+        
+        element.addContent(name);
+        element.addContent(title);
+        element.addContent(description);
+        
+        if (functionality.getPath() != null) {
+            element.setAttribute("path", functionality.getPath());
+        }
+        
+        if (functionality.getParameters() != null) {
+            element.setAttribute("parameters", functionality.getParameters());
+        }
+        
+        element.setAttribute("principal", String.valueOf(functionality.isPrincipal()));
+        element.setAttribute("enabled", String.valueOf(functionality.isEnabled()));
+        element.setAttribute("relative", String.valueOf(functionality.isRelative()));
+        element.setAttribute("visible", String.valueOf(functionality.isVisible()));
+        element.setAttribute("maximized", String.valueOf(functionality.isMaximized()));
+
+        if (functionality.getAvailabilityPolicy() != null) {
+            String expression = ((GroupAvailability) functionality.getAvailabilityPolicy()).getExpression();
+            element.addContent(new Element("availability").addContent(new Text(expression)));
+        }
+        
+        if (functionality instanceof Module) {
+            Module module = (Module) functionality;
+            
+            element.setAttribute("prefix", module.getPrefix());
+            
+            Element children = new Element("children");
+            for (Functionality child : module.getOrderedFunctionalities()) {
+                children.addContent(generateElement(child));
+            }
+            
+            element.addContent(children);
+        }
+        
+        return element;
+    }
+
+    private void generateMultiLanguageStringElement(Element parent, MultiLanguageString mlString) {
+        if (mlString == null) {
+            return;
+        }
+        
+        for (Language language : mlString.getAllLanguages()) {
+            Element element = new Element("value");
+            element.setAttribute("language", language.name());
+            element.addContent(new Text(mlString.getContent(language)));
+            parent.addContent(element);
+        }
+    }
+    
 }

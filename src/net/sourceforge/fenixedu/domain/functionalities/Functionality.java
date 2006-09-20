@@ -1,24 +1,23 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import java.util.WeakHashMap;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality.Movement;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
 import net.sourceforge.fenixedu.domain.functionalities.exceptions.IllegalOrderInModuleException;
-import net.sourceforge.fenixedu.domain.functionalities.exceptions.PublicPathConflictException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.domain.functionalities.exceptions.MatchPathConflictException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
-import pt.ist.utl.fenix.utils.Pair;
 
 /**
  * The base class that represents a basic functionality available through the
@@ -47,6 +46,21 @@ public abstract class Functionality extends Functionality_Base {
     }
 
     /**
+     * Generates an identifier that identifies a functionality in all systems
+     * during the it's entire lifetime. The idea is that when functionalities
+     * refer to each other during the exporting/importing operation we cannot
+     * rely on database dependant information like the internal id of the
+     * functionality. The UUID will be used instead and, since it's part of the
+     * functionality, will be unique and unchanged in all systems unless
+     * manually tampered with.
+     * 
+     * @return an UUID that identifies the new functionality in all systems
+     */
+    protected static UUID generateUuid() {
+        return UUID.randomUUID();
+    }
+
+    /**
      * Required default constructor.
      */
     protected Functionality() {
@@ -57,12 +71,25 @@ public abstract class Functionality extends Functionality_Base {
         setRootDomainObject(RootDomainObject.getInstance());
         setRelative(true);
         setEnabled(true);
+        setVisible(true);
+        setMaximized(false);
+        setPrincipal(true);
 
         // TODO: check if we can make a CommitListener to do this
         // only when the functionality is not inside a module
         setOrderInModule(getNextTopLevelOrder());
     }
 
+    @Override
+    public void setUuid(UUID uuid) {
+        // do not allow changes to the uuid
+        // TODO: should an exception be thrown?
+    }
+
+    protected final void changeUuid(UUID uuid) {
+        super.setUuid(uuid);
+    }
+    
     /**
      * Creates a new functionality ensuring that the name is not empty.
      * 
@@ -86,45 +113,6 @@ public abstract class Functionality extends Functionality_Base {
         }
 
         super.setName(name);
-    }
-
-    @Override
-    public void setPath(String path) {
-        super.setPath(path);
-        
-        Functionality.checkPublicPath();
-    }
-
-    @Override
-    public void setRelative(Boolean relative) {
-        super.setRelative(relative);
-
-        Functionality.checkPublicPath();
-    }
-
-    /**
-     * Checks that the public of this functionality does not conflict with the
-     * public path of other functionalities.
-     * 
-     * @exception PublicPathConflictException
-     *                when the public path of this functionality conflicts with
-     *                the public path of another functionality, that is, when
-     *                there are two public paths that are equal
-     */
-    public static void checkPublicPath() {
-        Set<String> paths = new HashSet<String>();
-
-        for (Functionality functionality : RootDomainObject.getInstance().getFunctionalities()) {
-            String publicPath = functionality.getPublicPath();
-            
-            if (publicPath == null) {
-                continue;
-            }
-
-            if (! paths.add(publicPath)) {
-                throw new PublicPathConflictException(publicPath);
-            }
-        }
     }
 
     @Override
@@ -185,6 +173,68 @@ public abstract class Functionality extends Functionality_Base {
         return super.getRelative();
     }
 
+    @Override
+    public void setPath(String path) {
+        super.setPath(path);
+
+        Functionality.checkMatchPath();
+    }
+
+    @Override
+    public void setRelative(Boolean relative) {
+        super.setRelative(relative);
+
+        Functionality.checkMatchPath();
+    }
+
+    /**
+     * Checks that the public of this functionality does not conflict with the
+     * public path of other functionalities.
+     * 
+     * @exception MatchPathConflictException
+     *                when the public path of this functionality conflicts with
+     *                the public path of another functionality, that is, when
+     *                there are two public paths that are equal
+     */
+    public static void checkMatchPath() {
+        Set<String> paths = new HashSet<String>();
+
+        for (Functionality functionality : RootDomainObject.getInstance().getFunctionalities()) {
+            if (!functionality.isPrincipal()) {
+                continue;
+            }
+
+            String matchPath = functionality.getMatchPath();
+
+            if (matchPath == null) {
+                continue;
+            }
+
+            if (!paths.add(matchPath)) {
+                throw new MatchPathConflictException(matchPath);
+            }
+        }
+    }
+
+    @Override
+    public void setPrincipal(Boolean principal) {
+        super.setPrincipal(principal);
+        Functionality.checkMatchPath();
+    }
+
+    public Boolean isPrincipal() {
+        return getPrincipal() == null ? true : getPrincipal();
+    }
+
+    public Boolean isMaximized() {
+        return getMaximized() == null ? false : getMaximized();
+    }
+
+    public void setPathAndPrincipal(String path, Boolean principal) {
+        super.setPrincipal(principal);
+        setPath(path);
+    }
+
     /**
      * The method follows the hierarchy of the functionalities to determine the
      * final public path through which the functionality is available. This
@@ -218,7 +268,7 @@ public abstract class Functionality extends Functionality_Base {
      * {@link #getPublicPath() public path} used to match agains the requested
      * path.
      * 
-     * @return the path that should be used to match this functionality agains
+     * @return the path that should be used to match this functionality against
      *         the requested path or <code>null</code> if it does not have one
      */
     public String getMatchPath() {
@@ -540,8 +590,8 @@ public abstract class Functionality extends Functionality_Base {
     }
 
     /**
-     * Checks is this functionality is available for the given person and
-     * context, that is, if the person may start the usecase pointed by this
+     * Checks is this functionality is available in the given context, that is,
+     * if the person hold in the context may start the usecase pointed by this
      * functionality.
      * 
      * <p>
@@ -557,14 +607,11 @@ public abstract class Functionality extends Functionality_Base {
      * 
      * @param context
      *            the current functionality context
-     * @param person
-     *            the person accessing the functionality or <code>null</code>
-     *            if it's a public requester
      * 
      * @return <code>true</code> if the functionality is available for the
-     *         given person
+     *         person hold in the context
      */
-    public boolean isAvailable(FunctionalityContext context, Person person) {
+    public boolean isAvailable(FunctionalityContext context) {
         if (context == null) {
             return true;
         }
@@ -577,7 +624,7 @@ public abstract class Functionality extends Functionality_Base {
             return false;
         }
 
-        if (getModule() != null && !getModule().isAvailable(context, person)) {
+        if (getModule() != null && !getModule().isAvailable(context)) {
             return false;
         }
 
@@ -585,11 +632,11 @@ public abstract class Functionality extends Functionality_Base {
             return true;
         }
 
-        return getAvailabilityPolicy().isAvailable(context, person);
+        return getAvailabilityPolicy().isAvailable(context);
     }
 
     /**
-     * Checks is this functionality is visible for the given person and context.
+     * Checks if this functionality is visible for the given person and context.
      * This method may be used to decide if a certain functionality is displayed
      * in the interface or not.
      * 
@@ -602,8 +649,16 @@ public abstract class Functionality extends Functionality_Base {
      * @return <code>true</code> if the functionality should be displayed to
      *         the user
      */
-    public boolean isVisible(FunctionalityContext context, Person person) {
-        return isAvailable(context, person);
+    public boolean isVisible(FunctionalityContext context) {
+        return isVisible() && isAvailable(context);
+    }
+
+    /**
+     * @return <code>true</code> if this functionality was marked as visible
+     *         to the user
+     */
+    public Boolean isVisible() {
+        return getVisible() == null ? true : getVisible();
     }
 
     /**
@@ -693,6 +748,8 @@ public abstract class Functionality extends Functionality_Base {
         return max + 1;
     }
 
+    
+    
     /**
      * Utility function that sorts a collection of functionalities according
      * with their order in the module and thei module hierarchy.
@@ -739,98 +796,36 @@ public abstract class Functionality extends Functionality_Base {
         return sort(getTopLevelFunctionalities());
     }
 
-    //
-    // Auxiliary methods
-    //
-
     /**
-     * Auxiliary method that invokes the real service that will delete the
-     * functionality.
+     * Obtains the functionality with the given <tt>uuid</tt>.
      * 
-     * @param functionality
-     *            the functionality that will be deleted
-     * @throws Exception
-     *             the exception throw by the service
+     * @param uuid
+     *            the <tt>uuid</tt> of the desired functionality
+     * @return the functionality with the given <tt>uuid</tt> if it exists or
+     *         <code>null</code> in all the other cases
      */
-    public static void deleteFunctionality(Functionality functionality) throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "DeleteFunctionality", functionality);
+    public static Functionality getFunctionality(UUID uuid) {
+        Functionality result = null;
+
+        synchronized (UUID_TABLE) {
+            WeakReference<Functionality> reference = UUID_TABLE.get(uuid);
+            if (reference != null) {
+                result = reference.get();
+            }
+            
+            if (result == null) {
+                for (Functionality functionality : RootDomainObject.getInstance().getFunctionalities()) {
+                    UUID_TABLE.put(functionality.getUuid(), new WeakReference<Functionality>(functionality));
+                    
+                    if (result == null && functionality.getUuid().equals(uuid)) {
+                        result = functionality;
+                    }
+                }
+            }
+        }
+        
+        return result;
     }
 
-    /**
-     * Auxiliary method that invokes the real service that will move the
-     * functionality.
-     * 
-     * @param functionality
-     *            the functionality to be moven
-     * @param movement
-     *            the type of movement
-     * @throws Exception
-     *             the exception thrown by the service
-     */
-    public static void moveFunctionality(Functionality functionality, Movement movement)
-            throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "MoveFunctionality", functionality,
-                movement);
-    }
-
-    /**
-     * Auxiliary method that invokes the real service that will rearrange all
-     * the functionalities. All pairs passed as argument describe the new
-     * module/functionality relations. Relations will be broken and created
-     * between all the referred functionalities in one transaction.
-     * 
-     * @param arrangements
-     *            a list of pairs (parent, child)
-     * @throws Exception
-     *             the exception thrown by the service
-     */
-    public static void rearrangeFunctionalities(List<Pair<Module, Functionality>> arrangements)
-            throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "ArrangeFunctionalities", arrangements);
-    }
-
-    /**
-     * Auxiliary method that invokes the service to enable the given
-     * functionality.
-     * 
-     * @param functionality
-     *            the functionality to enable
-     * @throws Exception
-     *             the exception thrown by the service
-     */
-    public static void enable(Functionality functionality) throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "ChangeEnableInFunctionality",
-                functionality, true);
-    }
-
-    /**
-     * Auxiliary method that invokes the service to disable the given
-     * functionality.
-     * 
-     * @param functionality
-     *            the functionality to disable
-     * @throws Exception
-     *             the exception thrown by the service
-     */
-    public static void disable(Functionality functionality) throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "ChangeEnableInFunctionality",
-                functionality, false);
-    }
-
-    /**
-     * Auxiliary method that invokes a service to create a
-     * {@link GroupAvailability} for the given functinolity
-     * 
-     * @param functionality
-     *            the functionality that will have it's availability changed
-     * @param expression
-     *            the group expression used to the create the new group
-     *            availability
-     */
-    public static void setGroupAvailability(Functionality functionality, String expression)
-            throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "CreateGroupAvailability",
-                functionality, expression);
-    }
-
+    private static Map<UUID, WeakReference<Functionality>> UUID_TABLE = new WeakHashMap<UUID, WeakReference<Functionality>>();
 }

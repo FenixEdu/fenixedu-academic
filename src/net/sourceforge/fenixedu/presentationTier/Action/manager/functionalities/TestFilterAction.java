@@ -45,11 +45,34 @@ public class TestFilterAction extends FenixDispatchAction {
                 continue;
             }
             
-            FunctionalityContext context = new TestFilterContext(request, bean, functionality);
-            try {
-                results.add(new TestFilterResultBean(functionality, functionality.isAvailable(context, person)));
-            } catch (GroupDynamicExpressionException e) {
-                results.add(new TestFilterResultBean(functionality, false));
+            Functionality targetFunctionality = null;
+            if (! functionality.isPrincipal()) {
+                for (Functionality testedFunctionality : RootDomainObject.getInstance().getFunctionalities()) {
+                    if (! testedFunctionality.isPrincipal()) {
+                        continue;
+                    }
+
+                    if (testedFunctionality.getMatchPath() == null) {
+                        continue;
+                    }
+                    
+                    if (testedFunctionality.getMatchPath().equals(functionality.getMatchPath())) {
+                        targetFunctionality = testedFunctionality;
+                        break;
+                    }
+                }
+            }
+            else {
+                targetFunctionality = functionality;
+            }
+            
+            if (targetFunctionality != null) {
+                FunctionalityContext context = new TestFilterContext(request, bean, targetFunctionality);
+                try {
+                    results.add(new TestFilterResultBean(functionality, functionality.isAvailable(context), bean.getParametersMap()));
+                } catch (GroupDynamicExpressionException e) {
+                    results.add(new TestFilterResultBean(functionality, false, bean.getParametersMap()));
+                }
             }
         }
         

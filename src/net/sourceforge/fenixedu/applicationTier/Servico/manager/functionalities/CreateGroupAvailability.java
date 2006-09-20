@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 public class CreateGroupAvailability extends Service {
 
     public GroupAvailability run(Functionality functionality, String expression) {
-        if (isValid(expression)) {
+        if (! isEmpty(expression)) {
             return new GroupAvailability(functionality, expression);
         }
         else {
@@ -21,8 +21,8 @@ public class CreateGroupAvailability extends Service {
         }
     }
 
-    private boolean isValid(String expression) {
-        return expression != null && expression.trim().length() > 0;
+    private boolean isEmpty(String expression) {
+        return expression == null || expression.trim().length() == 0;
     }
     
 }

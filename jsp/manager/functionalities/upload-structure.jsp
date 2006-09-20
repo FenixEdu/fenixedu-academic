@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<h2><bean:message key="title.module.edit" bundle="FUNCTIONALITY_RESOURCES"/></h2>
+<h2><bean:message key="title.uploadStructure" bundle="FUNCTIONALITY_RESOURCES"/></h2>
 
 <!-- ======================
          bread crumbs
@@ -19,10 +19,6 @@
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>
-    
-    <html:link page="/module/view.do" paramId="module" paramName="module" paramProperty="idInternal">
-        <fr:view name="module" property="name"/>
-    </html:link>
 </div>
 
 <!-- ======================
@@ -38,12 +34,18 @@
 </logic:messagesPresent>
 
 <!-- ======================
-         edit form
+         upload form
      ======================  -->
 
-<bean:define id="id" name="module" property="idInternal"/>
+<bean:define id="action">
+    /module/importStructure.do?module=<bean:write name="module" property="idInternal"/>
+</bean:define>
 
-<fr:edit name="module" 
-         layout="tabular" 
-         schema="functionalities.module.edit"
-         action="<%= "/module/view.do?module=" + id %>"/>
+<bean:define id="cancel">
+    /module/view.do?module=<bean:write name="module" property="idInternal"/>
+</bean:define>
+
+<fr:edit id="structure" name="bean" schema="functionalities.structure.bean"
+         action="<%= action %>">
+         <fr:destination name="cancel" path="<%= cancel %>"/>
+</fr:edit>

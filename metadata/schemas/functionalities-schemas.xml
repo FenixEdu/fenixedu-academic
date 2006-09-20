@@ -8,6 +8,7 @@
         <property name="size" value="40"/>
     </slot>
     <slot name="relative" default="true"/>
+    <slot name="principal" default="true"/>
     <slot name="parameters">
         <property name="size" value="40"/>
     </slot>
@@ -18,6 +19,8 @@
         <property name="rows" value="10"/>
         <property name="columns" value="40"/>
     </slot>
+    <slot name="visible" default="true"/>
+    <slot name="maximized"/>
 </schema>
 
 <schema name="functionalities.module.input" 
@@ -26,13 +29,14 @@
     <slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="prefix" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="prefix" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" default="/">
         <property name="size" value="40"/>
     </slot>
     <slot name="path">
         <property name="size" value="40"/>
     </slot>
     <slot name="relative" default="true"/>
+    <slot name="principal" default="true"/>
     <slot name="parameters">
         <property name="size" value="40"/>
     </slot>
@@ -43,13 +47,16 @@
         <property name="rows" value="10"/>
         <property name="columns" value="40"/>
     </slot>
+    <slot name="visible" default="true"/>
+    <slot name="maximized"/>
 </schema>
 
 <schema name="functionalities.concrete.functionality.create" 
         type="net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality"
         extends="functionalities.functionality.input"
         bundle="FUNCTIONALITY_RESOURCES"
-        constructor="name,path">
+        constructor="name">
+    <setter signature="setPathAndPrincipal(path, principal)"/>
 </schema>
 
 <schema name="functionalities.module.create" 
@@ -57,6 +64,7 @@
         extends="functionalities.module.input"
         bundle="FUNCTIONALITY_RESOURCES"
         constructor="name,prefix">
+    <setter signature="setPathAndPrincipal(path, principal)"/>
 </schema>
 
 <schema name="functionalities.functionality.view.simple" 
@@ -65,6 +73,7 @@
     <slot name="name"/>
     <slot name="path"/>
     <slot name="publicPath"/>
+    <slot name="principal"/>
     <slot name="parameters" layout="null-as-label">
         <property name="label" value="--"/>
     </slot>
@@ -74,6 +83,8 @@
     <slot name="description" layout="null-as-label">
         <property name="label" value="--"/>
     </slot>
+    <slot name="visible"/>
+    <slot name="maximized"/>
 </schema>
 
 <schema name="functionalities.functionality.availability" 
@@ -102,9 +113,18 @@
     <slot name="publicPrefix"/>
     <slot name="path"/>
     <slot name="publicPath"/>
-    <slot name="parameters"/>
-    <slot name="title"/>
-    <slot name="description"/>
+    <slot name="principal"/>
+    <slot name="parameters" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="title" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="description" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="visible"/>
+    <slot name="maximized"/>
 </schema>
 
 <schema name="functionalities.functionality.edit" 
@@ -166,7 +186,6 @@
     </slot>
 </schema>
 
-
 <schema name="functionalities.filter.result.bean" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.TestFilterResultBean"
         bundle="FUNCTIONALITY_RESOURCES">
     <slot name="accessible"/>
@@ -174,11 +193,12 @@
         <property name="useParent" value="true"/>
         <property name="destination" value="viewModule"/>
     </slot>
-    <slot name="functionality.publicPath" key="label.publicPath" layout="link">
+    <slot name="publicPath" key="label.publicPath" layout="link">
         <property name="useParent" value="true"/>
         <property name="destination" value="testFilter"/>
     </slot>
     <slot name="functionality.parameters" key="label.parameters.required"/>
+    <slot name="functionality.principal" key="label.principal"/>
 </schema>
 
 <schema name="functionalities.availability.manage.context" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.AvailabilityBean"
@@ -188,4 +208,16 @@
         <property name="useParent" value="true"/>
         <property name="destination" value="viewModule"/>
     </slot>
+</schema>
+
+<schema name="functionalities.structure.bean" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.StructureBean"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="stream">
+        <validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
+            <property name="required" value="true"/>
+            <property name="acceptedTypes" value="text/xml"/>
+        </validator>
+        <property name="size" value="50"/>
+    </slot>
+    <slot name="principalPreserved"/>
 </schema>

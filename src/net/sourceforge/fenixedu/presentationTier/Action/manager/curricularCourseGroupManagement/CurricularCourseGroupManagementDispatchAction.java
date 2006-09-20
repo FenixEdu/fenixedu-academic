@@ -104,7 +104,6 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
         try {
             infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceUtils.executeService(userView,
                     "ReadDegreeCurricularPlan", args);
-
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", "", e);
         } catch (FenixServiceException fenixServiceException) {

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.functionalities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -27,7 +28,6 @@ public class Module extends Module_Base {
         ModuleHasSubModules.addListener(new ModuleIsFunctionalityListener());
         ModuleAggregatesFunctionalities.addListener(new SomeFunctionalitiesAreModulesListener());
         ModuleAggregatesFunctionalities.addListener(new FunctionalitiesHaveAnOrderListener());
-        ModuleAggregatesFunctionalities.addListener(new PublicPathChangeListener());
     }
 
     /**
@@ -45,16 +45,25 @@ public class Module extends Module_Base {
 
         setName(name);
         setPrefix(prefix);
+        changeUuid(Functionality.generateUuid());
+    }
+
+    public Module(UUID uuid, MultiLanguageString name, String prefix) {
+        this();
+        
+        setName(name);
+        setPrefix(prefix);
+        changeUuid(uuid);
     }
 
     @Override
     public void setPrefix(String prefix) {
         if (prefix == null || prefix.length() == 0) {
-            throw new FieldIsRequiredException("prefix", "functionalities.functionality.required.prefix");
+            throw new FieldIsRequiredException("prefix", "functionalities.module.required.prefix");
         }
 
         super.setPrefix(prefix);
-        Functionality.checkPublicPath();
+        Functionality.checkMatchPath();
     }
 
     /**
@@ -109,11 +118,24 @@ public class Module extends Module_Base {
      * A module is visible if one of it's sub functionalities is visible to the
      * user. This allows a user to see, for example, a top-level module that
      * deep in it's sub-functionalities tree has a visible functionality.
+     * 
+     * <p>
+     * A module is also visible when it has an accessible public path. So if the
+     * module has a public path but none of it's children is visible then it is still
+     * visible to the user.
      */
     @Override
-    public boolean isVisible(FunctionalityContext context, Person person) {
+    public boolean isVisible(FunctionalityContext context) {
+        if (! isVisible()) {
+            return false;
+        }
+        
+        if (getPublicPath() != null && isAvailable(context)) {
+            return true;
+        }
+        
         for (Functionality child : getFunctionalities()) {
-            if (child.isVisible(context, person)) {
+            if (child.isVisible(context)) {
                 return true;
             }
         }
@@ -302,27 +324,4 @@ public class Module extends Module_Base {
 
     }
 
-    /**
-     * This listener forces the public path conflict check to happen whenever
-     * there is a change in the module structure.
-     * 
-     * @author cfgi
-     */
-    private static class PublicPathChangeListener extends RelationAdapter<Module, Functionality> {
-
-        @Override
-        public void afterAdd(Module self, Functionality functionality) {
-            super.afterAdd(self, functionality);
-
-            Functionality.checkPublicPath();
-        }
-
-        @Override
-        public void afterRemove(Module self, Functionality functionality) {
-            super.afterRemove(self, functionality);
-
-            Functionality.checkPublicPath();
-        }
-
-    }
 }

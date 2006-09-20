@@ -123,11 +123,9 @@
 	</definition>	
 	<definition name="df.page.choosePerson" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/password/choosePersonPage_bd.jsp" />
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.confirmPasswordChange" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/password/confirmPasswordChange_bd.jsp" />
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.insert-execution-course" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/insertExecutionCourse_bd.jsp" />
@@ -190,28 +188,24 @@
 	<!-- ========== TEACHERS MANAGEMENT ========== -->
 	<definition name="df.page.firstPage" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/teachersManagement/welcomeScreen.jsp" />
-		<put name="navLocal" value="/manager/teachersManagement/mainMenu.jsp" />
+		<!-- <put name="navLocal" value="/manager/teachersManagement/mainMenu.jsp" />  -->
 	</definition>	
 
 	<definition name="df.page.editCategories" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/teachersManagement/editCategories.jsp" />
-		<put name="navLocal" value="/manager/teachersManagement/mainMenu.jsp" />
 	</definition>	
 
 	<definition name="df.page.prepareDissociateEC" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/teachersManagement/prepareDissociateEC.jsp" />
-		<put name="navLocal" value="/manager/teachersManagement/mainMenu.jsp" />
 	</definition>	
 
 	<definition name="df.page.prepareDissociateECShowProfShipsAndRespFor" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/teachersManagement/prepareDissociateECShowProfShipsAndRespFor.jsp" />
-		<put name="navLocal" value="/manager/teachersManagement/mainMenu.jsp" />
 	</definition>	
 
 	<!-- ========== ROLES MANIPULATION ========== -->
 	<definition name="df.page.manage-roles" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageRoles_bd.jsp" />
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
 
 	<!-- ========== EXECUTION COURSE MERGE ========== -->
@@ -237,55 +231,44 @@
 	<!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
 	<definition name="df.executionCourseManagement.page.firstPage" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/welcomeScreen.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+        <!-- <put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" /> -->
 	</definition>
 	<definition name="df.executionCourseManagement.page.insertExecutionCourse" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/insertExecutionCourse.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
 	
 	<definition name="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecutionPeriod.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
 	
 	<definition name="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecDegreeAndCurYear.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
 
 	<definition name="df.executionCourseManagement.showCreatedSites" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/showCreatedSites.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
 	
 	<definition name="df.executionCourseManagement.prepareEditExecutionCourse" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/prepareEditExecutionCourse.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
 	<definition name="df.executionCourseManagement.editExecutionCourse" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/editExecutionCourse.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
 	<definition name="df.executionCourseManagement.viewExecutionCourse" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/viewExecutionCourse.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.executionCourseManagement.prepareAssociateCurricularCourseChooseDegreeCurricularPlan" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/prepareAssociateCurricularCourseChooseDegreeCurricularPlan.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
 	<definition name="df.executionCourseManagement.associateCurricularCourse" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/associateCurricularCourse.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
 	<definition name="df.executionCourseManagement.transferCurricularCourse" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/transferCurricularCourse.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.executionCourseManagement.seperateExecutionCourse" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/seperateExecutionCourse.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.executionCourseManagement.chooseDegreeType" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/chooseDegreeType.jsp" />
@@ -293,63 +276,52 @@
 	</definition>
 	<definition name="df.executionCourseManagement.chooseDegreeCurricularPlans" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/chooseDegreeCurricularPlans.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.executionCourseManagement.createExecutionCoursesSuccess" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/createExecutionCoursesSuccess.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>			
 
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->
 	<definition name="firstPage" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/welcomeScreen.jsp" />
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+		<!-- <put name="navLocal" value="/manager/personManagement/mainMenu.jsp" /> -->
 	</definition>
 	<definition name="findPerson" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/findPerson.jsp" />
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="displayPerson" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/displayPerson.jsp" />
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>	
 	<definition name="displayEmployee" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/displayEmployee.jsp" />
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="choosePersons" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/choosePersonsToMerge.jsp" />
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="displayPersons" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/mergePersons.jsp" />
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
 		
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->
 	<definition name="firstPageGenerateFiles" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/generateFiles/welcomeScreen.jsp" />
-		<put name="navLocal" value="/manager/generateFiles/mainMenu.jsp" />
+		<!-- <put name="navLocal" value="/manager/generateFiles/mainMenu.jsp" /> -->
 	</definition>
 	<definition name="chooseForGenerateFiles" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/generateFiles/chooseForGenerateFiles.jsp" />
-		<put name="navLocal" value="/manager/generateFiles/mainMenu.jsp" />
 	</definition>
 	<definition name="confirmation" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/generateFiles/confirmation.jsp" />
-		<put name="navLocal" value="/manager/generateFiles/mainMenu.jsp" />
 	</definition>
     <definition name="firstPageUploadFiles" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/uploadFiles/welcomeScreen.jsp" />
-		<put name="navLocal" value="/manager/uploadFiles/mainMenu.jsp" />
+		<!-- <put name="navLocal" value="/manager/uploadFiles/mainMenu.jsp" /> -->
 	</definition>
 	<definition name="chooseForUploadFiles" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/uploadFiles/chooseForUploadFiles.jsp" />
-		<put name="navLocal" value="/manager/uploadFiles/mainMenu.jsp" />
 	</definition>
 	<definition name="chooseForUploadFiles.error" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/uploadFiles/chooseForUploadFiles_error.jsp" />
-		<put name="navLocal" value="/manager/uploadFiles/mainMenu.jsp" />
 	</definition>	
 
 	<!-- ========== PRECEDENCES MANAGEMENT ========== -->
@@ -408,15 +380,13 @@
 	<!-- ========== GUIDES MANAGEMENT ========== -->
 	<definition name="firstPageGuideManagement" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/guideManagement/welcomeScreen.jsp" />
-        <put name="navLocal" value="/manager/guideManagement/mainMenu.jsp" />
+        <!-- <put name="navLocal" value="/manager/guideManagement/mainMenu.jsp" /> -->
 	</definition>	
 	<definition name="chooseGuide" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/guideManagement/chooseGuide.jsp" />
-        <put name="navLocal" value="/manager/guideManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="editGuide" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/guideManagement/editGuide.jsp" />
-        <put name="navLocal" value="/manager/guideManagement/mainMenu.jsp" />
 	</definition>
 
 	<!-- ========== STUDENTS MANAGEMENT ========== -->
@@ -475,7 +445,7 @@
 	
 	<!-- ========== Functions Management ========== -->	
 	<definition name="df.page.functionsManagement" extends="definition.manager.masterPage" >
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+		<!-- <put name="navLocal" value="/manager/personManagement/mainMenu.jsp" /> -->
 	</definition>	
     
     <!-- ========== Renderers Examples ============ -->
@@ -537,18 +507,16 @@
 
 	<!-- Paulo Zenida and Dinis Martins - 2006-02-17 -->
     <definition name="createPerson" extends="definition.manager.masterPage" >
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
-    	<put name="body" value="/manager/personManagement/createPerson.jsp" />
+    	   <put name="body" value="/manager/personManagement/createPerson.jsp" />
     </definition>
     <!-- Paulo Zenida and Dinis Martins - 2006-02-22 -->
     <definition name="createPersonSuccess" extends="definition.manager.masterPage" >
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
-    	<put name="body" value="/manager/personManagement/createPersonSuccess.jsp" />
+        	<put name="body" value="/manager/personManagement/createPersonSuccess.jsp" />
     </definition>
     
     <!-- ========== ExecutionDegree Management ========== -->
 	<definition name="df.executionDegreeManagement.default" extends="definition.manager.masterPage" >
-		<put name="navLocal" value="/manager/executionDegreesManagement/mainMenu.jsp" />
+		<!-- <put name="navLocal" value="/manager/executionDegreesManagement/mainMenu.jsp" /> -->
 	</definition>
 	
     <definition name="df.executionDegreeManagement.firstPage" extends="df.executionDegreeManagement.default" >
@@ -572,7 +540,6 @@
 	</definition>
 
 	<definition name="df.recover.inactive.person.search.form" extends="definition.manager.masterPage" >
-		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 		<put name="body" value="/manager/personManagement/recoverInactivePerson.jsp" />
 	</definition>
 

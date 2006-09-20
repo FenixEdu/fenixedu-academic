@@ -24,6 +24,9 @@
 		<h:outputText value="</p>" escape="false"/>
 		<h:outputText value="</fieldset></div>" escape="false"/>
 		
+        <h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
+        <h:outputText escape="false" value="<input alt='input.executionYearID' id='executionYearID' name='executionYearID' type='hidden' value='#{CurricularCourseManagement.executionYearID}'/>"/>
+        
 		<h:outputText value="<ul><li>" escape="false"/>
 		<h:commandLink value="#{bolonhaBundle['return']}"
 			action="buildCurricularPlan"/>

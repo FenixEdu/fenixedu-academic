@@ -1,20 +1,22 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
-import net.sourceforge.fenixedu.domain.functionalities.exceptions.PublicPathConflictException;
+import net.sourceforge.fenixedu.domain.functionalities.exceptions.MatchPathConflictException;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 
 import pt.ist.utl.fenix.utils.Pair;
 
@@ -71,7 +73,7 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
         try {
             updateStructure(getTreeRoots(module), structure);
         }
-        catch (PublicPathConflictException e) {
+        catch (MatchPathConflictException e) {
             processException(request, mapping, null, e);
         }
 
@@ -116,7 +118,7 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
             arrangements.add(new Pair<Module, Functionality>(parent, child));
         }
         
-        Functionality.rearrangeFunctionalities(arrangements);
+        rearrangeFunctionalities(arrangements);
     }
 
     private List<Functionality> flatten(List<Functionality> roots) {
@@ -150,4 +152,51 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
         return result;
     }
 
+    public ActionForward importStructure(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Module module = getModule(request);
+        
+        IViewState viewState = RenderUtils.getViewState("structure");
+        RenderUtils.invalidateViewState("structure");
+        
+        if (viewState == null) {
+            return viewModule(module, mapping, actionForm, request, response);
+        }
+        
+        StructureBean bean = (StructureBean) viewState.getMetaObject().getObject();
+        if (bean == null) {
+            return viewModule(module, mapping, actionForm, request, response);
+        }
+        
+        try {
+            importFunctionalities(module, bean.getStream(), bean.isPrincipalPreserved());
+        }
+        catch (DomainException e) {
+            addMessage(request, "error", e.getKey(), e.getArgs());
+            return uploadStructure(mapping, actionForm, request, response);
+        }
+        catch (IOException e) {
+            addMessage(request, "error", "functionalities.import.file.read.failed", new String[0]);
+            return uploadStructure(mapping, actionForm, request, response);
+        }
+        catch (Exception e) {
+            addMessage(request, "error", "functionalities.import.file.failed", e.getMessage());
+            return uploadStructure(mapping, actionForm, request, response);
+        }
+        
+        return viewModule(module, mapping, actionForm, request, response);
+    }
+
+    public ActionForward uploadStructure(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Module module = getModule(request);
+        
+        request.setAttribute("bean", new StructureBean());
+
+        if (module == null) {
+            return mapping.findForward("upload.toplevel");
+        }
+        else {
+            return forwardTo(mapping.findForward("upload"), request, module, true);
+        }
+    }
+    
 }

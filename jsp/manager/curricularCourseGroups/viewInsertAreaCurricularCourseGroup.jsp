@@ -9,7 +9,9 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertCurricularCourseGroup" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.type" property="type" value="area"/>
 	<bean:define id="dcpId" name="infoDegreeCurricularPlan" property="idInternal"/>
+    <bean:define id="degreeId" name="degreeId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= dcpId.toString() %>"/>
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= degreeId.toString() %>"/>
 	
 <table>
 <tr>	

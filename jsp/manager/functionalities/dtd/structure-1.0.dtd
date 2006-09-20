@@ -1,0 +1,37 @@
+<!ELEMENT structure (functionality*)>
+
+<!ATTLIST structure
+	version CDATA #REQUIRED
+	parent  CDATA #IMPLIED
+>
+
+<!ELEMENT functionality (name, title, description, availability?, children?)>
+
+<!ATTLIST functionality
+	uuid       CDATA #REQUIRED
+	type       CDATA #REQUIRED
+	path       CDATA #IMPLIED
+	parameters CDATA #IMPLIED
+	prefix     CDATA #IMPLIED
+	principal (true|false) #REQUIRED
+	enabled   (true|false) #REQUIRED
+	relative  (true|false) #REQUIRED
+	visible   (true|false) #REQUIRED
+	maximized (true|false) #REQUIRED
+>
+
+<!ELEMENT name (value*)>
+
+<!ELEMENT title (value*)>
+
+<!ELEMENT description (value*)>
+
+<!ELEMENT value (#PCDATA)>
+
+<!ATTLIST value
+	language NMTOKEN #REQUIRED
+>
+
+<!ELEMENT availability (#PCDATA)>
+
+<!ELEMENT children (functionality*)>

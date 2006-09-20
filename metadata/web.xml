@@ -173,9 +173,10 @@
         </description>
         <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter</filter-class>
         <init-param>
-            <!-- the value of this param MUST be the same as the prefix for the url-pattern below 
-                 but without the trailing /
-              -->
+                <!-- 
+                 the value of this param MUST be the same as the prefix for the url-pattern below 
+                 but without the trailing 
+                  -->
             <param-name>testing.prefix</param-name>
             <param-value>/manager/functionalities/test</param-value>
         </init-param>
@@ -274,7 +275,7 @@
     
     <filter-mapping>
         <filter-name>FunctionalityAccessFilter</filter-name>
-        <url-pattern>/manager/functionalities/test/*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <!-- Listeners -->

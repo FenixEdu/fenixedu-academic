@@ -1012,3 +1012,46 @@ border: none;
 
 th.parking { width: 8em;}
 td.parking { width: 44em;}
+
+/**********************************************
+	 new nav
+***********************************************/	
+
+#navlateral div.newnav li {
+border-bottom: none;
+}
+#navlateral div.newnav ul li a, #navlateral div.newnav ul li span {
+border-bottom: 1px solid #eee;
+}
+
+/* first level module */
+
+#navlateral div.newnav ul li.navmod {
+padding: 1em 0 1em 0;
+}
+#navlateral div.newnav ul li.navmod a {
+font-weight: bold;
+padding-bottom: 0.4em;
+}
+#navlateral div.newnav ul li.navmod span {
+font-weight: bold;
+padding-bottom: 0.4em;
+}
+
+/* sub level modules */
+
+#navlateral div.newnav ul li.navmod ul li a, #navlateral div.newnav ul li.navmod ul li a span { /* all anchors and spans that are not first modules */
+font-weight: normal;
+padding-bottom: 0.1em;
+}
+#navlateral div.newnav ul li.navmod ul li.navmod a, #navlateral div.newnav ul li.navmod ul li.navmod span { /* all navmod anchors and spans that are not in a first module */
+font-weight: normal;
+padding-bottom: 0.1em;
+}
+#navlateral div.newnav ul li.navmod ul li.navmod { /* all navmods that are not first modules */
+padding: 0;
+}
+
+#navlateral div.newnav ul li ul li ul { /* addictive identation */
+margin-left: 1em;
+}

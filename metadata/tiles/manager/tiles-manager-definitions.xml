@@ -7,8 +7,8 @@
 	  <put name="title" value="Portal de Gerência" />
 	  <put name="serviceName" value="Portal de Gerência" />
 	  <put name="navLocal" value="/manager/commons/commonNavLocalManager.jsp" />
-	  <put name="navGeral" value="/manager/commons/commonNavGeralManager.jsp" />
-	  <put name="body-context" value="/commons/blank.jsp"/>
+	  <put name="navGeral" value="/commons/functionalities/top-menu.jsp" />
+	  <put name="body-context" value="/commons/functionalities/breadCrumbs.jsp"/>
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>	

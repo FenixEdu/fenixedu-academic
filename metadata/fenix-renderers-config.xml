@@ -229,6 +229,10 @@ Documentation:
         <property name="format" value="${expression}"/>
     </renderer>
 
+    <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer"/>
+    <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.TopLevelMenuRenderer"/>
+    <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.BreadCrumbsRenderer"/>
+
     <!-- input -->
 
     <!--@ The default layout for editing objects.  -->  

@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add some more fields the functionalities tables" AlterFunctionalitiesTables.sql
+execute "Add toplevel portals and manager functionalities to the model" AddManagerFuctionalities.sql

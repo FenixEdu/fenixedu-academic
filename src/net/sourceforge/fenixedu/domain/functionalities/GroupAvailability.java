@@ -91,10 +91,10 @@ public class GroupAvailability extends GroupAvailability_Base {
 
     /**
      * Delegates the availability to the group obtained with {@link #getGroup()}.
-     * The functionality is available if the given person is a member of the
-     * group.
+     * The functionality is available if the group allows the <tt>UserView</tt>
+     * specified in the context.
      * 
-     * @return <code>getGroup().isMember(person)</code>
+     * @return <code>getGroup().allows(context.getUserView())</code>
      * 
      * @see Group#isMember(Person)
      * 
@@ -102,9 +102,9 @@ public class GroupAvailability extends GroupAvailability_Base {
      *                when the evaluation of the expression group fails
      */
     @Override
-    public boolean isAvailable(FunctionalityContext context, Person person) {
+    public boolean isAvailable(FunctionalityContext context) {
         try {
-            return getGroup().isMember(new GroupContextFromFunctionality(context), person);
+            return getGroup().allows(new GroupContextFromFunctionality(context), context.getUserView());
         } catch (GroupDynamicExpressionException e) {
             throw e;
         } catch (Exception e) {

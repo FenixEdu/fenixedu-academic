@@ -19,6 +19,7 @@
     
         <action path="/toplevel/view"     forward="/private/module.do?method=viewTopLevel"/>
         <action path="/toplevel/organize" forward="/private/module.do?method=organize"/>
+        <action path="/toplevel/upload"   forward="/private/module.do?method=uploadStructure"/>
         <action path="/module/*"          forward="/private/module.do?method={1}"/>
         <action path="/functionality/*"   forward="/private/functionality.do?method={1}"/>
 
@@ -33,6 +34,8 @@
             <forward name="edit"            path="functionalities.module.edit"/>
             <forward name="create"          path="functionalities.module.create"/>
             <forward name="create.toplevel" path="functionalities.module.create.toplevel"/>
+            <forward name="upload"          path="functionalities.module.upload"/>
+            <forward name="upload.toplevel" path="functionalities.module.upload.toplevel"/>
         </action>
         
         <action path="/private/functionality" 

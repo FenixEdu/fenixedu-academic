@@ -68,7 +68,7 @@ example of the required modification is:
 
 <p>
     <strong>Note</strong> that the tiles definition example extends a definition only available in the 
-    manager module. Using the conventions of the Fï¿½nix project you would extend 
+    manager module. Using the conventions of the Fénix project you would extend 
     <code>"defintion.&lt;module&nbsp;name&gt;.masterPage"</code> were <code>&lt;module&nbsp;name&gt;</code>
     is replaced by the corresponding module name.
 </p>

@@ -2,16 +2,43 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/> //
+<h2><bean:message key="title.toplevel" bundle="FUNCTIONALITY_RESOURCES"/></h2>
 
-<!-- error message -->
+<!-- ======================
+         bread crumbs
+     ======================  -->
+     
+<div>
+    <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/> //
+</div>
+
+<!-- ======================
+         error message
+     ======================  -->
 
 <logic:messagesPresent message="true">
-    <html:messages id="error" message="true" bundle="FUNCTIONALITY_RESOURCES">
-        <bean:write name="error"/>
-    </html:messages>
+    <div>
+        <html:messages id="error" message="true" bundle="FUNCTIONALITY_RESOURCES">
+            <bean:write name="error"/>
+        </html:messages>
+    </div>
 </logic:messagesPresent>
 
+<!-- ======================
+         export/import 
+     ======================  -->
+     
+<html:link page="/functionality/exportStructure.do">
+    <bean:message key="link.functionality.export" bundle="FUNCTIONALITY_RESOURCES"/>
+</html:link>
+
+<html:link page="/toplevel/upload.do">
+    <bean:message key="link.module.import" bundle="FUNCTIONALITY_RESOURCES"/>
+</html:link>
+
+<!-- ======================
+         tree
+     ======================  -->
 <!-- form used to submit the tree structure 
      search for: saveTree()
   -->
@@ -57,6 +84,10 @@
     <fr:destination name="functionality.view" path="/functionality/view.do?functionality=${idInternal}"/>
 </fr:view>
 
+<!-- ======================
+         tree controls
+     ======================  -->
+
 <div id="tree-controls" style="display: none;">
     <p>
         <a href="#" onclick="<%= tree %>.expandAll();"><bean:message key="link.tree.expand-all" bundle="FUNCTIONALITY_RESOURCES"/></a>
@@ -79,6 +110,10 @@
     // show hidden div
     document.getElementById("tree-controls").style.display = 'block';
 </script>
+
+<!-- ======================
+         create links
+     ======================  -->
 
 <p>
     <html:link page="/module/create.do">

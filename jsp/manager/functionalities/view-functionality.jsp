@@ -3,21 +3,25 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
+<h2><bean:message key="title.functionality" bundle="FUNCTIONALITY_RESOURCES"/></h2>
+
 <!-- ======================
          bread crumbs
      ======================  -->
 
-<html:link page="/toplevel/view.do">
-    <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
-</html:link> //
-
-<logic:iterate id="crumb" name="crumbs">
-    <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
-        <fr:view name="crumb" property="name"/>
-    </html:link> &gt;
-</logic:iterate>
-
-<fr:view name="functionality" property="name"/>
+<div>
+    <html:link page="/toplevel/view.do">
+        <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
+    </html:link> //
+    
+    <logic:iterate id="crumb" name="crumbs">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+            <fr:view name="crumb" property="name"/>
+        </html:link> &gt;
+    </logic:iterate>
+    
+    <fr:view name="functionality" property="name"/>
+</div>
 
 <!-- ======================
          information
@@ -46,4 +50,8 @@
 
 <html:link page="/functionality/manage.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
     <bean:message key="link.functionality.manage" bundle="FUNCTIONALITY_RESOURCES"/>
+</html:link>
+
+<html:link page="/functionality/exportStructure.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
+    <bean:message key="link.functionality.export" bundle="FUNCTIONALITY_RESOURCES"/>
 </html:link>

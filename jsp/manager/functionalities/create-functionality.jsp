@@ -3,26 +3,39 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
+<h2><bean:message key="title.functionality.create" bundle="FUNCTIONALITY_RESOURCES"/></h2>
+
 <!-- ======================
          bread crumbs
      ======================  -->
 
-<html:link page="/toplevel/view.do">
-    <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
-</html:link> //
-<logic:iterate id="crumb" name="crumbs">
-    <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
-        <fr:view name="crumb" property="name"/>
-    </html:link> &gt;
-</logic:iterate>
+<div>
+    <html:link page="/toplevel/view.do">
+        <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
+    </html:link> //
 
-<!-- error message -->
+    <logic:iterate id="crumb" name="crumbs">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+            <fr:view name="crumb" property="name"/>
+        </html:link> &gt;
+    </logic:iterate>
+</div>
+
+<!-- ======================
+         error message
+     ======================  -->
 
 <logic:messagesPresent message="true">
-    <html:messages id="error" message="true" bundle="FUNCTIONALITY_RESOURCES">
-        <bean:write name="error"/>
-    </html:messages>
+    <div>
+        <html:messages id="error" message="true" bundle="FUNCTIONALITY_RESOURCES">
+            <bean:write name="error"/>
+        </html:messages>
+    </div>
 </logic:messagesPresent>
+
+<!-- ======================
+         create form
+     ======================  -->
 
 <bean:define id="id" name="module" property="idInternal"/>
 
@@ -30,4 +43,5 @@
            schema="functionalities.concrete.functionality.create"
            action="<%= "/module/view.do?module=" + id %>">
     <fr:hidden slot="module" name="module"/>
+    <fr:destination name="invalid" path="<%= "/functionality/create.do?parent=" + id %>"/>
 </fr:create>

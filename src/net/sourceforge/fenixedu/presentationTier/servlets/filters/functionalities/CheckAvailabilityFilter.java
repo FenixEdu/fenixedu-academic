@@ -22,6 +22,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
+import org.apache.log4j.Logger;
+
 /**
  * This filter restricts the access to certain functionalities based on the
  * functionalities model. First, the requested path is mapped into a
@@ -43,6 +45,8 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
  */
 public class CheckAvailabilityFilter implements Filter {
 
+    private static final Logger logger = Logger.getLogger(CheckAvailabilityFilter.class);
+    
     private String errorPage;
     private String testingPrefix;
 
@@ -81,10 +85,20 @@ public class CheckAvailabilityFilter implements Filter {
         Functionality functionality = getFunctionality(servletRequest);
         FunctionalityContext context = getContext(servletRequest, userView, functionality);
 
-        Person person = userView.isPublicRequester() ? null : userView.getPerson();
-
-        if (functionality == null || functionality.isAvailable(context, person)) {
-            setupRequest(servletRequest, context);
+        if (functionality == null || functionality.isAvailable(context)) {
+            if (functionality != null) {
+                logger.debug(String.format("%s[%d]%s", functionality.getName().getContent(), functionality.getIdInternal(), functionality.getMatchPath()));
+                if (servletRequest.getQueryString() != null) {
+                    logger.debug("    " + servletRequest.getQueryString());
+                }
+                
+                setupRequest(servletRequest, context);
+            }
+            else {
+                if (servletRequest.getServletPath().matches("[^.]*\\.(jsp|do|faces).*") || servletRequest.getServletPath().matches("[^.]*")) {
+                    logger.debug("not mappped: " + servletRequest.getServletPath() + (servletRequest.getQueryString() != null ? "?" + servletRequest.getQueryString() : ""));
+                }
+            }
 
             if (hasTestingPrefix(servletRequest)) {
                 removeTestingPrefix(servletRequest, servletResponse);
@@ -109,7 +123,16 @@ public class CheckAvailabilityFilter implements Filter {
             requestedPath = requestedPath.substring(getTestingPrefix().length());
         }
         
+        // HACK: dotIstPortal.do is a redirection and does not map directly to a functionality
+        if (requestedPath.matches("/dotIstPortal.do")) {
+            requestedPath = servletRequest.getParameter("prefix") + servletRequest.getParameter("page");
+        }
+        
         for (Functionality functionality : RootDomainObject.getInstance().getFunctionalities()) {
+            if (! functionality.isPrincipal()) {
+                continue;
+            }
+            
             String matchPath = functionality.getMatchPath();
             
             if (matchPath != null && matchPath.equals(requestedPath)) {
