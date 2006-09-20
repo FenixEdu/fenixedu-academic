@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
+import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.FlowLayout;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
@@ -231,12 +232,19 @@ public class FlowInputRenderer extends InputRenderer {
             HtmlInlineContainer container = new HtmlInlineContainer();
             
             if (! isLabelExcluded()) {
-                HtmlLabel label = new HtmlLabel();
-                label.setFor(slot.getKey().toString());
-                label.setText(addLabelTerminator(slot.getLabel()));
-                label.setClasses(getLabelClasses());
-                label.setStyle(getLabelStyle());
-                container.addChild(label);
+                
+                if (slot.isReadOnly()) {
+                    container.addChild(new HtmlText(addLabelTerminator(slot.getLabel()), false)); 
+                }
+                else {
+                    HtmlLabel label = new HtmlLabel();
+                    label.setFor(slot.getKey().toString());
+                    label.setText(addLabelTerminator(slot.getLabel()));
+                    label.setClasses(getLabelClasses());
+                    label.setStyle(getLabelStyle());
+                
+                    container.addChild(label);
+                }
             }
             
             container.addChild(component);

@@ -198,7 +198,7 @@ public class StandardInputRenderer extends InputRenderer {
                 if(displayLabel) {
 
                     if (slot.isReadOnly()) {
-                    component = new HtmlText(slot.getLabel(), false); 
+                        component = new HtmlText(addLabelTerminator(slot.getLabel()), false); 
                     }
                     else {
                         HtmlLabel label = new HtmlLabel();
