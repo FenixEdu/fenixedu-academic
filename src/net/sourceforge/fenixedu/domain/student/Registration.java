@@ -11,6 +11,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -64,6 +65,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.joda.time.YearMonthDay;
 
 public class Registration extends Registration_Base {
 
@@ -93,6 +95,23 @@ public class Registration extends Registration_Base {
 		false, null);
 	setEntryPhase(entryPhase);
     }
+    
+    @Deprecated
+    // NOTE: use this for legacy code only
+    public Registration(Person person, Integer studentNumber, StudentKind studentKind,
+	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, 
+	    EntryPhase entryPhase, DegreeCurricularPlan degreeCurricularPlan) {
+	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, 
+		false, null);
+	
+	// create scp
+	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this,degreeCurricularPlan,
+		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
+			.readActualExecutionPeriod());
+	
+	setEntryPhase(entryPhase);
+    }
+    
 
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
 	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden,

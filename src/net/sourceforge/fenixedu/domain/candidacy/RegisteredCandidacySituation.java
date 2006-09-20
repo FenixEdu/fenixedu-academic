@@ -4,18 +4,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentType;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.StudentState;
 
@@ -45,13 +42,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	}
 
 	// create registration
-	Registration registration = createNewRegistration();
-
-	// create scp
-	StudentCurricularPlan.createBolonhaStudentCurricularPlan(registration,
-		((DFACandidacy) candidacy).getExecutionDegree().getDegreeCurricularPlan(),
-		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
-			.readActualExecutionPeriod());
+	Registration registration = createNewRegistration((DFACandidacy) candidacy);
 
 	createQualification();
 
@@ -59,13 +50,16 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 
     }
 
-    private Registration createNewRegistration() {
+    private Registration createNewRegistration(DFACandidacy candidacy) {
 
 	StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
 	StudentState state = new StudentState(StudentState.INSCRITO);
 	Person person = getCandidacy().getPerson();
+	
 	Registration registration = new Registration(person, null, studentKind, state, false, false,
-		EntryPhase.FIRST_PHASE_OBJ);
+		EntryPhase.FIRST_PHASE_OBJ, ((DFACandidacy) candidacy).getExecutionDegree()
+			.getDegreeCurricularPlan());
+	
 	registration.setInterruptedStudies(false);
 
 	person.getStudent().addRegistrations(registration);
