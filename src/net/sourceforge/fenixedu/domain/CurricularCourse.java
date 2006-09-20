@@ -1155,6 +1155,16 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 	return result;
     }
+    
+    public List<Context> getParentContextsByExecutionPeriod(ExecutionPeriod executionPeriod) {
+	final List<Context> result = new ArrayList<Context>();
+	for (final Context context : this.getParentContexts()) {
+	    if (executionPeriod == null || context.isValid(executionPeriod)) {
+		result.add(context);
+	    }
+	}
+	return result;
+    }    
 
     public boolean hasScopeForCurricularYear(final Integer curricularYear,
 	    ExecutionPeriod executionPeriod) {
