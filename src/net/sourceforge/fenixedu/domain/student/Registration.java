@@ -89,7 +89,7 @@ public class Registration extends Registration_Base {
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
 	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
 	    DegreeType degreeType) {
-	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, degreeType,
+	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, 
 		false, null);
 	setEntryPhase(entryPhase);
     }
@@ -97,17 +97,16 @@ public class Registration extends Registration_Base {
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
 	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, DegreeType degreeType,
 	    StudentCandidacy studentCandidacy) {
-	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, degreeType,
+	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, 
 		false, studentCandidacy);
     }
 
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
-	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, DegreeType degreeType,
+	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden,
 	    final Boolean interruptedStudies, StudentCandidacy studentCandidacy) {
 	this();
 	setPayedTuition(payedTuition);
 	setEnrollmentForbidden(enrolmentForbidden);
-	setDegreeType(degreeType);
 	if (person.hasStudent()) {
 	    setStudent(person.getStudent());
 	} else {
@@ -1028,5 +1027,10 @@ public class Registration extends Registration_Base {
 
     // FIXME: end of methods to remove after migration of this information
     // to Candidacy
+    
+    public DegreeType getDegreeType() {
+        final StudentCurricularPlan scp = (getActiveOrConcludedStudentCurricularPlan() != null) ? getActiveOrConcludedStudentCurricularPlan() : getLastStudentCurricularPlan(); 
+	return scp.getDegreeType();
+    }
 
 }

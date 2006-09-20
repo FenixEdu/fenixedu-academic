@@ -2710,7 +2710,6 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	Boolean payedTuition;
 	Integer keyRegistrationYear;
 	Integer number;
-	DegreeType degreeType;
     StudentState state;
     EntryPhase entryPhase;
     Boolean flunked;
@@ -3799,7 +3798,7 @@ class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.
 	Boolean relative;
 	Boolean principal;
 	String parameters;
-
+	
 	Boolean visible;
 	Boolean maximized;
 	
