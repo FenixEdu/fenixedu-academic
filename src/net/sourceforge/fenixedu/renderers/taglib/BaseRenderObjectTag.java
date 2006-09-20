@@ -286,15 +286,22 @@ public abstract class BaseRenderObjectTag extends TagSupport {
 
     protected String getCurrentPath() {
         ActionMapping mapping = (ActionMapping) pageContext.findAttribute(Globals.MAPPING_KEY);
-        String currentPath = TagUtils.getInstance().getActionMappingURL(mapping.getPath(), pageContext);
+        
+        String currentPath;
         String contextPath = ((HttpServletRequest) pageContext.getRequest()).getContextPath();
-    
-        ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
-    
+        
+        if (mapping != null) {
+            currentPath = TagUtils.getInstance().getActionMappingURL(mapping.getPath(), pageContext);
+        }
+        else {
+            currentPath = ((HttpServletRequest) pageContext.getRequest()).getServletPath();
+        }
+        
         if (currentPath.startsWith(contextPath)) {
             currentPath = currentPath.substring(contextPath.length());
         }
     
+        ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
         if (module != null && currentPath.startsWith(module.getPrefix())) {
             currentPath = currentPath.substring(module.getPrefix().length());
         }
