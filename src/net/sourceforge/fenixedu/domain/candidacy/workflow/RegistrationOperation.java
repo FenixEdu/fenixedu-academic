@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -113,7 +112,7 @@ public class RegistrationOperation extends CandidacyOperation {
 	final Registration registration = new Registration(getDegreeCandidacy().getPerson(), Student
 		.generateStudentNumber(), StudentKind.readByStudentType(StudentType.NORMAL),
 		new StudentState(StudentState.INSCRITO), Boolean.valueOf(false), Boolean.valueOf(false),
-		DegreeType.BOLONHA_DEGREE, degreeCandidacy);
+		getExecutionDegree().getDegree().getDegreeType(), degreeCandidacy);
 
 	registration.getStudent().setPersonalDataAuthorizationForCurrentExecutionYear(
 		getDegreeCandidacy().getStudentPersonalDataAuthorizationChoice());
