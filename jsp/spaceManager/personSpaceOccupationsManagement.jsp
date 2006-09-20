@@ -24,7 +24,7 @@
 		</span>
 	</logic:messagesPresent>
 	
-	<h3><bean:message key="label.active.occupations" bundle="SPACE_RESOURCES"/>:</h3>
+	<h3><bean:message key="label.active.person.occupations" bundle="SPACE_RESOURCES"/>:</h3>
 	<bean:size id="activeSize" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations"/>
 	<logic:equal name="activeSize" value="0">
 		<span class="error"><!-- Error messages go here -->
@@ -69,7 +69,7 @@
 	</logic:notEmpty>
 	<br/>
 		
-	<h3><bean:message key="label.inactive.occupations" bundle="SPACE_RESOURCES"/>:</h3>
+	<h3><bean:message key="label.inactive.person.occupations" bundle="SPACE_RESOURCES"/>:</h3>
 	<bean:size id="inactiveSize" name="selectedSpaceInformation" property="space.inactivePersonSpaceOccupations"/>
 	<logic:equal name="inactiveSize" value="0">
 		<span class="error"><!-- Error messages go here -->

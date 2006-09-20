@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 
-public class SpaceOccupation extends SpaceOccupation_Base {
+public abstract class SpaceOccupation extends SpaceOccupation_Base {
     
     public SpaceOccupation() {
         super();
@@ -15,4 +16,6 @@ public class SpaceOccupation extends SpaceOccupation_Base {
         removeRootDomainObject();
         deleteDomainObject();
     }
+    
+    public abstract Group getAccessGroup();
 }

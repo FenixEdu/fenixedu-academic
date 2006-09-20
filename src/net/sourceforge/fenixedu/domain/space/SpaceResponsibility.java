@@ -80,14 +80,14 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
         checkSpaceResponsabilityIntersection(begin, end, unit, space);
     }
     
-    private void checkSpaceResponsibilityInterval(final YearMonthDay begin, final YearMonthDay end) {
+    private void checkEndDate(final YearMonthDay begin, final YearMonthDay end) {
         if(end != null && !end.isAfter(begin)) {
             throw new DomainException("error.begin.after.end");
         }
     }    
     
     private void checkSpaceResponsabilityIntersection(final YearMonthDay begin, final YearMonthDay end, Unit unit, Space space) {
-        checkSpaceResponsibilityInterval(begin, end);   
+        checkEndDate(begin, end);   
         List<SpaceResponsibility> spaceResponsibilities = space.getSpaceResponsibility();         
         for (SpaceResponsibility spaceResponsibility : spaceResponsibilities) {
             if(!spaceResponsibility.equals(this) &&

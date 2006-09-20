@@ -16,7 +16,7 @@ public class MaterialTypeBean implements Serializable {
     
     public MaterialTypeBean(SpaceInformation spaceInformationReference) {
         super();
-        this.spaceInformationReference = new DomainReference<SpaceInformation>(spaceInformationReference);
+        setSpaceInformation(spaceInformationReference);
     }       
     
     public Class getMaterialType() {

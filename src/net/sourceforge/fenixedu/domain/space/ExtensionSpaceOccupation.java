@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.Material;
@@ -13,7 +15,8 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
         checkParameters(extension, begin, end, space);        
         checkExtensionSpaceOccupationIntersection(begin, end, extension);
         setSpace(space);
-        setExtension(extension);
+        checkPermissionsToMakeOperations();
+        setExtension(extension);        
         super.setBegin(begin);
         super.setEnd(end);
     }
@@ -27,45 +30,32 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
         }  
         if(begin == null) {
             throw new DomainException("error.extensionSpaceOccupation.no.beginDate");
-        }
-        if(end != null && end.isBefore(begin)) {
-            throw new DomainException("error.extensionSpaceOccupation.endDateBeforeBeginDate");
-        }              
+        }                    
     }
     
-    public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {               
+    public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
+	checkPermissionsToMakeOperations();	
         checkExtensionSpaceOccupationIntersection(begin, end, getExtension());
         super.setBegin(begin);
         super.setEnd(end);
     }
-
+   
     @Override
-    public void setBegin(YearMonthDay begin) {
+    public void setBegin(YearMonthDay begin) {	
+	checkPermissionsToMakeOperations();
         checkExtensionSpaceOccupationIntersection(begin, getEnd(), getExtension());
         super.setBegin(begin);
     }
 
     @Override
-    public void setEnd(YearMonthDay end) {  
+    public void setEnd(YearMonthDay end) {	
+	checkPermissionsToMakeOperations();
         checkExtensionSpaceOccupationIntersection(getBegin(), end, getExtension());
         super.setEnd(end);
-    }
-    
-    private void checkExtensionSpaceOccupationIntersection(YearMonthDay begin, YearMonthDay end, Extension extension) {
-        for (ExtensionSpaceOccupation extensionSpaceOccupation : extension.getExtensionSpaceOccupations()) {
-            if (!extensionSpaceOccupation.equals(this)
-                    && extensionSpaceOccupation.checkIntersections(begin, end)) {
-                throw new DomainException("error.extensionSpaceOccupation.intersection");
-            }
-        }
     }      
-    
-    private boolean checkIntersections(YearMonthDay begin, YearMonthDay end) {
-        return ((end == null || !this.getBegin().isAfter(end))
-                && (this.getEnd() == null || !this.getEnd().isBefore(begin)));
-    }
-    
+           
     public void delete() {
+	checkPermissionsToMakeOperations();
         removeExtension();
         super.delete();
     }
@@ -73,5 +63,38 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
     @Override
     public Material getMaterial() {        
         return (Material) getExtension();
-    }    
+    }
+
+    @Override
+    public Group getAccessGroup() {
+	return getSpace().getExtensionOccupationsAccessGroup();	
+    }
+    
+    private void checkExtensionSpaceOccupationIntersection(YearMonthDay begin, YearMonthDay end, Extension extension) {
+        checkEndDate(begin, end);
+	for (ExtensionSpaceOccupation extensionSpaceOccupation : extension.getExtensionSpaceOccupations()) {
+            if (!extensionSpaceOccupation.equals(this)
+                    && extensionSpaceOccupation.checkIntersections(begin, end)) {
+                throw new DomainException("error.extensionSpaceOccupation.intersection");
+            }
+        }
+    } 
+    
+    private void checkPermissionsToMakeOperations() {
+	if (getAccessGroup() == null
+		|| !getAccessGroup().isMember(AccessControl.getUserView().getPerson())) {
+	    throw new DomainException("error.logged.person.not.authorized.to.make.operation");
+	}
+    }
+    
+    private void checkEndDate(final YearMonthDay begin, final YearMonthDay end) {
+	if(end != null && !end.isAfter(begin)) {
+            throw new DomainException("error.begin.after.end");
+        }
+    }
+    
+    private boolean checkIntersections(YearMonthDay begin, YearMonthDay end) {
+        return ((end == null || !this.getBegin().isAfter(end))
+                && (this.getEnd() == null || !this.getEnd().isBefore(begin)));
+    }
 }

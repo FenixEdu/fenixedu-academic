@@ -48,5 +48,9 @@
     </definition> 
         <definition name="prepare-edit-material-space-occupation" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/editMaterialSpaceOccupation.jsp"></put>
-    </definition>               
+    </definition>    
+    <definition name="manage-space-access-groups" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/manageAccessGroups.jsp"></put>
+    </definition>              
+    
 </tiles-definitions>

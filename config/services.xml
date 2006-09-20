@@ -9252,6 +9252,14 @@
         </filterChains>
     </service>
     <service>
+   	 	<name>SpaceAccessGroupsManagement</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.SpaceAccessGroupsManagement</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>
+    </service>    
+    <service>
         <name>RemoveBinChild</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.website.RemoveBinChild</implementationClass>
         <description></description>

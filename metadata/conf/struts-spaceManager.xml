@@ -55,13 +55,15 @@
             <forward name="EditSpace" path="show-edit-space-form"/>
             <forward name="CreateSpaceInformation" path="show-create-space-information-form"/>
             <forward name="ViewSpaceInformation" path="show-space-information"/>
+            <forward name="ManageSpaceAccessGroups" path="manage-space-access-groups"/>
         </action>
         
         <action path="/managePersonSpaceOccupations"
         		name="managePersonSpaceOccupationsForm"
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManagePersonSpaceOccupationsDA"
         		parameter="method">                		
-       		<forward name="showSpaceOccupations" path="show-person-space-occupations"/>        		        	
+       		<forward name="showSpaceOccupations" path="show-person-space-occupations"/>   
+        	<forward name="ManageSpace" path="/manageSpaces.do?method=manageSpace"/>   
         </action>
         
         <action path="/manageSpaceResponsibility"        		
@@ -106,6 +108,7 @@
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.SpaceResources" key="SPACE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

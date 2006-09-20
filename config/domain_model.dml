@@ -2494,8 +2494,8 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 	String ojbConcreteClass;
 	Integer keySuroundingSpace;
 	YearMonthDay createdOn;
-	/*Group personOccupationsAccessGroup;
-	Group extensionOccupationsAccessGroup;*/
+	Group personOccupationsAccessGroup;
+	Group extensionOccupationsAccessGroup;	
 }
 	class net.sourceforge.fenixedu.domain.space.Campus extends net.sourceforge.fenixedu.domain.space.Space {
 	}

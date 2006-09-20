@@ -6,11 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -30,7 +30,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
     public ActionForward prepareInsertMaterialOccupation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException, ExcepcaoPersistencia {
-        
+               
         IViewState viewState = RenderUtils.getViewState("materialTypeWithMaterial");
         viewState = (viewState == null) ? RenderUtils.getViewState("materialTypeToCreate") : viewState;
         return setMaterialTypeBean(mapping, request, viewState);
@@ -40,7 +40,8 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException, ExcepcaoPersistencia {
 
-        IViewState viewState = RenderUtils.getViewState("materialTypeWithMaterialType");      
+        IViewState viewState = RenderUtils.getViewState();  
+        RenderUtils.invalidateViewState();
         return setMaterialTypeBean(mapping, request, viewState);
     }  
     
@@ -61,7 +62,11 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
         MaterialSpaceOccupation materialOccupation = getMaterialOccupationFromParameter(request);
         Class occupationClass = materialOccupation.getMaterial().getMaterialSpaceOccupationSubClass();
         Object[] args = { occupationClass.cast(materialOccupation) };        
-        ServiceUtils.executeService(getUserView(request), "DeleteMaterialSpaceOccupation", args);
+        try {
+            executeService(request, "DeleteMaterialSpaceOccupation", args);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	}	
         readAndSetSpaceInformation(request);
         return mapping.findForward("showMaterialSpaceOccupations");           
     }

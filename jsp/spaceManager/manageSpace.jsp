@@ -104,8 +104,8 @@
 		</html:link>
 	</p>
 
-	
-	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.bluePrint"/></h3>			
+	<%-- BluePrints --%>
+	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>			
 	<logic:notEmpty name="selectedSpaceInformation" property="space.mostRecentBlueprint">		
 		<bean:define id="blueprint" name="selectedSpaceInformation" property="space.mostRecentBlueprint"/>		
 		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="blueprint" property="idInternal"/></bean:define>
@@ -122,6 +122,7 @@
 		<fr:view name="selectedSpaceInformation" schema="RoomInformation" layout="tabular"/>
 	</logic:equal>		    
 
+	<%-- Subspaces --%>
 	<logic:present name="spaces">
 		<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="title.subspaces"/></h3>
 		<bean:size id="spacesSize" name="spaces"/>
@@ -177,14 +178,13 @@
 			</table>
 		</logic:greaterEqual>
 	</logic:present>
-
 	<p class="mtop05">
 		<html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/>
 		</html:link>
 	</p>
 
-	
+	<%-- Responsability --%>	
 	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></h3>
 	<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
 		<fr:layout name="tabular">      			
@@ -199,8 +199,8 @@
 		</html:link>
 	</p>
 	
-
-	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.active.occupations"/></h3>
+	<%-- Person Occupations --%>
+	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.active.person.occupations"/></h3>
 	<fr:view schema="PersonSpaceOccupationsWithUsername" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
@@ -209,9 +209,10 @@
    		</fr:layout>	
 	</fr:view>	
 	<p><html:link page="/managePersonSpaceOccupations.do?method=showSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-		<bean:message bundle="SPACE_RESOURCES" key="link.manage.occupations"/>
+		<bean:message bundle="SPACE_RESOURCES" key="link.manage.person.occupations"/>
 	</html:link></p>
 
+	<%-- Material --%>
 	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></h3>
 	<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial">
 		<fr:layout name="tabular">      			
@@ -223,4 +224,11 @@
 	<p><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.material.occupations"/>
 	</html:link></p>
+	
+	<%-- Access Groups --%>
+	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.access.groups"/></h3>
+	<p><html:link page="/manageSpaces.do?method=manageAccessGroups&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+		<bean:message bundle="SPACE_RESOURCES" key="link.manage.access.groups"/>
+	</html:link></p>
+	
 </logic:present>	

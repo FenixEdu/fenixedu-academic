@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -49,12 +50,12 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -62,12 +63,20 @@ import org.joda.time.YearMonthDay;
 public class Person extends Person_Base {
 
     final static Comparator PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE = new BeanComparator("sendDate");
+
+    public final static Comparator<Person> COMPARATOR_BY_NAME = new ComparatorChain();
+    static {
+	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator
+		.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
+    }
+    
     static {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
 
     /***********************************************************************
-     * BUSINESS SERVICES *
+         * BUSINESS SERVICES *
          **********************************************************************/
 
     public String getNome() {
@@ -398,29 +407,29 @@ public class Person extends Person_Base {
     }
 
     public List<ResultPublication> getResultPublications() {
-        List<ResultPublication> resultPublications = new ArrayList<ResultPublication>();
-        Result result = null;
-        for (ResultParticipation resultParticipation : this.getResultParticipations()) {
-            result = resultParticipation.getResult();
-            // filter only publication participations
-            if (result instanceof ResultPublication) {
-                resultPublications.add((ResultPublication) result);
-            }
-        }
-        return resultPublications;
+	List<ResultPublication> resultPublications = new ArrayList<ResultPublication>();
+	Result result = null;
+	for (ResultParticipation resultParticipation : this.getResultParticipations()) {
+	    result = resultParticipation.getResult();
+	    // filter only publication participations
+	    if (result instanceof ResultPublication) {
+		resultPublications.add((ResultPublication) result);
+	    }
+	}
+	return resultPublications;
     }
-    
+
     public List<ResultPatent> getResultPatents() {
 	List<ResultPatent> resultPatents = new ArrayList<ResultPatent>();
-        Result result = null;
-        for (ResultParticipation resultParticipation : this.getResultParticipations()) {
-            result = resultParticipation.getResult();
-            // filter only patent participations
-            if (result instanceof ResultPatent) {
-                resultPatents.add((ResultPatent) result);
-            }
-        }
-        return resultPatents;
+	Result result = null;
+	for (ResultParticipation resultParticipation : this.getResultParticipations()) {
+	    result = resultParticipation.getResult();
+	    // filter only patent participations
+	    if (result instanceof ResultPatent) {
+		resultPatents.add((ResultPatent) result);
+	    }
+	}
+	return resultPatents;
     }
 
     @Override
@@ -435,65 +444,68 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    	public Boolean getIsExamCoordinatorInCurrentYear() {
-        ExamCoordinator examCoordinator = this.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
-        return (examCoordinator == null) ? false : true ;
+    public Boolean getIsExamCoordinatorInCurrentYear() {
+	ExamCoordinator examCoordinator = this.getExamCoordinatorForGivenExecutionYear(ExecutionYear
+		.readCurrentExecutionYear());
+	return (examCoordinator == null) ? false : true;
     }
-    
+
     public Vigilant getVigilantForGivenExecutionYear(ExecutionYear executionYear) {
-        List<Vigilant> vigilants = this.getVigilants();
-        for (Vigilant vigilant : vigilants) {
-            if (vigilant.getExecutionYear().equals(executionYear)) {
-                return vigilant;
+	List<Vigilant> vigilants = this.getVigilants();
+	for (Vigilant vigilant : vigilants) {
+	    if (vigilant.getExecutionYear().equals(executionYear)) {
+		return vigilant;
 
-            }
-        }
-        
-        return null;
+	    }
+	}
+
+	return null;
     }
-    
+
     public Vigilant getLatestVigilant() {
-        List<Vigilant> vigilants = new ArrayList<Vigilant>(this.getVigilants());
-        Collections.sort(vigilants, new ReverseComparator(new BeanComparator("vigilant.executionYear")));
-        return vigilants.get(0);
-    }
-    
-    public ExamCoordinator getExamCoordinatorForGivenExecutionYear(ExecutionYear executionYear) {
-        List<ExamCoordinator> examCoordinators = this.getExamCoordinators();
-        for(ExamCoordinator examCoordinator : examCoordinators) {
-            if(examCoordinator.getExecutionYear().equals(executionYear)) {
-                return examCoordinator;
-            }
-        }
-        return null;
-    }
-    
-    public ExamCoordinator getCurrentExamCoordinator() {
-        return getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
-    }
-    
-    public Vigilant getCurrentVigilant() {
-    	return getVigilantForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
-    }
-    
-    public Integer getVigilancyPointsForGivenYear(ExecutionYear executionYear) {
-        Vigilant vigilant = this.getVigilantForGivenExecutionYear(executionYear);
-        if(vigilant==null) return 0;
-        else return vigilant.getPoints();
-    }
-    
-    public Integer getTotalVigilancyPoints() {
-        List<Vigilant> vigilants = this.getVigilants();
-        
-        int points = 0;
-        for(Vigilant vigilant : vigilants) {
-            points += vigilant.getPoints();
-        }
-        return points;
+	List<Vigilant> vigilants = new ArrayList<Vigilant>(this.getVigilants());
+	Collections.sort(vigilants, new ReverseComparator(new BeanComparator("vigilant.executionYear")));
+	return vigilants.get(0);
     }
 
-    /***************************************************************************
-     * PRIVATE METHODS *
+    public ExamCoordinator getExamCoordinatorForGivenExecutionYear(ExecutionYear executionYear) {
+	List<ExamCoordinator> examCoordinators = this.getExamCoordinators();
+	for (ExamCoordinator examCoordinator : examCoordinators) {
+	    if (examCoordinator.getExecutionYear().equals(executionYear)) {
+		return examCoordinator;
+	    }
+	}
+	return null;
+    }
+
+    public ExamCoordinator getCurrentExamCoordinator() {
+	return getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public Vigilant getCurrentVigilant() {
+	return getVigilantForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public Integer getVigilancyPointsForGivenYear(ExecutionYear executionYear) {
+	Vigilant vigilant = this.getVigilantForGivenExecutionYear(executionYear);
+	if (vigilant == null)
+	    return 0;
+	else
+	    return vigilant.getPoints();
+    }
+
+    public Integer getTotalVigilancyPoints() {
+	List<Vigilant> vigilants = this.getVigilants();
+
+	int points = 0;
+	for (Vigilant vigilant : vigilants) {
+	    points += vigilant.getPoints();
+	}
+	return points;
+    }
+
+    /***********************************************************************
+         * PRIVATE METHODS *
          **********************************************************************/
 
     private void setProperties(InfoPersonEditor infoPerson) {
@@ -625,7 +637,7 @@ public class Person extends Person_Base {
     }
 
     /***********************************************************************
-     * OTHER METHODS *
+         * OTHER METHODS *
          **********************************************************************/
 
     public String getSlideName() {
@@ -752,7 +764,7 @@ public class Person extends Person_Base {
 	getManageableDepartmentCredits().clear();
 	getAdvisories().clear();
 	removeCms();
-        removeNationality();
+	removeNationality();
 	removeCountryOfBirth();
 	removeCountryOfResidence();
 	if (hasUser()) {
@@ -1015,19 +1027,19 @@ public class Person extends Person_Base {
     }
 
     public DegreeCandidacy getDegreeCandidacyByExecutionDegree(final ExecutionDegree executionDegree) {
-        for (final Candidacy candidacy : this.getCandidaciesSet()) {
-            if (candidacy instanceof DegreeCandidacy) {
-                final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
-                if (degreeCandidacy.getExecutionDegree().equals(executionDegree)) {
-                    return degreeCandidacy;
-                }
-            }
-        }
-        return null;
+	for (final Candidacy candidacy : this.getCandidaciesSet()) {
+	    if (candidacy instanceof DegreeCandidacy) {
+		final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
+		if (degreeCandidacy.getExecutionDegree().equals(executionDegree)) {
+		    return degreeCandidacy;
+		}
+	    }
+	}
+	return null;
     }
 
     public boolean hasDegreeCandidacyForExecutionDegree(ExecutionDegree executionDegree) {
-        return (getDegreeCandidacyByExecutionDegree(executionDegree) != null);
+	return (getDegreeCandidacyByExecutionDegree(executionDegree) != null);
     }
 
     @Deprecated
@@ -1262,12 +1274,12 @@ public class Person extends Person_Base {
 
     @Deprecated
     public Country getPais() {
-        return super.getNationality();
+	return super.getNationality();
     }
 
     @Deprecated
     public void setPais(final Country nationality) {
-        super.setNationality(nationality);
+	super.setNationality(nationality);
     }
 
     @Override
