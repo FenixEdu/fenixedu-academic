@@ -151,7 +151,7 @@ public class ValuesRenderer extends OutputRenderer {
             }
             
             MetaSlot slot = this.slotsIterator.next();
-            Schema schema = RenderKit.getInstance().findSchema(slot.getSchema());
+            Schema schema = slot.getSchema();
             String layout = slot.getLayout();
             
             if (schema == null) {

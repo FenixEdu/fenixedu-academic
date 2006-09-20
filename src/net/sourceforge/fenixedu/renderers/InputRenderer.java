@@ -68,7 +68,7 @@ public abstract class InputRenderer extends Renderer {
     @Override
     protected HtmlComponent renderSlot(MetaSlot slot) {
         PresentationContext newContext = getContext().createSubContext(slot);
-        newContext.setSchema(slot.getSchema());
+        newContext.setSchema(slot.getSchema() != null ? slot.getSchema().getName() : null);
         newContext.setLayout(slot.getLayout());
         newContext.setProperties(slot.getProperties());
         

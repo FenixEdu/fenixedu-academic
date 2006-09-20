@@ -220,11 +220,10 @@ public abstract class Renderer {
     }
 
     protected PresentationContext createPresentationContext(MetaSlot slot) {
-        Schema schema = RenderKit.getInstance().findSchema(slot.getSchema());
-        MetaObject metaObject = MetaObjectFactory.createObject(slot.getObject(), schema);
+        MetaObject metaObject = MetaObjectFactory.createObject(slot.getObject(), slot.getSchema());
         
         PresentationContext newContext = getContext().createSubContext(metaObject);
-        newContext.setSchema(slot.getSchema());
+        newContext.setSchema(slot.getSchema() != null ? slot.getSchema().getName() : null);
         newContext.setLayout(slot.getLayout());
         newContext.setProperties(slot.getProperties());
         

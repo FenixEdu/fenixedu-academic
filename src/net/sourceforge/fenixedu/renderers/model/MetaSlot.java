@@ -29,7 +29,6 @@ public class MetaSlot extends MetaObject {
     private String bundle;
     private String labelKey;
     
-    private String schema;
     private String layout;
     
     private Class<HtmlValidator> validator;
@@ -71,18 +70,6 @@ public class MetaSlot extends MetaObject {
     }
 
     /**
-     * @return the name of the schema that should be used to present the slot's value.
-     * @see RenderKit#findSchema(String)
-     */
-    public String getSchema() {
-        return this.schema;
-    }
-
-    public void setSchema(String schema) {
-        this.schema = schema;
-    }
-
-    /**
      * @return the key that allows to identify this slot
      */
     public MetaSlotKey getKey() {
@@ -105,12 +92,15 @@ public class MetaSlot extends MetaObject {
      * @see RenderUtils#getSlotLabel(Class, String, String, String)
      */
     public String getLabel() {
-	Class type = getMetaObject().getType();
+        Class type;
         
-//        if (type == null) {
-//            type = getMetaObject().getType();
-//        }
-        
+        if (getMetaObject().getSchema() != null) {
+            type = getMetaObject().getSchema().getType();
+        }
+        else {
+            type = getMetaObject().getType();
+        }
+
         return RenderUtils.getSlotLabel(type, getName(), getBundle(), getLabelKey());
     }
 
@@ -230,9 +220,7 @@ public class MetaSlot extends MetaObject {
     }
     
     private void setValueMetaObject(Object object) {
-        Schema schema = RenderKit.getInstance().findSchema(getSchema());
-        
-        setValueMetaObject(MetaObjectFactory.createObject(object, schema));
+        setValueMetaObject(MetaObjectFactory.createObject(object, getSchema()));
     }
     
     protected MetaObject getValueMetaObject() {

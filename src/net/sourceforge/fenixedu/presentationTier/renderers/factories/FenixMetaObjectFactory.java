@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaObjectCollection;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
+import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 
 public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
     
@@ -40,6 +41,8 @@ public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
     private MetaObject createDomainMetaObject(Object object, Schema schema) {
         DomainMetaObject metaObject = new DomainMetaObject((DomainObject) object);
         
+        metaObject.setSchema(schema);
+        
         addSlotDescriptions(schema, metaObject);
         addCompositeSlotSetters(schema, metaObject);
         
@@ -48,6 +51,8 @@ public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
 
     private MetaObject createCreationMetaObject(Class type, Schema schema) {
         CreationDomainMetaObject metaObject = new CreationDomainMetaObject(type);
+        
+        metaObject.setSchema(schema);
         
         addSlotDescriptions(schema, metaObject);
         setInstanceCreator(schema.getType(), schema, metaObject);
@@ -72,7 +77,7 @@ public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
         
         metaSlot.setLabelKey(slotDescription.getKey());
         metaSlot.setBundle(slotDescription.getBundle());
-        metaSlot.setSchema(slotDescription.getSchema());
+        metaSlot.setSchema(RenderKit.getInstance().findSchema(slotDescription.getSchema()));
         metaSlot.setLayout(slotDescription.getLayout());
         metaSlot.setValidator(slotDescription.getValidator());
         metaSlot.setValidatorProperties(slotDescription.getValidatorProperties());

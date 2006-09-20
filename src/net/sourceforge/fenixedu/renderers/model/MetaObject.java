@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import net.sourceforge.fenixedu.renderers.schemas.Schema;
+import net.sourceforge.fenixedu.renderers.utils.RenderKit;
+
 /**
  * A MetaObject is an abstraction of a real domain object. If provides a
  * serializable representation or view of a concrete object that can be
@@ -24,6 +27,9 @@ public abstract class MetaObject implements Serializable {
     private List<MetaSlot> hiddenSlots;
 
     private InstanceCreator creator;
+
+    private String schemaName;
+    private transient Schema schema;
     
     public MetaObject() {
         super();
@@ -55,6 +61,22 @@ public abstract class MetaObject implements Serializable {
         }
     }
     
+    public Schema getSchema() {
+        if (this.schema == null && this.schemaName != null) {
+            this.schema = RenderKit.getInstance().findSchema(this.schemaName);
+        }
+        
+        return this.schema;
+    }
+
+    public void setSchema(Schema schema) {
+        this.schema = schema;
+        
+        if (this.schema != null) {
+            this.schemaName = this.schema.getName();
+        }
+    }
+
     public Properties getProperties() {
         return this.properties;
     }

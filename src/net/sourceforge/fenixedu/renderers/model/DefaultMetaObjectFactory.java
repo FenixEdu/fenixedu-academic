@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 import net.sourceforge.fenixedu.renderers.schemas.Signature;
 import net.sourceforge.fenixedu.renderers.schemas.SignatureParameter;
+import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 
 public class DefaultMetaObjectFactory extends MetaObjectFactory {
 
@@ -44,6 +45,8 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
         } catch (Exception e) {
             throw new RuntimeException("could not create a new instance of " + type, e);
         } 
+        
+        metaObject.setSchema(schema);
         
         addSlotDescriptions(schema, metaObject);
         setInstanceCreator(type, schema, metaObject);
@@ -105,8 +108,10 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
     }
 
     protected MetaObject createOneMetaObject(Object object, Schema schema) {
+        MetaObject result;
+        
         if (isPrimitiveObject(object)) {
-            return new PrimitiveMetaObject(object);
+            result = new PrimitiveMetaObject(object);
         }
         else {
             SimpleMetaObject metaObject = new SimpleMetaObject(object);
@@ -114,8 +119,11 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
             addSlotDescriptions(schema, metaObject);
             addCompositeSlotSetters(schema, metaObject);
             
-            return metaObject;
+            result = metaObject;
         }
+        
+        result.setSchema(schema);
+        return result;
     }
 
     private boolean isPrimitiveObject(Object object) {
@@ -160,7 +168,7 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
         
         metaSlot.setLabelKey(slotDescription.getKey()); 
         metaSlot.setBundle(slotDescription.getBundle());
-        metaSlot.setSchema(slotDescription.getSchema());
+        metaSlot.setSchema(RenderKit.getInstance().findSchema(slotDescription.getSchema()));
         metaSlot.setLayout(slotDescription.getLayout());
         metaSlot.setValidator(slotDescription.getValidator());
         metaSlot.setValidatorProperties(slotDescription.getValidatorProperties());
