@@ -162,6 +162,13 @@ padding: 0.5em 0.1em;
 border: none;
 background: none;
 }
+/* noborder */
+table.noborder { padding-left: 1em; padding-bottom: 1em; }
+table.noborder tr td { border: none; }
+table.noborder tr td { padding: 0; margin: 0; }
+
+/*txt*/
+table.smalltxt tr td { font-size: 0.85em;}
 
 .emphasis1 th { background: #ffc; }
 .emphasis2 th { font-weight: bold; }
@@ -366,7 +373,7 @@ padding-right: 0.5em;
  ---- Classes ----------
 ----------------------- */
 
-.smalltxt { font-size: 0.85em;}
+.smalltxt { font-size: 0.85em; }
 .p_mvert015 p { margin: 0.15em 0; }
 .prenomargin { margin: 0; padding: 0; font-family: Verdana, Arial, Helvetica, sans-serif;}
 .aleft { text-align: left; }
