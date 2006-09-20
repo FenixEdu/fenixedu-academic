@@ -331,7 +331,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                     "error.requiredDocumentDelivery"));
             result = false;
         } else if ((isStudent || isElectronicDelivery(parkingForm, "driverLicense"))
-                && parkingRequestFactory.getDriverLicenseInputStream() == null) {
+                && (parkingRequestFactory.getDriverLicenseFileName() == null && parkingRequestFactory
+                        .getDriverLicenseFileName().length() == 0)) {
             actionMessages.add("driverLicenseMessage", new ActionMessage("error.requiredStudentField"));
             parkingForm.set("driverLicense", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
             result = false;
@@ -342,7 +343,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                     "error.requiredDocumentDelivery"));
             result = false;
         } else if ((isStudent || isElectronicDelivery(parkingForm, "registry1"))
-                && parkingRequestFactory.getFirstCarPropertyRegistryInputStream() == null) {
+                && (parkingRequestFactory.getFirstCarPropertyRegistryFileName() == null && parkingRequestFactory
+                        .getFirstCarPropertyRegistryFileName().length() == 0)) {
             actionMessages.add("firstCarPropertyRegistryMessage", new ActionMessage(
                     "error.requiredStudentField"));
             parkingForm.set("registry1", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
@@ -353,7 +355,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                     "error.requiredDocumentDelivery"));
             result = false;
         } else if ((isStudent || isElectronicDelivery(parkingForm, "insurance1"))
-                && parkingRequestFactory.getFirstInsuranceInputStream() == null) {
+                && (parkingRequestFactory.getFirstInsuranceFileName() == null && parkingRequestFactory
+                        .getFirstInsuranceFileName().length() == 0)) {
             actionMessages.add("firstInsuranceMessage", new ActionMessage("error.requiredStudentField"));
             parkingForm.set("insurance1", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
             result = false;
@@ -365,7 +368,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                         "error.requiredDocumentDelivery"));
                 result = false;
             } else if ((isStudent || isElectronicDelivery(parkingForm, "Id1"))
-                    && parkingRequestFactory.getFirstCarOwnerIdInputStream() == null) {
+                    && (parkingRequestFactory.getFirstCarOwnerIdFileName() == null && parkingRequestFactory
+                            .getFirstCarOwnerIdFileName().length() == 0)) {
                 actionMessages.add("firstCarOwnerIdMessage", new ActionMessage(
                         "error.requiredStudentField"));
                 parkingForm.set("Id1", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
@@ -376,7 +380,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                         "error.requiredDocumentDelivery"));
                 result = false;
             } else if ((isStudent || isElectronicDelivery(parkingForm, "declaration1"))
-                    && parkingRequestFactory.getFirstDeclarationAuthorizationInputStream() == null) {
+                    && (parkingRequestFactory.getFirstDeclarationAuthorizationFileName() == null && parkingRequestFactory
+                            .getFirstDeclarationAuthorizationFileName().length() == 0)) {
                 actionMessages.add("firstDeclarationAuthorizationMessage", new ActionMessage(
                         "error.requiredStudentField"));
                 parkingForm.set("declaration1", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
@@ -407,7 +412,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                             "error.requiredDocumentDelivery"));
                     result = false;
                 } else if ((isStudent || isElectronicDelivery(parkingForm, "registry2"))
-                        && parkingRequestFactory.getSecondCarPropertyRegistryInputStream() == null) {
+                        && (parkingRequestFactory.getSecondCarPropertyRegistryFileName() == null && parkingRequestFactory
+                                .getSecondCarPropertyRegistryFileName().length() == 0)) {
                     actionMessages.add("secondCarPropertyRegistryMessage", new ActionMessage(
                             "error.requiredStudentField"));
                     parkingForm.set("registry2", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
@@ -418,7 +424,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                             "error.requiredDocumentDelivery"));
                     result = false;
                 } else if ((isStudent || isElectronicDelivery(parkingForm, "insurance2"))
-                        && parkingRequestFactory.getSecondInsuranceInputStream() == null) {
+                        && (parkingRequestFactory.getSecondInsuranceFileName() == null && parkingRequestFactory
+                                .getSecondInsuranceFileName().length() == 0)) {
                     actionMessages.add("secondInsuranceMessage", new ActionMessage(
                             "error.requiredStudentField"));
                     parkingForm.set("insurance2", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
@@ -431,7 +438,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                                 "error.requiredDocumentDelivery"));
                         result = false;
                     } else if ((isStudent || isElectronicDelivery(parkingForm, "Id2"))
-                            && parkingRequestFactory.getSecondCarOwnerIdInputStream() == null) {
+                            && (parkingRequestFactory.getSecondCarOwnerIdFileName() == null && parkingRequestFactory
+                                    .getSecondCarOwnerIdFileName().length() == 0)) {
                         actionMessages.add("secondCarOwnerIdMessage", new ActionMessage(
                                 "error.requiredStudentField"));
                         parkingForm.set("Id2", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
@@ -442,7 +450,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                                 new ActionMessage("error.requiredDocumentDelivery"));
                         result = false;
                     } else if ((isStudent || isElectronicDelivery(parkingForm, "declaration2"))
-                            && parkingRequestFactory.getSecondDeclarationAuthorizationInputStream() == null) {
+                            && (parkingRequestFactory.getSecondDeclarationAuthorizationFileName() == null && parkingRequestFactory
+                                    .getSecondDeclarationAuthorizationFileName().length() == 0)) {
                         actionMessages.add("secondDeclarationAuthorizationMessage", new ActionMessage(
                                 "error.requiredStudentField"));
                         parkingForm.set("declaration2", DocumentDeliveryType.ELECTRONIC_DELIVERY.name());
