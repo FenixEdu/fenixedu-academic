@@ -411,9 +411,18 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	final Map optionalEnrollments = (HashMap) form.get("enrollmentTypes");
 
 	try {
-	    ServiceManagerServiceFactory.executeService(getUserView(request), "WriteEnrollmentsList",
-		    new Object[] { getStudent(form), getDegreeType(form), getExecutionPeriod(form),
-			    curricularCourses, optionalEnrollments, getUserView(request) });
+	    Registration registration = getStudent(form);
+	    if (registration.getDegreeType().isBolonhaType()) {
+		ServiceManagerServiceFactory.executeService(getUserView(request),
+			"WriteBolonhaEnrolmentsList", new Object[] { registration, getDegreeType(form),
+				getExecutionPeriod(form), curricularCourses, optionalEnrollments,
+				getUserView(request) });
+	    } else {
+		ServiceManagerServiceFactory.executeService(getUserView(request),
+			"WriteEnrollmentsList", new Object[] { registration, getDegreeType(form),
+				getExecutionPeriod(form), curricularCourses, optionalEnrollments,
+				getUserView(request) });
+	    }
 
 	} catch (NotAuthorizedFilterException e) {
 	    e.printStackTrace();

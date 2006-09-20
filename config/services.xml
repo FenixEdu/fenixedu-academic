@@ -5975,6 +5975,15 @@
 			<chain name="EnrollmentWithoutRulesAuthorization" />
 		</filterChains>
 	</service>
+		<service>
+		<name>WriteBolonhaEnrolmentsList</name>
+		<implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.enrollment.WriteBolonhaEnrolmentsList</implementationClass>
+		<isTransactional>True</isTransactional>
+		<filterChains>
+			<chain name="EnrollmentWithoutRulesAuthorization" />
+		</filterChains>
+	</service>
 	<service>
         <name>ReadCurricularCoursesToEnrollSuperUser</name>
         <implementationClass>
