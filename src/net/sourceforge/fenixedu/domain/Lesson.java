@@ -180,8 +180,8 @@ public class Lesson extends Lesson_Base {
 	return lessonSummaries;
     }
 
-    public boolean isTimeValidToInsertSummary(HourMinuteSecond time) {
-	return !getEndHourMinuteSecond().isAfter(time);
+    public boolean isTimeValidToInsertSummary(HourMinuteSecond time, YearMonthDay summaryDate) {
+	return (!summaryDate.equals(new YearMonthDay()) ? true : !getEndHourMinuteSecond().isAfter(time));
     }
 
     public boolean isDateValidToInsertSummary(YearMonthDay date) {
@@ -243,7 +243,7 @@ public class Lesson extends Lesson_Base {
 		    break;
 		}
 		if (!Holiday.isHoliday(nextSummaryDate, lessonCampus)
-			&& (!nextSummaryDate.isEqual(currentDate) || isTimeValidToInsertSummary(now))) {
+			&& isTimeValidToInsertSummary(now, nextSummaryDate)) {
 		    return nextSummaryDate;
 		}
 		nextSummaryDate = nextSummaryDate.plusDays(7);
@@ -273,7 +273,7 @@ public class Lesson extends Lesson_Base {
 	    if (summaries.isEmpty()) {
 		while (true) {
 		    if (!Holiday.isHoliday(startDateToSearch, lessonCampus)
-			    && (!startDateToSearch.isEqual(currentDate) || isTimeValidToInsertSummary(now))) {
+			    && isTimeValidToInsertSummary(now, startDateToSearch)) {
 			datesToInsert.add(startDateToSearch);
 		    }
 		    startDateToSearch = startDateToSearch.plusDays(7);
@@ -289,7 +289,7 @@ public class Lesson extends Lesson_Base {
 			while (true) {
 			    if (startDateToSearch.isBefore(summary.getSummaryDateYearMonthDay())) {
 				if (!Holiday.isHoliday(startDateToSearch, lessonCampus)
-					&& (!startDateToSearch.isEqual(currentDate) || isTimeValidToInsertSummary(now))) {
+					&& isTimeValidToInsertSummary(now, startDateToSearch)) {
 				    datesToInsert.add(startDateToSearch);
 				}
 				startDateToSearch = startDateToSearch.plusDays(7);
@@ -311,7 +311,7 @@ public class Lesson extends Lesson_Base {
 		if (!startDateToSearch.isAfter(endDateToSearch)) {
 		    while (true) {
 			if (!Holiday.isHoliday(startDateToSearch, lessonCampus)
-				&& (!startDateToSearch.isEqual(currentDate) || isTimeValidToInsertSummary(now))) {
+				&& isTimeValidToInsertSummary(now, startDateToSearch)) {
 			    datesToInsert.add(startDateToSearch);
 			}
 			startDateToSearch = startDateToSearch.plusDays(7);
