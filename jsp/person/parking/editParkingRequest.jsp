@@ -205,6 +205,10 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 			<th class="parking"><bean:message key="label.firstCarMake" bundle="PARKING_RESOURCES"/>:</th>
 			<td class="parking"><fr:edit id="firstCarMakeFR" name="<%= factoryName %>" slot="firstCarMake" 
 				type="<%= type %>">
+						<fr:layout>
+							<fr:property name="size" value="25"/>
+							<fr:property name="maxLength" value="20"/>
+						</fr:layout>
 			</fr:edit></td>
 			<td class="noborder"><span class="error0 mtop025">
 				<html:messages id="message" property="firstCarMakePT" message="true" bundle="PARKING_RESOURCES">
@@ -216,11 +220,15 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 			<th class="parking"><bean:message key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
 			<td class="parking"><fr:edit id="firstCarPlateNumberFR" name="<%= factoryName %>" slot="firstCarPlateNumber"
 				type="<%= type %>">
+						<fr:layout>
+							<fr:property name="size" value="10"/>
+							<fr:property name="maxLength" value="10"/>
+						</fr:layout>
 			</fr:edit> (aa-bb-cc)</td>
 			<td class="noborder"><span class="error0 mtop025">
 				<html:messages id="message" property="firstCarPlateNumberPT" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/><br/></span>
-				</html:messages>
+					<bean:write name="message"/><br/>
+				</html:messages></span>
 			</td>
 		</tr>
 		<tr>
@@ -407,22 +415,30 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 			<th class="parking"><bean:message key="label.secondCarMake" bundle="PARKING_RESOURCES"/>:</th>
 			<td class="parking"><fr:edit id="secondCarMakeFR" name="<%= factoryName %>" slot="secondCarMake" 
 					type="<%= type %>">
+						<fr:layout>
+							<fr:property name="size" value="25"/>
+							<fr:property name="maxLength" value="20"/>
+						</fr:layout>					
 			</fr:edit></td>
 			<td class="noborder"><span class="error0 mtop025">
 				<html:messages id="message" property="secondCarMakePT" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/><br/></span>
-				</html:messages>
+					<bean:write name="message"/><br/>
+				</html:messages></span>
 			</td>
 		</tr>
 		<tr>
 			<th class="parking"><bean:message key="label.secondCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
 			<td class="parking"><fr:edit id="secondCarPlateNumberFR" name="<%= factoryName %>" slot="secondCarPlateNumber"
 					type="<%= type %>">
+						<fr:layout>
+							<fr:property name="size" value="10"/>
+							<fr:property name="maxLength" value="10"/>
+						</fr:layout>					
 			</fr:edit> (aa-bb-cc)</td>		
 			<td class="noborder"><span class="error0 mtop025">
 				<html:messages id="message" property="secondCarPlateNumberPT" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/><br/></span>
-				</html:messages>
+					<bean:write name="message"/><br/>
+				</html:messages></span>
 			</td>	
 		</tr>
 		<tr>

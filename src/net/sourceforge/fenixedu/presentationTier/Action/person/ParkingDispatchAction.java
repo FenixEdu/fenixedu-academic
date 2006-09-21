@@ -422,10 +422,18 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                 || parkingRequestFactory.getFirstCarMake().trim().length() == 0) {
             actionMessages.add("firstCarMakePT", new ActionMessage("error.requiredField"));
             result = false;
+        } else if (parkingRequestFactory.getFirstCarMake().length() > 20) {
+            actionMessages.add("firstCarMakePT",
+                    new ActionMessage("error.maxLengthExceeded", "20"));
+            result = false;
         }
         if (parkingRequestFactory.getFirstCarPlateNumber() == null
                 || parkingRequestFactory.getFirstCarPlateNumber().trim().length() == 0) {
             actionMessages.add("firstCarPlateNumberPT", new ActionMessage("error.requiredField"));
+            result = false;
+        } else if (parkingRequestFactory.getFirstCarPlateNumber().length() > 10) {
+            actionMessages.add("firstCarPlateNumberPT", new ActionMessage(
+                    "error.maxLengthExceeded", "10"));
             result = false;
         }
 
@@ -502,11 +510,19 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                         || parkingRequestFactory.getSecondCarMake().trim().length() == 0) {
                     actionMessages.add("secondCarMakePT", new ActionMessage("error.requiredField"));
                     result = false;
+                } else if (parkingRequestFactory.getSecondCarMake().length() > 20) {
+                    actionMessages.add("secondCarMakePT",
+                            new ActionMessage("error.maxLengthExceeded", "20"));
+                    result = false;
                 }
                 if (parkingRequestFactory.getSecondCarPlateNumber() == null
                         || parkingRequestFactory.getSecondCarPlateNumber().trim().length() == 0) {
                     actionMessages.add("secondCarPlateNumberPT",
                             new ActionMessage("error.requiredField"));
+                    result = false;
+                } else if (parkingRequestFactory.getSecondCarPlateNumber().length() > 10) {
+                    actionMessages.add("secondCarPlateNumberPT", new ActionMessage(
+                            "error.maxLengthExceeded", "10"));
                     result = false;
                 }
 
