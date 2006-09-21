@@ -5,13 +5,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page
 	import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants"%>
-<em><bean:message key="label.person.main.title" /></em>
+
 <h2><bean:message key="label.parking" bundle="PARKING_RESOURCES" /></h2>
 
 
 <logic:present name="parkingParty">
-	<p class="mbottom0"><strong><bean:message
-		key="label.person.title.personal.info" /></strong>:</p>
+	<p class="mbottom025"><bean:message
+		key="label.person.title.personal.info" /></p>
 
 	<fr:view name="parkingParty" property="party" schema="viewPersonInfo">
 		<fr:layout name="tabular">
@@ -29,14 +29,22 @@
 		<logic:notEqual name="parkingParty"
 			property="hasAllNecessaryPersonalInfo" value="false">
 			
-			<html:link page="/parking.do?method=downloadParkingRegulamentation">
-				<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
-			</html:link>
-			<br/>
+
+			<ul class="mvert025">
+				<li>
+					<html:link page="/parking.do?method=downloadParkingRegulamentation">
+						<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
+					</html:link>
+				</li>
+			</ul>
+
+
 			<logic:equal name="parkingParty" property="acceptedRegulation"
 				value="false">
-				<p class="infoop2"><bean:message
-					key="message.acceptRegulationCondition" bundle="PARKING_RESOURCES" /></p>
+				
+				<p class="infoop2 mvert1"><bean:message key="message.acceptRegulationCondition" bundle="PARKING_RESOURCES" /></p>
+					
+					
 				<bean:message key="message.acceptRegulation"
 					bundle="PARKING_RESOURCES" />
 				<ul>
@@ -49,20 +57,24 @@
 			</logic:equal>
 			<logic:notEqual name="parkingParty" property="acceptedRegulation"
 				value="false">
-				<div class="simpleblock4">
-				<bean:write name="parkingParty" property="parkingAcceptedRegulationMessage" filter="false"/>
+				
+				<div class="simpleblock5"> <%-- message.acceptedRegulation --%>
+					<bean:write name="parkingParty" property="parkingAcceptedRegulationMessage" filter="false"/>
 				</div>
-				<ul>
+				
+				<ul> <%-- first time - inserir --%>
 					<li><html:link page="/parking.do?method=prepareEditParking">
-						<bean:message key="label.editParkingDocuments"
+						<bean:message key="label.insertParkingDocuments"
 							bundle="PARKING_RESOURCES" />
 					</html:link></li>
 				</ul>
+				
 			</logic:notEqual>
 		</logic:notEqual>
 	</logic:empty>
 	<logic:notEmpty name="parkingParty" property="parkingRequests">
 		<ul>
+			<%-- editar --%>
 			<li><html:link page="/parking.do?method=prepareEditParking">
 				<bean:message key="label.editParkingDocuments"
 					bundle="PARKING_RESOURCES" />
@@ -73,8 +85,8 @@
 		
 
 		<logic:equal name="parkingParty" property="firstRequest.hasDriverLicense" value="true">
-			<p class="mbottom0"><strong><bean:message key="label.driverLicense"
-				bundle="PARKING_RESOURCES" /></strong>:</p>
+			<p class="mtop15 mbottom025"><strong><bean:message key="label.driverLicense"
+				bundle="PARKING_RESOURCES" /></strong></p>
 			<fr:view name="parkingParty" property="firstRequest"
 				schema="parkingRequest.driverLicense">
 				<fr:layout name="tabular">
@@ -84,8 +96,8 @@
 		</logic:equal>
 
 		<logic:equal name="parkingParty" property="firstRequest.hasFirstCar" value="true">
-			<p class="mbottom0"><strong><bean:message key="label.firstCar"
-				bundle="PARKING_RESOURCES" /></strong>:</p>
+			<p class="mtop15 mbottom025"><strong><bean:message key="label.firstCar"
+				bundle="PARKING_RESOURCES" /></strong></p>
 			<fr:view name="parkingParty" property="firstRequest"
 				schema="parkingRequest.firstCar">
 				<fr:layout name="tabular">
@@ -95,8 +107,8 @@
 		</logic:equal>
 
 		<logic:equal name="parkingParty" property="firstRequest.hasSecondCar" value="true">
-			<p class="mbottom0"><strong><bean:message key="label.secondCar"
-				bundle="PARKING_RESOURCES" /></strong>:</p>
+			<p class="mtop15 mbottom025"><strong><bean:message key="label.secondCar"
+				bundle="PARKING_RESOURCES" /></strong></p>
 			<fr:view name="parkingParty" property="firstRequest"
 				schema="parkingRequest.secondCar">
 				<fr:layout name="tabular">

@@ -73,7 +73,7 @@ display: block;
 .infoop2 { margin: 0.5em 0;}
 
 .first { margin-top: 0; margin-bottom: 1em;}
-.simpleblock1, .simpleblock2, .simpleblock3, .simpleblock4 { margin: 1.5em 0em; padding: 0.5em 1em;}
+.simpleblock1, .simpleblock2, .simpleblock3, .simpleblock4, .simpleblock5 { margin: 1.5em 0em; padding: 0.5em 1em;}
 
 .simpleblock1  {
 border: 1px solid #cc8;
@@ -92,6 +92,10 @@ background: #fff url(../images/transitional/grad64-f5-fff.gif) top repeat-x;
 .simpleblock4  {
 border: 1px solid #ddd;
 background: #fafafa url(../images/transitional/grad32-fa-eee.gif) bottom repeat-x;
+}
+.simpleblock5  {
+border: 1px solid #ddd;
+background: #fafafa;
 }
 
 /* ----------------------
@@ -459,7 +463,9 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width8em { width: 8em; } /*used in forums*/
 .width10em { width: 10em; }
 .width14em { width: 14em; }
+.width15em { width: 15em; }
 .width30em { width: 30em; }
+.width50em { width: 50em; }
 .width100px { width: 100px; }
 .width250px { width: 250px; }
 
@@ -559,6 +565,46 @@ background: url(../images/navlateral/minus01.gif) 0.4em 55% no-repeat; padding-l
 background: #eee url(../images/navlateral/minus01.gif) 0.4em 55% no-repeat;
 }
 
+/* new nav */
+
+#navlateral div.newnav li {
+border-bottom: none;
+}
+#navlateral div.newnav ul li a, #navlateral div.newnav ul li span {
+border-bottom: 1px solid #eee;
+}
+
+/* first level module */
+
+#navlateral div.newnav ul li.navmod {
+padding: 1em 0 1em 0;
+}
+#navlateral div.newnav ul li.navmod a {
+font-weight: bold;
+padding-bottom: 0.4em;
+}
+#navlateral div.newnav ul li.navmod span {
+font-weight: bold;
+padding-bottom: 0.4em;
+}
+
+/* sub level modules */
+
+#navlateral div.newnav ul li.navmod ul li a, #navlateral div.newnav ul li.navmod ul li a span { /* all anchors and spans that are not first modules */
+font-weight: normal;
+padding-bottom: 0.1em;
+}
+#navlateral div.newnav ul li.navmod ul li.navmod a, #navlateral div.newnav ul li.navmod ul li.navmod span { /* all navmod anchors and spans that are not in a first module */
+font-weight: normal;
+padding-bottom: 0.1em;
+}
+#navlateral div.newnav ul li.navmod ul li.navmod { /* all navmods that are not first modules */
+padding: 0;
+}
+
+#navlateral div.newnav ul li ul li ul { /* addictive identation */
+margin-left: 1em;
+}
 
 /**********************************************
 	 to organize
@@ -1024,45 +1070,3 @@ border: none;
 th.parking { width: 90px;}
 td.parking { width: 400px;}
 
-/**********************************************
-	 new nav
-***********************************************/	
-
-#navlateral div.newnav li {
-border-bottom: none;
-}
-#navlateral div.newnav ul li a, #navlateral div.newnav ul li span {
-border-bottom: 1px solid #eee;
-}
-
-/* first level module */
-
-#navlateral div.newnav ul li.navmod {
-padding: 1em 0 1em 0;
-}
-#navlateral div.newnav ul li.navmod a {
-font-weight: bold;
-padding-bottom: 0.4em;
-}
-#navlateral div.newnav ul li.navmod span {
-font-weight: bold;
-padding-bottom: 0.4em;
-}
-
-/* sub level modules */
-
-#navlateral div.newnav ul li.navmod ul li a, #navlateral div.newnav ul li.navmod ul li a span { /* all anchors and spans that are not first modules */
-font-weight: normal;
-padding-bottom: 0.1em;
-}
-#navlateral div.newnav ul li.navmod ul li.navmod a, #navlateral div.newnav ul li.navmod ul li.navmod span { /* all navmod anchors and spans that are not in a first module */
-font-weight: normal;
-padding-bottom: 0.1em;
-}
-#navlateral div.newnav ul li.navmod ul li.navmod { /* all navmods that are not first modules */
-padding: 0;
-}
-
-#navlateral div.newnav ul li ul li ul { /* addictive identation */
-margin-left: 1em;
-}
