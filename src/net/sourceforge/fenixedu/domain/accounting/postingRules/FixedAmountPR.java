@@ -86,9 +86,10 @@ public class FixedAmountPR extends FixedAmountPR_Base {
                                 .getDescriptionForEntryType(getEntryType())));
     }
 
+    //FIXME: this method should be in superclass. subclasses should only reimplement variable part...
     @Override
     public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
-        return getFixedAmount();
+        return getFixedAmount().subtract(event.calculatePayedAmount());
     }
 
 }

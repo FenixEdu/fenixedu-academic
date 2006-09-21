@@ -58,9 +58,11 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
                 "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.cannot.modify.amountPerUnit");
     }
 
+    //FIXME: this method should be in superclass. subclasses should only reimplement variable part...
     @Override
     public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
-        return getBaseAmount().add(getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event))));
+	return getBaseAmount().add(getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event))))
+		.subtract(event.calculatePayedAmount());
 
     }
 

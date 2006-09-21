@@ -25,9 +25,9 @@ public abstract class BaseAmountPlusAmountPerUnitGreaterThanOnePR extends
 
     @Override
     public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
-        return (getNumberOfUnits(event) > 1) ? getBaseAmount().add(
+        return ((getNumberOfUnits(event) > 1) ? getBaseAmount().add(
                 getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event) - 1)))
-                : getBaseAmount();
+                : getBaseAmount()).subtract(event.calculatePayedAmount());
 
     }
 

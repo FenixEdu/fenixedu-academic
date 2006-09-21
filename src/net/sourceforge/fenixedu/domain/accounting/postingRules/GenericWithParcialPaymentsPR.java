@@ -19,58 +19,33 @@ public abstract class GenericWithParcialPaymentsPR extends GenericWithParcialPay
 	super();
     }
 
-    public GenericWithParcialPaymentsPR(EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, EntryType totalPaymentEntryType,
-	    EntryType parcialPaymentEntryType, BigDecimal totalAmount) {
-	init(eventType, startDate, endDate, serviceAgreementTemplate, totalPaymentEntryType,
-		parcialPaymentEntryType, totalAmount);
+    public GenericWithParcialPaymentsPR(EventType eventType, EntryType entryType, DateTime startDate,
+	    DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal totalAmount) {
+	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, totalAmount);
     }
 
-    protected void init(EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, EntryType totalPaymentEntryType,
-	    EntryType partialPaymentEntryType, BigDecimal totalAmount) {
-	super.init(eventType, startDate, endDate, serviceAgreementTemplate);
-	checkParameters(totalPaymentEntryType, partialPaymentEntryType, totalAmount);
-	super.setTotalPaymentEntryType(totalPaymentEntryType);
-	super.setPartialPaymentEntryType(partialPaymentEntryType);
+    protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+	    ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal totalAmount) {
+	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
+	checkParameters(totalAmount);
 	super.setTotalAmount(totalAmount);
     }
 
-    private void checkParameters(EntryType totalPaymentEntryType, EntryType parcialPaymentEntryType,
-	    BigDecimal totalAmount) {
-	if (totalPaymentEntryType == null) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.postingRules.GenericWithParcialPaymentsPR.totalPaymentEntryType.cannot.be.null");
-	}
-
-	if (parcialPaymentEntryType == null) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.postingRules.GenericWithParcialPaymentsPR.parcialPaymentEntryType.cannot.be.null");
-	}
-
+    private void checkParameters(BigDecimal totalAmount) {
 	if (totalAmount == null) {
 	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.postingRules.GenericWithParcialPaymentsPR.totalAmount.cannot.be.null");
+		    "error.accounting.postingRules.GenericWithParcialPaymentsPR.totalAmount.cannot.be.null");
 	}
     }
 
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	final EntryType entryType = getEntryTypeForPayment(calculateTotalAmountToPay(event, when));
-
-	return Collections.singletonList(new EntryDTO(entryType, event, getTotalAmount(), event
+	return Collections.singletonList(new EntryDTO(getEntryType(), event, getTotalAmount(), event
 		.calculatePayedAmount(), calculateTotalAmountToPay(event, when), event
-		.getDescriptionForEntryType(entryType)));
+		.getDescriptionForEntryType(getEntryType())));
     }
 
-    protected EntryType getEntryTypeForPayment(BigDecimal amountToPay) {
-	return isPartialPayment(amountToPay) ? getPartialPaymentEntryType() : getTotalPaymentEntryType();
-    }
-
-    protected boolean isPartialPayment(BigDecimal amountToPay) {
-	return getTotalAmount().compareTo(amountToPay) != 0;
-    }
-
+    //FIXME: this method should be in superclass. subclasses should only reimplement variable part...
     @Override
     public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
 	return getTotalAmount().subtract(event.calculatePayedAmount());
@@ -80,18 +55,6 @@ public abstract class GenericWithParcialPaymentsPR extends GenericWithParcialPay
     public void setTotalAmount(BigDecimal totalAmount) {
 	throw new DomainException(
 		"error.accounting.postingRules.GenericWithParcialPaymentsPR.cannot.modify.totalAmount");
-    }
-
-    @Override
-    public void setPartialPaymentEntryType(EntryType partialPaymentEntryType) {
-	throw new DomainException(
-		"error.accounting.postingRules.GenericWithParcialPaymentsPR.cannot.modify.partialPaymentEntryType");
-    }
-
-    @Override
-    public void setTotalPaymentEntryType(EntryType totalPaymentEntryType) {
-	throw new DomainException(
-		"error.accounting.postingRules.GenericWithParcialPaymentsPR.cannot.modify.totalPaymentEntryType");
     }
 
 }

@@ -56,6 +56,7 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
         return certificateRequestEvent.isUrgentRequest();
     }
 
+    //FIXME: this method should be in superclass. subclasses should only reimplement variable part...
     @Override
     public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
         final CertificateRequestEvent certificateRequestEvent = (CertificateRequestEvent) event;
@@ -63,7 +64,7 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
                 .calculateTotalAmountToPay(certificateRequestEvent, when)
                 .multiply(BigDecimal.valueOf(2)) : super.calculateTotalAmountToPay(event, when);
 
-        return totalAmountToPay.add(calculateAmountToPayForPages(certificateRequestEvent));
+        return totalAmountToPay.add(calculateAmountToPayForPages(certificateRequestEvent)).subtract(event.calculatePayedAmount());
     }
 
     private BigDecimal calculateAmountToPayForPages(CertificateRequestEvent event) {

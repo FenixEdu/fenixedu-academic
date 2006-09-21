@@ -26,22 +26,18 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	super();
     }
 
-    public DFAGratuityPR(EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, EntryType totalPaymentEntryType,
-	    EntryType partialPaymentEntryType, BigDecimal totalAmount,
+    public DFAGratuityPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+	    ServiceAgreementTemplate serviceAgreementTemplate,BigDecimal totalAmount,
 	    BigDecimal partialAcceptedPercentage) {
 	super();
-	init(eventType, startDate, endDate, serviceAgreementTemplate, totalPaymentEntryType,
-		partialPaymentEntryType, totalAmount, partialAcceptedPercentage);
+	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, totalAmount, partialAcceptedPercentage);
     }
 
-    protected void init(EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, EntryType totalPaymentEntryType,
-	    EntryType parcialPaymentEntryType, BigDecimal totalAmount,
+    protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+	    ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal totalAmount,
 	    BigDecimal partialAcceptedPercentage) {
 
-	init(eventType, startDate, endDate, serviceAgreementTemplate, totalPaymentEntryType,
-		parcialPaymentEntryType, totalAmount);
+	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, totalAmount);
 	checkParameters(partialAcceptedPercentage);
 	super.setPartialAcceptedPercentage(partialAcceptedPercentage);
 
@@ -69,7 +65,7 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	checkIfCanAddAmount(entryDTO.getAmountToPay(), event, whenRegistered);
 
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
-		getEntryTypeForPayment(entryDTO.getAmountToPay()), entryDTO.getAmountToPay(),
+		getEntryType(), entryDTO.getAmountToPay(),
 		paymentMode, whenRegistered));
     }
 
@@ -78,8 +74,7 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	if (getTotalAmount().compareTo(amountToPay) != 0 && amountToAdd.compareTo(amountToPay) != 0) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.DFAGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
-		    event.getDescriptionForEntryType(getEntryTypeForPayment(calculateTotalAmountToPay(
-			    event, when))));
+		    event.getDescriptionForEntryType(getEntryType()));
 	}
 
 	if (amountToPay.compareTo(amountToAdd) != 0
@@ -90,8 +85,7 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.DFAGratuityPR.invalid.partial.payment.value",
-		    event.getDescriptionForEntryType(getEntryTypeForPayment(calculateTotalAmountToPay(
-			    event, when))), percentageLabelFormatter);
+		    event.getDescriptionForEntryType(getEntryType()), percentageLabelFormatter);
 	}
 
     }

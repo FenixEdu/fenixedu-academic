@@ -16,9 +16,7 @@ public enum EntryType {
 
     DEGREE_FINALIZATION_CERTIFICATE_REQUEST_FEE,
 
-    PARTIAL_GRATUITY_FEE,
-
-    TOTAL_GRATUITY_FEE;
+    GRATUITY_FEE;
 
     public String getName() {
 	return name();

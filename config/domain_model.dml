@@ -294,15 +294,13 @@ class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourcef
 					BigDecimal amountPerPage;
 				}
 				
-	class net.sourceforge.fenixedu.domain.accounting.postingRules.GenericWithParcialPaymentsPR extends net.sourceforge.fenixedu.domain.accounting.PostingRule {   
-		BigDecimal totalAmount;
-		EntryType totalPaymentEntryType;
-		EntryType partialPaymentEntryType;
-	}
-	
-		class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericWithParcialPaymentsPR {
-			BigDecimal partialAcceptedPercentage;
+		class net.sourceforge.fenixedu.domain.accounting.postingRules.GenericWithParcialPaymentsPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {   
+			BigDecimal totalAmount;
 		}
+	
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericWithParcialPaymentsPR {
+				BigDecimal partialAcceptedPercentage;
+			}
 		
 class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStartExecutionPeriod;
