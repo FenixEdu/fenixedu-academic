@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing Table AccountingEvent" AlterTableAccountingEvent.sql
+execute "Changing table PostingRule" AlterTablePostingRule.sql

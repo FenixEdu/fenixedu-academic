@@ -19,7 +19,7 @@ public class CreateDFACandidacy extends Service {
                 identificationDocumentType);
         if (person == null) {
             person = new Person(name, identificationDocumentNumber, identificationDocumentType,
-                    Gender.MALE, "T" + System.currentTimeMillis());
+                    Gender.MALE, "X" + System.currentTimeMillis());
         }
         
         person.setSocialSecurityNumber(contributorNumber);

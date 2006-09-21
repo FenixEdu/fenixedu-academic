@@ -175,7 +175,7 @@ public abstract class Event extends Event_Base {
 		return result;
 	}
 
-	protected BigDecimal calculatePayedAmount() {
+	public BigDecimal calculatePayedAmount() {
 		if (isCancelled()) {
 			throw new DomainException(
 					"error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");

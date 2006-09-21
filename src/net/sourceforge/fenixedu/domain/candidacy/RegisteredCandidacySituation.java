@@ -8,6 +8,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentKind;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -48,6 +51,10 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 
 	((DFACandidacy) getCandidacy()).setRegistration(registration);
 
+	new GratuityEvent(AdministrativeOffice
+		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), person,
+		registration);
+
     }
 
     private Registration createNewRegistration(DFACandidacy candidacy) {
@@ -55,11 +62,11 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
 	StudentState state = new StudentState(StudentState.INSCRITO);
 	Person person = getCandidacy().getPerson();
-	
+
 	Registration registration = new Registration(person, null, studentKind, state, false, false,
 		EntryPhase.FIRST_PHASE_OBJ, ((DFACandidacy) candidacy).getExecutionDegree()
 			.getDegreeCurricularPlan());
-	
+
 	registration.setInterruptedStudies(false);
 
 	person.getStudent().addRegistrations(registration);

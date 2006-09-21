@@ -10,17 +10,19 @@ public enum EventType {
 
     APPROVEMENT_CERTIFICATE_REQUEST,
 
-    DEGREE_FINALIZATION_CERTIFICATE_REQUEST;
+    DEGREE_FINALIZATION_CERTIFICATE_REQUEST,
+
+    GRATUITY;
 
     public String getName() {
-        return name();
+	return name();
     }
 
     public String getQualifiedName() {
-        return EventType.class.getSimpleName() + "." + name();
+	return EventType.class.getSimpleName() + "." + name();
     }
 
     public String getFullyQualifiedName() {
-        return EventType.class.getName() + "." + name();
+	return EventType.class.getName() + "." + name();
     }
 }

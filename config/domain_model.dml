@@ -219,6 +219,10 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 	class net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 	    Integer keyCandidacy;
 	}
+
+	class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+	    Integer keyRegistration;
+	}
 	
 	class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 		Integer keyCertificateRequest;
@@ -289,6 +293,16 @@ class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourcef
 				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR {
 					BigDecimal amountPerPage;
 				}
+				
+	class net.sourceforge.fenixedu.domain.accounting.postingRules.GenericWithParcialPaymentsPR extends net.sourceforge.fenixedu.domain.accounting.PostingRule {   
+		BigDecimal totalAmount;
+		EntryType totalPaymentEntryType;
+		EntryType partialPaymentEntryType;
+	}
+	
+		class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericWithParcialPaymentsPR {
+			BigDecimal partialAcceptedPercentage;
+		}
 		
 class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStartExecutionPeriod;
@@ -3798,7 +3812,7 @@ class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.
 	Boolean relative;
 	Boolean principal;
 	String parameters;
-	
+
 	Boolean visible;
 	Boolean maximized;
 	
@@ -9678,6 +9692,13 @@ relation AdministrativeOfficeEvent {
 relation DFACandidacyEventCandidacy {
 	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole candidacy;
 	net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent playsRole candidacyEvents {
+		multiplicity *;
+	}
+}
+
+relation GratuityEventRegistration {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent playsRole gratuityEvents {
 		multiplicity *;
 	}
 }
