@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
+import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.plugin.ExceptionHandler;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -43,8 +44,9 @@ import org.apache.struts.validator.DynaValidatorForm;
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
 
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-    
-    protected static final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+
+    protected static final ResourceBundle enumerationResources = ResourceBundle.getBundle(
+            "resources.EnumerationResources", LanguageUtils.getLocale());
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
@@ -93,8 +95,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Sets an error to display later in the Browser and sets the mapping
-     * forward.
+     * Sets an error to display later in the Browser and sets the mapping forward.
      */
     protected ActionForward setError(HttpServletRequest request, ActionMapping mapping,
             String errorMessage, String forwardPage, Object actionArg) {
@@ -113,8 +114,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Verifies if a property of type String in a FormBean is not empty. Returns
-     * true if the field is present and not empty. False otherwhise.
+     * Verifies if a property of type String in a FormBean is not empty. Returns true if the field is
+     * present and not empty. False otherwhise.
      */
     protected boolean verifyStringParameterInForm(DynaValidatorForm dynaForm, String field) {
         if (dynaForm.get(field) != null && !dynaForm.get(field).equals("")) {
@@ -124,8 +125,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Verifies if a parameter in a Http Request is not empty. Return true if
-     * the field is not empty. False otherwise.
+     * Verifies if a parameter in a Http Request is not empty. Return true if the field is not empty.
+     * False otherwise.
      */
     protected boolean verifyParameterInRequest(HttpServletRequest request, String field) {
         if (request.getParameter(field) != null && !request.getParameter(field).equals("")) {
@@ -179,15 +180,15 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         saveMessages(request, messages);
 
         IViewState viewState = RenderUtils.getViewState();
-        
+
         if (viewState != null) {
             ViewDestination destination = viewState.getDestination("exception");
-            
+
             if (destination != null) {
                 return destination.getActionForward();
-            } 
+            }
         }
-        
+
         // show exception in output to ease finding the problem when
         // messages are not shown in page
         e.printStackTrace();
@@ -201,7 +202,18 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected FactoryExecutor getFactoryObject() {
-        return (FactoryExecutor) RenderUtils.getViewState().getMetaObject().getObject();
+        return (FactoryExecutor) getRendererObject();
+    }
+
+    protected Object getRendererObject() {
+        IViewState viewState = RenderUtils.getViewState();
+        if (viewState != null) {
+            MetaObject metaObject = viewState.getMetaObject();
+            if (metaObject != null) {
+                return metaObject.getObject();
+            }
+        }
+        return null;
     }
 
     protected ActionMessages getActionMessages(HttpServletRequest request) {

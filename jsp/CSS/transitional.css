@@ -1021,8 +1021,8 @@ td.noborder {
 border: none;
 }
 
-th.parking { width: 8em;}
-td.parking { width: 44em;}
+th.parking { width: 90px;}
+td.parking { width: 400px;}
 
 /**********************************************
 	 new nav

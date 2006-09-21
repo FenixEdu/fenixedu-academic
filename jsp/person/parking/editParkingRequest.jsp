@@ -77,6 +77,10 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 <em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.parking" bundle="PARKING_RESOURCES" /></h2>
 
+<span class="error0 mtop0"><html:messages id="message" property="timeout" message="true" bundle="PARKING_RESOURCES">
+	<bean:write name="message"/><br/>
+</html:messages></span>
+
 <div class="warning0">
 	<p class="mvert025"><bean:message key="title.regulation" bundle="PARKING_RESOURCES"/>:</p>
 	<ul>
