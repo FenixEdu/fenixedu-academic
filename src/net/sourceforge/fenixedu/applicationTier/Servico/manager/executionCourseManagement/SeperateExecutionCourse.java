@@ -54,8 +54,8 @@ public class SeperateExecutionCourse extends Service {
         for (final Integer curricularCourseID : curricularCourseIdsToTransfer) {
             final CurricularCourse curricularCourse = (CurricularCourse) findDomainObjectByID(
                     originExecutionCourse.getAssociatedCurricularCourses(), curricularCourseID);
-            destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
             originExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
+            destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
         }
     }
 
