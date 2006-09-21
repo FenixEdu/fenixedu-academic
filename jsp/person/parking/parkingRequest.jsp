@@ -73,7 +73,14 @@
 		</logic:notEqual>
 	</logic:empty>
 	<logic:notEmpty name="parkingParty" property="parkingRequests">
-		<ul>
+
+		<ul class="mvert025">
+			<li>
+				<html:link page="/parking.do?method=downloadParkingRegulamentation">
+					<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
+				</html:link>
+			</li>
+
 			<%-- editar --%>
 			<li><html:link page="/parking.do?method=prepareEditParking">
 				<bean:message key="label.editParkingDocuments"
