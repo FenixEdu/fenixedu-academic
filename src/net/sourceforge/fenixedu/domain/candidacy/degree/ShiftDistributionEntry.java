@@ -47,6 +47,11 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
 	super.setShift(shift);
 	super.setAbstractStudentNumber(abstractStudentNumber);
     }
+    
+
+    public void changeShift(Shift newShift) {
+	super.setShift(newShift);
+    }
 
     @Override
     public void setShiftDistribution(ShiftDistribution shiftDistribution) {
@@ -74,4 +79,5 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
     public boolean alreadyDistributed() {
 	return getDistributed().booleanValue();
     }
+
 }

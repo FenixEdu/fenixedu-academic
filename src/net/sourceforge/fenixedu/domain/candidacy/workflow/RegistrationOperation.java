@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -70,9 +70,10 @@ public class RegistrationOperation extends CandidacyOperation {
 		    .getRegistrationsForDegreeCandidacies();
 	    Collections.sort(registrations, Registration.NUMBER_COMPARATOR);
 
-	    for (final Shift shift : getExecutionDegree().getShiftsFromShiftDistributionBasedOn(
-		    registrations.indexOf(registration))) {
-		shift.addStudents(registration);
+	    for (final ShiftDistributionEntry shiftEntry : getExecutionDegree()
+		    .getNotDistributedShiftsFromShiftDistributionBasedOn(registrations.indexOf(registration))) {
+		shiftEntry.setDistributed(Boolean.TRUE);
+		shiftEntry.getShift().addStudents(registration);
 	    }
 	}
     }

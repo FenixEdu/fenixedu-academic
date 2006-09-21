@@ -742,16 +742,16 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         return result;
     }
     
-    public List<Shift> getShiftsFromShiftDistributionBasedOn(Integer studentNumberPosition) {
+    public List<ShiftDistributionEntry> getNotDistributedShiftsFromShiftDistributionBasedOn(Integer studentNumberPosition) {
 	final Integer studentNumber = getStudentNumberForShiftDistributionBasedOn(studentNumberPosition);
 	if (studentNumber == null) {
 	    throw new DomainException(
 		    "error.candidacy.degree.ShiftDistribution.invalid.studentNumberPosition");
 	}
-	return getShiftsFor(studentNumber);
+	return getShiftsFor(studentNumber, false);
     }
 
-    private Integer getStudentNumberForShiftDistributionBasedOn(Integer studentNumberPosition) {
+    public Integer getStudentNumberForShiftDistributionBasedOn(Integer studentNumberPosition) {
 	final List<Integer> abstractStudentNumbers = new ArrayList<Integer>();
 	for (final ShiftDistributionEntry shiftDistributionEntry : getShiftDistributionEntriesSet()) {
 	    if (!abstractStudentNumbers.contains(shiftDistributionEntry.getAbstractStudentNumber())) {
@@ -759,17 +759,20 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	    }
 	}
 	Collections.sort(abstractStudentNumbers);
-	return (!abstractStudentNumbers.isEmpty()) ? abstractStudentNumbers.get(studentNumberPosition)
-		: null;
+	return (!abstractStudentNumbers.isEmpty()) ? abstractStudentNumbers.get(studentNumberPosition) : null;
+    }
+    
+    public List<ShiftDistributionEntry> getDistributedShiftsFor(Integer studentNumber) {
+	return getShiftsFor(studentNumber, true);
     }
 
-    private List<Shift> getShiftsFor(Integer studentNumber) {
-	final List<Shift> result = new ArrayList<Shift>();
+    private List<ShiftDistributionEntry> getShiftsFor(Integer studentNumber, boolean alreadyDistributed) {
+	final List<ShiftDistributionEntry> result = new ArrayList<ShiftDistributionEntry>();
 	for (final ShiftDistributionEntry shiftDistributionEntry : getShiftDistributionEntriesSet()) {
-	    if (!shiftDistributionEntry.alreadyDistributed()
+	    if (shiftDistributionEntry.getDistributed().booleanValue() == alreadyDistributed
 		    && shiftDistributionEntry.getAbstractStudentNumber().equals(studentNumber)) {
-		shiftDistributionEntry.setDistributed(Boolean.TRUE);
-		result.add(shiftDistributionEntry.getShift());
+		
+		result.add(shiftDistributionEntry);
 	    }
 	}
 	return result;
@@ -783,6 +786,23 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	    }
 	}
 	return result;
+    }
+
+    public void changeShiftFromShiftDistributionFor(int studentNumberPosition, Shift oldShift, Shift newShift) {
+	final Integer studentNumber = getStudentNumberForShiftDistributionBasedOn(studentNumberPosition);
+	if (studentNumber == null) {
+	    throw new DomainException("error.candidacy.degree.ShiftDistribution.invalid.studentNumberPosition");
+	}
+	
+	for (final ShiftDistributionEntry shiftDistributionEntry : getShiftDistributionEntriesSet()) {
+	    if (shiftDistributionEntry.alreadyDistributed()
+		    && shiftDistributionEntry.getAbstractStudentNumber().equals(studentNumber) 
+		    && shiftDistributionEntry.getShift() == oldShift) {
+		
+		shiftDistributionEntry.changeShift(newShift);
+		break;
+	    }
+	}
     }
 
 }
