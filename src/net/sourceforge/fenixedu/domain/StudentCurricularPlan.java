@@ -430,7 +430,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
 
-	calculateStudentAcumulatedEnrollments(executionPeriod);
+	//calculateStudentAcumulatedEnrollments(executionPeriod);
 	List<Enrolment> enrolments = (List) CollectionUtils.select(
 		getStudentEnrollmentsWithEnrolledState(), new Predicate() {
 
@@ -441,7 +441,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		});
 
 	initEctsCredits(enrolments);
-	return initAcumulatedEnrollments(enrolments);
+	//return initAcumulatedEnrollments(enrolments);
+	return enrolments;
     }
 
     private void initEctsCredits(List<Enrolment> enrolments) {
