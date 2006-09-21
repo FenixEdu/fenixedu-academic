@@ -28,6 +28,15 @@ public class Student extends Student_Base {
 	this(person, Student.generateStudentNumber());
     }
 
+    public static Student readStudentByNumber(Integer studentNumber) {
+	for (Student student : RootDomainObject.getInstance().getStudents()) {
+	    if (student.getNumber().equals(studentNumber)) {
+		return student;
+	    }
+	}
+	return null;
+    }
+
     public Collection<Registration> getRegistrationsByDegreeType(DegreeType degreeType) {
 	List<Registration> result = new ArrayList<Registration>();
 	for (Registration registration : getRegistrations()) {
