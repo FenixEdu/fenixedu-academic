@@ -34,7 +34,13 @@ public class Spreadsheet {
 
         public void setCell(final String cellValue) {
             cells.add(cellValue);
-        } 
+        }
+        
+        public void setValues(final String[] values) {
+            for (int i = 0; i < values.length; i++) {
+		setCell(i, values[i]);
+	    }
+        }
 
         protected List<Object> getCells() {
             return cells;
@@ -69,6 +75,12 @@ public class Spreadsheet {
 
     public void setHeader(final String columnHeader) {
         header.add(columnHeader);
+    }
+    
+    public void setHeaders(final String[] headers) {
+	for (int i = 0; i < headers.length; i++) {
+	    setHeader(i, headers[i]);
+	}
     }
 
     public Row addRow(final int rowNumber) {
