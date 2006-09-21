@@ -271,12 +271,12 @@ public class Degree extends Degree_Base {
     }
 
     public String getPresentationName() {
-        final ResourceBundle enumResourceBundle = ResourceBundle
-                .getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
-        final ResourceBundle appResourceBundle = ResourceBundle
-                .getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
-        return enumResourceBundle.getString(getTipoCurso().toString()) + " "
-                + appResourceBundle.getString("label.in") + " " + getNome();
+	final ResourceBundle enumResourceBundle = ResourceBundle
+		.getBundle("resources.EnumerationResources");
+	final ResourceBundle appResourceBundle = ResourceBundle
+		.getBundle("resources.ApplicationResources");
+	return enumResourceBundle.getString(getTipoCurso().toString()) + " "
+		+ appResourceBundle.getString("label.in") + " " + getNome();
     }
 
     public List<DegreeCurricularPlan> findDegreeCurricularPlansByState(DegreeCurricularPlanState state) {
