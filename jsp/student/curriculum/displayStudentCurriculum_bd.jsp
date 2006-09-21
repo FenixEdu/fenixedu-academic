@@ -19,10 +19,10 @@
 
 	<html:form action="/viewCurriculum.do?method=getStudentCP">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
-		
-		<table width="100%" class="infoop">
+	
+		<table class="tstyle5 thlight thright thmiddle mbottom0">
 			<tr>
-				<td><bean:message key="label.studentCurricularPlan" bundle="STUDENT_RESOURCES" /></td>
+				<th><bean:message key="label.studentCurricularPlan.basic" bundle="STUDENT_RESOURCES" /></th>
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.studentCPID" property="studentCPID"
 							onchange='this.form.submit();'> <html:options collection="allSCPs" property="value" labelProperty="label" />
@@ -34,7 +34,7 @@
 			</tr>
 			
 			<tr>
-				<td><bean:message key="label.enrollmentsFilter" bundle="STUDENT_RESOURCES" /></td>
+				<th><bean:message key="label.enrollmentsFilter.basic" bundle="STUDENT_RESOURCES" /></th>
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.select" property="select"
 						onchange='this.form.submit();' >
@@ -54,8 +54,7 @@
 
 
 	<logic:notEqual name="numCPs" value="0">
-		
-		<table width="100%">		
+
 			<logic:iterate id="infoStudentCurricularPlan" name="selectedStudentCPs">
 				<bean:define id="dateFormated">
 					<dt:format pattern="dd.MM.yyyy">
@@ -63,27 +62,16 @@
 					</dt:format>
 				</bean:define>
 
-				<tr><td><br/><br/></td></tr>
-	
-				<tr>
-					<td colspan=5>
-						<table width="100%" border="0" cellpadding="0" cellspacing="0">
-							<tr>
-								<td bgcolor="#FFFFFF" class="infoselected">
-									<p><strong><bean:message key="label.person.name" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></p>
-									<p><strong><bean:message key="label.degree.name" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/></p>
-									<p><strong><bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />: </strong> <bean:message bundle="ENUMERATION_RESOURCES" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name"/> <bean:message bundle="APPLICATION_RESOURCES" key="label.in"/> <bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/> - <bean:write name="dateFormated"/></p>
-									<p><logic:present name="infoStudentCurricularPlan" property="specialization"><bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/></logic:present><strong><bean:message key="label.number" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/></p>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>				
+			<div class="infoop2 mvert2 mtop0">
+				<p><strong><bean:message key="label.person.name" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></p>
+				<p><strong><bean:message key="label.degree.name" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/></p>
+				<p><strong><bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />: </strong> <bean:message bundle="ENUMERATION_RESOURCES" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name"/> <bean:message bundle="APPLICATION_RESOURCES" key="label.in"/> <bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/> - <bean:write name="dateFormated"/></p>
+				<p><logic:present name="infoStudentCurricularPlan" property="specialization"><bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/></logic:present><strong><bean:message key="label.number" />: </strong><bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/></p>
+			</div>
+		
+		
 				
-				
-				<tr><td><br/><br/></td></tr>
-				
-				
+			<table class="tstyle3 mbottom4" style="width: 650px;">
 		
 				<bean:define id="id" name="infoStudentCurricularPlan" property="idInternal"/>
 				<bean:define id="curriculum" 			name="infoStudentCPs" property='<%="infoEnrollmentsForStudentCPById("+ id +")"%>'/>
@@ -107,19 +95,19 @@
 								actualSemester = ((InfoEnrolment)enrolment).getInfoExecutionPeriod().getSemester().toString();
 						%>	
 							<tr>
-							  	<th class="listClasses-header">
+							  	<th style="width: 80px;">
 							  		<bean:message key="label.executionYear" />
-							  	</th >
-							  	<th class="listClasses-header">
-							  		<bean:message key="label.semester" />
-							  	</th >
-							  	<th class="listClasses-header">
+							  	</th>
+							  	<th style="width: 40px;">
+							  		<bean:message key="label.semester.abbreviation" />
+							  	</th>
+							  	<th style="width: 60px;">
 							  		<bean:message key="label.degree.name" />
 							  	</th>
-							  	<th class="listClasses-header">
+							  	<th>
 							  		<bean:message key="label.curricular.course.name" />
 							  	</th>
-							  	<th class="listClasses-header">
+							  	<th style="width: 100px;">
 							  		<bean:message key="label.finalEvaluation" />
 							  	</th>
 						  	</tr>	
@@ -132,23 +120,23 @@
 				
 										
 				  		<tr>
-						  <td class="listClasses">
+						  <td class="acenter">
 						    <bean:write name="enrolment" property="infoExecutionPeriod.infoExecutionYear.year"/>
 						  </td>
 						  				 
-						  <td class="listClasses">
+						  <td class="acenter">
 						    <bean:write name="enrolment" property="infoExecutionPeriod.semester"/>
 						  </td>
-						  <td class="listClasses">
+						  <td class="acenter">
 						    <bean:write name="enrolment" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>
 						  </td>
-						  <td class="listClasses" style="text-align:left">
+						  <td style="text-align:left">
 						    <bean:write name="enrolment" property="infoCurricularCourse.name"/>
 							<% if ( !((InfoEnrolment) enrolment).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
 								(<bean:message name="enrolment" bundle="APPLICATION_RESOURCES" property="enrollmentTypeResourceKey" />)
 							<% } %>
 						  </td>
-						  <td class="listClasses">
+						  <td class="acenter">
 							<logic:notEqual name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
 								<bean:message name="enrolment" property="enrollmentState.name" bundle="ENUMERATION_RESOURCES" />
 							</logic:notEqual>
@@ -166,11 +154,11 @@
 						<span class="error"><!-- Error messages go here --><bean:message key="message.no.enrolments" bundle="STUDENT_RESOURCES"/></span>
 					</td></tr>
 				</logic:equal>
-				<tr><td><br/><br/><br/><br/></td></tr>			
+	
 				
 			</logic:iterate>
 		</table>
-	
+		
 	
 	</logic:notEqual>
   	<logic:equal name="numCPs" value="0">

@@ -6,7 +6,6 @@
 
 h2 { margin: 0.5em 0 0.75em 0; }
 
-
 /* ----------------------
  ---- Show Info --------
 ----------------------- */
@@ -131,6 +130,7 @@ margin: 1em 0;
 
 /* vertical aligment */
 table.thtop th { vertical-align: top; }
+table.thmiddle th { vertical-align: middle; }
 table.tdtop td { vertical-align: top; }
 table.vamiddle td, table.vamiddle th { vertical-align: middle; }
 
@@ -155,7 +155,10 @@ table .aright  { text-align: right; }
 
 /* paddings */
 .tpadding01 th, .tpadding01 td {
-padding: 0.5em 0.1em;
+padding: 4px 1px;
+}
+table.tdpright2 td {
+padding-right: 4em;
 }
 /* nostyle */
 .tstylenone th, .tstylenone td {
@@ -205,7 +208,7 @@ text-align: center;
 .tstyle2 th { border: none; border-bottom: 1px solid #ccc; background: #f5f5f5 /*url(../../pics/back_32gray.gif) left bottom repeat-x*/; }
 .tstyle3 th { padding: 5px 10px; border: 1px solid #ccc; background: #eee; }
 .tstyle4 th { border: 1px solid #ccc; background: #eee; }
-.tstyle5 th { padding: 3px; border: 1px solid #fff; vertical-align: top; background: #f5f5f5; }
+.tstyle5 th { padding: 4px; border: 1px solid #fff; vertical-align: top; background: #f5f5f5; }
 .tstyle7 th { border: 1px solid #eee; background: #eee; }
 
 
@@ -219,7 +222,7 @@ padding: 5px; /*padding em "em" dá problemas de rendering no firefox, faz arredo
 .tstyle2 td { border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; }
 .tstyle3 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
-.tstyle5 td { padding: 3px; border: 1px solid #fff; background: #f5f5f5; }
+.tstyle5 td { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
 .tstyle7 td { border: 1px solid #eee; background: #eee; }
 
 
@@ -425,6 +428,7 @@ padding-right: 0.5em;
 .mbottom15 { margin-bottom: 1.5em;}
 .mbottom2 { margin-bottom: 2em;}
 .mbottom3 { margin-bottom: 3em;}
+.mbottom4 { margin-bottom: 3em;}
 .mvert0 { margin-top: 0; margin-bottom: 0; }
 .mvert025 { margin-top: 0.25em; margin-bottom: 0.25em; }
 .mvert05 { margin-top: 0.5em; margin-bottom: 0.5em; }

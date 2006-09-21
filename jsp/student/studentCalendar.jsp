@@ -11,8 +11,8 @@
 		<fc:viewState binding="#{studentCalendar.viewState}"/>
 		<h:outputText value="<h2>#{bundle['link.title.calendar']}</h2>" escape="false"/>
 		
-		<h:panelGrid styleClass="infoselected" columns="2">
-			<h:outputText value="#{bundle['label.choose.degreeCurricularPlan']}"/>
+		<h:panelGrid styleClass="infoop2" columns="2">
+			<h:outputText value="#{bundle['label.choose.degreeCurricularPlan']}:"/>
 			<h:panelGroup>
 				<h:selectOneMenu id="registrationID" value="#{studentCalendar.registrationID}"
 						onchange="this.form.submit();" valueChangeListener="#{studentCalendar.resetExecutionCourses}">
@@ -21,7 +21,7 @@
 				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</h:panelGroup>
 
-			<h:outputText value="#{bundle['label.execution.period']}"/>
+			<h:outputText value="#{bundle['label.execution.period']}:"/>
 			<h:panelGroup>
 				<h:selectOneMenu id="executionPeriodID" value="#{studentCalendar.executionPeriodID}"
 						onchange="this.form.submit();" valueChangeListener="#{studentCalendar.resetExecutionCourses}">
@@ -30,14 +30,14 @@
 				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</h:panelGroup>
 
-			<h:outputText value="#{bundle['label.execution.course']}"/>
+			<h:outputText value="#{bundle['label.execution.course']}:"/>
 			<h:selectOneMenu id="executionCourseID" value="#{studentCalendar.executionCourseID}"
 					onchange="this.form.submit();" valueChangeListener="#{studentCalendar.resetExecutionCourse}">
 				<f:selectItem itemLabel="#{bundle['label.exceution.courses.all']}" itemValue=""/>
 				<f:selectItems value="#{studentCalendar.executionCourseSelectItems}"/>
 			</h:selectOneMenu>
 
-			<h:outputText value="#{bundle['label.evaluation.type']}"/>
+			<h:outputText value="#{bundle['label.evaluation.type']}:"/>
 			<h:selectOneMenu id="evaluationTypeClassname" value="#{studentCalendar.evaluationTypeClassname}"
 					onchange="this.form.submit();">
 				<f:selectItem itemLabel="#{bundle['label.evaluation.type.all']}" itemValue=""/>
