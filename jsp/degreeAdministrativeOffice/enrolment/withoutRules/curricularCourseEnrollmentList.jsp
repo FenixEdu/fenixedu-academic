@@ -57,10 +57,7 @@
 						<bean:message key="label.curricular.course.semester"/>
 					</th>
 					<th class="listClasses-header">
-						<bean:message key="label.course.enrollment.weight" bundle="STUDENT_RESOURCES"/>
-					</th>
-					<th class="listClasses-header">
-						<bean:message key="label.course.enrollment.acumulated.enrollments" bundle="STUDENT_RESOURCES"/>
+						<bean:message key="label.course.enrollment.ectsCredits2" bundle="STUDENT_RESOURCES"/>
 					</th>
 					<th class="listClasses-header">
 						<bean:message key="label.unenroll"/>
@@ -85,10 +82,7 @@
 							<bean:write name="enrollment" property="executionPeriod.name"/>-<bean:write name="enrollment" property="executionPeriod.executionYear.year"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="enrollment" property="curricularCourse.enrollmentWeigth"/>
-						</td>
-						<td class="listClasses">
-							<bean:write name="enrollment" property="accumulatedWeight"/>
+							<bean:write name="enrollment" property="ectsCredits"/>
 						</td>
 						<td class="listClasses"><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.unenrollments" property="unenrollments" value="<%= enrollmentId.toString() %>" /></td>
 					</tr>
