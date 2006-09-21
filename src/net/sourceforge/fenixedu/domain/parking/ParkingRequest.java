@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
@@ -17,6 +18,7 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.joda.time.DateTime;
 
@@ -453,8 +455,10 @@ public class ParkingRequest extends ParkingRequest_Base {
                 ParkingDocumentState documentState) {
 
             ParkingDocument parkingDocument = parkingRequest.getParkingDocument(documentType);
-            if (parkingDocument != null && (inputStream != null || documentState != ParkingDocumentState.ELECTRONIC_DELIVERY)) {
-                String externalIdentifier = parkingDocument.getParkingFile().getExternalStorageIdentification();
+            if (parkingDocument != null
+                    && (inputStream != null || documentState != ParkingDocumentState.ELECTRONIC_DELIVERY)) {
+                String externalIdentifier = parkingDocument.getParkingFile()
+                        .getExternalStorageIdentification();
                 parkingDocument.delete();
                 if (externalIdentifier != null) {
                     FileManagerFactory.getFileManager().deleteFile(externalIdentifier);
@@ -754,6 +758,11 @@ public class ParkingRequest extends ParkingRequest_Base {
                 return parkingDocument.getParkingFile().getFilename();
             }
         }
+        if (getDriverLicenseDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getDriverLicenseDocumentState().name());
+        }
         return null;
     }
 
@@ -764,6 +773,11 @@ public class ParkingRequest extends ParkingRequest_Base {
                 return parkingDocument.getParkingFile().getFilename();
             }
         }
+        if (getFirstCarPropertyRegistryDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getFirstCarPropertyRegistryDocumentState().name());
+        }
         return null;
     }
 
@@ -773,6 +787,11 @@ public class ParkingRequest extends ParkingRequest_Base {
                 return parkingDocument.getParkingFile().getFilename();
             }
         }
+        if (getFirstCarInsuranceDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getFirstCarInsuranceDocumentState().name());
+        }
         return null;
     }
 
@@ -781,6 +800,11 @@ public class ParkingRequest extends ParkingRequest_Base {
             if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_OWNER_ID)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
+        }
+        if (getFirstCarOwnerIdDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getFirstCarOwnerIdDocumentState().name());
         }
         return null;
     }
@@ -792,6 +816,11 @@ public class ParkingRequest extends ParkingRequest_Base {
                 return parkingDocument.getParkingFile().getFilename();
             }
         }
+        if (getFirstCarDeclarationDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getFirstCarDeclarationDocumentState().name());
+        }    
         return null;
     }
 
@@ -802,6 +831,11 @@ public class ParkingRequest extends ParkingRequest_Base {
                 return parkingDocument.getParkingFile().getFilename();
             }
         }
+        if (getSecondCarPropertyRegistryDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getSecondCarPropertyRegistryDocumentState().name());
+        }          
         return null;
     }
 
@@ -812,6 +846,11 @@ public class ParkingRequest extends ParkingRequest_Base {
                 return parkingDocument.getParkingFile().getFilename();
             }
         }
+        if (getSecondCarInsuranceDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getSecondCarInsuranceDocumentState().name());
+        }        
         return null;
     }
 
@@ -820,6 +859,11 @@ public class ParkingRequest extends ParkingRequest_Base {
             if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.SECOND_CAR_OWNER_ID)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
+        }
+        if (getSecondCarOwnerIdDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getSecondCarOwnerIdDocumentState().name());
         }
         return null;
     }
@@ -830,6 +874,11 @@ public class ParkingRequest extends ParkingRequest_Base {
                     ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
+        }
+        if (getSecondCarDeclarationDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getSecondCarDeclarationDocumentState().name());
         }
         return null;
     }
