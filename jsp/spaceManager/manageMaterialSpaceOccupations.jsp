@@ -28,13 +28,13 @@
 	</html:link></p>	
 	
 	<h3><bean:message key="label.active.material.occupations" bundle="SPACE_RESOURCES"/>:</h3>
-	<bean:size id="activeSize" name="selectedSpaceInformation" property="space.activeMaterialSpaceOccupations"/>
+	<bean:size id="activeSize" name="selectedSpaceInformation" property="space.activeMaterialSpaceOccupationsToLoggedPerson"/>
 	<logic:equal name="activeSize" value="0">
 		<span class="error"><!-- Error messages go here -->
 			<bean:message key="label.space.no.current.materialOccupations" bundle="SPACE_RESOURCES"/>
 		</span>	
 	</logic:equal>
-	<fr:view schema="ViewMaterialSpaceOccupations" name="selectedSpaceInformation" property="space.activeMaterialSpaceOccupations">
+	<fr:view schema="ViewMaterialSpaceOccupations" name="selectedSpaceInformation" property="space.activeMaterialSpaceOccupationsToLoggedPerson">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
    			<fr:property name="columnClasses" value="listClasses"/>
@@ -56,13 +56,13 @@
 
 	<br/>	
 	<h3><bean:message key="label.other.material.occupations" bundle="SPACE_RESOURCES"/>:</h3>
-	<bean:size id="inactiveSize" name="selectedSpaceInformation" property="space.inactiveMaterialSpaceOccupations"/>
+	<bean:size id="inactiveSize" name="selectedSpaceInformation" property="space.inactiveMaterialSpaceOccupationsToLoggedPerson"/>
 	<logic:equal name="inactiveSize" value="0">
 		<span class="error"><!-- Error messages go here -->
 			<bean:message key="label.space.no.other.materialOccupations" bundle="SPACE_RESOURCES"/>
 		</span>	
 	</logic:equal>
-	<fr:view schema="ViewMaterialSpaceOccupations" name="selectedSpaceInformation" property="space.inactiveMaterialSpaceOccupations">
+	<fr:view schema="ViewMaterialSpaceOccupations" name="selectedSpaceInformation" property="space.inactiveMaterialSpaceOccupationsToLoggedPerson">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
    			<fr:property name="columnClasses" value="listClasses"/>

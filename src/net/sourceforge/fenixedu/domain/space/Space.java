@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
@@ -25,7 +26,7 @@ public abstract class Space extends Space_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setOjbConcreteClass(this.getClass().getName());
-	setCreatedOn(new YearMonthDay());	
+	setCreatedOn(new YearMonthDay());
     }
 
     public SpaceInformation getSpaceInformation() {
@@ -142,20 +143,23 @@ public abstract class Space extends Space_Base {
 	return spaceMaterial;
     }
 
-    public SortedSet<MaterialSpaceOccupation> getActiveMaterialSpaceOccupations() {
-	return getMaterialSpaceOccupationsByState(true);
+    public SortedSet<MaterialSpaceOccupation> getActiveMaterialSpaceOccupationsToLoggedPerson() {
+	return getMaterialSpaceOccupationsToLoggedPersonByState(true);
     }
 
-    public SortedSet<MaterialSpaceOccupation> getInactiveMaterialSpaceOccupations() {
-	return getMaterialSpaceOccupationsByState(false);
+    public SortedSet<MaterialSpaceOccupation> getInactiveMaterialSpaceOccupationsToLoggedPerson() {
+	return getMaterialSpaceOccupationsToLoggedPersonByState(false);
     }
 
-    private SortedSet<MaterialSpaceOccupation> getMaterialSpaceOccupationsByState(boolean state) {
+    private SortedSet<MaterialSpaceOccupation> getMaterialSpaceOccupationsToLoggedPersonByState(boolean state) {
 	SortedSet<MaterialSpaceOccupation> materialOccupations = new TreeSet<MaterialSpaceOccupation>(
 		MaterialSpaceOccupation.COMPARATOR_BY_CLASS_NAME);
 	YearMonthDay current = new YearMonthDay();
 	for (MaterialSpaceOccupation materialSpaceOccupation : getMaterialSpaceOccupations()) {
-	    if (materialSpaceOccupation.isActive(current) == state) {
+	    if (materialSpaceOccupation.isActive(current) == state
+		    && materialSpaceOccupation.getAccessGroup() != null
+		    && materialSpaceOccupation.getAccessGroup().isMember(
+			    AccessControl.getUserView().getPerson())) {
 		materialOccupations.add(materialSpaceOccupation);
 	    }
 	}
@@ -241,17 +245,17 @@ public abstract class Space extends Space_Base {
     }
 
     public static enum SpaceAccessGroupType {
-	
-	PERSON_OCCUPATION_ACCESS_GROUP ("personOccupationsAccessGroup"), 
-	
-	EXTENSION_OCCUPATION_ACCESS_GROUP ("extensionOccupationsAccessGroup");
-	
+
+	PERSON_OCCUPATION_ACCESS_GROUP("personOccupationsAccessGroup"),
+
+	EXTENSION_OCCUPATION_ACCESS_GROUP("extensionOccupationsAccessGroup");
+
 	private String spaceAccessGroupSlotName;
-	
+
 	private SpaceAccessGroupType(String spaceAccessGroupSlotName) {
 	    this.spaceAccessGroupSlotName = spaceAccessGroupSlotName;
 	}
-	
+
 	public String getName() {
 	    return name();
 	}

@@ -17,10 +17,9 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 
     public static final Comparator COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL)
-		.addComparator(new BeanComparator("begin"));
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL)
-		.addComparator(new BeanComparator("person.name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("begin"));
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("person.name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("idInternal"));
     }
 
     public PersonSpaceOccupation(final Space space, final Person person, final YearMonthDay begin,
