@@ -25,7 +25,7 @@ public abstract class Space extends Space_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setOjbConcreteClass(this.getClass().getName());
-	setCreatedOn(new YearMonthDay());
+	setCreatedOn(new YearMonthDay());	
     }
 
     public SpaceInformation getSpaceInformation() {
@@ -241,9 +241,23 @@ public abstract class Space extends Space_Base {
     }
 
     public static enum SpaceAccessGroupType {
-	PERSON_OCCUPATION, EXTENSION_OCCUPATION;
+	
+	PERSON_OCCUPATION_ACCESS_GROUP ("personOccupationsAccessGroup"), 
+	
+	EXTENSION_OCCUPATION_ACCESS_GROUP ("extensionOccupationsAccessGroup");
+	
+	private String spaceAccessGroupSlotName;
+	
+	private SpaceAccessGroupType(String spaceAccessGroupSlotName) {
+	    this.spaceAccessGroupSlotName = spaceAccessGroupSlotName;
+	}
+	
 	public String getName() {
 	    return name();
+	}
+
+	public String getSpaceAccessGroupSlotName() {
+	    return spaceAccessGroupSlotName;
 	}
     }
 }

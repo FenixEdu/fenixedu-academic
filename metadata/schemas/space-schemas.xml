@@ -187,7 +187,7 @@
 	<slot name="username"/>	
 </schema>	
 <schema name="AddPersonToAccessGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" bundle="SPACE_RESOURCES">
-	<slot name="accessGroupType" key="label.access.group" />
-	<slot name="person" layout="username-as-person" key="label.person" />		
+	<slot name="accessGroupType" key="label.access.group" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="person" layout="username-as-person" key="label.person" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
 </schema>	
 

@@ -14,7 +14,7 @@ public class SpaceAccessGroupsManagement extends Service {
 
     public void run(Space space, SpaceAccessGroupType accessGroupType, Person person, boolean toAdd) throws FenixServiceException {
 	if (person != null) {
-	    if (accessGroupType.equals(SpaceAccessGroupType.PERSON_OCCUPATION)) {
+	    if (accessGroupType.equals(SpaceAccessGroupType.PERSON_OCCUPATION_ACCESS_GROUP)) {
 		if (space.getPersonOccupationsAccessGroup() == null) {
 		    space.setPersonOccupationsAccessGroup(new FixedSetGroup());
 		}
@@ -22,7 +22,7 @@ public class SpaceAccessGroupsManagement extends Service {
 		Set<Person> newElements = manageAccessGroup(person, toAdd, elements);
 		space.setPersonOccupationsAccessGroup(new FixedSetGroup(newElements));
 
-	    } else if (accessGroupType.equals(SpaceAccessGroupType.EXTENSION_OCCUPATION)) {
+	    } else if (accessGroupType.equals(SpaceAccessGroupType.EXTENSION_OCCUPATION_ACCESS_GROUP)) {
 		if (space.getExtensionOccupationsAccessGroup() == null) {
 		    space.setExtensionOccupationsAccessGroup(new FixedSetGroup());
 		}
