@@ -289,18 +289,13 @@ function check(e,v){
 							</tr>
 						</logic:present>
 					</logic:equal>
-					<logic:present  name="personalInfo" property="infoStudentCurricularPlanList" >
+					<logic:present name="personalInfo" property="infoStudentCurricularPlanList" >
 						<tr>   
 							<td class="ppleft2" style="vertical-align: top;"><bean:message key="label.degree.name" />:</td>  
 							<td class="ppright">
 								<logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
-									<bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-									<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="MASTER_DEGREE">
-										<bean:message key="link.master"/> <bean:write name="degreeName" /><br/>
-									</logic:match>
-									<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="DEGREE"> 
-										<bean:message key="link.degree"/> <bean:write name="degreeName" /><br/>
-									</logic:match>
+									<bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>									
+									<bean:message name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name" bundle="ENUMERATION_RESOURCES" /> <bean:message key="label.in"/> <bean:write name="degreeName" /><br/>																		
 								</logic:iterate>
 							</td>
 						</tr>
