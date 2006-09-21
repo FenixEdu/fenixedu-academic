@@ -247,6 +247,9 @@
 </schema>
 
 <schema name="candidate.personalData-freeEdit" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES" > 
+	<slot name="name" >
+		<property name="size" value="70"/>
+	</slot>
 	<slot name="gender" />
 	<slot name="emissionLocationOfDocumentId" />
 	<slot name="emissionDateOfDocumentIdYearMonthDay" >
