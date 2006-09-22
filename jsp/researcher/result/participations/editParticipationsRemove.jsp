@@ -39,7 +39,7 @@
 			<logic:greaterThan name="result" property="resultParticipationsCount" value="1">
 				<html:link page="<%= prepareAlterOrder %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.alterOrder"/></html:link>
 			</logic:greaterThan>
-			<logic:equal name="result" property="isResultPublicationRole" value="true">
+			<logic:equal name="result" property="isPossibleSelectPersonRole" value="true">
 				<html:link page="<%= prepareEditRoles %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.editRoles"/></html:link>
 			</logic:equal>
 		</logic:notPresent>
