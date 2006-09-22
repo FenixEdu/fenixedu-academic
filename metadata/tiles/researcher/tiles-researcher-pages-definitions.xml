@@ -119,13 +119,16 @@
     <definition name="publications.editPublicationData" extends="results.management">
         <put name="body" value="/researcher/result/publications/editPublicationData.jsp"></put>
     </definition>
-    <definition name="publications.viewPublication" extends="results.management">
-        <put name="body" value="/researcher/result/publications/viewPublication.jsp"></put>
-    </definition>
     <definition name="publications.viewEditPublication" extends="results.management">
         <put name="body" value="/researcher/result/publications/viewEditPublication.jsp"></put>
     </definition>
     <definition name="publications.deletePublication" extends="results.management">
         <put name="body" value="/researcher/result/publications/deletePublication.jsp"></put>
     </definition>
+    <definition name="publications.openBibtexFile" extends="results.management">
+        <put name="body" value="/researcher/result/publications/bibtex/openBibtexFile.jsp"></put>
+    </definition>
+    <definition name="publications.importBibtex" extends="results.management">
+        <put name="body" value="/researcher/result/publications/bibtex/importBibtex.jsp"></put>
+    </definition> 
 </tiles-definitions>
