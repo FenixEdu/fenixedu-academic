@@ -51,22 +51,26 @@ public class NumberRangeValidator extends RequiredValidator {
 	public void performValidation() {
 		super.performValidation();
 
-		isNumber = this.isValid();
-
 		if (isValid()) {
-			int number = Integer.parseInt(getComponent().getValue().trim());
+			try {
+				int number = Integer.parseInt(getComponent().getValue().trim());
 
-			boolean inRange = true;
+				boolean inRange = true;
+				isNumber = true;
 
-			if (lowerBound != null) {
-				inRange &= lowerBound <= number;
+				if (lowerBound != null) {
+					inRange &= lowerBound <= number;
+				}
+
+				if (upperBound != null) {
+					inRange &= upperBound >= number;
+				}
+
+				this.setValid(inRange);
+			} catch (NumberFormatException e) {
+				isNumber = false;
+				setValid(false);
 			}
-
-			if (upperBound != null) {
-				inRange &= upperBound >= number;
-			}
-
-			this.setValid(inRange);
 		} else {
 			setValid(!isRequired());
 		}
@@ -79,17 +83,18 @@ public class NumberRangeValidator extends RequiredValidator {
 		}
 
 		if (lowerBound != null && upperBound != null) {
-			return RenderUtils.getFormatedResourceString("renderers.validator.number.range.both",
-					lowerBound, upperBound);
+			return RenderUtils.getFormatedResourceString(
+					"renderers.validator.number.range.both", lowerBound,
+					upperBound);
 		}
 
 		if (lowerBound != null) {
-			return RenderUtils.getFormatedResourceString("renderers.validator.number.range.lower",
-					lowerBound);
+			return RenderUtils.getFormatedResourceString(
+					"renderers.validator.number.range.lower", lowerBound);
 		}
 
-		return RenderUtils.getFormatedResourceString("renderers.validator.number.range.upper",
-				upperBound);
+		return RenderUtils.getFormatedResourceString(
+				"renderers.validator.number.range.upper", upperBound);
 	}
 
 }
