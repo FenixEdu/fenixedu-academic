@@ -50,7 +50,7 @@
 					<html:link page="/executionCourse.do?method=announcements"
 							paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal"
 							anchor="<%= anchor %>"
-							title="<%= announcementInformation %>">
+							title="">
 						<bean:write name="announcement" property="title"/>
 					</html:link>
 				</li>
