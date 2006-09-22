@@ -1,4 +1,4 @@
-/* transitional.css - 01.2006 by Joï¿½o Alfaiate @ Fenix */
+/* transitional.css - 01.2006 by João Alfaiate @ Fenix */
 
 /* ----------------------
  ---- Headings ---------
@@ -219,7 +219,7 @@ text-align: center;
 /* table classes - td properties */
 
 .tstyle1 td, .tstyle2 td, .tstyle3 td, .tstyle4 td  {
-padding: 5px; /*padding em "em" dï¿½ problemas de rendering no firefox, faz arredondamentos incoerentes */
+padding: 5px; /*padding em "em" dá problemas de rendering no firefox, faz arredondamentos incoerentes */
 }
 
 .tstyle1 td { border: 1px solid #cccccc; }
@@ -247,7 +247,7 @@ background-color: #fff8bb; color: #664400;
 
 table.mtop05 { margin-top: 0.5em; }
 table.smallmargin td { padding: 0.25em; }
-	/* nï¿½o funcionava com indent ou padding normal? testar*/
+	/* não funcionava com indent ou padding normal? testar*/
 td.pleft1 { padding-left: 1em; }
 td.pleft2 { padding-left: 2em; }
 td.pleft3 { padding-left: 3em; }
@@ -938,7 +938,7 @@ table.nospace label { width: auto; }
 	border-color: #CCCCCC;
 }
 
-/* Vigilï¿½ncia */
+/* Vigilância */
 .mvert15 { margin-top: 1.5em; margin-bottom: 1.5em; }
 .greytxt1 { color: #777; }
 .greytxt2 { color: #777; }
