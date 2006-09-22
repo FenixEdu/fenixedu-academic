@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.stm.TransactionAction;
 import net.sourceforge.fenixedu.stm.TransactionReport;
+import net.sourceforge.fenixedu.util.date.SerializationTool;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -24,22 +26,39 @@ import org.joda.time.YearMonthDay;
  */
 public class TransactionSystemDA extends FenixDispatchAction {
 
+    private TransactionReport getTransactionReport(final HttpServletRequest request) {
+	TransactionReport transactionReport = (TransactionReport) getRenderedObject();
+	if (transactionReport == null) {
+	    transactionReport = (TransactionReport) request.getAttribute("transactionReport");
+	    if (transactionReport == null) {
+		final YearMonthDay today = new YearMonthDay();
+		transactionReport = new TransactionReport(today.minusDays(1), today, null, null);
+	    }
+	}
+	request.setAttribute("transactionReport", transactionReport);
+	return transactionReport;
+    }
+
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
-//        final YearMonthDay today = new YearMonthDay();
-//        final TransactionReport transactionReport = new TransactionReport(today, today.minusDays(7));
-//        request.setAttribute("transactionReport", transactionReport);
-
+	getTransactionReport(request);
         return mapping.findForward("Show");
     }
 
     public ActionForward viewChart(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
         throws Exception {
 
-        final YearMonthDay today = new YearMonthDay();
-        final TransactionReport transactionReport = new TransactionReport(today.minusDays(7), today);
-        transactionReport.report();
+	final String startOfReportString = request.getParameter("startOfReport");
+	final String endOfReportString = request.getParameter("endOfReport");
+	final String actionString = request.getParameter("action");
+	final String serverString = request.getParameter("server");
+	final YearMonthDay startOfReport = SerializationTool.yearMonthDaySerialize(startOfReportString);
+	final YearMonthDay endOfReport = SerializationTool.yearMonthDaySerialize(endOfReportString);
+	final TransactionAction transactionAction = actionString == null || actionString.length() == 0 ? 
+		null : TransactionAction.valueOf(actionString);
+	final String server = serverString == null || serverString.length() == 0 ? null : serverString;
+	final TransactionReport transactionReport = new TransactionReport(startOfReport, endOfReport, transactionAction, server);
+	transactionReport.report();
 
         ServletOutputStream writer = null;
         try {

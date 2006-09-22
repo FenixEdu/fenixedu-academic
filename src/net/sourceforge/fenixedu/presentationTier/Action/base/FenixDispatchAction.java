@@ -201,6 +201,15 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return executeService(request, "ExecuteFactoryMethod", args);
     }
 
+    protected Object getRenderedObject() {
+	final IViewState viewState = RenderUtils.getViewState();
+	if (viewState != null) {
+	    final MetaObject metaObject = viewState.getMetaObject();
+	    return metaObject == null ? null : metaObject.getObject();
+	}
+        return null;
+    }
+
     protected FactoryExecutor getFactoryObject() {
         return (FactoryExecutor) getRendererObject();
     }

@@ -1,0 +1,11 @@
+<schema name="net.sourceforge.fenixedu.stm.TransactionReport" type="net.sourceforge.fenixedu.stm.TransactionReport" bundle="MANAGER_RESOURCES">	
+	<slot name="startOfReport"/>
+	<slot name="endOfReport"/>
+	<slot name="transactionAction" layout="menu-select">
+		<property name="choiceType" value="net.sourceforge.fenixedu.stm.TransactionAction"/>
+	</slot>	
+	<slot name="server" layout="menu-select">
+		<property name="choiceType" value="java.lang.String"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.TransactionServersProvider"/>
+	</slot>
+</schema>

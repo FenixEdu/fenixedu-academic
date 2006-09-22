@@ -21,6 +21,7 @@
     <!ENTITY executionCourse SYSTEM "executionCourse-schemas.xml"> 
     <!ENTITY parking SYSTEM "parking-schemas.xml"> 
 	<!ENTITY vigilancy SYSTEM "vigilancy-schemas.xml">
+	<!ENTITY system SYSTEM "system-schemas.xml">
 ]>
 
 <schemas>
@@ -763,6 +764,7 @@
     &executionCourse;
     &parking;
 	&vigilancy;
+	&system;
 
 <!-- Teacher Service Distribution -->
     <schema name="omissionValuesValuation.details" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase">
