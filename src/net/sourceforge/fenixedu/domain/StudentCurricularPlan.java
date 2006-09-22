@@ -1664,5 +1664,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public List<Enrolment> getEnrolments() {
 	return getDegreeCurricularPlan().isBolonha() ? getRoot().getEnrolments() : super.getEnrolments(); 
     }
+    
+    @Override
+    public Set<Enrolment> getEnrolmentsSet() {
+	return getDegreeCurricularPlan().isBolonha() ? getRoot().getEnrolmentsSet() : super.getEnrolmentsSet(); 
+    }
+
 
 }
