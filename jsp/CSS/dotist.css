@@ -676,6 +676,15 @@ select.degrees {
 	padding: 2px 4px;
 	}
 	
+.infoop5 {
+	background-color: #eaf1f5;
+	vertical-align: middle;
+	padding: 0.5em 0.75em;
+	border-bottom: 1px solid #c7dbe5;
+	}
+
+.infoop5 p { margin: 0.25em 0; }
+	
 .infoop-blue {
 	background-color: #9CF;
 	vertical-align: middle;

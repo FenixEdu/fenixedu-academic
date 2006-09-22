@@ -70,7 +70,7 @@ display: block;
 .breadcumbs span { border-bottom: 1px dotted #000;}
 .breadcumbs span.actual { background-color: #fff7bb;}
 
-.infoop2 { margin: 0.5em 0;}
+.infoop2, infoop5 { margin: 0.5em 0;}
 
 .first { margin-top: 0; margin-bottom: 1em;}
 .simpleblock1, .simpleblock2, .simpleblock3, .simpleblock4, .simpleblock5 { margin: 1.5em 0em; padding: 0.5em 1em;}
@@ -460,6 +460,7 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 /* with's */
 .wauto { width: auto; }
 .width100 { width: 100%; }
+.width4em { width: 4em; }
 .width8em { width: 8em; } /*used in forums*/
 .width10em { width: 10em; }
 .width14em { width: 14em; }
