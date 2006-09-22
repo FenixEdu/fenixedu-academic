@@ -21,23 +21,22 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadSeniorInfoByUsername extends Service {
 
 	public InfoSenior run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-		Person person = Person.readPersonByUsername(userView.getUtilizador());
-		Registration registration = person.getStudentByType(DegreeType.DEGREE);
+	    	final Person person = Person.readPersonByUsername(userView.getUtilizador());
+		final Registration registration = person.getStudentByType(DegreeType.DEGREE);
+		
+		final Senior senior = (registration == null) ? null : registration.getSenior();
+		if (senior == null) {
+		    return null;
+		}
 
-		Senior senior = registration.getSenior();
-
-		InfoSenior readInfoSenior = null;
-		if (senior == null)
-			return readInfoSenior;
-
-		readInfoSenior = new InfoSenior();
+		final InfoSenior readInfoSenior = new InfoSenior();
 		readInfoSenior.setIdInternal(senior.getIdInternal());
 		readInfoSenior.setName(person.getNome());
-		readInfoSenior.setAddress(person.getMorada());
-		readInfoSenior.setAreaCode(person.getCodigoPostal());
-		readInfoSenior.setAreaCodeArea(person.getLocalidadeCodigoPostal());
-		readInfoSenior.setPhone(person.getTelefone());
-		readInfoSenior.setMobilePhone(person.getTelemovel());
+		readInfoSenior.setAddress(person.getAddress());
+		readInfoSenior.setAreaCode(person.getAreaCode());
+		readInfoSenior.setAreaCodeArea(person.getAreaOfAreaCode());
+		readInfoSenior.setPhone(person.getPhone());
+		readInfoSenior.setMobilePhone(person.getMobile());
 		readInfoSenior.setEmail(person.getEmail());
 		readInfoSenior.setAvailablePhoto(person.getAvailablePhoto());
 		readInfoSenior.setPersonID(person.getIdInternal());
@@ -53,4 +52,5 @@ public class ReadSeniorInfoByUsername extends Service {
 
 		return readInfoSenior;
 	}
+	
 }
