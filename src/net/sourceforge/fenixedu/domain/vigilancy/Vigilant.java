@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -40,9 +42,9 @@ public class Vigilant extends Vigilant_Base {
 	}
 
 	public Integer getPoints() {
-		int points = 0;
-		List<Convoke> convokes = this.getConvokes();
-		for (Convoke convoke : convokes) {
+		int points = this.getStartPoints();
+		List<Vigilancy> convokes = this.getVigilancys();
+		for (Vigilancy convoke : convokes) {
 			points += convoke.getPoints();
 		}
 		return Integer.valueOf(points);
@@ -61,6 +63,32 @@ public class Vigilant extends Vigilant_Base {
 		return person.getTotalVigilancyPoints();
 	}
 
+	public List<VigilantGroup> getVigilantGroups() {
+		List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
+		for (VigilantBound bound : this.getBounds()) {
+			groups.add(bound.getVigilantGroup());
+		}
+		return groups;
+	}
+
+	public void addVigilantGroups(VigilantGroup group) {
+		VigilantBound bound = new VigilantBound(this, group);
+		this.addBounds(bound);
+	}
+
+	public void removeVigilantGroups(VigilantGroup group) {
+		for (VigilantBound bound : this.getBounds()) {
+			if (bound.getVigilantGroup().equals(group)) {
+				bound.delete();
+				return;
+			}
+		}
+	}
+
+	public int getVigilantGroupsCount() {
+		return this.getVigilantGroups().size();
+	}
+
 	public Boolean isAvailableOnDate(DateTime begin, DateTime end) {
 		List<UnavailablePeriod> unavailablePeriods = this
 				.getUnavailablePeriods();
@@ -75,12 +103,12 @@ public class Vigilant extends Vigilant_Base {
 	public Teacher getTeacher() {
 		return this.getPerson().getTeacher();
 	}
-					 
+
 	public String getTeacherCategoryCode() {
 		Teacher teacher = this.getTeacher();
 		return (teacher == null) ? "" : teacher.getCategory().getCode();
 	}
-	
+
 	public List<Campus> getCampus() {
 		Employee employee = this.getPerson().getEmployee();
 		if (employee != null) {
@@ -141,29 +169,28 @@ public class Vigilant extends Vigilant_Base {
 		}
 		return false;
 	}
-	
-	
+
 	public void removeIncompatiblePerson() {
-		if(super.getIncompatiblePerson()!=null) {
+		if (super.getIncompatiblePerson() != null) {
 			super.setIncompatiblePerson(null);
-		}
-		else {
+		} else {
 			Person person = this.getPerson();
 			ExecutionYear year = this.getExecutionYear();
 			List<Vigilant> vigilants = person.getIncompatibleVigilants();
-			for(Vigilant vigilant : vigilants) {
-				if(vigilant.getExecutionYear().equals(year)) {
+			for (Vigilant vigilant : vigilants) {
+				if (vigilant.getExecutionYear().equals(year)) {
 					vigilant.setIncompatiblePerson(null);
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	public Person getIncompatiblePerson() {
 		Person person = super.getIncompatiblePerson();
 		if (person == null) {
-			List<Vigilant> vigilants = this.getPerson().getIncompatibleVigilants();
+			List<Vigilant> vigilants = this.getPerson()
+					.getIncompatibleVigilants();
 			ExecutionYear year = this.getExecutionYear();
 			for (Vigilant vigilant : vigilants) {
 				if (vigilant.getExecutionYear().equals(year)) {
@@ -192,8 +219,8 @@ public class Vigilant extends Vigilant_Base {
 
 	public List<Interval> getConvokePeriods() {
 		List<Interval> convokingPeriods = new ArrayList<Interval>();
-		List<Convoke> convokes = this.getConvokes();
-		for (Convoke convoke : convokes) {
+		List<Vigilancy> convokes = this.getVigilancys();
+		for (Vigilancy convoke : convokes) {
 			convokingPeriods.add(new Interval(convoke.getBeginDate(), convoke
 					.getEndDate()));
 		}
@@ -230,9 +257,9 @@ public class Vigilant extends Vigilant_Base {
 
 	public boolean hasNoEvaluationsOnDate(DateTime beginOfExam,
 			DateTime endOfExam) {
-		List<Convoke> convokes = this.getConvokes();
+		List<Vigilancy> convokes = this.getVigilancys();
 		Interval requestedInterval = new Interval(beginOfExam, endOfExam);
-		for (Convoke convoke : convokes) {
+		for (Vigilancy convoke : convokes) {
 			DateTime begin = convoke.getBeginDateTime();
 			DateTime end = convoke.getEndDateTime();
 			Interval convokeInterval = new Interval(begin, end);
@@ -246,13 +273,13 @@ public class Vigilant extends Vigilant_Base {
 
 	public void delete() {
 
-		if (this.getConvokesCount() == 0) {
+		if (this.getVigilancysCount() == 0) {
 			removeIncompatiblePerson();
 			for (; !this.getUnavailablePeriods().isEmpty(); this
 					.getUnavailablePeriods().get(0).delete())
 				;
-			for (; !this.getVigilantGroups().isEmpty(); removeVigilantGroups(this
-					.getVigilantGroups().get(0)))
+			for (; !this.getBounds().isEmpty(); this.getBounds().get(0)
+					.delete())
 				;
 			removeExecutionYear();
 			removePerson();
@@ -275,65 +302,68 @@ public class Vigilant extends Vigilant_Base {
 		return false;
 	}
 
-	public List<Convoke> getAllConvokes() {
-		List<Convoke> convokes = new ArrayList<Convoke>(super.getConvokes());
+	public List<Vigilancy> getAllConvokes() {
+		List<Vigilancy> convokes = new ArrayList<Vigilancy>(super.getVigilancys());
 		Collections.sort(convokes,
-				Convoke.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
+				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
 		return convokes;
+	}
+
+	public List<VigilancyWithCredits> getVigilancyWithCredits() {
+		List<VigilancyWithCredits> convokes = Vigilancy.getAllVigilancyWithCredits(this);
+		Collections.sort(convokes,
+				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
+		return convokes;		
 	}
 	
 	@Override
-	public List<Convoke> getConvokes() {
-		List<Convoke> convokes = new ArrayList<Convoke>();
-		for(Convoke convoke : super.getConvokes()) {
-			if(convoke.isActive()) {
-				convokes.add(convoke);
-			}
-		}
+	public List<Vigilancy> getVigilancys() {
+		List<Vigilancy> convokes = new ArrayList<Vigilancy>();
 		Collections.sort(convokes,
-				Convoke.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
+				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
 		return convokes;
 	}
 
-	public List<Convoke> getConvokesBeforeCurrentDate() {
-		List<Convoke> convokes = super.getConvokes();
-		List<Convoke> pastConvokes = new ArrayList<Convoke>();
+	public List<VigilancyWithCredits> getConvokesBeforeCurrentDate() {
+		List<Vigilancy> convokes = super.getVigilancys();
+		List<VigilancyWithCredits> pastConvokes = new ArrayList<VigilancyWithCredits>();
 		YearMonthDay currentDate = new YearMonthDay();
 
-		for (Convoke convoke : convokes) {
-			if (currentDate.isAfter(convoke.getBeginYearMonthDay())) {
-				pastConvokes.add(convoke);
+		for (Vigilancy convoke : convokes) {
+			if (currentDate.isAfter(convoke.getBeginYearMonthDay()) && (convoke instanceof VigilancyWithCredits)) {
+				pastConvokes.add((VigilancyWithCredits)convoke);
 			}
 		}
 		Collections.sort(pastConvokes,
-				Convoke.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
+				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
 		return pastConvokes;
 
 	}
-	public List<Convoke> getConvokesAfterCurrentDate() {
-		List<Convoke> convokes = super.getConvokes();
-		List<Convoke> futureConvokes = new ArrayList<Convoke>();
+
+	public List<VigilancyWithCredits> getConvokesAfterCurrentDate() {
+		List<Vigilancy> convokes = super.getVigilancys();
+		List<VigilancyWithCredits> futureConvokes = new ArrayList<VigilancyWithCredits>();
 		YearMonthDay currentDate = new YearMonthDay();
 
-		for (Convoke convoke : convokes) {
-			if (currentDate.isBefore(convoke.getBeginYearMonthDay())
-					|| currentDate.isEqual(convoke.getBeginYearMonthDay())) {
-				futureConvokes.add(convoke);
+		for (Vigilancy convoke : convokes) {
+			if ((currentDate.isBefore(convoke.getBeginYearMonthDay())
+					|| currentDate.isEqual(convoke.getBeginYearMonthDay())) && (convoke instanceof VigilancyWithCredits)) {
+				futureConvokes.add((VigilancyWithCredits)convoke);
 			}
 		}
 		Collections.sort(futureConvokes,
-				Convoke.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
+				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
 		return futureConvokes;
 	}
 
-	public List<Convoke> getConvokes(VigilantGroup group) {
-		return group.getConvokes(this);
+	public List<VigilancyWithCredits> getVigilancys(VigilantGroup group) {
+		return group.getVigilancys(this);
 	}
 
 	public boolean hasBeenConvokedForEvaluation(
 			WrittenEvaluation writtenEvaluation) {
-		List<Convoke> convokes = this.getConvokes();
-		for (Convoke convoke : convokes) {
+		List<Vigilancy> convokes = this.getVigilancys();
+		for (Vigilancy convoke : convokes) {
 			if (convoke.getWrittenEvaluation().equals(writtenEvaluation))
 				return true;
 		}
@@ -357,18 +387,18 @@ public class Vigilant extends Vigilant_Base {
 				: null;
 	}
 
-	public UnavaibleTypes whyUnavailabeFor(WrittenEvaluation writtenEvaluation) {
+	public UnavailableTypes getWhyIsUnavailabeFor(WrittenEvaluation writtenEvaluation) {
 		DateTime begin = writtenEvaluation.getBeginningDateTime();
 		DateTime end = writtenEvaluation.getEndDateTime();
 
 		if (!this.isAvailableOnDate(begin, end)) {
-			return UnavaibleTypes.UNAVAILABLE_PERIOD;
+			return UnavailableTypes.UNAVAILABLE_PERIOD;
 		}
 		if (!this.isAvailableInCampus(writtenEvaluation.getCampus())) {
-			return UnavaibleTypes.NOT_AVAILABLE_ON_CAMPUS;
+			return UnavailableTypes.NOT_AVAILABLE_ON_CAMPUS;
 		}
 		if (!this.hasNoEvaluationsOnDate(begin, end)) {
-			return UnavaibleTypes.ALREADY_CONVOKED_FOR_ANOTHER_EVALUATION;
+			return UnavailableTypes.ALREADY_CONVOKED_FOR_ANOTHER_EVALUATION;
 		}
 
 		Teacher teacher = this.getPerson().getTeacher();
@@ -382,20 +412,41 @@ public class Vigilant extends Vigilant_Base {
 				DateInterval interval = new DateInterval(beginSituation,
 						endSituation);
 				if (interval.containsDate(begin))
-					return UnavaibleTypes.SERVICE_EXEMPTION;
+					return UnavailableTypes.SERVICE_EXEMPTION;
 			}
 		}
 
 		Person person = this.getIncompatiblePerson();
 		if (person != null) {
-			List<Convoke> convokes = writtenEvaluation.getConvokes();
-			for (Convoke convoke : convokes) {
+			List<Vigilancy> convokes = writtenEvaluation.getVigilancys();
+			for (Vigilancy convoke : convokes) {
 				if (convoke.getVigilant().getPerson().equals(person))
-					return UnavaibleTypes.INCOMPATIBLE_PERSON;
+					return UnavailableTypes.INCOMPATIBLE_PERSON;
 			}
 		}
 
-		return UnavaibleTypes.UNKNOWN;
+		return UnavailableTypes.UNKNOWN;
 
+	}
+
+	public boolean isCathedraticTeacher() {
+		Teacher teacher = this.getTeacher();
+		if(teacher!=null) {
+			return teacher.getCategory().getWeight()<=3;
+		}
+		return false;
+	}
+	
+	public String getBoundsAsString() {
+		String result = "";
+		int i=0;
+		for(VigilantBound bound : this.getBounds()) {
+			if(!bound.getConvokable()) {
+				if(i > 0) result += ", ";
+				result += bound.getVigilantGroup().getName() + ": " + bound.getJustification();
+				i++;
+			}
+		}
+		return result;
 	}
 }

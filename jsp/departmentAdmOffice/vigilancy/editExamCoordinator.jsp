@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em><br>
+<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em><br>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.editExamCoordinator"/></h2><br>
 
 
@@ -14,4 +14,8 @@
 <fr:edit id="editCoordinators" name="bean" property="examCoordinators" schema="editCoordinatorPreviledges">
 	<fr:destination name="cancel" path="<%= "/vigilancy/examCoordinatorManagement.do?method=prepareAddExamCoordinatorWithState&unitId=" + bean.getSelectedUnit().getIdInternal() + "&deparmentId=" + bean.getSelectedDepartment().getIdInternal() %>"/>
 	<fr:destination name="success" path="<%= "/vigilancy/examCoordinatorManagement.do?method=prepareAddExamCoordinatorWithState&unitId=" + bean.getSelectedUnit().getIdInternal() + "&deparmentId=" + bean.getSelectedDepartment().getIdInternal() %>"/>
+	<fr:layout name="tabular-editable">
+		<fr:property name="classes" value="tstyle5"/>
+		<fr:property name="rowClasses" value="trhighlight1, "/>
+	</fr:layout>
 </fr:edit>

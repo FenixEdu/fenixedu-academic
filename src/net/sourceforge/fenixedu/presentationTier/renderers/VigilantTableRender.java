@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.vigilancy.Convoke;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -14,12 +14,11 @@ import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
+import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class VigilantTableRender extends OutputRenderer {
-
-    private String vigilantSchema;
 
     private String convoke;
 
@@ -47,6 +46,14 @@ public class VigilantTableRender extends OutputRenderer {
 
     private String emptyMessageClasses;
 
+    private boolean showIncompatibilities = Boolean.FALSE;
+
+    private boolean showUnavailables = Boolean.FALSE;
+    
+    private boolean showBoundsJustification = Boolean.FALSE;
+
+    private boolean showStartPoints = Boolean.FALSE;
+    
     public String getEmptyMessageClasses() {
         return emptyMessageClasses;
     }
@@ -85,14 +92,6 @@ public class VigilantTableRender extends OutputRenderer {
 
     public void setConvokeSchema(String convoke) {
         this.convoke = convoke;
-    }
-
-    public String getVigilantSchema() {
-        return vigilantSchema;
-    }
-
-    public void setVigilantSchema(String vigilantSchema) {
-        this.vigilantSchema = vigilantSchema;
     }
 
     public String getConvokeTitleBundle() {
@@ -162,6 +161,75 @@ public class VigilantTableRender extends OutputRenderer {
     private Schema translateSchema(String name) {
         return RenderKit.getInstance().findSchema(name);
     }
+    
+  
+    
+	public boolean isShowBoundsJustification() {
+		return showBoundsJustification;
+	}
+
+	public void setShowBoundsJustification(boolean showBoundsJustification) {
+		this.showBoundsJustification = showBoundsJustification;
+	}
+
+	public boolean isShowIncompatibilities() {
+		return showIncompatibilities;
+	}
+
+	public void setShowIncompatibilities(boolean showIncompatibilities) {
+		this.showIncompatibilities = showIncompatibilities;
+	}
+
+	public boolean isShowStartPoints() {
+		return showStartPoints;
+	}
+
+	public void setShowStartPoints(boolean showStartPoints) {
+		this.showStartPoints = showStartPoints;
+	}
+
+	public boolean isShowUnavailables() {
+		return showUnavailables;
+	}
+
+	public void setShowUnavailables(boolean showUnavailables) {
+		this.showUnavailables = showUnavailables;
+	}
+
+	private SchemaSlotDescription getSlot(String slot, String key) {
+		SchemaSlotDescription slotDescription = new SchemaSlotDescription(slot);
+		slotDescription.setKey(key);
+		slotDescription.setBundle("VIGILANCY_RESOURCES");
+		
+		return slotDescription;
+	}
+	
+	private Schema getVigilantSchema() {
+		
+		Schema schema = new Schema(Vigilant.class);
+
+		schema.addSlotDescription(getSlot("teacherCategoryCode","label.vigilancy.category.header"));
+		schema.addSlotDescription(getSlot("person.username","label.vigilancy.username"));
+		schema.addSlotDescription(getSlot("person.name","label.vigilancy.vigilant"));
+		
+		if(isShowUnavailables()) {
+			schema.addSlotDescription(getSlot("unavailablePeriodsAsString", "label.vigilancy.unavailablePeriodsShortLabel"));
+		}
+		if (isShowIncompatibilities()) {
+			schema.addSlotDescription(getSlot("incompatiblePersonName","label.person.vigilancy.displayIncompatibleInformation"));
+		}
+		if(isShowBoundsJustification()) {
+			schema.addSlotDescription(getSlot("boundsAsString","label.person.vigilancy.boundsJustification"));
+		}
+	
+		if(isShowStartPoints()) {
+			schema.addSlotDescription(getSlot("startPoints","label.person.vigilancy.startPoints.header"));
+		}
+		
+		schema.addSlotDescription(getSlot("points","label.vigilancy.totalpoints.header"));
+    
+		return schema;
+    }
 
     @Override
     protected Layout getLayout(Object object, Class type) {
@@ -169,7 +237,7 @@ public class VigilantTableRender extends OutputRenderer {
                 getSortBy());
 
         return new VigilantTableRenderLayout(sortedCollection);
-    }
+    }		
 
     private class VigilantTableRenderLayout extends TabularLayout {
 
@@ -185,7 +253,7 @@ public class VigilantTableRender extends OutputRenderer {
 
         public VigilantTableRenderLayout(Collection<Vigilant> vigilants) {
             this.objects = new ArrayList<MetaObject>();
-            this.vigilantSchema = translateSchema(getVigilantSchema());
+            this.vigilantSchema = getVigilantSchema();
             this.convokeSchema = translateSchema(getConvokeSchema());
 
             for (Vigilant vigilant : vigilants) {
@@ -256,7 +324,7 @@ public class VigilantTableRender extends OutputRenderer {
             return columnIndex % getNumberOfConvokeSlots();
         }
 
-        private List<Convoke> getConvokes(Vigilant vigilant) {
+        private List<VigilancyWithCredits> getConvokes(Vigilant vigilant) {
             if (getConvokesToShow().equals("past")) {
                 return vigilant.getConvokesBeforeCurrentDate();
             }
@@ -265,20 +333,20 @@ public class VigilantTableRender extends OutputRenderer {
             }
 
             else {
-                return vigilant.getConvokes();
+                return vigilant.getVigilancyWithCredits();
             }
         }
 
         private MetaObject getConvokeMetaObjectToPutInTable(MetaObject vigilantMetaObject, int index) {
             Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
 
-            List<Convoke> convokes = getConvokes(vigilant);
+            List<VigilancyWithCredits> convokes = getConvokes(vigilant);
             int size = convokes.size();
             int numberOfColumns = (this.getNumberOfColumns() - this.getNumberOfVigilantsSlots())
                     / this.getNumberOfConvokeSlots();
 
             if (numberOfColumns - size <= index) {
-                Convoke oneConvoke = convokes.get(numberOfColumns - index - 1);
+            	VigilancyWithCredits oneConvoke = convokes.get(numberOfColumns - index - 1);
 
                 MetaObject convokeMetaObject = MetaObjectFactory.createObject(oneConvoke,
                         this.convokeSchema);
@@ -292,8 +360,8 @@ public class VigilantTableRender extends OutputRenderer {
         private MetaObject getConvokeMetaObject(MetaObject vigilantMetaObject, int index) {
             Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
 
-            List<Convoke> convokes = getConvokes(vigilant);
-            Convoke oneConvoke = convokes.get(0);
+            List<VigilancyWithCredits> convokes = getConvokes(vigilant);
+            VigilancyWithCredits oneConvoke = convokes.get(0);
             MetaObject convokeMetaObject = MetaObjectFactory
                     .createObject(oneConvoke, this.convokeSchema);
 
@@ -331,7 +399,7 @@ public class VigilantTableRender extends OutputRenderer {
         private MetaObject getVigilantWithConvokes() {
             for (MetaObject vigilantMetaObject : this.objects) {
                 Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
-                if (vigilant.hasAnyConvokes())
+                if (!getConvokes(vigilant).isEmpty())
                     return vigilantMetaObject;
             }
             return getVigilantForRow(0);
@@ -349,7 +417,7 @@ public class VigilantTableRender extends OutputRenderer {
 
         private int getNumberOfConvokeSlots() {
             Vigilant vigilant = (Vigilant) this.getVigilantWithConvokes().getObject();
-            MetaObject convokeMetaObject = MetaObjectFactory.createObject(vigilant.getConvokes().get(0),
+            MetaObject convokeMetaObject = MetaObjectFactory.createObject(getConvokes(vigilant).get(0),
                     this.convokeSchema);
             return convokeMetaObject.getSlots().size();
 

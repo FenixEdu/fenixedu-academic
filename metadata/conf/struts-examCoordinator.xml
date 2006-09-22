@@ -49,6 +49,8 @@
 			<forward name="incompatibilities" path="manage-incompatibilities"/>
 			<forward name="blank" path="blank"/>
 			<forward name="addIncompatiblePersonToVigilant" path="add-IncompatiblePerson-To-Vigilant"/>
+			<forward name="editVigilantBounds" path="edit-Vigilant-Bounds"/>
+			<forward name="editVigilantStartPoints" path="edit-Vigilant-StartPoints"/>
 		</action>
 		
 		<action path="/vigilancy/convokeManagement" 

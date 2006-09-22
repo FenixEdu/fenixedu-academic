@@ -7,7 +7,7 @@
 
 	<logic:equal name="UserView" property="person.isExamCoordinatorInCurrentYear" value="true">
 	<ul>
-		<li class="navheader"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></li>
+		<li class="navheader"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></li>
 		
 		<logic:equal name="UserView" property="person.currentExamCoordinator.allowedToCreateGroups" value="true">
 		<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.VigilantGroupManagement"/></html:link></li>

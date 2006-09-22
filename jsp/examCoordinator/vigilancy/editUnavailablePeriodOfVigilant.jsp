@@ -11,7 +11,7 @@
 <logic:messagesPresent message="true">
 	<p>
 		<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
-			<span class="error"><bean:write name="messages"/></span>
+			<span class="error0"><bean:write name="messages"/></span>
 		</html:messages>
 	</p>
 </logic:messagesPresent>			   

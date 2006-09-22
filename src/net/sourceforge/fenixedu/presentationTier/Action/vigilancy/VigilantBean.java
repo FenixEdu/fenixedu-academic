@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -23,8 +24,31 @@ public class VigilantBean implements Serializable {
     private boolean showAllVigilancyInfo = Boolean.FALSE;
 
     private boolean showInformationByVigilant = Boolean.TRUE;
+    
+    private boolean showBoundsJustification = Boolean.FALSE;
 
-    public boolean isShowAllVigilancyInfo() {
+    private boolean showStartPoints = Boolean.FALSE;
+    
+    private final HashMap<String,String> schemas = new HashMap<String, String>();
+    
+    
+    public boolean isShowStartPoints() {
+		return showStartPoints;
+	}
+
+	public void setShowStartPoints(boolean showStartPoints) {
+		this.showStartPoints = showStartPoints;
+	}
+
+	public boolean isShowBoundsJustification() {
+		return showBoundsJustification;
+	}
+
+	public void setShowBoundsJustification(boolean showBoundsJustification) {
+		this.showBoundsJustification = showBoundsJustification;
+	}
+
+	public boolean isShowAllVigilancyInfo() {
         return showAllVigilancyInfo;
     }
 
@@ -47,7 +71,7 @@ public class VigilantBean implements Serializable {
     public void setShowUnavailables(boolean showUnavailables) {
         this.showUnavailables = showUnavailables;
     }
-
+ 
     public boolean isShowInformationByVigilant() {
         return showInformationByVigilant;
     }
@@ -60,29 +84,69 @@ public class VigilantBean implements Serializable {
         if (this.showAllVigilancyInfo) {
             if (this.showIncompatibilities) {
                 if (this.showUnavailables) {
-                    return "convokesByVigilant.allInformation";
+                  if(this.showBoundsJustification) { 
+                	return "convokesByVigilant.allInformation";
+                  }
+                  else {
+                	  return "convokesByVigilant.exceptBounds";
+                  }
                 } else {
-                    return "convokesByVigilant.exceptUnavailables";
+                	if(this.showBoundsJustification) {
+                		return "convokesByVigilant.exceptUnavailablesAndBounds";
+                	}
+                	else {
+                		return "convokesByVigilant.exceptUnavailables";
+                	}
                 }
             } else {
                 if (this.showUnavailables) {
-                    return "convokesByVigilant.exceptIncompatibilities";
+                	if(this.showBoundsJustification) {
+                		return "convokesByVigilant.incompatibilitiesAndbounds";
+                	}
+                	else {
+                		return "convokesByVigilant.exceptIncompatibilities";
+                	}
                 } else {
-                    return "convokesByVigilant.onlyVigilancyInformation";
+                	if(this.showBoundsJustification) {
+                		return "convokesByVigilant.vigilancyInformationAndBounds";
+                	}
+                	else {
+                		return "convokesByVigilant.onlyVigilancyInformation";
+                	}
                 }
             }
         } else {
             if (this.showIncompatibilities) {
                 if (this.showUnavailables) {
-                    return "convokesByVigilant.exceptVigilancyInformation";
+                    if(this.showBoundsJustification) {
+                    	return "convokesByVigilant.exceptVigilancyInformationAndBounds";
+                    }
+                    else {
+                    	return "convokesByVigilant.exceptVigilancyInformation";
+                    }
                 } else {
-                    return "convokesByVigilant.onlyIncompatibilities";
+                	if(this.showBoundsJustification)  {
+                		return "convokesByVigilant.incompatibilitiesAndBounds";
+                	}
+                	else {
+                		return "convokesByVigilant.onlyIncompatibilities";
+                	}
                 }
             } else {
                 if (this.showUnavailables) {
-                    return "convokesByVigilant.onlyUnavailables";
+                    if(this.showUnavailables) {
+                    	return "convokesByVigilant.unavailablesAndBounds";
+                    }
+                    else {
+                    	return "convokesByVigilant.onlyUnavailables";
+                    }
                 } else {
-                    return "convokesByVigilant.simpleInformation";
+                	if(this.showBoundsJustification) {
+                		return "convokesByVigilant.showOnlyBounds";
+                	}
+                	else {
+                		return "convokesByVigilant.simpleInformation";
+                	}
                 }
             }
         }
@@ -126,6 +190,48 @@ public class VigilantBean implements Serializable {
                 this.vigilantGroups.add(new DomainReference(group));
             }
         }
+    }
+    
+    public String getWhatSchemaToUseInVigilants() {
+        boolean unavailables = this.isShowUnavailables();
+        boolean incompatibilities = this.isShowIncompatibilities();
+        boolean bounds = this.isShowBoundsJustification();
+        
+        if (unavailables) {
+            if (incompatibilities) {
+                if(bounds) {
+                	return "vigilantsWithAllInformation";
+                }
+                else {
+                	return "vigilantsWithoutBounds";
+                }
+            } else {
+                if(bounds) {
+                	return "vigilantsWithoutIncompatibilities";
+                }
+                else {
+                	return "vigilantsOnlyWithUnavailables";
+                }
+            }
+        } else {
+            if (incompatibilities) {
+              if(bounds) {
+            	return "vigilantsWithOutUnavailables";
+              }
+              else {
+            	 return "vigilantsOnlyWithIncompatibilities"; 
+              }
+            } else {
+                if(bounds) {
+                		return "vigilantsOnlyWithBounds";
+                }
+                else {
+                	return "simpleVigilants";
+                }
+            	
+            }
+        }
+
     }
 
 }

@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
+<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.editVigilancyCourseGroup"/></h2>
 <script type="text/javascript" language="javascript" src="<%= request.getContextPath() %>/examCoordinator/vigilancy/checkall.js"></script>
 
@@ -22,6 +22,7 @@
 	<fr:layout>
 		<fr:property name="eachLayout" value="values"/>
 		<fr:property name="eachSchema" value="presentExecutionCourse"/>
+		<fr:property name="sortBy" value="nome"/>
 		<fr:property name="classes" value="mbottom05"/>
 	</fr:layout>
 </fr:view>
@@ -37,6 +38,7 @@ action="vigilancy/vigilancyCourseGroupManagement.do?method=removeExecutionCourse
 nested="true">
 	<fr:layout>
 	<fr:property name="displayLabel" value="false"/>
+	<fr:property name="sortBy" value="nome"/>
 	<fr:property name="classes" value="mvert0"/>
 	</fr:layout>
 </fr:edit>
@@ -67,6 +69,7 @@ nested="true">
 			action="vigilancy/vigilancyCourseGroupManagement.do?method=addExecutionCourseToGroup">
 			<fr:layout>
 			<fr:property name="displayLabel" value="false"/>
+			<fr:property name="sortBy" value="nome"/>
 			<fr:property name="classes" value="mvert0"/>
 			</fr:layout>
 </fr:edit>

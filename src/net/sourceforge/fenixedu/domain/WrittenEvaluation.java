@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -569,5 +571,15 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     	    i++;
     	}
     	return degreesAsString;
+    }
+    
+    public List<VigilancyWithCredits> getVigilancysWithCredits() {
+    	List<VigilancyWithCredits> vigilancysWithCredits = new ArrayList<VigilancyWithCredits> ();
+    	for(Vigilancy vigilancy : this.getVigilancys()) {
+    		if(vigilancy instanceof VigilancyWithCredits) {
+    			vigilancysWithCredits.add( (VigilancyWithCredits) vigilancy);
+    		}
+    	}
+    	return vigilancysWithCredits;
     }
 }

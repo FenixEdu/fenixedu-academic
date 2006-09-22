@@ -4,13 +4,13 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
+<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.displayUnavailableInformation"/></h2>
 
 <logic:messagesPresent message="true">
 	<p>
 		<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
-			<span class="error"><bean:write name="messages"/></span>
+			<span class="error0"><bean:write name="messages"/></span>
 		</html:messages>
 	</p>
 </logic:messagesPresent>
@@ -45,7 +45,9 @@
     >
     <fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1" />
-		<fr:property name="columnClasses" value=",width100px acenter,width100px acenter,,," />
+
+		<fr:property name="key(edit)" value="label.edit"/>
+		<fr:property name="bundle(edit)" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="link(edit)" value="<%= "/vigilancy/unavailablePeriodManagement.do?method=editUnavailablePeriodOfVigilant&gid=" + vigilantGroup.getIdInternal() %>"/>
 		<fr:property name="param(edit)" value="idInternal/oid" />
 		<fr:property name="link(delete)" value="<%= "/vigilancy/unavailablePeriodManagement.do?method=deleteUnavailablePeriodOfVigilant&gid=" + vigilantGroup.getIdInternal() %>"/>

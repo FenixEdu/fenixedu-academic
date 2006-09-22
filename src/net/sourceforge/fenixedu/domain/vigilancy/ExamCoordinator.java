@@ -37,15 +37,15 @@ public class ExamCoordinator extends ExamCoordinator_Base {
         return this.getPerson().getEmail();
     }
 
-    public List<Convoke> getConvokesThatCanManage() {
+    public List<VigilancyWithCredits> getConvokesThatCanManage() {
         List<VigilantGroup> groups = this.getVigilantGroups();
-        Set<Convoke> convokes = new HashSet<Convoke>();
+        Set<VigilancyWithCredits> convokes = new HashSet<VigilancyWithCredits>();
 
         for (VigilantGroup group : groups) {
-            convokes.addAll(group.getConvokes());
+            convokes.addAll(group.getVigilancys());
         }
 
-        return new ArrayList<Convoke>(convokes);
+        return new ArrayList<VigilancyWithCredits>(convokes);
     }
 
     public List<UnavailablePeriod> getUnavailablePeriodsThatCanManage() {
@@ -112,10 +112,10 @@ public class ExamCoordinator extends ExamCoordinator_Base {
     }
 
     public void delete() {
-        this.getUnit().removeExamCoordinators(this);
+        removeUnit();
         removeRootDomainObject();
         removePerson();
         removeExecutionYear();
-        super.removeRootDomainObject();
+        super.deleteDomainObject();
     }
 }

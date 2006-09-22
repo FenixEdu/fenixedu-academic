@@ -4,13 +4,13 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
+<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.manage"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.convokes"/></h2>
 
 <logic:messagesPresent message="true">
 	<p>
 		<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
-			<span class="error"><bean:write name="messages"/></span>
+			<span class="error0"><bean:write name="messages"/></span>
 		</html:messages>
 	</p>
 </logic:messagesPresent>
@@ -27,6 +27,7 @@
 	<fr:edit id="temporalInfo" name="bean" schema="selectTime">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+		<fr:property name="columnClasses" value=",,tdclear"/>
 		</fr:layout>
 	</fr:edit>
 	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
@@ -37,7 +38,7 @@
 <logic:equal name="bean" property="showInformationByVigilant" value="false">
 <ul>
 	<li>
-		<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByVigilants&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") %>">
+		<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByVigilants&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") %>">
 		<bean:message key="label.vigilancy.showConvokesByVigilant" bundle="VIGILANCY_RESOURCES"/>
 		</html:link>, 
 		<span class="highlight1"><bean:message key="label.vigilancy.showConvokesByEvaluation" bundle="VIGILANCY_RESOURCES"/></span>
@@ -49,7 +50,7 @@
 <ul>
 	<li>
 	<span class="highlight1"><bean:message key="label.vigilancy.showConvokesByVigilant" bundle="VIGILANCY_RESOURCES"/></span>, 
-	<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByEvaluation&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") %>">
+	<html:link page="<%= "/vigilancy/convokeManagement.do?method=showConvokesByEvaluation&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") %>">
 	<bean:message key="label.vigilancy.showConvokesByEvaluation" bundle="VIGILANCY_RESOURCES"/>
 	</html:link>
 	</li>
@@ -77,7 +78,10 @@
 	
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
-		<fr:property name="vigilantSchema" value="<%= bean.getWhatSchemaToUseInVigilants() %>"/>
+		<fr:property name="showIncompatibilities" value="<%= String.valueOf(bean.isShowIncompatibilities()) %>"/>
+		<fr:property name="showUnavailables" value="<%= String.valueOf(bean.isShowUnavailables()) %>"/>
+		<fr:property name="showBoundsJustification" value="<%= String.valueOf(bean.isShowBoundsJustification()) %>"/>
+		<fr:property name="showStartPoints" value="<%= String.valueOf(bean.isShowStartPoints())%>"/>
 
 		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
 			<fr:property name="convokeSchema" value="present.convokesForFuture"/>	
@@ -103,7 +107,10 @@
  	<fr:property name="sortBy" value="teacherCategoryCode, person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
-		<fr:property name="vigilantSchema" value="<%= bean.getWhatSchemaToUseInVigilants() %>"/>
+		<fr:property name="showIncompatibilities" value="<%= String.valueOf(bean.isShowIncompatibilities()) %>"/>
+		<fr:property name="showUnavailables" value="<%= String.valueOf(bean.isShowUnavailables()) %>"/>
+		<fr:property name="showBoundsJustification" value="<%= String.valueOf(bean.isShowBoundsJustification()) %>"/>
+		<fr:property name="showStartPoints" value="<%= String.valueOf(bean.isShowStartPoints())%>"/>
 
 		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
 			<fr:property name="convokeSchema" value="present.convokesForPast"/>	
@@ -129,7 +136,10 @@
 		<fr:property name="sortBy" value="teacherCategoryCode, person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
-		<fr:property name="vigilantSchema" value="<%= bean.getWhatSchemaToUseInVigilants() %>"/>
+		<fr:property name="showIncompatibilities" value="<%= String.valueOf(bean.isShowIncompatibilities()) %>"/>
+		<fr:property name="showUnavailables" value="<%= String.valueOf(bean.isShowUnavailables()) %>"/>
+		<fr:property name="showBoundsJustification" value="<%= String.valueOf(bean.isShowBoundsJustification()) %>"/>
+		<fr:property name="showStartPoints" value="<%= String.valueOf(bean.isShowStartPoints())%>"/>
 
 		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
 			<fr:property name="convokeSchema" value="present.convokesForCoordinator"/>	
@@ -181,66 +191,302 @@
 <logic:notEmpty name="writtenEvaluations">
 
 <logic:iterate id="writtenEvaluation" name="writtenEvaluations">
-<ul class="list2">
-<li>
-<em><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.category" bundle="VIGILANCY_RESOURCES"/></em>
-</li>
-<li>
-<em><bean:message key="label.vigilancy.totalpoints.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.totalPoints" bundle="VIGILANCY_RESOURCES"/></em>
-</li>
-<li>
-<em><bean:message key="label.vigilancy.points.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></em>
-</li>
-</ul>
+
 <bean:define id="evaluation" name="writtenEvaluation" type="net.sourceforge.fenixedu.domain.WrittenEvaluation"/>
 <bean:define id="executionCourse" name="writtenEvaluation" property="associatedExecutionCourses[0]" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean"/>
 <bean:define id="beginDate" name="evaluation" property="beginningDateTime" type="org.joda.time.DateTime"/>
 <p class="mtop2 mbottom05"><%= "<strong>" +  executionCourse.getNome() + " (" + executionCourse.getSigla() + ")</strong> - " + evaluation.getEvaluationType().toString() + " " + beginDate.getDayOfMonth() + "/" + beginDate.getMonthOfYear() + "/" + beginDate.getYear() %> </p>
 
-<logic:equal name="bean" property="temporalInformation" value="ALL">
 
-<fr:view name="evaluation" property="convokes" schema="<%= bean.getWhatSchemaToUse() %>">
-<fr:layout name="tabular">
-	<fr:property name="sortBy" value="vigilant.teacherCategoryCode, vigilant.person.username"/>
-	<fr:property name="classes" value="tstyle1 tdtop thleft mtop05 mbottom0"/>
-</fr:layout>
-</fr:view>
+<logic:equal name="bean" property="temporalInformation" value="ALL">
+	
+<table class="tstyle1 tdtop thleft mtop05 mbottom0">
+	<tr>
+		<th><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<th><bean:message key="label.vigilancy.username" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<th><bean:message key="label.vigilancy.vigilant" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<logic:equal name="bean" property="showUnavailables" value="true">
+			<th><bean:message key="label.vigilancy.unavailablePeriodsShortLabel" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<logic:equal name="bean" property="showIncompatibilities" value="true">
+			<th><bean:message key="label.person.vigilancy.displayIncompatibleInformation" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<logic:equal name="bean" property="showBoundsJustification" value="true">
+			<th><bean:message key="label.person.vigilancy.boundsJustification" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<logic:equal name="bean" property="showStartPoints" value="true">
+			<th><bean:message key="label.vigilancy.startPoints.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<th>
+			<bean:message key="label.vigilancy.totalpoints.header" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
+			<th><bean:message key="label.vigilancy.date" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+			<th><bean:message key="label.vigilancy.active.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+			<th><bean:message key="label.vigilancy.confirmed.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+			<th><bean:message key="label.vigilancy.attended.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<th><bean:message key="label.vigilancy.points.header" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+	</tr>
+	<logic:iterate id="vigilancyWithCredits" name="evaluation" property="vigilancysWithCredits" type="net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits">
+		<tr>
+			<td><fr:view name="vigilancyWithCredits" property="vigilant.teacherCategoryCode"/>
+			</td>
+			<td><fr:view name="vigilancyWithCredits" property="vigilant.person.username"/>
+			</td>
+			<td><fr:view name="vigilancyWithCredits" property="vigilant.person.name"/>
+			</td>
+			<logic:equal name="bean" property="showUnavailables" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.unavailablePeriodsAsString"/>
+				</td>
+			</logic:equal>
+			<logic:equal name="bean" property="showIncompatibilities" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.incompatiblePersonName" type="java.lang.String"/>
+				</td>
+			</logic:equal>
+			<logic:equal name="bean" property="showBoundsJustification" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.boundsAsString"/>
+				</td>
+			</logic:equal>
+			<logic:equal name="bean" property="showStartPoints" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.startPoints"/>
+				</td>
+			</logic:equal>
+			<td>
+			<fr:view name="vigilancyWithCredits" property="vigilant.points"/>
+			</td>
+			<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="writtenEvaluation.dayDateYearMonthDay"/>
+				</td>
+				<td><fr:view name="vigilancyWithCredits" property="active"/>
+				</td>
+				<td><fr:view name="vigilancyWithCredits" property="confirmed"/>
+				</td>
+				<td><fr:view name="vigilancyWithCredits" property="attendedToConvoke"/>
+				</td>
+			</logic:equal>
+			<td><fr:view name="vigilancyWithCredits" property="points"/>
+			</td>
+		</tr>
+	</logic:iterate>
+</table>
+
+
 
 </logic:equal>
 
 <logic:equal name="bean" property="temporalInformation" value="PAST">
 
-<fr:view name="evaluation" property="convokes" schema="<%= bean.getWhatSchemaToUse() %>">
-<fr:layout name="tabular">
-	<fr:property name="classes" value="tstyle1 tdtop thleft mtop05 mbottom0"/>
-		<fr:property name="sortBy" value="vigilant.teacherCategoryCode, vigilant.person.username"/>
-	
-		<fr:property name="link(confirmar)" value="<%= "/vigilancy/convokeManagement.do?method=convokeAttended&bool=true&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>" />
-		<fr:property name="param(confirmar)" value="idInternal/oid" />
-		<fr:property name="visibleIf(confirmar)" value="notAttended" />
-		<fr:property name="link(Desconfirmar)" value="<%= "/vigilancy/convokeManagement.do?method=convokeAttended&bool=false&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>" />
-		<fr:property name="param(Desconfirmar)" value="idInternal/oid" />
-		<fr:property name="visibleIf(Desconfirmar)" value="attended" />
 
-</fr:layout>
-</fr:view>
+<table class="tstyle1 tdtop thleft mtop05 mbottom0">
+	<tr>
+		<th><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<th><bean:message key="label.vigilancy.username" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<th><bean:message key="label.vigilancy.vigilant" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<logic:equal name="bean" property="showUnavailables" value="true">
+			<th><bean:message key="label.vigilancy.unavailablePeriodsShortLabel" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<logic:equal name="bean" property="showIncompatibilities" value="true">
+			<th><bean:message key="label.person.vigilancy.displayIncompatibleInformation" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<logic:equal name="bean" property="showBoundsJustification" value="true">
+			<th><bean:message key="label.person.vigilancy.boundsJustification" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<logic:equal name="bean" property="showStartPoints" value="true">
+			<th><bean:message key="label.vigilancy.startPoints.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<th>
+			<bean:message key="label.vigilancy.totalpoints.header" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
+			<th><bean:message key="label.vigilancy.date" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+			<th><bean:message key="label.vigilancy.active.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+			<th><bean:message key="label.vigilancy.confirmed.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+			<th><bean:message key="label.vigilancy.attended.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<th><bean:message key="label.vigilancy.points.header" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<th></th>
+		<th></th>
+	</tr>
+	<logic:iterate id="vigilancyWithCredits" name="evaluation" property="vigilancysWithCredits" type="net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits">
+		<tr>
+			<td><fr:view name="vigilancyWithCredits" property="vigilant.teacherCategoryCode"/>
+			</td>
+			<td><fr:view name="vigilancyWithCredits" property="vigilant.person.username"/>
+			</td>
+			<td><fr:view name="vigilancyWithCredits" property="vigilant.person.name"/>
+			</td>
+			<logic:equal name="bean" property="showUnavailables" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.unavailablePeriodsAsString"/>
+				</td>
+			</logic:equal>
+			<logic:equal name="bean" property="showIncompatibilities" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.incompatiblePersonName" type="java.lang.String"/>
+				</td>
+			</logic:equal>
+			<logic:equal name="bean" property="showBoundsJustification" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.boundsAsString"/>
+				</td>
+			</logic:equal>
+			<logic:equal name="bean" property="showStartPoints" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.startPoints"/>
+				</td>
+			</logic:equal>
+			<td>
+			<fr:view name="vigilancyWithCredits" property="vigilant.points"/>
+			</td>
+			<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="writtenEvaluation.dayDateYearMonthDay"/>
+				</td>
+				<td><fr:view name="vigilancyWithCredits" property="active"/>
+				</td>
+				<td><fr:view name="vigilancyWithCredits" property="confirmed"/>
+				</td>
+				<td><fr:view name="vigilancyWithCredits" property="attendedToConvoke"/>
+				</td>
+			</logic:equal>
+			<td><fr:view name="vigilancyWithCredits" property="points"/>
+			</td>
+			<td>
+				<logic:equal name="vigilancyWithCredits" property="attended" value="false">
+				<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do?oid=" + vigilancyWithCredits.getIdInternal() + "&method=convokeAttended&bool=true&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "" ) %>"><bean:message key="label.unconfirm" bundle="VIGILANCY_RESOURCES"/></a>
+				</logic:equal>
+			</td>
+			<td>
+				<logic:equal name="vigilancyWithCredits" property="attended" value="true">
+				<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do?oid=" + vigilancyWithCredits.getIdInternal() + "&method=convokeAttended&bool=false&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "" ) %>"><bean:message key="label.confirm" bundle="VIGILANCY_RESOURCES"/></a>
+				</logic:equal>
+			</td>
+		</tr>
+		
+	</logic:iterate>
+</table>
+
 </logic:equal>
 
 <logic:equal name="bean" property="temporalInformation" value="FUTURE">
 
-<fr:view name="evaluation" property="convokes" schema="<%= bean.getWhatSchemaToUse() %>">
-<fr:layout name="tabular">
-	<fr:property name="sortBy" value="vigilant.teacherCategoryCode, vigilant.person.username"/>
-		<fr:property name="classes" value="tstyle1 tdtop thleft mtop05 mbottom0"/>
-		<fr:property name="link(Activar)" value="<%= "/vigilancy/convokeManagement.do?method=convokeActive&bool=true&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>" />
-		<fr:property name="param(Activar)" value="idInternal/oid" />
-		<fr:property name="visibleIf(Activar)" value="notActive" />
-		<fr:property name="link(Desactivar)" value="<%= "/vigilancy/convokeManagement.do?method=convokeActive&bool=false&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>"/>
-		<fr:property name="param(Desactivar)" value="idInternal/oid" />
-		<fr:property name="visibleIf(Desactivar)" value="active" />
-</fr:layout>
-</fr:view>
+<table class="tstyle1 tdtop thleft mtop05 mbottom0">
+	<tr>
+		<th><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<th><bean:message key="label.vigilancy.username" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<th><bean:message key="label.vigilancy.vigilant" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<logic:equal name="bean" property="showUnavailables" value="true">
+			<th><bean:message key="label.vigilancy.unavailablePeriodsShortLabel" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<logic:equal name="bean" property="showIncompatibilities" value="true">
+			<th><bean:message key="label.person.vigilancy.displayIncompatibleInformation" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<logic:equal name="bean" property="showBoundsJustification" value="true">
+			<th><bean:message key="label.person.vigilancy.boundsJustification" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<logic:equal name="bean" property="showStartPoints" value="true">
+			<th><bean:message key="label.vigilancy.startPoints.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<th>
+			<bean:message key="label.vigilancy.totalpoints.header" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
+			<th><bean:message key="label.vigilancy.date" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+			<th><bean:message key="label.vigilancy.active.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+			<th><bean:message key="label.vigilancy.confirmed.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+			<th><bean:message key="label.vigilancy.attended.header" bundle="VIGILANCY_RESOURCES"/>
+			</th>
+		</logic:equal>
+		<th><bean:message key="label.vigilancy.points.header" bundle="VIGILANCY_RESOURCES"/>
+		</th>
+		<th></th>
+		<th></th>
+	</tr>
+	<logic:iterate id="vigilancyWithCredits" name="evaluation" property="vigilancysWithCredits" type="net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits">
+		<tr>
+			<td><fr:view name="vigilancyWithCredits" property="vigilant.teacherCategoryCode"/>
+			</td>
+			<td><fr:view name="vigilancyWithCredits" property="vigilant.person.username"/>
+			</td>
+			<td><fr:view name="vigilancyWithCredits" property="vigilant.person.name"/>
+			</td>
+			<logic:equal name="bean" property="showUnavailables" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.unavailablePeriodsAsString"/>
+				</td>
+			</logic:equal>
+			<logic:equal name="bean" property="showIncompatibilities" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.incompatiblePersonName" type="java.lang.String"/>
+				</td>
+			</logic:equal>
+			<logic:equal name="bean" property="showBoundsJustification" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.boundsAsString"/>
+				</td>
+			</logic:equal>
+			<logic:equal name="bean" property="showStartPoints" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="vigilant.startPoints"/>
+				</td>
+			</logic:equal>
+			<td>
+			<fr:view name="vigilancyWithCredits" property="vigilant.points"/>
+			</td>
+			<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
+				<td><fr:view name="vigilancyWithCredits" property="writtenEvaluation.dayDateYearMonthDay"/>
+				</td>
+				<td><fr:view name="vigilancyWithCredits" property="active"/>
+				</td>
+				<td><fr:view name="vigilancyWithCredits" property="confirmed"/>
+				</td>
+				<td><fr:view name="vigilancyWithCredits" property="attendedToConvoke"/>
+				</td>
+			</logic:equal>
+			<td><fr:view name="vigilancyWithCredits" property="points"/>
+			</td>
+			<td>
+				<logic:equal name="vigilancyWithCredits" property="active" value="false">
+				<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do?oid=" + vigilancyWithCredits.getIdInternal() + "&method=convokeActive&bool=true&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>"><bean:message key="label.activate" bundle="VIGILANCY_RESOURCES"/></a>
+				</logic:equal>
+			</td>
+			<td>
+				<logic:equal name="vigilancyWithCredits" property="active" value="true">
+				<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do?oid="  + vigilancyWithCredits.getIdInternal() + "&method=convokeActive&bool=false&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "")%>"><bean:message key="label.deactivate" bundle="VIGILANCY_RESOURCES"/></a>
+				</logic:equal>
+			</td>
+		</tr>
+		
+	</logic:iterate>
+</table>
+
 </logic:equal>
 
 <p class="mtop0"><a href="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=" + evaluation.getIdInternal() + "&method=prepareAddMoreVigilants" %>">Adicionar Vigilantes</a></p>
@@ -263,8 +509,12 @@
 <li>
 <em><bean:message key="label.vigilancy.confirmed.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.confirmed" bundle="VIGILANCY_RESOURCES"/></em>
 </li>
-
-
+<li>
+<em><bean:message key="label.vigilancy.active.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.active" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.startPoints.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.startPoints" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
 </ul>
 </logic:notEmpty>
 </logic:present>

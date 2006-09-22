@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
+<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.editVigilantGroup"/></h2>
 <script type="text/javascript" language="javascript" src="<%= request.getContextPath() %>/examCoordinator/vigilancy/checkall.js"></script>
 
@@ -17,7 +17,7 @@
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
 		<p>
-			<span class="error"><bean:write name="messages" /></span>
+			<span class="error0"><bean:write name="messages" /></span>
 		</p>
 	</html:messages>
 </logic:messagesPresent>
@@ -29,6 +29,7 @@
 		<fr:layout>
 			<fr:property name="eachLayout" value="values"/>
 			<fr:property name="eachSchema" value="presentVigilant"/>
+			<fr:property name="sortBy" value="person.name"/>
 			<fr:property name="classes" value="mbottom05"/>
 		</fr:layout>
 	</fr:view>
@@ -45,6 +46,7 @@ action="vigilancy/vigilantGroupManagement.do?method=removeVigilantsFromGroup"
 nested="true">
 	<fr:layout>
 	<fr:property name="displayLabel" value="false"/>
+	<fr:property name="sortBy" value="person.name"/>
 	<fr:property name="classes" value="mvert0"/>
 	</fr:layout>
 </fr:edit>
@@ -75,6 +77,7 @@ nested="true">
 			action="/vigilancy/vigilantGroupManagement.do?method=addVigilantsToGroup">
 			<fr:layout>
 			<fr:property name="displayLabel" value="false"/>
+			<fr:property name="sortBy" value="person.name"/>
 			<fr:property name="classes" value="mvert0"/>
 			</fr:layout>
 </fr:edit>

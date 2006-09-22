@@ -28,6 +28,7 @@
 	<fr:destination name="postback" path="/vigilancy/vigilantManagement.do?method=displayMap"/>
 	<fr:layout>
 		<fr:property name="classes" value="tstyle5 thlight thright mbottom05"/>
+		<fr:property name="columnClasses" value=",,tdclear"/>
 	</fr:layout>
 	</fr:edit>
 	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
@@ -41,18 +42,42 @@
 </logic:notEmpty>
 </logic:empty>
 
+<logic:present name="bean" property="selectedVigilantGroup">
+<div class="infoop5 mvert1" style="width: 550px;">
+<p class="mvert025">
+<bean:message key="label.vigilancy.contactEmail" bundle="VIGILANCY_RESOURCES"/>: 
+<logic:present name="bean" property="selectedVigilantGroup.contactEmail">
+	<a href="mailto:<bean:write name="bean" property="selectedVigilantGroup.contactEmail"/>"><fr:view name="bean" property="selectedVigilantGroup.contactEmail"/></a>
+</logic:present>
+<logic:notPresent name="bean" property="selectedVigilantGroup.contactEmail">
+	<em><bean:message key="label.vigilancy.noContactEmailDefined"/></em>
+</logic:notPresent>
+</p>
+<p class="mvert025">
+<bean:message key="label.vigilancy.rulesLink" bundle="VIGILANCY_RESOURCES"/>: 
+<logic:present name="bean" property="selectedVigilantGroup.rulesLink">
+	<a href="<bean:write name="bean" property="selectedVigilantGroup.rulesLink"/>"><fr:view name="bean" property="selectedVigilantGroup.rulesLink"/></a>
+</logic:present>
+<logic:notPresent name="bean" property="selectedVigilantGroup.rulesLink">
+	<em><bean:message key="label.vigilancy.noRulesLinkDefined"/></em>
+</logic:notPresent>
+</p>
+</div>
+</logic:present>
 
 <logic:present name="vigilant">
 	<p class="mbottom05"><strong><bean:message key="vigilancy.myConvokes" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
-	<logic:empty name="vigilant" property="convokes">
+	<logic:empty name="vigilant" property="vigilancys">
 		<p class="mtop05"><em><bean:message key="label.person.vigilancy.noConvokesToDisplay" bundle="VIGILANCY_RESOURCES"/></em></p>
 	</logic:empty>
 
-	<logic:notEmpty name="vigilant" property="convokes">
+	<logic:notEmpty name="vigilant" property="vigilancys">
 	<logic:equal name="bean" property="executionYear.current" value="true">
-	<fr:view name="vigilant" property="convokes" schema="present.convokes" layout="tabular">
+	<fr:view name="vigilant" property="vigilancys" schema="present.convokes" layout="tabular">
 	<fr:layout>
 		<fr:property name="classes" value="tstyle1 mtop05" />
+		<fr:property name="key(confirmar)" value="label.confirm"/>
+		<fr:property name="bundle(confirmar)" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="link(confirmar)" value="/vigilancy/vigilantManagement.do?method=vigilantAcceptsConvoke" />
 		<fr:property name="param(confirmar)" value="idInternal/oid" />
 		<fr:property name="visibleIf(confirmar)" value="notConfirmed" />
@@ -60,7 +85,7 @@
 	</fr:view>
 	</logic:equal>	
 	<logic:equal name="bean" property="executionYear.current" value="false">
-	<fr:view name="vigilant" property="convokes" schema="present.convokes" layout="tabular">
+	<fr:view name="vigilant" property="vigilancys" schema="present.convokes" layout="tabular">
 		<fr:layout>
 		<fr:property name="classes" value="tstyle1 mtop05" />
 		</fr:layout>
@@ -75,8 +100,12 @@
 	<fr:view name="vigilant" property="unavailablePeriods" schema="unavailableShow">
     <fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 mtop05" />
+		<fr:property name="key(edit)" value="label.edit"/>
+		<fr:property name="bundle(edit)" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="link(edit)" value="/vigilancy/unavailablePeriodManagement.do?method=editUnavailablePeriod" />
 		<fr:property name="param(edit)" value="idInternal/oid" />
+		<fr:property name="key(delete)" value="label.delete"/>
+		<fr:property name="bundle(delete)" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="link(delete)" value="/vigilancy/unavailablePeriodManagement.do?method=deleteUnavailablePeriod" />
 		<fr:property name="param(delete)" value="idInternal/oid" />
 	</fr:layout>
@@ -115,10 +144,12 @@
 
 
 <logic:present name="bean" property="selectedVigilantGroup">
+
 <logic:notEmpty name="bean" property="selectedVigilantGroup.vigilants">
 	
 
 <h3 class="mtop15 mbottom05"><fr:view name="bean" property="selectedVigilantGroup.name"/></h3>
+<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantBean"/>
 
 <fr:view name="bean" property="selectedVigilantGroup.vigilants" layout="vigilant-table">
 	<fr:layout>                                
@@ -126,28 +157,13 @@
 		<fr:property name="sortBy" value="teacherCategoryCode, person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
-		<logic:equal name="bean" property="showIncompatibilities" value="true">
-			<logic:equal name="bean" property="showUnavailables" value="true">
-				<fr:property name="vigilantSchema" value="vigilantsWithAllInformation"/>	
-				<fr:property name="columnClasses" value=",,width250px aleft,width50px aleft,aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
-			</logic:equal>
-		
-			<logic:equal name="bean" property="showUnavailables" value="false">
-				<fr:property name="vigilantSchema" value="vigilantsWithOutUnavailables"/>	
-				<fr:property name="columnClasses" value=",,width250px aleft,width50px aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
-			</logic:equal>
-	    </logic:equal>
-		<logic:equal name="bean" property="showIncompatibilities" value="false">
-			<logic:equal name="bean" property="showUnavailables" value="true">
-				<fr:property name="vigilantSchema" value="vigilantsWithoutIncompatibilities"/>	
-				<fr:property name="columnClasses" value=",,width250px aleft,width50px aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
-			</logic:equal>
-		
-			<logic:equal name="bean" property="showUnavailables" value="false">
-				<fr:property name="vigilantSchema" value="simpleVigilants"/>	
-				<fr:property name="columnClasses" value=",,width250px aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
-		</logic:equal>
-		</logic:equal>
+
+		<fr:property name="showIncompatibilities" value="<%= String.valueOf(bean.isShowIncompatibilities()) %>"/>
+		<fr:property name="showUnavailables" value="<%= String.valueOf(bean.isShowUnavailables()) %>"/>
+		<fr:property name="showBoundsJustification" value="<%= String.valueOf(bean.isShowBoundsJustification()) %>"/>
+		<fr:property name="showStartPoints" value="<%= String.valueOf(bean.isShowStartPoints())%>"/>
+		<fr:property name="columnClasses" value=",,width250px aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
+
 
 
 		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
@@ -178,7 +194,12 @@
 <li>
 <em><bean:message key="label.vigilancy.confirmed.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.confirmed" bundle="VIGILANCY_RESOURCES"/></em>
 </li>
-
+<li>
+<em><bean:message key="label.vigilancy.active.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.active" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
+<li>
+<em><bean:message key="label.vigilancy.startPoints.header" bundle="VIGILANCY_RESOURCES"/>: <bean:message key="label.vigilancy.startPoints" bundle="VIGILANCY_RESOURCES"/></em>
+</li>
 
 </ul>
 

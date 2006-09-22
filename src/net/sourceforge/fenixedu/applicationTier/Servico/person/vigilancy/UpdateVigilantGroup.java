@@ -8,12 +8,14 @@ import org.joda.time.DateTime;
 
 public class UpdateVigilantGroup extends Service {
 
-    public void run(VigilantGroup vigilantGroup, String name, String convokeStrategy,
+    public void run(VigilantGroup vigilantGroup, String name, String convokeStrategy, String contactEmail, String rulesLink,
             DateTime beginFirst, DateTime endFirst, DateTime beginSecond, DateTime endSecond)
             throws ExcepcaoPersistencia {
 
         vigilantGroup.setName(name);
         vigilantGroup.setConvokeStrategy(convokeStrategy);
+        vigilantGroup.setContactEmail(contactEmail);
+        vigilantGroup.setRulesLink(rulesLink);
         vigilantGroup.setBeginOfFirstPeriodForUnavailablePeriods(beginFirst);
         vigilantGroup.setEndOfFirstPeriodForUnavailablePeriods(endFirst);
         vigilantGroup.setBeginOfSecondPeriodForUnavailablePeriods(beginSecond);

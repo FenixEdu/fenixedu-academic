@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
+<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.editVigilantGroup"/></h2>
 <script type="text/javascript" language="javascript" src="<%= request.getContextPath() %>/examCoordinator/vigilancy/checkall.js"></script>
 
@@ -16,7 +16,7 @@
 <logic:messagesPresent message="true">
 	<p>
 		<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
-			<span class="error"><bean:write name="messages" /></span>
+			<span class="error0"><bean:write name="messages" /></span>
 		</html:messages>
 	</p>
 </logic:messagesPresent>
@@ -30,6 +30,7 @@ action="vigilancy/vigilantGroupManagement.do?method=removeCoordinatorsFromGroup"
 nested="true">
 	<fr:layout>
 	<fr:property name="displayLabel" value="false"/>
+	<fr:property name="sortBy" value="person.name"/>
 	<fr:property name="classes" value="mvert0"/>
 	</fr:layout>
 	
@@ -61,7 +62,7 @@ nested="true">
 			<fr:layout>
 			<fr:property name="displayLabel" value="false"/>
 			<fr:property name="classes" value="mvert0"/>
-
+			<fr:property name="sortBy" value="person.name"/>
 			</fr:layout>
 </fr:edit>
 <p class="mtop0">

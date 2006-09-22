@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean;
@@ -22,6 +24,12 @@ public class VigilantsForGivenVigilantGroup implements DataProvider {
         if (source instanceof ConvokeBean) {
             ConvokeBean convokeBean = (ConvokeBean) bean;
             vigilants.addAll(convokeBean.getVigilantsSugestion());
+            WrittenEvaluation evaluation = convokeBean.getWrittenEvaluation();
+            if(evaluation!=null && evaluation.getVigilancys().size()>0) {
+            	for(Vigilancy convoke : evaluation.getVigilancys()) {
+            		vigilants.remove(convoke.getVigilant());
+            	}
+            }
         } else {
             vigilants.addAll(vigilantGroup.getVigilants());
         }

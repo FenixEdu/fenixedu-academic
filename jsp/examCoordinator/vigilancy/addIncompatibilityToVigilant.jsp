@@ -4,12 +4,14 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
+<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message key="label.vigilancy.addIncompatibilityToVigilant.title" bundle="VIGILANCY_RESOURCES"/></h2>
+
+<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean"/>
 
 <ul>
 	<li>
-	<html:link page="/vigilancy/vigilantGroupManagement.do?method=prepareManageIncompatiblesOfVigilants"><bean:message key="label.vigilancy.back" bundle="VIGILANCY_RESOURCES"/></html:link>
+	<html:link page="<%= "/vigilancy/vigilantGroupManagement.do?method=prepareManageIncompatiblesOfVigilants&gid=" + bean.getSelectedVigilantGroup().getIdInternal() %>"><bean:message key="label.vigilancy.back" bundle="VIGILANCY_RESOURCES"/></html:link>
 	</li>
 </ul>
 
@@ -40,6 +42,8 @@ action="/vigilancy/vigilantGroupManagement.do?method=vigilantSelectedInIncompati
 		schema="presentVigilantName"
     >
     <fr:layout name="tabular">
+		<fr:property name="key(Adicionar)" value="label.add"/>
+		<fr:property name="bundle(Adicionar)" value="VIGILANCY_RESOURCES"/>
  		<fr:property name="link(Adicionar)" value="<%= "/vigilancy/vigilantGroupManagement.do?method=addIncompatibilityToVigilant&oid=" + bean.getSelectedVigilant().getIdInternal() + "&gid=" + bean.getSelectedVigilantGroup().getIdInternal() %>"/>
 		<fr:property name="param(Adicionar)" value="person.idInternal/pid" />
 		<fr:property name="displayHeaders" value="false"/>

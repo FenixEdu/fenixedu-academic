@@ -93,6 +93,12 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		ExamCoordinator coordinator = getLoggedPerson(request)
 				.getCurrentExamCoordinator();
 
+		String groupId = request.getParameter("gid");
+		if(groupId!=null) {
+			VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(groupId));
+			bean.setSelectedVigilantGroup(group);
+			putIncompatibilitiesInRequest(request, group);
+		}
 		bean.setExamCoordinator(coordinator);
 		request.setAttribute("bean", bean);
 		return mapping.findForward("incompatibilities");
@@ -183,7 +189,8 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 				.getObject();
 
 		Object[] args = { beanWithName.getName(), beanWithName.getUnit(),
-				beanWithName.getConvokeStrategy(),
+				beanWithName.getConvokeStrategy(), beanWithName.getContactEmail(),
+				beanWithName.getRulesLink(),
 				beanWithFirstPeriod.getBeginFirstUnavailablePeriod(),
 				beanWithFirstPeriod.getEndFirstUnavailablePeriod(),
 				beanWithSecondPeriod.getBeginSecondUnavailablePeriod(),
@@ -283,7 +290,8 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		VigilantGroup vigilantGroup = beanWithName.getSelectedVigilantGroup();
 
 		Object[] args = { vigilantGroup, beanWithName.getName(),
-				beanWithName.getConvokeStrategy(),
+				beanWithName.getConvokeStrategy(), beanWithName.getContactEmail(),
+				beanWithName.getRulesLink(),
 				beanWithFirstPeriod.getBeginFirstUnavailablePeriod(),
 				beanWithFirstPeriod.getEndFirstUnavailablePeriod(),
 				beanWithSecondPeriod.getBeginSecondUnavailablePeriod(),
@@ -327,7 +335,9 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 				.getVigilantGroupsForGivenExecutionYear(executionYear);
 		bean.setVigilantGroups(vigilantGroups);
 		
-		if(!bean.getSelectedVigilantGroup().getExecutionYear().equals(executionYear)) {
+		VigilantGroup selectedGroup = bean.getSelectedVigilantGroup();
+		
+		if(selectedGroup != null && !selectedGroup.getExecutionYear().equals(executionYear)) {
 			bean.setSelectedVigilantGroup(null);
 		}
 		request.setAttribute("bean", bean);
@@ -485,6 +495,37 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("addIncompatiblePersonToVigilant");
 	}
 
+	public ActionForward prepareBoundPropertyEdition(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String groupId = request.getParameter("oid");
+
+		
+		VigilantGroup group = (VigilantGroup) RootDomainObject
+				.readDomainObjectByOID(VigilantGroup.class, Integer
+						.valueOf(groupId));
+
+		request.setAttribute("bounds", group.getBounds());
+		request.setAttribute("group", group);
+		return mapping.findForward("editVigilantBounds");
+	}
+
+	public ActionForward prepareStartPointsPropertyEdition(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String groupId = request.getParameter("oid");
+		
+		VigilantGroup group = (VigilantGroup) RootDomainObject
+				.readDomainObjectByOID(VigilantGroup.class, Integer
+						.valueOf(groupId));
+
+		request.setAttribute("vigilants", group.getVigilantsThatCanBeConvoked());
+		request.setAttribute("group", group);
+		return mapping.findForward("editVigilantStartPoints");
+	}
+	
 	private VigilantGroupBean prepareBean(Person person) {
 		VigilantGroupBean bean = new VigilantGroupBean();
 
@@ -511,7 +552,8 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		bean.setName(group.getName());
 		bean.setUnit(group.getUnit());
 		bean.setSelectedDepartment(group.getUnit().getDepartment());
-
+		bean.setContactEmail(group.getContactEmail());
+		bean.setRulesLink(group.getRulesLink());
 		bean.setEmployees(new ArrayList<Employee>());
 		bean.setBeginFirstUnavailablePeriod(group
 				.getBeginOfFirstPeriodForUnavailablePeriods());

@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.strategies.UnavailableInformation;
 
 public class ConvokeBean extends VigilantGroupBean implements Serializable {
 
@@ -29,7 +30,18 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
 
     private TemporalInformationType temporalInformation;
 
-    ConvokeBean() {
+    private List<UnavailableInformation> unavailableInformation;
+    
+    
+    public List<UnavailableInformation> getUnavailableInformation() {
+		return unavailableInformation;
+	}
+
+	public void setUnavailableInformation(List<UnavailableInformation> unavailableInformation) {
+		this.unavailableInformation = unavailableInformation;
+	}
+
+	ConvokeBean() {
         this.vigilantsSugestion = new ArrayList<DomainReference<Vigilant>>();
         this.unavailableVigilants = new ArrayList<DomainReference<Vigilant>>();
         this.selectedUnavailableVigilants = new ArrayList<DomainReference<Vigilant>>();
@@ -160,25 +172,5 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
 
     public void setTemporalInformation(TemporalInformationType temporalInformation) {
         this.temporalInformation = temporalInformation;
-    }
-
-    public String getWhatSchemaToUseInVigilants() {
-        boolean unavailables = this.isShowUnavailables();
-        boolean incompatibilities = this.isShowIncompatibilities();
-
-        if (unavailables) {
-            if (incompatibilities) {
-                return "vigilantsWithAllInformation";
-            } else {
-                return "vigilantsWithoutIncompatibilities";
-            }
-        } else {
-            if (incompatibilities) {
-                return "vigilantsWithOutUnavailables";
-            } else {
-                return "simpleVigilants";
-            }
-        }
-
     }
 }

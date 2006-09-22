@@ -73,4 +73,12 @@
 		<put name="body" value="/examCoordinator/vigilancy/addIncompatibilityToVigilant.jsp"/>
     </definition>        
 
+    <definition name="edit-Vigilant-Bounds" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/manageVigilantsConvokableStatus.jsp"/>
+    </definition>   
+
+    <definition name="edit-Vigilant-StartPoints" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/manageVigilantsStartPoints.jsp"/>
+    </definition>   
+
 </tiles-definitions>

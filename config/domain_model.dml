@@ -4007,6 +4007,7 @@ class net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipVa
  */ 
 
 class net.sourceforge.fenixedu.domain.vigilancy.Vigilant extends net.sourceforge.fenixedu.domain.DomainObject{
+	Integer startPoints;
 	Integer keyPerson;
 	Integer keyIncompatiblePerson;
 	Integer keyExecutionYear;
@@ -4019,18 +4020,31 @@ class net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod extends net.so
 	Integer keyVigilant;
 }
 
-class net.sourceforge.fenixedu.domain.vigilancy.Convoke extends net.sourceforge.fenixedu.domain.DomainObject{
-	Boolean confirmed;
-	Boolean attendedToConvoke; 
-	Boolean active;
+class net.sourceforge.fenixedu.domain.vigilancy.Vigilancy extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyVigilant;
 	Integer keyWrittenEvaluation;
+    String ojbConcreteClass;
 }
 
+	class net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits extends net.sourceforge.fenixedu.domain.vigilancy.Vigilancy {
+		Boolean confirmed;
+		Boolean attendedToConvoke; 
+		Boolean active;
+	}
+	
+class net.sourceforge.fenixedu.domain.vigilancy.VigilantBound extends net.sourceforge.fenixedu.domain.DomainObject {
+  Boolean convokable;
+  String justification;
+  
+  Integer keyVigilant;
+  Integer keyVigilantGroup;
+}
 
 class net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup extends net.sourceforge.fenixedu.domain.DomainObject{
 	String name;
 	String convokeStrategy;
+	String contactEmail;
+	String rulesLink;
 	DateTime beginOfFirstPeriodForUnavailablePeriods;
 	DateTime endOfFirstPeriodForUnavailablePeriods;
 	DateTime beginOfSecondPeriodForUnavailablePeriods;
@@ -10276,13 +10290,18 @@ relation ExecutionDegreeShiftDistributionEntry {
 	}
 }
 
-relation VigilantBelongsToGroup {
-	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {
+relation VigilantBounds {
+ 	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilant;
+ 	net.sourceforge.fenixedu.domain.vigilancy.VigilantBound playsRole bounds {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
-		multiplicity *;
-	}
+}
+
+relation VigilantGroupBounds {
+  net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroup;
+  net.sourceforge.fenixedu.domain.vigilancy.VigilantBound playsRole bounds {
+  	multiplicity *;
+  }
 }
 
 relation VigilantIsUnavailable {
@@ -10314,13 +10333,13 @@ relation VigilantIncompatiblePerson {
 }
 relation ConvokingVigilant {
 	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilant;
-	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilancy playsRole vigilancys {
 		multiplicity *;
 	}
 }
 
 relation ConvokeForWrittenEvaluation {
-	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilancy playsRole vigilancys {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
@@ -10376,6 +10395,13 @@ relation ExamCoordinatorManagesVigilantGroup {
 		multiplicity *;
 	}
 }
+
+relation RootDomainVigilantBound {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.vigilancy.VigilantBound playsRole vigilantBounds {
+		multiplicity *;
+	}
+}
 relation RootDomainVigilant {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilants {
@@ -10390,9 +10416,9 @@ relation RootDomainVigilantGroup {
 	}
 }
 
-relation RootDomainConvoke {
+relation RootDomainVigilancy {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.vigilancy.Convoke playsRole convokes {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilancy playsRole vigilancys {
 		multiplicity *;
 	}
 }

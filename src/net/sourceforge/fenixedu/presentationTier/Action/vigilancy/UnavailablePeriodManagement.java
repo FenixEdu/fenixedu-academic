@@ -213,7 +213,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         	request.setAttribute("gid", gid);
         	request.setAttribute("bean", bean);
         	addActionMessage(request, e.getMessage(), null);
-            return mapping.findForward("editPeriodOfVigilant");
+            return mapping.findForward("prepareAddPeriodToVigilant");
         }
         
         
@@ -277,6 +277,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         VigilantGroup group = getGroupInRequestOrFirstGroupFromVigilant(request, vigilant);
         bean.setSelectedVigilantGroup(group);
         bean.setVigilantGroups(vigilant.getVigilantGroups());
+        bean.setShowUnavailables(true);
         request.setAttribute("bean", bean);
         request.setAttribute("vigilant", vigilant);
     }

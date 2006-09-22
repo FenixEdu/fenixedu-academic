@@ -14,9 +14,16 @@
 </class-descriptor>
 
 <!-- ***********************************
-     Definitions for net.sourceforge.fenixedu.domain.vigilancy.Convoke
+     Definitions for net.sourceforge.fenixedu.domain.vigilancy.Vigilancy
      *********************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.Convoke" table="CONVOKE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" table="CONVOKE">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits"/>
+</class-descriptor>
+
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits" table="CONVOKE">
 </class-descriptor>
 
 <!-- ***********************************
@@ -32,4 +39,10 @@
      Definitions for net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator" table="EXAM_COORDINATOR">	
+</class-descriptor>
+
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.vigilancy.VigilantBound
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.VigilantBound" table="VIGILANT_BOUND">	
 </class-descriptor>

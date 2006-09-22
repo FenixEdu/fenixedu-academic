@@ -4,14 +4,14 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
+<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.manageExamCoordinator"/></h2>
 
 
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
 		<p>
-			<span class="error"><bean:write name="messages" /></span>
+			<span class="error0"><bean:write name="messages" /></span>
 		</p>
 	</html:messages>
 </logic:messagesPresent>
@@ -37,6 +37,8 @@ name="bean" schema="selectUnitInVigilantGroup"/>
 <fr:layout name="tabular">
 	<fr:property name="classes" value="tstyle1 mvert05" />
 	<fr:property name="sortBy" value="executionYear=desc, person.name=asc" />
+	<fr:property name="key(apagar)" value="label.delete"/>
+	<fr:property name="bundle(apagar)" value="VIGILANCY_RESOURCES"/>
 	<fr:property name="link(apagar)" value="<%= "/vigilancy/examCoordinatorManagement.do?method=deleteExamCoordinator&unitId=" + bean.getSelectedUnit().getIdInternal() + "&deparmentId=" + bean.getSelectedDepartment().getIdInternal() %>"/>
 	<fr:property name="param(apagar)" value="idInternal/oid"/>
 	<fr:property name="visibleIf(apagar)" value="executionYear.current"/>

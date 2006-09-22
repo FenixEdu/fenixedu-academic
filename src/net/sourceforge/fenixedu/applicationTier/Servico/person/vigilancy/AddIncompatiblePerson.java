@@ -9,6 +9,12 @@ public class AddIncompatiblePerson extends Service {
 
     public void run(Vigilant vigilant, Person person) throws ExcepcaoPersistencia {
 
+    	if(vigilant.hasIncompatiblePerson()) {
+    		vigilant.removeIncompatiblePerson();
+    	}
+    	if(person.getCurrentVigilant().hasIncompatiblePerson()) {
+    		person.getCurrentVigilant().removeIncompatiblePerson();
+    	}
         vigilant.setIncompatiblePerson(person);
     }
 

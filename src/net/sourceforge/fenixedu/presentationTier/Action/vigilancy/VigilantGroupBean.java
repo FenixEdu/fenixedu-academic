@@ -54,7 +54,27 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 
     private String username = "";
 
-    public boolean isShowCoordinators() {
+    private String contactEmail ="";
+    
+    private String rulesLink ="";
+    
+    public String getContactEmail() {
+		return contactEmail;
+	}
+
+	public void setContactEmail(String contactEmail) {
+		this.contactEmail = contactEmail;
+	}
+
+	public String getRulesLink() {
+		return rulesLink;
+	}
+
+	public void setRulesLink(String rulesLink) {
+		this.rulesLink = rulesLink;
+	}
+
+	public boolean isShowCoordinators() {
         return showCoordinators;
     }
 

@@ -5,8 +5,16 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinatior"/></em>
+<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.createUnavailablePeriod"/></h2>
+
+<logic:messagesPresent message="true">
+	<p>
+		<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
+			<span class="error0"><bean:write name="messages"/></span>
+		</html:messages>
+	</p>
+</logic:messagesPresent>
 
 <fr:edit name="bean" id="periodCreation" schema="addUnavailablePeriodToVigilant"
 action="<%= "vigilancy/unavailablePeriodManagement.do?method=addUnavailablePeriodToVigilant&gid=" + request.getParameter("gid") %>"
