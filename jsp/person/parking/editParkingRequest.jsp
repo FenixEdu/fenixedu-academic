@@ -112,8 +112,8 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 	<ul>
 		<li>os ficheiros não podem exceder 2MB de tamanho</li>
 		<li>os ficheiros têm de ser imagens no formato gif ou jpg</li>
-		<li>escreva o caminho completo na caixa de texto (ex: <i>c:\documentos\carta_condução.jpg</i>)	ou carregue em <i>Browse</i> 
-			e escolha o documento correspondente</li>
+		<li>carregue em <i>Browse</i> e escolha o documento correspondente ou escreva o caminho completo na caixa de texto
+			 (ex: <i>c:\documentos\carta_condução.jpg</i>)</li>
 	</ul>
 </div>	
 
