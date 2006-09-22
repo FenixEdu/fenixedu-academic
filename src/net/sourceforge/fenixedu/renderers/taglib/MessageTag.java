@@ -123,7 +123,7 @@ public class MessageTag extends TagSupport {
                 logger.warn("parent 'messages' tag is beeing ignored since the 'type' attribute was specified");
             }
             
-            return Type.valueOf(getType());
+            return Type.valueOf(String.valueOf(getType()).toUpperCase());
         }
         else {
             if (parent != null) {
