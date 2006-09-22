@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
+<bean:define id="datePattern" value="dd-MM-yyyy"/>
+
 <h2><bean:message key="title.teacherInformation"/></h2>
 <logic:present name="infoSiteTeacherInformation"> 
 	<html:form action="/teacherInformation">
@@ -38,7 +40,7 @@
 				<td width="70%"><b><bean:message key="message.teacherInformation.name" /></b>
 					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nome" /> </td> 
 				<td width="30%"><b><bean:message key="message.teacherInformation.birthDate" /></b>
-					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nascimento" /> </td>	
+					&nbsp;<dt:format patternId="datePattern"><bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nascimento.time" /></dt:format></td>	
 			</tr>
 			<tr>
 				<td>
