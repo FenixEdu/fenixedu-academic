@@ -74,18 +74,17 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 </script>
 
 
-<em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.parking" bundle="PARKING_RESOURCES" /></h2>
 
 <span class="error0 mtop0"><html:messages id="message" property="timeout" message="true" bundle="PARKING_RESOURCES">
 	<bean:write name="message"/><br/>
 </html:messages></span>
 
-<div class="warning0">
+<div class="infoop2">
 	<p class="mvert025"><bean:message key="title.regulation" bundle="PARKING_RESOURCES"/>:</p>
 	<ul>
 		<li><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES"/></li>
-		
+
 		<li><bean:message key="title.forEachVehicle" bundle="PARKING_RESOURCES"/>
 			<ul>
 				<li><bean:message key="title.registo" bundle="PARKING_RESOURCES"/></li>
@@ -103,12 +102,12 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 			</ul>
 		</li>
 	</ul>
-	<p class="mvert025"><bean:message key="title.documentDelivery" bundle="PARKING_RESOURCES"/>:</p>
+	<p class="mtop1 mbottom05"><bean:message key="title.documentDelivery" bundle="PARKING_RESOURCES"/>:</p>
 	<ul>
 		<li><bean:message key="title.documentDeliveryOnline" bundle="PARKING_RESOURCES"/></li>
 		<li><bean:message key="title.documentDeliveryPaper" bundle="PARKING_RESOURCES"/></li>
 	</ul>
-	<p class="mvert025">Para submeter os documentos necessários:</p>
+	<p class="mtop1 mbottom05">Para submeter os documentos necessários:</p>
 	<ul>
 		<li>os ficheiros não podem exceder 2MB de tamanho</li>
 		<li>os ficheiros têm de ser imagens no formato gif ou jpg</li>
@@ -116,6 +115,10 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 			 (ex: <i>c:\documentos\carta_condução.jpg</i>)</li>
 	</ul>
 </div>	
+
+
+<p class="greytxt1"><em><bean:message key="message.attentionRegulation" bundle="PARKING_RESOURCES" /></em></p>
+
 
 <logic:present name="parkingParty">
 
@@ -153,57 +156,74 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 	
 
 	<fr:form action="<%= "/parking.do?method="+method%>" encoding="multipart/form-data">
-	<p class="mbottom0"><strong><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES" /></strong>:</p>	
-		<table class="tstyle1 thright thlight mbottom0 tstylepark">
-		<tr>
-			<th class="parking"><div id="driverLicenseDivTop" style="display:none"><bean:message key="label.driverLicenseDocument" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">
+		<p class="mtop2 mbottom0"><strong><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES" /></strong></p>	
+			<div id="driverLicenseDivTop" style="display:none"></div>
+
+				<p>
 				<html:radio name="parkingForm" property="driverLicense" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('driverLicenseDiv','driverLicenseFile', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=driverLicenseLabel%>"/>
 				</html:radio>
-				<br/>
+				</p>
+
+				
+				<p>
 				<html:radio name="parkingForm" property="driverLicense" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('driverLicenseDiv','driverLicenseFile', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=driverLicenseLabel%>"/>
 				</html:radio>
-				<br/>				
+				</p>
+				
+				<p>
 				<html:radio name="parkingForm" property="driverLicense" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('driverLicenseDiv','driverLicenseFile', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=driverLicenseLabel%>"/>
 				</html:radio>
+				</p>
+				
 				<div id="driverLicenseFile">
 				<logic:notEmpty name="<%= factoryName %>" property="driverLicenseFileName">
-					<span class="warning0 mtop025">
+					<p>
+					<span class="warning0 mtop05">
 						<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=driverLicenseLabel%>"/>:
 						<bean:write name="<%= factoryName %>" property="driverLicenseFileName"/>
-					</span>					
+					</span>
+					</p>
 				</logic:notEmpty>
 				</div>
-			</td>
-		</tr>
-		</table>
+
+
+
 			<div id="driverLicenseDiv">
 				<fr:edit id="driverLicenseFR" name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.driverLicense"%>"
 					type="<%= type %>">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value="parking,parking,noborder"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mvert05"/>
+						<fr:property name="columnClasses" value="width15em,width50em,noborder"/>
 					</fr:layout>
 				</fr:edit>			
 
 				<span class="error0 mtop0"><html:messages id="message" property="driverLicenseMessage" message="true" bundle="PARKING_RESOURCES">
 					<bean:write name="message"/><br/>
 				</html:messages></span>
+
 			</div>
+
 			<span class="error0 mtop0"><html:messages id="message" property="driverLicenseDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>
-			<br/>
+
+
+
+<p class="mvert2">
+	<bean:message key="message.howManyVehicles" bundle="PARKING_RESOURCES"/>
+	<html:radio styleId="hasVehicle2radio2" name="parkingForm" property="vehicle2" value="false" onclick="document.getElementById('hasVehicle2').style.display='none'"/>Um 
+	<html:radio styleId="hasVehicle2radio1" name="parkingForm" property="vehicle2" value="true" onclick="document.getElementById('hasVehicle2').style.display='block'"/>Dois
+</p>
 
 	<!-- FIRST CAR BEGINING -->
-	<p class="mbottom0"><strong><bean:message key="label.firstCar" bundle="PARKING_RESOURCES" /></strong>:</p>
-		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
+	<p class="mbottom025"><strong><bean:message key="label.firstCar" bundle="PARKING_RESOURCES" /></strong></p>
+		<table class="tstyle1 thright thlight mtop025 mbottom0">
 		<tr>
-			<th class="parking"><bean:message key="label.firstCarMake" bundle="PARKING_RESOURCES"/>:</th>
-			<td class="parking"><fr:edit id="firstCarMakeFR" name="<%= factoryName %>" slot="firstCarMake" 
+			<th style="width: 15em;"><bean:message key="label.firstCarMake" bundle="PARKING_RESOURCES"/>:</th>
+			<td style="width: 50em;"><fr:edit id="firstCarMakeFR" name="<%= factoryName %>" slot="firstCarMake" 
 				type="<%= type %>">
 						<fr:layout>
 							<fr:property name="size" value="25"/>
@@ -217,8 +237,8 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 			</td>
 		</tr>
 		<tr>
-			<th class="parking"><bean:message key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
-			<td class="parking"><fr:edit id="firstCarPlateNumberFR" name="<%= factoryName %>" slot="firstCarPlateNumber"
+			<th><bean:message key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
+			<td><fr:edit id="firstCarPlateNumberFR" name="<%= factoryName %>" slot="firstCarPlateNumber"
 				type="<%= type %>">
 						<fr:layout>
 							<fr:property name="size" value="10"/>
@@ -232,150 +252,192 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 			</td>
 		</tr>
 		<tr>
-			<th class="parking"><div id="registry1DivTop" style="display:none"><bean:message key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">
+			<th><div id="registry1DivTop" style="display:none"><bean:message key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td>
+				<p>
 				<html:radio name="parkingForm" property="registry1" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('registry1Div','registry1File', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
-				<br/>
+				</p>
+				<p>
 				<html:radio name="parkingForm" property="registry1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('registry1Div','registry1File', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
-				<br/>				
+				</p>
+				<p>
 				<html:radio name="parkingForm" property="registry1" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('registry1Div','registry1File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
+				</p>
 				<div id="registry1File">
 				<logic:notEmpty name="<%= factoryName %>" property="firstCarPropertyRegistryFileName">
-					<span class="warning0 mtop025">				
+					<p>
+					<span class="warning0 mtop05">				
 						<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>:
 						<bean:write name="<%= factoryName %>" property="firstCarPropertyRegistryFileName"/>
 					</span>
+					</p>
 				</logic:notEmpty>
 				</div>
 			</td>	
 		</tr>
 		</table>
-
 			<div id="registry1Div">
 				<fr:edit id="registry1FR" name="<%= factoryName %>"  schema="<%= action+".parkingRequestFactory.firstCarRegistry"%>"
 					type="<%= type %>">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value="parking,parking,noborder"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0"/>
+						<fr:property name="columnClasses" value="width15em,width50em,noborder"/>
 					</fr:layout>
 				</fr:edit>					
+
 				<span class="error0 mtop025"><html:messages id="message" property="firstCarPropertyRegistryMessage" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/><br/>
-				</html:messages></span>				
+					<bean:write name="message"/>
+				</html:messages></span>
+
 			</div>
+
 			<span class="error0 mtop0"><html:messages id="message" property="firstCarPropertyRegistryDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>
-			
-		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
+
+
+
+		<table class="tstyle1 thright thlight mtop0 mbottom0">
 		<tr>
-			<th class="parking"><div id="insurance1DivTop" style="display:none"><bean:message key="label.firstInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">		
+			<th style="width: 15em;"><div id="insurance1DivTop" style="display:none"><bean:message key="label.firstInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td style="width: 50em;">		
+				<p>	
 				<html:radio name="parkingForm" property="insurance1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('insurance1Div','insurance1File', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
 				</html:radio>
-				<br/>					
+				</p>
+				<p>				
 				<html:radio name="parkingForm" property="insurance1" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('insurance1Div','insurance1File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
 				</html:radio>
+				</p>
 				<div id="insurance1File">
 				<logic:notEmpty name="<%= factoryName %>" property="firstInsuranceFileName">
-					<span class="warning0 mtop025">
+					<p>
+					<span class="warning0 mtop05">
 						<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>:
 						<bean:write name="<%= factoryName %>" property="firstInsuranceFileName"/>
 					</span>
+					</p>
 				</logic:notEmpty>				
 				</div>
 			</td>	
 		</tr>
 		</table>
+
+
+
 			<div id="insurance1Div">
 				<fr:edit id="insurance1FR" name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.firstCarInsurance"%>"
 					type="<%= type %>">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value="parking,parking,noborder"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0"/>
+						<fr:property name="columnClasses" value="width15em,width50em,noborder"/>
 					</fr:layout>				
-				</fr:edit>				
+				</fr:edit>
+	
 				<span class="error0 mtop025"><html:messages id="message" property="firstInsuranceMessage" message="true" bundle="PARKING_RESOURCES">
 					<bean:write name="message"/><br/>
 				</html:messages></span>
+
 			</div>
+
 			<span class="error0 mtop0"><html:messages id="message" property="firstInsuranceDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
-			</html:messages></span>			
+			</html:messages></span>	
+
+					
 			<p>
-				<bean:message key="label.ownVehicle" bundle="PARKING_RESOURCES"/>
+				<bean:message key="label.ownVehicle" bundle="PARKING_RESOURCES"/>? 
 				<html:radio styleId="ownCar1radio1" name="parkingForm" property="ownVehicle1" value="true" onclick="document.getElementById('ownCar1').style.display='none'"/>
 					<bean:message key="label.yes" bundle="PARKING_RESOURCES"/>
 				<html:radio styleId="ownCar1radio2" name="parkingForm" property="ownVehicle1" value="false" onclick="document.getElementById('ownCar1').style.display='block'"/>
 					<bean:message key="label.no" bundle="PARKING_RESOURCES"/>				
 			</p>
-			<div id="ownCar1">
-		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
+			
+		
+		<div id="ownCar1">
+		<table class="tstyle1 thright thlight mtop025 mbottom0">
 		<tr>
-			<th class="parking"><div id="Id1DivTop" style="display:none"><bean:message key="label.firstCarOwnerId" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">	
+			<th style="width: 15em;"><div id="Id1DivTop" style="display:none"><bean:message key="label.firstCarOwnerId" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td style="width: 50em;">
+				<p>
 				<html:radio name="parkingForm" property="Id1" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('Id1Div','Id1File', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
-				<br/>
+				</p>
+				<p>
 				<html:radio name="parkingForm" property="Id1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('Id1Div','Id1File', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
-				<br/>					
+				</p>
+				<p>				
 				<html:radio name="parkingForm" property="Id1" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('Id1Div','Id1File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
+				</p>
 				<div id="Id1File">
 				<logic:notEmpty name="<%= factoryName %>" property="firstCarOwnerIdFileName">
-					<span class="warning0 mtop025">
+					<p>
+					<span class="warning0 mtop05">
 						<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>:
 						<bean:write name="<%= factoryName %>" property="firstCarOwnerIdFileName"/>
 					</span>
+					</p>
 				</logic:notEmpty>
 				</div>
 			</td>	
 		</tr>
 		</table>
+		
 			<div id="Id1Div">
 				<fr:edit id="Id1FR" name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.firstCarId.notOwnCar"%>"
 					type="<%= type %>">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value="parking,parking,noborder"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0"/>
+						<fr:property name="columnClasses" value="width15em,width50em,noborder"/>
 					</fr:layout>					
-				</fr:edit>	
+				</fr:edit>
+
 				<span class="error0 mtop025"><html:messages id="message" property="firstCarOwnerIdMessage" message="true" bundle="PARKING_RESOURCES">
 					<bean:write name="message"/><br/>
 				</html:messages></span>
+
 			</div>
+
 			<span class="error0 mtop0"><html:messages id="message" property="firstCarOwnerIdDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>	
-		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
+
+			
+		<table class="tstyle1 thright thlight mtop0 mbottom0">
 		<tr>
-			<th class="parking"><div id="declaration1DivTop" style="display:none"><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">	
+			<th style="width: 15em;"><div id="declaration1DivTop" style="display:none"><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td style="width: 50em;">
+				<p>
 				<html:radio name="parkingForm" property="declaration1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('declaration1Div','Id1File', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>
-				</html:radio>
-				<br/>						
+				</html:radio>				
+				</p>
+				<p>
 				<html:radio name="parkingForm" property="declaration1" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('declaration1Div','declaration1File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>
 				</html:radio>
+				</p>
 				<div id="declaration1File">
 				<logic:notEmpty name="<%= factoryName %>" property="firstDeclarationAuthorizationFileName">
-					<span class="warning0 mtop025">
+					<p>
+					<span class="warning0 mtop05">
 						<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>:
 						<bean:write name="<%= factoryName %>" property="firstDeclarationAuthorizationFileName"/>
 					</span>	
+					</p>
 				</logic:notEmpty>				
 				</div>
 			</td>					
@@ -386,34 +448,33 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 					type="<%= type %>">
 				
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value="parking,parking,noborder"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0"/>
+						<fr:property name="columnClasses" value="width15em,width50em,noborder"/>
 					</fr:layout>				
-				</fr:edit>			
+				</fr:edit>
+	
 				<span class="error0 mtop025"><html:messages id="message" property="firstDeclarationAuthorizationMessage" message="true" bundle="PARKING_RESOURCES">
 					<bean:write name="message"/><br/>
 				</html:messages></span>
+
 			</div>
+
 			<span class="error0 mtop0"><html:messages id="message" property="firstDeclarationAuthorizationDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>	
+
 			</div>
-			<br/><br/>
+
 					
 	<!-- SECOND CAR BEGINING -->
 
-<p class="mbottom0">
-	<strong><bean:message key="label.secondCar" bundle="PARKING_RESOURCES" /></strong>:
-	<html:radio styleId="hasVehicle2radio1" name="parkingForm" property="vehicle2" value="true" onclick="document.getElementById('hasVehicle2').style.display='block'"/>
-	<bean:message key="label.yes" bundle="PARKING_RESOURCES"/>
-	<html:radio styleId="hasVehicle2radio2" name="parkingForm" property="vehicle2" value="false" onclick="document.getElementById('hasVehicle2').style.display='none'"/>
-	<bean:message key="label.no" bundle="PARKING_RESOURCES"/>		
-</p>
+
 <div id="hasVehicle2">
-		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
+		<p class="mtop2"><strong><bean:message key="label.secondCar" bundle="PARKING_RESOURCES" /></strong></p>
+		<table class="tstyle1 thright thlight mtop025 mbottom0">
 		<tr>
-			<th class="parking"><bean:message key="label.secondCarMake" bundle="PARKING_RESOURCES"/>:</th>
-			<td class="parking"><fr:edit id="secondCarMakeFR" name="<%= factoryName %>" slot="secondCarMake" 
+			<th style="width: 15em;"><bean:message key="label.secondCarMake" bundle="PARKING_RESOURCES"/>:</th>
+			<td style="width: 50em;"><fr:edit id="secondCarMakeFR" name="<%= factoryName %>" slot="secondCarMake" 
 					type="<%= type %>">
 						<fr:layout>
 							<fr:property name="size" value="25"/>
@@ -427,8 +488,8 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 			</td>
 		</tr>
 		<tr>
-			<th class="parking"><bean:message key="label.secondCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
-			<td class="parking"><fr:edit id="secondCarPlateNumberFR" name="<%= factoryName %>" slot="secondCarPlateNumber"
+			<th><bean:message key="label.secondCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
+			<td><fr:edit id="secondCarPlateNumberFR" name="<%= factoryName %>" slot="secondCarPlateNumber"
 					type="<%= type %>">
 						<fr:layout>
 							<fr:property name="size" value="10"/>
@@ -442,25 +503,31 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 			</td>	
 		</tr>
 		<tr>
-			<th class="parking"><div id="registry2DivTop" style="display:none"><bean:message key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">		
+			<th><div id="registry2DivTop" style="display:none"><bean:message key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td>
+				<p>
 				<html:radio name="parkingForm" property="registry2" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('registry2Div','registry2File', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
-				<br/>
+				</p>
+				<p>
 				<html:radio name="parkingForm" property="registry2" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('registry2Div','registry2File', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
-				<br/>						
+				</p>						
+				<p>
 				<html:radio name="parkingForm" property="registry2" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('registry2Div','registry2File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>
 				</html:radio>
+				</p>
 				<div id="registry2File">
 				<logic:notEmpty name="<%= factoryName %>" property="secondCarPropertyRegistryFileName">
-					<span class="warning0 mtop025">
+					<p>
+					<span class="warning0 mtop05">
 						<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=propertyRegisterLabel%>"/>:
 						<bean:write name="<%= factoryName %>" property="secondCarPropertyRegistryFileName"/>
 					</span>
+					</p>
 				</logic:notEmpty>				
 				</div>
 			</td>	
@@ -471,84 +538,107 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 				<fr:edit id="registry2FR" name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.secondCarRegistry"%>"
 					type="<%= type %>">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value="parking,parking,noborder"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0"/>
+						<fr:property name="columnClasses" value="width15em,width50em,noborder"/>
 					</fr:layout>
-				</fr:edit>		
+				</fr:edit>
+
 				<span class="error0 mtop025"><html:messages id="message" property="secondCarPropertyRegistryMessage" message="true" bundle="PARKING_RESOURCES">
 					<bean:write name="message"/><br/><br/>
 				</html:messages></span>
+
 			</div>
+
 			<span class="error0 mtop0"><html:messages id="message" property="secondCarPropertyRegistryDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>
-		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
+
+			
+			
+		<table class="tstyle1 thright thlight mtop0 mbottom0">
 		<tr>
-			<th class="parking"><div id="insurance2DivTop" style="display:none"><bean:message key="label.secondInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">		
+			<th style="width: 15em;"><div id="insurance2DivTop" style="display:none"><bean:message key="label.secondInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td style="width: 50em;">
+				<p>
 				<html:radio name="parkingForm" property="insurance2" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('insurance2Div','insurance2File', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
 				</html:radio>
-				<br/>					
+				</p>
+				<p>
 				<html:radio name="parkingForm" property="insurance2" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('insurance2Div','insurance2File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
 				</html:radio>
+				</p>
 				<div id="insurance2File">
 				<logic:notEmpty name="<%= factoryName %>" property="secondInsuranceFileName">
-					<span class="warning0 mtop025">
+					<p>
+					<span class="warning0 mtop05">
 						<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>:
 						<bean:write name="<%= factoryName %>" property="secondInsuranceFileName"/>
 					</span>
+					</p>
 				</logic:notEmpty>				
 				</div>
 			</td>	
 		</tr>
 		</table>
+		
 			<div id="insurance2Div">
 				<fr:edit id="insurance2FR" name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.secondCarInsurance"%>"
 					type="<%= type %>">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value="parking,parking,noborder"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0"/>
+						<fr:property name="columnClasses" value="width15em,width50em,noborder"/>
 					</fr:layout>				
 				</fr:edit>
+
 				<span class="error0 mtop025"><html:messages id="message" property="secondInsuranceMessage" message="true" bundle="PARKING_RESOURCES">
 					<bean:write name="message"/><br/><br/><br/>
 				</html:messages></span>
+
 			</div>
+
 			<span class="error0 mtop0"><html:messages id="message" property="secondInsuranceDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>
+
 			
 			<p>
-				<bean:message key="label.ownVehicle" bundle="PARKING_RESOURCES"/>
+				<bean:message key="label.ownVehicle" bundle="PARKING_RESOURCES"/>? 
 				<html:radio styleId="ownCar2radio1" name="parkingForm" property="ownVehicle2" value="true" onclick="document.getElementById('ownCar2').style.display='none'"/>
 					<bean:message key="label.yes" bundle="PARKING_RESOURCES"/>
 				<html:radio styleId="ownCar2radio2" name="parkingForm" property="ownVehicle2" value="false" onclick="document.getElementById('ownCar2').style.display='block'"/>
 					<bean:message key="label.no" bundle="PARKING_RESOURCES"/>	
 			</p>
-			<div id="ownCar2">
-		<table class="tstyle1 thright thlight mtop025 mbottom0 tstylepark">
+			
+		<div id="ownCar2">
+		<table class="tstyle1 thright thlight mtop025 mbottom0">
 		<tr>
-			<th class="parking"><div id="Id2DivTop" style="display:none"><bean:message key="label.secondCarOwnerId" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">	
+			<th style="width: 15em;"><div id="Id2DivTop" style="display:none"><bean:message key="label.secondCarOwnerId" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td style="width: 50em;">
+				<p>
 				<html:radio name="parkingForm" property="Id2" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('Id2Div','Id2File', 'none', 'block')">
 					<bean:message key="label.deliveredDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
-				<br/>
+				</p>
+				<p>
 				<html:radio name="parkingForm" property="Id2" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('Id2Div','Id2File', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
-				<br/>						
+				</p>
+				<p>						
 				<html:radio name="parkingForm" property="Id2" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('Id2Div','Id2File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>
 				</html:radio>
+				</p>
 				<div id="Id2File">
 				<logic:notEmpty name="<%= factoryName %>" property="secondCarOwnerIdFileName">
-					<span class="warning0 mtop025">				
+					<p>
+					<span class="warning0 mtop05">				
 						<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=ownerId%>"/>:
 						<bean:write name="<%= factoryName %>" property="secondCarOwnerIdFileName"/>
 					</span>
+					</p>
 				</logic:notEmpty>				
 				</div>
 			</td>	
@@ -558,34 +648,44 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 				<fr:edit id="Id2FR" name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.secondCarId.notOwnCar"%>"
 					type="<%= type %>">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value="parking,parking,noborder"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0"/>
+						<fr:property name="columnClasses" value="width15em,width50em,noborder"/>
 					</fr:layout>					
 				</fr:edit>
+
 				<span class="error0 mtop025"><html:messages id="message" property="secondCarOwnerIdMessage" message="true" bundle="PARKING_RESOURCES">
 					<bean:write name="message"/><br/><br/>
 				</html:messages></span>
+
 			</div>
+
 			<span class="error0 mtop0"><html:messages id="message" property="secondCarOwnerIdDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>
-		<table class="tstyle1 thright thlight mtop0 mbottom0 tstylepark">
+
+			
+		<table class="tstyle1 thright thlight mtop0 mbottom0">
 		<tr>
-			<th class="parking"><div id="declaration2DivTop" style="display:none"><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td class="parking">		
+			<th style="width: 15em;"><div id="declaration2DivTop" style="display:none"><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/>:</div></th>
+			<td style="width: 50em;">
+				<p>
 				<html:radio name="parkingForm" property="declaration2" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('declaration2Div','declaration2File', 'none', 'block')">
 					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>
 				</html:radio>
-				<br/>					
+				</p>
+				<p>				
 				<html:radio name="parkingForm" property="declaration2" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('declaration2Div','declaration2File', 'block', 'none')">
 					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>
 				</html:radio>
+				</p>
 				<div id="declaration2File">
 				<logic:notEmpty name="<%= factoryName %>" property="secondDeclarationAuthorizationFileName">
-					<span class="warning0 mtop025">
+					<p>
+					<span class="warning0 mtop05">
 						<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=authorizationDeclaration%>"/>:
 						<bean:write name="<%= factoryName %>" property="secondDeclarationAuthorizationFileName"/>
 					</span>
+					</p>
 				</logic:notEmpty>
 				</div>
 			</td>					
@@ -595,22 +695,27 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 				<fr:edit id="declaration2FR" name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.secondCarAuthorization.notOwnCar"%>"
 					type="<%= type %>">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0 tstylepark"/>
-						<fr:property name="columnClasses" value="parking,parking,noborder"/>
+						<fr:property name="classes" value="tstyle1 thright thlight mtop0 mbottom0"/>
+						<fr:property name="columnClasses" value="width15em,width50em,noborder"/>
 					</fr:layout>				
-				</fr:edit>			
+				</fr:edit>
+
 				<span class="error0 mtop0"><html:messages id="message" property="secondDeclarationAuthorizationMessage" message="true" bundle="PARKING_RESOURCES">
 					<bean:write name="message"/><br/><br/>
 				</html:messages></span>
+
 			</div>
+
 			<span class="error0 mtop0"><html:messages id="message" property="secondDeclarationAuthorizationDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>
+
 			</div>
 			</div>
-			<br/>
-		
-		<input type="submit" value="<%= submit.toString() %>" />		
+
+		<p class="mtop2">
+			<input type="submit" value="<%= submit.toString() %>" />		
+		</p>
 
 		</fr:form>
 
