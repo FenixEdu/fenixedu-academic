@@ -13,8 +13,8 @@
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.create"/></h3>
 
-	<!-- possible publication types -->		
-	<fr:form action="/resultPublications/prepareCreate.do"> 
+	<!-- possible publication types -->
+	<fr:form action="/resultPublications/prepareCreate.do">
 		<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.type"/></b>
 		<e:labelValues id="resultPublicationTypes" enumeration="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean$ResultPublicationType" bundle="ENUMERATION_RESOURCES" />		
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.resultPublicationType" value="<%=publicationBean.getPublicationType().toString()%>" property="resultPublicationType" onchange="this.form.submit();">
@@ -31,7 +31,7 @@
 		<br/><br/>
 	</logic:messagesPresent>
 
-	<fr:form action="<%="/resultPublications/create.do"%>">
+	<fr:form action="/resultPublications/create.do">
 		<!-- Present Author -->
 		<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.author"/>:</b></p>
 		<fr:edit id="author" name="publicationBean" schema="<%= publicationBean.getParticipationSchema() %>" nested="true">
@@ -50,8 +50,7 @@
 	    	    <fr:property name="classes" value="style1"/>
 	        	<fr:property name="columnClasses" value="listClasses,,"/>
 		    </fr:layout>
-		    <fr:destination name="bookPartPostBack" path="<%= "/resultPublications/changeBookPartTypePostBack.do" %>"/>
-	   		<fr:destination name="invalid" path="<%="/resultPublications/prepareCreate.do"%>"/>
+	   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
 		</fr:edit>
 
 		<!-- Create event in case of inproceedings or proceedings -->
@@ -63,7 +62,7 @@
 		    	    <fr:property name="classes" value="style1"/>
 		        	<fr:property name="columnClasses" value="listClasses,,"/>
 			    </fr:layout>
-		   		<fr:destination name="invalid" path="<%="/resultPublications/prepareCreate.do" %>"/>
+		   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
 			</fr:edit>
 		</logic:equal>
 		
@@ -72,6 +71,6 @@
 		</html:submit>
 		<html:cancel>
 			<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
-		</html:cancel>	
+		</html:cancel>
 	</fr:form>
 </logic:present>
