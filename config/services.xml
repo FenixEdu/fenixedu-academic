@@ -9782,6 +9782,12 @@
 		<isTransactional>true</isTransactional>
 	</service>
 	<service>
+		<name>ImportBibtexPublication</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.ImportBibtexPublication</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>
+	<service>
 		<name>EditResultPublication</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.EditResultPublication</implementationClass>
 		<description />
