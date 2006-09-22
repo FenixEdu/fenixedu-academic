@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.YearMonthDay;
 
 public class PersonFunction extends PersonFunction_Base {
-       
+   
     public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin, YearMonthDay end, Double credits) {        
         super();
         checkParameters(parentParty, childParty, function, begin, end);
@@ -86,5 +86,13 @@ public class PersonFunction extends PersonFunction_Base {
     
     public Function getFunction(){
         return (Function) this.getAccountabilityType();
-    } 
+    }
+   
+    @Override
+    public Double getCredits() {
+	if(super.getCredits() == null) {
+	    return 0d;
+	}
+	return super.getCredits();
+    }
 }
