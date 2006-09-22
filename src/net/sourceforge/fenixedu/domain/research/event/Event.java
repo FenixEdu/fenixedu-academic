@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.event;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
@@ -20,7 +21,10 @@ public class Event extends Event_Base {
 
 	public Event(YearMonthDay endDate, YearMonthDay startDate, String eventLocation, Boolean fee,
 			EventType type, MultiLanguageString name) {
-		super();
+        super();
+        
+        if(name == null)
+            throw new DomainException("errors.event.requiredAttributes");
 		setRootDomainObject(RootDomainObject.getInstance());
 		setEndDate(endDate);
 		setStartDate(startDate);
