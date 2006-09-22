@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -105,6 +107,15 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
+    
+    public Set<Enrolment> getEnrolmentsSet() {
+	final Set<Enrolment> result = new HashSet<Enrolment>();
+	for (final CurriculumModule curriculumModule : this.getCurriculumModulesSet()) {
+	    result.addAll(curriculumModule.getEnrolments());
+	}
+	return result;
+    }
+
     
     public boolean isRoot() {
 	return hasParentStudentCurricularPlan();
