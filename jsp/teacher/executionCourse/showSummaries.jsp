@@ -21,29 +21,30 @@
 	</logic:messagesPresent>
 				
 	<logic:notEmpty name="nextPossibleLessonsDates">
-		<p class="mbottom025"><strong><bean:message key="label.last.lessons.without.summaries"/></strong></p>	
+		<p class="mbottom025"><bean:message key="label.last.lessons.without.summaries"/></p>	
 		<fr:form action="/summariesManagement.do?method=prepareCreateComplexSummary">			
 			<fr:edit id="showSummariesBeanWithChoicesHidden" name="showSummariesBean" nested="true" visible="false" />
 			<fr:view name="nextPossibleLessonsDates" schema="PossibleNextSummaryLessonAndDate">
 				<fr:layout name="tabular">
+					<fr:property name="style" value="width: 500px;"/>
 					<fr:property name="checkable" value="true"/>
 					<fr:property name="checkboxName" value="selectedLessonAndDate"/>
 					<fr:property name="checkboxValue" value="checkBoxValue"/>
-					<fr:property name="classes" value="tstyle1 mtop025"/>
+					<fr:property name="classes" value="tstyle1 mtop025 mbottom0"/>
+					<fr:property name="columnClasses" value="acenter,,,"/>
 				</fr:layout>
 			</fr:view>
+			
+			<table style="width: 500px;" class="tstyle1 mtop0">
+				<tr><td><html:submit><bean:message key="label.fill"/></html:submit></td></tr>
+			</table>
+			
+			<%--
 			<p class="mtop025 mbottom1"><html:submit><bean:message key="label.fill"/></html:submit></p>
+			--%>
 		</fr:form>
 	</logic:notEmpty>
-		
-	<fr:form>
-		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToExecutionCourseManagement" nested="true">
-			<fr:destination name="postBack" path="/summariesManagement.do?method=showSummariesPostBack"/>		
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright"/>
-			</fr:layout>
-		</fr:edit>
-	</fr:form>
+
 	
 	<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>
 	<div class="gen-button mtop1 mbottom2">
@@ -54,6 +55,18 @@
 		<bean:message key="link.summary.insert.info"/>
 	</div>	
 	
+
+	<fr:form>
+		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToExecutionCourseManagement" nested="true">
+			<fr:destination name="postBack" path="/summariesManagement.do?method=showSummariesPostBack"/>		
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+				<fr:property name="columnClasses" value=",,tdclear"/>
+			</fr:layout>
+		</fr:edit>
+	</fr:form>
+	
+
 	<logic:notEmpty name="summaries">
 		<logic:iterate name="summaries" id="summary">					
 			

@@ -27,10 +27,11 @@ function check(e,v){
 	<logic:notEmpty name="summariesManagementBean" property="summary">			
 		<h2><bean:message key="title.summary.edit" bundle="DEFAULT"/></h2>
 	</logic:notEmpty>
-	
-	<div class="infoop2">
-		<a href="#" class="dnone" id="instructionsButton" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));"><bean:message key="link.home" bundle="DEFAULT"/></a>
-		<div id="instructions" class="dblock">
+
+
+	<p class="mbottom05"><a href="#" class="dnone" id="instructionsButton" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));"><bean:message key="link.home" bundle="DEFAULT"/></a></p>
+	<div id="instructions" class="dblock">
+		<div class="infoop2 mtop025">
 			<ul class="mvert025">
 				<li><bean:message key="label.summary.management.instructions1" bundle="DEFAULT"/></li>
 				<li><bean:message key="label.summary.management.instructions2" bundle="DEFAULT"/></li>
@@ -39,7 +40,8 @@ function check(e,v){
 			</ul>
 		</div>
 	</div>
-		
+
+
 	<script>
 		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
 		document.getElementById('instructionsButton').className="dblock";
@@ -57,13 +59,13 @@ function check(e,v){
 		</span>
 		<p>
 	</logic:messagesPresent>
-		
+
 	<%-- Lesson --%>			
 	<h3 class="mbottom0"><bean:message key="label.lesson" bundle="DEFAULT"/></h3>
 	<table class="tstyle5">
 		<tr>
 			<%-- SummaryType --%>				
-			<td><bean:message key="label.type"/></td>
+			<td class="aright"><bean:message key="label.type"/></td>
 			<td>
 				<div style="display: inline;">
 					<fr:form>
@@ -80,7 +82,7 @@ function check(e,v){
 			</td>	
 		</tr>	
 		<tr>
-			<td><bean:message key="label.shift"/>:</td>
+			<td class="aright"><bean:message key="label.shift"/>:</td>
 			<td>
 				<%-- Shift --%>						
 				<fr:form>
@@ -97,7 +99,7 @@ function check(e,v){
 		</tr>	
 		<logic:notEqual name="summariesManagementBean" property="summaryType" value="EXTRA_SUMMARY">
 			<tr>
-				<td><bean:message key="label.lesson" bundle="DEFAULT"/>:</td>
+				<td class="aright"><bean:message key="label.lesson" bundle="DEFAULT"/>:</td>
 				<td>
 					<%-- Lesson --%>
 					<fr:form>
@@ -113,7 +115,7 @@ function check(e,v){
 				</td>
 			</tr>		
 			<tr>
-				<td><bean:message key="label.date" bundle="DEFAULT"/>:</td>
+				<td class="aright"><bean:message key="label.date" bundle="DEFAULT"/>:</td>
 				<td>
 					<%-- Date --%>
 					<fr:form>		
@@ -136,7 +138,7 @@ function check(e,v){
 	<table class="tstyle5">
 		<%-- LessonPlannings --%>
 		<tr>
-			<td><bean:message key="label.lessonPlanning" bundle="DEFAULT"/>:</td>
+			<td class="aright"><bean:message key="label.lessonPlanning" bundle="DEFAULT"/>:</td>
 			<td>				
 				<fr:form>
 					<bean:define id="chooseLessonPlanningURL">/summariesManagement.do?method=chooseLessonPlanning&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
@@ -152,7 +154,7 @@ function check(e,v){
 		</tr>	
 		<%-- LastSummaries --%>
 		<tr>
-			<td><bean:message key="message.summaryText.last" bundle="DEFAULT"/>:</td>
+			<td class="aright"><bean:message key="message.summaryText.last" bundle="DEFAULT"/>:</td>
 			<td>				
 				<fr:form>
 					<bean:define id="chooseLastSummaryURL">/summariesManagement.do?method=chooseLastSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	

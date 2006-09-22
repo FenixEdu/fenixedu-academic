@@ -29,9 +29,9 @@ function check(e,v){
 	</logic:notEmpty>
 
 
-	<div class="infoop2">
-		<a href="#" class="dnone" id="instructionsButton" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));"><bean:message key="link.home"/></a>
-		<div id="instructions" class="dblock">
+	<p class="mbottom05"><a href="#" class="dnone" id="instructionsButton" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));"><bean:message key="link.home"/></a></p>
+	<div id="instructions" class="dblock">
+		<div class="infoop2 mtop025">
 			<ul class="mvert025">
 				<li><bean:message key="label.summary.management.instructions1" /></li>
 				<li><bean:message key="label.summary.management.instructions2" /></li>
@@ -64,7 +64,7 @@ function check(e,v){
 	<table class="tstyle5">
 		<tr>
 			<%-- SummaryType --%>				
-			<td><bean:message key="label.type"/>:</td>
+			<td class="aright"><bean:message key="label.type"/>:</td>
 			<td>
 				<div style="display: inline;">
 					<fr:form>
@@ -80,7 +80,7 @@ function check(e,v){
 			</td>	
 		</tr>	
 		<tr>
-			<td><bean:message key="label.shift"/>:</td>
+			<td class="aright"><bean:message key="label.shift"/>:</td>
 			<td>
 				<%-- Shift --%>						
 				<fr:form>
@@ -96,7 +96,7 @@ function check(e,v){
 		</tr>	
 		<logic:notEqual name="summariesManagementBean" property="summaryType" value="EXTRA_SUMMARY">
 			<tr>
-				<td><bean:message key="label.lesson" />:</td>
+				<td class="aright"><bean:message key="label.lesson" />:</td>
 				<td>
 					<%-- Lesson --%>
 					<fr:form>
@@ -111,7 +111,7 @@ function check(e,v){
 				</td>
 			</tr>		
 			<tr>
-				<td><bean:message key="label.date" />:</td>
+				<td class="aright"><bean:message key="label.date" />:</td>
 				<td>
 					<%-- Date --%>
 					<fr:form>
@@ -130,10 +130,10 @@ function check(e,v){
 	
 	<%-- Associate --%>
 	<h3 class="mbottom0"> <bean:message key="label.associate"/></h3>
-	<table class="tstyle5">
+	<table class="tstyle5 thright">
 		<%-- LessonPlannings --%>
 		<tr>
-			<td><bean:message key="label.lessonPlanning" />:</td>
+			<td class="aright"><bean:message key="label.lessonPlanning" />:</td>
 			<td>				
 				<fr:form>
 					<fr:edit id="summariesManagementBeanWithLessonPlanning" name="summariesManagementBean" schema="ListLessonPlanningsToSummariesManagement" nested="true">
@@ -148,7 +148,7 @@ function check(e,v){
 		</tr>	
 		<%-- LastSummaries --%>
 		<tr>
-			<td><bean:message key="message.summaryText.last"/>:</td>
+			<td class="aright"><bean:message key="message.summaryText.last"/>:</td>
 			<td>				
 				<fr:form>
 					<fr:edit id="summariesManagementBeanWithLastSummary" name="summariesManagementBean" schema="ListLastSummariesToSummariesManagement" nested="true">

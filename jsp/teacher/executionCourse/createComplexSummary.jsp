@@ -23,10 +23,11 @@ function check(e,v){
 	
 	<h2><bean:message key="title.summaries.insert"/></h2>
 	
-	<div class="infoop2">
-		<a href="#" class="dnone" id="instructionsButton" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));"><bean:message key="link.home"/></a>
-		<div id="instructions" class="dblock">
+	<p class="mbottom05"><a href="#" class="dnone" id="instructionsButton" onclick="check(document.getElementById('instructions'), document.getElementById('instructionsButton'));"><bean:message key="link.home"/></a></p>
+	<div id="instructions" class="dblock">
+		<div class="infoop2 mtop025">
 			<ul class="mvert025">
+				<li><bean:message key="label.summary.management.instructions1" /></li>
 				<li><bean:message key="label.summary.management.instructions2" /></li>
 				<li><bean:message key="label.summary.management.instructions3" /></li>
 				<li><bean:message key="label.summary.management.instructions4" /></li>
@@ -108,13 +109,13 @@ function check(e,v){
 			<logic:iterate name="nextPossibleLessonsDates" id="lesson" indexId="index" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">				
 				<fr:view name="lesson" schema="PossibleNextSummaryLessonAndDate">
 					<fr:layout>
-						<fr:property name="classes" value="tstyle5 mtop1 mbottom0"/>
+						<fr:property name="classes" value="tstyle5 thlight mtop1 mbottom0"/>
 						<fr:property name="columnClasses" value="width8em aright,width30em"/>
 					</fr:layout>
 				</fr:view>
 				<fr:edit nested="true" name="lesson" id="<%= "nextPossibleLessonsDatesBean" + String.valueOf(index.intValue() + 1) %>" schema="EditPossibleNextSummaryLessonAndDates">
 					<fr:layout>
-						<fr:property name="classes" value="tstyle5 mbottom1 mtop0"/>
+						<fr:property name="classes" value="tstyle5 thlight mbottom1 mtop0"/>
 						<fr:property name="columnClasses" value="width8em aright,width30em,tdclear"/>
 					</fr:layout>
 				</fr:edit>
