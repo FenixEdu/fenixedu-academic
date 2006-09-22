@@ -9,7 +9,7 @@
 
 <logic:notEmpty name="section" property="associatedItems">
 	<logic:iterate id="item" name="section" property="orderedItems">
-		<h3><fr:view name="item" property="name"/></h3>
+		<h3 class="mtop2"><fr:view name="item" property="name"/></h3>
 		<logic:notEmpty name="item" property="information">
 			<fr:view name="item" property="information">
 				<fr:layout>
@@ -17,11 +17,10 @@
 					<fr:property name="newlineAware" value="false" />
 				</fr:layout>
 			</fr:view>
-			<br/>
-			<br/>
+
 		</logic:notEmpty>
 		<logic:notEmpty name="item" property="sortedFileItems">
-			<br/>
+
 			<table>
 				<logic:iterate id="fileItem" name="item" property="sortedFileItems">
 					<bean:define id="itemCode" name="item" property="idInternal" type="java.lang.Integer"/>
