@@ -118,6 +118,7 @@
 		
 		<!-- Results Management -->
 		<action path="/resultPublications/*" forward="/publications/management.do?method={1}"/>
+		<action path="/bibtexManagement/*" forward="/publications/bibtexManagement.do?method={1}"/>
 		<action path="/resultPatents/*" forward="/patents/management.do?method={1}"/>
 		<action path="/resultParticipations/*" forward="/result/resultParticipationManagement.do?method={1}"/>		
 		<action path="/resultDocumentFiles/*" forward="/result/resultDocumentFilesManagement.do?method={1}"/>
@@ -128,12 +129,21 @@
 	        	 parameter="method"
 	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.ResultPublicationsManagementDispatchAction">
 		    <forward name="ListPublications" path="publications.publicationsManagement"/>
-		    <forward name="ViewPublication" path="publications.viewPublication"/>
 		    <forward name="ViewEditPublication" path="publications.viewEditPublication"/>
 		    <forward name="PreparedToCreate" path="publications.createPublication"/>
 		    <forward name="PreparedToEdit" path="publications.editPublicationData"/>
 		    <forward name="PreparedToDelete" path="publications.deletePublication"/>
 		    <forward name="PublicationDeleted" path="/resultPublications/listPublications.do"/>
+		</action>
+		
+		<!-- Bibtex Publications Management Action Mapping -->
+		<action path="/publications/bibtexManagement"
+	        	 parameter="method"
+	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.BibTexManagementDispatchAction">
+		    <forward name="PublicationExportedToBibtex" path="/result/publications/bibtex/showPublicationBibtex.jsp"/>
+		    <forward name="OpenBibtexFile" path="publications.openBibtexFile"/>
+		    <forward name="ImportBibtex" path="publications.importBibtex"/>
+		    <forward name="PublicationsManagement" path="/resultPublications/listPublications.do"/>
 		</action>
 				
         <!-- Result Patents Management Action Mapping -->
