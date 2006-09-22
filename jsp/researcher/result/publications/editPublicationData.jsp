@@ -29,7 +29,6 @@
 	    	    <fr:property name="classes" value="style1"/>
 	        	<fr:property name="columnClasses" value="listClasses,,"/>
 		    </fr:layout>
-		    <fr:destination name="bookPartPostBack" path="<%= "/resultPublications/changeBookPartTypePostBack.do?" + parameters %>"/>
 	   		<fr:destination name="invalid" path="<%= "/resultPublications/prepareEditData.do?" + parameters %>"/>
 		</fr:edit>
 
