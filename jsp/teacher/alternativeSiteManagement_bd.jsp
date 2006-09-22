@@ -18,7 +18,10 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <bean:define id="bodyComponent" name="siteView" property="component"/>
-<br />
+<bean:define id="objectCode"><%= pageContext.findAttribute("objectCode").toString() %></bean:define>
+<p><html:link page="/alternativeSite.do?method=prepareImportCustomizationOptions&page=0" paramId="objectCode" paramName="objectCode">
+	<bean:message key="link.import.customizationOptions"/>
+</html:link></p>
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_1.gif" alt="<bean:message key="number_1" bundle="IMAGE_RESOURCES" />" />

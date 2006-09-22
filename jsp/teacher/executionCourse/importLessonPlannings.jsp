@@ -10,7 +10,7 @@
 	<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>		
 	<bean:define id="showLessonPlannings">/manageExecutionCourse.do?method=lessonPlannings&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 	<bean:define id="submitURL">/manageExecutionCourse.do?method=submitDataToImportLessonPlannings&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="chooseExecutionPeriodUrl">/manageExecutionCourse.do?method=chooseExecutionPeriodToImportLessonPlannings&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="chooseExecutionPeriodUrl">/manageExecutionCourse.do?method=submitDataToImportLessonPlanningsPostBack&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 	
 	<h2><bean:message key="label.import.lessonPlannings.title"/></h2>
 

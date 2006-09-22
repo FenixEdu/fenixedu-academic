@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 
-public class ImportLessonPlanning extends Service {
+public class ImportLessonPlannings extends Service {
 
     public void run(Integer executionCourseID, ExecutionCourse executionCourseTo, ExecutionCourse executionCourseFrom, Shift shift) {
         if(executionCourseTo != null && executionCourseFrom != null) {

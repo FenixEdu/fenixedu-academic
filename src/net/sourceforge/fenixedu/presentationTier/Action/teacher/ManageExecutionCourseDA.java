@@ -582,7 +582,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("importLessonPlannings");
     }
     
-    public ActionForward chooseExecutionPeriodToImportLessonPlannings(ActionMapping mapping,
+    public ActionForward submitDataToImportLessonPlanningsPostBack(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
         final IViewState viewState = RenderUtils.getViewState();
@@ -619,7 +619,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         if(importType != null && importType.equals(ImportLessonPlanningsBean.ImportType.PLANNING)) {
             final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null};
             try {
-                ServiceManagerServiceFactory.executeService(getUserView(request), "ImportLessonPlanning", args);
+                executeService(request, "ImportLessonPlanning", args);
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
             }
@@ -641,7 +641,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         
         final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, shiftFrom.getDisciplinaExecucao(), shiftFrom};
         try {
-            ServiceManagerServiceFactory.executeService(getUserView(request), "ImportLessonPlanning", args);
+            executeService(request, "ImportLessonPlannings", args);
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
         }
@@ -673,7 +673,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning, 
                 (lessonPlanning.getOrderOfPlanning() - 1) };        
         try {
-            ServiceManagerServiceFactory.executeService(getUserView(request), "MoveLessonPlanning", args);    
+            executeService(request, "MoveLessonPlanning", args);    
         } catch (DomainException e) {            
             addActionMessage(request, e.getKey(), e.getArgs());
         }   
@@ -688,7 +688,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning, 
                 (lessonPlanning.getOrderOfPlanning() + 1)};        
         try {
-            ServiceManagerServiceFactory.executeService(getUserView(request), "MoveLessonPlanning", args);    
+            executeService(request, "MoveLessonPlanning", args);    
         } catch (DomainException e) {            
             addActionMessage(request, e.getKey(), e.getArgs());
         }   
@@ -721,7 +721,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
                 lessonPlanningBean.getPlanning(), lessonPlanningBean.getLessonType(), lessonPlanningBean.getExecutionCourse()};
         
         try {
-            ServiceManagerServiceFactory.executeService(getUserView(request), "CreateLessonPlanning", args);    
+            executeService(request, "CreateLessonPlanning", args);    
         } catch (DomainException e) {            
             addActionMessage(request, e.getKey(), e.getArgs());
         }        
@@ -736,7 +736,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         if(lessonPlanning != null) {
             final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning, null, null};            
             try {
-                ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteLessonPlanning", args);    
+                executeService(request, "DeleteLessonPlanning", args);    
             } catch (DomainException e) {            
                 addActionMessage(request, e.getKey(), e.getArgs());
             }               
@@ -753,7 +753,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         if(lessonType != null && executionCourse != null) {
             final Object args[] = { executionCourse.getIdInternal(), null, executionCourse, lessonType};            
             try {
-                ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteLessonPlanning", args);    
+                executeService(request, "DeleteLessonPlanning", args);    
             } catch (DomainException e) {            
                 addActionMessage(request, e.getKey(), e.getArgs());
             }               

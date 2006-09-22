@@ -15,17 +15,18 @@
 	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareBiliographicReferencesInvalid&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 
 	<H2><bean:message key="label.import.sections"/></H2>
-							
-	<fr:edit id="importContentBean" name="importContentBean" schema="ChooseDegreePeriodAndCurricularYearToImportLessonPlannings"
-		 action="<%= submitUrl %>">
-		<fr:destination name="postBack" path="<%= postBackLink %>"/>
-		<fr:destination name="invalid" path="<%= invalidLink %>"/>
-		<fr:destination name="cancel" path="<%= showSections %>"/>
-		<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle4"/>
-		        <fr:property name="columnClasses" value="listClasses,,"/>
-		</fr:layout>
-	</fr:edit>
+			
+	<fr:form action="<%= showSections %>">							
+		<fr:edit id="importContentBean" name="importContentBean" schema="ChooseDegreePeriodAndCurricularYearToImportLessonPlannings"
+			 action="<%= submitUrl %>">
+			<fr:destination name="postBack" path="<%= postBackLink %>"/>			
+			<fr:layout name="tabular" >
+					<fr:property name="classes" value="tstyle4"/>
+			        <fr:property name="columnClasses" value="listClasses,,"/>
+			</fr:layout>
+		</fr:edit>
+		<html:cancel><bean:message key="button.cancel"/></html:cancel>
+	</fr:form>	
 
 	<logic:notEmpty name="importContentBean" property="curricularYear">	
 	 	<logic:notEmpty name="importContentBean" property="executionPeriod">	

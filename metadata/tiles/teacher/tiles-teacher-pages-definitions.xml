@@ -532,7 +532,11 @@
 	<definition name="manage-execution-course-lessonPlannings-import" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/importLessonPlannings.jsp" />
 	</definition>	
-	
+		
+	<definition name="import-customization-options" extends="execution-course-administration">
+		<put name="body" value="/teacher/importCustomizationOptions.jsp" />
+	</definition>	
+		
 	<definition name="manage-execution-course-bibliographicReferences-import" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/importBibliographicReferences.jsp" />
 	</definition>

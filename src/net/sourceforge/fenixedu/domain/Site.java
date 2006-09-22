@@ -138,5 +138,11 @@ public class Site extends Site_Base {
             }
         }
     }
-    
+
+    public void copyCustomizationOptionsFrom(Site siteFrom) {
+	setMail(siteFrom.getMail());	
+	setAlternativeSite(siteFrom.getAlternativeSite());
+	setInitialStatement(siteFrom.getInitialStatement());
+	setIntroduction(siteFrom.getIntroduction());
+    }    
 }

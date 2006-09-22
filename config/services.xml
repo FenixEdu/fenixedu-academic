@@ -10197,9 +10197,18 @@
             <chain name="ExecutionCourseLecturingTeacherAuthorization" />
         </filterChains>
     </service>
-<service>
-        <name>ImportLessonPlanning</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportLessonPlanning</implementationClass>
+	<service>
+        <name>ImportLessonPlannings</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportLessonPlannings</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization" />
+        </filterChains>
+    </service>  
+    <service>
+        <name>ImportCustomizationOptions</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportCustomizationOptions</implementationClass>
         <description />
         <isTransactional>true</isTransactional>
         <filterChains>

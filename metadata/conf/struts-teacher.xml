@@ -869,6 +869,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true">
             <forward name="editAlternativeSite" path="/alternativeSiteManagement.jsp"/>
+            <forward name="importCustomizationOptions" path="import-customization-options"/>
             <forward name="viewSite" path="/viewSite.jsp"/>
         </action>
         <!-- input of actions for announcement management -->
