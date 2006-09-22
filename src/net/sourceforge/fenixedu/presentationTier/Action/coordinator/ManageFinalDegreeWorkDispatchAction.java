@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
+import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposalEditor;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -106,14 +107,17 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         final Department department = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
 
         final Set<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR);
-        for (final CompetenceCourse competenceCourse : department.getCompetenceCourses()) {
-            for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
-                if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE) {
-                    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-                    executionDegrees.addAll(degreeCurricularPlan.getExecutionDegrees());
+        if (department != null) {
+            for (final CompetenceCourse competenceCourse : department.getCompetenceCourses()) {
+                for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
+                    if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE) {
+                        final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+                        executionDegrees.addAll(degreeCurricularPlan.getExecutionDegrees());
+                    }
                 }
             }
         }
+        
         request.setAttribute("executionDegrees", executionDegrees);
 
         return mapping.findForward("show-choose-execution-degree-page");
@@ -125,7 +129,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         Integer degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
@@ -151,7 +155,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             actionErrors.add("notAuthorized", new ActionError("error.exception.notAuthorized"));
             saveErrors(request, actionErrors);
 
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
             return mapping.findForward("error");
@@ -294,7 +298,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 .getParameter("finalDegreeWorkProposalOID");
         Integer degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
@@ -306,7 +310,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object args[] = { new Integer(finalDegreeWorkProposalOIDString) };
+            Object args[] = { Integer.valueOf(finalDegreeWorkProposalOIDString) };
             try {
                 InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService(userView,
                         "ReadFinalDegreeWorkProposal", args);
@@ -426,7 +430,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         Integer degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
@@ -622,8 +626,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         String[] branchList = (String[]) finalWorkForm.get("branchList");
         String status = (String) finalWorkForm.get("status");
 
-        Integer min = new Integer(minimumNumberOfGroupElements);
-        Integer max = new Integer(maximumNumberOfGroupElements);
+        Integer min = Integer.valueOf(minimumNumberOfGroupElements);
+        Integer max = Integer.valueOf(maximumNumberOfGroupElements);
         if ((min.intValue() > max.intValue()) || (min.intValue() <= 0)) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.numberGroupElements.invalidInterval",
@@ -632,8 +636,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             return mapping.getInputForward();
         }
 
-        Integer orientatorCreditsPercentage = new Integer(responsibleCreditsPercentage);
-        Integer coorientatorCreditsPercentage = new Integer(coResponsibleCreditsPercentage);
+        Integer orientatorCreditsPercentage = Integer.valueOf(responsibleCreditsPercentage);
+        Integer coorientatorCreditsPercentage = Integer.valueOf(coResponsibleCreditsPercentage);
         if ((orientatorCreditsPercentage.intValue() < 0)
                 || (coorientatorCreditsPercentage.intValue() < 0)
                 || (orientatorCreditsPercentage.intValue() + coorientatorCreditsPercentage.intValue() != 100)) {
@@ -644,13 +648,13 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             return mapping.getInputForward();
         }
 
-        InfoProposal infoFinalWorkProposal = new InfoProposal();
-        if (idInternal != null && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
-            infoFinalWorkProposal.setIdInternal(new Integer(idInternal));
+        final InfoProposalEditor infoFinalWorkProposal = new InfoProposalEditor();
+        if (!StringUtils.isEmpty(idInternal) && StringUtils.isNumeric(idInternal)) {
+            infoFinalWorkProposal.setIdInternal(Integer.valueOf(idInternal));
         }
         infoFinalWorkProposal.setTitle(title);
-        infoFinalWorkProposal.setOrientatorsCreditsPercentage(new Integer(responsibleCreditsPercentage));
-        infoFinalWorkProposal.setCoorientatorsCreditsPercentage(new Integer(
+        infoFinalWorkProposal.setOrientatorsCreditsPercentage(Integer.valueOf(responsibleCreditsPercentage));
+        infoFinalWorkProposal.setCoorientatorsCreditsPercentage(Integer.valueOf(
                 coResponsibleCreditsPercentage));
         infoFinalWorkProposal.setFraming(framing);
         infoFinalWorkProposal.setObjectives(objectives);
@@ -658,8 +662,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         infoFinalWorkProposal.setRequirements(requirements);
         infoFinalWorkProposal.setDeliverable(deliverable);
         infoFinalWorkProposal.setUrl(url);
-        infoFinalWorkProposal.setMinimumNumberOfGroupElements(new Integer(minimumNumberOfGroupElements));
-        infoFinalWorkProposal.setMaximumNumberOfGroupElements(new Integer(maximumNumberOfGroupElements));
+        infoFinalWorkProposal.setMinimumNumberOfGroupElements(Integer.valueOf(minimumNumberOfGroupElements));
+        infoFinalWorkProposal.setMaximumNumberOfGroupElements(Integer.valueOf(maximumNumberOfGroupElements));
         infoFinalWorkProposal.setObservations(observations);
         infoFinalWorkProposal.setLocation(location);
         final DegreeType dt = (degreeType != null && degreeType.length() > 0) ? DegreeType.valueOf(degreeType) : null;
@@ -684,7 +688,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             infoFinalWorkProposal.setCompanionMail(companionMail);
             if (companionPhone != null && !companionPhone.equals("")
                     && StringUtils.isNumeric(companionPhone)) {
-                infoFinalWorkProposal.setCompanionPhone(new Integer(companionPhone));
+                infoFinalWorkProposal.setCompanionPhone(Integer.valueOf(companionPhone));
             }
             infoFinalWorkProposal.setCompanyAdress(companyAdress);
             infoFinalWorkProposal.setCompanyName(companyName);
@@ -696,14 +700,14 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             for (int i = 0; i < branchList.length; i++) {
                 String brachOIDString = branchList[i];
                 if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
-                    InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(new Integer(brachOIDString)));
+                    InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(Integer.valueOf(brachOIDString)));
                     infoFinalWorkProposal.getBranches().add(infoBranch);
                 }
             }
         }
 
         if (status != null && !status.equals("") && StringUtils.isNumeric(status)) {
-            infoFinalWorkProposal.setStatus(new FinalDegreeWorkProposalStatus(new Integer(status)));
+            infoFinalWorkProposal.setStatus(new FinalDegreeWorkProposalStatus(Integer.valueOf(status)));
         }
 
         try {
@@ -753,7 +757,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             return prepareFinalWorkInformation(mapping, form, request, response);
         }
 
-        Object[] args = { new Integer(number) };
+        Object[] args = { Integer.valueOf(number) };
         InfoTeacher infoTeacher;
         try {
             infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByNumber",
@@ -799,12 +803,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         String degreeId = (String) finalWorkForm.get("degree");
         finalWorkForm.set("degreeType", DegreeType.DEGREE.toString());
 
-        Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request
+        Integer degreeCurricularPlanID = Integer.valueOf(Integer.parseInt(request
                 .getParameter("degreeCurricularPlanID")));
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         InfoExecutionDegree infoExecutionDegree = CommonServiceRequests.getInfoExecutionDegree(userView,
-                new Integer(degreeId));
+                Integer.valueOf(degreeId));
 
         final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, infoExecutionDegree.getIdInternal());
         request.setAttribute("executionDegree", executionDegree);
@@ -905,7 +909,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             List selectedProposalOIDs = new ArrayList();
             for (int i = 0; i < selectedProposals.length; i++) {
                 if (selectedProposals[i] != null && StringUtils.isNumeric(selectedProposals[i])) {
-                    selectedProposalOIDs.add(new Integer(selectedProposals[i]));
+                    selectedProposalOIDs.add(Integer.valueOf(selectedProposals[i]));
                 }
             }
 
@@ -946,7 +950,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         Integer minimumNumberOfCompletedCourses = null;
         if (minimumNumberOfCompletedCoursesString != null
                 && !minimumNumberOfCompletedCoursesString.equals("")) {
-            minimumNumberOfCompletedCourses = new Integer(minimumNumberOfCompletedCoursesString);
+            minimumNumberOfCompletedCourses = Integer.valueOf(minimumNumberOfCompletedCoursesString);
         }
 
         Integer maximumCurricularYearToCountCompletedCourses = null;
@@ -964,18 +968,18 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         Integer minimumNumberOfStudents = null;
         if (minimumNumberOfStudentsString != null && !minimumNumberOfStudentsString.equals("")) {
-            minimumNumberOfStudents = new Integer(minimumNumberOfStudentsString);
+            minimumNumberOfStudents = Integer.valueOf(minimumNumberOfStudentsString);
         }
 
         Integer maximumNumberOfStudents = null;
         if (maximumNumberOfStudentsString != null && !maximumNumberOfStudentsString.equals("")) {
-            maximumNumberOfStudents = new Integer(maximumNumberOfStudentsString);
+            maximumNumberOfStudents = Integer.valueOf(maximumNumberOfStudentsString);
         }
 
         Integer maximumNumberOfProposalCandidaciesPerGroup = null;
         if (maximumNumberOfProposalCandidaciesPerGroupString != null
                 && !maximumNumberOfProposalCandidaciesPerGroupString.equals("")) {
-            maximumNumberOfProposalCandidaciesPerGroup = new Integer(
+            maximumNumberOfProposalCandidaciesPerGroup = Integer.valueOf(
                     maximumNumberOfProposalCandidaciesPerGroupString);
         }
 
@@ -1015,7 +1019,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 && StringUtils.isNumeric(selectedGroupProposal)) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object args[] = { new Integer(selectedGroupProposal) };
+            Object args[] = { Integer.valueOf(selectedGroupProposal) };
             ServiceUtils.executeService(userView, "AttributeFinalDegreeWork", args);
         }
 

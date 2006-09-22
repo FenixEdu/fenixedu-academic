@@ -5,6 +5,8 @@
 package net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 
 /**
  * @author Luis Cruz
@@ -12,77 +14,62 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
  */
 public class InfoGroupProposal extends InfoObject {
 
-    private Integer orderOfPreference;
+    private DomainReference<GroupProposal> groupProposalDomainReference;
+    
+    public InfoGroupProposal(final GroupProposal groupProposal) {
+	groupProposalDomainReference = new DomainReference<GroupProposal>(groupProposal);
+    }
+    
+    public static InfoGroupProposal newInfoFromDomain(final GroupProposal groupProposal) {
+	return groupProposal == null ? null : new InfoGroupProposal(groupProposal);
+    }
 
-    private InfoProposal finalDegreeWorkProposal;
+    private GroupProposal getGroupProposal() {
+	return groupProposalDomainReference == null ? null : groupProposalDomainReference.getObject();
+    }
 
-    private InfoGroup infoGroup;
+    @Override
+    public Integer getIdInternal() {
+	return getGroupProposal().getIdInternal();
+    }
 
-    public InfoGroupProposal() {
-        super();
+    @Override
+    public void setIdInternal(Integer integer) {
+	throw new Error("Method should not be called!");
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoGroupProposal) {
-            InfoGroupProposal group = (InfoGroupProposal) obj;
+	return obj instanceof InfoGroupProposal
+		&& getGroupProposal() == ((InfoGroupProposal) obj).getGroupProposal();
+    }
 
-            if (group.getIdInternal() != null && getIdInternal() != null) {
-                result = group.getIdInternal().equals(getIdInternal());
-            }
-        }
-        return result;
+    public int hashCode() {
+	return getGroupProposal().hashCode();
     }
 
     public String toString() {
-        String result = "[InfoGroupProposal";
-        result += ", idInternal=" + getIdInternal();
-        result += "]";
-        return result;
+	return getGroupProposal().toString();
     }
-
+    
     /**
      * @return Returns the finalDegreeWorkProposal.
      */
     public InfoProposal getFinalDegreeWorkProposal() {
-        return finalDegreeWorkProposal;
-    }
-
-    /**
-     * @param finalDegreeWorkProposal
-     *            The finalDegreeWorkProposal to set.
-     */
-    public void setFinalDegreeWorkProposal(InfoProposal finalDegreeWorkProposal) {
-        this.finalDegreeWorkProposal = finalDegreeWorkProposal;
+	return InfoProposal.newInfoFromDomain(getGroupProposal().getFinalDegreeWorkProposal());
     }
 
     /**
      * @return Returns the orderOfPreference.
      */
     public Integer getOrderOfPreference() {
-        return orderOfPreference;
-    }
-
-    /**
-     * @param orderOfPreference
-     *            The orderOfPreference to set.s
-     */
-    public void setOrderOfPreference(Integer orderOfPreference) {
-        this.orderOfPreference = orderOfPreference;
+	return getGroupProposal().getOrderOfPreference();
     }
 
     /**
      * @return Returns the infoGroup.
      */
     public InfoGroup getInfoGroup() {
-        return infoGroup;
+	return InfoGroup.newInfoFromDomain(getGroupProposal().getFinalDegreeDegreeWorkGroup());
     }
 
-    /**
-     * @param infoGroup
-     *            The infoGroup to set.
-     */
-    public void setInfoGroup(InfoGroup infoGroup) {
-        this.infoGroup = infoGroup;
-    }
 }

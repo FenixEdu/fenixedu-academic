@@ -4,9 +4,20 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
+import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
 /**
@@ -15,278 +26,173 @@ import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
  */
 public class FinalDegreeWorkProposalHeader extends InfoObject {
 
-    private Integer proposalNumber;
+    private DomainReference<Proposal> proposalDomainReference;
 
-    private Integer executionDegreeOID;
+    private DomainReference<ExecutionDegree> executionDegreeDomainReference;
 
-    private String executionYear;
-
-    private String title;
-
-    private Integer orientatorOID;
-
-    private String orientatorName;
-
-    private Integer coorientatorOID;
-
-    private String coorientatorName;
-
-    private String companyLink;
-
-    private String degreeCode;
-
-    private Boolean editable;
-
-    private FinalDegreeWorkProposalStatus status;
-
-    private List groupProposals;
-
-    private InfoGroup groupAttributedByTeacher;
-
-    private InfoGroup groupAttributed;
-
-    private List branches;
-
-    public FinalDegreeWorkProposalHeader() {
-        super();
+    public FinalDegreeWorkProposalHeader(final Proposal proposal) {
+	proposalDomainReference = new DomainReference<Proposal>(proposal);
+	executionDegreeDomainReference = new DomainReference<ExecutionDegree>(proposal.getScheduleing()
+		.getExecutionDegrees().get(0));
     }
 
-    /**
-     * @return Returns the companyLink.
-     */
-    public String getCompanyLink() {
-        if (companyLink == null)
-            return "";
-        return companyLink;
+    public FinalDegreeWorkProposalHeader(final Proposal proposal, final ExecutionDegree executionDegree) {
+	proposalDomainReference = new DomainReference<Proposal>(proposal);
+	executionDegreeDomainReference = new DomainReference<ExecutionDegree>(executionDegree);
     }
 
-    /**
-     * @param companyLink
-     *            The companyLink to set.
-     */
-    public void setCompanyLink(String companyLink) {
-        this.companyLink = companyLink;
+    public static FinalDegreeWorkProposalHeader newInfoFromDomain(final Proposal proposal) {
+	return proposal == null ? null : new FinalDegreeWorkProposalHeader(proposal);
     }
 
-    /**
-     * @return Returns the coorientatorName.
-     */
-    public String getCoorientatorName() {
-        if (coorientatorName == null)
-            return "";
-        return coorientatorName;
+    public static FinalDegreeWorkProposalHeader newInfoFromDomain(final Proposal proposal,
+	    final ExecutionDegree executionDegree) {
+	return proposal == null ? null : new FinalDegreeWorkProposalHeader(proposal, executionDegree);
     }
 
-    /**
-     * @param coorientatorName
-     *            The coorientatorName to set.
-     */
-    public void setCoorientatorName(String coorientatorName) {
-        this.coorientatorName = coorientatorName;
+    private Proposal getProposal() {
+	return proposalDomainReference == null ? null : proposalDomainReference.getObject();
     }
 
-    /**
-     * @return Returns the coorientatorOID.
-     */
-    public Integer getCoorientatorOID() {
-        return coorientatorOID;
+    private ExecutionDegree getExecutionDegree() {
+	return executionDegreeDomainReference == null ? null : executionDegreeDomainReference
+		.getObject();
     }
 
-    /**
-     * @param coorientatorOID
-     *            The coorientatorOID to set.
-     */
-    public void setCoorientatorOID(Integer coorientatorOID) {
-        this.coorientatorOID = coorientatorOID;
+    public boolean equals(Object obj) {
+	return obj instanceof FinalDegreeWorkProposalHeader
+		&& getProposal() == ((FinalDegreeWorkProposalHeader) obj).getProposal()
+		&& getExecutionDegree() == ((FinalDegreeWorkProposalHeader) obj).getExecutionDegree();
     }
 
-    /**
-     * @return Returns the orientatorName.
-     */
-    public String getOrientatorName() {
-        return orientatorName;
+    public int hashCode() {
+	return getProposal().hashCode();
     }
 
-    /**
-     * @param orientatorName
-     *            The orientatorName to set.
-     */
-    public void setOrientatorName(String orientatorName) {
-        this.orientatorName = orientatorName;
+    @Override
+    public Integer getIdInternal() {
+	return getProposal().getIdInternal();
     }
 
-    /**
-     * @return Returns the orientatorOID.
-     */
-    public Integer getOrientatorOID() {
-        return orientatorOID;
-    }
-
-    /**
-     * @param orientatorOID
-     *            The orientatorOID to set.
-     */
-    public void setOrientatorOID(Integer orientatorOID) {
-        this.orientatorOID = orientatorOID;
-    }
-
-    /**
-     * @return Returns the title.
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * @param title
-     *            The title to set.
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
-     * @return Returns the degreeCode.
-     */
-    public String getDegreeCode() {
-        return degreeCode;
-    }
-
-    /**
-     * @param degreeCode
-     *            The degreeCode to set.
-     */
-    public void setDegreeCode(String degreeCode) {
-        this.degreeCode = degreeCode;
-    }
-
-    /**
-     * @return Returns the editable.
-     */
-    public Boolean getEditable() {
-        return editable;
-    }
-
-    /**
-     * @param editable
-     *            The editable to set.
-     */
-    public void setEditable(Boolean editable) {
-        this.editable = editable;
-    }
-
-    /**
-     * @return Returns the proposalNumber.
-     */
-    public Integer getProposalNumber() {
-        return proposalNumber;
-    }
-
-    /**
-     * @param proposalNumber
-     *            The proposalNumber to set.
-     */
-    public void setProposalNumber(Integer proposalNumber) {
-        this.proposalNumber = proposalNumber;
+    @Override
+    public void setIdInternal(Integer integer) {
+	throw new Error("Method should not be called!");
     }
 
     /**
      * @return Returns the status.
      */
     public FinalDegreeWorkProposalStatus getStatus() {
-        return status;
+	return getProposal().getStatus();
     }
 
     /**
-     * @param status
-     *            The status to set.
+     * @return Returns the companyLink.
      */
-    public void setStatus(FinalDegreeWorkProposalStatus status) {
-        this.status = status;
+    public String getCompanyLink() {
+	return getProposal().getCompanionName();
     }
 
     /**
-     * @return Returns the groupProposals.
+     * @return Returns the coorientatorName.
      */
-    public List getGroupProposals() {
-        return groupProposals;
+    public String getCoorientatorName() {
+	return getProposal().hasCoorientator() ? getProposal().getCoorientator().getPerson().getNome() : StringUtils.EMPTY;
     }
 
     /**
-     * @param groupProposals
-     *            The groupProposals to set.
+     * @return Returns the coorientatorOID.
      */
-    public void setGroupProposals(List groupProposals) {
-        this.groupProposals = groupProposals;
+    public Integer getCoorientatorOID() {
+	return getProposal().getCoorientator().getIdInternal();
+    }
+
+    /**
+     * @return Returns the orientatorName.
+     */
+    public String getOrientatorName() {
+	return getProposal().getOrientator().getPerson().getNome();
+    }
+
+    /**
+     * @return Returns the orientatorOID.
+     */
+    public Integer getOrientatorOID() {
+	return getProposal().getOrientator().getIdInternal();
+    }
+
+    /**
+     * @return Returns the title.
+     */
+    public String getTitle() {
+	return getProposal().getTitle();
+    }
+
+    /**
+     * @return Returns the proposalNumber.
+     */
+    public Integer getProposalNumber() {
+	return getProposal().getProposalNumber();
     }
 
     /**
      * @return Returns the groupAttributedByTeacher.
      */
     public InfoGroup getGroupAttributedByTeacher() {
-        return groupAttributedByTeacher;
-    }
-
-    /**
-     * @param groupAttributedByTeacher
-     *            The groupAttributedByTeacher to set.
-     */
-    public void setGroupAttributedByTeacher(InfoGroup groupAttributedByTeacher) {
-        this.groupAttributedByTeacher = groupAttributedByTeacher;
+	return InfoGroup.newInfoFromDomain(getProposal().getGroupAttributedByTeacher());
     }
 
     /**
      * @return Returns the groupAttributed.
      */
     public InfoGroup getGroupAttributed() {
-        return groupAttributed;
-    }
-
-    /**
-     * @param groupAttributed
-     *            The groupAttributed to set.
-     */
-    public void setGroupAttributed(InfoGroup groupAttributed) {
-        this.groupAttributed = groupAttributed;
-    }
-
-    /**
-     * @return Returns the executionDegreeOID.
-     */
-    public Integer getExecutionDegreeOID() {
-        return executionDegreeOID;
-    }
-
-    /**
-     * @param executionDegreeOID
-     *            The executionDegreeOID to set.
-     */
-    public void setExecutionDegreeOID(Integer executionDegreeOID) {
-        this.executionDegreeOID = executionDegreeOID;
+	return InfoGroup.newInfoFromDomain(getProposal().getGroupAttributed());
     }
 
     /**
      * @return Returns the branches.
      */
-    public List getBranches() {
-        return branches;
+    public List<InfoBranch> getBranches() {
+	List<InfoBranch> result = new ArrayList<InfoBranch>();
+
+	for (final Branch branch : getProposal().getBranches()) {
+	    result.add(InfoBranch.newInfoFromDomain(branch));
+	}
+
+	return result;
     }
 
     /**
-     * @param branches
-     *            The branches to set.
+     * @return Returns the groupProposals.
      */
-    public void setBranches(List branches) {
-        this.branches = branches;
+    public List<InfoGroupProposal> getGroupProposals() {
+	List<InfoGroupProposal> result = new ArrayList<InfoGroupProposal>();
+
+	for (final GroupProposal groupProposal : getProposal().getGroupProposals()) {
+	    result.add(InfoGroupProposal.newInfoFromDomain(groupProposal));
+	}
+
+	return result;
+    }
+    public Integer getExecutionDegreeOID() {
+	return getExecutionDegree().getIdInternal();
     }
 
     public String getExecutionYear() {
-        return executionYear;
+	return getExecutionDegree().getExecutionYear().getYear();
     }
-    
 
-    public void setExecutionYear(String executionYear) {
-        this.executionYear = executionYear;
+    public String getDegreeCode() {
+	return getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla();
     }
-    
+
+    public Boolean getEditable() {
+	final Scheduleing scheduleing = getProposal().getScheduleing();
+
+	return scheduleing != null && scheduleing.getStartOfProposalPeriod() != null
+		&& scheduleing.getEndOfProposalPeriod() != null
+		&& scheduleing.getStartOfProposalPeriod().before(Calendar.getInstance().getTime())
+		&& scheduleing.getEndOfProposalPeriod().after(Calendar.getInstance().getTime());
+    }
+
 }

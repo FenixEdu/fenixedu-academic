@@ -43,7 +43,7 @@
 								 onchange="this.form.submit();">
 						<html:option value=""/>
 						<html:options property="idInternal"
-									  labelProperty="infoDegreeCurricularPlan.infoDegree.nome"
+									  labelProperty="infoDegreeCurricularPlan.name"
 									  collection="infoExecutionDegrees" />
 					</html:select>
 					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">

@@ -4,10 +4,15 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 
 /**
  * @author Luis Cruz
@@ -15,78 +20,75 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
  */
 public class InfoGroup extends InfoObject {
 
-    private InfoExecutionDegree executionDegree;
+    private DomainReference<Group> groupDomainReference;
+    
+    public InfoGroup(final Group group) {
+	groupDomainReference = new DomainReference<Group>(group);
+    }
 
-    private List groupStudents;
+    public static InfoGroup newInfoFromDomain(final Group group) {
+	return group == null ? null : new InfoGroup(group);
+    }
 
-    private List groupProposals;
-
-    public InfoGroup() {
-        super();
+    public Group getGroup() {
+	return groupDomainReference == null ? null : groupDomainReference
+		.getObject();
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoGroup) {
-            InfoGroup group = (InfoGroup) obj;
+	return obj instanceof InfoGroup
+		&& getGroup() == ((InfoGroup) obj).getGroup();
+    }
 
-            if (group.getIdInternal() != null && getIdInternal() != null) {
-                result = group.getIdInternal().equals(getIdInternal());
-            }
-        }
-        return result;
+    public int hashCode() {
+	return getGroup().hashCode();
+    }
+
+    @Override
+    public Integer getIdInternal() {
+	return getGroup().getIdInternal();
+    }
+
+    @Override
+    public void setIdInternal(Integer integer) {
+	throw new Error("Method should not be called!");
     }
 
     public String toString() {
-        String result = "[InfoGroup";
-        result += ", idInternal=" + getIdInternal();
-        result += ", infoExecutionDegree=" + getExecutionDegree();
-        result += "]";
-        return result;
+	return getGroup().toString();
     }
 
     /**
      * @return Returns the executionDegree.
      */
     public InfoExecutionDegree getExecutionDegree() {
-        return executionDegree;
-    }
-
-    /**
-     * @param executionDegree
-     *            The executionDegree to set.
-     */
-    public void setExecutionDegree(InfoExecutionDegree executionDegree) {
-        this.executionDegree = executionDegree;
+	return InfoExecutionDegree.newInfoFromDomain(getGroup().getExecutionDegree());
     }
 
     /**
      * @return Returns the groupProposals.
      */
-    public List getGroupProposals() {
-        return groupProposals;
-    }
+    public List<InfoGroupProposal> getGroupProposals() {
+	List<InfoGroupProposal> result = new ArrayList<InfoGroupProposal>();
+	
+	for (final GroupProposal groupProposal : getGroup().getGroupProposals()) {
+	    result.add(InfoGroupProposal.newInfoFromDomain(groupProposal));
+	}
 
-    /**
-     * @param groupProposals
-     *            The groupProposals to set.
-     */
-    public void setGroupProposals(List groupProposals) {
-        this.groupProposals = groupProposals;
+	return result;
     }
 
     /**
      * @return Returns the groupStudents.
      */
-    public List getGroupStudents() {
-        return groupStudents;
+    public List<InfoGroupStudent> getGroupStudents() {
+	List<InfoGroupStudent> result = new ArrayList<InfoGroupStudent>();
+	
+	for (final GroupStudent groupStudent : getGroup().getGroupStudents()) {
+	    result.add(InfoGroupStudent.newInfoFromDomain(groupStudent));
+	}
+
+	return result;
     }
 
-    /**
-     * @param groupStudents
-     *            The groupStudents to set.
-     */
-    public void setGroupStudents(List groupStudents) {
-        this.groupStudents = groupStudents;
-    }
 }

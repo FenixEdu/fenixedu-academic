@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 
 /**
  * @author Luis Cruz
@@ -13,77 +15,63 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
  */
 public class InfoGroupStudent extends InfoObject {
 
-    private InfoGroup finalDegreeDegreeWorkGroup;
-
-    private InfoStudent student;
-
-    private InfoProposal finalDegreeWorkProposalConfirmation;
-
-    public InfoGroupStudent() {
-        super();
+    private DomainReference<GroupStudent> groupStudentDomainReference;
+    
+    public InfoGroupStudent(final GroupStudent groupStudent) {
+	groupStudentDomainReference = new DomainReference<GroupStudent>(groupStudent);
+    }
+    
+    public static InfoGroupStudent newInfoFromDomain(GroupStudent groupStudent) {
+	return groupStudent == null ? null : new InfoGroupStudent(groupStudent);
+    }
+    
+    private GroupStudent getGroupStudent() {
+	return groupStudentDomainReference == null ?  null : groupStudentDomainReference.getObject();
+    }
+    
+    public boolean equals(Object obj) {
+	return obj instanceof InfoGroupStudent
+		&& getGroupStudent() == ((InfoGroupStudent) obj).getGroupStudent();
     }
 
-    public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoGroupStudent) {
-            InfoGroupStudent group = (InfoGroupStudent) obj;
+    public int hashCode() {
+	return getGroupStudent().hashCode();
+    }
 
-            if (group.getIdInternal() != null && getIdInternal() != null) {
-                result = group.getIdInternal().equals(getIdInternal());
-            }
-        }
-        return result;
+    @Override
+    public Integer getIdInternal() {
+	return getGroupStudent().getIdInternal();
+    }
+
+    @Override
+    public void setIdInternal(Integer integer) {
+	throw new Error("Method should not be called!");
     }
 
     public String toString() {
-        String result = "[InfoGroupStudent";
-        result += ", idInternal=" + getIdInternal();
-        result += "]";
-        return result;
+	return getGroupStudent().toString();
     }
 
     /**
      * @return Returns the finalDegreeDegreeWorkGroup.
      */
     public InfoGroup getFinalDegreeDegreeWorkGroup() {
-        return finalDegreeDegreeWorkGroup;
+	return InfoGroup.newInfoFromDomain(getGroupStudent().getFinalDegreeDegreeWorkGroup());
     }
 
-    /**
-     * @param finalDegreeDegreeWorkGroup
-     *            The finalDegreeDegreeWorkGroup to set.
-     */
-    public void setFinalDegreeDegreeWorkGroup(InfoGroup finalDegreeDegreeWorkGroup) {
-        this.finalDegreeDegreeWorkGroup = finalDegreeDegreeWorkGroup;
-    }
 
     /**
      * @return Returns the finalDegreeWorkProposalConfirmation.
      */
     public InfoProposal getFinalDegreeWorkProposalConfirmation() {
-        return finalDegreeWorkProposalConfirmation;
-    }
-
-    /**
-     * @param finalDegreeWorkProposalConfirmation
-     *            The finalDegreeWorkProposalConfirmation to set.
-     */
-    public void setFinalDegreeWorkProposalConfirmation(InfoProposal finalDegreeWorkProposalConfirmation) {
-        this.finalDegreeWorkProposalConfirmation = finalDegreeWorkProposalConfirmation;
+	return InfoProposal.newInfoFromDomain(getGroupStudent().getFinalDegreeWorkProposalConfirmation());
     }
 
     /**
      * @return Returns the student.
      */
     public InfoStudent getStudent() {
-        return student;
+	return InfoStudent.newInfoFromDomain(getGroupStudent().getStudent());
     }
 
-    /**
-     * @param student
-     *            The student to set.
-     */
-    public void setStudent(InfoStudent student) {
-        this.student = student;
-    }
 }

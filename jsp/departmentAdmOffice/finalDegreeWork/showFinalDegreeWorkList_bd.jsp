@@ -366,12 +366,14 @@
 					</td>
 				</tr>
 
-			<logic:present name="finalDegreeWorkProposalHeader" property="groupProposals">
+			<logic:equal name="finalDegreeWorkProposalHeader" property="groupProposals.empty" value="false">
 			<bean:size id="numberOfGroups" name="finalDegreeWorkProposalHeader" property="groupProposals"/>
 			<% int total = 1; %>
 			<logic:iterate id="groupProposal" name="finalDegreeWorkProposalHeader" property="groupProposals">
-				<bean:size id="numberOfStudents" name="groupProposal" property="infoGroup.groupStudents"/>
-				<% total += numberOfStudents.intValue(); %>
+				<logic:notEmpty name="groupProposal" property="infoGroup">
+					<bean:size id="numberOfStudents" name="groupProposal" property="infoGroup.groupStudents"/>
+					<% total += numberOfStudents.intValue(); %>
+				</logic:notEmpty>
 			</logic:iterate>
 				<tr>
 					<td bgcolor="#a2aebc" align="center" rowspan="<%= total %>">
@@ -404,15 +406,19 @@
 				</tr>
 			<% boolean isOdd = true; %>
 			<% java.lang.String bgColor = null; %>
-			<logic:iterate id="groupProposal" name="finalDegreeWorkProposalHeader" property="groupProposals">
+			<logic:iterate id="groupProposal" name="finalDegreeWorkProposalHeader" property="groupProposals" type="net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal">
 			<% isOdd = !isOdd; %>
 			<% if (isOdd) { %>
 				<% bgColor = "#d3cec8"; %>
 			<% } else { %>
 				<% bgColor = "#eae7e4"; %>
-			<% } %>
-			<bean:size id="numberOfStudents" name="groupProposal" property="infoGroup.groupStudents"/>
-			<% java.lang.String emails = ""; %>
+			<% }  
+
+			Integer numberOfStudents = groupProposal.getInfoGroup() == null ? Integer.valueOf(1) : Integer.valueOf(groupProposal.getInfoGroup().getGroupStudents().size());
+			
+			java.lang.String emails = ""; %>
+
+			<logic:notEmpty name="groupProposal" property="infoGroup">
 			<logic:iterate id="groupStudent" name="groupProposal" property="infoGroup.groupStudents" length="1">
 				<bean:define id="student" name="groupStudent" property="student"/>
 				<bean:define id="email" name="student" property="infoPerson.email"/>
@@ -513,8 +519,9 @@
 						</td>
 					</tr>
 				</logic:iterate>					
+			</logic:notEmpty>
 			</logic:iterate>
-			</logic:present>
+			</logic:equal>
 
 			</logic:iterate>
 		</table>
