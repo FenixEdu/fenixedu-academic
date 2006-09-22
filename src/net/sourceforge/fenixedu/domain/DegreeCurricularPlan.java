@@ -601,6 +601,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             return super.getCurricularCourses();
         }
     }
+    
+    @Override
+    public Set<CurricularCourse> getCurricularCoursesSet() {
+        if (this.isBolonha()) {
+            return new HashSet<CurricularCourse>(this.getCurricularCourses((ExecutionYear) null));
+        } else {
+            return super.getCurricularCoursesSet();
+        }
+    }
+
 
     public Set<CurricularCourse> getCurricularCourses(final ExecutionPeriod executionPeriod) {
     	final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
