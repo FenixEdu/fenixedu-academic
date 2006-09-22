@@ -80,8 +80,10 @@
 					<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
 				</html:link>
 			</li>
-			<br/>
+		</ul>
+		<br/>
 			<%-- editar --%>
+		<ul class="mvert025">			
 			<li><html:link page="/parking.do?method=prepareEditParking">
 				<bean:message key="label.editParkingDocuments"
 					bundle="PARKING_RESOURCES" />

@@ -78,6 +78,9 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         }
 
         prepareRadioButtonsForm(actionForm, parkingParty);
+        if (parkingParty.isStudent()) {
+            request.setAttribute("student", true);
+        }
 
         return mapping.findForward("editParkingRequest");
     }
@@ -172,7 +175,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             return prepareEditParking(mapping, actionForm, request, response);
         }
 
-        ajustParkingRequest(parkingForm, parkingRequestFactoryEditor);
+        adjustParkingRequest(parkingForm, parkingRequestFactoryEditor);
 
         if (!areFileNamesValid(parkingRequestFactoryEditor, request)) {
             RenderUtils.invalidateViewState();
@@ -423,8 +426,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             actionMessages.add("firstCarMakePT", new ActionMessage("error.requiredField"));
             result = false;
         } else if (parkingRequestFactory.getFirstCarMake().length() > 20) {
-            actionMessages.add("firstCarMakePT",
-                    new ActionMessage("error.maxLengthExceeded", "20"));
+            actionMessages.add("firstCarMakePT", new ActionMessage("error.maxLengthExceeded", "20"));
             result = false;
         }
         if (parkingRequestFactory.getFirstCarPlateNumber() == null
@@ -432,8 +434,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             actionMessages.add("firstCarPlateNumberPT", new ActionMessage("error.requiredField"));
             result = false;
         } else if (parkingRequestFactory.getFirstCarPlateNumber().length() > 10) {
-            actionMessages.add("firstCarPlateNumberPT", new ActionMessage(
-                    "error.maxLengthExceeded", "10"));
+            actionMessages.add("firstCarPlateNumberPT", new ActionMessage("error.maxLengthExceeded",
+                    "10"));
             result = false;
         }
 
@@ -511,8 +513,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                     actionMessages.add("secondCarMakePT", new ActionMessage("error.requiredField"));
                     result = false;
                 } else if (parkingRequestFactory.getSecondCarMake().length() > 20) {
-                    actionMessages.add("secondCarMakePT",
-                            new ActionMessage("error.maxLengthExceeded", "20"));
+                    actionMessages.add("secondCarMakePT", new ActionMessage("error.maxLengthExceeded",
+                            "20"));
                     result = false;
                 }
                 if (parkingRequestFactory.getSecondCarPlateNumber() == null
@@ -601,7 +603,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             RenderUtils.invalidateViewState();
             return mapping.getInputForward();
         }
-        ajustParkingRequest(parkingForm, parkingRequestFactoryCreator);
+        adjustParkingRequest(parkingForm, parkingRequestFactoryCreator);
 
         if (!areFileNamesValid(parkingRequestFactoryCreator, request)) {
             RenderUtils.invalidateViewState();
@@ -613,7 +615,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         return prepareParking(mapping, actionForm, request, response);
     }
 
-    private void ajustParkingRequest(DynaActionForm parkingForm,
+    private void adjustParkingRequest(DynaActionForm parkingForm,
             ParkingRequestFactory parkingRequestFactory) {
         if (!isElectronicDelivery(parkingForm, "driverLicense")) {
             parkingRequestFactory.setDriverLicenseFileName(null);
@@ -631,10 +633,22 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         if (!isElectronicDelivery(parkingForm, "registry2")) {
             parkingRequestFactory.setSecondCarPropertyRegistryFileName(null);
             parkingRequestFactory.setSecondCarPropertyRegistryInputStream(null);
+        } else if (parkingRequestFactory.getParkingParty().isStudent()
+                && !isOwner(parkingForm, "vehicle2")) {
+            parkingForm.set("registry2",null);
+            parkingRequestFactory.setSecondCarPropertyRegistryFileName(null);
+            parkingRequestFactory.setSecondCarPropertyRegistryInputStream(null);
+            parkingRequestFactory.setSecondCarPropertyRegistryDocumentState(null);
         }
         if (!isElectronicDelivery(parkingForm, "insurance2")) {
             parkingRequestFactory.setSecondInsuranceFileName(null);
             parkingRequestFactory.setSecondInsuranceInputStream(null);
+        } else if (parkingRequestFactory.getParkingParty().isStudent()
+                && !isOwner(parkingForm, "vehicle2")) {
+            parkingForm.set("insurance2",null);
+            parkingRequestFactory.setSecondInsuranceFileName(null);
+            parkingRequestFactory.setSecondInsuranceInputStream(null);
+            parkingRequestFactory.setSecondCarInsuranceDocumentState(null);
         }
 
         if (!isOwner(parkingForm, "ownVehicle1")) {
@@ -649,8 +663,12 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         } else {
             parkingRequestFactory.setFirstCarOwnerIdFileName(null);
             parkingRequestFactory.setFirstCarOwnerIdInputStream(null);
+            parkingRequestFactory.setFirstCarOwnerIdDocumentState(null);
+            parkingForm.set("Id1",null);
             parkingRequestFactory.setFirstDeclarationAuthorizationFileName(null);
             parkingRequestFactory.setFirstDeclarationAuthorizationInputStream(null);
+            parkingRequestFactory.setFirstCarDeclarationDocumentState(null);
+            parkingForm.set("declaration1",null);
         }
         if (!isOwner(parkingForm, "ownVehicle2")) {
             if (!isElectronicDelivery(parkingForm, "Id2")) {
@@ -664,8 +682,16 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         } else {
             parkingRequestFactory.setSecondCarOwnerIdFileName(null);
             parkingRequestFactory.setSecondCarOwnerIdInputStream(null);
+            parkingRequestFactory.setSecondCarOwnerIdDocumentState(null);
+            parkingForm.set("Id2",null);            
             parkingRequestFactory.setSecondDeclarationAuthorizationFileName(null);
             parkingRequestFactory.setSecondDeclarationAuthorizationInputStream(null);
+            parkingRequestFactory.setSecondCarDeclarationDocumentState(null);
+            parkingForm.set("declaration2",null);            
+        }
+        if(!isOwner(parkingForm, "vehicle2")) {
+            parkingRequestFactory.setSecondCarMake(null);
+            parkingRequestFactory.setSecondCarPlateNumber(null);
         }
     }
 

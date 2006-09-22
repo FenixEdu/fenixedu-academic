@@ -65,4 +65,21 @@ public class ParkingParty extends ParkingParty_Base {
         return MessageFormat.format(bundle.getString("message.acceptedRegulation"), new Object[] { name,
                 number});
     }
+    
+    public boolean isStudent(){
+        if (getParty().isPerson()) {
+            Person person = (Person) getParty();
+            Teacher teacher = person.getTeacher();
+            if (teacher == null) {
+                Employee employee = person.getEmployee();
+                if (employee == null) {
+                    Student student = person.getStudent();
+                    if (student != null){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
