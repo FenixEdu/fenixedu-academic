@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
-
+import bibtex.dom.BibtexEntry;
+import bibtex.dom.BibtexFile;
+import bibtex.dom.BibtexPerson;
+import bibtex.dom.BibtexPersonList;
 import net.sourceforge.fenixedu.accessControl.Checked;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
@@ -14,15 +19,15 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Resul
 public abstract class ResultPublication extends ResultPublication_Base {
 
     public enum ScopeType {
-	LOCAL, NATIONAL, INTERNATIONAL;
+        LOCAL, NATIONAL, INTERNATIONAL;
     }
-    
+
     /**
      * Comparator than can be used to order publications by Year.
      */
     static class OrderComparator implements Comparator<ResultPublication> {
-	public int compare(ResultPublication rp1, ResultPublication rp2) {
-	    Integer pub1 = rp1.getYear();
+        public int compare(ResultPublication rp1, ResultPublication rp2) {
+            Integer pub1 = rp1.getYear();
             Integer pub2 = rp2.getYear();
             if (pub1 == null) {
                 return 1;
@@ -30,57 +35,147 @@ public abstract class ResultPublication extends ResultPublication_Base {
                 return -1;
             }
             return (-1) * pub1.compareTo(pub2);
-	}
+        }
     }
-    
-    public static <T extends ResultPublication> List<T> sort(Collection<T> resultPublications) {
-	List<T> sorted = new ArrayList<T>(resultPublications);
-	Collections.sort(sorted, new ResultPublication.OrderComparator());
 
-	return sorted;
+    public static <T extends ResultPublication> List<T> sort(Collection<T> resultPublications) {
+        List<T> sorted = new ArrayList<T>(resultPublications);
+        Collections.sort(sorted, new ResultPublication.OrderComparator());
+
+        return sorted;
     }
 
     public ResultPublication() {
-	super();
-    }
-    
-    public List<ResultParticipation> getAuthors() {
-	ArrayList<ResultParticipation> authors = new ArrayList<ResultParticipation>();
-	for (ResultParticipation participation : this.getResultParticipations()) {
-	    if (participation.getRole().equals(ResultParticipationRole.Author))
-		authors.add(participation);
-	}
-	return authors;
+        super();
     }
 
-    public List<ResultParticipation> getEditors() {
-	ArrayList<ResultParticipation> editors = new ArrayList<ResultParticipation>();
-	for (ResultParticipation participation : this.getResultParticipations()) {
-	    if (participation.getRole().equals(ResultParticipationRole.Editor))
-		editors.add(participation);
-	}
-	return editors;
-    }
-    
     private void removeAssociations() {
-	super.setPublisher(null);
-	super.setOrganization(null);
+        super.setPublisher(null);
+        super.setOrganization(null);
     }
 
     @Override
     @Checked("ResultPredicates.writePredicate")
     public void delete() {
-	removeAssociations();
-	super.delete();
+        removeAssociations();
+        super.delete();
     }
-    
+
     @Override
     public void removePublisher() {
-	throw new DomainException("error.researcher.ResultPublication.call","removePublisher");
+        throw new DomainException("error.researcher.ResultPublication.call", "removePublisher");
     }
 
     @Override
     public void removeOrganization() {
-	throw new DomainException("error.researcher.ResultPublication.call","removeOrganization");
+        throw new DomainException("error.researcher.ResultPublication.call", "removeOrganization");
+    }
+
+    public List<Person> getAuthors() {
+        ArrayList<Person> authors = new ArrayList<Person>();
+        for (ResultParticipation participation : this.getResultParticipations()) {
+            if (participation.getRole().equals(ResultParticipationRole.Author))
+                authors.add(participation.getPerson());
+        }
+        return authors;
+    }
+
+    public List<Person> getEditors() {
+        ArrayList<Person> editors = new ArrayList<Person>();
+        for (ResultParticipation participation : this.getResultParticipations()) {
+            if (participation.getRole().equals(ResultParticipationRole.Editor))
+                editors.add(participation.getPerson());
+        }
+        return editors;
+    }
+
+    public abstract String getResume();
+
+    public abstract BibtexEntry exportToBibtexEntry();
+
+    protected String getParticipationsAndTitleString() {
+        String resume = "";
+        int i = 0;
+        for (ResultParticipation participation : getOrderedResultParticipations()) {
+            resume = resume + participation.getPerson().getName();
+            i++;
+            if (i < getResultParticipationsCount())
+                resume = resume + ", ";
+            else
+                resume = resume + " - ";
+        }
+        resume = resume + getTitle() + " - ";
+        return resume;
+    }
+
+    protected String finishResume(String resume) {
+        if ((resume.charAt(resume.length() - 1) == ','))
+            resume = resume.substring(0, resume.length() - 1);
+        else if ((resume.charAt(resume.length() - 2) == ','))
+            resume = resume.substring(0, resume.length() - 2);
+        else if ((resume.charAt(resume.length() - 2) == '-'))
+            resume = resume.substring(0, resume.length() - 2);
+        return resume;
+    }
+
+    protected BibtexPersonList getBibtexAuthorsList(BibtexFile bibtexFile, List<Person> authors) {
+        if ((authors != null) && (authors.size() > 0)) {
+            BibtexPersonList authorsList = bibtexFile.makePersonList();
+            BibtexPerson bp;
+            for (Person person : authors) {
+                bp = bibtexFile.makePerson(person.getName(), null, null, null, false);
+                authorsList.add(bp);
+            }
+            return authorsList;
+        }
+        return null;
+    }
+
+    protected BibtexPersonList getBibtexEditorsList(BibtexFile bibtexFile, List<Person> editors) {
+        if ((editors != null) && (editors.size() > 0)) {
+            BibtexPersonList editorsList = bibtexFile.makePersonList();
+            BibtexPerson bp;
+            for (Person person : editors) {
+                bp = bibtexFile.makePerson(person.getName(), null, null, null, false);
+                editorsList.add(bp);
+            }
+            return editorsList;
+        }
+        return null;
+    }
+
+    /**
+     * this methods are used instead of the provided by the javabib library
+     * because in the javabib a BibtexPerson is printed using first lastName
+     */
+    protected String bibtexPersonToString(BibtexPerson bp) {
+        String all = "";
+        if (bp.isOthers()) {
+            all = "others";
+        } else {
+            if (bp.getFirst() != null)
+                all = all + bp.getFirst();
+            if (bp.getPreLast() != null)
+                all = all + ' ' + bp.getPreLast();
+            if (bp.getLast() != null)
+                all = all + ' ' + bp.getLast();
+            if (bp.getLineage() != null)
+                all = all + ' ' + bp.getLineage();
+        }
+        return all;
+    }
+
+    protected String bibtexPersonListToString(BibtexPersonList bpl) {
+        String personList = "";
+
+        boolean isFirst = true;
+        for (Iterator it = bpl.getList().iterator(); it.hasNext();) {
+            if (isFirst) {
+                isFirst = false;
+            } else
+                personList = personList + " and ";
+            personList = personList + bibtexPersonToString((BibtexPerson) it.next());
+        }
+        return personList;
     }
 }

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
+import bibtex.dom.BibtexEntry;
+import bibtex.dom.BibtexFile;
+import bibtex.dom.BibtexPersonList;
+import bibtex.dom.BibtexString;
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
@@ -9,18 +13,18 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Resul
 import net.sourceforge.fenixedu.util.Month;
 
 /**
- * A work that is printed and bound, but without a named publisher or sponsoring institution.
- * Required fields: title.
- * Optional fields: author, howpublished, address, month, year, note.
+ * A work that is printed and bound, but without a named publisher or sponsoring
+ * institution. Required fields: title. Optional fields: author, howpublished,
+ * address, month, year, note.
  */
 public class Booklet extends Booklet_Base {
-    
+
     public Booklet() {
         super();
     }
-    
-    public Booklet(Person participator, String title, String howPublished, Integer year, Month month, String address,
-            String note, String url) {
+
+    public Booklet(Person participator, String title, String howPublished, Integer year, Month month,
+            String address, String note, String url) {
         this();
         checkRequiredParameters(title);
         super.setCreatorParticipation(participator, ResultParticipationRole.Author);
@@ -34,70 +38,106 @@ public class Booklet extends Booklet_Base {
         fillAllAttributes(title, howPublished, year, month, address, note, url);
         super.setModifyedByAndDate();
     }
-    
-    private void fillAllAttributes(String title, String howPublished, Integer year, Month month, String address,
-            String note, String url) {
-	super.setTitle(title);
-	super.setHowPublished(howPublished);
-	super.setYear(year);
-	super.setMonth(month);
-	super.setAddress(address);
-	super.setNote(note);
-	super.setUrl(url);
+
+    private void fillAllAttributes(String title, String howPublished, Integer year, Month month,
+            String address, String note, String url) {
+        super.setTitle(title);
+        super.setHowPublished(howPublished);
+        super.setYear(year);
+        super.setMonth(month);
+        super.setAddress(address);
+        super.setNote(note);
+        super.setUrl(url);
     }
-    
+
+    @Override
+    public String getResume() {
+        String resume = getParticipationsAndTitleString();
+        if ((getYear() != null) && (getYear() > 0))
+            resume = resume + getYear();
+
+        resume = finishResume(resume);
+        return resume;
+    }
+
+    @Override
+    public BibtexEntry exportToBibtexEntry() {
+        BibtexFile bibtexFile = new BibtexFile();
+
+        BibtexEntry bibEntry = bibtexFile.makeEntry("book", null);
+        bibEntry.setField("title", bibtexFile.makeString(getTitle()));
+        if ((getYear() != null) && (getYear() > 0))
+            bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
+        if ((getHowPublished() != null) && (getHowPublished().length() > 0))
+            bibEntry.setField("howpublished", bibtexFile.makeString(getHowPublished()));
+        if ((getAddress() != null) && (getAddress().length() > 0))
+            bibEntry.setField("address", bibtexFile.makeString(getAddress()));
+        if (getMonth() != null)
+            bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
+        if ((getNote() != null) && (getNote().length() > 0))
+            bibEntry.setField("note", bibtexFile.makeString(getNote()));
+
+        BibtexPersonList authorsList = getBibtexAuthorsList(bibtexFile, getAuthors());
+        if (authorsList != null) {
+            BibtexString bplString = bibtexFile.makeString(bibtexPersonListToString(authorsList));
+            bibEntry.setField("author", bplString);
+        }
+
+        return bibEntry;
+    }
+
     private void checkRequiredParameters(String title) {
-	if((title == null) || (title.length() == 0))
+        if ((title == null) || (title.length() == 0))
             throw new DomainException("error.researcher.Booklet.title.null");
     }
-    
+
     @Override
     public void setTitle(String title) {
-	throw new DomainException("error.researcher.Booklet.call","setTitle");
+        throw new DomainException("error.researcher.Booklet.call", "setTitle");
     }
-    
+
     @Override
     public void setHowPublished(String howPublished) {
-	throw new DomainException("error.researcher.Booklet.call","setHowPublished");
+        throw new DomainException("error.researcher.Booklet.call", "setHowPublished");
     }
-    
+
     @Override
     public void setYear(Integer year) {
-	throw new DomainException("error.researcher.Booklet.call","setYear");
+        throw new DomainException("error.researcher.Booklet.call", "setYear");
     }
-    
+
     @Override
     public void setMonth(Month month) {
-	throw new DomainException("error.researcher.Booklet.call","setMonth");
+        throw new DomainException("error.researcher.Booklet.call", "setMonth");
     }
-    
+
     @Override
     public void setAddress(String address) {
-	throw new DomainException("error.researcher.Booklet.call","setAddress");
+        throw new DomainException("error.researcher.Booklet.call", "setAddress");
     }
-    
+
     @Override
     public void setNote(String note) {
-	throw new DomainException("error.researcher.Booklet.call","setNote");
+        throw new DomainException("error.researcher.Booklet.call", "setNote");
     }
-    
+
     @Override
     public void setUrl(String url) {
-	throw new DomainException("error.researcher.Booklet.call","setUrl");
+        throw new DomainException("error.researcher.Booklet.call", "setUrl");
     }
-    
+
     @Override
     public void setCountry(Country country) {
-	throw new DomainException("error.researcher.Booklet.call","setCountry");
+        throw new DomainException("error.researcher.Booklet.call", "setCountry");
     }
-    
+
     @Override
     public void setOrganization(Unit organization) {
-	throw new DomainException("error.researcher.Booklet.call","setOrganization");
+        throw new DomainException("error.researcher.Booklet.call", "setOrganization");
     }
-    
+
     @Override
     public void setPublisher(Unit publisher) {
-	throw new DomainException("error.researcher.Booklet.call","setPublisher");
-    } 
+        throw new DomainException("error.researcher.Booklet.call", "setPublisher");
+    }
 }
