@@ -77,19 +77,24 @@ public class OtherPublication extends OtherPublication_Base {
         return resume;
     }
 
-    //TODO: rearrange exportation here
     @Override
     public BibtexEntry exportToBibtexEntry() {
         BibtexFile bibtexFile = new BibtexFile();
-        BibtexEntry bibEntry = bibtexFile.makeEntry("misc", null);
+        BibtexEntry bibEntry = bibtexFile.makeEntry("otherpublication", null);
         if ((getTitle() != null) && (getTitle().length() > 0))
             bibEntry.setField("title", bibtexFile.makeString(getTitle()));
         if ((getYear() != null) && (getYear() > 0))
             bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
-        if ((getHowPublished() != null) && (getHowPublished().length() > 0))
-            bibEntry.setField("howpublished", bibtexFile.makeString(getHowPublished()));
         if (getMonth() != null)
             bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
+        if ((getOtherPublicationType() != null) && (getOtherPublicationType().length() > 0))
+            bibEntry.setField("type", bibtexFile.makeString(getOtherPublicationType()));
+        if ((getHowPublished() != null) && (getHowPublished().length() > 0))
+            bibEntry.setField("howpublished", bibtexFile.makeString(getHowPublished()));
+        if (getPublisher() != null)
+            bibEntry.setField("publisher", bibtexFile.makeString(getPublisher().getName()));
+        if ((getAddress() != null) && (getAddress().length() > 0))
+            bibEntry.setField("address", bibtexFile.makeString(getAddress()));
         if ((getNote() != null) && (getNote().length() > 0))
             bibEntry.setField("note", bibtexFile.makeString(getNote()));
 
