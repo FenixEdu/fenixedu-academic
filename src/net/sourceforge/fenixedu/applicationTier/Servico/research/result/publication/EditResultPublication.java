@@ -67,10 +67,9 @@ public class EditResultPublication extends ResultPublicationService {
         final Inproceedings inproceedings = (Inproceedings) getResultPublication(bean);
         final Event event = getEventFromBean(bean);
 
-        inproceedings.setEditAll(bean.getTitle(), bean.getBookTitle(), bean.getYear(), event,
-                getPublisher(bean), getOrganization(bean), bean.getAddress(), bean.getFirstPage(), bean
-                        .getLastPage(), bean.getNote(), bean.getLanguage(), bean.getMonth(), bean
-                        .getUrl());
+        inproceedings.setEditAll(bean.getTitle(), bean.getYear(), event, getPublisher(bean),
+                getOrganization(bean), bean.getAddress(), bean.getFirstPage(), bean.getLastPage(), bean
+                        .getNote(), bean.getLanguage(), bean.getMonth(), bean.getUrl());
     }
 
     public void run(ProceedingsBean bean) throws FenixServiceException {

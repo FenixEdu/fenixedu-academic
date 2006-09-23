@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.util.Month;
  * proceedings. Required fields: author, title, booktitle, year. Optional
  * fields: editor, pages, organization, publisher, address, month, note.
  * 
- * Extra from previous publications: event, language
+ * Extra from previous publications: event(booktitle), language
  */
 public class Inproceedings extends Inproceedings_Base {
 
@@ -27,31 +27,30 @@ public class Inproceedings extends Inproceedings_Base {
     }
 
     public Inproceedings(Person participator, ResultParticipationRole participatorRole, String title,
-            String bookTitle, Integer year, Event event, Unit publisher, Unit organization,
+            Integer year, Event event, Unit publisher, Unit organization,
             String address, Integer firstPage, Integer lastPage, String note, String language,
             Month month, String url) {
         this();
-        checkRequiredParameters(title, bookTitle, year, event);
+        checkRequiredParameters(title, year, event);
         super.setCreatorParticipation(participator, participatorRole);
-        fillAllAttributes(title, bookTitle, year, event, publisher, organization, address, firstPage,
+        fillAllAttributes(title, year, event, publisher, organization, address, firstPage,
                 lastPage, note, language, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, String bookTitle, Integer year, Event event, Unit publisher,
+    public void setEditAll(String title, Integer year, Event event, Unit publisher,
             Unit organization, String address, Integer firstPage, Integer lastPage, String note,
             String language, Month month, String url) {
-        checkRequiredParameters(title, bookTitle, year, event);
-        fillAllAttributes(title, bookTitle, year, event, publisher, organization, address, firstPage,
+        checkRequiredParameters(title, year, event);
+        fillAllAttributes(title, year, event, publisher, organization, address, firstPage,
                 lastPage, note, language, month, url);
         super.setModifyedByAndDate();
     }
 
-    private void fillAllAttributes(String title, String bookTitle, Integer year, Event event,
+    private void fillAllAttributes(String title, Integer year, Event event,
             Unit publisher, Unit organization, String address, Integer firstPage, Integer lastPage,
             String note, String language, Month month, String url) {
         super.setTitle(title);
-        super.setBookTitle(bookTitle);
         super.setYear(year);
         super.setEvent(event);
         super.setPublisher(publisher);
@@ -65,11 +64,9 @@ public class Inproceedings extends Inproceedings_Base {
         super.setUrl(url);
     }
 
-    private void checkRequiredParameters(String title, String bookTitle, Integer year, Event event) {
+    private void checkRequiredParameters(String title, Integer year, Event event) {
         if ((title == null) || (title.length() == 0))
             throw new DomainException("error.researcher.Inproceedings.title.null");
-        if ((bookTitle == null) || (bookTitle.length() == 0))
-            throw new DomainException("error.researcher.Inproceedings.bookTitle.null");
         if (year == null)
             throw new DomainException("error.researcher.Inproceedings.year.null");
         if (event == null)
@@ -86,8 +83,6 @@ public class Inproceedings extends Inproceedings_Base {
         if ((getFirstPage() != null) && (getFirstPage() > 0) && (getLastPage() != null)
                 && (getLastPage() > 0))
             resume = resume + "Pag. " + getFirstPage() + " - " + getLastPage() + ", ";
-        if ((getBookTitle() != null) && (getBookTitle().length() > 0))
-            resume = resume + getBookTitle() + ", ";
         if (getEvent() != null && getEvent().getName() != null)
             resume = resume + getEvent().getName().getContent() + ", ";
         if (getOrganization() != null)
@@ -103,8 +98,9 @@ public class Inproceedings extends Inproceedings_Base {
 
         BibtexEntry bibEntry = bibtexFile.makeEntry("inproceedings", null);
         bibEntry.setField("title", bibtexFile.makeString(getTitle()));
-        bibEntry.setField("booktitle", bibtexFile.makeString(getBookTitle()));
         bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
+        if (getEvent() != null && getEvent().getName() != null)
+            bibEntry.setField("booktitle", bibtexFile.makeString(getEvent().getName().getContent()));
         if (getPublisher() != null)
             bibEntry.setField("publisher", bibtexFile.makeString(getPublisher().getName()));
         if ((getFirstPage() != null) && (getLastPage() != null) && (getFirstPage() < getLastPage()))
@@ -136,11 +132,6 @@ public class Inproceedings extends Inproceedings_Base {
     @Override
     public void setTitle(String title) {
         throw new DomainException("error.researcher.Inproceedings.call", "setTitle");
-    }
-
-    @Override
-    public void setBookTitle(String bookTitle) {
-        throw new DomainException("error.researcher.Inproceedings.call", "setBookTitle");
     }
 
     @Override

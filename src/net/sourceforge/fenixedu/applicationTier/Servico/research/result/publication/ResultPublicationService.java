@@ -64,8 +64,8 @@ public abstract class ResultPublicationService extends Service {
     protected Inproceedings createInproceedingsFromBean(InproceedingsBean bean) {
         final Event event = getEventFromBean(bean);
 
-        return new Inproceedings(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getBookTitle(),
-                bean.getYear(), event, getPublisher(bean), getOrganization(bean), bean.getAddress(),
+        return new Inproceedings(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getYear(),
+                event, getPublisher(bean), getOrganization(bean), bean.getAddress(),
                 bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean
                         .getMonth(), bean.getUrl());
     }

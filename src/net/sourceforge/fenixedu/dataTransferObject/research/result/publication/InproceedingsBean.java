@@ -11,8 +11,6 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
 
     private Integer lastPage;
 
-    private String bookTitle;
-
     private String language;
 
     private InproceedingsBean() {
@@ -25,7 +23,6 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
         this();
         if (inproceedings != null) {
             this.fillCommonFields(inproceedings);
-            this.setBookTitle(inproceedings.getBookTitle());
             this.setAddress(inproceedings.getAddress());
             this.setFirstPage(inproceedings.getFirstPage());
             this.setLastPage(inproceedings.getLastPage());
@@ -42,7 +39,8 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
         setMonthFromBibtexEntry(entry);
 
         setTitle(getStringValueFromBibtexEntry("title", entry));
-        setBookTitle(getStringValueFromBibtexEntry("booktitle", entry));
+        //booktitle will be used to event name
+        //setBookTitle(getStringValueFromBibtexEntry("booktitle", entry));
         setAddress(getStringValueFromBibtexEntry("address", entry));
         setNote(getStringValueFromBibtexEntry("note", entry));
         if (getFirstPageFromBibtexEntry(entry) != null) {
@@ -63,14 +61,6 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getBookTitle() {
-        return bookTitle;
-    }
-
-    public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
     }
 
     public Integer getFirstPage() {

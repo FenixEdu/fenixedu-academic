@@ -3475,7 +3475,6 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			Integer keyEvent;
 		}
 			class net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
-			String bookTitle;
 			String address;
 			Integer firstPage;
 			Integer lastPage;
