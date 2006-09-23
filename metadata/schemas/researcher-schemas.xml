@@ -1127,7 +1127,7 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
 		<property name="minChars" value="3"/>
 	</slot>
-	<slot name="address" key="label.local"><property name="size" value="40"/></slot>
+	<slot name="address"><property name="size" value="40"/></slot>
 	<slot name="numberPages">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
 			<property name="required" value="false"/>
@@ -1152,7 +1152,7 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
 	</slot>
-	<slot name="address" key="label.local"/>
+	<slot name="address"/>
 	<slot name="numberPages"/>
 	<slot name="language"/>
 	<slot name="url"/>
@@ -1183,7 +1183,7 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
 		<property name="minChars" value="3"/>
 	</slot>
-	<slot name="address" key="label.local"><property name="size" value="40"/></slot>
+	<slot name="address"><property name="size" value="40"/></slot>
 	<slot name="url"><property name="size" value="40"/></slot>
 	<slot name="note" layout="longText">
 		<property name="rows" value="5"/>
@@ -1200,7 +1200,7 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
 	</slot>
-	<slot name="address" key="label.local"/>
+	<slot name="address"/>
 	<slot name="url"/>
 	<slot name="note"/>
 </schema>
@@ -1228,7 +1228,7 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
 		<property name="minChars" value="3"/>
 	</slot>
-	<slot name="address" key="label.local"><property name="size" value="40"/></slot>
+	<slot name="address"><property name="size" value="40"/></slot>
 	<slot name="technicalReportType"><property name="size" value="40"/></slot>
 	<slot name="number"><property name="size" value="5"/></slot>
 	<slot name="numberPages">
@@ -1254,7 +1254,7 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
 	</slot>
-	<slot name="address" key="label.local"/>
+	<slot name="address"/>
 	<slot name="technicalReportType"/>
 	<slot name="number"/>
 	<slot name="numberPages"/>
