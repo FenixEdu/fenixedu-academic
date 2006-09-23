@@ -1276,42 +1276,9 @@
 	<slot name="note"/>
 </schema>
 
-<!-- Create/edit Booklet -->
-<schema name="result.publication.create.Booklet" bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookletBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
- 	<slot name="year">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="required" value="false"/>
-			<property name="dateFormat" value="yyyy"/>
-		</validator>
- 		<property name="size" value="5"/>
- 	</slot>
-	<slot name="month"/>
-	<slot name="howPublished"><property name="size" value="40"/></slot>
-	<slot name="address" key="label.local"><property name="size" value="40"/></slot>
-	<slot name="url"><property name="size" value="40"/></slot>
-	<slot name="note" layout="longText">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-</schema>
-<schema name="result.publication.details.Booklet" bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.domain.research.result.publication.Booklet">
-	<slot name="title"/>
- 	<slot name="year"/>
-	<slot name="month"/>
-	<slot name="howPublished"/>
-	<slot name="address" key="label.local"/>
-	<slot name="url"/>
-	<slot name="note"/>
-</schema>
-
-<!-- Create/edit Misc -->
-<schema name="result.publication.create.Misc" bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.MiscBean">
+<!-- Create/edit OtherPublication -->
+<schema name="result.publication.create.OtherPublication" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 	</slot>
@@ -1359,8 +1326,8 @@
 		<property name="columns" value="60"/>
 	</slot>
 </schema>
-<schema name="result.publication.details.Misc" bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.domain.research.result.publication.Misc">
+<schema name="result.publication.details.OtherPublication" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication">
 	<slot name="title"/>
  	<slot name="year"/>
 	<slot name="month"/>
@@ -1382,36 +1349,6 @@
 	<slot name="url"/>
 	<slot name="note"/>
 </schema>
-
-<!-- Create/edit Unpublished -->
-<schema name="result.publication.create.Unpublished" bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.UnpublishedBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
- 	<slot name="year">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="required" value="false"/>
-			<property name="dateFormat" value="yyyy"/>
-		</validator>
- 		<property name="size" value="5"/>
-	</slot>
-	<slot name="month"/>
-	<slot name="url"><property name="size" value="40"/></slot>
-	<slot name="note" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-</schema>
-<schema name="result.publication.details.Unpublished" bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.domain.research.result.publication.Unpublished">
-	<slot name="title"/>
- 	<slot name="year"/>
-	<slot name="month"/>
-	<slot name="url"/>
-	<slot name="note"/>
-</schema>
-
 
 <!-- Create/edit Unstructured -->
 <schema name="result.publication.details.Unstructured" bundle="RESEARCHER_RESOURCES"

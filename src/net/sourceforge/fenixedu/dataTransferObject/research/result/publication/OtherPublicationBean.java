@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 import bibtex.dom.BibtexEntry;
-import net.sourceforge.fenixedu.domain.research.result.publication.Misc;
+import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
 
-public class MiscBean extends ResultPublicationBean implements Serializable {
+public class OtherPublicationBean extends ResultPublicationBean implements Serializable {
     private String address;
 
     private Integer numberPages;
@@ -15,25 +15,26 @@ public class MiscBean extends ResultPublicationBean implements Serializable {
 
     private String otherPublicationType;
 
-    private MiscBean() {
-        this.setPublicationType(ResultPublicationType.Misc);
-        this.setActiveSchema("result.publication.create.Misc");
+    private OtherPublicationBean() {
+        this.setPublicationType(ResultPublicationType.OtherPublication);
+        this.setActiveSchema("result.publication.create.OtherPublication");
         this.setParticipationSchema("resultParticipation.simple");
     }
 
-    public MiscBean(Misc misc) {
+    public OtherPublicationBean(OtherPublication otherPublication) {
         this();
-        if (misc != null) {
-            this.fillCommonFields(misc);
-            this.setHowPublished(misc.getHowPublished());
-            this.setOtherPublicationType(misc.getOtherPublicationType());
-            this.setNumberPages(misc.getNumberPages());
-            this.setLanguage(misc.getLanguage());
-            this.setAddress(misc.getAddress());
+        if (otherPublication != null) {
+            this.fillCommonFields(otherPublication);
+            this.setHowPublished(otherPublication.getHowPublished());
+            this.setOtherPublicationType(otherPublication.getOtherPublicationType());
+            this.setNumberPages(otherPublication.getNumberPages());
+            this.setLanguage(otherPublication.getLanguage());
+            this.setAddress(otherPublication.getAddress());
         }
     }
 
-    public MiscBean(BibtexEntry entry) {
+    //TODO: rearrange importation
+    public OtherPublicationBean(BibtexEntry entry) {
         this();
         setUnitFromBibtexEntry("publisher", entry);
         setYearFromBibtexEntry(entry);

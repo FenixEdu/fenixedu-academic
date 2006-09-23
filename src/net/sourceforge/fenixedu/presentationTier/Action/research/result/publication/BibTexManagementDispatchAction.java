@@ -16,18 +16,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookletBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ConferenceArticlesBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.MiscBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.UnpublishedBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.ImportBibtexBean;
@@ -225,12 +223,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
             publicationBean = new ManualBean(entry);
         else if (type.equalsIgnoreCase("techreport"))
             publicationBean = new TechnicalReportBean(entry);
-        else if (type.equalsIgnoreCase("booklet"))
-            publicationBean = new BookletBean(entry);
-        else if (type.equalsIgnoreCase("misc"))
-            publicationBean = new MiscBean(entry);
-        else if (type.equalsIgnoreCase("unpublished"))
-            publicationBean = new UnpublishedBean(entry);
+        else if (type.equalsIgnoreCase("booklet") || type.equalsIgnoreCase("misc") || type.equalsIgnoreCase("unpublished"))
+            publicationBean = new OtherPublicationBean(entry);
 
         return publicationBean;
     }
@@ -272,11 +266,20 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     private void verifyPersonImportingInParticipators(Person personImporting, List<BibtexParticipatorBean> participators) throws FenixActionException {
 
         for (BibtexParticipatorBean participator : participators) {
-            if (participator.getPersonChosen() != null) {
-                if (personImporting.getIdInternal() == participator.getPersonChosen().getPerson().getIdInternal())
-                    return;
-            }
+            // verify option list
+            if (participator.getPersonChosen() != null
+                    && participator.getPersonChosen().getPerson() != null
+                    && (personImporting.getIdInternal() == participator.getPersonChosen().getPerson()
+                            .getIdInternal()))
+                return;
+            // verify other participator
+            if (participator.getPerson() != null
+                    && (personImporting.getIdInternal() == participator.getPerson().getIdInternal()))
+                return;
         }
+        
+        
+         
         throw new FenixActionException("error.importBibtex.personImportingNotInParticipants");
     }
 

@@ -3486,7 +3486,6 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Thesis extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			ThesisType thesisType;
-			//Integer keySchool; use keyOrganization
 			String address;
 			Integer numberPages;
 			String language;
@@ -3502,18 +3501,12 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			Integer numberPages;
 			String language;
 		}
-		class net.sourceforge.fenixedu.domain.research.result.publication.Booklet extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
-			String howPublished;
-			String address;
-		}
-		class net.sourceforge.fenixedu.domain.research.result.publication.Misc extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
+		class net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			String howPublished;
 			String otherPublicationType;
 			Integer numberPages;
 			String language;
 			String address;
-		}
-		class net.sourceforge.fenixedu.domain.research.result.publication.Unpublished extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Unstructured extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 		}

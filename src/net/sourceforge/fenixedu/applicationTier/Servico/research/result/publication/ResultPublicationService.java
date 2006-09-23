@@ -3,30 +3,26 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.result.publica
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookletBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ConferenceArticlesBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.MiscBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.UnpublishedBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
-import net.sourceforge.fenixedu.domain.research.result.publication.Booklet;
 import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
-import net.sourceforge.fenixedu.domain.research.result.publication.Misc;
+import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
-import net.sourceforge.fenixedu.domain.research.result.publication.Unpublished;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.domain.research.event.Event;
@@ -99,21 +95,11 @@ public abstract class ResultPublicationService extends Service {
                 .getNote(), bean.getNumberPages(), bean.getLanguage(), bean.getMonth(), bean.getUrl());
     }
 
-    protected Booklet createBookletFromBean(BookletBean bean) {
-        return new Booklet(bean.getPerson(), bean.getTitle(), bean.getHowPublished(), bean.getYear(),
-                bean.getMonth(), bean.getAddress(), bean.getNote(), bean.getUrl());
-    }
-
-    protected Misc createMiscFromBean(MiscBean bean) {
-        return new Misc(bean.getPerson(), bean.getTitle(), getPublisher(bean), bean.getYear(), bean
+    protected OtherPublication createOtherPublicationFromBean(OtherPublicationBean bean) {
+        return new OtherPublication(bean.getPerson(), bean.getTitle(), getPublisher(bean), bean.getYear(), bean
                 .getHowPublished(), bean.getNote(), bean.getAddress(), bean.getOtherPublicationType(),
                 bean.getNumberPages(), bean.getLanguage(), bean.getCountry(), bean.getMonth(), bean
                         .getUrl());
-    }
-
-    protected Unpublished createUnpublishedFromBean(UnpublishedBean bean) {
-        return new Unpublished(bean.getPerson(), bean.getTitle(), bean.getNote(), bean.getYear(), bean
-                .getMonth(), bean.getUrl());
     }
 
     /*

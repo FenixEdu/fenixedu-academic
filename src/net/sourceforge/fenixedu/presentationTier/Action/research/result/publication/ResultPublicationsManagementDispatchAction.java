@@ -2,39 +2,33 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.result.publica
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookletBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ConferenceArticlesBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.MiscBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.UnpublishedBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
-import net.sourceforge.fenixedu.domain.research.result.publication.Booklet;
 import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
-import net.sourceforge.fenixedu.domain.research.result.publication.Misc;
+import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
-import net.sourceforge.fenixedu.domain.research.result.publication.Unpublished;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsManagementAction;
@@ -210,9 +204,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
         request.setAttribute("theses", filterBySubType(publications, Thesis.class));
         request.setAttribute("manuals", filterBySubType(publications, Manual.class));
         request.setAttribute("technicalReports", filterBySubType(publications, TechnicalReport.class));
-        request.setAttribute("booklets", filterBySubType(publications, Booklet.class));
-        request.setAttribute("miscs", filterBySubType(publications, Misc.class));
-        request.setAttribute("unpublisheds", filterBySubType(publications, Unpublished.class));
+        request.setAttribute("otherPublications", filterBySubType(publications, OtherPublication.class));
         request.setAttribute("unstructureds", filterBySubType(publications, Unstructured.class));
     }
 
@@ -290,14 +282,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             case TechnicalReport:
                 bean = new TechnicalReportBean((TechnicalReport) publication);
                 break;
-            case Booklet:
-                bean = new BookletBean((Booklet) publication);
-                break;
-            case Misc:
-                bean = new MiscBean((Misc) publication);
-                break;
-            case Unpublished:
-                bean = new UnpublishedBean((Unpublished) publication);
+            case OtherPublication:
+                bean = new OtherPublicationBean((OtherPublication) publication);
                 break;
             default:
                 bean = new BookBean((Book) publication);

@@ -1,9 +1,28 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.*;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
 import net.sourceforge.fenixedu.domain.research.event.Event;
-import net.sourceforge.fenixedu.domain.research.result.publication.*;
+import net.sourceforge.fenixedu.domain.research.result.publication.Article;
+import net.sourceforge.fenixedu.domain.research.result.publication.Book;
+import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
+import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
+import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
+import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
+import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 
 public class EditResultPublication extends ResultPublicationService {
@@ -87,29 +106,15 @@ public class EditResultPublication extends ResultPublicationService {
                 .getNumberPages(), bean.getLanguage(), bean.getMonth(), bean.getUrl());
     }
 
-    public void run(BookletBean bean) throws FenixServiceException {
-        final Booklet booklet = (Booklet) getResultPublication(bean);
+    public void run(OtherPublicationBean bean) throws FenixServiceException {
+        final OtherPublication otherPublication = (OtherPublication) getResultPublication(bean);
 
-        booklet.setEditAll(bean.getTitle(), bean.getHowPublished(), bean.getYear(), bean.getMonth(),
-                bean.getAddress(), bean.getNote(), bean.getUrl());
-    }
-
-    public void run(MiscBean bean) throws FenixServiceException {
-        final Misc misc = (Misc) getResultPublication(bean);
-
-        misc.setEditAll(bean.getTitle(), getPublisher(bean), bean.getYear(), bean.getHowPublished(),
+        otherPublication.setEditAll(bean.getTitle(), getPublisher(bean), bean.getYear(), bean.getHowPublished(),
                 bean.getNote(), bean.getAddress(), bean.getOtherPublicationType(),
                 bean.getNumberPages(), bean.getLanguage(), bean.getCountry(), bean.getMonth(), bean
                         .getUrl());
     }
 
-    public void run(UnpublishedBean bean) throws FenixServiceException {
-        final Unpublished unpublished = (Unpublished) getResultPublication(bean);
-
-        unpublished.setEditAll(bean.getTitle(), bean.getNote(), bean.getYear(), bean.getMonth(), bean
-                .getUrl());
-    }
-    
     private ResultPublication getResultPublication(ResultPublicationBean bean)
             throws FenixServiceException {
         if ((bean == null) || (bean.getIdInternal() == null))

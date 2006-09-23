@@ -58,8 +58,7 @@ public abstract class ResultPublicationBean implements Serializable {
 
     public enum ResultPublicationType {
         /* Types based on BibTex */
-        Book, Inbook, Incollection, Article, Inproceedings, Proceedings, Thesis, Manual, TechnicalReport, Booklet, Misc, Unpublished;
-
+        Article, Book, Inbook, Incollection, Inproceedings, Proceedings, Thesis, Manual, TechnicalReport, OtherPublication;
 
         public static ResultPublicationType getDefaultType() {
             return Book;

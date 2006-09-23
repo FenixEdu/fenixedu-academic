@@ -75,21 +75,9 @@
 		<jsp:include page="publicationsResume.jsp"/>
 	</logic:notEmpty>
 	
-	<logic:notEmpty name="booklets">
-		<h3 id='booklets' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Booklets"/> </span> </h3>
-		<bean:define id="results" name="booklets" toScope="request"/>
-		<jsp:include page="publicationsResume.jsp"/>
-	</logic:notEmpty>
-	
-	<logic:notEmpty name="miscs">
-		<h3 id='miscs' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Miscs"/> </span> </h3>
-		<bean:define id="results" name="miscs" toScope="request"/>
-		<jsp:include page="publicationsResume.jsp"/>
-	</logic:notEmpty>
-	
-	<logic:notEmpty name="unpublisheds">
-		<h3 id='unpublisheds' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Unpublisheds"/> </span> </h3>
-		<bean:define id="results" name="unpublisheds" toScope="request"/>
+	<logic:notEmpty name="otherPublications">
+		<h3 id='otherPublications' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.OtherPublications"/> </span> </h3>
+		<bean:define id="results" name="otherPublications" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 	</logic:notEmpty>
 	

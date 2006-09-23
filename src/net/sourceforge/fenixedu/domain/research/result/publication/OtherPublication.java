@@ -13,19 +13,20 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Resul
 import net.sourceforge.fenixedu.util.Month;
 
 /**
- * Use this type when nothing else fits. Required fields: none. Optional fields:
- * author, title, howpublished, month, year, note.
- * 
- * Extra from previous publications: otherPublicationType, numberPages,
- * language, publisher, address
+ * (Misc, Booklet, Unpublished, ...)
+ * Use this type when nothing else fits.
+ * Required fields: title.
+ * Optional fields: otherPublicationType, howpublished, month,
+ * year, note, numberPages, language, publisher, address
  */
-public class Misc extends Misc_Base {
 
-    public Misc() {
+public class OtherPublication extends OtherPublication_Base {
+
+    public OtherPublication() {
         super();
     }
 
-    public Misc(Person participator, String title, Unit publisher, Integer year, String howPublished,
+    public OtherPublication(Person participator, String title, Unit publisher, Integer year, String howPublished,
             String note, String address, String otherPublicationType, Integer numberPages,
             String language, Country country, Month month, String url) {
         this();
@@ -76,6 +77,7 @@ public class Misc extends Misc_Base {
         return resume;
     }
 
+    //TODO: rearrange exportation here
     @Override
     public BibtexEntry exportToBibtexEntry() {
         BibtexFile bibtexFile = new BibtexFile();
@@ -102,66 +104,66 @@ public class Misc extends Misc_Base {
 
     private void checkRequiredParameters(String title) {
         if ((title == null) || (title.length() == 0))
-            throw new DomainException("error.researcher.Misc.title.null");
+            throw new DomainException("error.researcher.OtherPublication.title.null");
     }
 
     @Override
     public void setTitle(String title) {
-        throw new DomainException("error.researcher.Misc.call", "setTitle");
+        throw new DomainException("error.researcher.OtherPublication.call", "setTitle");
     }
 
     @Override
     public void setYear(Integer year) {
-        throw new DomainException("error.researcher.Misc.call", "setYear");
+        throw new DomainException("error.researcher.OtherPublication.call", "setYear");
     }
 
     @Override
     public void setHowPublished(String howPublished) {
-        throw new DomainException("error.researcher.Misc.call", "setHowPublished");
+        throw new DomainException("error.researcher.OtherPublication.call", "setHowPublished");
     }
 
     @Override
     public void setAddress(String address) {
-        throw new DomainException("error.researcher.Misc.call", "setAddress");
+        throw new DomainException("error.researcher.OtherPublication.call", "setAddress");
     }
 
     @Override
     public void setOtherPublicationType(String otherPublicationType) {
-        throw new DomainException("error.researcher.Misc.call", "setOtherPublicationType");
+        throw new DomainException("error.researcher.OtherPublication.call", "setOtherPublicationType");
     }
 
     @Override
     public void setNote(String note) {
-        throw new DomainException("error.researcher.Misc.call", "setNote");
+        throw new DomainException("error.researcher.OtherPublication.call", "setNote");
     }
 
     @Override
     public void setLanguage(String language) {
-        throw new DomainException("error.researcher.Misc.call", "setLanguage");
+        throw new DomainException("error.researcher.OtherPublication.call", "setLanguage");
     }
 
     @Override
     public void setMonth(Month month) {
-        throw new DomainException("error.researcher.Misc.call", "setMonth");
+        throw new DomainException("error.researcher.OtherPublication.call", "setMonth");
     }
 
     @Override
     public void setUrl(String url) {
-        throw new DomainException("error.researcher.Misc.call", "setUrl");
+        throw new DomainException("error.researcher.OtherPublication.call", "setUrl");
     }
 
     @Override
     public void setNumberPages(Integer numberPages) {
-        throw new DomainException("error.researcher.Misc.call", "setNumberPages");
+        throw new DomainException("error.researcher.OtherPublication.call", "setNumberPages");
     }
 
     @Override
     public void setOrganization(Unit organization) {
-        throw new DomainException("error.researcher.Misc.call", "setOrganization");
+        throw new DomainException("error.researcher.OtherPublication.call", "setOrganization");
     }
 
     @Override
     public void setPublisher(Unit publisher) {
-        throw new DomainException("error.researcher.Misc.call", "setPublisher");
+        throw new DomainException("error.researcher.OtherPublication.call", "setPublisher");
     }
 }
