@@ -303,6 +303,16 @@
          Indicates if the tag is beeing used inside. This controls if a form tag is generated or not.
       </description>
     </attribute>
+        
+    <attribute>
+      <name>slot</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Allows to specify a slot directly without having to define a schema that contains
+        only that specific slot.
+      </description>
+    </attribute>
   </tag>
 
   <tag>
@@ -350,7 +360,7 @@
     </attribute>
   </tag>
 
-<tag>
+  <tag>
     <name>hidden</name>
     <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixHiddenSlotTag</tag-class>
     <body-content>JSP</body-content>
