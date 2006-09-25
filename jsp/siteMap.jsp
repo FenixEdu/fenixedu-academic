@@ -90,7 +90,7 @@
 			<jsp:include page="degreesTable.jsp"/>
 			
 			<bean:define id="degreeType" type="java.lang.String" toScope="request">
-				<%= net.sourceforge.fenixedu.domain.degree.DegreeType.BOLONHA_ADVANCED_STUDIES_DIPLOMA.toString() %>
+				<%= net.sourceforge.fenixedu.domain.degree.DegreeType.BOLONHA_PHD_PROGRAM.toString() %>
 			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
 			

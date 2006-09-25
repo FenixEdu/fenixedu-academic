@@ -20,7 +20,7 @@
 			<h:outputText value="<table style='width: 720px' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
-			<h:outputText value="<td> #{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.sigla})</td>" escape="false"/>
+			<h:outputText value="<td> #{enumerationBundle[degree.bolonhaDegreeType.name]} #{bolonhaBundle['label.curricularPlansManagement.in']} #{degree.nome} (#{degree.sigla})</td>" escape="false"/>
 			<h:outputText value="<td style='width: 110px'>" escape="false"/>
 			<h:outputLink value="viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>

@@ -25,7 +25,7 @@ public enum DegreeType {
 
     BOLONHA_INTEGRATED_MASTER_DEGREE(null, CurricularPeriodType.FIVE_YEAR, 5, 300, true),
 
-    BOLONHA_ADVANCED_STUDIES_DIPLOMA(null, CurricularPeriodType.YEAR, 1, 30, true),
+    BOLONHA_PHD_PROGRAM(null, CurricularPeriodType.YEAR, 1, 30, true),
 
     BOLONHA_ADVANCED_FORMATION_DIPLOMA(null, CurricularPeriodType.YEAR, 1, 30, true),
 

@@ -27,7 +27,7 @@
 		<h:outputText value="<table style='width: 750px' class='showinfo1'>" escape="false"/>
 		<h:outputText value="<tr class='bgcolor1'><th style='width: 80px'><strong>#{scouncilBundle['degree']}:</strong></th>" escape="false"/>
 
-		<h:outputText value="<td><em>#{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.sigla})</em></td>" escape="false"/>
+		<h:outputText value="<td><em>#{enumerationBundle[degree.bolonhaDegreeType.name]} #{scouncilBundle['label.curricularPlansManagement.in']} #{degree.nome} (#{degree.sigla})</em></td>" escape="false"/>
 		<h:outputText value="<td style='width: 180px'>" escape="false"/>
 		<h:outputLink value="editDegree.faces">
 			<h:outputFormat value="#{scouncilBundle['edit']}"/>

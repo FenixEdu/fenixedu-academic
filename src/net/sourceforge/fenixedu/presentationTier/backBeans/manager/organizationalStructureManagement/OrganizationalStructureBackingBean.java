@@ -358,7 +358,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     selectItem.setLabel("(MI) " + degree.getNome());
                 } else if (degree.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
                     selectItem.setLabel("(DFA) " + degree.getNome());
-                } else if (degree.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_STUDIES_DIPLOMA)) {
+                } else if (degree.getDegreeType().equals(DegreeType.BOLONHA_PHD_PROGRAM)) {
                     selectItem.setLabel("(DEA) " + degree.getNome());
                 } else if (degree.getDegreeType().equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
                     selectItem.setLabel("(SD) " + degree.getNome());
