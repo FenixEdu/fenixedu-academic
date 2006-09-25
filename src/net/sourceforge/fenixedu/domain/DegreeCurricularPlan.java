@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.util.SituationName;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.YearMonthDay;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
@@ -1112,5 +1113,42 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return getDegreeStructure().getCurricularPeriod(curricularPeriodInfos);
     }
     
+    @Override
+    @Deprecated
+    public Date getInitialDate() {
+	YearMonthDay ymd = this.getInitialDateYearMonthDay();
+	return (ymd == null) ? null : new Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
+
+    @Override
+    public YearMonthDay getInitialDateYearMonthDay() {
+	if (isBolonha() && hasAnyExecutionDegrees()) {
+	     final ExecutionDegree firstExecutionDegree = getExecutionDegrees().get(0);
+	     return firstExecutionDegree.getExecutionYear().getBeginDateYearMonthDay();
+	} else {
+	    return super.getInitialDateYearMonthDay();
+	}
+    }
+
+    @Override
+    @Deprecated
+    public Date getEndDate() {
+	YearMonthDay ymd = this.getEndDateYearMonthDay();
+	return (ymd == null) ? null : new Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
+
+    @Override
+    public YearMonthDay getEndDateYearMonthDay() {
+	if (isBolonha() && hasAnyExecutionDegrees()) {
+	     final ExecutionDegree mostRecentExecutionDegree = getMostRecentExecutionDegree();
+	     if (mostRecentExecutionDegree.getExecutionYear() == ExecutionYear.readCurrentExecutionYear()) {
+		 return null;
+	     } else {
+		 return mostRecentExecutionDegree.getExecutionYear().getBeginDateYearMonthDay(); 
+	     }
+	} else {
+	    return super.getEndDateYearMonthDay();
+	}
+    }
 
 }
