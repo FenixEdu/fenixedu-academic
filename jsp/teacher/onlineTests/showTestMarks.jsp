@@ -82,7 +82,7 @@
 				<td class="listClasses">0</td>
 			</logic:lessEqual>
 			<logic:greaterThan name="finalMarkValue" value="0">
-				<td class="listClasses">2<bean:write name="finalMarkValue"/></td>
+				<td class="listClasses"><bean:write name="finalMarkValue"/></td>
 			</logic:greaterThan>
 				
 				<logic:greaterThan name="maximumMark" value="0">
