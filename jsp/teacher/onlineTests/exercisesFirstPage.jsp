@@ -48,7 +48,7 @@
 </logic:present>
 <br />
 <br />
-<logic:present name="infoMetadataList">
+<logic:present name="metadataList">
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<table>
@@ -57,7 +57,7 @@
 		</tr>
 	</table>
 	<br />
-	<bean:size id="metadatasSize" name="infoMetadataList" />
+	<bean:size id="metadatasSize" name="metadataList" />
 	<logic:equal name="metadatasSize" value="0">
 		<span class="error"><!-- Error messages go here --><bean:message key="message.tests.no.exercises" /></span>
 	</logic:equal>
@@ -215,7 +215,7 @@
 				</logic:notEqual></div>
 				</th>
 			</tr>
-			<logic:iterate id="metadata" name="infoMetadataList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata">
+			<logic:iterate id="metadata" name="metadataList" type="net.sourceforge.fenixedu.domain.onlineTests.Metadata">
 				<tr>
 					<logic:notEqual name="metadata" property="description" value="">
 						<td class="listClasses"><bean:write name="metadata" property="description" /></td>
@@ -235,12 +235,8 @@
 					<logic:equal name="metadata" property="difficulty" value="">
 						<td class="listClasses"><bean:message key="message.tests.notDefined" /></td>
 					</logic:equal>
-					<logic:notEqual name="metadata" property="numberOfMembers" value="">
-						<td class="listClasses"><bean:write name="metadata" property="numberOfMembers" /></td>
-					</logic:notEqual>
-					<logic:equal name="metadata" property="numberOfMembers" value="">
-						<td class="listClasses"><bean:message key="message.tests.notDefined" /></td>
-					</logic:equal>
+					<bean:size id="questionsSize" name="metadata" property="visibleQuestions"/>
+					<td class="listClasses"><bean:write name="questionsSize" /></td>
 					<bean:define id="exerciseCode" name="metadata" property="idInternal" />
 					<bean:define id="metadataCode" name="metadata" property="idInternal" />
 					<td>

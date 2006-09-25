@@ -4,10 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys;
 
-import java.util.Iterator;
-import java.util.List;
-
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.ResponseLID;
@@ -19,38 +16,35 @@ import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
  */
 public class IMS_LIDQuestionCorrectionStrategy extends QuestionCorrectionStrategy {
 
-    public InfoStudentTestQuestion getMark(InfoStudentTestQuestion infoStudentTestQuestion) {
-        if ((infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID)
-                && (infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.MULTIPLE)) {
-            List questionCorrectionList = infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions();
-            Iterator questionCorrectionIt = questionCorrectionList.iterator();
-            for (int i = 0; questionCorrectionIt.hasNext(); i++) {
-                ResponseProcessing responseProcessing = (ResponseProcessing) questionCorrectionIt.next();
-                if (isCorrectLID(responseProcessing.getResponseConditions(), ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse())) {
-                    infoStudentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
-                    ResponseLID r = (ResponseLID) infoStudentTestQuestion.getResponse();
-                    r.setResponseProcessingIndex(new Integer(i));
-                    infoStudentTestQuestion.setResponse(r);
-                    return infoStudentTestQuestion;
-                }
-            }
-        } else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID
-                && infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE) {
-            List questionCorrectionList = infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions();
-            Iterator questionCorrectionIt = questionCorrectionList.iterator();
-            for (int i = 0; questionCorrectionIt.hasNext(); i++) {
-                ResponseProcessing responseProcessing = (ResponseProcessing) questionCorrectionIt.next();
-                if (isCorrectLID(responseProcessing.getResponseConditions(), new String(((ResponseLID) infoStudentTestQuestion.getResponse())
-                        .getResponse()[0]))) {
-                    infoStudentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
-                    ResponseLID r = (ResponseLID) infoStudentTestQuestion.getResponse();
-                    r.setResponseProcessingIndex(new Integer(i));
-                    infoStudentTestQuestion.setResponse(r);
-                    return infoStudentTestQuestion;
-                }
-            }
+    public StudentTestQuestion getMark(StudentTestQuestion studentTestQuestion) {
+        if ((studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID)
+                && (studentTestQuestion.getSubQuestionByItem().getQuestionType().getCardinalityType()
+                        .getType().intValue() == CardinalityType.MULTIPLE)) {
+            ResponseProcessing responseProcessing = getLIDResponseProcessing(studentTestQuestion
+                    .getSubQuestionByItem().getResponseProcessingInstructions(),
+                    ((ResponseLID) studentTestQuestion.getResponse()).getResponse());
+            studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
+            ResponseLID r = (ResponseLID) studentTestQuestion.getResponse();
+            r.setResponseProcessingIndex(studentTestQuestion.getSubQuestionByItem()
+                    .getResponseProcessingInstructions().indexOf(responseProcessing));
+            studentTestQuestion.setResponse(r);
+            studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
+            return studentTestQuestion;
+        } else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID
+                && studentTestQuestion.getSubQuestionByItem().getQuestionType().getCardinalityType()
+                        .getType().intValue() == CardinalityType.SINGLE) {
+            ResponseProcessing responseProcessing = getLIDResponseProcessing(studentTestQuestion
+                    .getSubQuestionByItem().getResponseProcessingInstructions(),
+                    ((ResponseLID) studentTestQuestion.getResponse()).getResponse()[0]);
+            studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
+            ResponseLID r = (ResponseLID) studentTestQuestion.getResponse();
+            r.setResponseProcessingIndex(studentTestQuestion.getSubQuestionByItem()
+                    .getResponseProcessingInstructions().indexOf(responseProcessing));
+            studentTestQuestion.setResponse(r);
+            studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
+            return studentTestQuestion;
         }
-        infoStudentTestQuestion.setTestQuestionMark(new Double(0));
-        return infoStudentTestQuestion;
+        studentTestQuestion.setTestQuestionMark(new Double(0));
+        return studentTestQuestion;
     }
 }

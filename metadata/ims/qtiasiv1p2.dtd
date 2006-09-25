@@ -381,7 +381,9 @@
 
 <!ELEMENT itemproc_extension ANY>
 
-<!ELEMENT respcond_extension ANY>
+<!ELEMENT respcond_extension EMPTY>
+
+<!ATTLIST respcond_extension  itemident CDATA  #REQUIRED>
 
 <!ELEMENT selection_extension ANY>
 

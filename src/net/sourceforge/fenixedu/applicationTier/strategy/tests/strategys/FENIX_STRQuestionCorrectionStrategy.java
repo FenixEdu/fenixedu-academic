@@ -4,9 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys;
 
-import java.util.List;
-
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
@@ -17,27 +15,31 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
  */
 public class FENIX_STRQuestionCorrectionStrategy extends QuestionCorrectionStrategy {
 
-    public InfoStudentTestQuestion getMark(InfoStudentTestQuestion infoStudentTestQuestion) {
-        Integer fenixCorrectResponseIndex = getFenixCorrectResponseIndex(infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions());
-        if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR) {
-            List correctResponseList = ((ResponseProcessing) infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions().get(
-                    fenixCorrectResponseIndex.intValue())).getResponseConditions();
+    public StudentTestQuestion getMark(StudentTestQuestion studentTestQuestion) {
 
-            if (isCorrectSTR(correctResponseList, new String(((ResponseSTR) infoStudentTestQuestion.getResponse()).getResponse()))) {
-                infoStudentTestQuestion.setTestQuestionMark(new Double(infoStudentTestQuestion.getTestQuestionValue().doubleValue()));
-                ResponseSTR r = (ResponseSTR) infoStudentTestQuestion.getResponse();
-                r.setIsCorrect(new Boolean(true));
-                infoStudentTestQuestion.setResponse(r);
-            } else {
-                infoStudentTestQuestion.setTestQuestionMark(new Double(0));
-                ResponseSTR r = (ResponseSTR) infoStudentTestQuestion.getResponse();
-                r.setIsCorrect(new Boolean(false));
-                infoStudentTestQuestion.setResponse(r);
+        if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR) {
+            ResponseProcessing responseProcessing = getSTRResponseProcessing(studentTestQuestion
+                    .getSubQuestionByItem().getResponseProcessingInstructions(),
+                    ((ResponseSTR) studentTestQuestion.getResponse()).getResponse());
+            if (responseProcessing != null) {
+                if (responseProcessing.isFenixCorrectResponse()) {
+                    studentTestQuestion.setTestQuestionMark(new Double(studentTestQuestion
+                            .getTestQuestionValue().doubleValue()));
+                    ResponseSTR r = (ResponseSTR) studentTestQuestion.getResponse();
+                    r.setIsCorrect(new Boolean(true));
+                    studentTestQuestion.setResponse(r);
+                    studentTestQuestion.getSubQuestionByItem().setNextItemId(
+                            responseProcessing.getNextItem());
+                    return studentTestQuestion;
+                }
+                studentTestQuestion.getSubQuestionByItem().setNextItemId(
+                        responseProcessing.getNextItem());
             }
-            return infoStudentTestQuestion;
+            ResponseSTR r = (ResponseSTR) studentTestQuestion.getResponse();
+            r.setIsCorrect(new Boolean(false));
+            studentTestQuestion.setResponse(r);
         }
-        infoStudentTestQuestion.setTestQuestionMark(new Double(0));
-        return infoStudentTestQuestion;
+        studentTestQuestion.setTestQuestionMark(new Double(0));
+        return studentTestQuestion;
     }
-
 }

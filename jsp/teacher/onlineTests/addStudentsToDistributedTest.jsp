@@ -45,7 +45,7 @@ function cleanSelect() {
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.availableCorrection" property="availableCorrection"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.imsFeedback" property="imsFeedback"/>
 
-<bean:size id="studentsSize" name="students"/>
+<bean:size id="studentsSize" name="studentList"/>
 <logic:equal name="studentsSize" value="0">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEditDistributedTest"/>
@@ -77,10 +77,10 @@ function cleanSelect() {
 		<th class="listClasses-header"><bean:message key="label.name"/></th>
 		<td class="listClasses-header"></td>
 	</tr>
-	<logic:iterate id="student" name="students"> 
+	<logic:iterate id="student" name="studentList"> 
 		<tr><td></td>
 			<td class="listClasses"><bean:write name="student" property="number"/></td>
-			<td class="listClasses"><bean:write name="student" property="infoPerson.nome"/></td>
+			<td class="listClasses"><bean:write name="student" property="person.nome"/></td>
 			<td class="listClasses">
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="cleanSelect()">
 			    <bean:write name="student" property="idInternal"/>

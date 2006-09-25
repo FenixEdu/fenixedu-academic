@@ -3,21 +3,21 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>	
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<logic:present name="infoStudentTestQuestionList">
+<logic:present name="studentTestQuestionList">
 	<center>
-	<logic:empty name="infoStudentTestQuestionList">
+	<logic:empty name="studentTestQuestionList">
 		<h2><bean:message key="message.studentTest.no.available"/></h2>
 	</logic:empty>
 	
-	<logic:notEmpty name="infoStudentTestQuestionList" >
+	<logic:notEmpty name="studentTestQuestionList" >
 	<html:form action="/studentTests">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
 
-	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion"/>
-	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
+	<logic:iterate id="testQuestion" name="studentTestQuestionList" type="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion"/>
+	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
 	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
 		
-	<bean:define id="objectCode" name="distributedTest" property="infoTestScope.infoObject.idInternal"/>
+	<bean:define id="objectCode" name="distributedTest" property="testScope.domainObject.idInternal"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%= testCode.toString() %>"/>
 	
@@ -42,7 +42,7 @@
 	</html:form>
 	</logic:notEmpty>
 </logic:present>
-<logic:notPresent name="infoStudentTestQuestionList">
+<logic:notPresent name="studentTestQuestionList">
 <center>
 	<h2><bean:message key="message.studentTest.no.available"/></h2>
 </center>

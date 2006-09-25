@@ -10,8 +10,8 @@
 	</tr>
 </table>
 <br/>
-<logic:present name="infoTest">
-<bean:define id="infoTestQuestionList" name="infoTest" property="infoTestQuestions"/>
+<logic:present name="test">
+<bean:define id="testQuestionList" name="testQuestionList"/>
 
 <html:form action="/testEdition">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -20,12 +20,12 @@
 <table>
 	<tr>
 		<td><b><bean:message key="label.title"/></b></td>
-		<td><bean:write name="infoTest" property="title"/></td>
+		<td><bean:write name="test" property="title"/></td>
 	</tr>
-	<logic:notEqual name="infoTest" property="information" value="">
+	<logic:notEqual name="test" property="information" value="">
 		<tr>
 			<td><b><bean:message key="label.information"/></b></td>
-			<td><bean:write name="infoTest" property="information"/></td>
+			<td><bean:write name="test" property="information"/></td>
 		</tr>
 	</logic:notEqual>
 </table>
@@ -48,13 +48,13 @@
 <br/>
 <table>
 	<tr><td><hr/></td></tr>
-	<logic:iterate id="testQuestion" name="infoTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestQuestion">
+	<logic:iterate id="testQuestion" name="testQuestionList" type="net.sourceforge.fenixedu.domain.onlineTests.TestQuestion">
 	<tr>
 		<td><b><bean:message key="message.tests.question" />:</b>&nbsp;<bean:write name="testQuestion" property="testQuestionOrder"/></td></tr>
 		<bean:define id="testQuestionValue" name="testQuestion" property="testQuestionValue"/>
 		<bean:define id="testQuestionValue" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(testQuestionValue.toString())).toString()) %>"/>		
 		<tr><td><b><bean:message key="message.tests.questionValue" /></b>&nbsp;<bean:write name="testQuestionValue"/></td></tr>
-		<bean:define id="thisQuestion" name="testQuestion" property="question" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion"/>
+		<bean:define id="thisQuestion" name="testQuestion" property="question" type="net.sourceforge.fenixedu.domain.onlineTests.Question"/>
 		<bean:define id="questionCode" name="thisQuestion" property="idInternal"/>
 		<tr><td><table><tr><td>
 			<div class="gen-button">
@@ -65,8 +65,8 @@
 			<html:link page="<%= "/testEdition.do?method=deleteTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
 			<bean:message key="link.removeTestQuestion" />
 			</html:link></div></td>
-		</tr></table>
-		<bean:define id="metadataId" name="thisQuestion" property="infoMetadata.idInternal"/>
+		</tr></table><tr><td>
+		<bean:define id="metadataId" name="thisQuestion" property="metadata.idInternal"/>
 		<% request.setAttribute("iquestion", thisQuestion); 
 		request.setAttribute("metadataId", metadataId);%>
 		<jsp:include page="showQuestion.jsp">
@@ -77,8 +77,8 @@
 	</logic:iterate>
 </table>
 <br/>
-<bean:size id="infoTestQuestionListSize" name="infoTest" property="infoTestQuestions"/>
-<logic:notEqual name="infoTestQuestionListSize" value="0">
+<bean:size id="testQuestionListSize" name="test" property="testQuestions"/>
+<logic:notEqual name="testQuestionListSize" value="0">
 	<table>
 		<tr><td>
 			<div class="gen-button">

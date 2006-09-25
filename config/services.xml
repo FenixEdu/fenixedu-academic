@@ -636,15 +636,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadStudentTests</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTests</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="StudentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadStudentTest</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTest</implementationClass>
 		<description />
@@ -683,6 +674,16 @@
 		<name>InsertStudentTestResponses</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.InsertStudentTestResponses</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="StudentAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>GiveUpQuestion</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.GiveUpQuestion</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4081,42 +4082,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadMetadatas</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadMetadatas</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>CountMetadatasByExecutionCourse</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.CountMetadatasByExecutionCourse</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadQuestion</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadQuestion</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadTests</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadTests</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>InsertTest</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertTest</implementationClass>
 		<description />
@@ -4160,7 +4125,7 @@
 		<filterChains>
 			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
 		</filterChains>
-	</service>
+	</service>	
 	<service>
 		<name>EditTest</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.EditTest</implementationClass>
@@ -4189,15 +4154,6 @@
 	<service>
 		<name>EditTestQuestion</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.EditTestQuestion</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadTestQuestion</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadTestQuestion</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4278,15 +4234,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>VerifyIfCanDeleteDistributedTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.VerifyIfCanDeleteDistributedTest</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>DeleteDistributedTest</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.DeleteDistributedTest</implementationClass>
 		<description />
@@ -4319,15 +4266,6 @@
 		<name>SimulateTest</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.SimulateTest</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadStudentTestLog</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadStudentTestLog</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4374,7 +4312,7 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadExercise</name>
+	<name>ReadExercise</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadExercise</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
@@ -4382,7 +4320,7 @@
 			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
 		</filterChains>
 	</service>
-	<service>
+	<service>	
 		<name>EditExercise</name>
 		<implementationClass>
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.EditExercise</implementationClass>

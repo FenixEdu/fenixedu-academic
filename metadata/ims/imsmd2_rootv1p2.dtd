@@ -80,7 +80,7 @@
       <!ELEMENT taxon (id?, entry?, taxon?)>
         <!ELEMENT id (#PCDATA)>
 
-<!ELEMENT ist (field, discipline, subject, author?, level?, members)>
+<!ELEMENT ist (field, discipline, subject, author?, level?, members?)>
 	<!ELEMENT field (source, value)>
 	<!ELEMENT discipline (source, value)>
 	<!ELEMENT subject (mainsubject, secondarysubject*)>

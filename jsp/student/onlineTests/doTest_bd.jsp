@@ -11,20 +11,20 @@ response.setHeader("Pragma","no-cache");
 response.setDateHeader ("Expires", 0);
 %>
 
-<logic:present name="infoStudentTestQuestionList">
+<logic:present name="studentTestQuestionList">
 	<center>
-<logic:empty name="infoStudentTestQuestionList">
+<logic:empty name="studentTestQuestionList">
 	<h2><bean:message key="message.studentTest.no.available"/></h2>
 </logic:empty>
 	
-<logic:notEmpty name="infoStudentTestQuestionList" >
+<logic:notEmpty name="studentTestQuestionList" >
 	
-	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion"/>
-	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
+	<logic:iterate id="testQuestion" name="studentTestQuestionList" type="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion"/>
+	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
 	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
-	<bean:define id="infoTestScope" name="distributedTest" property="infoTestScope"/>
-	<bean:define id="infoObject" name="infoTestScope" property="infoObject"/>
-	<bean:define id="objectCode" name="infoObject" property="idInternal"/>
+	<bean:define id="testScope" name="distributedTest" property="testScope"/>
+	<bean:define id="domainObject" name="testScope" property="domainObject"/>
+	<bean:define id="objectCode" name="domainObject" property="idInternal"/>
 	<bean:define id="student" name="testQuestion" property="student"/>
 	<bean:define id="studentCode" name="student" property="number"/>
 	
@@ -58,7 +58,7 @@ response.setDateHeader ("Expires", 0);
 	</logic:notEmpty>
 </logic:present>
 <center>
-<logic:notPresent name="infoStudentTestQuestionList">
+<logic:notPresent name="studentTestQuestionList">
 <h2><bean:message key="message.studentTest.no.available"/></h2>
 </logic:notPresent>
 </center>

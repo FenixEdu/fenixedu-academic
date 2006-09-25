@@ -1,6 +1,8 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <html:xhtml/>
+<%@ page language="java"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.showDistributedTests" /></h2>
@@ -14,14 +16,20 @@ function invertSelect(){
 	} else { 
 		select = false;
 	}
-	for (var i=0; i<document.forms[0].distributedTestCodes.length; i++){
-		var e = document.forms[0].distributedTestCodes[i];
-		if (select == true) { e.checked = true; } else { e.checked = false; }
+	if(document.forms[0].distributedTestCodes.type=='checkbox'){
+		var e = document.forms[0].distributedTestCodes;
+		e.checked = select;
+	}else{
+		for (var i=0; i<document.forms[0].distributedTestCodes.length; i++){
+			var e = document.forms[0].distributedTestCodes[i];
+			e.checked = select;
+		}
 	}
+	 
 }
 // -->
 </script>
-<logic:present name="infoDistributedTests">
+<logic:present name="distributedTests">
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
 
 	<logic:present name="successfulDistribution">
@@ -51,7 +59,7 @@ function invertSelect(){
 	</logic:present>
 	<br />
 	<br />
-	<bean:size id="distrubutedTestsSize" name="infoDistributedTests" />
+	<bean:size id="distrubutedTestsSize" name="distributedTests" />
 	<logic:equal name="distrubutedTestsSize" value="0">
 		<span class="error"><!-- Error messages go here --><bean:message key="message.tests.no.distributedTests" /></span>
 	</logic:equal>
@@ -74,7 +82,7 @@ function invertSelect(){
 					<th class="listClasses-header"><bean:message key="message.testBeginDate" /></th>
 					<th class="listClasses-header"><bean:message key="message.testEndDate" /></th>
 				</tr>
-				<logic:iterate id="distributedTest" name="infoDistributedTests" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest">
+				<logic:iterate id="distributedTest" name="distributedTests" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
 					<tr>
 						<bean:define id="testType" name="distributedTest" property="testType.type" />
 						<bean:define id="distributedTestCode" name="distributedTest" property="idInternal" />
@@ -104,12 +112,12 @@ function invertSelect(){
 						<%if (((Integer) testType).intValue() != 3) {
 
             %>
-						<td>
+						<%-- <td>
 						<div class="gen-button"><html:link
 							page="<%= "/testDistribution.do?method=showTestMarksStatistics&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
 							<bean:message key="label.test.statistics" />
 						</html:link></div>
-						</td>
+						</td> --%>
 						<td>
 						<div class="gen-button"><html:link
 							page="<%= "/testDistribution.do?method=showTestMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">

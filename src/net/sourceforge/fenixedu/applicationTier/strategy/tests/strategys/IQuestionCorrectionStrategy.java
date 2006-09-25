@@ -4,15 +4,16 @@
  */
 package net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys;
 
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.util.tests.Response;
 
 /**
  * @author Susana Fernandes
- *  
+ * 
  */
 public interface IQuestionCorrectionStrategy {
 
-    public InfoStudentTestQuestion getMark(InfoStudentTestQuestion infoStudentTestQuestion);
+    public StudentTestQuestion getMark(StudentTestQuestion studentTestQuestion);
 
-    public String validResponse(InfoStudentTestQuestion infoStudentTestQuestion);
+    public String validResponse(StudentTestQuestion studentTestQuestion, Response response);
 }

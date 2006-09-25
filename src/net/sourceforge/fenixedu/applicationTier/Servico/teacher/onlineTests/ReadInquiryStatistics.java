@@ -19,16 +19,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteInquiryStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithAll;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
-import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -55,12 +54,11 @@ public class ReadInquiryStatistics extends Service {
 			InfoInquiryStatistics infoInquiryStatistics = new InfoInquiryStatistics();
 
 			InfoStudentTestQuestion infoStudentTestQuestion;
-			ParseQuestion parse = new ParseQuestion();
+			ParseSubQuestion parse = new ParseSubQuestion();
 			try {
-				infoStudentTestQuestion = InfoStudentTestQuestionWithAll
-						.newInfoFromDomain(studentTestQuestion);
-				infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion,
-						this.path);
+				infoStudentTestQuestion = InfoStudentTestQuestion.newInfoFromDomain(studentTestQuestion);
+//				infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion,
+//						this.path);
 				if (studentTestQuestion.getOptionShuffle() == null) {
 					studentTestQuestion.setOptionShuffle(infoStudentTestQuestion.getOptionShuffle());
 				}

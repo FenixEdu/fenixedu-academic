@@ -5,10 +5,9 @@
 package net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.ResponseCondition;
@@ -21,33 +20,39 @@ import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
  */
 public class FENIX_LIDQuestionCorrectionStrategy extends QuestionCorrectionStrategy {
 
-    public InfoStudentTestQuestion getMark(InfoStudentTestQuestion infoStudentTestQuestion) {
-        Integer fenixCorrectResponseIndex = getFenixCorrectResponseIndex(infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions());
-        Integer empty = new Integer(getEmptyOptionIndex(infoStudentTestQuestion.getQuestion().getOptions()));
-        if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID) {
-            List correctResponseList = getFenixCorrectResponse4LID(infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions(),
-                    fenixCorrectResponseIndex);
-            if (infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.MULTIPLE) {
+    public StudentTestQuestion getMark(StudentTestQuestion studentTestQuestion) {
+        if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID) {
+            if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getCardinalityType()
+                    .getType().intValue() == CardinalityType.MULTIPLE) {
                 // 2*(correctOptionsChosen+wrongOptionNotChosen)/allOptionNumber-1
-
+                Integer fenixCorrectResponseIndex = getFenixCorrectResponseIndex(studentTestQuestion
+                        .getSubQuestionByItem().getResponseProcessingInstructions());
+                Integer empty = new Integer(getEmptyOptionIndex(studentTestQuestion
+                        .getSubQuestionByItem().getOptions()));
+                List<ResponseCondition> correctResponseList = getFenixCorrectResponse4LID(
+                        studentTestQuestion.getSubQuestionByItem().getResponseProcessingInstructions(),
+                        fenixCorrectResponseIndex);
                 int emptyNumber = 0;
-                int emptyIndex = getEmptyOptionIndex(infoStudentTestQuestion.getQuestion().getOptions());
+                int emptyIndex = getEmptyOptionIndex(studentTestQuestion.getSubQuestionByItem()
+                        .getOptions());
                 if (emptyIndex != -1)
                     emptyNumber = 1;
-                int allOptionNumber = infoStudentTestQuestion.getQuestion().getOptionNumber().intValue() - emptyNumber;
+                int allOptionNumber = studentTestQuestion.getSubQuestionByItem().getOptions().size()
+                        - emptyNumber;
                 int correctOptionNumber = getCorrectOptionsNumber(correctResponseList, emptyIndex);
                 int wrongOptionsNumber = allOptionNumber - correctOptionNumber;
                 int correctOptionsChosen = 0;
                 int wrongOptionChosen = 0;
-                Boolean[] isCorrect = new Boolean[((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse().length];
-                for (int i = 0; i < ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse().length; i++) {
-                    Iterator responseConditionIt = correctResponseList.iterator();
+                Boolean[] isCorrect = new Boolean[((ResponseLID) studentTestQuestion.getResponse())
+                        .getResponse().length];
+                for (int i = 0; i < ((ResponseLID) studentTestQuestion.getResponse()).getResponse().length; i++) {
                     boolean correct = false;
                     boolean chooseEmpty = false;
-                    while (responseConditionIt.hasNext()) {
-                        if ((((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse()[i]).equals(empty.toString()))
+                    for (ResponseCondition responseCondition : correctResponseList) {
+                        if ((((ResponseLID) studentTestQuestion.getResponse()).getResponse()[i])
+                                .equals(empty.toString()))
                             chooseEmpty = true;
-                        if (((ResponseCondition) responseConditionIt.next()).isCorrectLID(new String(((ResponseLID) infoStudentTestQuestion
+                        if (responseCondition.isCorrectLID(new String(((ResponseLID) studentTestQuestion
                                 .getResponse()).getResponse()[i]))) {
                             correct = true;
                             break;
@@ -65,41 +70,57 @@ public class FENIX_LIDQuestionCorrectionStrategy extends QuestionCorrectionStrat
                 int wrongOptionNotChosen = wrongOptionsNumber - wrongOptionChosen;
 
                 if (allOptionNumber > 1) {
-                    infoStudentTestQuestion.setTestQuestionMark(new Double(infoStudentTestQuestion.getTestQuestionValue().doubleValue()
-                            * (2 * (correctOptionsChosen + wrongOptionNotChosen) * (java.lang.Math.pow(allOptionNumber, -1)) - 1)));
+                    studentTestQuestion.setTestQuestionMark(new Double(studentTestQuestion
+                            .getTestQuestionValue().doubleValue()
+                            * (2 * (correctOptionsChosen + wrongOptionNotChosen)
+                                    * (java.lang.Math.pow(allOptionNumber, -1)) - 1)));
                 } else {
-                    infoStudentTestQuestion.setTestQuestionMark(new Double(infoStudentTestQuestion.getTestQuestionValue().doubleValue()
+                    studentTestQuestion.setTestQuestionMark(new Double(studentTestQuestion
+                            .getTestQuestionValue().doubleValue()
                             * correctOptionsChosen));
                 }
-                ResponseLID r = (ResponseLID) infoStudentTestQuestion.getResponse();
+                ResponseLID r = (ResponseLID) studentTestQuestion.getResponse();
                 r.setIsCorrect(isCorrect);
-                infoStudentTestQuestion.setResponse(r);
-                return infoStudentTestQuestion;
+                studentTestQuestion.setResponse(r);
 
-            } else if (infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE) {
+                ResponseProcessing responseProcessing = getLIDResponseProcessing(studentTestQuestion
+                        .getSubQuestionByItem().getResponseProcessingInstructions(),
+                        ((ResponseLID) studentTestQuestion.getResponse()).getResponse());
+                studentTestQuestion.getSubQuestionByItem().setNextItemId(
+                        responseProcessing.getNextItem());
+                return studentTestQuestion;
+            } else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getCardinalityType()
+                    .getType().intValue() == CardinalityType.SINGLE) {
                 // (1/num_op)-1
-                if (isCorrectLID(correctResponseList, new String(((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse()[0]))) {
-
-                    infoStudentTestQuestion.setTestQuestionMark(new Double(infoStudentTestQuestion.getTestQuestionValue().doubleValue()));
-                    ResponseLID r = (ResponseLID) infoStudentTestQuestion.getResponse();
+                ResponseProcessing responseProcessing = getLIDResponseProcessing(studentTestQuestion
+                        .getSubQuestionByItem().getResponseProcessingInstructions(),
+                        ((ResponseLID) studentTestQuestion.getResponse()).getResponse()[0]);
+                if (responseProcessing != null && responseProcessing.isFenixCorrectResponse()) {
+                    studentTestQuestion.setTestQuestionMark(new Double(studentTestQuestion
+                            .getTestQuestionValue().doubleValue()));
+                    ResponseLID r = (ResponseLID) studentTestQuestion.getResponse();
                     r.setIsCorrect(new Boolean[] { new Boolean(true) });
-                    infoStudentTestQuestion.setResponse(r);
-                } else {
-                    if (infoStudentTestQuestion.getQuestion().getOptionNumber().intValue() > 1) {
-                        infoStudentTestQuestion.setTestQuestionMark(new Double(
-                                -(infoStudentTestQuestion.getTestQuestionValue().intValue() * (java.lang.Math.pow(infoStudentTestQuestion
-                                        .getQuestion().getOptionNumber().intValue() - 1, -1)))));
-                    } else
-                        infoStudentTestQuestion.setTestQuestionMark(new Double(0));
-                    ResponseLID r = (ResponseLID) infoStudentTestQuestion.getResponse();
+                    studentTestQuestion.setResponse(r);
+                    studentTestQuestion.getSubQuestionByItem().setNextItemId(
+                            responseProcessing.getNextItem());
+                    return studentTestQuestion;
+                } else if (studentTestQuestion.getSubQuestionByItem().getOptions().size() > 1) {
+                    studentTestQuestion.setTestQuestionMark(new Double(-(studentTestQuestion
+                            .getTestQuestionValue().intValue() * (java.lang.Math.pow(studentTestQuestion
+                            .getSubQuestionByItem().getOptions().size() - 1, -1)))));
+                    ResponseLID r = (ResponseLID) studentTestQuestion.getResponse();
                     r.setIsCorrect(new Boolean[] { new Boolean(false) });
-                    infoStudentTestQuestion.setResponse(r);
+                    studentTestQuestion.setResponse(r);
+                    if (responseProcessing != null) {
+                        studentTestQuestion.getSubQuestionByItem().setNextItemId(
+                                responseProcessing.getNextItem());
+                    }
+                    return studentTestQuestion;
                 }
-                return infoStudentTestQuestion;
             }
         }
-        infoStudentTestQuestion.setTestQuestionMark(new Double(0));
-        return infoStudentTestQuestion;
+        studentTestQuestion.setTestQuestionMark(new Double(0));
+        return studentTestQuestion;
     }
 
     private int getCorrectOptionsNumber(List correctResponseList, int emptyIndex) {
@@ -112,23 +133,28 @@ public class FENIX_LIDQuestionCorrectionStrategy extends QuestionCorrectionStrat
         return result;
     }
 
-    public List getFenixCorrectResponse4LID(List responseProcessingList, Integer index) {
-
-        List oneResponse = new ArrayList();
-        ResponseProcessing responseProcessing = (ResponseProcessing) responseProcessingList.get(index.intValue());
-
+    // public List<ResponseCondition>
+    // getFenixCorrectResponse4LID(ResponseProcessing responseProcessing) {
+    // List<ResponseCondition> oneResponse = new ArrayList<ResponseCondition>();
+    // if (responseProcessing.isFenixCorrectResponse()) {
+    // for (ResponseCondition rc : responseProcessing.getResponseConditions()) {
+    // if (rc != null && rc.getCondition().intValue() ==
+    // ResponseCondition.VAREQUAL)
+    // oneResponse.add(rc);
+    // }
+    // }
+    // return oneResponse;
+    // }
+    public List<ResponseCondition> getFenixCorrectResponse4LID(List responseProcessingList, Integer index) {
+        List<ResponseCondition> oneResponse = new ArrayList<ResponseCondition>();
+        ResponseProcessing responseProcessing = (ResponseProcessing) responseProcessingList.get(index
+                .intValue());
         if (responseProcessing.isFenixCorrectResponse()) {
-            oneResponse = new ArrayList();
-            Iterator itResponseCondition = responseProcessing.getResponseConditions().iterator();
-            while (itResponseCondition.hasNext()) {
-                ResponseCondition rc = (ResponseCondition) itResponseCondition.next();
-
+            for (ResponseCondition rc : responseProcessing.getResponseConditions()) {
                 if (rc != null && rc.getCondition().intValue() == ResponseCondition.VAREQUAL)
                     oneResponse.add(rc);
-
             }
         }
-
         return oneResponse;
     }
 

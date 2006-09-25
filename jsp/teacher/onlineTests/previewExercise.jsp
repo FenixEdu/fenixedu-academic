@@ -70,11 +70,11 @@
 
 <% }%>
 
-<logic:present name="infoQuestion">
-<bean:define id="infoQuestion" name="infoQuestion"/>
+<logic:present name="subQuestion">
+<bean:define id="subQuestion" name="subQuestion"/>
 <table>
-	<tr><td>
-	<logic:iterate id="questionBody" name="infoQuestion" property="question">
+	<tr><td
+	<logic:iterate id="questionBody" name="subQuestion" property="presentation">
 		<bean:define id="questionLabel" name="questionBody" property="label"/>
 		<%if (((String)questionLabel).equals("flow")){%>
 			</td></tr><tr><td>
@@ -83,10 +83,10 @@
 		<% } %>
 	</logic:iterate>
 	
-	<bean:define id="cardinality" name="infoQuestion" property="questionType.cardinalityType.type"/>
-	<bean:define id="questionType" name="infoQuestion" property="questionType.type"/>
+	<bean:define id="cardinality" name="subQuestion" property="questionType.cardinalityType.type"/>
+	<bean:define id="questionType" name="subQuestion" property="questionType.type"/>
 	
-	<logic:iterate id="questionOption" name="infoQuestion" property="options" indexId="indexOption">
+	<logic:iterate id="questionOption" name="subQuestion" property="options" indexId="indexOption">
 	<logic:iterate id="optionBody" name="questionOption" property="optionContent" indexId="optionBodyIndex">
 		<bean:define id="optionLabel" name="optionBody" property="label"/>
 		<% if (((String)optionLabel).equals("response_label")){ %>
@@ -104,13 +104,13 @@
 					<td>
 				<%}%>
 			<%}else{ %><%-- QuestionType.STR or QuestionType.NUM--%>
-				<logic:notEmpty name="infoQuestion" property="questionType.render.maxchars">
-					<bean:define id="maxchars" name="infoQuestion" property="questionType.render.maxchars"/>
-					<logic:notEmpty name="infoQuestion" property="questionType.render.columns">
-						<bean:define id="cols" name="infoQuestion" property="questionType.render.columns"/>
+				<logic:notEmpty name="subQuestion" property="questionType.render.maxchars">
+					<bean:define id="maxchars" name="subQuestion" property="questionType.render.maxchars"/>
+					<logic:notEmpty name="subQuestion" property="questionType.render.columns">
+						<bean:define id="cols" name="subQuestion" property="questionType.render.columns"/>
 						<html:text bundle="HTMLALT_RESOURCES" altKey="text.response" maxlength="<%=maxchars.toString()%>" size="<%=cols.toString()%>" property="response" value=""/>
 					</logic:notEmpty>
-					<logic:empty name="infoQuestion" property="questionType.render.columns">
+					<logic:empty name="subQuestion" property="questionType.render.columns">
 						<bean:define id="textBoxSize" value="<%=maxchars.toString()%>"/>
 						<logic:greaterThan name="textBoxSize" value="100" >
 						<bean:define id="textBoxSize" value="100"/>
@@ -118,23 +118,23 @@
 						<html:text bundle="HTMLALT_RESOURCES" altKey="text.response" maxlength="<%=maxchars.toString()%>" size="<%=textBoxSize%>" property="response" value=""/>
 					</logic:empty>
 				</logic:notEmpty>	
-				<logic:empty name="infoQuestion" property="questionType.render.maxchars">
-					<logic:notEmpty name="infoQuestion" property="questionType.render.rows">
-						<bean:define id="rows" name="infoQuestion" property="questionType.render.rows"/>
-						<logic:notEmpty name="infoQuestion" property="questionType.render.columns">
-							<bean:define id="cols" name="infoQuestion" property="questionType.render.columns"/>
+				<logic:empty name="subQuestion" property="questionType.render.maxchars">
+					<logic:notEmpty name="subQuestion" property="questionType.render.rows">
+						<bean:define id="rows" name="subQuestion" property="questionType.render.rows"/>
+						<logic:notEmpty name="subQuestion" property="questionType.render.columns">
+							<bean:define id="cols" name="subQuestion" property="questionType.render.columns"/>
 							<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.response" rows="<%=rows.toString()%>" cols="<%=cols.toString()%>" property="response"/>
 						</logic:notEmpty>
-						<logic:empty name="infoQuestion" property="questionType.render.columns">
+						<logic:empty name="subQuestion" property="questionType.render.columns">
 							<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.response" rows="<%=rows.toString()%>" property="response"/>
 						</logic:empty>
 					</logic:notEmpty>
-					<logic:empty name="infoQuestion" property="questionType.render.rows">
-						<logic:notEmpty name="infoQuestion" property="questionType.render.columns">
-							<bean:define id="cols" name="infoQuestion" property="questionType.render.columns"/>
+					<logic:empty name="subQuestion" property="questionType.render.rows">
+						<logic:notEmpty name="subQuestion" property="questionType.render.columns">
+							<bean:define id="cols" name="subQuestion" property="questionType.render.columns"/>
 							<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.response" cols="<%=cols.toString()%>" property="response"/>
 						</logic:notEmpty>
-						<logic:empty name="infoQuestion" property="questionType.render.columns">
+						<logic:empty name="subQuestion" property="questionType.render.columns">
 							<html:text bundle="HTMLALT_RESOURCES" altKey="text.response" property="response" value=""/>
 						</logic:empty>
 					</logic:empty>
@@ -148,7 +148,6 @@
 	</logic:iterate>
 	</logic:iterate>
 </td></tr></table>
-
 
 </logic:present>	
 <br/><br/><br/>

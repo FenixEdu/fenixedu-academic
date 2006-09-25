@@ -641,6 +641,7 @@
 			<forward name="studentFeedback" path="show-Student-Test-Feedback"/>
 			<forward name="showTestCorrection" path="show-Test-Correction"/>
 			<forward name="viewStudentExecutionCoursesWithTests" path="view-Student-ExecutionCourses-With-Tests"/>
+			<forward name="giveUpQuestion" path="give-Up-Question"/>
 		</action>
 		
       <action path="/studentGaugingTestResults"

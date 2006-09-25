@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestType;
-import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -41,77 +40,78 @@ public class SimulateTest extends Service {
             String[] optionShuffle, TestType testType, CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation,
             String path) throws FenixServiceException, ExcepcaoPersistencia {
 
-        InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
-        this.path = path.replace('\\', '/');
-        Test test = rootDomainObject.readTestByOID(testId);
-        if (test == null)
-            throw new FenixServiceException();
-
-        double totalMark = 0;
-        int responseNumber = 0;
-        int notResponseNumber = 0;
-        List<String> errors = new ArrayList<String>();
-
-        TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
-
-        if (testScope == null) {
-            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-            if (executionCourse == null)
-                throw new InvalidArgumentsServiceException();
-            testScope = new TestScope(executionCourse);
-        }
-
-        InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
-        infoDistributedTest.setIdInternal(testId);
-        infoDistributedTest.setInfoTestScope(InfoTestScope.newInfoFromDomain(testScope));
-        infoDistributedTest.setTestType(testType);
-        infoDistributedTest.setCorrectionAvailability(correctionAvailability);
-        infoDistributedTest.setImsFeedback(imsfeedback);
-        infoDistributedTest.setTestInformation(testInformation);
-        infoDistributedTest.setTitle(test.getTitle());
-        infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
-
-        List<InfoStudentTestQuestion> infoStudentTestQuestionList = getInfoStudentTestQuestionList(questionCodes, optionShuffle,
-                responses, infoDistributedTest, testId);
-        if (infoStudentTestQuestionList.size() == 0)
-            return null;
-        for (InfoStudentTestQuestion infoStudentTestQuestion : infoStudentTestQuestionList) {
-            if (infoStudentTestQuestion.getResponse().isResponsed()) {
-                responseNumber++;
-
-                IQuestionCorrectionStrategyFactory questionCorrectionStrategyFactory = QuestionCorrectionStrategyFactory.getInstance();
-                IQuestionCorrectionStrategy questionCorrectionStrategy = questionCorrectionStrategyFactory
-                        .getQuestionCorrectionStrategy(infoStudentTestQuestion);
-
-                String error = questionCorrectionStrategy.validResponse(infoStudentTestQuestion);
-                if (error == null) {
-                    if ((!infoDistributedTest.getTestType().equals(new TestType(TestType.INQUIRY)))
-                            && infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions().size() != 0) {
-
-                        infoStudentTestQuestion = questionCorrectionStrategy.getMark(infoStudentTestQuestion);
-                    }
-                    totalMark += infoStudentTestQuestion.getTestQuestionMark().doubleValue();
-                } else {
-                    notResponseNumber++;
-                    responseNumber--;
-                    errors.add(error);
-                    if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID)
-                        infoStudentTestQuestion.setResponse(new ResponseLID());
-                    else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR)
-                        infoStudentTestQuestion.setResponse(new ResponseSTR());
-                    else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM)
-                        infoStudentTestQuestion.setResponse(new ResponseNUM());
-                }
-            } else
-                notResponseNumber++;
-        }
-
-        infoSiteStudentTestFeedback.setResponseNumber(Integer.valueOf(responseNumber));
-        infoSiteStudentTestFeedback.setNotResponseNumber(Integer.valueOf(notResponseNumber));
-        infoSiteStudentTestFeedback.setErrors(errors);
-
-        infoSiteStudentTestFeedback.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
-        return infoSiteStudentTestFeedback;
+//        InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
+//        this.path = path.replace('\\', '/');
+//        Test test = rootDomainObject.readTestByOID(testId);
+//        if (test == null)
+//            throw new FenixServiceException();
+//
+//        double totalMark = 0;
+//        int responseNumber = 0;
+//        int notResponseNumber = 0;
+//        List<String> errors = new ArrayList<String>();
+//
+//        TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
+//
+//        if (testScope == null) {
+//            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+//            if (executionCourse == null)
+//                throw new InvalidArgumentsServiceException();
+//            testScope = DomainFactory.makeTestScope(executionCourse);
+//        }
+//
+//        InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
+//        infoDistributedTest.setIdInternal(testId);
+//        infoDistributedTest.setInfoTestScope(InfoTestScope.newInfoFromDomain(testScope));
+//        infoDistributedTest.setTestType(testType);
+//        infoDistributedTest.setCorrectionAvailability(correctionAvailability);
+//        infoDistributedTest.setImsFeedback(imsfeedback);
+//        infoDistributedTest.setTestInformation(testInformation);
+//        infoDistributedTest.setTitle(test.getTitle());
+//        infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
+//
+//        List<InfoStudentTestQuestion> infoStudentTestQuestionList = getInfoStudentTestQuestionList(questionCodes, optionShuffle,
+//                responses, infoDistributedTest, testId);
+//        if (infoStudentTestQuestionList.size() == 0)
+//            return null;
+//        for (InfoStudentTestQuestion infoStudentTestQuestion : infoStudentTestQuestionList) {
+//            if (infoStudentTestQuestion.getResponse().isResponsed()) {
+//                responseNumber++;
+//
+//                IQuestionCorrectionStrategyFactory questionCorrectionStrategyFactory = QuestionCorrectionStrategyFactory.getInstance();
+//                IQuestionCorrectionStrategy questionCorrectionStrategy = questionCorrectionStrategyFactory
+//                        .getQuestionCorrectionStrategy(infoStudentTestQuestion);
+//
+//                String error = questionCorrectionStrategy.validResponse(infoStudentTestQuestion);
+//                if (error == null) {
+//                    if ((!infoDistributedTest.getTestType().equals(new TestType(TestType.INQUIRY)))
+//                            && infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions().size() != 0) {
+//
+//                        infoStudentTestQuestion = questionCorrectionStrategy.getMark(infoStudentTestQuestion);
+//                    }
+//                    totalMark += infoStudentTestQuestion.getTestQuestionMark().doubleValue();
+//                } else {
+//                    notResponseNumber++;
+//                    responseNumber--;
+//                    errors.add(error);
+//                    if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID)
+//                        infoStudentTestQuestion.setResponse(new ResponseLID());
+//                    else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR)
+//                        infoStudentTestQuestion.setResponse(new ResponseSTR());
+//                    else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM)
+//                        infoStudentTestQuestion.setResponse(new ResponseNUM());
+//                }
+//            } else
+//                notResponseNumber++;
+//        }
+//
+//        infoSiteStudentTestFeedback.setResponseNumber(Integer.valueOf(responseNumber));
+//        infoSiteStudentTestFeedback.setNotResponseNumber(Integer.valueOf(notResponseNumber));
+//        infoSiteStudentTestFeedback.setErrors(errors);
+//
+//        infoSiteStudentTestFeedback.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
+//        return infoSiteStudentTestFeedback;
+        return null;
     }
 
     private InfoQuestion correctQuestionValues(InfoQuestion infoQuestion, Double questionValue) {
@@ -143,7 +143,7 @@ public class SimulateTest extends Service {
         for (int i = 0; i < testQuestionList.size(); i++) {
             TestQuestion testQuestionExample = testQuestionList.get(i);
             InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
-            infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
+          //  infoStudentTestQuestion.setDistributedTest(distributedTest);
             infoStudentTestQuestion.setTestQuestionOrder(testQuestionExample.getTestQuestionOrder());
             infoStudentTestQuestion.setTestQuestionValue(testQuestionExample.getTestQuestionValue());
             infoStudentTestQuestion.setOldResponse(Integer.valueOf(0));
@@ -155,15 +155,15 @@ public class SimulateTest extends Service {
                 throw new InvalidArgumentsServiceException();
             }
             infoStudentTestQuestion.setQuestion(InfoQuestion.newInfoFromDomain(question));
-            ParseQuestion parse = new ParseQuestion();
-            try {
-                infoStudentTestQuestion.setOptionShuffle(optionShuffle[i]);
-                infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, this.path);
-                infoStudentTestQuestion.setQuestion(correctQuestionValues(infoStudentTestQuestion.getQuestion(), Double.valueOf(infoStudentTestQuestion.getTestQuestionValue())));
-                infoStudentTestQuestion.setResponse(responses[i]);
-            } catch (Exception e) {
-                throw new FenixServiceException(e);
-            }
+//            ParseQuestion parse = new ParseQuestion();
+//            try {
+//                infoStudentTestQuestion.setOptionShuffle(optionShuffle[i]);
+//                infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, this.path);
+//                infoStudentTestQuestion.setQuestion(correctQuestionValues(infoStudentTestQuestion.getQuestion(), Double.valueOf(infoStudentTestQuestion.getTestQuestionValue())));
+//                infoStudentTestQuestion.setResponse(responses[i]);
+//            } catch (Exception e) {
+//                throw new FenixServiceException(e);
+//            }
             infoStudentTestQuestionList.add(infoStudentTestQuestion);
         }
         return infoStudentTestQuestionList;

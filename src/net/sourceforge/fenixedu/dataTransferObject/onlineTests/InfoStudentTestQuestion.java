@@ -3,11 +3,9 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 
-import java.beans.XMLDecoder;
-import java.io.ByteArrayInputStream;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import net.sourceforge.fenixedu.util.tests.Response;
@@ -19,7 +17,7 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
 
     private InfoStudent student;
 
-    private InfoDistributedTest distributedTest;
+    private DistributedTest distributedTest;
 
     private InfoQuestion question;
 
@@ -40,7 +38,7 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
     public InfoStudentTestQuestion() {
     }
 
-    public InfoDistributedTest getDistributedTest() {
+    public DistributedTest getDistributedTest() {
         return distributedTest;
     }
 
@@ -76,7 +74,7 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
         return response;
     }
 
-    public void setDistributedTest(InfoDistributedTest test) {
+    public void setDistributedTest(DistributedTest test) {
         distributedTest = test;
     }
 
@@ -150,11 +148,13 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
             setTestQuestionValue(studentTestQuestion.getTestQuestionValue());
             setOptionShuffle(studentTestQuestion.getOptionShuffle());
             setCorrectionFormula(studentTestQuestion.getCorrectionFormula());
-            if (studentTestQuestion.getResponse() != null) {
-                XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(studentTestQuestion.getResponse().getBytes()));
-                setResponse((Response) decoder.readObject());
-                decoder.close();
-            }
+            // if (studentTestQuestion.getResponse() != null) {
+            // XMLDecoder decoder = new XMLDecoder(new
+            // ByteArrayInputStream(studentTestQuestion.getResponse().getBytes()));
+            // setResponse((Response) decoder.readObject());
+            // decoder.close();
+            // }
+            setResponse(studentTestQuestion.getResponse());
         }
     }
 

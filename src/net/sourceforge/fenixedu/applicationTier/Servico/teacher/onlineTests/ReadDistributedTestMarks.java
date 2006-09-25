@@ -4,7 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -18,11 +19,10 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsT
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionMark;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 /**
  * @author Susana Fernandes
@@ -30,38 +30,70 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadDistributedTestMarks extends Service {
 
-	public SiteView run(Integer executionCourseId, Integer distributedTestId)
-			throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoSiteStudentsTestMarks run(Integer executionCourseId, Integer distributedTestId, String path)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-		InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
+        InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
 
-		DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-		if (distributedTest == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        if (distributedTest == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		Set<StudentTestQuestion> studentTestQuestionList = distributedTest.getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder();
+        Set<StudentTestQuestion> studentTestQuestionList = distributedTest
+                .getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder();
 
-		List<InfoStudentTestQuestionMark> infoStudentTestQuestionList = (List<InfoStudentTestQuestionMark>) CollectionUtils
-				.collect(studentTestQuestionList, new Transformer() {
+        HashMap<Integer, InfoStudentTestQuestionMark> infoStudentTestQuestionMarkList = new HashMap<Integer, InfoStudentTestQuestionMark>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+            if (infoStudentTestQuestionMarkList
+                    .containsKey(studentTestQuestion.getStudent().getNumber())) {
+                InfoStudentTestQuestionMark infoStudentTestQuestionMark = infoStudentTestQuestionMarkList
+                        .get(studentTestQuestion.getStudent().getNumber());
+                ParseSubQuestion parse = new ParseSubQuestion();
+                Question question = studentTestQuestion.getQuestion();
+                try {
+                    question = parse.parseSubQuestion(studentTestQuestion.getQuestion(), path.replace(
+                            '\\', '/'));
+                } catch (Exception e) {
+                    throw new FenixServiceException(e);
+                }
+                if (studentTestQuestion.getItemId() != null
+                        && !studentTestQuestion.getItemId().equals(
+                                question.getSubQuestions().get(0).getItemId())) {
+                    infoStudentTestQuestionMark.addTestQuestionMark(infoStudentTestQuestionMark
+                            .getTestQuestionMarks().size() - 1, studentTestQuestion
+                            .getTestQuestionMark());
+                } else {
+                    infoStudentTestQuestionMark.addTestQuestionMark(studentTestQuestion
+                            .getTestQuestionMark());
+                }
+                infoStudentTestQuestionMark.addToMaximumMark(studentTestQuestion.getTestQuestionValue());
+            } else {
+                infoStudentTestQuestionMarkList.put(studentTestQuestion.getStudent().getNumber(),
+                        InfoStudentTestQuestionMark.newInfoFromDomain(studentTestQuestion));
+            }
+        }
+        // List<InfoStudentTestQuestionMark> infoStudentTestQuestionList =
+        // (List<InfoStudentTestQuestionMark>) CollectionUtils
+        // .collect(studentTestQuestionList, new Transformer() {
+        //
+        // public Object transform(Object arg0) {
+        // StudentTestQuestion studentTestQuestion = (StudentTestQuestion) arg0;
+        // return
+        // InfoStudentTestQuestionMark.newInfoFromDomain(studentTestQuestion);
+        // }
+        //
+        // });
 
-					public Object transform(Object arg0) {
-						StudentTestQuestion studentTestQuestion = (StudentTestQuestion) arg0;
-						return InfoStudentTestQuestionMark.newInfoFromDomain(studentTestQuestion);
-					}
+        // infoSiteStudentsTestMarks.setMaximumMark(distributedTest.calculateMaximumDistributedTestMark());
+        infoSiteStudentsTestMarks
+                .setInfoStudentTestQuestionList(new ArrayList<InfoStudentTestQuestionMark>(
+                        infoStudentTestQuestionMarkList.values()));
+        infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse
+                .newInfoFromDomain((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));
+        infoSiteStudentsTestMarks.setInfoDistributedTest(InfoDistributedTest
+                .newInfoFromDomain(distributedTest));
 
-				});
-
-		infoSiteStudentsTestMarks.setMaximumMark(distributedTest.calculateMaximumDistributedTestMark());
-		infoSiteStudentsTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
-		infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse
-				.newInfoFromDomain((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));
-		infoSiteStudentsTestMarks.setInfoDistributedTest(InfoDistributedTest
-				.newInfoFromDomain(distributedTest));
-
-		SiteView siteView = new ExecutionCourseSiteView(infoSiteStudentsTestMarks,
-				infoSiteStudentsTestMarks);
-		return siteView;
-	}
-
+        return infoSiteStudentsTestMarks;
+    }
 }

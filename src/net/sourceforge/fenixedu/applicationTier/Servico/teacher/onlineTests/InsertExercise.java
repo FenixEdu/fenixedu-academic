@@ -22,10 +22,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.utilTests.Element;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
-import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.upload.FormFile;
@@ -62,8 +62,8 @@ public class InsertExercise extends Service {
                 String xmlFile = labelValueBean.getValue();
                 String xmlFileName = labelValueBean.getLabel();
                 try {
-                    ParseQuestion parseQuestion = new ParseQuestion();
-                    parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), replacedPath);
+                    ParseSubQuestion parseQuestion = new ParseSubQuestion();
+                    parseQuestion.parseSubQuestion(xmlFile, replacedPath);
                     Question question = new Question();
                     question.setXmlFile(xmlFile);
                     question.setXmlFileName(xmlFileName);

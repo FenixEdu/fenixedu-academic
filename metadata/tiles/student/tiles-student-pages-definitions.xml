@@ -30,6 +30,10 @@
 	<definition name="show-Test-Correction" extends="definition.student.one-column">
 		<put name="body" value="/student/onlineTests/showTestCorrection_bd.jsp" />		
 	</definition>
+
+	<definition name="give-Up-Question" extends="definition.student.masterPage">
+		<put name="body" value="/student/onlineTests/giveUpQuestion.jsp" />		
+	</definition>
 	
 	<!-- END STUDENT TESTS DEFINITIONS -->
 	

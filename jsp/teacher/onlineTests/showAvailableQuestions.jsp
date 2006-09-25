@@ -14,19 +14,24 @@ function invertSelect(){
 	} else { 
 		select = false;
 	}
-	for (var i=0; i<document.questionForm.metadataCode.length; i++){
-		var e = document.questionForm.metadataCode[i];
-		if (select == true) { e.checked = true; } else { e.checked = false; }
+	if(document.forms[0].metadataCode.type=='checkbox'){
+		var e = document.forms[0].metadataCode;
+		e.checked = select;
+	}else{
+		for (var i=0; i<document.forms[0].metadataCode.length; i++){
+			var e = document.forms[0].metadataCode[i];
+			e.checked = select;
+		}
 	}
 }
 // -->
 </script>
-<logic:present name="infoMetadataList">
+<logic:present name="metadataList">
 
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	
-	<bean:size id="metadatasSize" name="infoMetadataList" />
+	<bean:size id="metadatasSize" name="metadataList" />
 
 	<logic:notEqual name="metadatasSize" value="0">
 
@@ -250,7 +255,7 @@ function invertSelect(){
 				</th>
 			</tr>
 			
-			<logic:iterate id="metadata" name="infoMetadataList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata">
+			<logic:iterate id="metadata" name="metadataList" type="net.sourceforge.fenixedu.domain.onlineTests.Metadata">
 			
 				<tr>
 					<bean:define id="metadataId" name="metadata" property="idInternal" />
@@ -295,14 +300,8 @@ function invertSelect(){
 					<logic:equal name="metadata" property="difficulty" value="">
 						<td class="listClasses"><bean:message key="message.tests.notDefined" /></td>
 					</logic:equal>
-					
-					<logic:notEqual name="metadata" property="numberOfMembers" value="">
-						<td class="listClasses"><bean:write name="metadata" property="numberOfMembers" /></td>
-					</logic:notEqual>
-					<logic:equal name="metadata" property="numberOfMembers" value="">
-						<td class="listClasses"><bean:message key="message.tests.notDefined" /></td>
-					</logic:equal>
-					
+					<bean:size id="numberOfMembers" name="metadata" property="visibleQuestions"/>
+					<td class="listClasses"><bean:write name="numberOfMembers" /></td>
 				</tr>
 				
 			</logic:iterate>

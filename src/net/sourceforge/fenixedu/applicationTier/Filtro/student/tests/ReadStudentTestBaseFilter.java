@@ -23,9 +23,14 @@ public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilte
             Exception {
         super.execute(request, response);
 
-        Integer testId = (Integer) request.getServiceParameters().parametersArray()[1];
-
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(testId);
+        Object object = request.getServiceParameters().parametersArray()[1];
+        DistributedTest distributedTest = null;
+        if (object instanceof Integer) {
+            final Integer testId = (Integer) object;
+            distributedTest = rootDomainObject.readDistributedTestByOID(testId);
+        } else if (object instanceof DistributedTest) {
+            distributedTest = (DistributedTest) object;
+        }
 
         if (distributedTest != null) {
             Calendar now = Calendar.getInstance();

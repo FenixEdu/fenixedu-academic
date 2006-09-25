@@ -19,7 +19,7 @@ public class InfoSiteStudentTestFeedback extends DataTranferObject implements IS
 
     private List errors;
 
-    private List infoStudentTestQuestionList;
+    private List studentTestQuestionList;
 
     public InfoSiteStudentTestFeedback() {
     }
@@ -48,11 +48,11 @@ public class InfoSiteStudentTestFeedback extends DataTranferObject implements IS
         this.responseNumber = responseNumber;
     }
 
-    public List getInfoStudentTestQuestionList() {
-        return infoStudentTestQuestionList;
+    public List getStudentTestQuestionList() {
+        return studentTestQuestionList;
     }
 
-    public void setInfoStudentTestQuestionList(List infoStudentTestQuestionList) {
-        this.infoStudentTestQuestionList = infoStudentTestQuestionList;
+    public void setStudentTestQuestionList(List studentTestQuestionList) {
+        this.studentTestQuestionList = studentTestQuestionList;
     }
 }

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
@@ -18,25 +18,27 @@ import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
  */
 public class IMS_NUMQuestionCorrectionStrategy extends QuestionCorrectionStrategy {
 
-    public InfoStudentTestQuestion getMark(InfoStudentTestQuestion infoStudentTestQuestion) {
-        if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM) {
-            List questionCorrectionList = infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions();
+    public StudentTestQuestion getMark(StudentTestQuestion studentTestQuestion) {
+        if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.NUM) {
+            List questionCorrectionList = studentTestQuestion.getSubQuestionByItem()
+                    .getResponseProcessingInstructions();
             Iterator questionCorrectionIt = questionCorrectionList.iterator();
             for (int i = 0; questionCorrectionIt.hasNext(); i++) {
                 ResponseProcessing responseProcessing = (ResponseProcessing) questionCorrectionIt.next();
-                if (isCorrectNUM(responseProcessing.getResponseConditions(), new Double(((ResponseNUM) infoStudentTestQuestion.getResponse())
-                        .getResponse()))) {
-                    infoStudentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
-                    ResponseNUM r = (ResponseNUM) infoStudentTestQuestion.getResponse();
+                if (isCorrectNUM(responseProcessing.getResponseConditions(), new Double(
+                        ((ResponseNUM) studentTestQuestion.getResponse()).getResponse()))) {
+                    studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
+                    ResponseNUM r = (ResponseNUM) studentTestQuestion.getResponse();
                     r.setResponseProcessingIndex(new Integer(i));
-                    infoStudentTestQuestion.setResponse(r);
-
-                    return infoStudentTestQuestion;
+                    studentTestQuestion.setResponse(r);
+                    studentTestQuestion.getSubQuestionByItem().setNextItemId(
+                            responseProcessing.getNextItem());
+                    return studentTestQuestion;
                 }
             }
         }
-        infoStudentTestQuestion.setTestQuestionMark(new Double(0));
-        return infoStudentTestQuestion;
+        studentTestQuestion.setTestQuestionMark(new Double(0));
+        return studentTestQuestion;
     }
 
 }

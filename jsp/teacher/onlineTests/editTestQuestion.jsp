@@ -5,12 +5,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.editTestQuestion" /></h2>
 
-<logic:present name="infoTestQuestion">
+<logic:present name="testQuestion">
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
-	<bean:define id="infoQuestion" name="infoTestQuestion" property="question" />
-	<bean:define id="exerciseCode" name="infoQuestion" property="idInternal" />
-	<bean:define id="metadataId" name="infoQuestion" property="infoMetadata.idInternal" />
-	<bean:define id="testQuestionCode" name="infoTestQuestion" property="idInternal" />
+	<bean:define id="question" name="testQuestion" property="question" />
+	<bean:define id="exerciseCode" name="question" property="idInternal" />
+	<bean:define id="metadataId" name="question" property="metadata.idInternal" />
+	<bean:define id="testQuestionCode" name="testQuestion" property="idInternal" />
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<html:form action="/testQuestionEdition">
@@ -40,7 +40,7 @@
 		<table>
 			<tr>
 				<td><b><bean:message key="message.tests.questionValue" /></b></td>
-				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.testQuestionValue" size="1" name="infoTestQuestion" property="testQuestionValue" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.testQuestionValue" size="1" name="testQuestion" property="testQuestionValue" /></td>
 			</tr>
 			<tr>
 				<td><bean:message key="message.testOrder" /></td>
@@ -76,7 +76,7 @@
 		<br />
 		<br />
 		<h2><bean:message key="title.example" /></h2>
-		<%request.setAttribute("iquestion", infoQuestion);
+		<%request.setAttribute("iquestion", question);
 		request.setAttribute("metadataId", metadataId);
         %>
 		<jsp:include page="showQuestion.jsp">

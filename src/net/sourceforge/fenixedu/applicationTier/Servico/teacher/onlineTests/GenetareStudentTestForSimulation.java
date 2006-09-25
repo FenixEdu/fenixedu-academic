@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
+import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
-import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -58,7 +58,7 @@ public class GenetareStudentTestForSimulation extends Service {
             questionList.addAll(testQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
             InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
-            infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
+            //infoStudentTestQuestion.setDistributedTest(distributedTest);
             infoStudentTestQuestion.setTestQuestionOrder(testQuestionExample.getTestQuestionOrder());
             infoStudentTestQuestion.setTestQuestionValue(testQuestionExample.getTestQuestionValue());
             infoStudentTestQuestion.setOldResponse(Integer.valueOf(0));
@@ -73,12 +73,12 @@ public class GenetareStudentTestForSimulation extends Service {
                 throw new InvalidArgumentsServiceException();
             }
             infoStudentTestQuestion.setQuestion(InfoQuestion.newInfoFromDomain(question));
-            ParseQuestion parse = new ParseQuestion();
-            try {
-                infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, path);
-            } catch (Exception e) {
-                throw new FenixServiceException(e);
-            }
+            ParseSubQuestion parse = new ParseSubQuestion();
+//            try {
+//          //      studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion, path);
+//            } catch (Exception e) {
+//                throw new FenixServiceException(e);
+//            }
             infoStudentTestQuestionList.add(infoStudentTestQuestion);
             questionList.remove(question);
         }

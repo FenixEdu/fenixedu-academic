@@ -3,88 +3,40 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.tests.QuestionOption;
-import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
-import net.sourceforge.fenixedu.utilTests.ParseQuestion;
-
-import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadStudentTestQuestionImage extends Service {
+    public String run(Integer registrationId, Integer distributedTestId, Integer questionId,
+            Integer imageId, String feedbackId, Integer itemIndex, String path)
+            throws FenixServiceException, ExcepcaoPersistencia {
+        final DistributedTest distributedTest = rootDomainObject
+                .readDistributedTestByOID(distributedTestId);
+        final Registration registration = rootDomainObject.readRegistrationByOID(registrationId);
+        return run(registration, distributedTest, questionId, imageId, feedbackId, itemIndex, path);
+    }
 
-    public String run(String userName, Integer distributedTestId, Integer questionId, Integer imageId,
-            String feedbackId, String path) throws FenixServiceException, ExcepcaoPersistencia {
-        path = path.replace('\\', '/');
-        Registration registration = Registration.readByUsername(userName);
-        if (registration == null)
-            throw new FenixServiceException();
-
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-        if (distributedTest == null)
-            throw new FenixServiceException();
-
-        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
-        
-
-        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-            if (studentTestQuestion.getKeyQuestion().equals(questionId)) {
-                ParseQuestion parse = new ParseQuestion();
-                InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest
-                        .newInfoFromDomain(studentTestQuestion);
+    public String run(Registration registration, DistributedTest distributedTest, Integer questionId,
+            Integer imageId, String feedbackId, Integer itemIndex, String path)
+            throws FenixServiceException, ExcepcaoPersistencia {
+        for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
+            if (studentTestQuestion.getKeyDistributedTest().equals(distributedTest.getIdInternal())
+                    && studentTestQuestion.getKeyQuestion().equals(questionId)) {
+                ParseSubQuestion parse = new ParseSubQuestion();
                 try {
-                    infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion,
-                            path);
+                    parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
                 } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }
-                int imgIndex = 0;
-                for (LabelValueBean lvb : (List<LabelValueBean>) infoStudentTestQuestion.getQuestion()
-                        .getQuestion()) {
-                    if (lvb.getLabel().startsWith("image/")) {
-                        imgIndex++;
-                        if (imgIndex == imageId.intValue())
-                            return lvb.getValue();
-                    }
-                }
-                Iterator optionit = infoStudentTestQuestion.getQuestion().getOptions().iterator();
-
-                while (optionit.hasNext()) {
-                    List<LabelValueBean> optionContent = ((QuestionOption) optionit.next())
-                            .getOptionContent();
-                    for (LabelValueBean lvb : optionContent) {
-                        if (lvb.getLabel().startsWith("image/")) {
-                            imgIndex++;
-                            if (imgIndex == imageId.intValue())
-                                return lvb.getValue();
-                        }
-                    }
-                }
-
-                if (feedbackId != null) {
-                    for (LabelValueBean lvb : (List<LabelValueBean>) ((ResponseProcessing) infoStudentTestQuestion
-                            .getQuestion().getResponseProcessingInstructions().get(
-                                    new Integer(feedbackId).intValue())).getFeedback()) {
-                        if (lvb.getLabel().startsWith("image/")) {
-                            imgIndex++;
-                            if (imgIndex == imageId.intValue())
-                                return lvb.getValue();
-                        }
-                    }
-                }
+                return studentTestQuestion.getStudentSubQuestions().get(itemIndex).getImage(imageId);
             }
         }
         return null;

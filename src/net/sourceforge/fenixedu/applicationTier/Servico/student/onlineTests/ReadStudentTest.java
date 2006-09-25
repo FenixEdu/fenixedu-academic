@@ -4,70 +4,72 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithAll;
-
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.utilTests.ParseQuestion;
+
+import org.joda.time.DateTime;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadStudentTest extends Service {
 
-    public List<InfoStudentTestQuestion> run(String userName, Integer distributedTestId, Boolean log,
-            String path) throws FenixServiceException, ExcepcaoPersistencia {
-        
-        List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
-        path = path.replace('\\', '/');
-        
-        Registration registration = Registration.readByUsername(userName);
-        if (registration == null)
-            throw new FenixServiceException();
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+    public List<StudentTestQuestion> run(Registration registration, Integer distributedTestId,
+            Boolean log, String path) throws FenixServiceException, ExcepcaoPersistencia {
+        final DistributedTest distributedTest = rootDomainObject
+                .readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
+        return run(registration, distributedTest, log, path);
+    }
 
-        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
-        if (studentTestQuestionList.size() == 0)
+    public List<StudentTestQuestion> run(Registration registration, DistributedTest distributedTest,
+            Boolean log, String path) throws FenixServiceException, ExcepcaoPersistencia {
+        List<StudentTestQuestion> studentTestQuestionList = new ArrayList<StudentTestQuestion>();
+        if (registration == null) {
+            throw new FenixServiceException();
+        }
+        if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
-
-        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-            InfoStudentTestQuestion infoStudentTestQuestion;
-            ParseQuestion parse = new ParseQuestion();
+        }
+        Set<StudentTestQuestion> studentTestQuestions = StudentTestQuestion.findStudentTestQuestions(
+                registration, distributedTest);
+        if (studentTestQuestions.size() == 0) {
+            throw new InvalidArgumentsServiceException();
+        }
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
+            ParseSubQuestion parse = new ParseSubQuestion();
             try {
-                infoStudentTestQuestion = InfoStudentTestQuestionWithAll
-                        .newInfoFromDomain(studentTestQuestion);
-                infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, path);
-                if (studentTestQuestion.getOptionShuffle() == null) {
-                    studentTestQuestion.setOptionShuffle(infoStudentTestQuestion.getOptionShuffle());
-                }
+                parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
             } catch (Exception e) {
                 throw new FenixServiceException(e);
             }
-
-            infoStudentTestQuestionList.add(infoStudentTestQuestion);
+            if (studentTestQuestion.getOptionShuffle() == null
+                    && studentTestQuestion.getSubQuestionByItem().getShuffle() != null) {
+                studentTestQuestion.setOptionShuffle(studentTestQuestion.getSubQuestionByItem()
+                        .getShuffleString());
+            }
+            studentTestQuestionList.add(studentTestQuestion);
         }
         if (log.booleanValue()) {
             StudentTestLog studentTestLog = new StudentTestLog();
             studentTestLog.setDistributedTest(distributedTest);
             studentTestLog.setStudent(registration);
-            studentTestLog.setDate(Calendar.getInstance().getTime());
+            studentTestLog.setDateDateTime(new DateTime());
             studentTestLog.setEvent(new String("Ler Ficha de Trabalho"));
         }
-        return infoStudentTestQuestionList;
+        return studentTestQuestionList;
     }
 
 }

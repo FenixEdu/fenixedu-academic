@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 
 /**
  * @author Susana Fernandes
@@ -26,9 +26,7 @@ public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject imple
 
     private List answeredPercentage;
 
-    private InfoDistributedTest infoDistributedTest;
-
-    private InfoExecutionCourse executionCourse;
+    private DistributedTest distributedTest;
 
     public InfoSiteStudentsTestMarksStatistics() {
     }
@@ -37,8 +35,8 @@ public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject imple
         return correctAnswersPercentage;
     }
 
-    public InfoDistributedTest getInfoDistributedTest() {
-        return infoDistributedTest;
+    public DistributedTest getDistributedTest() {
+        return distributedTest;
     }
 
     public List getNotAnsweredPercentage() {
@@ -53,8 +51,8 @@ public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject imple
         correctAnswersPercentage = list;
     }
 
-    public void setInfoDistributedTest(InfoDistributedTest infoDistributedTest) {
-        this.infoDistributedTest = infoDistributedTest;
+    public void setDistributedTest(DistributedTest distributedTest) {
+        this.distributedTest = distributedTest;
     }
 
     public void setNotAnsweredPercentage(List list) {
@@ -63,14 +61,6 @@ public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject imple
 
     public void setWrongAnswersPercentage(List list) {
         wrongAnswersPercentage = list;
-    }
-
-    public InfoExecutionCourse getExecutionCourse() {
-        return executionCourse;
-    }
-
-    public void setExecutionCourse(InfoExecutionCourse course) {
-        executionCourse = course;
     }
 
     public List getPartiallyCorrectAnswersPercentage() {

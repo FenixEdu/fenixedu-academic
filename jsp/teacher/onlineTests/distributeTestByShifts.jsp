@@ -28,7 +28,7 @@ function cleanSelect() {
 // -->
 </script>
 
-<bean:size id="shiftsSize" name="shifts"/>
+<bean:size id="shiftsSize" name="shiftList"/>
 <logic:notEqual name="shiftsSize" value="0">
 
 <html:form action="/testDistributionByShifts">
@@ -70,12 +70,12 @@ function cleanSelect() {
 		<th class="listClasses-header"><bean:message key="label.curricularCourseType"/></th>
 		<td class="listClasses-header"></td>
 	</tr>
-	<logic:iterate id="shiftList" name="shifts" indexId="index">
+	<logic:iterate id="shift" name="shiftList" indexId="index">
 		<logic:equal name="index" value="0">
-			<bean:define id="tipoBefore" name="shiftList" property="tipo.fullNameTipoAula"/>
+			<bean:define id="tipoBefore" name="shift" property="tipo.fullNameTipoAula"/>
 		</logic:equal>
 		<logic:notEqual name="index" value="0">
-			<logic:notEqual name="shiftList" property="tipo.fullNameTipoAula" value="<%tipoBefore%>">
+			<logic:notEqual name="shift" property="tipo.fullNameTipoAula" value="<%tipoBefore%>">
 				<tr height=20><td></td></tr>
 				<tr><td></td>
 					<th class="listClasses-header"><bean:message key="link.executionCourse.shifts"/></th>
@@ -85,15 +85,15 @@ function cleanSelect() {
 			</logic:notEqual>
 		</logic:notEqual>
 		<tr><td></td>
-			<td class="listClasses"><bean:write name="shiftList" property="nome"/></td>
-			<td class="listClasses"><bean:write name="shiftList" property="tipo.fullNameTipoAula"/></td>
+			<td class="listClasses"><bean:write name="shift" property="nome"/></td>
+			<td class="listClasses"><bean:write name="shift" property="tipo.fullNameTipoAula"/></td>
 			<td class="listClasses">
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="cleanSelect()">
-			    <bean:write name="shiftList" property="idInternal"/>
+			    <bean:write name="shift" property="idInternal"/>
 				</html:multibox> 
 			</td>
 		</tr>
-		<bean:define id="tipoBefore" name="shiftList" property="tipo.fullNameTipoAula"/>
+		<bean:define id="tipoBefore" name="shift" property="tipo.fullNameTipoAula"/>
 	</logic:iterate>
 </table>
 <table><tr>

@@ -18,7 +18,7 @@ function back(){
 <br />
 <h2><bean:message key="title.editTestQuestion" /></h2>
 <br />
-<logic:present name="infoMetadata">
+<logic:present name="metadata">
 	<logic:present name="successfulChanged">
 		<span class="error"><!-- Error messages go here --><bean:message key="message.successfulChanged" /></span>
 		<br />
@@ -35,9 +35,8 @@ function back(){
 		<br />
 		<br />
 	</logic:present>
-	<bean:define id="objectCode" name="infoMetadata" property="infoExecutionCourse.idInternal" />
-	<bean:define id="metadata" name="infoMetadata" />
-	<bean:define id="metadataId" name="infoMetadata" property="idInternal" />
+	<bean:define id="objectCode" name="metadata" property="executionCourse.idInternal" />
+	<bean:define id="metadataId" name="metadata" property="idInternal" />
 	<bean:define id="variationCode" value="<%=(pageContext.findAttribute("variationCode")).toString()%>" />
 	<table>
 		<tr>
@@ -59,32 +58,33 @@ function back(){
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.asc" property="asc" value="true" />
 		</logic:notPresent>
 		<table>
-			<logic:notEqual name="infoMetadata" property="author" value="">
+			<logic:notEqual name="metadata" property="author" value="">
 				<tr>
 					<td><b><bean:message key="message.tests.author" /></b></td>
-					<td><bean:write name="infoMetadata" property="author" /></td>
+					<td><bean:write name="metadata" property="author" /></td>
 				</tr>
 			</logic:notEqual>
-			<logic:equal name="infoMetadata" property="author" value="">
+			<logic:equal name="metadata" property="author" value="">
 				<tr>
 					<td><b><bean:message key="message.tests.author" /></b></td>
-					<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.author" size="25" name="infoMetadata" property="author" /></td>
+					<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.author" size="25" name="metadata" property="author" /></td>
 				</tr>
 			</logic:equal>
 			<tr>
 				<td><b><bean:message key="label.test.quantidadeExercicios" />:</b></td>
-				<td><bean:write name="infoMetadata" property="numberOfMembers" /></td>
+				<bean:size id="questionsSize" name="metadata" property="visibleQuestions"/>
+				<td><bean:write name="questionsSize" /></td>
 			</tr>
 			<tr>
 				<td><b><bean:message key="label.description" />:</b></td>
-				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.description" size="25" name="infoMetadata" property="description" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.description" size="25" name="metadata" property="description" /></td>
 			</tr>
 			<tr>
 				<td><b><bean:message key="label.test.difficulty" />:</b></td>
 				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.difficulty" property="difficulty">
-					<logic:notEqual name="infoMetadata" property="difficulty" value="">
+					<logic:notEqual name="metadata" property="difficulty" value="">
 						<html:option value="-1">
-							<bean:write name="infoMetadata" property="difficulty" />
+							<bean:write name="metadata" property="difficulty" />
 						</html:option>
 					</logic:notEqual>
 					<logic:iterate id="questionDifficulty" name="questionDifficultyList" type="org.apache.struts.util.LabelValueBean">
@@ -96,22 +96,22 @@ function back(){
 			</tr>
 			<tr>
 				<td><b><bean:message key="label.test.materiaPrincipal" />:</b></td>
-				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.mainSubject" size="25" name="infoMetadata" property="mainSubject" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.mainSubject" size="25" name="metadata" property="mainSubject" /></td>
 			</tr>
 
 			<tr>
 				<td><b><bean:message key="label.test.materiaSecundaria" />:</b></td>
-				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.secondarySubject" size="25" name="infoMetadata" property="secondarySubject" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.secondarySubject" size="25" name="metadata" property="secondarySubject" /></td>
 			</tr>
 			<tr>
 				<td><b><bean:message key="label.test.learningTime" /></b><bean:message key="message.hourFormat" />:</td>
-				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.learningTimeFormatted" size="8" name="infoMetadata" property="learningTimeFormatted" /></td>
-				<td><span class="error"><!-- Error messages go here --><html:errors property="learningTimeFormatted" /></span></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.learningTimeFormatted" size="8" name="metadata" property="learningTimeFormatted" /></td>
+				<td><span class="error"><html:errors property="learningTimeFormatted" /></span></td>
 			</tr>
 			<tr>
 				<td><b><bean:message key="label.exam.enrollment.year" />:</b></td>
-				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.level" size="2" name="infoMetadata" property="level" /></td>
-				<td><span class="error"><!-- Error messages go here --><html:errors property="level" /></span></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.level" size="2" name="metadata" property="level" /></td>
+				<td><span class="error"><html:errors property="level" /></span></td>
 			</tr>
 		</table>
 		<br />
@@ -134,7 +134,7 @@ function back(){
 			</tr>
 		</table>
 		<br />
-		<bean:size id="questionsSize" name="infoMetadata" property="visibleQuestions" />
+		<bean:size id="questionsSize" name="metadata" property="visibleQuestions" />
 		<logic:notEqual name="questionsSize" value="">
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.variationCode" property="variationCode" onchange="showQuestion()">
 				<html:option value="-1">
@@ -143,7 +143,7 @@ function back(){
 				<html:option value="-2">
 					<bean:message key="label.summaries.all" />
 				</html:option>
-				<logic:iterate id="iquestion" name="infoMetadata" property="visibleQuestions">
+				<logic:iterate id="iquestion" name="metadata" property="visibleQuestions">
 					<bean:define id="questionValue" name="iquestion" property="idInternal" />
 					<html:option value="<%=questionValue.toString()%>">
 						<bean:write name="iquestion" property="xmlFileName" />
@@ -155,29 +155,43 @@ function back(){
 			</html:submit>
 			<br />
 			<br />
-			<logic:iterate id="iquestion" name="infoMetadata" property="visibleQuestions">
-				<logic:notEmpty name="iquestion" property="question">
+			<logic:equal name="variationCode" value="-2">
+				<logic:iterate id="iquestion" name="metadata" property="visibleQuestions">
 					<bean:define id="questionCode" name="iquestion" property="idInternal" />
 					<bean:define id="index" value="0" />
 					<bean:define id="imageLabel" value="false" />
-
 					<h2><bean:message key="title.exercise" />:&nbsp;<bean:write name="iquestion" property="xmlFileName" /></h2>
-
-
 					<div class="gen-button"><html:link
-						page="<%= "/exercisesEdition.do?method=prepareRemoveExerciseVariation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;exerciseCode=" + pageContext.findAttribute("exerciseCode") + "&amp;variationCode=" + questionCode  + "&amp;order=" + pageContext.findAttribute("order")+ "&amp;asc=" + pageContext.findAttribute("asc")+"&amp;metadataCode="+metadataId%>">
+						page="<%= "/exercisesEdition.do?method=prepareRemoveExerciseVariation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;exerciseCode=" + pageContext.findAttribute("exerciseCode") + "&amp;variationCode=" + questionCode  + "&amp;order=" + pageContext.findAttribute("order")+ "&amp;asc=" + pageContext.findAttribute("asc")%>">
 						<bean:message key="label.remove" />
 					</html:link></div>
-					<%
-					request.setAttribute("iquestion", iquestion);
-					request.setAttribute("metadataId", metadataId);
-			       %>
+					<%request.setAttribute("iquestion", iquestion);
+					request.setAttribute("metadataId", metadataId);%>
+					<jsp:include page="showQuestion.jsp">
+						<jsp:param name="showResponses" value="true" />
+					</jsp:include>
+				</logic:iterate>
+			</logic:equal>
+			<logic:notEqual name="variationCode" value="-2">
+			<logic:iterate id="iquestion" name="metadata" property="visibleQuestions">
+				<logic:equal name="iquestion" property="idInternal" value="<%= variationCode.toString()%>">
+					<bean:define id="questionCode" name="iquestion" property="idInternal" />
+					<bean:define id="index" value="0" />
+					<bean:define id="imageLabel" value="false" />
+					<h2><bean:message key="title.exercise" />:&nbsp;<bean:write name="iquestion" property="xmlFileName" /></h2>
+					<div class="gen-button"><html:link
+						page="<%= "/exercisesEdition.do?method=prepareRemoveExerciseVariation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;exerciseCode=" + pageContext.findAttribute("exerciseCode") + "&amp;variationCode=" + questionCode  + "&amp;order=" + pageContext.findAttribute("order")+ "&amp;asc=" + pageContext.findAttribute("asc")%>">
+						<bean:message key="label.remove" />
+					</html:link></div>
+					<%request.setAttribute("iquestion", iquestion);
+					request.setAttribute("metadataId", metadataId);%>
 					<jsp:include page="showQuestion.jsp">
 						<jsp:param name="showResponses" value="true" />
 					</jsp:include>
 					<br />
-				</logic:notEmpty>
+				</logic:equal>
 			</logic:iterate>
+			</logic:notEqual>
 		</logic:notEqual>
 	</html:form>
 </logic:present>

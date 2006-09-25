@@ -27,11 +27,10 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
-	<logic:present name="infoStudentTestQuestionList">
-	<logic:notEmpty name="infoStudentTestQuestionList" >
-
-		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion"/>
-		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
+	<logic:notEmpty name="infoSiteStudentTestFeedback" property="studentTestQuestionList">
+		<bean:define id="studentTestQuestionList" name="infoSiteStudentTestFeedback" property="studentTestQuestionList"/>
+		<logic:iterate id="testQuestion" name="studentTestQuestionList" type="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion"/>
+		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
 		<bean:define id="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 		<br/>
 		<br/>
@@ -39,12 +38,12 @@
 			<h2><bean:write name="distributedTest" property="title"/></h2>
 			<b><bean:write name="distributedTest" property="testInformation"/></b>	
 		</center>
+		<%request.setAttribute("studentTestQuestionList", studentTestQuestionList);%>
 		<jsp:include page="showStudentTest_bd.jsp">
 			<jsp:param name="pageType" value="feedback"/>
 			<jsp:param name="testCode" value="<%=testCode%>"/>
 	 	</jsp:include>
 	</logic:notEmpty>
-	</logic:present>
 	<center>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.back"/></html:submit>
 	</center>

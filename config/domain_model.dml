@@ -86,6 +86,7 @@ valueType net.sourceforge.fenixedu.domain.transactions.TransactionType          
 valueType net.sourceforge.fenixedu.util.tests.CorrectionFormula                                 as CorrectionFormula;
 valueType net.sourceforge.fenixedu.util.tests.CorrectionAvailability                            as CorrectionAvailability;
 valueType net.sourceforge.fenixedu.util.tests.TestType                  				        as TestType;
+valueType net.sourceforge.fenixedu.util.tests.Response                  				        as Response;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.UnitType                  	as UnitType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType                 	as FunctionType;
 valueType net.sourceforge.fenixedu.domain.QualificationType										as QualificationType;
@@ -2824,9 +2825,10 @@ class net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion extends ne
     Double testQuestionValue;
     Integer keyDistributedTest;
     Integer keyStudent;
-    String response;
+    Response response;
     Double testQuestionMark;
     CorrectionFormula correctionFormula;
+    String itemId;
 }
 
 class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.domain.DomainObject {

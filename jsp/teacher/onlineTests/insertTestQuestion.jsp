@@ -12,12 +12,12 @@
 <br />
 <h2><bean:message key="title.insertTestQuestionInformation" /></h2>
 <br />
-<logic:present name="infoQuestion">
+<logic:present name="question">
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-	<bean:define id="metadata" name="infoQuestion" property="infoMetadata" />
-	<bean:define id="exerciseCode" name="infoQuestion" property="idInternal" />
+	<bean:define id="metadata" name="question" property="metadata" />
+	<bean:define id="exerciseCode" name="question" property="idInternal" />
 	<bean:define id="metadataCode" name="metadata" property="idInternal" />
-
+	<logic:iterate id="subQuestion" name="question" property="subQuestions" />
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<html:form action="/questionsManagementWithValue">
@@ -71,15 +71,14 @@
 					<td><bean:write name="metadata" property="author" /></td>
 				</tr>
 			</logic:notEqual>
-			<logic:notEqual name="metadata" property="numberOfMembers" value="">
-				<tr>
-					<td><b><bean:message key="label.test.quantidadeExercicios" />:</b></td>
-					<td><bean:write name="metadata" property="numberOfMembers" /></td>
-				</tr>
-			</logic:notEqual>
+			<tr>
+				<td><b><bean:message key="label.test.quantidadeExercicios" />:</b></td>
+				<bean:size id="numberOfMembers" name="metadata" property="visibleQuestions" />
+				<td><bean:write name="numberOfMembers" /></td>
+			</tr>
 			<tr>
 				<td><b><bean:message key="message.tests.questionCardinality" />:</b></td>
-				<td><bean:write name="infoQuestion" property="questionType.cardinalityType.typeString" /></td>
+				<td><bean:write name="subQuestion" property="questionType.cardinalityType.typeString" /></td>
 			</tr>
 		</table>
 		<br />
@@ -104,7 +103,7 @@
 		<table>
 			<tr>
 				<td><bean:message key="message.tests.questionValue" /></td>
-				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.questionValue" size="1" name="infoQuestion" property="questionValue" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.questionValue" size="1" name="subQuestion" property="questionValue" /></td>
 			</tr>
 			<tr>
 				<td><bean:message key="message.testOrder" /></td>
@@ -141,7 +140,7 @@
 		<br />
 		<h2><bean:message key="title.example" /></h2>
 
-		<%request.setAttribute("iquestion", pageContext.findAttribute("infoQuestion"));
+		<%request.setAttribute("iquestion", pageContext.findAttribute("question"));
 		request.setAttribute("metadataId", metadataCode);
         %>
 		<jsp:include page="showQuestion.jsp">

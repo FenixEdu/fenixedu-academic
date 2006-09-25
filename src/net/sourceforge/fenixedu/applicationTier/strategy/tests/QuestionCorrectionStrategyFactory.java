@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_LID
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_NUMQuestionCorrectionStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_STRQuestionCorrectionStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IQuestionCorrectionStrategy;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 
 /**
  * @author Susana Fernandes
- *  
+ * 
  */
 public class QuestionCorrectionStrategyFactory implements IQuestionCorrectionStrategyFactory {
     private static QuestionCorrectionStrategyFactory instance = null;
@@ -39,27 +39,24 @@ public class QuestionCorrectionStrategyFactory implements IQuestionCorrectionStr
     }
 
     public IQuestionCorrectionStrategy getQuestionCorrectionStrategy(
-            InfoStudentTestQuestion infoStudentTestQuestion) {
+            StudentTestQuestion studentTestQuestion) {
         IQuestionCorrectionStrategy questionCorrectionStrategy = null;
-
-        if (infoStudentTestQuestion.getCorrectionFormula().getFormula().equals(
+        if (studentTestQuestion.getCorrectionFormula().getFormula().equals(
                 new Integer(CorrectionFormula.IMS))) {
-            if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID)
+            if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID)
                 questionCorrectionStrategy = new IMS_LIDQuestionCorrectionStrategy();
-            if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR)
+            if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR)
                 questionCorrectionStrategy = new IMS_STRQuestionCorrectionStrategy();
-            if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM)
+            if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.NUM)
                 questionCorrectionStrategy = new IMS_NUMQuestionCorrectionStrategy();
-
-        } else if (infoStudentTestQuestion.getCorrectionFormula().getFormula().equals(
+        } else if (studentTestQuestion.getCorrectionFormula().getFormula().equals(
                 new Integer(CorrectionFormula.FENIX))) {
-            if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID)
+            if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID)
                 questionCorrectionStrategy = new FENIX_LIDQuestionCorrectionStrategy();
-            if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR)
+            if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR)
                 questionCorrectionStrategy = new FENIX_STRQuestionCorrectionStrategy();
-            if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM)
+            if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.NUM)
                 questionCorrectionStrategy = new FENIX_NUMQuestionCorrectionStrategy();
-
         }
         return questionCorrectionStrategy;
     }

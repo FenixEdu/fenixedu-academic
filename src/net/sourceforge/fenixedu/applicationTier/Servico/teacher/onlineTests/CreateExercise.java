@@ -11,14 +11,14 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 import net.sourceforge.fenixedu.util.tests.XMLQuestion;
-import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 /**
  * @author Susana Fernandes
@@ -26,12 +26,10 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 public class CreateExercise extends Service {
 
     public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
-            QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject,
-            Calendar learningTime, String level, InfoQuestion infoQuestion, String questionText,
-            String secondQuestionText, String[] options, String[] correctOptions, String[] shuffle,
-            String correctFeedbackText, String wrongFeedbackText, Boolean breakLineBeforeResponseBox,
-            Boolean breakLineAfterResponseBox, String path) throws FenixServiceException,
-            ExcepcaoPersistencia {
+            QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime, String level,
+            SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options, String[] correctOptions, String[] shuffle,
+            String correctFeedbackText, String wrongFeedbackText, Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox, String path)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
@@ -49,12 +47,11 @@ public class CreateExercise extends Service {
             }
         }
         Question question = new Question();
-        question.setMetadata(metadata);
+
         question.setVisibility(new Boolean(true));
         try {
-            question.setXmlFile(getQuestion(infoQuestion, questionText, secondQuestionText, options,
-                    shuffle, correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
-                    breakLineAfterResponseBox));
+            question.setXmlFile(getQuestion(subQuestion, questionText, secondQuestionText, options, shuffle, correctFeedbackText, wrongFeedbackText,
+                    breakLineBeforeResponseBox, breakLineAfterResponseBox));
         } catch (UnsupportedEncodingException e) {
             throw new FenixServiceException(e);
         }
@@ -62,30 +59,26 @@ public class CreateExercise extends Service {
         if (metadataId == null)
             question.setXmlFileName("Pergunta" + visibleQuestions.size() + ".xml");
         else
-            question.setXmlFileName(metadata.correctFileName("Pergunta"
-                    + visibleQuestions.size() + ".xml"));
+            question.setXmlFileName(metadata.correctFileName("Pergunta" + visibleQuestions.size() + ".xml"));
 
-        infoQuestion.setXmlFile(question.getXmlFile());
-        ParseQuestion parse = new ParseQuestion();
+        question.setMetadata(metadata);
+        ParseSubQuestion parse = new ParseSubQuestion();
         try {
-            infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, path);
+            question = parse.parseSubQuestion(question, path);
         } catch (Exception e) {
             throw new FenixServiceException(e);
         }
         return true;
     }
 
-    private String getQuestion(InfoQuestion infoQuestion, String questionText,
-            String secondQuestionText, String[] options, String[] shuffle, String correctFeedbackText,
-            String wrongFeedbackText, Boolean breakLineBeforeResponseBox,
-            Boolean breakLineAfterResponseBox) throws UnsupportedEncodingException {
+    private String getQuestion(SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options, String[] shuffle,
+            String correctFeedbackText, String wrongFeedbackText, Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox)
+            throws UnsupportedEncodingException {
         String xmlFile = new String();
         XMLQuestion xmlQuestion = new XMLQuestion();
-        xmlFile = new String(xmlQuestion.getXmlQuestion(questionText, secondQuestionText,
-                infoQuestion.getQuestionType(), options, shuffle,
-                infoQuestion.getResponseProcessingInstructions(), correctFeedbackText,
-                wrongFeedbackText, breakLineBeforeResponseBox, breakLineAfterResponseBox).getBytes(),
-                "ISO-8859-1");
+        xmlFile = new String(xmlQuestion.getXmlQuestion(questionText, secondQuestionText, subQuestion.getQuestionType(), options, shuffle,
+                subQuestion.getResponseProcessingInstructions(), correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
+                breakLineAfterResponseBox).getBytes(), "ISO-8859-1");
         return xmlFile;
     }
 }

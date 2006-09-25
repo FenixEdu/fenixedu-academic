@@ -22,14 +22,18 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
+import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.time.DateFormatUtils;
+
+import com.sun.faces.el.impl.parser.ParseException;
 
 public class InsertDistributedTest extends Service {
 
@@ -38,7 +42,6 @@ public class InsertDistributedTest extends Service {
     public Integer run(Integer executionCourseId, Integer testId, String testInformation, Calendar beginDate, Calendar beginHour, Calendar endDate,
             Calendar endHour, TestType testType, CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
             List<InfoStudent> infoStudentList, String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
-        this.contextPath = contextPath.replace('\\', '/');
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
@@ -84,11 +87,22 @@ public class InsertDistributedTest extends Service {
                 studentTestQuestion.setTestQuestionMark(Double.valueOf(0));
                 studentTestQuestion.setResponse(null);
 
-                if (questionList.size() == 0)
+                if (questionList.size() == 0) {
                     questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
-                Question question = getStudentQuestion(questionList);
+                }
+                Question question = null;
+                try {
+                    question = getStudentQuestion(questionList, contextPath.replace('\\', '/'));
+                } catch (ParseException e) {
+                    throw new InvalidArgumentsServiceException();
+                } catch (ParseQuestionException e) {
+                    throw new InvalidArgumentsServiceException();
+                }
                 if (question == null) {
                     throw new InvalidArgumentsServiceException();
+                }
+                if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().get(0).getItemId() != null) {
+                    studentTestQuestion.setItemId(question.getSubQuestions().get(0).getItemId());
                 }
                 studentTestQuestion.setQuestion(question);
                 questionList.remove(question);
@@ -112,12 +126,15 @@ public class InsertDistributedTest extends Service {
         return advisory.getIdInternal();
     }
 
-    private Question getStudentQuestion(List<Question> questions) {
+    private Question getStudentQuestion(List<Question> questions, String path) throws ParseException, ParseQuestionException {
         Question question = null;
         if (questions.size() != 0) {
             Random r = new Random();
             int questionIndex = r.nextInt(questions.size());
             question = questions.get(questionIndex);
+            if (question.getSubQuestions() == null || question.getSubQuestions().size() == 0) {
+                question = new ParseSubQuestion().parseSubQuestion(question, path);
+            }
         }
         return question;
     }
@@ -140,7 +157,7 @@ public class InsertDistributedTest extends Service {
         } else {
             advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.distributeTestMessage"), args));
         }
-        
+
         return advisory;
     }
 

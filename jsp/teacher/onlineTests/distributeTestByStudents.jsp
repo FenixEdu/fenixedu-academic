@@ -28,10 +28,9 @@ function cleanSelect() {
 // -->
 </script>
 
-<logic:present name="siteView">
-<bean:define id="studentsComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudents"/>
+<logic:present name="studentList">
 
-<bean:size id="studentsSize" name="studentsComponent" property="students"/>
+<bean:size id="studentsSize" name="studentList"/>
 <logic:notEqual name="studentsSize" value="0">
 
 <html:form action="/testDistributionByStudents">
@@ -77,10 +76,10 @@ function cleanSelect() {
 		<td class="listClasses-header"></td>
 	</tr>
 	
-	<logic:iterate id="student" name="studentsComponent" property="students"> 
+	<logic:iterate id="student" name="studentList"> 
 		<tr><td></td>
 			<td class="listClasses"><bean:write name="student" property="number"/></td>
-			<td class="listClasses"><bean:write name="student" property="infoPerson.nome"/></td>
+			<td class="listClasses"><bean:write name="student" property="person.nome"/></td>
 			<td class="listClasses">
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="cleanSelect()">
 			    <bean:write name="student" property="idInternal"/>

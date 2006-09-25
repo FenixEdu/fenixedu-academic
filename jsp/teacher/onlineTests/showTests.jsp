@@ -5,10 +5,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.showTests" /></h2>
 
-<logic:present name="infoTestList">
+<logic:present name="testList">
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
 
-	<bean:size id="testsSize" name="infoTestList" />
+	<bean:size id="testsSize" name="testList" />
 	<logic:equal name="testsSize" value="0">
 		<span class="error"><!-- Error messages go here --><bean:message key="message.tests.no.tests" /></span>
 	</logic:equal>
@@ -32,13 +32,14 @@
 				<th class="listClasses-header"><bean:message key="label.test.lastModifiedDate" /></th>
 				<th width="100" class="listClasses-header"><bean:message key="label.test.numberOfQuestions" /></th>
 			</tr>
-			<logic:iterate id="tests" name="infoTestList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTest">
+			<logic:iterate id="test" name="testList" type="net.sourceforge.fenixedu.domain.onlineTests.Test">
 				<tr>
-					<td class="listClasses"><bean:write name="tests" property="title" /></td>
-					<td class="listClasses"><bean:write name="tests" property="creationDateFormatted" /></td>
-					<td class="listClasses"><bean:write name="tests" property="lastModifiedDateFormatted" /></td>
-					<td class="listClasses"><bean:write name="tests" property="numberOfQuestions" /></td>
-					<bean:define id="testCode" name="tests" property="idInternal" />
+					<td class="listClasses"><bean:write name="test" property="title" /></td>
+					<td class="listClasses"><bean:write name="test" property="creationDateFormatted" /></td>
+					<td class="listClasses"><bean:write name="test" property="lastModifiedDateFormatted" /></td>
+					<bean:size id="numberOfQuestions" name="test" property="testQuestions"/>
+					<td class="listClasses"><bean:write name="numberOfQuestions" /></td>
+					<bean:define id="testCode" name="test" property="idInternal" />
 					<td>
 					<div class="gen-button"><html:link
 						page="<%= "/testEdition.do?method=editTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + testCode %>">
@@ -63,12 +64,14 @@
 						<bean:message key="link.student.room.distribution" />
 					</html:link></div>
 					</td>
+					<%--
 					<td>
 					<div class="gen-button"><html:link
 						page="<%= "/studentTestManagement.do?method=chooseTestSimulationOptions&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" +testCode %>">
 						<bean:message key="label.Simulate" />
 					</html:link></div>
 					</td>
+					--%>
 				</tr>
 			</logic:iterate>
 		</table>
