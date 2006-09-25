@@ -226,15 +226,8 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
             // course name
             InfoDegreeCurricularPlan infoDCP = attendacy.getAttendingStudentInfoDCP();
-            InfoDegree degree = infoDCP.getInfoDegree();
 
-            String courseName = degree.getSigla();
-            Date dataInicio = infoDCP.getInitialDate();
-            Calendar dataInicioCalendar = new GregorianCalendar();
-            dataInicioCalendar.setTime(dataInicio);
-            int year = dataInicioCalendar.get(Calendar.YEAR);
-
-            fileContents += courseName + " " + year + SEPARATOR;
+            fileContents += infoDCP.getName() + SEPARATOR;
 
             // student name
             String shortName = infoAttends.getAluno().getInfoPerson().getNome();
