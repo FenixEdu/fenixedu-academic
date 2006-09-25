@@ -26,3 +26,8 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Correct AvailabilityPolicy table and some availability expressions" CorrectAvailabilityPolicyTable.sql
+execute "Fix portal mappings" FixPortalMappings.sql
+execute "Add column to studentTestQuestion" alterStudentTestQuestionTable.sql
+execute "Add column to VigilancyTables" alterVigilancyTables.sql
