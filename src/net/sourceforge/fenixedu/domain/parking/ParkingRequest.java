@@ -881,7 +881,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         return null;
     }
     
-    public String getSecondCarPropertyRegistryFileNameToDiplay() {
+    public String getSecondCarPropertyRegistryFileNameToDisplay() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType().equals(
                     ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER)) {
