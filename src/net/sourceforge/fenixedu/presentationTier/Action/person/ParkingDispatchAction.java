@@ -380,7 +380,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
     private boolean validateFileName(String fileName) {
         final String filenameT = fileName.trim().toLowerCase();
-        return filenameT.endsWith(".gif") || filenameT.endsWith(".jpg") || filenameT.endsWith(".jpeg");
+        return filenameT.endsWith(".pdf") || filenameT.endsWith(".gif") || filenameT.endsWith(".jpg") || filenameT.endsWith(".jpeg");
     }
 
     public ActionForward downloadAuthorizationDocument(ActionMapping mapping, ActionForm actionForm,
