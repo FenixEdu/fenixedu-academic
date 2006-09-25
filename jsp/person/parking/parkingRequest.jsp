@@ -80,11 +80,8 @@
 					<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
 				</html:link>
 			</li>
-		</ul>
-		<br/>
 			<%-- editar --%>
-		<ul class="mvert025">			
-			<li><html:link page="/parking.do?method=prepareEditParking">
+			<li class="mtop05"><html:link page="/parking.do?method=prepareEditParking">
 				<bean:message key="label.editParkingDocuments"
 					bundle="PARKING_RESOURCES" />
 			</html:link></li>
@@ -99,29 +96,29 @@
 			<fr:view name="parkingParty" property="firstRequest"
 				schema="parkingRequest.driverLicense">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
+					<fr:property name="classes" value="tstyle1 thright thlight mtop025 mbottom1" />
 				</fr:layout>
 			</fr:view>
 		</logic:equal>
 
 		<logic:equal name="parkingParty" property="firstRequest.hasFirstCar" value="true">
-			<p class="mtop15 mbottom025"><strong><bean:message key="label.firstCar"
+			<p class="mtop1 mbottom025"><strong><bean:message key="label.firstCar"
 				bundle="PARKING_RESOURCES" /></strong></p>
 			<fr:view name="parkingParty" property="firstRequest"
 				schema="parkingRequest.firstCar">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
+					<fr:property name="classes" value="tstyle1 thright thlight mtop025 mbottom1" />
 				</fr:layout>
 			</fr:view>
 		</logic:equal>
 
 		<logic:equal name="parkingParty" property="firstRequest.hasSecondCar" value="true">
-			<p class="mtop15 mbottom025"><strong><bean:message key="label.secondCar"
+			<p class="mtop1 mbottom025"><strong><bean:message key="label.secondCar"
 				bundle="PARKING_RESOURCES" /></strong></p>
 			<fr:view name="parkingParty" property="firstRequest"
 				schema="parkingRequest.secondCar">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
+					<fr:property name="classes" value="tstyle1 thright thlight mtop025 mbottom1" />
 				</fr:layout>
 			</fr:view>
 		</logic:equal>
