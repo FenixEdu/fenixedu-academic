@@ -898,24 +898,24 @@
 <!-- CONFERENCE ARTICLES -->
 <schema name="result.publication.create.Event" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ConferenceArticlesBean">
-	<slot name="eventName" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="eventName" key="label.conference" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="60"/>
 	</slot>
-	<slot name="eventType"/>
-	<slot name="eventLocal"><property name="size" value="40"/></slot>
-	<slot name="eventStartDate" layout="year-month-day">
+	<slot name="eventLocal" key="label.conferenceLocal">
+		<property name="size" value="40"/>
+	</slot>
+	<slot name="eventStartDate" key="label.conferenceStartDate" layout="year-month-day">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
 		<property name="size" value="10"/>
 	</slot>
-	<slot name="eventEndDate" layout="year-month-day">
+	<slot name="eventEndDate" key="label.conferenceEndDate" layout="year-month-day">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
 		<property name="size" value="10"/>
 	</slot>
-	<slot name="eventFee"/>
 </schema>
 
 <!-- Create/edit Inproceedings (Conference Article) -->
@@ -931,16 +931,17 @@
 		<property name="size" value="5"/>
 	</slot>
 	<slot name="month"/>
-	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="event" key="label.conference" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="eventNameAutoComplete"/>
 		<property name="labelField" value="name.content"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
-		<property name="serviceArgs" value="slot=name"/>
+		<property name="serviceName" value="SearchEventsByType"/>
+		<property name="serviceArgs" value="slot=name,type=Conference"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>				
 		<property name="minChars" value="3"/>
 	</slot>
+	<slot name="scope"/>
 	<slot name="publisher" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="publisherName"/>
@@ -990,18 +991,18 @@
 	<slot name="title"/>
  	<slot name="year"/>
 	<slot name="month"/>
-	<slot name="event" layout="null-as-label">
+	<slot name="event" key="label.conference" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="event.name"/>
 	</slot>
+	<slot name="scope"/>
 	<slot name="publisher" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
 	</slot>
 	<slot name="address"/>
-
 	<slot name="organization" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
@@ -1027,6 +1028,17 @@
 		<property name="size" value="5"/>
 	</slot>	
 	<slot name="month"/>
+	<slot name="event" key="label.conference" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="rawSlotName" value="eventNameAutoComplete"/>
+		<property name="labelField" value="name.content"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchEventsByType"/>
+		<property name="serviceArgs" value="slot=name,type=Conference"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>
+		<property name="minChars" value="3"/>
+	</slot>
+	<slot name="scope"/>
 	<slot name="publisher" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="publisherName"/>
@@ -1038,26 +1050,6 @@
 		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="address"><property name="size" value="40"/></slot>
-	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="40"/>
-		<property name="rawSlotName" value="eventNameAutoComplete"/>
-		<property name="labelField" value="name.content"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>
-		<property name="minChars" value="3"/>
-	</slot>
-	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="40"/>
-		<property name="rawSlotName" value="eventNameAutoComplete"/>
-		<property name="labelField" value="name.content"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>
-		<property name="minChars" value="3"/>
-	</slot>
 	<slot name="organization" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
@@ -1083,17 +1075,18 @@
 	<slot name="title"/>
  	<slot name="year"/>	
 	<slot name="month"/>
+	<slot name="event" key="label.conference" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="event.name"/>
+	</slot>
+	<slot name="scope"/>
 	<slot name="publisher" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
 	</slot>
 	<slot name="address"/>
-	<slot name="event" layout="null-as-label">
-		<property name="label" value=""/>
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="event.name"/>
-	</slot>
 	<slot name="organization" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
