@@ -168,7 +168,12 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
         }
         
         try {
-            importFunctionalities(module, bean.getStream(), bean.isPrincipalPreserved());
+            if (bean.isUuidUsed() && !bean.isCurrentParentUsed()) {
+                importStartupFunctionalities(bean.getStream());
+            }
+            else { 
+                importFunctionalities(module, bean.getStream(), bean.isPrincipalPreserved(), bean.isUuidUsed());
+            }
         }
         catch (DomainException e) {
             addMessage(request, "error", e.getKey(), e.getArgs());

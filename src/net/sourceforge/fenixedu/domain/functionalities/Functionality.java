@@ -706,6 +706,10 @@ public abstract class Functionality extends Functionality_Base {
      */
     public void delete() {
         checkDeletion(); // throws exception if cannot delete
+
+        // remove from cached table
+        Functionality.UUID_TABLE.remove(getUuid());
+
         disconnect();
         deleteDomainObject();
     }

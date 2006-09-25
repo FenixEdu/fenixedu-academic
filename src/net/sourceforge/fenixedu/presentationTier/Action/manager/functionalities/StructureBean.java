@@ -28,10 +28,15 @@ public class StructureBean implements Serializable {
      */
     private boolean principalPreserved;
 
+    private boolean uuidUsed;
+    private boolean currentParentUsed;
+    
     public StructureBean() {
         super();
         
         setPrincipalPreserved(true);
+        setUuidUsed(false);
+        setCurrentParentUsed(true);
     }
 
     public InputStream getStream() {
@@ -49,5 +54,21 @@ public class StructureBean implements Serializable {
     public void setPrincipalPreserved(boolean principalPreserved) {
         this.principalPreserved = principalPreserved;
     }
-    
+
+    public boolean isUuidUsed() {
+        return this.uuidUsed;
+    }
+
+    public void setUuidUsed(boolean uuidUsed) {
+        this.uuidUsed = uuidUsed;
+    }
+
+    public boolean isCurrentParentUsed() {
+        return this.currentParentUsed;
+    }
+
+    public void setCurrentParentUsed(boolean currentParentUsed) {
+        this.currentParentUsed = currentParentUsed;
+    }
+
 }

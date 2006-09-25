@@ -277,10 +277,25 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      * @param principalPreserved
      *            if <code>false</code> then all functionalities will have the
      *            value of <tt>principal</tt> set to false, possibly avoiding
-     *            conflicts with existing functionalities.
+     *            conflicts with existing functionalities
+     * @param uuidUsed
+     *            if the uuid declared in the document should be used as the new
+     *            functionality uuid, that is, functionalities will be imported 
+     *            with the same uuids
      */
-    public static void importFunctionalities(Module module, InputStream stream, boolean principalPreserved) throws Exception {
+    public static void importFunctionalities(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed) throws Exception {
         ServiceUtils.executeService(AccessControl.getUserView(), "ImportFunctionalities",
-                module, stream, principalPreserved);
+                module, stream, principalPreserved, uuidUsed);
+    }
+    
+    /**
+     * Auxiliary method that invokes a service to import functionalities from a
+     * file using the parent declared in that file or by creating a new top level
+     * module to hold them.
+     * 
+     * @param stream the stream containing the XML funcitonalities structure
+     */
+    public static void importStartupFunctionalities(InputStream stream) throws Exception {
+        ServiceUtils.executeService(AccessControl.getUserView(), "ImportStartupFunctionalities", stream);
     }
 }

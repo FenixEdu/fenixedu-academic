@@ -311,6 +311,10 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
             element.setAttribute("parameters", functionality.getParameters());
         }
         
+        if (functionality.getOrderInModule() != null) {
+            element.setAttribute("order", String.valueOf(functionality.getOrderInModule()));
+        }
+
         element.setAttribute("principal", String.valueOf(functionality.isPrincipal()));
         element.setAttribute("enabled", String.valueOf(functionality.isEnabled()));
         element.setAttribute("relative", String.valueOf(functionality.isRelative()));

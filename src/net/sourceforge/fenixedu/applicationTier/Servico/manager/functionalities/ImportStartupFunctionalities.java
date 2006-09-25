@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -56,4 +58,11 @@ public class ImportStartupFunctionalities extends ImportFunctionalities {
         importFunctionalities(parent, root.getChildren("functionality"), true, true);
     }
     
+    public void run(FileInputStream stream) throws IOException {
+        run((InputStream) stream);
+    }
+    
+    public void run(ByteArrayInputStream stream) throws IOException {
+        run((InputStream) stream);
+    }
 }

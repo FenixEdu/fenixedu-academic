@@ -43,13 +43,17 @@ public class ImportFunctionalities extends Service {
      * @param principalPreserved
      *            a flag indicating ifthe <tt>principal</tt> property should
      *            be preserved or if it should be set to <code>false</code>
+     * @param uuidUsed
+     *            indicates that new functionalities should be assigned the uuid
+     *            defined in the document, that is, no new uuid will be
+     *            generated
      * 
      * @throws IOException
      *             when it's not possible to read from the stream
      */
-    public void run(Module module, InputStream stream, boolean principalPreserved) throws IOException {
+    public void run(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed) throws IOException {
         Element root = getRootElement(stream);
-        importFunctionalities(module, root.getChildren("functionality"), principalPreserved, false);
+        importFunctionalities(module, root.getChildren("functionality"), principalPreserved, uuidUsed);
     }
 
     protected Element getRootElement(InputStream stream) throws IOException {
@@ -79,8 +83,13 @@ public class ImportFunctionalities extends Service {
         for (Object element : children) {
             Element functionalityElement = (Element) element;
 
-            UUID uuid = UUID.fromString(functionalityElement.getAttributeValue("uuid"));
-            Functionality functionality = Functionality.getFunctionality(uuid);
+            Functionality functionality = null;
+            UUID uuid = null;
+            
+            if (considerUUID) {
+                uuid = UUID.fromString(functionalityElement.getAttributeValue("uuid"));
+                functionality  = Functionality.getFunctionality(uuid);
+            }
 
             if (functionality == null) {
                 String path = functionalityElement.getAttributeValue("path");
@@ -96,12 +105,18 @@ public class ImportFunctionalities extends Service {
                 Boolean visible   = new Boolean(functionalityElement.getAttributeValue("visible"));
                 Boolean maximized = new Boolean(functionalityElement.getAttributeValue("maximized"));
     
+                Integer order = null;
+                String orderValue = functionalityElement.getAttributeValue("order");
+                if (orderValue != null) {
+                    order = new Integer(orderValue);
+                }
+                
                 String type = functionalityElement.getAttributeValue("type");
                 if (type.equals(Module.class.getName())) {
-                    functionality = new Module(uuid, name, prefix);
+                    functionality = considerUUID ? new Module(uuid, name, prefix) : new Module(name, prefix);
                 }
                 else {
-                    functionality = new ConcreteFunctionality(uuid, name);
+                    functionality = considerUUID ? new ConcreteFunctionality(uuid, name) : new ConcreteFunctionality(name);
                 }
     
                 String expression = null;
@@ -125,6 +140,10 @@ public class ImportFunctionalities extends Service {
                 
                 functionality.setModule(module);
                 
+                if (order != null) {
+                    functionality.setOrderInModule(order);
+                }
+                
                 logNewFunctionality(functionality);
             }
             
@@ -133,6 +152,8 @@ public class ImportFunctionalities extends Service {
                 importFunctionalities((Module) functionality, childrenElement.getChildren("functionality"), principalPreserved, considerUUID);
             }
         }
+        
+        Module.pack(module);
     }
 
     private void logNewFunctionality(Functionality functionality) {

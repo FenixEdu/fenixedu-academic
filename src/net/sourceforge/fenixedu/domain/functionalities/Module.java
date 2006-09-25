@@ -78,7 +78,7 @@ public class Module extends Module_Base {
         if (getParent() != null) {
             return getParent().getPublicPrefix() + getNormalizedPrefix();
         } else {
-            return getPrefix();
+            return getNormalizedPrefix();
         }
     }
 
@@ -160,6 +160,31 @@ public class Module extends Module_Base {
         }
     }
 
+    /**
+     * Normalizes the order of all functionalities so that it correspondes
+     * to it's index in the list returned by
+     * {@link Module#getOrderedFunctionalities(Module)}.
+     * 
+     * @param module
+     *            the module to pack or <code>null</code> for the toplevel
+     */
+    public static void pack(Module module) {
+        List<Functionality> functionalities = getOrderedFunctionalities(module);
+
+        int index = 0;
+        for (Functionality f : functionalities) {
+            f.setOrderInModule(index++);
+        }
+    }
+
+    private static List<Functionality> getOrderedFunctionalities(Module module) {
+        if (module == null) {
+            return Functionality.getOrderedTopLevelFunctionalities();
+        } else {
+            return module.getOrderedFunctionalities();
+        }
+    }
+    
     //
     //
     //
@@ -278,36 +303,11 @@ public class Module extends Module_Base {
     private static class FunctionalitiesHaveAnOrderListener extends
             RelationAdapter<Module, Functionality> {
 
-        /**
-         * Normalizes the order of all functionalities so that it correspondes
-         * to it's index in the list returned by
-         * {@link Module#getOrderedFunctionalities(Module)}.
-         * 
-         * @param module
-         *            the module to pack or <code>null</code> for the toplevel
-         */
-        private void pack(Module module) {
-            List<Functionality> functionalities = getOrderedFunctionalities(module);
-
-            int index = 0;
-            for (Functionality f : functionalities) {
-                f.setOrderInModule(index++);
-            }
-        }
-
-        private List<Functionality> getOrderedFunctionalities(Module module) {
-            if (module == null) {
-                return Functionality.getOrderedTopLevelFunctionalities();
-            } else {
-                return module.getOrderedFunctionalities();
-            }
-        }
-
         @Override
         public void afterRemove(Module self, Functionality functionality) {
             super.afterRemove(self, functionality);
 
-            pack(self);
+            Module.pack(self);
         }
 
         @Override
@@ -319,7 +319,7 @@ public class Module extends Module_Base {
             }
 
             functionality.setOrderInModule(Integer.MAX_VALUE); // ensures last
-            pack(self);
+            Module.pack(self);
         }
 
     }

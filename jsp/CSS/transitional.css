@@ -490,6 +490,7 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .highlight2 { background-color: #f5f5f5; } 
 .highlight3 { background-color: #def; } /* azul */
 .highlight4 { background-color: #dfb ; } /* verde */
+.highlight5 { background-color: #fdfbdd; } /* amarelo */
 .lowlight1 { color: #999; }
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fbfbdd; }

@@ -12,6 +12,7 @@
 	type       CDATA #REQUIRED
 	path       CDATA #IMPLIED
 	parameters CDATA #IMPLIED
+	order      CDATA #IMPLIED
 	prefix     CDATA #IMPLIED
 	principal (true|false) #REQUIRED
 	enabled   (true|false) #REQUIRED

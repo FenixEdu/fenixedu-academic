@@ -57,6 +57,8 @@
         
         <fr:property name="schemaFor(Module)" value="functionalities.module.tree"/>
         <fr:property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
+
+        <fr:property name="movedClass" value="highlight5"/>
         
         <fr:property name="hiddenLinks">
             <html:link page="/functionality/up.do?functionality=${idInternal}">

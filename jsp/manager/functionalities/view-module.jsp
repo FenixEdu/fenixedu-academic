@@ -97,6 +97,8 @@
         <fr:property name="schemaFor(Module)" value="functionalities.module.tree"/>
         <fr:property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
         
+        <fr:property name="movedClass" value="highlight5"/>
+        
         <fr:property name="hiddenLinks">
             <html:link page="<%= "/functionality/up.do?module=" + thisModule + "&functionality=${idInternal}" %>">
                 <bean:message key="link.functionality.up" bundle="FUNCTIONALITY_RESOURCES"/>

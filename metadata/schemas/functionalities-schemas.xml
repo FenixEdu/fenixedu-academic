@@ -220,4 +220,6 @@
         <property name="size" value="50"/>
     </slot>
     <slot name="principalPreserved"/>
+    <slot name="currentParentUsed"/>
+    <slot name="uuidUsed"/>
 </schema>

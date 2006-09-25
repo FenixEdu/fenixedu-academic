@@ -7,7 +7,7 @@
                  type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext">
              <fr:layout name="side-menu">
                 <fr:property name="moduleClasses" value="navmod"/>
-                <fr:property name="selectedClasses" value="highlight1"/>
+                <fr:property name="selectedClasses" value="highlight5"/>
              </fr:layout>
         </fr:view>
     </div>
