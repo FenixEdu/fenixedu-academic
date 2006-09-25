@@ -3474,6 +3474,7 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			ScopeType scope;
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
+			ScopeType scope;
 			Integer keyEvent;
 		}
 			class net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
