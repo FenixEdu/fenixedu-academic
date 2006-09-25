@@ -186,7 +186,10 @@ Documentation:
           the table columns as well as the table header. The table can also be extended with control links to the right. 
           Control links are link that are parameterized with values from the object beeing presented in each row.
           Check the renderer documentation for more details.  -->
-    <renderer type="java.util.Collection" layout="tabular" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>
+    <renderer type="java.util.Collection" layout="tabular" class="net.sourceforge.fenixedu.renderers.CollectionRenderer">
+    	<property name="groupLinks" value="true"/>
+    	<property name="linkGroupSeparator" value=", "/>
+    </renderer>
     
     <!--@ This layout intends to provide the control links feature to a list presentation. Each object in the collection
           is presented with their own layout and schema in the left column o the table. -->
