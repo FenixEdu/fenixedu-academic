@@ -45,6 +45,7 @@ public class EditResultPublication extends ResultPublicationService {
                 bean.getNote(), bean.getMonth(), bean.getUrl());
 
     }
+
     public void run(IncollectionBean bean) throws FenixServiceException {
         final BookPart bookPart = (BookPart) getResultPublication(bean);
 
@@ -67,19 +68,19 @@ public class EditResultPublication extends ResultPublicationService {
         final Inproceedings inproceedings = (Inproceedings) getResultPublication(bean);
         final Event event = getEventFromBean(bean);
 
-        inproceedings.setEditAll(bean.getTitle(), bean.getYear(), event, getPublisher(bean),
-                getOrganization(bean), bean.getAddress(), bean.getFirstPage(), bean.getLastPage(), bean
-                        .getNote(), bean.getLanguage(), bean.getMonth(), bean.getUrl());
+        inproceedings.setEditAll(bean.getTitle(), bean.getYear(), event, bean.getScope(),
+                getPublisher(bean), getOrganization(bean), bean.getAddress(), bean.getFirstPage(), bean
+                        .getLastPage(), bean.getNote(), bean.getLanguage(), bean.getMonth(), bean
+                        .getUrl());
     }
 
     public void run(ProceedingsBean bean) throws FenixServiceException {
         final Proceedings proceedings = (Proceedings) getResultPublication(bean);
         final Event event = getEventFromBean(bean);
 
-        proceedings
-                .setEditAll(bean.getTitle(), bean.getYear(), event, getPublisher(bean),
-                        getOrganization(bean), bean.getAddress(), bean.getNote(), bean.getMonth(), bean
-                                .getUrl());
+        proceedings.setEditAll(bean.getTitle(), bean.getYear(), event, bean.getScope(),
+                getPublisher(bean), getOrganization(bean), bean.getAddress(), bean.getNote(), bean
+                        .getMonth(), bean.getUrl());
     }
 
     public void run(ThesisBean bean) throws FenixServiceException {
@@ -108,8 +109,8 @@ public class EditResultPublication extends ResultPublicationService {
     public void run(OtherPublicationBean bean) throws FenixServiceException {
         final OtherPublication otherPublication = (OtherPublication) getResultPublication(bean);
 
-        otherPublication.setEditAll(bean.getTitle(), getPublisher(bean), bean.getYear(), bean.getHowPublished(),
-                bean.getNote(), bean.getAddress(), bean.getOtherPublicationType(),
+        otherPublication.setEditAll(bean.getTitle(), getPublisher(bean), bean.getYear(), bean
+                .getHowPublished(), bean.getNote(), bean.getAddress(), bean.getOtherPublicationType(),
                 bean.getNumberPages(), bean.getLanguage(), bean.getCountry(), bean.getMonth(), bean
                         .getUrl());
     }

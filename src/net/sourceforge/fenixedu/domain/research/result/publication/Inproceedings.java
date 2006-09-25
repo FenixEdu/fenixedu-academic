@@ -27,32 +27,33 @@ public class Inproceedings extends Inproceedings_Base {
     }
 
     public Inproceedings(Person participator, ResultParticipationRole participatorRole, String title,
-            Integer year, Event event, Unit publisher, Unit organization,
+            Integer year, Event event, ScopeType scope, Unit publisher, Unit organization,
             String address, Integer firstPage, Integer lastPage, String note, String language,
             Month month, String url) {
         this();
         checkRequiredParameters(title, year, event);
         super.setCreatorParticipation(participator, participatorRole);
-        fillAllAttributes(title, year, event, publisher, organization, address, firstPage,
+        fillAllAttributes(title, year, event, scope, publisher, organization, address, firstPage,
                 lastPage, note, language, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, Integer year, Event event, Unit publisher,
+    public void setEditAll(String title, Integer year, Event event, ScopeType scope, Unit publisher,
             Unit organization, String address, Integer firstPage, Integer lastPage, String note,
             String language, Month month, String url) {
         checkRequiredParameters(title, year, event);
-        fillAllAttributes(title, year, event, publisher, organization, address, firstPage,
+        fillAllAttributes(title, year, event, scope, publisher, organization, address, firstPage,
                 lastPage, note, language, month, url);
         super.setModifyedByAndDate();
     }
 
-    private void fillAllAttributes(String title, Integer year, Event event,
+    private void fillAllAttributes(String title, Integer year, Event event, ScopeType scope,
             Unit publisher, Unit organization, String address, Integer firstPage, Integer lastPage,
             String note, String language, Month month, String url) {
         super.setTitle(title);
         super.setYear(year);
         super.setEvent(event);
+        super.setScope(scope);
         super.setPublisher(publisher);
         super.setOrganization(organization);
         super.setAddress(address);
@@ -192,5 +193,10 @@ public class Inproceedings extends Inproceedings_Base {
     @Override
     public void setCountry(Country country) {
         throw new DomainException("error.researcher.Inproceedings.call", "setCountry");
+    }
+    
+    @Override
+    public void setScope(ScopeType scope) {
+        throw new DomainException("error.researcher.Inproceedings.call", "setScope");
     }
 }

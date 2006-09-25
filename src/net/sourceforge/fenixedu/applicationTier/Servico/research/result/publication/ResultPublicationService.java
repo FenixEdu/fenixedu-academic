@@ -65,7 +65,7 @@ public abstract class ResultPublicationService extends Service {
         final Event event = getEventFromBean(bean);
 
         return new Inproceedings(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getYear(),
-                event, getPublisher(bean), getOrganization(bean), bean.getAddress(),
+                event, bean.getScope(), getPublisher(bean), getOrganization(bean), bean.getAddress(),
                 bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean
                         .getMonth(), bean.getUrl());
     }
@@ -74,8 +74,8 @@ public abstract class ResultPublicationService extends Service {
         final Event event = getEventFromBean(bean);
 
         return new Proceedings(bean.getPerson(), bean.getTitle(), bean.getYear(), event,
-                getPublisher(bean), getOrganization(bean), bean.getAddress(), bean.getNote(), bean
-                        .getMonth(), bean.getUrl());
+                bean.getScope(), getPublisher(bean), getOrganization(bean), bean.getAddress(), bean
+                        .getNote(), bean.getMonth(), bean.getUrl());
     }
 
     protected Thesis createThesisFromBean(ThesisBean bean) {
@@ -96,10 +96,10 @@ public abstract class ResultPublicationService extends Service {
     }
 
     protected OtherPublication createOtherPublicationFromBean(OtherPublicationBean bean) {
-        return new OtherPublication(bean.getPerson(), bean.getTitle(), getPublisher(bean), bean.getYear(), bean
-                .getHowPublished(), bean.getNote(), bean.getAddress(), bean.getOtherPublicationType(),
-                bean.getNumberPages(), bean.getLanguage(), bean.getCountry(), bean.getMonth(), bean
-                        .getUrl());
+        return new OtherPublication(bean.getPerson(), bean.getTitle(), getPublisher(bean), bean
+                .getYear(), bean.getHowPublished(), bean.getNote(), bean.getAddress(), bean
+                .getOtherPublicationType(), bean.getNumberPages(), bean.getLanguage(),
+                bean.getCountry(), bean.getMonth(), bean.getUrl());
     }
 
     /*
@@ -125,22 +125,10 @@ public abstract class ResultPublicationService extends Service {
     protected Event getEventFromBean(ConferenceArticlesBean bean) {
         Event event = bean.getEvent();
         if (event == null) {
-            event = new Event(bean.getEventEndDate(), bean.getEventStartDate(), bean.getEventLocal(),
-                    bean.getEventFee(), bean.getEventType(), bean.getEventName());
+            event = new Event(bean.getEventEndDate(), bean.getEventStartDate(), bean
+                    .getEventLocal(), bean.getEventType(), bean.getEventName());
         }
         return event;
-    }
-
-    /**
-     * This method is used in the conversion of unstructured publication to a
-     * new type, when creating the publication of a new type is necessary to
-     * delete the unstructured publication.
-     */
-    protected void deleteUnstructuredPublication(ResultPublicationBean publicationBean) {
-        Unstructured unstructuredPublication = publicationBean.getUnstructuredPublication();
-        if (unstructuredPublication == null)
-            return;
-        unstructuredPublication.delete();
     }
 
 }

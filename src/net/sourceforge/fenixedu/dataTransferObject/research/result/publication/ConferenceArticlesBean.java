@@ -5,17 +5,20 @@ import org.joda.time.YearMonthDay;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.event.Event;
 import net.sourceforge.fenixedu.domain.research.event.EventType;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public abstract class ConferenceArticlesBean extends ResultPublicationBean implements Serializable {
+    private ScopeType scope;
+
     private DomainReference<Event> event;
 
     private String eventNameAutoComplete;
 
-    // event creation needed to create a event
     private MultiLanguageString eventName;
 
-    private EventType eventType;
+    // default type is Conference
+    private EventType eventType = EventType.Conference;
 
     private String eventLocal;
 
@@ -23,13 +26,9 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
 
     private YearMonthDay eventEndDate;
 
-    private Boolean eventFee;
-
     @Override
     public void setCreateEvent(Boolean createEvent) {
         this.setEventName(new MultiLanguageString(this.getEventNameAutoComplete()));
-        // default: event is a conference
-        this.setEventType(EventType.Conference);
         super.setCreateEvent(createEvent);
     }
 
@@ -39,14 +38,6 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
 
     public void setEventEndDate(YearMonthDay eventEndDate) {
         this.eventEndDate = eventEndDate;
-    }
-
-    public Boolean getEventFee() {
-        return eventFee;
-    }
-
-    public void setEventFee(Boolean eventFee) {
-        this.eventFee = eventFee;
     }
 
     public String getEventLocal() {
@@ -95,5 +86,13 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
 
     public void setEvent(Event event) {
         this.event = (event != null) ? new DomainReference<Event>(event) : null;
+    }
+
+    public ScopeType getScope() {
+        return scope;
+    }
+
+    public void setScope(ScopeType scope) {
+        this.scope = scope;
     }
 }
