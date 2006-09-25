@@ -54,7 +54,7 @@
 					<fr:edit id="<%=participatorBean.getBibtexPerson()%>" nested="true" name="editor" schema="<%=participatorBean.getActiveSchema()%>">
 						<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
 			   		</fr:edit>
-					<br/>
+					<hr/>
 				</logic:iterate>
 			</logic:notEmpty>
 	
