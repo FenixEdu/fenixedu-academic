@@ -93,6 +93,17 @@ public abstract class ResultPublication extends ResultPublication_Base {
 
     public abstract BibtexEntry exportToBibtexEntry();
 
+    protected String generateBibtexKey() {
+        String key = "";
+        ResultParticipation participation = getOrderedResultParticipations().get(0);
+        key = participation.getPerson().getName();
+        key = key.replace(" ","");
+        if ((getYear() != null) && (getYear() > 0))
+            key = key + getYear();
+        
+        return key;
+    }
+    
     protected String getParticipationsAndTitleString() {
         String resume = "";
         int i = 0;

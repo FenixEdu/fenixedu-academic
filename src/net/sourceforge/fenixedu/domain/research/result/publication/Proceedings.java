@@ -82,7 +82,7 @@ public class Proceedings extends Proceedings_Base {
     public BibtexEntry exportToBibtexEntry() {
         BibtexFile bibtexFile = new BibtexFile();
 
-        BibtexEntry bibEntry = bibtexFile.makeEntry("proceedings", null);
+        BibtexEntry bibEntry = bibtexFile.makeEntry("proceedings", generateBibtexKey());
         bibEntry.setField("title", bibtexFile.makeString(getTitle()));
         bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
         if (getPublisher() != null)

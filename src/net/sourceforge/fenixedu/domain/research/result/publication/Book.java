@@ -99,8 +99,8 @@ public class Book extends Book_Base {
     @Override
     public BibtexEntry exportToBibtexEntry() {
         BibtexFile bibtexFile = new BibtexFile();
-
-        BibtexEntry bibEntry = bibtexFile.makeEntry("book", null);
+        
+        BibtexEntry bibEntry = bibtexFile.makeEntry("book", generateBibtexKey());
         bibEntry.setField("title", bibtexFile.makeString(getTitle()));
         if (getPublisher() != null)
             bibEntry.setField("publisher", bibtexFile.makeString(getPublisher().getName()));

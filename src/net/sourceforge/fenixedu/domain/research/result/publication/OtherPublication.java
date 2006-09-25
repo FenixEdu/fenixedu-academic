@@ -80,7 +80,7 @@ public class OtherPublication extends OtherPublication_Base {
     @Override
     public BibtexEntry exportToBibtexEntry() {
         BibtexFile bibtexFile = new BibtexFile();
-        BibtexEntry bibEntry = bibtexFile.makeEntry("otherpublication", null);
+        BibtexEntry bibEntry = bibtexFile.makeEntry("otherpublication", generateBibtexKey());
         if ((getTitle() != null) && (getTitle().length() > 0))
             bibEntry.setField("title", bibtexFile.makeString(getTitle()));
         if ((getYear() != null) && (getYear() > 0))

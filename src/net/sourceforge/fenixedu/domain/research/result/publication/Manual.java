@@ -71,7 +71,7 @@ public class Manual extends Manual_Base {
     public BibtexEntry exportToBibtexEntry() {
         BibtexFile bibtexFile = new BibtexFile();
 
-        BibtexEntry bibEntry = bibtexFile.makeEntry("manual", null);
+        BibtexEntry bibEntry = bibtexFile.makeEntry("manual", generateBibtexKey());
         bibEntry.setField("title", bibtexFile.makeString(getTitle()));
         if ((getYear() != null) && (getYear() > 0))
             bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));

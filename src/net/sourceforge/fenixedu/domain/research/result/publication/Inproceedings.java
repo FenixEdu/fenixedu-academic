@@ -96,7 +96,7 @@ public class Inproceedings extends Inproceedings_Base {
     public BibtexEntry exportToBibtexEntry() {
         BibtexFile bibtexFile = new BibtexFile();
 
-        BibtexEntry bibEntry = bibtexFile.makeEntry("inproceedings", null);
+        BibtexEntry bibEntry = bibtexFile.makeEntry("inproceedings", generateBibtexKey());
         bibEntry.setField("title", bibtexFile.makeString(getTitle()));
         bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
         if (getEvent() != null && getEvent().getName() != null)

@@ -88,7 +88,7 @@ public class TechnicalReport extends TechnicalReport_Base {
     public BibtexEntry exportToBibtexEntry() {
         BibtexFile bibtexFile = new BibtexFile();
 
-        BibtexEntry bibEntry = bibtexFile.makeEntry("techreport", null);
+        BibtexEntry bibEntry = bibtexFile.makeEntry("techreport", generateBibtexKey());
         bibEntry.setField("title", bibtexFile.makeString(getTitle()));
         if (getOrganization() != null)
             bibEntry.setField("organization", bibtexFile.makeString(getOrganization().getName()));

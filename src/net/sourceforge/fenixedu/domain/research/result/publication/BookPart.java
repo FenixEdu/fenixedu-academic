@@ -209,9 +209,9 @@ public class BookPart extends BookPart_Base {
 
         BibtexEntry bibEntry;
         if (getBookPartType().equals(BookPartType.Inbook))
-            bibEntry = bibtexFile.makeEntry("inbook", null);
+            bibEntry = bibtexFile.makeEntry("inbook", generateBibtexKey());
         else
-            bibEntry = bibtexFile.makeEntry("incollection", null);
+            bibEntry = bibtexFile.makeEntry("incollection", generateBibtexKey());
 
         bibEntry.setField("title", bibtexFile.makeString(getTitle()));
         bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));

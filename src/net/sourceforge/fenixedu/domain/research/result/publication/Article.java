@@ -98,7 +98,7 @@ public class Article extends Article_Base {
     public BibtexEntry exportToBibtexEntry() {
         BibtexFile bibtexFile = new BibtexFile();
 
-        BibtexEntry bibEntry = bibtexFile.makeEntry("article", null);
+        BibtexEntry bibEntry = bibtexFile.makeEntry("article", generateBibtexKey());
         bibEntry.setField("title", bibtexFile.makeString(getTitle()));
         bibEntry.setField("journal", bibtexFile.makeString(getJournal()));
         bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));

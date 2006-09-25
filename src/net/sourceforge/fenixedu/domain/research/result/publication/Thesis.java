@@ -95,9 +95,9 @@ public class Thesis extends Thesis_Base {
 
         BibtexEntry bibEntry;
         if (getThesisType().equals(ThesisType.PhD_Thesis))
-            bibEntry = bibtexFile.makeEntry("phdthesis", null);
+            bibEntry = bibtexFile.makeEntry("phdthesis", generateBibtexKey());
         else
-            bibEntry = bibtexFile.makeEntry("masterthesis", null);
+            bibEntry = bibtexFile.makeEntry("masterthesis", generateBibtexKey());
 
         bibEntry.setField("title", bibtexFile.makeString(getTitle()));
         bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
