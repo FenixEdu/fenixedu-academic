@@ -5,10 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
@@ -41,6 +37,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author Andre Fernandes / Joao Brito
@@ -297,16 +294,14 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
                     + NEWLINE;
         }
 
-        try {
+        try {            
             ServletOutputStream writer = response.getOutputStream();
             response.setContentType("plain/text");
             StringBuilder fileName = new StringBuilder();
-            Calendar now = new GregorianCalendar();
+            YearMonthDay currentDate = new YearMonthDay();
             fileName.append("listaDeAlunos_");
-            fileName.append(infoDTO.getInfoExecutionCourse().getSigla()).append("_").append(
-                    now.get(Calendar.DAY_OF_MONTH));
-            fileName.append("-").append(now.get(Calendar.MONTH)).append("-").append(
-                    now.get(Calendar.YEAR));
+            fileName.append(infoDTO.getInfoExecutionCourse().getSigla()).append("_").append(currentDate.getDayOfMonth());
+            fileName.append("-").append(currentDate.getMonthOfYear()).append("-").append(currentDate.getYear());
             fileName.append(".tsv");
             response.setHeader("Content-disposition", "attachment; filename=" + fileName);
             writer.print(fileContents);
