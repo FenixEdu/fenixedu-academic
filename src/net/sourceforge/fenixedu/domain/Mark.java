@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
+import net.sourceforge.fenixedu.util.EvaluationType;
 
 public class Mark extends Mark_Base {
 
@@ -40,8 +41,10 @@ public class Mark extends Mark_Base {
     	} else {
     		gradeScale = getAttend().getEnrolment().getCurricularCourse().getGradeScaleChain();
     	}
+        if(gradeScale==null && getEvaluation().getEvaluationType().getType() == EvaluationType.ONLINE_TEST) {
+            return GradeScale.TYPE20.isValid(mark, getEvaluation().getEvaluationType());
+        }
     	return gradeScale.isValid(mark, getEvaluation().getEvaluationType());
-    	
     }
 
 }
