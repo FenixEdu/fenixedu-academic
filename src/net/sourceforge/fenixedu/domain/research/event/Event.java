@@ -19,7 +19,7 @@ public class Event extends Event_Base {
         setEventType(type);
     }    
 
-	public Event(YearMonthDay endDate, YearMonthDay startDate, String eventLocation, Boolean fee,
+	public Event(YearMonthDay endDate, YearMonthDay startDate, String eventLocation,
 			EventType type, MultiLanguageString name) {
         super();
         
@@ -29,7 +29,6 @@ public class Event extends Event_Base {
 		setEndDate(endDate);
 		setStartDate(startDate);
 		setEventLocation(eventLocation);
-		setFee(fee);
 		setName(name);
 		setEventType(type);
 	}
