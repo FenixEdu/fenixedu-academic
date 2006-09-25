@@ -9630,7 +9630,15 @@
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
-    </service>    
+    </service>
+	<service>
+        <name>SearchEventsByType</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.SearchEventsByType</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
 	<service>
         <name>SearchExternalUnits</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits</implementationClass>
