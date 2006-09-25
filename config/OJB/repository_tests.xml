@@ -150,7 +150,6 @@
 <!-- ********************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.onlineTests.TestScope"
                   table="TEST_SCOPE"
-                  row-reader="net.sourceforge.fenixedu.persistenceTier.rowReaders.TestScopeRowReader" 
                   >
     
  	
