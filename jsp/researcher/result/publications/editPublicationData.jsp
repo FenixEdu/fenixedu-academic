@@ -35,7 +35,7 @@
 		<!-- Edit event in case of inproceedings or proceedings -->
 		<logic:equal name="publicationBean" property="createEvent" value="true">
 			<br/>
-			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createEvent"/>
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createConference"/>
 			<fr:edit id="createEvent" name="publicationBean" schema="result.publication.create.Event" nested="true">
 		 	    <fr:layout name="tabular">
 		    	    <fr:property name="classes" value="style1"/>

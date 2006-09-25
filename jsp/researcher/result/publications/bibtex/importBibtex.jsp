@@ -91,7 +91,7 @@
 	   		<!-- Create event in case of inproceedings or proceedings -->
 			<logic:equal name="publicationData" property="createEvent" value="true">
 				<br/>
-				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createEvent"/>
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createConference"/>
 				<fr:edit id="createEvent" name="importBibtexBean" property="currentPublicationBean" schema="result.publication.create.Event" nested="true">
 			   		<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
 				</fr:edit>
