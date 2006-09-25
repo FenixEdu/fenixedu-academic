@@ -88,8 +88,11 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 	    CandidacySituationType candidacySituationType = candidacy.getActiveCandidacySituation()
 		    .getCandidacySituationType();
 	    if (candidacySituationType.equals(CandidacySituationType.STAND_BY_CONFIRMED_DATA)
-		    || candidacySituationType.equals(CandidacySituationType.SUBSTITUTE)) {
-		candidacies.add(new SelectDFACandidacyBean(candidacy));
+		    || candidacySituationType.equals(CandidacySituationType.SUBSTITUTE)
+            || candidacySituationType.equals(CandidacySituationType.ADMITTED)
+            || candidacySituationType.equals(CandidacySituationType.NOT_ADMITTED)) {
+            
+	        candidacies.add(new SelectDFACandidacyBean(candidacy));
 	    }
 	}
 

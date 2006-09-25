@@ -15,12 +15,12 @@ public class NotAdmittedCandidacySituation extends NotAdmittedCandidacySituation
 
     @Override
     public void checkConditionsToForward() {
-	throw new DomainException("error.impossible.to.forward.from.notAdmitted");
+	//throw new DomainException("error.impossible.to.forward.from.notAdmitted");
     }
 
     @Override
     public void checkConditionsToForward(String nextState) {
-	throw new DomainException("error.impossible.to.forward.from.notAdmitted");
+	//throw new DomainException("error.impossible.to.forward.from.notAdmitted");
     }
 
     @Override
@@ -30,17 +30,34 @@ public class NotAdmittedCandidacySituation extends NotAdmittedCandidacySituation
 
     @Override
     public Set<String> getValidNextStates() {
-	return new HashSet<String>();
+    Set<String> nextStates = new HashSet<String>();
+    nextStates.add(CandidacySituationType.ADMITTED.toString());
+    nextStates.add(CandidacySituationType.NOT_ADMITTED.toString());
+    nextStates.add(CandidacySituationType.SUBSTITUTE.toString());
+    return nextStates;
     }
+    
 
     @Override
     public void nextState() {
-	throw new DomainException("error.impossible.to.forward.from.notAdmitted");
+	//throw new DomainException("error.impossible.to.forward.from.notAdmitted");
     }
 
     @Override
     public void nextState(String nextState) {
-	throw new DomainException("error.impossible.to.forward.from.notAdmitted");
+    CandidacySituationType situationType = CandidacySituationType.valueOf(nextState);
+    switch (situationType) {
+    case ADMITTED:
+        new AdmittedCandidacySituation(this.getCandidacy());
+        break;
+    case NOT_ADMITTED:
+        break;
+    case SUBSTITUTE:
+        new SubstituteCandidacySituation(this.getCandidacy());
+        break;
+    default:
+        break;
+    }
     }
     
     @Override

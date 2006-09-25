@@ -32,7 +32,17 @@ public class SelectDFACandidacyBean implements Serializable {
 		    CandidacySituationType.SUBSTITUTE)) {
 		this.selectionSituation = CandidacySituationType.SUBSTITUTE;
 	    }
-	}
+        if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(
+                CandidacySituationType.ADMITTED)) {
+            this.selectionSituation = CandidacySituationType.ADMITTED;
+        
+        }
+        if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(
+                CandidacySituationType.NOT_ADMITTED)) {
+            this.selectionSituation = CandidacySituationType.NOT_ADMITTED;
+        
+        }
+    }
     }
 
     public DFACandidacy getCandidacy() {
