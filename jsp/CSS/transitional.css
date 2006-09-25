@@ -123,7 +123,7 @@ padding: 0.5em 1em 0.1em 1em;
 font-style: italic;
 }
 
-.tstyle1, .tstyle2, .tstyle3, .tstyle4, .tstyle5, .tstyle7 {
+.tstyle1, .tstyle2, .tstyle3, .tstyle4, .tstyle5, .tstyle7, .tstyle8 {
 border-collapse: collapse;
 margin: 1em 0;
 }
@@ -199,6 +199,7 @@ table td.cornerright { }
 .tstyle4 { }
 .tstyle5 { }
 .tstyle7 { }
+.tstyle8 { }
 
 
 /* table classes - th properties */
@@ -214,6 +215,7 @@ text-align: center;
 .tstyle4 th { border: 1px solid #ccc; background: #eee; }
 .tstyle5 th { padding: 4px; border: 1px solid #fff; vertical-align: top; background: #f5f5f5; }
 .tstyle7 th { border: 1px solid #eee; background: #eee; }
+.tstyle8 th { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
 
 
 /* table classes - td properties */
@@ -228,6 +230,7 @@ padding: 5px; /*padding em "em" dá problemas de rendering no firefox, faz arredo
 .tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle5 td { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
 .tstyle7 td { border: 1px solid #eee; background: #eee; }
+.tstyle8 td { padding: 4px; }
 
 
 /* ------------ */
@@ -468,7 +471,9 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width30em { width: 30em; }
 .width50em { width: 50em; }
 .width100px { width: 100px; }
+.width150px { width: 150px; }
 .width250px { width: 250px; }
+
 
 /* display */
 .hidden { display: none; }
