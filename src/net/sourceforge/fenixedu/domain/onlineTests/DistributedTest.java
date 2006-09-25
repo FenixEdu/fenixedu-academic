@@ -23,43 +23,46 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 public class DistributedTest extends DistributedTest_Base {
 
     public DistributedTest() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
     public void delete() {
-        for (; hasAnyDistributedTestQuestions(); getDistributedTestQuestions().get(0).delete());
-        for (; hasAnyDistributedTestAdvisories(); getDistributedTestAdvisories().get(0).delete());
-        for (; hasAnyStudentsLogs(); getStudentsLogs().get(0).delete());
+        for (; hasAnyDistributedTestQuestions(); getDistributedTestQuestions().get(0).delete())
+            ;
+        for (; hasAnyDistributedTestAdvisories(); getDistributedTestAdvisories().get(0).delete())
+            ;
+        for (; hasAnyStudentsLogs(); getStudentsLogs().get(0).delete())
+            ;
         if (getTestType().getType().intValue() == TestType.EVALUATION) {
             getOnlineTest().delete();
         }
         deleteQuestions();
-        
+
         removeTestScope();
         removeRootDomainObject();
-        
+
         deleteDomainObject();
     }
-    
+
     private void deleteQuestions() {
         for (StudentTestQuestion studentTestQuestion : getDistributedTestQuestions()) {
-            if(!studentTestQuestion.getQuestion().getVisibility() && !isInOtherDistributedTest(studentTestQuestion.getQuestion())) {
+            if (!studentTestQuestion.getQuestion().getVisibility() && !isInOtherDistributedTest(studentTestQuestion.getQuestion())) {
                 studentTestQuestion.getQuestion().delete();
             }
         }
     }
-    
+
     private boolean isInOtherDistributedTest(Question question) {
         for (StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestions()) {
-            if(!studentTestQuestion.getDistributedTest().equals(this)) {
+            if (!studentTestQuestion.getDistributedTest().equals(this)) {
                 return true;
             }
         }
         return false;
     }
-    
-	public Calendar getBeginDate() {
+
+    public Calendar getBeginDate() {
         if (getBeginDateDate() != null) {
             final Calendar calendar = Calendar.getInstance();
             calendar.setTime(getBeginDateDate());
@@ -118,6 +121,7 @@ public class DistributedTest extends DistributedTest_Base {
         final Date date = (endHour != null) ? endHour.getTime() : null;
         setEndHourDate(date);
     }
+
     
     public List<StudentTestLog> getStudentTestLogs(final Registration registration){
     	List<StudentTestLog> result = new ArrayList<StudentTestLog>();
@@ -128,17 +132,18 @@ public class DistributedTest extends DistributedTest_Base {
 		}
     	return result;
     }
-    
+
     public void updateDistributedTestAdvisoryDates(final Date newExpiresDate) {
-    	for (final DistributedTestAdvisory distributedTestAdvisory : this.getDistributedTestAdvisories()) {
-			distributedTestAdvisory.getAdvisory().setExpires(newExpiresDate);
-		}
+        for (final DistributedTestAdvisory distributedTestAdvisory : this.getDistributedTestAdvisories()) {
+            distributedTestAdvisory.getAdvisory().setExpires(newExpiresDate);
+        }
     }
 
     public SortedSet<StudentTestQuestion> getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder() {
-    	final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(StudentTestQuestion.COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER);
-    	studentTestQuestions.addAll(getDistributedTestQuestionsSet());
-    	return studentTestQuestions;
+        final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(
+                StudentTestQuestion.COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER);
+        studentTestQuestions.addAll(getDistributedTestQuestionsSet());
+        return studentTestQuestions;
     }
 
     public Set<StudentTestQuestion> findStudentTestQuestionsByTestQuestionOrder(final Integer order) {
@@ -162,7 +167,7 @@ public class DistributedTest extends DistributedTest_Base {
     public SortedSet<StudentTestQuestion> findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder() {
         final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(StudentTestQuestion.COMPARATOR_BY_TEST_QUESTION_ORDER);
         final Registration registration = getDistributedTestQuestionsSet() != null ? getDistributedTestQuestionsSet().iterator().next().getStudent() : null;
-        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+       for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
             if (registration == studentTestQuestion.getStudent()) {
                 studentTestQuestions.add(studentTestQuestion);
             }
@@ -191,9 +196,9 @@ public class DistributedTest extends DistributedTest_Base {
     public int countLikeResponses(final Integer order, final String response) {
         int count = 0;
         for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
-            if (studentTestQuestion.getTestQuestionOrder().equals(order) && studentTestQuestion.getResponse().contains(response)) {
+         //   if (studentTestQuestion.getTestQuestionOrder().equals(order) && studentTestQuestion.getResponse().contains(response)) {
                 count++;
-            }
+         //   }
         }
         return count;
     }
@@ -210,11 +215,11 @@ public class DistributedTest extends DistributedTest_Base {
 
     public Set<String> findResponses() {
         final Set<String> responses = new HashSet<String>();
-        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
-            if (studentTestQuestion.getResponse() != null) {
-                responses.add(studentTestQuestion.getResponse());
-            }
-        }
+//        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+//            if (studentTestQuestion.getResponse() != null) {
+//                responses.add(studentTestQuestion.getResponse());
+//            }
+//        }
         return responses;
     }
 
@@ -263,12 +268,114 @@ public class DistributedTest extends DistributedTest_Base {
         return getDistributedTestQuestionsSet().size() / getNumberOfQuestions().intValue();
     }
 
-    public Question findQuestionByOID(Integer questionId){
+    public Question findQuestionByOID(Integer questionId) {
         for (StudentTestQuestion studentTestQuestion : this.getDistributedTestQuestions()) {
-            if(studentTestQuestion.getQuestion().getIdInternal().equals(questionId)){
+            if (studentTestQuestion.getQuestion().getIdInternal().equals(questionId)) {
                 return studentTestQuestion.getQuestion();
             }
         }
         return null;
+    }
+
+    public String getBeginDateTimeFormatted() {
+        String result = new String();
+        Calendar date = getBeginDate();
+        result += date.get(Calendar.DAY_OF_MONTH);
+        result += "/";
+        result += date.get(Calendar.MONTH) + 1;
+        result += "/";
+        result += date.get(Calendar.YEAR);
+        result += " ";
+        date = getBeginHour();
+        result += date.get(Calendar.HOUR_OF_DAY);
+        result += ":";
+        if (date.get(Calendar.MINUTE) < 10)
+            result += "0";
+        result += date.get(Calendar.MINUTE);
+        return result;
+    }
+
+    public String getEndDateTimeFormatted() {
+        String result = new String();
+        Calendar date = getEndDate();
+        result += date.get(Calendar.DAY_OF_MONTH);
+        result += "/";
+        result += date.get(Calendar.MONTH) + 1;
+        result += "/";
+        result += date.get(Calendar.YEAR);
+        result += " ";
+        date = getEndHour();
+        result += date.get(Calendar.HOUR_OF_DAY);
+        result += ":";
+        if (date.get(Calendar.MINUTE) < 10)
+            result += "0";
+        result += date.get(Calendar.MINUTE);
+        return result;
+    }
+
+    public String getBeginDayFormatted() {
+        String result = new String();
+        if (getBeginDate().get(Calendar.DAY_OF_MONTH) < 10)
+            result += "0";
+        return result.concat(new Integer(getBeginDate().get(Calendar.DAY_OF_MONTH)).toString());
+
+    }
+
+    public String getBeginMonthFormatted() {
+        String result = new String();
+        if (getBeginDate().get(Calendar.MONTH) + 1 < 10)
+            result += "0";
+        return result.concat(new Integer(getBeginDate().get(Calendar.MONTH) + 1).toString());
+    }
+
+    public String getBeginYearFormatted() {
+        return new Integer(getBeginDate().get(Calendar.YEAR)).toString();
+    }
+
+    public String getBeginHourFormatted() {
+        String result = new String();
+        if (getBeginHour().get(Calendar.HOUR_OF_DAY) < 10)
+            result += "0";
+        return result.concat(new Integer(getBeginHour().get(Calendar.HOUR_OF_DAY)).toString());
+    }
+
+    public String getBeginMinuteFormatted() {
+        String result = new String();
+        if (getBeginHour().get(Calendar.MINUTE) < 10)
+            result += "0";
+        return result.concat(new Integer(getBeginHour().get(Calendar.MINUTE)).toString());
+    }
+
+    public String getEndDayFormatted() {
+        String result = new String();
+        if (getEndDate().get(Calendar.DAY_OF_MONTH) < 10)
+            result += "0";
+        return result.concat(new Integer(getEndDate().get(Calendar.DAY_OF_MONTH)).toString());
+    }
+
+    public String getEndMonthFormatted() {
+        String result = new String();
+        if (getEndDate().get(Calendar.MONTH) + 1 < 10)
+            result += "0";
+        return result.concat(new Integer(getEndDate().get(Calendar.MONTH) + 1).toString());
+    }
+
+    public String getEndYearFormatted() {
+        return new Integer(getEndDate().get(Calendar.YEAR)).toString();
+    }
+
+    public String getEndHourFormatted() {
+        String result = new String();
+        if (getEndHour().get(Calendar.HOUR_OF_DAY) < 10)
+            result += "0";
+        return result.concat(new Integer(getEndHour().get(Calendar.HOUR_OF_DAY)).toString());
+
+    }
+
+    public String getEndMinuteFormatted() {
+        String result = new String();
+        if (getEndHour().get(Calendar.MINUTE) < 10)
+            result += "0";
+        return result.concat(new Integer(getEndHour().get(Calendar.MINUTE)).toString());
     }
 }

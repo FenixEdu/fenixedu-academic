@@ -229,8 +229,8 @@ public class ResponseCondition extends FenixUtil {
             conditionSignal = "";
     }
 
-    public static List getConditionSignalsToStringQuestion() {
-        List signalsList = new ArrayList();
+    public static List<LabelValueBean> getConditionSignalsToStringQuestion() {
+        List<LabelValueBean> signalsList = new ArrayList<LabelValueBean>();
         signalsList.add(new LabelValueBean(VAREQUAL_STRING, getConditionCode(VAREQUAL_XML_STRING)
                 .toString()));
         signalsList.add(new LabelValueBean(NOTVAREQUAL_STRING, getConditionCode(NOTVAREQUAL_XML_STRING)
@@ -242,8 +242,8 @@ public class ResponseCondition extends FenixUtil {
         return signalsList;
     }
 
-    public static List getConditionSignalsToNumericalQuestion() {
-        List signalsList = new ArrayList();
+    public static List<LabelValueBean> getConditionSignalsToNumericalQuestion() {
+        List<LabelValueBean> signalsList = new ArrayList<LabelValueBean>();
         signalsList.add(new LabelValueBean(VAREQUAL_SIGNAL, getConditionCode(VAREQUAL_XML_STRING)
                 .toString()));
         signalsList.add(new LabelValueBean(NOTVAREQUAL_SIGNAL, getConditionCode(NOTVAREQUAL_XML_STRING)
@@ -326,8 +326,11 @@ public class ResponseCondition extends FenixUtil {
     }
 
     public boolean isCorrectLID(String userResponse) {
-        if (getCondition().intValue() == VAREQUAL)
+        if (getCondition().intValue() == VAREQUAL) {
             return (userResponse.compareTo(getResponse()) == 0 ? true : false);
+        } else if (getCondition().intValue() == NOTVAREQUAL) {
+            return (userResponse.compareTo(getResponse()) == 0 ? false : true);
+        }
         return false;
     }
 

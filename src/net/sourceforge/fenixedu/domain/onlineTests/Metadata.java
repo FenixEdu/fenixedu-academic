@@ -20,9 +20,8 @@ import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 
 public class Metadata extends Metadata_Base {
 
-    public Metadata(final ExecutionCourse executionCourse, final String author,
-            final String description, final String difficulty, final Calendar learningTime,
-            final String mainSubject, final String secondarySubject, final String level) {
+    public Metadata(final ExecutionCourse executionCourse, final String author, final String description, final String difficulty,
+            final Calendar learningTime, final String mainSubject, final String secondarySubject, final String level) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setVisibility(Boolean.TRUE);
@@ -106,8 +105,7 @@ public class Metadata extends Metadata_Base {
         super.deleteDomainObject();
     }
 
-    public static Set<Metadata> findVisibleMetadataFromExecutionCourseNotOfTest(
-            final ExecutionCourse executionCourse, final Test test) {
+    public static Set<Metadata> findVisibleMetadataFromExecutionCourseNotOfTest(final ExecutionCourse executionCourse, final Test test) {
         final Set<Metadata> testMetadatas = new HashSet<Metadata>();
         for (final TestQuestion testQuestion : test.getTestQuestionsSet()) {
             testMetadatas.add(testQuestion.getQuestion().getMetadata());
@@ -115,8 +113,7 @@ public class Metadata extends Metadata_Base {
 
         final Set<Metadata> visibleMetadata = new HashSet<Metadata>();
         for (final Metadata metadata : executionCourse.getMetadatasSet()) {
-            if (metadata.getVisibility() != null && metadata.getVisibility().booleanValue()
-                    && !testMetadatas.contains(metadata)) {
+            if (metadata.getVisibility() != null && metadata.getVisibility().booleanValue() && !testMetadatas.contains(metadata)) {
                 visibleMetadata.add(metadata);
             }
         }
@@ -124,18 +121,16 @@ public class Metadata extends Metadata_Base {
         return visibleMetadata;
     }
 
-    public static Set<Metadata> findVisibleMetadataFromExecutionCourseNotOfDistributedTest(
-            final ExecutionCourse executionCourse, final DistributedTest distributedTest) {
+    public static Set<Metadata> findVisibleMetadataFromExecutionCourseNotOfDistributedTest(final ExecutionCourse executionCourse,
+            final DistributedTest distributedTest) {
         final Set<Metadata> distributedTestMetadata = new HashSet<Metadata>();
-        for (final StudentTestQuestion studentTestQuestion : distributedTest
-                .getDistributedTestQuestionsSet()) {
+        for (final StudentTestQuestion studentTestQuestion : distributedTest.getDistributedTestQuestionsSet()) {
             distributedTestMetadata.add(studentTestQuestion.getQuestion().getMetadata());
         }
 
         final Set<Metadata> visibleMetadata = new HashSet<Metadata>();
         for (final Metadata metadata : executionCourse.getMetadatasSet()) {
-            if (metadata.getVisibility() != null && metadata.getVisibility().booleanValue()
-                    && !distributedTestMetadata.contains(metadata)) {
+            if (metadata.getVisibility() != null && metadata.getVisibility().booleanValue() && !distributedTestMetadata.contains(metadata)) {
                 visibleMetadata.add(metadata);
             }
         }
@@ -143,4 +138,16 @@ public class Metadata extends Metadata_Base {
         return visibleMetadata;
     }
 
+    public String getLearningTimeFormatted() {
+        String result = "";
+        Calendar date = getLearningTime();
+        if (date == null)
+            return result;
+        result += date.get(Calendar.HOUR_OF_DAY);
+        result += ":";
+        if (date.get(Calendar.MINUTE) < 10)
+            result += "0";
+        result += date.get(Calendar.MINUTE);
+        return result;
+    }
 }

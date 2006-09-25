@@ -4,7 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.onlineTests;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -14,12 +16,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class Question extends Question_Base {
 
-    public Question() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    private List<SubQuestion> subQuestions;
 
-	public void delete() {
+    public Question() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public void delete() {
         removeMetadata();
         removeRootDomainObject();
         getStudentTestsQuestions().clear();
@@ -34,5 +38,33 @@ public class Question extends Question_Base {
         }
         return distributedTests;
     }
+
+    public List<SubQuestion> getSubQuestions() {
+        return subQuestions;
+    }
+
+    public void setSubQuestions(List<SubQuestion> subQuestions) {
+        this.subQuestions = subQuestions;
+    }
+
+    public void addSubQuestion(SubQuestion subQuestion) {
+        if (subQuestions == null) {
+            subQuestions = new ArrayList<SubQuestion>();
+        }
+        subQuestions.add(subQuestion);
+    }
+
+//    public SubQuestion getSubQuestionByItem(String itemId) {
+//        for (SubQuestion subQuestion : getSubQuestions()) {
+//            if (itemId != null && subQuestion.getItemId() != null) {
+//                if (itemId.equals(subQuestion.getItemId())) {
+//                    return subQuestion;
+//                }
+//            } else if (itemId == null && subQuestion.getItemId() == null) {
+//                return subQuestion;
+//            }
+//        }
+//        return null;
+//    }
 
 }

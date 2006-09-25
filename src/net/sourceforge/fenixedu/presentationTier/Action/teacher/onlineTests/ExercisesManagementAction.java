@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,10 +18,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidMetadataException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.MetadataComparator;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -36,7 +39,6 @@ import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.XMLQuestion;
-import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.action.ActionError;
@@ -48,12 +50,15 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
 import org.apache.struts.util.LabelValueBean;
 
+import com.sun.faces.el.impl.parser.ParseException;
+
 /**
  * @author Susana Fernandes
  */
 public class ExercisesManagementAction extends FenixDispatchAction {
 
-    public ActionForward prepareChooseExerciseType(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareChooseExerciseType(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("exerciseCode", getCodeFromRequest(request, "exerciseCode"));
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("questionsTypes", QuestionType.getAllTypes());
@@ -61,7 +66,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return mapping.findForward("chooseExerciseType");
     }
 
-    public ActionForward chooseQuestionType(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseQuestionType(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         Integer questionType = (Integer) ((DynaActionForm) form).get("questionType");
         if (questionType.intValue() == QuestionType.LID) {
@@ -73,7 +79,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
             }
             ((DynaActionForm) form).set("optionNumber", new Integer(4));
             return prepareCreateExercise(mapping, form, request, response);
-        } else if (questionType.intValue() == QuestionType.STR || questionType.intValue() == QuestionType.NUM) {
+        } else if (questionType.intValue() == QuestionType.STR
+                || questionType.intValue() == QuestionType.NUM) {
             ((DynaActionForm) form).set("cardinalityType", new Integer(CardinalityType.SINGLE));
             ((DynaActionForm) form).set("optionNumber", new Integer(1));
             return prepareCreateExercise(mapping, form, request, response);
@@ -84,7 +91,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
     }
 
-    public ActionForward prepareCreateExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
 
         Integer questionType = (Integer) ((DynaActionForm) form).get("questionType");
@@ -103,7 +111,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
         Integer[] signal = (Integer[]) ((DynaActionForm) form).get("signal");
         if (signal == null || signal.length == 0) {
-            ((DynaActionForm) form).set("signal", new Integer[] { new Integer(ResponseCondition.VAREQUAL) });
+            ((DynaActionForm) form).set("signal",
+                    new Integer[] { new Integer(ResponseCondition.VAREQUAL) });
         }
 
         List questionDifficultyList = (new QuestionDifficultyType()).getAllTypes();
@@ -127,10 +136,11 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return mapping.findForward("prepareCreateExercise");
     }
 
-    public ActionForward createExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+    public ActionForward createExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
+        final IUserView userView = getUserView(request);
         // METADATA
         String author = (String) ((DynaActionForm) form).get("author");
         String description = (String) ((DynaActionForm) form).get("description");
@@ -142,7 +152,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         String level = (String) ((DynaActionForm) form).get("level");
 
         Calendar learningTime = null;
-        if (learningHour != null || learningHour.equals("") || learningMinute != null || learningMinute.equals("")) {
+        if (learningHour != null || learningHour.equals("") || learningMinute != null
+                || learningMinute.equals("")) {
             if (learningHour == null || learningHour.equals(""))
                 learningHour = "0";
             if (learningMinute == null || learningMinute.equals(""))
@@ -188,8 +199,10 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         Boolean integerType = (Boolean) ((DynaActionForm) form).get("integerType");
         Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form).get("evaluationQuestion");
 
-        Boolean breakLineBeforeResponseBox = (Boolean) ((DynaActionForm) form).get("breakLineBeforeResponseBox");
-        Boolean breakLineAfterResponseBox = (Boolean) ((DynaActionForm) form).get("breakLineAfterResponseBox");
+        Boolean breakLineBeforeResponseBox = (Boolean) ((DynaActionForm) form)
+                .get("breakLineBeforeResponseBox");
+        Boolean breakLineAfterResponseBox = (Boolean) ((DynaActionForm) form)
+                .get("breakLineAfterResponseBox");
 
         QuestionType questionType = new QuestionType(questionTypeId);
         CardinalityType cardinalityType = null;
@@ -199,10 +212,11 @@ public class ExercisesManagementAction extends FenixDispatchAction {
             cardinalityType = new CardinalityType(cardinalityTypeId);
         questionType.setCardinalityType(cardinalityType);
 
-        InfoQuestion infoQuestion = null;
+        SubQuestion subQuestion = null;
         try {
-            infoQuestion = setInfoQuestion(questionType, questionValue, optionNumber, options, correctOptions, shuffle, signal, integerType,
-                    evaluationQuestion, caseSensitive, maxChar, cols, rows);
+            subQuestion = setSubQuestion(questionType, questionValue, optionNumber, options,
+                    correctOptions, shuffle, signal, integerType, evaluationQuestion, caseSensitive,
+                    maxChar, cols, rows);
         } catch (ParseQuestionException e) {
             error(request, "createExercise", e.getMessage());
             return prepareCreateExercise(mapping, form, request, response);
@@ -213,9 +227,11 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         if (metadataIdString != null && metadataIdString.length() != 0)
             metadataId = new Integer(metadataIdString);
         try {
-            Object[] args = { executionCourseId, metadataId, author, description, questionDifficultyType, mainSubject, secondarySubject,
-                    learningTime, level, infoQuestion, questionText, secondQuestionText, options, correctOptions, shuffle, correctFeedbackText,
-                    wrongFeedbackText, breakLineBeforeResponseBox, breakLineAfterResponseBox, getServlet().getServletContext().getRealPath("/") };
+            Object[] args = { executionCourseId, metadataId, author, description,
+                    questionDifficultyType, mainSubject, secondarySubject, learningTime, level,
+                    subQuestion, questionText, secondQuestionText, options, correctOptions, shuffle,
+                    correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
+                    breakLineAfterResponseBox, getServlet().getServletContext().getRealPath("/") };
             ServiceUtils.executeService(userView, "CreateExercise", args);
         } catch (FenixServiceException e) {
             error(request, "createExercise", "error.exerciseCreationError");
@@ -227,7 +243,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return exercisesFirstPage(mapping, form, request, response);
     }
 
-    public ActionForward previewExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward previewExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
         // QUESTION
         Integer questionTypeId = (Integer) ((DynaActionForm) form).get("questionType");
         Integer cardinalityTypeId = (Integer) ((DynaActionForm) form).get("cardinalityType");
@@ -263,8 +280,10 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form).get("evaluationQuestion");
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
 
-        Boolean breakLineBeforeResponseBox = (Boolean) ((DynaActionForm) form).get("breakLineBeforeResponseBox");
-        Boolean breakLineAfterResponseBox = (Boolean) ((DynaActionForm) form).get("breakLineAfterResponseBox");
+        Boolean breakLineBeforeResponseBox = (Boolean) ((DynaActionForm) form)
+                .get("breakLineBeforeResponseBox");
+        Boolean breakLineAfterResponseBox = (Boolean) ((DynaActionForm) form)
+                .get("breakLineAfterResponseBox");
 
         QuestionType questionType = new QuestionType(questionTypeId);
         CardinalityType cardinalityType = null;
@@ -274,37 +293,39 @@ public class ExercisesManagementAction extends FenixDispatchAction {
             cardinalityType = new CardinalityType(cardinalityTypeId);
         questionType.setCardinalityType(cardinalityType);
 
-        InfoQuestion infoQuestion = null;
+        SubQuestion subQuestion = null;
         try {
-            infoQuestion = setInfoQuestion(questionType, questionValue, optionNumber, options, correctOptions, shuffle, signal, integerType,
-                    evaluationQuestion, caseSensitive, maxChar, cols, rows);
+            subQuestion = setSubQuestion(questionType, questionValue, optionNumber, options,
+                    correctOptions, shuffle, signal, integerType, evaluationQuestion, caseSensitive,
+                    maxChar, cols, rows);
         } catch (ParseQuestionException e) {
             error(request, "createExercise", e.getMessage());
             return prepareCreateExercise(mapping, form, request, response);
         }
 
         XMLQuestion xmlQuestion = new XMLQuestion();
-        infoQuestion.setXmlFile(xmlQuestion.getXmlQuestion(questionText, secondQuestionText, infoQuestion.getQuestionType(), options, shuffle,
-                infoQuestion.getResponseProcessingInstructions(), correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
-                breakLineAfterResponseBox));
-        ParseQuestion parse = new ParseQuestion();
+        String xmlFile = xmlQuestion.getXmlQuestion(questionText, secondQuestionText, subQuestion
+                .getQuestionType(), options, shuffle, subQuestion.getResponseProcessingInstructions(),
+                correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
+                breakLineAfterResponseBox);
+        ParseSubQuestion parse = new ParseSubQuestion();
         try {
-            infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, getServlet().getServletContext().getRealPath("/"));
+            subQuestion = parse.parseSubQuestion(xmlFile, getServlet().getServletContext().getRealPath(
+                    "/"));
         } catch (Exception e) {
             error(request, "createExercise", "error.exerciseCreationError");
             return prepareCreateExercise(mapping, form, request, response);
         }
         ((DynaActionForm) form).set("response", null);
-        request.setAttribute("infoQuestion", infoQuestion);
+        request.setAttribute("subQuestion", subQuestion);
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         return mapping.findForward("previewExercise");
     }
 
-    private InfoQuestion setInfoQuestion(QuestionType questionType, Double questionValue, Integer optionNumber, String[] options,
-            String[] correctOptions, String[] shuffle, Integer[] signal, Boolean integerType, Boolean evaluationQuestion, Boolean caseSensitive,
+    private SubQuestion setSubQuestion(QuestionType questionType, Double questionValue,
+            Integer optionNumber, String[] options, String[] correctOptions, String[] shuffle,
+            Integer[] signal, Boolean integerType, Boolean evaluationQuestion, Boolean caseSensitive,
             Integer maxChar, Integer cols, Integer rows) throws ParseQuestionException {
-        InfoQuestion infoQuestion = new InfoQuestion();
-
         // RENDER
         if (questionType.getType().intValue() == QuestionType.LID) {
             RenderChoise render = new RenderChoise();
@@ -380,28 +401,32 @@ public class ExercisesManagementAction extends FenixDispatchAction {
                     condition = ResponseCondition.VAREQUAL_XML_STRING;
                 }
                 if (condition != null) {
-                    ResponseCondition responseCondition = new ResponseCondition(condition, correctResponse, new String("1"));
+                    ResponseCondition responseCondition = new ResponseCondition(condition,
+                            correctResponse, new String("1"));
                     responseConditionList.add(responseCondition);
                 }
             }
             if (responseConditionList != null && responseConditionList.size() != 0) {
-                ResponseProcessing responseProcessing = new ResponseProcessing(responseConditionList, questionValue, new Integer(
-                        ResponseProcessing.SET), null, true);
+                ResponseProcessing responseProcessing = new ResponseProcessing(responseConditionList,
+                        questionValue, new Integer(ResponseProcessing.SET), null, true);
                 responseProcessingInstructionsList.add(responseProcessing);
             }
 
         }
-        infoQuestion.setOptionNumber(optionNumber);
-        infoQuestion.setQuestionType(questionType);
-        infoQuestion.setQuestionValue(questionValue);
+        SubQuestion subQuestion = new SubQuestion();
+        // subQuestion.setOptionNumber(optionNumber);
+        subQuestion.setQuestionType(questionType);
+        subQuestion.setQuestionValue(questionValue);
 
-        infoQuestion.setResponseProcessingInstructions(responseProcessingInstructionsList);
+        subQuestion.setResponseProcessingInstructions(responseProcessingInstructionsList);
 
-        return infoQuestion;
+        return subQuestion;
     }
 
-    public ActionForward addNewCondition(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        ((DynaActionForm) form).set("optionNumber", new Integer(((Integer) ((DynaActionForm) form).get("optionNumber")).intValue() + 1));
+    public ActionForward addNewCondition(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        ((DynaActionForm) form).set("optionNumber", new Integer(((Integer) ((DynaActionForm) form)
+                .get("optionNumber")).intValue() + 1));
         Integer[] signal = (Integer[]) ((DynaActionForm) form).get("signal");
         if (signal != null && signal.length != 0) {
             Integer[] newSignal = new Integer[signal.length + 1];
@@ -433,7 +458,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return prepareCreateExercise(mapping, form, request, response);
     }
 
-    public ActionForward removeCondition(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward removeCondition(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
 
         Integer conditionId = (Integer) (((DynaActionForm) form).get("conditionId"));
         Integer[] signal = (Integer[]) ((DynaActionForm) form).get("signal");
@@ -489,63 +515,68 @@ public class ExercisesManagementAction extends FenixDispatchAction {
             }
             ((DynaActionForm) form).set("correctOptions", correctOptions);
         }
-        ((DynaActionForm) form).set("optionNumber", new Integer(((Integer) ((DynaActionForm) form).get("optionNumber")).intValue() - 1));
+        ((DynaActionForm) form).set("optionNumber", new Integer(((Integer) ((DynaActionForm) form)
+                .get("optionNumber")).intValue() - 1));
         return prepareCreateExercise(mapping, form, request, response);
     }
 
-    public ActionForward exercisesFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+    public ActionForward exercisesFirstPage(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        final IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
-        List<InfoMetadata> infoMetadataList = null;
-        try {
-            infoMetadataList = (List<InfoMetadata>) ServiceUtils.executeService(userView, "ReadMetadatas", new Object[] { executionCourseId, null,
-                    null });
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
+
+        final ExecutionCourse executionCourse = rootDomainObject
+                .readExecutionCourseByOID(executionCourseId);
+        List<Metadata> metadataList = new ArrayList<Metadata>();
+        for (Metadata metadata : executionCourse.getMetadatas()) {
+            if (metadata.getVisibility()) {
+                metadataList.add(metadata);
+            }
         }
         final String order = request.getParameter("order");
         final String asc = request.getParameter("asc");
 
-        if (order != null) {
-            MetadataComparator metadataComparator = new MetadataComparator(order, asc);
-            Collections.sort(infoMetadataList, metadataComparator);
-        }
+        // if (order != null) {
+        // MetadataComparator metadataComparator = new MetadataComparator(order,
+        // asc);
+        // Collections.sort(infoMetadataList, metadataComparator);
+        // }
 
         request.setAttribute("badXmls", (List) request.getAttribute("badXmls"));
-        request.setAttribute("infoMetadataList", infoMetadataList);
+        request.setAttribute("metadataList", metadataList);
         request.setAttribute("objectCode", executionCourseId);
         request.setAttribute("order", order);
         request.setAttribute("asc", asc);
         return mapping.findForward("exercisesFirstPage");
     }
 
-    public ActionForward chooseNewExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+    public ActionForward chooseNewExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        final IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
-        List<InfoMetadata> infoMetadataList = null;
-        try {
-            infoMetadataList = (List<InfoMetadata>) ServiceUtils.executeService(userView, "ReadMetadatas", new Object[] { executionCourseId, null,
-                    null });
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+        final IUserView userView = getUserView(request);
+
+        final ExecutionCourse executionCourse = rootDomainObject
+                .readExecutionCourseByOID(executionCourseId);
+        Set<Metadata> metadataList = executionCourse.findVisibleMetadata();
+
         final String order = request.getParameter("order");
         final String asc = request.getParameter("asc");
 
         if (order != null) {
-            MetadataComparator metadataComparator = new MetadataComparator(order, asc);
-            Collections.sort(infoMetadataList, metadataComparator);
+            // MetadataComparator metadataComparator = new
+            // MetadataComparator(order, asc);
+            // Collections.sort(infoMetadataList, metadataComparator);
         }
         request.setAttribute("objectCode", executionCourseId);
-        request.setAttribute("infoMetadataList", infoMetadataList);
+        request.setAttribute("metadataList", metadataList);
         request.setAttribute("order", order);
         request.setAttribute("asc", asc);
         return mapping.findForward("chooseNewExercise");
     }
 
-    public ActionForward prepareAddExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareAddExerciseVariation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("exerciseCode", getCodeFromRequest(request, "exerciseCode"));
         request.setAttribute("order", request.getParameter("order"));
@@ -553,27 +584,31 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return mapping.findForward("addExerciseVariation");
     }
 
-    public ActionForward loadExerciseVariationsFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
-        Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+    public ActionForward loadExerciseVariationsFile(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        final IUserView userView = getUserView(request);
+        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         request.setAttribute("objectCode", executionCourseId);
-        Integer metadataId = getCodeFromRequest(request, "exerciseCode");
+        final Integer metadataId = getCodeFromRequest(request, "exerciseCode");
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
 
         FormFile xmlZipFile = (FormFile) ((DynaActionForm) form).get("xmlZipFile");
-        if (xmlZipFile == null || xmlZipFile.getFileData() == null || xmlZipFile.getFileData().length == 0) {
+        if (xmlZipFile == null || xmlZipFile.getFileData() == null
+                || xmlZipFile.getFileData().length == 0) {
             error(request, "FileNotExist", "error.nullXmlZipFile");
             return mapping.findForward("addExerciseVariation");
-        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed") || xmlZipFile.getContentType().equals("text/xml")
-                || xmlZipFile.getContentType().equals("application/xml") || (xmlZipFile.getContentType().equals("application/zip")))) {
+        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed")
+                || xmlZipFile.getContentType().equals("text/xml")
+                || xmlZipFile.getContentType().equals("application/xml") || (xmlZipFile.getContentType()
+                .equals("application/zip")))) {
             error(request, "FileNotExist", "error.badXmlZipFile");
             return mapping.findForward("addExerciseVariation");
         }
 
         try {
-            Object[] args = { executionCourseId, metadataId, xmlZipFile, getServlet().getServletContext().getRealPath("/") };
+            Object[] args = { executionCourseId, metadataId, xmlZipFile,
+                    getServlet().getServletContext().getRealPath("/") };
 
             List badXmls = (List) ServiceUtils.executeService(userView, "InsertExerciseVariation", args);
             request.setAttribute("badXmls", badXmls);
@@ -587,35 +622,40 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return exercisesFirstPage(mapping, form, request, response);
     }
 
-    public ActionForward insertNewExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward insertNewExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
         return mapping.findForward("insertNewExercise");
     }
 
-    public ActionForward loadExerciseFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
-        FormFile metadataFile = (FormFile) ((DynaActionForm) form).get("metadataFile");
-        FormFile xmlZipFile = (FormFile) ((DynaActionForm) form).get("xmlZipFile");
-        Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+    public ActionForward loadExerciseFiles(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        final IUserView userView = getUserView(request);
+        final FormFile metadataFile = (FormFile) ((DynaActionForm) form).get("metadataFile");
+        final FormFile xmlZipFile = (FormFile) ((DynaActionForm) form).get("xmlZipFile");
+        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         if (metadataFile != null)
             if ((metadataFile.getFileData().length != 0)
-                    && !(metadataFile.getContentType().equals("text/xml") || metadataFile.getContentType().equals("application/xml"))) {
+                    && !(metadataFile.getContentType().equals("text/xml") || metadataFile
+                            .getContentType().equals("application/xml"))) {
                 error(request, "FileNotExist", "error.badMetadataFile");
                 return mapping.findForward("insertNewExercise");
             }
-        if (xmlZipFile == null || xmlZipFile.getFileData() == null || xmlZipFile.getFileData().length == 0) {
+        if (xmlZipFile == null || xmlZipFile.getFileData() == null
+                || xmlZipFile.getFileData().length == 0) {
             error(request, "FileNotExist", "error.nullXmlZipFile");
             return mapping.findForward("insertNewExercise");
-        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed") || xmlZipFile.getContentType().equals("text/xml")
-                || xmlZipFile.getContentType().equals("application/xml") || (xmlZipFile.getContentType().equals("application/zip")))) {
+        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed")
+                || xmlZipFile.getContentType().equals("text/xml")
+                || xmlZipFile.getContentType().equals("application/xml") || (xmlZipFile.getContentType()
+                .equals("application/zip")))) {
             error(request, "FileNotExist", "error.badXmlZipFile");
             return mapping.findForward("insertNewExercise");
         }
-        String path = getServlet().getServletContext().getRealPath("/");
+        final String path = getServlet().getServletContext().getRealPath("/");
         List badXmls = null;
         try {
             Object[] args = { executionCourseId, xmlZipFile, path };
@@ -635,7 +675,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return exercisesFirstPage(mapping, form, request, response);
     }
 
-    public ActionForward prepareRemoveExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareRemoveExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("exerciseCode", getCodeFromRequest(request, "exerciseCode"));
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
@@ -644,13 +685,15 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return mapping.findForward("prepareRemoveExercise");
     }
 
-    public ActionForward removeExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
-        final IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
+    public ActionForward removeExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
+        final IUserView userView = getUserView(request);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final Integer metadataId = getCodeFromRequest(request, "exerciseCode");
         try {
-            ServiceUtils.executeService(userView, "DeleteExercise", new Object[] { executionCourseId, metadataId });
+            ServiceUtils.executeService(userView, "DeleteExercise", new Object[] { executionCourseId,
+                    metadataId });
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -660,55 +703,72 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return exercisesFirstPage(mapping, form, request, response);
     }
 
-    public ActionForward prepareEditExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
-        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
-        Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
+    public ActionForward prepareEditExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
+        final IUserView userView = getUserView(request);
+        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+        final Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
         Integer variationCode = getCodeFromRequest(request, "variationCode");
-        String path = getServlet().getServletContext().getRealPath("/");
-        if (variationCode == null)
-            variationCode = new Integer(-1);
-        InfoMetadata infoMetadata = null;
-        request.setAttribute("objectCode", executionCourseId);
-        request.setAttribute("order", request.getParameter("order"));
-        request.setAttribute("asc", request.getParameter("asc"));
+        Metadata metadata = null;
         try {
-            Object[] args = { executionCourseId, exerciseId, variationCode, path };
-            infoMetadata = (InfoMetadata) ServiceUtils.executeService(userView, "ReadExercise", args);
+            metadata = (Metadata) ServiceUtils.executeService(userView, "ReadExercise", new Object[] {
+                    executionCourseId, exerciseId });
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        if (infoMetadata == null) {
+        if (metadata == null || !metadata.getVisibility().booleanValue()) {
             return exercisesFirstPage(mapping, form, request, response);
         }
+        String path = getServlet().getServletContext().getRealPath("/");
+        ParseSubQuestion parse = new ParseSubQuestion();
+        if (variationCode != null) {
+            for (Question question : metadata.getVisibleQuestions()) {
+                if ((question.getIdInternal().equals(variationCode) || variationCode.intValue() == -2)
+                        && (question.getSubQuestions() == null || question.getSubQuestions().size() == 0)) {
+                    try {
+                        question = parse.parseSubQuestion(question, path);
+                    } catch (ParseQuestionException e) {
+                        throw new FenixActionException();
+                    } catch (ParseException e) {
+                        throw new FenixActionException();
+                    }
+                }
+            }
+        } else {
+            variationCode = new Integer(-1);
+        }
+
+        request.setAttribute("objectCode", executionCourseId);
+        request.setAttribute("order", request.getParameter("order"));
+        request.setAttribute("asc", request.getParameter("asc"));
         request.setAttribute("exerciseCode", exerciseId);
         request.setAttribute("variationCode", variationCode);
-        request.setAttribute("infoMetadata", infoMetadata);
+        request.setAttribute("metadata", metadata);
         List questionDifficultyList = (new QuestionDifficultyType()).getAllTypes();
         request.setAttribute("questionDifficultyList", questionDifficultyList);
         return mapping.findForward("editExercise");
     }
 
-    public ActionForward editExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
-        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
-        Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
-        // String path = getServlet().getServletContext().getRealPath("/");
-        String author = request.getParameter("author");
-        String description = request.getParameter("description");
+    public ActionForward editExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
+        final IUserView userView = getUserView(request);
+        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+        final Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
+        final String author = request.getParameter("author");
+        final String description = request.getParameter("description");
         String difficulty = request.getParameter("difficulty");
-        String learningTime = request.getParameter("learningTimeFormatted");
-        String level = request.getParameter("level");
-        String mainSubject = request.getParameter("mainSubject");
-        String secondarySubject = request.getParameter("secondarySubject");
+        final String learningTime = request.getParameter("learningTimeFormatted");
+        final String level = request.getParameter("level");
+        final String mainSubject = request.getParameter("mainSubject");
+        final String secondarySubject = request.getParameter("secondarySubject");
         if (!difficulty.equals("-1"))
             difficulty = new QuestionDifficultyType(new Integer(difficulty)).getTypeString();
         Boolean result = null;
         try {
-            Object[] args = { executionCourseId, exerciseId, author, description, difficulty, string2Hour(learningTime), level, mainSubject,
-                    secondarySubject };
+            Object[] args = { executionCourseId, exerciseId, author, description, difficulty,
+                    string2Hour(learningTime), level, mainSubject, secondarySubject };
             result = (Boolean) ServiceUtils.executeService(userView, "EditExercise", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -720,25 +780,26 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return exercisesFirstPage(mapping, form, request, response);
     }
 
-    public ActionForward prepareRemoveExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        final IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
+    public ActionForward prepareRemoveExerciseVariation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
+        final IUserView userView = (IUserView) request.getSession(false).getAttribute(
+                SessionConstants.U_VIEW);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         Integer variationCode = getCodeFromRequest(request, "variationCode");
         request.setAttribute("objectCode", executionCourseId);
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
-        Integer metadataCode = getCodeFromRequest(request, "metadataCode");
-        
         try {
-            List<LabelValueBean> result = (List<LabelValueBean>) ServiceUtils.executeService(userView, "DeleteExerciseVariation", new Object[] {
-                    executionCourseId, variationCode, metadataCode });
+            List<LabelValueBean> result = (List<LabelValueBean>) ServiceUtils.executeService(userView,
+                    "DeleteExerciseVariation", new Object[] { executionCourseId, variationCode });
             if (result == null || result.size() == 0) {
                 return prepareEditExercise(mapping, form, request, response);
             }
             request.setAttribute("studentsList", result);
-            InfoQuestion infoQuestion = (InfoQuestion) ServiceUtils.executeService(userView, "ReadQuestion", new Object[] { executionCourseId, metadataCode,
-                    variationCode, getServlet().getServletContext().getRealPath("/") });
+            InfoQuestion infoQuestion = (InfoQuestion) ServiceUtils.executeService(userView,
+                    "ReadQuestion", new Object[] { executionCourseId, null, variationCode,
+                            getServlet().getServletContext().getRealPath("/") });
             request.setAttribute("infoQuestion", infoQuestion);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -746,9 +807,11 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return mapping.findForward("removeExerciseVariation");
     }
 
-    public ActionForward removeExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
-        final IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
+    public ActionForward removeExerciseVariation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
+        final IUserView userView = (IUserView) request.getSession(false).getAttribute(
+                SessionConstants.U_VIEW);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
         final Integer variationCode = getCodeFromRequest(request, "variationCode");
@@ -759,10 +822,18 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
         try {
-            infoSiteDistributedTestAdvisoryList = (List<InfoSiteDistributedTestAdvisory>) ServiceUtils.executeService(userView,
-                    "ChangeStudentTestQuestion", new Object[] { executionCourseId, null, variationCode, null, null,
-                            new TestQuestionChangesType(TestQuestionChangesType.CHANGE_VARIATION), new Boolean(true),
-                            new TestQuestionStudentsChangesType(TestQuestionStudentsChangesType.ALL_STUDENTS), request.getContextPath() });
+            infoSiteDistributedTestAdvisoryList = (List<InfoSiteDistributedTestAdvisory>) ServiceUtils
+                    .executeService(userView, "ChangeStudentTestQuestion", new Object[] {
+                            executionCourseId,
+                            null,
+                            variationCode,
+                            null,
+                            null,
+                            new TestQuestionChangesType(TestQuestionChangesType.CHANGE_VARIATION),
+                            new Boolean(true),
+                            new TestQuestionStudentsChangesType(
+                                    TestQuestionStudentsChangesType.ALL_STUDENTS),
+                            request.getContextPath() });
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -772,13 +843,17 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory : infoSiteDistributedTestAdvisoryList) {
-            List<InfoStudent> studentWithoutAdvisory = infoSiteDistributedTestAdvisory.getInfoStudentList();
+            List<InfoStudent> studentWithoutAdvisory = infoSiteDistributedTestAdvisory
+                    .getInfoStudentList();
             List<InfoStudent> result = new ArrayList<InfoStudent>();
             for (int times = 0; times < 3; times++) {
                 for (InfoStudent student : studentWithoutAdvisory) {
                     try {
-                        ServiceUtils.executeService(userView, "InsertStudentDistributedTestAdvisory", new Object[] { executionCourseId,
-                                infoSiteDistributedTestAdvisory.getInfoAdvisory().getIdInternal(), student.getIdInternal() });
+                        ServiceUtils.executeService(userView, "InsertStudentDistributedTestAdvisory",
+                                new Object[] {
+                                        executionCourseId,
+                                        infoSiteDistributedTestAdvisory.getInfoAdvisory()
+                                                .getIdInternal(), student.getIdInternal() });
                     } catch (FenixServiceException e) {
                         result.add(student);
                     }

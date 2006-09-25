@@ -4,12 +4,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.util.FenixUtil;
 
+import org.apache.struts.util.LabelValueBean;
+
 public class QuestionOption extends FenixUtil {
 
     private String optionId;
 
-    //list of labelValueBeans
-    private List optionContent;
+    private List<LabelValueBean> optionContent;
 
     private boolean emptyResponse = false;
 
@@ -30,11 +31,11 @@ public class QuestionOption extends FenixUtil {
         this.emptyResponse = emptyResponse;
     }
 
-    public List getOptionContent() {
+    public List<LabelValueBean> getOptionContent() {
         return optionContent;
     }
 
-    public void setOptionContent(List optionContent) {
+    public void setOptionContent(List<LabelValueBean> optionContent) {
         this.optionContent = optionContent;
     }
 

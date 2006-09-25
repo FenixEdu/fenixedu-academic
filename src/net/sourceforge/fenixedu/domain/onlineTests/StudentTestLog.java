@@ -4,6 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.onlineTests;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
@@ -11,10 +14,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class StudentTestLog extends StudentTestLog_Base {
 
-	public StudentTestLog() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public StudentTestLog() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
     public void delete() {
         removeStudent();
@@ -22,4 +25,16 @@ public class StudentTestLog extends StudentTestLog_Base {
         deleteDomainObject();
     }
 
+    public String getDateFormatted() {
+        return getDateDateTime().toString("dd/MM/yyyy HH:mm:ss");
+    }
+
+    public List getEventList() {
+        String[] eventTokens = getEvent().split(";");
+        List<String> eventList = new ArrayList<String>();
+        for (int i = 0; i < eventTokens.length; i++) {
+            eventList.add(eventTokens[i]);
+        }
+        return eventList;
+    }
 }

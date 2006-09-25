@@ -8,6 +8,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.util.FenixUtil;
 
+import org.apache.struts.util.LabelValueBean;
+
 /**
  * @author Susana Fernandes
  */
@@ -34,24 +36,26 @@ public class ResponseProcessing extends FenixUtil {
 
     public static final String DIVIDE_STRING = "Divide";
 
-    private List responseConditions;
+    private List<ResponseCondition> responseConditions;
 
     private Double responseValue;
 
     private Integer action;
 
-    private List feedback;
+    private List<LabelValueBean> feedback;
 
     private int responseProcessingId;
 
     private boolean fenixCorrectResponse;
 
+    private String nextItem;
+
     public ResponseProcessing(int id) {
         responseProcessingId = id;
     }
 
-    public ResponseProcessing(List responseConditions, Double responseValue, Integer action,
-            List feedback, boolean fenixCorrectResponse) {
+    public ResponseProcessing(List<ResponseCondition> responseConditions, Double responseValue,
+            Integer action, List<LabelValueBean> feedback, boolean fenixCorrectResponse) {
         this.responseConditions = responseConditions;
         this.responseValue = responseValue;
         this.action = action;
@@ -67,11 +71,11 @@ public class ResponseProcessing extends FenixUtil {
         this.responseProcessingId = responseProcessingId;
     }
 
-    public List getResponseConditions() {
+    public List<ResponseCondition> getResponseConditions() {
         return responseConditions;
     }
 
-    public void setResponseConditions(List responses) {
+    public void setResponseConditions(List<ResponseCondition> responses) {
         this.responseConditions = responses;
     }
 
@@ -91,11 +95,11 @@ public class ResponseProcessing extends FenixUtil {
         this.action = getActionCode(actionString);
     }
 
-    public List getFeedback() {
+    public List<LabelValueBean> getFeedback() {
         return feedback;
     }
 
-    public void setFeedback(List feedback) {
+    public void setFeedback(List<LabelValueBean> feedback) {
         this.feedback = feedback;
     }
 
@@ -105,6 +109,14 @@ public class ResponseProcessing extends FenixUtil {
 
     public void setFenixCorrectResponse(boolean fenixCorrectResponse) {
         this.fenixCorrectResponse = fenixCorrectResponse;
+    }
+
+    public String getNextItem() {
+        return nextItem;
+    }
+
+    public void setNextItem(String nextItem) {
+        this.nextItem = nextItem;
     }
 
     private Integer getActionCode(String actionString) {
@@ -135,54 +147,57 @@ public class ResponseProcessing extends FenixUtil {
         return null;
     }
 
-    public boolean isThisConditionListInResponseProcessingList(List rpList, boolean lidQuestion) {
-        for (int i = 0; i < rpList.size(); i++) {
+    public boolean isThisConditionListInResponseProcessingList(List<ResponseProcessing> rpList,
+            boolean lidQuestion) {
+        for (ResponseProcessing responseProcessing : rpList) {
             if (lidQuestion) {
-                if (!hasEqualVAREQUALConditionList(((ResponseProcessing) rpList.get(i))
-                        .getResponseConditions()))
+                if (!hasEqualVAREQUALConditionList(responseProcessing.getResponseConditions())) {
                     return false;
-            } else if (!hasEqualConditionList(((ResponseProcessing) rpList.get(i))
-                    .getResponseConditions()))
+                }
+            } else if (!hasEqualConditionList(responseProcessing.getResponseConditions())) {
                 return false;
+            }
         }
         return true;
     }
 
-    public boolean hasEqualConditionList(List rcList) {
-        for (int i = 0; i < rcList.size(); i++) {
-            ResponseCondition rc = (ResponseCondition) rcList.get(i);
-            if (!hasThisCondition(responseConditions, rc))
+    public boolean hasEqualConditionList(List<ResponseCondition> rcList) {
+        for (ResponseCondition responseCondition : rcList) {
+            if (!hasThisCondition(responseConditions, responseCondition)) {
                 return false;
+            }
         }
-        for (int i = 0; i < responseConditions.size(); i++) {
-            ResponseCondition rc = (ResponseCondition) responseConditions.get(i);
-            if (!hasThisCondition(rcList, rc))
+        for (ResponseCondition responseCondition : responseConditions) {
+            if (!hasThisCondition(rcList, responseCondition)) {
                 return false;
+            }
         }
         return true;
     }
 
-    public boolean hasEqualVAREQUALConditionList(List rcList) {
-        for (int i = 0; i < rcList.size(); i++) {
-            ResponseCondition rc = (ResponseCondition) rcList.get(i);
-            if (rc.getCondition().intValue() == ResponseCondition.VAREQUAL)
-                if (!hasThisCondition(responseConditions, rc))
+    public boolean hasEqualVAREQUALConditionList(List<ResponseCondition> rcList) {
+        for (ResponseCondition responseCondition : rcList) {
+            if (responseCondition.getCondition().intValue() == ResponseCondition.VAREQUAL) {
+                if (!hasThisCondition(responseConditions, responseCondition)) {
                     return false;
+                }
+            }
         }
-        for (int i = 0; i < responseConditions.size(); i++) {
-            ResponseCondition rc = (ResponseCondition) responseConditions.get(i);
-            if (rc.getCondition().intValue() == ResponseCondition.VAREQUAL)
-                if (!hasThisCondition(rcList, rc))
+        for (ResponseCondition responseCondition : responseConditions) {
+            if (responseCondition.getCondition().intValue() == ResponseCondition.VAREQUAL) {
+                if (!hasThisCondition(rcList, responseCondition)) {
                     return false;
+                }
+            }
         }
         return true;
     }
 
-    public boolean hasThisCondition(List rcList, ResponseCondition rc) {
-        for (int i = 0; i < rcList.size(); i++) {
-            ResponseCondition thisRc = (ResponseCondition) rcList.get(i);
-            if (thisRc.equals(rc))
+    public boolean hasThisCondition(List<ResponseCondition> rcList, ResponseCondition rc) {
+        for (ResponseCondition responseCondition : rcList) {
+            if (responseCondition.equals(rc)) {
                 return true;
+            }
         }
         return false;
     }
