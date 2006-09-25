@@ -29,7 +29,7 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
     }
 
     private Integer getWrittenEvaluationID(final Object[] arguments) {
-        return (Integer) ((arguments.length == 2) ? arguments[1] : arguments[7]);
+        return (Integer) ((arguments.length == 2) ? arguments[1] : arguments[8]);
     }
 
 }
