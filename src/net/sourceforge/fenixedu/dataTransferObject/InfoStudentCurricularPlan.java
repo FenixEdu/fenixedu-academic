@@ -162,7 +162,7 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
         throw new Error("Method should not be called!");
     }
 
-    private StudentCurricularPlan getStudentCurricularPlan() {
+    public StudentCurricularPlan getStudentCurricularPlan() {
         return studentCurricularPlan == null ? null : studentCurricularPlan.getObject();
     }
 
