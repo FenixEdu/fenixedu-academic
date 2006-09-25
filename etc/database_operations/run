@@ -27,5 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Remove BolonhaDegreeType column from Degree table" dropBolonhaDegreeTypeFromDegreeTable.sql
-execute "Change DegreeType enum value" updateDegreeTypeValues.sql

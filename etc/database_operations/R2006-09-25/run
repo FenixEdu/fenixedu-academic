@@ -31,3 +31,5 @@ execute "Correct AvailabilityPolicy table and some availability expressions" Cor
 execute "Fix portal mappings" FixPortalMappings.sql
 execute "Add column to studentTestQuestion" alterStudentTestQuestionTable.sql
 execute "Add column to VigilancyTables" alterVigilancyTables.sql
+execute "Remove BolonhaDegreeType column from Degree table" dropBolonhaDegreeTypeFromDegreeTable.sql
+execute "Change DegreeType enum value" updateDegreeTypeValues.sql
