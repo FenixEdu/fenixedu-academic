@@ -91,7 +91,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     
     public void exportToExcel() throws FenixFilterException, FenixServiceException {
         String filename = this.getDegreeCurricularPlan().getName().replace(" ","_") + "-"; 
-        filename += (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) ? "Estrutura_Curricular-" : "Plano_de_Estudos";
+        filename += (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) ? "Estrutura_Curricular" : "Plano_de_Estudos";
         if (!rootWasClicked) {
             filename += "-" + this.getCourseGroup().getName().replace(" ", "_");
         }
@@ -263,8 +263,8 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
             row.setCell(""); // scientific area unit acronym
             
             row.setCell(""); // regime
-            row.setCell(curricularPeriod.getParent().getOrder().toString());
-            row.setCell(curricularPeriod.getOrder().toString());
+            row.setCell(curricularPeriod.getParent().getChildOrder() == null ? "" : curricularPeriod.getParent().getChildOrder().toString());
+            row.setCell(curricularPeriod.getChildOrder().toString());
 
             row.setCell(""); // ects
             row.setCell(""); // t
@@ -280,8 +280,8 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
             row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
             
             row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime().toString()));
-            row.setCell(curricularPeriod.getParent().getChildOrder() == null ? "" : curricularPeriod.getParent().getOrder().toString());
-            row.setCell(curricularPeriod.getOrder().toString());
+            row.setCell(curricularPeriod.getParent().getChildOrder() == null ? "" : curricularPeriod.getParent().getChildOrder().toString());
+            row.setCell(curricularPeriod.getChildOrder().toString());
         
             row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
             row.setCell(curricularCourse.getTheoreticalHours(curricularPeriod).toString());
