@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.parking;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -24,9 +26,22 @@ public class ParkingParty extends ParkingParty_Base {
 
     public boolean getHasAllNecessaryPersonalInfo() {
         Person person = (Person) getParty();
-        return (((person.getWorkPhone() != null && person.getWorkPhone().length() != 0) || (person
-                .getMobile() != null && person.getMobile().length() != 0)) && (person.getEmail() != null && person
-                .getEmail().length() != 0));
+        return (!StringUtils.isEmpty(person.getWorkPhone()) || !StringUtils.isEmpty(person.getMobile()))
+                && (isEmployee() || !StringUtils.isEmpty(person.getEmail()));
+    }
+
+    private boolean isEmployee() {
+        if (getParty().isPerson()) {
+            Person person = (Person) getParty();
+            Teacher teacher = person.getTeacher();
+            if (teacher == null) {
+                Employee employee = person.getEmployee();
+                if (employee != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public ParkingRequest getFirstRequest() {
@@ -38,12 +53,12 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public String getParkingAcceptedRegulationMessage() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                .getLocale());
         String name = getParty().getName();
         String number = "";
         if (getParty().isPerson()) {
             Person person = (Person) getParty();
-            // ((Person)getParty()).
             Teacher teacher = person.getTeacher();
             if (teacher == null) {
                 Employee employee = person.getEmployee();
@@ -63,10 +78,10 @@ public class ParkingParty extends ParkingParty_Base {
         }
 
         return MessageFormat.format(bundle.getString("message.acceptedRegulation"), new Object[] { name,
-                number});
+                number });
     }
-    
-    public boolean isStudent(){
+
+    public boolean isStudent() {
         if (getParty().isPerson()) {
             Person person = (Person) getParty();
             Teacher teacher = person.getTeacher();
@@ -74,7 +89,7 @@ public class ParkingParty extends ParkingParty_Base {
                 Employee employee = person.getEmployee();
                 if (employee == null) {
                     Student student = person.getStudent();
-                    if (student != null){
+                    if (student != null) {
                         return true;
                     }
                 }
