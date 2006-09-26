@@ -63,6 +63,7 @@
 		        	<fr:property name="columnClasses" value="listClasses,,"/>
 			    </fr:layout>
 		   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
+		   		<fr:destination name="input" path="/resultPublications/prepareCreate.do"/>
 			</fr:edit>
 		</logic:equal>
 		

@@ -72,15 +72,6 @@
  			<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 2 : </b>
 		 	<u><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.setPublicationData"/></u>
 
-			<!-- Participations -->
-<!--			<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.participations"/></h3>
-			<fr:view name="importBibtexBean" layout="tabular-list" property="currentParticipators">
-				<fr:layout>
-					<fr:property name="subLayout" value="values"/>
-					<fr:property name="subSchema" value="bibtex.participatorDescription"/>
-				</fr:layout>
-			</fr:view>
--->
 			<!-- Set Publication data -->
 	 		<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.publicationData"/></h3>
 			<bean:define id="publicationData" name="importBibtexBean" property="currentPublicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
@@ -94,6 +85,7 @@
 				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createConference"/>
 				<fr:edit id="createEvent" name="importBibtexBean" property="currentPublicationBean" schema="result.publication.create.Event" nested="true">
 			   		<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
+			   		<fr:destination name="input" path="/bibtexManagement/invalidSubmit.do"/>
 				</fr:edit>
 			</logic:equal>
 			

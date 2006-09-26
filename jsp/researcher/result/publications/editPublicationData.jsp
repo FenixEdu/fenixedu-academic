@@ -42,6 +42,7 @@
 		        	<fr:property name="columnClasses" value="listClasses,,"/>
 			    </fr:layout>
 		   		<fr:destination name="invalid" path="<%= "/resultPublications/prepareEditData.do?" + parameters %>"/>
+		   		<fr:destination name="input" path="<%= "/resultPublications/prepareEditData.do?" + parameters %>"/>
 			</fr:edit>
 		</logic:equal>
 		
