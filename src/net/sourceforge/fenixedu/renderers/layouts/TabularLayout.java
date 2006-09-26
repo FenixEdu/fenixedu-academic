@@ -136,6 +136,11 @@ public abstract class TabularLayout extends Layout {
                     if (isHeader(rowIndex, columnIndex)) {
                         cell.setType(HtmlTableCell.CellType.HEADER);
                     }
+
+                    costumizeCell(cell, rowIndex, columnIndex);
+                    if (cell.getColspan() != null) {
+                        columnIndex += cell.getColspan() - 1;
+                    }
                     
                     cell.setBody(getComponent(rowIndex, columnIndex));
                 }
@@ -163,6 +168,10 @@ public abstract class TabularLayout extends Layout {
         return null;
     }
 
+    protected void costumizeCell(HtmlTableCell cell, int rowIndex, int columnIndex) {
+        
+    }
+    
     protected abstract int getNumberOfColumns();
 
     protected abstract int getNumberOfRows();

@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlScript;
+import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
@@ -134,6 +135,8 @@ public class CollectionRenderer extends OutputRenderer {
     private boolean groupLinks;
     
     private String linkGroupSeparator;
+    
+    private boolean rowForLinks;
     
     public CollectionRenderer() {
         super();
@@ -555,7 +558,24 @@ public class CollectionRenderer extends OutputRenderer {
 		this.linkGroupSeparator = linkGroupSeparator;
 	}
 
-	public boolean isCheckable() {
+	public boolean isRowForLinks() {
+        return this.rowForLinks;
+    }
+
+    /**
+     * Indicates that the control links should be generated in their own row.
+     * This forces the links to be grouped and the
+     * {@link #setLinkGroupSeparator(String) link group separator} to be used so
+     * you should define that.
+     * 
+     * @property
+     */
+    public void setRowForLinks(boolean rowForLinks) {
+        this.rowForLinks = rowForLinks;
+        setGroupLinks(true);
+    }
+
+    public boolean isCheckable() {
         return this.checkable;
     }
 
@@ -698,15 +718,21 @@ public class CollectionRenderer extends OutputRenderer {
         getTableLink(name).setContextRelative(Boolean.parseBoolean(value));
     }
 
-    protected int getNumberOfLinks() {
-    	if (isGroupLinks() && this.links.size() > 0) {
-    		return 1;
-    	}
-    	else {
-    		return this.links.size();
-    	}
+    protected int getNumberOfLinkColumns() {
+        if (isRowForLinks()) {
+            return 0;
+        }
+        else if (isGroupLinks() && this.links.size() > 0) {
+            return 1;
+        } else {
+            return this.links.size();
+        }
     }
     
+    protected int getNumberOfLinks() {
+        return this.links.size();
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         Collection sortedCollection = RenderUtils.sortCollectionWithCriteria((Collection) object,
@@ -816,7 +842,7 @@ public class CollectionRenderer extends OutputRenderer {
         protected int getNumberOfColumns() {
             if (this.metaObjects.size() > 0) {
                 MetaObject metaObject = this.metaObjects.get(0);
-                return metaObject.getSlots().size() + getNumberOfLinks() + (isCheckable() ? 1 : 0);
+                return metaObject.getSlots().size() + getNumberOfLinkColumns() + (isCheckable() ? 1 : 0);
             } else {
                 return 0;
             }
@@ -824,7 +850,12 @@ public class CollectionRenderer extends OutputRenderer {
 
         @Override
         protected int getNumberOfRows() {
-            return this.metaObjects.size();
+            if (isRowForLinks()) {
+                return this.metaObjects.size() * 2;
+            }
+            else {
+                return this.metaObjects.size();
+            }
         }
 
         protected MetaObject getObject(int index) {
@@ -835,7 +866,7 @@ public class CollectionRenderer extends OutputRenderer {
         protected HtmlComponent getHeaderComponent(int columnIndex) {
             if (columnIndex == 0 && isCheckable()) {
                 return new HtmlText();
-            } else if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
+            } else if (columnIndex < getNumberOfColumns() - getNumberOfLinkColumns()) {
                 String slotLabel = getLabel(columnIndex);
                 return new HtmlText(slotLabel, false);
             } else {
@@ -854,10 +885,25 @@ public class CollectionRenderer extends OutputRenderer {
         }
 
         @Override
+        protected void costumizeCell(HtmlTableCell cell, int rowIndex, int columnIndex) {
+            super.costumizeCell(cell, rowIndex, columnIndex);
+            
+            if (isRowForLinks() && rowIndex % 2 == 1) { // links in isolated row
+                cell.setColspan(getNumberOfColumns());
+            }
+        }
+
+        @Override
         protected HtmlComponent getComponent(int rowIndex, int columnIndex) {
-            MetaObject object = getObject(rowIndex);
+            int objectRow = isRowForLinks() ? rowIndex / 2 : rowIndex;
+            
+            MetaObject object = getObject(objectRow);
             getContext().setMetaObject(object);
 
+            if (isRowForLinks() && rowIndex % 2 == 1) { // links in isolated row
+                return generateLinkComponent(object, rowIndex, columnIndex);
+            }
+            
             if (columnIndex == 0 && isCheckable()) {
                 HtmlCheckBox checkBox = new HtmlCheckBox();
                 checkBox.setName(getCheckboxName());
@@ -893,10 +939,10 @@ public class CollectionRenderer extends OutputRenderer {
                 }
                 
                 return checkBox;
-            } else if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
+            } else if (columnIndex < getNumberOfColumns() - getNumberOfLinkColumns()) {
                 return generateObjectComponent(columnIndex - (isCheckable() ? 1 : 0), object);
             } else {
-                return generateLinkComponent(object, rowIndex, columnIndex - (getNumberOfColumns() - getNumberOfLinks()));
+                return generateLinkComponent(object, rowIndex, columnIndex - (getNumberOfColumns() - getNumberOfLinkColumns()));
             }
         }
 
@@ -943,27 +989,26 @@ public class CollectionRenderer extends OutputRenderer {
         }
 
         protected HtmlComponent generateLinkComponent(MetaObject object, int rowIndex, int number) {
-        	if (isGroupLinks()) {
-        		HtmlInlineContainer container = new HtmlInlineContainer();
-        		container.setIndented(false);
-        		
-        		for (int i = 0; i < CollectionRenderer.this.links.size(); i++) {
-        			HtmlComponent component = generateSingleLinkComponent(object, rowIndex, i);
-        			if (component != null) {
-        				if (i > 0) {
-        					container.addChild(new HtmlText(getLinkGroupSeparator(), false));
-        				}
+            if (isGroupLinks() || isRowForLinks()) {
+                HtmlInlineContainer container = new HtmlInlineContainer();
+                container.setIndented(false);
 
-        				container.addChild(component);
-        			}
-        		}
-        		
-        		return container;
-        	}
-        	else {
-        		HtmlComponent component = generateSingleLinkComponent(object, rowIndex, number);
-        		return component == null ? new HtmlText() : component;
-        	}
+                for (int i = 0; i < getNumberOfLinks(); i++) {
+                    HtmlComponent component = generateSingleLinkComponent(object, rowIndex, i);
+                    if (component != null) {
+                        if (i > 0) {
+                            container.addChild(new HtmlText(getLinkGroupSeparator(), false));
+                        }
+
+                        container.addChild(component);
+                    }
+                }
+
+                return container;
+            } else {
+                HtmlComponent component = generateSingleLinkComponent(object, rowIndex, number);
+                return component == null ? new HtmlText() : component;
+            }
         }
         
         protected HtmlComponent generateSingleLinkComponent(MetaObject object, int rowIndex, int number) {
