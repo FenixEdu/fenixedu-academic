@@ -121,6 +121,9 @@ public class ParseSubQuestion extends DefaultHandler {
     }
 
     private QuestionElement getQuestionElement(String questionItem) {
+        if (!questionElementList.isEmpty() && questionElementList.size() == 1 && questionItem == null) {
+            return questionElementList.iterator().next();
+        }
         for (QuestionElement questionElement : questionElementList) {
             if (questionElement.getItemId().equals(questionItem)) {
                 return questionElement;
@@ -651,7 +654,7 @@ public class ParseSubQuestion extends DefaultHandler {
         // String[] aux = shuffle.substring(1, shuffle.length() - 1).split(",
         // ");
         for (int i = 0; i < shuffle.length; i++)
-            newList.add(i, oldList.get(new Integer(shuffle[i]).intValue() - 1));
+            newList.add(i, oldList.get(new Integer(shuffle[i].trim()).intValue() - 1));
 
         return newList;
     }
