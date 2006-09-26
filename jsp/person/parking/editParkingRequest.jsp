@@ -301,7 +301,7 @@ margin: 0.5em 0;
 			</td>
 		</tr>
 		<tr>
-			<th><bean:message key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
+			<th class="width150px"><bean:message key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
 			<td><fr:edit id="firstCarPlateNumberFR" name="<%= factoryName %>" slot="firstCarPlateNumber"
 				type="<%= type %>">
 						<fr:layout>
@@ -321,7 +321,7 @@ margin: 0.5em 0;
 		<div id="registry1Radio">
 		<table class="tstyle8 thright thlight mtop0 mbottom0">
 		<tr>
-			<th><div id="registry1DivTop" style="display:none"><bean:message key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
+			<th class="width150px"><div id="registry1DivTop" style="display:none"><bean:message key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
 			<td>
 				<p>
 				<html:radio name="parkingForm" property="registry1" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('registry1Div','registry1File', 'none', 'block')">
@@ -629,7 +629,7 @@ margin: 0.5em 0;
 			</td>
 		</tr>
 		<tr>
-			<th><bean:message key="label.secondCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
+			<th class="width150px"><bean:message key="label.secondCarPlateNumber" bundle="PARKING_RESOURCES"/>:</th>
 			<td><fr:edit id="secondCarPlateNumberFR" name="<%= factoryName %>" slot="secondCarPlateNumber"
 					type="<%= type %>">
 						<fr:layout>
@@ -648,7 +648,7 @@ margin: 0.5em 0;
 		<div id="registry2Radio">
 		<table class="tstyle8 thright thlight mtop0 mbottom0">
 		<tr>
-			<th><div id="registry2DivTop" style="display:none"><bean:message key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
+			<th class="width150px"><div id="registry2DivTop" style="display:none"><bean:message key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES"/>:</div></th>
 			<td>
 				<p>
 				<html:radio name="parkingForm" property="registry2" value="ALREADY_DELIVERED_HARD_COPY" onclick="changeElementsDisplay('registry2Div','registry2File', 'none', 'block')">
