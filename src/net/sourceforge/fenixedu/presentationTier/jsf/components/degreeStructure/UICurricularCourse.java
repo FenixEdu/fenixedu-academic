@@ -193,10 +193,16 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.writeAttribute("class", "smalltxt", null);
         if (!byYears) {
             writer.writeAttribute("align", "center", null);
-            writer.append(previousContext.getCurricularPeriod().getParent().getOrder() + " "  
-                    + getBundleValue("EnumerationResources", previousContext.getCurricularPeriod().getParent().getPeriodType().name() + ".ABBREVIATION") + ", " 
-                    + (previousContext.getCurricularPeriod().getOrder() + 1) + " " 
-                    + getBundleValue("EnumerationResources", previousContext.getCurricularPeriod().getPeriodType().name() + ".ABBREVIATION"));
+            if (previousContext.getCurricularPeriod().getParent().getChildOrder() != null) {
+        	writer.append(String.valueOf(previousContext.getCurricularPeriod().getParent().getChildOrder()));
+        	writer.append(" ");  
+        	writer.append(getBundleValue("EnumerationResources", previousContext.getCurricularPeriod().getParent().getPeriodType().name() + ".ABBREVIATION"));
+        	writer.append(", ");
+            }
+             
+            writer.append(String.valueOf(previousContext.getCurricularPeriod().getChildOrder() + 1));
+            writer.append(" "); 
+            writer.append(getBundleValue("EnumerationResources", previousContext.getCurricularPeriod().getPeriodType().name() + ".ABBREVIATION"));
         } else {
             writer.append(previousContext.getParentCourseGroup().getName());
         }
