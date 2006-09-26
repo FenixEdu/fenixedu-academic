@@ -247,7 +247,11 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 	checkNeededSchemas(request, result, bean); // Define schemas to use
 	checkNeededWarnings(request, result); // Action Warning Messages
 	
-	if(request.getAttribute("editRoles")==null && request.getAttribute("alterOrder")==null){
+	if(getFromRequest(request, "editRoles")!=null) {
+	    request.setAttribute("editRoles","editRoles");
+	} else if(getFromRequest(request, "alterOrder")!=null){
+		request.setAttribute("alterOrder", "alterOrder");
+	} else {
 	    request.setAttribute("removeOnly", "removeOnly");
 	}
 	

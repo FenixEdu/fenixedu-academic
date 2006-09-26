@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
-import bibtex.dom.BibtexEntry;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import bibtex.dom.BibtexEntry;
 
 public class InbookBean extends ResultPublicationBean implements Serializable {
     private String address;
@@ -20,7 +21,7 @@ public class InbookBean extends ResultPublicationBean implements Serializable {
 
     private String chapter;
 
-    private InbookBean() {
+    public InbookBean() {
         this.setPublicationType(ResultPublicationType.Inbook);
         this.setActiveSchema("result.publication.create.Inbook");
         this.setParticipationSchema("resultParticipation.simpleWithRole");
@@ -28,37 +29,55 @@ public class InbookBean extends ResultPublicationBean implements Serializable {
 
     public InbookBean(BookPart bookPart) {
         this();
-        if (bookPart != null) {
-            this.fillCommonFields(bookPart);
-            this.setChapter(bookPart.getChapter());
-            this.setFirstPage(bookPart.getFirstPage());
-            this.setLastPage(bookPart.getLastPage());
-            this.setAddress(bookPart.getAddress());
-            this.setVolume(bookPart.getVolume());
-            this.setSeries(bookPart.getSeries());
-            this.setEdition(bookPart.getEdition());
-        }
+        fillCommonFields(bookPart);
+        fillSpecificFields(bookPart);
+    }
+    
+    public InbookBean(ResultPublicationBean bean) {
+	this();
+	fillCommonBeanFields(bean);
+    }
+    
+    public InbookBean(BibtexEntry bibtexEntry) {
+	this();
+	fillBibTeXFields(bibtexEntry);
     }
 
-    public InbookBean(BibtexEntry entry) {
-        this();
-        setUnitFromBibtexEntry("publisher", entry);
-        setYearFromBibtexEntry(entry);
-        setMonthFromBibtexEntry(entry);
+    @Override
+    protected void fillSpecificFields(ResultPublication publication) {
+	this.setChapter(((BookPart)publication).getChapter());
+	this.setFirstPage(((BookPart)publication).getFirstPage());
+	this.setLastPage(((BookPart)publication).getLastPage());
+	this.setAddress(((BookPart)publication).getAddress());
+	this.setVolume(((BookPart)publication).getVolume());
+	this.setSeries(((BookPart)publication).getSeries());
+	this.setEdition(((BookPart)publication).getEdition());
+    }
+    
+    @Override
+    protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
+	setUnitFromBibtexEntry("publisher", bibtexEntry);
+        setYearFromBibtexEntry(bibtexEntry);
+        setMonthFromBibtexEntry(bibtexEntry);
 
-        setTitle(getStringValueFromBibtexEntry("title", entry));
-        setChapter(getStringValueFromBibtexEntry("chapter", entry));
-        setVolume(getStringValueFromBibtexEntry("volume", entry));
-        setSeries(getStringValueFromBibtexEntry("series", entry));
-        setAddress(getStringValueFromBibtexEntry("address", entry));
-        setEdition(getStringValueFromBibtexEntry("edition", entry));
-        setNote(getStringValueFromBibtexEntry("note", entry));
-        if (getFirstPageFromBibtexEntry(entry) != null) {
-            setFirstPage(getFirstPageFromBibtexEntry(entry));
-            setLastPage(getLastPageFromBibtexEntry(entry));
+        setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
+        setChapter(getStringValueFromBibtexEntry("chapter", bibtexEntry));
+        setVolume(getStringValueFromBibtexEntry("volume", bibtexEntry));
+        setSeries(getStringValueFromBibtexEntry("series", bibtexEntry));
+        setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
+        setEdition(getStringValueFromBibtexEntry("edition", bibtexEntry));
+        setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
+        if (getFirstPageFromBibtexEntry(bibtexEntry) != null) {
+            setFirstPage(getFirstPageFromBibtexEntry(bibtexEntry));
+            setLastPage(getLastPageFromBibtexEntry(bibtexEntry));
         }
     }
-
+    
+    @Override
+    public ResultPublicationBean convertTo(ResultPublicationType type) {
+        return ResultPublicationBeanConversions.inbookTo(this, type);
+    }
+    
     public String getAddress() {
         return address;
     }

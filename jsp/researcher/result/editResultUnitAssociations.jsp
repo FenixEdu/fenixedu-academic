@@ -47,8 +47,8 @@
 					<fr:property name="classes" value="tstyle2" />
 					<fr:property name="columnClasses" value=",acenter,acenter"/>
 				</fr:layout>
-				<fr:destination name="exception" path="<%= prepareEdit %>" />
-				<fr:destination name="invalid" path="<%= prepareEdit %>"/>	
+				<fr:destination name="exception" path="<%= prepareEdit + "&editExisting=true" %>" />
+				<fr:destination name="invalid" path="<%= prepareEdit + "&editExisting=true"%>"/>	
 			</fr:edit>
 		</logic:present>
 		<logic:notPresent name="editExisting">	

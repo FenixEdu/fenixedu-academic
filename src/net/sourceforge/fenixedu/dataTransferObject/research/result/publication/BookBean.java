@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
-import bibtex.dom.BibtexEntry;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType;
+import bibtex.dom.BibtexEntry;
 
 public class BookBean extends ResultPublicationBean implements Serializable {
     private String address;
@@ -22,41 +24,59 @@ public class BookBean extends ResultPublicationBean implements Serializable {
 
     private ScopeType scope;
 
-    private BookBean() {
+    public BookBean() {
         this.setPublicationType(ResultPublicationType.Book);
         this.setActiveSchema("result.publication.create.Book");
         this.setParticipationSchema("resultParticipation.simpleWithRole");
     }
-
+   
     public BookBean(Book book) {
-        this();
-        if (book != null) {
-            this.fillCommonFields(book);
-            this.setAddress(book.getAddress());
-            this.setVolume(book.getVolume());
-            this.setSeries(book.getSeries());
-            this.setEdition(book.getEdition());
-            this.setIsbn(book.getIsbn());
-            this.setNumberPages(book.getNumberPages());
-            this.setLanguage(book.getLanguage());
-            this.setScope(book.getScope());
-        }
+	this();
+	fillCommonFields(book);
+	fillSpecificFields(book);
+    }
+    
+    public BookBean(ResultPublicationBean bean) {
+	this();
+	fillCommonBeanFields(bean);
+    }
+    
+    public BookBean(BibtexEntry bibtexEntry) {
+	this();
+	fillBibTeXFields(bibtexEntry);
+    }
+    
+    @Override
+    public ResultPublicationBean convertTo(ResultPublicationType type) {
+        return ResultPublicationBeanConversions.bookTo(this, type);
     }
 
-    public BookBean(BibtexEntry entry) {
-        this();
-        setUnitFromBibtexEntry("publisher", entry);
-        setYearFromBibtexEntry(entry);
-        setMonthFromBibtexEntry(entry);
-
-        setTitle(getStringValueFromBibtexEntry("title", entry));
-        setVolume(getStringValueFromBibtexEntry("volume", entry));
-        setSeries(getStringValueFromBibtexEntry("series", entry));
-        setAddress(getStringValueFromBibtexEntry("address", entry));
-        setEdition(getStringValueFromBibtexEntry("edition", entry));
-        setNote(getStringValueFromBibtexEntry("note", entry));
+    @Override
+    protected void fillSpecificFields(ResultPublication publication) {
+	this.setAddress(((Book)publication).getAddress());
+	this.setVolume(((Book)publication).getVolume());
+	this.setSeries(((Book)publication).getSeries());
+	this.setEdition(((Book)publication).getEdition());
+	this.setIsbn(((Book)publication).getIsbn());
+	this.setNumberPages(((Book)publication).getNumberPages());
+	this.setLanguage(((Book)publication).getLanguage());
+	this.setScope(((Book)publication).getScope());
     }
+    
+    @Override
+    protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
+        setUnitFromBibtexEntry("publisher", bibtexEntry);
+        setYearFromBibtexEntry(bibtexEntry);
+        setMonthFromBibtexEntry(bibtexEntry);
 
+        setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
+        setVolume(getStringValueFromBibtexEntry("volume", bibtexEntry));
+        setSeries(getStringValueFromBibtexEntry("series", bibtexEntry));
+        setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
+        setEdition(getStringValueFromBibtexEntry("edition", bibtexEntry));
+        setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
+    }
+    
     public String getAddress() {
         return address;
     }

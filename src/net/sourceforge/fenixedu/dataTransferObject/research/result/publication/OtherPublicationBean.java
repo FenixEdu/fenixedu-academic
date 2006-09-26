@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
-import bibtex.dom.BibtexEntry;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import bibtex.dom.BibtexEntry;
 
 public class OtherPublicationBean extends ResultPublicationBean implements Serializable {
     private String address;
@@ -15,74 +17,92 @@ public class OtherPublicationBean extends ResultPublicationBean implements Seria
 
     private String otherPublicationType;
 
-    private OtherPublicationBean() {
-        this.setPublicationType(ResultPublicationType.OtherPublication);
-        this.setActiveSchema("result.publication.create.OtherPublication");
-        this.setParticipationSchema("resultParticipation.simple");
+    public OtherPublicationBean() {
+	this.setPublicationType(ResultPublicationType.OtherPublication);
+	this.setActiveSchema("result.publication.create.OtherPublication");
+	this.setParticipationSchema("resultParticipation.simple");
     }
 
-    public OtherPublicationBean(OtherPublication otherPublication) {
-        this();
-        if (otherPublication != null) {
-            this.fillCommonFields(otherPublication);
-            this.setHowPublished(otherPublication.getHowPublished());
-            this.setOtherPublicationType(otherPublication.getOtherPublicationType());
-            this.setNumberPages(otherPublication.getNumberPages());
-            this.setLanguage(otherPublication.getLanguage());
-            this.setAddress(otherPublication.getAddress());
-        }
+    public OtherPublicationBean(OtherPublication publication) {
+	this();
+	fillCommonFields(publication);
+	fillSpecificFields(publication);
     }
 
-    //TODO: rearrange importation
-    public OtherPublicationBean(BibtexEntry entry) {
-        this();
-        setUnitFromBibtexEntry("publisher", entry);
-        setYearFromBibtexEntry(entry);
-        setMonthFromBibtexEntry(entry);
+    public OtherPublicationBean(ResultPublicationBean bean) {
+	this();
+	fillCommonBeanFields(bean);
+    }
 
-        setTitle(getStringValueFromBibtexEntry("title", entry));
-        setHowPublished(getStringValueFromBibtexEntry("howpublished", entry));
-        setAddress(getStringValueFromBibtexEntry("address", entry));
-        setNote(getStringValueFromBibtexEntry("note", entry));
+    public OtherPublicationBean(BibtexEntry bibtexEntry) {
+	this();
+	fillBibTeXFields(bibtexEntry);
+    }
+
+    @Override
+    protected void fillSpecificFields(ResultPublication publication) {
+	this.setHowPublished(((OtherPublication) publication).getHowPublished());
+	this.setOtherPublicationType(((OtherPublication) publication).getOtherPublicationType());
+	this.setNumberPages(((OtherPublication) publication).getNumberPages());
+	this.setLanguage(((OtherPublication) publication).getLanguage());
+	this.setAddress(((OtherPublication) publication).getAddress());
+    }
+
+    @Override
+    protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
+	//TODO: rearrange importation
+	setUnitFromBibtexEntry("publisher", bibtexEntry);
+	setYearFromBibtexEntry(bibtexEntry);
+	setMonthFromBibtexEntry(bibtexEntry);
+
+	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
+	setHowPublished(getStringValueFromBibtexEntry("howpublished", bibtexEntry));
+	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
+	setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
+    }
+
+    @Override
+    public ResultPublicationBean convertTo(ResultPublicationType type) {
+	return ResultPublicationBeanConversions.otherPublicationTo(this, type);
     }
 
     public String getAddress() {
-        return address;
+	return address;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+	this.address = address;
     }
 
     public String getHowPublished() {
-        return howPublished;
+	return howPublished;
     }
 
     public void setHowPublished(String howPublished) {
-        this.howPublished = howPublished;
+	this.howPublished = howPublished;
     }
 
     public String getLanguage() {
-        return language;
+	return language;
     }
 
     public void setLanguage(String language) {
-        this.language = language;
+	this.language = language;
     }
 
     public Integer getNumberPages() {
-        return numberPages;
+	return numberPages;
     }
 
     public void setNumberPages(Integer numberPages) {
-        this.numberPages = numberPages;
+	this.numberPages = numberPages;
     }
 
     public String getOtherPublicationType() {
-        return otherPublicationType;
+	return otherPublicationType;
     }
 
     public void setOtherPublicationType(String otherPublicationType) {
-        this.otherPublicationType = otherPublicationType;
+	this.otherPublicationType = otherPublicationType;
     }
 }

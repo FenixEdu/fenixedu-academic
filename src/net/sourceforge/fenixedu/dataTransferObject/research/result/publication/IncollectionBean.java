@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
-import bibtex.dom.BibtexEntry;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import bibtex.dom.BibtexEntry;
 
 public class IncollectionBean extends ResultPublicationBean implements Serializable {
     private String address;
@@ -14,69 +15,87 @@ public class IncollectionBean extends ResultPublicationBean implements Serializa
 
     private String bookTitle;
 
-    private IncollectionBean() {
-        this.setPublicationType(ResultPublicationType.Incollection);
-        this.setActiveSchema("result.publication.create.Incollection");
-        this.setParticipationSchema("resultParticipation.simpleWithRole");
+    public IncollectionBean() {
+	this.setPublicationType(ResultPublicationType.Incollection);
+	this.setActiveSchema("result.publication.create.Incollection");
+	this.setParticipationSchema("resultParticipation.simpleWithRole");
     }
 
     public IncollectionBean(BookPart bookPart) {
-        this();
-        if (bookPart != null) {
-            this.fillCommonFields(bookPart);
-            this.setBookTitle(bookPart.getBookTitle());
-            this.setFirstPage(bookPart.getFirstPage());
-            this.setLastPage(bookPart.getLastPage());
-            this.setAddress(bookPart.getAddress());
-        }
+	this();
+	fillCommonFields(bookPart);
+	fillSpecificFields(bookPart);
     }
-    
-    public IncollectionBean(BibtexEntry entry) {
-        this();
-        setUnitFromBibtexEntry("publisher", entry);
-        setUnitFromBibtexEntry("organization", entry);
-        setYearFromBibtexEntry(entry);
-        setMonthFromBibtexEntry(entry);
 
-        setTitle(getStringValueFromBibtexEntry("title", entry));
-        setBookTitle(getStringValueFromBibtexEntry("booktitle", entry));
-        setAddress(getStringValueFromBibtexEntry("address", entry));
-        setNote(getStringValueFromBibtexEntry("note", entry));
-        if (getFirstPageFromBibtexEntry(entry) != null) {
-            setFirstPage(getFirstPageFromBibtexEntry(entry));
-            setLastPage(getLastPageFromBibtexEntry(entry));
-        }
+    public IncollectionBean(ResultPublicationBean bean) {
+	this();
+	fillCommonBeanFields(bean);
+    }
+
+    public IncollectionBean(BibtexEntry bibtexEntry) {
+	this();
+	fillBibTeXFields(bibtexEntry);
+    }
+
+    @Override
+    protected void fillSpecificFields(ResultPublication publication) {
+	this.setBookTitle(((BookPart) publication).getBookTitle());
+	this.setFirstPage(((BookPart) publication).getFirstPage());
+	this.setLastPage(((BookPart) publication).getLastPage());
+	this.setAddress(((BookPart) publication).getAddress());
+    }
+
+    @Override
+    protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
+	setUnitFromBibtexEntry("publisher", bibtexEntry);
+	setUnitFromBibtexEntry("organization", bibtexEntry);
+	setYearFromBibtexEntry(bibtexEntry);
+	setMonthFromBibtexEntry(bibtexEntry);
+
+	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
+	setBookTitle(getStringValueFromBibtexEntry("booktitle", bibtexEntry));
+	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
+	setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
+	if (getFirstPageFromBibtexEntry(bibtexEntry) != null) {
+	    setFirstPage(getFirstPageFromBibtexEntry(bibtexEntry));
+	    setLastPage(getLastPageFromBibtexEntry(bibtexEntry));
+	}
+    }
+
+    @Override
+    public ResultPublicationBean convertTo(ResultPublicationType type) {
+	return ResultPublicationBeanConversions.incollectionTo(this, type);
     }
 
     public String getAddress() {
-        return address;
+	return address;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+	this.address = address;
     }
 
     public Integer getFirstPage() {
-        return firstPage;
+	return firstPage;
     }
 
     public void setFirstPage(Integer firstPage) {
-        this.firstPage = firstPage;
+	this.firstPage = firstPage;
     }
 
     public Integer getLastPage() {
-        return lastPage;
+	return lastPage;
     }
 
     public void setLastPage(Integer lastPage) {
-        this.lastPage = lastPage;
+	this.lastPage = lastPage;
     }
 
     public String getBookTitle() {
-        return bookTitle;
+	return bookTitle;
     }
 
     public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
+	this.bookTitle = bookTitle;
     }
 }

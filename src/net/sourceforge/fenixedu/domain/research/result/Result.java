@@ -231,13 +231,13 @@ public abstract class Result extends Result_Base {
         return false;
     }
 
-    public Boolean getIsPossibleSelectPersonRole() {
+    public final Boolean getIsPossibleSelectPersonRole() {
         if ((this instanceof Book) || (this instanceof BookPart) || (this instanceof Inproceedings))
             return true;
         return false;
     }
 
-    protected boolean acceptsParticipationRole(ResultParticipationRole role) {
+    public final boolean acceptsParticipationRole(ResultParticipationRole role) {
         if (this instanceof Proceedings) {
             if (role.equals(ResultParticipationRole.Editor)) {
                 return true;

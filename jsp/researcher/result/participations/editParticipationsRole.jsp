@@ -20,8 +20,9 @@
 				<fr:property name="classes" value="tstyle2"/>
 				<fr:property name="columnClasses" value=",acenter,acenter"/>
 			</fr:layout>
-			<fr:destination name="exception" path="<%= prepareEdit %>"/>
-			<fr:destination name="invalid" path="<%= prepareEdit %>"/>	
+			<fr:destination name="exception" path="<%= prepareEdit + "&editRoles=true"%>"/>
+			<fr:destination name="invalid" path="<%= prepareEdit + "&editRoles=true" %>"/>	
+			<fr:destination name="cancel" path="<%= prepareEdit %>"/>
 		</fr:edit>
 	</logic:notEmpty>
 </logic:present>

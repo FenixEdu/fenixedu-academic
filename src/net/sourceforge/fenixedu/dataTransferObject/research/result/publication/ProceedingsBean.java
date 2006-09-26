@@ -1,50 +1,70 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
-import bibtex.dom.BibtexEntry;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import bibtex.dom.BibtexEntry;
 
 public class ProceedingsBean extends ConferenceArticlesBean implements Serializable {
     private String address;
 
-    private ProceedingsBean() {
-        this.setPublicationType(ResultPublicationType.Proceedings);
-        this.setActiveSchema("result.publication.create.Proceedings");
-        this.setParticipationSchema("resultParticipation.simple");
+    public ProceedingsBean() {
+	this.setPublicationType(ResultPublicationType.Proceedings);
+	this.setActiveSchema("result.publication.create.Proceedings");
+	this.setParticipationSchema("resultParticipation.simple");
     }
 
     public ProceedingsBean(Proceedings proceedings) {
-        this();
-        if (proceedings != null) {
-            this.fillCommonFields(proceedings);
-            this.setAddress(proceedings.getAddress());
-            this.setEvent(proceedings.getEvent());
-        }
+	this();
+	fillCommonFields(proceedings);
+	fillSpecificFields(proceedings);
     }
 
-    public ProceedingsBean(BibtexEntry entry) {
-        this();
-        setUnitFromBibtexEntry("publisher", entry);
-        setUnitFromBibtexEntry("organization", entry);
-        setYearFromBibtexEntry(entry);
-        setMonthFromBibtexEntry(entry);
+    public ProceedingsBean(ResultPublicationBean bean) {
+	this();
+	fillCommonBeanFields(bean);
+    }
 
-        setTitle(getStringValueFromBibtexEntry("title", entry));
-        setAddress(getStringValueFromBibtexEntry("address", entry));
-        setNote(getStringValueFromBibtexEntry("note", entry));
+    public ProceedingsBean(BibtexEntry bibtexEntry) {
+	this();
+	fillBibTeXFields(bibtexEntry);
+    }
+
+    @Override
+    protected void fillSpecificFields(ResultPublication publication) {
+	this.setAddress(((Proceedings) publication).getAddress());
+	this.setEvent(((Proceedings) publication).getEvent());
+    }
+
+    @Override
+    protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
+	setUnitFromBibtexEntry("publisher", bibtexEntry);
+	setUnitFromBibtexEntry("organization", bibtexEntry);
+	setYearFromBibtexEntry(bibtexEntry);
+	setMonthFromBibtexEntry(bibtexEntry);
+
+	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
+	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
+	setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
+    }
+
+    @Override
+    public ResultPublicationBean convertTo(ResultPublicationType type) {
+	return ResultPublicationBeanConversions.proceedingsTo(this, type);
     }
 
     @Override
     public void setCreateEvent(Boolean createEvent) {
-        this.setActiveSchema("result.publication.create.ProceedingsAndEvent");
-        super.setCreateEvent(createEvent);
+	this.setActiveSchema("result.publication.create.ProceedingsAndEvent");
+	super.setCreateEvent(createEvent);
     }
 
     public String getAddress() {
-        return address;
+	return address;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+	this.address = address;
     }
 }

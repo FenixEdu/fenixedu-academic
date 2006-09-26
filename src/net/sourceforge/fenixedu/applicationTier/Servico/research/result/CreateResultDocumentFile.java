@@ -25,11 +25,13 @@ public class CreateResultDocumentFile extends Service {
         final Group permittedGroup = ResultDocumentFile.getPermittedGroup(bean.getPermission());
         
         final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
-                getFilePath(result), bean.getFileName(), (permittedGroup != null) ? true : false, fileMetadata, bean.getInputStream());
+         getFilePath(result), bean.getFileName(), (permittedGroup != null) ? true : false, fileMetadata, bean.getInputStream());
         
         result.addDocumentFile(fileDescriptor.getFilename(), displayName, bean.getPermission(), fileDescriptor.getMimeType(), fileDescriptor
 				        .getChecksum(), fileDescriptor.getChecksumAlgorithm(),
                 fileDescriptor.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
+        /*result.addDocumentFile(bean.getFileName(), displayName, bean.getPermission(), "mime", "checkSum", "alg",
+        	12345, "uniqueId", permittedGroup);*/
     }
 
     /**

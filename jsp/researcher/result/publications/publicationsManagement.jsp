@@ -9,6 +9,13 @@
 	<bean:define id="publications" name="UserView" property="person.resultPublications"/>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></h2>
 
+	<%-- Action messages --%>
+	<logic:messagesPresent name="messages" message="true">
+		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
+			<p><span class="error"><!-- Error messages go here --><bean:write name="messages"/></span></p>
+		</html:messages>
+	</logic:messagesPresent>
+	
 	<p><html:link page="/publications/bibtexManagement.do?method=prepareOpenBibtexFile">
 		<bean:message bundle="RESEARCHER_RESOURCES"	key="researcher.result.publication.importBibtex"/>
 	</html:link></p>

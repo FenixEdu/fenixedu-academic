@@ -14,6 +14,12 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.R
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.event.Event;
+import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
+import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
@@ -21,13 +27,21 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings
 import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
 import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
-import net.sourceforge.fenixedu.domain.research.event.Event;
 
 public abstract class ResultPublicationService extends Service {
+
+    protected static CreateResultPublication getCreateService() {
+        return new CreateResultPublication();
+    }
+    
+    protected static DeleteResultPublication getDeleteService() {
+	return new DeleteResultPublication();
+    }
 
     /*
      * Methods used by CreateResultPublication and ImportBibtexPublication to
@@ -131,4 +145,43 @@ public abstract class ResultPublicationService extends Service {
         return event;
     }
 
+    protected void updateResultReferences(ResultPublication from, ResultPublication to) {
+	createNewParticipations(from,to);
+	createNewEventAssociations(from,to);
+	createNewUnitAssociations(from,to);
+    }
+
+    private void createNewUnitAssociations(ResultPublication from, ResultPublication to) {
+	for (ResultUnitAssociation association : from.getResultUnitAssociations()) {
+	    to.addUnitAssociation(association.getUnit(), association.getRole());
+	}
+    }
+
+    private void createNewEventAssociations(ResultPublication from, ResultPublication to) {
+	for (ResultEventAssociation association : from.getResultEventAssociations()) {
+	    to.addEventAssociation(association.getEvent(), association.getRole());
+	}
+    }
+
+    //TODO: future work: DSpace don't have support to the operations needed for this method
+    /*
+    private void createNewDocumentFiles(ResultPublication from, ResultPublication to) {
+	for (ResultDocumentFile documentFile : from.getResultDocumentFiles()) {
+	
+	}
+    }
+    */
+
+    private void createNewParticipations(Result from, Result to) {
+	for (ResultParticipation participation : from.getResultParticipations()) {
+	    ResultParticipationRole role = participation.getRole();
+	    
+	    if (!to.acceptsParticipationRole(role)){
+		role = ResultParticipationRole.Author;
+	    }
+	    if (!to.hasPersonParticipationWithRole(participation.getPerson(),role)) {
+		to.addParticipation(participation.getPerson(), role);
+	    }
+	}
+    }
 }

@@ -1,15 +1,17 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
-import bibtex.dom.BibtexEntry;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import bibtex.dom.BibtexEntry;
 
 public class ManualBean extends ResultPublicationBean implements Serializable {
     private String address;
 
     private String edition;
 
-    private ManualBean() {
+    public ManualBean() {
         this.setPublicationType(ResultPublicationType.Manual);
         this.setActiveSchema("result.publication.create.Manual");
         this.setParticipationSchema("resultParticipation.simple");
@@ -17,25 +19,43 @@ public class ManualBean extends ResultPublicationBean implements Serializable {
 
     public ManualBean(Manual manual) {
         this();
-        if (manual != null) {
-            this.fillCommonFields(manual);
-            this.setAddress(manual.getAddress());
-            this.setEdition(manual.getEdition());
-        }
+        fillCommonFields(manual);
+        fillSpecificFields(manual);
+    }
+    
+    public ManualBean(ResultPublicationBean bean) {
+	this();
+	fillCommonBeanFields(bean);
+    }
+    
+    public ManualBean(BibtexEntry bibtexEntry) {
+	this();
+	fillBibTeXFields(bibtexEntry);
     }
 
-    public ManualBean(BibtexEntry entry) {
-        this();
-        setUnitFromBibtexEntry("organization", entry);
-        setYearFromBibtexEntry(entry);
-        setMonthFromBibtexEntry(entry);
-
-        setTitle(getStringValueFromBibtexEntry("title", entry));
-        setAddress(getStringValueFromBibtexEntry("address", entry));
-        setEdition(getStringValueFromBibtexEntry("edition", entry));
-        setNote(getStringValueFromBibtexEntry("note", entry));
+    @Override
+    protected void fillSpecificFields(ResultPublication publication) {
+	this.setAddress(((Manual)publication).getAddress());
+	this.setEdition(((Manual)publication).getEdition());
     }
+    
+    @Override
+    protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
+	setUnitFromBibtexEntry("organization", bibtexEntry);
+        setYearFromBibtexEntry(bibtexEntry);
+        setMonthFromBibtexEntry(bibtexEntry);
 
+        setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
+        setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
+        setEdition(getStringValueFromBibtexEntry("edition", bibtexEntry));
+        setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
+    }
+    
+    @Override
+    public ResultPublicationBean convertTo(ResultPublicationType type) {
+        return ResultPublicationBeanConversions.manualTo(this, type);
+    }
+    
     public String getAddress() {
         return address;
     }

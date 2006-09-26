@@ -139,6 +139,10 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	final ResultEventAssociationCreationBean bean = getEventBeanFromRequest(request,result);
 	String creationSchema = "resultEventAssociation.fullCreation";
 	
+	if(getFromRequest(request, "editExisting")!=null) {
+	    request.setAttribute("editExisting", "editExisting");
+	}
+	
 	if (bean.getEventNameMLS()==null) {
 	    creationSchema = "resultEventAssociation.simpleCreation";
 	}
@@ -160,6 +164,9 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 
     private void setResUnitAssRequestAttributes(HttpServletRequest request, Result result)
 	    throws FenixFilterException, FenixServiceException {
+	if(getFromRequest(request, "editExisting")!=null) {
+	    request.setAttribute("editExisting", "editExisting");
+	}
 	request.setAttribute("bean", new ResultUnitAssociationCreationBean(result));
 	request.setAttribute("result", result);
     }

@@ -40,6 +40,17 @@
 	<jsp:include page="../commons/viewDocumentFiles.jsp"/>
 	<br/>
 	
+ 	<%-- Event Associations --%>
+	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.title.label"/></b>:
+	<jsp:include page="../commons/viewEventAssociations.jsp"/>
+	<br/>
+	
+	<%-- Unit Associations --%>
+	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b>:
+	<jsp:include page="../commons/viewUnitAssociations.jsp"/>
+ 	<br/>
+ 	<br/>
+	
 	<%-- Confirmation buttons --%>
 	<p><bean:message key="researcher.ResultPublication.delete.useCase.title"/></p>	
 	<fr:form action="<%= "/resultPublications/delete.do?resultId=" + resultId %>">

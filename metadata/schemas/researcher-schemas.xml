@@ -513,7 +513,7 @@
 		type="net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation">
 	<slot name="event.name" read-only="true"/>
 	<slot name="event.eventType" read-only="true"/>
-	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="role"/>
 </schema>
 
 <!-- Schemas used for Result Unit Associations Management -->
@@ -538,15 +538,21 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
 	</slot>
-	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="role"/>
 </schema>
 
 <!-- PUBLICATION SCHEMAS -->
 <!-- Schemas used for Result Publications Management -->
 <!-- Publication schema names's construction: "result.publication.[***]."+[PublicationType] -->
-
+<schema name="resultPublication.editType" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean">
+	<slot name="publicationType" layout="menu-select-postback" key="researcher.ResultPublication.type">
+		<property name="choiceType" value="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean$ResultPublicationType"/>
+		<property name="destination" value="typePostBack"/>
+	</slot>
+</schema>
 <!-- Create/edit Book -->
-<schema name="result.publication.create.Book" bundle="RESEARCHER_RESOURCES"
+<schema name="result.publication.create.Book" bundle="RESEARCHER_RESOURCES" extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
@@ -630,7 +636,8 @@
 </schema>
 
 <!-- Create/edit Inbook -->
-<schema name="result.publication.create.Inbook" bundle="RESEARCHER_RESOURCES"
+<schema name="result.publication.create.Inbook" bundle="RESEARCHER_RESOURCES" 
+		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
@@ -685,7 +692,7 @@
 		<property name="columns" value="60"/>
 	</slot>
 </schema>
-<schema name="result.publication.details.Inbook" bundle="RESEARCHER_RESOURCES"
+<schema name="result.publication.details.Inbook" bundle="RESEARCHER_RESOURCES" 
 		type="net.sourceforge.fenixedu.domain.research.result.publication.BookPart">
 	<slot name="title"/>
 	<slot name="chapter"/>
@@ -713,6 +720,7 @@
 
 <!-- Create/edit Incollection -->
 <schema name="result.publication.create.Incollection" bundle="RESEARCHER_RESOURCES"
+		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
@@ -806,6 +814,7 @@
 
 <!-- Create/edit Article -->
 <schema name="result.publication.create.Article" bundle="RESEARCHER_RESOURCES"
+		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
@@ -920,6 +929,7 @@
 
 <!-- Create/edit Inproceedings (Conference Article) -->
 <schema name="result.publication.create.Inproceedings" bundle="RESEARCHER_RESOURCES"
+		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
@@ -1017,6 +1027,7 @@
 
 <!-- Create/edit Proceedings (Conference Article) -->
 <schema name="result.publication.create.Proceedings" bundle="RESEARCHER_RESOURCES"
+		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
@@ -1098,6 +1109,7 @@
 
 <!-- Create/edit Thesis -->
 <schema name="result.publication.create.Thesis" bundle="RESEARCHER_RESOURCES"
+		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
@@ -1105,7 +1117,7 @@
 	<slot name="thesisType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
  	<slot name="year">
  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="dateFormat" value="dd/MM/yyyy"/>
+			<property name="dateFormat" value="yyyy"/>
 		</validator>
  		<property name="size" value="5"/>
 	</slot>	
@@ -1154,6 +1166,7 @@
 
 <!-- Create/edit Manual -->
 <schema name="result.publication.create.Manual" bundle="RESEARCHER_RESOURCES"
+		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
@@ -1200,6 +1213,7 @@
 
 <!-- Create/edit Technical Report -->
 <schema name="result.publication.create.TechnicalReport" bundle="RESEARCHER_RESOURCES"
+		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
@@ -1258,6 +1272,7 @@
 
 <!-- Create/edit OtherPublication -->
 <schema name="result.publication.create.OtherPublication" bundle="RESEARCHER_RESOURCES"
+		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>

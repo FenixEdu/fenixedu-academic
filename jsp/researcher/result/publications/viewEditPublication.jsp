@@ -52,6 +52,22 @@
 	</html:link>
 	<jsp:include page="../commons/viewDocumentFiles.jsp"/>
 	<br/>
+	
+	<%-- Event Associations --%>
+	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.title.label"/></b>:
+	<html:link page="<%="/resultAssociations/prepareEditEventAssociations.do?" + parameters %>">
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.eventAssociations.link" />
+	</html:link>
+	<jsp:include page="../commons/viewEventAssociations.jsp"/>
+	<br/>
+	
+	<%-- Unit Associations --%>
+	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b>:
+	<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?" + parameters %>">
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.unitAssociations.link" />
+	</html:link>	
+	<jsp:include page="../commons/viewUnitAssociations.jsp"/>
+	<br/>
 	<br/>
 	
 	<html:link page="/resultPublications/listPublications.do">

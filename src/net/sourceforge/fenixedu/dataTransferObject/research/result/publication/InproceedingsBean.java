@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
-import bibtex.dom.BibtexEntry;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import bibtex.dom.BibtexEntry;
 
 public class InproceedingsBean extends ConferenceArticlesBean implements Serializable {
     private String address;
@@ -13,7 +15,7 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
 
     private String language;
 
-    private InproceedingsBean() {
+    public InproceedingsBean() {
         this.setPublicationType(ResultPublicationType.Inproceedings);
         this.setActiveSchema("result.publication.create.Inproceedings");
         this.setParticipationSchema("resultParticipation.simpleWithRole");
@@ -21,32 +23,50 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
 
     public InproceedingsBean(Inproceedings inproceedings) {
         this();
-        if (inproceedings != null) {
-            this.fillCommonFields(inproceedings);
-            this.setAddress(inproceedings.getAddress());
-            this.setFirstPage(inproceedings.getFirstPage());
-            this.setLastPage(inproceedings.getLastPage());
-            this.setLanguage(inproceedings.getLanguage());
-            this.setEvent(inproceedings.getEvent());
-        }
+       	fillCommonFields(inproceedings);
+       	fillSpecificFields(inproceedings);
+    }
+    
+    public InproceedingsBean(ResultPublicationBean bean) {
+	this();
+        fillCommonBeanFields(bean);
+    }
+    
+    public InproceedingsBean(BibtexEntry bibtexEntry) {
+	this();
+	fillBibTeXFields(bibtexEntry);
     }
 
-    public InproceedingsBean(BibtexEntry entry) {
-        this();
-        setUnitFromBibtexEntry("publisher", entry);
-        setUnitFromBibtexEntry("organization", entry);
-        setYearFromBibtexEntry(entry);
-        setMonthFromBibtexEntry(entry);
+    @Override
+    protected void fillSpecificFields(ResultPublication publication) {
+	this.setAddress(((Inproceedings)publication).getAddress());
+	this.setFirstPage(((Inproceedings)publication).getFirstPage());
+	this.setLastPage(((Inproceedings)publication).getLastPage());
+	this.setLanguage(((Inproceedings)publication).getLanguage());
+	this.setEvent(((Inproceedings)publication).getEvent());
+    }
+    
+    @Override
+    protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
+	setUnitFromBibtexEntry("publisher", bibtexEntry);
+        setUnitFromBibtexEntry("organization", bibtexEntry);
+        setYearFromBibtexEntry(bibtexEntry);
+        setMonthFromBibtexEntry(bibtexEntry);
 
-        setTitle(getStringValueFromBibtexEntry("title", entry));
+        setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
         //booktitle will be used to event name
         //setBookTitle(getStringValueFromBibtexEntry("booktitle", entry));
-        setAddress(getStringValueFromBibtexEntry("address", entry));
-        setNote(getStringValueFromBibtexEntry("note", entry));
-        if (getFirstPageFromBibtexEntry(entry) != null) {
-            setFirstPage(getFirstPageFromBibtexEntry(entry));
-            setLastPage(getLastPageFromBibtexEntry(entry));
+        setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
+        setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
+        if (getFirstPageFromBibtexEntry(bibtexEntry) != null) {
+            setFirstPage(getFirstPageFromBibtexEntry(bibtexEntry));
+            setLastPage(getLastPageFromBibtexEntry(bibtexEntry));
         }
+    }
+    
+    @Override
+    public ResultPublicationBean convertTo(ResultPublicationType type) {
+        return ResultPublicationBeanConversions.inproceedingsTo(this, type);
     }
 
     @Override

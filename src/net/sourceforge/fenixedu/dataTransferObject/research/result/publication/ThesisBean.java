@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
-import bibtex.dom.BibtexEntry;
+
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType;
+import bibtex.dom.BibtexEntry;
 
 public class ThesisBean extends ResultPublicationBean implements Serializable {
     private String address;
@@ -14,68 +16,86 @@ public class ThesisBean extends ResultPublicationBean implements Serializable {
 
     private ThesisType thesisType;
 
-    private ThesisBean() {
-        this.setPublicationType(ResultPublicationType.Thesis);
-        this.setActiveSchema("result.publication.create.Thesis");
-        this.setParticipationSchema("resultParticipation.simple");
+    public ThesisBean() {
+	this.setPublicationType(ResultPublicationType.Thesis);
+	this.setActiveSchema("result.publication.create.Thesis");
+	this.setParticipationSchema("resultParticipation.simple");
     }
 
     public ThesisBean(Thesis thesis) {
-        this();
-        if (thesis != null) {
-            this.fillCommonFields(thesis);
-            this.setThesisType(thesis.getThesisType());
-            this.setAddress(thesis.getAddress());
-            this.setNumberPages(thesis.getNumberPages());
-            this.setLanguage(thesis.getLanguage());
-        }
+	this();
+	fillCommonFields(thesis);
+	fillSpecificFields(thesis);
     }
 
-    public ThesisBean(BibtexEntry entry) {
-        this();
-        if (entry.getEntryType().equalsIgnoreCase("mastersthesis"))
-            setThesisType(ThesisType.Masters_Thesis);
-        else
-            setThesisType(ThesisType.PhD_Thesis);
+    public ThesisBean(ResultPublicationBean bean) {
+	this();
+	fillCommonBeanFields(bean);
+    }
 
-        setYearFromBibtexEntry(entry);
-        setMonthFromBibtexEntry(entry);
-        setUnitFromBibtexEntry("organization", entry);// school
+    public ThesisBean(BibtexEntry bibtexEntry) {
+	this();
+	fillBibTeXFields(bibtexEntry);
+    }
 
-        setTitle(getStringValueFromBibtexEntry("title", entry));
-        setAddress(getStringValueFromBibtexEntry("address", entry));
-        setNote(getStringValueFromBibtexEntry("note", entry));
+    @Override
+    protected void fillSpecificFields(ResultPublication publication) {
+	this.setThesisType(((Thesis) publication).getThesisType());
+	this.setAddress(((Thesis) publication).getAddress());
+	this.setNumberPages(((Thesis) publication).getNumberPages());
+	this.setLanguage(((Thesis) publication).getLanguage());
+    }
+
+    @Override
+    protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
+	if (bibtexEntry.getEntryType().equalsIgnoreCase("mastersthesis"))
+	    setThesisType(ThesisType.Masters_Thesis);
+	else
+	    setThesisType(ThesisType.PhD_Thesis);
+
+	setYearFromBibtexEntry(bibtexEntry);
+	setMonthFromBibtexEntry(bibtexEntry);
+	setUnitFromBibtexEntry("organization", bibtexEntry);// school
+
+	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
+	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
+	setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
+    }
+
+    @Override
+    public ResultPublicationBean convertTo(ResultPublicationType type) {
+	return ResultPublicationBeanConversions.thesisTo(this, type);
     }
 
     public String getAddress() {
-        return address;
+	return address;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+	this.address = address;
     }
 
     public String getLanguage() {
-        return language;
+	return language;
     }
 
     public void setLanguage(String language) {
-        this.language = language;
+	this.language = language;
     }
 
     public Integer getNumberPages() {
-        return numberPages;
+	return numberPages;
     }
 
     public void setNumberPages(Integer numberPages) {
-        this.numberPages = numberPages;
+	this.numberPages = numberPages;
     }
 
     public ThesisType getThesisType() {
-        return thesisType;
+	return thesisType;
     }
 
     public void setThesisType(ThesisType thesisType) {
-        this.thesisType = thesisType;
+	this.thesisType = thesisType;
     }
 }

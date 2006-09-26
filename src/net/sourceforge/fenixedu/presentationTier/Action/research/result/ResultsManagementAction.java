@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.result;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
@@ -69,7 +70,15 @@ public class ResultsManagementAction extends FenixDispatchAction {
 	
 	if (result==null) {
 	    try {
-		result = (Result)getRenderedObject(null);
+		final Object object = getRenderedObject(null);
+		
+		if (object instanceof Result) {
+		    result = (Result) object;
+		}
+		if (object instanceof ResultPublicationBean) {
+		    result = Result.readByOid(((ResultPublicationBean)object).getIdInternal());
+		}
+
 	    } catch (Exception e) {
 	    }
 	}
