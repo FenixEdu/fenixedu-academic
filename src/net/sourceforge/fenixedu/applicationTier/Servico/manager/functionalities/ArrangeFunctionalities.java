@@ -23,7 +23,20 @@ public class ArrangeFunctionalities extends Service {
      */
     public void run(List<Pair<Module, Functionality>> arrangements) {
         for (Pair<Module, Functionality> pair : arrangements) {
+            Module oldModule = pair.getValue().getModule();
+            
             pair.getValue().setModule(pair.getKey());
+            
+            // HACK: when a functionality is in the toplevel and it's changed
+            //       into other module then the toplevel is sorted before 
+            //       the functionality is removed. This happens because 
+            //       changing the module of a functionality consists in setting
+            //       the value to NULL and then to the final value.
+            //       If the functionality is a toplevel functionality then setting
+            //       the module to NULL does not remove it from the toplevel.
+            if (oldModule == null && pair.getKey() != null) {
+                Module.pack(oldModule);
+            }
         }
     }
     
