@@ -32,6 +32,33 @@ public abstract class Result extends Result_Base {
         setRootDomainObject(RootDomainObject.getInstance());
         setOnCreateAtributes();
     }
+    
+    public abstract String getResume();
+    
+    protected String getParticipationsAndTitleString() {
+        String resume = "";
+        int i = 0;
+        for (ResultParticipation participation : getOrderedResultParticipations()) {
+            resume = resume + participation.getPerson().getName();
+            i++;
+            if (i < getResultParticipationsCount())
+                resume = resume + ", ";
+            else
+                resume = resume + " - ";
+        }
+        resume = resume + getTitle() + " - ";
+        return resume;
+    }
+
+    protected String finishResume(String resume) {
+        if ((resume.charAt(resume.length() - 1) == ','))
+            resume = resume.substring(0, resume.length() - 1);
+        else if ((resume.charAt(resume.length() - 2) == ','))
+            resume = resume.substring(0, resume.length() - 2);
+        else if ((resume.charAt(resume.length() - 2) == '-'))
+            resume = resume.substring(0, resume.length() - 2);
+        return resume;
+    }
 
     @Checked("ResultPredicates.createPredicate")
     private void setOnCreateAtributes() {

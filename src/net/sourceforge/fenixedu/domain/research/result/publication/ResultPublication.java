@@ -89,8 +89,6 @@ public abstract class ResultPublication extends ResultPublication_Base {
         return editors;
     }
 
-    public abstract String getResume();
-
     public abstract BibtexEntry exportToBibtexEntry();
 
     protected String generateBibtexKey() {
@@ -104,31 +102,6 @@ public abstract class ResultPublication extends ResultPublication_Base {
         return key;
     }
     
-    protected String getParticipationsAndTitleString() {
-        String resume = "";
-        int i = 0;
-        for (ResultParticipation participation : getOrderedResultParticipations()) {
-            resume = resume + participation.getPerson().getName();
-            i++;
-            if (i < getResultParticipationsCount())
-                resume = resume + ", ";
-            else
-                resume = resume + " - ";
-        }
-        resume = resume + getTitle() + " - ";
-        return resume;
-    }
-
-    protected String finishResume(String resume) {
-        if ((resume.charAt(resume.length() - 1) == ','))
-            resume = resume.substring(0, resume.length() - 1);
-        else if ((resume.charAt(resume.length() - 2) == ','))
-            resume = resume.substring(0, resume.length() - 2);
-        else if ((resume.charAt(resume.length() - 2) == '-'))
-            resume = resume.substring(0, resume.length() - 2);
-        return resume;
-    }
-
     protected BibtexPersonList getBibtexAuthorsList(BibtexFile bibtexFile, List<Person> authors) {
         if ((authors != null) && (authors.size() > 0)) {
             BibtexPersonList authorsList = bibtexFile.makePersonList();

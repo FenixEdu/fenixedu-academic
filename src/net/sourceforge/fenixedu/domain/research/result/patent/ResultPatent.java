@@ -105,6 +105,16 @@ public class ResultPatent extends ResultPatent_Base {
 	    throw new DomainException("error.researcher.ResultPatent.approval.before.registration");
 	}
     }
+    
+    @Override
+    public String getResume() {
+        String resume = getParticipationsAndTitleString();
+
+        //TODO: fill with fields!
+        
+        resume = finishResume(resume);
+        return resume;
+    }
 
     /**
      * Block individual setters
@@ -158,4 +168,5 @@ public class ResultPatent extends ResultPatent_Base {
     public void setUrl(String url) {
 	throw new DomainException("error.researcher.ResultPatent.illegal.call","setUrl");
     }
+
 }
