@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -220,5 +221,7 @@ public abstract class Party extends Party_Base {
     public boolean isPerson() {
 	return false;
     }
+
+    public abstract ParkingPartyClassification getPartyClassification();
 
 }

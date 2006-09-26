@@ -3760,6 +3760,7 @@ class net.sourceforge.fenixedu.domain.parking.ParkingRequest extends net.sourcef
 class net.sourceforge.fenixedu.domain.parking.ParkingDocument extends net.sourceforge.fenixedu.domain.DomainObject {
 	ParkingDocumentType parkingDocumentType;
 	Integer keyParkingRequest;
+	Integer keyParkingParty;
 	Integer keyParkingFile;
 }
 
@@ -3773,6 +3774,15 @@ class net.sourceforge.fenixedu.domain.parking.ParkingParty extends net.sourcefor
 	Boolean authorized;
 	Integer keyParty;
 	Boolean acceptedRegulation;
+	ParkingDocumentState driverLicenseDocumentState;
+    ParkingDocumentState firstCarPropertyRegistryDocumentState;
+    ParkingDocumentState firstCarInsuranceDocumentState;
+    ParkingDocumentState firstCarOwnerIdDocumentState;
+    ParkingDocumentState firstCarDeclarationDocumentState;
+    ParkingDocumentState secondCarPropertyRegistryDocumentState;
+    ParkingDocumentState secondCarInsuranceDocumentState;
+    ParkingDocumentState secondCarOwnerIdDocumentState;    
+    ParkingDocumentState secondCarDeclarationDocumentState;
 }
 
 
@@ -7718,6 +7728,13 @@ relation PartyParkingParty {
 
 relation ParkingRequestParkingDocument {
 	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequest;
+	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocuments{
+		multiplicity *;
+	}
+}
+
+relation ParkingPartyParkingDocument {
+	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParty;
 	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocuments{
 		multiplicity *;
 	}

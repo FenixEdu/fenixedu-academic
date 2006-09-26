@@ -97,4 +97,221 @@ public class ParkingParty extends ParkingParty_Base {
         }
         return false;
     }
+
+    public String getDriverLicenseFileName() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.DRIVER_LICENSE)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        return null;
+    }
+    
+    public String getDriverLicenseFileNameToDisplay() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.DRIVER_LICENSE)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        if (getDriverLicenseDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getDriverLicenseDocumentState().name());
+        }
+        return null;
+    }    
+
+    public String getFirstCarPropertyRegistryFileName() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(
+                    ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        return null;
+    }
+    
+    public String getFirstCarPropertyRegistryFileNameToDisplay() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(
+                    ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        if (getFirstCarPropertyRegistryDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getFirstCarPropertyRegistryDocumentState().name());
+        }
+        return null;
+    }    
+
+    public String getFirstCarInsuranceFileName() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_INSURANCE)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        return null;
+    }
+    
+    public String getFirstCarInsuranceFileNameToDisplay() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_INSURANCE)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        if (getFirstCarInsuranceDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getFirstCarInsuranceDocumentState().name());
+        }
+        return null;
+    }
+
+    public String getFirstCarOwnerIdFileName() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_OWNER_ID)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        return null;
+    }
+    
+    public String getFirstCarOwnerIdFileNameToDisplay() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_OWNER_ID)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        if (getFirstCarOwnerIdDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getFirstCarOwnerIdDocumentState().name());
+        }
+        return null;
+    }
+
+    public String getFirstDeclarationAuthorizationFileName() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(
+                    ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }    
+        return null;
+    }
+
+    public String getFirstDeclarationAuthorizationFileNameToDisplay() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(
+                    ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        if (getFirstCarDeclarationDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getFirstCarDeclarationDocumentState().name());
+        }    
+        return null;
+    }
+    
+    public String getSecondCarPropertyRegistryFileName() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(
+                    ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }       
+        return null;
+    }
+    
+    public String getSecondCarPropertyRegistryFileNameToDisplay() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(
+                    ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        if (getSecondCarPropertyRegistryDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getSecondCarPropertyRegistryDocumentState().name());
+        }          
+        return null;
+    }
+
+    public String getSecondCarInsuranceFileName() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType()
+                    .equals(ParkingDocumentType.SECOND_CAR_INSURANCE)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }        
+        return null;
+    }
+    
+    public String getSecondCarInsuranceFileNameToDisplay() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType()
+                    .equals(ParkingDocumentType.SECOND_CAR_INSURANCE)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        if (getSecondCarInsuranceDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getSecondCarInsuranceDocumentState().name());
+        }        
+        return null;
+    }
+
+    public String getSecondCarOwnerIdFileName() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.SECOND_CAR_OWNER_ID)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        return null;
+    }
+    
+    public String getSecondCarOwnerIdFileNameToDisplay() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.SECOND_CAR_OWNER_ID)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        if (getSecondCarOwnerIdDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getSecondCarOwnerIdDocumentState().name());
+        }
+        return null;
+    }
+
+    public String getSecondDeclarationAuthorizationFileName() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(
+                    ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        return null;
+    }
+    
+    public String getSecondDeclarationAuthorizationFileNameToDisplay() {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(
+                    ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION)) {
+                return parkingDocument.getParkingFile().getFilename();
+            }
+        }
+        if (getSecondCarDeclarationDocumentState() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getSecondCarDeclarationDocumentState().name());
+        }
+        return null;
+    }
 }

@@ -62,6 +62,8 @@
 		key="GLOBAL_RESOURCES" null="false" />
 	<message-resources parameter="resources.ApplicationResources"
 		key="APPLICATION_RESOURCES" null="false" />
+	<message-resources parameter="resources.EnumerationResources"
+		key="ENUMERATION_RESOURCES" null="false" />
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">

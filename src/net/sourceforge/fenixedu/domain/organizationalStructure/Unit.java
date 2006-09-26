@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
@@ -708,4 +709,10 @@ public class Unit extends Unit_Base {
 	}
 	return examCoordinators;
     }
+
+    @Override
+    public ParkingPartyClassification getPartyClassification() {
+        return ParkingPartyClassification.UNIT;
+    }
+
 }

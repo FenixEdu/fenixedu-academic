@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -34,6 +35,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -46,7 +48,9 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublica
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -1604,5 +1608,31 @@ public class Person extends Person_Base {
 	}
 	return new HashSet<Registration>();
     }
-
+    
+    @Override
+    public ParkingPartyClassification getPartyClassification() {
+        final Teacher teacher = getTeacher();
+        if (teacher != null) {
+            final TeacherLegalRegimen legalRegimen = teacher.getCurrentLegalRegimenWithoutEndSitutions();
+            if (legalRegimen != null) {
+                return ParkingPartyClassification.TEACHER;
+            }
+        }
+        final Employee employee = getEmployee();
+        if (employee != null && employee.getCurrentContract() != null) {
+            return ParkingPartyClassification.EMPLOYEE;
+        }
+        final GrantOwner grantOwner = getGrantOwner();
+        if (grantOwner != null && grantOwner.hasCurrentContract()) {
+            return ParkingPartyClassification.GRANT_OWNER;
+        }
+        final Student student = getStudent();
+        if (student != null) {
+            final DegreeType degree = student.getMostSignificantDegreeType();
+            if (degree != null) {
+                return ParkingPartyClassification.getClassificationByDegreeType(degree);
+            }
+        }
+        return ParkingPartyClassification.PERSON;
+    }
 }

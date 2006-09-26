@@ -209,5 +209,19 @@
 <schema name="show.parkingRequest.noDetail"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
 	<slot name="parkingParty.party.name" key="label.name" bundle="PARKING_RESOURCES" />
+	<slot name="parkingRequestState" key="label.state" bundle="PARKING_RESOURCES" />
 	<slot name="creationDate" key="label.creationDate" bundle="PARKING_RESOURCES" />
+</schema>
+
+<schema name="input.parkingRequestSearch"
+	type="net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch">
+	<slot name="parkingRequestState" key="label.state" layout="menu-select" >
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.parking.ParkingRequestState" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="parkingPartyClassification" key="label.type" layout="menu-select">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="personName" key="label.name" bundle="PARKING_RESOURCES" />
 </schema>

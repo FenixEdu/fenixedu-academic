@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add columns to parkingParty table" alterTableParkingParty.sql

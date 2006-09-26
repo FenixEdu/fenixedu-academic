@@ -140,4 +140,12 @@ public class GrantOwner extends GrantOwner_Base {
         return counter;
     }
 
+    public boolean hasCurrentContract() {
+        for (GrantContract grantContract : getGrantContracts()) {
+            if (grantContract.hasActiveRegimes()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
