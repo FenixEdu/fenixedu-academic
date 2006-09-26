@@ -90,7 +90,12 @@ public class ChangeDegreeDA extends FenixDispatchAction {
                 final InfoExecutionYear infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
                 final InfoEnrolmentEvaluation infoEnrolmentEvaluation = infoEnrolment
                         .getInfoEnrolmentEvaluation();
-                final String grade = infoEnrolmentEvaluation.getGrade();
+                
+                String grade = null;
+                if(infoEnrolmentEvaluation != null) {
+                    grade = infoEnrolmentEvaluation.getGrade();
+                }
+                
                 if (!infoExecutionYear.getState().equals(PeriodState.CURRENT)) {
                     enrolementsToMaintainList.add(infoEnrolment.getIdInternal().toString());
                 } else if (grade == null || grade.length() == 0) {

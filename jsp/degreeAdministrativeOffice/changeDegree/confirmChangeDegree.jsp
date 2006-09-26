@@ -72,7 +72,12 @@
 							<td class="listClasses"><bean:write name="infoEnrolment" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/></td>
 							<td class="listClasses"><bean:write name="infoEnrolment" property="infoCurricularCourse.code"/></td>
 							<td class="listClasses"><bean:write name="infoEnrolment" property="infoCurricularCourse.name"/></td>
-							<td class="listClasses"><bean:write name="infoEnrolment" property="infoEnrolmentEvaluation.grade"/></td>
+							<logic:present name="infoEnrolment" property="infoEnrolmentEvaluation">
+								<td class="listClasses"><bean:write name="infoEnrolment" property="infoEnrolmentEvaluation.grade"/></td>
+							</logic:present>
+							<logic:notPresent name="infoEnrolment" property="infoEnrolmentEvaluation">
+								<td class="listClasses"/>
+							</logic:notPresent>
 						</tr>
 					</logic:equal>
 				</logic:iterate>
@@ -132,7 +137,12 @@
 							<td class="listClasses"><bean:write name="infoEnrolment" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/></td>
 							<td class="listClasses"><bean:write name="infoEnrolment" property="infoCurricularCourse.code"/></td>
 							<td class="listClasses"><bean:write name="infoEnrolment" property="infoCurricularCourse.name"/></td>
-							<td class="listClasses"><bean:write name="infoEnrolment" property="infoEnrolmentEvaluation.grade"/></td>
+							<logic:present name="infoEnrolment" property="infoEnrolmentEvaluation">
+								<td class="listClasses"><bean:write name="infoEnrolment" property="infoEnrolmentEvaluation.grade"/></td>
+							</logic:present>
+							<logic:notPresent name="infoEnrolment" property="infoEnrolmentEvaluation">
+								<td class="listClasses"/>
+							</logic:notPresent>
 						</tr>
 					</logic:equal>
 				</logic:iterate>
