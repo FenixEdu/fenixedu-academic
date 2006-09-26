@@ -37,3 +37,5 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultParticipation" table="RESULT_PARTICIPATION"/>
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation" table="RESULT_EVENT_ASSOCIATION"/>
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation" table="RESULT_UNIT_ASSOCIATION"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultTeacher" table="RESULT_TEACHER"/>

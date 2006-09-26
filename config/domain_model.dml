@@ -3529,6 +3529,12 @@ class net.sourceforge.fenixedu.domain.research.result.ResultParticipation extend
 	ResultParticipationRole role;
 }
 
+class net.sourceforge.fenixedu.domain.research.result.ResultTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Integer keyResult;
+    PublicationArea publicationArea;
+}
+
 class net.sourceforge.fenixedu.domain.research.project.Project extends net.sourceforge.fenixedu.domain.DomainObject{
 	Integer number;
 	String acronym;
@@ -7523,6 +7529,20 @@ relation ResultDocumentFileResult {
 	net.sourceforge.fenixedu.domain.research.result.Result playsRole result;
 }
 
+relation ResultTeacherResult {
+	net.sourceforge.fenixedu.domain.research.result.ResultTeacher playsRole resultTeachers {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.research.result.Result playsRole result;
+}
+
+relation ResultTeacherTeacher {
+	net.sourceforge.fenixedu.domain.research.result.ResultTeacher playsRole teacherResults {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
 relation ProjectParticipationProject {
 	net.sourceforge.fenixedu.domain.research.project.Project playsRole project;
 	net.sourceforge.fenixedu.domain.research.project.ProjectParticipation playsRole projectParticipations {
@@ -9001,6 +9021,13 @@ relation RootDomainObjectResult {
 relation RootDomainObjectResultParticipation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.research.result.ResultParticipation playsRole resultParticipations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectResultTeacher {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.result.ResultTeacher playsRole resultTeachers {
 		multiplicity *;
 	}
 }
