@@ -239,6 +239,10 @@ public class ComponentLifeCycle {
                 destination = viewState.getCurrentDestination();
     
                 if (destination == null) {
+                    destination = viewState.getDestination("input");
+                }
+                
+                if (destination == null) {
                     destination = viewState.getInputDestination();
                 }
             }
@@ -251,7 +255,11 @@ public class ComponentLifeCycle {
                 }
                 
                 if (destination == null && !viewState.isValid()) {
-                    destination = viewState.getInputDestination();
+                    destination = viewState.getDestination("input");
+                    
+                    if (destination == null) {
+                        destination = viewState.getInputDestination();
+                    }
                 }
             }
             
