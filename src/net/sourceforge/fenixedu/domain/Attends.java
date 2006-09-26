@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
@@ -280,7 +281,7 @@ public class Attends extends Attends_Base {
             throw new DomainException("unsupported.execution.period.semester");
         }
     }
-        
+
     public static List<Attends> readByDegreeCurricularPlanAndExecutionPeriod(
             DegreeCurricularPlan degreeCurricularPlan, ExecutionPeriod executionPeriod) {
         final Set<Attends> attends = new HashSet<Attends>();
@@ -296,7 +297,13 @@ public class Attends extends Attends_Base {
         return new ArrayList<Attends>(attends);
     }
     
- 
-    
-
+    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
+	if (getEnrolment().getExecutionPeriod() != getDisciplinaExecucao().getExecutionPeriod()) {
+	    return EnrolmentEvaluationType.IMPROVEMENT;
+	} else if (getEnrolment().hasSpecialSeason()) {
+	    return EnrolmentEvaluationType.SPECIAL_SEASON;
+	} else {
+	    return EnrolmentEvaluationType.NORMAL;
+	}
+    }
 }

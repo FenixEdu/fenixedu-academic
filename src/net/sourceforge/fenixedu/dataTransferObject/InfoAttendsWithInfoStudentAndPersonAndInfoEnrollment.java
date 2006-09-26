@@ -15,7 +15,7 @@ public class InfoAttendsWithInfoStudentAndPersonAndInfoEnrollment extends
     public void copyFromDomain(Attends frequenta) {
         super.copyFromDomain(frequenta);
         if (frequenta != null) {
-            setInfoEnrolment(InfoEnrolmentWithExecutionPeriodAndYearAndEvaluationType.newInfoFromDomain(frequenta.getEnrolment()));
+            setInfoEnrolment(InfoEnrolment.newInfoFromDomain(frequenta.getEnrolment()));
         }
     }
 

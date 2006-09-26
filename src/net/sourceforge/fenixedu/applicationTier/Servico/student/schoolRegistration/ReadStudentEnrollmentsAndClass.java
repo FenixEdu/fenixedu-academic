@@ -1,7 +1,3 @@
-/*
- * Created on Jul 28, 2004
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.schoolRegistration;
 
 import java.util.ArrayList;
@@ -10,9 +6,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -21,114 +17,83 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-/**
- * @author Nuno Correia
- * @author Ricardo Rodrigues
- */
 public class ReadStudentEnrollmentsAndClass extends Service {
 
-    public List run(IUserView userView) throws ExcepcaoPersistencia {
-        Registration registration = userView.getPerson().getStudentByType(DegreeType.DEGREE);
-        StudentCurricularPlan scp = null;
-        if(registration != null) {
-        	scp = registration.getActiveStudentCurricularPlan();
-        }
+    public List run(IUserView userView) throws FenixServiceException {
 
-        List studentEnrollments = scp.getEnrolments();
-        final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        
-        List studentShifts = new ArrayList();
-        List<Shift> shifts = scp.getStudent().getShifts();
-        for (Shift shift : shifts) {
-            if (shift.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
-                studentShifts.add(shift);
-            }
-        }
-        
-        List filteredStudentShifts = filterStudentShifts(studentShifts);
+	final Registration registration = userView.getPerson().getStudentByType(DegreeType.DEGREE);
+	if (registration == null) {
+	    throw new FenixServiceException("error.ReadStudentEnrollmentsAndClass.noRegistration");
+	}
 
-        InfoClass infoClass = getClass(filteredStudentShifts, scp.getDegreeCurricularPlan().getDegree()
-                .getNome());
-        List infoEnrollments = new ArrayList();
+	final StudentCurricularPlan studentCurricularPlan = registration
+		.getActiveStudentCurricularPlan();
+	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 
-        for (int iterator = 0; iterator < studentEnrollments.size(); iterator++) {
+	final List<Shift> studentShifts = new ArrayList();
+	for (final Shift shift : studentCurricularPlan.getStudent().getShifts()) {
+	    if (shift.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
+		studentShifts.add(shift);
+	    }
+	}
 
-            Enrolment enrollment = (Enrolment) studentEnrollments.get(iterator);
+	final InfoClass infoClass = getClass(filterStudentShifts(studentShifts), studentCurricularPlan
+		.getDegreeCurricularPlan().getDegree().getName());
 
-            InfoEnrolment infoEnrollment = InfoEnrolmentWithInfoCurricularCourse
-                    .newInfoFromDomain(enrollment);
-            infoEnrollments.add(infoEnrollment);
-        }
+	final List<InfoEnrolment> infoEnrollments = new ArrayList<InfoEnrolment>(studentCurricularPlan
+		.getEnrolmentsCount());
+	for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+	    infoEnrollments.add(InfoEnrolment.newInfoFromDomain(enrolment));
+	}
 
-        List result = new ArrayList();
-        result.add(infoEnrollments);
-        result.add(infoClass);
-        result.add(scp.getDegreeCurricularPlan().getDegree().getNome());
+	final List result = new ArrayList(3);
+	result.add(infoEnrollments);
+	result.add(infoClass);
+	result.add(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome());
 
-        return result;
+	return result;
     }
 
-    /**
-     * @param studentShifts
-     * @return
-     */
-    private InfoClass getClass(List studentShifts, String degreeName) {
+    private InfoClass getClass(List<Shift> studentShifts, String degreeName) {
 
-        List<SchoolClass> classesName = new ArrayList<SchoolClass>();
-        for (int iter = 0; iter < studentShifts.size(); iter++) {
-            Shift shift = (Shift) studentShifts.get(0);
-            List classes = shift.getAssociatedClasses();
-            if (classes.size() == 1) {
-                SchoolClass klass = (SchoolClass) classes.get(0);
-                return InfoClass.newInfoFromDomain(klass);
-            }
-
-            for (int j = 0; j < classes.size(); j++) {
-                SchoolClass klass = (SchoolClass) classes.get(j);
-                if (degreeName.equals(klass.getExecutionDegree().getDegreeCurricularPlan().getDegree()
-                        .getNome())) {
-                    classesName.add(klass);
-                }
-            }
-
-        }
-        return InfoClass.newInfoFromDomain(getMaxOcurrenceElement(classesName));
+	final List<SchoolClass> schoolClassList = new ArrayList<SchoolClass>();
+	for (final Shift shift : studentShifts) {
+	    if (shift.getAssociatedClassesCount() == 1) {
+		return InfoClass.newInfoFromDomain(shift.getAssociatedClassesSet().iterator().next());
+	    }
+	    for (final SchoolClass schoolClass : shift.getAssociatedClassesSet()) {
+		if (degreeName.equals(schoolClass.getExecutionDegree().getDegree().getName())) {
+		    schoolClassList.add(schoolClass);
+		}
+	    }
+	}
+	return InfoClass.newInfoFromDomain(getMaxOcurrenceElement(schoolClassList));
     }
 
-    /**
-     * @param studentShifts
-     * @return
-     */
     private List filterStudentShifts(List studentShifts) {
-        List filteredStudentShifts = (List) CollectionUtils.select(studentShifts, new Predicate() {
-            List validTypes = Arrays.asList(new ShiftType[] { ShiftType.PRATICA,
-                    ShiftType.TEORICO_PRATICA });
+	return (List) CollectionUtils.select(studentShifts, new Predicate() {
+	    final List<ShiftType> validTypes = Arrays.asList(new ShiftType[] { ShiftType.PRATICA,
+		    ShiftType.TEORICO_PRATICA });
 
-            public boolean evaluate(Object input) {
-                Shift shift = (Shift) input;
-                return validTypes.contains(shift.getTipo());
-            }
-        });
-
-        return filteredStudentShifts;
+	    public boolean evaluate(Object input) {
+		return validTypes.contains(((Shift) input).getTipo());
+	    }
+	});
     }
 
     private SchoolClass getMaxOcurrenceElement(List<SchoolClass> classes) {
-
-        int maxNumberOfOcurrencies = 0;
-        SchoolClass resultElement = null;
-        for (int iter = 0; iter < classes.size(); iter++) {
-            SchoolClass element = (SchoolClass) classes.get(iter);
-            int numberOfOcurrencis = CollectionUtils.cardinality(element, classes);
-            if (numberOfOcurrencis > maxNumberOfOcurrencies)
-                resultElement = element;
-        }
-        return resultElement;
+	int maxNumberOfOcurrencies = 0;
+	SchoolClass resultElement = null;
+	for (final SchoolClass schoolClass : classes) {
+	    int numberOfOcurrencis = CollectionUtils.cardinality(schoolClass, classes);
+	    if (numberOfOcurrencis > maxNumberOfOcurrencies) {
+		resultElement = schoolClass;
+	    }
+	}
+	return resultElement;
     }
 }
-

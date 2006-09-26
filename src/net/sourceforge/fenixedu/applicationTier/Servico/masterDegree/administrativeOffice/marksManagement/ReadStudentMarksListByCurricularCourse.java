@@ -15,12 +15,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -48,13 +45,7 @@ public class ReadStudentMarksListByCurricularCourse extends Service {
         return cleanList(enrolmentList, userView);
     }
 
-    /**
-     * @param enrollments
-     * @return A list of Registration curricular Plans without the duplicates
-     * @throws ExcepcaoPersistencia
-     */
-    private List cleanList(List enrollments, IUserView userView) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    private List cleanList(List enrollments, IUserView userView) {
         List result = new ArrayList();
         Integer numberAux = null;
 
@@ -70,17 +61,7 @@ public class ReadStudentMarksListByCurricularCourse extends Service {
                             .getNumber().intValue())) {
                 numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
 
-                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (new GetEnrolmentGrade())
-                        .run(enrolment);
-
-                if (infoEnrolmentEvaluation != null) {
-
-                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-                            .newInfoFromDomain(enrolment);
-                    infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
-                    result.add(infoEnrolment);
-
-                }
+                result.add(InfoEnrolment.newInfoFromDomain(enrolment));
             }
         }
         Collections.sort(result, numberComparator);

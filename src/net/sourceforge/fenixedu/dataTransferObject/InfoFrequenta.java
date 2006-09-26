@@ -1,17 +1,8 @@
-/*
- * Attends.java
- *
- * Created on 20 de Outubro de 2002, 14:42
- */
-
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 
-/**
- * 
- * @author tfc130
- */
 public class InfoFrequenta extends InfoObject {
     protected InfoStudent _aluno;
 
@@ -19,10 +10,6 @@ public class InfoFrequenta extends InfoObject {
 
     protected InfoEnrolment infoEnrolment;
 
-    /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
-    // errr..... os objectos info nao vao para a base de dados, por isso nao
-    // precisam deste construtor ;) ai esse copy/paste ...:P
-    // ass: BlueBus
     public InfoFrequenta() {
     }
 
@@ -58,9 +45,7 @@ public class InfoFrequenta extends InfoObject {
         boolean resultado = false;
         if (obj instanceof InfoFrequenta) {
             InfoFrequenta frequenta = (InfoFrequenta) obj;
-            resultado =
-            getAluno().equals(frequenta.getAluno())
-                    && getDisciplinaExecucao().equals(frequenta.getDisciplinaExecucao());
+            resultado = getAluno().equals(frequenta.getAluno()) && getDisciplinaExecucao().equals(frequenta.getDisciplinaExecucao());
         }
         return resultado;
     }
@@ -83,6 +68,20 @@ public class InfoFrequenta extends InfoObject {
 
     }
 
+    /*
+     * Temporary solution to create InfoEnrolment to an Enrolment wrapper
+     *  - after create InfoFrequenta wrapper this should be delegated to attends
+     */
+    private EnrolmentEvaluationType enrolmentEvaluationType;
+    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
+        return enrolmentEvaluationType;
+    }
+
+    public void setEnrolmentEvaluationType(EnrolmentEvaluationType enrolmentEvaluationType) {
+        this.enrolmentEvaluationType = enrolmentEvaluationType;
+    }    
+    
+    
     public void copyFromDomain(Attends frequenta) {
         super.copyFromDomain(frequenta);
 		this.setAluno(InfoStudent.newInfoFromDomain(frequenta.getAluno()));
@@ -98,4 +97,5 @@ public class InfoFrequenta extends InfoObject {
         }
         return infoFrequenta;
     }
+
 }

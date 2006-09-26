@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChange
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.GratuityValuesNotDefinedServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Branch;
@@ -101,9 +100,7 @@ public class RegisterCandidate extends Service {
         Iterator iteratorSCPs = studentCurricularPlan.getEnrolments().iterator();
         while (iteratorSCPs.hasNext()) {
             Enrolment enrolment = (Enrolment) iteratorSCPs.next();
-            InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-                    .newInfoFromDomain(enrolment);
-            infoCandidateRegistration.getEnrolments().add(infoEnrolment);
+            infoCandidateRegistration.getEnrolments().add(InfoEnrolment.newInfoFromDomain(enrolment));
         }
         return infoCandidateRegistration;
     }

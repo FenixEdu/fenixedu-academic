@@ -1,147 +1,94 @@
-/*
- * Created on Oct 19, 2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.EnrollmentPredicates;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EnrollmentStateSelectionType;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-/**
- * @author Andr� Fernandes / Jo�o Brito
- * 
- * TODO To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
- */
 public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
 
-    /*
-     * devolve InfoXxxx com: - StudentCurricularPlan's do aluno - Enrolments do
-     * aluno (filtrados por um criterio)
-     */
     public InfoStudentCurricularPlansWithSelectedEnrollments run(String username,
-            StudentCurricularPlanIDDomainType curricularPlanID, EnrollmentStateSelectionType criterio)
-            throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
-        // curricularPlanID pode ser: ID do CP do aluno, 'all ou 'newest
-        // criterio define que IEnrolments vamos ver: pode ser 'aprovado ou null
-        // (selecciona todos)
+	    StudentCurricularPlanIDDomainType curricularPlanID, EnrollmentStateSelectionType criteria) {
 
-        List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
+	final Predicate predicate = getPredicateBy(criteria);
+	final Person person = Person.readPersonByUsername(username);
 
-        Predicate predicado = null;
+	final List<StudentCurricularPlan> studentCurricularPlans;
 
-        if (criterio.equals(EnrollmentStateSelectionType.APPROVED)) {
-            predicado = EnrollmentPredicates.getApprovedPredicate();
-        } else if (criterio.equals(EnrollmentStateSelectionType.NONE)) {
-            predicado = EnrollmentPredicates.getNonePredicate(); // nenhum
-        } else {
-            predicado = EnrollmentPredicates.getAllPredicate(); // todos
-        }
+	if (curricularPlanID.isAll()) {
+	    studentCurricularPlans = getAllStudentCurricularPlans(person);
 
-        if (curricularPlanID.isAll() || curricularPlanID.isNewest()) {
-            Person person = Person.readPersonByUsername(username);
-            List students = person.getStudents();
-            List<StudentCurricularPlan> studentCPsTemp = null;
+	} else if (curricularPlanID.isNewest()) {
+	    studentCurricularPlans = Collections.singletonList(getMostRecentStudentCurricularPlan(person));
 
-            Iterator studentsIterator = students.iterator();
+	} else {
+	    studentCurricularPlans = Collections.singletonList(rootDomainObject
+		    .readStudentCurricularPlanByOID(curricularPlanID.getId()));
+	}
 
-            // para cada Registration que esta Person �
-            // juntar todos os SCP
-            while (studentsIterator.hasNext()) {
-                Registration registration = (Registration) studentsIterator.next();
+	final InfoStudentCurricularPlansWithSelectedEnrollments result = new InfoStudentCurricularPlansWithSelectedEnrollments();
 
-                // seleccionar todos os planos do aluno
-                studentCPsTemp = registration.getStudentCurricularPlans();
+	for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 
-                studentCurricularPlans.addAll(studentCPsTemp);
-            }
+	    final List<InfoEnrolment> infoSelectedEnrollments = new ArrayList<InfoEnrolment>();
+	    
+	    for (final Enrolment enrolment : (List<Enrolment>) CollectionUtils.select(
+		    studentCurricularPlan.getEnrolmentsSet(), predicate)) {
+		infoSelectedEnrollments.add(InfoEnrolment.newInfoFromDomain(enrolment));
+	    }
 
-            if (curricularPlanID.isNewest()) {
-                // seleccionar o mais recente
+	    result.addInfoStudentCurricularPlan(InfoStudentCurricularPlan
+		    .newInfoFromDomain(studentCurricularPlan), infoSelectedEnrollments);
 
-                StudentCurricularPlan planoRecente = null;
-                StudentCurricularPlan planoTemp = null;
-                Iterator iterator = studentCurricularPlans.iterator();
+	}
 
-                while (iterator.hasNext()) {
-                    planoTemp = (StudentCurricularPlan) iterator.next();
+	return result;
+    }
 
-                    if (planoRecente == null
-                            || planoRecente.getStartDate().before(planoTemp.getStartDate())) {
-                        planoRecente = planoTemp;
-                    }
-                }
+    private StudentCurricularPlan getMostRecentStudentCurricularPlan(final Person person) {
+	StudentCurricularPlan mostRecentStudentCurricularPlan = null;
+	for (final StudentCurricularPlan studentCurricularPlan : getAllStudentCurricularPlans(person)) {
+	    if (mostRecentStudentCurricularPlan == null
+		    || mostRecentStudentCurricularPlan.getStartDateYearMonthDay().isBefore(
+			    studentCurricularPlan.getStartDateYearMonthDay())) {
+		mostRecentStudentCurricularPlan = studentCurricularPlan;
+	    }
+	}
+	return mostRecentStudentCurricularPlan;
+    }
 
-                studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-                studentCurricularPlans.add(planoRecente);
-            }
-        } else // um SCP em particular
-        {
-            // obter o CP especificado como curricularPlanID
-            studentCurricularPlans.add(rootDomainObject.readStudentCurricularPlanByOID(curricularPlanID.getId()));
-        }
+    private List<StudentCurricularPlan> getAllStudentCurricularPlans(final Person person) {
+	final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+	for (final Registration registration : person.getStudentsSet()) {
+	    result.addAll(registration.getStudentCurricularPlans());
+	}
+	return result;
+    }
 
-        InfoStudentCurricularPlansWithSelectedEnrollments currPlanEnrol = new InfoStudentCurricularPlansWithSelectedEnrollments();
+    private Predicate getPredicateBy(EnrollmentStateSelectionType criteria) {
+	if (criteria.equals(EnrollmentStateSelectionType.APPROVED)) {
+	    return EnrollmentPredicates.getApprovedPredicate();
 
-        Iterator iteratorInfo = studentCurricularPlans.iterator();
-        StudentCurricularPlan studentCurricularPlan = null;
+	} else if (criteria.equals(EnrollmentStateSelectionType.NONE)) {
+	    return EnrollmentPredicates.getNonePredicate();
 
-        while (iteratorInfo.hasNext()) {
-            // criacao da info a retornar a partir dos objectos de dominio
-            // pretendidos
-
-            studentCurricularPlan = (StudentCurricularPlan) iteratorInfo.next();
-
-            List enrollments = studentCurricularPlan.getEnrolments();// lista
-                                                                        // de
-                                                                        // IEnrollment's
-            List selectedEnrollments = ((List) CollectionUtils.select(enrollments, predicado));
-
-            List<InfoEnrolment> infoSelectedEnrollments = new ArrayList<InfoEnrolment>();
-            Iterator selectedEnrollmentsIterator = selectedEnrollments.iterator();
-
-            GetEnrolmentGrade getEnrolmentGrade = new GetEnrolmentGrade();
-
-            while (selectedEnrollmentsIterator.hasNext()) {
-                Enrolment enrollment = (Enrolment) selectedEnrollmentsIterator.next();
-                InfoEnrolment infoEnrollment = InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
-                        .newInfoFromDomain(enrollment);
-
-                InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrolmentGrade.run(enrollment);
-                infoEnrollment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
-
-                infoSelectedEnrollments.add(infoEnrollment);
-            }
-
-            currPlanEnrol.addInfoStudentCurricularPlan(
-                    InfoStudentCurricularPlan
-                            .newInfoFromDomain(studentCurricularPlan), infoSelectedEnrollments);
-        }
-
-        return currPlanEnrol;
+	} else {
+	    return EnrollmentPredicates.getAllPredicate();
+	}
     }
 
 }

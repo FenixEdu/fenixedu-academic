@@ -76,15 +76,11 @@
 			<bean:size id="size" name="marksListComponent" property="infoAttends" />	
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.sizeList" property="sizeList" value="<%= size.toString() %>" /> 
 				    			    		
-	    	<logic:iterate id="markElem" name="marksListComponent" property="infoAttends"  indexId="markId"  type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta" > 
+	    	<logic:iterate id="markElem" name="marksListComponent" property="infoAttends" indexId="markId" type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
 	    	
 		    	<bean:define id="studentCode" name="markElem" property="aluno.idInternal" />
 		    	<bean:define id="studentNumber" name="markElem" property="aluno.number" />
 
-		    	<logic:notEmpty name="markElem" property="infoEnrolment">
-		      		<bean:define id="infoEnrolment" name="markElem" property="infoEnrolment"/>					
-					<bean:define id="evaluationType" name="markElem" property="infoEnrolment.enrolmentEvaluationType" type="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType"/>
-		  		</logic:notEmpty>
 				<bean:define id="studentMark" value=""/>
 				<logic:notEmpty name="marksListComponent" property='<%="marks(" + studentNumber + ")"%>'>
 		    		<bean:define id="studentMark" name="marksListComponent" property='<%="marks(" + studentNumber + ")"%>' type="java.lang.String"/>
@@ -101,9 +97,8 @@
 						<logic:empty name="markElem" property="infoEnrolment" >
 							<bean:message key="message.notEnroled"/>
 						</logic:empty>	
-						<logic:notEmpty name="markElem" property="infoEnrolment">
-							<bean:define id="aux"><bean:write name="evaluationType"/></bean:define>
-							<bean:message name="aux"/>
+						<logic:notEmpty name="markElem" property="enrolmentEvaluationType">
+							<bean:message name="markElem" property="enrolmentEvaluationType.name"/>
 						</logic:notEmpty>
 					</td>
 				

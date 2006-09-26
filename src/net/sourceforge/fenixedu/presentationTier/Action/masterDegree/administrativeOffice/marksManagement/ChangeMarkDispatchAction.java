@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -341,8 +340,6 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
             actionErrors.add("TeacharNumberRequired", new ActionError("error.data.lançamento.inválida"));
             saveErrors(request, actionErrors);
             return chooseStudentMarks(mapping, form, request, response);
-            //				infoEnrolmentEvaluation.setGradeAvailableDate(null);
-            //throw new FenixActionException("error.data.lançamento.inválida");
         }
 
         day = new Integer((String) studentNumberForm.get("gradeAvailableDateDay"));
@@ -353,19 +350,12 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         infoEnrolmentEvaluation.setGradeAvailableDate(examDate.getTime());
 
         final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByNumber(teacherNumber));
-
         final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) RootDomainObject.getInstance().readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
-
-        InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan());
-
-        InfoEnrolment infoEnrolment = new InfoEnrolment();
-        infoEnrolment.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-
         infoEnrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
 
         infoEnrolmentEvaluation.setGrade(grade);
         infoEnrolmentEvaluation.setObservation(observation);
-        infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
+        infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment()));
 
         List evaluationsWithError = null;
 
@@ -378,16 +368,10 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         } catch (NonExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("TeacharNumberRequired", new ActionError("message.non.existing.teacher"));
-            //error.teacherNumber.required
-
             saveErrors(request, actionErrors);
             return chooseStudentMarks(mapping, form, request, response);
-
-            //throw new NonExistingActionException(teacherNumber.toString(),
-            // e);
         }
-
-        //			check for invalid marks
+        
         ActionErrors actionErrors = null;
         actionErrors = checkForErrors(evaluationsWithError);
         if (actionErrors != null) {

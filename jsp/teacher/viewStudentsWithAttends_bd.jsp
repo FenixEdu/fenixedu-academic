@@ -28,11 +28,6 @@ var selectDegree = true;
 var selectShift = true;
 
 function invertSelect(checkboxes){
-	/*if ( checkboxes[0].checked == false ) { 
-		checkboxes[0].checked = true; 
-	} else { 
-		checkboxes[0].checked = false;
-	}*/
 	for (var i=1; i<checkboxes.length; i++){
 		var e = checkboxes[i];
 		if (checkboxes[0].checked == true) { e.checked = true; } else { e.checked = false; }
@@ -365,10 +360,9 @@ function cleanSelect(checkboxes) {
 				</td>
 				<td class="listClasses">
 
-					<logic:present name="attendacy" property="infoEnrolment">
-						<bean:define id="enrollmentEvaluationType" 
-							type="EnrolmentEvaluationType" 
-							name="attendacy" property="infoEnrolment.enrolmentEvaluationType"/>
+					<logic:present name="attendacy" property="enrolmentEvaluationType">
+						<bean:define id="enrollmentEvaluationType" type="EnrolmentEvaluationType" 
+							name="attendacy" property="enrolmentEvaluationType"/>
 						
 						<logic:equal name="enrollmentEvaluationType" value='<%= EnrolmentEvaluationType.NORMAL.toString() %>' >
 							<bean:message key="label.attends.enrollmentState.normal"/>
@@ -380,7 +374,7 @@ function cleanSelect(checkboxes) {
 							<bean:message key="label.attends.enrollmentState.specialSeason"/>
 						</logic:equal>
 					</logic:present>
-					<logic:notPresent name="attendacy" property="infoEnrolment">
+					<logic:notPresent name="attendacy" property="enrolmentEvaluationType">
 						<bean:message key="label.attends.enrollmentState.notEnrolled"/>
 					</logic:notPresent>
 				</td>

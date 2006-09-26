@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -178,21 +177,9 @@ public class SubmitMarksAction extends FenixDispatchAction {
         }
         if (studentCode != null) {
 
-            // enrolment evaluation with only student code and mark and
-            // enrolment code
-
-            final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance()
-                    .readCurriculumModuleByOID(enrolmentCode);
-
-            InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(
-                    enrolment.getStudentCurricularPlan());
-
-            InfoEnrolment infoEnrolment = new InfoEnrolment();
-            infoEnrolment.setIdInternal(enrolmentCode);
-            infoEnrolment.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-
-            InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
-            infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
+            final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(enrolmentCode);
+            final InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
+            infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(enrolment));
 
             infoEnrolmentEvaluation.setGrade(evaluation);
             infoEnrolmentEvaluation.setIdInternal(evaluationId);

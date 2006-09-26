@@ -14,7 +14,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     protected Context() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-        this.setOrder(0);
+        this.setChildOrder(0);
     }
 
     public Context(CourseGroup courseGroup, DegreeModule degreeModule,
@@ -62,7 +62,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
     
     public int compareTo(Context o) {
-        int orderCompare = this.getOrder().compareTo(o.getOrder());
+        int orderCompare = this.getChildOrder().compareTo(o.getChildOrder());
         if (this.getParentCourseGroup().equals(o.getParentCourseGroup()) && orderCompare != 0) {
             return orderCompare;
         } else {

@@ -63,11 +63,9 @@ public class ReadStudentsAndMarksByEvaluation extends Service {
                 if (attend.getEnrolment() != null) {
                     if (!attend.getEnrolment().getExecutionPeriod().equals(
                             executionCourse.getExecutionPeriod())) {
-                        infoAttend.getInfoEnrolment().setEnrolmentEvaluationType(
-                                EnrolmentEvaluationType.IMPROVEMENT);
+                	infoAttend.setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
                     }
                 }
-
                 return infoAttend;
             }
         });

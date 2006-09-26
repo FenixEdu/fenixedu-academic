@@ -1,90 +1,54 @@
-/**
- * 
- * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
- * (jccm@rnl.ist.utl.pt)
- *  
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 public class ReadStudentListByCurricularCourse extends Service {
 
     public List run(IUserView userView, Integer curricularCourseID, String executionYear)
-            throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException {
 
-        CurricularCourse curricularCourse = null;
+	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
+		.readDegreeModuleByOID(curricularCourseID);
 
-        // Read the Students
-
-        curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
-
-        List enrolmentList = null;
-        if (executionYear != null) {
-        	enrolmentList = curricularCourse.getEnrolmentsByYear(executionYear);
-        } else {
-            enrolmentList = curricularCourse.getCurriculumModules();
-        }
-
-        if ((enrolmentList == null) || (enrolmentList.isEmpty())) {
-            throw new NonExistingServiceException();
-        }
-
-        return cleanList(enrolmentList);
+	if (executionYear != null) {
+	    return cleanList(curricularCourse.getEnrolmentsByYear(executionYear));
+	} else {
+	    return cleanList(curricularCourse.getCurriculumModules());
+	}
     }
 
-    /**
-     * @param enrolmentList
-     * @return A list of enrolments without the duplicates
-     * @throws ExcepcaoPersistencia 
-     */
-    private List cleanList(List enrolmentList) throws FenixServiceException, ExcepcaoPersistencia {
-        List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
-        Integer numberAux = null;
+    private List cleanList(final List enrolmentList) throws FenixServiceException {
 
-        Iterator iterator = enrolmentList.iterator();
-        while (iterator.hasNext()) {
-            Enrolment enrolment = (Enrolment) iterator.next();
+	if (enrolmentList.isEmpty()) {
+	    throw new NonExistingServiceException();
+	}
 
-            if ((numberAux == null)
-                    || (numberAux.intValue() != enrolment.getStudentCurricularPlan().getStudent()
-                            .getNumber().intValue())) {
-                numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
+	Integer studentNumber = null;
+	final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
+	for (final Enrolment enrolment : (List<Enrolment>) enrolmentList) {
 
-                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (new GetEnrolmentGrade())
-                        .run(enrolment);
+	    if (studentNumber == null
+		    || studentNumber.intValue() != enrolment.getStudentCurricularPlan().getStudent()
+			    .getNumber().intValue()) {
 
-                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-                        .newInfoFromDomain(enrolment);
-                infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
-
-                result.add(infoEnrolment);
-            }
-        }
-
-        BeanComparator numberComparator = new BeanComparator(
-                "infoStudentCurricularPlan.infoStudent.number");
-        Collections.sort(result, numberComparator);
-
-        return result;
+		studentNumber = enrolment.getStudentCurricularPlan().getStudent().getNumber();
+		result.add(InfoEnrolment.newInfoFromDomain(enrolment));
+	    }
+	}
+	Collections.sort(result, new BeanComparator("infoStudentCurricularPlan.infoStudent.number"));
+	return result;
     }
 
 }

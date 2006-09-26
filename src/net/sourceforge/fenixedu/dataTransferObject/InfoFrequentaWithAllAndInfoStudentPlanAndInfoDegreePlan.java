@@ -17,8 +17,7 @@ public class InfoFrequentaWithAllAndInfoStudentPlanAndInfoDegreePlan extends Inf
             setAluno(InfoStudent.newInfoFromDomain(frequenta.getAluno()));
             setDisciplinaExecucao(InfoExecutionCourse.newInfoFromDomain(frequenta
                     .getDisciplinaExecucao()));
-            setInfoEnrolment(InfoEnrolmentWithInfoStudentPlanAndInfoDegreePlan
-                    .newInfoFromDomain(frequenta.getEnrolment()));
+            setInfoEnrolment(InfoEnrolment.newInfoFromDomain(frequenta.getEnrolment()));
         }
     }
 

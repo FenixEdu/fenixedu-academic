@@ -5855,16 +5855,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadImprovmentsToEnroll</name>
-		<description></description>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.improvment.ReadImprovmentsToEnroll</implementationClass>
-		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="EnrolmentImprovmentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ImprovmentEnrollService</name>
 		<description></description>
 		<implementationClass>

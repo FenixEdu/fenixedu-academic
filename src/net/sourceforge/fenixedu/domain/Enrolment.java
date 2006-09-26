@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -30,6 +28,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author dcs-rjao
@@ -369,16 +368,16 @@ public class Enrolment extends Enrolment_Base {
 	enrolmentEvaluation.setObservation(observation);
 	enrolmentEvaluation.setPersonResponsibleForGrade(personResponsibleForGrade);
 
-	enrolmentEvaluation.setEmployee(employee);
-
-	Calendar calendar = Calendar.getInstance();
-	enrolmentEvaluation.setWhen(new Timestamp(calendar.getTimeInMillis()));
-	enrolmentEvaluation.setGradeAvailableDate(calendar.getTime());
-	if (evaluationDate != null) {
-	    enrolmentEvaluation.setExamDate(evaluationDate);
-	} else {
-	    enrolmentEvaluation.setExamDate(calendar.getTime());
-	}
+        enrolmentEvaluation.setEmployee(employee);
+        enrolmentEvaluation.setWhenDateTime(new DateTime());
+        
+        final YearMonthDay yearMonthDay = new YearMonthDay();
+	enrolmentEvaluation.setGradeAvailableDateYearMonthDay(yearMonthDay);
+        if (evaluationDate != null) {
+            enrolmentEvaluation.setExamDate(evaluationDate);
+        } else {
+            enrolmentEvaluation.setExamDateYearMonthDay(yearMonthDay);
+        }
 
 	enrolmentEvaluation.setCheckSum("");
 
@@ -816,7 +815,11 @@ public class Enrolment extends Enrolment_Base {
 		.getAllFinalEnrolmentEvaluations())
 		: getLatestEnrolmentEvalution(this.getEvaluations());
     }
-
+    
+    public EnrolmentEvaluation getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType evaluationType) {
+	return getLatestEnrolmentEvalution(getEnrolmentEvaluationsByEnrolmentEvaluationType(evaluationType));
+    }
+    
     private EnrolmentEvaluation getLatestEnrolmentEvalution(
 	    List<EnrolmentEvaluation> enrolmentEvaluations) {
 	return (enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) ? null : Collections

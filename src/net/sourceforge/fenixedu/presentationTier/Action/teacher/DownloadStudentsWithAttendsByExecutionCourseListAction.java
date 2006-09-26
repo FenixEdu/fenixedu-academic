@@ -43,6 +43,7 @@ import org.joda.time.YearMonthDay;
  * @author Andre Fernandes / Joao Brito
  */
 public class DownloadStudentsWithAttendsByExecutionCourseListAction extends FenixAction {
+    
     private static final String SEPARATOR = "\t";
 
     private static final String NEWLINE = "\n";
@@ -94,7 +95,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
         List enrollmentTypeList = null;
         List shiftIDs = null;
         try {
-            executionCourseID = new Integer(request.getParameter("objectCode"));
+            executionCourseID = Integer.valueOf(request.getParameter("objectCode"));
 
         } catch (NumberFormatException ex) {
             // ok, we don't want to view a shift's student list
@@ -209,15 +210,16 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
             // attendacy type (normal, improvement, not enrolled)
             String attendacyType = "";
             if (infoAttends.getInfoEnrolment() != null) {
-                if (infoAttends.getInfoEnrolment().getEnrolmentEvaluationType().equals(
-                        EnrolmentEvaluationType.NORMAL)) {
+        	
+                if (infoAttends.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
                     attendacyType = ATTENDACY_TYPE_NORMAL;
-                } else if (infoAttends.getInfoEnrolment().getEnrolmentEvaluationType().equals(
-                        EnrolmentEvaluationType.IMPROVEMENT)) {
+                    
+                } else if (infoAttends.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT)) {
                     attendacyType = ATTENDACY_TYPE_IMPROVEMENT;
                 }
-            } else
+            } else {
                 attendacyType = ATTENDACY_TYPE_NOT_ENROLLED;
+            }
 
             fileContents += attendacyType + SEPARATOR;
 
@@ -228,11 +230,6 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
             // student name
             String shortName = infoAttends.getAluno().getInfoPerson().getNome();
-//            String[] names = shortName.split(" ");
-//            String firstName = names[0];
-//            String lastName = names[names.length - 1];
-//            shortName = firstName + " " + lastName;
-// commented out by gedl            
             fileContents += shortName + SEPARATOR;
 
             // student groups

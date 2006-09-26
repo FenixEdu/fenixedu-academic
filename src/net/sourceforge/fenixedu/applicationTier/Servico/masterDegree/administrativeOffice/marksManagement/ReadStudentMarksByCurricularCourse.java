@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluationWithResponsibleForGrade;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -126,8 +125,7 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 		    EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) iter.next();
 		    InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
 			    .newInfoFromDomain(enrolmentEvaluation);
-		    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-			    .newInfoFromDomain(enrolmentEvaluation.getEnrolment());
+		    InfoEnrolment infoEnrolment = InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment());
 		    infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 
 		    if (enrolmentEvaluation != null && enrolmentEvaluation.hasEmployee()) {

@@ -4,7 +4,6 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -25,16 +23,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
 
-/**
- * @author Tânia Pousão
- *  
- */
 public class MarksListAction extends FenixDispatchAction {
 
     public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession(false);
 
         IUserView userView = getUserView(request);
 
@@ -63,14 +55,9 @@ public class MarksListAction extends FenixDispatchAction {
 
     }
 
-    /**
-     * @author Tânia Pousão
-     *  
-     */
-    public ActionForward loadMarksOnline(ActionMapping mapping, ActionForm form,
+     public ActionForward loadMarksOnline(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-
+	 
         IUserView userView = getUserView(request);
 
         Integer executionCourseCode = getFromRequest("objectCode", request);
@@ -99,13 +86,8 @@ public class MarksListAction extends FenixDispatchAction {
         return mapping.findForward("marksList");
     }
 
-    /**
-     * @author Fernanda Quitério
-     *  
-     */
     public ActionForward preparePublishMarks(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
@@ -131,14 +113,9 @@ public class MarksListAction extends FenixDispatchAction {
         return mapping.findForward("preparePublishMarks");
     }
 
-    /**
-     * @author Fernanda Quitério
-     *  
-     */
     public ActionForward publishMarks(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-
+        
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
         Integer objectCode = getFromRequest("objectCode", request);
@@ -166,10 +143,6 @@ public class MarksListAction extends FenixDispatchAction {
 
         return mapping.findForward("viewMarksOptions");
     }
-
-
-
-
 
     private Integer getFromRequest(String parameter, HttpServletRequest request) {
         Integer parameterCode = null;

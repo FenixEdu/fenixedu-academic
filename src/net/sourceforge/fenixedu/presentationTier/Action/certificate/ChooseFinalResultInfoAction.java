@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.certificate;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
@@ -35,16 +33,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-/**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- *  
- */
 public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -52,21 +45,16 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
         if (session != null) {
-
             session.removeAttribute(SessionConstants.SPECIALIZATIONS);
-
             return mapping.findForward("PrepareReady");
         }
-
         throw new Exception();
-
     }
 
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-
         if (session != null) {
 
             DynaActionForm chooseDeclaration = (DynaActionForm) form;
@@ -119,19 +107,10 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
             request.setAttribute("path", "FinalResult");
 
             return mapping.findForward("ChooseStudentCurricularPlan");
-
         }
-
         throw new Exception();
     }
 
-    /**
-     * @param mapping
-     * @param form
-     * @param request
-     * @param response
-     * @return
-     */
     public ActionForward chooseFinal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -194,12 +173,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
                 throw new NonExistingActionException("Inscrição em Disciplinas");
             }
 
-            //check the last exam date
-            //                        InfoEnrolmentEvaluation infoEnrolmentEvaluation = new
-            // InfoEnrolmentEvaluation();
-
             String conclusionDate = null;
-
             Date endOfScholarshipDate = null;
             try {
                 Object argsTemp[] = { studentCurricularPlanID };
@@ -215,22 +189,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
             conclusionDate = DateFormat.getDateInstance().format(dateConclusion);
             //String dataAux = null;
             Object result = null;
-            //                        Iterator iterator = enrolmentList.iterator();
-            //                        int i = 0;
-            //                        while (iterator.hasNext())
-            //                        {
-            //                            result = iterator.next();
-            //                            infoEnrolmentEvaluation = (InfoEnrolmentEvaluation)
-            // (((InfoEnrolment) result)
-            //                                            .getInfoEvaluations().get(i));
-            //                            // dataAux =
-            //                            // DateFormat.getDateInstance().format(
-            //                            // infoEnrolmentEvaluation.getExamDate());
-            //                            /*
-            //                             * if (conclusionDate.compareTo(dataAux) == -1) {
-            //                             * conclusionDate = dataAux;
-            //                             */
-            //                        }
+            
             List newEnrolmentList = new ArrayList();
             //get the last enrolmentEvaluation
             Iterator iterator1 = enrolmentList.iterator();
@@ -238,30 +197,9 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
             while (iterator1.hasNext()) {
                 result = iterator1.next();
                 InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
-                //                            InfoCurricularCourseScope infoCurricularCourseScope =
-                // infoEnrolment2
-                //                                            .getInfoCurricularCourseScope();
-                //                            sum = sum
-                //                                            + Double.parseDouble(String
-                //                                                            .valueOf(infoCurricularCourseScope
-                //                                                                            .getInfoCurricularCourse()
-                //                                                                            .getCredits()));
 
                 InfoCurricularCourse infoCurricularCourse = infoEnrolment2.getInfoCurricularCourse();
                 sum = sum + Double.parseDouble(String.valueOf(infoCurricularCourse.getCredits()));
-
-                List aux = infoEnrolment2.getInfoEvaluations();
-
-                if (aux != null && aux.size() > 0) {
-                    if (aux.size() > 1) {
-                        BeanComparator dateComparator = new BeanComparator("when");
-                        Collections.sort(aux, dateComparator);
-                        Collections.reverse(aux);
-                    }
-                    InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux.get(0);
-                    infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
-                    newEnrolmentList.add(infoEnrolment2);
-                }
             }
             if ((infoStudentCurricularPlan.getGivenCredits() != null)
                     && !infoStudentCurricularPlan.getGivenCredits().equals(new Double(0))) {

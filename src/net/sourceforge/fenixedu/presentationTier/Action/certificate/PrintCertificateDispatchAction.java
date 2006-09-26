@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.certificate;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
@@ -33,32 +31,17 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-/**
- * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- * 
- * 
- */
 public class PrintCertificateDispatchAction extends FenixDispatchAction {
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-        // String[] destination = null;
-        // InfoStudent infoStudent = new InfoStudent();
-        // InfoDegree infoDegree = new InfoDegree();
-        // InfoPerson infoPerson = new InfoPerson();
-        // InfoDegreeCurricularPlan infoDegreeCurricularPlan = new
-        // InfoDegreeCurricularPlan();
-        // InfoEnrolment infoEnrolment = new InfoEnrolment();
-        // InfoStudentCurricularPlan newInfoStudentCurricularPlan = new
-        // InfoStudentCurricularPlan();
+    
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+        final HttpSession session = request.getSession(false);
         if (session != null) {
             IUserView userView = getUserView(request);
             session.removeAttribute(SessionConstants.MATRICULA);
@@ -157,17 +140,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                     while (iterator.hasNext()) {
                         result = iterator.next();
                         InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
-                        List aux = infoEnrolment2.getInfoEvaluations();
-                        if (aux != null && aux.size() > 0) {
-                            if (aux.size() > 1) {
-                                BeanComparator dateComparator = new BeanComparator("when");
-                                Collections.sort(aux, dateComparator);
-                                Collections.reverse(aux);
-                            }
-                            InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux
-                                    .get(0);
-                            infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
-                        }
+                        
                         if (result instanceof InfoEnrolmentInExtraCurricularCourse) {
                             extraEnrolment.add(infoEnrolment2);
                             anoLectivo = ((InfoEnrolment) extraEnrolment.get(0))
@@ -208,17 +181,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                         while (iterator.hasNext()) {
                             result = iterator.next();
                             InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
-                            List aux = infoEnrolment2.getInfoEvaluations();
-                            if (aux != null && aux.size() > 0) {
-                                if (aux.size() > 1) {
-                                    BeanComparator dateComparator = new BeanComparator("when");
-                                    Collections.sort(aux, dateComparator);
-                                    Collections.reverse(aux);
-                                }
-                                InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux
-                                        .get(0);
-                                infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
-                            }
+                           
                             if (result instanceof InfoEnrolmentInExtraCurricularCourse) {
                                 extraEnrolment.add(infoEnrolment2);
                                 anoLectivo = ((InfoEnrolment) extraEnrolment.get(0))
@@ -229,16 +192,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                                         .getInfoExecutionPeriod().getInfoExecutionYear().getYear();
                             }
                         }
-                        // Object result = null;
-                        // Iterator iterator = enrolmentList.iterator();
-                        // while(iterator.hasNext()) {
-                        // result = (InfoEnrolment) iterator.next();
-                        // if (result instanceof
-                        // InfoEnrolmentInExtraCurricularCourse)
-                        // extraEnrolment.add(result);
-                        // else
-                        // normalEnrolment.add(result);
-                        // }
+
                         session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
                         session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);
                         if (certificate.equals("Aproveitamento")) {
@@ -305,9 +259,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                                     saveErrors(request, errors);
                                     return new ActionForward(mapping.getInput());
                                 }
-                                // InfoEnrolmentEvaluation
-                                // infoEnrolmentEvaluation = new
-                                // InfoEnrolmentEvaluation();
+
                                 String conclusionDate = null;
                                 Date endOfScholarshipDate = null;
                                 try {
@@ -319,28 +271,14 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                                     throw new FenixActionException(e);
                                 }
                                 conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate, "-");
-                                // String dataAux = null;
-                                // Object result = null;
+
                                 List normalEnrolment = new ArrayList();
                                 List extraEnrolment = new ArrayList();
-                                // InfoEnrolment infoEnrolment = new
-                                // InfoEnrolment();
                                 Object result = null;
                                 Iterator iterator = enrolmentList.iterator();
                                 while (iterator.hasNext()) {
                                     result = iterator.next();
                                     InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
-                                    List aux = infoEnrolment2.getInfoEvaluations();
-                                    if (aux != null && aux.size() > 0) {
-                                        if (aux.size() > 1) {
-                                            BeanComparator dateComparator = new BeanComparator("when");
-                                            Collections.sort(aux, dateComparator);
-                                            Collections.reverse(aux);
-                                        }
-                                        InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux
-                                                .get(0);
-                                        infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
-                                    }
                                     if (result instanceof InfoEnrolmentInExtraCurricularCourse) {
                                         extraEnrolment.add(infoEnrolment2);
                                         anoLectivo = ((InfoEnrolment) extraEnrolment.get(0))

@@ -58,4 +58,7 @@ public enum EnrolmentEvaluationType {
          return labelValueBeans;
     }
     
+    public String getName() {
+	return name();
+    }
 }

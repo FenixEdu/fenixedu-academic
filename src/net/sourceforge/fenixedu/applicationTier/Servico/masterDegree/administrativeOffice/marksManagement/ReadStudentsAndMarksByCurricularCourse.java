@@ -15,9 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluationWithResponsibleForGrade;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -89,15 +87,6 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 				throw new ExistingServiceException();
 			}
 
-			// if (((EnrolmentEvaluation) enrolmentEvaluations.get(0))
-			// .getEnrolmentEvaluationState()
-			// .equals(EnrolmentEvaluationState.FINAL_OBJ)) {
-			// throw new ExistingServiceException();
-			// }
-
-			// get teacher responsible for final evaluation - he is
-			// responsible for all evaluations for this
-			// curricularCourse
 			List enrolmentEvaluationsWithResponsiblePerson = (List) CollectionUtils.select(
 					enrolmentEvaluations, new Predicate() {
 						public boolean evaluate(Object arg0) {
@@ -123,9 +112,7 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 						.newInfoFromDomain(elem);
 				infoEnrolmentEvaluation.setIdInternal(elem.getIdInternal());
 
-				InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-						.newInfoFromDomain(elem.getEnrolment());
-				infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
+				infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(elem.getEnrolment()));
 				infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 			}
 		}
