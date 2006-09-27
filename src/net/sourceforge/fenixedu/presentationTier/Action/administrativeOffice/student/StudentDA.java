@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -25,6 +26,13 @@ public class StudentDA extends FenixDispatchAction {
 
     public ActionForward prepareEditPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         final Student student = getStudent(request);        
+        
+        final Employee employee = student.getPerson().getEmployee();
+	if(employee != null && employee.getCurrentContract() != null){
+            addActionMessage(request, "message.student.personIsEmployee");
+            return mapping.findForward("viewStudentDetails");
+        }
+	
         request.setAttribute("personBean", new PersonBeanFactoryEditor(student.getPerson()));
 	return mapping.findForward("editPersonalData");
     }
