@@ -55,8 +55,8 @@ public class CreateStudent extends Service {
 	new Qualification(person, studentCandidacy.getPrecedentDegreeInformation());
 
 	// add roles
-	person.addPersonRoleByRoleType(RoleType.PERSON);
 	person.addPersonRoleByRoleType(RoleType.STUDENT);
+	person.addPersonRoleByRoleType(RoleType.PERSON);
 
 	return registration;
     }

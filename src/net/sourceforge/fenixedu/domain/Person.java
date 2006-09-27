@@ -984,6 +984,8 @@ public class Person extends Person_Base {
 	    case MASTER_DEGREE_CANDIDATE:
 	    case CANDIDATE:
 		return true;
+	    case STUDENT:
+		return true;		
 	    case PERSON:
 		return true;
 	    default:
