@@ -154,7 +154,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	    if (person != null) {
 		personBean = new PersonBean(person);
 
-		if (person.getEmployee() != null) {
+		if (person.getEmployee() != null && person.getEmployee().getCurrentContract() != null) {
 		    request.setAttribute("personBean", personBean);
 		    return mapping.findForward("fillNewPersonDataForEmployee");
 		}
