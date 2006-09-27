@@ -1397,3 +1397,238 @@
 <schema name="bibtex.participatorDescription" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean">
  	<slot name="personDescription"/>
 </schema>
+
+<!-- Publications presentation -->
+<schema name="publication.resultParticipation" bundle="RESEARCHER_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation">
+	<slot name="person.name"/>
+</schema>
+<schema name="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication">
+	<slot name="orderedResultParticipations" layout="publication.resultParticipation"/>
+	<slot name="title"/>
+</schema>
+<schema name="result.publication.presentation.Book" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.Book">
+	<slot name="publisher" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="address"/>
+ 	<slot name="year"/>
+	<slot name="month"/>
+	<slot name="edition"/>
+	<slot name="volume"/>
+	<slot name="series"/>
+	<slot name="isbn"/>
+	<slot name="numberPages"/>
+	<slot name="language"/>
+	<slot name="country" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="country.name"/>
+	</slot>
+	<slot name="scope"/>
+	<slot name="url"/>
+	<slot name="note"/>
+</schema>
+<schema name="result.publication.presentation.Inbook" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.BookPart">
+	<slot name="chapter"/>
+	<slot name="publisher" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="address"/>
+ 	<slot name="year"/>
+	<slot name="month"/>
+	<slot name="edition"/>
+	<slot name="volume"/>
+	<slot name="series"/>
+	<slot name="firstPage"/>
+	<slot name="lastPage"/>
+	<slot name="country" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="country.name"/>
+	</slot>
+	<slot name="url"/>
+	<slot name="note"/>
+</schema>
+<schema name="result.publication.presentation.Incollection" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.BookPart">
+	<slot name="bookTitle"/>
+	<slot name="publisher" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="address"/>
+ 	<slot name="year"/>
+	<slot name="month"/>
+	<slot name="firstPage"/>
+	<slot name="lastPage"/>
+	<slot name="organization" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="country" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="country.name"/>
+	</slot>
+	<slot name="url"/>
+	<slot name="note"/>
+</schema>
+<schema name="result.publication.presentation.Article" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.Article">
+	<slot name="journal"/>
+ 	<slot name="year"/>	
+	<slot name="month"/>
+	<slot name="volume"/>
+	<slot name="number"/>
+	<slot name="firstPage"/>
+	<slot name="lastPage"/>
+	<slot name="issn"/>
+	<slot name="publisher" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="language"/>
+	<slot name="country" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="country.name"/>
+	</slot>
+	<slot name="scope"/>
+	<slot name="url"/>
+	<slot name="note"/>
+</schema>
+<schema name="result.publication.presentation.Inproceedings" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings">
+ 	<slot name="year"/>
+	<slot name="month"/>
+	<slot name="event" key="label.conference" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="event.name"/>
+	</slot>
+	<slot name="scope"/>
+	<slot name="publisher" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="address"/>
+	<slot name="organization" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="firstPage"/>
+	<slot name="lastPage"/>
+	<slot name="language"/>
+	<slot name="url"/>
+	<slot name="note"/>
+</schema>
+<schema name="result.publication.presentation.Proceedings" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.Proceedings">
+ 	<slot name="year"/>	
+	<slot name="month"/>
+	<slot name="event" key="label.conference" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="event.name"/>
+	</slot>
+	<slot name="scope"/>
+	<slot name="publisher" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="address"/>
+	<slot name="organization" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="url"/>
+	<slot name="note"/>
+</schema>
+<schema name="result.publication.presentation.Thesis" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.Thesis">
+	<slot name="thesisType"/>
+ 	<slot name="year"/>	
+	<slot name="month"/>
+	<slot name="organization" layout="null-as-label" key="label.school">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="address"/>
+	<slot name="numberPages"/>
+	<slot name="language"/>
+	<slot name="url"/>
+	<slot name="note"/>
+</schema>
+<schema name="result.publication.presentation.Manual" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.Manual">
+ 	<slot name="year"/>
+	<slot name="month"/>
+	<slot name="organization" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="address"/>
+	<slot name="url"/>
+	<slot name="note"/>
+</schema>
+<schema name="result.publication.presentation.TechnicalReport" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport">
+ 	<slot name="year"/>
+	<slot name="month"/>
+	<slot name="organization" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="address"/>
+	<slot name="technicalReportType"/>
+	<slot name="number"/>
+	<slot name="numberPages"/>
+	<slot name="language"/>
+	<slot name="url"/>
+	<slot name="note"/>
+</schema>
+<schema name="result.publication.presentation.OtherPublication" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication">
+ 	<slot name="year"/>
+	<slot name="month"/>
+	<slot name="otherPublicationType"/>
+	<slot name="howPublished"/>
+	<slot name="publisher" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="unit.name"/>
+	</slot>
+	<slot name="address"/>
+	<slot name="numberPages"/>
+	<slot name="language"/>
+	<slot name="country" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="country.name"/>
+	</slot>
+	<slot name="url"/>
+	<slot name="note"/>
+</schema>
+<!-- This one has a single field title with all information (from old publications) -->
+<schema name="result.publication.presentation.Unstructured" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.Unstructured">
+		<slot name="title"/>
+</schema>
