@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -181,10 +182,17 @@ public class ConvokeManagement extends FenixDispatchAction {
 		vigilants.addAll(unavailables);
 		beanWithVigilants.setVigilants(vigilants);
 
-		beanWithVigilants.setEmailMessage(RenderUtils.getResourceString(
-				"VIGILANCY_RESOURCES", "label.vigilancy.emailConvoke"));
-		request.setAttribute("bean", beanWithVigilants);
-		return mapping.findForward("confirmConvokes");
+		
+	  String email = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.vigilancy.emailConvoke");
+	  MessageFormat format = new MessageFormat(email);
+	  WrittenEvaluation evaluation = beanWithVigilants.getWrittenEvaluation();
+	  DateTime beginDate = evaluation.getBeginningDateTime();
+	  String date = beginDate.getDayOfMonth() + "/" + beginDate.getMonthOfYear() + "/" + beginDate.getYear();
+	  Object[] args = { evaluation.getName(), date, beginDate.getHourOfDay(), beginDate.getMinuteOfHour(), evaluation.getAssociatedRoomsAsString(),
+			  beanWithVigilants.getVigilantsAsString(), beanWithVigilants.getSelectedVigilantGroup().getRulesLink() };
+	  beanWithVigilants.setEmailMessage(format.format(args));
+	  request.setAttribute("bean", beanWithVigilants);
+	  return mapping.findForward("confirmConvokes");
 	}
 
 	public ActionForward revertConvokes(ActionMapping mapping, ActionForm form,

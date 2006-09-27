@@ -12,7 +12,7 @@
 <logic:present name="vigilant">
 <logic:equal name="bean" property="executionYear.current" value="true">
 	<logic:equal name="vigilant" property="allowedToSpecifyUnavailablePeriod" value="true">
-		<li><html:link  page="/vigilancy/unavailablePeriodManagement.do?method=addUnavailablePeriod"><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.addUnavailablePeriod"/></html:link></li>
+		<li><html:link  page="/vigilancy/unavailablePeriodManagement.do?method=addUnavailablePeriod"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addUnavailablePeriod"/></html:link></li>
 	</logic:equal>
 </logic:equal>
 </logic:present>
@@ -68,7 +68,7 @@
 <logic:present name="vigilant">
 	<p class="mbottom05"><strong><bean:message key="vigilancy.myConvokes" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
 	<logic:empty name="vigilant" property="vigilancys">
-		<p class="mtop05"><em><bean:message key="label.person.vigilancy.noConvokesToDisplay" bundle="VIGILANCY_RESOURCES"/></em></p>
+		<p class="mtop05"><em><bean:message key="label.vigilancy.noConvokesToDisplay" bundle="VIGILANCY_RESOURCES"/></em></p>
 	</logic:empty>
 
 	<logic:notEmpty name="vigilant" property="vigilancys">

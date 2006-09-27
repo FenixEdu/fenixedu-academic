@@ -156,7 +156,8 @@ public class VigilantManagement extends FenixDispatchAction {
         }
 
         if (vigilant != null) {
-            List<VigilantGroup> groups = vigilant.getVigilantGroups();
+        	
+        	List<VigilantGroup> groups = vigilant.getVisibleVigilantGroups();
             bean.setVigilantGroups(groups);
             if (groups.size() == 1) {
                 VigilantGroup group = groups.get(0);

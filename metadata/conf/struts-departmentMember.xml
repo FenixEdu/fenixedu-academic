@@ -403,6 +403,8 @@
         		<forward name="showTeacherServiceDistributionCreationForm" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionCreationForm"/>	
         		<forward name="showTeacherServiceDistributionServices" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionServices"/>
         		<forward name="showTeacherServiceDistributions" path="df.page.teacherServiceDistribution.showTeacherServiceDistributions"/>
+				<forward name="createNewDistributionFromCopy" path="df.page.teacherServiceDistribution.createNewDistributionFromCopy"/>
+
         </action>
 
 	    <action path="/teacherServiceDistributionCopy"

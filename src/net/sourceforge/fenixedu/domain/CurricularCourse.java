@@ -247,6 +247,16 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return activeScopesInExecutionPeriod;
     }
 
+    public List<DegreeModuleScope> getActiveDegreeModuleScopesInExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    	final List<DegreeModuleScope> activeScopesInExecutionPeriod = new ArrayList<DegreeModuleScope> ();
+    	for(final DegreeModuleScope scope : getDegreeModuleScopes()) {
+    		if(scope.isActiveForExecutionPeriod(executionPeriod)) {
+    			activeScopesInExecutionPeriod.add(scope);
+    		}
+    	}
+    	return activeScopesInExecutionPeriod;
+    }
+    
     public boolean hasActiveScopesInExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	return !getActiveScopesInExecutionPeriod(executionPeriod).isEmpty();
     }

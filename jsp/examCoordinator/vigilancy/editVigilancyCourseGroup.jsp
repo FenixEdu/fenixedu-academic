@@ -6,7 +6,7 @@
 
 
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
-<h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.editVigilancyCourseGroup"/></h2>
+<h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.editVigilancyCourseGroup"/></h2>
 <script type="text/javascript" language="javascript" src="<%= request.getContextPath() %>/examCoordinator/vigilancy/checkall.js"></script>
 
 <ul>

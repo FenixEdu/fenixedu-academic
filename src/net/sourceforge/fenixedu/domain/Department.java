@@ -11,6 +11,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +22,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.CompetenceCourseGroupsForScientificArea;
 
 import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
@@ -239,7 +242,38 @@ public class Department extends Department_Base {
         return new ArrayList<Employee>(employees);
     }
 
+	public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
+		
+		Unit departmentUnit = this.getDepartmentUnit();
+		List<VigilantGroup> groups = new ArrayList<VigilantGroup> ();
+		for(Unit unit : departmentUnit.getSubUnits()) {
+			groups.addAll(unit.getVigilantGroupsForGivenExecutionYear(executionYear));
+		}
+		groups.addAll(departmentUnit.getVigilantGroupsForGivenExecutionYear(executionYear));
+		return groups;
+	}
 	
+	public List<CompetenceCourse> getBolonhaCompetenceCourses() {
+		Unit departmentUnit = this.getDepartmentUnit();
+        List<Unit> courseGroups = new ArrayList<Unit> ();
+        List<CompetenceCourse> courses = new ArrayList<CompetenceCourse> ();
+        for (Unit areaUnit : departmentUnit.getScientificAreaUnits()) {
+            for(Unit competenceCourseGroupUnit : areaUnit.getCompetenceCourseGroupUnits()) {
+            	courses.addAll(competenceCourseGroupUnit.getCompetenceCourses());
+            }
+        }
+        return courses;
+    }
+	
+	public List<CompetenceCourse> getBolonhaCompetenceCourses(ExecutionPeriod period) {
+		List<CompetenceCourse> courses = new ArrayList<CompetenceCourse> (); 
+		for(CompetenceCourse course : this.getBolonhaCompetenceCourses()) {
+			if(!course.getCurricularCoursesWithActiveScopesInExecutionPeriod(period).isEmpty()) {
+				courses.add(course);
+			}
+		}
+		return courses;
+	}
     // -------------------------------------------------------------
     // read static methods 
     // -------------------------------------------------------------
@@ -251,4 +285,5 @@ public class Department extends Department_Base {
         }
         return null;
     }
+	
 }

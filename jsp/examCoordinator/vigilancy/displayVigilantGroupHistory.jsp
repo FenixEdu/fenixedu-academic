@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
-<h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.displayGroupHistory"/></h2>
+<h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.displayGroupHistory"/></h2>
 
 
 <fr:form action="/vigilancy/vigilantGroupManagement.do?method=displayGroupHistory">

@@ -173,4 +173,14 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
     public void setTemporalInformation(TemporalInformationType temporalInformation) {
         this.temporalInformation = temporalInformation;
     }
+    
+    public String getVigilantsAsString() {
+    	
+    	String vigilants = "";
+    	for(Object object : this.getVigilants()) {
+    		Vigilant  vigilant = (Vigilant) object;
+    		vigilants += vigilant.getPerson().getName() + " (" + vigilant.getPerson().getUsername() + ")\n"; 
+    	}
+    	return vigilants;
+    }
 }

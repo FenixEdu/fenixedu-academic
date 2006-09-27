@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -19,13 +21,15 @@ public class CreateConvokes extends Service {
         group.convokeVigilants(vigilants, writtenEvaluation);
         if (emailMessage.length() != 0) {
         	Person person = coordinator.getPerson();
+            final ArrayList<String> tos = new ArrayList<String>();
         	for (Vigilant vigilant : vigilants) {
                 String emailTo = vigilant.getEmail();
-                final ArrayList<String> tos = new ArrayList<String>();
                 tos.add(emailTo);
-                EmailSender.send(person.getName(), person.getEmail(), tos, null, null, "Convocatória",
-                        emailMessage);
             }
+        	DateTime date = writtenEvaluation.getBeginningDateTime();
+        	String subject = writtenEvaluation.getName() + " " + group.getName() + " " + date.getDayOfMonth() + "/" + date.getMonthOfYear() + "/" + date.getYear();  
+        	EmailSender.send(person.getName(), person.getEmail(), tos, null, null, subject,
+                    emailMessage);
         }
     }
 

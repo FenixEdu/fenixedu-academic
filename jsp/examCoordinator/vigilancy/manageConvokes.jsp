@@ -214,11 +214,11 @@
 			</th>
 		</logic:equal>
 		<logic:equal name="bean" property="showIncompatibilities" value="true">
-			<th><bean:message key="label.person.vigilancy.displayIncompatibleInformation" bundle="VIGILANCY_RESOURCES"/>
+			<th><bean:message key="label.vigilancy.displayIncompatibleInformation" bundle="VIGILANCY_RESOURCES"/>
 			</th>
 		</logic:equal>
 		<logic:equal name="bean" property="showBoundsJustification" value="true">
-			<th><bean:message key="label.person.vigilancy.boundsJustification" bundle="VIGILANCY_RESOURCES"/>
+			<th><bean:message key="label.vigilancy.boundsJustification" bundle="VIGILANCY_RESOURCES"/>
 			</th>
 		</logic:equal>
 		<logic:equal name="bean" property="showStartPoints" value="true">
@@ -304,11 +304,11 @@
 			</th>
 		</logic:equal>
 		<logic:equal name="bean" property="showIncompatibilities" value="true">
-			<th><bean:message key="label.person.vigilancy.displayIncompatibleInformation" bundle="VIGILANCY_RESOURCES"/>
+			<th><bean:message key="label.vigilancy.displayIncompatibleInformation" bundle="VIGILANCY_RESOURCES"/>
 			</th>
 		</logic:equal>
 		<logic:equal name="bean" property="showBoundsJustification" value="true">
-			<th><bean:message key="label.person.vigilancy.boundsJustification" bundle="VIGILANCY_RESOURCES"/>
+			<th><bean:message key="label.vigilancy.boundsJustification" bundle="VIGILANCY_RESOURCES"/>
 			</th>
 		</logic:equal>
 		<logic:equal name="bean" property="showStartPoints" value="true">
@@ -404,11 +404,11 @@
 			</th>
 		</logic:equal>
 		<logic:equal name="bean" property="showIncompatibilities" value="true">
-			<th><bean:message key="label.person.vigilancy.displayIncompatibleInformation" bundle="VIGILANCY_RESOURCES"/>
+			<th><bean:message key="label.vigilancy.displayIncompatibleInformation" bundle="VIGILANCY_RESOURCES"/>
 			</th>
 		</logic:equal>
 		<logic:equal name="bean" property="showBoundsJustification" value="true">
-			<th><bean:message key="label.person.vigilancy.boundsJustification" bundle="VIGILANCY_RESOURCES"/>
+			<th><bean:message key="label.vigilancy.boundsJustification" bundle="VIGILANCY_RESOURCES"/>
 			</th>
 		</logic:equal>
 		<logic:equal name="bean" property="showStartPoints" value="true">

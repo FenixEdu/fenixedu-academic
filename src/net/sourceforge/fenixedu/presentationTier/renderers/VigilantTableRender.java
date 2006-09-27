@@ -216,14 +216,14 @@ public class VigilantTableRender extends OutputRenderer {
 			schema.addSlotDescription(getSlot("unavailablePeriodsAsString", "label.vigilancy.unavailablePeriodsShortLabel"));
 		}
 		if (isShowIncompatibilities()) {
-			schema.addSlotDescription(getSlot("incompatiblePersonName","label.person.vigilancy.displayIncompatibleInformation"));
+			schema.addSlotDescription(getSlot("incompatiblePersonName","label.vigilancy.displayIncompatibleInformation"));
 		}
 		if(isShowBoundsJustification()) {
-			schema.addSlotDescription(getSlot("boundsAsString","label.person.vigilancy.boundsJustification"));
+			schema.addSlotDescription(getSlot("boundsAsString","label.vigilancy.boundsJustification"));
 		}
 	
 		if(isShowStartPoints()) {
-			schema.addSlotDescription(getSlot("startPoints","label.person.vigilancy.startPoints.header"));
+			schema.addSlotDescription(getSlot("startPoints","label.vigilancy.startPoints.header"));
 		}
 		
 		schema.addSlotDescription(getSlot("points","label.vigilancy.totalpoints.header"));

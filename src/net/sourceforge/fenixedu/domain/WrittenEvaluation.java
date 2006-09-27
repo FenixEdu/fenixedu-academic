@@ -582,4 +582,12 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     	}
     	return vigilancysWithCredits;
     }
+    
+    public String getAssociatedRoomsAsString() {
+    	String rooms="";
+    	for(OldRoom room : this.getAssociatedRooms()) {
+    		rooms += room.getName() + "\n";
+    	}
+    	return rooms;
+    }
 }

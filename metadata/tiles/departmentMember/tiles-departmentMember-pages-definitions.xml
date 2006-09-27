@@ -187,7 +187,12 @@
  	<definition name="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses" extends="departmentMember.masterPage">
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses.jsp"/>
 	</definition>
-	    
+
+ 	<definition name="df.page.teacherServiceDistribution.createNewDistributionFromCopy" extends="departmentMember.masterPage">
+		<put name="body" value="/departmentMember/teacherServiceDistribution/createNewDistributionFromCopy.jsp"/>
+	</definition>
+		    
+	<!--  VIGILANCY -->
 	<definition name="display-convoke-map" extends="departmentMember.masterPage" >
 		<put name="body" value="/departmentMember/vigilancy/manageVigilant.jsp" />
     </definition>	    

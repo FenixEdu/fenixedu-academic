@@ -15,8 +15,8 @@
 	
 		<li><html:link page="/vigilancy/convokeManagement.do?method=prepareEditConvoke" ><bean:message bundle="VIGILANCY_RESOURCES" key="label.manage"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.convokes"/></html:link></li>
 	
-		<li><html:link  page="/vigilancy/unavailablePeriodManagement.do?method=prepareManageUnavailablePeriodsOfVigilants"><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.displayUnavailableInformation"/></html:link></li>
-		<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareManageIncompatiblesOfVigilants"><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.displayIncompatibleInformation"/></html:link></li>
-		<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareGroupInformation"><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.displayGroupHistory"/></html:link></li>
+		<li><html:link  page="/vigilancy/unavailablePeriodManagement.do?method=prepareManageUnavailablePeriodsOfVigilants"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.displayUnavailableInformation"/></html:link></li>
+		<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareManageIncompatiblesOfVigilants"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.displayIncompatibleInformation"/></html:link></li>
+		<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareGroupInformation"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.displayGroupHistory"/></html:link></li>
 	</ul>
 	</logic:equal>

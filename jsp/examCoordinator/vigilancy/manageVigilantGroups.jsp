@@ -133,8 +133,8 @@
 <tr>
 <logic:equal name="bean" property="showVigilantColumn" value="true">
 	<td>
-		<logic:notEmpty name="group" property="vigilantsThatCanBeConvoked">
 		<p class="mvert05"><strong><bean:message key="label.vigilancy.vigilants" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
+		<logic:notEmpty name="group" property="vigilantsThatCanBeConvoked">
 		<fr:view name="group" property="vigilantsThatCanBeConvoked">
 		<fr:layout>
 		<fr:property name="eachSchema" value="presentVigilantName"/>

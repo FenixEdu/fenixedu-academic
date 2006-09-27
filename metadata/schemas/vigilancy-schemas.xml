@@ -239,8 +239,8 @@
 
 <schema name="showEmail" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
 		<slot name="emailMessage" layout="longText" key="label.vigilancy.email">
-		<property name="columns" value="50"/>
-		<property name="rows" value="10"/>
+		<property name="columns" value="100"/>
+		<property name="rows" value="30"/>
 		</slot>
 </schema>
 	
@@ -249,8 +249,8 @@
 		<slot name="person.username" key="label.vigilancy.username"/>
 		<slot name="person.name" key="label.vigilancy.name"/>
 		<slot name="unavailablePeriodsAsString" key="label.vigilancy.unavailablePeriodsShortLabel"/>
-		<slot name="incompatiblePersonName" key="label.person.vigilancy.displayIncompatibleInformation"/>
-		<slot name="boundsAsString" key="label.person.vigilancy.boundsJustification"/>
+		<slot name="incompatiblePersonName" key="label.vigilancy.displayIncompatibleInformation"/>
+		<slot name="boundsAsString" key="label.vigilancy.boundsJustification"/>
 </schema>
 
 <schema name="vigilantsWithAllInformation" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES" extends="convokesOrderedByVigilants">
@@ -346,8 +346,8 @@
 		<property name="format" value="${name}"/>
 		</slot>
 		<slot name="showIncompatibilities" key="label.vigilancy.incompatibilities" layout="option-select-postback"/>
-		<slot name="showUnavailables" key="label.person.vigilancy.displayUnavailableInformation" layout="option-select-postback"/>
-		<slot name="showBoundsJustification" key="label.person.vigilancy.displayBoundsJustification" layout="option-select-postback"/>
+		<slot name="showUnavailables" key="label.vigilancy.displayUnavailableInformation" layout="option-select-postback"/>
+		<slot name="showBoundsJustification" key="label.vigilancy.displayBoundsJustification" layout="option-select-postback"/>
 		<slot name="showStartPoints" key="label.vigilancy.startPoints" layout="option-select-postback"/>
 		<slot name="showAllVigilancyInfo" key="label.vigilancy.showAllVigilancyInfo" layout="option-select-postback"/>
 </schema>
@@ -393,8 +393,8 @@
 		<slot name="vigilant.person.username" key="label.vigilancy.username"/>
 		<slot name="vigilant.person.name" key="label.vigilancy.vigilant"/>
 		<slot name="vigilant.unavailablePeriodsAsString" key="label.vigilancy.unavailablePeriodsShortLabel"/>
-		<slot name="vigilant.incompatiblePersonName" key="label.person.vigilancy.displayIncompatibleInformation"/>
-		<slot name="vigilant.boundsAsString" key="label.person.vigilancy.boundsJustification"/>
+		<slot name="vigilant.incompatiblePersonName" key="label.vgilancy.displayIncompatibleInformation"/>
+		<slot name="vigilant.boundsAsString" key="label.vigilancy.boundsJustification"/>
 		<slot name="vigilant.points" key="label.vigilancy.totalpoints.header"/>
 		<slot name="writtenEvaluation.dayDateYearMonthDay" key="label.vigilancy.date"/>		
 		<slot name="active" key="label.vigilancy.active.header"/>
@@ -516,7 +516,7 @@
 	
 <schema name="visibleConvokeInfo" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
 	<slot name="showIncompatibilities" key="label.vigilancy.incompatibilities" layout="option-select-postback"/>
-	<slot name="showUnavailables" key="label.person.vigilancy.displayUnavailableInformation" layout="option-select-postback"/>
+	<slot name="showUnavailables" key="label.vigilancy.displayUnavailableInformation" layout="option-select-postback"/>
 	<slot name="showAllVigilancyInfo" key="label.vigilancy.showAllVigilancyInfo" layout="option-select-postback"/>
 </schema>
 
@@ -686,8 +686,8 @@
 			<property name="format" value="${name}"/>
 		</slot>
 		<slot name="showIncompatibilities" key="label.vigilancy.incompatibilities" layout="option-select-postback"/>
-		<slot name="showUnavailables" key="label.person.vigilancy.displayUnavailableInformation" layout="option-select-postback"/>
-		<slot name="showBoundsJustification" key="label.person.vigilancy.displayBoundsJustification" layout="option-select-postback"/>
+		<slot name="showUnavailables" key="label.vigilancy.displayUnavailableInformation" layout="option-select-postback"/>
+		<slot name="showBoundsJustification" key="label.vigilancy.displayBoundsJustification" layout="option-select-postback"/>
 		<slot name="showStartPoints" key="label.vigilancy.startPoints" layout="option-select-postback"/>
 		<slot name="showAllVigilancyInfo" key="label.vigilancy.showAllVigilancyInfo" layout="option-select-postback"/>
 </schema>

@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
-<h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.displayUnavailableInformation"/></h2>
+<h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.displayUnavailableInformation"/></h2>
 
 <logic:messagesPresent message="true">
 	<p>
@@ -50,8 +50,11 @@
 		<fr:property name="bundle(edit)" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="link(edit)" value="<%= "/vigilancy/unavailablePeriodManagement.do?method=editUnavailablePeriodOfVigilant&gid=" + vigilantGroup.getIdInternal() %>"/>
 		<fr:property name="param(edit)" value="idInternal/oid" />
+		<fr:property name="key(delete)" value="label.delete"/>
+		<fr:property name="bundle(delete)" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="link(delete)" value="<%= "/vigilancy/unavailablePeriodManagement.do?method=deleteUnavailablePeriodOfVigilant&gid=" + vigilantGroup.getIdInternal() %>"/>
 		<fr:property name="param(delete)" value="idInternal/oid" />
+
 	</fr:layout>
 	</fr:view>
    

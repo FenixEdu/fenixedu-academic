@@ -6,7 +6,7 @@
 
 
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em><br>
-<h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.person.vigilancy.editExamCoordinator"/></h2><br>
+<h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.editExamCoordinator"/></h2><br>
 
 
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean"/>

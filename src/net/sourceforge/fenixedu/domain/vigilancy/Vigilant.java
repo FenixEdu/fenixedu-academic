@@ -2,10 +2,13 @@ package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -15,6 +18,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
@@ -448,5 +452,21 @@ public class Vigilant extends Vigilant_Base {
 			}
 		}
 		return result;
+	}
+	
+	public List<VigilantGroup> getVisibleVigilantGroups() {
+		
+		Set<VigilantGroup> groups = new HashSet<VigilantGroup> ();
+		groups.addAll(this.getVigilantGroups());
+
+		Employee employee = this.getPerson().getEmployee();
+		if(employee!=null) {
+			ExecutionYear executionYear = this.getExecutionYear();
+			Department department = employee.getLastDepartmentWorkingPlace(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+			groups.addAll(department.getVigilantGroupsForGivenExecutionYear(executionYear)) ;
+
+		}
+		
+		return new ArrayList<VigilantGroup>(groups);
 	}
 }
