@@ -332,7 +332,7 @@
     	<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
 		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
-            <property name="regexp" value="\d{2}"/>
+            <property name="regexp" value="(\d{2}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
@@ -341,7 +341,7 @@
        	<property name="size" value="4"/>
 		<property name="maxLength" value="4"/>
         <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
-            <property name="regexp" value="\d{4}"/>
+            <property name="regexp" value="(\d{4}|)"/>
             <property name="message" value="error.conclusionYear.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
