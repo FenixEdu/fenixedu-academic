@@ -29,55 +29,56 @@ import org.apache.struts.action.ActionMapping;
 public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 
     public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        IUserView userView = SessionUtils.getUserView(request);
-        FileEntry personalPhoto = userView.getPerson().getPersonalPhoto();
+	IUserView userView = SessionUtils.getUserView(request);
+	FileEntry personalPhoto = userView.getPerson().getPersonalPhoto();
 
-        if (personalPhoto != null) {
+	if (personalPhoto != null) {
 
-            try {
-                response.setContentType(personalPhoto.getContentType().getMimeType());
-                DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-                dos.write(personalPhoto.getContents());
-                dos.close();
-            } catch (IOException e) {
-            }
-        }
+	    try {
+		response.setContentType(personalPhoto.getContentType().getMimeType());
+		DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+		dos.write(personalPhoto.getContents());
+		dos.close();
+	    } catch (IOException e) {
+	    }
+	}
 
-        return null;
+	return null;
 
     }
 
     public ActionForward retrieveByID(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
-        Integer personID = new Integer(request.getParameter("personCode"));
+	IUserView userView = SessionUtils.getUserView(request);
+	Integer personID = new Integer(request.getParameter("personCode"));
 
-        Person person = (Person) rootDomainObject.readPartyByOID(personID);
-        FileEntry personalPhoto = person.getPersonalPhoto();
+	Person person = (Person) rootDomainObject.readPartyByOID(personID);
+	FileEntry personalPhoto = person.getPersonalPhoto();
 
-        if (personalPhoto != null) {
+	if (personalPhoto != null) {
 
-            if (!person.getAvailablePhoto()) {
-                Person requester = userView.getPerson();
-                if (!(person.hasRole(RoleType.STUDENT) && requester.hasRole(RoleType.TEACHER))) {
-                    return null;
-                }
-            }
+	    if (!person.getAvailablePhoto()) {
+		Person requester = userView.getPerson();
+		if (!(person.hasRole(RoleType.STUDENT) || requester.hasRole(RoleType.TEACHER) || requester
+			.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE))) {
+		    return null;
+		}
+	    }
 
-            try {
-                response.setContentType(personalPhoto.getContentType().getMimeType());
-                DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-                dos.write(personalPhoto.getContents());
-                dos.close();
-            } catch (IOException e) {
-            }
-        }
+	    try {
+		response.setContentType(personalPhoto.getContentType().getMimeType());
+		DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+		dos.write(personalPhoto.getContents());
+		dos.close();
+	    } catch (IOException e) {
+	    }
+	}
 
-        return null;
+	return null;
 
     }
 
