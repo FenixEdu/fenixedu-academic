@@ -860,6 +860,8 @@
     </global-forwards>
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
+        <action path="/seminariesIndex.do" forward="/seminariesIndex.jsp"/>
+    
         <action path="/voidAction" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" name="voidForm">
             <!-- form is not used -->
             <forward name="Success" path="/teacherInformation.do?method=prepareEdit&amp;page=0" />
