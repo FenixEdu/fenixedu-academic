@@ -19,9 +19,12 @@ public class Student extends Student_Base {
 
     public Student(Person person, Integer number) {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
 	setPerson(person);
+	if(number == null){
+	    number = Student.generateStudentNumber();
+	}
 	setNumber(number);
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Student(Person person) {

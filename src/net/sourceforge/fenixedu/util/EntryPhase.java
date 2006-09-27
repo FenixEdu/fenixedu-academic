@@ -12,7 +12,7 @@ import java.util.List;
  * @author João Mota
  * 
  */
-public class EntryPhase implements Serializable{
+public class EntryPhase implements Serializable {
 
     public static final int FIRST_PHASE = 1;
 
@@ -79,13 +79,22 @@ public class EntryPhase implements Serializable{
 	return result;
     }
 
-    public String getName(){
-	if (this.entryPhase.equals(1)){
+    public String getName() {
+	if (this.entryPhase.equals(1)) {
 	    return EntryPhase.FIRST_PHASE_STRING;
 	}
-	if (this.entryPhase.equals(2)){
+	if (this.entryPhase.equals(2)) {
 	    return EntryPhase.SECOND_PHASE_STRING;
 	}
 	return null;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (obj instanceof EntryPhase) {
+	    return ((EntryPhase) obj).getEntryPhase().equals(this.getEntryPhase());
+	}
+	return false;
+    }
+
 }
