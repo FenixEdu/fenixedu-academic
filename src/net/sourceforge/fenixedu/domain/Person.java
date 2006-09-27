@@ -578,7 +578,7 @@ public class Person extends Person_Base {
 	setWorkPhone(infoPerson.getWorkPhone());
     }
 
-    private void setProperties(PersonBean personBean) {
+    public void setProperties(PersonBean personBean) {
 
 	setName(personBean.getName());
 	setGender(personBean.getGender());
