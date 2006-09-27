@@ -93,22 +93,22 @@ public class Registration extends Registration_Base {
 	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, false, null);
 	setEntryPhase(entryPhase);
     }
-
+    
     @Deprecated
     // NOTE: use this for legacy code only
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
 	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
 	    DegreeCurricularPlan degreeCurricularPlan) {
 	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, false, null);
-
+	
 	// create scp
-	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
+	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this,degreeCurricularPlan,
 		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
 			.readActualExecutionPeriod());
-
+	
 	setEntryPhase(entryPhase);
     }
-
+    
     public Registration(Person person, StudentKind studentKind,
 	    DegreeCurricularPlan degreeCurricularPlan, StudentCandidacy studentCandidacy) {
 
@@ -516,6 +516,12 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return null;
+    }
+
+    public static Registration readStudentByNumberAndAllDegreeTypes(Integer number) {
+	Registration result = readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);
+	
+	return result == null ? readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE) : result;
     }
 
     public static List<Registration> readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
@@ -1053,7 +1059,7 @@ public class Registration extends Registration_Base {
 
     // FIXME: end of methods to remove after migration of this information
     // to Candidacy
-
+    
     public DegreeType getDegreeType() {
 	final StudentCurricularPlan scp = (getActiveOrConcludedStudentCurricularPlan() != null) ? getActiveOrConcludedStudentCurricularPlan()
 		: getLastStudentCurricularPlan();
