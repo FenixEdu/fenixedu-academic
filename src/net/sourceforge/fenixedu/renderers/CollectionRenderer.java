@@ -993,14 +993,16 @@ public class CollectionRenderer extends OutputRenderer {
                 HtmlInlineContainer container = new HtmlInlineContainer();
                 container.setIndented(false);
 
+                boolean includeSeparator = false;
                 for (int i = 0; i < getNumberOfLinks(); i++) {
                     HtmlComponent component = generateSingleLinkComponent(object, rowIndex, i);
                     if (component != null) {
-                        if (i > 0) {
+                        if (includeSeparator) {
                             container.addChild(new HtmlText(getLinkGroupSeparator(), false));
                         }
 
                         container.addChild(component);
+                        includeSeparator = true;
                     }
                 }
 
