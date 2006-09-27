@@ -44,6 +44,13 @@
 			<forward name="showCreateStudentConfirmation" path="student.showCreateStudentConfirmation"/>			
 			<forward name="printRegistrationDeclarationTemplate" path="/printRegistrationDeclarationTemplate.jsp"/>			
 		</action>        
+
+		<action path="/students"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA">
+			<forward name="search" path="students.search"/>
+		</action>        
 	
     </action-mappings>
 

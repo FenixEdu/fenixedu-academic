@@ -16,4 +16,7 @@
     <definition name="student.showCreateStudentConfirmation" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/showCreateStudentConfirmation.jsp"></put>
     </definition> 
+    <definition name="students.search" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/searchStudents.jsp"></put>
+    </definition> 
 </tiles-definitions>
