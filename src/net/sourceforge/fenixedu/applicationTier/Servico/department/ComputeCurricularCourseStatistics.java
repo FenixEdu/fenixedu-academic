@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -40,8 +41,11 @@ public class ComputeCurricularCourseStatistics extends Service {
             for (ExecutionPeriod executionPeriod : executionPeriods) {
 
                 // Get Scopes
-                List<CurricularCourseScope> scopes = curricularCourse
-                        .getActiveScopesInExecutionPeriod(executionPeriod);
+                //List<CurricularCourseScope> scopes = curricularCourse
+                  //      .getActiveScopesInExecutionPeriod(executionPeriod);
+
+                List<DegreeModuleScope> scopes = curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod);
+                
                 if (scopes.isEmpty()) {
                     continue;
                 }
@@ -49,14 +53,22 @@ public class ComputeCurricularCourseStatistics extends Service {
                 // Get max Year and its Semester
                 int year = 0;
                 int semester = 0;
-                for (CurricularCourseScope scope : scopes) {
-                    Integer scopeYear = scope.getCurricularSemester().getCurricularYear().getYear();
-                    if (scopeYear > year) {
-                        year = scopeYear;
-                        semester = scope.getCurricularSemester().getSemester();
-                    }
-                }
+//                for (CurricularCourseScope scope : scopes) {
+//                    Integer scopeYear = scope.getCurricularSemester().getCurricularYear().getYear();
+//                    if (scopeYear > year) {
+//                        year = scopeYear;
+//                        semester = scope.getCurricularSemester().getSemester();
+//                    }
+//                }
 
+                for(DegreeModuleScope scope : scopes) {
+                	Integer scopeYear = scope.getCurricularYear();
+                	if(scopeYear > year) {
+                		year = scopeYear;
+                		semester = scope.getCurricularSemester();
+                	}
+                }
+                
                 // Get Execution Course
                 List<ExecutionCourse> executionCourses = curricularCourse
                         .getExecutionCoursesByExecutionPeriod(executionPeriod);

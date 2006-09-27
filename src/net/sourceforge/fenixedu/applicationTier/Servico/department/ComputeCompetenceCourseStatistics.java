@@ -6,7 +6,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.department.CompetenceCourseStatisticsDTO;
@@ -31,29 +33,31 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
         
-        List<CompetenceCourse> competenceCourses = department
-                .getCompetenceCoursesByExecutionPeriod(executionPeriod);
+        Set<CompetenceCourse> competenceCourses = new HashSet(department
+                .getCompetenceCoursesByExecutionPeriod(executionPeriod));
         
+        competenceCourses.addAll(department.getBolonhaCompetenceCourses(executionPeriod));
+        
+      //  List<CompetenceCourse> sortedCompetenceCourses = new ArrayList<CompetenceCourse>();
+       // sortedCompetenceCourses.addAll(competenceCourses);
 
-        List<CompetenceCourse> sortedCompetenceCourses = new ArrayList<CompetenceCourse>();
-        sortedCompetenceCourses.addAll(competenceCourses);
-
-        Collections.sort(sortedCompetenceCourses, new BeanComparator("name"));
+        List<CompetenceCourse> sortedCourses = new ArrayList<CompetenceCourse>(competenceCourses);
+        Collections.sort(sortedCourses, new BeanComparator("name"));
 
         List<CompetenceCourseStatisticsDTO> results = new ArrayList<CompetenceCourseStatisticsDTO>();
 
-        for (CompetenceCourse competenceCourse : sortedCompetenceCourses) {
-            List<Enrolment> enrollments = competenceCourse
-                    .getActiveEnrollments(executionPeriod);
+        for (CompetenceCourse competenceCourse : sortedCourses) {
+            List<Enrolment> enrollments = competenceCourse.getActiveEnrollments(executionPeriod);
             
            
-
-            CompetenceCourseStatisticsDTO competenceCourseStatistics = new CompetenceCourseStatisticsDTO();
-            competenceCourseStatistics.setIdInternal(competenceCourse.getIdInternal());
-            competenceCourseStatistics.setName(competenceCourse.getName());
-            createCourseStatistics(competenceCourseStatistics, enrollments);
-
-            results.add(competenceCourseStatistics);
+            if(enrollments.size()>0) {
+            	CompetenceCourseStatisticsDTO competenceCourseStatistics = new CompetenceCourseStatisticsDTO();
+            	competenceCourseStatistics.setIdInternal(competenceCourse.getIdInternal());
+            	competenceCourseStatistics.setName(competenceCourse.getName());
+            	createCourseStatistics(competenceCourseStatistics, enrollments);
+            	
+            	results.add(competenceCourseStatistics);
+            }
         }
 
         return results;
