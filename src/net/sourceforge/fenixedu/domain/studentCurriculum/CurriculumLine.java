@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -34,6 +35,10 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     @Override
     public StudentCurricularPlan getStudentCurricularPlan() {
         return hasCurriculumGroup() ? getCurriculumGroup().getStudentCurricularPlan() : null; 
+    }
+
+    public boolean isEnrolment() {
+	return this instanceof Enrolment;
     }
     
 }
