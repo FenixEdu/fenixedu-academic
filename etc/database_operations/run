@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Deleting first time student role" DeleteFirstTimeStudentRole.sql

@@ -63,8 +63,8 @@ public class UsernameUtils extends FenixUtil {
     }
 
     /*
-     * Rewrite method
-     */
+         * Rewrite method
+         */
     public static String updateIstUsername(Person person) {
 	if (person.getIstUsername() == null) {
 	    String ist = "ist";
@@ -84,14 +84,14 @@ public class UsernameUtils extends FenixUtil {
 		    && person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) != null) {
 		istUsername = ist + sumNumber(username.substring(1), 100000);
 	    } else if (username.startsWith("L")) {
-		
+
 		if (person.getStudentByType(DegreeType.DEGREE) != null
 			|| person.getStudentByType(DegreeType.BOLONHA_DEGREE) != null
 			|| person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) != null) {
-		    
+
 		    istUsername = ist + sumNumber(username.substring(1), 100000);
 		}
-		
+
 	    } else if (username.startsWith("C")) {
 		return person.getIstUsername();
 	    } else if (username.startsWith("P")) {
@@ -125,9 +125,6 @@ public class UsernameUtils extends FenixUtil {
 	    } else {
 		throw new DomainException("error.person.addingInvalidRole", RoleType.EMPLOYEE.getName());
 	    }
-	} else if (roleType.equals(RoleType.FIRST_TIME_STUDENT)) {
-	    Registration registration = person.getStudentByType(DegreeType.DEGREE);
-	    return "L" + registration.getNumber();
 	} else if (roleType.equals(RoleType.STUDENT)) {
 
 	    Registration registration = person
@@ -182,7 +179,7 @@ public class UsernameUtils extends FenixUtil {
 		    return "A" + registration.getNumber();
 		}
 	    }
-	    
+
 	    registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	    if (registration != null) {
 		StudentType studentType = registration.getStudentKind().getStudentType();

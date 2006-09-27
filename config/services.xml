@@ -6672,27 +6672,6 @@
 	<!-- =============================================================================================== -->
 	<!-- =============================================================================================== -->
 
-
-	<service>
-		<name>SchoolRegistration</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.schoolRegistration.SchoolRegistration</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="FirstTimeStudentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadStudentEnrollmentsAndClass</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.schoolRegistration.ReadStudentEnrollmentsAndClass</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="FirstTimeStudentAuthorization" />
-		</filterChains>
-	</service>
 	<service>
         <name>student.ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod</name>
         <implementationClass> 

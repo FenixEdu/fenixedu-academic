@@ -10,7 +10,7 @@ public enum RoleType {
     STUDENT("Registration"),
 
     TEACHER("Teacher"),
-    
+
     DEPARTMENT_MEMBER("Department Member"),
 
     TIME_TABLE_MANAGER("Timetable Management"),
@@ -61,70 +61,63 @@ public enum RoleType {
 
     DELEGATE("Delegate"),
 
-    //FIXME: this role should be removed
-    FIRST_TIME_STUDENT("First time student"),
-
     PROJECTS_MANAGER("Projects Management"),
 
-    INSTITUCIONAL_PROJECTS_MANAGER("Institutional Projects Management"),    
+    INSTITUCIONAL_PROJECTS_MANAGER("Institutional Projects Management"),
 
     BOLONHA_MANAGER("Bolonha Process Management"),
 
     CMS_MANAGER("Content Management"),
 
     SPACE_MANAGER("Space Management"),
-    
+
     RESEARCHER("Researcher"),
-    
+
     ALUMNI("Alumni"),
-    
+
     MESSAGING("Messaging"),
 
     PEDAGOGICAL_COUNCIL("Pedagogical Council"),
-    
+
     CANDIDATE("Candidate"),
 
     EXAM_COORDINATOR("Exam Coordinator"),
-    
+
     ACADEMIC_ADMINISTRATIVE_OFFICE("Academic Administrative Office"),
-    
+
     PARKING_MANAGER("Parking Manager");
 
     public String getName() {
-        return name();    
-    }
-    
-    public static List<RoleType> getRolesImportance(){
-        List<RoleType> rolesImportance = new ArrayList<RoleType>();
-        rolesImportance.add(RoleType.TEACHER);
-        rolesImportance.add(RoleType.EMPLOYEE);
-        rolesImportance.add(RoleType.STUDENT);
-        rolesImportance.add(RoleType.GRANT_OWNER);
-        rolesImportance.add(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
-        rolesImportance.add(RoleType.PROJECTS_MANAGER);
-        rolesImportance.add(RoleType.MASTER_DEGREE_CANDIDATE);
-        rolesImportance.add(RoleType.CANDIDATE);
-        rolesImportance.add(RoleType.ALUMNI);
-        rolesImportance.add(RoleType.PERSON);
-        rolesImportance.add(RoleType.EXAM_COORDINATOR);
-        return rolesImportance;
+	return name();
     }
 
-    private String defaultLabel=null;
+    public static List<RoleType> getRolesImportance() {
+	List<RoleType> rolesImportance = new ArrayList<RoleType>();
+	rolesImportance.add(RoleType.TEACHER);
+	rolesImportance.add(RoleType.EMPLOYEE);
+	rolesImportance.add(RoleType.STUDENT);
+	rolesImportance.add(RoleType.GRANT_OWNER);
+	rolesImportance.add(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
+	rolesImportance.add(RoleType.PROJECTS_MANAGER);
+	rolesImportance.add(RoleType.MASTER_DEGREE_CANDIDATE);
+	rolesImportance.add(RoleType.CANDIDATE);
+	rolesImportance.add(RoleType.ALUMNI);
+	rolesImportance.add(RoleType.PERSON);
+	rolesImportance.add(RoleType.EXAM_COORDINATOR);
+	return rolesImportance;
+    }
 
-    private RoleType(String defaultLabel)
-    {
-    	setDefaultLabel(defaultLabel);
+    private String defaultLabel = null;
+
+    private RoleType(String defaultLabel) {
+	setDefaultLabel(defaultLabel);
     }
-    
-    public String getDefaultLabel()
-    {
-    	return defaultLabel;
+
+    public String getDefaultLabel() {
+	return defaultLabel;
     }
-    
-    private void setDefaultLabel(String defaultLabel)
-    {
-    	this.defaultLabel=defaultLabel;
+
+    private void setDefaultLabel(String defaultLabel) {
+	this.defaultLabel = defaultLabel;
     }
 }
-

@@ -405,10 +405,6 @@
             <param-name>config/delegate</param-name>
             <param-value>/WEB-INF/conf/struts-delegate.xml</param-value>
         </init-param>
-        <init-param>
-            <param-name>config/schoolRegistration</param-name>
-            <param-value>/WEB-INF/conf/struts-schoolRegistration.xml</param-value>
-        </init-param>      
 	    <init-param>
             <param-name>config/managementAssiduousness</param-name>
             <param-value>/WEB-INF/conf/struts-managementAssiduousness.xml</param-value>

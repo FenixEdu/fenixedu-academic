@@ -645,7 +645,6 @@
     <message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES" null="false"/>
     <message-resources parameter="resources.TeacherCreditsSheetResources" key="TEACHER_CREDITS_SHEET_RESOURCES" null="false"/>
     <message-resources parameter="resources.GEPResources" key="GEP_RESOURCES" null="false"/>
-	<message-resources parameter="resources.SchoolRegistrationResources" key="SCHOOL_REGISTRATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.CurriculumHistoricResources" key="CURRICULUM_HISTORIC_RESOURCES" null="false"/>
 	<message-resources parameter="resources.InquiriesResources" key="INQUIRIES_RESOURCES" null="false"/>
     <message-resources parameter="resources.PublicDegreeInformation" key="PUBLIC_DEGREE_INFORMATION" null="false"/>

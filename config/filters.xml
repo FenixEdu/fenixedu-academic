@@ -738,12 +738,6 @@
         <description/>
         <isTransactional>true</isTransactional>
     </filter>   
-	<filter>
-    	<name>FirstTimeStudentAuthorization</name>
-    	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.student.FirstTimeStudentAuthorizationFilter</implementationClass>
-    	<description/>
-    	<isTransactional>false</isTransactional>
-    </filter>     
     <filter>
     	<name>ClassEnrollmentAuthorizationFilter</name>
     	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter</implementationClass>

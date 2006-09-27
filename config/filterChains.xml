@@ -773,13 +773,6 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>	
-    <filterChain>
-        <name>FirstTimeStudentAuthorization</name>
-        <expression>FirstTimeStudentAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
 	<filterChain>
 		<name>ManagerOrMasterDegreeAdministrativeOfficeAuthorization</name>
 		<expression>ManagerAuthorization || MasterDegreeAdministrativeOfficeAuthorization</expression>
