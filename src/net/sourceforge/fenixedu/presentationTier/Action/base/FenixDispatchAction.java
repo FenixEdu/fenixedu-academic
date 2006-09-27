@@ -236,6 +236,10 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     protected void addActionMessage(HttpServletRequest request, String key, String... args) {
         this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
     }
+    
+    protected void addActionMessage(HttpServletRequest request, String key) {
+        this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key));
+    }
 
     protected String[] solveLabelFormatterArgs(HttpServletRequest request,
             LabelFormatter[] labelFormatterArgs) {
