@@ -20,23 +20,19 @@ public class SearchForStudentsDA extends FenixDispatchAction {
         StudentsSearchBean studentsSearchBean = (StudentsSearchBean) getRenderedObject();
         
         if (studentsSearchBean == null) { //1st time
-            request.setAttribute("studentsSearchBean", new StudentsSearchBean());
-            return mapping.findForward("search");
+            studentsSearchBean = new StudentsSearchBean();
+        } else {
+            final Set<Student> students = studentsSearchBean.search();
+        
+            if(students.size() == 1){
+                request.setAttribute("student", students.iterator().next());
+                return mapping.findForward("viewStudentDetails");
+            }
+            request.setAttribute("students", students);
         }
-        
-        //postback
-        final Set<Student> students = studentsSearchBean.search();
-        
-        if(students.size() == 1){
-            request.setAttribute("student", students.iterator().next());
-            return mapping.findForward("viewStudentDetails");
-        }
-        
+
         request.setAttribute("studentsSearchBean", studentsSearchBean);
-        request.setAttribute("students", students);
-        
         return mapping.findForward("search");
-        
     }
     
 
