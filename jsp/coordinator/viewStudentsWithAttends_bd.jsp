@@ -325,6 +325,21 @@ function cleanSelect(checkboxes) {
 				<logic:equal name="classTypeInt" value='<%= ShiftType.LABORATORIAL.toString() %>' >
 					<bean:message key="label.attends.shifts.laboratory"/>
 				</logic:equal>
+				<logic:equal name="classTypeInt" value='<%= ShiftType.SEMINARY.toString() %>' >
+					<bean:message key="label.attends.shifts.seminary"/>
+				</logic:equal>
+				<logic:equal name="classTypeInt" value='<%= ShiftType.PROBLEMS.toString() %>' >
+					<bean:message key="label.attends.shifts.problems"/>
+				</logic:equal>
+				<logic:equal name="classTypeInt" value='<%= ShiftType.FIELD_WORK.toString() %>' >
+					<bean:message key="label.attends.shifts.fieldwork"/>
+				</logic:equal>
+				<logic:equal name="classTypeInt" value='<%= ShiftType.TRAINING_PERIOD.toString() %>' >
+					<bean:message key="label.attends.shifts.trainingperiod"/>
+				</logic:equal>
+				<logic:equal name="classTypeInt" value='<%= ShiftType.TUTORIAL_ORIENTATION.toString() %>' >
+					<bean:message key="label.attends.shifts.tutorialorientation"/>
+				</logic:equal>
         	  </th>
           	</logic:iterate>
          

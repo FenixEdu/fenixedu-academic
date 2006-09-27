@@ -382,18 +382,15 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
     private List getClassTypesFromExecutionCourse(ExecutionCourse executionCourse) {
 	List classTypes = new ArrayList();
-	if (executionCourse.getTheoreticalHours().doubleValue() > 0)
-	    classTypes.add(ShiftType.TEORICA);
-
-	if (executionCourse.getLabHours().doubleValue() > 0)
-	    classTypes.add(ShiftType.LABORATORIAL);
-
-	if (executionCourse.getPraticalHours().doubleValue() > 0)
-	    classTypes.add(ShiftType.PRATICA);
-
-	if (executionCourse.getTheoPratHours().doubleValue() > 0)
-	    classTypes.add(ShiftType.TEORICO_PRATICA);
-
+	if (executionCourse.getTheoreticalHours().doubleValue() > 0) classTypes.add(ShiftType.TEORICA);
+	if (executionCourse.getLabHours().doubleValue() > 0) classTypes.add(ShiftType.LABORATORIAL);
+	if (executionCourse.getPraticalHours().doubleValue() > 0) classTypes.add(ShiftType.PRATICA);
+	if (executionCourse.getTheoPratHours().doubleValue() > 0) classTypes.add(ShiftType.TEORICO_PRATICA);
+        if (executionCourse.getSeminaryHours().doubleValue() > 0) classTypes.add(ShiftType.SEMINARY);
+        if (executionCourse.getProblemsHours().doubleValue() > 0) classTypes.add(ShiftType.PROBLEMS);
+        if (executionCourse.getFieldWorkHours().doubleValue() > 0) classTypes.add(ShiftType.FIELD_WORK);
+        if (executionCourse.getTrainingPeriodHours().doubleValue() > 0) classTypes.add(ShiftType.TRAINING_PERIOD);
+        if (executionCourse.getTutorialOrientationHours().doubleValue() > 0) classTypes.add(ShiftType.TUTORIAL_ORIENTATION);
 	return classTypes;
     }
 
