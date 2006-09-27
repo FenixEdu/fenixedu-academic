@@ -36,6 +36,12 @@ public class ValuesRenderer extends OutputRenderer {
     
     private String htmlSeparator;
     
+    private boolean indentation;
+    
+    public ValuesRenderer() {
+    	this.indentation = true;
+    }
+    
     /**
      * Specifies the css classes to be used in the presentation of each value.
      * 
@@ -118,6 +124,20 @@ public class ValuesRenderer extends OutputRenderer {
         this.htmlSeparator = htmlSeparator;
     }
 
+    /**
+     * Chooses if the generated elements should be indented or not. This can be usefull when
+     * you want to introduce a separator but need to remove extra spaces.
+     * 
+     * @property
+     */
+    public void setIndentation(boolean indentation) {
+        this.indentation = indentation;
+    }
+
+    public boolean isIndentation() {
+        return this.indentation;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new ValuesLayout(getContext().getMetaObject());
@@ -163,6 +183,14 @@ public class ValuesRenderer extends OutputRenderer {
             }
             
             return renderValue(slot.getObject(), slot.getType(), schema, layout, slot.getProperties());
+        }
+        
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+        	HtmlComponent component = super.createComponent(object, type);
+        	component.setIndented(isIndentation());
+
+        	return component;
         }
     }
 }
