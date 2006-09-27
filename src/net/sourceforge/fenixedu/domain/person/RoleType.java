@@ -83,8 +83,10 @@ public enum RoleType {
     PEDAGOGICAL_COUNCIL("Pedagogical Council"),
     
     CANDIDATE("Candidate"),
-    
+
     EXAM_COORDINATOR("Exam Coordinator"),
+    
+    ACADEMIC_ADMINISTRATIVE_OFFICE("Academic Administrative Office"),
     
     PARKING_MANAGER("Parking Manager");
 

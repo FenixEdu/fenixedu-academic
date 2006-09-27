@@ -1,0 +1,19 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<tiles-definitions>
+    <definition name="index" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/index.jsp"></put>
+    </definition>	    
+    <definition name="student.chooseNewStudentExecutionDegreeAndIdentification" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/chooseNewStudentExecutionDegreeAndIdentification.jsp"></put>
+    </definition>
+    <definition name="student.fillNewPersonData" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/fillNewPersonData.jsp"></put>
+    </definition>  
+    <definition name="student.createStudentSuccess" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/createStudentSuccess.jsp"></put>
+    </definition>  
+    <definition name="student.showCreateStudentConfirmation" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/showCreateStudentConfirmation.jsp"></put>
+    </definition> 
+</tiles-definitions>

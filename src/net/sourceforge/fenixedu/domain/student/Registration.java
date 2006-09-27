@@ -89,35 +89,42 @@ public class Registration extends Registration_Base {
     @Deprecated
     // NOTE: use this for legacy code only
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
-	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, 
-	    EntryPhase entryPhase) {
-	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, 
-		false, null);
+	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase) {
+	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, false, null);
 	setEntryPhase(entryPhase);
     }
-    
+
     @Deprecated
     // NOTE: use this for legacy code only
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
-	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, 
-	    EntryPhase entryPhase, DegreeCurricularPlan degreeCurricularPlan) {
-	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, 
-		false, null);
-	
+	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
+	    DegreeCurricularPlan degreeCurricularPlan) {
+	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, false, null);
+
 	// create scp
-	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this,degreeCurricularPlan,
+	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
 		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
 			.readActualExecutionPeriod());
-	
+
 	setEntryPhase(entryPhase);
     }
-    
+
+    public Registration(Person person, StudentKind studentKind,
+	    DegreeCurricularPlan degreeCurricularPlan, StudentCandidacy studentCandidacy) {
+
+	this(person, null, studentKind, StudentState.INSCRITO_OBJ, false, false, false, studentCandidacy);
+
+	// create scp
+	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
+		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
+			.readActualExecutionPeriod());
+    }
 
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
 	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden,
 	    StudentCandidacy studentCandidacy) {
-	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, 
-		false, studentCandidacy);
+	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, false,
+		studentCandidacy);
     }
 
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
@@ -1046,9 +1053,10 @@ public class Registration extends Registration_Base {
 
     // FIXME: end of methods to remove after migration of this information
     // to Candidacy
-    
+
     public DegreeType getDegreeType() {
-        final StudentCurricularPlan scp = (getActiveOrConcludedStudentCurricularPlan() != null) ? getActiveOrConcludedStudentCurricularPlan() : getLastStudentCurricularPlan(); 
+	final StudentCurricularPlan scp = (getActiveOrConcludedStudentCurricularPlan() != null) ? getActiveOrConcludedStudentCurricularPlan()
+		: getLastStudentCurricularPlan();
 	return scp.getDegreeType();
     }
 

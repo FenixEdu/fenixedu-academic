@@ -124,15 +124,29 @@
 </schema>
 
 <schema name="candidate.precedentDegreeInformation-edit" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="CANDIDATE_RESOURCES" >
-	<slot name="degreeDesignation" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="conclusionGrade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="conclusionYear" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator" >
-		<property name="maxLength" value="4" />
-		<property name="size" value="4" />
-		<property name="required" value="true"/>
-	</slot>	
-	<slot name="currentInstitutionName" read-only="true" />
-	<slot name="institution" layout="autoComplete" >
+	<slot name="degreeDesignation" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="255"/>
+    </slot>
+	<slot name="conclusionGrade">
+    	<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{2}"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+    <slot name="conclusionYear">
+       	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+        <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{4}"/>
+            <property name="message" value="error.conclusionYear.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+    </slot>
+	<slot name="institution" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>		
@@ -140,12 +154,12 @@
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
 		<property name="minChars" value="2"/>
-	</slot>	
-	<slot name="newInstitutionName" />	
-	<slot name="country" layout="menu-select" key="label.countryOfPrecedenceDegree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="rawSlotName" value="institutionName"/>
+	</slot>		
+	<slot name="country" layout="menu-select" key="label.countryOfPrecedenceDegree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${name}"/>
-		<property name="sortBy" value="name"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>	
 </schema>
 
@@ -310,14 +324,28 @@
 </schema>
 
 <schema name="candidate.precedentDegreeInformation-freeEdit" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="CANDIDATE_RESOURCES" >
-	<slot name="degreeDesignation" />
-	<slot name="conclusionGrade" />
-	<slot name="conclusionYear" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator" >
-		<property name="maxLength" value="4" />
-		<property name="size" value="4" />
-		<property name="required" value="true"/>
-	</slot>	
-	<slot name="currentInstitutionName" read-only="true" />
+	<slot name="degreeDesignation" >
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="255"/>
+    </slot>
+	<slot name="conclusionGrade">
+    	<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{2}"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+    <slot name="conclusionYear">
+       	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+        <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{4}"/>
+            <property name="message" value="error.conclusionYear.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+    </slot>
 	<slot name="institution" layout="autoComplete" >
 		<property name="size" value="40"/>
 		<property name="labelField" value="name"/>
@@ -326,12 +354,12 @@
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
 		<property name="minChars" value="2"/>
-	</slot>	
-	<slot name="newInstitutionName" />	
-	<slot name="country" layout="menu-select" key="label.countryOfPrecedenceDegree" >
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="rawSlotName" value="institutionName"/>
+	</slot>		
+	<slot name="country" layout="menu-select" key="label.countryOfPrecedenceDegree" > 
 		<property name="format" value="${name}"/>
-		<property name="sortBy" value="name"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>	
 </schema>
 

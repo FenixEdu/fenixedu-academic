@@ -17,6 +17,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
+import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
@@ -74,7 +76,7 @@ public class Person extends Person_Base {
 		.getInstance()));
 	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
     }
-    
+
     static {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
@@ -116,8 +118,24 @@ public class Person extends Person_Base {
 	setIsPassInKerberos(Boolean.FALSE);
     }
 
+    public Person(PersonBean personBean) {
+	super();
+
+	checkConditionsToCreateNewPerson(personBean.getDocumentIdNumber(), personBean
+		.getIdDocumentType(), this);
+
+	createUserAndLoginEntity();
+
+	setProperties(personBean);
+	setIsPassInKerberos(Boolean.FALSE);
+    }
+
     private void createUserAndLoginEntity(String username) {
 	new Login(new User(this), username);
+    }
+    
+    private void createUserAndLoginEntity() {
+	createUserAndLoginEntity("X" + getIdInternal());
     }
 
     public Person(String name, String identificationDocumentNumber,
@@ -558,6 +576,48 @@ public class Person extends Person_Base {
 	setAvailablePhoto(Boolean.TRUE);
 	setAvailableWebSite(infoPerson.getAvailableWebSite());
 	setWorkPhone(infoPerson.getWorkPhone());
+    }
+
+    private void setProperties(PersonBean personBean) {
+
+	setName(personBean.getName());
+	setGender(personBean.getGender());
+	setDocumentIdNumber(personBean.getDocumentIdNumber());
+	setIdDocumentType(personBean.getIdDocumentType());
+	setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());
+	setEmissionDateOfDocumentIdYearMonthDay(personBean.getDocumentIdEmissionDate());
+	setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
+	setSocialSecurityNumber(personBean.getSocialSecurityNumber());
+	setProfession(personBean.getProfession());
+	setMaritalStatus(personBean.getMaritalStatus());
+
+	setDateOfBirthYearMonthDay(personBean.getDateOfBirth());
+	setNationality(personBean.getNationality());
+	setParishOfBirth(personBean.getParishOfBirth());
+	setDistrictSubdivisionOfBirth(personBean.getDistrictSubdivisionOfBirth());
+	setDistrictOfBirth(personBean.getDistrictOfBirth());
+	setCountryOfBirth(personBean.getCountryOfBirth());
+	setNameOfMother(personBean.getMotherName());
+	setNameOfFather(personBean.getFatherName());
+
+	setAddress(personBean.getAddress());
+	setArea(personBean.getArea());
+	setAreaCode(personBean.getAreaCode());
+	setAreaOfAreaCode(personBean.getAreaOfAreaCode());
+	setParishOfResidence(personBean.getParishOfResidence());
+	setDistrictSubdivisionOfResidence(personBean.getDistrictSubdivisionOfResidence());
+	setDistrictOfResidence(personBean.getDistrictOfResidence());
+	setCountryOfResidence(personBean.getCountryOfResidence());
+
+	setPhone(personBean.getPhone());
+	setMobile(personBean.getMobile());
+	setEmail(personBean.getEmail());
+	setWebAddress(personBean.getWebAddress());
+
+	setAvailableEmail(personBean.isEmailAvailable());
+	setAvailablePhoto(personBean.isPhotoAvailable());
+	setAvailableWebSite(personBean.isHomepageAvailable());
+
     }
 
     private void updateProperties(InfoPersonEditor infoPerson) {
@@ -1046,6 +1106,23 @@ public class Person extends Person_Base {
 	return (getDegreeCandidacyByExecutionDegree(executionDegree) != null);
     }
 
+    public StudentCandidacy getStudentCandidacyForExecutionDegree(ExecutionDegree executionDegree) {
+	for (final Candidacy candidacy : this.getCandidaciesSet()) {
+	    if (candidacy instanceof StudentCandidacy) {
+		final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
+		if (studentCandidacy.getExecutionDegree().equals(executionDegree)) {
+		    return studentCandidacy;
+		}
+	    }
+	}
+	return null;
+    }
+
+    public boolean hasStudentCandidacyForExecutionDegree(ExecutionDegree executionDegree) {
+	return (getStudentCandidacyForExecutionDegree(executionDegree) != null);
+    }
+
+    
     @Deprecated
     public String getCodigoFiscal() {
 	return super.getFiscalCode();
@@ -1608,7 +1685,7 @@ public class Person extends Person_Base {
 	}
 	return new HashSet<Registration>();
     }
-    
+
     @Override
     public ParkingPartyClassification getPartyClassification() {
         final Teacher teacher = getTeacher();

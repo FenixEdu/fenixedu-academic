@@ -901,4 +901,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>                
+     <filter>
+        <name>AcademicAdministrativeOfficeAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AcademicAdministrativeOfficeAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>                
 </filterDefinitions>

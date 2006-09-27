@@ -9,24 +9,16 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
-public class DFACandidacy extends DFACandidacy_Base {
-
-    public DFACandidacy(Person person, ExecutionDegree executionDegree) {
+public class IMDCandidacy extends IMDCandidacy_Base {
+    
+    public  IMDCandidacy(Person person, ExecutionDegree executionDegree) {
         super();
         init(person, executionDegree);
-        
-        new PreCandidacySituation(this);
-
-        addCandidacyDocuments(new CandidacyDocument("curriculum.vitae"));
-        addCandidacyDocuments(new CandidacyDocument("habilitation.certificate"));
-        addCandidacyDocuments(new CandidacyDocument("second.habilitation.certificate"));
-        addCandidacyDocuments(new CandidacyDocument("interest.letter"));
-
     }
-
+    
     @Override
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale()).getString("label.dfaCandidacy")
+        return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale()).getString("label.imdCandidacy")
                 + " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
                 + getExecutionDegree().getExecutionYear().getYear();
     }
@@ -38,13 +30,12 @@ public class DFACandidacy extends DFACandidacy_Base {
 
     @Override
     void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public boolean isConcluded() {
         return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
                 .getCandidacySituationType() == CandidacySituationType.CANCELED);
-    }
+    }    
+    
 }

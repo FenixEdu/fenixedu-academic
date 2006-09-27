@@ -86,6 +86,7 @@ public class DataInitializer {
         new Role(RoleType.ALUMNI, "/alumin", "/index.do", "portal.alumni");
         new Role(RoleType.MESSAGING, "/messaging", "/index.do", "portal.messaging");
         new Role(RoleType.CANDIDATE, "/candidate", "/index.do", "portal.candidate");
+        new Role(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE, "/academicAdminOffice", "/index.do", "portal.academicAdminOffice");
         new Role(RoleType.PARKING_MANAGER, "/parkingManager", "/index.do", "portal.parkingManager");
     }
 

@@ -12,7 +12,6 @@ public class PreCandidacySituation extends PreCandidacySituation_Base {
 
     public PreCandidacySituation(Candidacy candidacy) {
         this(candidacy, AccessControl.getUserView().getPerson());
-        // TODO: create payment event
     }
 
     public PreCandidacySituation(Candidacy candidacy, Person person) {

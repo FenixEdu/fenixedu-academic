@@ -3631,9 +3631,23 @@ class net.sourceforge.fenixedu.domain.candidacy.Candidacy extends net.sourceforg
 		Integer keyExecutionDegree;
 		Integer keyPrecedentDegreeInformation;
 		Integer keyRegistration;
+		String ingression;
+		EntryPhase entryPhase;		
 	}
 
 	class net.sourceforge.fenixedu.domain.candidacy.DFACandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
+	}
+
+	class net.sourceforge.fenixedu.domain.candidacy.MDCandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
+	}
+
+	class net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
+	}
+
+	class net.sourceforge.fenixedu.domain.candidacy.PHDProgramCandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
+	}
+
+	class net.sourceforge.fenixedu.domain.candidacy.SDCandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
 	}
 
 	class net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
@@ -3642,9 +3656,7 @@ class net.sourceforge.fenixedu.domain.candidacy.Candidacy extends net.sourceforg
 		Boolean applyForResidence;
 		String notesAboutResidenceAppliance;
 		String contigent;
-		String ingression;
 		String istUniversity;
-		EntryPhase entryPhase;		
 	}
 	
 class net.sourceforge.fenixedu.domain.candidacy.CandidacySituation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4038,18 +4050,19 @@ class net.sourceforge.fenixedu.domain.vigilancy.Vigilancy extends net.sourceforg
 }
 
 	class net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits extends net.sourceforge.fenixedu.domain.vigilancy.Vigilancy {
-		Boolean confirmed;
-		Boolean attendedToConvoke; 
-		Boolean active;
+	Boolean confirmed;
+	Boolean attendedToConvoke; 
+	Boolean active;
 	}
 	
 class net.sourceforge.fenixedu.domain.vigilancy.VigilantBound extends net.sourceforge.fenixedu.domain.DomainObject {
   Boolean convokable;
   String justification;
   
-  Integer keyVigilant;
+	Integer keyVigilant;
   Integer keyVigilantGroup;
 }
+
 
 class net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup extends net.sourceforge.fenixedu.domain.DomainObject{
 	String name;
@@ -10339,8 +10352,8 @@ relation VigilantBounds {
 relation VigilantGroupBounds {
   net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroup;
   net.sourceforge.fenixedu.domain.vigilancy.VigilantBound playsRole bounds {
-  	multiplicity *;
-  }
+		multiplicity *;
+	}
 }
 
 relation VigilantIsUnavailable {

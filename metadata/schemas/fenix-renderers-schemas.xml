@@ -21,6 +21,7 @@
     <!ENTITY executionCourse SYSTEM "executionCourse-schemas.xml"> 
     <!ENTITY parking SYSTEM "parking-schemas.xml"> 
 	<!ENTITY vigilancy SYSTEM "vigilancy-schemas.xml">
+	<!ENTITY academicAdminOffice SYSTEM "academicAdminOffice-schemas.xml">	
 	<!ENTITY system SYSTEM "system-schemas.xml">
 ]>
 
@@ -746,25 +747,6 @@
 		<slot name="idDocumentType"/>
 		<slot name="documentIdNumber"/>
 	</schema>
-		
-	&researcher;
-	&markSheet;
-	&messaging;
-	&space;
-	&assiduousness;
-	&party;
-	&payments;
-	&candidacy;
-	&execution;
-	&cron;
-	&prices;
-	&serviceRequests;
-    &functionalities;
-    &degreeAdminOffice;
-    &executionCourse;
-    &parking;
-	&vigilancy;
-	&system;
 
 <!-- Teacher Service Distribution -->
     <schema name="omissionValuesValuation.details" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase">
@@ -857,4 +839,25 @@
         	<property name="maxLength" value="3"/>
         </slot>
     </schema>
+    
+	&researcher;
+	&markSheet;
+	&messaging;
+	&space;
+	&assiduousness;
+	&party;
+	&payments;
+	&candidacy;
+	&execution;
+	&cron;
+	&prices;
+	&serviceRequests;
+    &functionalities;
+    &degreeAdminOffice;
+    &executionCourse;
+    &parking;
+	&vigilancy;
+	&system;
+	&academicAdminOffice;
+	
 </schemas>

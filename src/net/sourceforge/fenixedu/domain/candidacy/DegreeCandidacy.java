@@ -26,24 +26,22 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class DegreeCandidacy extends DegreeCandidacy_Base {
 
-    private DegreeCandidacy() {
+    public DegreeCandidacy(final Person person, final ExecutionDegree executionDegree) {
 	super();
-	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(this.getClass().getName());
+	init(person, executionDegree);
     }
 
     public DegreeCandidacy(final Person person, final ExecutionDegree executionDegree,
-	    final Person creator, final Double entryGrade,
-	    final String contigent, final String ingression, final String istUniversity,
-	    EntryPhase entryPhase) {
-	this();
-	init(person, executionDegree, creator,entryGrade, contigent, ingression,
-		istUniversity, entryPhase);
+	    final Person creator, final Double entryGrade, final String contigent,
+	    final String ingression, final String istUniversity, EntryPhase entryPhase) {
+	super();
+	init(person, executionDegree, creator, entryGrade, contigent, ingression, istUniversity,
+		entryPhase);
     }
 
     private void checkParameters(final Person person, final ExecutionDegree executionDegree,
-	    final Person creator, Double entryGrade, String contigent,
-	    String ingression, String istUniversity, EntryPhase entryPhase) {
+	    final Person creator, Double entryGrade, String contigent, String ingression,
+	    String istUniversity, EntryPhase entryPhase) {
 	if (executionDegree == null) {
 	    throw new DomainException("error.candidacy.DegreeCandidacy.executionDegree.cannot.be.null");
 	}
@@ -60,21 +58,25 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	    throw new DomainException("error.candidacy.DegreeCandidacy.creator.cannot.be.null");
 	}
 
-	if (entryGrade == null) {
-	    throw new DomainException("error.candidacy.DegreeCandidacy.entryGrade.cannot.be.null");
-	}
-
-	if (contigent == null) {
-	    throw new DomainException("error.candidacy.DegreeCandidacy.contigent.cannot.be.null");
-	}
-
-	if (ingression == null) {
-	    throw new DomainException("error.candidacy.DegreeCandidacy.ingression.cannot.be.null");
-	}
-
-	if (istUniversity == null) {
-	    throw new DomainException("error.candidacy.DegreeCandidacy.istUniversity.cannot.be.null");
-	}
+	// if (entryGrade == null) {
+	// throw new
+        // DomainException("error.candidacy.DegreeCandidacy.entryGrade.cannot.be.null");
+	// }
+	//
+	// if (contigent == null) {
+	// throw new
+        // DomainException("error.candidacy.DegreeCandidacy.contigent.cannot.be.null");
+	// }
+	//
+	// if (ingression == null) {
+	// throw new
+        // DomainException("error.candidacy.DegreeCandidacy.ingression.cannot.be.null");
+	// }
+	//
+	// if (istUniversity == null) {
+	// throw new
+        // DomainException("error.candidacy.DegreeCandidacy.istUniversity.cannot.be.null");
+	// }
 
 	if (entryPhase == null) {
 	    throw new DomainException("error.candidacy.DegreeCandidacy.entryPhase.cannot.be.null");
@@ -83,10 +85,10 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
     }
 
     protected void init(final Person person, final ExecutionDegree executionDegree,
-	    final Person creator, Double entryGrade, String contigent,
-	    String ingression, String istUniversity, EntryPhase entryPhase) {
-	checkParameters(person, executionDegree, creator, entryGrade, contigent,
-		ingression, istUniversity, entryPhase);
+	    final Person creator, Double entryGrade, String contigent, String ingression,
+	    String istUniversity, EntryPhase entryPhase) {
+	checkParameters(person, executionDegree, creator, entryGrade, contigent, ingression,
+		istUniversity, entryPhase);
 	super.setExecutionDegree(executionDegree);
 	super.setPerson(person);
 	super.setPrecedentDegreeInformation(new PrecedentDegreeInformation());
@@ -96,32 +98,32 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	super.setIstUniversity(istUniversity);
 	super.setEntryPhase(entryPhase);
 
-//	if (person.hasRole(RoleType.PERSON)) {
-//	    new AdmittedCandidacySituation(this, creator);
-//	} else {
-	    new StandByCandidacySituation(this, creator);
-	//}
+	// if (person.hasRole(RoleType.PERSON)) {
+	// new AdmittedCandidacySituation(this, creator);
+	// } else {
+	new StandByCandidacySituation(this, creator);
+	// }
     }
 
-    @Override
-    public void setExecutionDegree(ExecutionDegree executionDegree) {
-	throw new DomainException("error.candidacy.DegreeCandidacy.cannot.modify.executionDegree");
-    }
+//    @Override
+//    public void setExecutionDegree(ExecutionDegree executionDegree) {
+//	//throw new DomainException("error.candidacy.DegreeCandidacy.cannot.modify.executionDegree");
+//    }
 
-    @Override
-    public void setPerson(Person person) {
-	throw new DomainException("error.candidacy.DegreeCandidacy.cannot.modify.person");
-    }
-
-    @Override
-    public void setPrecedentDegreeInformation(PrecedentDegreeInformation precedentDegreeInformation) {
-	throw new DomainException(
-		"error.candidacy.DegreeCandidacy.cannot.modify.precedentDegreeInformation");
-    }
+//    @Override
+//    public void setPerson(Person person) {
+//	throw new DomainException("error.candidacy.DegreeCandidacy.cannot.modify.person");
+//    }
+//
+//    @Override
+//    public void setPrecedentDegreeInformation(PrecedentDegreeInformation precedentDegreeInformation) {
+//	throw new DomainException(
+//		"error.candidacy.DegreeCandidacy.cannot.modify.precedentDegreeInformation");
+//    }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale()).getString(
-		"label.studentCandidacy")
+	return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale())
+		.getString("label.studentCandidacy")
 		+ " - "
 		+ getExecutionDegree().getDegreeCurricularPlan().getName()
 		+ " - "
@@ -191,8 +193,8 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	    break;
 	case REGISTERED:
 	    operations.add(new PrintScheduleOperation(Collections.singleton(RoleType.STUDENT), this));
-	    operations.add(new PrintRegistrationDeclarationOperation(Collections.singleton(RoleType.STUDENT),
-		    this));
+	    operations.add(new PrintRegistrationDeclarationOperation(Collections
+		    .singleton(RoleType.STUDENT), this));
 	    operations.add(new PrintSystemAccessDataOperation(Collections.singleton(RoleType.STUDENT),
 		    this));
 	    break;

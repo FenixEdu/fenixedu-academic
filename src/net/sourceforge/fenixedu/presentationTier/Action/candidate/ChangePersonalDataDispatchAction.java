@@ -59,20 +59,8 @@ public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
 	PrecedentDegreeInformationBean precedentDegreeInformation = (PrecedentDegreeInformationBean) RenderUtils
 		.getViewState("precedentDegreeInformation").getMetaObject().getObject();
 
-	if (!precedentDegreeInformation.isInstitutionFilled()) {
-	    request.setAttribute("precedentDegreeInformation", precedentDegreeInformation);
-
-	    addActionMessage(request, "error.candidacy.institution.must.be.choosed.or.created",
-		    new String[] {});
-
-	    return mapping.findForward("change");
-	}
-
-	if (precedentDegreeInformation.getNewInstitutionName() != null
-		|| precedentDegreeInformation.getInstitution() != null) {
-	    Object[] argsInstitution = { precedentDegreeInformation };
-	    ServiceUtils.executeService(userView, "EditPrecedentDegreeInformation", argsInstitution);
-	}
+	Object[] argsInstitution = { precedentDegreeInformation };
+	ServiceUtils.executeService(userView, "EditPrecedentDegreeInformation", argsInstitution);
 
 	Object[] argsStateMachine = { new StateMachineRunner.RunnerArgs(precedentDegreeInformation
 		.getPrecedentDegreeInformation().getStudentCandidacy().getActiveCandidacySituation(),

@@ -4125,7 +4125,7 @@
 		<filterChains>
 			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
 		</filterChains>
-	</service>	
+	</service>
 	<service>
 		<name>EditTest</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.EditTest</implementationClass>
@@ -4312,7 +4312,7 @@
 		</filterChains>
 	</service>
 	<service>
-	<name>ReadExercise</name>
+		<name>ReadExercise</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadExercise</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
@@ -4320,7 +4320,7 @@
 			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
 		</filterChains>
 	</service>
-	<service>	
+	<service>
 		<name>EditExercise</name>
 		<implementationClass>
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.EditExercise</implementationClass>
@@ -9620,7 +9620,7 @@
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
-    </service>
+    </service>    
 	<service>
         <name>SearchEventsByType</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.SearchEventsByType</implementationClass>
@@ -10069,7 +10069,7 @@
             <chain name="ManagerAuthorization" />
         </filterChains>
     </service>
-    <service>
+	<service>
         <name>ImportStartupFunctionalities</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ImportStartupFunctionalities</implementationClass>
         <description />
@@ -10142,7 +10142,7 @@
             <chain name="ExecutionCourseLecturingTeacherAuthorization" />
         </filterChains>
     </service>
-	<service>
+<service>
         <name>ImportLessonPlannings</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportLessonPlannings</implementationClass>
         <description />
@@ -10150,7 +10150,7 @@
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherAuthorization" />
         </filterChains>
-    </service>  
+    </service>  	
     <service>
         <name>ImportCustomizationOptions</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportCustomizationOptions</implementationClass>
@@ -10803,5 +10803,15 @@
 		<isTransactional>True</isTransactional>
 		<filterChains />
 	</service>
+
+	<service>
+    	<name>CreateStudent</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateStudent</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
 
 </serviceDefinitions>		

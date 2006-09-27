@@ -29,3 +29,5 @@ function executeWithTempFile() {
 
 execute "Add columns to parkingParty table" alterTableParkingParty.sql
 execute "Create table ResultTeacher" CreateTableResultTeacher.sql
+
+execute "Add ACademic Office Role" AddAcademicOfficeRole.sql

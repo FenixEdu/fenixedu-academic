@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE struts-config PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <!-- ========== Data Source Configuration =============================== -->
+    
+    <!-- ========== Form Bean Definitions ================================== -->
+    <form-beans type="org.apache.struts.action.ActionFormBean">
+
+    </form-beans>
+
+    <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
+			/>
+	</global-exceptions>
+
+    <!-- ========== Global Forward Definitions =============================== -->
+    <global-forwards type="org.apache.struts.action.ActionForward">
+    </global-forwards>
+    
+    <!-- ========== Action Mapping Definitions =============================== -->
+    <action-mappings type="org.apache.struts.action.ActionMapping">
+        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+            <forward name="Success" path="index"/>
+        </action>
+        
+		<action path="/createStudent"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentOperationsDispatchAction">
+			<forward name="chooseNewStudentExecutionDegreeAndIdentification" path="student.chooseNewStudentExecutionDegreeAndIdentification"/>
+			<forward name="fillNewPersonData" path="student.fillNewPersonData"/>
+			<forward name="createStudentSuccess" path="student.createStudentSuccess"/>
+			<forward name="showCreateStudentConfirmation" path="student.showCreateStudentConfirmation"/>			
+			<forward name="printRegistrationDeclarationTemplate" path="/printRegistrationDeclarationTemplate.jsp"/>			
+		</action>        
+	
+    </action-mappings>
+
+    <!-- ========== Controller Configuration ================================ -->
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
+    
+    <!-- ========== Message Resources Definitions ============================ -->
+	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>	
+	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
+
+    <!-- ========== Plug Ins Configuration ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+      <set-property property="pathnames" 
+                    value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-alumni.xml"/>
+    </plug-in>    
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/academicAdminOffice/tiles-academicAdminOffice-definitions.xml,/WEB-INF/tiles/academicAdminOffice/tiles-academicAdminOffice-pages-definitions.xml" />
+        <set-property property="moduleAware" value="true" />
+        <set-property property="definitions-parser-validate" value="true" />
+    </plug-in>
+</struts-config>
