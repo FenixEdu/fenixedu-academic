@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentType;
 
 /**
@@ -29,12 +28,9 @@ public class CreateStudent extends Service {
 	    PrecedentDegreeInformationBean precedentDegreeInformationBean,
 	    IngressionInformationBean ingressionInformationBean) {
 
-	// create person
-	Person person = new Person(personBean);
-
-	// create student
-	new Student(person);
-
+	// get or update person 
+	Person person = getPerson(personBean);
+	
 	// create candidacy
 	StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(executionDegreeBean
 		.getExecutionDegree(), person);
@@ -59,6 +55,18 @@ public class CreateStudent extends Service {
 	person.addPersonRoleByRoleType(RoleType.PERSON);
 
 	return registration;
+    }
+
+    private Person getPerson(PersonBean personBean) {
+	Person person = null;
+	if(personBean.getPerson() != null){
+	    person = personBean.getPerson();
+	    person.setProperties(personBean);
+	}else{
+	    // create person
+	    person = new Person(personBean);	    
+	}
+	return person;
     }
 
 }

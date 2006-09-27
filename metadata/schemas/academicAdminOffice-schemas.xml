@@ -151,7 +151,6 @@
 	</slot>
 	<slot name="entryPhase" key="label.entryPhase" layout="menu-select-postback">		
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.EntryPhaseProvider" />
-		<property name="choiceType"	value="net.sourceforge.fenixedu.util.EntryPhase" />	
 		<property name="saveOptions" value="true" />
 		<property name="format" value="${name}" />
 		<property name="destination" value="entryPhasePostBack"/>
@@ -194,7 +193,6 @@
 		<property name="format" value="${name}" />
 	</slot>			
 </schema>
-
 <schema name="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="number" key="label.studentNumber"/>
 </schema>

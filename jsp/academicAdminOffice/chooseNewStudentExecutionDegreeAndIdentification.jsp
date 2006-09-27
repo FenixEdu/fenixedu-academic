@@ -8,6 +8,7 @@
 	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
 	<br/>
 </html:messages>
+
 <h2><strong><bean:message key="label.student.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
 <fr:form >	
@@ -34,7 +35,6 @@
 		        <fr:property name="columnClasses" value="listClasses,,"/>
 			</fr:layout>
 		</fr:edit>
-		<br/>
 	</logic:present>		
 	
 </fr:form >

@@ -40,11 +40,12 @@
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentOperationsDispatchAction">
 			<forward name="chooseNewStudentExecutionDegreeAndIdentification" path="student.chooseNewStudentExecutionDegreeAndIdentification"/>
 			<forward name="fillNewPersonData" path="student.fillNewPersonData"/>
+			<forward name="fillNewPersonDataForEmployee" path="student.fillNewPersonDataForEmployee"/>
 			<forward name="createStudentSuccess" path="student.createStudentSuccess"/>
 			<forward name="showCreateStudentConfirmation" path="student.showCreateStudentConfirmation"/>			
 			<forward name="printRegistrationDeclarationTemplate" path="/printRegistrationDeclarationTemplate.jsp"/>			
 		</action>        
-
+	
 		<action path="/students"
 				scope="request"		
 		        parameter="method"

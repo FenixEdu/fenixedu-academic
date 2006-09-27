@@ -10,6 +10,9 @@
     <definition name="student.fillNewPersonData" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/fillNewPersonData.jsp"></put>
     </definition>  
+    <definition name="student.fillNewPersonDataForEmployee" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/fillNewPersonDataForEmployee.jsp"></put>
+    </definition>  
     <definition name="student.createStudentSuccess" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/createStudentSuccess.jsp"></put>
     </definition>  

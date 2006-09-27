@@ -4,6 +4,11 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
+	<br/>
+</html:messages>
+
 <h2><strong><bean:message key="label.student.registerStudent" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
 <fr:view name="personBean" schema="student.show.personInformation">

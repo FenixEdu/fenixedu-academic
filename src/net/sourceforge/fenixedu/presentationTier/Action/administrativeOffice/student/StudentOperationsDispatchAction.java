@@ -16,6 +16,8 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -25,6 +27,8 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -131,34 +135,41 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 		: (PrecedentDegreeInformationBean) RenderUtils
 			.getViewState("precedentDegreeInformation").getMetaObject().getObject();
 
+	request.setAttribute("executionDegreeBean", executionDegreeBean);
+	request.setAttribute("ingressionInformationBean", ingressionInformationBean);
+	request.setAttribute("precedentDegreeInformationBean", precedentDegreeInformationBean);
+
 	PersonBean personBean = null;
-	String identificationNumber = null;
-	IDDocumentType documentType = null;
 
 	if (RenderUtils.getViewState("choosePerson") != null) { // 1st time
 	    ChoosePersonBean choosePersonBean = (ChoosePersonBean) RenderUtils.getViewState(
 		    "choosePerson").getMetaObject().getObject();
-	    personBean = new PersonBean(choosePersonBean.getIdentificationNumber(), choosePersonBean
-		    .getDocumentType());
-	} else { // Postback
+
+	    String identificationNumber = choosePersonBean.getIdentificationNumber();
+	    IDDocumentType documentType = choosePersonBean.getDocumentType();
+
+	    Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationNumber,
+		    documentType);
+
+	    if (person != null) {
+		personBean = new PersonBean(person);
+
+		if (person.getEmployee() != null) {
+		    request.setAttribute("personBean", personBean);
+		    return mapping.findForward("fillNewPersonDataForEmployee");
+		}
+
+	    } else {
+		personBean = new PersonBean(identificationNumber, documentType);
+	    }
+
+	} else if (RenderUtils.getViewState("person") != null) { // Postback
 	    personBean = (PersonBean) RenderUtils.getViewState("person").getMetaObject().getObject();
 	}
 
-	Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationNumber,
-		documentType);
+	request.setAttribute("personBean", personBean);
+	return mapping.findForward("fillNewPersonData");
 
-	if (person == null) {
-
-	    request.setAttribute("executionDegreeBean", executionDegreeBean);
-	    request.setAttribute("ingressionInformationBean", ingressionInformationBean);
-	    request.setAttribute("precedentDegreeInformationBean", precedentDegreeInformationBean);
-	    request.setAttribute("personBean", personBean);
-	    return mapping.findForward("fillNewPersonData");
-	} else {
-
-	}
-
-	return null;
     }
 
     public ActionForward prepareShowCreateStudentConfirmation(ActionMapping mapping,
@@ -196,10 +207,15 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	Object[] args = { personBean, executionDegreeBean, precedentDegreeInformationBean,
 		ingressionInformationBean };
-	Registration registration = (Registration) ServiceUtils.executeService(getUserView(request),
-		"CreateStudent", args);
 
-	request.setAttribute("registration", registration);
+	try {
+	    Registration registration = (Registration) ServiceUtils.executeService(getUserView(request),
+		    "CreateStudent", args);
+	    request.setAttribute("registration", registration);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());	    
+	    return prepareShowCreateStudentConfirmation(mapping, actionForm, request, response);
+	}
 
 	return mapping.findForward("createStudentSuccess");
     }
