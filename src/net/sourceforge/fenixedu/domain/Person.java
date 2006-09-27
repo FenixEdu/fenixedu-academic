@@ -235,6 +235,11 @@ public class Person extends Person_Base {
 	}
     }
 
+    public void edit(PersonBean personBean) {
+        checkConditionsToCreateNewPerson(personBean.getDocumentIdNumber(), personBean.getIdDocumentType(), this);
+        setProperties(personBean);
+    }
+
     public void update(InfoPersonEditor updatedPersonalData, Country country) {
 	checkConditionsToCreateNewPerson(updatedPersonalData.getNumeroDocumentoIdentificacao(),
 		updatedPersonalData.getTipoDocumentoIdentificacao(), this);
@@ -1713,4 +1718,16 @@ public class Person extends Person_Base {
         }
         return ParkingPartyClassification.PERSON;
     }
+
+    public static class PersonBeanFactoryEditor extends PersonBean implements FactoryExecutor {
+        public PersonBeanFactoryEditor(final Person person) {
+            super(person);
+        }
+
+        public Object execute() {
+            getPerson().edit(this);
+            return null;
+        }
+    }
+
 }

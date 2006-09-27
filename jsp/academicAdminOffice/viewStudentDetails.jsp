@@ -6,7 +6,6 @@
 
 <h2><strong><bean:message key="link.students" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
-
 <table >
 	<tr>
 		<td>
@@ -24,9 +23,6 @@
 	</tr>
 </table>
 
-<html:link action="">
+<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
 	<bean:message key="link.edit.personal.data" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 </html:link>
-		
-		
-

@@ -25,7 +25,7 @@ public class SearchForStudentsDA extends FenixDispatchAction {
         }
         
         //postback
-        Set<Student> students = studentsSearchBean.search();
+        final Set<Student> students = studentsSearchBean.search();
         
         if(students.size() == 1){
             request.setAttribute("student", students.iterator().next());
