@@ -185,6 +185,15 @@
 	</slot>		
 </schema>
 
+<schema name="student.show.personAndStudentInformation"
+		type="net.sourceforge.fenixedu.domain.student.Student" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="person.name" key="label.name"/>
+	<slot name="person.documentIdNumber" key="label.identificationNumber"/>		
+	<slot name="person.idDocumentType" key="label.idDocumentType"/>	
+	<slot name="person.istUsername" key="label.username"/>
+	<slot name="number" key="label.studentNumber"/>
+</schema>
+
 <schema name="student.show.ingressionInformation" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="ingression" layout="format"  >
 		<property name="format" value="${name} - ${description}" />

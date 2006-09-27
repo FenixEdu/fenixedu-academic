@@ -6,7 +6,7 @@
 
 <h2><strong><bean:message key="link.students" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
-<fr:view name="student" schema="net.sourceforge.fenixedu.domain.student.Student">
+<fr:view name="student" schema="student.show.personAndStudentInformation">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4"/>
       		<fr:property name="columnClasses" value="listClasses,,"/>
