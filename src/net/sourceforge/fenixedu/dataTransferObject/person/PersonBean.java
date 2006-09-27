@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -21,7 +22,9 @@ import org.joda.time.YearMonthDay;
 public class PersonBean implements Serializable {
 
     private static final Integer DEFAULT_COUNTRY_ID = Integer.valueOf(1);
-    
+
+    private DomainReference<Person> person;
+
     // personal information
     private String name; // read only
 
@@ -45,7 +48,7 @@ public class PersonBean implements Serializable {
 
     private MaritalStatus maritalStatus;
 
-    //contacts
+    // contacts
     private String phone;
 
     private String mobile;
@@ -60,7 +63,7 @@ public class PersonBean implements Serializable {
 
     private boolean isPhotoAvailable;
 
-    //birth information
+    // birth information
     private YearMonthDay dateOfBirth;
 
     private DomainReference<Country> nationality;
@@ -77,8 +80,7 @@ public class PersonBean implements Serializable {
 
     private DomainReference<Country> countryOfBirth;
 
-
-    //residence
+    // residence
     private String address;
 
     private String areaCode; // zip code
@@ -94,8 +96,8 @@ public class PersonBean implements Serializable {
     private String districtOfResidence;
 
     private DomainReference<Country> countryOfResidence;
-    
-    public PersonBean(){
+
+    public PersonBean() {
 	super();
     }
 
@@ -104,37 +106,78 @@ public class PersonBean implements Serializable {
 	setDocumentIdNumber(identificationNumber);
     }
 
+    public PersonBean(Person person) {
+
+	setAddress(person.getAddress());
+	setArea(person.getArea());
+	setAreaCode(person.getAreaCode());
+	setAreaOfAreaCode(person.getAreaOfAreaCode());
+	setCountryOfBirth(person.getCountryOfBirth());
+	setCountryOfResidence(person.getCountryOfResidence());
+	setDateOfBirth(person.getDateOfBirthYearMonthDay());
+	setDistrictOfBirth(person.getDistrictOfBirth());
+	setDistrictOfResidence(person.getDistrictOfResidence());
+	setDistrictSubdivisionOfBirth(person.getDistrictSubdivisionOfBirth());
+	setDistrictSubdivisionOfResidence(person.getDistrictSubdivisionOfResidence());
+	setDocumentIdEmissionDate(person.getEmissionDateOfDocumentIdYearMonthDay());
+	setDocumentIdEmissionLocation(person.getEmissionLocationOfDocumentId());
+	setDocumentIdExpirationDate(person.getExpirationDateOfDocumentIdYearMonthDay());
+	setDocumentIdNumber(person.getDocumentIdNumber());
+	setEmail(person.getEmail());
+	setFatherName(person.getNameOfFather());
+	setGender(person.getGender());
+	setIdDocumentType(person.getIdDocumentType());
+	setEmailAvailable(person.getAvailableEmail());
+	setHomepageAvailable(person.getAvailableWebSite());
+	setPhotoAvailable(person.getAvailablePhoto());
+	setMaritalStatus(person.getMaritalStatus());
+	setMobile(person.getMobile());
+	setMotherName(person.getNameOfMother());
+	setName(person.getName());
+	setNationality(person.getNationality());
+	setParishOfBirth(person.getParishOfBirth());
+	setParishOfResidence(person.getParishOfResidence());
+	setPhone(person.getPhone());
+	setProfession(person.getProfession());
+	setSocialSecurityNumber(person.getSocialSecurityNumber());
+	setUsername(person.getUsername());
+	setWebAddress(person.getWebAddress());
+
+	setPerson(person);
+
+    }
+
     public String getAddress() {
-        return address;
+	return address;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+	this.address = address;
     }
 
     public String getArea() {
-        return area;
+	return area;
     }
 
     public void setArea(String area) {
-        this.area = area;
+	this.area = area;
     }
 
     public String getAreaCode() {
-        return areaCode;
+	return areaCode;
     }
 
     public void setAreaCode(String areaCode) {
-        this.areaCode = areaCode;
+	this.areaCode = areaCode;
     }
 
     public String getAreaOfAreaCode() {
-        return areaOfAreaCode;
+	return areaOfAreaCode;
     }
 
     public void setAreaOfAreaCode(String areaOfAreaCode) {
-        this.areaOfAreaCode = areaOfAreaCode;
-    } 
+	this.areaOfAreaCode = areaOfAreaCode;
+    }
 
     public Country getCountryOfBirth() {
 	return countryOfBirth == null ? null : countryOfBirth.getObject();
@@ -146,237 +189,244 @@ public class PersonBean implements Serializable {
     }
 
     public Country getCountryOfResidence() {
-        return countryOfResidence == null ? null : countryOfResidence.getObject();
+	return countryOfResidence == null ? null : countryOfResidence.getObject();
     }
 
     public void setCountryOfResidence(Country countryOfResidence) {
-        this.countryOfResidence = countryOfResidence == null ? null : new DomainReference<Country>(countryOfResidence);
+	this.countryOfResidence = countryOfResidence == null ? null : new DomainReference<Country>(
+		countryOfResidence);
     }
 
     public YearMonthDay getDateOfBirth() {
-        return dateOfBirth;
+	return dateOfBirth;
     }
 
     public void setDateOfBirth(YearMonthDay dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+	this.dateOfBirth = dateOfBirth;
     }
 
     public String getDistrictOfBirth() {
-        return districtOfBirth;
+	return districtOfBirth;
     }
 
     public void setDistrictOfBirth(String districtOfBirth) {
-        this.districtOfBirth = districtOfBirth;
+	this.districtOfBirth = districtOfBirth;
     }
 
     public String getDistrictOfResidence() {
-        return districtOfResidence;
+	return districtOfResidence;
     }
 
     public void setDistrictOfResidence(String districtOfResidence) {
-        this.districtOfResidence = districtOfResidence;
+	this.districtOfResidence = districtOfResidence;
     }
 
     public String getDistrictSubdivisionOfBirth() {
-        return districtSubdivisionOfBirth;
+	return districtSubdivisionOfBirth;
     }
 
     public void setDistrictSubdivisionOfBirth(String districtSubdivisionOfBirth) {
-        this.districtSubdivisionOfBirth = districtSubdivisionOfBirth;
+	this.districtSubdivisionOfBirth = districtSubdivisionOfBirth;
     }
 
     public String getDistrictSubdivisionOfResidence() {
-        return districtSubdivisionOfResidence;
+	return districtSubdivisionOfResidence;
     }
 
     public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
-        this.districtSubdivisionOfResidence = districtSubdivisionOfResidence;
+	this.districtSubdivisionOfResidence = districtSubdivisionOfResidence;
     }
 
     public YearMonthDay getDocumentIdEmissionDate() {
-        return documentIdEmissionDate;
+	return documentIdEmissionDate;
     }
 
     public void setDocumentIdEmissionDate(YearMonthDay documentIdEmissionDate) {
-        this.documentIdEmissionDate = documentIdEmissionDate;
+	this.documentIdEmissionDate = documentIdEmissionDate;
     }
 
     public String getDocumentIdEmissionLocation() {
-        return documentIdEmissionLocation;
+	return documentIdEmissionLocation;
     }
 
     public void setDocumentIdEmissionLocation(String documentIdEmissionLocation) {
-        this.documentIdEmissionLocation = documentIdEmissionLocation;
+	this.documentIdEmissionLocation = documentIdEmissionLocation;
     }
 
     public YearMonthDay getDocumentIdExpirationDate() {
-        return documentIdExpirationDate;
+	return documentIdExpirationDate;
     }
 
     public void setDocumentIdExpirationDate(YearMonthDay documentIdExpirationDate) {
-        this.documentIdExpirationDate = documentIdExpirationDate;
+	this.documentIdExpirationDate = documentIdExpirationDate;
     }
 
     public String getDocumentIdNumber() {
-        return documentIdNumber;
+	return documentIdNumber;
     }
 
     public void setDocumentIdNumber(String documentIdNumber) {
-        this.documentIdNumber = documentIdNumber;
+	this.documentIdNumber = documentIdNumber;
     }
 
     public String getEmail() {
-        return email;
+	return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+	this.email = email;
     }
 
     public String getFatherName() {
-        return fatherName;
+	return fatherName;
     }
 
     public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
+	this.fatherName = fatherName;
     }
 
     public Gender getGender() {
-        return gender;
+	return gender;
     }
 
     public void setGender(Gender gender) {
-        this.gender = gender;
+	this.gender = gender;
     }
 
     public IDDocumentType getIdDocumentType() {
-        return idDocumentType;
+	return idDocumentType;
     }
 
     public void setIdDocumentType(IDDocumentType idDocumentType) {
-        this.idDocumentType = idDocumentType;
+	this.idDocumentType = idDocumentType;
     }
 
     public boolean isEmailAvailable() {
-        return isEmailAvailable;
+	return isEmailAvailable;
     }
 
     public void setEmailAvailable(boolean isEmailAvailable) {
-        this.isEmailAvailable = isEmailAvailable;
+	this.isEmailAvailable = isEmailAvailable;
     }
 
     public boolean isHomepageAvailable() {
-        return isHomepageAvailable;
+	return isHomepageAvailable;
     }
 
     public void setHomepageAvailable(boolean isHomepageAvailable) {
-        this.isHomepageAvailable = isHomepageAvailable;
+	this.isHomepageAvailable = isHomepageAvailable;
     }
 
     public boolean isPhotoAvailable() {
-        return isPhotoAvailable;
+	return isPhotoAvailable;
     }
 
     public void setPhotoAvailable(boolean isPhotoAvailable) {
-        this.isPhotoAvailable = isPhotoAvailable;
+	this.isPhotoAvailable = isPhotoAvailable;
     }
 
     public MaritalStatus getMaritalStatus() {
-        return maritalStatus == null ? MaritalStatus.UNKNOWN : maritalStatus;
+	return maritalStatus == null ? MaritalStatus.UNKNOWN : maritalStatus;
     }
 
     public void setMaritalStatus(MaritalStatus maritalStatus) {
-        this.maritalStatus = maritalStatus;
+	this.maritalStatus = maritalStatus;
     }
 
     public String getMobile() {
-        return mobile;
+	return mobile;
     }
 
     public void setMobile(String mobileNumber) {
-        this.mobile = mobileNumber;
+	this.mobile = mobileNumber;
     }
 
     public String getMotherName() {
-        return motherName;
+	return motherName;
     }
 
     public void setMotherName(String motherName) {
-        this.motherName = motherName;
+	this.motherName = motherName;
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public Country getNationality() {
-        return nationality == null ? null : nationality.getObject();
+	return nationality == null ? null : nationality.getObject();
     }
 
     public void setNationality(Country nationality) {
-        this.nationality = nationality == null ? null : new DomainReference<Country>(nationality);
+	this.nationality = nationality == null ? null : new DomainReference<Country>(nationality);
     }
 
     public String getParishOfBirth() {
-        return parishOfBirth;
+	return parishOfBirth;
     }
 
     public void setParishOfBirth(String parishOfBirth) {
-        this.parishOfBirth = parishOfBirth;
+	this.parishOfBirth = parishOfBirth;
     }
 
     public String getParishOfResidence() {
-        return parishOfResidence;
+	return parishOfResidence;
     }
 
     public void setParishOfResidence(String parishOfResidence) {
-        this.parishOfResidence = parishOfResidence;
+	this.parishOfResidence = parishOfResidence;
     }
 
     public String getPhone() {
-        return phone;
+	return phone;
     }
 
     public void setPhone(String phoneNumber) {
-        this.phone = phoneNumber;
+	this.phone = phoneNumber;
     }
 
     public String getProfession() {
-        return profession;
+	return profession;
     }
 
     public void setProfession(String profession) {
-        this.profession = profession;
+	this.profession = profession;
     }
 
     public String getSocialSecurityNumber() {
-        return socialSecurityNumber;
+	return socialSecurityNumber;
     }
 
     public void setSocialSecurityNumber(String socialSecurityNumber) {
-        this.socialSecurityNumber = socialSecurityNumber;
+	this.socialSecurityNumber = socialSecurityNumber;
     }
 
     public String getUsername() {
-        return username;
+	return username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+	this.username = username;
     }
 
     public String getWebAddress() {
-        return webAddress;
+	return webAddress;
     }
 
     public void setWebAddress(String webAddress) {
-        this.webAddress = webAddress;
+	this.webAddress = webAddress;
     }
-    
-    
+
+    public Person getPerson() {
+	return person == null ? null : person.getObject();
+    }
+
+    public void setPerson(Person person) {
+	this.person = person == null ? null : new DomainReference<Person>(person);
+    }
 
 }
