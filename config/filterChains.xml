@@ -817,7 +817,7 @@
 	</filterChain>
 	<filterChain>
 		<name>ReadStudentCurricularPlansAccess</name>
-		<expression>StudentCurricularPlanOwnerAuthorization || StudentTutorAuthorization || StudentDegreeCoordinatorAuthorization || DegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization || CoordinatorAuthorization || FinalDegreeWorkOrientatorForCandidacy || AlumniAuthorization</expression>
+		<expression>StudentCurricularPlanOwnerAuthorization || StudentTutorAuthorization || StudentDegreeCoordinatorAuthorization || DegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization || CoordinatorAuthorization || FinalDegreeWorkOrientatorForCandidacy || AlumniAuthorization || DepartmentAdministrativeOfficeAuthorization</expression>
 		<description />
 		<invocationTiming>1</invocationTiming>
 		<filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

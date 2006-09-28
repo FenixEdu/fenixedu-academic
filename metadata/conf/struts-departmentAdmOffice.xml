@@ -219,6 +219,17 @@
 			<form-property name="teacherId" type="java.lang.Integer" />												
 		</form-bean>  	
 
+		<form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        	<form-property name="studentCPID" type="java.lang.String" />
+        	<form-property name="select" type="java.lang.String" />
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>			
+			<form-property name="organizedByGroups" type="java.lang.Boolean" initial="false"/>			
+		</form-bean>	
+
 <!-- Teacher Service Distribution -->		
 		<form-bean name="teacherServiceDistributionForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
@@ -762,6 +773,18 @@
 			<forward name="show-student-curricular-plan" path="/viewCurriculum.do?method=getStudentCP&amp;page=0"/>
 		</action>
 
+		<action path="/viewCurriculum"
+			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
+	        parameter="method"
+			name="studentCurricularPlanAndEnrollmentsSelectionForm"
+			scope="request"
+			validate="true"
+			input="/manageFinalDegreeWork.do?method=prepare&amp;page=0"
+			>
+	        	<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
+	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
+	    </action>	  
+
 		<action path="/setFinalDegreeWorkCandidacyPeriod"
 				type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
 				input="/manageFinalDegreeWork.do?method=prepare&amp;page=0"
@@ -957,6 +980,8 @@
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>    
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>    
+    <message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>    
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

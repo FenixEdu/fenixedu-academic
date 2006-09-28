@@ -190,7 +190,12 @@
 	<definition name="detailed-proposal-list" extends="departmentAdmOffice.masterPage">
 		<put name="body" value="/departmentAdmOffice/finalDegreeWork/detailedProposalList_bd.jsp" />
 	</definition>
-
+	<definition name="df.page.showStudentCurriculum" extends="departmentAdmOffice.masterPage" >
+		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>
+	<definition name="df.page.notAuthorizedSimple" extends="departmentAdmOffice.masterPage" >
+		<put name="body" value="/coordinator/notAuthorizedSimple.jsp" />
+	</definition>	
 
 
 <!-- Teacher Service Distribution -->	
