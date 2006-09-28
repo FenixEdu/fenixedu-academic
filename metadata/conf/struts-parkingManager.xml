@@ -39,12 +39,10 @@
 		<action path="/parking" scope="request" parameter="method"
 			name="parkingRequest"
 			type="net.sourceforge.fenixedu.presentationTier.Action.parkingManager.ParkingManagerDispatchAction">
-			<forward name="showParkingRequests"
-				path="show-parking-requests" />
-			<forward name="showParkingRequest"
-				path="show-parking-request" />
-			<forward name="searchParkingParty"
-				path="search-parking-party" />
+			<forward name="showParkingRequests"	path="show-parking-requests" />
+			<forward name="showParkingRequest" path="show-parking-request" />
+			<forward name="searchParty" path="search-party" />
+			<forward name="showParkingPartyRequests" path="show-party-parking-requests"/>
 		</action>
 
 	</action-mappings>

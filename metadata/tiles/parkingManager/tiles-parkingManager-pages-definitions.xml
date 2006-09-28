@@ -10,7 +10,10 @@
 	<definition name="show-parking-request" extends="definition.parkingManager.masterPage">
 		<put name="body" value="/parkingManager/showParkingRequest.jsp" />
 	</definition>
-	<definition name="search-parking-party" extends="definition.parkingManager.masterPage">
-		<put name="body" value="/parkingManager/searchParkingParty.jsp" />
+	<definition name="search-party" extends="definition.parkingManager.masterPage">
+		<put name="body" value="/parkingManager/searchParty.jsp" />
 	</definition>
+	<definition name="show-party-parking-requests" extends="definition.parkingManager.masterPage">
+		<put name="body" value="/parkingManager/searchParty.jsp" />
+	</definition>	
 </tiles-definitions>

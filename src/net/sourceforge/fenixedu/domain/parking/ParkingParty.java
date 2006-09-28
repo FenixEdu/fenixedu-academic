@@ -314,4 +314,28 @@ public class ParkingParty extends ParkingParty_Base {
         }
         return null;
     }
+    
+    public String getParkingGroupToDisplay(){
+        if(getParkingGroup() != null){
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getParkingGroup().getGroupName());
+        }
+        return null;
+    }
+    
+    public String getWorkPhone(){
+        if(getParty().isPerson()){
+            return ((Person) getParty()).getWorkPhone();
+        }
+        return null;
+    }
+    
+    public boolean getHasFirstCar() {
+        return !StringUtils.isEmpty(getFirstCarMake());
+    }
+    
+    public boolean getHasSecondCar() {
+        return !StringUtils.isEmpty(getSecondCarMake());
+    }
 }

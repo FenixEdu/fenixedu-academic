@@ -6,6 +6,19 @@
 	<slot name="email" key="label.email" bundle="PARKING_RESOURCES" />
 </schema>
 
+<schema name="view.parkingParty.personalInfo"
+	type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+	<slot name="cardNumber" key="label.cardNumber" bundle="PARKING_RESOURCES" />
+	<slot name="parkingGroupToDisplay" key="label.parkingGroup" bundle="PARKING_RESOURCES" />		
+	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES" />
+	<slot name="workPhone" key="label.phone" bundle="PARKING_RESOURCES" />
+	<slot name="party.mobile" key="label.mobile" bundle="PARKING_RESOURCES" />
+	<slot name="party.email" key="label.email" bundle="PARKING_RESOURCES" />
+</schema>
+
+<schema name="view.partyName" type="net.sourceforge.fenixedu.domain.organizationalStructure.Party" bundle="PARKING_RESOURCES">
+	<slot name="name" key="label.name"/>
+</schema>
 
 <schema name="parkingRequest.driverLicense"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
@@ -22,6 +35,29 @@
 </schema>
 
 <schema name="parkingRequest.secondCar"	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
+	<slot name="secondCarMake" bundle="PARKING_RESOURCES" />
+	<slot name="secondCarPlateNumber" bundle="PARKING_RESOURCES" />
+	<slot name="secondCarPropertyRegistryFileNameToDisplay" key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES" />
+	<slot name="secondCarInsuranceFileNameToDisplay" key="label.secondInsurance" bundle="PARKING_RESOURCES" />	
+	<slot name="secondCarOwnerIdFileNameToDisplay" key="label.secondCarOwnerId" bundle="PARKING_RESOURCES" />
+	<slot name="secondDeclarationAuthorizationFileNameToDisplay" key="label.secondDeclarationAuthorization" bundle="PARKING_RESOURCES" />		
+</schema>
+
+<schema name="parkingParty.driverLicense"
+	type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+	<slot name="driverLicenseFileName" key="label.driverLicense" bundle="PARKING_RESOURCES" />
+</schema>
+
+<schema name="parkingParty.firstCar" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+	<slot name="firstCarMake" bundle="PARKING_RESOURCES" />
+	<slot name="firstCarPlateNumber" bundle="PARKING_RESOURCES" />
+	<slot name="firstCarPropertyRegistryFileNameToDisplay" key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES" />
+	<slot name="firstCarInsuranceFileNameToDisplay" key="label.firstInsurance" bundle="PARKING_RESOURCES" />	
+	<slot name="firstCarOwnerIdFileNameToDisplay" key="label.firstCarOwnerId" bundle="PARKING_RESOURCES" />
+	<slot name="firstDeclarationAuthorizationFileNameToDisplay" key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES" />	
+</schema>
+
+<schema name="parkingParty.secondCar"	type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
 	<slot name="secondCarMake" bundle="PARKING_RESOURCES" />
 	<slot name="secondCarPlateNumber" bundle="PARKING_RESOURCES" />
 	<slot name="secondCarPropertyRegistryFileNameToDisplay" key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES" />
@@ -224,4 +260,20 @@
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="personName" key="label.name" bundle="PARKING_RESOURCES" />
+</schema>
+
+<schema name="search.party" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean" bundle="PARKING_RESOURCES">
+	<slot name="party" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.name">
+		<property name="size" value="50"/>
+		<property name="labelField" value="name"/>
+		<property name="format" value="${name}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
+		<property name="minChars" value="3"/>
+		<property name="maxCount" value="100"/>		
+		<property name="rawSlotName" value="partyName"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
 </schema>

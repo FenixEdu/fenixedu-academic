@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
@@ -979,23 +980,11 @@ public class ParkingRequest extends ParkingRequest_Base {
     }
 
     public boolean getHasFirstCar() {
-        return (getFirstCarMake() != null && getFirstCarMake().length() > 0)
-                || (getFirstCarPlateNumber() != null && getFirstCarPlateNumber().length() > 0)
-                || (getFirstCarPropertyRegistryFileName() != null && getFirstCarPropertyRegistryFileName()
-                        .length() > 0)
-                || (getFirstCarOwnerIdFileName() != null && getFirstCarOwnerIdFileName().length() > 0)
-                || (getFirstDeclarationAuthorizationFileName() != null && getFirstDeclarationAuthorizationFileName()
-                        .length() > 0);
+        return !StringUtils.isEmpty(getFirstCarMake());
     }
 
     public boolean getHasSecondCar() {
-        return (getSecondCarMake() != null && getSecondCarMake().length() > 0)
-                || (getSecondCarPlateNumber() != null && getSecondCarPlateNumber().length() > 0)
-                || (getSecondCarPropertyRegistryFileName() != null && getSecondCarPropertyRegistryFileName()
-                        .length() > 0)
-                || (getSecondCarOwnerIdFileName() != null && getSecondCarOwnerIdFileName().length() > 0)
-                || (getSecondDeclarationAuthorizationFileName() != null && getSecondDeclarationAuthorizationFileName()
-                        .length() > 0);
+        return !StringUtils.isEmpty(getSecondCarMake());
     }
 
     public boolean getHasDriverLicense() {
