@@ -29,7 +29,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
-	</service>net.sourceforge.fenixedu.applicationTier.Servico.messaging
+	</service>
 	<service>
 		<name>AddSchoolClassesToShift</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AddSchoolClassesToShift</implementationClass>
