@@ -985,6 +985,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return false;
     }
 
+    public static Set<DegreeCurricularPlan> readBolonhaDegreeCurricularPlans() {
+        Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+
+        List<Degree> degrees = Degree.readBolonhaDegrees();
+        for (Degree degree : degrees) {
+            result.addAll(degree.getDegreeCurricularPlans());
+        }
+        
+        return result;
+    }
+
     public Set<MasterDegreeCandidate> readMasterDegreeCandidates() {
 	final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
 	for (final ExecutionDegree executionDegree : this.getExecutionDegreesSet()) {
