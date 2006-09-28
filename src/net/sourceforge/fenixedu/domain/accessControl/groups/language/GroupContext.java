@@ -22,6 +22,18 @@ public interface GroupContext {
     public static final String VAR_USER = "user";
     
     /**
+     * The standard name of the context variable that contains the user view
+     * associated with the logged person.
+     */
+    public static final String VAR_USERVIEW = "userview";
+
+    /**
+     * The standard name of the context variable that contains the current request.
+     * This allows some low level access that may be difficulat to maintain.
+     */
+    public static final String VAR_REQUEST = "request";
+    
+    /**
      * Obtains a parameter value from the current request.
      * 
      * @param name the name of the parameter

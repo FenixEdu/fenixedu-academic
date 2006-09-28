@@ -34,6 +34,8 @@ public class GroupContextFromFunctionality implements GroupContext {
         this.variables = new Hashtable<String, Object>();
         
         this.variables.put(VAR_USER, getContext().getLoggedUser());
+        this.variables.put(VAR_USERVIEW, getContext().getLoggedUser());
+        this.variables.put(VAR_REQUEST, getContext().getRequest());
     }
 
     /**
