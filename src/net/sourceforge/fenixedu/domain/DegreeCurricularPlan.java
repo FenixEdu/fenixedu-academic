@@ -1106,6 +1106,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public CurricularPeriod getCurricularPeriodFor(int year, int semester) {
+	final CurricularPeriodInfoDTO[] curricularPeriodInfos = buildCurricularPeriodInfoDTOsFor(year, semester);
+	return getDegreeStructure().getCurricularPeriod(curricularPeriodInfos);
+    }
+
+    private CurricularPeriodInfoDTO[] buildCurricularPeriodInfoDTOsFor(int year, int semester) {
 	final CurricularPeriodInfoDTO[] curricularPeriodInfos;
 	if (getDegree().getDegreeType().getYears() > 1) {
 
@@ -1117,8 +1122,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    curricularPeriodInfos = new CurricularPeriodInfoDTO[] { new CurricularPeriodInfoDTO(
 		    semester, CurricularPeriodType.SEMESTER) };
 	}
-
-	return getDegreeStructure().getCurricularPeriod(curricularPeriodInfos);
+	return curricularPeriodInfos;
+    }
+    
+    public CurricularPeriod createCurricularPeriodFor(int year, int semester) {
+	final CurricularPeriodInfoDTO[] curricularPeriodInfos = buildCurricularPeriodInfoDTOsFor(year, semester);
+	
+	return getDegreeStructure().addCurricularPeriod(curricularPeriodInfos);
     }
 
     @Override
