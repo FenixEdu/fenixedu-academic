@@ -10,7 +10,6 @@
 <html:xhtml/>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-  sdf
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 
 <bean:define id="organizedByGroups" name="organizedByGroups" scope="request" type="java.lang.Boolean" />	
