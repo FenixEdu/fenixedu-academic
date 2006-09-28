@@ -96,10 +96,10 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
 	    if(group.hasAnyCurriculumModules()) {
-		htmlTableRow.createCell().setBody(new HtmlText("Grupo " + group.getDegreeModule().getName()));
+		htmlTableRow.createCell().setBody(new HtmlText(group.getDegreeModule().getName()));
 		generateDegreeModulesEnroled(blockContainer, group, studentCurricularPlan, executionPeriod, depth);
 	    } else {
-		htmlTableRow.createCell().setBody(new HtmlText("Grupo Sem Filhos" + group.getDegreeModule().getName()));
+		htmlTableRow.createCell().setBody(new HtmlText(group.getDegreeModule().getName()));
 		HtmlTableCell checkBoxCell = htmlTableRow.createCell();
 		checkBoxCell.setClasses("aright");
 		
@@ -131,7 +131,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 		    if(!studentCurricularPlan.getRoot().isAproved(curricularCourse, executionPeriod) &&
 			    !studentCurricularPlan.getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod)) {
 			HtmlTableRow htmlTableRow = groupTable.createRow();
-			htmlTableRow.createCell().setBody(new HtmlText("Inscrever " + curricularCourse.getName()));
+			htmlTableRow.createCell().setBody(new HtmlText(curricularCourse.getName()));
 			HtmlTableCell checkBoxCell = htmlTableRow.createCell();
 			checkBoxCell.setClasses("aright");
 						
@@ -145,7 +145,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 		} else {
 		    if(!studentCurricularPlan.getRoot().hasDegreModule(context.getChildDegreeModule())) {
 			HtmlTableRow htmlTableRow = groupTable.createRow();
-			htmlTableRow.createCell().setBody(new HtmlText("Inscrever Grupo " + context.getChildDegreeModule().getName()));
+			htmlTableRow.createCell().setBody(new HtmlText(context.getChildDegreeModule().getName()));
 			HtmlTableCell checkBoxCell = htmlTableRow.createCell();
 			checkBoxCell.setClasses("aright");
 			
@@ -176,7 +176,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 			if(enrolment.getExecutionPeriod().equals(executionPeriod) && enrolment.isEnroled()) {
 			    HtmlTableRow htmlTableRow = groupTable.createRow();
 			    HtmlTableCell cellName = htmlTableRow.createCell();
-			    cellName.setBody(new HtmlText("Inscrito " + enrolment.getCurricularCourse().getName()));
+			    cellName.setBody(new HtmlText(enrolment.getCurricularCourse().getName()));
 			    
 			    MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(enrolment, new Schema(Enrolment.class));
 			    

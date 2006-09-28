@@ -8,12 +8,12 @@
 	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
 	<br/>
 </html:messages>
-<h2><strong><bean:message key="label.student.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<h2><strong><bean:message key="label.student.enrolment.chooseExecutionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
 
+<fr:form action="/studentEnrolments.do?method=showDegreeModulesToEnrol">
 	<fr:edit id="studentEnrolment"
 			 name="studentEnrolmentBean"
-			 action="/studentEnrolments.do?method=showDegreeModulesToEnrol"
 			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean"
 			 schema="student.enrolment.choose.executionPeriod">
 		<fr:layout name="tabular">
@@ -21,4 +21,5 @@
 		        <fr:property name="columnClasses" value="listClasses,,"/>
 		</fr:layout>
 	</fr:edit>
-	
+	<html:submit><bean:message key="button.submit"/></html:submit>
+</fr:form>	

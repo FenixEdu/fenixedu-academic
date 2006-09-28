@@ -253,9 +253,9 @@
 </schema>
 
 <schema name="student.enrolment.choose.executionPeriod" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean">
-	<slot name="studentCurricularPlan.student.student.person.name" read-only="true"/>
-	<slot name="studentCurricularPlan.student.student.number" read-only="true"/>
-	<slot name="studentCurricularPlan.degreeCurricularPlan.name" read-only="true"/>
+	<slot name="studentCurricularPlan.student.student.person.name" key="label.name" read-only="true"/>
+	<slot name="studentCurricularPlan.student.student.number" key="label.studentNumber" read-only="true"/>
+	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan" read-only="true"/>
 	<slot name="executionPeriod" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsFrom1Sem0607" />

@@ -10694,5 +10694,15 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
+    
+	<service>
+    	<name>CreateStudentEnrolmentsWithoutRules</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateStudentEnrolmentsWithoutRules</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>
+    </service>
 
 </serviceDefinitions>		

@@ -32,6 +32,10 @@ public class EnrolmentRuleServiceException extends FenixServiceException {
     public EnrolmentRuleServiceException(String s) {
         super(s);
     }
+    
+    public EnrolmentRuleServiceException(String s, String[] args) {
+        super(s, args);
+    }
 
     /**
      * @param cause

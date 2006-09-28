@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
@@ -29,6 +30,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -1696,12 +1698,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
     
-    public void createModules(Collection<DegreeModuleToEnrol> degreeModulesToEnrol, ExecutionPeriod executionPeriod) {
+    public void createModules(Collection<DegreeModuleToEnrol> degreeModulesToEnrol, ExecutionPeriod executionPeriod, EnrollmentCondition enrollmentCondition) {
 	for (DegreeModuleToEnrol degreeModuleToEnrol : degreeModulesToEnrol) {
 	    if(degreeModuleToEnrol.getContext().getChildDegreeModule().isLeaf()) {
-		
+		new Enrolment(this, degreeModuleToEnrol.getCurriculumGroup(), (CurricularCourse) degreeModuleToEnrol.getContext().getChildDegreeModule(), executionPeriod, enrollmentCondition, AccessControl.getUserView().getUtilizador());
 	    } else {
-		
+		new CurriculumGroup(degreeModuleToEnrol.getCurriculumGroup(), (CourseGroup) degreeModuleToEnrol.getContext().getChildDegreeModule());
 	    }
 	}
     }

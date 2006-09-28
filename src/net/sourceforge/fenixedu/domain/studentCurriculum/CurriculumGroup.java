@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -22,11 +23,12 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	init(studentCurricularPlan, courseGroup, executionPeriod);
     }
     
-    public CurriculumGroup(CourseGroup courseGroup) {
-	if (courseGroup == null) {
+    public CurriculumGroup(CurriculumGroup curriculumGroup, CourseGroup courseGroup) {
+	if (courseGroup == null || curriculumGroup == null) {
 	    throw new DomainException("error.studentCurriculum.curriculumGroup.courseGroup.cannot.be.null");
 	}	
-	setDegreeModule(courseGroup);	
+	setDegreeModule(courseGroup);
+	setCurriculumGroup(curriculumGroup);
     }
 
     private void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
@@ -137,6 +139,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return isRoot() ? getParentStudentCurricularPlan() : getCurriculumGroup().getStudentCurricularPlan();
     }
     
+    
+    //alterar isto, colocar as regras 
     public Collection<Context> getDegreeModulesToEnrol(ExecutionPeriod executionPeriod) {
 	return this.getDegreeModule().getChildContexts(executionPeriod);
     }
