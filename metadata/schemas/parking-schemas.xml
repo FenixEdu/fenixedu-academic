@@ -16,13 +16,34 @@
 	<slot name="party.email" key="label.email" bundle="PARKING_RESOURCES" />
 </schema>
 
+<schema name="viewRequestPersonInfo"
+	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
+	<slot name="parkingParty.party.name" key="label.name" bundle="PARKING_RESOURCES" />
+	<slot name="phone" key="label.phone" bundle="PARKING_RESOURCES" />
+	<slot name="mobile" key="label.mobile" bundle="PARKING_RESOURCES" />
+	<slot name="email" key="label.email" bundle="PARKING_RESOURCES" />
+</schema>
+
 <schema name="view.partyName" type="net.sourceforge.fenixedu.domain.organizationalStructure.Party" bundle="PARKING_RESOURCES">
 	<slot name="name" key="label.name"/>
 </schema>
 
+<schema name="viewParkingPartyInfo"
+	type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+	<slot name="cardNumber" key="label.cardNumber" bundle="PARKING_RESOURCES" />
+	<slot name="parkingGroup.groupName" key="label.group" bundle="PARKING_RESOURCES" />
+</schema>
+
+<schema name="viewParkingRequestInfo"
+	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
+	<slot name="parkingRequestState" key="label.state" bundle="PARKING_RESOURCES" layout="menu-select">
+	</slot>
+	<slot name="note" key="label.note" bundle="PARKING_RESOURCES" />
+</schema>
+
 <schema name="parkingRequest.driverLicense"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
-	<slot name="driverLicenseFileName" key="label.driverLicense" bundle="PARKING_RESOURCES" />
+	<slot name="driverLicenseFileNameToDisplay" key="label.driverLicense" bundle="PARKING_RESOURCES" />
 </schema>
 
 <schema name="parkingRequest.firstCar" type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
@@ -45,7 +66,7 @@
 
 <schema name="parkingParty.driverLicense"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
-	<slot name="driverLicenseFileName" key="label.driverLicense" bundle="PARKING_RESOURCES" />
+	<slot name="driverLicenseFileNameToDisplay" key="label.driverLicense" bundle="PARKING_RESOURCES" />
 </schema>
 
 <schema name="parkingParty.firstCar" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">

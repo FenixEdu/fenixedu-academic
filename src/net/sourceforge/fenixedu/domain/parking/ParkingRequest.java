@@ -761,7 +761,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
         return null;
     }
-    
+
     public String getDriverLicenseFileNameToDisplay() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.DRIVER_LICENSE)) {
@@ -774,7 +774,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             return bundle.getString(getDriverLicenseDocumentState().name());
         }
         return null;
-    }    
+    }
 
     public String getFirstCarPropertyRegistryFileName() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
@@ -785,7 +785,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
         return null;
     }
-    
+
     public String getFirstCarPropertyRegistryFileNameToDisplay() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType().equals(
@@ -799,7 +799,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             return bundle.getString(getFirstCarPropertyRegistryDocumentState().name());
         }
         return null;
-    }    
+    }
 
     public String getFirstCarInsuranceFileName() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
@@ -809,7 +809,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
         return null;
     }
-    
+
     public String getFirstCarInsuranceFileNameToDisplay() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_INSURANCE)) {
@@ -832,7 +832,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
         return null;
     }
-    
+
     public String getFirstCarOwnerIdFileNameToDisplay() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_OWNER_ID)) {
@@ -853,7 +853,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                     ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
-        }    
+        }
         return null;
     }
 
@@ -868,20 +868,20 @@ public class ParkingRequest extends ParkingRequest_Base {
             ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
                     .getLocale());
             return bundle.getString(getFirstCarDeclarationDocumentState().name());
-        }    
+        }
         return null;
     }
-    
+
     public String getSecondCarPropertyRegistryFileName() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType().equals(
                     ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
-        }       
+        }
         return null;
     }
-    
+
     public String getSecondCarPropertyRegistryFileNameToDisplay() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType().equals(
@@ -893,7 +893,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
                     .getLocale());
             return bundle.getString(getSecondCarPropertyRegistryDocumentState().name());
-        }          
+        }
         return null;
     }
 
@@ -903,10 +903,10 @@ public class ParkingRequest extends ParkingRequest_Base {
                     .equals(ParkingDocumentType.SECOND_CAR_INSURANCE)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
-        }        
+        }
         return null;
     }
-    
+
     public String getSecondCarInsuranceFileNameToDisplay() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType()
@@ -918,7 +918,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
                     .getLocale());
             return bundle.getString(getSecondCarInsuranceDocumentState().name());
-        }        
+        }
         return null;
     }
 
@@ -930,7 +930,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
         return null;
     }
-    
+
     public String getSecondCarOwnerIdFileNameToDisplay() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.SECOND_CAR_OWNER_ID)) {
@@ -954,7 +954,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
         return null;
     }
-    
+
     public String getSecondDeclarationAuthorizationFileNameToDisplay() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType().equals(
@@ -988,7 +988,8 @@ public class ParkingRequest extends ParkingRequest_Base {
     }
 
     public boolean getHasDriverLicense() {
-        return getDriverLicenseFileName() != null && getDriverLicenseFileName().length() > 0;
+        return (getDriverLicenseFileName() != null && getDriverLicenseFileName().length() > 0)
+                || getDriverLicenseDocumentState() != null;
     }
-
+ 
 }

@@ -3700,6 +3700,7 @@ class net.sourceforge.fenixedu.domain.parking.ParkingRequest extends net.sourcef
 	String phone;
 	String mobile;
 	String email;
+	String note;
     ParkingDocumentState driverLicenseDocumentState;
     ParkingDocumentState firstCarPropertyRegistryDocumentState;
     ParkingDocumentState firstCarInsuranceDocumentState;

@@ -10503,7 +10503,16 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
         </filterChains>     
-    </service>     
+    </service>   
+    <service>
+    	<name>UpdateParkingParty</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.parking.UpdateParkingParty</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+         <filterChains>
+        	<chain name="ParkingManagerAuthorizationFilter"></chain>
+        </filterChains>   
+    </service>   
 	<service>
     	<name>SelectCandidacies</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SelectCandidacies</implementationClass>

@@ -888,11 +888,17 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.spaceManager.SpaceManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
-    </filter>                
-     <filter>
+    </filter>
+	<filter>
         <name>AcademicAdministrativeOfficeAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AcademicAdministrativeOfficeAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
-    </filter>                
+    </filter>
+    <filter>
+        <name>ParkingManagerAuthorizationFilter</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ParkingManagerAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>             
 </filterDefinitions>

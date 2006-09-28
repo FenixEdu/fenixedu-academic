@@ -7,9 +7,13 @@
 
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
-		<form-bean name="parkingRequest"
+		<form-bean name="parkingForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
+			<form-property name="group" type="java.lang.Integer" />
+			<form-property name="code" type="java.lang.Integer" />
+			<form-property name="cardNumber" type="java.lang.Integer"/>
+			<form-property name="note" type="java.lang.String"/>
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="page" type="java.lang.Integer" />
 		</form-bean>
@@ -37,7 +41,7 @@
 		</action>
 
 		<action path="/parking" scope="request" parameter="method"
-			name="parkingRequest"
+			name="parkingForm"
 			type="net.sourceforge.fenixedu.presentationTier.Action.parkingManager.ParkingManagerDispatchAction">
 			<forward name="showParkingRequests"	path="show-parking-requests" />
 			<forward name="showParkingRequest" path="show-parking-request" />

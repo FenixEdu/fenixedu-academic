@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
@@ -48,44 +49,30 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         // verificar autorização
         final Integer code = new Integer(request.getParameter("idInternal"));
         final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(code);
+        if (parkingRequest.getParkingRequestState() == ParkingRequestState.PENDING) {
+            request.setAttribute("groups", ParkingGroup.getAll());
+        }
         request.setAttribute("parkingRequest", parkingRequest);
-        //        if (code != null) {
-        //            ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(code);
-        //            ParkingRequestFactoryEditor parkingRequestFactoryEditor = parkingRequest
-        //                    .getParkingRequestFactoryEditor();
-        //            request.setAttribute("parkingRequestFactoryEditor", parkingRequestFactoryEditor);
-        //
-        //        }
         return mapping.findForward("showParkingRequest");
     }
 
-    public ActionForward acceptRequest(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward editParkingParty(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        Integer parkingRequestID = new Integer(request.getParameter("parkingRequestID"));
-        if (parkingRequestID == null) {
-            ParkingRequest parkingRequest = (ParkingRequest) RenderUtils.getViewState("edit")
-                    .getMetaObject().getObject();
-            parkingRequestID = parkingRequest.getIdInternal();
+        Integer parkingRequestID = new Integer(request.getParameter("code"));
+        String note = request.getParameter("note");
+        Object args[] = { parkingRequestID, null, null, null, note };
+        if (request.getParameter("accept") != null) {
+            Integer cardNumber = new Integer(request.getParameter("cardNumber"));
+            Integer group = new Integer(request.getParameter("group"));
+            args[1] = ParkingRequestState.ACCEPTED;
+            args[2] = cardNumber;
+            args[3] = group;
+        } else if (request.getParameter("reject") != null) {
+            args[1] = ParkingRequestState.REJECTED;
+        } else {
+            args[1] = ParkingRequestState.PENDING;
         }
-        request.setAttribute("parkingRequestAccepted", "parkingRequestAccepted");
-        Object[] args = { parkingRequestID, ParkingRequestState.ACCEPTED };
-        // verificar autorização
-        ServiceUtils
-                .executeService(SessionUtils.getUserView(request), "UpdateParkingRequestState", args);
-        return showParkingRequests(mapping, actionForm, request, response);
-    }
-
-    public ActionForward rejectRequest(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        Integer parkingRequestID = new Integer(request.getParameter("parkingRequestID"));
-
-        request.setAttribute("parkingRequestAccepted", "parkingRequestAccepted");
-        Object[] args = { parkingRequestID, ParkingRequestState.REJECTED };
-        // verificar autorização
-        ServiceUtils
-                .executeService(SessionUtils.getUserView(request), "UpdateParkingRequestState", args);
+        ServiceUtils.executeService(SessionUtils.getUserView(request), "UpdateParkingParty", args);
         return showParkingRequests(mapping, actionForm, request, response);
     }
 
@@ -106,7 +93,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         }
         if (searchPartyBean != null) {
             Party party = searchPartyBean.getParty();
-            if (party != null && searchPartyBean.getPartyName().equalsIgnoreCase(searchPartyBean.getParty().getName())) {
+            if (party != null
+                    && searchPartyBean.getPartyName().equalsIgnoreCase(
+                            searchPartyBean.getParty().getName())) {
                 setupParkingRequests(request, party);
             } else {
                 Map<String, String> map = new HashMap<String, String>();
