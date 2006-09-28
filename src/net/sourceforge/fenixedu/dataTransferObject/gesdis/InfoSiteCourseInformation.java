@@ -334,7 +334,8 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
                 break;
             }
         }
-        if (this.infoEvaluationMethod.getEvaluationElements() != null
+        if (this.infoEvaluationMethod != null && this.infoEvaluationMethod.getEvaluationElements() != null
+                && this.infoEvaluationMethod.getEvaluationElements().getContent(Language.pt) != null
                 && this.infoEvaluationMethod.getEvaluationElements().getContent(Language.pt).length() > MIN_LENGTH)
             numberOfFieldsFilled++;
 
@@ -374,7 +375,9 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
                 break;
             }
         }
-        if (this.infoEvaluationMethod.getEvaluationElements().getContent(Language.en) != null
+        if (this.infoEvaluationMethod != null
+                && this.infoEvaluationMethod.getEvaluationElements() != null
+                && this.infoEvaluationMethod.getEvaluationElements().getContent(Language.en) != null
                 && this.infoEvaluationMethod.getEvaluationElements().getContent(Language.en).length() > MIN_LENGTH)
             numberOfFieldsFilled++;
 

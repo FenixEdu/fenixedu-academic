@@ -33,6 +33,9 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         final IUserView userView = getRemoteUser(request);
         final Object[] arguments = getServiceCallArguments(request);
+        if (arguments == null || arguments.length < 1 || arguments[0] == null) {
+            throw new NotAuthorizedFilterException();
+        }
         final Integer idInternal = (arguments[0] instanceof Integer) ? (Integer) arguments[0] : ((InfoObject)arguments[0]).getIdInternal();
 
         if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, idInternal)) {
