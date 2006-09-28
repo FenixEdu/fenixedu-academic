@@ -16,7 +16,6 @@ import javax.servlet.jsp.tagext.TagSupport;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
@@ -150,8 +149,8 @@ public class UnitsTree extends TagSupport {
         if (!subUnits.isEmpty()) {
             buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(
                     parentUnit.getIdInternal()).append("\" ").append("style='display:none'>\r\n");
-
-            Collections.sort(subUnits, new BeanComparator("name"));
+            
+            Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
         }
 
         for (Unit subUnit : subUnits) {
