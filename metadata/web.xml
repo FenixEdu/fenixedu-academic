@@ -424,18 +424,10 @@
         <init-param>
             <param-name>config/departmentMember</param-name>
             <param-value>/WEB-INF/conf/struts-departmentMember.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/cms</param-name>
-            <param-value>/WEB-INF/conf/struts-cms.xml</param-value>
-        </init-param>
+        </init-param>     
         <init-param>
             <param-name>config/bolonhaManager</param-name>
             <param-value>/WEB-INF/conf/struts-bolonhaManager.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/CMSManager</param-name>
-            <param-value>/WEB-INF/conf/struts-cms.xml</param-value>
         </init-param>
         <init-param>
             <param-name>config/SpaceManager</param-name>

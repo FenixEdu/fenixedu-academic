@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.ExpandExecutionCourseMailAlias.ForwardMailsReport.AliasExpandingStatus;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  *         on May 18, 2006, 12:07:00 PM
  * 
  */
-public class ExpandExecutionCourseMailAlias extends CmsService {
+public class ExpandExecutionCourseMailAlias extends Service {
 
     public static class ForwardMailsReport {
 

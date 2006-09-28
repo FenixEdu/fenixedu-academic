@@ -370,8 +370,7 @@
             <form-property name="approved" type="java.lang.String" />
         </form-bean>
        <form-bean name="sendMailForm" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm" dynamic="false"/>        
-	   <form-bean name="studentsByCurricularCourseForm" 
-            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	   <form-bean name="studentsByCurricularCourseForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="shiftIDs" type="java.lang.Integer[]" />
 			<form-property name="coursesIDs" type="java.lang.Integer[]" />
 			<form-property name="enrollmentType" type="java.lang.String[]" />

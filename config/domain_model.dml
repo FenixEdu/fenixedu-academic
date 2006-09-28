@@ -514,9 +514,9 @@ class net.sourceforge.fenixedu.domain.messaging.ConversationThread extends net.s
    
 class net.sourceforge.fenixedu.domain.messaging.ConversationMessage extends net.sourceforge.fenixedu.domain.DomainObject {
 	DateTime creationDateDateTime;
-   String body;
-   Integer keyConversationThread;
-   Integer keyCreator;
+    String body;
+    Integer keyConversationThread;
+    Integer keyCreator;
 }
 
 class net.sourceforge.fenixedu.domain.PersonalGroup extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -524,68 +524,6 @@ class net.sourceforge.fenixedu.domain.PersonalGroup extends net.sourceforge.feni
 	String description;
 	Group concreteGroup;
 	Integer keyPerson;
-}
-
-class net.sourceforge.fenixedu.domain.cms.Cms extends net.sourceforge.fenixedu.domain.DomainObject
-{
-	Integer keyConfiguration;
-	String name;
-}
-
-class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixedu.domain.DomainObject
-{
- 	Group readersGroup;
- 	Group writersGroup;
-	String name;
-	String description;
-	Integer keyCms;
-	DateTime creationDateDateTime;
-	Integer keyCreator;
-}
-    class net.sourceforge.fenixedu.domain.cms.Bin extends net.sourceforge.fenixedu.domain.cms.Content {
-       }
-       
-    class net.sourceforge.fenixedu.domain.cms.website.WebsiteType extends net.sourceforge.fenixedu.domain.DomainObject
-     {
-      String name;
-      String description;    
-	DateTime creationDateDateTime;
-      Integer keyCreator;
-
-    }
-               
-    class net.sourceforge.fenixedu.domain.cms.FunctionalityLink extends net.sourceforge.fenixedu.domain.cms.Content
-    {
-      String target;
-    }
-    
-    class net.sourceforge.fenixedu.domain.cms.website.Website extends net.sourceforge.fenixedu.domain.cms.Bin {
-          Integer keyWebsiteType;
-          Integer keyTarget;
-    }
-    class net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite extends net.sourceforge.fenixedu.domain.cms.website.Website {
-      Integer keyExecutionCourse;
-    }
-    class net.sourceforge.fenixedu.domain.cms.website.WebsiteSection extends net.sourceforge.fenixedu.domain.cms.Bin {
-    }
-    
-    class net.sourceforge.fenixedu.domain.cms.website.WebsiteFile extends net.sourceforge.fenixedu.domain.cms.Content {
-    }
-    
-    class net.sourceforge.fenixedu.domain.cms.website.WebsiteItem extends net.sourceforge.fenixedu.domain.cms.Content {
-    		Boolean urgent;
-    }    
-    
-
-class net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration extends net.sourceforge.fenixedu.domain.DomainObject
-{
-	Integer keyCms;
-	String smtpServerAddress;
-	Boolean filterNonTextualAttachments;
-	String mailingListsHost;
-	String conversationReplyMarkers;
-	Integer maxAttachmentSize; /* in bytes */
-	Integer maxMessageSize; /* in bytes */
 }
 
 class net.sourceforge.fenixedu.domain.degreeStructure.Context extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1315,7 +1253,6 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	Integer keyCourseReport;
 	Integer keyEvaluationMethod;
 	Integer keySite;
-	Integer keyExecutionCourseWebsite;
 	Integer keyVigilantGroup;
 	String comment;
 	Double theoreticalHours;
@@ -2956,7 +2893,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	}
 
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
-		Integer keyCms;
 		Integer keyEmployee;
 		Integer keyTeacher;
 		Integer keyExternalPerson;	
@@ -4241,30 +4177,6 @@ relation CardIdentificationCard
 	net.sourceforge.fenixedu.domain.assiduousness.Card playsRole card;
 }
 
-relation CmsConfiguration
-{
-	net.sourceforge.fenixedu.domain.cms.Cms playsRole cms;
-	net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration playsRole configuration;
-}
-
-relation CmsContents
-{
-	net.sourceforge.fenixedu.domain.cms.Cms playsRole cms;
-	net.sourceforge.fenixedu.domain.cms.Content playsRole contents
-	{
-		multiplicity *;
-	}
-}
-
-relation CmsUsers
-{
-	net.sourceforge.fenixedu.domain.cms.Cms playsRole cms;
-	net.sourceforge.fenixedu.domain.Person playsRole users
-	{
-		multiplicity *;
-	}
-}
-
 relation CandidacyCaseStudyChoice {
     net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy playsRole candidacy;
     net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice playsRole caseStudyChoices {
@@ -4337,15 +4249,6 @@ relation CoordinatorTeacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
-}
-
-relation ContentHierarchy {
-	net.sourceforge.fenixedu.domain.cms.Content playsRole children{
-	multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.cms.Bin playsRole parents{
-	multiplicity *;
-	}
 }
 
 relation CourseEquivalencyTheme {
@@ -5037,11 +4940,6 @@ relation ExecutionCourseSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
-}
-
-relation ExecutionCourseWebsiteRelation {
-	net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite playsRole executionCourseWebsite;
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
@@ -7025,43 +6923,6 @@ relation SeminaryCourseEquivalency {
     }
 }
 
-relation WebsiteTypeWebsite {
-	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole websiteType;
-	net.sourceforge.fenixedu.domain.cms.website.Website playsRole websites
-	{
-		multiplicity *;
-	}
-}
-
-relation WebsiteTypeMandatoryContent {
-	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole websiteTypes {
-		multiplicity *;
-	}
-	
-	net.sourceforge.fenixedu.domain.cms.Content playsRole mandatoryContents
-	{
-		multiplicity *;
-	}
-}
-
-relation FunctionalityLinkAvailableToWebsiteType {
-	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole types {
-		multiplicity *;
-	}
-	
-	net.sourceforge.fenixedu.domain.cms.FunctionalityLink playsRole functionalityLinks {
-		multiplicity *;
-	} 
-}
-
-relation WebsiteHasTarget {
-	net.sourceforge.fenixedu.domain.cms.website.Website playsRole {
-		multiplicity *;
-	}
-	
-	net.sourceforge.fenixedu.domain.DomainObject playsRole target;
-}
-
 relation WebSiteItemPerson {
     net.sourceforge.fenixedu.domain.WebSiteItem playsRole editedWebSiteItems {
         multiplicity *;
@@ -7116,35 +6977,7 @@ relation TeacherPersonalExpectationExecutionYear {
 	}
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
-
- relation ContentOwnership {
- 	net.sourceforge.fenixedu.domain.Person playsRole owners
- 	{
- 		multiplicity *;
- 	}
- 	net.sourceforge.fenixedu.domain.cms.Content playsRole ownedContents
- 	{
- 		multiplicity *;
- 	}
- }
  
-relation ContentCreation
-{
-	net.sourceforge.fenixedu.domain.Person playsRole creator;
-	net.sourceforge.fenixedu.domain.cms.Content playsRole createdContents
-	{
-		multiplicity *;
-	}
-}
-
-relation WebsiteTypeCreation
-{
-	net.sourceforge.fenixedu.domain.Person playsRole creator;
-	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole createdWebsiteTypes
-	{
-		multiplicity *;
-	}
-}
 
 relation ContractSalaryUnit {
     net.sourceforge.fenixedu.domain.Contract playsRole salaryContracts{
@@ -8863,13 +8696,6 @@ relation RootDomainObjectOldInquiriesTeachersRes {
 	}
 }
 
-relation RootDomainObjectWebsiteType {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole websiteTypes {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectEnrolmentEquivalence {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.EnrolmentEquivalence playsRole enrolmentEquivalences {
@@ -8887,13 +8713,6 @@ relation RootDomainObjectSpaceOccupation {
 relation RootDomainObjectSpaceResponsibility {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.space.SpaceResponsibility playsRole spaceResponsibility {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectContent {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.cms.Content playsRole contents {
 		multiplicity *;
 	}
 }
@@ -9178,13 +8997,6 @@ relation RootDomainObjectQualification {
 	}
 }
 
-relation RootDomainObjectCms {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.cms.Cms playsRole cmss {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectExtraWorkRequests {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests playsRole extraWorkRequestss {
@@ -9230,13 +9042,6 @@ relation RootDomainObjectTeacherPersonalExpectation {
 relation RootDomainObjectSpaceInformation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.space.SpaceInformation playsRole spaceInformations {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectCmsConfiguration {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration playsRole cmsConfigurations {
 		multiplicity *;
 	}
 }

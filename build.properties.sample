@@ -361,16 +361,14 @@ roleback.filename=/tmp/roleback.sql
 struts.validation.doctype.url=file:///home/gedl/workspace/fenix-head/metadata/dtds/validator_1_0.dtd
 #
 #
+
 #-----------------------------------------------------------------------------
 # Cms Configuration
 #-----------------------------------------------------------------------------
-cms.mailer.username=xptze
-cms.mailer.password=xptze
 mail.smtp.host=
 mail.smtp.name=
 mailingList.host.name=
-#
-#
+
 #----------------------------------------------
 # Authentication Service
 #----------------------------------------------

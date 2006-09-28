@@ -928,14 +928,6 @@ validation.struts.validator.doctype.url=file:///home/gedl/workspace/fenix-head/m
 # Cms Configuration
 #-----------------------------------------------------------------------------
 #
-# @message = Content Management system mail username
-# @type = string
-cms.mailer.username=
-
-# @message = Content Management system mail password
-# @type = password
-cms.mailer.password=
-
 # @message = Content Management system mail host
 # @type = hostname
 # @validate = yes

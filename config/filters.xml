@@ -835,13 +835,7 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
-<!--############# CMS ####################-->
-<filter>
-    <name>CmsManagerAuthorization</name>
-    <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.CmsManagerAuthorizationFilter</implementationClass>
-    <description/>
-    <isTransactional>true</isTransactional>
-</filter>
+
 
 <filter>
 	<name>ResearcherAuthorization</name>

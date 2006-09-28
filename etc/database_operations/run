@@ -27,5 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove CMS tables" removeCMSTables.sql
 execute "Deleting first time student role" DeleteFirstTimeStudentRole.sql
 execute "Correct AvailabilityPolicy keys" CorrectAvailabilityPolicyKey.sql

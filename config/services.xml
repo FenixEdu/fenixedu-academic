@@ -8519,28 +8519,6 @@
     </service>  
  <!-- =========by gedl 15-11-2005============  -->
     <service>
-		<name>ReadCmsByName</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.basic.ReadCmsByName
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>				
-	</service>
-    <service>
-		<name>WriteCmsConfiguration</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.basic.WriteCmsConfiguration
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>				
-	</service>
-    <service>
 		<name>DefineInquiryResponsePeriod</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.DefineInquiryResponsePeriod
@@ -8588,65 +8566,7 @@
         	<chain name="DepartmentAdministrativeOfficeOrDepartmentMemberOrTeacherAuthorization"></chain>
         </filterChains>     
     </service>
-    <service>
-		<name>DeleteCms</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.basic.DeleteCms
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>				
-	</service>
-
-    <service>
-		<name>CreateCms</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.basic.CreateCms
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>				
-	</service>
-	
-	<service>
-		<name>WriteExecutionCourseWebsite</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.website.WriteExecutionCourseWebsite
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>				
-	</service>
-	
-	<service>
-		<name>DeleteWebsite</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.website.DeleteWebsite
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-        <name>DeleteFunctionalityLink</name>
-        <implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.cms.website.DeleteFunctionalityLink
-        </implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>	
-    </service>
-	
+   
     <!-- ======================================  -->
     <service>
     	<name>CreateCompetenceCourse</name>
@@ -9175,33 +9095,6 @@
         <filterChains>
         </filterChains>
     </service>    
-    <service>
-        <name>RemoveBinChild</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.website.RemoveBinChild</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-            <chain name="CmsManagerAuthorization"></chain>
-        </filterChains>
-    </service>
-    <service>
-        <name>RemoveWebsiteTypeChild</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.website.RemoveWebsiteTypeChild</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-            <chain name="CmsManagerAuthorization"></chain>
-        </filterChains>
-    </service>
-    <service>
-        <name>DeleteWebsiteType</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.website.DeleteWebsiteType</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-            <chain name="CmsManagerAuthorization"></chain>
-        </filterChains>
-    </service>
 	<service>
    	 	<name>ReadTeachersCreditsResumeByPeriodAndUnit</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit</implementationClass>
@@ -9271,13 +9164,13 @@
         <filterChains>
         	<chain name="StudentAuthorization"></chain>
         </filterChains>     
-    </service>           
+    </service>        
 	<service>
    	 	<name>SendEMail</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.email.SendEMail</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
-    </service>               
+    </service>                
 	<service>
    	 	<name>ReadActiveMasterDegreeThesis</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesis</implementationClass>

@@ -832,7 +832,6 @@ public class Person extends Person_Base {
 	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
 	getAdvisories().clear();
-	removeCms();
 	removeNationality();
 	removeCountryOfBirth();
 	removeCountryOfResidence();

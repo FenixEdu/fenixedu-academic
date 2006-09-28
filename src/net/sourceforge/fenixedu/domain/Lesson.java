@@ -172,13 +172,7 @@ public class Lesson extends Lesson_Base {
 
     public SortedSet<Summary> getSummariesSortedByNewestDate() {
 	return getSummaries(Summary.COMPARATOR_BY_DATE_AND_HOUR);
-    }
-
-    private SortedSet<Summary> getSummaries(Comparator comparator) {
-	SortedSet<Summary> lessonSummaries = new TreeSet<Summary>(comparator);
-	lessonSummaries.addAll(getAssociatedSummariesSet());
-	return lessonSummaries;
-    }
+    }   
 
     public boolean isTimeValidToInsertSummary(HourMinuteSecond time, YearMonthDay summaryDate) {
 	return (!summaryDate.equals(new YearMonthDay()) ? true : !getEndHourMinuteSecond().isAfter(time));
@@ -210,7 +204,7 @@ public class Lesson extends Lesson_Base {
 		.intValue() - 1);
     }
 
-    public Campus getLessonCampus() {
+    private Campus getLessonCampus() {
 	net.sourceforge.fenixedu.domain.Campus oldCampus = getSala().getBuilding().getCampus();
 	if (oldCampus != null) {
 	    for (Campus campus : Space.getAllCampus()) {
@@ -221,16 +215,12 @@ public class Lesson extends Lesson_Base {
 	}
 	return null;
     }
-
-    private Summary getLastSummary() {
-	SortedSet<Summary> summaries = getSummariesSortedByNewestDate();
-	return (summaries.isEmpty()) ? null : summaries.first();
-    }
-
+   
     public YearMonthDay getNextPossibleSummaryDate() {
 	YearMonthDay currentDate = new YearMonthDay();
 	YearMonthDay lessonEndDay = getLessonEndDay();
 	YearMonthDay endDateToSearch = (lessonEndDay.isAfter(currentDate)) ? currentDate : lessonEndDay;
+
 	HourMinuteSecond now = new HourMinuteSecond();
 	Campus lessonCampus = getLessonCampus();
 	Summary lastSummary = getLastSummary();
@@ -239,6 +229,7 @@ public class Lesson extends Lesson_Base {
 	    YearMonthDay summaryDateYearMonthDay = lastSummary.getSummaryDateYearMonthDay();
 	    YearMonthDay nextSummaryDate = summaryDateYearMonthDay.plusDays(7);
 	    while (true) {
+		nextSummaryDate = getPossibleDateInValidLessonWeekDay(nextSummaryDate);
 		if (nextSummaryDate.isAfter(endDateToSearch)) {
 		    break;
 		}
@@ -252,6 +243,7 @@ public class Lesson extends Lesson_Base {
 	    YearMonthDay lessonStartDay = getLessonStartDay();
 	    return (!lessonStartDay.isAfter(endDateToSearch)) ? lessonStartDay : null;
 	}
+
 	return null;
     }
 
@@ -272,49 +264,52 @@ public class Lesson extends Lesson_Base {
 	if (!startDateToSearch.isAfter(endDateToSearch)) {
 	    if (summaries.isEmpty()) {
 		while (true) {
-		    if (!Holiday.isHoliday(startDateToSearch, lessonCampus)
-			    && isTimeValidToInsertSummary(now, startDateToSearch)) {
-			datesToInsert.add(startDateToSearch);
-		    }
-		    startDateToSearch = startDateToSearch.plusDays(7);
+		    startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, now, lessonCampus);
 		    if (startDateToSearch.isAfter(endDateToSearch)) {
 			break;
 		    }
 		}
-	    } else {
-		YearMonthDay dateBefore = null;
-		for (Summary summary : summaries) {
-		    if (dateBefore == null
-			    || !datesSearched.contains(summary.getSummaryDateYearMonthDay())) {
+	    } else {		
+		for (Summary summary : summaries) {		    
+		    if (!datesSearched.contains(summary.getSummaryDateYearMonthDay())) {
+			YearMonthDay summaryDate = summary.getSummaryDateYearMonthDay();
 			while (true) {
-			    if (startDateToSearch.isBefore(summary.getSummaryDateYearMonthDay())) {
-				if (!Holiday.isHoliday(startDateToSearch, lessonCampus)
-					&& isTimeValidToInsertSummary(now, startDateToSearch)) {
-				    datesToInsert.add(startDateToSearch);
+			    if (!hasLessonWeekDayChanges(summaryDate)) {
+				if (startDateToSearch.isBefore(summaryDate)) {
+				    startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, now, lessonCampus);
+				} else if (startDateToSearch.isEqual(summaryDate)) {
+				    startDateToSearch = startDateToSearch.plusDays(7);
+				    break;
+				} else {
+				    // ERROR: I hope that never enter here
+				    System.out.println("3 2 1 ... BOOOOOOMMMMMMMMM!!!");
+				    startDateToSearch = startDateToSearch.plusDays(7);
 				}
-				startDateToSearch = startDateToSearch.plusDays(7);
-			    } else if (startDateToSearch.isEqual(summary.getSummaryDateYearMonthDay())) {
+
+			    } else if (isInSameWeek(startDateToSearch, summaryDate)) {
 				startDateToSearch = startDateToSearch.plusDays(7);
 				break;
+
+			    } else if (startDateToSearch.isBefore(summaryDate)) {
+				YearMonthDay day = getPossibleDateInValidSummaryDateWeekDay(startDateToSearch, summaryDate);
+				startDateToSearch = addPossibleDate(datesToInsert, day, startDateToSearch, now, lessonCampus);				
+			    
 			    } else {
-				// ERROR
+				// ERROR: I hope that never enter here
 				System.out.println("3 2 1 ... BOOOOOOMMMMMMMMM!!!");
 				startDateToSearch = startDateToSearch.plusDays(7);
 			    }
+
 			    if (startDateToSearch.isAfter(endDateToSearch)) {
 				break;
 			    }
 			}
-			datesSearched.add(summary.getSummaryDateYearMonthDay());
+			datesSearched.add(summaryDate);
 		    }
 		}
 		if (!startDateToSearch.isAfter(endDateToSearch)) {
 		    while (true) {
-			if (!Holiday.isHoliday(startDateToSearch, lessonCampus)
-				&& isTimeValidToInsertSummary(now, startDateToSearch)) {
-			    datesToInsert.add(startDateToSearch);
-			}
-			startDateToSearch = startDateToSearch.plusDays(7);
+			startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, now, lessonCampus);
 			if (startDateToSearch.isAfter(endDateToSearch)) {
 			    break;
 			}
@@ -325,6 +320,15 @@ public class Lesson extends Lesson_Base {
 	return datesToInsert;
     }
 
+    private YearMonthDay addPossibleDate(List<YearMonthDay> datesToInsert, YearMonthDay dayToInsert,
+	    YearMonthDay startDateToSearch, HourMinuteSecond now, Campus lessonCampus) {
+
+	if (!Holiday.isHoliday(dayToInsert, lessonCampus) && isTimeValidToInsertSummary(now, dayToInsert)) {
+	    datesToInsert.add(dayToInsert);
+	}
+	return startDateToSearch.plusDays(7);
+    }
+  
     public List<YearMonthDay> getAllLessonDatesEvenToday() {
 	YearMonthDay startDateToSearch = getLessonStartDay();
 	YearMonthDay lessonEndDay = getLessonEndDay();
@@ -337,6 +341,18 @@ public class Lesson extends Lesson_Base {
 	YearMonthDay startDateToSearch = getLessonStartDay();
 	YearMonthDay endDateToSearch = getLessonEndDay();
 	return getLessonDates(startDateToSearch, endDateToSearch);
+    }
+
+    private boolean hasLessonWeekDayChanges(YearMonthDay date) {
+	int dateWeekDay = date.toDateTimeAtMidnight().getDayOfWeek();
+	int lessonWeekDayToYearMonthDayFormat = getLessonWeekDayToYearMonthDayFormat();
+	return lessonWeekDayToYearMonthDayFormat != dateWeekDay;
+    }
+
+    private boolean isInSameWeek(YearMonthDay possibleDate, YearMonthDay summaryDate) {
+	int dateWeek = possibleDate.toDateTimeAtMidnight().getWeekOfWeekyear();
+	int summaryWeek = summaryDate.toDateTimeAtMidnight().getWeekOfWeekyear();
+	return dateWeek == summaryWeek;
     }
 
     private List<YearMonthDay> getLessonDates(YearMonthDay startDateToSearch,
@@ -358,6 +374,41 @@ public class Lesson extends Lesson_Base {
 	return dates;
     }
 
+    private Summary getLastSummary() {
+	SortedSet<Summary> summaries = getSummariesSortedByNewestDate();
+	return (summaries.isEmpty()) ? null : summaries.first();
+    }
+
+    private YearMonthDay getPossibleDateInValidLessonWeekDay(YearMonthDay possibleDate) {
+	int lessonWeekDay = getLessonWeekDayToYearMonthDayFormat();
+	int possibleDateWeekDay = possibleDate.toDateTimeAtMidnight().getDayOfWeek();
+	int weekDayDiff = lessonWeekDay - possibleDateWeekDay;
+	return getWeekDayValidDate(weekDayDiff, possibleDate);
+    }
+
+    private YearMonthDay getPossibleDateInValidSummaryDateWeekDay(YearMonthDay possibleDate,
+	    YearMonthDay summaryDate) {
+	int summaryDateWeekDay = summaryDate.toDateTimeAtMidnight().getDayOfWeek();
+	int possibleDateWeekDay = possibleDate.toDateTimeAtMidnight().getDayOfWeek();
+	int weekDayDiff = summaryDateWeekDay - possibleDateWeekDay;
+	return getWeekDayValidDate(weekDayDiff, possibleDate);
+    }
+
+    private YearMonthDay getWeekDayValidDate(int weekDayDiff, YearMonthDay possibleDate) {
+	if (weekDayDiff != 0 && weekDayDiff > 0) {
+	    return possibleDate.plusDays(weekDayDiff);
+	} else if (weekDayDiff != 0 && weekDayDiff < 0) {
+	    return possibleDate.minusDays((-1) * weekDayDiff);
+	}
+	return possibleDate;
+    }
+    
+    private SortedSet<Summary> getSummaries(Comparator comparator) {
+	SortedSet<Summary> lessonSummaries = new TreeSet<Summary>(comparator);
+	lessonSummaries.addAll(getAssociatedSummariesSet());
+	return lessonSummaries;
+    }
+    
     public String prettyPrint() {
 	final StringBuilder result = new StringBuilder();
 
@@ -371,5 +422,4 @@ public class Lesson extends Lesson_Base {
 
 	return result.toString();
     }
-
 }

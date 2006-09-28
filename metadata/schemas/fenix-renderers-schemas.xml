@@ -199,111 +199,12 @@
    	<slot name="courseSummaryHours" />	   	
    	<slot name="courseDifference" />	   	   	  	
   </schema>
-
-  <schema name="websiteType.basic" type="net.sourceforge.fenixedu.domain.cms.website.WebsiteType">
-    <slot name="name" key="websiteType.name"/>
-    <slot name="description" key="websiteType.description"/>
-    <slot name="creationDate" key="websiteType.creationDate"/>
-    <slot name="creator" key="websiteType.creator" schema="person.admin.simple" layout="values">
-        <property name="htmlSeparator" value=" - "/>
-    </slot>
-  </schema>
-  
-  <schema name="websiteType.list" type="net.sourceforge.fenixedu.domain.cms.website.WebsiteType">
-    <slot name="name" key="websiteType.name"/>
-    <slot name="description" key="websiteType.description"/>
-  </schema>
-  
+   
   <schema name="person.admin.simple" type="net.sourceforge.fenixedu.domain.Person">
     <slot name="username" layout="link"/>
     <slot name="nome"/>
   </schema>
-  
-  <schema name="websiteType.edit" type="net.sourceforge.fenixedu.domain.cms.website.WebsiteType">
-    <slot name="name" key="websiteType.name"/>
-    <slot name="description" key="websiteType.description">
-        <property name="size" value="50"/>
-    </slot>
-    <slot name="mandatoryContents" key="websiteType.functionalityLinks" layout="option-select">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FunctionalLinksForWebsiteType"/>
-        <property name="eachLayout" value="values-dash"/>
-        <property name="eachSchema" value="functionalityLink.simple"/>
-    </slot>
-  </schema>
-  
-  <schema name="websiteType.create" type="net.sourceforge.fenixedu.domain.cms.website.WebsiteType">
-    <slot name="name" key="websiteType.name"/>
-    <slot name="description" key="websiteType.description">
-        <property name="size" value="50"/>
-    </slot>
-  </schema>
-  
-  <schema name="functionalityLink.simple" type="net.sourceforge.fenixedu.domain.cms.FunctionalityLink">
-    <slot name="name"/>
-    <slot name="description"/>
-  </schema>
-  
-  <schema name="websiteType.details" type="net.sourceforge.fenixedu.domain.cms.website.WebsiteType">
-    <slot name="name" key="websiteType.name"/>
-    <slot name="description" key="websiteType.description"/>
-    <slot name="creationDate" key="websiteType.creationDate"/>
-    <slot name="creator" key="websiteType.creator" schema="person.admin.simple" layout="values">
-        <property name="htmlSeparator" value=" - "/>
-    </slot>
-    <slot name="mandatoryContents" key="websiteType.mandatoryContents">
-        <property name="eachLayout" value="values-dash"/>
-        <property name="eachSchema" value="functionalityLink.simple"/>
-    </slot>
-  </schema>
-  
-  <schema name="functionalityLink.details" type="net.sourceforge.fenixedu.domain.cms.FunctionalityLink">
-    <slot name="name"/>
-    <slot name="description"/>
-    <slot name="target"/>
-    <slot name="types">
-        <property name="eachLayout" value="values-dash"/>
-        <property name="eachSchema" value="websiteType.list"/>
-    </slot>
-  </schema>
-  
-  <schema name="functionalityLink.edit" type="net.sourceforge.fenixedu.domain.cms.FunctionalityLink">
-    <slot name="name"/>
-    <slot name="description">
-        <property name="size" value="60"/>
-    </slot>
-    <slot name="target">
-        <property name="size" value="60"/>
-    </slot>
-    <slot name="types" layout="option-select">
-        <property name="choiceType" value="net.sourceforge.fenixedu.domain.cms.website.WebsiteType"/>
-        <property name="eachLayout" value="values-dash"/>
-        <property name="eachSchema" value="websiteType.list"/>
-    </slot>
-  </schema>
-
-  <schema name="cms.content.basic" type="net.sourceforge.fenixedu.domain.cms.Content">
-    <slot name="name"/>
-    <slot name="description"/>
-  </schema>
-
-  <schema name="cms.content.basic.input" type="net.sourceforge.fenixedu.domain.cms.Content">
-    <slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="description">
-        <property name="size" value="60"/>
-    </slot>
-  </schema>
-  
-  <schema name="cms.content.item.input" type="net.sourceforge.fenixedu.domain.cms.website.WebsiteItem">
-    <slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="urgent" layout="menu"/>
-    <slot name="description" layout="htmlEditor">
-        <property name="width" value="700"/>
-        <property name="heigth" value="500"/>
-        <property name="rows" value="30"/>
-        <property name="columns" value="100"/>
-    </slot>
-  </schema>
-
+    
   <schema name="weekly.work.load.bean" type="net.sourceforge.fenixedu.presentationTier.Action.student.WeeklyWorkLoadBean">
     <slot name="contact"/>
     <slot name="autonomousStudy"/>

@@ -178,16 +178,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			    			   property="db.slide.user"/>
 				<replacefilter token="@db.slide.pass@" 
 			    			   property="db.slide.pass"/>
-			</replace>
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="cms.properties"/>
-				<replacefilter token="@cms.mailer.username@" 
-			    			   property="cms.mailer.username"/>
-				<replacefilter token="@cms.mailer.password@" 
-			    			   property="cms.mailer.password"/>
-			</replace>
+			</replace>		
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
