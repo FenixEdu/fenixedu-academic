@@ -437,9 +437,11 @@
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.attributions" property="attributions" onchange='<%= onChange.toString() %>'>
 							<bean:write name="finalDegreeWorkProposalHeader" property="idInternal"/><bean:write name="groupProposal" property="infoGroup.idInternal"/>
 						</html:multibox>
+<%-- 
 						<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 							<bean:message key="button.submit"/>
 						</html:submit>
+--%>
 					</td>
 					<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
 						<a href="mailto:<%= emails %>"><bean:write name="groupProposal" property="orderOfPreference"/></a>
@@ -451,18 +453,24 @@
 							<bean:define id="curriculumLink">
 								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
 							</bean:define>
+<%-- 
 							<html:link page='<%= curriculumLink.toString() %>'>
 								<bean:write name="student" property="infoPerson.username"/>
 							</html:link>
+--%>
+							<bean:write name="student" property="infoPerson.username"/>
 						</td>
 						<td bgcolor="<%= bgColor %>" align="center">
 							<bean:define id="studentNumber" name="student" property="number"/>
 							<bean:define id="curriculumLink">
 								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
 							</bean:define>
+<%-- 
 							<html:link page='<%= curriculumLink.toString() %>'>
 								<bean:write name="student" property="infoPerson.nome"/>
 							</html:link>
+--%>
+							<bean:write name="student" property="infoPerson.nome"/>							
 						</td>
 						<td bgcolor="<%= bgColor %>" align="center">
 							<bean:define id="email" name="student" property="infoPerson.email"/>
@@ -497,18 +505,24 @@
 							<bean:define id="curriculumLink">
 								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
 							</bean:define>
+<%-- 
 							<html:link page='<%= curriculumLink.toString() %>'>
 								<bean:write name="student" property="infoPerson.username"/>
 							</html:link>
+--%>
+							<bean:write name="student" property="infoPerson.username"/>							
 						</td>
 						<td bgcolor="<%= bgColor %>" align="center">
 							<bean:define id="studentNumber" name="student" property="number"/>
 							<bean:define id="curriculumLink">
 								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
 							</bean:define>
+<%-- 
 							<html:link page='<%= curriculumLink.toString() %>'>
 								<bean:write name="student" property="infoPerson.nome"/>
 							</html:link>
+--%>
+							<bean:write name="student" property="infoPerson.nome"/>
 						</td>
 						<td bgcolor="<%= bgColor %>" align="center">
 							<bean:define id="email" name="student" property="infoPerson.email"/>

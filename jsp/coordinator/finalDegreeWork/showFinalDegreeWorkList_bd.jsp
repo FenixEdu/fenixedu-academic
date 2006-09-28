@@ -449,9 +449,11 @@
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.attributions" property="attributions" onchange='<%= onChange.toString() %>'>
 							<bean:write name="finalDegreeWorkProposalHeader" property="idInternal"/><bean:write name="groupProposal" property="infoGroup.idInternal"/>
 						</html:multibox>
+<%-- 
 						<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 							<bean:message key="button.submit"/>
 						</html:submit>
+--%>
 					</td>
 					<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
 						<a href="mailto:<%= emails %>"><bean:write name="groupProposal" property="orderOfPreference"/></a>
