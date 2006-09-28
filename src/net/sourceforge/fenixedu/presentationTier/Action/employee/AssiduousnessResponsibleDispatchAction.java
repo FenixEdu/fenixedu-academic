@@ -97,9 +97,29 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
                 }
             }
         }
-        Collections.sort(unitEmployeesList, new BeanComparator("unit.costCenterCode"));
+        unitEmployeesList = filterRepeatedUnits(unitEmployeesList);
+        Collections.sort(unitEmployeesList, new BeanComparator("unitCode"));
         request.setAttribute("unitEmployeesList", unitEmployeesList);
         return mapping.findForward("show-employee-list");
+    }
+    
+    private List<UnitEmployees> filterRepeatedUnits(List<UnitEmployees> unitEmployeesList) {
+        List<UnitEmployees> result = new ArrayList<UnitEmployees>();
+        for (UnitEmployees unitEmployees : unitEmployeesList) {
+            if(!containsUnit(result,unitEmployees.getUnit())){
+                result.add(unitEmployees);
+            }
+        }
+        return result;
+    }
+
+    private boolean containsUnit(List<UnitEmployees> unitEmployeesList, Unit unit) {
+        for (UnitEmployees tempUnitEmployees : unitEmployeesList) {
+            if(tempUnitEmployees.getUnit() == unit){
+                return true;
+            }
+        }
+        return false;
     }
 
     public ActionForward showEmployeeWorkSheet(ActionMapping mapping, ActionForm form,

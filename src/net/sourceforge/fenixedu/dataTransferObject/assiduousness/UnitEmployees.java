@@ -10,6 +10,8 @@ public class UnitEmployees implements Serializable {
     private Unit unit;
 
     private List<Employee> employeeList;
+    
+    private String unitCode;
 
     public List<Employee> getEmployeeList() {
         return employeeList;
@@ -25,6 +27,18 @@ public class UnitEmployees implements Serializable {
 
     public void setUnit(Unit unit) {
         this.unit = unit;
+        if(unit.getCostCenterCode() != null){
+            setUnitCode(unit.getCostCenterCode().toString());
+        } else {
+            setUnitCode("");
+        }
     }
 
+    public String getUnitCode() {
+        return unitCode;
+    }
+
+    public void setUnitCode(String unitCode) {
+        this.unitCode = unitCode;
+    }
 }
