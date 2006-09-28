@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -38,6 +39,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -48,6 +50,9 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -93,22 +98,22 @@ public class Registration extends Registration_Base {
 	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, false, null);
 	setEntryPhase(entryPhase);
     }
-    
+
     @Deprecated
     // NOTE: use this for legacy code only
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
 	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
 	    DegreeCurricularPlan degreeCurricularPlan) {
 	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, false, null);
-	
+
 	// create scp
-	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this,degreeCurricularPlan,
+	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
 		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
 			.readActualExecutionPeriod());
-	
+
 	setEntryPhase(entryPhase);
     }
-    
+
     public Registration(Person person, StudentKind studentKind,
 	    DegreeCurricularPlan degreeCurricularPlan, StudentCandidacy studentCandidacy) {
 
@@ -191,6 +196,14 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return concludedStudentCurricularPlan;
+    }
+
+    public StudentCurricularPlan getActiveOrConcludedOrLastStudentCurricularPlan() {
+	StudentCurricularPlan studentCurricularPlan = getActiveOrConcludedStudentCurricularPlan();
+	if (studentCurricularPlan == null) {
+	    studentCurricularPlan = getLastStudentCurricularPlan();
+	}
+	return studentCurricularPlan;
     }
 
     public boolean attends(final ExecutionCourse executionCourse) {
@@ -1007,6 +1020,10 @@ public class Registration extends Registration_Base {
 	}
 	return super.getIngression();
     }
+    
+    public Ingression getIngressionEnum() {
+	return Ingression.valueOf(getIngression());
+    }
 
     @Override
     public void setIngression(String ingression) {
@@ -1062,11 +1079,46 @@ public class Registration extends Registration_Base {
 
     // FIXME: end of methods to remove after migration of this information
     // to Candidacy
-    
+
     public DegreeType getDegreeType() {
 	final StudentCurricularPlan scp = (getActiveOrConcludedStudentCurricularPlan() != null) ? getActiveOrConcludedStudentCurricularPlan()
 		: getLastStudentCurricularPlan();
 	return scp.getDegreeType();
+    }
+
+    public boolean isActiveForOffice(Unit office) {
+
+	Set<Party> officeDegreeUnits = office.getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE,
+		Unit.class);
+
+	StudentCurricularPlan activeStudentCurricularPlan = getActiveStudentCurricularPlan();
+	if (activeStudentCurricularPlan != null) {
+	    if (officeDegreeUnits.contains(activeStudentCurricularPlan.getDegreeCurricularPlan()
+		    .getDegree().getUnit())) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean isForOffice(Unit office) {
+
+	Set<Party> officeDegreeUnits = office.getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE,
+		Unit.class);
+
+	StudentCurricularPlan studentCurricularPlan = getActiveOrConcludedOrLastStudentCurricularPlan();
+	if (officeDegreeUnits.contains(studentCurricularPlan.getDegreeCurricularPlan().getDegree()
+		.getUnit())) {
+	    return true;
+	}
+
+	return false;
+    }
+
+    public boolean getIsForOffice() {
+	Unit workingPlace = AccessControl.getUserView().getPerson().getEmployee()
+		.getCurrentWorkingPlace();
+	return isForOffice(workingPlace);
     }
 
 }

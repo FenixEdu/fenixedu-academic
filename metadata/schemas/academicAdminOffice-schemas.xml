@@ -7,7 +7,7 @@
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.DegreesByEmployeeUnit" />
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.Degree" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${tipoCurso.localizedName} - ${name}" />
 		<property name="destination" value="degreePostBack"/>
 	</slot>
 	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
@@ -202,14 +202,47 @@
 		<property name="format" value="${name}" />
 	</slot>			
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+
+<schema name="student.StudentsSearchBean" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="number" key="label.studentNumber"/>
 </schema>
 
-<schema name="net.sourceforge.fenixedu.domain.student.StudentsSearchBean.searchResult" type="net.sourceforge.fenixedu.domain.student.Student" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="student.searchResult" type="net.sourceforge.fenixedu.domain.student.Student" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="number" key="label.studentNumber"/>
 </schema>
 
-<schema name="net.sourceforge.fenixedu.domain.student.Student" type="net.sourceforge.fenixedu.domain.student.Student">
-	<slot name="person.name"/>
+<schema name="student.registrationsWithStartData" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="firstStudentCurricularPlan.startDateYearMonthDay" key="label.startDate" />
+	<slot name="activeOrConcludedOrLastStudentCurricularPlan.degreeCurricularPlan" layout="format" key="label.degree" >
+		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name}" />
+	</slot>	
+</schema>
+
+<schema name="student.registrationDetail" extends="student.registrationsWithStartData" 
+		type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="ingressionEnum" layout="format"  >
+		<property name="format" value="${name} - ${fullDescription}" />
+	</slot>
+	<slot name="entryPhase" layout="format"  >
+		<property name="format" value="${name}" />
+	</slot>			
+</schema>
+
+<schema name="student.studentCurricularPlans" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="startDateYearMonthDay" key="label.startDate" />
+	<slot name="degreeCurricularPlan.degree.tipoCurso.localizedName" key="label.degreeType" />
+	<slot name="degreeCurricularPlan.degree.name" key="label.degree" />
+	<slot name="degreeCurricularPlan.name" key="label.curricularPlan" />
+</schema>
+
+<schema name="student.precedentDegreeInformation" type="net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation" bundle="ACADEMIC_OFFICE_RESOURCES" >
+	<slot name="degreeDesignation" />
+	<slot name="conclusionGrade" />
+    <slot name="conclusionYear" />
+	<slot name="institution" layout="format"> 
+		<property name="format"  value="${name}"/>
+	</slot>	
+	<slot name="country" layout="format" key="label.countryOfPrecedenceDegree" > 
+		<property name="format" value="${name}"/>
+	</slot>	
 </schema>

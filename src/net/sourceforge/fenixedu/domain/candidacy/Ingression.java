@@ -41,6 +41,10 @@ public enum Ingression {
 	return (description.length() > 50 ? description.substring(0, 49) + " ..." : description);
     }
 
+    public String getFullDescription() {
+	return description;
+    }
+    
     public boolean hasEntryPhase() {
 	return this.equals(Ingression.CNA01);
     }

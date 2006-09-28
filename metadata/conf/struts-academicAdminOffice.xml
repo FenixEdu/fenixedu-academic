@@ -8,6 +8,18 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
 
+		<!-- VIEW STUDENT CURRICULUM FORMS -->
+		<form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        	<form-property name="studentCPID" type="java.lang.String" />
+        	<form-property name="select" type="java.lang.String" />
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
+			<form-property name="organizedByGroups" type="java.lang.Boolean" initial="false"/>			
+		</form-bean>	
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -60,7 +72,22 @@
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA">
 			<forward name="editPersonalData" path="student.editPersonalData"/>
 			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
+			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>			
 		</action>        
+		
+		<action path="/viewCurriculum"
+		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
+	        parameter="method"
+			name="studentCurricularPlanAndEnrollmentsSelectionForm"
+			scope="request"
+			validate="true"
+			input="/viewStudentCurriculum.do?method=prepareView&amp;page=0">
+	        	<forward name="ShowStudentCurriculum" path="student.showStudentCurriculum"/>
+	        	
+	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
+	        	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
+	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
+	    </action>			
 	
     </action-mappings>
 
@@ -71,6 +98,7 @@
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>	
 	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

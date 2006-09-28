@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<h2><strong><bean:message key="link.edit.personal.data" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
-
+<h2><strong><bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<br/>
 <fr:form action="/student.do">	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editPersonalData"/>
 	<bean:define id="studentID" type="java.lang.Integer" name="student" property="idInternal"/>

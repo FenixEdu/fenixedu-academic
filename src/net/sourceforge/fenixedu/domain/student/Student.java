@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -177,5 +180,31 @@ public class Student extends Student_Base {
         }
         return false;
     }
+    
+    public boolean hasActiveRegistrationForOffice(Unit office){	
+	Set<Registration> registrations = getRegistrationsSet();
+	for (Registration registration : registrations) {
+	    if(registration.isActiveForOffice(office)){
+		return true;
+	    }
+	}	
+	return false;
+    }
+    
+    // Convenience method for invocation as bean.
+    public boolean getHasActiveRegistrationForOffice(){
+	Unit workingPlace = AccessControl.getUserView().getPerson().getEmployee().getCurrentWorkingPlace();
+	return hasActiveRegistrationForOffice(workingPlace);
+    }
+    
+    public boolean hasRegistrationForOffice(Unit office){	
+	Set<Registration> registrations = getRegistrationsSet();
+	for (Registration registration : registrations) {
+	    if(registration.isForOffice(office)){
+		return true;
+	    }
+	}	
+	return false;
+    }    
 
 }

@@ -4,9 +4,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<h2><strong><bean:message key="link.students" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<h2><strong><bean:message key="link.studentOperations.viewStudents" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
-<fr:edit name="studentsSearchBean" schema="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" >
+<fr:edit name="studentsSearchBean" schema="student.StudentsSearchBean" >
 	<fr:layout name="tabular" >
 		<fr:property name="classes" value="tstyle4"/>
         <fr:property name="columnClasses" value="listClasses,,"/>
@@ -25,7 +25,7 @@
 	</logic:equal>
 	
 	<logic:greaterThan name="numberStudents" value="1">
-		<fr:view name="students" schema="net.sourceforge.fenixedu.domain.student.StudentsSearchBean.searchResult">
+		<fr:view name="students" schema="student.searchResult">
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle4"/>
 	        	<fr:property name="columnClasses" value="listClasses,,"/>

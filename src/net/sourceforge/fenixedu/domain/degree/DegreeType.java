@@ -6,8 +6,11 @@
 
 package net.sourceforge.fenixedu.domain.degree;
 
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 /**
  * 
@@ -42,36 +45,41 @@ public enum DegreeType {
     private boolean bolonhaType;
 
     private DegreeType(GradeScale gradeScale, CurricularPeriodType curricularPeriodType, int years,
-            double defaultEctsCredits, boolean bolonhaType) {
-        this.gradeScale = gradeScale;
-        this.curricularPeriodType = curricularPeriodType;
-        this.years = years;
-        this.defaultEctsCredits = defaultEctsCredits;
-        this.bolonhaType = bolonhaType;
+	    double defaultEctsCredits, boolean bolonhaType) {
+	this.gradeScale = gradeScale;
+	this.curricularPeriodType = curricularPeriodType;
+	this.years = years;
+	this.defaultEctsCredits = defaultEctsCredits;
+	this.bolonhaType = bolonhaType;
     }
 
     public String getName() {
-        return name();
+	return name();
     }
 
     public GradeScale getGradeScale() {
-        return this.gradeScale;
+	return this.gradeScale;
     }
 
     public CurricularPeriodType getCurricularPeriodType() {
-        return curricularPeriodType;
+	return curricularPeriodType;
     }
 
     public int getYears() {
-        return this.years;
+	return this.years;
     }
 
     public double getDefaultEctsCredits() {
-        return defaultEctsCredits;
+	return defaultEctsCredits;
     }
 
     public boolean isBolonhaType() {
-        return bolonhaType;
+	return bolonhaType;
+    }
+
+    public String getLocalizedName() {
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+		.getString(name());
     }
 
 }

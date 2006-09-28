@@ -5,6 +5,8 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentsSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -22,7 +24,8 @@ public class SearchForStudentsDA extends FenixDispatchAction {
         if (studentsSearchBean == null) { //1st time
             studentsSearchBean = new StudentsSearchBean();
         } else {
-            final Set<Student> students = studentsSearchBean.search();
+            Unit workingPlace = AccessControl.getUserView().getPerson().getEmployee().getCurrentWorkingPlace();
+            final Set<Student> students = studentsSearchBean.searchForOffice(workingPlace);
         
             if(students.size() == 1){
                 request.setAttribute("student", students.iterator().next());
