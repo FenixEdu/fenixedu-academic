@@ -14,6 +14,7 @@
         <form-property name="studentCPID" type="java.lang.String" />
         <form-property name="select" type="java.lang.String" />
 		<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>        
+		<form-property name="organizedByGroups" type="java.lang.Boolean" initial="false"/>
       </form-bean>
 
     </form-beans>
@@ -60,6 +61,8 @@
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>	
 	<message-resources parameter="resources.AlumniResources" key="ALUMNI" null="false"/>
+    <message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES"  null="false"/>
+	<message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

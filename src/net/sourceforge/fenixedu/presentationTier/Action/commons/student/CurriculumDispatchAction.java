@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -37,7 +37,7 @@ import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- * @author David Santos
+ * @author David SantosorganizedByGroups
  * @author André Fernandes / João Brito
  */
 
@@ -56,38 +56,29 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
-        String studentNumber = getStudent(request);
-        InfoPerson infoPerson = null;
-
-        String username = null;
-
-        if (studentNumber != null) { // para um aluno em particular
-            try {
-                Object args[] = { Integer.valueOf(studentNumber) };
-                InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadStudentByNumberAndAllDegreeTypes", args);
-
-                if (infoStudent == null)
-                    return mapping.findForward("NotAuthorized");
-
-                infoPerson = infoStudent.getInfoPerson();
-
-                username = infoPerson.getUsername();
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
+        Person person = null;
+        final String studentNumber = getStudent(request);
+        if (studentNumber != null) { 
+            // para um aluno em particular
+            final Registration registration = Registration.readByNumber(Integer.valueOf(studentNumber));
+            if (registration == null) {
+        	return mapping.findForward("NotAuthorized");
             }
+            
+            person = registration.getPerson();
         } else if (studentNumber == null) {
             // deixa de importar se o ID do plano curricular for especificado
-            username = userView.getUtilizador();
+            person = userView.getPerson();
         }
 
         try {
-            executeService(username, request);
+            executeService(person.getUsername(), request);
         } catch (Exception e) {
             return mapping.findForward("NotAuthorized");
         }
 
-        request.setAttribute("studentPerson", infoPerson);
+        request.setAttribute("studentPerson", InfoPerson.newInfoFromDomain(person));
+        request.setAttribute("organizedByGroups", Boolean.valueOf(request.getParameter("organizedByGroups")));
 
         if (degreeCurricularPlanID != null && degreeCurricularPlanID.intValue() != 0) {
             return mapping.findForward("ShowStudentCurriculumForCoordinator");
