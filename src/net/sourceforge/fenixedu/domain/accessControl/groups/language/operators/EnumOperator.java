@@ -45,8 +45,8 @@ public class EnumOperator extends OperatorArgument {
     protected void checkOperatorArguments() {
         int size = getArguments().size();
 
-        if (size < 1 | size > 2) {
-            throw new WrongNumberOfArgumentsException(size, 1, 2);
+        if (size != 2) {
+            throw new WrongNumberOfArgumentsException(size, 2, 2);
         }
     }
 
