@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.RecipientTy
  * @version $Id$
  */
 public class SendEMail extends Service {
+
     static public class SendEMailParameters {
 	public EMailAddress from;
 
