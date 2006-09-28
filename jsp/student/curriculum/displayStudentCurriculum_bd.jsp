@@ -24,7 +24,7 @@
 	
 	<table class="tstyle5 thlight thright thmiddle mbottom0">
 		<tr>
-			<th><bean:message key="label.person.name" />:</th>
+			<th><bean:message bundle="APPLICATION_RESOURCES" key="label.person.name" />:</th>
 			<td>
 				<bean:write name="studentPerson" property="nome"/>			
 			</td>
@@ -145,13 +145,13 @@
 							  		<bean:message bundle="STUDENT_RESOURCES" key="label.semester.abbreviation" />
 							  	</th >
 							  	<th style="width: 60px;">
-							  		<bean:message key="label.degree.name" />
+							  		<bean:message bundle="APPLICATION_RESOURCES" key="label.degree.name" />
 							  	</th>
 							  	<th>
-							  		<bean:message key="label.curricular.course.name" />
+							  		<bean:message bundle="APPLICATION_RESOURCES" key="label.curricular.course.name" />
 							  	</th>
 							  	<th style="width: 100px;">
-							  		<bean:message key="label.finalEvaluation" />
+							  		<bean:message bundle="APPLICATION_RESOURCES" key="label.finalEvaluation" />
 							  	</th>
 						  	</tr>	
 							<%		
