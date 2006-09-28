@@ -46,7 +46,7 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4"/>
       	<fr:property name="columnClasses" value="listClasses,,"/>
-		<fr:property name="linkFormat(enrol)" value="/student.do?method=enrol&studentCurricularPlanID=${idInternal}" />
+		<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&scpID=${idInternal}" />
 		<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
 		<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
 		<fr:property name="visibleIf(enrol)" value="active"/>

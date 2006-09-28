@@ -6,7 +6,7 @@
 
 <h2><strong><bean:message key="link.studentOperations.viewStudents" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
-<fr:edit name="studentsSearchBean" schema="student.StudentsSearchBean" >
+<fr:edit name="studentsSearchBean" schema="student.StudentsSearchBeanByNumber" >
 	<fr:layout name="tabular" >
 		<fr:property name="classes" value="tstyle4"/>
         <fr:property name="columnClasses" value="listClasses,,"/>

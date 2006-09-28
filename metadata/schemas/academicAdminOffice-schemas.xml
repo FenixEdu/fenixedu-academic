@@ -203,8 +203,13 @@
 	</slot>			
 </schema>
 
-<schema name="student.StudentsSearchBean" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="student.StudentsSearchBeanByNumber" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="number" key="label.studentNumber"/>
+</schema>
+
+<schema name="student.StudentsSearchBeanByIdentification" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="identificationNumber" key="label.identificationNumber"/>
+	<slot name="documentType" key="label.idDocumentType"/>
 </schema>
 
 <schema name="student.searchResult" type="net.sourceforge.fenixedu.domain.student.Student" bundle="ACADEMIC_OFFICE_RESOURCES">
