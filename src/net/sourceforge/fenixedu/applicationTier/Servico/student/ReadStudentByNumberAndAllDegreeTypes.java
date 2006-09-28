@@ -12,9 +12,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class ReadStudentByNumberAndAllDegreeTypes extends Service {
 
     public InfoStudent run (Integer number) {
-        final Registration registration = Registration.readStudentByNumberAndAllDegreeTypes(number);
-
-        return registration == null ? null : InfoStudent.newInfoFromDomain(registration);
+        return InfoStudent.newInfoFromDomain(Registration.readByNumber(number));
     }
 
 }

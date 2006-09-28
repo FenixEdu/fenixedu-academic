@@ -518,10 +518,13 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    public static Registration readStudentByNumberAndAllDegreeTypes(Integer number) {
-	Registration result = readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);
-	
-	return result == null ? readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE) : result;
+    public static Registration readByNumber(Integer number) {
+	for (Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
+	    if(registration.getNumber().equals(number)) {
+		return registration;
+	    }
+	}
+	return null;
     }
 
     public static List<Registration> readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
