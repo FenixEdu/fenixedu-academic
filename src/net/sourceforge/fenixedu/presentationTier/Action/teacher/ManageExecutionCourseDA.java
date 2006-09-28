@@ -619,7 +619,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         if(importType != null && importType.equals(ImportLessonPlanningsBean.ImportType.PLANNING)) {
             final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null};
             try {
-                executeService(request, "ImportLessonPlanning", args);
+                executeService(request, "ImportLessonPlannings", args);
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
             }
