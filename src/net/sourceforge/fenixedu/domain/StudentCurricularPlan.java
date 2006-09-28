@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.RuleResult;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -27,6 +29,8 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
+import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
@@ -1669,10 +1673,37 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Set<Enrolment> getEnrolmentsSet() {
 	return getDegreeCurricularPlan().isBolonha() ? getRoot().getEnrolmentsSet() : super.getEnrolmentsSet(); 
     }
-
+    
     public boolean isBolonha() {
 	return getDegreeCurricularPlan().isBolonha();
     }
+    
+    public void evaluate(final ExecutionPeriod executionPeriod, final Set<DegreeModuleToEnrol> degreeModulesToEnrol) {
+	final Set<CurricularRule> rulesToEvaluate = getRulesToEvaluate(degreeModulesToEnrol, executionPeriod);
+	final List<RuleResult> results = new ArrayList<RuleResult>();
+	for (final CurricularRule rule : rulesToEvaluate) {
+	    final RuleResult ruleResult = rule.evaluate(new EnrolmentContext(this, executionPeriod, degreeModulesToEnrol));
+	    results.add(ruleResult);
+	}
+    }
 
+    private Set<CurricularRule> getRulesToEvaluate(final Set<DegreeModuleToEnrol> degreeModulesToEnrol, final ExecutionPeriod executionPeriod) {
+	final Set<CurricularRule> result = new HashSet<CurricularRule>();
+	for (final DegreeModuleToEnrol degreeModuleToEnrol : degreeModulesToEnrol) {
+	    result.addAll(degreeModuleToEnrol.getContext().getChildDegreeModule().getCurricularRules(executionPeriod));
+	    result.addAll(degreeModuleToEnrol.getCurriculumGroup().getCurricularRules(executionPeriod));
+	}
+	return result;
+    }
+    
+    public void createModules(Collection<DegreeModuleToEnrol> degreeModulesToEnrol, ExecutionPeriod executionPeriod) {
+	for (DegreeModuleToEnrol degreeModuleToEnrol : degreeModulesToEnrol) {
+	    if(degreeModuleToEnrol.getContext().getChildDegreeModule().isLeaf()) {
+		
+	    } else {
+		
+	    }
+	}
+    }
 
 }

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class CurricularRule extends CurricularRule_Base {
@@ -102,5 +103,5 @@ public abstract class CurricularRule extends CurricularRule_Base {
     protected abstract void removeOwnParameters();
     public abstract boolean isLeaf();    
     public abstract List<GenericPair<Object, Boolean>> getLabel();
-    public abstract boolean evaluate(Class<? extends DomainObject> object);
+    public abstract RuleResult evaluate(EnrolmentContext enrolmentContext);
 }

@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
@@ -85,31 +88,29 @@ public class CompositeRule extends CompositeRule_Base {
     }
 
     @Override
-    public boolean evaluate(Class<? extends DomainObject> object) {
-        boolean result = true;
+    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
         switch (getCompositeRuleType()) {
 
         case NOT:
-            result = !getCurricularRules().get(0).evaluate(object);
+            return getCurricularRules().get(0).evaluate(enrolmentContext).not();
         
         case AND:
+            RuleResult result = new RuleResult(Boolean.TRUE);
             for (final CurricularRule curricularRule : getCurricularRules()) {
-                result &= curricularRule.evaluate(object);
-                if (!result) { break; }
+                result = result.and(curricularRule.evaluate(enrolmentContext));
             }
-            break;
+            return result;
         
         case OR:
+            RuleResult resultOR = new RuleResult(Boolean.FALSE);
             for (final CurricularRule curricularRule : getCurricularRules()) {
-                result |= curricularRule.evaluate(object);
-                if (result) { break; }
+                resultOR = resultOR.or(curricularRule.evaluate(enrolmentContext));
             }
-            break;
+            return resultOR;
             
         default:
             throw new DomainException("unsupported.composite.rule");
         }
-        return result;
     }        
 
     @Override

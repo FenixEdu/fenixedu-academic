@@ -21,7 +21,7 @@
     </definition>
     <definition name="students.search" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/searchStudents.jsp"></put>
-    </definition>
+    </definition> 
     <definition name="students.viewStudentDetails" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/viewStudentDetails.jsp"></put>
     </definition>
@@ -34,4 +34,10 @@
 	<definition name="student.showStudentCurriculum" extends="academicAdminOffice.masterPage" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>    
+    <definition name="student.enrolment.prepareChooseExecutionPeriod" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/chooseStudentEnrolmentExecutionPeriod.jsp"></put>
+    </definition> 
+    <definition name="student.enrolment.showDegreeModulesToEnrol" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/showDegreeModulesToEnrol.jsp"></put>
+    </definition>     
 </tiles-definitions>

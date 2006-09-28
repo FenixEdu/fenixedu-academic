@@ -171,6 +171,8 @@ Documentation:
     
     <renderer type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanRenderer"/>
     
+	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean" layout="student-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanEnrolmentsRenderer"/>
+    
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="autoComplete" class="net.sourceforge.fenixedu.presentationTier.renderers.AutoCompleteInputRenderer">
         <property name="autoCompleteItemsStyleClass" value="autoCompleteItems"/>
         <property name="autoCompleteStyleClass" value="autoComplete"/>

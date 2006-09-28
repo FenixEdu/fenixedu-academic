@@ -1,14 +1,18 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CurriculumGroup extends CurriculumGroup_Base {
@@ -16,6 +20,13 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     public CurriculumGroup(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
 	super();
 	init(studentCurricularPlan, courseGroup, executionPeriod);
+    }
+    
+    public CurriculumGroup(CourseGroup courseGroup) {
+	if (courseGroup == null) {
+	    throw new DomainException("error.studentCurriculum.curriculumGroup.courseGroup.cannot.be.null");
+	}	
+	setDegreeModule(courseGroup);	
     }
 
     private void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
@@ -125,5 +136,42 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     public StudentCurricularPlan getStudentCurricularPlan() {
         return isRoot() ? getParentStudentCurricularPlan() : getCurriculumGroup().getStudentCurricularPlan();
     }
+    
+    public Collection<Context> getDegreeModulesToEnrol(ExecutionPeriod executionPeriod) {
+	return this.getDegreeModule().getChildContexts(executionPeriod);
+    }
 
+    @Override
+    public boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
+	    if(curriculumModule.isAproved(curricularCourse, executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    @Override
+    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
+	    if(curriculumModule.isEnroledInExecutionPeriod(curricularCourse, executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
+    @Override
+    public boolean hasDegreModule(DegreeModule degreeModule) {
+        if(super.hasDegreModule(degreeModule)) {
+            return true;
+        } else {
+            for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
+		if(curriculumModule.hasDegreModule(degreeModule)) {
+		    return true;
+		}
+	    }
+            return false;
+        }
+    }
 }

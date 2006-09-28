@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
@@ -157,7 +158,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     }
 
     @Override
-    public boolean evaluate(Class< ? extends DomainObject> object) {
+    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
         // TODO Auto-generated method stub
         /**
          * ? if getDegree() == null 
@@ -167,6 +168,6 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
          * 
          * if departmentUnit != null ? curricular courses from competence courses that belong to that department      
          */
-        return false;
+        return null;
     }
 }

@@ -41,4 +41,14 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
 	return this instanceof Enrolment;
     }
     
+    @Override
+    public boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+        return false;
+    }
+    
+    @Override
+    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+        return false;
+    }
+    
 }

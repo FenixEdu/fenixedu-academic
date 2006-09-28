@@ -111,7 +111,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public List<Context> getChildContexts(Class<? extends DegreeModule> clazz) {
-	return getChildContexts(clazz, null);
+	return getChildContexts(clazz, (ExecutionYear) null);
     }
 
     public List<Context> getChildContexts(ExecutionYear executionYear) {
@@ -124,6 +124,23 @@ public class CourseGroup extends CourseGroup_Base {
 	for (Context context : this.getChildContexts()) {
 	    if ((clazz == null || context.getChildDegreeModule().getClass().equals(clazz))
 		    && ((executionYear == null || context.isValid(executionYear)))) {
+		result.add(context);
+	    }
+	}
+
+	return result;
+    }
+    
+    public List<Context> getChildContexts(ExecutionPeriod executionPeriod) {
+	return getChildContexts(null, executionPeriod);
+    }
+
+    public List<Context> getChildContexts(Class<? extends DegreeModule> clazz,
+	    ExecutionPeriod executionPeriod) {
+	List<Context> result = new ArrayList<Context>();
+	for (Context context : this.getChildContexts()) {
+	    if ((clazz == null || context.getChildDegreeModule().getClass().equals(clazz))
+		    && ((executionPeriod == null || context.isValid(executionPeriod)))) {
 		result.add(context);
 	    }
 	}

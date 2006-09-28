@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol_Base {
@@ -72,9 +73,9 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
     }
 
     @Override
-    public boolean evaluate(Class< ? extends DomainObject> object) {
+    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
         // TODO Auto-generated method stub
-        return false;
+        return null;
     }
 
     @Deprecated

@@ -593,6 +593,11 @@ public class Enrolment extends Enrolment_Base {
 	final EnrolmentEvaluation finalEnrolmentEvaluation = getFinalEnrolmentEvaluation();
 	return finalEnrolmentEvaluation != null && finalEnrolmentEvaluation.isApproved();
     }
+    
+    public boolean isEnroled() {
+	return this.getEnrollmentState().equals(EnrollmentState.ENROLLED);
+    }
+
 
     public Boolean isFirstTime() {
 	List<Enrolment> enrollments = getStudentCurricularPlan().getActiveEnrolments(
@@ -854,5 +859,18 @@ public class Enrolment extends Enrolment_Base {
     public StudentCurricularPlan getStudentCurricularPlan() {
         return hasCurriculumGroup() ? getCurriculumGroup().getStudentCurricularPlan() : super.getStudentCurricularPlan(); 
     }
-
+    
+    @Override
+    public boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+        if(executionPeriod == null || this.getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
+            return this.getCurricularCourse().isEquivalent(curricularCourse);
+        } else {
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+        return this.getExecutionPeriod().equals(executionPeriod) && this.getCurricularCourse().equals(curricularCourse);
+    }
 }

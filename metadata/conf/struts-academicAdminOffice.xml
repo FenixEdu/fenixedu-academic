@@ -64,7 +64,7 @@
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA">
 			<forward name="search" path="students.search"/>
 			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
-		</action>        
+		</action>       
 
 		<action path="/student"
 				scope="request"		
@@ -73,7 +73,7 @@
 			<forward name="editPersonalData" path="student.editPersonalData"/>
 			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
 			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>			
-		</action>        
+		</action>         
 		
 		<action path="/viewCurriculum"
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
@@ -88,6 +88,15 @@
 	        	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
 	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
 	    </action>			
+
+		<action path="/studentEnrolments"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.StudentEnrolmentsDA">
+			<forward name="prepareChooseExecutionPeriod" path="student.enrolment.prepareChooseExecutionPeriod"/>
+			<forward name="showDegreeModulesToEnrol" path="student.enrolment.showDegreeModulesToEnrol"/>
+		</action>        
+		
 	
     </action-mappings>
 

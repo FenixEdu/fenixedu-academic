@@ -1152,8 +1152,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     public boolean isEquivalent(CurricularCourse oldCurricularCourse) {
 	return this.equals(oldCurricularCourse)
 		|| this.getOldCurricularCourses().contains(oldCurricularCourse)
-		|| this.getCompetenceCourse().getAssociatedCurricularCourses().contains(
-			oldCurricularCourse);
+		|| (this.getCompetenceCourse() != null && this.getCompetenceCourse().getAssociatedCurricularCourses().contains(
+			oldCurricularCourse));
     }
 
     public List<Context> getParentContextsByExecutionYear(ExecutionYear executionYear) {
