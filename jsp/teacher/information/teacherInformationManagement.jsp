@@ -210,6 +210,7 @@
 		<p class="infoop"><span class="emphasis-box">5</span>
 		<bean:message key="message.teacherInformation.ownPublications" />
 		</p>
+		<!-- DELETE (replace by resultpublications)  -->
 		<div class="gen-button">
 			<html:link page="/readPublications.do?typePublication=Didatic&amp;page=0">
 				<bean:message key="label.teacherInformation.manage" />
@@ -231,9 +232,36 @@
 			<bean:message key="label.teachersInformation.notModified" />
 			<br/>&nbsp;<br/>
 		</logic:empty>
+		<!-- END DELETE  -->
+		<!-- DIDATIC PUBLICATIONS (Sergio Patricio & Luis Santos)-->
+		<%--
+		<div class="gen-button">
+			<html:link page="/resultTeacherManagement.do?method=readTeacherResults&amp;typeResult=Didatic">
+				<bean:message key="label.teacherInformation.manage"/>
+			</html:link>
+		</div>
+		<logic:notEmpty name="didaticResults">
+			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+				<logic:iterate id="didaticResult" name="didaticResults">
+					<tr>
+						<td class="listClasses" style="text-align:left">
+							<bean:write name="didaticResult" property="resume"/>
+						</td>
+					</tr>
+				</logic:iterate>
+			</table>
+		</logic:notEmpty>
+		<logic:empty name="didaticResults">
+			<br/>&nbsp;<br/>
+			<bean:message key="label.teachersInformation.notModified" />
+			<br/>&nbsp;<br/>
+		</logic:empty>
+		--%>
+		<!--  END DIDATIC PUBLICATIONS -->
 		<br />
 		<p class="infoop"><span class="emphasis-box">6</span>
 		<bean:message key="message.teacherInformation.cientificPublications" /></p>
+		<!-- DELETE (replace by resultpublications)  -->
 		<div class="gen-button">
 			<html:link page="/readPublications.do?typePublication=Cientific&amp;page=0">
 				<bean:message key="label.teacherInformation.manage" />
@@ -255,6 +283,32 @@
 			<bean:message key="label.teachersInformation.notModified" />
 			<br/>&nbsp;<br/>
 		</logic:empty>
+		<!-- END DELETE  -->
+		<!-- CIENTIFIC PUBLICATIONS (Sergio Patricio & Luis Santos)-->
+		<%--
+		<div class="gen-button">
+			<html:link page="/resultTeacherManagement.do?method=readTeacherResults&amp;typeResult=Cientific">
+				<bean:message key="label.teacherInformation.manage"/>
+			</html:link>
+		</div>
+		<logic:notEmpty name="cientificResults">
+			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+				<logic:iterate id="cientificResult" name="cientificResults">
+					<tr>
+						<td class="listClasses" style="text-align:left">
+							<bean:write name="cientificResult" property="resume"/>
+						</td>
+					</tr>
+				</logic:iterate>
+			</table>
+		</logic:notEmpty>
+		<logic:empty name="cientificResults">
+			<br/>&nbsp;<br/>
+			<bean:message key="label.teachersInformation.notModified" />
+			<br/>&nbsp;<br/>
+		</logic:empty>
+		--%>
+		<!--  END CIENTIFIC PUBLICATIONS -->
 		<br />
 		<!-- TJBF & PFON -->
 		<p class="infoop"><span class="emphasis-box">7</span>

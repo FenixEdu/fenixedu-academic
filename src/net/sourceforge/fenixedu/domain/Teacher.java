@@ -29,6 +29,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.Category;
@@ -112,6 +114,34 @@ public class Teacher extends Teacher_Base {
      * BUSINESS SERVICES *
      **************************************************************************/
 
+    public void addToTeacherInformationSheet(Result result, PublicationArea publicationArea) {
+        new ResultTeacher(result, this, publicationArea);
+    }
+    
+    public void removeFromTeacherInformationSheet(Result result) {
+        for (ResultTeacher resultTeacher : getTeacherResults()) {
+            if(resultTeacher.getResult().equals(result))
+            {
+                resultTeacher.delete();
+                return;
+            }
+        }
+    }
+    
+    public boolean canAddResultToTeacherInformationSheet(PublicationArea area) {
+        /*method based on canAddPublicationToTeacherInformationSheet*/
+        int count = 0;
+        for (ResultTeacher resultTeacher : getTeacherResults()) {
+            if (resultTeacher.getPublicationArea().equals(area)) {
+                count++;
+            }
+        }
+        if (count < 5)
+            return true;
+        else 
+            return false;
+    }
+    
     public void addToTeacherInformationSheet(Publication publication, PublicationArea publicationArea) {
         new PublicationTeacher(publication, this, publicationArea);
     }

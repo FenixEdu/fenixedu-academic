@@ -324,8 +324,21 @@
 	</definition>
 	<!-- END TESTS DEFINITIONS -->	
 	
+	<!-- ResultTeacher -->
+	<definition name="showTeacherDidaticResults" extends="teacher-information">
+		<put name="body" value="/researcher/result/teacher/didaticResultsManagement.jsp"></put>
+	</definition>
+	<definition name="showTeacherCientificResults" extends="teacher-information">
+		<put name="body" value="/researcher/result/teacher/cientificResultsManagement.jsp"></put>
+	</definition>
+	<definition name="addTeacherDidaticResult" extends="teacher-information">
+		<put name="body" value="/researcher/result/teacher/addDidaticResult.jsp"></put>
+	</definition>
+	<definition name="addTeacherCientificResult" extends="teacher-information">
+		<put name="body" value="/researcher/result/teacher/addCientificResult.jsp"></put>
+	</definition>
+	
 	<!-- TJBF & PFON -->
-
 	<definition name="view-cientific-teacher-publications" 
 		extends="teacher-information">
 		<put name="body" 

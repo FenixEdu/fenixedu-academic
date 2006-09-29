@@ -7,10 +7,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
@@ -23,13 +21,15 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRe
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.ProviderRegimeType;
+import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.PublicationType;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
@@ -411,6 +411,28 @@ public class TeacherInformationAction extends FenixDispatchAction {
         }
         setInfoSiteTeacherInformationToRequest(request, infoSiteTeacherInformation, mapping);
         request.setAttribute("providerRegimeTypeList", ProviderRegimeType.getEnumList());
+        
+        
+        /* 
+         * This code is to replace PublicationTeacher by ResultTeacher.
+         * Sergio Patricio & Luis Santos
+        /*
+        List<ResultTeacher> teacherResults = getUserView(request).getPerson().getTeacher()
+                .getTeacherResults();
+        List<Result> didaticResults = new ArrayList<Result>();
+        List<Result> cientificResults = new ArrayList<Result>();
+        for (ResultTeacher resultTeacher : teacherResults) {
+            if (resultTeacher.getPublicationArea().equals(PublicationArea.DIDATIC))
+                didaticResults.add(resultTeacher.getResult());
+            else
+                // PublicationArea.CIENTIFIC
+                cientificResults.add(resultTeacher.getResult());
+        }
+        request.setAttribute("didaticResults",didaticResults);
+        request.setAttribute("cientificResults",cientificResults);*/
+        
+        /*END modification*/
+        
         return mapping.findForward("show-form");
     }
 

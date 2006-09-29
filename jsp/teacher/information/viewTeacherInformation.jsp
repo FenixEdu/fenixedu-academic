@@ -142,6 +142,7 @@
 		<br/>
 		<p class="infoop"><span class="emphasis-box">5</span>
 		<bean:message key="message.teacherInformation.ownPublications" /></p>
+		<!-- DELETE (replace by resultpublications)  -->
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoDidaticPublications">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<logic:iterate id="infoPublicationDidatic" name="infoSiteTeacherInformation" property="infoDidaticPublications">
@@ -158,9 +159,31 @@
 			<bean:message key="label.teachersInformation.notModified" />
 			<br/>&nbsp;<br/>
 		</logic:empty>
+		<!-- END DELETE  -->
+		<!-- DIDATIC PUBLICATIONS (Sergio Patricio & Luis Santos)-->
+		<%--
+		<logic:notEmpty name="didaticResults">
+			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+				<logic:iterate id="didaticResult" name="didaticResults">
+					<tr>
+						<td class="listClasses" style="text-align:left">
+							<bean:write name="didaticResult" property="resume"/>
+						</td>
+					</tr>
+				</logic:iterate>
+			</table>
+		</logic:notEmpty>
+		<logic:empty name="didaticResults">
+			<br/>&nbsp;<br/>
+			<bean:message key="label.teachersInformation.notModified" />
+			<br/>&nbsp;<br/>
+		</logic:empty>
+		--%>
+		<!--  END DIDATIC PUBLICATIONS -->
 		<br />
 		<p class="infoop"><span class="emphasis-box">6</span>
 		<bean:message key="message.teacherInformation.cientificPublications" /></p>
+		<!-- DELETE (replace by resultpublications)  -->
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoCientificPublications">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<logic:iterate id="infoPublicationCientific" name="infoSiteTeacherInformation" property="infoCientificPublications">
@@ -177,6 +200,27 @@
 			<bean:message key="label.teachersInformation.notModified" />
 			<br/>&nbsp;<br/>
 		</logic:empty>
+		<!-- END DELETE  -->
+		<!-- CIENTIFIC PUBLICATIONS (Sergio Patricio & Luis Santos)-->
+		<%--
+		<logic:notEmpty name="cientificResults">
+			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+				<logic:iterate id="cientificResult" name="cientificResults">
+					<tr>
+						<td class="listClasses" style="text-align:left">
+							<bean:write name="cientificResult" property="resume"/>
+						</td>
+					</tr>
+				</logic:iterate>
+			</table>
+		</logic:notEmpty>
+		<logic:empty name="cientificResults">
+			<br/>&nbsp;<br/>
+			<bean:message key="label.teachersInformation.notModified" />
+			<br/>&nbsp;<br/>
+		</logic:empty>
+		--%>
+		<!--  END CIENTIFIC PUBLICATIONS -->
 		<br />
 		<p class="infoop"><span class="emphasis-box">7</span>
 		<bean:message key="message.teacherInformation.numberOfPublications" /></p>

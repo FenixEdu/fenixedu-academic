@@ -1730,6 +1730,15 @@
         </action>
 
 
+		<!-- Replacement of PublicationTeacher by ResultTeacher (Sergio Patricio & Luis Santos)-->
+        <action type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultTeacherManagementDispatchAction" 
+            path="/resultTeacherManagement" scope="request" name="voidForm" parameter="method">
+            <forward name="showTeacherDidaticResults" path="showTeacherDidaticResults"/>
+            <forward name="showTeacherCientificResults" path="showTeacherCientificResults"/>
+            <forward name="addTeacherDidaticResult" path="addTeacherDidaticResult"/>
+            <forward name="addTeacherCientificResult" path="addTeacherCientificResult"/>
+        </action>
+
         <!-- TJBF & PFON -->
         <!-- publication Management-->
         <action 
