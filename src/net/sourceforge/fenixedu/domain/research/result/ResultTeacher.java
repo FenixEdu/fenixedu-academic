@@ -8,6 +8,11 @@ import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class ResultTeacher extends ResultTeacher_Base {
     
+    static {
+        Teacher.ResultTeacherTeacher.addListener(new ResultTeacherTeacherListener());
+    }
+    
+    
     public ResultTeacher()
     {
         super();
@@ -40,4 +45,12 @@ public class ResultTeacher extends ResultTeacher_Base {
         if (!isParticipator) throw new DomainException("error.result.teacherNotAuthor");
     }
     
+    private static class ResultTeacherTeacherListener extends dml.runtime.RelationAdapter<Teacher,ResultTeacher> {
+        @Override
+        public void beforeAdd(Teacher teacher, ResultTeacher result) {
+            if (teacher != null && !teacher.canAddResultToTeacherInformationSheet(result.getPublicationArea())) {
+                throw new DomainException("error.teacherSheetFull", result.getPublicationArea().getName());
+            }
+        }
+    }
 }
