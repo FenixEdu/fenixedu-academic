@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Correct Contexts with key 0 for begin ExecutionPeriod " updateContextTable.sql
