@@ -178,4 +178,29 @@ public class CurriculumGroup extends CurriculumGroup_Base {
             return false;
         }
     }
+    
+    public Set<CurriculumLine> getCurriculumLines() {
+	Set<CurriculumLine> result = new HashSet<CurriculumLine>();
+	
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (curriculumModule.isLeaf()) {
+		result.add((CurriculumLine)curriculumModule);
+	    }
+	}
+	
+	return result;
+    }
+
+    public Set<CurriculumGroup> getCurriculumGroups() {
+	Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
+	
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (!curriculumModule.isLeaf()) {
+		result.add((CurriculumGroup) curriculumModule);
+	    }
+	}
+	
+	return result;
+    }
+
 }
