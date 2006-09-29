@@ -32,3 +32,7 @@ execute "Updating Accounting Event Table" UpdateAccountingEventTable.sql
 execute "Changing Table Accounting Event" AlterTableAccountingEvent.sql
 execute "Changing Table Registration" AlterTableRegistration.sql
 execute "Changing Table Candidacy" AlterTableCandidacy.sql
+
+execute "Correct Contexts with key 0 for begin ExecutionPeriod " updateContextTable.sql
+execute "Alter Convoke table" addColumnConvokes.sql
+execute "Alter table Result" alterTableResult.sql
