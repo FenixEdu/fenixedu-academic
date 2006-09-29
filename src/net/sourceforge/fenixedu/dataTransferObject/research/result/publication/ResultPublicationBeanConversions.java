@@ -48,7 +48,7 @@ public abstract class ResultPublicationBeanConversions {
 	    ((ThesisBean)newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
 	default:
-	    return null;
+	    return oldBean;
 	}
     }
 
@@ -105,7 +105,7 @@ public abstract class ResultPublicationBeanConversions {
 	    ((ThesisBean) newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
 	default:
-	    return null;
+	    return oldBean;
 	}
     }
     
@@ -159,7 +159,7 @@ public abstract class ResultPublicationBeanConversions {
 	    ((ThesisBean)newBean).setAddress(oldBean.getAddress());
 	    return newBean;
 	default:
-	    return null;
+	    return oldBean;
 	}
     }
     
@@ -208,7 +208,7 @@ public abstract class ResultPublicationBeanConversions {
 	    ((ThesisBean)newBean).setAddress(oldBean.getAddress());
 	    return newBean;
 	default:
-	    return null;
+	    return oldBean;
 	}
     }
     
@@ -262,7 +262,7 @@ public abstract class ResultPublicationBeanConversions {
 	    ((ThesisBean)newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
 	default:
-	    return null;
+	    return oldBean;
 	}
     }
     
@@ -306,7 +306,7 @@ public abstract class ResultPublicationBeanConversions {
 	    ((ThesisBean)newBean).setAddress(oldBean.getAddress());
 	    return newBean;
 	default:
-	    return null;
+	    return oldBean;
 	}
     }
     
@@ -357,7 +357,7 @@ public abstract class ResultPublicationBeanConversions {
 	    ((ThesisBean)newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
 	default:
-	    return null;
+	    return oldBean;
 	}
     }
     
@@ -399,7 +399,7 @@ public abstract class ResultPublicationBeanConversions {
 	    ((ThesisBean)newBean).setAddress(oldBean.getAddress());
 	    return newBean;
 	default:
-	    return null;
+	    return oldBean;
 	}
     }
     
@@ -451,7 +451,7 @@ public abstract class ResultPublicationBeanConversions {
 	    ((ThesisBean)newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
 	default:
-	    return null;
+	    return oldBean;
 	}
     }
     
@@ -460,7 +460,6 @@ public abstract class ResultPublicationBeanConversions {
 	switch (type) {
 	case Article:
 	    newBean = new ArticleBean(oldBean);
-	    ((ArticleBean)newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
 	case Book:
 	    newBean = new BookBean(oldBean);
@@ -495,6 +494,12 @@ public abstract class ResultPublicationBeanConversions {
 	    newBean = new ProceedingsBean(oldBean);
 	    ((ProceedingsBean)newBean).setAddress(oldBean.getAddress());
 	    return newBean;
+    case Thesis:
+        newBean = new ThesisBean(oldBean);
+        ((ThesisBean)newBean).setAddress(oldBean.getAddress());
+        ((ThesisBean)newBean).setNumberPages(oldBean.getNumberPages());
+        ((ThesisBean)newBean).setLanguage(oldBean.getLanguage());
+        return newBean;
 	case TechnicalReport:
 	    newBean = new TechnicalReportBean(oldBean);
 	    ((TechnicalReportBean)newBean).setAddress(oldBean.getAddress());
@@ -502,7 +507,35 @@ public abstract class ResultPublicationBeanConversions {
 	    ((TechnicalReportBean)newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
 	default:
-	    return null;
+	    return oldBean;
 	}
     }
+    
+    public static ResultPublicationBean unstructuredTo(UnstructuredBean oldBean, ResultPublicationType type) {
+        switch (type) {
+        case Article:
+            return new ArticleBean(oldBean);
+        case Book:
+            return new BookBean(oldBean);
+        case Inbook:
+            return new InbookBean(oldBean);
+        case Incollection:
+            return new IncollectionBean(oldBean);
+        case Inproceedings:
+            return new InproceedingsBean(oldBean);
+        case Manual:
+            return new ManualBean(oldBean);
+        case OtherPublication:
+            return new OtherPublicationBean(oldBean);
+        case Proceedings:
+            return new ProceedingsBean(oldBean);
+        case Thesis:
+            return new ThesisBean(oldBean);
+        case TechnicalReport:
+            return new TechnicalReportBean(oldBean);
+        default:
+            return oldBean;
+        }
+    }
+
 }
