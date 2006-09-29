@@ -95,6 +95,7 @@
         <form-property name="page" type="java.lang.Integer"/>
         <form-property name="oldShiftId" type="java.lang.String"/>
 		<form-property name="newShiftId" type="java.lang.String"/>
+		<form-property name="studentIDs" type="java.lang.String[]"/>
       </form-bean>
 
       <!-- Dynamic-FormBean for lesson manipulation -->

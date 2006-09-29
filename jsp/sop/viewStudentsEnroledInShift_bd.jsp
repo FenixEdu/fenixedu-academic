@@ -5,6 +5,32 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+
+<script language="Javascript" type="text/javascript">
+<!--
+
+var select = false;
+
+function invertSelect(){
+	if ( select == false ) { 
+		select = true; 
+	} else { 
+		select = false;
+	}
+	if(document.forms[0].studentIDs.type=='checkbox'){
+		var e = document.forms[0].studentIDs;
+		e.checked = select;
+	}else{
+		for (var i=0; i<document.forms[0].studentIDs.length; i++){
+			var e = document.forms[0].studentIDs[i];
+			e.checked = select;
+		}
+	}
+}
+// -->
+</script>
+
+
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
     	<td class="infoselected">
@@ -31,8 +57,16 @@ Alunos Inscritos
 
 <br />
 <logic:present name="<%= SessionConstants.STUDENT_LIST %>" scope="request">
+	<html:form action="/manageShiftStudents">
+	<!--
+		<html:link href="javascript:invertSelect()" titleKey="label.invertSelect">
+			<bean:message key="label.invertSelect" />
+		</html:link>
+	-->
 		<table>
 			<tr>
+				<th class="listClasses-header">
+				</th>
 				<th class="listClasses-header">
 					<bean:message key="label.number"/>
 				</th>
@@ -45,6 +79,9 @@ Alunos Inscritos
 			</tr>
 			<logic:iterate id="student" name="<%= SessionConstants.STUDENT_LIST %>">
 				<tr align="center">
+					<td class="listClasses">
+						<html:multibox property="studentIDs"><bean:write name="student" property="idInternal"/></html:multibox>
+					</td>
 					<td class="listClasses">
 						<bean:write name="student" property="number"/>
 					</td>
@@ -64,7 +101,6 @@ Alunos Inscritos
 <span class="info"><bean:message key="message.transfer.students.shift.notice"/></span>
 <br />
 <logic:present name="<%= SessionConstants.SHIFTS %>" scope="request">
-	<html:form action="/manageShiftStudents">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeStudentsShift"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oldShiftId" property="oldShiftId" value="<%= pageContext.findAttribute("shiftId").toString() %>"/>
@@ -109,9 +145,9 @@ Alunos Inscritos
 		</table>
 
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.transfer"/></html:submit>
-	</html:form> 
-
 </logic:present>
+
+	</html:form> 
 </logic:present>
 
 <logic:notPresent name="<%= SessionConstants.STUDENT_LIST %>" scope="request">

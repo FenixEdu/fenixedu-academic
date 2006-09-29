@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -14,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ChangeStudentsShift extends Service {
 
-    public void run(IUserView userView, Integer oldShiftId, Integer newShiftId)
+    public void run(IUserView userView, Integer oldShiftId, Integer newShiftId, final Set<Registration> registrations)
             throws ExcepcaoPersistencia, FenixServiceException {
 
         final Shift oldShift = rootDomainObject.readShiftByOID(oldShiftId);
@@ -29,23 +30,15 @@ public class ChangeStudentsShift extends Service {
         List<String> emptyList = new ArrayList<String>();
         List<String> toMails = new ArrayList<String>();
 
-        final List<Registration> oldStudents = oldShift.getStudents();
-        final List<Registration> newStudents = newShift.getStudents();
-        while (!oldStudents.isEmpty()) {
-            final Registration registration = oldStudents.get(0);
-            if (!newStudents.contains(registration)) {
-                newStudents.add(registration);
-
-                Person person = registration.getPerson();
-                if (person.getEmail() != null && person.getEmail().length() > 0) {
-                    toMails.add(person.getEmail());
-                }
-            } else {
-                oldStudents.remove(registration);
+        oldShift.getStudentsSet().removeAll(registrations);
+        newShift.getStudentsSet().addAll(registrations);
+        for (final Registration registration : registrations) {
+            Person person = registration.getPerson();
+            if (person.getEmail() != null && person.getEmail().length() > 0) {
+                toMails.add(person.getEmail());
             }
         }
 
-            
         Person person = Person.readPersonByUsername(userView.getUtilizador());
         sendMail.run(emptyList, emptyList, toMails, person.getNome(), person.getEmail(), 
                 "Alteração de turnos",

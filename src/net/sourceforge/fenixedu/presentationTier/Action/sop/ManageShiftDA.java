@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.sop;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
@@ -251,7 +254,17 @@ public class ManageShiftDA extends
         Integer oldShiftId = new Integer((String) dynaActionForm.get("oldShiftId"));
         Integer newShiftId = new Integer((String) dynaActionForm.get("newShiftId"));
 
-        Object args[] = { userView, oldShiftId, newShiftId };
+        final String[] studentIDs = (String[]) dynaActionForm.get("studentIDs");
+        final Set<Registration> registrations = new HashSet<Registration>();
+        if (studentIDs != null) {
+            for (final String studentID : studentIDs) {
+                final Integer id = Integer.valueOf(studentID);
+                final Registration registration = rootDomainObject.readRegistrationByOID(id);
+                registrations.add(registration);
+            }
+        }
+
+        Object args[] = { userView, oldShiftId, newShiftId, registrations };
         ServiceUtils.executeService(userView, "ChangeStudentsShift", args);
 
         return mapping.findForward("Continue");
