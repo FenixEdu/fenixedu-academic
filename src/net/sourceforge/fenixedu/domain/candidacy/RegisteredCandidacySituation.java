@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentKind;
+import net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -51,9 +52,12 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 
 	((DFACandidacy) getCandidacy()).setRegistration(registration);
 
-	new GratuityEvent(AdministrativeOffice
-		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), person,
-		registration);
+	final AdministrativeOffice administrativeOffice = AdministrativeOffice
+		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+
+	new GratuityEvent(administrativeOffice, person, registration);
+
+	new DfaRegistrationEvent(administrativeOffice, person, registration);
 
     }
 

@@ -12,7 +12,9 @@ public enum EventType {
 
     DEGREE_FINALIZATION_CERTIFICATE_REQUEST,
 
-    GRATUITY;
+    GRATUITY,
+
+    DFA_REGISTRATION;
 
     public String getName() {
 	return name();

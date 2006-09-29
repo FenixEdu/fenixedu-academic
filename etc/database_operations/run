@@ -27,3 +27,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Updating Accounting Event Table" UpdateAccountingEventTable.sql
+execute "Changing Table Accounting Event" AlterTableAccountingEvent.sql
+execute "Chaging Table Registration" AlterTableRegistration.sql
+execute "Changing Table Candidacy" AlterTableCandidacy.sql

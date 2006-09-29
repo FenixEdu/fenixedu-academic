@@ -217,12 +217,16 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     Integer keyEmployeeResponsibleForCancel;
 }
 
-	class net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+	class net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 	    Integer keyCandidacy;
+	}
+		
+	class net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+		Integer keyRegistrationForDfaRegistrationEvent;
 	}
 
 	class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-	    Integer keyRegistration;
+		Integer keyRegistrationForGratuityEvent;
 	}
 	
 	class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
@@ -2676,6 +2680,7 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	Integer keyStudent;
 	Integer keyStudentCandidacy;
 	Integer keyStudentKind;
+	Integer keyDfaRegistrationEvent;
 }
 
 class net.sourceforge.fenixedu.domain.student.Student extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -9561,13 +9566,18 @@ relation AdministrativeOfficeEvent {
 
 relation DFACandidacyEventCandidacy {
 	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole candidacy;
-	net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent playsRole candidacyEvents {
+	net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent playsRole candidacyEvents {
 		multiplicity *;
 	}
 }
 
+relation DfaRegistrationEventRegistration {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registrationForDfaRegistrationEvent;
+	net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvent;
+}
+
 relation GratuityEventRegistration {
-	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registrationForGratuityEvent;
 	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent playsRole gratuityEvents {
 		multiplicity *;
 	}

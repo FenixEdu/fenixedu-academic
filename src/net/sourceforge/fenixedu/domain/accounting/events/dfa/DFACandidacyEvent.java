@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.accounting.events.candidacy;
+package net.sourceforge.fenixedu.domain.accounting.events.dfa;
 
 import java.util.List;
 import java.util.Set;

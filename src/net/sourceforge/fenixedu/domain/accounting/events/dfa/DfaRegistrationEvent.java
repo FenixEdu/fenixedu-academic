@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
+package net.sourceforge.fenixedu.domain.accounting.events.dfa;
 
 import java.util.List;
 import java.util.Set;
@@ -15,56 +15,38 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
-public class GratuityEvent extends GratuityEvent_Base {
+public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 
-    protected GratuityEvent() {
+    private DfaRegistrationEvent() {
 	super();
     }
 
-    public GratuityEvent(AdministrativeOffice administrativeOffice, Person person,
+    public DfaRegistrationEvent(AdministrativeOffice administrativeOffice, Person person,
 	    Registration registration) {
 	this();
 	init(administrativeOffice, person, registration);
     }
 
-    protected void init(AdministrativeOffice administrativeOffice, Person person,
-	    Registration registration) {
-	super.init(administrativeOffice, EventType.GRATUITY, person);
+    private void init(AdministrativeOffice administrativeOffice, Person person, Registration registration) {
+	super.init(administrativeOffice, EventType.DFA_REGISTRATION, person);
 	checkParameters(registration);
-	super.setRegistrationForGratuityEvent(registration);
+	super.setRegistrationForDfaRegistrationEvent(registration);
+
     }
 
     private void checkParameters(Registration registration) {
 	if (registration == null) {
 	    throw new DomainException(
-		    "error.accounting.events.gratuity.GratuityEvent.registration.cannot.be.null");
+		    "error.accounting.events.dfa.DfaRegistrationEvent.registration.cannot.be.null");
 	}
-
-    }
-
-    @Override
-    public Account getToAccount() {
-	return getUnit().getAccountBy(AccountType.INTERNAL);
-    }
-
-    private Unit getUnit() {
-	return getExecutionDegree().getDegreeCurricularPlan().getDegree().getUnit();
-    }
-
-    private ExecutionDegree getExecutionDegree() {
-	return getRegistration().getStudentCandidacy().getExecutionDegree();
-    }
-
-    private Degree getDegree() {
-	return getExecutionDegree().getDegree();
     }
 
     @Override
@@ -78,10 +60,27 @@ public class GratuityEvent extends GratuityEvent_Base {
 	return labelFormatter;
     }
 
+    private ExecutionDegree getExecutionDegree() {
+	return getRegistration().getStudentCandidacy().getExecutionDegree();
+    }
+
+    private Degree getDegree() {
+	return getExecutionDegree().getDegree();
+    }
+
     @Override
     protected PostingRule getPostingRule(DateTime whenRegistered) {
-	return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate()
-		.findPostingRuleByEventTypeAndDate(getEventType(), whenRegistered);
+	return getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
+		whenRegistered);
+    }
+
+    private AdministrativeOfficeServiceAgreementTemplate getServiceAgreementTemplate() {
+	return getAdministrativeOffice().getServiceAgreementTemplate();
+    }
+
+    @Override
+    public Account getToAccount() {
+	return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
     }
 
     @Override
@@ -91,14 +90,14 @@ public class GratuityEvent extends GratuityEvent_Base {
 		whenRegistered, this, getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount());
     }
 
-    @Override
-    public void setRegistrationForGratuityEvent(Registration registration) {
-	throw new DomainException(
-		"error.accounting.events.gratuity.GratuityEvent.cannot.modify.registration");
+    public Registration getRegistration() {
+	return getRegistrationForDfaRegistrationEvent();
     }
 
-    public Registration getRegistration() {
-	return getRegistrationForGratuityEvent();
+    @Override
+    public void setRegistrationForDfaRegistrationEvent(Registration registration) {
+	throw new DomainException(
+		"error.accounting.events.dfa.DfaRegistrationEvent.cannot.modify.registration");
     }
 
 }

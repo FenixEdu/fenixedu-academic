@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;

@@ -23,15 +23,16 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.accounting.Event -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.Event" table="ACCOUNTING_EVENT">
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent" />
 </class-descriptor>
 
 	<!-- ************************************************************************************************************ -->
-	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent -->
 	<!-- ************************************************************************************************************ -->
-	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent" table="ACCOUNTING_EVENT">
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent" table="ACCOUNTING_EVENT">
 	
 	</class-descriptor>
 	
@@ -47,6 +48,13 @@
 	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent -->
 	<!-- ************************************************************************************************************ -->
 	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent" table="ACCOUNTING_EVENT">
+	
+	</class-descriptor>	
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent" table="ACCOUNTING_EVENT">
 	
 	</class-descriptor>	
 
