@@ -59,7 +59,7 @@ public class ResultPatent extends ResultPatent_Base {
 	checkRequiredParameters(title, registrationDate, approvalDate);
 	fillAllAttributes(title, note, patentType, patentStatus, registrationDate, approvalDate,
 		country, local, patentNumber, url);
-	super.setModifyedByAndDate();
+	super.setModifiedByAndDate();
     }
     
     public Person getParticipation(){
@@ -110,7 +110,10 @@ public class ResultPatent extends ResultPatent_Base {
     public String getResume() {
         String resume = getParticipationsAndTitleString();
 
-        //TODO: fill with fields!
+        if ((getPatentNumber() != null) && (getPatentNumber().length() > 0))
+            resume = resume + "N.º " + getPatentNumber() + ", ";
+        if ((getCountry() != null) && (getPatentNumber().length() > 0))
+            resume = resume + getCountry().getName() + ", ";
         
         resume = finishResume(resume);
         return resume;
