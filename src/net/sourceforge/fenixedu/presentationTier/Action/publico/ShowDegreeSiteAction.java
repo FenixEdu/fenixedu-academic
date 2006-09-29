@@ -85,16 +85,20 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
             final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
             
             List<ExecutionYear> whenDegreeIsExecuted = degree.getDegreeCurricularPlansExecutionYears();
-            final ExecutionYear firstExecutionYear = whenDegreeIsExecuted.get(0);
-            final ExecutionYear lastExecutionYear = whenDegreeIsExecuted.get(whenDegreeIsExecuted.size() - 1);
-            
-            if (whenDegreeIsExecuted.contains(currentExecutionYear)) {
-                return currentExecutionYear;
+            if (whenDegreeIsExecuted.isEmpty()) {
+        	return currentExecutionYear;
             } else {
-                if (currentExecutionYear.isBefore(firstExecutionYear)) {
-                    return firstExecutionYear;
+                final ExecutionYear firstExecutionYear = whenDegreeIsExecuted.get(0);
+                final ExecutionYear lastExecutionYear = whenDegreeIsExecuted.get(whenDegreeIsExecuted.size() - 1);
+                
+                if (whenDegreeIsExecuted.contains(currentExecutionYear)) {
+                    return currentExecutionYear;
                 } else {
-                    return lastExecutionYear;
+                    if (currentExecutionYear.isBefore(firstExecutionYear)) {
+                        return firstExecutionYear;
+                    } else {
+                        return lastExecutionYear;
+                    }
                 }
             }
         }
