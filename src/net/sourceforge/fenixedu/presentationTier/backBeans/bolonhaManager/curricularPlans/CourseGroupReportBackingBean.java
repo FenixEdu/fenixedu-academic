@@ -63,7 +63,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         this.courseGroupID = courseGroupID;
     }
     
-    public CourseGroup getCourseGroup() throws FenixFilterException, FenixServiceException {
+    public CourseGroup getCourseGroup() {
         return (CourseGroup) rootDomainObject.readDegreeModuleByOID(getCourseGroupID());
     }
 
@@ -159,6 +159,15 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
 
     private void reportInfo(Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
         List<Context> contextsWithCurricularCourses = null;
+
+        contextsWithCurricularCourses = contextsWithCurricularCoursesToList(this.getCourseGroup());
+        
+        if (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) {
+            fillCurricularStructure(this.getCourseGroup().getName(), contextsWithCurricularCourses, spreadsheet);
+        } else {
+            fillStudiesPlan(contextsWithCurricularCourses, spreadsheet);            
+        }
+        
         if (rootWasClicked) {
             // first level contexts are to be reported
             for (Context context : this.getCourseGroup().getSortedChildContextsWithCourseGroups()) {
@@ -173,20 +182,12 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
                     spreadsheet.addRow();
                 }
             }
-        } else {
-            contextsWithCurricularCourses = contextsWithCurricularCoursesToList(this.getCourseGroup());
-            
-            if (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) {
-                fillCurricularStructure(null, contextsWithCurricularCourses, spreadsheet);
-            } else {
-                fillStudiesPlan(contextsWithCurricularCourses, spreadsheet);            
-            }
-        }
+        } 
     }
 
     private List<Object> getCurricularStructureHeader() {
         final List<Object> headers = new ArrayList<Object>();
-        if (rootWasClicked) {
+        if (rootWasClicked && !this.getCourseGroup().getSortedChildContextsWithCourseGroups().isEmpty()) {
             headers.add("Grupo");
         }
         headers.add("Área Científica");
@@ -206,7 +207,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
                     && !scientificAreaUnits.contains(curricularCourse.getCompetenceCourse().getScientificAreaUnit())) {
                 final Row row = spreadsheet.addRow();
                 
-                if (rootWasClicked && courseGroupBeingReported != null) {
+                if (rootWasClicked && !this.getCourseGroup().getSortedChildContextsWithCourseGroups().isEmpty()) {
                     row.setCell(courseGroupBeingReported);
                 }
                 row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
