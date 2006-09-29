@@ -188,9 +188,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	} else if (curricularStage == CurricularStage.APPROVED) {
 	    approve(beginExecutionYear);
 	} else {
-	    if (isApproved()) {
-		resetBeginExecutionPeriodForDegreeCurricularPlan(getRoot());
-	    }
 	    this.setCurricularStage(curricularStage);
 	}
     }
@@ -280,6 +277,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     private void initBeginExecutionPeriodForDegreeCurricularPlan(final CourseGroup courseGroup,
 	    final ExecutionPeriod beginExecutionPeriod) {
+	
+	if (beginExecutionPeriod == null) {
+	    throw new DomainException("");
+	}
 
 	for (final CurricularRule curricularRule : courseGroup.getCurricularRules()) {
 	    curricularRule.setBegin(beginExecutionPeriod);
@@ -291,10 +292,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 			.getChildDegreeModule(), beginExecutionPeriod);
 	    }
 	}
-    }
-
-    private void resetBeginExecutionPeriodForDegreeCurricularPlan(final CourseGroup courseGroup) {
-	initBeginExecutionPeriodForDegreeCurricularPlan(courseGroup, null);
     }
 
     public boolean isBolonha() {
