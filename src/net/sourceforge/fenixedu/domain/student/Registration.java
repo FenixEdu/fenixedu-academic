@@ -117,7 +117,7 @@ public class Registration extends Registration_Base {
     public Registration(Person person, StudentKind studentKind,
 	    DegreeCurricularPlan degreeCurricularPlan, StudentCandidacy studentCandidacy) {
 
-	this(person, null, studentKind, StudentState.INSCRITO_OBJ, false, false, false, studentCandidacy);
+	this(person, null, studentKind, StudentState.INSCRITO_OBJ, true, false, false, studentCandidacy);
 
 	// create scp
 	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
