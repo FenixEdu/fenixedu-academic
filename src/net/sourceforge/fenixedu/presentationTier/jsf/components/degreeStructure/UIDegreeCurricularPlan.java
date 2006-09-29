@@ -203,6 +203,8 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
         
         if (toRepeat.containsKey(curricularPeriod)) {
+            anyCurricularCourseEncoded = true;
+            
             for (Context check : toRepeat.get(curricularPeriod)) {
                 new UICurricularCourse(check.getChildDegreeModule(), check, this.toEdit, this.showRules, this.executionYear).encodeInNextPeriod(facesContext);
             }
