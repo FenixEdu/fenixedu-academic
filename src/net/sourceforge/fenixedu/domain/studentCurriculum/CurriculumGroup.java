@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -180,7 +180,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
     
     public Set<CurriculumLine> getCurriculumLines() {
-	Set<CurriculumLine> result = new HashSet<CurriculumLine>();
+	Set<CurriculumLine> result = new TreeSet<CurriculumLine>(CurriculumModule.COMPARATOR_BY_NAME);
 	
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (curriculumModule.isLeaf()) {
@@ -192,7 +192,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public Set<CurriculumGroup> getCurriculumGroups() {
-	Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
+	Set<CurriculumGroup> result = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME);
 	
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (!curriculumModule.isLeaf()) {
