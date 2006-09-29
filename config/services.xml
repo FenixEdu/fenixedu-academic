@@ -9614,6 +9614,24 @@
 		<isTransactional>true</isTransactional>
 	</service>
 	<service>
+		<name>AddResultToTeacherInformationSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.teacher.AddResultToTeacherInformationSheet</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>RemoveResultFromTeacherInformationSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.teacher.RemoveResultFromTeacherInformationSheet</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>SetUserUID</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SetUserUID</implementationClass>
 		<description />
