@@ -327,9 +327,9 @@
 </schema>
 
 <!-- SCHEMAS FOR RESULTS MANAGEMENT -->
-<schema name="result.modifyedBy" type="net.sourceforge.fenixedu.domain.research.result.Result" bundle="RESEARCHER_RESOURCES">
+<schema name="result.modifiedBy" type="net.sourceforge.fenixedu.domain.research.result.Result" bundle="RESEARCHER_RESOURCES">
 	<slot name="lastModificationDate"/>
-	<slot name="modifyedBy"/>
+	<slot name="modifiedBy"/>
 </schema>
 <schema name="resultParticipation.result" type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation">
 	<slot name="result.title"/>
@@ -556,9 +556,11 @@
 <!-- Publication schema names's construction: "result.publication.[***]."+[PublicationType] -->
 <schema name="resultPublication.editType" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean">
-	<slot name="publicationType" layout="menu-select-postback" key="researcher.ResultPublication.type">
+	<slot name="publicationType" layout="menu-select-postback" key="researcher.ResultPublication.type"
+			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="choiceType" value="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean$ResultPublicationType"/>
 		<property name="destination" value="typePostBack"/>
+		<property name="eachLayout" value="default"/>
 	</slot>
 </schema>
 <!-- Create/edit Book -->
@@ -1356,6 +1358,11 @@
 </schema>
 
 <!-- Create/edit Unstructured -->
+<schema name="result.publication.edit.Unstructured" bundle="RESEARCHER_RESOURCES"
+		extends="resultPublication.editType"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.UnstructuredBean">
+	<slot name="note" read-only="true"/>
+</schema>
 <schema name="result.publication.details.Unstructured" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Unstructured">
 	<slot name="title"/>
