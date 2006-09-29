@@ -105,21 +105,22 @@
 	<logic:notEmpty name="unstructureds">
 		<p id='unstructureds' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Unstructureds"/></span></strong></p>
 		<bean:define id="results" name="unstructureds" toScope="request"/>
-				<table class="tstyle2" style="width: 500px; text-align: left;">
+		<ul>
 			<logic:iterate id="result" name="results" scope="request">
 	 			<bean:define id="resultId" name="result" property="idInternal"/>
-				<tr>
-			 		<td style="text-align:left">
-			 			<fr:view name="result" layout="tabular" schema="result.publication.presentation.Unstructured" />
-		 			</td>
-					<td style="text-align:center">
-				 		<html:link page="<%="/resultPublications/prepareEdit.do?resultId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.details.link" /></html:link>
-			 		</td>
-			 		<td style="text-align:center">
-			 			<html:link page="<%="/resultPublications/prepareDelete.do?&resultId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
-			 		</td>
-		 		</tr>
+				<li class="mtop1">
+		 			<fr:view name="result" layout="values" schema="result.publication.presentation.Unstructured">
+		 				<fr:layout>
+		 					<fr:property name="htmlSeparator" value=", "/>
+		 					<fr:property name="indentation" value="false"/>
+		 				</fr:layout>
+	 				</fr:view>
+		 			<p class="mtop025">
+			 		<html:link page="<%="/resultPublications/prepareEditData.do?resultId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.convertUnstructured" /></html:link>, 
+		 			<html:link page="<%="/resultPublications/prepareDelete.do?&resultId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.delete" /></html:link>
+			 		</p>
+	 			</li>
 			</logic:iterate>
-		</table>
+		</ul>
 	</logic:notEmpty>
 </logic:present>

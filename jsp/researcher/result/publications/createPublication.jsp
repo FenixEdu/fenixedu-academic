@@ -32,13 +32,14 @@
 
 		
 		<!-- Present publication fields -->
-		<p class="mtop1 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type." + publicationBean.getPublicationType() %>"/></b></p>
+		<p class="mtop1 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES"key="<%="researcher.ResultPublication.type." + publicationBean.getPublicationTypeString() %>"/></b></p>
 		<fr:edit id="publicationData" name="publicationBean" schema="<%= publicationBean.getActiveSchema() %>" nested="true">
 	 	    <fr:layout name="tabular">
 	    	    <fr:property name="classes" value="tstyle1 thright thlight thtop"/>
 	        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		    </fr:layout>
 	   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
+	   		<fr:destination name="typePostBack" path="/resultPublications/changeType.do"/>
 		</fr:edit>
 
 		<!-- Create event in case of inproceedings or proceedings -->
@@ -50,6 +51,7 @@
 		        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			    </fr:layout>
 		   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
+		   		<fr:destination name="input" path="/resultPublications/prepareCreate.do"/>
 			</fr:edit>
 		</logic:equal>
 		
