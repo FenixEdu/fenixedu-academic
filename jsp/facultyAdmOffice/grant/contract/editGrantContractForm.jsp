@@ -1,7 +1,7 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<html:xhtml/>
 
 <strong><p align="center"><bean:message key="label.grant.contract.edition"/></p></strong><br/>
 
