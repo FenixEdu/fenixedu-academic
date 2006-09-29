@@ -1,17 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
+import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlDiv;
 import net.sourceforge.fenixedu.renderers.components.HtmlTable;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
@@ -19,7 +17,6 @@ import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell.CellType;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.util.LanguageUtils;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class StudentCurricularPlanRenderer extends OutputRenderer {
 
@@ -51,7 +48,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	public HtmlComponent createComponent(Object object, Class type) {
 	    final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) object;
 
-	    final HtmlDiv scpDiv = new HtmlDiv();
+	    final HtmlBlockContainer scpDiv = new HtmlBlockContainer();
 
 	    if (studentCurricularPlan == null) {
 		return new HtmlText();
@@ -60,22 +57,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    }
 
 	    if (isOrganizedByGroups()) {
-		final CurriculumGroup scpRoot = studentCurricularPlan.getRoot();
-		final HtmlTable scpRootTable = scpDiv.createTable();
-		scpRootTable.setClasses("showinfo3 mvert0");
-		scpRootTable.setStyle("width: 70em;");
-
-		final HtmlTableRow line = scpRootTable.createRow();
-		line.setClasses("bgcolor2");
-
-		final DegreeModule degreeRoot = scpRoot.getDegreeModule();
-		final HtmlTableCell name = line.createCell();
-		name.setType(CellType.HEADER);
-		name.setClasses("aleft");
-		name.setColspan(5);
-		name.setBody(renderMultiLanguage(degreeRoot.getName(), degreeRoot.getNameEn()));
-
-		generateModules(scpDiv, scpRoot, 0);
+		generateGroup(scpDiv, studentCurricularPlan.getRoot(), 0);
 	    } else {
 		return new HtmlText("Querias, mas ainda não há!");
 	    }
@@ -83,86 +65,92 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    return scpDiv;
 	}
 
-	private void generateModules(HtmlDiv scpDiv, final CurriculumGroup group, int depth) {
-	    final HtmlDiv groupDiv = scpDiv.createDiv();
-	    groupDiv.setStyle("padding-left: " + (depth + 3) + "em;");
-
-	    final HtmlTable groupTable = groupDiv.createTable();
+	private void generateGroup(HtmlBlockContainer scpDiv, final CurriculumGroup group, int depth) {
+	    final HtmlTable groupTable = new HtmlTable();
+	    scpDiv.addChild(groupTable);
 	    groupTable.setClasses("showinfo3 mvert0");
-	    groupTable.setStyle("width: " + (70 - depth - 3) + "em;");
+	    groupTable.setStyle("width: " + (70 - depth) + "em; margin-left: " + depth + "em;");
 
-	    for (final CurriculumModule module : group.getCurriculumModules()) {
-		final DegreeModule degreeModule = module.getDegreeModule();
+	    final HtmlTableRow groupRow = groupTable.createRow();
+	    groupRow.setClasses("bgcolor2");
 
-		final HtmlTableRow line = groupTable.createRow();
+	    final HtmlTableCell groupNameCell = groupRow.createCell();
+	    groupNameCell.setType(CellType.HEADER);
+	    groupNameCell.setClasses("aleft");
+	    groupNameCell.setColspan(5);
+	    groupNameCell.setBody(new HtmlText(group.getName()));
 
-		final HtmlTableCell name = line.createCell();
-		name.setBody(renderMultiLanguage(degreeModule.getName(), degreeModule.getNameEn()));
+	    generateLines(scpDiv, depth, group.getCurriculumLines());
 
-		if (module.isLeaf()) {
-		    final CurriculumLine curriculumLine = (CurriculumLine) module;
+	    for (final CurriculumGroup curriculumGroup : group.getCurriculumGroups()) {
+		generateGroup(scpDiv, curriculumGroup, depth + 3);
+	    }
+	}
 
-		    if (curriculumLine.isEnrolment()) {
-			final ResourceBundle enumerationResources = ResourceBundle.getBundle(
-				    "resources.EnumerationResources", LanguageUtils.getLocale());
-			
-			final Enrolment enrolment = (Enrolment) curriculumLine;
+	private void generateLines(HtmlBlockContainer scpDiv, int depth,
+		final Set<CurriculumLine> curriculumLines) {
+	    if (!curriculumLines.isEmpty()) {
+		final HtmlTable groupLinesTable = new HtmlTable();
+		scpDiv.addChild(groupLinesTable);
+		groupLinesTable.setClasses("showinfo3 mvert0");
+		groupLinesTable.setStyle("width: " + (70 - depth - 3) + "em; margin-left: "
+			+ (depth + 3) + "em;");
 
-			// Year
-			final HtmlTableCell yearCell = line.createCell();
-			yearCell.setClasses("smalltxt");
-			yearCell.setAlign("rigth");
-			
-			final StringBuilder year = new StringBuilder();
-			year.append(enrolment.getExecutionPeriod().getExecutionYear().getYear());
-			yearCell.setBody(new HtmlText(year.toString()));
-			
-			// Semester
-			final HtmlTableCell semesterCell = line.createCell();
-			semesterCell.setClasses("smalltxt");
-			semesterCell.setAlign("rigth");
-
-			final StringBuilder semester = new StringBuilder();
-			semester.append(enrolment.getExecutionPeriod().getSemester().toString());
-			semester.append(" ");
-			semester.append(enumerationResources.getString("SEMESTER.ABBREVIATION"));
-			semesterCell.setBody(new HtmlText(semester.toString()));
-
-			// Enrolment
-			final HtmlTableCell enrolmentCell = line.createCell();
-			enrolmentCell.setAlign("rigth");
-			
-			if (enrolment.isApproved()) {
-			    final String grade = enrolment.getLatestEnrolmentEvaluation().getGrade();
-			    enrolmentCell.setBody(new HtmlText(grade));
-			} else {
-			    final String enrolmentState = enumerationResources.getString(enrolment.getEnrollmentState().toString()); 
-			    enrolmentCell.setBody(new HtmlText(enrolmentState));
-			}
-		    }
-		} else {
-		    line.setClasses("bgcolor2");
-		    name.setClasses("aleft");
-		    name.setColspan(5);
-		    name.setType(CellType.HEADER);
-
-		    generateModules(scpDiv, (CurriculumGroup) module, depth + 3);
+		for (final CurriculumLine curriculumLine : curriculumLines) {
+		    generateLine(groupLinesTable, curriculumLine);
 		}
 	    }
 	}
 
-	private HtmlComponent renderMultiLanguage(String portuguese, String english) {
-	    return renderValue(createSimpleMultiLanguageString(portuguese, english),
-		    MultiLanguageString.class, null, null);
+	private void generateLine(final HtmlTable groupLinesTable, final CurriculumLine curriculumLine) {
+	    final HtmlTableRow lineRow = groupLinesTable.createRow();
+
+	    final HtmlTableCell name = lineRow.createCell();
+	    name.setBody(new HtmlText(curriculumLine.getName()));
+
+	    if (curriculumLine.isEnrolment()) {
+		generateEnrolment(curriculumLine, lineRow);
+	    }
 	}
 
-	private MultiLanguageString createSimpleMultiLanguageString(String portuguese, String english) {
-	    MultiLanguageString mls = new MultiLanguageString();
+	private void generateEnrolment(final CurriculumLine curriculumLine, final HtmlTableRow lineRow) {
+	    final Enrolment enrolment = (Enrolment) curriculumLine;
 
-	    mls.setContent(Language.pt, portuguese);
-	    mls.setContent(Language.en, english);
+	    final ResourceBundle enumerationResources = ResourceBundle.getBundle(
+	    	"resources.EnumerationResources", LanguageUtils.getLocale());
 
-	    return mls;
+	    // Year
+	    final HtmlTableCell yearCell = lineRow.createCell();
+	    yearCell.setClasses("smalltxt");
+	    yearCell.setAlign("rigth");
+
+	    final StringBuilder year = new StringBuilder();
+	    year.append(enrolment.getExecutionPeriod().getExecutionYear().getYear());
+	    yearCell.setBody(new HtmlText(year.toString()));
+
+	    // Semester
+	    final HtmlTableCell semesterCell = lineRow.createCell();
+	    semesterCell.setClasses("smalltxt");
+	    semesterCell.setAlign("rigth");
+
+	    final StringBuilder semester = new StringBuilder();
+	    semester.append(enrolment.getExecutionPeriod().getSemester().toString());
+	    semester.append(" ");
+	    semester.append(enumerationResources.getString("SEMESTER.ABBREVIATION"));
+	    semesterCell.setBody(new HtmlText(semester.toString()));
+
+	    // Enrolment
+	    final HtmlTableCell enrolmentCell = lineRow.createCell();
+	    enrolmentCell.setAlign("rigth");
+
+	    if (enrolment.isApproved()) {
+	        final String grade = enrolment.getLatestEnrolmentEvaluation().getGrade();
+	        enrolmentCell.setBody(new HtmlText(grade));
+	    } else {
+	        final String enrolmentState = enumerationResources.getString(enrolment
+	    	    .getEnrollmentState().toString());
+	        enrolmentCell.setBody(new HtmlText(enrolmentState));
+	    }
 	}
     }
 
