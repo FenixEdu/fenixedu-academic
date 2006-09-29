@@ -21,7 +21,7 @@
 	
 	<logic:messagesPresent message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-			<span class="error"><!-- Error messages go here --><bean:write name="messages" /></span>
+			<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
 		</html:messages>
 		<br/><br/>
 	</logic:messagesPresent>

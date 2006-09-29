@@ -22,16 +22,21 @@
 	<!-- Schema definitions -->
 	<bean:define id="createSchema" name="createSchema" type="java.lang.String"/>
 	
-	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.add"/></b></p>
+	<%--
+	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.add"/></b></p>
+	--%>
+ 	<logic:notEqual name="bean" property="beanExternal" value="true">
+		<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.add"/></b></p>
+ 	</logic:notEqual>
  	<logic:equal name="bean" property="beanExternal" value="true">
-	 	<p><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.addExternal"/></p>
+	 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.addExternal"/></b></p>
  	</logic:equal>
  	
  	<%-- From to Create Participation --%>
 	<fr:edit id="bean" name="bean" schema="<%= createSchema %>" action="<%= create %>">
 		<fr:layout name="tabular">
-	        <fr:property name="classes" value="style1"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
+	        <fr:property name="classes" value="tstyle1 mtop05"/>
+	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="exception" path="<%= prepareEdit %>"/>	
 		<fr:destination name="invalid" path="<%= prepareEdit %>"/>	

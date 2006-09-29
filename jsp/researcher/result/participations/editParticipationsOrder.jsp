@@ -24,7 +24,11 @@
 	<fr:form action="<%= saveOrder %>">
    		<input id="tree-structure" type="hidden" name="tree" value=""/>
 	</fr:form>
+
 	
+	<p><span class="warning0">Faça <em>drag & drop</em> dos items para reordenar a lista.</span></p> <!-- tobundle -->
+
+
 	<fr:view name="participations" layout="tree">
 		<fr:layout>
 			<fr:property name="treeId" value="tree"/>
@@ -49,8 +53,9 @@
             </fr:property>
 		</fr:layout>
  	</fr:view>
- 	<br/>
- 	
+	
+	<br/>
+
  	<div id="tree-controls" style="display: none;">
 	 	<fr:form action="<%= prepareEdit %>">
 	        <!-- submits the form on top of the page, search for: tree-structure -->

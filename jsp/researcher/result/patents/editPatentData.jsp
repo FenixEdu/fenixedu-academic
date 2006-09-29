@@ -10,23 +10,23 @@
 	<bean:define id="parameter" value="<%= "resultId=" + resultId %>"/>
 	
 	<%-- Title messages --%>
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.management.title"/></em>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data"/></h3>
+	<em>Patentes</em> <!-- tobundle -->
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data"/></h2>
 	
 	<%-- Warning/Error messages --%>
 	<logic:messagesPresent name="messages" message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-			<p><span class="error"><!-- Error messages go here --><bean:write name="messages"/></span></p>
+			<p><span class="error0"><!-- Error messages go here --><bean:write name="messages"/></span></p>
 		</html:messages>
 	</logic:messagesPresent>
 	
 	<%-- Form edit Patent Data --%>
-	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></b></p>
-	<fr:edit 	id="editPatent" name="result" schema="patent.edit" 
+	<p class="mtop2 mbottom0"><b>Detalhes da patente:</b></p> <!-- tobundle -->
+	<fr:edit id="editPatent" name="result" schema="patent.edit" 
 				action="<%= "/resultPatents/prepareEdit.do?" + parameter %>">
 	    <fr:layout name="tabular">
-	        <fr:property name="classes" value="style1"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
+	        <fr:property name="classes" value="tstyle1 thlight thright thtop"/>
+	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	    </fr:layout>
 	    <fr:destination name="exception" path="<%= "/resultPatents/prepareEditData.do?" + parameter %>"/>
 	    <fr:destination name="invalid" path="<%= "/resultPatents/prepareEditData.do?" + parameter %>"/>

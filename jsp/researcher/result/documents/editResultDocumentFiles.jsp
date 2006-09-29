@@ -22,22 +22,29 @@
 	
 	<%-- Use Case Titles --%>
 	<logic:equal name="resultType" value="ResultPatent">
-		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.management.title"/></em>
+		<em>Patentes</em> <!-- tobundle -->
 	</logic:equal>
 	<logic:notEqual name="resultType" value="ResultPatent">
 		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
 	</logic:notEqual>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.useCase.title"/>: <fr:view name="result" property="title"/></h3>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.useCase.title"/>: <fr:view name="result" property="title"/></h2>
 	
+	<%-- Go to previous page --%>
+	<ul class="mvert2 list5">
+		<li>
+			<html:link page="<%= backLink %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.goBackToView"/></html:link>
+		</li>
+	</ul>
+
 	<%-- Warning/Error messages --%>
 	<logic:messagesPresent name="messages" message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-			<p><span class="error"><bean:write name="messages"/></span></p>
+			<p><span class="error0"><bean:write name="messages"/></span></p>
 		</html:messages>
 	</logic:messagesPresent>
 	
 	<%-- Documents List--%>
-	<b><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></b>
+	<p class="mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></b></p>
 	<logic:empty name="documents">
 		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.emptyList"/></em></p>
 	</logic:empty>
@@ -52,18 +59,15 @@
 	</logic:notEmpty>
 
 	<%-- Document File Submission --%>
-	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.selectFile"/></b></p>
+	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.selectFile"/>:</b></p>
 	<fr:edit id="editBean" name="bean" schema="resultDocumentFile.submission.edit" action="<%= create %>">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="style1" />
-			<fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle1 thlight thright thtop" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="exception" path="<%= prepareEdit %>"/>
 		<fr:destination name="invalid" path="<%= prepareEdit %>"/>
 		<fr:destination name="cancel" path="<%= cancel %>"/>
 	</fr:edit>
-	<br/>
 	
-	<%-- Go to previous page --%>
-	<html:link page="<%= backLink %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.goBackToView"/></html:link>
 </logic:present>

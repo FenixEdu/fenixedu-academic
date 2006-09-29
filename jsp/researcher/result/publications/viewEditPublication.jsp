@@ -12,66 +12,85 @@
 	<bean:define id="result" name="result"/>	
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>"/>
 
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.details.link"/></h3>
+	<em>Publicações</em> <!-- tobundle -->
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.details.title"/></h2>
+	
+	
+	<ul class="mvert2 list5">
+		<li>
+			<html:link page="/resultPublications/listPublications.do">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.backTo.link" />
+			</html:link>
+		</li>
+	</ul>
 	
 	<%-- Last Modification Date --%>
-	<p class="mtop0 mbottom2">
-		<span style="background-color: #eee; padding: 0.25em;">
-			<bean:message key="label.lastModificationDate"/>:&nbsp;
-				<b><fr:view name="result" property="lastModificationDate"/></b> (<fr:view name="result" property="modifyedBy"/>)
+	<p class="mtop15 mbottom2">
+		<span class="greytxt1">
+			<bean:message key="label.lastModificationDate"/>
+				<fr:view name="result" property="lastModificationDate"/> (<fr:view name="result" property="modifyedBy"/>)
 		</span>
 	</p>
-	
+
 	<%-- Participations --%>
-	<b><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></b>:
-	<html:link page="<%="/resultParticipations/prepareEdit.do?" + parameters %>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.participations.link" />
-	</html:link>
+	<p class="mtop2 mbottom0"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></strong></p>
 	<jsp:include page="../commons/viewParticipations.jsp"/>
+	<ul class="mtop0 list5">
+		<li>
+		<html:link page="<%="/resultParticipations/prepareEdit.do?" + parameters %>">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.participations.link" />
+		</html:link>
+		</li>
+	</ul>
 	
 	<%-- Data --%>
-	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/>
-		&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+resultPublicationType %>"/>)</b>:
+	<p class="mtop2 mbottom0"><b>Detalhes da publicação</b></p> <!-- tobundle -->
+	<fr:view name="result" layout="tabular" schema="<%="result.publication.details."+resultPublicationType %>">
+ 		<fr:layout name="tabular">
+    	    <fr:property name="classes" value="tstyle1 thlight thright thtop width600px"/>
+        	<fr:property name="columnClasses" value="width12em,,"/>
+		</fr:layout>
+	</fr:view>
+	<ul class="mtop0 list5">
+		<li>
 		<html:link page="<%="/resultPublications/prepareEditData.do?" + parameters %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data" />
 		</html:link>
-	</p>
-	<fr:view name="result" layout="tabular" schema="<%="result.publication.details."+resultPublicationType %>">
- 		<fr:layout name="tabular">
-    	    <fr:property name="classes" value="tstyle4"/>
-	       	<fr:property name="columnClasses" value="listClasses,,"/>
-		   </fr:layout>
-	</fr:view>
-	<br/>
+		</li>
+	</ul>
+
 	
 	<%-- Documents --%>
-	<b><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></b>:
-	<html:link page="<%="/resultDocumentFiles/prepareEdit.do?" + parameters %>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.documents.link" />
-	</html:link>
+	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></b></p>
 	<jsp:include page="../commons/viewDocumentFiles.jsp"/>
-	<br/>
-	
+	<ul class="mtop0 list5">
+		<li>
+		<html:link page="<%="/resultDocumentFiles/prepareEdit.do?" + parameters %>">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.documents.link" />
+		</html:link>
+		</li>
+	</ul>
+
 	<%-- Event Associations --%>
-	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.title.label"/></b>:
-	<html:link page="<%="/resultAssociations/prepareEditEventAssociations.do?" + parameters %>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.eventAssociations.link" />
-	</html:link>
+	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.title.label"/></b></p>
 	<jsp:include page="../commons/viewEventAssociations.jsp"/>
-	<br/>
+	<ul class="mtop0 list5">
+		<li>
+		<html:link page="<%="/resultAssociations/prepareEditEventAssociations.do?" + parameters %>">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.eventAssociations.link" />
+		</html:link>
+		</li>
+	</ul>
 	
 	<%-- Unit Associations --%>
-	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b>:
-	<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?" + parameters %>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.unitAssociations.link" />
-	</html:link>	
+	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b></p>
 	<jsp:include page="../commons/viewUnitAssociations.jsp"/>
-	<br/>
-	<br/>
-	
-	<html:link page="/resultPublications/listPublications.do">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.backTo.link" />
-	</html:link>
+	<ul class="mtop0 list5">
+		<li>
+		<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?" + parameters %>">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.unitAssociations.link" />
+		</html:link>	
+		</li>
+	</ul>
+
 </logic:present>
-<br/>

@@ -6,16 +6,22 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">		
+	<%--
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.eventsManagement.superUseCaseTitle"/></em>
-
-  	<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.eventsManagement.title"/> </h2>
+	--%>
+  	<h2 id='pageTitle'/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.eventsManagement.title"/></h2>
 		
+	<ul class="mtop15 mbottom1 list5">
+		<li>
+			<html:link page="/events/createEvent.do?method=prepareCreateSimpleEventParticipation"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.eventsManagement.createEvent" /></html:link>
+		</li>
+	</ul>
 		
 		<fr:view name="events" layout="tabular-list" >
 			<fr:layout>
 				<fr:property name="subLayout" value="values"/>
 				<fr:property name="subSchema" value="event.summary"/>
-			
+		
 				<fr:property name="link(view)" value="/events/viewEvent.do?method=prepare"/>
 				<fr:property name="param(view)" value="idInternal/eventId"/>
 				<fr:property name="key(view)" value="researcher.event.eventsManagement.view"/>
@@ -27,10 +33,11 @@
 				<fr:property name="key(delete)" value="researcher.event.eventsManagement.delete"/>
 				<fr:property name="bundle(delete)" value="RESEARCHER_RESOURCES"/>
 				<fr:property name="order(delete)" value="2"/>
+
+				<fr:property name="classes" value="tstyle2"/>
+				<fr:property name="columnClasses" value=",,"/>
 			</fr:layout>
 		</fr:view>
-		
-	<html:link page="/events/createEvent.do?method=prepareCreateSimpleEventParticipation"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.eventsManagement.createEvent" /></html:link>
+
 </logic:present>
 		
-<br/>

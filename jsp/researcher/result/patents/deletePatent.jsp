@@ -10,26 +10,28 @@
 	<bean:define id="result" name="result"/>
 	<bean:define id="requestParameters" value="<%="resultId=" + resultId + "&resultType=" + result.getClass().getSimpleName()%>"/>
 
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.management.title"/></em>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.delete.useCase.title"/></h3>
+	<em>Patentes</em> <!-- tobundle -->
+	<h2>Apagar Patente</h2> <!-- tobundle -->
+	
+	<p class="mvert2"><span class="warning0"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.delete.useCase.title"/></span></p>
 	
 	<%-- Action Messages --%>
 	<logic:messagesPresent name="messages" message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-			<p><span class="error"><!-- Error messages go here --><bean:write name="messages"/></span></p>
+			<p><span class="error0"><!-- Error messages go here --><bean:write name="messages"/></span></p>
 		</html:messages>
 	</logic:messagesPresent>
 	
 	<jsp:include page="patentInfo.jsp"></jsp:include>
-	<br/>
-	<br/>
-	
+
 	<fr:form action="<%= "/resultPatents/delete.do?" + requestParameters %>">
-		<html:submit property="confirm">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
-		</html:submit>
-		<html:submit property="cancel">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
-		</html:submit>
+		<p>
+			<html:submit property="confirm">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
+			</html:submit>
+			<html:submit property="cancel">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
+			</html:submit>
+		</p>
 	</fr:form>	
 </logic:present>

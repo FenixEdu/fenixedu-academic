@@ -6,9 +6,19 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">	
+	<em>Interesses</em> <!-- tobundle -->
+  	<h2 id='pageTitle'/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.interestsManagement.title"/></h2>
 
-  	<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.interestsManagement.title"/> </h2>
-		
+	<ul>
+		<li>
+			<html:link module="/researcher" page="/interests/interestsManagement.do?method=prepareInsertInterest">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="link.new.interest" />
+			</html:link>
+		</li>
+	</ul>
+
+	<p class="mtop15 mbottom05">Áreas de interesse ordenadas por preferência:</p> <!-- tobundle -->
+	
 		<fr:view name="researchInterests" layout="tabular-list" >
 			<fr:layout>
 				<fr:property name="subLayout" value="values"/>
@@ -39,13 +49,13 @@
 				<fr:property name="key(delete)" value="researcher.interestsManagement.delete"/>
 				<fr:property name="bundle(delete)" value="RESEARCHER_RESOURCES"/>
 				<fr:property name="order(delete)" value="3"/>
+				
+				<fr:property name="classes" value="tstyle2 mtop0 mbottom1"/>
+				<fr:property name="suffixes" value="),"/>
 			</fr:layout>
 		</fr:view>
 
-	<br/>	
-	<html:link module="/researcher" page="/interests/interestsManagement.do?method=prepareInsertInterest">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="link.new.interest" />
-	</html:link>
+
 		
 </logic:present>
 

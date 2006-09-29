@@ -14,7 +14,7 @@
 	<logic:notEmpty name="eventAssociations">
 		<fr:view name="eventAssociations" schema="resultEventAssociation.details">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4"/>
+				<fr:property name="classes" value="tstyle2"/>
 				<fr:property name="columnClasses" value=",acenter,acenter"/>
 			</fr:layout>
 		</fr:view>

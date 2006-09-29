@@ -7,40 +7,40 @@
 
 <logic:present role="RESEARCHER">		
 
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.eventsManagement.superUseCaseTitle"/></em>
-		
-	<h2/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.createEvent.useCasetitle"/> </h2>
+	<em>Eventos</em> <!-- tobundle -->
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.createEvent.useCasetitle"/></h2>
   	
- 	<br/>
- 		
-	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.createEventUseCase.step.insertDataExplanation"/>
-  	
-   	<br/>
- 	<br/>
-		
-	
+ 	<p class="mtop2 mbottom1">	
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.createEventUseCase.step.insertDataExplanation"/>
+	</p>
+
 	
 	<logic:present name="simpleBean">
-	 	<br/>
- 	 	<br/>
- 	 	<br/>
 		<fr:edit id="simpleBean" name="simpleBean" action="/events/createEvent.do?method=createSimpleEventParticipation" schema="eventParticipation.simpleCreation">
 			<fr:destination name="invalid" path="/events/createEvent.do?method=prepareCreateSimpleEventParticipation"/>			
 			<fr:destination name="cancel" path="/events/eventsManagement.do?method=listEvents"/>				
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thlight thright mtop0"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
 		</fr:edit>
 	</logic:present>
+
 	<logic:present name="fullBean">
-		<strong>
-			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.createEventUseCase.fullEventCreationExplanation"/>
-		</strong>
-		<br/>
-		<br/>
+		<p class="mvert1">
+			<span class="warning0">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.createEventUseCase.fullEventCreationExplanation"/>
+			</span>
+		</p>
+
 		<fr:edit id="fullBean" name="fullBean" action="/events/createEvent.do?method=createFullEventParticipation" schema="eventParticipation.fullCreation">
-			<fr:destination name="invalid" path="/events/createEvent.do?method=prepareCreateFullEventParticipation"/>		
-			<fr:destination name="cancel" path="/events/eventsManagement.do?method=listEvents"/>	
+			<fr:destination name="invalid" path="/events/createEvent.do?method=prepareCreateFullEventParticipation"/>
+			<fr:destination name="cancel" path="/events/eventsManagement.do?method=listEvents"/>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thlight thright"/>
+			</fr:layout>
 		</fr:edit>
 	</logic:present>
-  	<br/>
 	
 </logic:present>
 		

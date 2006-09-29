@@ -10,15 +10,21 @@
 	<bean:define id="projectId" name="selectedProject" property="idInternal" />
 	<bean:define id="projectName" name="selectedProject" property="title.content" />
 
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.superUseCaseTitle"/></em>
+	<em>Projectos</em> <!-- tobundle -->
 
 	<%-- TITLE --%>		
-	<h2/>
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.useCaseTitle"/> 
-	  	<html:link page="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>">
-			<%= projectName %>
-		</html:link>
+	<h2>
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.useCaseTitle"/> <%= projectName %>
 	</h2>
+	
+
+	<ul class="list5 mtop2 mbottom1">
+		<li>
+			<html:link page="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.goBackToView" />
+			</html:link>
+		</li>
+	</ul>
 	
 	<%-- LIST OF EXISTING PARTICIPATIONS --%>	
 	<logic:notEmpty name="participations">
@@ -29,62 +35,69 @@
 				<fr:property name="param(remove)" value="idInternal/participantId"/>
 				<fr:property name="key(remove)" value="researcher.project.editProject.participations.remove"/>
 				<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
+				<fr:property name="classes" value="tstyle1"/>
 			</fr:layout>
 			<fr:destination name="cancel" path="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>"/>	
 		</fr:edit>
 	</logic:notEmpty>
-	<br/>
+
 	
 	<%-- CREATION OF A NEW PARTICIPATION --%>
-	
-	
-
 		<logic:notPresent name="external">
-			<h3>
-				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewParticipant"/>
+			<p class="mtop2">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewParticipant"/>:
 				<html:link page="<%="/projects/editProject.do?method=prepareEditParticipantsWithSimpleBean&external=false&projectId="+projectId%>">
 					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.internal" />
-				</html:link>				
-				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.or" />
+				</html:link>		
+				, 						
 				<html:link page="<%="/projects/editProject.do?method=prepareEditParticipantsWithSimpleBean&external=true&projectId="+projectId%>">
 					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.external" />
 				</html:link>				
-			</h3>
+			</p>
 		</logic:notPresent>
 		<logic:present name="external">
 			<logic:equal name="external" value="false">
-				<h3>
-					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewInternalParticipant"/>
-				</h3>
+				<p class="mtop2 mbottom05">
+					<strong>
+						<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewInternalParticipant"/>
+					</strong>
+				</p>
 				<fr:edit id="simpleBean" name="simpleBean" action="<%="/projects/editProject.do?method=createParticipantInternalPerson&projectId="+projectId%>" schema="projectParticipation.internalPerson.creation">
 					<fr:destination name="invalid" path="<%="/projects/editProject.do?method=prepareEditParticipantsWithSimpleBean&external=false&projectId="+projectId%>"/>	
 					<fr:destination name="cancel" path="<%="/projects/editProject.do?method=prepareEditParticipants&projectId="+projectId%>"/>	
+			 	    <fr:layout name="tabular">
+			    	    <fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				    </fr:layout>
 				</fr:edit>
 			</logic:equal>
 			<logic:equal name="external" value="true">
-				<h3>
-					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewExternalParticipant"/>			
-				</h3>
+				<p class="mtop2 mbottom05">
+					<strong>
+						<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewExternalParticipant"/>			
+					</strong>
+				</p>
 				<logic:present name="simpleBean">
 					<fr:edit id="simpleBean" name="simpleBean" action="<%="/projects/editProject.do?method=createParticipantExternalPerson&external=true&projectId="+projectId%>" schema="projectParticipation.externalPerson.simpleCreation">
 						<fr:destination name="invalid" path="<%="/projects/editProject.do?method=prepareEditParticipantsWithSimpleBean&external=true&projectId="+projectId%>"/>	
 						<fr:destination name="cancel" path="<%="/projects/editProject.do?method=prepareEditParticipants&projectId="+projectId%>"/>	
+				 	    <fr:layout name="tabular">
+				    	    <fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					    </fr:layout>
 					</fr:edit>						
 				</logic:present>
 				<logic:present name="fullBean">
 					<fr:edit id="fullBean" name="fullBean" action="<%="/projects/editProject.do?method=createParticipantExternalPerson&projectId="+projectId%>" schema="projectParticipation.externalPerson.fullCreation">
 						<fr:destination name="invalid" path="<%="/projects/editProject.do?method=prepareEditParticipantsWithFullBean&external=true&projectId="+projectId%>"/>
 						<fr:destination name="cancel" path="<%="/projects/editProject.do?method=prepareEditParticipants&projectId="+projectId%>"/>	
+				 	    <fr:layout name="tabular">
+				    	    <fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					    </fr:layout>
 					</fr:edit>
 				</logic:present>
 			</logic:equal>
 		</logic:present>
 
-
-	
-  	<br/>
-	<html:link page="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.goBackToView" />
-	</html:link>
 </logic:present>
-<br/>

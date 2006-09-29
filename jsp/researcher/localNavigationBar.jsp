@@ -7,11 +7,13 @@
 <logic:present role="RESEARCHER">
 	<ul>
 		<li><html:link page="/viewCurriculum.do?method=prepare"> <bean:message bundle="RESEARCHER_RESOURCES" key="link.viewCurriculum"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</html:link> </li>
-		<li class="navheader"><bean:message bundle="RESEARCHER_RESOURCES" key="link.managementTitle"/></li>
+		<li class="navheader"><bean:message bundle="RESEARCHER_RESOURCES" key="link.cientificActivities.title"/></li>
 		<li><html:link page="/interests/interestsManagement.do?method=prepare"><bean:message bundle="RESEARCHER_RESOURCES" key="link.interestsManagement"/></html:link></li>
 		<li><html:link page="/resultPatents/management.do"><bean:message bundle="RESEARCHER_RESOURCES" key="link.patentsManagement"/></html:link></li>			
 		<li><html:link page="/resultPublications/listPublications.do"><bean:message bundle="RESEARCHER_RESOURCES" key="link.Publications"/></html:link></li>
+		<%--
 		<li class="navheader"><bean:message bundle="RESEARCHER_RESOURCES" key="link.participationsTitle"/></li>
+		--%>
 		<li><html:link page="/events/eventsManagement.do?method=listEvents"><bean:message bundle="RESEARCHER_RESOURCES" key="link.eventsManagement"/></html:link></li>
 		<li><html:link page="/projects/projectsManagement.do?method=listProjects"><bean:message bundle="RESEARCHER_RESOURCES" key="link.projectsManagement"/></html:link></li>
 	</ul>

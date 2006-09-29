@@ -7,9 +7,13 @@
 
 <logic:present role="RESEARCHER">	
 
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.superUseCaseTitle"/></em>
-		
-  	<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.title"/> </h2>
+  	<h2 id='pageTitle'/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.title"/></h2>
+
+	<ul class="list5 mvert2">
+		<li>
+			<html:link page="/projects/createProject.do?method=prepareCreateProject"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.createProject" /></html:link>
+		</li>
+	</ul>
 
 	<fr:view name="projects" layout="tabular-list" >
 		<fr:layout>
@@ -27,10 +31,9 @@
 			<fr:property name="key(delete)" value="researcher.project.projectsManagement.delete"/>
 			<fr:property name="bundle(delete)" value="RESEARCHER_RESOURCES"/>
 			<fr:property name="order(delete)" value="2"/>
+
+			<fr:property name="classes" value="tstyle2"/>
+			<fr:property name="columnClasses" value=",,"/>
 		</fr:layout>
 	</fr:view>
-		
-	<html:link page="/projects/createProject.do?method=prepareCreateProject"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.createProject" /></html:link>
 </logic:present>
-		
-<br/>

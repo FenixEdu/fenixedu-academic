@@ -9,50 +9,47 @@
 	<bean:define id="resultId" name="result" property="idInternal"/>
 	<bean:define id="resultPublicationType" name="resultPublicationType"/>
 
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>	
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.delete"/></h3>
+	<em>Publicações</em> <!-- tobundle -->
+	<h2>Apagar Publicação</h2> <!-- tobundle -->
 	
+	<p class="mvert2"><span class="warning0"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.delete.useCase.title"/></span></p>
+
 	<%-- Last Modification Date --%>
-	<p class="mtop0 mbottom2">
-		<span style="background-color: #eee; padding: 0.25em;">
+	<p class="mtop15 mbottom2">
+		<span class="greytxt1">
 			<bean:message key="label.lastModificationDate"/>:&nbsp;
-				<b><fr:view name="result" property="lastModificationDate"/></b> (<fr:view name="result" property="modifyedBy"/>)
+				<fr:view name="result" property="lastModificationDate"/> (<fr:view name="result" property="modifyedBy"/>)
 		</span>
 	</p>
-	
+		
+
 	<%-- Participations --%>
-	<b><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></b>
+	<p class="mbottom0"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></strong></p>
 	<jsp:include page="../commons/viewParticipations.jsp"/>
 	
 	<%-- Data --%>
-	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/>
-	&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+resultPublicationType%>"/>)</b></p>
+	<p class="mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/> (<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+resultPublicationType%>"/>)</b></p>
  	<fr:view name="result" layout="tabular" schema="<%="result.publication.details."+resultPublicationType %>">
- 		<fr:layout name="tabular">
-        	<fr:property name="classes" value="style1"/>
-	       	<fr:property name="columnClasses" value="listClasses,,"/>
+	    <fr:layout name="tabular">
+    	    <fr:property name="classes" value="tstyle1 thlight thright thtop width600px"/>
+        	<fr:property name="columnClasses" value="width12em,,"/>
 	    </fr:layout>
    	</fr:view>
-	<br/>
 	
 	<%-- Document Files --%>
-	<b><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></b>
+	<p class="mbottom0 mtop15"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></b></p>
 	<jsp:include page="../commons/viewDocumentFiles.jsp"/>
-	<br/>
 	
  	<%-- Event Associations --%>
-	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.title.label"/></b>:
+	<p class="mbottom1 mtop2"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.title.label"/></b></p>
 	<jsp:include page="../commons/viewEventAssociations.jsp"/>
-	<br/>
-	
+
 	<%-- Unit Associations --%>
-	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b>:
+	<p class="mbottom1 mtop2"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b></p>
 	<jsp:include page="../commons/viewUnitAssociations.jsp"/>
- 	<br/>
- 	<br/>
 	
 	<%-- Confirmation buttons --%>
-	<p><bean:message key="researcher.ResultPublication.delete.useCase.title"/></p>	
+	<p class="mbottom1 mtop2"><span class="warning0"><bean:message key="researcher.ResultPublication.delete.useCase.title"/></span></p>
 	<fr:form action="<%= "/resultPublications/delete.do?resultId=" + resultId %>">
 		<html:submit property="confirm">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>

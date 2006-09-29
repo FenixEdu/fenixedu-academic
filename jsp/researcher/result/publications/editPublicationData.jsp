@@ -8,51 +8,41 @@
 
 <logic:present role="RESEARCHER">		
 	<bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
-	<bean:define id="parameters" value=""/>
-	<logic:present name="typeChanged">
-		<bean:define id="typeChanged" name="typeChanged" type="java.lang.String"/>
-		<bean:define id="parameters" value="<%= "?typeChanged=" + typeChanged %>"/>	
-	</logic:present>
+	<bean:define id="parameters" value="<%= "resultId=" + publicationBean.getIdInternal().toString() %>"/>
 	
-	
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data"/></h3>
+	<em>Publicações</em> <!-- tobundle -->
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data"/></h2>
 
-	<!-- Action messages -->
 	<logic:messagesPresent message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-			<span class="error"><!-- Error messages go here --><bean:write name="messages" /></span>
+			<p>
+			<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
+			</p>
 		</html:messages>
-		<br/><br/>
 	</logic:messagesPresent>
+
+	<p class="mtop2 mbottom05"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/> (<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+publicationBean.getPublicationType().toString()%>"/>)</b></p>
 	
-	<!-- Publication Data -->
-	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/>
-	&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+publicationBean.getPublicationType().toString()%>"/>)</b></p>
-	
-	<!-- From to edit publication -->
-	<fr:form action="<%= "/resultPublications/editData.do" + parameters %>">
+	<fr:form action="<%= "/resultPublications/editData.do?" + parameters %>">
 		<!-- Present publication fields -->
-		<fr:edit id="publicationData" name="publicationBean" schema="<%= publicationBean.getActiveSchema() %>" nested="true">
+		<fr:edit id="editPublication" name="publicationBean" schema="<%= publicationBean.getActiveSchema() %>" nested="true">
 	 	    <fr:layout name="tabular">
-	    	    <fr:property name="classes" value="style1"/>
-	        	<fr:property name="columnClasses" value="listClasses,,"/>
+		        <fr:property name="classes" value="tstyle1 thlight thright thtop mtop05"/>
+		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		    </fr:layout>
-	   		<fr:destination name="invalid" path="<%= "/resultPublications/prepareEditData.do" + parameters %>"/>
-	   		<fr:destination name="typePostBack" path="<%= "/resultPublications/changeType.do" + parameters %>"/>
+	   		<fr:destination name="invalid" path="<%= "/resultPublications/prepareEditData.do?" + parameters %>"/>
 		</fr:edit>
 
 		<!-- Edit event in case of inproceedings or proceedings -->
 		<logic:equal name="publicationBean" property="createEvent" value="true">
 			<br/>
-			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createConference"/>
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createEvent"/>
 			<fr:edit id="createEvent" name="publicationBean" schema="result.publication.create.Event" nested="true">
 		 	    <fr:layout name="tabular">
-		    	    <fr:property name="classes" value="style1"/>
-		        	<fr:property name="columnClasses" value="listClasses,,"/>
+		    	    <fr:property name="classes" value="tstyle1"/>
+		        	<fr:property name="columnClasses" value=",,"/>
 			    </fr:layout>
-		   		<fr:destination name="invalid" path="<%= "/resultPublications/prepareEditData.do" + parameters %>"/>
-				<fr:destination name="input" path="<%= "/resultPublications/prepareEditData.do?" + parameters %>"/>
+		   		<fr:destination name="invalid" path="<%= "/resultPublications/prepareEditData.do?" + parameters %>"/>
 			</fr:edit>
 		</logic:equal>
 		

@@ -6,14 +6,17 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">	
-
-	<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="title.insert.new.interest"/></h2><br/>
+	<em>Interesses</em> <!-- tobundle -->
+	<h2 id='pageTitle'/><bean:message bundle="RESEARCHER_RESOURCES" key="title.insert.new.interest"/></h2><br/>
 	
 	<fr:create type="net.sourceforge.fenixedu.domain.research.ResearchInterest" schema="researchInterest.simpleCreate"
 	           action="/interests/interestsManagement.do?method=prepare">
 		<fr:hidden slot="order" name="lastOrder"/>
 		<fr:hidden slot="party" name="party" />
 		<fr:destination name="cancel" path="/interests/interestsManagement.do?method=prepare"/>
+		<fr:layout>
+			<fr:property name="classes" value="thlight thtop mbottom1"/>
+		</fr:layout>
 	</fr:create>
 
 </logic:present>

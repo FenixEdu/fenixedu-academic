@@ -14,7 +14,7 @@
 	<logic:notEmpty name="documents">
 		<fr:view name="documents" schema="resultDocumentFile.summary">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4"/>
+				<fr:property name="classes" value="tstyle2"/>
 				<fr:property name="columnClasses" value=",acenter,acenter,acenter"/>
 				<fr:property name="sortBy" value="uploadTime=desc"/>
 			</fr:layout>

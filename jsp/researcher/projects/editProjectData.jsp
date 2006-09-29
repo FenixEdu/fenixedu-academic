@@ -8,27 +8,17 @@
 <logic:present role="RESEARCHER">		
 
 	<bean:define id="projectId" name="selectedProject" property="idInternal" />
-
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.superUseCaseTitle"/></em>
-		
-	<h2/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.data.useCaseTitle"/> </h2>
+	<em>Projectos</em> <!-- tobundle -->
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.data.useCaseTitle"/></h2>
   	
-	<br/>
-
-	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.data.explanation"/>
-  	
-  	<br/>
-		
-	<h3/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.data"/> </h3>
+	<p class="mtop2 mbottom05"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.data"/></strong></p>
 	
 	<fr:edit name="selectedProject" schema="project.edit-defaults" action="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>">
 	    <fr:layout name="tabular">
-    	    <fr:property name="classes" value="style1"/>
-        	<fr:property name="columnClasses" value="listClasses,,"/>
+    	    <fr:property name="classes" value="tstyle1 thlight thright throp mtop05"/>
+        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	    </fr:layout>
 	    <fr:destination name="cancel" path="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>"/>
 	</fr:edit>
 	
 </logic:present>
-		
-<br/>

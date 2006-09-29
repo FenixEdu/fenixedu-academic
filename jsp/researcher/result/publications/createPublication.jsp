@@ -10,52 +10,46 @@
 	<bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
 
 	<!-- Insert new publication -->
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.create"/></h3>
-	 
-	 <!-- Action Messages -->
+	<em>Publicações</em> <!-- tobundle -->
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.create"/></h2>
+	
 	<logic:messagesPresent message="true">
-		<br/>
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-			<span class="error"><!-- Error messages go here --><bean:write name="messages" /></span>
+			<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
 		</html:messages>
-		<br/><br/>
 	</logic:messagesPresent>
 
-	<!-- Form to create new publication -->
 	<fr:form action="/resultPublications/create.do">
 		<!-- Present Author -->
-		<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.author"/>:</b></p>
+		<p class="mtop15 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.author"/></b></p>
 		<fr:edit id="author" name="publicationBean" schema="<%= publicationBean.getParticipationSchema() %>" nested="true">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="style1"/>
-				<fr:property name="columnClasses" value="listClasses,,"/>
+				<fr:property name="classes" value="tstyle1 thright thlight"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 	   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
 		</fr:edit>	
+
 		
 		<!-- Present publication fields -->
-		<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type." + publicationBean.getPublicationType() %>"/></b></p>
+		<p class="mtop1 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type." + publicationBean.getPublicationType() %>"/></b></p>
 		<fr:edit id="publicationData" name="publicationBean" schema="<%= publicationBean.getActiveSchema() %>" nested="true">
 	 	    <fr:layout name="tabular">
-	    	    <fr:property name="classes" value="style1"/>
-	        	<fr:property name="columnClasses" value="listClasses,,"/>
+	    	    <fr:property name="classes" value="tstyle1 thright thlight thtop"/>
+	        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		    </fr:layout>
-   	   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
-	   		<fr:destination name="typePostBack" path="/resultPublications/changeType.do"/>
+	   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
 		</fr:edit>
 
 		<!-- Create event in case of inproceedings or proceedings -->
 		<logic:equal name="publicationBean" property="createEvent" value="true">
-			<br/>
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createConference"/>
 			<fr:edit id="createEvent" name="publicationBean" schema="result.publication.create.Event" nested="true">
 		 	    <fr:layout name="tabular">
-		    	    <fr:property name="classes" value="style1"/>
-		        	<fr:property name="columnClasses" value="listClasses,,"/>
+		    	    <fr:property name="classes" value="tstyle1 thright thlight thtop"/>
+		        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			    </fr:layout>
 		   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
-		   		<fr:destination name="input" path="/resultPublications/prepareCreate.do"/>
 			</fr:edit>
 		</logic:equal>
 		
