@@ -39,7 +39,7 @@ public class ResultDocumentFile extends ResultDocumentFile_Base {
     public void setEdit(String displayName, FileResultPermittedGroupType fileResultPermittedGroupType) {
 	super.setDisplayName(displayName);
 	changeFilePermission(fileResultPermittedGroupType);
-	this.getResult().setModifyedByAndDate();
+	this.getResult().setModifiedByAndDate();
     }
 
     public final void delete() {

@@ -43,7 +43,7 @@ public class OtherPublication extends OtherPublication_Base {
         checkRequiredParameters(title);
         fillAllAttributes(title, publisher, year, howPublished, note, address, otherPublicationType,
                 numberPages, language, country, month, url);
-        super.setModifyedByAndDate();
+        super.setModifiedByAndDate();
     }
 
     private void fillAllAttributes(String title, Unit publisher, Integer year, String howPublished,

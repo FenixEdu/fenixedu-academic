@@ -67,7 +67,7 @@ public class BookPart extends BookPart_Base {
         checkBookPartTypeChange(bookPartType);
         fillAllInbookAttributes(bookPartType, title, chapter, firstPage, lastPage, publisher, year,
                 volume, series, edition, country, address, note, month, url);
-        super.setModifyedByAndDate();
+        super.setModifiedByAndDate();
     }
 
     @Checked("ResultPredicates.writePredicate")
@@ -78,7 +78,7 @@ public class BookPart extends BookPart_Base {
         checkBookPartTypeChange(bookPartType);
         fillAllIncollectionAttributes(bookPartType, title, bookTitle, publisher, year, firstPage,
                 lastPage, organization, country, address, note, month, url);
-        super.setModifyedByAndDate();
+        super.setModifiedByAndDate();
     }
 
     private void fillAllInbookAttributes(BookPartType bookPartType, String title, String chapter,

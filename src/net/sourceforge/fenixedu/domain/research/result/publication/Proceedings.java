@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.event.Event;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType;
 import net.sourceforge.fenixedu.util.Month;
 
 /**
@@ -40,7 +39,7 @@ public class Proceedings extends Proceedings_Base {
             String address, String note, Month month, String url) {
         checkRequiredParameters(title, year, event);
         fillAllAttributes(title, year, event, scope, publisher, organization, address, note, month, url);
-        super.setModifyedByAndDate();
+        super.setModifiedByAndDate();
     }
 
     private void fillAllAttributes(String title, Integer year, Event event, ScopeType scope, Unit publisher,

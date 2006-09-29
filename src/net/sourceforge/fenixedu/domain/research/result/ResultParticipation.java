@@ -92,7 +92,7 @@ public class ResultParticipation extends ResultParticipation_Base {
 	if(!this.getRole().equals(role)) {
 	    if (!this.getResult().hasPersonParticipationWithRole(this.getPerson(), role)) {
 		super.setRole(role);
-		this.getResult().setModifyedByAndDate();
+		this.getResult().setModifiedByAndDate();
 	    } else {
 		throw new DomainException("error.researcher.ResultEventAssociation.association.exists",
 			this.getPerson().getName(), this.getRole().toString());
@@ -144,7 +144,7 @@ public class ResultParticipation extends ResultParticipation_Base {
      * Update the last modification date and author name.
      */
     private void setChangedBy() {
-	this.getResult().setModifyedByAndDate();
+	this.getResult().setModifiedByAndDate();
     }
 
     private void move(OrderChange change) {

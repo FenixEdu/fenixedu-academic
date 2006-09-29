@@ -35,7 +35,7 @@ public class ResultEventAssociation extends ResultEventAssociation_Base {
 	if(!this.getRole().equals(role)) {
 	    if (!this.getResult().hasAssociationWithEventRole(this.getEvent(), role)) {
 		super.setRole(role);
-		this.getResult().setModifyedByAndDate();
+		this.getResult().setModifiedByAndDate();
 	    } else {
 		throw new DomainException("error.researcher.ResultEventAssociation.association.exists",
 			this.getEvent().getName().getContent(), this.getRole().toString());

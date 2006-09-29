@@ -35,7 +35,7 @@ public class Manual extends Manual_Base {
             String edition, Month month, String url) {
         checkRequiredParameters(title);
         fillAllAttributes(title, organization, year, address, note, edition, month, url);
-        super.setModifyedByAndDate();
+        super.setModifiedByAndDate();
     }
 
     private void fillAllAttributes(String title, Unit organization, Integer year, String address,

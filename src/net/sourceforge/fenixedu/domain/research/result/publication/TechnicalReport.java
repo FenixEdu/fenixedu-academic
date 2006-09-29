@@ -42,7 +42,7 @@ public class TechnicalReport extends TechnicalReport_Base {
         checkRequiredParameters(title, institution, year);
         fillAllAttributes(title, institution, year, technicalReportType, number, address, note,
                 numberPages, language, month, url);
-        super.setModifyedByAndDate();
+        super.setModifiedByAndDate();
     }
 
     private void fillAllAttributes(String title, Unit institution, Integer year,

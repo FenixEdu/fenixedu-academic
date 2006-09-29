@@ -43,7 +43,7 @@ public class Book extends Book_Base {
         checkRequiredParameters(title, publisher, year);
         fillAllAttributes(title, publisher, year, volume, series, address, edition, isbn, numberPages,
                 language, country, scope, note, month, url);
-        super.setModifyedByAndDate();
+        super.setModifiedByAndDate();
     }
 
     private void fillAllAttributes(String title, Unit publisher, Integer year, String volume,

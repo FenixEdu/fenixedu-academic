@@ -47,7 +47,7 @@ public class Thesis extends Thesis_Base {
         checkRequiredParameters(thesisType, title, school, year);
         fillAllAttributes(thesisType, title, school, year, address, note, numberPages, language, month,
                 url);
-        super.setModifyedByAndDate();
+        super.setModifiedByAndDate();
     }
 
     private void fillAllAttributes(ThesisType thesisType, String title, Unit school, Integer year,

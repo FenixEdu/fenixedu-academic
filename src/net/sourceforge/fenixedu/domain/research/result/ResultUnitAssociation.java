@@ -34,7 +34,7 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
 	if(!this.getRole().equals(role)) {
 	    if (!this.getResult().hasAssociationWithUnitRole(this.getUnit(), role)) {
 		super.setRole(role);
-		this.getResult().setModifyedByAndDate();
+		this.getResult().setModifiedByAndDate();
 	    } else {
 		throw new DomainException("error.researcher.ResultUnitAssociation.association.exists",
 			this.getUnit().getName(), this.getRole().toString());

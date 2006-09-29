@@ -44,7 +44,7 @@ public class Inproceedings extends Inproceedings_Base {
         checkRequiredParameters(title, year, event);
         fillAllAttributes(title, year, event, scope, publisher, organization, address, firstPage,
                 lastPage, note, language, month, url);
-        super.setModifyedByAndDate();
+        super.setModifiedByAndDate();
     }
 
     private void fillAllAttributes(String title, Integer year, Event event, ScopeType scope,

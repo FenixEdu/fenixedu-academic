@@ -63,7 +63,7 @@ public abstract class Result extends Result_Base {
     @Checked("ResultPredicates.createPredicate")
     private void setOnCreateAtributes() {
         super.setOjbConcreteClass(getClass().getName());
-        super.setModifyedBy(AccessControl.getUserView().getPerson().getName());
+        super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
         super.setLastModificationDate(new DateTime());
     }
 
@@ -76,7 +76,7 @@ public abstract class Result extends Result_Base {
     public ResultParticipation addParticipation(Person participator, ResultParticipationRole role) {
         final ResultParticipation participation = new ResultParticipation(this, participator, role, this
                 .getResultParticipationsCount());
-        updateModifyedByAndDate();
+        updateModifiedByAndDate();
         return participation;
     }
 
@@ -84,33 +84,33 @@ public abstract class Result extends Result_Base {
     public void removeParticipation(ResultParticipation participation) {
         participation.deleteIfNotLast();
         this.reOrderParticipations(this.getOrderedResultParticipations());
-        updateModifyedByAndDate();
+        updateModifiedByAndDate();
     }
 
     @Checked("ResultPredicates.writePredicate")
     public ResultUnitAssociation addUnitAssociation(Unit unit, ResultUnitAssociationRole role) {
         final ResultUnitAssociation association = new ResultUnitAssociation(this, unit, role);
-        updateModifyedByAndDate();
+        updateModifiedByAndDate();
         return association;
     }
 
     @Checked("ResultPredicates.writePredicate")
     public void removeUnitAssociation(ResultUnitAssociation association) {
         association.delete();
-        updateModifyedByAndDate();
+        updateModifiedByAndDate();
     }
 
     @Checked("ResultPredicates.writePredicate")
     public ResultEventAssociation addEventAssociation(Event event, ResultEventAssociationRole role) {
         final ResultEventAssociation association = new ResultEventAssociation(this, event, role);
-        updateModifyedByAndDate();
+        updateModifiedByAndDate();
         return association;
     }
 
     @Checked("ResultPredicates.writePredicate")
     public void removeEventAssociation(ResultEventAssociation association) {
         association.delete();
-        updateModifyedByAndDate();
+        updateModifiedByAndDate();
     }
 
     @Checked("ResultPredicates.writePredicate")
@@ -120,25 +120,25 @@ public abstract class Result extends Result_Base {
         final ResultDocumentFile documentFile = new ResultDocumentFile(this, filename, displayName,
                 permittedGroupType, mimeType, checksum, checksumAlgorithm, size, externalStorageId,
                 permittedGroup);
-        updateModifyedByAndDate();
+        updateModifiedByAndDate();
         return documentFile;
     }
 
     @Checked("ResultPredicates.writePredicate")
     public void removeDocumentFile(ResultDocumentFile documentFile) {
         documentFile.delete();
-        updateModifyedByAndDate();
+        updateModifiedByAndDate();
     }
 
     @Checked("ResultPredicates.writePredicate")
     public void setParticipationsOrder(List<ResultParticipation> newParticipationsOrder) {
         reOrderParticipations(newParticipationsOrder);
-        updateModifyedByAndDate();
+        updateModifiedByAndDate();
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setModifyedByAndDate() {
-        updateModifyedByAndDate();
+    public void setModifiedByAndDate() {
+        updateModifiedByAndDate();
     }
 
     @Checked("ResultPredicates.writePredicate")
@@ -238,6 +238,8 @@ public abstract class Result extends Result_Base {
     }
 
     public final boolean acceptsParticipationRole(ResultParticipationRole role) {
+        if (role == null)
+            return false;
         if (this instanceof Proceedings) {
             if (role.equals(ResultParticipationRole.Editor)) {
                 return true;
@@ -255,8 +257,8 @@ public abstract class Result extends Result_Base {
         return false;
     }
 
-    private void updateModifyedByAndDate() {
-        super.setModifyedBy(AccessControl.getUserView().getPerson().getName());
+    private void updateModifiedByAndDate() {
+        super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
         super.setLastModificationDate(new DateTime());
     }
 
@@ -316,8 +318,8 @@ public abstract class Result extends Result_Base {
     }
 
     @Override
-    public void setModifyedBy(String modifyedBy) {
-        throw new DomainException("error.researcher.Result.call", "setModifyedBy");
+    public void setModifiedBy(String modifiedBy) {
+        throw new DomainException("error.researcher.Result.call", "setModifiedBy");
     }
 
     @Override

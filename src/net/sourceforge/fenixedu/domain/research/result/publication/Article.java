@@ -41,7 +41,7 @@ public class Article extends Article_Base {
         checkRequiredParameters(title, journal, year);
         fillAllAttributes(title, journal, year, publisher, volume, number, firstPage, lastPage, note,
                 issn, language, country, scope, month, url);
-        super.setModifyedByAndDate();
+        super.setModifiedByAndDate();
     }
 
     private void fillAllAttributes(String title, String journal, Integer year, Unit publisher,
