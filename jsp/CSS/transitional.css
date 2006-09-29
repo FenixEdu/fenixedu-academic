@@ -189,10 +189,8 @@ table.smalltxt tr td { font-size: 0.85em;}
 table th.cornerleft { background: none; border-left: none; border-top: none; }
 table td.cornerright { }
 /* error / warning */
-.tderror1 {
-background-color: #ffeadd; color: #c00;
-}
-
+.tderror1 { color: #c00; }
+.tderror1 span { background-color: #ffeadd; }
 
 /* ------------------------- */
 /* Table classes definitions */
@@ -396,6 +394,7 @@ padding-right: 0.5em;
 .acenter { text-align: center; }
 .asterisk1 { color: #d42; }
 .bold { font-weight: bold; }
+.italic { text-decoration: italic; }
 .fwnormal { font-weight: normal; }
 .nobullet { list-style: none; }
 .noindent { margin-left: 0; padding-left: 0; }
