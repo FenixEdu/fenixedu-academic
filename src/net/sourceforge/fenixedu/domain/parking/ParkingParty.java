@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -351,13 +352,13 @@ public class ParkingParty extends ParkingParty_Base {
         return (getDriverLicenseFileName() != null && getDriverLicenseFileName().length() > 0)
                 || getDriverLicenseDocumentState() != null;
     }
-    
+
     public List<String> getOccupations() {
         List<String> occupations = new ArrayList<String>();
         if (getParty().isPerson()) {
             Person person = (Person) getParty();
             Teacher teacher = person.getTeacher();
-            if (teacher != null) {
+            if (teacher != null && person.getPersonRole(RoleType.TEACHER) != null) {
                 String currenteDepartment = null;
                 if (teacher.getCurrentWorkingDepartment() != null) {
                     currenteDepartment = teacher.getCurrentWorkingDepartment().getName();
@@ -365,7 +366,8 @@ public class ParkingParty extends ParkingParty_Base {
                 occupations.add("Docente: Nº" + teacher.getTeacherNumber() + " " + currenteDepartment);
             }
             Employee employee = person.getEmployee();
-            if (employee != null) {
+            if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
+                    && person.getPersonRole(RoleType.EMPLOYEE) != null) {
                 Unit currentUnit = employee.getCurrentWorkingPlace();
                 if (currentUnit != null) {
                     occupations.add("Funcionário: Nº" + employee.getEmployeeNumber() + " "
@@ -375,11 +377,11 @@ public class ParkingParty extends ParkingParty_Base {
                 }
             }
             Student student = person.getStudent();
-            if (student != null) {
+            if (student != null && person.getPersonRole(RoleType.STUDENT) != null) {
                 DegreeType degreeType = student.getMostSignificantDegreeType();
                 Collection<Registration> registrations = student
                         .getRegistrationsByDegreeType(degreeType);
-                StringBuilder stringBuilder = null;                
+                StringBuilder stringBuilder = null;
                 for (Registration registration : registrations) {
                     StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
                     if (scp != null) {
@@ -396,7 +398,7 @@ public class ParkingParty extends ParkingParty_Base {
                 }
             }
             GrantOwner grantOwner = person.getGrantOwner();
-            if (grantOwner != null) {
+            if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null) {
                 occupations.add("Bolseiro: Nº" + grantOwner.getNumber());
             }
         }
