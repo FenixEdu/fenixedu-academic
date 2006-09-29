@@ -326,9 +326,7 @@ public class ParkingParty extends ParkingParty_Base {
 
     public String getParkingGroupToDisplay() {
         if (getParkingGroup() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-                    .getLocale());
-            return bundle.getString(getParkingGroup().getGroupName());
+            return getParkingGroup().getGroupName();
         }
         return null;
     }
@@ -363,17 +361,17 @@ public class ParkingParty extends ParkingParty_Base {
                 if (teacher.getCurrentWorkingDepartment() != null) {
                     currenteDepartment = teacher.getCurrentWorkingDepartment().getName();
                 }
-                occupations.add("Docente: Nº" + teacher.getTeacherNumber() + " " + currenteDepartment);
+                occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber() + "<br/>" + currenteDepartment);
             }
             Employee employee = person.getEmployee();
             if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
                     && person.getPersonRole(RoleType.EMPLOYEE) != null) {
                 Unit currentUnit = employee.getCurrentWorkingPlace();
                 if (currentUnit != null) {
-                    occupations.add("Funcionário: Nº" + employee.getEmployeeNumber() + " "
+                    occupations.add("<strong>Funcionário</strong><br/> Nº " + employee.getEmployeeNumber() + "<br/>"
                             + currentUnit.getName() + " - " + currentUnit.getCostCenterCode());
                 } else {
-                    occupations.add("Funcionário: " + employee.getEmployeeNumber());
+                    occupations.add("<strong>Funcionário</strong><br/> Nº " + employee.getEmployeeNumber());
                 }
             }
             Student student = person.getStudent();
@@ -386,7 +384,7 @@ public class ParkingParty extends ParkingParty_Base {
                     StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
                     if (scp != null) {
                         if (stringBuilder == null) {
-                            stringBuilder = new StringBuilder("Estudante: Nº");
+                            stringBuilder = new StringBuilder("<strong>Estudante</strong><br/> Nº ");
                             stringBuilder.append(student.getNumber()).append(" ");
                         }
                         stringBuilder.append(scp.getDegreeCurricularPlan().getName());
@@ -399,7 +397,7 @@ public class ParkingParty extends ParkingParty_Base {
             }
             GrantOwner grantOwner = person.getGrantOwner();
             if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null) {
-                occupations.add("Bolseiro: Nº" + grantOwner.getNumber());
+                occupations.add("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
             }
         }
         return occupations;

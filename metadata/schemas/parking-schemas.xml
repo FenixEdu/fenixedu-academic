@@ -281,6 +281,7 @@
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="personName" key="label.name" bundle="PARKING_RESOURCES" />
+	<slot name="carPlateNumber" key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES" />
 </schema>
 
 <schema name="search.party" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean" bundle="PARKING_RESOURCES">

@@ -10,6 +10,9 @@
 		<form-bean name="parkingForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
+			<form-property name="parkingRequestState" type="java.lang.String" />
+			<form-property name="parkingPartyClassification" type="java.lang.String" />
+			<form-property name="personName" type="java.lang.String" />
 			<form-property name="group" type="java.lang.Integer" />
 			<form-property name="code" type="java.lang.Integer" />
 			<form-property name="cardNumber" type="java.lang.Integer"/>

@@ -18,7 +18,7 @@
 		
 		<h3><bean:message key="label.parkUserInfo" /></h3>
 		<logic:iterate id="occupation" name="parkingParty" property="occupations">
-			<i><bean:write name="occupation"/></i><br/>
+			<i><bean:write name="occupation" filter="false"/></i><br/>
 		</logic:iterate>
 		<p><logic:equal name="parkingParty" property="hasFirstCar" value="false">
 			<bean:message key="label.newUser" bundle="PARKING_RESOURCES"/>
