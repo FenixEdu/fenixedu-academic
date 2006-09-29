@@ -26,3 +26,9 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Changing Table ParkingRequest" addColumnToParkingRequest.sql
+execute "Updating Accounting Event Table" UpdateAccountingEventTable.sql
+execute "Changing Table Accounting Event" AlterTableAccountingEvent.sql
+execute "Changing Table Registration" AlterTableRegistration.sql
+execute "Changing Table Candidacy" AlterTableCandidacy.sql
