@@ -31,6 +31,7 @@ public class Vigilant extends Vigilant_Base {
 
 	protected Vigilant() {
 		super();
+		this.setStartPoints(0);
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
@@ -41,6 +42,7 @@ public class Vigilant extends Vigilant_Base {
 
 	public Vigilant(Person person, ExecutionYear executionYear) {
 		this();
+		
 		this.setPerson(person);
 		this.setExecutionYear(executionYear);
 	}

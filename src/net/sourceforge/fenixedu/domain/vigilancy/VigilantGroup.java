@@ -75,14 +75,6 @@ public class VigilantGroup extends VigilantGroup_Base {
     
     public void addVigilants(Vigilant vigilant) {
     	VigilantBound bound = new VigilantBound(vigilant,this);
-    	if(vigilant.isCathedraticTeacher()) {
-    		bound.setConvokable(false);
-    		bound.setJustification("label.vigilancy.notConvokableDueToBeingTeacher");
-    	}
-    	else if(vigilant.getCampus().size()>2) {
-    		bound.setConvokable(false);
-    		bound.setJustification("label.vigilancy.notConvokableDueToTeachingInBothCampus");
-    	}
     	this.addBounds(bound);
     }
     

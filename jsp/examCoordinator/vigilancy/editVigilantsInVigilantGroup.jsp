@@ -29,7 +29,6 @@
 		<fr:layout>
 			<fr:property name="eachLayout" value="values"/>
 			<fr:property name="eachSchema" value="presentVigilant"/>
-			<fr:property name="sortBy" value="person.name"/>
 			<fr:property name="classes" value="mbottom05"/>
 		</fr:layout>
 	</fr:view>
@@ -41,12 +40,18 @@
 <p class="mbottom0"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.vigilantGroup"/> <fr:view name="bean" property="selectedVigilantGroup.name"/>:</strong></p>
 
 <fr:form id="removeVigilantsForm" action="/vigilancy/vigilantGroupManagement.do?method=removeVigilantsFromGroup">
+<p class="mtop0">
+	<span class="switchInline"><a href="javascript:document.getElementById('removeVigilantsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.remove"/></a>, </span>
+	<span class="switchInline"><a href="javascript:checkall('removeVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
+	<span class="switchInline"><a href="javascript:uncheckall('removeVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
+	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.remove" bundle="VIGILANCY_RESOURCES"/></html:submit>
+</p>
+
 <fr:edit name="bean" id="removeVigilants" schema="removeVigilants" 
 action="vigilancy/vigilantGroupManagement.do?method=removeVigilantsFromGroup"
 nested="true">
 	<fr:layout>
 	<fr:property name="displayLabel" value="false"/>
-	<fr:property name="sortBy" value="person.name"/>
 	<fr:property name="classes" value="mvert0"/>
 	</fr:layout>
 </fr:edit>
@@ -73,11 +78,17 @@ nested="true">
 <div id="addVigilantsToGroup">
 <p class="mbottom0"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.employees"/></strong>
 <fr:form id="addVigilantsForm" action="/vigilancy/vigilantGroupManagement.do?method=addVigilantsToGroup">
+<p class="mtop0">
+	<span class="switchInline"><a href="javascript:document.getElementById('addVigilantsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.add"/></a>, </span>
+	<span class="switchInline"><a href="javascript:checkall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
+	<span class="switchInline"><a href="javascript:uncheckall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a> </span>
+	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
+</p>
 <fr:edit name="bean" id="addVigilants" schema="addVigilants" 
 			action="/vigilancy/vigilantGroupManagement.do?method=addVigilantsToGroup">
 			<fr:layout>
 			<fr:property name="displayLabel" value="false"/>
-			<fr:property name="sortBy" value="person.name"/>
+
 			<fr:property name="classes" value="mvert0"/>
 			</fr:layout>
 </fr:edit>

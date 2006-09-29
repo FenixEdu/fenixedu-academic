@@ -22,7 +22,7 @@
 	<fr:layout>
 		<fr:property name="eachLayout" value="values"/>
 		<fr:property name="eachSchema" value="presentExecutionCourse"/>
-		<fr:property name="sortBy" value="nome"/>
+
 		<fr:property name="classes" value="mbottom05"/>
 	</fr:layout>
 </fr:view>
@@ -33,12 +33,18 @@
 <p class="mbottom0"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.executionCourseGroup"/></strong></p>
 
 <fr:form id="removeExecutionCourseForm" action="/vigilancy/vigilancyCourseGroupManagement.do?method=removeExecutionCoursesFromGroup">
+<p class="mtop0">
+	<span class="switchInline"><a href="javascript:document.getElementById('removeExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.removeCourse"/></a>, </span>
+	<span class="switchInline"><a href="javascript:checkall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
+	<span class="switchInline"><a class="switchInline" href="javascript:uncheckall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
+	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.remove" bundle="VIGILANCY_RESOURCES"/></html:submit>
+</p>
 <fr:edit name="bean" id="removeExecutionCourses" schema="removeExecutionCourses" 
 action="vigilancy/vigilancyCourseGroupManagement.do?method=removeExecutionCoursesFromGroup"
 nested="true">
 	<fr:layout>
 	<fr:property name="displayLabel" value="false"/>
-	<fr:property name="sortBy" value="nome"/>
+
 	<fr:property name="classes" value="mvert0"/>
 	</fr:layout>
 </fr:edit>
@@ -65,11 +71,17 @@ nested="true">
 </fr:form>
 
 <fr:form id="addExecutionCourseForm" action="/vigilancy/vigilancyCourseGroupManagement.do?method=addExecutionCourseToGroup">
+<p class="mtop0">
+	<span class="switchInline"><a href="javascript:document.getElementById('addExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addCourse"/></a>, </span>
+	<span class="switchInline"><a href="javascript:checkall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
+	<span class="switchInline"><a href="javascript:uncheckall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
+	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
+</p>
 <fr:edit name="bean" id="addExecutionCourses" schema="addExecutionCourses" 
 			action="vigilancy/vigilancyCourseGroupManagement.do?method=addExecutionCourseToGroup">
 			<fr:layout>
 			<fr:property name="displayLabel" value="false"/>
-			<fr:property name="sortBy" value="nome"/>
+
 			<fr:property name="classes" value="mvert0"/>
 			</fr:layout>
 </fr:edit>

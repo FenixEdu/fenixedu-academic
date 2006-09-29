@@ -104,10 +104,11 @@
 	<slot name="vigilants" key="label.vigilancy.vigilants" layout="option-select">
    		    <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantsForGivenVigilantGroup"/>
 			<property name="eachLayout" value="values"/>
-			<property name="eachSchema" value="presentVigilantName"/>
+			<property name="eachSchema" value="presentVigilantInline"/>
 			<property name="classes" value="list2"/>
 			<property name="emptyMessageKey" value="label.vigilancy.noVigilantsInGroup"/>
 			<property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
+			<property name="sortBy" value="person.name"/>
 	</slot>		
 </schema>
 	
@@ -547,6 +548,7 @@
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCoursesInGroup"/>
 			<property name="emptyMessageKey" value="label.vigilancy.noCoursesInGroup"/>
 			<property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
+			<property name="sortBy" value="nome"/>
 	</slot>
 </schema>
 
@@ -558,6 +560,7 @@
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCoursesForUnit"/>
 			<property name="emptyMessageKey" value="label.vigilancy.noCourses"/>
 			<property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
+			<property name="sortBy" value="nome"/>
 	</slot>
 </schema>
 
@@ -655,7 +658,9 @@
 
 <!--  Others -->	
 <schema name="presentEmployee" type="net.sourceforge.fenixedu.domain.Employee" bundle="VIGILANCY_RESOURCES">
-		<slot name="person.name" key="label.vigilancy.name"/>
+		<slot name="person" key="label.vigilancy.name">
+			<property name="format" value="${name} (${username})"/>
+		</slot>
 </schema>
 		
 <schema name="prepare.yearselect" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantBean" bundle="VIGILANCY_RESOURCES">
