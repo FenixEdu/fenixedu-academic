@@ -3373,7 +3373,7 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
     Integer keyResultDocumentFile;
 
 	DateTime lastModificationDate;
-	String modifyedBy;
+	String modifiedBy;
 }
 
 	class net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication extends net.sourceforge.fenixedu.domain.research.result.Result {

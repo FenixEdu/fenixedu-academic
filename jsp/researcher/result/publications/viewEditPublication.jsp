@@ -28,7 +28,7 @@
 	<p class="mtop15 mbottom2">
 		<span class="greytxt1">
 			<bean:message key="label.lastModificationDate"/>
-				<fr:view name="result" property="lastModificationDate"/> (<fr:view name="result" property="modifyedBy"/>)
+				<fr:view name="result" property="lastModificationDate"/> (<fr:view name="result" property="modifiedBy"/>)
 		</span>
 	</p>
 
