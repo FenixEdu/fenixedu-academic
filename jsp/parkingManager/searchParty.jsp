@@ -17,6 +17,12 @@
 		<bean:define id="parkingParty" name="searchPartyBean" property="party.parkingParty"/>
 		
 		<h3><bean:message key="label.parkUserInfo" /></h3>
+		<logic:iterate id="occupation" name="parkingParty" property="occupations">
+			<i><bean:write name="occupation"/></i><br/>
+		</logic:iterate>
+		<p><logic:equal name="parkingParty" property="hasFirstCar" value="false">
+			<bean:message key="label.newUser" bundle="PARKING_RESOURCES"/>
+		</logic:equal></p>
 		<p class="mbottom05"><html:link page="">Editar utente</html:link></p>
 		<fr:view name="parkingParty" schema="view.parkingParty.personalInfo">
 			<fr:layout name="tabular">
@@ -24,7 +30,6 @@
 			</fr:layout>
 		</fr:view>
 		
-		<h3><bean:message key="label.actualState" /></h3>
 		<logic:equal name="parkingParty" property="hasFirstCar" value="true">
 			<p class="mtop15 mbottom025"><strong><bean:message key="label.driverLicense"
 				bundle="PARKING_RESOURCES" /></strong></p>
@@ -54,9 +59,7 @@
 				</fr:view>
 			</logic:equal>
 		</logic:equal>
-		<logic:equal name="parkingParty" property="hasFirstCar" value="false">
-			<bean:message key="label.newUser" bundle="PARKING_RESOURCES"/>
-		</logic:equal>
+
 		<p class="mtop05"><html:link page="">Editar utente</html:link></p>
 		<h3><bean:message key="label.requestList" /></h3>
 		<logic:notEmpty name="parkingRequests">		

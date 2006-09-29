@@ -1,18 +1,26 @@
 package net.sourceforge.fenixedu.domain.parking;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.ResourceBundle;
-
-import org.apache.commons.lang.StringUtils;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 public class ParkingParty extends ParkingParty_Base {
 
@@ -315,26 +323,26 @@ public class ParkingParty extends ParkingParty_Base {
         return null;
     }
 
-  public String getParkingGroupToDisplay(){
-        if(getParkingGroup() != null){
+    public String getParkingGroupToDisplay() {
+        if (getParkingGroup() != null) {
             ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
                     .getLocale());
             return bundle.getString(getParkingGroup().getGroupName());
         }
         return null;
     }
-    
-    public String getWorkPhone(){
-        if(getParty().isPerson()){
+
+    public String getWorkPhone() {
+        if (getParty().isPerson()) {
             return ((Person) getParty()).getWorkPhone();
         }
         return null;
     }
-    
+
     public boolean getHasFirstCar() {
         return !StringUtils.isEmpty(getFirstCarMake());
     }
-    
+
     public boolean getHasSecondCar() {
         return !StringUtils.isEmpty(getSecondCarMake());
     }
@@ -342,5 +350,56 @@ public class ParkingParty extends ParkingParty_Base {
     public boolean getHasDriverLicense() {
         return (getDriverLicenseFileName() != null && getDriverLicenseFileName().length() > 0)
                 || getDriverLicenseDocumentState() != null;
+    }
+    
+    public List<String> getOccupations() {
+        List<String> occupations = new ArrayList<String>();
+        if (getParty().isPerson()) {
+            Person person = (Person) getParty();
+            Teacher teacher = person.getTeacher();
+            if (teacher != null) {
+                String currenteDepartment = null;
+                if (teacher.getCurrentWorkingDepartment() != null) {
+                    currenteDepartment = teacher.getCurrentWorkingDepartment().getName();
+                }
+                occupations.add("Docente: Nº" + teacher.getTeacherNumber() + " " + currenteDepartment);
+            }
+            Employee employee = person.getEmployee();
+            if (employee != null) {
+                Unit currentUnit = employee.getCurrentWorkingPlace();
+                if (currentUnit != null) {
+                    occupations.add("Funcionário: Nº" + employee.getEmployeeNumber() + " "
+                            + currentUnit.getName() + " - " + currentUnit.getCostCenterCode());
+                } else {
+                    occupations.add("Funcionário: " + employee.getEmployeeNumber());
+                }
+            }
+            Student student = person.getStudent();
+            if (student != null) {
+                DegreeType degreeType = student.getMostSignificantDegreeType();
+                Collection<Registration> registrations = student
+                        .getRegistrationsByDegreeType(degreeType);
+                StringBuilder stringBuilder = null;                
+                for (Registration registration : registrations) {
+                    StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
+                    if (scp != null) {
+                        if (stringBuilder == null) {
+                            stringBuilder = new StringBuilder("Estudante: Nº");
+                            stringBuilder.append(student.getNumber()).append(" ");
+                        }
+                        stringBuilder.append(scp.getDegreeCurricularPlan().getName());
+                        stringBuilder.append("\n\t");
+                    }
+                }
+                if (stringBuilder != null) {
+                    occupations.add(stringBuilder.toString());
+                }
+            }
+            GrantOwner grantOwner = person.getGrantOwner();
+            if (grantOwner != null) {
+                occupations.add("Bolseiro: Nº" + grantOwner.getNumber());
+            }
+        }
+        return occupations;
     }
 }
