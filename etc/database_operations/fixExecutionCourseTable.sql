@@ -1,0 +1,9 @@
+alter table EXECUTION_COURSE change THEORETICAL_HOURS THEORETICAL_HOURS double not null default 0;
+alter table EXECUTION_COURSE change PRATICAL_HOURS PRATICAL_HOURS double not null default 0;
+alter table EXECUTION_COURSE change THEO_PRAT_HOURS THEO_PRAT_HOURS double not null default 0;
+alter table EXECUTION_COURSE change LAB_HOURS LAB_HOURS double not null default 0;
+alter table EXECUTION_COURSE change PROBLEMS_HOURS PROBLEMS_HOURS double not null default 0;
+alter table EXECUTION_COURSE change SEMINARY_HOURS SEMINARY_HOURS double not null default 0;
+alter table EXECUTION_COURSE change FIELD_WORK_HOURS FIELD_WORK_HOURS double not null default 0;
+alter table EXECUTION_COURSE change TRAINING_PERIOD_HOURS TRAINING_PERIOD_HOURS double not null default 0;
+alter table EXECUTION_COURSE change TUTORIAL_ORIENTATION_HOURS TUTORIAL_ORIENTATION_HOURS double not null default 0;

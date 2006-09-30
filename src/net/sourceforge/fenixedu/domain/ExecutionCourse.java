@@ -68,6 +68,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     private void init() {
 	setRootDomainObject(RootDomainObject.getInstance());
+	setTheoPratHours(Double.valueOf(0));
+	setLabHours(Double.valueOf(0));
+	setPraticalHours(Double.valueOf(0));
+	setTheoreticalHours(Double.valueOf(0));
+	setSeminaryHours(Double.valueOf(0));
+	setProblemsHours(Double.valueOf(0));
+	setFieldWorkHours(Double.valueOf(0));
+	setTrainingPeriodHours(Double.valueOf(0));
+	setTutorialOrientationHours(Double.valueOf(0));
     }
 
     public List<Grouping> getGroupings() {
