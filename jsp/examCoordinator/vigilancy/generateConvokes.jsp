@@ -91,6 +91,7 @@
 	<fr:property name="displayLabel" value="false"/>
 	<fr:property name="classes" value="mtop0" />
 </fr:layout>
+<fr:destination name="cancel" path="/vigilancy/convokeManagement.do?method=prepareConvoke"/>
 </fr:edit>
 
 <logic:notEmpty name="bean" property="unavailableInformation">

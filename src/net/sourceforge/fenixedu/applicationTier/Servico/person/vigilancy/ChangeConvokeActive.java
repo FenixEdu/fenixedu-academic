@@ -8,13 +8,10 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class ChangeConvokeActive extends Service {
-
-    private static final String YOU_HAVE_BEEN_CONVOKED = "Possui uma nova convocat�ria.";
-
-    private static final String YOU_HAVE_BEEN_UNCOVOKED = "A sua convocat�ria foi desactivada";
 
     public void run(Integer convokeOID, Boolean bool, ExamCoordinator coordinator)
             throws ExcepcaoPersistencia {
@@ -30,14 +27,15 @@ public class ChangeConvokeActive extends Service {
         Person person = coordinator.getPerson();
 
         String emailMessage = generateMessage(bool, convoke);
-        EmailSender.send(person.getName(), person.getEmail(), tos, null, null, "Convocat�ria",
+        EmailSender.send(person.getName(), person.getEmail(), tos, null, null, RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject"),
                 emailMessage);
     }
 
     private String generateMessage(Boolean bool, VigilancyWithCredits convoke) {
-        String message = "";
-        message = (bool) ? YOU_HAVE_BEEN_CONVOKED : YOU_HAVE_BEEN_UNCOVOKED;
-        message += "Prova de avaliacao: " + convoke.getWrittenEvaluation().getName();
+     
+    	String message = "";
+        message = (bool) ? RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.convokedAgain") : RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.uncovoked");
+        message += "\n\nProva de avaliacao: " + convoke.getWrittenEvaluation().getName();
 
         return message;
     }

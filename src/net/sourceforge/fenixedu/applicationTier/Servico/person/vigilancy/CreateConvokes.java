@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class CreateConvokes extends Service {
@@ -27,7 +28,9 @@ public class CreateConvokes extends Service {
                 tos.add(emailTo);
             }
         	DateTime date = writtenEvaluation.getBeginningDateTime();
-        	String subject = writtenEvaluation.getName() + " " + group.getName() + " " + date.getDayOfMonth() + "/" + date.getMonthOfYear() + "/" + date.getYear();  
+        	String convokeTitle = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject");
+        	
+        	String subject = convokeTitle + writtenEvaluation.getName() + " " + group.getName() + " " + date.getDayOfMonth() + "/" + date.getMonthOfYear() + "/" + date.getYear();  
         	EmailSender.send(person.getName(), person.getEmail(), tos, null, null, subject,
                     emailMessage);
         }
