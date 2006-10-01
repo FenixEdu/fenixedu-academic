@@ -109,6 +109,7 @@ nested="true">
 </fr:form>
 </div>
 
+ 
 <div class="switchNone">
 <fr:form id="addExternalExecutionCourse" action="/vigilancy/vigilancyCourseGroupManagement.do?method=addExternalCourse">
 <fr:edit name="bean" id="addExternalCourse-withoutjs" schema="addExternalCourse-withoutjs">

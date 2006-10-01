@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class ExamCoordinatorsForGivenGroup implements DataProvider {
         VigilantGroupBean bean = (VigilantGroupBean) source;
         VigilantGroup group = bean.getSelectedVigilantGroup();
 
-        List<ExamCoordinator> coordinators = group.getExamCoordinators();
+        List<ExamCoordinator> coordinators = new ArrayList<ExamCoordinator>(group.getExamCoordinators());
 
         Collections.sort(coordinators, new BeanComparator("person.name"));
         return coordinators;

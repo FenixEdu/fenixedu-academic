@@ -322,6 +322,13 @@ public class Vigilant extends Vigilant_Base {
 		return convokes;		
 	}
 	
+	public List<VigilancyWithCredits> getActiveVigilancyWithCredits() {
+		List<VigilancyWithCredits> activeConvokes = getActiveVigilancysInList(Vigilancy.getAllVigilancyWithCredits(this));
+		Collections.sort(activeConvokes,
+				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
+		return activeConvokes;
+	}
+	
 	@Override
 	public List<Vigilancy> getVigilancys() {
 		List<Vigilancy> convokes = new ArrayList<Vigilancy>();
@@ -330,6 +337,10 @@ public class Vigilant extends Vigilant_Base {
 		return convokes;
 	}
 
+	public List<VigilancyWithCredits> getActiveConvokesBeforeCurrentDate() {
+		return getActiveVigilancysInList(this.getConvokesBeforeCurrentDate());
+	}
+	
 	public List<VigilancyWithCredits> getConvokesBeforeCurrentDate() {
 		List<Vigilancy> convokes = super.getVigilancys();
 		List<VigilancyWithCredits> pastConvokes = new ArrayList<VigilancyWithCredits>();
@@ -346,6 +357,21 @@ public class Vigilant extends Vigilant_Base {
 
 	}
 
+	public List<VigilancyWithCredits> getActiveConvokesAfterCurrentDate() {
+		return getActiveVigilancysInList(this.getConvokesAfterCurrentDate());
+	}
+
+	private List<VigilancyWithCredits> getActiveVigilancysInList(List<VigilancyWithCredits> vigilancys) {
+		List<VigilancyWithCredits> activeVigilancys = new ArrayList<VigilancyWithCredits> ();
+		for(VigilancyWithCredits vigilancy : vigilancys) {
+			if(vigilancy.isActive()) {
+				activeVigilancys.add(vigilancy);
+			}
+		}
+		return activeVigilancys;
+	}
+	
+	
 	public List<VigilancyWithCredits> getConvokesAfterCurrentDate() {
 		List<Vigilancy> convokes = super.getVigilancys();
 		List<VigilancyWithCredits> futureConvokes = new ArrayList<VigilancyWithCredits>();

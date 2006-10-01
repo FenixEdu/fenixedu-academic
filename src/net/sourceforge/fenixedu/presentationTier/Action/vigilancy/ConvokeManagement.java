@@ -188,7 +188,16 @@ public class ConvokeManagement extends FenixDispatchAction {
 	  WrittenEvaluation evaluation = beanWithVigilants.getWrittenEvaluation();
 	  DateTime beginDate = evaluation.getBeginningDateTime();
 	  String date = beginDate.getDayOfMonth() + "/" + beginDate.getMonthOfYear() + "/" + beginDate.getYear();
-	  Object[] args = { evaluation.getName(), date, beginDate.getHourOfDay(), beginDate.getMinuteOfHour(), evaluation.getAssociatedRoomsAsString(),
+
+	  // "Martelada" big time. Tomorrow with time will read documentation
+	  //  and see the correct formating for MessageFormat
+	  
+	  String minutes = String.valueOf(beginDate.getMinuteOfHour());
+	  if(minutes.length()==1) {
+		  minutes = "0" + minutes;
+	  }
+	  
+	  Object[] args = { evaluation.getFullName(), date, beginDate.getHourOfDay(), minutes, evaluation.getAssociatedRoomsAsString(),
 			  beanWithVigilants.getVigilantsAsString(), beanWithVigilants.getSelectedVigilantGroup().getRulesLink() };
 	  beanWithVigilants.setEmailMessage(format.format(args));
 	  request.setAttribute("bean", beanWithVigilants);
@@ -302,6 +311,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 		String convokeInfo = request.getParameter("showConvokeInfo");
 		String whatToShow = request.getParameter("whatToShow");
 		String bounds = request.getParameter("showBoundsJustification");
+		String notActiveConvokes = request.getParameter("showNotActiveConvokes");
 		bean
 				.setTemporalInformation((temporalInformation != null) ? TemporalInformationType
 						.valueOf(temporalInformation)
@@ -315,7 +325,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 		bean.setShowBoundsJustification( (bounds!=null) ? Boolean.valueOf(bounds) : Boolean.FALSE);
 		bean.setShowAllVigilancyInfo((convokeInfo != null) ? Boolean
 				.valueOf(convokeInfo) : Boolean.FALSE);
-
+		bean.setShowNotActiveConvokes((notActiveConvokes != null) ? Boolean.valueOf(notActiveConvokes) : Boolean.FALSE);
 		ExamCoordinator coordinator = getCoordinatorForCurrentYear(request);
 		bean.setExamCoordinator(coordinator);
 		bean.setVigilantGroups(coordinator.getVigilantGroups());

@@ -351,6 +351,7 @@
 		<slot name="showBoundsJustification" key="label.vigilancy.displayBoundsJustification" layout="option-select-postback"/>
 		<slot name="showStartPoints" key="label.vigilancy.startPoints" layout="option-select-postback"/>
 		<slot name="showAllVigilancyInfo" key="label.vigilancy.showAllVigilancyInfo" layout="option-select-postback"/>
+		<slot name="showNotActiveConvokes" key="label.vigilancy.showNotActiveConvokes" layout="option-select-postback"/>
 </schema>
 
 <schema name="selectWrittenEvaluation" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES" extends="selectVigilantGroupForConvokes">
@@ -695,6 +696,7 @@
 		<slot name="showBoundsJustification" key="label.vigilancy.displayBoundsJustification" layout="option-select-postback"/>
 		<slot name="showStartPoints" key="label.vigilancy.startPoints" layout="option-select-postback"/>
 		<slot name="showAllVigilancyInfo" key="label.vigilancy.showAllVigilancyInfo" layout="option-select-postback"/>
+		<slot name="showNotActiveConvokes" key="label.vigilancy.showNotActiveConvokes" layout="option-select-postback"/>
 </schema>
 	
 	

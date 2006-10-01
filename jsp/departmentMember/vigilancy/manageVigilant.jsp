@@ -67,13 +67,13 @@
 
 <logic:present name="vigilant">
 	<p class="mbottom05"><strong><bean:message key="vigilancy.myConvokes" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
-	<logic:empty name="vigilant" property="vigilancyWithCredits">
+	<logic:empty name="vigilant" property="activeVigilancyWithCredits">
 		<p class="mtop05"><em><bean:message key="label.vigilancy.noConvokesToDisplay" bundle="VIGILANCY_RESOURCES"/></em></p>
 	</logic:empty>
 
-	<logic:notEmpty name="vigilant" property="vigilancyWithCredits">
+	<logic:notEmpty name="vigilant" property="activeVigilancyWithCredits">
 	<logic:equal name="bean" property="executionYear.current" value="true">
-	<fr:view name="vigilant" property="vigilancyWithCredits" schema="present.convokes" layout="tabular">
+	<fr:view name="vigilant" property="activeVigilancyWithCredits" schema="present.convokes" layout="tabular">
 	<fr:layout>
 		<fr:property name="classes" value="tstyle1 mtop05" />
 		<fr:property name="key(confirmar)" value="label.confirm"/>
@@ -85,7 +85,7 @@
 	</fr:view>
 	</logic:equal>	
 	<logic:equal name="bean" property="executionYear.current" value="false">
-	<fr:view name="vigilant" property="vigilancyWithCredits" schema="present.convokes" layout="tabular">
+	<fr:view name="vigilant" property="activeVigilancyWithCredits" schema="present.convokes" layout="tabular">
 		<fr:layout>
 		<fr:property name="classes" value="tstyle1 mtop05" />
 		</fr:layout>
@@ -162,6 +162,7 @@
 		<fr:property name="showUnavailables" value="<%= String.valueOf(bean.isShowUnavailables()) %>"/>
 		<fr:property name="showBoundsJustification" value="<%= String.valueOf(bean.isShowBoundsJustification()) %>"/>
 		<fr:property name="showStartPoints" value="<%= String.valueOf(bean.isShowStartPoints())%>"/>
+		<fr:property name="showNotActiveConvokes" value="<%= String.valueOf(bean.isShowNotActiveConvokes()) %>"/>
 		<fr:property name="columnClasses" value=",,width250px aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 
 

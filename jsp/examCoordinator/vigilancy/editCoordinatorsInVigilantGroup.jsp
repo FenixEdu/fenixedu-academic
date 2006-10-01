@@ -30,7 +30,6 @@ action="vigilancy/vigilantGroupManagement.do?method=removeCoordinatorsFromGroup"
 nested="true">
 	<fr:layout>
 	<fr:property name="displayLabel" value="false"/>
-	<fr:property name="sortBy" value="person.name"/>
 	<fr:property name="classes" value="mvert0"/>
 	</fr:layout>
 	
@@ -62,7 +61,6 @@ nested="true">
 			<fr:layout>
 			<fr:property name="displayLabel" value="false"/>
 			<fr:property name="classes" value="mvert0"/>
-			<fr:property name="sortBy" value="person.name"/>
 			</fr:layout>
 </fr:edit>
 <p class="mtop0">

@@ -49,22 +49,24 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
     public ActionForward addExecutionCourseToGroup(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) RenderUtils.getViewState(
-                "addExecutionCourses").getMetaObject().getObject();
-        List<ExecutionCourse> executionCourses = bean.getCoursesToAdd();
-        VigilantGroup group = bean.getSelectedVigilantGroup();
+    	IViewState viewState = RenderUtils.getViewState("addExecutionCourses");
+    	VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) viewState.getMetaObject().getObject();
+    		List<ExecutionCourse> executionCourses = bean.getCoursesToAdd();
+    		VigilantGroup group = bean.getSelectedVigilantGroup();
 
-        List<ExecutionCourse> coursesUnableToAdd;
-        Object[] args = { group, executionCourses };
-        coursesUnableToAdd = (List<ExecutionCourse>) executeService(request,
-                "AddExecutionCourseToGroup", args);
+    		if(executionCourses.size()>0) {
+    			List<ExecutionCourse> coursesUnableToAdd;
+    			Object[] args = { group, executionCourses };
+    			coursesUnableToAdd = (List<ExecutionCourse>) executeService(request,
+    					"AddExecutionCourseToGroup", args);
 
-        request.setAttribute("coursesUnableToAdd", coursesUnableToAdd);
-        bean.setCoursesToAdd(new ArrayList<ExecutionCourse>());
-        request.setAttribute("bean", bean);
-
-        RenderUtils.invalidateViewState("addExecutionCourses");
-        return mapping.findForward("editCourseGroup");
+    			request.setAttribute("coursesUnableToAdd", coursesUnableToAdd);
+    		}
+    		bean.setCoursesToAdd(new ArrayList<ExecutionCourse>());
+    		request.setAttribute("bean", bean);
+    		RenderUtils.invalidateViewState("addExecutionCourses");
+            return mapping.findForward("editCourseGroup");
+    	
     }
 
     public ActionForward removeExecutionCoursesFromGroup(ActionMapping mapping, ActionForm form,

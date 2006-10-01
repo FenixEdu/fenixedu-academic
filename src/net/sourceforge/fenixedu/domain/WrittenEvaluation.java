@@ -75,6 +75,18 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return name;
     }
     
+    public String getFullName() {
+    	List<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
+    	String fullName = "";
+    	int i=0;
+        for(ExecutionCourse course : courses) {
+            if(i>0) fullName = fullName + ", ";
+            fullName = fullName + " " + course.getNome(); 
+            i++;
+        }
+        return fullName;
+    }
+    
     public Campus getCampus() {
         List<OldRoom> rooms = this.getAssociatedRooms();
         if(rooms.size()>0) {
@@ -578,6 +590,16 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     	for(Vigilancy vigilancy : this.getVigilancys()) {
     		if(vigilancy instanceof VigilancyWithCredits) {
     			vigilancysWithCredits.add( (VigilancyWithCredits) vigilancy);
+    		}
+    	}
+    	return vigilancysWithCredits;
+    }
+    
+    public List<VigilancyWithCredits> getActiveVigilancysWithCredits() {
+    	List<VigilancyWithCredits> vigilancysWithCredits = new ArrayList<VigilancyWithCredits> ();
+    	for(VigilancyWithCredits vigilancy : this.getVigilancysWithCredits()) {
+    		if(vigilancy.isActive()) {
+    			vigilancysWithCredits.add(vigilancy);
     		}
     	}
     	return vigilancysWithCredits;

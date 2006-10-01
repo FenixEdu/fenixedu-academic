@@ -2,13 +2,14 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
@@ -26,8 +27,8 @@ public class ExecutionCoursesForUnit implements DataProvider {
         Department department = bean.getSelectedDepartment();
         Unit competenceCourseGroup = bean.getSelectedCompetenceCourseGroupUnit();
 
-        ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
-        List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
+
+        Set<ExecutionCourse> courses = new HashSet<ExecutionCourse>();
         if (unit == null) {
             // Add pre-bolonha competenceCourses
             courses.addAll(getExecutionCoursesFromCompetenceCourses(department.getCompetenceCourses()));
@@ -38,8 +39,9 @@ public class ExecutionCoursesForUnit implements DataProvider {
         courses.addAll((competenceCourseGroup == null) ? getBolonhaCourses(unit)
                 : getBolonhaCoursesForGivenGroup(competenceCourseGroup));
 
-        Collections.sort(courses, new BeanComparator("nome"));
-        return courses;
+        List<ExecutionCourse> coursesToProvide = new ArrayList<ExecutionCourse>(courses);
+        Collections.sort(coursesToProvide, new BeanComparator("nome"));
+        return coursesToProvide;
     }
 
     private List<ExecutionCourse> getBolonhaCoursesForGivenGroup(Unit competenceCourseGroup) {

@@ -54,6 +54,8 @@ public class VigilantTableRender extends OutputRenderer {
 
     private boolean showStartPoints = Boolean.FALSE;
     
+    private boolean showNotActiveConvokes = Boolean.FALSE;
+    
     public String getEmptyMessageClasses() {
         return emptyMessageClasses;
     }
@@ -326,14 +328,14 @@ public class VigilantTableRender extends OutputRenderer {
 
         private List<VigilancyWithCredits> getConvokes(Vigilant vigilant) {
             if (getConvokesToShow().equals("past")) {
-                return vigilant.getConvokesBeforeCurrentDate();
+                return (showNotActiveConvokes) ? vigilant.getConvokesBeforeCurrentDate() : vigilant.getActiveConvokesBeforeCurrentDate();
             }
             if (getConvokesToShow().equals("future")) {
-                return vigilant.getConvokesAfterCurrentDate();
+                return (showNotActiveConvokes) ? vigilant.getConvokesAfterCurrentDate() : vigilant.getActiveConvokesAfterCurrentDate();
             }
 
             else {
-                return vigilant.getVigilancyWithCredits();
+                return (showNotActiveConvokes) ? vigilant.getVigilancyWithCredits() : vigilant.getActiveVigilancyWithCredits();
             }
         }
 
@@ -512,5 +514,13 @@ public class VigilantTableRender extends OutputRenderer {
     public void setSortBy(String sortBy) {
         this.sortBy = sortBy;
     }
+
+	public boolean isShowNotActiveConvokes() {
+		return showNotActiveConvokes;
+	}
+
+	public void setShowNotActiveConvokes(boolean showNotActiveConvokes) {
+		this.showNotActiveConvokes = showNotActiveConvokes;
+	}
 
 }
