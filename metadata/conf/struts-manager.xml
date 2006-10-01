@@ -2038,7 +2038,15 @@
        	</action>
        	
        	<action path="/prepareNotNeedToEnroll" forward="show-not-need-to-enroll"/>
-       	       		
+
+       	<action path="/externalPerson"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ExternalPersonDA"
+       			scope="request"
+				input="/externalPerson.do?method=prepareCreate"
+       			parameter="method">
+       		<forward name="showCreateForm" path="df.create.external.person"/>
+       		<forward name="showCreatedPerson" path="df.show.created.external.person"/>
+       	</action>
 
 	</action-mappings>
 

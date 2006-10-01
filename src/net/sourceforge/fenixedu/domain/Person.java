@@ -17,6 +17,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
+import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
@@ -1726,6 +1727,18 @@ public class Person extends Person_Base {
         public Object execute() {
             getPerson().edit(this);
             return null;
+        }
+    }
+
+    public static class ExternalPersonBeanFactoryCreator extends ExternalPersonBean implements FactoryExecutor {
+        public ExternalPersonBeanFactoryCreator() {
+            super();
+        }
+
+        public Object execute() {
+            final Person person = new Person(this);
+            person.addPersonRoleByRoleType(RoleType.PERSON);
+            return person;
         }
     }
 
