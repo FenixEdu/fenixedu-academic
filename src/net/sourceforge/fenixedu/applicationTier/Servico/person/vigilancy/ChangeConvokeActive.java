@@ -78,9 +78,7 @@ public class ChangeConvokeActive extends Service {
     private List<String> getEmailsFromTeachers(WrittenEvaluation writtenEvaluation) {
     	Set<String> emails = new HashSet<String>();
     	for(ExecutionCourse course : writtenEvaluation.getAssociatedExecutionCourses()) {
-    		for(Professorship professorship : course.getProfessorships()) {
-    			emails.add(professorship.getTeacher().getPerson().getEmail());
-    		}
+    		emails.add(course.getSite().getMail());
     	}
     	return new ArrayList<String>(emails);
     }
