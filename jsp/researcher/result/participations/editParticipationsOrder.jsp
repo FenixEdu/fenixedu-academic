@@ -1,9 +1,10 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
+<html:xhtml/>
 
 <logic:present role="RESEARCHER">
 	<bean:define id="result" name="result"/>
@@ -59,7 +60,7 @@
  	<div id="tree-controls" style="display: none;">
 	 	<fr:form action="<%= prepareEdit %>">
 	        <!-- submits the form on top of the page, search for: tree-structure -->
-	        <html:button property="saveButton" onclick="tree.saveTree();">
+	        <html:button property="saveButton" onclick="treeRenderer_saveTree('tree');">
 	            <bean:message key="button.save" bundle="RESEARCHER_RESOURCES"/>
 	        </html:button>
 	    

@@ -579,14 +579,9 @@ public class TreeRenderer extends OutputRenderer {
             String id = getTreeId();
             list.setId(id);
 
-            HtmlLink link = new HtmlLink();
-            link.setModuleRelative(false);
-            
-            link.setUrl("/javaScript/drag-drop-folder-tree/js/ajax.js");
-            HtmlScript scriptA = new HtmlScript("text/javascript", link.calculateUrl());
-            
-            link.setUrl("/javaScript/drag-drop-folder-tree/js/drag-drop-folder-tree.js");
-            HtmlScript scriptB = new HtmlScript("text/javascript", link.calculateUrl());
+            HtmlLink imagesUrlLink = new HtmlLink();
+            imagesUrlLink.setModuleRelative(false);
+            imagesUrlLink.setUrl("/javaScript/drag-drop-folder-tree/images/");
             
             HtmlLink requestUrlLink = new HtmlLink();
             requestUrlLink.setModuleRelative(isModuleRelative());
@@ -594,13 +589,9 @@ public class TreeRenderer extends OutputRenderer {
             
             String requestUrl = getSaveUrl() != null ? requestUrlLink.calculateUrl() : null;
             
-            HtmlLink imagesUrlLink = new HtmlLink();
-            imagesUrlLink.setModuleRelative(false);
-            imagesUrlLink.setUrl("/javaScript/drag-drop-folder-tree/images/");
-            
-            HtmlScript scriptC = new HtmlScript();
-            scriptC.setContentType("text/javascript");
-            scriptC.setScript(getTreeScript(id, requestUrl, imagesUrlLink.calculateUrl()));
+            HtmlScript scriptA = new HtmlScript();
+            scriptA.setContentType("text/javascript");
+            scriptA.setScript(getTreeScript(id, requestUrl, imagesUrlLink.calculateUrl()));
             
             HtmlStyle style = new HtmlStyle();
             style.setStyleBody(
@@ -609,74 +600,53 @@ public class TreeRenderer extends OutputRenderer {
                     String.format("#%s li,#%s-container li { %s }", id, id, getItemStyle()) + "\n"
             );
             
-            HtmlScript scriptD = new HtmlScript();
-            scriptD.setContentType("text/javascript");
-            scriptD.setScript(createHideLinksScript());
-            
             HtmlContainer container = new HtmlBlockContainer();
 
             container.addChild(list);
             container.addChild(style);
             container.addChild(scriptA);
-            container.addChild(scriptB);
-            container.addChild(scriptC);
-            container.addChild(scriptD);
             
             return container;
-        }
-
-        private CharSequence createHideLinksScript() {
-            return String.format(
-                    "\n" +
-                    "var items = document.getElementById('%s').getElementsByTagName('SPAN');\n" +
-                    "for (var item=0; item<items.length; item++) {\n" +
-                    "  var span = items[item];\n" +
-                    "\n" +
-                    "  if (span.className && span.className.indexOf('%s') >= 0) {\n" +
-                    "    var childSpans = span.getElementsByTagName('SPAN');\n" +
-                    "    if (childSpans.length > 0) {\n" +
-                    "      span.getElementsByTagName('SPAN')[0].style.display = 'none';\n" +
-                    "    }\n" +
-                    "  }\n" +
-                    "}\n",
-                    getTreeId(), 
-                    getUsableLinksClasses());
         }
 
         private String getTreeScript(String id, String requestUrl, String imagesFolder) {
             StringBuilder script = new StringBuilder();
             
-            script.append(id + " = new JSDragDropTree();\n");
-            script.append(id + ".setTreeId('" + id + "');\n");
-            script.append(id + ".setImageFolder('" + imagesFolder + "');\n");
+            script.append("treeRenderer_init('" + id + "', {");
 
+            script.append("imageFolder: '" + imagesFolder + "'");
+            script.append(", includeImage: " + isIncludeImage());
+            
             if (requestUrl != null) {
-                script.append(id + ".setRequestUrl('" + requestUrl + "');\n");
+                script.append(", requestUrl: '" + requestUrl + "'");
             }
             
             if (getSaveParameter() != null) {
-                script.append(id + ".setRequestParameter('" + getSaveParameter() + "');\n");
+                script.append(", requestParameter: '" + getSaveParameter() + "'");
             }
             
             if (getFieldId() != null) {
-                script.append(id + ".setFieldId('" + getFieldId() + "');\n");
+                script.append(", fieldId: '" + getFieldId() + "'");
             }
 
             if (getOnComplete() != null) {
-                script.append(id + ".setOnComplete(" + getOnComplete() + ");\n");
+                script.append(", onComplete: " + getOnComplete());
             }
             
             if (getOnError() != null) {
-                script.append(id + ".setOnError(" + getOnError() + ");\n");
+                script.append(", onError: " + getOnError());
             }
 
             if (getMovedClass() != null) {
-                script.append(id + ".setMovedClass('" + getMovedClass() + "');\n");
+                script.append(", movedClass: '" + getMovedClass() + "'");
+            }
+
+            if (getUsableLinksClasses() != null) {
+                script.append(", linkClasses: '" + getUsableLinksClasses() + "'");
             }
             
-            script.append(id + ".setIncludeImage(" + isIncludeImage() + ");\n");
-            script.append(id + ".initTree();\n");
-            
+            script.append("});");
+
             return script.toString();
         }
 
@@ -735,7 +705,10 @@ public class TreeRenderer extends OutputRenderer {
                  
                     if (children != null) {
                         Collection subCollection = (Collection) RendererPropertyUtils.getProperty(object, children, false);
-                        item.addChild(createList(subCollection));
+                        
+                        if (subCollection != null && ! subCollection.isEmpty()) {
+                            item.addChild(createList(subCollection));
+                        }
                     }
                     else {
                         item.setAttribute("noChildren", "true");

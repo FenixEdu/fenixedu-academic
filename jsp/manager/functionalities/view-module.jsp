@@ -97,7 +97,7 @@
         <fr:property name="schemaFor(Module)" value="functionalities.module.tree"/>
         <fr:property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
         
-        <fr:property name="movedClass" value="highlight5"/>
+        <fr:property name="movedClass" value="highlight3"/>
         
         <fr:property name="hiddenLinks">
             <html:link page="<%= "/functionality/up.do?module=" + thisModule + "&functionality=${idInternal}" %>">
@@ -131,13 +131,13 @@
 
 <div id="tree-controls" style="display: none;">
     <p>
-        <a href="#" onclick="<%= tree %>.expandAll();"><bean:message key="link.tree.expand-all" bundle="FUNCTIONALITY_RESOURCES"/></a>
-        | <a href="#" onclick="<%= tree %>.collapseAll();"><bean:message key="link.tree.collapse-all" bundle="FUNCTIONALITY_RESOURCES"/></a>
+        <a href="#" onclick="<%= "treeRenderer_expandAll('" + tree + "');" %>"><bean:message key="link.tree.expand-all" bundle="FUNCTIONALITY_RESOURCES"/></a>
+        | <a href="#" onclick="<%= "treeRenderer_collapseAll('" + tree + "');" %>"><bean:message key="link.tree.collapse-all" bundle="FUNCTIONALITY_RESOURCES"/></a>
     </p>
     
-    <fr:form action="<%= "/module/view.do?module=" + thisModule %>">
+    <fr:form action="/toplevel/view.do">
         <!-- submits the form on top of the page, search for: tree-structure -->
-        <html:button property="saveButton" onclick="<%= tree + ".saveTree();" %>">
+        <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('" + tree + "');" %>">
             <bean:message key="button.tree.save" bundle="FUNCTIONALITY_RESOURCES"/>
         </html:button>
     

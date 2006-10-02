@@ -12,6 +12,7 @@
 	</definition>
 	<definition name="df.layout.two-column" page="/layout/fenixLayout_2col.jsp" >
 		<put name="title" value="/commons/blank.jsp" type="string"/>
+        <put name="head" value="/commons/blank.jsp"/>
 		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
 		<put name="navLocal" value="/commons/blank.jsp" />
@@ -41,6 +42,7 @@
   	</definition>
 	<definition name="df.layout.two-column.posGrad" page="/layout/fenixLayout_posGrad.jsp" >
 		<put name="title" value="/commons/blank.jsp" />
+        <put name="head" value="/commons/blank.jsp" />
 		<put name="serviceName" value="/commons/blank.jsp" />
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
 		<put name="navLocal" value="/commons/blank.jsp" />

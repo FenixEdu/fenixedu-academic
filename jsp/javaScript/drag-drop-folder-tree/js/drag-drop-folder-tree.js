@@ -669,9 +669,15 @@
 					treeUlCounter++;
 				}
 				
-				var aTag = menuItems[no].getElementsByTagName('*')[0];
-				if (aTag.tagName == 'IMG') {
-					aTag = menuItems[no].getElementsByTagName('*')[1];
+				var aTag = false;
+				var possibleTags = menuItems[no].getElementsByTagName('*');
+				for (var ptIndex = 0; ptIndex < possibleTags.length; ptIndex++) {
+					aTag = possibleTags[ptIndex];
+					
+					// IE 6.0: considers </img> as a tag named "/IMG"
+					if (aTag.tagName != 'IMG' && aTag.tagName != '/IMG') {
+						break;
+					}
 				}
 				
 				//aTag.onclick = JSTreeObj.showHideNode;

@@ -5,6 +5,7 @@
 <tiles-definitions>
 	<definition name="functionalities.master" extends="df.layout.two-column">
 	  <put name="title" value="Portal de Gerência" />
+      <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
 	  <put name="serviceName" value="Gestão de funcionalidades" />
 	  <put name="navLocal" value="/manager/commons/commonNavLocalManager.jsp" />
 	  <put name="navGeral" value="/commons/functionalities/top-menu.jsp" />

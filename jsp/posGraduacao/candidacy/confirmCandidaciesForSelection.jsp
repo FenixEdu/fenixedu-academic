@@ -53,21 +53,6 @@
 			        
 			        <fr:property name="eachLayout" value="values-dash"/>
 			        <fr:property name="eachSchema" value="candidacy.show.listForSelection"/>
-			
-			        <fr:property name="hiddenLinks">
-			            <html:link page="/functionality/up.do?functionality=${candidacy.number}">
-			                <bean:message key="link.functionality.up" bundle="ADMIN_OFFICE_RESOURCES"/>
-			            </html:link>,
-			            <html:link page="/functionality/down.do?functionality=${candidacy.number}">
-			                <bean:message key="link.functionality.down" bundle="ADMIN_OFFICE_RESOURCES"/>
-			            </html:link>,
-			            <html:link page="/functionality/top.do?functionality=${candidacy.number}">
-			                <bean:message key="link.functionality.top" bundle="ADMIN_OFFICE_RESOURCES"/>
-			            </html:link>,
-			            <html:link page="/functionality/bottom.do?functionality=${candidacy.number}">
-			                <bean:message key="link.functionality.bottom" bundle="ADMIN_OFFICE_RESOURCES"/>
-			            </html:link>       
-			        </fr:property>
 			    </fr:layout>
 			</fr:view>
 			
@@ -99,7 +84,7 @@
 	</logic:present>
 	
 	<p>
-		<html:submit onclick="substituteCandidaciesOrderTree.saveTree();" ><bean:message key="button.confirm" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit>
+		<html:submit onclick="treeRenderer_saveTree('substituteCandidaciesOrderTree');"><bean:message key="button.confirm" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit>
 	</p>
 	
 </fr:form>

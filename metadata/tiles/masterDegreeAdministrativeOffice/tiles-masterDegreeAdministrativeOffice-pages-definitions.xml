@@ -321,6 +321,7 @@
 	</definition>
 
 	<definition name="df.page.confirmCandidaciesForSelection" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp"/>
 		<put name="body" value="/posGraduacao/candidacy/confirmCandidaciesForSelection.jsp"/>
 	</definition>
 
