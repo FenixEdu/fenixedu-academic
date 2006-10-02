@@ -84,14 +84,14 @@ nested="true">
 	<span class="switchInline"><a href="javascript:uncheckall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a> </span>
 	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
+
 <fr:edit name="bean" id="addVigilants" schema="addVigilants" 
 			action="/vigilancy/vigilantGroupManagement.do?method=addVigilantsToGroup">
 			<fr:layout>
-			<fr:property name="displayLabel" value="false"/>
-
-			<fr:property name="classes" value="mvert0"/>
+				<fr:property name="displayLabel" value="false"/>
 			</fr:layout>
 </fr:edit>
+
 <p class="mtop0">
 	<span class="switchInline"><a href="javascript:document.getElementById('addVigilantsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.add"/></a>, </span>
 	<span class="switchInline"><a href="javascript:checkall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>

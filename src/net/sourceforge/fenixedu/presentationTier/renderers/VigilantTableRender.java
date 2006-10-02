@@ -2,7 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -235,10 +238,15 @@ public class VigilantTableRender extends OutputRenderer {
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-        Collection sortedCollection = RenderUtils.sortCollectionWithCriteria((Collection) object,
-                getSortBy());
+        ComparatorChain chain = new ComparatorChain();
+        chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
+        chain.addComparator(Vigilant.NAME_COMPARATOR);
+        chain.addComparator(Vigilant.USERNAME_COMPARATOR);
+        
+        List<Vigilant> vigilants = new ArrayList<Vigilant>((Collection)object);
+    	Collections.sort(vigilants, chain);
 
-        return new VigilantTableRenderLayout(sortedCollection);
+        return new VigilantTableRenderLayout(vigilants);
     }		
 
     private class VigilantTableRenderLayout extends TabularLayout {

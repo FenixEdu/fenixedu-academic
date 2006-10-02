@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -70,11 +73,13 @@ public class ConvokeByPoints extends Strategy {
 			}
 		}
 
-		// ComparatorChain comparator = new ComparatorChain();
-		// comparator.addComparator(new VigilantComparator(executionCourses));
-		// comparator.addComparator(new PointComparator());
-		Collections.sort(vigilantSugestion, new PointComparator());
-		Collections.sort(teachersSugestion, new PointComparator());
+		 ComparatorChain comparator = new ComparatorChain();
+		 comparator.addComparator(new PointComparator());
+		 comparator.addComparator(Vigilant.CATEGORY_COMPARATOR);
+		 comparator.addComparator(new ReverseComparator(Vigilant.USERNAME_COMPARATOR));
+		 
+		 Collections.sort(vigilantSugestion, comparator);
+		 Collections.sort(teachersSugestion, comparator);
 		return new StrategySugestion(teachersSugestion, vigilantSugestion,
 				unavailableVigilants);
 	}
@@ -145,6 +150,9 @@ public class ConvokeByPoints extends Strategy {
 			Integer p1 = v1.getPoints();
 			Integer p2 = v2.getPoints();
 
+			p1 += v1.getActiveConvokesAfterCurrentDate().size();
+			p2 += v2.getActiveConvokesAfterCurrentDate().size();
+			
 			return p1.compareTo(p2);
 
 		}

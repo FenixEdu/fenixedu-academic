@@ -13,6 +13,7 @@
 <fr:edit id="editPoints" name="vigilants" schema="editStartPoints">
 	<fr:layout name="tabular-editable">
 		<fr:property name="classes" value="tstyle5"/>
+
 	</fr:layout>
 	<fr:destination name="cancel" path="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement"/>
 	<fr:destination name="success" path="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement"/>
@@ -24,5 +25,6 @@
 			</span>
 		</p>
 	</fr:hasMessages>
+
 </fr:edit>
 </p>

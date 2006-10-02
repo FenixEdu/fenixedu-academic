@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -35,7 +36,8 @@ public class CreateConvokes extends Service {
         	String groupEmail = group.getContactEmail();
         	String[] replyTo;
         	
-        	tos.addAll(getEmailsFromTeachers(writtenEvaluation));
+        	
+        	tos.addAll(Vigilancy.getEmailsThatShouldBeContactedFor(writtenEvaluation));
         	
         	if(groupEmail!=null) {
         		tos.add(groupEmail);
@@ -54,11 +56,5 @@ public class CreateConvokes extends Service {
         }
     }
 
-    private List<String> getEmailsFromTeachers(WrittenEvaluation writtenEvaluation) {
-    	Set<String> emails = new HashSet<String>();
-    	for(ExecutionCourse course : writtenEvaluation.getAssociatedExecutionCourses()) {
-    		emails.add(course.getSite().getMail());
-    	}
-    	return new ArrayList<String>(emails);
-    }
+   
 }

@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
@@ -10,6 +12,7 @@ import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 
@@ -69,6 +72,37 @@ public class Vigilancy extends Vigilancy_Base {
 
         return this.getWrittenEvaluation().getAssociatedExecutionCourses();
 
+    }
+    
+    
+    public static List<String> getEmailsThatShouldBeContactedFor(WrittenEvaluation writtenEvaluation) {
+    	List<String> emails = getEmailsBySite(writtenEvaluation);
+    	if(emails.size()==0) {
+    		emails = getEmailsByTeachers(writtenEvaluation);
+    	}
+    	return emails;
+    }
+    
+    private static List<String> getEmailsBySite(WrittenEvaluation writtenEvaluation) {
+    	Set<String> emails = new HashSet<String>();
+    	for(ExecutionCourse course : writtenEvaluation.getAssociatedExecutionCourses()) {
+    		String mail = course.getSite().getMail();
+    		if(mail!=null) {
+    			emails.add(course.getSite().getMail());
+    		}
+    	}
+    	return new ArrayList<String>(emails);
+    }
+    
+    private static List<String> getEmailsByTeachers(WrittenEvaluation writtenEvaluation) {
+    	Set<String> emails = new HashSet<String>();
+    	for(ExecutionCourse course : writtenEvaluation.getAssociatedExecutionCourses()) {
+    		for(Professorship professorship : course.getProfessorships()) {
+    			String mail = professorship.getTeacher().getPerson().getEmail(); 
+    			emails.add(mail);
+    		}
+    	}
+    	return new ArrayList<String>(emails);
     }
     
     public static List<VigilancyWithCredits> getAllVigilancyWithCredits() {

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,12 +24,34 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 public class Vigilant extends Vigilant_Base {
 
+	public static final Comparator<Vigilant> NAME_COMPARATOR = new BeanComparator("person.name"); 
+	public static final Comparator<Vigilant> USERNAME_COMPARATOR = new BeanComparator("person.username");
+	public static final Comparator<Vigilant> CATEGORY_COMPARATOR = new Comparator() {
+
+		public int compare(Object o1, Object o2) {
+				Vigilant v1 = (Vigilant) o1;
+				Vigilant v2 = (Vigilant) o2;
+				
+				Category c1 = v1.getTeacherCategory();
+				Category c2 = v2.getTeacherCategory();
+				
+				if(c1==null) return -1;
+				if(c2==null) return 1;
+				
+				return -c1.compareTo(c2);
+			
+			}
+		
+	};
+	
 	protected Vigilant() {
 		super();
 		this.setStartPoints(0);
@@ -110,6 +133,11 @@ public class Vigilant extends Vigilant_Base {
 		return this.getPerson().getTeacher();
 	}
 
+	public Category getTeacherCategory() {
+		Teacher teacher = this.getTeacher();
+		return (teacher == null) ? null : teacher.getCategory();
+	}
+	
 	public String getTeacherCategoryCode() {
 		Teacher teacher = this.getTeacher();
 		return (teacher == null) ? "" : teacher.getCategory().getCode();
@@ -237,25 +265,6 @@ public class Vigilant extends Vigilant_Base {
 			WrittenEvaluation writtenEvaluation) {
 		DateTime beginOfExam = writtenEvaluation.getBeginningDateTime();
 		DateTime endOfExam = writtenEvaluation.getEndDateTime();
-		Teacher teacher = this.getTeacher();
-		if (teacher != null) {
-			List<TeacherServiceExemption> situations = teacher
-					.getServiceExemptionSituations();
-			for (TeacherServiceExemption situation : situations) {
-				YearMonthDay begin = situation.getStartYearMonthDay();
-				YearMonthDay end = situation.getEndYearMonthDay();
-				DateInterval interval = new DateInterval(begin, end);
-				if (interval.containsDate(beginOfExam))
-					return false;
-			}
-		}
-
-		net.sourceforge.fenixedu.domain.Campus campus = writtenEvaluation
-				.getCampus();
-		if (campus != null) {
-			if (!isAvailableInCampus(campus))
-				return Boolean.FALSE;
-		}
 
 		return this.isAvailableOnDate(beginOfExam, endOfExam)
 				&& this.hasNoEvaluationsOnDate(beginOfExam, endOfExam);
@@ -497,4 +506,5 @@ public class Vigilant extends Vigilant_Base {
 		
 		return new ArrayList<VigilantGroup>(groups);
 	}
+	
 }

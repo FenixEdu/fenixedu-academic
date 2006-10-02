@@ -32,7 +32,6 @@
 	
 	<fr:view name="bean" property="selectedVigilantGroup.vigilants" layout="vigilant-table">
 	<fr:layout>                                
-		<fr:property name="sortBy" value="teacherCategoryCode, person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="classes" value="tstyle1 mtop05" />

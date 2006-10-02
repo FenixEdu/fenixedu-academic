@@ -86,7 +86,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
         return fullName;
     }
-    
+     
     public Campus getCampus() {
         List<OldRoom> rooms = this.getAssociatedRooms();
         if(rooms.size()>0) {

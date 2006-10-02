@@ -68,7 +68,10 @@ public class TabularOptionInputRenderer extends InputRenderer {
 
     private String providerClass;
     private DataProvider provider;
-
+    private String classes;
+    private String emptyMessageKey;
+    private String emptyMessageBundle;
+    
     private String sortBy;
 
     public String getSortBy() {
@@ -139,6 +142,7 @@ public class TabularOptionInputRenderer extends InputRenderer {
         }
     }
 
+    
     @Override
     protected Layout getLayout(Object object, Class type) {
 
@@ -179,6 +183,7 @@ public class TabularOptionInputRenderer extends InputRenderer {
                 return container;
             }
 
+            
             @Override
             protected boolean hasHeader() {
                 return metaObjects.size() > 0;
@@ -280,5 +285,29 @@ public class TabularOptionInputRenderer extends InputRenderer {
 
         return metaObjects;
     }
+
+	public String getClasses() {
+		return classes;
+	}
+
+	public void setClasses(String classes) {
+		this.classes = classes;
+	}
+
+	public String getEmptyMessageBundle() {
+		return emptyMessageBundle;
+	}
+
+	public void setEmptyMessageBundle(String emptyMessageBundle) {
+		this.emptyMessageBundle = emptyMessageBundle;
+	}
+
+	public String getEmptyMessageKey() {
+		return emptyMessageKey;
+	}
+
+	public void setEmptyMessageKey(String emptyMessageKey) {
+		this.emptyMessageKey = emptyMessageKey;
+	}
 
 }

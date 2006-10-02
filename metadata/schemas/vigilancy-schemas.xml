@@ -1,5 +1,11 @@
 <!--  Vigilant Schemas -->
 
+<schema name="presentVigilantWithCategory" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES">
+		<slot name="teacherCategoryCode" key="label.vigilancy.category"/>
+		<slot name="person.username" key="label.vigilancy.username"/>
+		<slot name="person.name" key="label.vigilancy.name"/>
+</schema>
+
 <schema name="presentVigilantName" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES">
 		<slot name="person.name"/>
 </schema>
@@ -88,6 +94,7 @@
 		</slot>
 </schema>
 
+<!--  
 <schema name="addVigilants" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
 		<slot name="employees" key="label.vigilancy.employees" layout="option-select">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.EmployeesForGivenUnit"/>
@@ -98,8 +105,19 @@
 			<property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
 		</slot>
 </schema>
+-->
+
+<!--  Like this because providers needs context in the vigilantGroupBean-->	
+<schema name="addVigilants" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+		<slot name="employees" key="label.vigilancy.employees" layout="tabular-option" schema="presentEmployeeWithCatAndNumber">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.EmployeesForGivenUnit"/>
+			<property name="classes" value="tstyle1"/>
+			<property name="emptyMessageKey" value="label.vigilancy.noEmployees"/>
+			<property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
+		</slot>
+</schema>
 	
-	
+<!--  
 <schema name="removeVigilants" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
 	<slot name="vigilants" key="label.vigilancy.vigilants" layout="option-select">
    		    <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantsForGivenVigilantGroup"/>
@@ -109,6 +127,16 @@
 			<property name="emptyMessageKey" value="label.vigilancy.noVigilantsInGroup"/>
 			<property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
 			<property name="sortBy" value="person.name"/>
+	</slot>		
+</schema>
+-->
+
+<schema name="removeVigilants" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+	<slot name="vigilants" key="label.vigilancy.vigilants" layout="tabular-option" schema="presentVigilantWithCategory">
+   		    <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantsForGivenVigilantGroup"/>
+			<property name="classes" value="tstyle1"/>
+			<property name="emptyMessageKey" value="label.vigilancy.noVigilantsInGroup"/>
+			<property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
 	</slot>		
 </schema>
 	
@@ -146,6 +174,11 @@
 <schema name="addExternalPerson" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
 		<slot name="username" key="label.vigilancy.personUsername"/>
 </schema>	
+
+<schema name="presentVigilantGroupName" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup" bundle="VIGILANCY_RESOURCES">
+		<slot name="name"/>
+</schema>
+
 <!--  Convokes Schemas -->
 
 
@@ -193,27 +226,21 @@
 </schema>
 
 <schema name="selectVigilantsThatAreTeachers" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
-		<slot name="selectedTeachers" layout="option-select">
+		<slot name="selectedTeachers" layout="tabular-option" schema="presentVigilantWithCategory">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.TeachersInAGivenConvoke"/>
-			<property name="eachLayout" value="values"/>
-			<property name="eachSchema" value="presentVigilantInline"/>
-			<property name="classes" value="list2 mtop0" />	
+			<property name="classes" value="tstyle1 mtop0" />	
 		</slot>
 </schema>
 <schema name="selectVigilants" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
-		<slot name="vigilants" key="label.vigilancy.vigilants" layout="option-select">
+		<slot name="vigilants" key="label.vigilancy.vigilants" layout="tabular-option" schema="presentVigilantWithCategory">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantsForGivenVigilantGroup"/>
-			<property name="eachLayout" value="values"/>
-			<property name="eachSchema" value="presentVigilantInline"/>
-			<property name="classes" value="list2 mtop0" />
+			<property name="classes" value="tstyle1 mtop0" />
 		</slot>
 </schema>
 <schema name="selectVigilantsThatAreUnavailable" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">		
-		<slot name="selectedUnavailableVigilants" key="label.vigilancy.vigilants" layout="option-select">
+		<slot name="selectedUnavailableVigilants" key="label.vigilancy.vigilants" layout="tabular-option" schema="presentVigilantWithCategory">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.UnavaibleVigilantsInGivenConvoke"/>
-			<property name="eachLayout" value="values"/>
-			<property name="eachSchema" value="presentVigilantInline"/>
-			<property name="classes" value="list2 mtop0" />
+			<property name="classes" value="tstyle1 mtop0" />
 		</slot>
 </schema>
 
@@ -357,7 +384,8 @@
 <schema name="selectWrittenEvaluation" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES" extends="selectVigilantGroupForConvokes">
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation" layout="menu-select-postback">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.WrittenEvaluationForGivenVigilantGroup" />
-			<property name="format" value="${name} (${degreesAsString} - ${evaluationType}) ${beginningDateTime.hourOfDay}:${beginningDateTime.minuteOfHour,02d} ${beginningDateTime.dayOfMonth}/${beginningDateTime.monthOfYear}/${beginningDateTime.year}"/>
+			<property name="format" value="${beginningDateTime.dayOfMonth}/${beginningDateTime.monthOfYear}/${beginningDateTime.year} ${beginningDateTime.hourOfDay}:${beginningDateTime.minuteOfHour,02d} ${fullName} (${degreesAsString} - ${evaluationType})  "/>
+			<property name="sortBy" value="beginningDateTime"/>
 		</slot>
 </schema>
 
@@ -663,6 +691,15 @@
 			<property name="format" value="${name} (${username})"/>
 		</slot>
 </schema>
+
+<schema name="presentEmployeeWithCatAndNumber" type="net.sourceforge.fenixedu.domain.Employee" bundle="VIGILANCY_RESOURCES">
+		<slot name="categoryCode" key="label.vigilancy.name"/>
+		<slot name="person.username" key="label.vigilancy.name"/>
+		<slot name="person" key="label.vigilancy.name">
+			<property name="format" value="${name}"/>
+		</slot>
+</schema>
+
 		
 <schema name="prepare.yearselect" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantBean" bundle="VIGILANCY_RESOURCES">
 		<slot name="executionYear" key="label.vigilancy.executionYear" layout="menu-select-postback" >
@@ -706,6 +743,8 @@
 </schema>
 
 <schema name="editConvokableStatus" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantBound" bundle="VIGILANCY_RESOURCES">
+	<slot name="vigilant.teacherCategoryCode" read-only="true" key="label.vigilancy.category"/>
+	<slot name="vigilant.person.username" read-only="true" key="label.vigilancy.username"/>
 	<slot name="vigilant.person.name" read-only="true" key="label.vigilancy.vigilant"/>
 	<slot name="convokable" layout="radio" key="label.vigilancy.isConvokable">
 			<property name="classes" value="nobullet liinline"/>
@@ -716,6 +755,8 @@
 </schema>
 
 <schema name="editStartPoints" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES">
+	<slot name="teacherCategoryCode" read-only="true" key="label.vigilancy.category"/>
+	<slot name="person.username" read-only="true" key="label.vigilancy.username"/>
 	<slot name="person.name" read-only="true" key="label.vigilancy.vigilant"/>
 	<slot name="startPoints" key="label.vigilancy.startPoints">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>

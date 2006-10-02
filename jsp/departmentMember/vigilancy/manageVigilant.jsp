@@ -66,6 +66,16 @@
 </logic:present>
 
 <logic:present name="vigilant">
+	<p class="mbottom05"><strong><bean:message key="vigilancy.yourGroups" bundle="VIGILANCY_RESOURCES"/></strong>:
+	<fr:view name="vigilant" property="vigilantGroups"> 
+	<fr:layout name="flowLayout">
+	<fr:property name="eachLayout" value="values"/>
+	<fr:property name="eachSchema" value="presentVigilantGroupName"/>
+	<fr:property name="htmlSeparator" value=","/>
+
+	</fr:layout>
+	</fr:view>
+	</p>
 	<p class="mbottom05"><strong><bean:message key="vigilancy.myConvokes" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
 	<logic:empty name="vigilant" property="activeVigilancyWithCredits">
 		<p class="mtop05"><em><bean:message key="label.vigilancy.noConvokesToDisplay" bundle="VIGILANCY_RESOURCES"/></em></p>
@@ -154,7 +164,6 @@
 <fr:view name="bean" property="selectedVigilantGroup.vigilants" layout="vigilant-table">
 	<fr:layout>                                
 		<fr:property name="classes" value="tstyle1 mtop05 acenter" />
-		<fr:property name="sortBy" value="teacherCategoryCode, person.username"/>
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
 

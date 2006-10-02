@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -174,5 +175,20 @@ public class Employee extends Employee_Base {
     	Unit departmentUnit = (unit != null) ? unit.getDepartmentUnit() : null;
     	return (departmentUnit != null) ? departmentUnit.getDepartment() : null;    	    	
     }
+
+    public Category getCategory() {
+    	Teacher teacher = this.getPerson().getTeacher();
+    	if(teacher!=null) {
+    		return teacher.getCategory();
+    	}
+    	return null;
+    }
     
+    public String getCategoryCode() {
+    	Category category = this.getCategory();
+    	if(category!=null) {
+    		return category.getCode();
+    	}
+    	else return null;
+    }
 }

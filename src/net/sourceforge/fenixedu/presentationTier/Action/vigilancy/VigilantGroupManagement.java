@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,10 +21,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantBound;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -506,7 +511,13 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 				.readDomainObjectByOID(VigilantGroup.class, Integer
 						.valueOf(groupId));
 
-		request.setAttribute("bounds", group.getBounds());
+		List<VigilantBound> bounds = new ArrayList<VigilantBound>(group.getBounds());
+		ComparatorChain chain = new ComparatorChain();
+		chain.addComparator(VigilantBound.VIGILANT_CATEGORY_COMPARATOR);
+		chain.addComparator(VigilantBound.VIGILANT_NAME_COMPARATOR);
+		chain.addComparator(VigilantBound.VIGILANT_USERNAME_COMPARATOR);
+		Collections.sort(bounds,chain);
+		request.setAttribute("bounds", bounds);
 		request.setAttribute("group", group);
 		return mapping.findForward("editVigilantBounds");
 	}
@@ -521,7 +532,13 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 				.readDomainObjectByOID(VigilantGroup.class, Integer
 						.valueOf(groupId));
 
-		request.setAttribute("vigilants", group.getVigilantsThatCanBeConvoked());
+		List<Vigilant> vigilants = group.getVigilantsThatCanBeConvoked();
+		ComparatorChain chain = new ComparatorChain();
+		chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
+		chain.addComparator(Vigilant.NAME_COMPARATOR);
+		chain.addComparator(Vigilant.USERNAME_COMPARATOR);
+		Collections.sort(vigilants, chain);
+		request.setAttribute("vigilants", vigilants);
 		request.setAttribute("group", group);
 		return mapping.findForward("editVigilantStartPoints");
 	}

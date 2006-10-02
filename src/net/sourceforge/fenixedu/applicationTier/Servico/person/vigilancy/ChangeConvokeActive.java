@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -47,7 +48,7 @@ public class ChangeConvokeActive extends Service {
         	replyTo = new String[] { person.getEmail() };
         }
         
-        tos.addAll(getEmailsFromTeachers(convoke.getWrittenEvaluation()));
+        tos.addAll(Vigilancy.getEmailsThatShouldBeContactedFor(convoke.getWrittenEvaluation()));
         
         String emailMessage = generateMessage(bool, convoke);
         EmailSender.send(person.getName(), (groupEmail!=null) ? groupEmail : person.getEmail(), replyTo, tos, null, null, RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject"),
@@ -70,12 +71,4 @@ public class ChangeConvokeActive extends Service {
         return message;
     }
     
-    private List<String> getEmailsFromTeachers(WrittenEvaluation writtenEvaluation) {
-    	Set<String> emails = new HashSet<String>();
-    	for(ExecutionCourse course : writtenEvaluation.getAssociatedExecutionCourses()) {
-    		emails.add(course.getSite().getMail());
-    	}
-    	return new ArrayList<String>(emails);
-    }
-
 }

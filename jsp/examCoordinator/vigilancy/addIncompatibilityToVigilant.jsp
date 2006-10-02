@@ -48,6 +48,7 @@ action="/vigilancy/vigilantGroupManagement.do?method=vigilantSelectedInIncompati
 		<fr:property name="param(Adicionar)" value="person.idInternal/pid" />
 		<fr:property name="displayHeaders" value="false"/>
 	</fr:layout>
+	<fr:property name="sortBy" value="person.name"/>
 	</fr:view>
 	
 </logic:present>

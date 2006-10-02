@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
@@ -34,6 +37,11 @@ public class VigilantsForGivenVigilantGroup implements DataProvider {
             vigilants.addAll(vigilantGroup.getVigilants());
         }
 
+        ComparatorChain chain = new ComparatorChain();
+        chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
+        chain.addComparator(Vigilant.NAME_COMPARATOR);
+        chain.addComparator(Vigilant.USERNAME_COMPARATOR);
+        Collections.sort(vigilants,chain);
         return vigilants;
 
     }
