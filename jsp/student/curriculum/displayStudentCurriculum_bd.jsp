@@ -107,6 +107,12 @@
 					<fr:view name="infoStudentCurricularPlan" property="studentCurricularPlan">
 						<fr:layout>
 							<fr:property name="organizedByGroups" value="<%=organizedByGroups.toString()%>"/>
+							<fr:property name="initialWidth" value="70"/>
+							<fr:property name="widthDecreasePerLevel" value="3"/>
+							<fr:property name="tablesClasses" value="showinfo3 mvert0"/>
+							<fr:property name="groupRowClasses" value="bgcolor2"/>
+							<fr:property name="groupNameClasses" value="aleft"/>
+							<fr:property name="enrolmentClasses" value="smalltxt aright,,aright"/>
 						</fr:layout>
 					</fr:view>
 				</logic:equal>

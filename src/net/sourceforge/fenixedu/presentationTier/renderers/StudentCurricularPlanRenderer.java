@@ -21,10 +21,24 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 public class StudentCurricularPlanRenderer extends OutputRenderer {
 
     private Boolean organizedByGroups;
-    
+
     private Integer initialWidth = Integer.valueOf(70);
-    
+
     private Integer widthDecreasePerLevel = Integer.valueOf(3);
+
+    private String tablesClasses = "showinfo3 mvert0";
+
+    private String groupRowClasses = "bgcolor2";
+
+    private String groupNameClasses = "aleft";
+
+    private String enrolmentClasses = "smalltxt aright, smalltxt aright, aright";
+    
+    private String enrolmentYearClasses = getEnrolmentClasses()[0];
+    
+    private String enrolmentSemesterClasses = getEnrolmentClasses()[1];
+    
+    private String enrolmentInfoClasses = getEnrolmentClasses()[2];
 
     public StudentCurricularPlanRenderer() {
 	super();
@@ -39,19 +53,51 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
     }
 
     public Integer getInitialWidth() {
-        return initialWidth;
+	return initialWidth;
     }
 
     public void setInitialWidth(Integer initialWidth) {
-        this.initialWidth = initialWidth;
+	this.initialWidth = initialWidth;
     }
 
     public Integer getWidthDecreasePerLevel() {
-        return widthDecreasePerLevel;
+	return widthDecreasePerLevel;
     }
 
     public void setWidthDecreasePerLevel(Integer widthDecreasePerLevel) {
-        this.widthDecreasePerLevel = widthDecreasePerLevel;
+	this.widthDecreasePerLevel = widthDecreasePerLevel;
+    }
+
+    public String getTablesClasses() {
+	return tablesClasses;
+    }
+
+    public void setTablesClasses(String tablesClasses) {
+	this.tablesClasses = tablesClasses;
+    }
+
+    public String getGroupRowClasses() {
+	return groupRowClasses;
+    }
+
+    public void setGroupRowClasses(String groupRowClasses) {
+	this.groupRowClasses = groupRowClasses;
+    }
+
+    public String getGroupNameClasses() {
+	return groupNameClasses;
+    }
+
+    public void setGroupNameClasses(String groupNameClasses) {
+	this.groupNameClasses = groupNameClasses;
+    }
+
+    private String[] getEnrolmentClasses() {
+	return enrolmentClasses.split(",");
+    }
+
+    public void setEnrolmentClasses(String enrolmentClasses) {
+	this.enrolmentClasses = enrolmentClasses;
     }
 
     @Override
@@ -85,15 +131,16 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	private void generateGroup(HtmlBlockContainer scpDiv, final CurriculumGroup group, int depth) {
 	    final HtmlTable groupTable = new HtmlTable();
 	    scpDiv.addChild(groupTable);
-	    groupTable.setClasses("showinfo3 mvert0");
-	    groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth + "em;");
+	    groupTable.setClasses(getTablesClasses());
+	    groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth
+		    + "em;");
 
 	    final HtmlTableRow groupRow = groupTable.createRow();
-	    groupRow.setClasses("bgcolor2");
+	    groupRow.setClasses(getGroupRowClasses());
 
 	    final HtmlTableCell groupNameCell = groupRow.createCell();
 	    groupNameCell.setType(CellType.HEADER);
-	    groupNameCell.setClasses("aleft");
+	    groupNameCell.setClasses(getGroupNameClasses());
 	    groupNameCell.setColspan(5);
 	    groupNameCell.setBody(new HtmlText(group.getName()));
 
@@ -109,8 +156,9 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    if (!curriculumLines.isEmpty()) {
 		final HtmlTable groupLinesTable = new HtmlTable();
 		scpDiv.addChild(groupLinesTable);
-		groupLinesTable.setClasses("showinfo3 mvert0");
-		groupLinesTable.setStyle("width: " + (getInitialWidth() - depth - getWidthDecreasePerLevel()) + "em; margin-left: "
+		groupLinesTable.setClasses(getTablesClasses());
+		groupLinesTable.setStyle("width: "
+			+ (getInitialWidth() - depth - getWidthDecreasePerLevel()) + "em; margin-left: "
 			+ (depth + getWidthDecreasePerLevel()) + "em;");
 
 		for (final CurriculumLine curriculumLine : curriculumLines) {
@@ -134,12 +182,11 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    final Enrolment enrolment = (Enrolment) curriculumLine;
 
 	    final ResourceBundle enumerationResources = ResourceBundle.getBundle(
-	    	"resources.EnumerationResources", LanguageUtils.getLocale());
+		    "resources.EnumerationResources", LanguageUtils.getLocale());
 
 	    // Year
 	    final HtmlTableCell yearCell = lineRow.createCell();
-	    yearCell.setClasses("smalltxt");
-	    yearCell.setAlign("rigth");
+	    yearCell.setClasses(enrolmentYearClasses);
 
 	    final StringBuilder year = new StringBuilder();
 	    year.append(enrolment.getExecutionPeriod().getExecutionYear().getYear());
@@ -147,8 +194,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 
 	    // Semester
 	    final HtmlTableCell semesterCell = lineRow.createCell();
-	    semesterCell.setClasses("smalltxt");
-	    semesterCell.setAlign("rigth");
+	    semesterCell.setClasses(enrolmentSemesterClasses);
 
 	    final StringBuilder semester = new StringBuilder();
 	    semester.append(enrolment.getExecutionPeriod().getSemester().toString());
@@ -158,15 +204,15 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 
 	    // Enrolment
 	    final HtmlTableCell enrolmentCell = lineRow.createCell();
-	    enrolmentCell.setAlign("rigth");
+	    enrolmentCell.setClasses(enrolmentInfoClasses);
 
 	    if (enrolment.isApproved()) {
-	        final String grade = enrolment.getLatestEnrolmentEvaluation().getGrade();
-	        enrolmentCell.setBody(new HtmlText(grade));
+		final String grade = enrolment.getLatestEnrolmentEvaluation().getGrade();
+		enrolmentCell.setBody(new HtmlText(grade));
 	    } else {
-	        final String enrolmentState = enumerationResources.getString(enrolment
-	    	    .getEnrollmentState().toString());
-	        enrolmentCell.setBody(new HtmlText(enrolmentState));
+		final String enrolmentState = enumerationResources.getString(enrolment
+			.getEnrollmentState().toString());
+		enrolmentCell.setBody(new HtmlText(enrolmentState));
 	    }
 	}
     }
