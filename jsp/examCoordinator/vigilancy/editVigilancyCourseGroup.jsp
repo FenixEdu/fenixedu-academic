@@ -102,6 +102,7 @@ nested="true">
 			<fr:layout>
 			<fr:property name="displayLabel" value="false"/>
 			</fr:layout>
+	<fr:destination name="invalid" path="/vigilancy/vigilancyCourseGroupManagement.do?method=addExternalCourse"/>
 </fr:edit>
 <p class="mtop0">
 	<a href="javascript:document.getElementById('addExternalExecutionCourse').submit()"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></a>
@@ -116,6 +117,7 @@ nested="true">
 			<fr:layout>
 				<fr:property name="displayLabel" value="false"/>
 			</fr:layout>
+	<fr:destination name="invalid" path="/vigilancy/vigilancyCourseGroupManagement.do?method=addExternalCourse"/>
 </fr:edit>
 <p class="mtop0">
 	<html:submit><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>

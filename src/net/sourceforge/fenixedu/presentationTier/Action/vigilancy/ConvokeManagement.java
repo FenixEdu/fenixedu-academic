@@ -189,13 +189,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 	  DateTime beginDate = evaluation.getBeginningDateTime();
 	  String date = beginDate.getDayOfMonth() + "/" + beginDate.getMonthOfYear() + "/" + beginDate.getYear();
 
-	  // "Martelada" big time. Tomorrow with time will read documentation
-	  //  and see the correct formating for MessageFormat
-	  
-	  String minutes = String.valueOf(beginDate.getMinuteOfHour());
-	  if(minutes.length()==1) {
-		  minutes = "0" + minutes;
-	  }
+	  String minutes = String.format("%02d", new Object[]{beginDate.getMinuteOfHour()});
 	  
 	  Object[] args = { evaluation.getFullName(), date, beginDate.getHourOfDay(), minutes, evaluation.getAssociatedRoomsAsString(),
 			  beanWithVigilants.getVigilantsAsString(), beanWithVigilants.getSelectedVigilantGroup().getRulesLink() };

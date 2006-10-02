@@ -61,13 +61,8 @@ public class ChangeConvokeActive extends Service {
         DateTime beginDate = writtenEvaluation.getBeginningDateTime();
     	String date = beginDate.getDayOfMonth() + "/" + beginDate.getMonthOfYear() + "/" + beginDate.getYear();
     	
-    	 // "Martelada" big time. Tomorrow with time will read documentation
-  	  //  and see the correct formating for MessageFormat
-  	  
-  	  String minutes = String.valueOf(beginDate.getMinuteOfHour());
-  	  if(minutes.length()==1) {
-  		  minutes = "0" + minutes;
-  	  }
+  	  	String minutes = String.format("%02d", new Object[]{beginDate.getMinuteOfHour()});
+  	  	
     	message = "Caro docente,\n\n";
   	    message += (bool) ? RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.convokedAgain") : RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.uncovoked");
         message += "\n\nProva de avaliacao: " + writtenEvaluation.getFullName();
