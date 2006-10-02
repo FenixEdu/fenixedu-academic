@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**
@@ -15,40 +17,56 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class InsuranceTransaction extends InsuranceTransaction_Base {
 
-	public InsuranceTransaction() {
+    public InsuranceTransaction() {
 
-	}
+    }
 
-	/**
-	 * @param value
-	 * @param transactionDate
-	 * @param remarks
-	 * @param paymentType
-	 * @param transactionType
-	 * @param wasInternalBalance
-	 * @param responsiblePerson
-	 * @param personAccount
-	 * @param guideEntry
-	 * @param executionYear
-	 * @param registration
-	 */
-	public InsuranceTransaction(Double value, Timestamp transactionDate,
-			String remarks, PaymentType paymentType,
-			TransactionType transactionType, Boolean wasInternalBalance,
-			Person responsiblePerson, PersonAccount personAccount,
-			GuideEntry guideEntry, ExecutionYear executionYear,
-			Registration registration) {
-        setOjbConcreteClass(getClass().getName());
-		setValue(value);
-		setTransactionDate(transactionDate);
-		setRemarks(remarks);
-		setPaymentType(paymentType);
-		setTransactionType(transactionType);
-		setWasInternalBalance(wasInternalBalance);
-		setResponsiblePerson(responsiblePerson);
-		setPersonAccount(personAccount);
-		setExecutionYear(executionYear);
-        setGuideEntry(guideEntry);
-		setStudent(registration);
+    /**
+         * @param value
+         * @param transactionDate
+         * @param remarks
+         * @param paymentType
+         * @param transactionType
+         * @param wasInternalBalance
+         * @param responsiblePerson
+         * @param personAccount
+         * @param guideEntry
+         * @param executionYear
+         * @param registration
+         */
+    public InsuranceTransaction(Double value, Timestamp transactionDate, String remarks,
+	    PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
+	    Person responsiblePerson, PersonAccount personAccount, GuideEntry guideEntry,
+	    ExecutionYear executionYear, Registration registration) {
+	setOjbConcreteClass(getClass().getName());
+	setValue(value);
+	setTransactionDate(transactionDate);
+	setRemarks(remarks);
+	setPaymentType(paymentType);
+	setTransactionType(transactionType);
+	setWasInternalBalance(wasInternalBalance);
+	setResponsiblePerson(responsiblePerson);
+	setPersonAccount(personAccount);
+	setExecutionYear(executionYear);
+	setGuideEntry(guideEntry);
+	setStudent(registration);
+    }
+
+    public boolean isReimbursed() {
+	if (!hasGuideEntry() || getGuideEntry().getReimbursementGuideEntriesCount() == 0) {
+	    return false;
+	} else {
+	    for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry()
+		    .getReimbursementGuideEntries()) {
+		if (reimbursementGuideEntry.getReimbursementGuide()
+			.getActiveReimbursementGuideSituation().getReimbursementGuideState().equals(
+				ReimbursementGuideState.PAYED)) {
+		    return true;
+		}
+	    }
+
+	    return false;
 	}
+    }
+
 }

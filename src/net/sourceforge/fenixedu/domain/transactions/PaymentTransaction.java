@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.transactions;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import net.sourceforge.fenixedu.domain.GratuitySituation;
@@ -15,55 +16,53 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public abstract class PaymentTransaction extends PaymentTransaction_Base {
 
-	public PaymentTransaction() {
-	    super();
-        setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public PaymentTransaction() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	/**
-	 * @param value
-	 * @param transactionDate
-	 * @param remarks
-	 * @param paymentType
-	 * @param transactionType
-	 * @param wasInternalBalance
-	 * @param responsiblePerson
-	 * @param personAccount
-	 * @param guideEntry
-	 */
-	public PaymentTransaction(Double value, Timestamp transactionDate,
-			String remarks, PaymentType paymentType,
-			TransactionType transactionType, Boolean wasInternalBalance,
-			Person responsiblePerson, PersonAccount personAccount,
-			GuideEntry guideEntry) {
-        this();
-        setOjbConcreteClass(getClass().getName());
-		setGuideEntry(guideEntry);
-		setValue(value);
-		setTransactionDate(transactionDate);
-		setRemarks(remarks);
-		setPaymentType(paymentType);
-		setTransactionType(transactionType);
-		setWasInternalBalance(wasInternalBalance);
-		setResponsiblePerson(responsiblePerson);
-		setPersonAccount(personAccount);
-	}
+    /**
+         * @param value
+         * @param transactionDate
+         * @param remarks
+         * @param paymentType
+         * @param transactionType
+         * @param wasInternalBalance
+         * @param responsiblePerson
+         * @param personAccount
+         * @param guideEntry
+         */
+    public PaymentTransaction(BigDecimal value, Timestamp transactionDate, String remarks,
+	    PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
+	    Person responsiblePerson, PersonAccount personAccount, GuideEntry guideEntry) {
+	this();
+	setOjbConcreteClass(getClass().getName());
+	setGuideEntry(guideEntry);
+	setValueBigDecimal(value);
+	setTransactionDate(transactionDate);
+	setRemarks(remarks);
+	setPaymentType(paymentType);
+	setTransactionType(transactionType);
+	setWasInternalBalance(wasInternalBalance);
+	setResponsiblePerson(responsiblePerson);
+	setPersonAccount(personAccount);
+    }
 
     public void delete() {
-        if (this instanceof GratuityTransaction) {
-            GratuityTransaction gratuityTransaction = (GratuityTransaction) this;
-            GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
-            gratuityTransaction.removeGratuitySituation();
-            
-            double guideEntryValue = getGuideEntry().getPrice() * getGuideEntry().getQuantity();
-            gratuitySituation.setRemainingValue(gratuitySituation.getRemainingValue() + guideEntryValue);
-        }
-        
-        removeGuideEntry();
-        removeResponsiblePerson();
-        removePersonAccount();
-        removeRootDomainObject();
-        deleteDomainObject();
+	if (this instanceof GratuityTransaction) {
+	    GratuityTransaction gratuityTransaction = (GratuityTransaction) this;
+	    GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
+	    gratuityTransaction.removeGratuitySituation();
+
+	    double guideEntryValue = getGuideEntry().getPrice() * getGuideEntry().getQuantity();
+	    gratuitySituation.setRemainingValue(gratuitySituation.getRemainingValue() + guideEntryValue);
+	}
+
+	removeGuideEntry();
+	removeResponsiblePerson();
+	removePersonAccount();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
-    
+
 }

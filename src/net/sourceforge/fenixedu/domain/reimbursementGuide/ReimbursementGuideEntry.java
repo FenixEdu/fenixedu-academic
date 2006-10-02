@@ -5,6 +5,8 @@
 
 package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
@@ -17,17 +19,27 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class ReimbursementGuideEntry extends ReimbursementGuideEntry_Base {
 
-	public ReimbursementGuideEntry() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public ReimbursementGuideEntry() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
     public void delete() {
-        removeGuideEntry();
-        removeReimbursementGuide();
-        removeReimbursementTransaction();
-        removeRootDomainObject();
-        deleteDomainObject();
+	removeGuideEntry();
+	removeReimbursementGuide();
+	removeReimbursementTransaction();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
+    @Deprecated
+    public Double getValue() {
+	return getValueBigDecimal().doubleValue();
+    }
+
+    @Deprecated
+    public void setValue(Double value) {
+	setValueBigDecimal(BigDecimal.valueOf(value));
     }
 
 }

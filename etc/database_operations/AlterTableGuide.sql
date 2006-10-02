@@ -1,0 +1,1 @@
+alter table GUIDE change column TOTAL TOTAL_BIG_DECIMAL VARCHAR(250) NOT NULL;

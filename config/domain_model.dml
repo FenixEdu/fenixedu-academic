@@ -1666,7 +1666,7 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 	Integer keyContributorParty;
 	String remarks;
 	Integer version;
-	Double total;
+	BigDecimal totalBigDecimal;
 	Integer year;
 	Integer keyPerson;
 	Integer keyExecutionDegree;
@@ -1680,7 +1680,7 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 class net.sourceforge.fenixedu.domain.GuideEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyGuide;
 	Integer keyPaymentTransaction;
-	Double price;
+	BigDecimal priceBigDecimal;
 	String description;
 	Integer quantity;
     DocumentType documentType;
@@ -1841,7 +1841,7 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher extends net.sou
 
 class net.sourceforge.fenixedu.domain.InsuranceValue extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
-	Double annualValue;
+	BigDecimal annualValueBigDecimal;
 	YearMonthDay endDateYearMonthDay;
 }
 
@@ -2282,7 +2282,7 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide exte
 
 class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	String justification;
-	Double value;
+	BigDecimal valueBigDecimal;
 	Integer keyReimbursementGuide;
 	Integer keyGuideEntry;
 	Integer keyReimbursementTransaction;
@@ -3129,7 +3129,7 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
 }
 
 class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourceforge.fenixedu.domain.DomainObject {
-	Double value;
+	BigDecimal valueBigDecimal;
 	String remarks;
 	Boolean wasInternalBalance;
 	Integer keyResponsiblePerson;
