@@ -1,10 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.parking;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.parking.ParkingDocument;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
+import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class UpdateParkingParty extends Service {
 
@@ -49,5 +56,19 @@ public class UpdateParkingParty extends Service {
         }
         parkingRequest.setParkingRequestState(parkingRequestState);
         parkingRequest.setNote(note);
+
+        String email = ((Person) parkingRequest.getParkingParty().getParty()).getEmail();
+
+        if (note != null && note.trim().length() != 0 && email != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            List<String> to = new ArrayList<String>();
+            to.add(email);
+            if (EmailSender.send(bundle.getString("label.fromName"),
+                    bundle.getString("label.fromAddress"), to, null, null,
+                    bundle.getString("label.subject"), note).isEmpty()) {
+
+            }
+        }
     }
 }

@@ -361,17 +361,21 @@ public class ParkingParty extends ParkingParty_Base {
                 if (teacher.getCurrentWorkingDepartment() != null) {
                     currenteDepartment = teacher.getCurrentWorkingDepartment().getName();
                 }
-                occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber() + "<br/>" + currenteDepartment);
+                occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber()
+                        + "<br/>" + currenteDepartment);
             }
             Employee employee = person.getEmployee();
             if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
-                    && person.getPersonRole(RoleType.EMPLOYEE) != null) {
+                    && person.getPersonRole(RoleType.EMPLOYEE) != null
+                    && employee.getCurrentContract() != null) {
                 Unit currentUnit = employee.getCurrentWorkingPlace();
                 if (currentUnit != null) {
-                    occupations.add("<strong>Funcionário</strong><br/> Nº " + employee.getEmployeeNumber() + "<br/>"
-                            + currentUnit.getName() + " - " + currentUnit.getCostCenterCode());
+                    occupations.add("<strong>Funcionário</strong><br/> Nº "
+                            + employee.getEmployeeNumber() + "<br/>" + currentUnit.getName() + " - "
+                            + currentUnit.getCostCenterCode());
                 } else {
-                    occupations.add("<strong>Funcionário</strong><br/> Nº " + employee.getEmployeeNumber());
+                    occupations.add("<strong>Funcionário</strong><br/> Nº "
+                            + employee.getEmployeeNumber());
                 }
             }
             Student student = person.getStudent();
@@ -396,7 +400,8 @@ public class ParkingParty extends ParkingParty_Base {
                 }
             }
             GrantOwner grantOwner = person.getGrantOwner();
-            if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null) {
+            if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null
+                    && grantOwner.hasCurrentContract()) {
                 occupations.add("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
             }
         }

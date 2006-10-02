@@ -88,7 +88,7 @@ public class ParkingRequestSearch implements Serializable {
     }
 
     private boolean satisfiedPersonName(ParkingRequest request) {
-        return getPersonName() == null
+        return org.apache.commons.lang.StringUtils.isEmpty(getPersonName())
                 || StringUtils.verifyContainsWithEquality(
                         request.getParkingParty().getParty().getName(), getPersonName());
     }
