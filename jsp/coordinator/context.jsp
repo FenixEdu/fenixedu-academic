@@ -20,8 +20,8 @@
 	<logic:equal name="infoExecutionDegree" property="bolonha" value="false">
 		<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 			<bean:define id="candidates" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT %>" scope="session"/>
-			<strong><bean:message key="label.masterDegree.coordinator.candidates"/></strong>
-			<bean:write name="candidates" />
+			>&nbsp;&nbsp;<em><strong><bean:message key="label.masterDegree.coordinator.candidates"/></strong>
+			<bean:write name="candidates" /></em>
 		</logic:equal>
 	</logic:equal>
 
