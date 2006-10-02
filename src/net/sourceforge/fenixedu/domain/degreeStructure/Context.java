@@ -112,6 +112,9 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
     
     protected void checkExecutionPeriods(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+	if (beginExecutionPeriod == null) {
+	    throw new DomainException("curricular.rule.begin.execution.period.cannot.be.null");
+	}
         if (endExecutionPeriod != null && beginExecutionPeriod.isAfter(endExecutionPeriod)) {
             throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
         }
@@ -170,6 +173,14 @@ public class Context extends Context_Base implements Comparable<Context> {
             initDegreeModuleScopeContext();
         }
         return degreeModuleScopeContext;
+    }
+    
+    @Override
+    public void setBeginExecutionPeriod(ExecutionPeriod beginExecutionPeriod) {
+	if (beginExecutionPeriod == null) {
+	    throw new DomainException("curricular.rule.begin.execution.period.cannot.be.null");
+	}
+        super.setBeginExecutionPeriod(beginExecutionPeriod);
     }
     
     public class DegreeModuleScopeContext extends DegreeModuleScope {
