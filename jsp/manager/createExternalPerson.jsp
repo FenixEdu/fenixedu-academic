@@ -9,6 +9,9 @@
 <br/>
 <h2><strong><bean:message key="link.create.external.person" bundle="MANAGER_RESOURCES"/></strong></h2>
 <br/>
+
+<span class="error"><!-- Error messages go here --><html:errors/><br /></span>
+
 <fr:form action="/externalPerson.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="create"/>
 

@@ -136,7 +136,7 @@ public class Person extends Person_Base {
     }
     
     private void createUserAndLoginEntity() {
-	createUserAndLoginEntity("X" + getIdInternal());
+	createUserAndLoginEntity("P" + getIdInternal());
     }
 
     public Person(String name, String identificationDocumentNumber,
@@ -224,6 +224,17 @@ public class Person extends Person_Base {
 	setAvailablePhoto(Boolean.FALSE);
 	setMaritalStatus(MaritalStatus.UNKNOWN);
 	setIsPassInKerberos(Boolean.FALSE);
+    }
+
+    public Person(PersonBean creator, boolean createExternalPerson) {
+	this(creator);
+	if (createExternalPerson) {
+	    getPersonRolesSet().clear();
+	    final User user = getUser();
+	    final Login login = (Login) user.getIdentificationsSet().iterator().next();
+	    login.setEndDateDateTime(login.getBeginDateDateTime());
+	    login.setActive(Boolean.FALSE);
+	}
     }
 
     public void edit(InfoPersonEditor personToEdit, Country country) {
@@ -1736,9 +1747,7 @@ public class Person extends Person_Base {
         }
 
         public Object execute() {
-            final Person person = new Person(this);
-            person.addPersonRoleByRoleType(RoleType.PERSON);
-            return person;
+            return new Person(this, true);
         }
     }
 

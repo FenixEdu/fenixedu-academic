@@ -2036,7 +2036,7 @@
        		<forward name="showNotNeedToEnroll" path="show-not-need-to-enroll"/>
        		<forward name="insertNotNeedToEnroll" path="/showNotNeedToEnroll.do?method=prepareNotNeedToEnroll"/>
        	</action>
-       	
+
        	<action path="/prepareNotNeedToEnroll" forward="show-not-need-to-enroll"/>
 
        	<action path="/externalPerson"
@@ -2044,6 +2044,8 @@
        			scope="request"
 				input="/externalPerson.do?method=prepareCreate"
        			parameter="method">
+			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key=""
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>
        		<forward name="showCreateForm" path="df.create.external.person"/>
        		<forward name="showCreatedPerson" path="df.show.created.external.person"/>
        	</action>

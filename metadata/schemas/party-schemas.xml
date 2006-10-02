@@ -64,4 +64,5 @@
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.Login" type="net.sourceforge.fenixedu.domain.Login" bundle="MANAGER_RESOURCES" > 
 	<slot name="username"/>
+	<slot name="active"/>
 </schema>
