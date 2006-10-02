@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Fix execution course hours." fixExecutionCourseTable.sql
+execute "alter table ParkingParty" alterTableParkingParty.sql
+execute "Insert ParkingGroups" insertParkingGroups.sql
