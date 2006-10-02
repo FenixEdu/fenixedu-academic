@@ -6,12 +6,12 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class ChangeStudentsShift extends Service {
 
@@ -21,31 +21,34 @@ public class ChangeStudentsShift extends Service {
         final Shift oldShift = rootDomainObject.readShiftByOID(oldShiftId);
         final Shift newShift = rootDomainObject.readShiftByOID(newShiftId);
 
-        if (oldShift == null || newShift == null || !oldShift.getTipo().equals(newShift.getTipo())
-                || !oldShift.getDisciplinaExecucao().getIdInternal().equals(newShift.getDisciplinaExecucao().getIdInternal())) {
-            throw new UnableToTransferStudentsException();
+        if (newShift != null) {
+            if (oldShift == null || !oldShift.getTipo().equals(newShift.getTipo())
+                    || !oldShift.getDisciplinaExecucao().getIdInternal().equals(newShift.getDisciplinaExecucao().getIdInternal())) {
+                throw new UnableToTransferStudentsException();
+            }
         }
 
-        SendMail sendMail = new SendMail();
-        List<String> emptyList = new ArrayList<String>();
-        List<String> toMails = new ArrayList<String>();
+        final List<String> emptyList = new ArrayList<String>();
+        final List<String> toMails = new ArrayList<String>();
 
         oldShift.getStudentsSet().removeAll(registrations);
-        newShift.getStudentsSet().addAll(registrations);
+        if (newShift != null) {
+            newShift.getStudentsSet().addAll(registrations);
+        }
         for (final Registration registration : registrations) {
-            Person person = registration.getPerson();
+            final Person person = registration.getPerson();
             if (person.getEmail() != null && person.getEmail().length() > 0) {
                 toMails.add(person.getEmail());
             }
         }
 
-        Person person = Person.readPersonByUsername(userView.getUtilizador());
-        sendMail.run(emptyList, emptyList, toMails, person.getNome(), person.getEmail(), 
-                "Alteração de turnos",
-                "Devido a alterações nos horários, a sua reserva no turno "
-                + oldShift.getNome() 
-                + " foi transferida para o turno "
-                + newShift.getNome());
+        final String subject = "Alteração de turnos";
+        final String messagePrefix = "Devido a alterações nos horários, a sua reserva no turno " + oldShift.getNome(); 
+        final String messagePosfix = newShift == null ? " foi removida. Deverá efectuar uma nova reserva no turno que pretende."
+                : " foi transferida para o turno " + newShift.getNome();
+        final String message = messagePrefix + messagePosfix;
+        final Person person = Person.readPersonByUsername(userView.getUtilizador());
+        EmailSender.send("GOP", "gop@ist.utl.pt", emptyList, emptyList, toMails, subject, message);
     }
 
     public class UnableToTransferStudentsException extends FenixServiceException {
