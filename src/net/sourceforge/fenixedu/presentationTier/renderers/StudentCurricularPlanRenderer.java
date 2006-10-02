@@ -21,6 +21,10 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 public class StudentCurricularPlanRenderer extends OutputRenderer {
 
     private Boolean organizedByGroups;
+    
+    private Integer initialWidth = Integer.valueOf(70);
+    
+    private Integer widthDecreasePerLevel = Integer.valueOf(3);
 
     public StudentCurricularPlanRenderer() {
 	super();
@@ -30,11 +34,24 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	return organizedByGroups;
     }
 
-    /**
-     * @property
-     */
     public void setOrganizedByGroups(Boolean organizedByGroups) {
 	this.organizedByGroups = organizedByGroups;
+    }
+
+    public Integer getInitialWidth() {
+        return initialWidth;
+    }
+
+    public void setInitialWidth(Integer initialWidth) {
+        this.initialWidth = initialWidth;
+    }
+
+    public Integer getWidthDecreasePerLevel() {
+        return widthDecreasePerLevel;
+    }
+
+    public void setWidthDecreasePerLevel(Integer widthDecreasePerLevel) {
+        this.widthDecreasePerLevel = widthDecreasePerLevel;
     }
 
     @Override
@@ -69,7 +86,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    final HtmlTable groupTable = new HtmlTable();
 	    scpDiv.addChild(groupTable);
 	    groupTable.setClasses("showinfo3 mvert0");
-	    groupTable.setStyle("width: " + (70 - depth) + "em; margin-left: " + depth + "em;");
+	    groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth + "em;");
 
 	    final HtmlTableRow groupRow = groupTable.createRow();
 	    groupRow.setClasses("bgcolor2");
@@ -83,7 +100,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    generateLines(scpDiv, depth, group.getCurriculumLines());
 
 	    for (final CurriculumGroup curriculumGroup : group.getCurriculumGroups()) {
-		generateGroup(scpDiv, curriculumGroup, depth + 3);
+		generateGroup(scpDiv, curriculumGroup, depth + getWidthDecreasePerLevel());
 	    }
 	}
 
@@ -93,8 +110,8 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		final HtmlTable groupLinesTable = new HtmlTable();
 		scpDiv.addChild(groupLinesTable);
 		groupLinesTable.setClasses("showinfo3 mvert0");
-		groupLinesTable.setStyle("width: " + (70 - depth - 3) + "em; margin-left: "
-			+ (depth + 3) + "em;");
+		groupLinesTable.setStyle("width: " + (getInitialWidth() - depth - getWidthDecreasePerLevel()) + "em; margin-left: "
+			+ (depth + getWidthDecreasePerLevel()) + "em;");
 
 		for (final CurriculumLine curriculumLine : curriculumLines) {
 		    generateLine(groupLinesTable, curriculumLine);
