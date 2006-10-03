@@ -1,9 +1,18 @@
 <!--  Vigilant Schemas -->
 
 <schema name="presentVigilantWithCategory" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES">
-		<slot name="teacherCategoryCode" key="label.vigilancy.category"/>
+		<slot name="person.teacher" layout="null-as-label" key="label.vigilancy.category">
+			<property name="label" value=" "/>
+			<property name="subLayout" value="values"/>
+			<property name="subSchema" value="presentTeacherCategoryCode"/>
+		</slot>
 		<slot name="person.username" key="label.vigilancy.username"/>
 		<slot name="person.name" key="label.vigilancy.name"/>
+		<slot name="points" key="label.vigilancy.points"/>
+</schema>
+
+<schema name="presentTeacherCategoryCode" type="net.sourceforge.fenixedu.domain.Teacher" bundle="VIGILANCY_RESOURCES">
+	<slot name="category.code" key="label.vigilancy.category"/>
 </schema>
 
 <schema name="presentVigilantName" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES">
@@ -232,7 +241,7 @@
 		</slot>
 </schema>
 <schema name="selectVigilants" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
-		<slot name="vigilants" key="label.vigilancy.vigilants" layout="tabular-option" schema="presentVigilantWithCategory">
+		<slot name="vigilants" key="label.vigilancy.vigilants" layout="tabular-option-postback" schema="presentVigilantWithCategory">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantsForGivenVigilantGroup"/>
 			<property name="classes" value="tstyle1 mtop0" />
 		</slot>
@@ -693,8 +702,12 @@
 </schema>
 
 <schema name="presentEmployeeWithCatAndNumber" type="net.sourceforge.fenixedu.domain.Employee" bundle="VIGILANCY_RESOURCES">
-		<slot name="categoryCode" key="label.vigilancy.name"/>
-		<slot name="person.username" key="label.vigilancy.name"/>
+		<slot name="person.teacher" layout="null-as-label" key="label.vigilancy.category">
+			<property name="label" value=" "/>
+			<property name="subLayout" value="values"/>
+			<property name="subSchema" value="presentTeacherCategoryCode"/>
+		</slot>
+		<slot name="person.username" key="label.vigilancy.username"/>
 		<slot name="person" key="label.vigilancy.name">
 			<property name="format" value="${name}"/>
 		</slot>

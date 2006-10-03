@@ -176,19 +176,4 @@ public class Employee extends Employee_Base {
     	return (departmentUnit != null) ? departmentUnit.getDepartment() : null;    	    	
     }
 
-    public Category getCategory() {
-    	Teacher teacher = this.getPerson().getTeacher();
-    	if(teacher!=null) {
-    		return teacher.getCategory();
-    	}
-    	return null;
-    }
-    
-    public String getCategoryCode() {
-    	Category category = this.getCategory();
-    	if(category!=null) {
-    		return category.getCode();
-    	}
-    	else return null;
-    }
 }

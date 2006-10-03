@@ -51,7 +51,7 @@
 </p>
 
 <logic:notEmpty name="bean" property="writtenEvaluation.vigilancys"> 
-<p class="mbottom05"><strong><bean:message key="label.vigilancy.alreadyConvoked" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
+<p class="mbottom05"><strong><bean:message key="label.vigilancy.alreadyConvoked" bundle="VIGILANCY_RESOURCES"/></strong>:
 <fr:view name="bean" property="writtenEvaluation.vigilancys">
 	<fr:layout name="flowLayout">
 		<fr:property name="eachInline" value="false"/>
@@ -59,6 +59,18 @@
 		<fr:property name="eachLayout" value="values"/>
 	</fr:layout>
 </fr:view>
+</p>
+</logic:notEmpty>
+
+<logic:notEmpty name="incompatibleVigilants">
+<strong><bean:message key="label.vigilancy.incompatibilityDetected" bundle="VIGILANCY_RESOURCES"/></strong>:
+<fr:view name="incompatibleVigilants">
+	<fr:layout>
+		<fr:property name="eachLayout" value="values"/>
+		<fr:property name="eachSchema" value="presentVigilantName"/>
+		<fr:property name="classes" value="error1 list2"/>
+	</fr:layout>
+</fr:view> 
 </logic:notEmpty>
 
 <fr:form id="addVigilantsForm" action="/vigilancy/convokeManagement.do?method=confirmConvokes">
@@ -82,6 +94,7 @@
 	<fr:property name="displayLabel" value="false"/>
 	<fr:property name="classes" value="mtop0" />
 </fr:layout>
+	<fr:destination name="postback" path="/vigilancy/convokeManagement.do?method=checkForIncompatibilities"/>
 </fr:edit>
 
 

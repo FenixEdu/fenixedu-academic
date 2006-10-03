@@ -447,6 +447,8 @@ Documentation:
 
 	<renderer mode="input" type="java.util.List" layout="tabular-option" class="net.sourceforge.fenixedu.renderers.TabularOptionInputRenderer"/>	
 
+	<renderer mode="input" type="java.util.List" layout="tabular-option-postback" class="net.sourceforge.fenixedu.renderers.TabularOptionInputRendererWithPostBack"/>	
+
 	<!--@ Layout that allows you to render a list with checkboxes with postback -->
 	<renderer mode="input" type="java.util.List" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.CheckBoxOptionListRendererWithPostBack"/>
 

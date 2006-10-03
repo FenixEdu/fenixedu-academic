@@ -7,17 +7,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.commons.collections.comparators.ReverseComparator;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailableTypes;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class ConvokeByPoints extends Strategy {
 
@@ -51,11 +50,12 @@ public class ConvokeByPoints extends Strategy {
 					Teacher teacher = vigilant.getTeacher();
 					if(teacher!=null && teacher.teachesAny(executionCourses))  {
 						teachersSugestion.add(vigilant);
+						incompatiblePersons.add(vigilant.getPerson());
 					}
 					else {
 						vigilantSugestion.add(vigilant);
 					}
-					incompatiblePersons.add(vigilant.getPerson());
+					
 			} else {
 				if (!vigilantIsAlreadyConvokedForThisExam(vigilant,
 						writtenEvaluation)) {

@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class EmployeesForGivenUnit implements DataProvider {
 
@@ -50,8 +52,7 @@ public class EmployeesForGivenUnit implements DataProvider {
         }
         ComparatorChain chain = new ComparatorChain();
         chain.addComparator(new CategoryComparator());
-        chain.addComparator(new BeanComparator("person.name"));
-        chain.addComparator(new BeanComparator("person.username"));
+        chain.addComparator(new ReverseComparator(new BeanComparator("person.username")));
         Collections.sort(employees, chain);
         return employees;
 
@@ -67,9 +68,13 @@ public class EmployeesForGivenUnit implements DataProvider {
 				Employee e1 = (Employee) o1;
 				Employee e2 = (Employee) o2;
 				
-				Category c1 = e1.getCategory();
-				Category c2 = e2.getCategory();
+				Teacher t1 = e1.getPerson().getTeacher();
+				Teacher t2 = e2.getPerson().getTeacher();
 				
+				Category c1 = (t1!=null) ? t1.getCategory() : null;
+				Category c2 = (t2!=null) ? t2.getCategory() : null;
+				
+				if(c1==null && c2==null) return 0;
 				if(c1==null) return -1;
 				if(c2==null) return 1;
 				

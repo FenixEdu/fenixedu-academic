@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -274,6 +275,27 @@ public class ConvokeManagement extends FenixDispatchAction {
 		return mapping.findForward("prepareEditConvoke");
 	}
 
+	public ActionForward checkForIncompatibilities(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("selectVigilants").getMetaObject().getObject();
+		List<Vigilant> vigilants = bean.getTeachersForAGivenCourse();
+		vigilants.addAll(bean.getVigilants());
+		List<Vigilant> incompatibleVigilants = new ArrayList<Vigilant>();
+		for(Vigilant vigilant : vigilants) {
+			if(vigilant.hasIncompatiblePerson()) {
+				incompatibleVigilants.add(vigilant.getIncompatibleVigilant());
+			}
+		}
+		vigilants.retainAll(incompatibleVigilants);
+		if(!vigilants.isEmpty()) {
+			request.setAttribute("incompatibleVigilants", vigilants);
+		}
+		request.setAttribute("bean", bean);
+		return mapping.findForward("prepareGenerateConvokes");
+	}	
+	
 	private ExamCoordinator getCoordinatorForCurrentYear(
 			HttpServletRequest request) throws FenixFilterException,
 			FenixServiceException {

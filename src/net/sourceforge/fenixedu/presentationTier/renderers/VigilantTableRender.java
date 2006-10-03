@@ -240,7 +240,6 @@ public class VigilantTableRender extends OutputRenderer {
     protected Layout getLayout(Object object, Class type) {
         ComparatorChain chain = new ComparatorChain();
         chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
-        chain.addComparator(Vigilant.NAME_COMPARATOR);
         chain.addComparator(Vigilant.USERNAME_COMPARATOR);
         
         List<Vigilant> vigilants = new ArrayList<Vigilant>((Collection)object);

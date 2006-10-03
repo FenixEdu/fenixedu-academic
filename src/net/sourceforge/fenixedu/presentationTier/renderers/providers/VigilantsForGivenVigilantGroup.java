@@ -35,14 +35,14 @@ public class VigilantsForGivenVigilantGroup implements DataProvider {
             }
         } else {
             vigilants.addAll(vigilantGroup.getVigilants());
+            ComparatorChain chain = new ComparatorChain();
+            chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
+            chain.addComparator(Vigilant.USERNAME_COMPARATOR);
+            Collections.sort(vigilants,chain);
         }
 
-        ComparatorChain chain = new ComparatorChain();
-        chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
-        chain.addComparator(Vigilant.NAME_COMPARATOR);
-        chain.addComparator(Vigilant.USERNAME_COMPARATOR);
-        Collections.sort(vigilants,chain);
-        return vigilants;
+        
+       return vigilants;
 
     }
 

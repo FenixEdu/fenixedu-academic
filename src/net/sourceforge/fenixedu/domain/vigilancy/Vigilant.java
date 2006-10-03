@@ -7,8 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -19,13 +17,12 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -33,7 +30,7 @@ import org.joda.time.YearMonthDay;
 public class Vigilant extends Vigilant_Base {
 
 	public static final Comparator<Vigilant> NAME_COMPARATOR = new BeanComparator("person.name"); 
-	public static final Comparator<Vigilant> USERNAME_COMPARATOR = new BeanComparator("person.username");
+	public static final Comparator<Vigilant> USERNAME_COMPARATOR = new ReverseComparator(new BeanComparator("person.username"));
 	public static final Comparator<Vigilant> CATEGORY_COMPARATOR = new Comparator() {
 
 		public int compare(Object o1, Object o2) {
