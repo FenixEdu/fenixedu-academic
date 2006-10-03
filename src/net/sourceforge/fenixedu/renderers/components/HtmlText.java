@@ -58,6 +58,10 @@ public class HtmlText extends HtmlComponent {
         	    tag.setName(null);
         	}
         
+        if (this.text == null) {
+            return tag;
+        }
+            
         String finalText = this.escaped ? escape(this.text) : this.text;
         finalText = this.newLineAware ? replaceNewlines(finalText) : finalText;
         
