@@ -1406,6 +1406,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getDegree().getTipoCurso();
     }
 
+    public Set<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
+	final Comparator<ExecutionPeriod> comparator = new ReverseComparator(
+		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	Set<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(comparator);
+
+	for (final Enrolment enrolment : this.getEnrolmentsSet()) {
+	    result.add(enrolment.getExecutionPeriod());
+	}
+
+	return result;
+    }
+
     public Set<ExecutionYear> getEnrolmentsExecutionYears() {
 	final Comparator<ExecutionYear> comparator = new ReverseComparator(
 		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
