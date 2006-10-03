@@ -4,10 +4,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.beanutils.BeanComparator;
-
-import sun.security.krb5.internal.s;
-
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -26,7 +22,13 @@ import net.sourceforge.fenixedu.renderers.components.HtmlTableCell.CellType;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
+
 public class StudentCurricularPlanRenderer extends OutputRenderer {
+
+    private static final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", LanguageUtils.getLocale());
+    
+    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
 
     private Boolean organizedByGroups;
 
@@ -122,20 +124,17 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    final HtmlBlockContainer scpDiv = new HtmlBlockContainer();
 
 	    if (studentCurricularPlan == null) {
-		return new HtmlText();
+		return new HtmlText(studentResources.getString("message.no.curricularplan"));
 	    } else if (isOrganizedByGroups() == null) {
 		setOrganizedByGroups(studentCurricularPlan.isBolonha() ? Boolean.TRUE : Boolean.FALSE);
+	    } else if (isOrganizedByGroups() && !studentCurricularPlan.isBolonha()) {
+		return new HtmlText(studentResources.getString("not.applicable"));
 	    }
 
 	    if (isOrganizedByGroups()) {
 		generateGroup(scpDiv, studentCurricularPlan.getRoot(), 0);
 	    } else {
-		Set<ExecutionPeriod> executionPeriods = studentCurricularPlan
-			.getEnrolmentsExecutionPeriods();
-
-		for (final ExecutionPeriod executionPeriod : executionPeriods) {
-		    generateExecutionPeriod(scpDiv, executionPeriod);
-		}
+		generateEnrolmentsExecutionPeriods(scpDiv, studentCurricularPlan);
 	    }
 
 	    return scpDiv;
@@ -145,8 +144,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    final HtmlTable groupTable = new HtmlTable();
 	    scpDiv.addChild(groupTable);
 	    groupTable.setClasses(getTablesClasses());
-	    groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth
-		    + "em;");
+	    groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth + "em;");
 
 	    final HtmlTableRow groupRow = groupTable.createRow();
 	    groupRow.setClasses(getGroupRowClasses());
@@ -155,22 +153,13 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    groupNameCell.setType(CellType.HEADER);
 	    groupNameCell.setClasses(getGroupNameClasses());
 	    groupNameCell.setColspan(5);
-	    groupNameCell.setBody((group.isRoot()) ? generateRootLink(group) : new HtmlText(group
-		    .getName()));
+	    groupNameCell.setBody((group.isRoot()) ? generateRootNameLink(group) : new HtmlText(group.getName()));
 
-	    final Set<CurriculumLine> sortedCurriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_NAME);
-	    sortedCurriculumLines.addAll(group.getCurriculumLines());
-	    generateLines(scpDiv, depth, sortedCurriculumLines);
-
-	    final Set<CurriculumGroup> sortedCurriculumGroups = new TreeSet<CurriculumGroup>(new BeanComparator("childOrder"));
-	    sortedCurriculumGroups.addAll(group.getCurriculumGroups());
-	    
-	    for (final CurriculumGroup curriculumGroup : sortedCurriculumGroups) {
-		generateGroup(scpDiv, curriculumGroup, depth + getWidthDecreasePerLevel());
-	    }
+	    generateGroupLines(scpDiv, depth, group);
+	    generateGroupChilds(scpDiv, depth, group);
 	}
 
-	private HtmlLink generateRootLink(CurriculumGroup root) {
+	private HtmlLink generateRootNameLink(CurriculumGroup root) {
 	    final HtmlLink rootLink = new HtmlLink();
 
 	    rootLink.setText(root.getName());
@@ -193,9 +182,11 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    return rootLink;
 	}
 
-	private void generateLines(HtmlBlockContainer scpDiv, int depth,
-		final Set<CurriculumLine> curriculumLines) {
-	    if (!curriculumLines.isEmpty()) {
+	private void generateGroupLines(HtmlBlockContainer scpDiv, int depth, CurriculumGroup group) {
+	    final Set<CurriculumLine> sortedCurriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_NAME);
+	    sortedCurriculumLines.addAll(group.getCurriculumLines());
+	    
+	    if (!sortedCurriculumLines.isEmpty()) {
 		final HtmlTable groupLinesTable = new HtmlTable();
 		scpDiv.addChild(groupLinesTable);
 		groupLinesTable.setClasses(getTablesClasses());
@@ -203,7 +194,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 			+ (getInitialWidth() - depth - getWidthDecreasePerLevel()) + "em; margin-left: "
 			+ (depth + getWidthDecreasePerLevel()) + "em;");
 
-		for (final CurriculumLine curriculumLine : curriculumLines) {
+		for (final CurriculumLine curriculumLine : sortedCurriculumLines) {
 		    generateLine(groupLinesTable, curriculumLine);
 		}
 	    }
@@ -219,9 +210,6 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 
 	private void generateEnrolment(final CurriculumLine curriculumLine, final HtmlTableRow lineRow) {
 	    final Enrolment enrolment = (Enrolment) curriculumLine;
-
-	    final ResourceBundle enumerationResources = ResourceBundle.getBundle(
-		    "resources.EnumerationResources", LanguageUtils.getLocale());
 
 	    // Name
 	    final HtmlTableCell name = lineRow.createCell();
@@ -259,44 +247,63 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    }
 	}
 
-	private HtmlLink generateExecutionCourseLink(Enrolment enrolment) {
-	    final HtmlLink rootLink = new HtmlLink();
+	private HtmlComponent generateExecutionCourseLink(Enrolment enrolment) {
+	    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
+	    
+	    if (executionCourse == null) {
+		return new HtmlText(enrolment.getName());
+	    } else {
+		final HtmlLink executionCourseLink = new HtmlLink();
 
-	    rootLink.setText(enrolment.getName());
+		executionCourseLink.setText(enrolment.getName());
 
-	    rootLink.setUrl("/publico/executionCourse.do?method=firstPage");
-	    rootLink.setModuleRelative(false);
+		executionCourseLink.setUrl("/publico/executionCourse.do?method=firstPage");
+		executionCourseLink.setModuleRelative(false);
 
-	    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(ExecutionPeriod.readActualExecutionPeriod());
-	    rootLink.setParameter("executionCourseID", executionCourse.getIdInternal());
+		executionCourseLink.setParameter("executionCourseID", executionCourse.getIdInternal());
 
-	    rootLink.setTarget(HtmlLink.Target.BLANK);
+		executionCourseLink.setTarget(HtmlLink.Target.BLANK);
 
-	    return rootLink;
+		return executionCourseLink;
+	    }
 	}
 
-	private void generateExecutionPeriod(HtmlBlockContainer scpDiv, ExecutionPeriod executionPeriod) {
-	    final HtmlTable groupTable = new HtmlTable();
-	    scpDiv.addChild(groupTable);
-	    groupTable.setClasses(getTablesClasses());
-	    groupTable.setStyle("width: " + getInitialWidth() + "em;");
+	private void generateGroupChilds(HtmlBlockContainer scpDiv, int depth, final CurriculumGroup group) {
+	    final Set<CurriculumGroup> sortedCurriculumGroups = new TreeSet<CurriculumGroup>(new BeanComparator("childOrder"));
+	    sortedCurriculumGroups.addAll(group.getCurriculumGroups());
+	    
+	    for (final CurriculumGroup curriculumGroup : sortedCurriculumGroups) {
+		generateGroup(scpDiv, curriculumGroup, depth + getWidthDecreasePerLevel());
+	    }
+	}
 
-	    final HtmlTableRow groupRow = groupTable.createRow();
-	    groupRow.setClasses(getGroupRowClasses());
+	private void generateEnrolmentsExecutionPeriods(final HtmlBlockContainer scpDiv, final StudentCurricularPlan studentCurricularPlan) {
+	    final Set<ExecutionPeriod> enrolmentsExecutionPeriods = new TreeSet<ExecutionPeriod>(ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	    enrolmentsExecutionPeriods.addAll(studentCurricularPlan.getEnrolmentsExecutionPeriods());
 
-	    final HtmlTableCell groupNameCell = groupRow.createCell();
-	    groupNameCell.setType(CellType.HEADER);
-	    groupNameCell.setClasses(getGroupNameClasses());
-	    groupNameCell.setColspan(5);
-	    groupNameCell.setBody(new HtmlText(executionPeriod.getYear() + ", " + executionPeriod.getName()));
+	    for (final ExecutionPeriod enrolmentsExecutionPeriod : enrolmentsExecutionPeriods) {
+	        generateEnrolmentExecutionPeriod(scpDiv, studentCurricularPlan, enrolmentsExecutionPeriod);
+	    }
+	}
 
-	    // generateLines(scpDiv, depth, group.getCurriculumLines());
-	    //
-	    // for (final CurriculumGroup curriculumGroup :
-                // group.getCurriculumGroups()) {
-	    // generateGroup(scpDiv, curriculumGroup, depth +
-                // getWidthDecreasePerLevel());
-	    //		}
+	private void generateEnrolmentExecutionPeriod(HtmlBlockContainer scpDiv, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+	    final HtmlTable executionPeriodTable = new HtmlTable();
+	    scpDiv.addChild(executionPeriodTable);
+	    executionPeriodTable.setClasses(getTablesClasses());
+	    executionPeriodTable.setStyle("width: " + getInitialWidth() + "em;");
+
+	    final HtmlTableRow executionPeriodRow = executionPeriodTable.createRow();
+	    executionPeriodRow.setClasses(getGroupRowClasses());
+
+	    final HtmlTableCell executionPeriodNameCell = executionPeriodRow.createCell();
+	    executionPeriodNameCell.setType(CellType.HEADER);
+	    executionPeriodNameCell.setClasses(getGroupNameClasses());
+	    executionPeriodNameCell.setColspan(5);
+	    executionPeriodNameCell.setBody(new HtmlText(executionPeriod.getYear() + ", " + executionPeriod.getName()));
+
+	    for (final CurriculumLine curriculumLine : studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod)) {
+		generateLine(executionPeriodTable, curriculumLine);
+	    }
 	}
 
     }
