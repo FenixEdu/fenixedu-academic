@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -73,6 +74,7 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
 	return getAmountPerPage().multiply(BigDecimal.valueOf(event.getNumberOfPages()));
     }
 
+    @Checked("PostingRulePredicates.editPredicate")
     public CertificateRequestPR edit(final BigDecimal baseAmount, final BigDecimal amountPerUnit,
 	    final BigDecimal amountPerPage) {
 
