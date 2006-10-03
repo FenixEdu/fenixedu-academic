@@ -163,7 +163,7 @@ margin: 0.5em 0;
 		<li><bean:message key="message.fileFormat" bundle="PARKING_RESOURCES"/></li>
 		<li><bean:message key="message.howToSubmit" bundle="PARKING_RESOURCES"/></li>
 	</ul>
-	<i><bean:message key="message.personalDataUse" bundle="PARKING_RESOURCES"/></i>
+	<bean:message key="message.personalDataUse" bundle="PARKING_RESOURCES"/>
 </div>	
 
 
