@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.beanutils.BeanComparator;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -192,7 +194,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public Set<CurriculumGroup> getCurriculumGroups() {
-	Set<CurriculumGroup> result = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME);
+	Set<CurriculumGroup> result = new TreeSet<CurriculumGroup>(new BeanComparator("childOrder"));
 	
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (!curriculumModule.isLeaf()) {
@@ -201,6 +203,19 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	
 	return result;
+    }
+    
+    public Integer getChildOrder() {
+	final CourseGroup parentCourseGroup = getCurriculumGroup().getDegreeModule();
+	final CourseGroup courseGroup = getDegreeModule();
+	
+	for (final Context context : parentCourseGroup.getChildContexts(ExecutionPeriod.readActualExecutionPeriod())) {
+	    if (context.getChildDegreeModule() == courseGroup) {
+		return context.getChildOrder();
+	    }
+	}
+	
+	return null;
     }
 
 }
