@@ -82,7 +82,7 @@ public class TabularOptionInputRenderer extends InputRenderer {
      * Selects the sorting criteria to apply to the collection of objects before presenting them.
      * 
      * @property
-     * @see {@link net.sourceforge.fenixedu.renderers.utils.RenderUtils#sortCollectionWithCriteria(Collection, String)}
+     * @see net.sourceforge.fenixedu.renderers.utils.RenderUtils#sortCollectionWithCriteria(Collection, String)
      */
     public void setSortBy(String sort) {
         sortBy = sort;
