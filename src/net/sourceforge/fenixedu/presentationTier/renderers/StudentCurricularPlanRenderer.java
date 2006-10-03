@@ -2,14 +2,22 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeSet;
+
+import org.apache.commons.beanutils.BeanComparator;
+
+import sun.security.krb5.internal.s;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlTable;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
@@ -33,11 +41,11 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
     private String groupNameClasses = "aleft";
 
     private String enrolmentClasses = "smalltxt aright, smalltxt aright, aright";
-    
+
     private String enrolmentYearClasses = getEnrolmentClasses()[0];
-    
+
     private String enrolmentSemesterClasses = getEnrolmentClasses()[1];
-    
+
     private String enrolmentInfoClasses = getEnrolmentClasses()[2];
 
     public StudentCurricularPlanRenderer() {
@@ -122,7 +130,12 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    if (isOrganizedByGroups()) {
 		generateGroup(scpDiv, studentCurricularPlan.getRoot(), 0);
 	    } else {
-		return new HtmlText("Querias, mas ainda não há!");
+		Set<ExecutionPeriod> executionPeriods = studentCurricularPlan
+			.getEnrolmentsExecutionPeriods();
+
+		for (final ExecutionPeriod executionPeriod : executionPeriods) {
+		    generateExecutionPeriod(scpDiv, executionPeriod);
+		}
 	    }
 
 	    return scpDiv;
@@ -142,13 +155,42 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    groupNameCell.setType(CellType.HEADER);
 	    groupNameCell.setClasses(getGroupNameClasses());
 	    groupNameCell.setColspan(5);
-	    groupNameCell.setBody(new HtmlText(group.getName()));
+	    groupNameCell.setBody((group.isRoot()) ? generateRootLink(group) : new HtmlText(group
+		    .getName()));
 
-	    generateLines(scpDiv, depth, group.getCurriculumLines());
+	    final Set<CurriculumLine> sortedCurriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_NAME);
+	    sortedCurriculumLines.addAll(group.getCurriculumLines());
+	    generateLines(scpDiv, depth, sortedCurriculumLines);
 
-	    for (final CurriculumGroup curriculumGroup : group.getCurriculumGroups()) {
+	    final Set<CurriculumGroup> sortedCurriculumGroups = new TreeSet<CurriculumGroup>(new BeanComparator("childOrder"));
+	    sortedCurriculumGroups.addAll(group.getCurriculumGroups());
+	    
+	    for (final CurriculumGroup curriculumGroup : sortedCurriculumGroups) {
 		generateGroup(scpDiv, curriculumGroup, depth + getWidthDecreasePerLevel());
 	    }
+	}
+
+	private HtmlLink generateRootLink(CurriculumGroup root) {
+	    final HtmlLink rootLink = new HtmlLink();
+
+	    rootLink.setText(root.getName());
+
+	    rootLink.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?");
+	    rootLink.setModuleRelative(false);
+
+	    rootLink.setParameter("degreeID", root.getStudentCurricularPlan().getDegree()
+		    .getIdInternal());
+	    rootLink.setParameter("degreeCurricularPlanID", root.getStudentCurricularPlan().getDegreeCurricularPlan()
+		    .getIdInternal());
+	    rootLink.setParameter("executionPeriodOID", ExecutionPeriod.readActualExecutionPeriod()
+		    .getIdInternal());
+	    rootLink.setParameter("organizeBy", "groups");
+	    rootLink.setParameter("showRules", "false");
+	    rootLink.setParameter("hideCourses", "false");
+
+	    rootLink.setTarget("_blank");
+
+	    return rootLink;
 	}
 
 	private void generateLines(HtmlBlockContainer scpDiv, int depth,
@@ -170,9 +212,6 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	private void generateLine(final HtmlTable groupLinesTable, final CurriculumLine curriculumLine) {
 	    final HtmlTableRow lineRow = groupLinesTable.createRow();
 
-	    final HtmlTableCell name = lineRow.createCell();
-	    name.setBody(new HtmlText(curriculumLine.getName()));
-
 	    if (curriculumLine.isEnrolment()) {
 		generateEnrolment(curriculumLine, lineRow);
 	    }
@@ -183,6 +222,10 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 
 	    final ResourceBundle enumerationResources = ResourceBundle.getBundle(
 		    "resources.EnumerationResources", LanguageUtils.getLocale());
+
+	    // Name
+	    final HtmlTableCell name = lineRow.createCell();
+	    name.setBody(generateExecutionCourseLink(enrolment));
 
 	    // Year
 	    final HtmlTableCell yearCell = lineRow.createCell();
@@ -215,6 +258,47 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		enrolmentCell.setBody(new HtmlText(enrolmentState));
 	    }
 	}
+
+	private HtmlLink generateExecutionCourseLink(Enrolment enrolment) {
+	    final HtmlLink rootLink = new HtmlLink();
+
+	    rootLink.setText(enrolment.getName());
+
+	    rootLink.setUrl("/publico/executionCourse.do?method=firstPage");
+	    rootLink.setModuleRelative(false);
+
+	    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(ExecutionPeriod.readActualExecutionPeriod());
+	    rootLink.setParameter("executionCourseID", executionCourse.getIdInternal());
+
+	    rootLink.setTarget(HtmlLink.Target.BLANK);
+
+	    return rootLink;
+	}
+
+	private void generateExecutionPeriod(HtmlBlockContainer scpDiv, ExecutionPeriod executionPeriod) {
+	    final HtmlTable groupTable = new HtmlTable();
+	    scpDiv.addChild(groupTable);
+	    groupTable.setClasses(getTablesClasses());
+	    groupTable.setStyle("width: " + getInitialWidth() + "em;");
+
+	    final HtmlTableRow groupRow = groupTable.createRow();
+	    groupRow.setClasses(getGroupRowClasses());
+
+	    final HtmlTableCell groupNameCell = groupRow.createCell();
+	    groupNameCell.setType(CellType.HEADER);
+	    groupNameCell.setClasses(getGroupNameClasses());
+	    groupNameCell.setColspan(5);
+	    groupNameCell.setBody(new HtmlText(executionPeriod.getYear() + ", " + executionPeriod.getName()));
+
+	    // generateLines(scpDiv, depth, group.getCurriculumLines());
+	    //
+	    // for (final CurriculumGroup curriculumGroup :
+                // group.getCurriculumGroups()) {
+	    // generateGroup(scpDiv, curriculumGroup, depth +
+                // getWidthDecreasePerLevel());
+	    //		}
+	}
+
     }
 
 }

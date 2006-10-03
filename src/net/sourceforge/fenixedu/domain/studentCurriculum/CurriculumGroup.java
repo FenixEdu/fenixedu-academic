@@ -5,9 +5,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -182,7 +179,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
     
     public Set<CurriculumLine> getCurriculumLines() {
-	Set<CurriculumLine> result = new TreeSet<CurriculumLine>(CurriculumModule.COMPARATOR_BY_NAME);
+	final Set<CurriculumLine> result = new HashSet<CurriculumLine>();
 	
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (curriculumModule.isLeaf()) {
@@ -194,7 +191,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public Set<CurriculumGroup> getCurriculumGroups() {
-	Set<CurriculumGroup> result = new TreeSet<CurriculumGroup>(new BeanComparator("childOrder"));
+	final Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
 	
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (!curriculumModule.isLeaf()) {
