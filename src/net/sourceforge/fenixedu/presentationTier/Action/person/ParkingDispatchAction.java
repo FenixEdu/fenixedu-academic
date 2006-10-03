@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingDocumentState;
 import net.sourceforge.fenixedu.domain.parking.ParkingFile;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
+import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactory;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryEditor;
@@ -39,6 +40,13 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             parkingParty = (ParkingParty) ServiceUtils.executeService(SessionUtils.getUserView(request),
                     "CreateParkingParty", new Object[] { userView.getPerson() });
         }
+        ParkingRequest parkingRequest = parkingParty.getFirstRequest();
+        boolean canEdit = true;
+        if(parkingRequest != null && (parkingRequest.getParkingRequestState() == ParkingRequestState.ACCEPTED || 
+                parkingRequest.getParkingRequestState() == ParkingRequestState.REJECTED)){
+            canEdit = false;
+        }
+        request.setAttribute("canEdit",canEdit);
         request.setAttribute("parkingParty", parkingParty);
         return mapping.findForward("prepareParking");
     }

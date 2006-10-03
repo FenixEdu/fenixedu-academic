@@ -107,6 +107,15 @@ public class ParkingParty extends ParkingParty_Base {
         return false;
     }
 
+    public ParkingDocument getParkingDocument(ParkingDocumentType documentType) {
+        for (ParkingDocument parkingDocument : getParkingDocuments()) {
+            if (parkingDocument.getParkingDocumentType().equals(documentType)) {
+                return parkingDocument;
+            }
+        }
+        return null;
+    }
+
     public String getDriverLicenseFileName() {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.DRIVER_LICENSE)) {
@@ -406,5 +415,19 @@ public class ParkingParty extends ParkingParty_Base {
             }
         }
         return occupations;
+    }
+
+    public boolean hasCarContainingPlateNumber(String plateNumber) {
+        if (getFirstCarPlateNumber() != null
+                && (getFirstCarPlateNumber().equalsIgnoreCase(plateNumber) || getFirstCarPlateNumber()
+                        .toLowerCase().contains(plateNumber.toLowerCase()))) {
+            return true;
+        }
+        if (getSecondCarPlateNumber() != null
+                && (getSecondCarPlateNumber().equalsIgnoreCase(plateNumber) || getSecondCarPlateNumber()
+                        .toLowerCase().contains(plateNumber.toLowerCase()))) {
+            return true;
+        }
+        return false;
     }
 }

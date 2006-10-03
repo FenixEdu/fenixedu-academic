@@ -2,9 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.parkingManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.parking.ParkingDocument;
+import net.sourceforge.fenixedu.domain.parking.ParkingDocumentType;
+import net.sourceforge.fenixedu.domain.parking.ParkingFile;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
@@ -34,6 +35,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 public class ParkingManagerDispatchAction extends FenixDispatchAction {
     public ActionForward showParkingRequests(ActionMapping mapping, ActionForm actionForm,
@@ -102,11 +105,159 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             carPlateNumber = "";
         }
 
+        prepapreParkingRequestDocumentsLinks(request, parkingRequest);
+        prepapreParkingPartyDocumentsLinks(request, parkingRequest.getParkingParty());
+
         request.setAttribute("parkingRequestState", parkingRequestState);
         request.setAttribute("parkingPartyClassification", parkingPartyClassification);
         request.setAttribute("personName", personName);
         request.setAttribute("carPlateNumber", carPlateNumber);
         return mapping.findForward("showParkingRequest");
+    }
+
+    private void prepapreParkingPartyDocumentsLinks(HttpServletRequest request,
+            final ParkingParty parkingParty) {
+        ParkingDocument parkingDocument = parkingParty
+                .getParkingDocument(ParkingDocumentType.DRIVER_LICENSE);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("partyDriverLicenselink", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingParty
+                .getParkingDocument(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("partyRegister1link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingParty.getParkingDocument(ParkingDocumentType.FIRST_CAR_INSURANCE);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("partyInsurance1link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingParty.getParkingDocument(ParkingDocumentType.FIRST_CAR_OWNER_ID);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("partyOwnerID1link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingParty
+                .getParkingDocument(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("partyDeclaration1link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingParty
+                .getParkingDocument(ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("partyRegister2link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingParty.getParkingDocument(ParkingDocumentType.SECOND_CAR_INSURANCE);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("partyInsurance2link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingParty.getParkingDocument(ParkingDocumentType.SECOND_CAR_OWNER_ID);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("partyOwnerID2link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingParty
+                .getParkingDocument(ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("partyDeclaration2link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+
+    }
+
+    private void prepapreParkingRequestDocumentsLinks(HttpServletRequest request,
+            final ParkingRequest parkingRequest) {
+        ParkingDocument parkingDocument = parkingRequest
+                .getParkingDocument(ParkingDocumentType.DRIVER_LICENSE);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("requestDriverLicenselink", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingRequest
+                .getParkingDocument(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("requestRegister1link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingRequest.getParkingDocument(ParkingDocumentType.FIRST_CAR_INSURANCE);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("requestInsurance1link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingRequest.getParkingDocument(ParkingDocumentType.FIRST_CAR_OWNER_ID);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("requestOwnerID1link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingRequest
+                .getParkingDocument(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("requestDeclaration1link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingRequest
+                .getParkingDocument(ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("requestRegister2link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingRequest.getParkingDocument(ParkingDocumentType.SECOND_CAR_INSURANCE);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("requestInsurance2link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingRequest.getParkingDocument(ParkingDocumentType.SECOND_CAR_OWNER_ID);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("requestOwnerID2link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
+        parkingDocument = parkingRequest
+                .getParkingDocument(ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION);
+        if (parkingDocument != null) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            request.setAttribute("requestDeclaration2link", FileManagerFactory.getFileManager()
+                    .getDirectDownloadUrlFormat(parkingFile.getExternalStorageIdentification(),
+                            parkingFile.getFilename()));
+        }
     }
 
     public ActionForward editParkingParty(ActionMapping mapping, ActionForm actionForm,
@@ -232,33 +383,32 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                         .readParkingRequestByOID(new Integer(codeString));
                 searchPartyBean.setParty(parkingRequest.getParkingParty().getParty());
                 searchPartyBean.setPartyName(parkingRequest.getParkingParty().getParty().getName());
+                searchPartyBean.setCarPlateNumber("");
             }
         }
 
         if (searchPartyBean != null) {
-            Party party = searchPartyBean.getParty();
-            if (party != null
-                    && searchPartyBean.getPartyName().equalsIgnoreCase(
-                            searchPartyBean.getParty().getName())) {
-                setupParkingRequests(request, party);
-            } else {
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("slot", "name");
-                Object[] args = { Party.class, searchPartyBean.getPartyName(), 200, map };
-                List<Party> partyList = (List<Party>) ServiceManagerServiceFactory.executeService(
-                        SessionUtils.getUserView(request), "SearchObjects", args);
-                request.setAttribute("partyList", partyList);
-            }
-        } else if (request.getParameter("idInternal") != null) {
-            final Integer idInternal = new Integer(request.getParameter("idInternal"));
+            searchPartyBean.setParty(null);
+            Object[] args = { searchPartyBean.getPartyName(), searchPartyBean.getCarPlateNumber() };
+            List<Party> partyList = (List<Party>) ServiceManagerServiceFactory.executeService(
+                    SessionUtils.getUserView(request), "SearchPartyCarPlate", args);
+            request.setAttribute("searchPartyBean", searchPartyBean);
+            request.setAttribute("partyList", partyList);
+
+        } else if (request.getParameter("partyID") != null) {
+            final Integer idInternal = new Integer(request.getParameter("partyID"));
+            final String carPlateNumber = request.getParameter("plateNumber");
             Party party = rootDomainObject.readPartyByOID(idInternal);
-            setupParkingRequests(request, party);
+            if(party.getParkingParty() != null){
+                prepapreParkingPartyDocumentsLinks(request,party.getParkingParty());
+            }
+            setupParkingRequests(request, party, carPlateNumber);
         }
 
         return mapping.findForward("showParkingPartyRequests");
     }
 
-    private void setupParkingRequests(HttpServletRequest request, Party party)
+    private void setupParkingRequests(HttpServletRequest request, Party party, String carPlateNumber)
             throws FenixFilterException, FenixServiceException {
         if (party.getParkingParty() != null) {
             List<ParkingRequest> parkingRequests = new ArrayList<ParkingRequest>(party.getParkingParty()
@@ -268,10 +418,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             comparatorChain.addComparator(new BeanComparator("parkingRequestState"));
             Collections.sort(parkingRequests, comparatorChain);
             request.setAttribute("parkingRequests", parkingRequests);
-        } else {
-            ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
-                    "CreateParkingParty", new Object[] { party });
         }
-        request.setAttribute("searchPartyBean", new SearchPartyBean(party));
+        request.setAttribute("searchPartyBean", new SearchPartyBean(party, carPlateNumber));
     }
 }

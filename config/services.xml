@@ -10722,5 +10722,13 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>
     </service>
-
+    <service>
+    	<name>SearchPartyCarPlate</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.parking.SearchPartyCarPlate</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+         <filterChains>
+        	<chain name="ParkingManagerAuthorizationFilter"></chain>
+        </filterChains>   
+    </service>
 </serviceDefinitions>		

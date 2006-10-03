@@ -81,14 +81,20 @@
 				</html:link>
 			</li>
 			<%-- editar --%>
-			<li class="mtop05"><html:link page="/parking.do?method=prepareEditParking">
-				<bean:message key="label.editParkingDocuments"
-					bundle="PARKING_RESOURCES" />
-			</html:link></li>
+			<logic:equal name="canEdit" value="true">
+				<li class="mtop05"><html:link page="/parking.do?method=prepareEditParking">
+					<bean:message key="label.editParkingDocuments"
+						bundle="PARKING_RESOURCES" />
+				</html:link></li>
+			</logic:equal>
 		</ul>
 
 
-		
+		<logic:notEmpty name="parkingParty" property="firstRequest.note">
+			<p class="infoop2"><bean:message key="label.note" bundle="PARKING_RESOURCES"/>:
+				<bean:write name="parkingParty" property="firstRequest.note"/>
+			</p>
+		</logic:notEmpty>
 
 		<logic:equal name="parkingParty" property="firstRequest.hasDriverLicense" value="true">
 			<p class="mtop15 mbottom025"><strong><bean:message key="label.driverLicense"
