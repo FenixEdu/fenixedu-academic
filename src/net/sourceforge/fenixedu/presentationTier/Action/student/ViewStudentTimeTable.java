@@ -1,26 +1,19 @@
-/*
- * Created on 29/Ago/2003
- *
- * 
- */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -38,14 +31,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException,
 	    FenixServiceException {
 
-	final Person person = getUserView(request).getPerson();
-
-	// FIXME: after old student migration this test should be remove
-	// registrations should be read using
-        // person.getStudent().getRegistrations()
-	request.setAttribute("registrations", (person.hasStudent()) ? person.getStudent()
-		.getRegistrations() : person.getStudents());
-
+	request.setAttribute("registrations", getUserView(request).getPerson().getStudent().getRegistrations());
 	return mapping.findForward("chooseRegistration");
     }
 
@@ -54,17 +40,18 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
 	    FenixFilterException, FenixServiceException {
 
 	final List<InfoLesson> infoLessons = (List) ServiceUtils.executeService(getUserView(request),
-		"ReadStudentTimeTable", new Object[] { getRegistration(actionForm) });
-
+		"ReadStudentTimeTable", new Object[] { getRegistration(actionForm, request) });
+	
 	request.setAttribute("infoLessons", infoLessons);
-
 	return mapping.findForward("showTimeTable");
 
     }
 
-    private Registration getRegistration(ActionForm form) {
-	return rootDomainObject.readRegistrationByOID((Integer) ((DynaActionForm) form)
-		.get("registrationId"));
+    private Registration getRegistration(final ActionForm form, final HttpServletRequest request) {
+	Integer registrationId = (Integer) ((DynaActionForm) form).get("registrationId");
+	if (registrationId == null && !StringUtils.isEmpty(request.getParameter("registrationId"))) {
+	    registrationId = Integer.valueOf(request.getParameter("registrationId"));
+	}
+	return rootDomainObject.readRegistrationByOID(registrationId);
     }
-
 }

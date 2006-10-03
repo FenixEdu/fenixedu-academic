@@ -42,7 +42,7 @@
 		</li>
 		
 		<li>
-		<html:link page="/studentTimeTable.do" target="_blank" >
+		<html:link page="/studentTimeTable.do?method=showTimeTable" target="_blank" paramId="registrationId" paramName="studentId">
 		<strong><bean:message key="link.shift.enrollment.item2" /></strong>
 		</html:link>
 		</li>
