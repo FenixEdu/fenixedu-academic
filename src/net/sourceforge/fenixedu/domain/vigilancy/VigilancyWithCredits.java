@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.vigilancy;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -58,6 +60,13 @@ public class VigilancyWithCredits extends VigilancyWithCredits_Base {
 			return this.POINTS_WON_FOR_NON_ATTENDING_CONVOKE;
 		if (this.getAttendedToConvoke())
 			return this.POINTS_WON_FOR_ATTENDING_CONVOKE;
+		if(!atLeastOneVigilancyWithCreditsIsAttended()) {
+			// no vigilancy has been yet setted to attended so maybe the 
+			// coordinator did not yet filled the report. Let's just give
+			// 0 points yet.
+			return this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN;
+		}
+		
 		return this.POINTS_WON_FOR_MISSING_CONVOKE;
 	}
 
@@ -67,11 +76,7 @@ public class VigilancyWithCredits extends VigilancyWithCredits_Base {
 				.getDayDateYearMonthDay();
 		YearMonthDay currentDate = new YearMonthDay();
 
-		YearMonthDay limitDate = examDate.minusDays(2); // You can deactive a
-		// convoke until 48h
-		// before the exam.
-
-		if (limitDate.isAfter(currentDate)) {
+		if (examDate.isAfter(currentDate)) {
 			super.setActive(bool);
 		} else {
 			throw new DomainException("vigilancy.error.cannotChangeActive");
@@ -121,5 +126,13 @@ public class VigilancyWithCredits extends VigilancyWithCredits_Base {
 		return !this.getActive();
 	}
 
+	private boolean atLeastOneVigilancyWithCreditsIsAttended() {
+		List<VigilancyWithCredits> vigilancies = this.getWrittenEvaluation().getVigilancysWithCredits();
+		for(VigilancyWithCredits vigilancy : vigilancies) {
+			if(vigilancy.isAttended()) return true;
+		}
+		
+		return false;
+	}
 	
 }

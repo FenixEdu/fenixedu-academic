@@ -360,6 +360,7 @@
 			<property name="falseMessageKey" value="label.confirm"/>
 			<property name="messageBundle" value="VIGILANCY_RESOURCES"/>
 		</slot>
+		<slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 	
 <schema name="presentSugestion" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">

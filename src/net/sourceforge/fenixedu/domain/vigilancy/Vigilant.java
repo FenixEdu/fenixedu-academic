@@ -40,6 +40,7 @@ public class Vigilant extends Vigilant_Base {
 				Category c1 = v1.getTeacherCategory();
 				Category c2 = v2.getTeacherCategory();
 				
+				if(c1==null && c2==null) return 0;
 				if(c1==null) return -1;
 				if(c2==null) return 1;
 				
@@ -69,10 +70,12 @@ public class Vigilant extends Vigilant_Base {
 
 	public Integer getPoints() {
 		int points = this.getStartPoints();
-		List<Vigilancy> convokes = this.getVigilancys();
-		for (Vigilancy convoke : convokes) {
-			points += convoke.getPoints();
+		List<VigilancyWithCredits> vigilancies = Vigilancy.getAllVigilancyWithCredits(this); 
+
+		for(Vigilancy vigilancy : vigilancies) {
+			points += vigilancy.getPoints();
 		}
+		
 		return Integer.valueOf(points);
 	}
 
