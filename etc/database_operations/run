@@ -27,10 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Alter ROOT_DOMAIN_OBJECT Table" alterRootDomainObjectAndPartyTable.sql
-echo '------- TODO: IS NECESSARY ASSOCIATE YOUR INSTITUTION UNIT AND EXTERNAL INSTITUTION UNIT TO ROOT_DOMAIN_OBJECT'
-echo '------------- IST EXAMPLE: update ROOT_DOMAIN_OBJECT set `KEY_EXTERNAL_INSTITUTION_UNIT` = 61558;'
-echo '-------------------------- update ROOT_DOMAIN_OBJECT set `KEY_INSTITUTION_UNIT` = 61559;'
-		   
-executeWithTempFile "Migrate ExternalPersons To ExternalContracts" migrateExternalPersons.sql	   
-execute "Add AccountabilityType To New ExternalContracts" addAccountabilityTypeToExternalPersons.sql
