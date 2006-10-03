@@ -200,6 +200,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
                 InfoCurricularCourse infoCurricularCourse = infoEnrolment2.getInfoCurricularCourse();
                 sum = sum + Double.parseDouble(String.valueOf(infoCurricularCourse.getCredits()));
+                newEnrolmentList.add(infoEnrolment2);
             }
             if ((infoStudentCurricularPlan.getGivenCredits() != null)
                     && !infoStudentCurricularPlan.getGivenCredits().equals(new Double(0))) {
