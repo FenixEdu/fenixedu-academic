@@ -1,0 +1,1 @@
+alter table PARKING_PARTY add UNIQUE KEY `U1` (`CARD_NUMBER`);

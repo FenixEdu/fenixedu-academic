@@ -27,3 +27,13 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing Table Guide" AlterTableGuide.sql
+execute "Changing Table GuideEntry" AlterTableGuideEntry.sql
+execute "Changing Table PaymentTransacion" AlterTablePaymentTransaction.sql
+execute "Changing Table ReimbursementTransaction" AlterTableReimbursementTransaction.sql
+execute "Changing Table InsuranceValue" AlterTableInsuranceValue.sql
+execute "Changing Table ReimbursementGuideEntry" AlterTableReimbursementGuideEntry.sql
+execute "Fix execution course hours." fixExecutionCourseTable.sql
+execute "alter table ParkingParty" alterTableParkingParty.sql
+execute "Insert ParkingGroups" insertParkingGroups.sql
+execute "Add functionality mappings for the unit and position management" AddUnitManagementMappings.sql
