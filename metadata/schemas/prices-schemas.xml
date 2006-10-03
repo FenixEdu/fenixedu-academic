@@ -1,16 +1,49 @@
-<schema name="certificateRequestPRDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRules.serviceRequests.CertificateRequestPRDTO" bundle="APPLICATION_RESOURCES">
-	<slot name="baseAmount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="maxLength" value="7"/>
-	</slot>
-	<slot name="amountPerUnit" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="maxLength" value="7"/>
-	</slot>
-	<slot name="amountPerPage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="maxLength" value="7"/>
-	</slot>
+<schema name="PostingRule.view"
+	type="net.sourceforge.fenixedu.domain.accounting.PostingRule"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.creationDate" />
+	<slot name="startDate" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.startDate" />
+	<slot name="endDate" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.endDate"/>
+</schema>
+
+<schema name="FixedAmountPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+</schema>
+
+<schema name="BaseAmountPlusAmountPerUnitPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount" />
+	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit"/>
+</schema>
+
+<schema name="CertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="BaseAmountPlusAmountPerUnitPR.view">
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage" />
 </schema>
 
 
+<schema name="FixedAmountPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<setter signature="edit(fixedAmount)"/>
+</schema>
 
+<schema name="BaseAmountPlusAmountPerUnitPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount" />
+	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit"/>
+</schema>
 
+<schema name="CertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="BaseAmountPlusAmountPerUnitPR.edit">
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage" />
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+</schema>
 

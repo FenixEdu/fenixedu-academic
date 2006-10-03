@@ -29,16 +29,17 @@
 	</ul>
 </fr:hasMessages>
 
-<h3><bean:message name="postingRuleDTO" property="postingRule.eventType.name" bundle="ENUMERATION_RESOURCES"/></h3>
+<h3><bean:message name="postingRule" property="eventType.name" bundle="ENUMERATION_RESOURCES"/></h3>
 
-<fr:edit name="postingRuleDTO" 
-		 schema="certificateRequestPRDTO.edit"
-		 action="/pricesManagement.do?method=editPrice">
+<bean:define id="postingRuleClassName" name="postingRule" property="class.simpleName" />
+<fr:edit name="postingRule" 
+		 schema="<%=postingRuleClassName + ".edit"%>">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4" />
 		<fr:property name="columnClasses" value="listClasses,," />
 	</fr:layout>
 	<fr:destination name="cancel" path="/pricesManagement.do?method=viewPrices"/>
+	<fr:destination name="success" path="/pricesManagement.do?method=viewPrices"/>
 </fr:edit>
 
 </logic:present>

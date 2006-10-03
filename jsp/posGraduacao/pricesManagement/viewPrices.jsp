@@ -23,27 +23,21 @@
 <logic:iterate id="postingRule" name="postingRules">
 	<tr>
 		<td colspan="2" align="left">
-			<h3><bean:message name="postingRule" property="eventType.name" bundle="ENUMERATION_RESOURCES"/></h3>
-			<hr/>
+		<h3><bean:message name="postingRule" property="eventType.name"
+			bundle="ENUMERATION_RESOURCES" /></h3>
+		<hr />
 		</td>
 	</tr>
+
 	<tr>
 		<td>
-			<strong><bean:message key="label.masterDegree.administrativeOffice.pricesManagement.price"/></strong>
+			<bean:define id="postingRuleClassName" name="postingRule" property="class.simpleName" /> 
+			
+			<fr:view name="postingRule"	schema="<%=postingRuleClassName + ".view" %>">
+				<fr:layout name="tabular">
+				</fr:layout>
+			</fr:view>
 		</td>
-		<td>
-			<bean:write name="postingRule" property="baseAmount"/> <strong><bean:message key="label.currencySymbol"/></strong>
-		</td>
-	</tr>
-	<logic:notEqual name="postingRule" property="amountPerUnit" value="0">
-	<tr>
-		<td><strong><bean:message key="label.masterDegree.administrativeOffice.pricesManagement.pricePerUnit"/></strong></td>
-		<td><bean:write name="postingRule" property="amountPerUnit"/> <strong><bean:message key="label.currencySymbol"/></strong></td>
-	</tr>
-	</logic:notEqual>
-	<tr>
-		<td><strong><bean:message key="label.masterDegree.administrativeOffice.pricesManagement.pricePerPage"/></strong></td>
-		<td><bean:write name="postingRule" property="amountPerPage"/> <strong><bean:message key="label.currencySymbol"/></strong></td>
 	</tr>
 	<tr>
 		<td colspan="2">
