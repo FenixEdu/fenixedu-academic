@@ -76,7 +76,7 @@ public class ConvokeByPoints extends Strategy {
 		 ComparatorChain comparator = new ComparatorChain();
 		 comparator.addComparator(new PointComparator());
 		 comparator.addComparator(Vigilant.CATEGORY_COMPARATOR);
-		 comparator.addComparator(new ReverseComparator(Vigilant.USERNAME_COMPARATOR));
+		 comparator.addComparator(Vigilant.USERNAME_COMPARATOR);
 		 
 		 Collections.sort(vigilantSugestion, comparator);
 		 Collections.sort(teachersSugestion, comparator);
