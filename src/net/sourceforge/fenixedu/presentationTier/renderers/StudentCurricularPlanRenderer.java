@@ -20,15 +20,14 @@ import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell.CellType;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 public class StudentCurricularPlanRenderer extends OutputRenderer {
 
-    private static final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", LanguageUtils.getLocale());
+    private static final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources");
     
-    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
 
     private Boolean organizedByGroups;
 
