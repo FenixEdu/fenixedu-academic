@@ -525,16 +525,16 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException();
 	    }
-
+        String pass = null;
 	    try {
 		final Person person = (Person) rootDomainObject.readPartyByOID(infoMasterDegreeCandidate
 			.getInfoPerson().getIdInternal());
-		ServiceManagerServiceFactory.executeService(userView, "GenerateNewPassword",
+        pass = (String)ServiceManagerServiceFactory.executeService(userView, "GenerateNewPassword",
 			new Object[] { person });
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException();
 	    }
-
+        request.setAttribute("password",pass);
 	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 	    session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
 	    return mapping.findForward("ChangePasswordSuccess");
