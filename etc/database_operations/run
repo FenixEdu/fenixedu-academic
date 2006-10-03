@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Clear and insert new groups in Parking Group" clearAndInsertIntoParkingGroup.sql
