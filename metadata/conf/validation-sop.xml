@@ -43,7 +43,7 @@
 		<field property="oldShiftId" depends="required, integer" page="1">
 			<arg0 key="property.old.shift"/>
 		</field>
-		<field property="newShiftId" depends="required, integer" page="1">
+		<field property="newShiftId" depends="integer" page="1">
 			<arg0 key="property.new.shift"/>
 		</field>
 	</form>
