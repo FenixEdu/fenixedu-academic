@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.accessControl.groups.language;
 
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupBuilderNameTakenException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NoSuchGroupBuilderException;
@@ -76,12 +78,22 @@ public class GroupBuilderRegistry {
         return instance.builders.get(name);
     }
 
+    /**
+     * Obtains the map of currently registered builders.
+     * 
+     * @return an unmodifiable map of builders
+     */
+    public static Map<String, GroupBuilder> getRegisteredBuilders() {
+        return Collections.unmodifiableMap(instance.builders);
+    }
+    
     //
     // register builders
     //
     
     static {
         register("role", new RoleGroup.Builder());
+        register("person", new PersonGroup.Builder());
         register("custom", new CustomGroupBuilder());
     }
 }

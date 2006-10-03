@@ -31,7 +31,7 @@ public class PersonGroup extends DomainBackedGroup<Person> {
     }
 
     /**
-     * Builder used to create a person role in a group expression. This builder
+     * Builder used to create a person group expression. This builder
      * accepts one argument but the builder behaves differently accordingly with
      * the type of that argument.
      * 

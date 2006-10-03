@@ -61,6 +61,14 @@
 </logic:present>
 
 <!-- ======================
+        expression help
+     ======================  -->
+
+<div>
+    <bean:message key="functionalities.expression.help" bundle="FUNCTIONALITY_RESOURCES" arg0="<%= request.getContextPath() %>"/>
+</div>
+
+<!-- ======================
         expression
      ======================  -->
 

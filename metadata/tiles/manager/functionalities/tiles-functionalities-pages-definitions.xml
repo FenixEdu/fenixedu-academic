@@ -76,4 +76,7 @@
         <put name="body" value="/manager/functionalities/filter/index.jsp"/>
     </definition>
 
+    <definition name="functionalities.groupLanguage.show" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/group-language.jsp"/>
+    </definition>
 </tiles-definitions>

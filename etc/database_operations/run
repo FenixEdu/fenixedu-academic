@@ -27,4 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding 'Groups Language' link to manager menu" AddGroupLanguageLink.sql
+execute "Solve generated script DELETE bug" DeleteConflictingFunctionality.sql
 execute "Clear and insert new groups in Parking Group" clearAndInsertIntoParkingGroup.sql

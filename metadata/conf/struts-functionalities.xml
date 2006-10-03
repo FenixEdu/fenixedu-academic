@@ -58,6 +58,11 @@
             <forward name="results" path="functionalities.filter.results"/>
         </action>
 
+        <action path="/groupLanguage"
+                type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.GroupLanguageAction">
+            <forward name="show" path="functionalities.groupLanguage.show"/>
+        </action>
+
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================= -->

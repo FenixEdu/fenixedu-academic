@@ -223,3 +223,12 @@
     <slot name="currentParentUsed"/>
     <slot name="uuidUsed"/>
 </schema>
+
+<schema name="functionalities.groups.info" type="net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name"/>
+    <slot name="arguments"/>
+    <slot name="builder.class" layout="label">
+        <property name="bundle" value="FUNCTIONALITY_RESOURCES"/>
+    </slot>
+</schema>
