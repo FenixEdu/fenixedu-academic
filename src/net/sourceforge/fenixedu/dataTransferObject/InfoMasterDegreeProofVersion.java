@@ -8,10 +8,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -160,7 +160,7 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
     private List copyExternalPersons(List externalPersons) {
         return (List) CollectionUtils.collect(externalPersons, new Transformer() {
             public Object transform(Object arg0) {
-                ExternalPerson externalPerson = (ExternalPerson) arg0;
+        	ExternalContract externalPerson = (ExternalContract) arg0;
                 return InfoExternalPerson.newInfoFromDomain(externalPerson);
             }
         });

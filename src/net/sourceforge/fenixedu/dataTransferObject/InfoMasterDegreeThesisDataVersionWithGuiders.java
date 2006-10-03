@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.GuiderType;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -79,10 +79,10 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
      * @param externalPersons
      * @return
      */
-    private List<InfoExternalPerson> copyExternalPersons(List<ExternalPerson> externalPersons) {
+    private List<InfoExternalPerson> copyExternalPersons(List<ExternalContract> externalPersons) {
         
         List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(externalPersons.size());
-        for (ExternalPerson externalPerson : externalPersons) {
+        for (ExternalContract externalPerson : externalPersons) {
             infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));            
         }
         return infoExternalPersons;

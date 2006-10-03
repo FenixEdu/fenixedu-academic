@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -67,10 +67,10 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
                     resultFormatter.format("%s\t", teacher.getPerson().getNome());
                 }
             } else {
-                List<ExternalPerson> externalGuiders = thesis.getActiveMasterDegreeThesisDataVersion()
+                List<ExternalContract> externalGuiders = thesis.getActiveMasterDegreeThesisDataVersion()
                         .getExternalGuiders();
                 if (!externalGuiders.isEmpty()) {
-                    for (ExternalPerson externalPerson : externalGuiders) {
+                    for (ExternalContract externalPerson : externalGuiders) {
                         resultFormatter.format("%s\t", externalPerson.getPerson().getNome());
                     }
                 }

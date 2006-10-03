@@ -28,16 +28,16 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
 
     public void getUnitTree(StringBuilder buffer, Unit parentUnit) {
         buffer.append("<ul class='padding1 nobullet'>");
-        getUnitsList(parentUnit, buffer);
+        getUnitsList(parentUnit, null, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsList(Unit parentUnit, StringBuilder buffer) {
+    private void getUnitsList(Unit parentUnit, Unit parentUnitParent, StringBuilder buffer) {
         
         openLITag(buffer);
 
         if (parentUnit.hasAnySubUnits()) {
-            putImage(parentUnit, buffer);
+            putImage(parentUnit, buffer, parentUnitParent);
         }
 
         buffer.append("<a href=\"").append(getContextPath()).append(
@@ -46,7 +46,7 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
                 parentUnit.getName()).append("</a>").append("</li>");
 
         if (parentUnit.hasAnySubUnits()) {
-            openULTag(parentUnit, buffer);
+            openULTag(parentUnit, buffer, parentUnitParent);
         }
 
         List<Unit> subUnits = new ArrayList<Unit>();
@@ -55,7 +55,7 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
         
         for (Unit subUnit : subUnits) {
             if (subUnit.isActive(new YearMonthDay())) {
-                getUnitsList(subUnit, buffer);
+                getUnitsList(subUnit, parentUnitParent, buffer);
             }
         }
 

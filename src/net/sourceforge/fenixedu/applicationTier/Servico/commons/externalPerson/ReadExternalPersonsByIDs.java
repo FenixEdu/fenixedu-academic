@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -21,9 +21,9 @@ public class ReadExternalPersonsByIDs extends Service {
 	Collection<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(
 		externalPersonsIDs.size());
 
-	Collection<ExternalPerson> externalPersons = ExternalPerson.readByIDs(externalPersonsIDs);
+	Collection<ExternalContract> externalPersons = ExternalContract.readByIDs(externalPersonsIDs);
 
-	for (ExternalPerson externalPerson : externalPersons) {
+	for (ExternalContract externalPerson : externalPersons) {
 	    infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
 	}
 

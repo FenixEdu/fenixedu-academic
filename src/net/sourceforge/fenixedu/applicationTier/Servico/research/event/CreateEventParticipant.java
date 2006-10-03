@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.event.EventParticipa
 import net.sourceforge.fenixedu.dataTransferObject.research.event.EventParticipantUnitCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.event.EventParticipantionFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.event.EventParticipantionSimpleCreationBean;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.event.Event;
@@ -71,7 +71,7 @@ public class CreateEventParticipant extends Service  {
      */
     public EventParticipation run(EventParticipantFullCreationBean bean, Integer eventId) throws ExcepcaoPersistencia, FenixServiceException {
         final EventParticipation participation;
-        final ExternalPerson externalPerson;
+        final ExternalContract externalPerson;
         
         final Event event = rootDomainObject.readEventByOID(eventId);
         if(event == null){

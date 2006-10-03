@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -17,9 +17,9 @@ public class ReadExternalPersonByID extends Service {
 
     public Object run(Integer externalPersonID) throws FenixServiceException, ExcepcaoPersistencia {
         InfoExternalPerson infoExternalPerson = null;
-        ExternalPerson externalPerson = null;
+        ExternalContract externalPerson = null;
 
-        externalPerson = rootDomainObject.readExternalPersonByOID(externalPersonID);
+        externalPerson = (ExternalContract) rootDomainObject.readAccountabilityByOID(externalPersonID);
         if (externalPerson == null)
             throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");
 

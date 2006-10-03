@@ -16,7 +16,7 @@ import org.joda.time.YearMonthDay;
 
 public class ScientificCouncilFunctionsManagementBackingBean extends ManagerFunctionsManagementBackingBean {
 
-    protected void getUnitsList(Unit parentUnit, StringBuilder buffer, YearMonthDay currentDate) {
+    protected void getUnitsList(Unit parentUnit, Unit parentUnitParent, StringBuilder buffer, YearMonthDay currentDate) {
 
         openLITag(buffer);
 
@@ -24,7 +24,7 @@ public class ScientificCouncilFunctionsManagementBackingBean extends ManagerFunc
         Collections.sort(subUnits, new BeanComparator("name"));
 
         if (!subUnits.isEmpty()) {
-            putImage(parentUnit, buffer);
+            putImage(parentUnit, buffer, parentUnitParent);
         }
 
         buffer.append("<a href=\"").append(getContextPath()).append(
@@ -33,11 +33,11 @@ public class ScientificCouncilFunctionsManagementBackingBean extends ManagerFunc
                 .append(parentUnit.getName()).append("</a>").append("</li>");
 
         if (!subUnits.isEmpty()) {
-            openULTag(parentUnit, buffer);
+            openULTag(parentUnit, buffer, parentUnitParent);
         }
 
         for (Unit subUnit : subUnits) {
-            getUnitsList(subUnit, buffer, currentDate);
+            getUnitsList(subUnit, parentUnit, buffer, currentDate);
         }
 
         if (!subUnits.isEmpty()) {

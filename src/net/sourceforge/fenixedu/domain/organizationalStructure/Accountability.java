@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
 
@@ -14,11 +15,24 @@ public class Accountability extends Accountability_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
-    Accountability(Party parentParty, Party childParty, AccountabilityType accountabilityType) {
-        this();
+    protected Accountability(Party parentParty, Party childParty, AccountabilityType accountabilityType) {
+        this();        
+        checkParameters(parentParty, childParty, accountabilityType);	        
         setParentParty(parentParty);
         setChildParty(childParty);
         setAccountabilityType(accountabilityType);
+    }
+
+    private void checkParameters(Party parentParty, Party childParty, AccountabilityType accountabilityType) {
+	if (parentParty == null) {
+	    throw new DomainException("error.accountability.inexistent.parentParty");
+	}
+        if (childParty == null) {
+	    throw new DomainException("error.accountability.inexistent.childParty");
+	}
+	if (accountabilityType == null) {
+	    throw new DomainException("error.accountability.inexistent.accountabilityType");
+	}
     }
 
     public void delete() {

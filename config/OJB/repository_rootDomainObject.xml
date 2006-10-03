@@ -5,5 +5,15 @@
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
-		/>		
+	/>
+	<field-descriptor
+		name="keyExternalInstitutionUnit"
+		column="KEY_EXTERNAL_INSTITUTION_UNIT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyInstitutionUnit"
+		column="KEY_INSTITUTION_UNIT"
+		jdbc-type="INTEGER"
+	/>		
 </class-descriptor>

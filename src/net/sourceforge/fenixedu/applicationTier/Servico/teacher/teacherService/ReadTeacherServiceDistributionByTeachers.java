@@ -51,7 +51,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		
 		for (ExecutionPeriod executionPeriodEntry : executionPeriodList) {
 			
-			List<Teacher> teachers = department.getTeachers(executionPeriodEntry.getBeginDateYearMonthDay(),
+			List<Teacher> teachers = department.getAllTeachers(executionPeriodEntry.getBeginDateYearMonthDay(),
                     executionPeriodEntry.getEndDateYearMonthDay());	
 					
 			for (Teacher teacher : teachers) {

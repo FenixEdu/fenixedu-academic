@@ -6,8 +6,9 @@ package net.sourceforge.fenixedu.util;
 
 public enum ContractType{
 
-    TEACHER_CONTRACT,
-    EMPLOYEE_CONTRACT;
+    WORKING,
+    MAILING,
+    SALARY;
     
     public String getName() {
         return name();

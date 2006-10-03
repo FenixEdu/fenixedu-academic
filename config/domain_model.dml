@@ -172,6 +172,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 }
 
 class net.sourceforge.fenixedu.domain.RootDomainObject extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExternalInstitutionUnit;
+	Integer keyInstitutionUnit;
 }
 
 class net.sourceforge.fenixedu.domain.accounting.Account extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -384,24 +386,12 @@ class net.sourceforge.fenixedu.domain.Campus extends net.sourceforge.fenixedu.do
 	String name;
 }
 
-
-class net.sourceforge.fenixedu.domain.Contract extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyEmployee;
-	Integer keySalaryUnit;
-	Integer keyMailingUnit;
-	Integer keyWorkingUnit;
-	ContractType contractType;
-	YearMonthDay beginDateYearMonthDay;
-	YearMonthDay endDateYearMonthDay;
-}
-
 class net.sourceforge.fenixedu.domain.CostCenter extends net.sourceforge.fenixedu.domain.DomainObject {
     String code;
     String section2;
     String section1;
     String departament;
 }
-
 
 class net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy extends net.sourceforge.fenixedu.domain.DomainObject {
     Boolean approved;
@@ -1321,12 +1311,6 @@ class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourc
     Integer keyTeacher;
 	DateTime lastModificationDateDateTime;
     String activity;
-}
-
-
-class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyPerson;
-	Integer keyInstitutionUnit;
 }
 
 class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2895,6 +2879,8 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		YearMonthDay beginDateYearMonthDay;
 		YearMonthDay endDateYearMonthDay;
 		Integer keyAdministrativeOffice;
+		Integer keyRootDomainObjectForInstitutionUnit;
+		Integer keyRootDomainObjectForExternalInstitutionUnit;
 	}
 
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
@@ -2974,13 +2960,20 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability ext
 }	  	  
 	class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 		Double credits;	
+	}
+	
+	class net.sourceforge.fenixedu.domain.organizationalStructure.Contract extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
+		ContractType contractType;
 	}  
+	
+	class net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
+
+	}
 	  	  
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String name;
 }
-
 
 class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -5094,18 +5087,6 @@ relation ExternalActivityTeacher {
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
-relation ExternalPersonPerson {
-	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPerson;
-	net.sourceforge.fenixedu.domain.Person playsRole person;
-}
-
-relation ExternalPersonUnit {
-	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPersons {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole institutionUnit;
-}
-
 relation ExtraWorkCostCenter {
 	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork playsRole extraWork {
 		multiplicity *;
@@ -5757,7 +5738,7 @@ relation MasterDegreeProofVersionExternalJury {
 	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofsExternalJury {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalJuries {
+	net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract playsRole externalJuries {
 		multiplicity *;
 	}
 }
@@ -5794,7 +5775,7 @@ relation MasterDegreeThesisDataVersionExternalGuider {
 	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalGuider {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalGuiders {
+	net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract playsRole externalGuiders {
 		multiplicity *;
 	}
 }
@@ -5803,7 +5784,7 @@ relation MasterDegreeThesisDataVersionExternalAssistentGuider {
 	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalAssistentGuider {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalAssistentGuiders {
+	net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract playsRole externalAssistentGuiders {
 		multiplicity *;
 	}
 }
@@ -6858,7 +6839,7 @@ relation ResultUnitAssociationResult {
 }
 
 relation ResulUnitAssociationUnit {
-		net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
+	net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
@@ -6984,30 +6965,6 @@ relation TeacherPersonalExpectationExecutionYear {
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
  
-
-relation ContractSalaryUnit {
-    net.sourceforge.fenixedu.domain.Contract playsRole salaryContracts{
-    	multiplicity *;
-    }
-	
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole salaryUnit;
-}
-
-relation ContractMailingUnit {
-    net.sourceforge.fenixedu.domain.Contract playsRole mailingContracts{
-    	multiplicity *;
-    }
-	
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole mailingUnit;
-}
-
-relation ContractWorkingUnit {
-    net.sourceforge.fenixedu.domain.Contract playsRole workingContracts{
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole workingUnit;
-}
-
 relation DepartmentUnit {
     net.sourceforge.fenixedu.domain.Department playsRole department;    
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole departmentUnit;
@@ -7032,12 +6989,6 @@ relation TeacherLegalRegimenTeacher {
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;    
 }
 
-relation EmployeeContract {
-    net.sourceforge.fenixedu.domain.Contract playsRole contracts {
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.Employee playsRole employee;
-}
 relation UnitFunction {
     net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole functions  {
     	multiplicity *;
@@ -8079,13 +8030,6 @@ relation RootDomainObjectResultEventAssociation {
 	}
 }
 
-relation RootDomainObjectExternalPerson {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPersons {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectAssiduousness {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousnesss {
@@ -9083,13 +9027,6 @@ relation RootDomainObjectTest {
 relation RootDomainObjectEvaluation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.Evaluation playsRole evaluations {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectContract {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.Contract playsRole contracts {
 		multiplicity *;
 	}
 }
@@ -10303,4 +10240,14 @@ relation RootDomainExamCoordinator {
 	net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator playsRole examCoordinators {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectInstitutionUnit {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObjectForInstitutionUnit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole institutionUnit;	
+}
+
+relation RootDomainObjectExternalInstitutionUnit {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObjectForExternalInstitutionUnit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole externalInstitutionUnit;	
 }

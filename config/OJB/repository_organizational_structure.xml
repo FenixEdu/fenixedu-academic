@@ -1,106 +1,52 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Party -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Party" table="PARTY">	
-	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.Person"/>
-		
-	
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Unit -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" table="PARTY">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-	
-	
-    
-	
+
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Accountability -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability" table="ACCOUNTABILITY">
-	
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction"/>
-	
-	
-	
-		
-    
-    
-    
-		
-	
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability" table="ACCOUNTABILITY">	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Contract"/>	     
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract"/>	     
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function -->
-
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" table="ACCOUNTABILITY">
 	
-	
-	
-		
-    
-    
-    
-		
-			
-    
 </class-descriptor>
+
+<!-- Definitions for class net.sourceforge.fenixedu.domain.organizationalStructure.Contract -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Contract" table="ACCOUNTABILITY">
+
+</class-descriptor>
+
+<!-- Definitions for class net.sourceforge.fenixedu.domain.ExternalPerson -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract" table="ACCOUNTABILITY">
+               
+</class-descriptor>  
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule" table="CONNECTION_RULE">
-	
-	
-	
-    
-    		
+ 		
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.PartyType -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType" table="PARTY_TYPE">
-	
-	
-    
-	
+
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType" table="ACCOUNTABILITY_TYPE">
-	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function"/>
-	
-	
-	
-	
-	
-		
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Function -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Function" table="ACCOUNTABILITY_TYPE">
-			
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 </class-descriptor>

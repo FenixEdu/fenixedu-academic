@@ -38,7 +38,7 @@ public class StudentDA extends FenixDispatchAction {
 	final Student student = getStudent(request);
 
 	final Employee employee = student.getPerson().getEmployee();
-	if (employee != null && employee.getCurrentContract() != null) {
+	if (employee != null && employee.getCurrentWorkingContract() != null) {
 	    addActionMessage(request, "message.student.personIsEmployee");
 	    return mapping.findForward("viewStudentDetails");
 	}

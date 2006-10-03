@@ -229,7 +229,7 @@ public class ValuationPhase extends ValuationPhase_Base {
 		Set<Teacher> teacherSet = new HashSet<Teacher>();
 
 		for (ExecutionPeriod executionPeriod : executionPeriodList) {
-			teacherSet.addAll(department.getTeachers(
+			teacherSet.addAll(department.getAllTeachers(
 					executionPeriod.getBeginDateYearMonthDay(),
 					executionPeriod.getEndDateYearMonthDay()));
 		}

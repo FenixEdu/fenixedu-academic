@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 
 public class InsertInexistentAuthors extends Service {
 
@@ -46,10 +46,10 @@ public class InsertInexistentAuthors extends Service {
         }
         
         InsertExternalPersons iep = new InsertExternalPersons();
-        List<ExternalPerson> externalPersons = iep.run(infoExternalPersons);
+        List<ExternalContract> externalPersons = iep.run(infoExternalPersons);
         
         Iterator<Integer> indexIterator =  externalPersonsIndexes.iterator();
-        for (ExternalPerson externalPerson : externalPersons) {
+        for (ExternalContract externalPerson : externalPersons) {
             
             authorsList.add(indexIterator.next(),externalPerson.getPerson());
             

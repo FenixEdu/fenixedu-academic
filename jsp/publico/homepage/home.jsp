@@ -67,8 +67,8 @@
 		<tr>
 			<th><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:</th>
 			<td>
-				<logic:present name="homepage" property="person.employee.currentContract.workingUnit">
-					<bean:define id="currentUnit" name="homepage" property="person.employee.currentContract.workingUnit" toScope="request"/>
+				<logic:present name="homepage" property="person.employee.currentWorkingContract.workingUnit">
+					<bean:define id="currentUnit" name="homepage" property="person.employee.currentWorkingContract.workingUnit" toScope="request"/>
 					<jsp:include page="unitStructure.jsp"/>
 				</logic:present>
 			</td>
@@ -81,7 +81,7 @@
 			<th><bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>:</th>
 			<td>
 			<logic:present name="homepage" property="person.teacher">
-				<logic:present name="homepage" property="person.employee.currentContract">
+				<logic:present name="homepage" property="person.employee.currentWorkingContract">
 					<string:capitalizeAllWords>
 						<string:lowerCase>
 							<bean:write name="homepage" property="person.teacher.category.name.content"/>
@@ -98,7 +98,7 @@
 		<logic:equal name="homepage" property="showResearchUnitHomepage" value="true">
 		<tr>
 			<logic:present name="homepage" property="person.teacher">
-				<logic:present name="homepage" property="person.employee.currentContract">
+				<logic:present name="homepage" property="person.employee.currentWorkingContract">
 					<logic:present name="homepage" property="researchUnitHomepage">
 						<logic:present name="homepage" property="researchUnit">
 							<bean:define id="researchUnitHomepage" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
@@ -320,7 +320,7 @@
 			<th><bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:</th>
 			<td>
 				<logic:present name="homepage" property="person.teacher">
-					<logic:present name="homepage" property="person.employee.currentContract">
+					<logic:present name="homepage" property="person.employee.currentWorkingContract">
 						<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" length="1">
 							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 							<html:link href="<%= url %>">

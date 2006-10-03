@@ -50,8 +50,8 @@
 			
 			<h:outputText value="<b>#{bundle['label.begin.date']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.beginDate']}" id="beginDate" required="true" size="10" value="#{scientificCouncilFunctionsManagementBackingBean.beginDate}">							
-					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.beginDate']}" maxlength="10" id="beginDate" required="true" size="10" value="#{scientificCouncilFunctionsManagementBackingBean.beginDate}">							
+					<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
 				</h:inputText>	
 				<h:outputText value="#{bundle['label.date.format']}"/>
 				<h:message for="beginDate" styleClass="error"/>				
@@ -59,8 +59,8 @@
 						
 			<h:outputText value="<b>#{bundle['label.end.date']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.endDate']}" id="endDate" required="true" size="10" value="#{scientificCouncilFunctionsManagementBackingBean.endDate}">
-					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.endDate']}" maxlength="10" id="endDate" required="true" size="10" value="#{scientificCouncilFunctionsManagementBackingBean.endDate}">
+					<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
 				</h:inputText>				
 				<h:outputText value="#{bundle['label.date.format']}"/>
 				<h:message for="endDate" styleClass="error"/>

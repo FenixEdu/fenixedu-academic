@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.util.ContractType;
 
 /**
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -47,11 +48,11 @@ public class InfoEmployee extends InfoObject {
     }
 
     public InfoUnit getWorkingUnit() {
-        return InfoUnit.newInfoFromDomain(getEmployee().getCurrentContract().getWorkingUnit());
+        return InfoUnit.newInfoFromDomain((getEmployee().getCurrentWorkingContract() != null) ? getEmployee().getCurrentWorkingContract().getWorkingUnit() : null);
     }
 
     public InfoUnit getMailingUnit() {
-	return InfoUnit.newInfoFromDomain(getEmployee().getCurrentContract().getMailingUnit());
+	return InfoUnit.newInfoFromDomain((getEmployee().getCurrentContractByContractType(ContractType.MAILING) != null) ? getEmployee().getCurrentContractByContractType(ContractType.MAILING).getMailingUnit() : null);
     }
 
     public InfoPerson getPerson() {

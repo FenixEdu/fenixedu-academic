@@ -5,10 +5,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class ResultParticipation extends ResultParticipation_Base {
@@ -238,7 +238,7 @@ public class ResultParticipation extends ResultParticipation_Base {
 
     public String getAditionalInfo() {
 	final Person person = this.getPerson();
-	final ExternalPerson externalPerson = person.getExternalPerson();
+	final ExternalContract externalPerson = person.getExternalPerson();
 	final String username = person.getUsername();
 	
 	if (externalPerson != null) {

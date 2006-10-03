@@ -69,12 +69,7 @@ function check(e,v){
 									<fr:property name="labelTerminator" value=""/>
 									<fr:property name="labelExcluded" value="true"/>
 								</fr:layout>	
-						</fr:edit>	
-						<logic:notEmpty name="nextPossibleLessonsDates">
-							<logic:iterate name="nextPossibleLessonsDates" id="lesson" indexId="index" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">														
-								<fr:edit visible="false" nested="true" name="lesson" id="<%= "nextPossibleLessonsDatesBeanHiddenLessonPlanning" + String.valueOf(index.intValue() + 1) %>" schema="EditPossibleNextSummaryLessonAndDates" />				
-							</logic:iterate>			
-						</logic:notEmpty>
+						</fr:edit>							
 					</fr:form>
 				</td>
 			</tr>	
@@ -90,12 +85,7 @@ function check(e,v){
 									<fr:property name="labelTerminator" value=""/>
 									<fr:property name="labelExcluded" value="true"/>
 								</fr:layout>	
-						</fr:edit>	
-						<logic:notEmpty name="nextPossibleLessonsDates">
-							<logic:iterate name="nextPossibleLessonsDates" id="lesson" indexId="index" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">														
-								<fr:edit visible="false" nested="true" name="lesson" id="<%= "nextPossibleLessonsDatesBeanHiddenLastSummary" + String.valueOf(index.intValue() + 1) %>" schema="EditPossibleNextSummaryLessonAndDates" />				
-							</logic:iterate>			
-						</logic:notEmpty>
+						</fr:edit>							
 					</fr:form>	
 				</td>
 			</tr>
@@ -108,8 +98,8 @@ function check(e,v){
 
 		<%-- Lessons --%>
 		<h3 class="mbottom0"><bean:message key="label.lesson.or.lessons" bundle="DEFAULT"/></h3>
-		<logic:notEmpty name="nextPossibleLessonsDates">
-			<logic:iterate name="nextPossibleLessonsDates" id="lesson" indexId="index" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">				
+		<logic:notEmpty name="summariesManagementBean" property="nextPossibleSummaryLessonsAndDatesBean">
+			<logic:iterate name="summariesManagementBean" property="nextPossibleSummaryLessonsAndDatesBean" id="lesson" indexId="index" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">				
 				<fr:view name="lesson" schema="PossibleNextSummaryLessonAndDate">
 					<fr:layout>
 						<fr:property name="classes" value="tstyle5 thlight mtop1 mbottom0"/>

@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlreadyChosenServiceException;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 
@@ -72,8 +72,8 @@ public class CreateMasterDegreeThesis extends Service {
 
         Collection<Teacher> guiders = Teacher.readByNumbers(guidersNumbers);
         Collection<Teacher> assistentGuiders = Teacher.readByNumbers(assistentGuidersNumbers);
-        Collection<ExternalPerson> externalGuiders = ExternalPerson.readByIDs(externalGuidersIDs);
-        Collection<ExternalPerson> externalAssistentGuiders = ExternalPerson
+        Collection<ExternalContract> externalGuiders = ExternalContract.readByIDs(externalGuidersIDs);
+        Collection<ExternalContract> externalAssistentGuiders = ExternalContract
                 .readByIDs(externalAssistentGuidersIDs);
 
         masterDegreeThesisDataVersion.getGuiders().addAll(guiders);

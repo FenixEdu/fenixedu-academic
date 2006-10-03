@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -134,7 +135,7 @@ public class Person extends Person_Base {
     private void createUserAndLoginEntity(String username) {
 	new Login(new User(this), username);
     }
-    
+
     private void createUserAndLoginEntity() {
 	createUserAndLoginEntity("P" + getIdInternal());
     }
@@ -158,17 +159,13 @@ public class Person extends Person_Base {
 	setIsPassInKerberos(Boolean.FALSE);
     }
 
-    private Person(ExternalPerson externalPerson, String name, Gender gender, String address,
-	    String areaCode, String areaOfAreaCode, String area, String parishOfResidence,
-	    String districtSubdivisionOfResidence, String districtOfResidence, String phone,
-	    String mobile, String homepage, String email, String documentIDNumber,
-	    IDDocumentType documentType) {
+    private Person(String name, Gender gender, String address, String areaCode, String areaOfAreaCode,
+	    String area, String parishOfResidence, String districtSubdivisionOfResidence,
+	    String districtOfResidence, String phone, String mobile, String homepage, String email,
+	    String documentIDNumber, IDDocumentType documentType) {
 
 	super();
 	checkConditionsToCreateNewPerson(documentIDNumber, documentType, this);
-
-	setExternalPerson(externalPerson);
-
 	setNome(name);
 	setGender(gender);
 	setAddress(address);
@@ -190,15 +187,15 @@ public class Person extends Person_Base {
 	setMaritalStatus(MaritalStatus.UNKNOWN);
     }
 
-    protected static Person createExternalPerson(ExternalPerson externalPerson, String name,
-	    Gender gender, String address, String areaCode, String areaOfAreaCode, String area,
-	    String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence,
-	    String phone, String mobile, String homepage, String email, String documentIdNumber,
+    public static Person createExternalPerson(String name, Gender gender, String address,
+	    String areaCode, String areaOfAreaCode, String area, String parishOfResidence,
+	    String districtSubdivisionOfResidence, String districtOfResidence, String phone,
+	    String mobile, String homepage, String email, String documentIdNumber,
 	    IDDocumentType documentType) {
 
-	return new Person(externalPerson, name, gender, address, areaCode, areaOfAreaCode, area,
-		parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, phone, mobile,
-		homepage, email, documentIdNumber, documentType);
+	return new Person(name, gender, address, areaCode, areaOfAreaCode, area, parishOfResidence,
+		districtSubdivisionOfResidence, districtOfResidence, phone, mobile, homepage, email,
+		documentIdNumber, documentType);
     }
 
     public Person(String username, String name, Gender gender, String address, String phone,
@@ -248,8 +245,9 @@ public class Person extends Person_Base {
     }
 
     public void edit(PersonBean personBean) {
-        checkConditionsToCreateNewPerson(personBean.getDocumentIdNumber(), personBean.getIdDocumentType(), this);
-        setProperties(personBean);
+	checkConditionsToCreateNewPerson(personBean.getDocumentIdNumber(), personBean
+		.getIdDocumentType(), this);
+	setProperties(personBean);
     }
 
     public void update(InfoPersonEditor updatedPersonalData, Country country) {
@@ -899,9 +897,6 @@ public class Person extends Person_Base {
 	if (getEmployee() != null) {
 	    return false;
 	}
-	if (getExternalPerson() != null) {
-	    return false;
-	}
 	if (getTeacher() != null) {
 	    return false;
 	}
@@ -920,7 +915,25 @@ public class Person extends Person_Base {
 	if (hasAnyPayedReceipts()) {
 	    return false;
 	}
+	if (getExternalPerson() != null) {
+	    return false;
+	}
 	return true;
+    }
+
+    public ExternalContract getExternalPerson() {
+	List<Accountability> accountabilities = new ArrayList<Accountability>(
+		getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class));
+	
+	if(accountabilities.size() > 1) {
+	    throw new DomainException("error.person.has.two.or.more.externalPersons");
+	}
+	
+	return (ExternalContract) ((accountabilities.isEmpty()) ? null : accountabilities.get(0));
+    }
+    
+    public boolean hasExternalPerson() {
+	return !getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class).isEmpty();
     }
 
     private static class PersonRoleListener extends dml.runtime.RelationAdapter<Role, Person> {
@@ -1001,7 +1014,7 @@ public class Person extends Person_Base {
 	    case CANDIDATE:
 		return true;
 	    case STUDENT:
-		return true;		
+		return true;
 	    case PERSON:
 		return true;
 	    default:
@@ -1139,7 +1152,6 @@ public class Person extends Person_Base {
 	return (getStudentCandidacyForExecutionDegree(executionDegree) != null);
     }
 
-    
     @Deprecated
     public String getCodigoFiscal() {
 	return super.getFiscalCode();
@@ -1657,13 +1669,15 @@ public class Person extends Person_Base {
 	    throw new DomainException("EXTERNAL_PERSON.createContributor.existing.contributor.number");
 	}
 
-	ExternalPerson externalPerson = new ExternalPerson(contributorName, Gender.MALE,
+	Person externalPerson = Person.createExternalPerson(contributorName, Gender.MALE,
 		contributorAddress, areaCode, areaOfAreaCode, area, parishOfResidence,
 		districtSubdivisionOfResidence, districtOfResidence, null, null, null, null, String
 			.valueOf(System.currentTimeMillis()), null);
-	externalPerson.getPerson().setSocialSecurityNumber(contributorNumber);
+	externalPerson.setSocialSecurityNumber(contributorNumber);
+	new ExternalContract(externalPerson,
+		RootDomainObject.getInstance().getExternalInstitutionUnit(), new YearMonthDay(), null);
 
-	return externalPerson.getPerson();
+	return externalPerson;
     }
 
     public Country getCountry() {
@@ -1705,50 +1719,50 @@ public class Person extends Person_Base {
 
     @Override
     public ParkingPartyClassification getPartyClassification() {
-        final Teacher teacher = getTeacher();
-        if (teacher != null) {
-            final TeacherLegalRegimen legalRegimen = teacher.getCurrentLegalRegimenWithoutEndSitutions();
-            if (legalRegimen != null) {
-                return ParkingPartyClassification.TEACHER;
-            }
-        }
-        final Employee employee = getEmployee();
-        if (employee != null && employee.getCurrentContract() != null) {
-            return ParkingPartyClassification.EMPLOYEE;
-        }
-        final GrantOwner grantOwner = getGrantOwner();
-        if (grantOwner != null && grantOwner.hasCurrentContract()) {
-            return ParkingPartyClassification.GRANT_OWNER;
-        }
-        final Student student = getStudent();
-        if (student != null) {
-            final DegreeType degree = student.getMostSignificantDegreeType();
-            if (degree != null) {
-                return ParkingPartyClassification.getClassificationByDegreeType(degree);
-            }
-        }
-        return ParkingPartyClassification.PERSON;
+	final Teacher teacher = getTeacher();
+	if (teacher != null) {
+	    final TeacherLegalRegimen legalRegimen = teacher.getCurrentLegalRegimenWithoutEndSitutions();
+	    if (legalRegimen != null) {
+		return ParkingPartyClassification.TEACHER;
+	    }
+	}
+	final Employee employee = getEmployee();
+	if (employee != null && employee.getCurrentWorkingContract() != null) {
+	    return ParkingPartyClassification.EMPLOYEE;
+	}
+	final GrantOwner grantOwner = getGrantOwner();
+	if (grantOwner != null && grantOwner.hasCurrentContract()) {
+	    return ParkingPartyClassification.GRANT_OWNER;
+	}
+	final Student student = getStudent();
+	if (student != null) {
+	    final DegreeType degree = student.getMostSignificantDegreeType();
+	    if (degree != null) {
+		return ParkingPartyClassification.getClassificationByDegreeType(degree);
+	    }
+	}
+	return ParkingPartyClassification.PERSON;
     }
 
     public static class PersonBeanFactoryEditor extends PersonBean implements FactoryExecutor {
-        public PersonBeanFactoryEditor(final Person person) {
-            super(person);
-        }
+	public PersonBeanFactoryEditor(final Person person) {
+	    super(person);
+	}
 
-        public Object execute() {
-            getPerson().edit(this);
-            return null;
-        }
+	public Object execute() {
+	    getPerson().edit(this);
+	    return null;
+	}
     }
 
-    public static class ExternalPersonBeanFactoryCreator extends ExternalPersonBean implements FactoryExecutor {
-        public ExternalPersonBeanFactoryCreator() {
-            super();
-        }
+    public static class ExternalPersonBeanFactoryCreator extends ExternalPersonBean implements
+	    FactoryExecutor {
+	public ExternalPersonBeanFactoryCreator() {
+	    super();
+	}
 
-        public Object execute() {
-            return new Person(this, true);
-        }
+	public Object execute() {
+	    return new Person(this, true);
+	}
     }
-
 }

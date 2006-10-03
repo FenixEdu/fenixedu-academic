@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 public enum AccountabilityTypeEnum {
 
-    MANAGEMENT_FUNCTION, ACADEMIC_STRUCTURE, ORGANIZATIONAL_STRUCTURE;
-
+    MANAGEMENT_FUNCTION, ACADEMIC_STRUCTURE, ORGANIZATIONAL_STRUCTURE, EMPLOYEE_CONTRACT;
+    
     public String getName() {
         return name();
     }
@@ -19,5 +19,4 @@ public enum AccountabilityTypeEnum {
     public String getFullyQualifiedName() {
         return AccountabilityTypeEnum.class.getName() + "." + name();
     }
-
 }

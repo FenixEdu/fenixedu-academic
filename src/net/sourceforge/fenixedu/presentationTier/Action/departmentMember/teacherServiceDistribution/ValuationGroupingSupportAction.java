@@ -497,7 +497,7 @@ public class ValuationGroupingSupportAction extends FenixDispatchAction {
 	}
 
 	private List<Person> getCurrentWorkingPersonsFromDepartment(TeacherServiceDistribution teacherServiceDistribution) {
-		List<Employee> employeeList = teacherServiceDistribution.getDepartment().getCurrentActiveWorkingEmployees();
+		List<Employee> employeeList = teacherServiceDistribution.getDepartment().getAllCurrentActiveWorkingEmployees();
 
 		List<Person> personList = new ArrayList<Person>();
 		for (Employee employee : employeeList) {

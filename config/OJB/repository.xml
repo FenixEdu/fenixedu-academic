@@ -62,7 +62,6 @@
 <!ENTITY inquiries SYSTEM "repository_inquiries.xml">
 <!ENTITY managementAssiduousness SYSTEM "repository_managementAssiduousness.xml">
 <!ENTITY projectsManagement SYSTEM "repository_projectsManagement.xml">
-<!ENTITY contract SYSTEM "repository_contract.xml">
 <!ENTITY teacherServiceExemption SYSTEM "repository_teacher_service_exemption.xml">
 <!ENTITY qualification SYSTEM "repository_qualification.xml">
 <!ENTITY fileEntry SYSTEM "repository_fileEntry.xml">
@@ -157,9 +156,7 @@
 	&inquiries;
 	&managementAssiduousness;
 	&projectsManagement;	
-	&contract;
 	&teacherServiceExemption;	
-	&teacherServiceExemption;
 	&qualification;
 	&fileEntry;
 	&degreeStructure;

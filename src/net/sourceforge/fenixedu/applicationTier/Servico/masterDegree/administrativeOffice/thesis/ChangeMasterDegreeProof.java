@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.De
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.Person;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
@@ -62,7 +62,7 @@ public class ChangeMasterDegreeProof extends Service {
         Employee employee = userView.getPerson().getEmployee();
 
         List<Teacher> teacherJuries = (List<Teacher>) Teacher.readByNumbers(teacherJuriesNumbers);
-        List<ExternalPerson> externalJuries = ExternalPerson.readByIDs(externalJuriesIDs);
+        List<ExternalContract> externalJuries = ExternalContract.readByIDs(externalJuriesIDs);
 
         new MasterDegreeProofVersion(storedMasterDegreeThesis, employee, new Date(),
                 proofDate, thesisDeliveryDate, finalResult, attachedCopiesNumber,

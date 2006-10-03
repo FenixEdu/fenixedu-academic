@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFact
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.ContractType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.lang.StringUtils;
@@ -376,7 +377,7 @@ public class ParkingParty extends ParkingParty_Base {
             Employee employee = person.getEmployee();
             if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
                     && person.getPersonRole(RoleType.EMPLOYEE) != null
-                    && employee.getCurrentContract() != null) {
+                    && employee.getCurrentContractByContractType(ContractType.WORKING) != null) {
                 Unit currentUnit = employee.getCurrentWorkingPlace();
                 if (currentUnit != null) {
                     occupations.add("<strong>Funcionário</strong><br/> Nº "

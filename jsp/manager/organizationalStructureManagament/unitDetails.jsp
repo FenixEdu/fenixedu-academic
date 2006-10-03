@@ -333,7 +333,7 @@
 				styleClass="error" escape="false"/>		
 		
 		<h:outputText value="<br/>" escape="false" />	
-		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="listAllUnits" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
+		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="#{organizationalStructureBackingBean.prepareListAllUnits}" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
 				
 	</h:form>
 	

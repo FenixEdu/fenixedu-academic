@@ -78,11 +78,11 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
     protected void getUnitTree(StringBuilder buffer, Unit parentUnit, YearMonthDay currentDate) {
         buffer.append("<ul class='padding1 nobullet'>");
-        getUnitsList(parentUnit, buffer, currentDate);
+        getUnitsList(parentUnit, null, buffer, currentDate);
         buffer.append("</ul>");
     }
 
-    protected void getUnitsList(Unit parentUnit, StringBuilder buffer, YearMonthDay currentDate) {
+    protected void getUnitsList(Unit parentUnit, Unit parentUnitParent, StringBuilder buffer, YearMonthDay currentDate) {
 
         openLITag(buffer);
 
@@ -90,7 +90,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         Collections.sort(subUnits, new BeanComparator("name"));
         
         if (!subUnits.isEmpty()) {
-            putImage(parentUnit, buffer);
+            putImage(parentUnit, buffer, parentUnitParent);
         }
 
         buffer.append("<a href=\"").append(getContextPath()).append(
@@ -99,11 +99,11 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
                 .append(parentUnit.getName()).append("</a>").append("</li>");
 
         if (!subUnits.isEmpty()) {
-            openULTag(parentUnit, buffer);
+            openULTag(parentUnit, buffer, parentUnitParent);
         }       
 
         for (Unit subUnit : subUnits) {            
-           getUnitsList(subUnit, buffer, currentDate);            
+           getUnitsList(subUnit, parentUnit, buffer, currentDate);            
         }
 
         if (!subUnits.isEmpty()) {

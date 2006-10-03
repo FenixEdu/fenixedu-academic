@@ -316,35 +316,6 @@
    
 <!-- End of definitions for class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion -->
 
-
-<!-- Definitions for class net.sourceforge.fenixedu.domain.ExternalPerson -->
-	
- <class-descriptor class="net.sourceforge.fenixedu.domain.ExternalPerson"
-              table="EXTERNAL_PERSON"
-      >
-      
-        
-        
-             
-        
-         
-          
-      
-
-				
-	  
-	 				  	  
-	  	   	  
-	   
-
-	   
-      	
-	         	
-                
- </class-descriptor>  
-   
-<!-- End of definitions for class net.sourceforge.fenixedu.domain.ExternalPerson -->
-
 <!-- Start of definitions for class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide"
 		table="REIMBURSEMENT_GUIDE"

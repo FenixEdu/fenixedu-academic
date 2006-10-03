@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.io.Serializable;
+import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -53,12 +55,15 @@ public class SummariesManagementBean implements Serializable {
     
     private DomainReference<Professorship> professorshipLoggedReference;
     
+    private List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean;
+    
 
-    public SummariesManagementBean(SummaryType summaryType, ExecutionCourse executionCourse, Professorship professorship) {        
+    public SummariesManagementBean(SummaryType summaryType, ExecutionCourse executionCourse, Professorship professorship, List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {        
         setSummaryType(summaryType);
         setExecutionCourse(executionCourse);
         setProfessorship(professorship);                    
         setProfessorshipLogged(professorship);
+        setNextPossibleSummaryLessonsAndDatesBean(nextPossibleSummaryLessonsAndDatesBean);
     }
     
     public SummariesManagementBean(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, SummaryType summaryType,
@@ -246,5 +251,14 @@ public class SummariesManagementBean implements Serializable {
 
     public boolean isNewSummary() {
         return getSummary() == null;
+    }
+
+    public List<NextPossibleSummaryLessonsAndDatesBean> getNextPossibleSummaryLessonsAndDatesBean() {
+        return nextPossibleSummaryLessonsAndDatesBean;
+    }
+
+    public void setNextPossibleSummaryLessonsAndDatesBean(
+    	List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {
+        this.nextPossibleSummaryLessonsAndDatesBean = nextPossibleSummaryLessonsAndDatesBean;
     }
 }

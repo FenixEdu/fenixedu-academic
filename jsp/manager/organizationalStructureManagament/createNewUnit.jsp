@@ -44,7 +44,7 @@
 			
 			<h:outputText value="<b>#{bundle['message.initialDate']}:</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.unitBeginDate']}" id="beginDate" required="true" size="10" value="#{organizationalStructureBackingBean.unitBeginDate}">
+				<h:inputText alt="#{htmlAltBundle['inputText.unitBeginDate']}" maxlength="10" id="beginDate" required="true" size="10" value="#{organizationalStructureBackingBean.unitBeginDate}">
 					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>
 				<h:outputText value="#{bundle['date.format']}"/>
@@ -53,8 +53,11 @@
 			
 			<h:outputText value="<b>#{bundle['message.endDate']}:</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.unitEndDate']}" id="endDate" size="10" value="#{organizationalStructureBackingBean.unitEndDate}"/>
-				<h:outputText value="#{bundle['date.format']}"/>				
+				<h:inputText alt="#{htmlAltBundle['inputText.unitEndDate']}" maxlength="10" id="endDate" size="10" value="#{organizationalStructureBackingBean.unitEndDate}">
+					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
+				</h:inputText>
+				<h:outputText value="#{bundle['date.format']}"/>
+				<h:message for="endDate" styleClass="error"/>				
 			</h:panelGroup>
 		
 			<h:outputText value="<b>#{bundle['message.uniType']}</b>" escape="false"/>

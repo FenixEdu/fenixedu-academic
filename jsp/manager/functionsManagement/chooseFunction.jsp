@@ -95,7 +95,7 @@
 			columns="4" styleClass="infoop">							
 			<h:outputText value="<b>#{bundle['label.begin.date']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.beginDate']}" disabled="#{managerFunctionsManagementBackingBean.disabledVar == 0}" id="beginDate"  size="10" value="#{managerFunctionsManagementBackingBean.beginDate}">							
+				<h:inputText alt="#{htmlAltBundle['inputText.beginDate']}" maxlength="10" disabled="#{managerFunctionsManagementBackingBean.disabledVar == 0}" id="beginDate"  size="10" value="#{managerFunctionsManagementBackingBean.beginDate}">							
 					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>	
 				<h:outputText value="#{bundle['label.date.format']}"/>
@@ -106,7 +106,7 @@
 						
 			<h:outputText value="<b>#{bundle['label.end.date']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.endDate']}" disabled="#{managerFunctionsManagementBackingBean.disabledVar == 0}" id="endDate" size="10" value="#{managerFunctionsManagementBackingBean.endDate}">
+				<h:inputText alt="#{htmlAltBundle['inputText.endDate']}" maxlength="10" disabled="#{managerFunctionsManagementBackingBean.disabledVar == 0}" id="endDate" size="10" value="#{managerFunctionsManagementBackingBean.endDate}">
 					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>				
 				<h:outputText value="#{bundle['label.date.format']}"/>

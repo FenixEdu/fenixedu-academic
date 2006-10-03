@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -22,9 +22,9 @@ public class ReadExternalPersonsByInstitution extends Service {
         List infoExternalPersons = new ArrayList();
         
         Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);
-        List<ExternalPerson> externalPersons = institution.getExternalPersons();               
+        List<ExternalContract> externalPersons = institution.getExternalPersons();               
 
-        for (ExternalPerson externalPerson : externalPersons) {
+        for (ExternalContract externalPerson : externalPersons) {
             infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
         }
 

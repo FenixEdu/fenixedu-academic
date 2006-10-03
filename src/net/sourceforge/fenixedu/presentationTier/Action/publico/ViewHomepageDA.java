@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -96,7 +96,7 @@ public class ViewHomepageDA extends FenixDispatchAction {
     		final Person person = teacher.getPerson();
     		final Employee employee = person.getEmployee();
     		if (employee != null) {
-    			final Contract contract = employee.getCurrentContract();
+    			final Contract contract = employee.getCurrentWorkingContract();
     			if (contract != null) {
     				final Unit unit = contract.getWorkingUnit();
     				final SortedSet<Homepage> unitHomepages;
@@ -131,7 +131,7 @@ public class ViewHomepageDA extends FenixDispatchAction {
     		if (person != null) {
     			final Teacher teacher = person.getTeacher();
     			if (teacher == null) {
-    				final Contract contract = employee.getCurrentContract();
+    				final Contract contract = employee.getCurrentWorkingContract();
     				if (contract != null) {
     					final Unit unit = contract.getWorkingUnit();
     					final SortedSet<Homepage> unitHomepages;

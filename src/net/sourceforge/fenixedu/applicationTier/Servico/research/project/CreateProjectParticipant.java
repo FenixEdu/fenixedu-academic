@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantSimpleCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantUnitCreationBean;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
@@ -46,7 +46,7 @@ public class CreateProjectParticipant extends Service  {
      */
     public ProjectParticipation run(ProjectParticipantFullCreationBean bean, Integer projectId) throws ExcepcaoPersistencia, FenixServiceException {
         final ProjectParticipation participation;
-        final ExternalPerson externalPerson;
+        final ExternalContract externalPerson;
         
         final Project project = rootDomainObject.readProjectByOID(projectId);
         if(project == null){

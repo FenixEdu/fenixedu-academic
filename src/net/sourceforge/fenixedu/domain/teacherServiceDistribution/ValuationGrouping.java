@@ -234,7 +234,7 @@ public class ValuationGrouping extends ValuationGrouping_Base {
 
 	public List<Teacher> getDepartmentTeachersNotInGrouping(Department department) {
 		TeacherServiceDistribution distribution = this.getValuationPhase().getTeacherServiceDistribution();
-		List<Teacher> departmentTeachers = department.getTeachers(
+		List<Teacher> departmentTeachers = department.getAllTeachers(
 				distribution.getFirstExecutionPeriod().getBeginDateYearMonthDay(),
 				distribution.getLastExecutionPeriod().getEndDateYearMonthDay());
 

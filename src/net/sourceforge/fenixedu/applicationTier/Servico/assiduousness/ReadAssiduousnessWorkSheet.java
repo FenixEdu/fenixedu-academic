@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.ContractType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.joda.time.DateMidnight;
@@ -202,9 +203,9 @@ public class ReadAssiduousnessWorkSheet extends Service {
         employeeWorkSheet.setWorkDaySheetList(workSheet);
         employeeWorkSheet.setEmployee(assiduousness.getEmployee());
         Unit unit = assiduousness.getEmployee().getLastWorkingPlaceByPeriod(beginDate, endDate);
-        if (assiduousness.getEmployee().getLastContract() != null
-                && assiduousness.getEmployee().getLastContract().getMailingUnit() != null) {
-            unit = assiduousness.getEmployee().getLastContract().getMailingUnit();
+        if (assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING) != null
+                && assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING).getMailingUnit() != null) {
+            unit = assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING).getMailingUnit();
         }
         employeeWorkSheet.setUnit(unit);
         if (unit != null) {

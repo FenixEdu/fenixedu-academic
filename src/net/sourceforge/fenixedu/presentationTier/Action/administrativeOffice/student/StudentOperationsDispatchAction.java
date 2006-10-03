@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -27,8 +26,6 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -154,7 +151,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	    if (person != null) {
 		personBean = new PersonBean(person);
 
-		if (person.getEmployee() != null && person.getEmployee().getCurrentContract() != null) {
+		if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null) {
 		    request.setAttribute("personBean", personBean);
 		    return mapping.findForward("fillNewPersonDataForEmployee");
 		}

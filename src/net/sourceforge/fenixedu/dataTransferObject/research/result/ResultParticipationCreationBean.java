@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
@@ -90,11 +90,11 @@ public class ResultParticipationCreationBean implements Serializable {
 	this.role = role;
     }
 
-    public ExternalPerson getExternalPerson() {
+    public ExternalContract getExternalPerson() {
 	return (this.participator == null) ? null : this.participator.getObject().getExternalPerson();
     }
 
-    public void setExternalPerson(ExternalPerson externalPerson) {
+    public void setExternalPerson(ExternalContract externalPerson) {
 	if (externalPerson == null) {
 	    this.participator = null;
 	} else {
