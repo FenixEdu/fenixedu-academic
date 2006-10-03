@@ -1,4 +1,4 @@
-delete * from PARKING_GROUP;
+delete from PARKING_GROUP;
 
 insert into PARKING_GROUP values(null,"Limitados",1);
 insert into PARKING_GROUP values(null,"Jubilados",1);
