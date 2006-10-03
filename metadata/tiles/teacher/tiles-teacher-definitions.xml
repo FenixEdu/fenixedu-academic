@@ -23,7 +23,7 @@
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	  <put name="body" value="/commons/blank.jsp" />
 	  <put name="footer" value="/copyright.jsp" />	  
-	</definition>	
+	</definition>
 	<definition name="copy.site.execution.course.page" page="/layout/teacherLayout_2col.jsp">
 	  <put name="serviceName" value="Portal Docente" />	
 	  <put name="institutionName" value="Instituto Superior Técnico" />

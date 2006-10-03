@@ -1085,3 +1085,15 @@ th.parking { width: 90px;}
 td.parking { width: 400px;}
 
 tr.trhighlight1 td { background: #fff; }
+
+/* Testes online */
+
+.qcontainer {}
+.qheader {}
+.qbody {}
+.qlinks {}
+.qanswer {}
+
+.qsanswered .qheader .qshowstate { background-color: #dfb ;}
+.qsnotanswered .qheader .qshowstate { background-color: #def; }
+.qsgivenup .qheader .qshowstate { background-color: #fff7bb; }

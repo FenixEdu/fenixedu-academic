@@ -41,6 +41,11 @@ public abstract class HtmlContainer extends HtmlComponent {
             tag.addChild(component.getOwnTag(context));
         }
         
+        // force close tag to appear
+        if (tag.getChildren().isEmpty()) {
+            tag.addChild(new HtmlTag(null));
+        }
+        
         return tag;
     }    
     

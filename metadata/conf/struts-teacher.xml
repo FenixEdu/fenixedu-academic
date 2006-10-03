@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" 
-    "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd" [
+<!ENTITY tests-actions SYSTEM "struts-tests-actions.xml">
+]>
 <struts-config>
     <!-- ========== Data Source Configuration =============================== -->
     <!-- ========== Form Bean Definitions ================================== -->
@@ -1273,7 +1275,7 @@
             <forward name="viewExams" path="/viewEvaluation.do?method=viewEvaluation"/>
         </action>
         <!-- End Marks List -->        
-                
+
         <!-- Summaries Management -->
 		<action path="/summariesManagement" 
 		    name="summariesManagementForm"
@@ -1283,7 +1285,7 @@
             validate="true" >
             <forward name="prepareInsertSummary" path="prepare-insert-summary" />            
             <forward name="prepareInsertComplexSummary" path="prepare-insert-complex-summary" />            
-            <forward name="prepareShowSummaries" path="prepare-show-summaries" />                       
+            <forward name="prepareShowSummaries" path="prepare-show-summaries" />           
         </action>	
 
         <!-- Actions For Groups -->
@@ -2156,6 +2158,11 @@
         	<forward name="viewProjectSubmissionLogsByGroup" path="view-project-submission-logs-by-group"/>
         </action>
         
+		
+		<!-- Action mappings for tests -->
+		&tests-actions;
+		<!-- End of action mappings for tests -->
+	    
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
@@ -2166,7 +2173,8 @@
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>    
     <message-resources parameter="resources.CmsResources" key="CMS_RESOURCES" null="false" />
     <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
-    <message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>        
+    <message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/> 
+    <message-resources parameter="resources.TestsResources" key="TESTS_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

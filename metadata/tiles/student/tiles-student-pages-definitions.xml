@@ -30,7 +30,7 @@
 	<definition name="show-Test-Correction" extends="definition.student.one-column">
 		<put name="body" value="/student/onlineTests/showTestCorrection_bd.jsp" />		
 	</definition>
-
+	
 	<definition name="give-Up-Question" extends="definition.student.masterPage">
 		<put name="body" value="/student/onlineTests/giveUpQuestion.jsp" />		
 	</definition>
@@ -255,4 +255,14 @@
         <put name="body" value="/commons/student/timeTable/classTimeTable.jsp"></put>
     </definition>
 		
+	<!-- ONLINE TESTS -->
+	
+	<definition name="viewTestsPage" extends="definition.student.masterPage">
+		<put name="body" value="/student/tests/viewTests.jsp" />
+	</definition>
+	
+	<definition name="viewTestPage" extends="definition.student.masterPage">
+		<put name="body" value="/student/tests/viewTest.jsp" />
+	</definition>
+	
 </tiles-definitions>

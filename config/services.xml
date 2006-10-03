@@ -5903,7 +5903,7 @@
 			<chain name="EnrollmentWithoutRulesAuthorization" />
 		</filterChains>
 	</service>
-		<service>
+	<service>
 		<name>WriteBolonhaEnrolmentsList</name>
 		<implementationClass>
             net.sourceforge.fenixedu.applicationTier.Servico.enrollment.WriteBolonhaEnrolmentsList</implementationClass>
@@ -6671,6 +6671,7 @@
 	<!-- =============================================================================================== -->
 	<!-- =============================================================================================== -->
 	<!-- =============================================================================================== -->
+
 
 	<service>
         <name>student.ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod</name>
@@ -8566,7 +8567,7 @@
         	<chain name="DepartmentAdministrativeOfficeOrDepartmentMemberOrTeacherAuthorization"></chain>
         </filterChains>     
     </service>
-   
+
     <!-- ======================================  -->
     <service>
     	<name>CreateCompetenceCourse</name>
@@ -9094,8 +9095,8 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
         </filterChains>
-    </service>    
-	<service>
+    </service>
+    <service>
    	 	<name>ReadTeachersCreditsResumeByPeriodAndUnit</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit</implementationClass>
         <description></description>
@@ -9164,13 +9165,13 @@
         <filterChains>
         	<chain name="StudentAuthorization"></chain>
         </filterChains>     
-    </service>        
+    </service>           
 	<service>
    	 	<name>SendEMail</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.email.SendEMail</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
-    </service>                
+    </service>               
 	<service>
    	 	<name>ReadActiveMasterDegreeThesis</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesis</implementationClass>
@@ -9483,6 +9484,18 @@
         </filterChains>
     </service>
 	<service>
+        <name>SearchPolymorphicObjects</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchPolymorphicObjects</implementationClass>
+        <description>
+            Generic service to search all objects of a certain type that have a string property
+            that matches some user input. Inheritance is respected, so searching for Party also
+            returns Person and Unit.
+        </description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+	<service>
         <name>SearchObjectsByMultiLanguageString</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchObjectsByMultiLanguageString</implementationClass>
         <description>
@@ -9529,7 +9542,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 	</service>
-	<service>
+   	<service>
 		<name>SaveResultParticipationsOrder</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.SaveResultParticipationsOrder</implementationClass>
 		<description />
@@ -9801,7 +9814,7 @@
 			<chain name="ManagementAssiduousnessAuthorization" />
 		</filterChains>		
 	</service>
-    <service>
+	<service>
 		<name>ReadAssiduousnessResponsibleWorkSheet</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAssiduousnessWorkSheet</implementationClass>
 		<description />
@@ -9842,7 +9855,7 @@
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.EditBlueprintVersion</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>	
+		<filterChains>			
 			<chain name="SpaceManagerAuthorization"></chain>					
 		</filterChains>
 	</service>
@@ -9851,7 +9864,7 @@
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteBlueprintVersion</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
+		<filterChains>			
 			<chain name="SpaceManagerAuthorization"></chain>			
 		</filterChains>
 	</service>
@@ -9941,7 +9954,7 @@
             <chain name="ManagerAuthorization" />
         </filterChains>
     </service>
-    <service>
+	<service>
         <name>ImportFunctionalities</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ImportFunctionalities</implementationClass>
         <description />
@@ -10014,7 +10027,7 @@
             <chain name="ExecutionCourseLecturingTeacherAuthorization" />
         </filterChains>
     </service>
-      <service>
+    <service>
         <name>MoveLessonPlanning</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.MoveLessonPlanning</implementationClass>
         <description />
@@ -10023,7 +10036,7 @@
             <chain name="ExecutionCourseLecturingTeacherAuthorization" />
         </filterChains>
     </service>
-<service>
+    <service>
         <name>ImportLessonPlannings</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportLessonPlannings</implementationClass>
         <description />
@@ -10450,7 +10463,7 @@
         <filterChains>
         	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
         </filterChains>     
-    </service>      
+    </service>        
     <service>
         <name>CreateSummary</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary</implementationClass>
@@ -10459,9 +10472,8 @@
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherOrDepartmentAdministrativeOfficeAuthorization" />
         </filterChains>
-    </service>  
-    
-      <service>
+    </service>      
+    <service>
         <name>EditSummary</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary</implementationClass>
         <description />
@@ -10470,7 +10482,6 @@
             <chain name="SummaryManagementAuthorization" />
         </filterChains>
     </service>      
-
     <service>
 		<name>DeleteSummary</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteSummary</implementationClass>
@@ -10487,7 +10498,7 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
         </filterChains>     
-    </service> 
+    </service>      
 
     <service>
     	<name>SetEmail</name>
@@ -10496,7 +10507,7 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
         </filterChains>     
-    </service> 
+    </service>      
     <service>
     	<name>CreateParkingParty</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty</implementationClass>
@@ -10722,4 +10733,285 @@
         	<chain name="ParkingManagerAuthorizationFilter"></chain>
         </filterChains>   
     </service>
-</serviceDefinitions>		
+
+	<service>
+		<name>CreatePictureMaterial</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreatePictureMaterial</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeletePresentationMaterial</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeletePresentationMaterial</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>SwitchPosition</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.SwitchPosition</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeletePermissionUnit</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeletePermissionUnit</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>CreatePermissionUnit</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreatePermissionUnit</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteQuestion</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteQuestion</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateAtomicQuestion</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreateAtomicQuestion</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateChoice</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreateChoice</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteChoice</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteChoice</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateAllGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreateAllGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteGrade</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteGrade</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>ChooseCorrector</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.ChooseCorrector</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>ChooseValidator</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.ChooseValidator</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>ChoosePreCondition</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.ChoosePreCondition</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteCorrector</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteCorrector</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeletePreCondition</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeletePreCondition</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteValidator</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteValidator</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>AssociateParent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.AssociateParent</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DisassociateParent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DisassociateParent</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateQuestionBank</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreateQuestionBank</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteModelRestriction</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteModelRestriction</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateModelGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreateModelGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>SelectAtomicQuestionRestrictions</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.SelectAtomicQuestionRestrictions</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>UnselectRestriction</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.UnselectRestriction</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>SelectQuestionGroupRestriction</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.SelectQuestionGroupRestriction</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>GenerateTests</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.GenerateTests</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>PublishTestGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.PublishTestGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>UnpublishTestGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.UnpublishTestGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteTestGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteTestGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>FinishTestGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.FinishTestGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>CorrectTestGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CorrectTestGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>GetStudentTest</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.GetStudentTest</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteAnswer</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteAnswer</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>GiveUpQuestion</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.GiveUpQuestion</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>PublishGrades</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.PublishGrades</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+</serviceDefinitions>

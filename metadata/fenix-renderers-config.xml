@@ -239,7 +239,17 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer"/>
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.TopLevelMenuRenderer"/>
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.BreadCrumbsRenderer"/>
-
+    
+    <!--@ File displayed as an html picture -->
+    <renderer type="net.sourceforge.fenixedu.domain.File"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.FileAsPictureRenderer"
+              layout="image" />
+    
+    <!--@ File displayed as an html picture -->
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.MathMlMaterialRenderer"
+              layout="equation" />
+    
     <!-- input -->
 
     <!--@ The default layout for editing objects.  -->  
@@ -318,10 +328,10 @@ Documentation:
     <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
           The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
     <renderer mode="input" type="boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
-    
+
     <!--@ The default input layout for an enumeration presents an html menu with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->
-    <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/> 
+    <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>
     <!--@ The input layout for an enumeration presents radio buttons with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->     
     <renderer mode="input" type="java.lang.Enum" layout="radio" class="net.sourceforge.fenixedu.renderers.EnumRadioInputRenderer">
@@ -376,7 +386,7 @@ Documentation:
 	<renderer type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}"/>
 	</renderer>	
-
+	
 	<!--@ The default layout for a HourMinuteSecond automatically includes the hour and minute -->	
 	<renderer type="net.sourceforge.fenixedu.util.HourMinuteSecond" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
 		<property name="format" value="${hour,02d}:${minuteOfHour,02d}"/>
@@ -455,4 +465,178 @@ Documentation:
 	<!--@ Layout that allows you to render a boolean or Boolean with checkbox with postback -->
 	<renderer mode="input" type="boolean" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderWithPostBack"/>
 	<renderer mode="input" type="java.lang.Boolean" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderWithPostBack"/>
+	
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.Grade"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.GradeInputRenderer"
+              mode="input" />
+
+	<renderer type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
+	          class="net.sourceforge.fenixedu.presentationTier.renderers.AtomicQuestionForAllGroupRenderer"
+	          layout="sub-question" />
+
+	<renderer type="net.sourceforge.fenixedu.domain.tests.NewCorrector"
+	          class="net.sourceforge.fenixedu.presentationTier.renderers.CorrectorForAllGroupRenderer"
+	          layout="values" />
+
+	<renderer type="net.sourceforge.fenixedu.domain.tests.NewCorrector"
+	          class="net.sourceforge.fenixedu.presentationTier.renderers.CorrectorForTest"
+	          layout="short" />
+
+	<renderer type="net.sourceforge.fenixedu.domain.tests.predicates.Predicate"
+	          class="net.sourceforge.fenixedu.presentationTier.renderers.PredicateRenderer"
+	          layout="values" />
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewQuestion"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.ShortQuestionRenderer"
+              layout="short" />
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTestElement"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.TestElementSummaryRenderer"
+              layout="summary" />
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTestElement"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.TestElementDetailsRenderer"
+              layout="details" />
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.ModelRestrictionDetailsRenderer"
+              layout="template-model-tree" />
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.ModelRestrictionSelectRenderer"
+              layout="template-select-tree" />
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.ModelRestrictionSortRenderer"
+              layout="template-sort-tree" />
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTestElement"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.TestElementVariationRenderer"
+              layout="template-variations-tree" />
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewChoice"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              layout="template-short">
+    	<property name="template"
+    	          value="/teacher/tests/templates/questionBank/shortChoiceTemplate.jsp"/>
+    </renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewChoice"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer"
+              layout="short">
+        <property name="subLayout" value="values"/>
+        <property name="subSchema" value="tests.choice.position"/>
+        <property name="linkFormat" value="/tests/questionBank.do?method=editTestElement&amp;oid=${idInternal}"/>
+    </renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              layout="template-tree">
+    	<property name="template"
+    	          value="/teacher/tests/templates/questionBank/treeQuestionGroupTemplate.jsp"/>
+    </renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              layout="template-simple">
+    	<property name="template"
+    	          value="/teacher/tests/templates/questionBank/simplePresentationMaterialTemplate.jsp"/>
+    </renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewStringMaterial"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+    	<property name="template"
+    	          value="/teacher/tests/templates/presentationMaterial/stringMaterialTemplate.jsp"/>
+    </renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewPictureMaterial"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+    	<property name="template"
+    	          value="/teacher/tests/templates/presentationMaterial/pictureMaterialTemplate.jsp"/>
+    </renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+    	<property name="template"
+    	          value="/teacher/tests/templates/presentationMaterial/mathMlMaterialTemplate.jsp"/>
+    </renderer>
+    
+    <!-- Render templates for Tests and descendants in teacher correctByPerson context -->
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTest"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              layout="template-correctByPerson-tree">
+    	<property name="template"
+    	          value="/teacher/tests/templates/test/correctByPerson/test.jsp"/>
+    </renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewSection"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              layout="template-correctByPerson-tree">
+    	<property name="template"
+    	          value="/teacher/tests/templates/test/correctByPerson/section.jsp"/>
+    </renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              layout="template-correctByPerson-tree">
+    	<property name="template"
+    	          value="/teacher/tests/templates/test/correctByPerson/atomicQuestion.jsp"/>
+    </renderer>
+    
+    <!-- Render templates for Tests in student context -->
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTest"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              layout="template-student-tree">
+    	<property name="template"
+    	          value="/student/tests/templates/test.jsp"/>
+    </renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewSection"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              layout="template-student-tree">
+    	<property name="template"
+    	          value="/student/tests/templates/section.jsp"/>
+    </renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
+              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              layout="template-student-tree">
+    	<property name="template"
+    	          value="/student/tests/templates/atomicQuestion.jsp"/>
+    </renderer>
+    
+    <renderer mode="input"
+              type="net.sourceforge.fenixedu.domain.tests.NewStringMaterial"
+              class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
+    </renderer>
+    
+    <renderer mode="input"
+              type="net.sourceforge.fenixedu.domain.tests.NewPictureMaterial"
+              class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
+    </renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.Grade"
+              class="net.sourceforge.fenixedu.renderers.FormatRenderer"
+              layout="format">
+		<property name="format" value="${percentage,.2f}%% (${value,.2f}/${scale,.2f})" />
+	</renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.Person"
+              class="net.sourceforge.fenixedu.renderers.FormatRenderer"
+              layout="format-name-number">
+		<property name="format" value="${name}" />
+	</renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTest"
+              class="net.sourceforge.fenixedu.renderers.FormatRenderer"
+              layout="format-as-variation">
+		<property name="format" value="(V. ${position})" />
+	</renderer>
+    
+    <renderer type="net.sourceforge.fenixedu.domain.tests.NewAnswer"
+              class="net.sourceforge.fenixedu.renderers.FormatRenderer"
+              layout="computed-grade">
+		<property name="format" value="${percentage} x ${atomicQuestion.grade.value} = ${calculatedGrade.value}/${calculatedGrade.scale}" />
+	</renderer>
 </renderers-config>

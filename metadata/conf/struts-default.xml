@@ -172,9 +172,10 @@
    	<message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/> 
    	<message-resources parameter="resources.DomainExceptionResources" key="DOMAIN_EXCEPTION_RESOURCES" null="false"/> 
     <message-resources parameter="resources.RendererResources" key="RENDERER_RESOURCES" null="false"/> 
-	<message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>            
-	<message-resources parameter="resources.CandidateResources" key="CANDIDATE_RESOURCES" null="false" />     
+    <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>  
+   	<message-resources parameter="resources.CandidateResources" key="CANDIDATE_RESOURCES" null="false" />     
 	<message-resources parameter="resources.VigilancyResources" key="VIGILANCY_RESOURCES" null="false"/> 
+   	<message-resources parameter="resources.TestsResources" key="TESTS_RESOURCES" null="false" />
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

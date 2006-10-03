@@ -1,0 +1,60 @@
+<action path="/tests/questionBank"
+        name="testForm"
+        input="/tests/questionBank.do?method=manageQuestionBank?view=tree"
+        scope="request"
+        parameter="method"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.QuestionBankManagementAction" 
+        validate="true">
+	<forward name="manageTreeQuestionBank" path="manageTreeQuestionBankPage" />
+	<forward name="manageLinearQuestionBank" path="manageLinearQuestionBankPage" />
+	<forward name="editTestElement" path="editTestElementPage" />
+	<forward name="managePermissionUnits" path="managePermissionUnitsPage" />
+	<forward name="createQuestionGroup" path="createQuestionGroupPage" />
+	<forward name="createAtomicQuestion" path="createAtomicQuestionPage" />
+	<forward name="editCorrector" path="editCorrectorPage" />
+	<forward name="editValidator" path="editValidatorPage" />
+	<forward name="editPreCondition" path="editPreConditionPage" />
+	<forward name="associateParent" path="associateParentPage" />
+	<forward name="disassociateParent" path="disassociateParentPage" />
+	<forward name="deleteQuestion" path="deleteQuestionPage" />
+</action>
+
+<action path="/tests/questionBank/presentationMaterial"
+        name="testForm"
+        scope="request" 
+        parameter="method"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PresentationMaterialManagementAction" 
+        validate="true">
+	<forward name="createPresentationMaterial" path="createPresentationMaterialPage" />
+	<forward name="createPictureMaterial" path="createPictureMaterialPage" />
+	<forward name="editPresentationMaterials" path="editPresentationMaterialsPage" />
+	<forward name="deletePresentationMaterial" path="deletePresentationMaterialPage" />
+</action>
+
+<action path="/tests/testModels"
+        name="testForm"
+        scope="request" 
+        parameter="method"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelsManagementAction" 
+        validate="true">
+	<forward name="manageTestModels" path="manageTestModelsPage" />
+	<forward name="deleteTestModel" path="deleteTestModelPage" />
+	<forward name="editTestModel" path="editTestModelPage" />
+	<forward name="editModelGroup" path="editModelGroupPage" />
+	<forward name="selectQuestions" path="selectQuestionsPage" />
+	<forward name="sortTestModel" path="sortTestModelPage" />
+	<forward name="generateTests" path="generateTestsPage" />
+	<forward name="editPreCondition" path="editPreConditionModelPage" />
+</action>
+
+<action path="/tests/tests"
+        scope="request" 
+        parameter="method"
+        input="/tests/tests.do?method=manageTests"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestsManagementAction">
+	<forward name="manageTests" path="manageTestsPage" />
+	<forward name="viewTest" path="viewTestPage" />
+	<forward name="correctTestGroup" path="correctTestGroupPage" />
+	<forward name="correctTestByPerson" path="correctTestByPersonPage" />
+	<forward name="deleteTestGroup" path="deleteTestGroupPage" />
+</action>

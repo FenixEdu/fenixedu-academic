@@ -90,6 +90,7 @@
 <!ENTITY teacherServiceDistribution SYSTEM "repository_teacher_service_distribution.xml">
 <!ENTITY parking SYSTEM "repository_parking.xml">
 <!ENTITY vigilancy SYSTEM "repository_vigilancy.xml">
+<!ENTITY newTests SYSTEM "repository-tests.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -155,8 +156,8 @@
 	&oldInquiries;
 	&inquiries;
 	&managementAssiduousness;
-	&projectsManagement;	
-	&teacherServiceExemption;	
+	&projectsManagement;
+	&teacherServiceExemption;
 	&qualification;
 	&fileEntry;
 	&degreeStructure;
@@ -184,5 +185,6 @@
     &teacherServiceDistribution;
     &parking;
 	&vigilancy;
+    &newTests;
 
 </descriptor-repository>

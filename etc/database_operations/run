@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creating Test Module" createTestModule.sql

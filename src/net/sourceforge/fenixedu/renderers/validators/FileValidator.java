@@ -45,11 +45,11 @@ public class FileValidator extends HtmlValidator {
      * then the accepted types are used if provided.
      */
     public void setAcceptedExtensions(String acceptedExtensions) {
-        this.acceptedExtensions = acceptedExtensions;
+        this.acceptedExtensions = acceptedExtensions.toLowerCase();
     }
 
     public String getAcceptedTypes() {
-        return this.acceptedTypes;
+        return this.acceptedTypes.toLowerCase();
     }
 
     /**
@@ -140,7 +140,7 @@ public class FileValidator extends HtmlValidator {
             int index = fileName.lastIndexOf(".");
             
             if (index != -1) {
-                String extension = fileName.substring(index + 1); 
+                String extension = fileName.substring(index + 1).toLowerCase(); 
                 
                 if (! getAcceptedExtensions().contains(extension)) {
                     setInvalid("renderers.validator.file.extension", getAcceptedExtensions(), extension);
@@ -154,7 +154,7 @@ public class FileValidator extends HtmlValidator {
         }
         
         if (getAcceptedTypes() != null) {
-            if (! matchesMimeType(file.getContentType())) {
+            if (! matchesMimeType(file.getContentType().toLowerCase())) {
                 setInvalid("renderers.validator.file.type", getAcceptedTypes(), file.getContentType());
                 return;
             }

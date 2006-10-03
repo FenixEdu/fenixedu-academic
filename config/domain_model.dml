@@ -127,15 +127,15 @@ valueType net.sourceforge.fenixedu.domain.system.WhenToSendEmail                
 valueType net.sourceforge.fenixedu.domain.FileItemPermittedGroupType							as FileItemPermittedGroupType;
 valueType net.sourceforge.fenixedu.util.HourMinuteSecond										as HourMinuteSecond;
 valueType net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType		    as ThesisType;
-valueType net.sourceforge.fenixedu.domain.MarkSheetType		                                    as MarkSheetType;
-valueType net.sourceforge.fenixedu.domain.MarkSheetState					                    as MarkSheetState;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel                 as CompetenceCourseLevel;
-valueType net.sourceforge.fenixedu.domain.accounting.AccountType                                as AccountType;
-valueType net.sourceforge.fenixedu.domain.accounting.EventType                                  as AccountingEventType;
-valueType net.sourceforge.fenixedu.domain.accounting.EntryType                                  as EntryType;
-valueType net.sourceforge.fenixedu.domain.accounting.PaymentMode                                as PaymentMode;
-valueType net.sourceforge.fenixedu.domain.accounting.EventState                                 as AccountingEventState;
-valueType net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType         as AdministrativeOfficeType;
+valueType net.sourceforge.fenixedu.domain.MarkSheetType					as MarkSheetType;
+valueType net.sourceforge.fenixedu.domain.MarkSheetState					as MarkSheetState;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel     as CompetenceCourseLevel;
+valueType net.sourceforge.fenixedu.domain.accounting.AccountType     as AccountType;
+valueType net.sourceforge.fenixedu.domain.accounting.EventType     as AccountingEventType;
+valueType net.sourceforge.fenixedu.domain.accounting.EntryType     as EntryType;
+valueType net.sourceforge.fenixedu.domain.accounting.PaymentMode   as PaymentMode;
+valueType net.sourceforge.fenixedu.domain.accounting.EventState     as AccountingEventState;
+valueType net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType     as AdministrativeOfficeType;
 valueType net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType   as AcademicServiceRequestSituationType;
 valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType  as DocumentRequestType;
 valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType  as DocumentPurposeType;
@@ -159,6 +159,12 @@ valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentType							as P
 valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentState							as ParkingDocumentState;
 
 valueType java.util.UUID as UUID;
+
+valueType net.sourceforge.fenixedu.domain.tests.NewPermission					as Permission;
+valueType net.sourceforge.fenixedu.domain.tests.predicates.Predicate			as Predicate;
+valueType net.sourceforge.fenixedu.domain.tests.Grade							as Grade;
+valueType net.sourceforge.fenixedu.domain.tests.TestGroupStatus					as TestGroupStatus;
+valueType net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer			as ConcreteAnswer;
 
 /*
 *
@@ -220,8 +226,8 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 }
 
 	class net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-	    Integer keyCandidacy;
-	}
+		    Integer keyCandidacy;
+		}
 		
 	class net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 		Integer keyRegistrationForDfaRegistrationEvent;
@@ -243,13 +249,13 @@ class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge
     Integer year;
     DateTime whenCreated;
 	Integer keyEmployee;
-}
-
+	}
+	
 class net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion extends net.sourceforge.fenixedu.domain.DomainObject {
     DateTime whenCreated;
     Integer keyReceipt;
-    Integer keyEmployee;
-}
+   	 	Integer keyEmployee;
+	}
 
 class net.sourceforge.fenixedu.domain.accounting.ServiceAgreement extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
@@ -300,7 +306,7 @@ class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourcef
 				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR {
 					BigDecimal amountPerPage;
 				}
-				
+		
 		class net.sourceforge.fenixedu.domain.accounting.postingRules.GenericWithParcialPaymentsPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {   
 			BigDecimal totalAmount;
 		}
@@ -349,7 +355,6 @@ class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourcef
 	String reference;
 }
 
-
 class net.sourceforge.fenixedu.domain.homepage.Blog extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyHomepage;
 	String name;
@@ -358,7 +363,7 @@ class net.sourceforge.fenixedu.domain.homepage.Blog extends net.sourceforge.feni
 
 class net.sourceforge.fenixedu.domain.homepage.BlogEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyBlog;
-	DateTime postedDateTime;
+ 	DateTime postedDateTime;
 	String title;
 	String content;
 }
@@ -392,6 +397,7 @@ class net.sourceforge.fenixedu.domain.CostCenter extends net.sourceforge.fenixed
     String section1;
     String departament;
 }
+
 
 class net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy extends net.sourceforge.fenixedu.domain.DomainObject {
     Boolean approved;
@@ -500,17 +506,16 @@ class net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard extends ne
  
 class net.sourceforge.fenixedu.domain.messaging.ConversationThread extends net.sourceforge.fenixedu.domain.DomainObject {
 	DateTime creationDateDateTime;
-	String subject;
-	Integer keyForum;
-	Integer keyCreator;
+   String subject;
+   Integer keyForum;
+   Integer keyCreator;
 }
-
    
 class net.sourceforge.fenixedu.domain.messaging.ConversationMessage extends net.sourceforge.fenixedu.domain.DomainObject {
 	DateTime creationDateDateTime;
-    String body;
-    Integer keyConversationThread;
-    Integer keyCreator;
+   String body;
+   Integer keyConversationThread;
+   Integer keyCreator;
 }
 
 class net.sourceforge.fenixedu.domain.PersonalGroup extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -730,7 +735,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
-    
+
 	class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBL extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
     
@@ -796,7 +801,7 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     String enrolmentPeriod;
     String additionalInfo;
     String links;
-
+    
     String testIngression;
     String classifications;
     String accessRequisites;
@@ -804,7 +809,7 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     Integer driftsInitial;
     Integer driftsFirst;
     Integer driftsSecond;
-    Double markMin;    
+    Double markMin;
     Double markMax;
     Double markAverage;
 
@@ -1179,12 +1184,12 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	    String name;
 		DateTime projectBeginDateTime;
 		DateTime projectEndDateTime;
-        String description;     
+        String description;
         Boolean onlineSubmissionsAllowed;
         Integer maxSubmissionsToKeep;
         Integer keyGrouping;
 	}
-
+	
 	class net.sourceforge.fenixedu.domain.ProjectSubmission extends net.sourceforge.fenixedu.domain.DomainObject {
 	    DateTime submissionDateTime;
 	    Integer keyStudentGroup;
@@ -1192,7 +1197,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	    Integer keyProject;
 	    Integer keyProjectSubmissionFile;
 	}
-
+	
 	class net.sourceforge.fenixedu.domain.ProjectSubmissionLog extends net.sourceforge.fenixedu.domain.DomainObject {
 	    DateTime submissionDateTime;
 	    String filename;
@@ -1289,7 +1294,7 @@ class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fe
 	String name;
 	Integer semester;
     PeriodState state;
-    DateTime inquiryResponseBeginDateTime;
+	DateTime inquiryResponseBeginDateTime;
 	DateTime inquiryResponseEndDateTime;
     DateTime teacherCreditsPeriodBegin;
     DateTime teacherCreditsPeriodEnd;
@@ -1306,6 +1311,7 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
     PeriodState state;
     Integer keyShiftDistribution;
 }
+
 
 class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -1637,14 +1643,15 @@ class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.
 }
 
 class net.sourceforge.fenixedu.domain.ExportGrouping extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keySenderExecutionCourse;
-    Integer keySenderPerson;
-    Integer keyExecutionCourse;
-    Integer keyReceiverPerson;
-    Integer keyGrouping;
+        Integer keySenderExecutionCourse;
+        Integer keySenderPerson;
+        Integer keyExecutionCourse;
+        Integer keyReceiverPerson;
+        Integer keyGrouping;
     ProposalState proposalState;
 }
-               
+        
+        
 class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyContributor;
 	Integer keyContributorParty;
@@ -1681,35 +1688,35 @@ class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fen
 }
 
 class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.domain.DomainObject {
-	String ojbConcreteClass;
-	String filename;
-	String displayName;
-	String mimeType;
-	String checksum;
-	String checksumAlgorithm;
-	Integer size;
-	String externalStorageIdentification;
-	DateTime uploadTime;
-	Group permittedGroup;
+  String ojbConcreteClass;
+  String filename;
+  String displayName;
+  String mimeType;
+  String checksum;
+  String checksumAlgorithm;
+  Integer size;
+  String externalStorageIdentification;
+  DateTime uploadTime;
+  Group permittedGroup;
 }
 
 	class net.sourceforge.fenixedu.domain.FileItem extends net.sourceforge.fenixedu.domain.File {
-		FileItemPermittedGroupType fileItemPermittedGroupType;
+	  FileItemPermittedGroupType fileItemPermittedGroupType;
 	}
 	
 	class net.sourceforge.fenixedu.domain.ProjectSubmissionFile extends net.sourceforge.fenixedu.domain.File {
-		Integer keyProjectSubmission;
+	 Integer keyProjectSubmission;
 	}
 
 	class net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyCandidacyDocument;
 	}	
-	
+
 	class net.sourceforge.fenixedu.domain.space.BlueprintFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyBlueprint;
 		ByteArray content;
 	}
-	
+
 	class net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyResult;
 		FileResultPermittedGroupType fileResultPermittedGroupType;
@@ -1726,7 +1733,7 @@ class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu
 }
 
 class net.sourceforge.fenixedu.domain.Holiday extends net.sourceforge.fenixedu.domain.DomainObject {
-	Partial date; 
+	Partial date;
 	Integer keyLocality;
 }
 
@@ -1772,6 +1779,8 @@ class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fen
 		DateTime lastModifiedDate;
 		Integer keyModifiedBy;
 	}
+
+	
   
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
@@ -1872,8 +1881,8 @@ class net.sourceforge.fenixedu.domain.Mark extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.FinalMark extends net.sourceforge.fenixedu.domain.Mark {
 		String submitedMark;
 		Integer gradeListVersion;
-		YearMonthDay submitDateYearMonthDay;
-		YearMonthDay whenSubmitedYearMonthDay;
+	YearMonthDay submitDateYearMonthDay;
+	YearMonthDay whenSubmitedYearMonthDay;
 	}
 
 class net.sourceforge.fenixedu.domain.material.Material extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1882,7 +1891,7 @@ class net.sourceforge.fenixedu.domain.material.Material extends net.sourceforge.
 	Integer barCodeNumber;
 	YearMonthDay acquisition;
 	YearMonthDay cease;
-}
+	}
 	class net.sourceforge.fenixedu.domain.material.Extension extends net.sourceforge.fenixedu.domain.material.Material {
 		Integer number;	
 	}			
@@ -2440,24 +2449,26 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 
 	class net.sourceforge.fenixedu.domain.space.Building extends net.sourceforge.fenixedu.domain.space.Space {
 	}
-		class net.sourceforge.fenixedu.domain.space.OldBuilding extends net.sourceforge.fenixedu.domain.space.Building {
-			String name;
-			Integer keyCampus;
-		}
+
+	class net.sourceforge.fenixedu.domain.space.OldBuilding extends net.sourceforge.fenixedu.domain.space.Building {
+		String name;
+		Integer keyCampus;
+	}
 
 	class net.sourceforge.fenixedu.domain.space.Floor extends net.sourceforge.fenixedu.domain.space.Space {
 	}
 
 	class net.sourceforge.fenixedu.domain.space.Room extends net.sourceforge.fenixedu.domain.space.Space {
 	}
-		class net.sourceforge.fenixedu.domain.space.OldRoom extends net.sourceforge.fenixedu.domain.space.Room {
-			Integer keyBuilding;
-			String name;
-			Integer capacidadeNormal;
-			Integer capacidadeExame;
-			Integer piso;
-		    TipoSala tipo;
-		}
+
+	class net.sourceforge.fenixedu.domain.space.OldRoom extends net.sourceforge.fenixedu.domain.space.Room {
+		Integer keyBuilding;
+		String name;
+		Integer capacidadeNormal;
+		Integer capacidadeExame;
+		Integer piso;
+	    TipoSala tipo;
+	}
 
 
 class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2502,9 +2513,9 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 		YearMonthDay begin;
 		YearMonthDay end;
 	}
-		class net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation extends net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation {				
-			Integer keyExtension;
-		}
+		class net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation extends net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation {
+		Integer keyExtension;
+	}
 
 	class net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
 		YearMonthDay begin;
@@ -2512,15 +2523,16 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 		Integer keyPerson;
 	}
 
-class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyRoom;
-	Integer keyPeriod;
-    DiaSemana dayOfWeek;
+	class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
+		Integer keyRoom;
+		Integer keyPeriod;
+	    DiaSemana dayOfWeek;
 	HourMinuteSecond startTimeDateHourMinuteSecond;
 	HourMinuteSecond endTimeDateHourMinuteSecond;
-    Integer keyWrittenEvaluation;
-    Integer keyLesson;
-}
+	    Integer keyWrittenEvaluation;
+	    Integer keyLesson;
+	}
+
 
 class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.DomainObject {
 	YearMonthDay begin;
@@ -2870,6 +2882,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	String districtSubdivisionOfResidence;	
 	String districtOfResidence;	
 	Integer keyParkingParty;
+	Integer keyQuestionBank;
 }
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer costCenterCode;
@@ -2957,11 +2970,12 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability ext
 	Integer keyChildParty;
 	Integer keyAccountabilityType;
 	String ojbConcreteClass;
-}	  	  
+}
+	  	  
 	class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 		Double credits;	
-	}
-	
+	}  
+	  	  
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Contract extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 		ContractType contractType;
 	}  
@@ -2974,6 +2988,7 @@ class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixed
 	String code;
 	String name;
 }
+
 
 class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -3077,10 +3092,12 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
     Boolean required;
 }
 
+
 class net.sourceforge.fenixedu.domain.Tutor extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
     Integer keyStudentCurricularPlan;
 }
+
 
 class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
@@ -3088,6 +3105,7 @@ class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.d
     String mail;
     String name;
 }
+
 
     class net.sourceforge.fenixedu.domain.SiteIST extends net.sourceforge.fenixedu.domain.WebSite {
     }
@@ -3319,7 +3337,6 @@ class net.sourceforge.fenixedu.domain.assiduousness.Justification extends net.so
 	Integer keyModifiedBy;
 	String notes;
 }
-
 class net.sourceforge.fenixedu.domain.assiduousness.MissingClocking extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
 }
 
@@ -3681,7 +3698,7 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
 				Integer keyExecutionYear;
 			}
-
+			
 class net.sourceforge.fenixedu.domain.parking.ParkingGroup extends net.sourceforge.fenixedu.domain.DomainObject {
 	String groupName;
 }
@@ -3708,7 +3725,7 @@ class net.sourceforge.fenixedu.domain.parking.ParkingRequest extends net.sourcef
     ParkingDocumentState secondCarInsuranceDocumentState;
     ParkingDocumentState secondCarOwnerIdDocumentState;    
     ParkingDocumentState secondCarDeclarationDocumentState;
-   }
+}
 
 class net.sourceforge.fenixedu.domain.parking.ParkingDocument extends net.sourceforge.fenixedu.domain.DomainObject {
 	ParkingDocumentType parkingDocumentType;
@@ -3757,7 +3774,7 @@ class net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry ex
 
 class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
-
+	
 	UUID uuid;
 
 	MultiLanguageString name;
@@ -4019,6 +4036,159 @@ class net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator extends net.sour
 	Integer keyExecutionYear;
 }
 
+/****************************
+ *	New Test/Inquery Model  *
+ ****************************/
+
+class net.sourceforge.fenixedu.domain.tests.NewAnswer extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyAtomicQuestion;
+	Integer keyPerson;
+	
+	ConcreteAnswer concreteAnswer;
+	Double percentage;
+}
+
+class net.sourceforge.fenixedu.domain.tests.NewTestGroup extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCreator;
+	Integer keyExecutionCourse;
+	
+	DateTime beginDate;
+	DateTime finalDate;
+	String name;
+	TestGroupStatus status;
+}
+
+class net.sourceforge.fenixedu.domain.tests.NewTestElement extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	
+	Integer sectionPosition;
+	
+	Integer keySection;
+}
+	
+	class net.sourceforge.fenixedu.domain.tests.NewSection extends net.sourceforge.fenixedu.domain.tests.NewTestElement {
+		Predicate preCondition;
+	}
+	
+		class net.sourceforge.fenixedu.domain.tests.NewTest extends net.sourceforge.fenixedu.domain.tests.NewSection {
+			Integer position;
+			Double scale;
+			
+			Integer keyTestGroup;
+		}
+	
+	class net.sourceforge.fenixedu.domain.tests.NewQuestion extends net.sourceforge.fenixedu.domain.tests.NewTestElement {
+		Predicate preCondition;
+		Integer timesUsed;
+		Grade grade;
+	}
+	
+		class net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion extends net.sourceforge.fenixedu.domain.tests.NewQuestion {
+			Predicate validator;
+		}
+	
+			class net.sourceforge.fenixedu.domain.tests.NewStringQuestion extends net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion {
+			}
+	
+			class net.sourceforge.fenixedu.domain.tests.NewDateQuestion extends net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion {
+			}
+	
+			class net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion extends net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion {
+				Boolean shuffle;
+			}
+	
+			class net.sourceforge.fenixedu.domain.tests.NewNumericQuestion extends net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion {
+			}
+		
+		class net.sourceforge.fenixedu.domain.tests.NewQuestionGroup extends net.sourceforge.fenixedu.domain.tests.NewQuestion {
+			String name;
+		}
+		
+			class net.sourceforge.fenixedu.domain.tests.NewQuestionBank extends net.sourceforge.fenixedu.domain.tests.NewQuestionGroup {
+				Integer keyOwner;
+			}
+		
+			class net.sourceforge.fenixedu.domain.tests.NewAllGroup extends net.sourceforge.fenixedu.domain.tests.NewQuestionGroup {
+			}
+		
+		
+	class net.sourceforge.fenixedu.domain.tests.NewChoice extends net.sourceforge.fenixedu.domain.tests.NewTestElement {
+		Integer keyMultipleChoiceQuestion;
+		
+		Integer position;
+	}
+
+	class net.sourceforge.fenixedu.domain.tests.NewModelRestriction extends net.sourceforge.fenixedu.domain.tests.NewTestElement {
+		Integer keyQuestion;
+		Integer keyParentGroup;
+	
+		Double value;
+		Integer position;
+		Integer count;
+	}
+
+		class net.sourceforge.fenixedu.domain.tests.NewModelGroup extends net.sourceforge.fenixedu.domain.tests.NewModelRestriction {
+			Integer keyBagModel;
+			
+			String name;
+		}
+
+			class net.sourceforge.fenixedu.domain.tests.NewTestModel extends net.sourceforge.fenixedu.domain.tests.NewModelGroup {
+				Integer keyCreator;
+				Integer keyBag;
+
+				DateTime created;
+				Double scale;
+			}
+
+class net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	
+	Integer keyTestElement;
+	
+	Integer position;
+	Boolean inline;
+}
+
+	class net.sourceforge.fenixedu.domain.tests.NewStringMaterial extends net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial {
+		String text;
+	}
+	
+	class net.sourceforge.fenixedu.domain.tests.NewPictureMaterial extends net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial {
+		Integer keyPictureMaterialFile;
+	}
+	
+	class net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial extends net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial {
+		String mathMl;
+	}
+
+	class net.sourceforge.fenixedu.domain.tests.PictureMaterialFile extends net.sourceforge.fenixedu.domain.File {
+	}
+
+class net.sourceforge.fenixedu.domain.tests.NewGroupElement extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	
+	Integer keyParent;
+	Integer keyChild;
+	
+	Integer position;
+}
+
+class net.sourceforge.fenixedu.domain.tests.NewPermissionUnit extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyParty;
+	Integer keyQuestion;
+	
+	Permission permission;
+}
+
+class net.sourceforge.fenixedu.domain.tests.NewCorrector extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyAtomicQuestion;
+	
+	Predicate predicate;
+	Integer percentage;
+	Integer position;
+}
+
 /*
  * Relations definitions
  * 
@@ -4070,6 +4240,7 @@ relation AssiduousnessCampusHistoryCampus {
 
 relation AssiduousnessAssiduousnessStatusHistory {
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
+	
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistories {
 		multiplicity *;
 	}
@@ -4077,6 +4248,7 @@ relation AssiduousnessAssiduousnessStatusHistory {
 
 relation AssiduousnessAssiduousnessRecord {
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
+	
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
 		multiplicity *;
 	}
@@ -4084,6 +4256,7 @@ relation AssiduousnessAssiduousnessRecord {
 
 relation AssiduousnessStatusAssiduousnessStatusHistory {
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus playsRole assiduousnessStatus;
+	
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistories {
 		multiplicity *;
 	}
@@ -6411,6 +6584,7 @@ relation SiteAnnouncement {
 	net.sourceforge.fenixedu.domain.Site playsRole site;
 }
 
+
 relation SpaceSpace {
 	net.sourceforge.fenixedu.domain.space.Space playsRole containedSpaces {
 		multiplicity *;
@@ -6763,6 +6937,7 @@ relation TutorStudentCurricularPlan {
     net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
+
 relation TutorTeacher {
     net.sourceforge.fenixedu.domain.Tutor playsRole associatedTutors {
         multiplicity *;
@@ -6839,7 +7014,7 @@ relation ResultUnitAssociationResult {
 }
 
 relation ResulUnitAssociationUnit {
-	net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
+		net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
@@ -6964,7 +7139,7 @@ relation TeacherPersonalExpectationExecutionYear {
 	}
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
- 
+
 relation DepartmentUnit {
     net.sourceforge.fenixedu.domain.Department playsRole department;    
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole departmentUnit;
@@ -9338,7 +9513,6 @@ relation MarkSheetExecutionPeriod {
         multiplicity *;
     }
 }
-
 relation RectificationEnrolmentEvaluationRectifiedEnrolmentEvaluation {
     net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole rectification;
     net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole rectified;
@@ -10250,4 +10424,199 @@ relation RootDomainObjectInstitutionUnit {
 relation RootDomainObjectExternalInstitutionUnit {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObjectForExternalInstitutionUnit;
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole externalInstitutionUnit;	
+}
+
+/*******************************************
+ * Relations definitions for tests package *
+ *******************************************/
+
+relation AnswerPerson {
+	net.sourceforge.fenixedu.domain.tests.NewAnswer playsRole answers {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation AnswerAtomicQuestion {
+	net.sourceforge.fenixedu.domain.tests.NewAnswer playsRole answers {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion playsRole atomicQuestion;
+}
+
+relation TestPerson {
+	net.sourceforge.fenixedu.domain.tests.NewTest playsRole tests {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole persons {
+		multiplicity *;
+	}
+}
+
+relation TestGroupTest {
+	net.sourceforge.fenixedu.domain.tests.NewTest playsRole tests {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.tests.NewTestGroup playsRole testGroup;
+}
+
+relation TestGroupExecutionCourse {
+	net.sourceforge.fenixedu.domain.tests.NewTestGroup playsRole testGroups {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation TestGroupTeacher {
+	net.sourceforge.fenixedu.domain.tests.NewTestGroup playsRole testGroups {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole creator;
+}
+
+relation SectionTestElement {
+	net.sourceforge.fenixedu.domain.tests.NewTestElement playsRole testElements {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.tests.NewSection playsRole section;
+}
+
+relation CorrectorAtomicQuestion {
+	net.sourceforge.fenixedu.domain.tests.NewCorrector playsRole correctors {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion playsRole atomicQuestion;
+}
+
+relation PictureMaterialFilePictureMaterial {
+	net.sourceforge.fenixedu.domain.tests.NewPictureMaterial playsRole pictureMaterials {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.tests.PictureMaterialFile playsRole pictureMaterialFile;
+}
+
+relation TestModelModelGroup {
+	net.sourceforge.fenixedu.domain.tests.NewTestModel playsRole bagModel;
+	net.sourceforge.fenixedu.domain.tests.NewModelGroup playsRole bag;
+}
+
+relation TestModelTeacher {
+	net.sourceforge.fenixedu.domain.tests.NewTestModel playsRole testModels {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole creator;
+}
+
+relation ModelRestrictionQuestion {
+	net.sourceforge.fenixedu.domain.tests.NewModelRestriction playsRole modelRestrictions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.tests.NewQuestion playsRole question;
+}
+
+relation ModelRestrictionModelGroup {
+	net.sourceforge.fenixedu.domain.tests.NewModelRestriction playsRole childRestrictions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.tests.NewModelGroup playsRole parentGroup;
+}
+
+relation TestElementPresentationMaterial {
+	net.sourceforge.fenixedu.domain.tests.NewTestElement playsRole testElement;
+	net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial playsRole presentationMaterials {
+		multiplicity *;
+	}
+}
+
+relation ChoiceMultipleChoiceQuestion {
+	net.sourceforge.fenixedu.domain.tests.NewChoice playsRole choices {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion playsRole multipleChoiceQuestion;
+}
+
+relation GroupElementQuestion {
+	net.sourceforge.fenixedu.domain.tests.NewGroupElement playsRole parentElements {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.tests.NewQuestion playsRole child;
+}
+
+relation GroupElementQuestionGroup {
+	net.sourceforge.fenixedu.domain.tests.NewGroupElement playsRole childElements {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.tests.NewQuestionGroup playsRole parent;
+}
+
+relation PermissionUnitParty {
+	net.sourceforge.fenixedu.domain.tests.NewPermissionUnit playsRole permissionUnits {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+}
+
+relation PermissionUnitQuestion {
+	net.sourceforge.fenixedu.domain.tests.NewPermissionUnit playsRole permissionUnits {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.tests.NewQuestion playsRole question;
+}
+
+relation QuestionBankParty {
+	net.sourceforge.fenixedu.domain.tests.NewQuestionBank playsRole questionBank;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole owner;
+}
+
+/*****************************************************************
+ * Relations definitions for tests package with rootDomainObject *
+ *****************************************************************/
+
+relation RootDomainObjectNewAnswer {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.tests.NewAnswer playsRole answers {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectNewTestGroup {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.tests.NewTestGroup playsRole testGroups {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectNewGroupElement {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.tests.NewGroupElement playsRole groupElements {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectNewTestElement {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.tests.NewTestElement playsRole newTestElements {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectNewPresentationMaterial {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial playsRole presentationMaterials {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectNewPermissionUnit {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.tests.NewPermissionUnit playsRole permissionUnits {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectNewCorrector {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.tests.NewCorrector playsRole correctors {
+		multiplicity *;
+	}
 }

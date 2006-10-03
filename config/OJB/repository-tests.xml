@@ -1,0 +1,117 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewTestElement"
+                  table="TESTS_TEST_ELEMENT">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewQuestion" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewChoice" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewModelRestriction" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewSection" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewQuestion"
+                  table="TESTS_TEST_ELEMENT">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
+                  table="TESTS_TEST_ELEMENT">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewStringQuestion" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewDateQuestion" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewNumericQuestion" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion"
+                  table="TESTS_TEST_ELEMENT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewStringQuestion"
+                  table="TESTS_TEST_ELEMENT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewDateQuestion"
+                  table="TESTS_TEST_ELEMENT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewNumericQuestion"
+                  table="TESTS_TEST_ELEMENT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewChoice"
+                  table="TESTS_TEST_ELEMENT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial"
+                  table="TESTS_PRESENTATION_MATERIAL">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewStringMaterial" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewPictureMaterial" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewStringMaterial"
+                  table="TESTS_PRESENTATION_MATERIAL">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewPictureMaterial"
+                  table="TESTS_PRESENTATION_MATERIAL">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial"
+                  table="TESTS_PRESENTATION_MATERIAL">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup"
+                  table="TESTS_TEST_ELEMENT">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewQuestionBank" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewAllGroup" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewQuestionBank"
+                  table="TESTS_TEST_ELEMENT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewAllGroup"
+                  table="TESTS_TEST_ELEMENT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewGroupElement"
+                  table="TESTS_GROUP_ELEMENT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewPermissionUnit"
+                  table="TESTS_PERMISSION_UNIT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
+                  table="TESTS_TEST_ELEMENT">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewModelGroup" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewModelGroup"
+                  table="TESTS_TEST_ELEMENT">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewTestModel" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewTestModel"
+                  table="TESTS_TEST_ELEMENT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewCorrector"
+                  table="TESTS_CORRECTOR">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewTestGroup"
+                  table="TESTS_TEST_GROUP">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewSection"
+                  table="TESTS_TEST_ELEMENT">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.NewTest" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewTest"
+                  table="TESTS_TEST_ELEMENT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.tests.NewAnswer"
+                  table="TESTS_ANSWER">
+</class-descriptor>

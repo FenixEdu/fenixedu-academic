@@ -84,6 +84,12 @@
 				<bean:message key="link.testsManagement"/>
 			</html:link>
 		</li>
+  
+		<%--<li>
+			<html:link page="/tests/tests.do?method=manageTests" paramId="oid" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="message.tests.manage" bundle="TESTS_RESOURCES" />
+			</html:link>
+		</li>--%>
 		<li>
 			<html:link page="/viewExecutionCourseProjects.do?method=prepareViewExecutionCourseProjects" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.groupsManagement"/>

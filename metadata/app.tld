@@ -563,4 +563,64 @@
     </attribute>
   </tag>    
   
+  <tag>
+	<name>parameterLink</name>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.commons.ParameterLinkTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+
+    <attribute>
+      <name>page</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>module</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>achor</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+	<name>parameter</name>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.commons.ParameterTag</tagclass>
+    <bodycontent>empty</bodycontent>
+
+    <attribute>
+      <name>id</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>  
+  
 </taglib>

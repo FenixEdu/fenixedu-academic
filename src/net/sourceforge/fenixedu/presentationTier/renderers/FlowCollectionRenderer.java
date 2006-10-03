@@ -39,6 +39,8 @@ public class FlowCollectionRenderer extends OutputRenderer {
 
     private String emptyMessageClasses;
 
+    private String emptyMessageBundle;
+
     private String eachInline;
     
     public String getEachLayout() {
@@ -138,7 +140,22 @@ public class FlowCollectionRenderer extends OutputRenderer {
         this.emptyMessageClasses = emptyMessageClasses;
     }
 
-    public String getEachInline() {
+    public String getEmptyMessageBundle() {
+		return emptyMessageBundle;
+	}
+
+    /**
+     * When <code>emptyMessageKey</code> is used to specify wich resource key will be used
+     * when the collection is empty, this property allows to specify wich bundle
+     * will be used to fetch the key.
+     * 
+     * @property
+     */
+    public void setEmptyMessageBundle(String emptyMessageBundle) {
+		this.emptyMessageBundle = emptyMessageBundle;
+	}
+
+	public String getEachInline() {
         return this.eachInline;
     }
 
@@ -146,7 +163,7 @@ public class FlowCollectionRenderer extends OutputRenderer {
      * Indicates if the each object's presentation should be placed 
      * inside a <code>&lt;div&gt;</code> or a <code>&lt;span&gt;</code>.
      * 
-     * @param eachInline
+     * @property
      */
     public void setEachInline(String eachInline) {
         this.eachInline = eachInline;
@@ -167,7 +184,7 @@ public class FlowCollectionRenderer extends OutputRenderer {
                 HtmlComponent component = null;
 
                 if ((getEmptyMessageKey() != null) && (hasMoreComponents() == false)) {
-                    component = new HtmlText(RenderUtils.getResourceString(getEmptyMessageKey()));
+                    component = new HtmlText(RenderUtils.getResourceString(getEmptyMessageBundle(), getEmptyMessageKey()));
                     this.empty = true;
                 } else {
                     component = super.createComponent(object, type);

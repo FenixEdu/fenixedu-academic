@@ -1,0 +1,1198 @@
+<schema name="tests.atomicQuestion.answer"
+        type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion">
+	<slot name="answer"
+	      layout="tests.answer" />
+</schema>
+
+<schema name="tests.questionGroup.name"
+        type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup">
+	<slot name="name" />
+</schema>
+
+<schema name="tests.questionGroup.edit.name"
+        type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup">
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="tests.questionBank.owner.name"
+        type="net.sourceforge.fenixedu.domain.tests.NewQuestionBank">
+	<slot name="owner.name" />
+</schema>
+
+<schema name="tests.questionGroup.create"
+        type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup"
+        constructor="parentQuestionGroup,name">
+	<slot name="parentQuestionGroup" hidden="true"/>
+	<slot name="name"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	</slot>
+</schema>
+
+<schema name="tests.presentationMaterial.chooseType"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PresentationMaterialBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="presentationMaterialType"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.presentationMaterial.type" />
+</schema>
+
+<schema name="tests.presentationMaterial.choose-details-for.STRING"
+        type="net.sourceforge.fenixedu.domain.tests.NewStringMaterial"
+        constructor="testElement,inline,text"
+        bundle="TESTS_RESOURCES">
+	<slot name="text"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      layout="rich-text"
+	      key="label.stringMaterial.text">
+		<property name="config" value="basic" />
+	</slot>
+	<slot name="inline"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.presentationMaterial.inline" />
+	<slot name="testElement"
+	      hidden="true" />
+</schema>
+
+<schema name="tests.presentationMaterial.choose-details-for.PICTURE"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PresentationMaterialBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="inputStream"
+	      key="label.pictureMaterial.picture">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
+			<property name="required" value="true" />
+			<property name="acceptedExtensions" value="gif,jpg,png" />
+			<property name="acceptedTypes" value="image/gif,image/jpg,image/png" />
+		</validator>
+		<property name="fileContentTypeSlot" value="fileContentType" />
+		<property name="fileNameSlot" value="originalFileName" />
+	</slot>
+	<slot name="inline"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.presentationMaterial.inline" />
+	<slot name="fileName"
+	      key="label.pictureMaterial.displayName" />
+</schema>
+
+<schema name="tests.presentationMaterial.choose-details-for.MATHML"
+        type="net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial"
+        constructor="testElement,inline,mathMl"
+        bundle="TESTS_RESOURCES">
+	<slot name="mathMl"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      layout="longText"
+	      key="label.mathMlMaterial.mathMl">
+		<property name="columns" value="75" />
+		<property name="rows" value="25" />
+	</slot>
+	<slot name="inline"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.presentationMaterial.inline" />
+	<slot name="testElement"
+	      hidden="true" />
+</schema>
+
+<schema name="tests.presentationMaterial.edit-details-for.STRING"
+        type="net.sourceforge.fenixedu.domain.tests.NewStringMaterial"
+        bundle="TESTS_RESOURCES">
+	<slot name="text"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      layout="rich-text"
+	      key="label.stringMaterial.text">
+		<property name="config" value="basic" />
+	</slot>
+	<slot name="inline"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.presentationMaterial.inline" />
+</schema>
+
+<schema name="tests.presentationMaterial.edit-details-for.PICTURE"
+        type="net.sourceforge.fenixedu.domain.tests.NewPictureMaterial"
+        bundle="TESTS_RESOURCES">
+	<slot name="pictureMaterialFile"
+	      key="label.pictureMaterial.picture"
+	      layout="image"
+	      read-only="true" />
+	<slot name="inline"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.presentationMaterial.inline" />
+	<slot name="pictureMaterialFile.displayName"
+	      key="label.pictureMaterial.displayName" />
+</schema>
+
+<schema name="tests.presentationMaterial.edit-details-for.MATHML"
+        type="net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial"
+        bundle="TESTS_RESOURCES">
+	<slot name="mathMl"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      layout="longText"
+	      key="label.mathMlMaterial.mathMl">
+		<property name="columns" value="75" />
+		<property name="rows" value="25" />
+	</slot>
+	<slot name="inline"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.presentationMaterial.inline" />
+</schema>
+
+<schema name="permissionUnit.create"
+        type="net.sourceforge.fenixedu.domain.tests.NewPermissionUnit"
+        bundle="TESTS_RESOURCES">
+	<slot name="permission"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.permission" />
+	<slot name="party"
+	      validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator"
+	      layout="autoComplete"
+	      key="label.party">
+		<property name="size" value="70"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchPolymorphicObjects"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>				
+		<property name="minChars" value="4"/>
+	</slot>
+</schema>
+
+<schema name="permissionUnit.view"
+        type="net.sourceforge.fenixedu.domain.tests.NewPermissionUnit"
+        bundle="TESTS_RESOURCES">
+	<slot name="permission"
+	      key="label.permission" />
+	<slot name="party.name"
+	      key="label.party" />
+</schema>
+
+<schema name="tests.atomicQuestion.create"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.AtomicQuestionBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="questionType"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.question.questionType" />
+</schema>
+
+<schema name="tests.choice.position"
+        type="net.sourceforge.fenixedu.domain.tests.NewChoice">
+	<slot name="position" />
+</schema>
+
+<schema name="tests.atomicQuestion.grade"
+        type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="grade" key="label.atomicQuestion.grade">
+		<property name="fieldWidth" value="5" />
+	</slot>
+</schema>
+
+<schema name="tests.answer.percentage"
+        type="net.sourceforge.fenixedu.domain.tests.NewAnswer"
+        bundle="TESTS_RESOURCES">
+	<slot name="percentage" key="label.tests.corrector.percentage"
+	      validator="net.sourceforge.fenixedu.renderers.validators.DoubleValidator" />
+</schema>
+
+<schema name="tests.answer.correction"
+        type="net.sourceforge.fenixedu.domain.tests.NewAnswer"
+        bundle="TESTS_RESOURCES">
+	<slot name="percentage" layout="computed-grade" />
+</schema>
+
+<schema name="tests.atomicQuestion.grade.percentage"
+        type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="grade" layout="null-as-label" key="label.atomicQuestion.grade-current">
+		<property name="label" value="label.atomicQuestion.grade.null" />
+		<property name="bundle" value="TESTS_RESOURCES" />
+		<property name="key" value="true" />
+		<property name="subLayout" value="format" />
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-type"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-type.preCondition"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PreConditionPredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-details-for.GIVEN_UP_QUESTION"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PreConditionPredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="atomicQuestion"
+	      layout="menu-select"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.corrector.atomicQuestion">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AtomicQuestionsForQuestion" />
+		<property name="eachLayout" value="sub-question" />
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-details-for.OUTCOME_BY_NO_CORRECTOR"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PreConditionPredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="atomicQuestion"
+	      layout="menu-select"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.corrector.atomicQuestion">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AtomicQuestionsForQuestion" />
+		<property name="eachLayout" value="sub-question" />
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-details-for.ANSWERED_QUESTION"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PreConditionPredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="atomicQuestion"
+	      layout="menu-select"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.corrector.atomicQuestion">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AtomicQuestionsForQuestion" />
+		<property name="eachLayout" value="sub-question" />
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-details-for.OUTCOME_BY_CORRECTOR"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PreConditionPredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="corrector"
+	      layout="menu-select"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.corrector.corrector">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CorrectorsForQuestion" />
+		<property name="eachLayout" value="values" />
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-details-for.MULTIPLE_CHOICE_ANSWER"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="choice"
+	      layout="menu-select"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.corrector.choice">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ChoicesForMultipleChoiceQuestionInPredicate" />
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="tests.choice.position" />
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-details-for.MULTIPLE_CHOICE_COUNT"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="count" key="label.corrector.count">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="0" />
+		</validator>
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-details-for.STRING_SIZE_EQUALS"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="size" key="label.corrector.size">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="0" />
+		</validator>
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-details-for.STRING_SIZE_MORE_THAN"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="size" key="label.corrector.size">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="0" />
+		</validator>
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-details-for.STRING_SIZE_LESS_THAN"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="size" key="label.corrector.size">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="0" />
+		</validator>
+	</slot>
+</schema>
+
+<schema name="tests.predicate.choose-details-for.NUMERIC_EQUALS"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="value" key="label.corrector.value" />
+</schema>
+
+<schema name="tests.predicate.choose-details-for.NUMERIC_GREATER_THAN"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="value" key="label.corrector.value" />
+</schema>
+
+<schema name="tests.predicate.choose-details-for.NUMERIC_GREATER_THAN_OR_EQUAL"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="value" key="label.corrector.value" />
+</schema>
+
+<schema name="tests.predicate.choose-details-for.NUMERIC_LESS_THAN"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="value" key="label.corrector.value" />
+</schema>
+
+<schema name="tests.predicate.choose-details-for.NUMERIC_LESS_THAN_OR_EQUAL"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicateType"
+	      layout="menu-select-postback"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.tests.corrector.predicateType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="prepare-create" />
+	</slot>
+	<slot name="value" key="label.corrector.value" />
+</schema>
+
+<schema name="tests.predicate.predicates"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="selectedPredicates" layout="option-select" key="label.corrector.selectedPredicates">
+		<property name="eachLayout" value="values" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicatesForPredicateBean" />
+		<property name="saveOptions" value="true" />
+		<property name="classes" value="list2" />
+	</slot>
+	<slot layout="menu-select-postback"
+	      name="action"
+	      key="label.corrector.action"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActionsForPredicates" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="action" />
+	</slot>
+</schema>
+
+<schema name="tests.predicate.predicates.compose"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="selectedPredicates"
+	      layout="option-select"
+	      key="label.corrector.selectedPredicates"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="eachLayout" value="values" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicatesForPredicateBean" />
+		<property name="saveOptions" value="true" />
+		<property name="classes" value="list2" />
+	</slot>
+	<slot layout="menu-select-postback"
+	      name="action"
+	      key="label.corrector.action"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActionsForPredicates" />
+		<property name="eachLayout" value="" />
+		<property name="destination" value="action" />
+	</slot>
+	<slot name="compositePredicateType"
+	      layout="menu-select"
+	      key="label.tests.corrector.compositePredicateType"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CompositePredicateTypes" />
+		<property name="eachLayout" value="" />
+	</slot>
+</schema>
+
+<schema name="tests.corrector.choose"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="choosenPredicate"
+	      layout="menu-select"
+	      key="label.corrector.choosenPredicate"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="eachLayout" value="values" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicatesForPredicateBean" />
+		<property name="saveOptions" value="true" />
+	</slot>
+	<slot name="percentage"
+	      validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"
+	      key="label.tests.corrector.percentage" />
+</schema>
+
+<schema name="tests.validator.choose"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="choosenPredicate"
+	      layout="menu-select"
+	      key="label.corrector.choosenPredicate"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="eachLayout" value="values" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicatesForPredicateBean" />
+		<property name="saveOptions" value="true" />
+	</slot>
+</schema>
+
+<schema name="tests.corrector.view"
+        type="net.sourceforge.fenixedu.domain.tests.NewCorrector"
+        bundle="TESTS_RESOURCES">
+	<slot name="predicate" key="label.tests.corrector.representation" layout="values" />
+	<slot name="percentage" key="label.tests.corrector.percentage" />
+</schema>
+
+<schema name="tests.atomicQuestion.validator"
+        type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="validator" layout="values" key="label.atomicQuestion.validator" />
+</schema>
+
+<schema name="tests.question.preCondition"
+        type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="preCondition" layout="values" key="label.question.preCondition" />
+</schema>
+
+<schema name="tests.predicate.name"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean">
+	<slot name="predicateType.name" />
+</schema>
+
+<schema name="tests.groupElement.edit"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.GroupElementBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="parent"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      layout="menu-select"
+	      key="label.GroupElementBean.associate.parent">
+		<property name="eachLayout" value="short" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AssociableParentsForQuestion" />
+	</slot>
+</schema>
+
+<schema name="tests.groupElement.delete"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.GroupElementBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="parent"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      layout="menu-select"
+	      key="label.GroupElementBean.disassociate.parent">
+		<property name="eachLayout" value="short" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DisassociableParentsForQuestion" />
+	</slot>
+</schema>
+
+<schema name="tests.question.view"
+        type="net.sourceforge.fenixedu.domain.tests.NewQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="parentQuestionGroups" layout="flowLayout" key="label.question.parentQuestionGroups">
+		<property name="eachLayout" value="short" />
+		<property name="htmlSeparator" value=", " />
+		<property name="emptyMessageKey" value="tests.questionGroups.empty" />
+		<property name="emptyMessageBundle" value="TESTS_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="tests.question.type"
+        type="net.sourceforge.fenixedu.domain.tests.NewQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="questionType" layout="" key="label.question.questionType" />
+</schema>
+
+<schema name="tests.questionGroup.view"
+        type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup"
+        extends="tests.question.view"
+        bundle="TESTS_RESOURCES">
+	<slot name="orderedChildQuestionGroups" layout="flowLayout" key="label.questionGroup.childQuestionGroups">
+		<property name="eachLayout" value="short" />
+		<property name="htmlSeparator" value=", " />
+		<property name="emptyMessageKey" value="tests.questionGroups.empty" />
+		<property name="emptyMessageBundle" value="TESTS_RESOURCES" />
+	</slot>
+	<slot name="childAtomicQuestionsCount" key="label.questionGroup.childAtomicQuestionsCount" />
+</schema>
+
+<schema name="tests.atomicQuestion.view"
+        type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
+        extends="tests.question.view"
+        bundle="TESTS_RESOURCES">
+	<slot name="questionType" layout="" key="label.question.questionType" />
+</schema>
+
+<schema name="tests.allGroup.view"
+        type="net.sourceforge.fenixedu.domain.tests.NewAllGroup"
+        extends="tests.question.view"
+        bundle="TESTS_RESOURCES">
+	<slot name="questionType" layout="" key="label.question.questionType" />
+	<slot name="childAtomicQuestionsCount" key="label.allGroup.childAtomicQuestionsCount" />
+</schema>
+
+<schema name="tests.multipleChoiceQuestion.view"
+        type="net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion"
+        extends="tests.atomicQuestion.view"
+        bundle="TESTS_RESOURCES">
+	<slot name="choicesCount" key="label.multipleChoiceQuestion.choicesCount" />
+</schema>
+
+<schema name="tests.multipleChoiceQuestion.view.shuffle"
+        type="net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="shuffle" key="label.multipleChoiceQuestion.shuffle" />
+</schema>
+
+<schema name="tests.multipleChoiceQuestion.edit.shuffle"
+        type="net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="shuffle" key="label.multipleChoiceQuestion.shuffle" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="tests.corrector.representation"
+        type="net.sourceforge.fenixedu.domain.tests.predicates.Predicate">
+	<slot name="representation" />
+</schema>
+
+<schema name="tests.testElement.simple"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestElement"
+        bundle="TESTS_RESOURCES">
+	<slot name="orderedPresentationMaterials" layout="flowLayout" key="label.testElement.presentationMaterials">
+		<property name="emptyMessageKey" value="tests.presentationMaterials.empty" />
+		<property name="emptyMessageBundle" value="TESTS_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="tests.testElement.complex"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestElement"
+        bundle="TESTS_RESOURCES">
+	<slot name="orderedPresentationMaterials"
+	      layout="flowLayout"
+	      key="label.testElement.presentationMaterials">
+		<property name="eachStyle" value="display: block;" />
+		<property name="eachLayout" value="template-simple" />
+		<property name="emptyMessageKey" value="tests.presentationMaterials.empty" />
+		<property name="emptyMessageClasses" value="emptyMessage" />
+		<property name="emptyMessageBundle" value="TESTS_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="tests.question.simple"
+        type="net.sourceforge.fenixedu.domain.tests.NewQuestion"
+        extends="tests.testElement.simple"
+        bundle="TESTS_RESOURCES">
+    <slot name="questionType" layout="" key="label.question.questionType">
+	</slot>
+    <slot name="parentQuestionGroups" layout="flowLayout" key="label.question.parentQuestionGroups">
+		<property name="eachLayout" value="short" />
+		<property name="htmlSeparator" value=", " />
+		<property name="emptyMessageKey" value="tests.questionGroups.empty" />
+		<property name="emptyMessageBundle" value="TESTS_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="tests.atomicQuestion.simple"
+        type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
+        extends="tests.question.simple"
+        bundle="TESTS_RESOURCES">
+	<slot name="grade" layout="null-as-label" key="label.atomicQuestion.grade-current">
+		<property name="label" value="label.atomicQuestion.grade.null" />
+		<property name="bundle" value="TESTS_RESOURCES" />
+		<property name="key" value="true" />
+		<property name="subLayout" value="format" />
+	</slot>
+	<slot name="correctorsCount" key="label.atomicQuestion.correctors" />
+	<slot name="validator" layout="null-as-label" key="label.atomicQuestion.validator">
+		<property name="label" value="label.atomicQuestion.validator.null" />
+		<property name="bundle" value="TESTS_RESOURCES" />
+		<property name="key" value="true" />
+		<property name="subSchema" value="tests.corrector.representation" />
+		<property name="subLayout" value="values" />
+	</slot>
+</schema>
+
+<schema name="tests.multipleChoiceQuestion.simple"
+        type="net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion"
+        extends="tests.atomicQuestion.simple"
+        bundle="TESTS_RESOURCES">
+	<slot name="orderedChoices" key="label.multipleChoiceQuestion.choices">
+		<property name="ordered" value="true" />
+		<property name="style" value="clear: both" />
+		<property name="eachLayout" value="template-short" />
+	</slot>
+</schema>
+
+<schema name="tests.allGroup.simple"
+        type="net.sourceforge.fenixedu.domain.tests.NewAllGroup"
+        extends="tests.question.simple"
+        bundle="TESTS_RESOURCES">
+	<slot name="grade" layout="null-as-label" key="label.atomicQuestion.grade-current">
+		<property name="label" value="label.atomicQuestion.grade.null" />
+		<property name="bundle" value="TESTS_RESOURCES" />
+		<property name="key" value="true" />
+		<property name="subLayout" value="format" />
+	</slot>
+	<slot name="childAtomicQuestionsCount" key="label.questionGroup.childAtomicQuestionsCount.subQuestions" />
+</schema>
+
+<schema name="tests.modelRestriction.create"
+        type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
+        constructor="question,parentGroup"
+        bundle="TESTS_RESOURCES">
+	<slot name="question" hidden="true" />
+	<slot name="parentGroup"
+	      layout="menu-select"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.testModel.choose">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BagsForTeacher" />
+		<property name="eachSchema" value="tests.bagModel.name" />
+		<property name="eachLayout" value="values" />
+	</slot>
+</schema>
+
+<schema name="tests.bagModel.name"
+        type="net.sourceforge.fenixedu.domain.tests.NewModelGroup"
+        bundle="TESTS_RESOURCES">
+	<slot name="bagModel.name" />
+</schema>
+
+<schema name="tests.modelGroup.name"
+        type="net.sourceforge.fenixedu.domain.tests.NewModelGroup"
+        bundle="TESTS_RESOURCES">
+	<slot name="name" key="label.testModel.name" />
+</schema>
+
+<schema name="tests.modelGroup.create"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="name"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.testModel.name" />
+	<slot name="modelGroup"
+	      layout="menu-select"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.modelRestriction.parent">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ModelGroupsForTestModel" />
+		<property name="eachSchema" value="tests.modelGroup.name" />
+		<property name="eachLayout" value="values" />
+	</slot>
+</schema>
+
+<schema name="tests.testModel.view"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestModel"
+        bundle="TESTS_RESOURCES">
+	<slot name="created"
+	      layout="format"
+	      key="label.testModel.created">
+		<property name="format" value="${dayOfMonth,02d}/${monthOfYear,02d}/${year}"/>
+	</slot>
+	<slot name="name"
+	      layout="link"
+	      key="label.testModel.name">
+		<property name="linkFormat" value="/tests/testModels.do?method=editTestModel&amp;oid=${idInternal}" />
+		<property name="useParent" value="true" />
+	</slot>
+	<slot name="questionCount" key="label.testModel.questions" />
+	<slot name="grade" key="label.grade" layout="format" />
+</schema>
+
+<schema name="tests.testModel.create"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestModel"
+        constructor="creator,name,scale"
+        bundle="TESTS_RESOURCES">
+	<slot name="creator" hidden="true" />
+	<slot name="name"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.testModel.name" />
+	<slot name="scale" key="label.grade">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="0" />
+		</validator>
+		<property name="size" value="5" />
+	</slot>
+</schema>
+
+<schema name="tests.testModel.scale.view"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestModel"
+        bundle="TESTS_RESOURCES">
+	<slot name="scale" key="label.grade" />
+</schema>
+
+<schema name="tests.testModel.scale"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestModel"
+        bundle="TESTS_RESOURCES">
+	<slot name="scale" key="label.grade">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DoubleValidator" />
+		<property name="size" value="5" />
+	</slot>
+</schema>
+
+<schema name="tests.testModel.name.view"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestModel"
+        bundle="TESTS_RESOURCES">
+	<slot name="name" key="label.testModel.name" />
+</schema>
+
+<schema name="tests.testModel.name"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestModel"
+        bundle="TESTS_RESOURCES">
+	<slot name="name"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.testModel.name" />
+</schema>
+
+<schema name="tests.question.testModels"
+        type="net.sourceforge.fenixedu.domain.tests.NewQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="testModels" layout="flowLayout">
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="tests.testModel.name" />
+		<property name="htmlSeparator" value="," />
+		<property name="emptyMessageKey" value="tests.testModels.empty" />
+		<property name="emptyMessageBundle" value="TESTS_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="tests.testModel.selectAtomicQuestions"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="modelGroup"
+	      layout="menu-select"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.modelRestriction.parent">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ModelGroupsForTestModel" />
+		<property name="eachSchema" value="tests.modelGroup.name" />
+		<property name="eachLayout" value="values" />
+	</slot>
+	<slot name="value" key="label.grade">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="1" />
+			<property name="required" value="true" />
+		</validator>
+	</slot>
+</schema>
+
+<schema name="tests.testModel.selectQuestionGroup.modelGroup"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="modelGroup"
+	      layout="menu-select"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ModelGroupsForTestModel" />
+		<property name="eachSchema" value="tests.modelGroup.name" />
+		<property name="eachLayout" value="values" />
+	</slot>
+</schema>
+
+<schema name="tests.modelRestriction.edit.atomicQuestion"
+        type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
+        bundle="TESTS_RESOURCES">
+	<slot name="value" key="label.modelRestriction.value">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="1" />
+			<property name="required" value="false" />
+		</validator>
+	</slot>
+</schema>
+
+<schema name="tests.modelRestriction.edit.questionGroup"
+        type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
+        bundle="TESTS_RESOURCES">
+	<slot name="count" key="label.modelRestriction.count">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="1" />
+		</validator>
+	</slot>
+	<slot name="value" key="label.modelRestriction.value"
+	      validator="net.sourceforge.fenixedu.renderers.validators.DoubleValidator"/>
+</schema>
+
+<schema name="tests.testModel.selectQuestionGroup.count"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="count">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="1" />
+		</validator>
+	</slot>
+</schema>
+
+<schema name="tests.testModel.selectQuestionGroup.value"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="value" validator="net.sourceforge.fenixedu.renderers.validators.DoubleValidator" />
+</schema>
+
+<schema name="tests.test.create.prepare"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="executionCourse"
+	      layout="menu-select"
+	      validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	      key="label.executionCourse.name">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCoursesForTestModel" />
+		<property name="format" value="${nome}" />
+	</slot>
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.testModel.name" />
+	<slot name="useVariations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="tests.generateTests.useVariations" />
+	<slot name="useFinalDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="tests.generateTests.useFinalDate" />
+</schema>
+
+<schema name="tests.test.create.variations"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
+        bundle="TESTS_RESOURCES"
+        extends="tests.test.create.prepare">
+	<slot name="executionCourse" read-only="true" layout="format" key="label.executionCourse.name">
+		<property name="format" value="${nome}" />
+	</slot>
+	<slot name="name" read-only="true" key="label.testModel.name" />
+	<slot name="useVariations" read-only="true" key="tests.generateTests.useVariations" />
+	<slot name="variations" key="tests.generateTests.variations">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="1" />
+		</validator>
+	</slot>
+	<slot name="useFinalDate" read-only="true" key="tests.generateTests.useFinalDate" />
+</schema>
+
+<schema name="tests.test.create.finalDate"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
+        bundle="TESTS_RESOURCES"
+        extends="tests.test.create.prepare">
+	<slot name="executionCourse" read-only="true" layout="format" key="label.executionCourse.name">
+		<property name="format" value="${nome}" />
+	</slot>
+	<slot name="name" read-only="true" key="label.testModel.name" />
+	<slot name="useVariations" read-only="true" key="tests.generateTests.useVariations" />
+	<slot name="useFinalDate" read-only="true" key="tests.generateTests.useFinalDate" />
+	<slot name="finalDate" key="tests.generateTests.finalDate">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.FutureDateTimeValidator">
+			<property name="required" value="true" />
+		</validator>
+	</slot>
+</schema>
+
+<schema name="tests.test.create.both"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
+        bundle="TESTS_RESOURCES"
+        extends="tests.test.create.prepare">
+	<slot name="executionCourse" read-only="true" layout="format" key="label.executionCourse.name">
+		<property name="format" value="${nome}" />
+	</slot>
+	<slot name="name" read-only="true" key="label.testModel.name" />
+	<slot name="useVariations" read-only="true" key="tests.generateTests.useVariations" />
+	<slot name="variations" key="tests.generateTests.variations">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="1" />
+		</validator>
+	</slot>
+	<slot name="useFinalDate" read-only="true" key="tests.generateTests.useFinalDate" />
+	<slot name="finalDate" key="tests.generateTests.finalDate">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.FutureDateTimeValidator">
+			<property name="required" value="true" />
+		</validator>
+	</slot>
+</schema>
+
+<schema name="tests.testGroup.view"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestGroup"
+        bundle="TESTS_RESOURCES">
+	<slot name="name" layout="link" key="label.testModel.name">
+		<property name="linkFormat" value="/tests/tests.do?method=viewTestGroup&amp;oid=${idInternal}" />
+		<property name="useParent" value="true" />
+	</slot>
+	<slot name="executionCourse.nome" key="label.executionCourse.name" />
+	<slot name="questionCount" key="tests.testGroup.questionCount" />
+	<slot name="testsCount" key="tests.testGroup.testsCount" />
+	<slot name="beginDate" layout="null-as-label" key="tests.testGroup.beginDate">
+		<property name="label" value="tests.empty" />
+		<property name="key" value="true" />
+		<property name="bundle" value="TESTS_RESOURCES" />
+	</slot>
+	<slot name="finalDate" layout="null-as-label" key="tests.testGroup.finalDate">
+		<property name="label" value="tests.empty" />
+		<property name="key" value="true" />
+		<property name="bundle" value="TESTS_RESOURCES" />
+	</slot>
+	<slot name="status" layout="" key="tests.testGroup.status">
+		<property name="bundle" value="TESTS_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="tests.testGroup.manage"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestGroup"
+        bundle="TESTS_RESOURCES">
+	<slot name="name" layout="link" key="label.testModel.name">
+		<property name="linkFormat" value="/tests/tests.do?method=viewTestGroup&amp;oid=${idInternal}" />
+		<property name="useParent" value="true" />
+	</slot>
+	<slot name="questionCount" key="tests.testGroup.questionCount" />
+	<slot name="testsCount" key="tests.testGroup.testsCount" />
+	<slot name="beginDate" layout="null-as-label" key="tests.testGroup.beginDate">
+		<property name="label" value="tests.empty" />
+		<property name="key" value="true" />
+		<property name="bundle" value="TESTS_RESOURCES" />
+	</slot>
+	<slot name="finalDate" layout="null-as-label" key="tests.testGroup.finalDate">
+		<property name="label" value="tests.empty" />
+		<property name="key" value="true" />
+		<property name="bundle" value="TESTS_RESOURCES" />
+	</slot>
+	<slot name="status" layout="" key="tests.testGroup.status">
+		<property name="bundle" value="TESTS_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="tests.test.correct-by-person"
+        type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.CorrectTestBean"
+        bundle="TESTS_RESOURCES">
+	<slot name="person" layout="link">
+		<property name="linkFormat" value="/tests/tests.do?method=correctByPerson&amp;testGroupId=${test.testGroup.idInternal}&amp;personId=${person.idInternal}" />
+		<property name="subLayout" value="format-name-number" />
+		<property name="useParent" value="true" />
+	</slot>
+	<slot name="test" layout="format-as-variation" />
+	<slot name="allUncorrectedQuestionsCount" layout="format">
+		<property name="format" value="(${$} pergunta(s) por corrigir, " />
+	</slot>
+	<slot name="finalGrade" layout="format">
+		<property name="format" value="${value}/${scale} valor(es) no momento)" />
+	</slot>
+</schema>
+
+<schema name="tests.test.navigation"
+        type="net.sourceforge.fenixedu.domain.tests.NewTest"
+        bundle="TESTS_RESOURCES">
+	<slot name="testGroup.orderedTests" layout="flowLayout">
+		<property name="htmlSeparator" value="," />
+		<property name="eachInline" value="true" />
+		<property name="eachSchema" value="tests.test.position" />
+		<property name="eachLayout" value="values" />
+	</slot>
+</schema>
+
+<schema name="tests.test.position"
+        type="net.sourceforge.fenixedu.domain.tests.NewTest"
+        bundle="TESTS_RESOURCES">
+	<slot name="position" layout="link">
+		<property name="linkFormat" value="/tests/tests.do?method=viewTest&amp;oid=${idInternal}" />
+		<property name="useParent" value="true" />
+	</slot>
+</schema>
+
+<schema name="tests.testGroup.view.student"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestGroup"
+        bundle="TESTS_RESOURCES">
+	<slot name="executionCourse.nome" key="label.executionCourse.name" />
+	<slot name="name" layout="link" key="label.testModel.name">
+		<property name="linkFormat" value="/tests/tests.do?method=viewTest&amp;oid=${idInternal}" />
+		<property name="useParent" value="true" />
+	</slot>
+	<slot name="beginDate" key="tests.testGroup.beginDate" />
+	<slot name="finalDate" layout="null-as-label" key="tests.testGroup.finalDate">
+		<property name="label" value="tests.empty" />
+		<property name="key" value="true" />
+		<property name="bundle" value="TESTS_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="tests.testGroup.view.student.grade"
+        type="net.sourceforge.fenixedu.domain.tests.NewTestGroup"
+        bundle="TESTS_RESOURCES">
+	<slot name="executionCourse.nome" key="label.executionCourse.name" />
+	<slot name="name" key="label.testModel.name" />
+	<slot name="finalDate" layout="null-as-label" key="tests.testGroup.finalDate">
+		<property name="label" value="tests.empty" />
+		<property name="key" value="true" />
+		<property name="bundle" value="TESTS_RESOURCES" />
+	</slot>
+	<slot name="grade" layout="format" key="label.grade">
+		<property name="format" value="${value}/${scale}" />
+	</slot>
+</schema>
+
+<schema name="tests.answer.details-for.NewStringQuestion"
+        type="net.sourceforge.fenixedu.domain.tests.NewStringQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="stringAnswer" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="columns" value="90" />
+		<property name="rows" value="4" />
+	</slot>
+	<setter signature="setAnswer(stringAnswer)"/>
+</schema>
+
+<schema name="tests.answer.details-for.NewNumericQuestion"
+        type="net.sourceforge.fenixedu.domain.tests.NewNumericQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="numericAnswer" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<setter signature="setAnswer(numericAnswer)"/>
+</schema>
+
+<schema name="tests.answer.details-for.NewDateQuestion"
+        type="net.sourceforge.fenixedu.domain.tests.NewDateQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="dateAnswer">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.FutureDateTimeValidator">
+			<property name="required" value="true" />
+		</validator>
+	</slot>
+	<setter signature="setAnswer(dateAnswer)"/>
+</schema>
+
+<schema name="tests.answer.details-for.NewMultipleChoiceQuestion"
+        type="net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="multipleChoiceAnswer" layout="option-select">
+		<property name="listItemStyle" value="clear: both" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ChoicesForMultipleChoiceQuestion" />
+		<property name="eachLayout" value="template-short" />
+		<property name="checkBoxStyle" value="float: left;" />
+		<property name="ordered" value="true" />
+	</slot>
+	<setter signature="setAnswer(multipleChoiceAnswer)"/>
+</schema>
+
+<schema name="tests.answer.view.NewStringQuestion"
+        type="net.sourceforge.fenixedu.domain.tests.NewAnswer"
+        bundle="TESTS_RESOURCES">
+	<slot name="stringAnswer" layout="longText" />
+</schema>
+
+<schema name="tests.answer.view.NewNumericQuestion"
+        type="net.sourceforge.fenixedu.domain.tests.NewNumericQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="numericAnswer" />
+</schema>
+
+<schema name="tests.answer.view.NewDateQuestion"
+        type="net.sourceforge.fenixedu.domain.tests.NewDateQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="dateAnswer" />
+</schema>
+
+<schema name="tests.answer.view.NewMultipleChoiceQuestion"
+        type="net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion"
+        bundle="TESTS_RESOURCES">
+	<slot name="multipleChoiceAnswer">
+		<property name="style" value="clear: both" />
+		<property name="eachLayout" value="template-short" />
+		<property name="classes" value="list2" />
+	</slot>
+</schema>

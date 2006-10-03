@@ -660,4 +660,145 @@
 		<put name="body" value="/teacher/executionCourse/createComplexSummary.jsp" />
 	</definition>		
 	
+	<!-- Tests Pages Definitions -->
+	<definition name="manageTreeQuestionBankPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/manageTreeQuestionBank.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="manageLinearQuestionBankPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/manageLinearQuestionBank.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="editTestElementPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/editTestElement.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="createPresentationMaterialPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/presentationMaterial/createPresentationMaterial.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="createPictureMaterialPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/presentationMaterial/createPictureMaterial.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="editPresentationMaterialsPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/presentationMaterial/editPresentationMaterials.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="deletePresentationMaterialPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/presentationMaterial/deletePresentationMaterial.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="managePermissionUnitsPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/managePermissionUnits.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="createQuestionGroupPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/createQuestionGroup.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="createAtomicQuestionPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/createAtomicQuestion.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="editCorrectorPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/editCorrector.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="editValidatorPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/editValidator.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="editPreConditionPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/editPreCondition.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="associateParentPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/associateParent.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="disassociateParentPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/disassociateParent.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="manageTestModelsPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/testModels/manageTestModels.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="deleteTestModelPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/testModels/deleteTestModel.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="editTestModelPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/testModels/editTestModel.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="editModelGroupPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/testModels/editModelGroup.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="selectQuestionsPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/testModels/selectQuestions.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="sortTestModelPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/testModels/sortTestModel.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="generateTestsPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/testModels/generateTests.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="deleteQuestionPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/questionBank/deleteQuestion.jsp" />
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	</definition>
+	
+	<definition name="manageTestsPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/tests/manageTests.jsp" />
+ 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" />
+	</definition>
+	
+	<definition name="viewTestPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/tests/viewTest.jsp" />
+ 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" />
+	</definition>
+	
+	<definition name="correctTestGroupPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/tests/correctTestGroup.jsp" />
+ 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" />
+	</definition>
+	
+	<definition name="correctTestByPersonPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/tests/correctTestByPerson.jsp" />
+ 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" />
+	</definition>
+	
+	<definition name="deleteTestGroupPage" extends="definition.teacher.two-column">
+		<put name="body" value="/teacher/tests/tests/deleteTestGroup.jsp" />
+ 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" />
+	</definition>
+	<!-- End Tests Pages Definitions -->
 </tiles-definitions>

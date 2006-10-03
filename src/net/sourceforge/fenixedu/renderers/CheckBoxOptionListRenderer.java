@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.collections.Predicate;
+
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBoxList;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
+import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
@@ -55,6 +58,16 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
     private boolean saveOptions;
 
     private boolean selectAllShown;
+    
+    private String checkBoxClasses;
+    
+    private String checkBoxStyle;
+    
+    private String listItemClasses;
+    
+    private String listItemStyle;
+    
+    private boolean ordered;
 
     /**
      * This property allows you to configure the class attribute for each
@@ -177,7 +190,72 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
         this.saveOptions = saveOptions;
     }
 
-    @Override
+    public String getCheckBoxClasses() {
+		return checkBoxClasses;
+	}
+
+    /**
+     * Specifies the class applied to the input element
+     * 
+     * @property
+     */
+	public void setCheckBoxClasses(String checkBoxClasses) {
+		this.checkBoxClasses = checkBoxClasses;
+	}
+
+	public String getCheckBoxStyle() {
+		return checkBoxStyle;
+	}
+
+    /**
+     * Specifies the style applied to the input element
+     * 
+     * @property
+     */
+	public void setCheckBoxStyle(String checkBoxStyle) {
+		this.checkBoxStyle = checkBoxStyle;
+	}
+
+	public String getListItemClasses() {
+		return listItemClasses;
+	}
+
+    /**
+     * Specifies the classes applied to the list element
+     * 
+     * @property
+     */
+	public void setListItemClasses(String listItemClasses) {
+		this.listItemClasses = listItemClasses;
+	}
+
+	public String getListItemStyle() {
+		return listItemStyle;
+	}
+
+    /**
+     * Specifies the style applied to the list element
+     * 
+     * @property
+     */
+	public void setListItemStyle(String listItemStyle) {
+		this.listItemStyle = listItemStyle;
+	}
+
+	public boolean isOrdered() {
+		return ordered;
+	}
+
+    /**
+     * Specifies if the generated list will be ordered
+     * 
+     * @property
+     */
+	public void setOrdered(boolean ordered) {
+		this.ordered = ordered;
+	}
+
+	@Override
     protected Layout getLayout(Object object, Class type) {
         return new CheckBoxListLayout();
     }
@@ -231,6 +309,7 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
             Collection collection = (Collection) object;
 
             HtmlCheckBoxList listComponent = new HtmlCheckBoxList();
+            listComponent.getList().setOrdered(isOrdered());
             listComponent.setSelectAllShown(isSelectAllShown());
 
             Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
@@ -267,6 +346,8 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
 
                 HtmlCheckBox checkBox = listComponent.addOption(label, key.toString());
                 label.setFor(checkBox);
+                checkBox.setClasses(getCheckBoxClasses());
+                checkBox.setStyle(getCheckBoxStyle());
 
                 if (collection != null && collection.contains(obj)) {
                     checkBox.setChecked(true);
@@ -275,6 +356,18 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
 
             if (isSaveOptions()) {
                 savePossibleMetaObjects(possibleMetaObjects);
+            }
+            
+            List<HtmlComponent> components = listComponent.getChildren(new Predicate() {
+				public boolean evaluate(Object arg0) {
+					return arg0 instanceof HtmlListItem;
+				}});
+            
+            for(HtmlComponent component : components) {
+            	HtmlListItem listItem = (HtmlListItem) component;
+            	
+            	listItem.setStyle(getListItemStyle());
+            	listItem.setClasses(getListItemClasses());
             }
 
             // TODO: make providers only provide a converter for a single object

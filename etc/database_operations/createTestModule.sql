@@ -1,0 +1,145 @@
+drop table if exists TESTS_TEST_ELEMENT;
+drop table if exists TESTS_ANSWER;
+drop table if exists TEST_PERSON;
+drop table if exists TESTS_TEST_GROUP;
+drop table if exists TESTS_PRESENTATION_MATERIAL;
+drop table if exists TESTS_GROUP_ELEMENT;
+drop table if exists TESTS_GRADE_SCALE;
+drop table if exists TESTS_PERMISSION_UNIT;
+drop table if exists TESTS_GRADE;
+drop table if exists TESTS_CORRECTOR;
+
+alter table PARTY add KEY_QUESTION_BANK int(11) NULL;
+
+create table TESTS_TEST_ELEMENT (
+	ID_INTERNAL int(11) NOT NULL auto_increment,
+	ACK_OPT_LOCK int(11),
+	KEY_ROOT_DOMAIN_OBJECT int(11),
+	OJB_CONCRETE_CLASS varchar(255) NOT NULL,
+
+	KEY_MULTIPLE_CHOICE_QUESTION int(11),
+	KEY_OWNER int(11),
+	KEY_CREATOR int(11),
+	KEY_BAG int(11),
+	KEY_BAG_MODEL int(11),
+	KEY_QUESTION int(11),
+	KEY_PARENT_GROUP int(11),
+	KEY_TEST_GROUP int(11),
+	KEY_SECTION int(11),
+	
+	GRADE BLOB,
+
+	POSITION int(11),
+	LOWER int(11),
+	UPPER int(11),
+	NAME text,
+	VALIDATOR BLOB,
+	
+	CREATED DATETIME,
+	SCALE double,
+	VALUE double,
+	COUNT int(11),
+	TIMES_USED int(11),
+	
+	PRE_CONDITION BLOB,
+	
+	SECTION_POSITION int(11),
+	SHUFFLE tinyint(1),
+
+	PRIMARY KEY (ID_INTERNAL)
+) TYPE=InnoDB;
+
+create table TESTS_ANSWER (
+	ID_INTERNAL int(11) NOT NULL auto_increment,
+	ACK_OPT_LOCK int(11),
+	KEY_ROOT_DOMAIN_OBJECT int(11),
+	
+	KEY_ATOMIC_QUESTION int(11),
+	KEY_PERSON int(11) NOT NULL,
+	
+	CONCRETE_ANSWER BLOB,
+	PERCENTAGE double,
+	
+	PRIMARY KEY (ID_INTERNAL)
+) TYPE=InnoDB;
+
+create table TEST_PERSON (
+	KEY_NEW_TEST int(11),
+	KEY_PERSON int(11)
+) TYPE=InnoDB;
+
+create table TESTS_TEST_GROUP (
+	ID_INTERNAL int(11) NOT NULL auto_increment,
+	ACK_OPT_LOCK int(11),
+	KEY_ROOT_DOMAIN_OBJECT int(11),
+	OJB_CONCRETE_CLASS varchar(255) NOT NULL,
+
+	BEGIN_DATE DATETIME,
+	FINAL_DATE DATETIME,
+	NAME text,
+	STATUS varchar(255),
+
+	KEY_CREATOR int(11),
+	KEY_EXECUTION_COURSE int(11),
+
+	PRIMARY KEY (ID_INTERNAL)
+) TYPE=InnoDB;
+
+create table TESTS_PRESENTATION_MATERIAL (
+	ID_INTERNAL int(11) NOT NULL auto_increment,
+	ACK_OPT_LOCK int(11),
+	KEY_ROOT_DOMAIN_OBJECT int(11),
+	OJB_CONCRETE_CLASS varchar(255) NOT NULL,
+
+	TEXT text,
+	POSITION int(11) NOT NULL,
+	MATH_ML text,
+	INLINE tinyint(1),
+
+	KEY_TEST_ELEMENT int(11),
+	KEY_PICTURE_MATERIAL_FILE int(11),
+
+	PRIMARY KEY (ID_INTERNAL)
+) TYPE=InnoDB;
+
+create table TESTS_GROUP_ELEMENT (
+	ID_INTERNAL int(11) NOT NULL auto_increment,
+	ACK_OPT_LOCK int(11),
+	KEY_ROOT_DOMAIN_OBJECT int(11),
+	OJB_CONCRETE_CLASS varchar(255) NOT NULL,
+	
+	KEY_GRADE_SCALE int(11),
+	KEY_PARENT int(11) NOT NULL,
+	KEY_CHILD int(11) NOT NULL,
+	
+	POSITION int(11),
+	
+	PRIMARY KEY (ID_INTERNAL)
+) TYPE=InnoDB;
+
+create table TESTS_PERMISSION_UNIT (
+	ID_INTERNAL int(11) NOT NULL auto_increment,
+	ACK_OPT_LOCK int(11),
+	KEY_ROOT_DOMAIN_OBJECT int(11),
+	
+	KEY_PARTY int(11) NOT NULL,
+	KEY_QUESTION int(11) NOT NULL,
+	
+	PERMISSION varchar(255) NOT NULL,
+	
+	PRIMARY KEY (ID_INTERNAL)
+) TYPE=InnoDB;
+
+create table TESTS_CORRECTOR (
+	ID_INTERNAL int(11) NOT NULL auto_increment,
+	ACK_OPT_LOCK int(11),
+	KEY_ROOT_DOMAIN_OBJECT int(11),
+	
+	KEY_ATOMIC_QUESTION int(11),
+	
+	PREDICATE blob,
+	PERCENTAGE int(11),
+	POSITION int(11),
+	
+	PRIMARY KEY (ID_INTERNAL)
+) TYPE=InnoDB;
