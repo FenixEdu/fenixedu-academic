@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,11 +48,21 @@ public class RoleGroup extends DomainBackedGroup<Role> {
      * of this groups has different behaviours. The <tt>UserView</tt> as all
      * the person roles that are allowed in the current host while the person
      * has all the roles assigned to it.
+     * 
+     * <p>
+     * This method checks if the <tt>UserView</tt> contains the same role as this
+     * group. 
      */
     @Override
     public boolean allows(IUserView userView) {
-        if (userView.getRoleTypes().contains(getRole().getRoleType())) {
-            return super.allows(userView);
+        Collection<RoleType> roleTypes = userView.getRoleTypes();
+        
+        if (roleTypes == null) {
+            return false;
+        }
+        
+        if (roleTypes.contains(getRole().getRoleType())) {
+            return true;
         }
         else {
             return false;
