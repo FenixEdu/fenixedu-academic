@@ -19,7 +19,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  * @author Susana Fernandes
  */
 public class StudentTestQuestion extends StudentTestQuestion_Base {
-    private List<SubQuestion> studentSubQuestions;
+    private static InheritableThreadLocal<List<SubQuestion>> studentSubQuestions = new InheritableThreadLocal<List<SubQuestion>>();
 
     public static final Comparator<StudentTestQuestion> COMPARATOR_BY_TEST_QUESTION_ORDER = new BeanComparator(
             "testQuestionOrder");
@@ -38,18 +38,18 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
     }
 
     public List<SubQuestion> getStudentSubQuestions() {
-        return studentSubQuestions;
+        return studentSubQuestions.get();
     }
 
     public void setStudentSubQuestions(List<SubQuestion> studentSubQuestions) {
-        this.studentSubQuestions = studentSubQuestions;
+        this.studentSubQuestions.set(studentSubQuestions);
     }
 
     public void addStudentSubQuestion(SubQuestion subQuestion) {
-        if (studentSubQuestions == null) {
-            studentSubQuestions = new ArrayList<SubQuestion>();
+        if (getStudentSubQuestions() == null) {
+            setStudentSubQuestions(new ArrayList<SubQuestion>());
         }
-        studentSubQuestions.add(subQuestion);
+        getStudentSubQuestions().add(subQuestion);
     }
 
     public SubQuestion getSubQuestionByItem() {
