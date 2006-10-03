@@ -302,4 +302,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
         }
         return null;
     }
+
+    public String getYear() {
+	return getExecutionYear().getYear();
+    }
 }
