@@ -200,6 +200,7 @@ public class HtmlLink extends HtmlComponent {
         tag.setAttribute("href", calculateUrl());
         tag.setAttribute("charset", getCharSet());
         tag.setAttribute("type", getContentType());
+        tag.setAttribute("target", getTarget());
 
         if (getText() != null) {
             tag.addChild(new HtmlTag(null, getText()));
