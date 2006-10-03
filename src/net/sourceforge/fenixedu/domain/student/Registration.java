@@ -175,13 +175,17 @@ public class Registration extends Registration_Base {
     }
 
     public StudentCurricularPlan getLastStudentCurricularPlan() {
+       
+       if (getStudentCurricularPlans().size()== 0){
+           return null;
+       }
 	return (StudentCurricularPlan) Collections.max(getStudentCurricularPlans(), new BeanComparator(
 		"startDateYearMonthDay"));
     }
 
     public StudentCurricularPlan getFirstStudentCurricularPlan() {
-	return (StudentCurricularPlan) Collections.min(getStudentCurricularPlans(), new BeanComparator(
-		"startDateYearMonthDay"));
+    return (StudentCurricularPlan) Collections.min(getStudentCurricularPlans(), new BeanComparator(
+    	"startDateYearMonthDay"));
     }
 
     public StudentCurricularPlan getActiveOrConcludedStudentCurricularPlan() {
@@ -580,7 +584,7 @@ public class Registration extends Registration_Base {
     public static List<Registration> readStudentsByDegreeType(DegreeType degreeType) {
 	final List<Registration> students = new ArrayList();
 	for (final Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
-	    if (registration.getDegreeType().equals(degreeType)) {
+        if (registration.getDegreeType().equals(degreeType)) {
 		students.add(registration);
 	    }
 	}
@@ -1083,7 +1087,10 @@ public class Registration extends Registration_Base {
     public DegreeType getDegreeType() {
 	final StudentCurricularPlan scp = (getActiveOrConcludedStudentCurricularPlan() != null) ? getActiveOrConcludedStudentCurricularPlan()
 		: getLastStudentCurricularPlan();
-	return scp.getDegreeType();
+       if (scp == null){
+            return null;
+        }
+        return scp.getDegreeType();
     }
 
     public boolean isActiveForOffice(Unit office) {

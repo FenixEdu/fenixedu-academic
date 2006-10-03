@@ -70,13 +70,14 @@ public class RegisterCandidate extends Service {
             new Student(person, registration.getNumber());
         }
         person.getStudent().getRegistrations().add(registration);
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
-
+       // person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
         checkDuplicateStudentCurricularPlan(masterDegreeCandidate, registration);
 
-	StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(registration,
-		branchID, masterDegreeCandidate);
-
+        StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(registration,
+                branchID, masterDegreeCandidate);
+    
+	    person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
+       
         createEnrolments(userView, masterDegreeCandidate, studentCurricularPlan);
 
         updateCandidateSituation(masterDegreeCandidate);
@@ -182,9 +183,9 @@ public class RegisterCandidate extends Service {
 
         StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
         StudentState state = new StudentState(StudentState.INSCRITO);
-	registration = new Registration(person, studentNumber, studentKind, state, false, false,
+        registration = new Registration(person, studentNumber, studentKind, state, false, false,
                 EntryPhase.FIRST_PHASE_OBJ);
-        registration.setInterruptedStudies(false);
+        registration.setInterruptedStudies(false);      
         
         return registration;
     }
