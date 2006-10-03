@@ -16,7 +16,8 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 public class HtmlLink extends HtmlComponent {
 
     private String text;
-    
+
+    private String target;
     private String url;
     private String module;
     private String anchor;
@@ -34,6 +35,14 @@ public class HtmlLink extends HtmlComponent {
         
         parameters = new Hashtable<String, String[]>();
         setModuleRelative(true);
+    }
+
+    public String getTarget() {
+        return this.target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 
     public String getAnchor() {
@@ -267,4 +276,36 @@ public class HtmlLink extends HtmlComponent {
         
         return buffer.toString();
     }
+    
+    /**
+     * Predefined values for the {@link HtmlLink#setTarget(String) target} attribute.
+     */
+    public static final class Target {
+        /**
+         * The user agent should load the designated document in a new, unnamed
+         * window.
+         */
+        public static final String BLANK = "_blank";
+
+        /**
+         * The user agent should load the document in the same frame as the
+         * element that refers to this target.
+         */
+        public static final String SELF = "_self";
+
+        /**
+         * The user agent should load the document into the immediate FRAMESET
+         * parent of the current frame. This value is equivalent to _self if the
+         * current frame has no parent.
+         */
+        public static final String PARENT = "_parent";
+
+        /**
+         * The user agent should load the document into the full, original
+         * window (thus canceling all other frames). This value is equivalent to
+         * _self if the current frame has no parent.
+         */
+        public static final String TOP = "_top";
+    };
+    
 }
