@@ -60,6 +60,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.StringNormalizer;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -1798,17 +1799,26 @@ public class Person extends Person_Base {
 	    this.name = name;
 	}
 
-	private boolean matchesAnyCriteria(final Person person) {
-	    return (isSpecified(documentIdNumber) && documentIdNumber.equalsIgnoreCase(person.getDocumentIdNumber()))
-	    		|| (isSpecified(name) && name.equalsIgnoreCase(person.getName()));
+	private boolean matchesAnyCriteria(final String[] nameValues, final String[] documentIdNumberValues, final Person person) {
+            return matchesAnyCriteriaField(nameValues, name, person.getName())
+                    || matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, person.getDocumentIdNumber());
 	}
 
+        private boolean matchesAnyCriteriaField(final String[] nameValues, final String string, final String stringFromPerson) {
+            return isSpecified(string) && areNamesPresent(stringFromPerson, nameValues);
+        }
+
 	public SortedSet<Person> search() {
+            final String[] nameValues = name == null ?
+                    null : StringNormalizer.normalize(name).toLowerCase().split("\\p{Space}+");
+            final String[] documentIdNumberValues = documentIdNumber == null ?
+                    null : StringNormalizer.normalize(documentIdNumber).toLowerCase().split("\\p{Space}+");
+
 	    final SortedSet<Person> people = new TreeSet<Person>(COMPARATOR_BY_NAME);
 	    for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
 		if (party.isPerson()) {
 		    final Person person = (Person) party;
-		    if (matchesAnyCriteria(person)) {
+		    if (matchesAnyCriteria(nameValues, documentIdNumberValues, person)) {
 			people.add(person);
 		    }
 		}
@@ -1827,8 +1837,18 @@ public class Person extends Person_Base {
 	private boolean isSpecified(final String string) {
 	    return string != null && string.length() > 0;
 	}
-    }
 
+        private boolean areNamesPresent(String name, String[] searchNameParts) {
+            String nameNormalized = StringNormalizer.normalize(name).toLowerCase();
+            for (int i = 0; i < searchNameParts.length; i++) {
+                String namePart = searchNameParts[i];
+                if (!nameNormalized.contains(namePart)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
 
     public Registration getRegistration(ExecutionCourse executionCourse) {
     	return executionCourse.getRegistration(this);
