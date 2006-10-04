@@ -6,7 +6,7 @@
 <html:xhtml/>
 
 <logic:present role="RESEARCHER">
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex"/></h3>
 	
 	<fr:form action="/bibtexManagement/ignorePublication.do">
@@ -41,9 +41,12 @@
 				<logic:iterate id="author" name="importBibtexBean" property="currentAuthors">
 					<bean:define id="participatorBean" name="author" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean"/>
 					<fr:edit id="<%=participatorBean.getBibtexPerson()%>" nested="true" name="author" schema="<%=participatorBean.getActiveSchema()%>">
+						<fr:layout name="tabular">
+		    			    <fr:property name="classes" value="tstyle1 thright thlight thtop"/>
+			        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					    </fr:layout>
 				   		<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
 			   		</fr:edit>
-					<hr/>
 				</logic:iterate>
  			</logic:notEmpty>
 			
@@ -52,9 +55,12 @@
 				<logic:iterate id="editor" name="importBibtexBean" property="currentEditors">
 					<bean:define id="participatorBean" name="editor" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean"/>
 					<fr:edit id="<%=participatorBean.getBibtexPerson()%>" nested="true" name="editor" schema="<%=participatorBean.getActiveSchema()%>">
+					    <fr:layout name="tabular">
+				    	    <fr:property name="classes" value="tstyle1 thright thlight thtop"/>
+				        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					    </fr:layout>
 						<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
 			   		</fr:edit>
-					<hr/>
 				</logic:iterate>
 			</logic:notEmpty>
 	
@@ -72,21 +78,39 @@
  			<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 2 : </b>
 		 	<u><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.setPublicationData"/></u>
 
-			<!-- Set Publication data -->
-	 		<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.publicationData"/></h3>
 			<bean:define id="publicationData" name="importBibtexBean" property="currentPublicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
-			<fr:edit nested="true" id="publicationData" name="importBibtexBean" property="currentPublicationBean" schema="<%=publicationData.getActiveSchema()%>">
-				<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
-	   		</fr:edit>
+			<logic:equal name="publicationData" property="createEvent" value="false">
+				<!-- Set Publication data -->
+		 		<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.publicationData"/></h3>
+				<fr:edit nested="true" id="publicationData" name="importBibtexBean" property="currentPublicationBean" schema="<%=publicationData.getActiveSchema()%>">
+			    <fr:layout name="tabular">
+		    	    <fr:property name="classes" value="tstyle1 thright thlight thtop"/>
+		        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			    </fr:layout>
+					<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
+		   		</fr:edit>
+		   	</logic:equal>
 	   		
 	   		<!-- Create event in case of inproceedings or proceedings -->
 			<logic:equal name="publicationData" property="createEvent" value="true">
-				<br/>
 				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createConference"/>
 				<fr:edit id="createEvent" name="importBibtexBean" property="currentPublicationBean" schema="result.publication.create.Event" nested="true">
+				    <fr:layout name="tabular">
+			    	    <fr:property name="classes" value="tstyle1 thright thlight thtop"/>
+			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				    </fr:layout>
 			   		<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
 			   		<fr:destination name="input" path="/bibtexManagement/invalidSubmit.do"/>
 				</fr:edit>
+				
+				<!-- present publication fields -->
+				<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.publicationData"/></h3>
+				<fr:view name="importBibtexBean" property="currentPublicationBean" schema="<%=publicationData.getActiveSchema()%>">
+					<fr:layout name="tabular">
+			    	    <fr:property name="classes" value="tstyle1 thlight thright thtop width600px"/>
+        				<fr:property name="columnClasses" value="width12em,,"/>
+					</fr:layout>
+	   			</fr:view>
 			</logic:equal>
 			
 			<html:submit><bean:message bundle="RESEARCHER_RESOURCES" key="button.submit"/></html:submit>
