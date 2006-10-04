@@ -113,7 +113,7 @@ public class Unit extends Unit_Base {
 	}
 	return allActiveSubUnits;
     }
-    
+
     public List<Unit> getInactiveParentUnits(YearMonthDay currentDate) {
 	return getParentUnitsByState(currentDate, false);
     }
@@ -173,7 +173,7 @@ public class Unit extends Unit_Base {
 	}
 	return allActiveSubUnits;
     }
-    
+
     public List<Unit> getAllInactiveParentUnits(YearMonthDay currentDate) {
 	Set<Unit> allInactiveParentUnits = new HashSet<Unit>();
 	List<Unit> inactiveParentUnits = getInactiveParentUnits(currentDate);
@@ -242,7 +242,7 @@ public class Unit extends Unit_Base {
 	checkUnitDates(beginDate, endDate);
 	setCostCenterCode(unitCostCenter);
 	checkAcronym(acronym, this.getType());
-	setName(unitName);	
+	setName(unitName);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
 	setType(type);
@@ -299,15 +299,14 @@ public class Unit extends Unit_Base {
     private boolean canBeDeleted() {
 	return (!hasAnyParents() || (this.getParentUnits().size() == 1 && this.getParents().size() == 1))
 		&& !hasAnyFunctions()
-		&& !hasAnyChilds()		
+		&& !hasAnyChilds()
 		&& !hasAnySpaceResponsibility()
 		&& !hasAnyMaterials()
 		&& !hasAnyVigilantGroups()
-		&& !hasAnyCompetenceCourses()		
+		&& !hasAnyCompetenceCourses()
 		&& !hasAnyAssociatedNonAffiliatedTeachers()
 		&& !hasAnyPayedGuides()
-		&& !hasAnyPayedReceipts() 
-		&& !hasAdministrativeOffice();
+		&& !hasAnyPayedReceipts() && !hasAdministrativeOffice();
     }
 
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
@@ -319,13 +318,14 @@ public class Unit extends Unit_Base {
 	}
 	return contracts;
     }
-    
+
     public List<Contract> getContracts() {
-	return new ArrayList(getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT,	Contract.class));
+	return new ArrayList(getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT,
+		Contract.class));
     }
-    
+
     public List<Contract> getContractsByContractType(ContractType contractType) {
-	List<Contract> contracts = new ArrayList<Contract>();	
+	List<Contract> contracts = new ArrayList<Contract>();
 	for (Contract contract : getContracts()) {
 	    if (contract.getContractType().equals(contractType)) {
 		contracts.add(contract);
@@ -511,52 +511,36 @@ public class Unit extends Unit_Base {
 	return !getSubUnits().isEmpty();
     }
 
-    public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {	
+    public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
 	if (this.equals(parentUnit)) {
 	    throw new DomainException("error.unit.equals.parentUnit");
 	}
-	if (getParentUnits().contains(parentUnit)) {
+	if (getParentUnits(accountabilityType.getType()).contains(parentUnit)) {
 	    throw new DomainException("error.unit.parentUnit.is.already.parentUnit");
 	}
 	YearMonthDay currentDate = new YearMonthDay();
-	List<Unit> subUnits = (parentUnit.isActive(currentDate)) ? getAllActiveSubUnits(currentDate) : getAllInactiveSubUnits(currentDate);
+	List<Unit> subUnits = (parentUnit.isActive(currentDate)) ? getAllActiveSubUnits(currentDate)
+		: getAllInactiveSubUnits(currentDate);
 	if (subUnits.contains(parentUnit)) {
 	    throw new DomainException("error.unit.parentUnit.is.already.subUnit");
 	}
 	return new Accountability(parentUnit, this, accountabilityType);
     }
-    
+
     public Accountability addSubUnit(Unit childUnit, AccountabilityType accountabilityType) {
 	if (this.equals(childUnit)) {
 	    throw new DomainException("error.unit.equals.subUnit");
 	}
-	if(this.getSubUnits().contains(childUnit)) {
+	if (this.getSubUnits(accountabilityType.getType()).contains(childUnit)) {
 	    throw new DomainException("error.unit.subUnit.is.already.subUnit");
 	}
 	YearMonthDay currentDate = new YearMonthDay();
-	List<Unit> parentUnits = (childUnit.isActive(currentDate)) ? getAllActiveParentUnits(currentDate) : getAllInactiveParentUnits(currentDate);
+	List<Unit> parentUnits = (childUnit.isActive(currentDate)) ? getAllActiveParentUnits(currentDate)
+		: getAllInactiveParentUnits(currentDate);
 	if (parentUnits.contains(childUnit)) {
 	    throw new DomainException("error.unit.childUnit.is.already.parentUnit");
 	}
 	return new Accountability(this, childUnit, accountabilityType);
-    }
-
-    public void removeParentUnit(Unit parentUnit) {
-	for (Accountability accountability : this.getParents()) {
-	    if (accountability.getParentParty().equals(parentUnit)) {
-		accountability.delete();
-		break;
-	    }
-	}
-    }
-
-    public void removeSubUnit(Unit childUnit) {
-	for (Accountability accountability : this.getChilds()) {
-	    if (accountability.getChildParty().equals(childUnit)) {
-		accountability.delete();
-		break;
-	    }
-	}
     }
 
     public NonAffiliatedTeacher findNonAffiliatedTeacherByName(final String name) {
@@ -670,7 +654,7 @@ public class Unit extends Unit_Base {
 	if (parentUnit != null && accountabilityType != null) {
 	    unit.addParentUnit(parentUnit, accountabilityType);
 	}
-		
+
 	return unit;
     }
 
@@ -773,15 +757,17 @@ public class Unit extends Unit_Base {
 	return ParkingPartyClassification.UNIT;
     }
 
-    public List<ExternalContract> getExternalPersons() {	
-	return new ArrayList(getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class));
+    public List<ExternalContract> getExternalPersons() {
+	return new ArrayList(getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT,
+		ExternalContract.class));
     }
 
     public static Unit findFirstExternalUnitByName(final String unitName) {
 	if (unitName == null || unitName.length() == 0) {
 	    return null;
 	}
-	for (final Party party : RootDomainObject.getInstance().getExternalInstitutionUnit().getSubUnits()) {
+	for (final Party party : RootDomainObject.getInstance().getExternalInstitutionUnit()
+		.getSubUnits()) {
 	    if (!party.isPerson() && unitName.equalsIgnoreCase(party.getName())) {
 		final Unit unit = (Unit) party;
 		return unit;

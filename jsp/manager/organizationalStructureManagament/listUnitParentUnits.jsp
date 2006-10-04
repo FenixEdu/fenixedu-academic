@@ -23,54 +23,54 @@
 		
 		<h:outputText value="<br/>" escape="false" />	
 		
-		<h:dataTable value="#{organizationalStructureBackingBean.unit.parentUnits}" var="unit"
-			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.unit.parentUnits}">
+		<h:dataTable value="#{organizationalStructureBackingBean.parentAccountabilities}" var="accountability"
+			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.parentAccountabilities}">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitName']}" />
 				</f:facet>				
-				<h:outputText value="<strong>#{unit.name}</strong>" escape="false"/>
+				<h:outputText value="<strong>#{accountability.parentParty.name}</strong>" escape="false"/>
 			</h:column>
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitCostCenter']}" />
 				</f:facet>				
-				<h:outputText value="#{unit.costCenterCode}" escape="false"/>
+				<h:outputText value="#{accountability.parentParty.costCenterCode}" escape="false"/>
 			</h:column>
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitType']}" />
 				</f:facet>				
-				<h:outputText value="#{bundleEnum[unit.type.name]}" escape="false"/>
+				<h:outputText value="#{bundleEnum[accountability.parentParty.type.name]}" escape="false"/>
 			</h:column>
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitBeginDate']}" />
 				</f:facet>				
 				<h:outputFormat value="{0, date, dd/MM/yyyy}">
-					<f:param value="#{unit.beginDate}"/>
+					<f:param value="#{accountability.parentParty.beginDate}"/>
 				</h:outputFormat>
 			</h:column>
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitEndDate']}" />
 				</f:facet>								
-				<h:outputFormat value="{0, date, dd/MM/yyyy}" rendered="#{!empty unit.endDate}">
-					<f:param value="#{unit.endDate}"/>
+				<h:outputFormat value="{0, date, dd/MM/yyyy}" rendered="#{!empty accountability.parentParty.endDate}">
+					<f:param value="#{accountability.parentParty.endDate}"/>
 				</h:outputFormat>					
 			</h:column>
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['title.relation.type']}" />
 				</f:facet>								
-				<h:outputText value="#{organizationalStructureBackingBean.unitRelationsAccountabilityTypes[unit.idInternal]}" escape="false"/>									
+				<h:outputText value="#{organizationalStructureBackingBean.unitRelationsAccountabilityTypes[accountability.idInternal]}" escape="false"/>									
 			</h:column>	
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>
 				<h:commandLink action="#{organizationalStructureBackingBean.disassociateParentUnit}" value="#{bundle['button.choose']}">
-					<f:param id="chooseUnitID" name="chooseUnitID" value="#{unit.idInternal}"/>
+					<f:param id="accountabilityID" name="accountabilityID" value="#{accountability.idInternal}"/>
 				</h:commandLink> 				
 			</h:column>						
 		</h:dataTable>				

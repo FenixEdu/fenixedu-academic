@@ -6,25 +6,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 
 public class DisassociateParentUnit extends Service {
 
-    public void run(Integer unitID, Integer parentUnitID) throws FenixServiceException {
-        Unit parentUnit = getParentUnit(parentUnitID);
-        Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
-
-        if (unit == null) {
-            throw new FenixServiceException("error.inexistent.unit");
-        }
-        unit.removeParentUnit(parentUnit);
-    }
-
-    private Unit getParentUnit(Integer parentUnitID) {
-        Unit parentUnit = null;
-        if (parentUnitID != null) {
-            parentUnit = (Unit) rootDomainObject.readPartyByOID(parentUnitID);
-        }
-        return parentUnit;
+    public void run(Integer accountabilityID) throws FenixServiceException {
+	Accountability accountability = rootDomainObject.readAccountabilityByOID(accountabilityID);
+	if (accountability == null) {
+	    throw new FenixServiceException("error.inexistent.accountability");
+	}
+	accountability.delete();
     }
 }

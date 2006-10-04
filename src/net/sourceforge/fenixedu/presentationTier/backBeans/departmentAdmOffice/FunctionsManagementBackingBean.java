@@ -49,6 +49,7 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class FunctionsManagementBackingBean extends FenixBackingBean {
@@ -85,26 +86,25 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     private void getParametersFromLinks() {
 
-	if (getRequestParameter("personID") != null) {
+	if (!StringUtils.isEmpty(getRequestParameter("personID"))) {
 	    this.personID = Integer.valueOf(getRequestParameter("personID"));
 	}
-	if (getRequestParameter("page") != null) {
+	if (!StringUtils.isEmpty(getRequestParameter("page"))) {
 	    this.page = Integer.valueOf(getRequestParameter("page").toString());
 	}
-	if (getRequestParameter("name") != null) {
+	if (!StringUtils.isEmpty(getRequestParameter("name"))) {
 	    this.personName = getRequestParameter("name").toString();
 	}
-	if (getRequestParameter("unitID") != null) {
+	if (!StringUtils.isEmpty(getRequestParameter("unitID"))) {
 	    this.unitID = Integer.valueOf(getRequestParameter("unitID").toString());
 	}
-	if (getRequestParameter("personFunctionID") != null
-		&& !getRequestParameter("personFunctionID").equals("")) {
+	if (!StringUtils.isEmpty(getRequestParameter("personFunctionID"))) {
 	    this.personFunctionID = Integer.valueOf(getRequestParameter("personFunctionID").toString());
 	}
-	if (getRequestParameter("functionID") != null && !getRequestParameter("functionID").equals("")) {
+	if (!StringUtils.isEmpty(getRequestParameter("functionID"))) {
 	    this.functionID = Integer.valueOf(getRequestParameter("functionID").toString());
 	}
-	if (getRequestParameter("disabledVar") != null && !getRequestParameter("disabledVar").equals("")) {
+	if (!StringUtils.isEmpty(getRequestParameter("disabledVar"))) {
 	    this.disabledVar = Integer.valueOf(getRequestParameter("disabledVar").toString());
 	}
     }

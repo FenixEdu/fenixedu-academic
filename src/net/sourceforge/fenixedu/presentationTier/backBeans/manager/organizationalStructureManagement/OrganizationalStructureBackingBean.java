@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
@@ -50,6 +51,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private Integer principalFunctionID;
 
+    private Integer accountabilityID;
+
     private Unit unit, chooseUnit;
 
     private Function function;
@@ -62,27 +65,25 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private Boolean toRemoveParentUnit;
 
     public OrganizationalStructureBackingBean() {
-	if (getRequestParameter("unitID") != null
-		&& !getRequestParameter("unitID").toString().equals("")) {
+	if (!StringUtils.isEmpty(getRequestParameter("unitID"))) {
 	    getUnitIDHidden().setValue(Integer.valueOf(getRequestParameter("unitID").toString()));
 	}
-	if (getRequestParameter("chooseUnitID") != null
-		&& !getRequestParameter("chooseUnitID").toString().equals("")) {
+	if (!StringUtils.isEmpty(getRequestParameter("chooseUnitID"))) {
 	    getChooseUnitIDHidden().setValue(
 		    Integer.valueOf(getRequestParameter("chooseUnitID").toString()));
 	}
-	if (getRequestParameter("functionID") != null
-		&& !getRequestParameter("functionID").toString().equals("")) {
+	if (!StringUtils.isEmpty(getRequestParameter("functionID"))) {
 	    getFunctionIDHidden()
 		    .setValue(Integer.valueOf(getRequestParameter("functionID").toString()));
 	}
-	if (getRequestParameter("principalFunctionID") != null
-		&& !getRequestParameter("principalFunctionID").toString().equals("")) {
+	if (!StringUtils.isEmpty(getRequestParameter("principalFunctionID"))) {
 	    this.principalFunctionID = Integer.valueOf(getRequestParameter("principalFunctionID")
 		    .toString());
 	}
-	if (getRequestParameter("isToRemoveParentUnit") != null
-		&& !getRequestParameter("isToRemoveParentUnit").toString().equals("")) {
+	if (!StringUtils.isEmpty(getRequestParameter("accountabilityID"))) {
+	    this.accountabilityID = Integer.valueOf(getRequestParameter("accountabilityID").toString());
+	}
+	if (!StringUtils.isEmpty(getRequestParameter("isToRemoveParentUnit"))) {
 	    this.toRemoveParentUnit = Boolean.valueOf(getRequestParameter("isToRemoveParentUnit")
 		    .toString());
 	} else {
@@ -549,8 +550,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String disassociateParentUnit() throws FenixFilterException, FenixServiceException {
-	final Object[] argsToRead = { this.getUnit().getIdInternal(),
-		this.getChooseUnit().getIdInternal() };
+	final Object[] argsToRead = { this.getAccountabilityID() };
 
 	return executeUnitsManagementService(argsToRead, "backToUnitDetails", "DisassociateParentUnit");
     }
@@ -843,13 +843,22 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return unit;
     }
 
+    public List<Accountability> getParentAccountabilities() throws FenixFilterException,
+	    FenixServiceException {
+	return getUnit().getParentAccountabilities(Unit.class);
+    }
+
+    public List<Accountability> getChildAccountabilities() throws FenixFilterException,
+	    FenixServiceException {
+	return getUnit().getChildAccountabilities(Unit.class);
+    }
+
     private void getParentUnitsRelationTypes() {
 	ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 	getUnitRelationsAccountabilityTypes().clear();
 	for (Accountability accountability : unit.getParentsSet()) {
 	    if (accountability.getParentParty() instanceof Unit) {
-		getUnitRelationsAccountabilityTypes().put(
-			accountability.getParentParty().getIdInternal(),
+		getUnitRelationsAccountabilityTypes().put(accountability.getIdInternal(),
 			bundle.getString(accountability.getAccountabilityType().getType().getName()));
 	    }
 	}
@@ -860,8 +869,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	getUnitRelationsAccountabilityTypes().clear();
 	for (Accountability accountability : unit.getChildsSet()) {
 	    if (accountability.getChildParty() instanceof Unit) {
-		getUnitRelationsAccountabilityTypes().put(
-			accountability.getChildParty().getIdInternal(),
+		getUnitRelationsAccountabilityTypes().put(accountability.getIdInternal(),
 			bundle.getString(accountability.getAccountabilityType().getType().getName()));
 	    }
 	}
@@ -871,7 +879,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	this.unit = unit;
     }
 
-    private String processDate(Date date) throws FenixFilterException, FenixServiceException {	
+    private String processDate(Date date) throws FenixFilterException, FenixServiceException {
 	return DateFormatUtil.format("dd/MM/yyyy", date);
     }
 
@@ -1147,5 +1155,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	public Integer getDepartmentID() {
 	    return departmentID;
 	}
+    }
+
+    public Integer getAccountabilityID() {
+	return accountabilityID;
+    }
+
+    public void setAccountabilityID(Integer accountabilityID) {
+	this.accountabilityID = accountabilityID;
     }
 }
