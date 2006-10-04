@@ -3439,6 +3439,8 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			String address;
 			Integer numberPages;
 			String language;
+			Integer yearBegin;
+			Month monthBegin;
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Manual extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			String edition;

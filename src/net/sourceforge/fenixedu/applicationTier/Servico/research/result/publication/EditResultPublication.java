@@ -109,10 +109,10 @@ public class EditResultPublication extends ResultPublicationService {
 	if (publication instanceof Inproceedings) {
 	    final Event event = getEventFromBean(bean);
 
-	    ((Inproceedings) publication).setEditAll(bean.getTitle(), bean.getYear(), event, bean.getScope(),
-                getPublisher(bean), getOrganization(bean), bean.getAddress(), bean.getFirstPage(), bean
-                        .getLastPage(), bean.getNote(), bean.getLanguage(), bean.getMonth(), bean
-                        .getUrl());
+	    ((Inproceedings) publication).setEditAll(bean.getTitle(), bean.getYear(), event, bean
+		    .getScope(), getPublisher(bean), getOrganization(bean), bean.getAddress(), bean
+		    .getFirstPage(), bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean
+		    .getMonth(), bean.getUrl());
 	} else {
 	    final Inproceedings inproceedings = getCreateService().createInproceedingsFromBean(bean);
 	    updateResultReferences(publication, inproceedings);
@@ -128,9 +128,9 @@ public class EditResultPublication extends ResultPublicationService {
 	if (publication instanceof Proceedings) {
 	    final Event event = getEventFromBean(bean);
 
-	    ((Proceedings) publication).setEditAll(bean.getTitle(), bean.getYear(), event, bean.getScope(),
-                getPublisher(bean), getOrganization(bean), bean.getAddress(), bean.getNote(), bean
-                        .getMonth(), bean.getUrl());
+	    ((Proceedings) publication).setEditAll(bean.getTitle(), bean.getYear(), event, bean
+		    .getScope(), getPublisher(bean), getOrganization(bean), bean.getAddress(), bean
+		    .getNote(), bean.getMonth(), bean.getUrl());
 	} else {
 	    final Proceedings proceedings = getCreateService().createProceedingsFromBean(bean);
 	    updateResultReferences(publication, proceedings);
@@ -146,7 +146,8 @@ public class EditResultPublication extends ResultPublicationService {
 	if (publication instanceof Thesis) {
 	    ((Thesis) publication).setEditAll(bean.getThesisType(), bean.getTitle(),
 		    getOrganization(bean), bean.getYear(), bean.getAddress(), bean.getNote(), bean
-			    .getNumberPages(), bean.getLanguage(), bean.getMonth(), bean.getUrl());
+			    .getNumberPages(), bean.getLanguage(), bean.getMonth(), bean.getYearBegin(),
+		    bean.getMonthBegin(), bean.getUrl());
 	} else {
 	    final Thesis thesis = getCreateService().createThesisFromBean(bean);
 	    updateResultReferences(publication, thesis);
@@ -194,11 +195,11 @@ public class EditResultPublication extends ResultPublicationService {
 	final ResultPublication publication = getResultPublication(bean);
 
 	if (publication instanceof OtherPublication) {
-	    ((OtherPublication) publication).setEditAll(bean.getTitle(), getPublisher(bean), bean.getYear(), bean
-                .getHowPublished(), bean.getNote(), bean.getAddress(), bean.getOtherPublicationType(),
-                bean.getNumberPages(), bean.getLanguage(), bean.getCountry(), bean.getMonth(), bean
-                        .getUrl());
-   
+	    ((OtherPublication) publication).setEditAll(bean.getTitle(), getPublisher(bean), bean
+		    .getYear(), bean.getHowPublished(), bean.getNote(), bean.getAddress(), bean
+		    .getOtherPublicationType(), bean.getNumberPages(), bean.getLanguage(), bean
+		    .getCountry(), bean.getMonth(), bean.getUrl());
+
 	} else {
 	    final OtherPublication other = getCreateService().createOtherPublicationFromBean(bean);
 	    updateResultReferences(publication, other);

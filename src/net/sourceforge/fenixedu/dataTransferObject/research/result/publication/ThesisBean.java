@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType;
+import net.sourceforge.fenixedu.util.Month;
 import bibtex.dom.BibtexEntry;
 
 public class ThesisBean extends ResultPublicationBean implements Serializable {
@@ -15,6 +16,10 @@ public class ThesisBean extends ResultPublicationBean implements Serializable {
     private String language;
 
     private ThesisType thesisType;
+    
+    private Integer yearBegin;
+    
+    private Month monthBegin;
 
     public ThesisBean() {
 	this.setPublicationType(ResultPublicationType.Thesis);
@@ -36,6 +41,7 @@ public class ThesisBean extends ResultPublicationBean implements Serializable {
     public ThesisBean(BibtexEntry bibtexEntry) {
 	this();
 	fillBibTeXFields(bibtexEntry);
+	this.setActiveSchema("result.publication.import.Thesis");
     }
 
     @Override
@@ -44,6 +50,8 @@ public class ThesisBean extends ResultPublicationBean implements Serializable {
 	this.setAddress(((Thesis) publication).getAddress());
 	this.setNumberPages(((Thesis) publication).getNumberPages());
 	this.setLanguage(((Thesis) publication).getLanguage());
+	this.setYearBegin(((Thesis) publication).getYearBegin());
+	this.setMonthBegin(((Thesis) publication).getMonthBegin());
     }
 
     @Override
@@ -97,5 +105,21 @@ public class ThesisBean extends ResultPublicationBean implements Serializable {
 
     public void setThesisType(ThesisType thesisType) {
 	this.thesisType = thesisType;
+    }
+
+    public Month getMonthBegin() {
+        return monthBegin;
+    }
+
+    public void setMonthBegin(Month monthBegin) {
+        this.monthBegin = monthBegin;
+    }
+
+    public Integer getYearBegin() {
+        return yearBegin;
+    }
+
+    public void setYearBegin(Integer yearBegin) {
+        this.yearBegin = yearBegin;
     }
 }
