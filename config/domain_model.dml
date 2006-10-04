@@ -589,14 +589,12 @@ class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge
         class net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
             Double credits;
             String position;
-            Integer keyTeacher;
         }    
     
     class net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
         String reason;
         Double credits;
         Integer keyExecutionPeriod;
-		Integer keyTeacher;
     }
 
 
