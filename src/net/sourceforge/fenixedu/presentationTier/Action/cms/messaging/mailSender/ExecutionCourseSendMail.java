@@ -59,8 +59,10 @@ public abstract class ExecutionCourseSendMail extends ContextualGroupMailSenderA
     protected void sendMail(HttpServletRequest request, MessageResources resources, IUserView userView,
 	    SendEMailParameters parameters, Map previousRequestParameters) throws FenixActionException {
 	ExecutionCourse executionCourse = getExecutionCourse(previousRequestParameters);
-	parameters.subject = "[" + executionCourse.getSigla() + "] " + parameters.subject;
-	parameters.message = parameters.message + "\n\n ----- \n" + executionCourse.getNome();
+	if(executionCourse != null) {
+	    parameters.subject = "[" + executionCourse.getSigla() + "] " + parameters.subject;
+	    parameters.message = parameters.message + "\n\n ----- \n" + executionCourse.getNome();
+	}
 	super.sendMail(request, resources, userView, parameters, previousRequestParameters);
     }
 

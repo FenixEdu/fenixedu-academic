@@ -26,15 +26,17 @@ public class Contract extends Contract_Base {
 	((ComparatorChain) CONTRACT_COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator(
 		"idInternal"));
     }
-    
-    protected Contract() {
+
+    private Contract() {
 	super();
     }
 
     public Contract(Person person, YearMonthDay beginDate, YearMonthDay endDate, Unit unit,
-	    ContractType type, AccountabilityType accountabilityType) {
-	
+	    ContractType type) {
+
 	this();
+	AccountabilityType accountabilityType = AccountabilityType
+		.readAccountabilityTypeByType(AccountabilityTypeEnum.EMPLOYEE_CONTRACT);
 	checkParameters(person, beginDate, endDate, unit, accountabilityType);
 	setParentParty(unit);
 	setChildParty(person);
@@ -44,7 +46,8 @@ public class Contract extends Contract_Base {
 	setAccountabilityType(accountabilityType);
     }
 
-    private void checkParameters(Person person, YearMonthDay beginDate, YearMonthDay endDate, Unit unit, AccountabilityType accountabilityType) {
+    private void checkParameters(Person person, YearMonthDay beginDate, YearMonthDay endDate, Unit unit,
+	    AccountabilityType accountabilityType) {
 	if (unit == null) {
 	    throw new DomainException("error.contract.no.unit");
 	}
@@ -57,8 +60,8 @@ public class Contract extends Contract_Base {
 	if (endDate != null && endDate.isBefore(beginDate)) {
 	    throw new DomainException("error.contract.endDateBeforeBeginDate");
 	}
-	if(accountabilityType == null) {
-	    throw new DomainException("error.contract.no.accountabilityType"); 
+	if (accountabilityType == null) {
+	    throw new DomainException("error.contract.no.accountabilityType");
 	}
 	// checkContractDatesIntersection(employee, beginDate, endDate);
     }
@@ -89,15 +92,15 @@ public class Contract extends Contract_Base {
     public Employee getEmployee() {
 	return getPerson().getEmployee();
     }
-    
+
     public Unit getWorkingUnit() {
 	return getUnit();
     }
-    
+
     public Unit getMailingUnit() {
 	return getUnit();
     }
-    
+
     public Unit getSalaryUnit() {
 	return getUnit();
     }

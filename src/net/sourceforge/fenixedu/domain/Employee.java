@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.ContractType;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
