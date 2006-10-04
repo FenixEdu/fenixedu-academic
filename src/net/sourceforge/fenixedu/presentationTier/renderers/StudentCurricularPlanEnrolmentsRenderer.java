@@ -1,16 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
@@ -37,8 +36,17 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
+import net.sourceforge.fenixedu.util.LanguageUtils;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
+    
+    private static Integer initialWidth = 70;
+
+    private static Integer widthDecreasePerLevel = 3;
+
 
     public StudentCurricularPlanEnrolmentsRenderer() {
 	super();
@@ -51,11 +59,18 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 
     private class StudentCurricularPlanEnrolmentLayout extends Layout {
 
-	private CopyCheckBoxValuesController enrollmentsController = new CopyCheckBoxValuesController();
+	private final CopyCheckBoxValuesController enrollmentsController = new CopyCheckBoxValuesController();
 	
-	private CopyCheckBoxValuesController degreeModulesToEnrolController = new CopyCheckBoxValuesController(); 
+	private final CopyCheckBoxValuesController degreeModulesToEnrolController = new CopyCheckBoxValuesController(); 
 	
-	private List<CurriculumModule> initialCurriculumModules = new ArrayList<CurriculumModule>();
+	private final List<CurriculumModule> initialCurriculumModules = new ArrayList<CurriculumModule>();
+	
+	private final ResourceBundle enumerationResources = ResourceBundle.getBundle(
+	    	"resources.EnumerationResources", LanguageUtils.getLocale());
+
+	private final ResourceBundle academicAdminOfficeResources = ResourceBundle.getBundle(
+	    	"resources.AcademicAdminOffice", LanguageUtils.getLocale());
+
 	
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
@@ -86,15 +101,15 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	}
 
 	private void generateModules(HtmlBlockContainer blockContainer, StudentCurricularPlan studentCurricularPlan, CurriculumGroup group, ExecutionPeriod executionPeriod, int depth) {
-	    HtmlBlockContainer container = new HtmlBlockContainer();
-	    blockContainer.addChild(container);
-	    container.setStyle("padding-left: " + depth + "em;");
 	    final HtmlTable groupTable = new HtmlTable();
-	    container.addChild(groupTable);
+	    blockContainer.addChild(groupTable);
 	    groupTable.setClasses("showinfo3 mvert0");
-	    groupTable.setStyle("width: " + (70 - depth)  + "em;");
+	    groupTable.setStyle("width: " + (initialWidth - depth) + "em; margin-left: " + depth + "em;");
 	    
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
+	    htmlTableRow.setClasses("bgcolor2");
+	    
+	    
 	    if(group.hasAnyCurriculumModules()) {
 		htmlTableRow.createCell().setBody(new HtmlText(group.getDegreeModule().getName()));
 		generateDegreeModulesEnroled(blockContainer, group, studentCurricularPlan, executionPeriod, depth);
@@ -116,88 +131,151 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	}
 
 	private void generateDegreeModulesToEnrol(HtmlBlockContainer blockContainer, CurriculumGroup group, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, int depth) {
-	    HtmlBlockContainer container = new HtmlBlockContainer();
-	    blockContainer.addChild(container);
-	    container.setStyle("padding-left: " + (depth + 3) + "em;");
 	    final HtmlTable groupTable = new HtmlTable();
-	    container.addChild(groupTable);
+	    blockContainer.addChild(groupTable);
 	    groupTable.setClasses("showinfo3 mvert0");
-	    groupTable.setStyle("width: " + (70 - depth - 3)  + "em;");
+	    groupTable.setStyle("width: " + (initialWidth - depth - widthDecreasePerLevel) + "em; margin-left: " + (depth + widthDecreasePerLevel) + "em;");
+	    
+	    generateCurricularCoursesToEnrol(groupTable, group, executionPeriod);
+	    generateCourseGroupsToEnrol(groupTable, group, executionPeriod);
+	}
+	
+	
 
-	    Collection<Context> degreeModulesToEnrol = group.getDegreeModulesToEnrol(executionPeriod);
-	    for (Context context : degreeModulesToEnrol) {
-		if(context.getChildDegreeModule().isLeaf()) {
-		    CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-		    if(!studentCurricularPlan.getRoot().isAproved(curricularCourse, executionPeriod) &&
-			    !studentCurricularPlan.getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod)) {
-			HtmlTableRow htmlTableRow = groupTable.createRow();
-			htmlTableRow.createCell().setBody(new HtmlText(curricularCourse.getName()));
-			HtmlTableCell checkBoxCell = htmlTableRow.createCell();
-			checkBoxCell.setClasses("aright");
-						
-			DegreeModuleToEnrol degreeModuleToEnrol = new DegreeModuleToEnrol(group, context);
-			HtmlCheckBox checkBox = new HtmlCheckBox(false);
-			checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getIdInternal() + ":" + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
-			checkBox.setUserValue(degreeModuleToEnrol.getKey());
-			degreeModulesToEnrolController.addCheckBox(checkBox);
-			checkBoxCell.setBody(checkBox);
-		    }
-		} else {
-		    if(!studentCurricularPlan.getRoot().hasDegreModule(context.getChildDegreeModule())) {
-			HtmlTableRow htmlTableRow = groupTable.createRow();
-			htmlTableRow.createCell().setBody(new HtmlText(context.getChildDegreeModule().getName()));
-			HtmlTableCell checkBoxCell = htmlTableRow.createCell();
-			checkBoxCell.setClasses("aright");
-			
-			DegreeModuleToEnrol degreeModuleToEnrol = new DegreeModuleToEnrol(group, context);
-			HtmlCheckBox checkBox = new HtmlCheckBox(false);
-			checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getIdInternal() + ":" + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
-			checkBox.setUserValue(degreeModuleToEnrol.getKey());
-			degreeModulesToEnrolController.addCheckBox(checkBox);
-			checkBoxCell.setBody(checkBox);
-		    } 
-		}
-	    }    
+	private void generateCourseGroupsToEnrol(HtmlTable groupTable, CurriculumGroup group, ExecutionPeriod executionPeriod) {
+	    List<Context> curricularCoursesToEnrol = group.getCourseGroupContextsToEnrol(executionPeriod);
+	    Collections.sort(curricularCoursesToEnrol, new BeanComparator("childDegreeModule.name", Collator.getInstance()));
+	    
+	    for (Context context : curricularCoursesToEnrol) {
+		HtmlTableRow htmlTableRow = groupTable.createRow();
+		htmlTableRow.setClasses("bgcolor2");
+		htmlTableRow.createCell().setBody(new HtmlText(context.getChildDegreeModule().getName()));
+		HtmlTableCell checkBoxCell = htmlTableRow.createCell();
+		checkBoxCell.setClasses("aright");
+
+		DegreeModuleToEnrol degreeModuleToEnrol = new DegreeModuleToEnrol(group, context);
+		HtmlCheckBox checkBox = new HtmlCheckBox(false);
+		checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getIdInternal() + ":" + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
+		checkBox.setUserValue(degreeModuleToEnrol.getKey());
+		degreeModulesToEnrolController.addCheckBox(checkBox);
+		checkBoxCell.setBody(checkBox);
+	    }
+	}
+
+	private void generateCurricularCoursesToEnrol(HtmlTable groupTable, CurriculumGroup group, ExecutionPeriod executionPeriod) {
+	    List<Context> curricularCoursesToEnrol = group.getCurricularCourseContextsToEnrol(executionPeriod);
+	    ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(new BeanComparator("curricularPeriod"));
+	    comparatorChain.addComparator(new BeanComparator("childDegreeModule.name", Collator.getInstance()));
+	    Collections.sort(curricularCoursesToEnrol, comparatorChain);
+	    
+	    for (Context context : curricularCoursesToEnrol) {
+		CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+
+		HtmlTableRow htmlTableRow = groupTable.createRow();
+		htmlTableRow.createCell().setBody(new HtmlText(curricularCourse.getName()));
+
+		//Year
+		final HtmlTableCell yearCell = htmlTableRow.createCell();
+		yearCell.setClasses("smalltxt");
+		yearCell.setAlign("rigth");
+
+		final StringBuilder year = new StringBuilder();
+		year.append(context.getCurricularPeriod().getFullLabel());
+		yearCell.setBody(new HtmlText(year.toString()));
+
+		//Ects
+		final HtmlTableCell ectsCell = htmlTableRow.createCell();
+		ectsCell.setClasses("smalltxt");
+		ectsCell.setAlign("rigth");
+
+		final StringBuilder ects = new StringBuilder();
+		ects.append(curricularCourse.getEctsCredits()).append(" ").append(academicAdminOfficeResources.getString("credits.abbreviation"));
+		ectsCell.setBody(new HtmlText(ects.toString()));
+
+
+		HtmlTableCell checkBoxCell = htmlTableRow.createCell();
+		checkBoxCell.setClasses("aright");
+
+		DegreeModuleToEnrol degreeModuleToEnrol = new DegreeModuleToEnrol(group, context);
+		HtmlCheckBox checkBox = new HtmlCheckBox(false);
+		checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getIdInternal() + ":" + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
+		checkBox.setUserValue(degreeModuleToEnrol.getKey());
+		degreeModulesToEnrolController.addCheckBox(checkBox);
+		checkBoxCell.setBody(checkBox);
+	    }
 	}
 
 	private void generateDegreeModulesEnroled(HtmlBlockContainer blockContainer, CurriculumGroup group, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, int depth) {
-	    HtmlBlockContainer container = new HtmlBlockContainer();
-	    blockContainer.addChild(container);
-	    container.setStyle("padding-left: " + (depth + 3) + "em;");
 	    final HtmlTable groupTable = new HtmlTable();
-	    container.addChild(groupTable);
+	    blockContainer.addChild(groupTable);
 	    groupTable.setClasses("showinfo3 mvert0");
-	    groupTable.setStyle("width: " + (70 - depth - 3)  + "em;");
-
-	    for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
-		if(curriculumModule.isLeaf()) {
-		    if(((CurriculumLine) curriculumModule).isEnrolment()) {
-			Enrolment enrolment = (Enrolment) curriculumModule;
-			if(enrolment.getExecutionPeriod().equals(executionPeriod) && enrolment.isEnroled()) {
-			    HtmlTableRow htmlTableRow = groupTable.createRow();
-			    HtmlTableCell cellName = htmlTableRow.createCell();
-			    cellName.setBody(new HtmlText(enrolment.getCurricularCourse().getName()));
-			    
-			    MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(enrolment, new Schema(Enrolment.class));
-			    
-			    HtmlCheckBox checkBox = new HtmlCheckBox(true);
-			    checkBox.setName("enrolmentCheckBox" + enrolment.getIdInternal());
-			    checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
-			    enrollmentsController.addCheckBox(checkBox);
-			    
-			    HtmlTableCell cellCheckBox = htmlTableRow.createCell();
-			    cellCheckBox.setClasses("aright");
-			    cellCheckBox.setBody(checkBox);
-			    
-			    initialCurriculumModules.add(enrolment);
-			}
+	    groupTable.setStyle("width: " + (initialWidth - depth - widthDecreasePerLevel) + "em; margin-left: " + (depth + widthDecreasePerLevel) + "em;");
+	    
+	    for (CurriculumLine curriculumLine : group.getCurriculumLines()) {
+		if(((CurriculumLine) curriculumLine).isEnrolment()) {
+		    Enrolment enrolment = (Enrolment) curriculumLine;
+		    if(enrolment.getExecutionPeriod().equals(executionPeriod) && enrolment.isEnroled()) {
+			generateEnrolment(groupTable, enrolment);
 		    }
-		} else {
-		    CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
-		    generateModules(blockContainer, studentCurricularPlan, curriculumGroup, executionPeriod, depth + 3);
 		}
 	    }
+
+	    for (CurriculumGroup curriculumGroup : group.getCurriculumGroups()) {
+		generateModules(blockContainer, studentCurricularPlan, curriculumGroup, executionPeriod, depth + 3);
+	    }
 	}
+
+	private void generateEnrolment(final HtmlTable groupTable, Enrolment enrolment) {
+	    HtmlTableRow htmlTableRow = groupTable.createRow();
+	    HtmlTableCell cellName = htmlTableRow.createCell();
+	    cellName.setBody(new HtmlText(enrolment.getCurricularCourse().getName()));
+	    
+	    // Year
+	    final HtmlTableCell yearCell = htmlTableRow.createCell();
+	    yearCell.setClasses("smalltxt");
+	    yearCell.setAlign("rigth");
+
+	    final StringBuilder year = new StringBuilder();
+	    year.append(enrolment.getExecutionPeriod().getExecutionYear().getYear());
+	    yearCell.setBody(new HtmlText(year.toString()));
+
+	    // Semester
+	    final HtmlTableCell semesterCell = htmlTableRow.createCell();
+	    semesterCell.setClasses("smalltxt");
+	    semesterCell.setAlign("rigth");
+
+	    final StringBuilder semester = new StringBuilder();
+	    semester.append(enrolment.getExecutionPeriod().getSemester().toString());
+	    semester.append(" ");
+	    semester.append(enumerationResources.getString("SEMESTER.ABBREVIATION"));
+	    semesterCell.setBody(new HtmlText(semester.toString()));
+
+	    //Ects
+	    final HtmlTableCell ectsCell = htmlTableRow.createCell();
+	    ectsCell.setClasses("smalltxt");
+	    ectsCell.setAlign("rigth");
+
+	    final StringBuilder ects = new StringBuilder();
+	    ects.append(enrolment.getCurricularCourse().getEctsCredits()).append(" ").append(academicAdminOfficeResources.getString("credits.abbreviation"));
+	    ectsCell.setBody(new HtmlText(ects.toString()));
+	    
+
+	    MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(enrolment, new Schema(Enrolment.class));
+
+	    HtmlCheckBox checkBox = new HtmlCheckBox(true);
+	    checkBox.setName("enrolmentCheckBox" + enrolment.getIdInternal());
+	    checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
+	    enrollmentsController.addCheckBox(checkBox);
+
+	    HtmlTableCell cellCheckBox = htmlTableRow.createCell();
+	    cellCheckBox.setClasses("aright");
+	    cellCheckBox.setBody(checkBox);
+
+	    initialCurriculumModules.add(enrolment);
+	}
+	
+
     }
     
     private static class CopyCheckBoxValuesController extends HtmlController {
