@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.parkingManager;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
+import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -29,6 +32,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
@@ -43,6 +47,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.action.DynaActionForm;
 
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
@@ -121,6 +126,26 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         request.setAttribute("personName", personName);
         request.setAttribute("carPlateNumber", carPlateNumber);
         return mapping.findForward("showParkingRequest");
+    }
+
+    public ActionForward showPhoto(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        Integer personID = new Integer(request.getParameter("personID"));
+        Party party = rootDomainObject.readPartyByOID(personID);
+        if (party.isPerson()) {
+            Person person = (Person) party;
+            FileEntry personalPhoto = person.getPersonalPhoto();
+            try {
+                response.setContentType(personalPhoto.getContentType().getMimeType());
+                DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+                dos.write(personalPhoto.getContents());
+                dos.close();
+            } catch (java.io.IOException e) {
+                throw new FenixActionException(e);
+            }
+        }
+        return null;
     }
 
     private void prepapreParkingPartyDocumentsLinks(HttpServletRequest request,
@@ -268,7 +293,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         }
     }
 
-    public ActionForward editParkingParty(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward editFirstTimeParkingParty(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer parkingRequestID = new Integer(request.getParameter("code"));
         final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(parkingRequestID);
@@ -302,6 +327,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             Integer group = null;
             try {
                 cardNumber = new Integer(request.getParameter("cardNumber"));
+                if (cardNumber <= 0) {
+                    saveErrorMessage(request, "cardNumber", "error.number.below.minimum");
+                    request.setAttribute("idInternal", parkingRequestID);
+                    return showRequest(mapping, actionForm, request, response);
+                }
             } catch (NullPointerException e) {
                 saveErrorMessage(request, "cardNumber", "error.requiredCardNumber");
                 request.setAttribute("idInternal", parkingRequestID);
@@ -421,17 +451,6 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         if (viewState != null) {
             searchPartyBean = (SearchPartyBean) viewState.getMetaObject().getObject();
         }
-        if (searchPartyBean == null) {
-            final String codeString = request.getParameter("idInternal");
-            if (!StringUtils.isEmpty(codeString)) {
-                searchPartyBean = new SearchPartyBean();
-                final ParkingRequest parkingRequest = rootDomainObject
-                        .readParkingRequestByOID(new Integer(codeString));
-                searchPartyBean.setParty(parkingRequest.getParkingParty().getParty());
-                searchPartyBean.setPartyName(parkingRequest.getParkingParty().getParty().getName());
-                searchPartyBean.setCarPlateNumber("");
-            }
-        }
 
         if (searchPartyBean != null) {
             searchPartyBean.setParty(null);
@@ -441,17 +460,25 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             request.setAttribute("searchPartyBean", searchPartyBean);
             request.setAttribute("partyList", partyList);
 
-        } else if (request.getParameter("partyID") != null) {
-            final Integer idInternal = new Integer(request.getParameter("partyID"));
+        } else if (request.getParameter("partyID") != null || request.getAttribute("partyID") != null) {
+            final Integer idInternal = getPopertyID(request, "partyID");
             final String carPlateNumber = request.getParameter("plateNumber");
             Party party = rootDomainObject.readPartyByOID(idInternal);
-            if(party.getParkingParty() != null){
-                prepapreParkingPartyDocumentsLinks(request,party.getParkingParty());
+            if (party.getParkingParty() != null) {
+                prepapreParkingPartyDocumentsLinks(request, party.getParkingParty());
             }
             setupParkingRequests(request, party, carPlateNumber);
         }
 
         return mapping.findForward("showParkingPartyRequests");
+    }
+
+    private int getPopertyID(HttpServletRequest request, String property) {
+        if (request.getParameter(property) != null) {
+            return new Integer(request.getParameter(property));
+        } else {
+            return (Integer) request.getAttribute(property);
+        }
     }
 
     private void setupParkingRequests(HttpServletRequest request, Party party, String carPlateNumber)
@@ -466,5 +493,35 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             request.setAttribute("parkingRequests", parkingRequests);
         }
         request.setAttribute("searchPartyBean", new SearchPartyBean(party, carPlateNumber));
+    }
+
+    public ActionForward prepareEditParkingParty(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        Integer parkingPartyID = getPopertyID(request, "parkingPartyID");
+        ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(parkingPartyID);
+        request.setAttribute("parkingParty", parkingParty);
+        request.setAttribute("parkingPartyID", parkingParty.getIdInternal());
+        return mapping.findForward("editParkingParty");
+    }
+
+    public ActionForward editParkingParty(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        ParkingParty parkingParty = (ParkingParty) RenderUtils.getViewState().getMetaObject()
+                .getObject();
+        request.setAttribute("parkingPartyID", parkingParty.getIdInternal());
+        DynaActionForm dynaForm = (DynaActionForm) actionForm;
+        Boolean deleteFirstCar = (Boolean) dynaForm.get("deleteFirstCar");
+        Boolean deleteSecondCar = (Boolean) dynaForm.get("deleteSecondCar");
+        boolean deleteFirstCarBool = deleteFirstCar != null ? deleteFirstCar.booleanValue() : false;
+        boolean deleteSecondCarBool = deleteSecondCar != null ? deleteSecondCar.booleanValue() : false;
+
+        ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteParkingPartyCar",
+                new Object[] { parkingParty.getIdInternal(), deleteFirstCarBool, deleteSecondCarBool });
+
+        request.setAttribute("partyID", parkingParty.getParty().getIdInternal());
+
+        return showParkingPartyRequests(mapping, actionForm, request, response);
     }
 }

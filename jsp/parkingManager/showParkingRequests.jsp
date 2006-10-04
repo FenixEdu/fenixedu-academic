@@ -42,7 +42,7 @@
 				<fr:property name="classes" value="tstyle1" />
 				<fr:property name="link(viewUser)" value="/parking.do?method=showParkingPartyRequests" />
 				<fr:property name="key(viewUser)" value="link.viewUser" />
-				<fr:property name="param(viewUser)" value="idInternal" />
+				<fr:property name="param(viewUser)" value="parkingParty.party.idInternal/partyID" />
 				<fr:property name="bundle(viewUser)" value="PARKING_RESOURCES" />
 				<fr:property name="link(viewRequest)" value="<%="/parking.do?method=showRequest"+query.toString()%>" />
 				<fr:property name="key(viewRequest)" value="link.viewRequest" />

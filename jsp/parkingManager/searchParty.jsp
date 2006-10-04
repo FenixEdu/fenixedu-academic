@@ -21,7 +21,7 @@
 	<logic:notEmpty name="searchPartyBean" property="party">
 	
 		<logic:notEmpty name="searchPartyBean" property="party.parkingParty">
-			<bean:define id="parkingParty" name="searchPartyBean" property="party.parkingParty"/>
+			<bean:define id="parkingParty" name="searchPartyBean" property="party.parkingParty" type="net.sourceforge.fenixedu.domain.parking.ParkingParty"/>
 			
 			<h3><bean:message key="label.parkUserInfo" /></h3>
 			<logic:iterate id="occupation" name="parkingParty" property="occupations">
@@ -30,7 +30,7 @@
 			<p><logic:equal name="parkingParty" property="hasFirstCar" value="false">
 				<bean:message key="label.newUser" bundle="PARKING_RESOURCES"/>
 			</logic:equal></p>
-			<p class="mbottom05"><html:link page="">Editar utente</html:link></p>
+			<p class="mbottom05"><html:link page="<%= "/parking.do?method=prepareEditParkingParty&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">Editar utente</html:link></p>
 			<fr:view name="parkingParty" schema="view.parkingParty.personalInfo">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
@@ -184,7 +184,7 @@
 						</logic:equal>
 					</logic:equal>
 			
-					<p class="mtop05"><html:link page="">Editar utente</html:link></p>
+					<p class="mtop05"><html:link page="<%= "/parking.do?method=prepareEditParkingParty&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">Editar utente</html:link></p>
 				<h3><bean:message key="label.requestList" /></h3>
 			<logic:notEmpty name="parkingRequests">		
 				<fr:view name="parkingRequests" schema="show.parkingRequest.noDetail">
@@ -211,19 +211,56 @@
 
 <logic:present name="partyList">
 	<logic:notEmpty name="partyList">
-	<bean:define id="searchPartyBean" name="searchPartyBean" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean"/>
-		<fr:view name="partyList" schema="view.partyName">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1" />
-				<fr:property name="link(view)" value="/parking.do?method=showParkingPartyRequests" />
-				<fr:property name="key(view)" value="link.view" />
-				<fr:property name="param(view)" value="<%= "idInternal/partyID,plateNumber=" + searchPartyBean.getCarPlateNumber()%>"/>
-				<fr:property name="bundle(view)" value="PARKING_RESOURCES" />
-			</fr:layout>
-		</fr:view>
+	<table class="tstyle1"><tbody>
+		<tr>
+			<th scope="col"><bean:message key="label.name" bundle="MANAGER_RESOURCES"/></th>
+			<th scope="col"><bean:message key="label.identification" bundle="MANAGER_RESOURCES"/></th>
+			<th scope="col"><bean:message key="label.person.unit.info" bundle="MANAGER_RESOURCES"/></th>
+			<th scope="col"></th>
+		</tr>
+		<logic:iterate id="party" name="partyList">
+			<bean:define id="person" name="party" type="net.sourceforge.fenixedu.domain.Person"/>
+			<bean:define id="organizationalUnitsPresentation" name="person" property="organizationalUnitsPresentation"/>
+			<bean:size id="numberUnitsTemp" name="person" property="organizationalUnitsPresentation"/>
+			<bean:define id="numberUnits"><bean:write name="numberUnitsTemp"/></bean:define>
+			<logic:empty name="organizationalUnitsPresentation">
+				<bean:define id="numberUnits" value="1"/>
+			</logic:empty>
+			<tr>
+				<td rowspan="<%= numberUnits %>"><bean:write name="person" property="name"/></td>
+				<bean:define id="docIDTitle" type="java.lang.String"><logic:present name="person" property="idDocumentType"><bean:message name="person" property="idDocumentType.name" bundle="ENUMERATION_RESOURCES"/></logic:present></bean:define>
+				<td rowspan="<%= numberUnits %>" title="<%= docIDTitle %>"><bean:write name="person" property="documentIdNumber"/></td>
+				<logic:empty name="person" property="organizationalUnitsPresentation">
+					<td>
+					</td>
+				</logic:empty>
+				<logic:iterate id="unitName" name="organizationalUnitsPresentation" length="1">
+					<td>
+						<bean:write name="unitName"/>
+						<br/>
+					</td>
+				</logic:iterate>
+				<td rowspan="<%= numberUnits %>">
+					<bean:define id="searchPartyBean" name="searchPartyBean" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean"/>
+					<bean:define id="url" type="java.lang.String">/parking.do?method=showParkingPartyRequests&amp;partyID=<bean:write name="person" property="idInternal"/>
+						&amp;plateNumber=<bean:write name="searchPartyBean" property="carPlateNumber"/></bean:define>
+					<html:link page="<%= url %>"><bean:message key="link.viewUser" /></html:link>
+				</td>
+			</tr>
+			<logic:iterate id="unitName" name="organizationalUnitsPresentation" offset="1">
+				<tr>
+					<td>
+						<bean:write name="unitName"/>
+						<br/>
+					</td>
+				</tr>
+			</logic:iterate>
+		</logic:iterate>
+		</tbody>
+	</table>
+		
 	</logic:notEmpty>
 	<logic:empty name="partyList">
-		<!-- criar utente -->
 		<bean:message key="label.noRecordFound"/>
 	</logic:empty>
 </logic:present>

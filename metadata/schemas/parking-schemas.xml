@@ -263,6 +263,28 @@
 	</slot>
 </schema>
 
+<schema name="edit.parkingParty.user" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+	<slot name="cardNumber" key="label.cardNumber">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="1"/>
+		</validator>
+	</slot>
+	<slot name="parkingGroup" key="label.group" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.parking.ParkingGroup"/>
+		<property name="format" value="${groupName}"/>
+	</slot>
+</schema>
+
+<schema name="edit.parkingParty.firstCar" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+	<slot name="firstCarMake" key="label.firstCarMake" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="firstCarPlateNumber" key="label.firstCarPlateNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+</schema>
+
+<schema name="edit.parkingParty.secondCar" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+	<slot name="secondCarMake" key="label.secondCarMake" />
+	<slot name="secondCarPlateNumber" key="label.secondCarPlateNumber" />	
+</schema>
+
 <schema name="show.parkingRequest.noDetail"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
 	<slot name="parkingParty.party.name" key="label.name" bundle="PARKING_RESOURCES" />

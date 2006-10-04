@@ -15,6 +15,9 @@
 	</definition>
 	<definition name="show-party-parking-requests" extends="definition.parkingManager.masterPage">
 		<put name="body" value="/parkingManager/searchParty.jsp" />
+	</definition>
+	<definition name="edit-parking-party" extends="definition.parkingManager.masterPage">
+		<put name="body" value="/parkingManager/editParkingParty.jsp" />
 	</definition>	
 	<definition name="df.search.external.person.before.create" extends="definition.parkingManager.masterPage" >
 		<put name="body" value="/parkingManager/searchForExternalPersonBeforeCreate.jsp" />

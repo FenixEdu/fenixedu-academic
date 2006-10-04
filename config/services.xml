@@ -11014,4 +11014,13 @@
 		<filterChains>
 		</filterChains>
 	</service>
+    <service>
+    	<name>DeleteParkingPartyCar</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.parking.DeleteParkingPartyCar</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+         <filterChains>
+        	<chain name="ParkingManagerAuthorizationFilter"></chain>
+        </filterChains>   
+    </service> 
 </serviceDefinitions>

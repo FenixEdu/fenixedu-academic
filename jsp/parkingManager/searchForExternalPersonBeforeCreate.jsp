@@ -17,8 +17,8 @@
 	<h2><strong><bean:message key="label.search.for.external.person" bundle="MANAGER_RESOURCES" /></strong></h2>
 	<fr:edit id="anyPersonSearchBean" name="anyPersonSearchBean" schema="net.sourceforge.fenixedu.domain.Person.AnyPersonSearchBean" >
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle4"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle1"/>
+	        <fr:property name="columnClasses" value=",,noborder"/>
 		</fr:layout>
 	</fr:edit>
 

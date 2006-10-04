@@ -992,4 +992,8 @@ public class ParkingRequest extends ParkingRequest_Base {
                 || getDriverLicenseDocumentState() != null;
     }
  
+    public boolean getIsFileUploaded(String documentType){
+        ParkingDocumentType parkingDocumentType = ParkingDocumentType.valueOf(documentType);
+        return getParkingDocument(parkingDocumentType) != null;
+    }
 }

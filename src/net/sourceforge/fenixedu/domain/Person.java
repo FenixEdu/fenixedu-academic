@@ -40,6 +40,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -920,7 +921,18 @@ public class Person extends Person_Base {
 	if (getExternalPerson() != null) {
 	    return false;
 	}
+        if(hasParking()){
+            return false;
+        }
         return true;
+    }
+
+    private boolean hasParking() {
+        ParkingParty parkingParty = getParkingParty();
+        if(parkingParty != null){
+            return parkingParty.hasCar();             
+        }
+        return false;
     }
 
     public ExternalContract getExternalPerson() {
@@ -1859,7 +1871,6 @@ public class Person extends Person_Base {
         final SortedSet<String> organizationalUnits = new TreeSet<String>();
         for (final Accountability accountability : getParentsSet()) {
             if (isOrganizationalUnitsForPresentation(accountability)) {
-                System.out.println("Adding: " + accountability.getAccountabilityType().getName());
                 final Party party = accountability.getParentParty();
                 organizationalUnits.add(party.getName());
             }

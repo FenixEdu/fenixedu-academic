@@ -18,16 +18,16 @@
 	<h2><strong><bean:message key="label.person.title.personal.info" bundle="MANAGER_RESOURCES" /></strong></h2>
 	<fr:edit id="personData" name="externalPersonBean" schema="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" >
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle4"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle1"/>
+	        <fr:property name="columnClasses" value=",,noborder"/>
 		</fr:layout>
 	</fr:edit>
 
 	<h2><strong><bean:message key="label.person.unit.info" bundle="MANAGER_RESOURCES" /></strong></h2>
 	<fr:edit id="unitData" name="externalPersonBean" schema="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean.Unit" >
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle4"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle1"/>
+	        <fr:property name="columnClasses" value=",,noborder"/>
 		</fr:layout>
 	</fr:edit>
 

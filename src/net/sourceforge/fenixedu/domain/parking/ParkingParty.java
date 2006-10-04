@@ -24,6 +24,8 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+
 public class ParkingParty extends ParkingParty_Base {
 
     public ParkingParty(Party party) {
@@ -367,7 +369,7 @@ public class ParkingParty extends ParkingParty_Base {
             Person person = (Person) getParty();
             Teacher teacher = person.getTeacher();
             if (teacher != null && person.getPersonRole(RoleType.TEACHER) != null) {
-                String currenteDepartment = null;
+                String currenteDepartment = "";
                 if (teacher.getCurrentWorkingDepartment() != null) {
                     currenteDepartment = teacher.getCurrentWorkingDepartment().getName();
                 }
@@ -401,8 +403,8 @@ public class ParkingParty extends ParkingParty_Base {
                             stringBuilder = new StringBuilder("<strong>Estudante</strong><br/> Nº ");
                             stringBuilder.append(student.getNumber()).append(" ");
                         }
-                        stringBuilder.append(scp.getDegreeCurricularPlan().getName());
-                        stringBuilder.append("\n\t");
+                        stringBuilder.append("\n").append(scp.getDegreeCurricularPlan().getName());
+                        stringBuilder.append("\t");
                     }
                 }
                 if (stringBuilder != null) {
@@ -430,5 +432,35 @@ public class ParkingParty extends ParkingParty_Base {
             return true;
         }
         return false;
+    }
+
+    public void deleteSecondCar() {
+        setSecondCarMake(null);
+        setSecondCarPlateNumber(null);
+        setSecondCarDeclarationDocumentState(null);
+        setSecondCarInsuranceDocumentState(null);
+        setSecondCarOwnerIdDocumentState(null);
+        setSecondCarPropertyRegistryDocumentState(null);        
+        
+        deleteCarFile(ParkingDocumentType.SECOND_CAR_INSURANCE);
+        deleteCarFile(ParkingDocumentType.SECOND_CAR_OWNER_ID);
+        deleteCarFile(ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER);
+        deleteCarFile(ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION);
+    }
+
+    private void deleteCarFile(ParkingDocumentType documentType) {
+        ParkingDocument parkingDocument = getParkingDocument(documentType);
+        if (parkingDocument != null) {
+            String externalIdentifier = parkingDocument.getParkingFile()
+                    .getExternalStorageIdentification();
+            parkingDocument.delete();
+            if (externalIdentifier != null) {
+                FileManagerFactory.getFileManager().deleteFile(externalIdentifier);
+            }
+        }        
+    }
+
+    public boolean hasCar() {
+        return !StringUtils.isEmpty(getFirstCarMake());
     }
 }

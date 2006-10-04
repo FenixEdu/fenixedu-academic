@@ -19,6 +19,8 @@
 			<form-property name="note" type="java.lang.String"/>
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="page" type="java.lang.Integer" />
+			<form-property name="deleteFirstCar" type="java.lang.Boolean" />
+			<form-property name="deleteSecondCar" type="java.lang.Boolean" />			
 		</form-bean>
 	</form-beans>
 
@@ -45,11 +47,15 @@
 
 		<action path="/parking" scope="request" parameter="method"
 			name="parkingForm"
+			input="/parking.do?method=prepareEditParkingParty&amp;page=0"
 			type="net.sourceforge.fenixedu.presentationTier.Action.parkingManager.ParkingManagerDispatchAction">
+			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key=""
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>
 			<forward name="showParkingRequests"	path="show-parking-requests" />
 			<forward name="showParkingRequest" path="show-parking-request" />
 			<forward name="searchParty" path="search-party" />
 			<forward name="showParkingPartyRequests" path="show-party-parking-requests"/>
+			<forward name="editParkingParty" path="edit-parking-party"/>			
 		</action>
 
        	<action path="/externalPerson"

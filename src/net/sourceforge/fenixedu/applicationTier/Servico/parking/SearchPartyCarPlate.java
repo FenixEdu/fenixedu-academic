@@ -23,10 +23,11 @@ public class SearchPartyCarPlate extends Service {
     public List<Party> run(String nameSearch, String carPlateNumber) {
         List<Party> result = new ArrayList<Party>();
 
-        if (!StringUtils.isEmpty(carPlateNumber)) {
+        if (!StringUtils.isEmpty(carPlateNumber) || !StringUtils.isEmpty(nameSearch)) {
             List<ParkingParty> parkingParties = rootDomainObject.getParkingParties();
             for (ParkingParty parkingParty : parkingParties) {
-                if (parkingParty.hasCarContainingPlateNumber(carPlateNumber.trim())) {
+                if (!StringUtils.isEmpty(carPlateNumber)
+                        && parkingParty.hasCarContainingPlateNumber(carPlateNumber.trim())) {
                     if (StringUtils.isEmpty(nameSearch)) {
                         result.add(parkingParty.getParty());
                     } else {
@@ -36,21 +37,11 @@ public class SearchPartyCarPlate extends Service {
                             result.add(parkingParty.getParty());
                         }
                     }
-                }
-            }
-        } else if (!StringUtils.isEmpty(nameSearch)) {
-            List<Party> parties = rootDomainObject.getPartys();
-            String[] nameValues = StringNormalizer.normalize(nameSearch).toLowerCase().split(
-                    "\\p{Space}+");
-            for (Party party : parties) {
-                if (areNamesPresent(party.getName(), nameValues)) {
-                    if (!StringUtils.isEmpty(carPlateNumber)) {
-                        if (party.getParkingParty() != null
-                                && party.getParkingParty().hasCarContainingPlateNumber(carPlateNumber)) {
-                            result.add(party);
-                        }
-                    } else {
-                        result.add(party);
+                } else { //filled in the name and not the plate number
+                    String[] nameValues = StringNormalizer.normalize(nameSearch).toLowerCase().split(
+                            "\\p{Space}+");
+                    if (areNamesPresent(parkingParty.getParty().getName(), nameValues)) {
+                        result.add(parkingParty.getParty());
                     }
                 }
             }
