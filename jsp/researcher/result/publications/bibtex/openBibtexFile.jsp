@@ -6,7 +6,7 @@
 <html:xhtml/>
 
 <logic:present role="RESEARCHER">
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex"/></h3>
 	
 	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.openBibtexFile"/></b></p>
