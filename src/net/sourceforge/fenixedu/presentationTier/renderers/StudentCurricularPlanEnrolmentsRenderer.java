@@ -1,10 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -37,9 +41,6 @@ import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.util.LanguageUtils;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
     
@@ -108,13 +109,8 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
 	    htmlTableRow.setClasses("bgcolor2");
-	    
-	    
-	    if(group.hasAnyCurriculumModules()) {
-		htmlTableRow.createCell().setBody(new HtmlText(group.getDegreeModule().getName()));
-		generateDegreeModulesEnroled(blockContainer, group, studentCurricularPlan, executionPeriod, depth);
-	    } else {
-		htmlTableRow.createCell().setBody(new HtmlText(group.getDegreeModule().getName()));
+	    htmlTableRow.createCell().setBody(new HtmlText(group.getDegreeModule().getName()));
+	    if(!group.hasAnyCurriculumModules()) {
 		HtmlTableCell checkBoxCell = htmlTableRow.createCell();
 		checkBoxCell.setClasses("aright");
 		
@@ -126,48 +122,66 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 		checkBoxCell.setBody(checkBox);
 		initialCurriculumModules.add(group);
 	    }
-		
-	    generateDegreeModulesToEnrol(blockContainer, group, studentCurricularPlan, executionPeriod, depth);
+	    
+	    final HtmlTable coursesTable = new HtmlTable();
+	    blockContainer.addChild(coursesTable);
+	    coursesTable.setClasses("showinfo3 mvert0");
+	    coursesTable.setStyle("width: " + (initialWidth - depth - widthDecreasePerLevel) + "em; margin-left: " + (depth + widthDecreasePerLevel) + "em;");
+	    
+	    generateEnrolments(group, executionPeriod, coursesTable);
+	    generateCurricularCoursesToEnrol(coursesTable, group, executionPeriod);
+	    generateGroups(blockContainer, group, studentCurricularPlan, executionPeriod, depth);
 	}
 
-	private void generateDegreeModulesToEnrol(HtmlBlockContainer blockContainer, CurriculumGroup group, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, int depth) {
-	    final HtmlTable groupTable = new HtmlTable();
-	    blockContainer.addChild(groupTable);
-	    groupTable.setClasses("showinfo3 mvert0");
-	    groupTable.setStyle("width: " + (initialWidth - depth - widthDecreasePerLevel) + "em; margin-left: " + (depth + widthDecreasePerLevel) + "em;");
+	private void generateGroups(HtmlBlockContainer blockContainer, CurriculumGroup group, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, int depth) {
+	    List<Context> courseGroupsToEnrol = group.getCourseGroupContextsToEnrol(executionPeriod);
+	    Collections.sort(courseGroupsToEnrol);
 	    
-	    generateCurricularCoursesToEnrol(groupTable, group, executionPeriod);
-	    generateCourseGroupsToEnrol(groupTable, group, executionPeriod);
-	}
-	
-	
-
-	private void generateCourseGroupsToEnrol(HtmlTable groupTable, CurriculumGroup group, ExecutionPeriod executionPeriod) {
-	    List<Context> curricularCoursesToEnrol = group.getCourseGroupContextsToEnrol(executionPeriod);
-	    Collections.sort(curricularCoursesToEnrol, new BeanComparator("childDegreeModule.name", Collator.getInstance()));
+	    List<CurriculumGroup> curriculumGroups = new ArrayList<CurriculumGroup>(group.getCurriculumGroups());
+	    Collections.sort(curriculumGroups, new CurriculumModuleComparator(executionPeriod));
 	    
-	    for (Context context : curricularCoursesToEnrol) {
-		HtmlTableRow htmlTableRow = groupTable.createRow();
-		htmlTableRow.setClasses("bgcolor2");
-		htmlTableRow.createCell().setBody(new HtmlText(context.getChildDegreeModule().getName()));
-		HtmlTableCell checkBoxCell = htmlTableRow.createCell();
-		checkBoxCell.setClasses("aright");
-
-		DegreeModuleToEnrol degreeModuleToEnrol = new DegreeModuleToEnrol(group, context);
-		HtmlCheckBox checkBox = new HtmlCheckBox(false);
-		checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getIdInternal() + ":" + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
-		checkBox.setUserValue(degreeModuleToEnrol.getKey());
-		degreeModulesToEnrolController.addCheckBox(checkBox);
-		checkBoxCell.setBody(checkBox);
+	    while(!courseGroupsToEnrol.isEmpty() || !curriculumGroups.isEmpty()) {
+		if(!curriculumGroups.isEmpty() && courseGroupsToEnrol.isEmpty()) {
+		    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionPeriod, depth + widthDecreasePerLevel);
+		    curriculumGroups.remove(0);
+		} else if(curriculumGroups.isEmpty() && !courseGroupsToEnrol.isEmpty()) {
+		    generateCourseGroupToEnroll(blockContainer, group, courseGroupsToEnrol.get(0), depth + widthDecreasePerLevel);
+		    courseGroupsToEnrol.remove(0);
+		} else if(curriculumGroups.get(0).getChildOrder(executionPeriod) <= courseGroupsToEnrol.get(0).getChildOrder()) {
+		    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionPeriod, depth + widthDecreasePerLevel);
+		    curriculumGroups.remove(0);
+		} else {
+		    generateCourseGroupToEnroll(blockContainer, group, courseGroupsToEnrol.get(0), depth + widthDecreasePerLevel);
+		    courseGroupsToEnrol.remove(0);
+		}
 	    }
 	}
 
+	private void generateCourseGroupToEnroll(HtmlBlockContainer blockContainer, CurriculumGroup group, Context context, int depth) {
+	    final HtmlTable groupTable = new HtmlTable();
+	    blockContainer.addChild(groupTable);
+	    groupTable.setClasses("showinfo3 mvert0");
+	    groupTable.setStyle("width: " + (initialWidth - depth) + "em; margin-left: " + depth + "em;");	    
+	    HtmlTableRow htmlTableRow = groupTable.createRow();
+	    htmlTableRow.setClasses("bgcolor2");
+	    htmlTableRow.createCell().setBody(new HtmlText(context.getChildDegreeModule().getName()));
+	    HtmlTableCell checkBoxCell = htmlTableRow.createCell();
+	    checkBoxCell.setClasses("aright");
+
+	    DegreeModuleToEnrol degreeModuleToEnrol = new DegreeModuleToEnrol(group, context);
+	    HtmlCheckBox checkBox = new HtmlCheckBox(false);
+	    checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getIdInternal() + ":" + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
+	    checkBox.setUserValue(degreeModuleToEnrol.getKey());
+	    degreeModulesToEnrolController.addCheckBox(checkBox);
+	    checkBoxCell.setBody(checkBox);	    
+	}
+	
+
+
+
 	private void generateCurricularCoursesToEnrol(HtmlTable groupTable, CurriculumGroup group, ExecutionPeriod executionPeriod) {
 	    List<Context> curricularCoursesToEnrol = group.getCurricularCourseContextsToEnrol(executionPeriod);
-	    ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(new BeanComparator("curricularPeriod"));
-	    comparatorChain.addComparator(new BeanComparator("childDegreeModule.name", Collator.getInstance()));
-	    Collections.sort(curricularCoursesToEnrol, comparatorChain);
+	    Collections.sort(curricularCoursesToEnrol);
 	    
 	    for (Context context : curricularCoursesToEnrol) {
 		CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
@@ -179,6 +193,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 		final HtmlTableCell yearCell = htmlTableRow.createCell();
 		yearCell.setClasses("smalltxt");
 		yearCell.setAlign("rigth");
+		yearCell.setColspan(2);
 
 		final StringBuilder year = new StringBuilder();
 		year.append(context.getCurricularPeriod().getFullLabel());
@@ -206,12 +221,8 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    }
 	}
 
-	private void generateDegreeModulesEnroled(HtmlBlockContainer blockContainer, CurriculumGroup group, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, int depth) {
-	    final HtmlTable groupTable = new HtmlTable();
-	    blockContainer.addChild(groupTable);
-	    groupTable.setClasses("showinfo3 mvert0");
-	    groupTable.setStyle("width: " + (initialWidth - depth - widthDecreasePerLevel) + "em; margin-left: " + (depth + widthDecreasePerLevel) + "em;");
-	    
+
+	private void generateEnrolments(CurriculumGroup group, ExecutionPeriod executionPeriod, final HtmlTable groupTable) {
 	    for (CurriculumLine curriculumLine : group.getCurriculumLines()) {
 		if(((CurriculumLine) curriculumLine).isEnrolment()) {
 		    Enrolment enrolment = (Enrolment) curriculumLine;
@@ -219,10 +230,6 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 			generateEnrolment(groupTable, enrolment);
 		    }
 		}
-	    }
-
-	    for (CurriculumGroup curriculumGroup : group.getCurriculumGroups()) {
-		generateModules(blockContainer, studentCurricularPlan, curriculumGroup, executionPeriod, depth + 3);
 	    }
 	}
 
@@ -336,5 +343,19 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    
 	    return result;
 	}
+    }
+    
+    public static class CurriculumModuleComparator implements Comparator<CurriculumGroup> {
+
+	private ExecutionPeriod executionPeriod; 
+	
+	public CurriculumModuleComparator(ExecutionPeriod executionPeriod) {
+	    this.executionPeriod = executionPeriod;
+	}
+	
+	public int compare(CurriculumGroup o1, CurriculumGroup o2) {
+	    return o1.getChildOrder(executionPeriod).compareTo(o2.getChildOrder(executionPeriod));
+	}
+	
     }
 }
