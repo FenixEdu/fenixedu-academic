@@ -13,11 +13,13 @@
 </html:messages>
 <br/>
 
-<fr:form action="/studentEnrolments.do?method=enrol">
+<fr:form action="/studentEnrolments.do">
+	<html:hidden property="method" value="enrol"/>
 	<fr:edit id="showDegreeModulesToEnrol"
 			 name="studentEnrolmentBean"
 			 layout="student-enrolments"/>
-	<br/>
-	<br/>	
+	<br />
+	<br />	
 	<html:submit><bean:message key="button.submit"/></html:submit>
+	<html:submit onclick="this.form.method.value='end'; return true;"><bean:message key="button.end"/></html:submit>
 </fr:form>
