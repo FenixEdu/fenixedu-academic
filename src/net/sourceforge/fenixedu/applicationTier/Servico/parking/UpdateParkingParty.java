@@ -15,9 +15,8 @@ import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class UpdateParkingParty extends Service {
 
-    public void run(final Integer parkingRequestID, final ParkingRequestState parkingRequestState,
+    public void run(ParkingRequest parkingRequest, final ParkingRequestState parkingRequestState,
             final Integer cardCode, final Integer groupId, final String note) {
-        ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(parkingRequestID);
         if (parkingRequestState == ParkingRequestState.ACCEPTED) {
             parkingRequest.getParkingParty().setAuthorized(true);
             parkingRequest.getParkingParty().setCardNumber(cardCode);

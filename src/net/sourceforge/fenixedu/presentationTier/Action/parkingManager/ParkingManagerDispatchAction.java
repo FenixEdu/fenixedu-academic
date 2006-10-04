@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.parkingManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.parking.ParkingDocument;
 import net.sourceforge.fenixedu.domain.parking.ParkingDocumentType;
@@ -20,12 +26,14 @@ import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.ReportsUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -263,8 +271,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     public ActionForward editParkingParty(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer parkingRequestID = new Integer(request.getParameter("code"));
+        final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(parkingRequestID);
+
         String note = request.getParameter("note");
-        Object args[] = { parkingRequestID, null, null, null, note };
+        Object args[] = { parkingRequest, null, null, null, note };
 
         String parkingRequestState = request.getParameter("parkingRequestState");
         if (parkingRequestState == null) {
@@ -334,7 +344,43 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         }
         ServiceUtils.executeService(SessionUtils.getUserView(request), "UpdateParkingParty", args);
 
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat(
+                "/images/LogoIST.gif"));
+        Person person = (Person) parkingRequest.getParkingParty().getParty();
+        parameters.put("number", getMostSignificantNumber(person));
+
+        List<Person> persons = new ArrayList<Person>();
+        persons.add(person);
+
+        ReportsUtils.printReport("parkingManager.parkingCard", parameters, null, persons, 91, 58);
+
         return showParkingRequests(mapping, actionForm, request, response);
+    }
+
+    private Integer getMostSignificantNumber(Person p) {
+        if (p.getTeacher() != null) {
+            return p.getTeacher().getTeacherNumber();
+        }
+        if (p.getEmployee() != null && p.getEmployee().getCurrentWorkingContract() != null) {
+            return p.getEmployee().getEmployeeNumber();
+        }
+        if (p.getStudent() != null) {
+            DegreeType degreeType = p.getStudent().getMostSignificantDegreeType();
+            Collection<Registration> registrations = p.getStudent().getRegistrationsByDegreeType(
+                    degreeType);
+            for (Registration registration : registrations) {
+                StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
+                if (scp != null) {
+                    return p.getStudent().getNumber();
+                }
+            }
+        }
+        if (p.getGrantOwner() != null && p.getGrantOwner().hasCurrentContract()) {
+            return p.getGrantOwner().getNumber();
+        }
+
+        return null;
     }
 
     private boolean isValidGroup(Integer groupId) {

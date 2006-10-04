@@ -64,13 +64,47 @@ public class ReportsUtils extends PropertiesManager {
                 System.out.println("Printer Job Sent");
                 return true;
             } else {
-        	if(jasperPrint == null) {
-        	    System.out.println("Couldn't find report " + key);
-        	}
-        	if(printService == null) {
-        	    System.out.println("Couldn't find print service " + printerName);
-        	}
-        	
+                if (jasperPrint == null) {
+                    System.out.println("Couldn't find report " + key);
+                }
+                if (printService == null) {
+                    System.out.println("Couldn't find print service " + printerName);
+                }
+
+                return false;
+            }
+        } catch (JRException e) {
+            System.out.println("Unable to print");
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static boolean printReport(String key, Map parameters, ResourceBundle bundle,
+            Collection dataSource, int width, int height) {
+        try {
+            JasperPrint jasperPrint = getReport(key, parameters, bundle, dataSource);
+            if (jasperPrint != null) {
+                JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+
+                PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+                printRequestAttributeSet.add(OrientationRequested.PORTRAIT);
+                printRequestAttributeSet.add(MediaSizeName.ISO_A4);
+                printRequestAttributeSet.add(new MediaPrintableArea(0, 0, width, height,
+                        MediaPrintableArea.MM));
+                exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET,
+                        printRequestAttributeSet);
+                exporter
+                        .setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
+                exporter.exportReport();
+                System.out.println("Printer Job Sent");
+                return true;
+            } else {
+                if (jasperPrint == null) {
+                    System.out.println("Couldn't find report " + key);
+                }
                 return false;
             }
         } catch (JRException e) {
