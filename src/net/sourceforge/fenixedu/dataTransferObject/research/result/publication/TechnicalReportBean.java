@@ -37,6 +37,7 @@ public class TechnicalReportBean extends ResultPublicationBean implements Serial
     public TechnicalReportBean(BibtexEntry bibtexEntry) {
 	this();
 	fillBibTeXFields(bibtexEntry);
+	this.setActiveSchema("result.publication.import.TechnicalReport");
     }
 
     @Override

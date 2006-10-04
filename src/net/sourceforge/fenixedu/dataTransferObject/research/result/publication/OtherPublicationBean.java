@@ -37,6 +37,7 @@ public class OtherPublicationBean extends ResultPublicationBean implements Seria
     public OtherPublicationBean(BibtexEntry bibtexEntry) {
 	this();
 	fillBibTeXFields(bibtexEntry);
+	this.setActiveSchema("result.publication.import.OtherPublication");
     }
 
     @Override
@@ -50,7 +51,7 @@ public class OtherPublicationBean extends ResultPublicationBean implements Seria
 
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
-	//TODO: rearrange importation
+	// TODO: rearrange importation
 	setUnitFromBibtexEntry("publisher", bibtexEntry);
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);

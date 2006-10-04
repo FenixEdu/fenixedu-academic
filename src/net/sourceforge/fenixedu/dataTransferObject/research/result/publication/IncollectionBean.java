@@ -35,6 +35,7 @@ public class IncollectionBean extends ResultPublicationBean implements Serializa
     public IncollectionBean(BibtexEntry bibtexEntry) {
 	this();
 	fillBibTeXFields(bibtexEntry);
+	this.setActiveSchema("result.publication.import.Incollection");
     }
 
     @Override

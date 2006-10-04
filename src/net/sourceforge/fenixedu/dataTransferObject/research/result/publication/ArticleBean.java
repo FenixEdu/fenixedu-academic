@@ -35,26 +35,27 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 	fillCommonFields(article);
 	fillSpecificFields(article);
     }
-    
+
     public ArticleBean(ResultPublicationBean bean) {
 	this();
 	fillCommonBeanFields(bean);
     }
-    
+
     public ArticleBean(BibtexEntry bibtexEntry) {
 	this();
 	fillBibTeXFields(bibtexEntry);
+	this.setActiveSchema("result.publication.import.Article");
     }
 
     @Override
     public ResultPublicationBean convertTo(ResultPublicationType type) {
-        return ResultPublicationBeanConversions.articleTo(this, type);
+	return ResultPublicationBeanConversions.articleTo(this, type);
     }
-    
+
     @Override
     protected void fillSpecificFields(ResultPublication publication) {
 	final Article article = (Article) publication;
-	
+
 	this.setJournal(article.getJournal());
 	this.setVolume(article.getVolume());
 	this.setNumber(article.getNumber());
@@ -64,7 +65,7 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 	this.setLanguage(article.getLanguage());
 	this.setScope(article.getScope());
     }
-    
+
     protected void fillBibTeXFields(BibtexEntry entry) {
 	setYearFromBibtexEntry(entry);
 	setMonthFromBibtexEntry(entry);
@@ -79,7 +80,7 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 	    setLastPage(getLastPageFromBibtexEntry(entry));
 	}
     }
-    
+
     public String getLanguage() {
 	return language;
     }

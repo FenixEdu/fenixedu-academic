@@ -29,6 +29,7 @@ public class ProceedingsBean extends ConferenceArticlesBean implements Serializa
     public ProceedingsBean(BibtexEntry bibtexEntry) {
 	this();
 	fillBibTeXFields(bibtexEntry);
+	this.setActiveSchema("result.publication.import.Proceedings");
     }
 
     @Override

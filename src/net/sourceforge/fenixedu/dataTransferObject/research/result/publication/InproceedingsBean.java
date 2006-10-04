@@ -16,95 +16,96 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
     private String language;
 
     public InproceedingsBean() {
-        this.setPublicationType(ResultPublicationType.Inproceedings);
-        this.setActiveSchema("result.publication.create.Inproceedings");
-        this.setParticipationSchema("resultParticipation.simpleWithRole");
+	this.setPublicationType(ResultPublicationType.Inproceedings);
+	this.setActiveSchema("result.publication.create.Inproceedings");
+	this.setParticipationSchema("resultParticipation.simpleWithRole");
     }
 
     public InproceedingsBean(Inproceedings inproceedings) {
-        this();
-       	fillCommonFields(inproceedings);
-       	fillSpecificFields(inproceedings);
+	this();
+	fillCommonFields(inproceedings);
+	fillSpecificFields(inproceedings);
     }
-    
+
     public InproceedingsBean(ResultPublicationBean bean) {
 	this();
-        fillCommonBeanFields(bean);
+	fillCommonBeanFields(bean);
     }
-    
+
     public InproceedingsBean(BibtexEntry bibtexEntry) {
 	this();
 	fillBibTeXFields(bibtexEntry);
+	this.setActiveSchema("result.publication.import.Inproceedings");
     }
 
     @Override
     protected void fillSpecificFields(ResultPublication publication) {
-	this.setAddress(((Inproceedings)publication).getAddress());
-	this.setFirstPage(((Inproceedings)publication).getFirstPage());
-	this.setLastPage(((Inproceedings)publication).getLastPage());
-	this.setLanguage(((Inproceedings)publication).getLanguage());
-	this.setEvent(((Inproceedings)publication).getEvent());
+	this.setAddress(((Inproceedings) publication).getAddress());
+	this.setFirstPage(((Inproceedings) publication).getFirstPage());
+	this.setLastPage(((Inproceedings) publication).getLastPage());
+	this.setLanguage(((Inproceedings) publication).getLanguage());
+	this.setEvent(((Inproceedings) publication).getEvent());
     }
-    
+
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
 	setUnitFromBibtexEntry("publisher", bibtexEntry);
-        setUnitFromBibtexEntry("organization", bibtexEntry);
-        setYearFromBibtexEntry(bibtexEntry);
-        setMonthFromBibtexEntry(bibtexEntry);
+	setUnitFromBibtexEntry("organization", bibtexEntry);
+	setYearFromBibtexEntry(bibtexEntry);
+	setMonthFromBibtexEntry(bibtexEntry);
 
-        setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
-        //booktitle will be used to event name
-        //setBookTitle(getStringValueFromBibtexEntry("booktitle", entry));
-        setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
-        setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
-        if (getFirstPageFromBibtexEntry(bibtexEntry) != null) {
-            setFirstPage(getFirstPageFromBibtexEntry(bibtexEntry));
-            setLastPage(getLastPageFromBibtexEntry(bibtexEntry));
-        }
+	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
+	// booktitle will be used to event name
+	// setBookTitle(getStringValueFromBibtexEntry("booktitle", entry));
+	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
+	setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
+	if (getFirstPageFromBibtexEntry(bibtexEntry) != null) {
+	    setFirstPage(getFirstPageFromBibtexEntry(bibtexEntry));
+	    setLastPage(getLastPageFromBibtexEntry(bibtexEntry));
+	}
     }
-    
+
     @Override
     public ResultPublicationBean convertTo(ResultPublicationType type) {
-        return ResultPublicationBeanConversions.inproceedingsTo(this, type);
+	return ResultPublicationBeanConversions.inproceedingsTo(this, type);
     }
 
     @Override
     public void setCreateEvent(Boolean createEvent) {
-        this.setActiveSchema("result.publication.create.InproceedingsAndEvent");
-        super.setCreateEvent(createEvent);
+	this.setActiveSchema("result.publication.create.InproceedingsAndEvent");
+	super.setCreateEvent(createEvent);
     }
 
     public String getAddress() {
-        return address;
+	return address;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+	this.address = address;
     }
 
     public Integer getFirstPage() {
-        return firstPage;
+	return firstPage;
     }
 
     public void setFirstPage(Integer firstPage) {
-        this.firstPage = firstPage;
+	this.firstPage = firstPage;
     }
 
     public String getLanguage() {
-        return language;
+	return language;
     }
 
     public void setLanguage(String language) {
-        this.language = language;
+	this.language = language;
     }
 
     public Integer getLastPage() {
-        return lastPage;
+	return lastPage;
     }
 
     public void setLastPage(Integer lastPage) {
-        this.lastPage = lastPage;
+	this.lastPage = lastPage;
     }
 
 }
