@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.renderers;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButton;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButtonList;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
@@ -32,6 +33,12 @@ public class BooleanRadioInputRenderer extends InputRenderer {
     
     private String eachStyle;
         
+    public BooleanRadioInputRenderer() {
+        super();
+        
+        setStyle("white-space: nowrap;");
+    }
+
     public String getEachClasses() {
         return eachClasses;
     }
@@ -56,8 +63,6 @@ public class BooleanRadioInputRenderer extends InputRenderer {
         this.eachStyle = eachStyle;
     }
 
-
-
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new Layout() {
@@ -73,8 +78,6 @@ public class BooleanRadioInputRenderer extends InputRenderer {
                 newContext.setRenderMode(RenderMode.getMode("output"));
                 HtmlComponent component = RenderKit.getInstance().render(newContext, booleanTrue);                
                 HtmlRadioButton buttonTrue = radioList.addOption(component, booleanTrue.toString());
-                buttonTrue.setClasses(eachClasses);
-                buttonTrue.setStyle(eachStyle);
                                             
                 Boolean booleanFalse = Boolean.FALSE;                                                            
                 booleanMetaObject = MetaObjectFactory.createObject(booleanFalse, null);
@@ -82,14 +85,17 @@ public class BooleanRadioInputRenderer extends InputRenderer {
                 newContext.setRenderMode(RenderMode.getMode("output"));
                 component = RenderKit.getInstance().render(newContext, booleanFalse);                                                   
                 HtmlRadioButton buttonFalse = radioList.addOption(component, booleanFalse.toString());
-                buttonFalse.setClasses(eachClasses);
-                buttonFalse.setStyle(eachStyle);
-                                
+
                 buttonTrue.setChecked(booleanObject == null ? false : booleanObject);                
                 buttonFalse.setChecked(booleanObject == null ? false : !booleanObject);
                 
                 radioList.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
-                               
+                
+                for (HtmlListItem item : radioList.getList().getItems()) {
+                    item.setClasses(getEachClasses());
+                    item.setStyle(getEachStyle());
+                }
+                
                 return radioList;
             }
             
