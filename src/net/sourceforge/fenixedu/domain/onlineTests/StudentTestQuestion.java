@@ -5,8 +5,10 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -19,7 +21,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  * @author Susana Fernandes
  */
 public class StudentTestQuestion extends StudentTestQuestion_Base {
-    private List<SubQuestion> studentSubQuestions;
+    private static InheritableThreadLocal<Map<StudentTestQuestion, List<SubQuestion>>> studentSubQuestions = new InheritableThreadLocal<Map<StudentTestQuestion, List<SubQuestion>>>();
 
     public static final Comparator<StudentTestQuestion> COMPARATOR_BY_TEST_QUESTION_ORDER = new BeanComparator(
             "testQuestionOrder");
@@ -38,18 +40,23 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
     }
 
     public List<SubQuestion> getStudentSubQuestions() {
-        return studentSubQuestions;
+        if (studentSubQuestions.get() == null) {
+            studentSubQuestions.set(new HashMap<StudentTestQuestion, List<SubQuestion>>());
+        }
+
+        return studentSubQuestions.get().get(this);
     }
 
     public void setStudentSubQuestions(List<SubQuestion> studentSubQuestions) {
-        this.studentSubQuestions = studentSubQuestions;
+        getStudentSubQuestions();
+        this.studentSubQuestions.get().put(this, studentSubQuestions);
     }
 
     public void addStudentSubQuestion(SubQuestion subQuestion) {
-        if (studentSubQuestions == null) {
-            studentSubQuestions = new ArrayList<SubQuestion>();
+        if (getStudentSubQuestions() == null) {
+            setStudentSubQuestions(new ArrayList<SubQuestion>());
         }
-        studentSubQuestions.add(subQuestion);
+        getStudentSubQuestions().add(subQuestion);
     }
 
     public SubQuestion getSubQuestionByItem() {
