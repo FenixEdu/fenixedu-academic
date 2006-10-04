@@ -162,7 +162,7 @@ public abstract class Party extends Party_Base {
     
     public List<Accountability> getChildAccountabilities(Class childClass) {
 	final List<Accountability> result = new ArrayList<Accountability>();
-	for (final Accountability accountability : getParentsSet()) {
+	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getChildParty().getClass().equals(childClass)) {
 		result.add(accountability);
 	    }
