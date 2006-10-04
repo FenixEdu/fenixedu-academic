@@ -202,7 +202,9 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
                 || (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEIC02/04"))
                 || (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEIC03/05"))
                 || (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML03/05"))
-                || (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML02/04"))) {
+                || (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML02/04"))
+                || (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEE04/06"))
+                || (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEE05/07"))) {
 
             Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
             infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage,
