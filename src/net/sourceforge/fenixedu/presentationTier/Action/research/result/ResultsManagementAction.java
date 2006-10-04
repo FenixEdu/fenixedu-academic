@@ -20,114 +20,112 @@ import org.apache.struts.action.ActionMessages;
 
 public class ResultsManagementAction extends FenixDispatchAction {
     public ActionForward backToResult(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-	final Result result = getResultFromRequest(request);
-	if (result == null) {
-	    return backToResultList(mapping, form, request, response);
-	}
-	
-	request.setAttribute("resultId", result.getIdInternal());
-	if (result instanceof ResultPatent) {
-	    return mapping.findForward("editPatent");    
-	} else if (result instanceof ResultPublication) {
-	    return mapping.findForward("viewEditPublication");	   
-	}
-	return null;
+            HttpServletRequest request, HttpServletResponse response) {
+        final Result result = getResultFromRequest(request);
+        if (result == null) {
+            return backToResultList(mapping, form, request, response);
+        }
+
+        request.setAttribute("resultId", result.getIdInternal());
+        if (result instanceof ResultPatent) {
+            return mapping.findForward("editPatent");
+        } else if (result instanceof ResultPublication) {
+            return mapping.findForward("viewEditPublication");
+        }
+        return null;
     }
 
     public ActionForward backToResultList(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-	final String resultType = (String) getFromRequest(request, "resultType");
+            HttpServletRequest request, HttpServletResponse response) {
+        final String resultType = (String) getFromRequest(request, "resultType");
 
-	if (!(resultType == null || resultType.equals(""))) {
-	    if (resultType.compareTo(ResultPatent.class.getSimpleName()) == 0) {
-		return mapping.findForward("listPatents");
-	    } 
-	    return mapping.findForward("ListPublications");
-	}
-	return null;
+        if (!(resultType == null || resultType.equals(""))) {
+            if (resultType.compareTo(ResultPatent.class.getSimpleName()) == 0) {
+                return mapping.findForward("listPatents");
+            }
+            return mapping.findForward("ListPublications");
+        }
+        return null;
     }
 
     private Result getResultByIdFromRequest(HttpServletRequest request) {
-	final Integer resultId = Integer.valueOf(getFromRequest(request, "resultId").toString());
+        final Integer resultId = Integer.valueOf(getFromRequest(request, "resultId").toString());
 
-	if(resultId!=null) {
-	    try {
-		return Result.readByOid(resultId);
-	    } catch (DomainException e) {
-		addMessage(request, e.getKey(), e.getArgs());
-	    }
-	}
-	return null;
+        if (resultId != null) {
+            try {
+                return Result.readByOid(resultId);
+            } catch (DomainException e) {
+                addMessage(request, e.getKey(), e.getArgs());
+            }
+        }
+        return null;
     }
-    
+
     public final Result getResultFromRequest(HttpServletRequest request) {
-	Result result = null;
-	try {
-	    result = getResultByIdFromRequest(request);
-	} catch (Exception e) {
-	}
-	
-	if (result==null) {
-	    try {
-		final Object object = getRenderedObject(null);
-		
-		if (object instanceof Result) {
-		    result = (Result) object;
-		}
-		if (object instanceof ResultPublicationBean) {
-		    result = Result.readByOid(((ResultPublicationBean)object).getIdInternal());
-		}
+        Result result = null;
+        try {
+            result = getResultByIdFromRequest(request);
+        } catch (Exception e) {
+        }
 
-	    } catch (Exception e) {
-	    }
-	}
+        if (result == null) {
+            try {
+                final Object object = getRenderedObject(null);
 
-	if (result != null)
-	    request.setAttribute("result", result);
+                if (object instanceof Result) {
+                    result = (Result) object;
+                }
+                if (object instanceof ResultPublicationBean) {
+                    result = Result.readByOid(((ResultPublicationBean) object).getIdInternal());
+                }
 
-	return result;
+            } catch (Exception e) {
+            }
+        }
+
+        if (result != null)
+            request.setAttribute("result", result);
+
+        return result;
     }
-    
+
     public Object getRenderedObject(String id) {
-	if(id==null || id.equals("")){
-	    if (RenderUtils.getViewState()!=null) {
-		return RenderUtils.getViewState().getMetaObject().getObject();
-	    }
-	}
-	else {
-	    if(RenderUtils.getViewState(id)!=null) {
-		return RenderUtils.getViewState(id).getMetaObject().getObject();
-	    }
-	}
-	return null; 
+        if (id == null || id.equals("")) {
+            if (RenderUtils.getViewState() != null) {
+                return RenderUtils.getViewState().getMetaObject().getObject();
+            }
+        } else {
+            if (RenderUtils.getViewState(id) != null) {
+                return RenderUtils.getViewState(id).getMetaObject().getObject();
+            }
+        }
+        return null;
     }
-    
+
     public ActionForward processException(HttpServletRequest request, ActionMapping mapping,
-            ActionForward input, Exception e){
-	if (!(e instanceof DomainException)) {
+            ActionForward input, Exception e) {
+        if (!(e instanceof DomainException)) {
             addMessage(request, e.getMessage());
             e.printStackTrace();
+        } else {
+            final DomainException ex = (DomainException) e;
+
+            addMessage(request, ex.getKey(), ex.getArgs());
+
+            if (RenderUtils.getViewState() != null) {
+                ViewDestination destination = RenderUtils.getViewState().getDestination("exception");
+                RenderUtils.invalidateViewState();
+                if (destination != null) {
+                    return destination.getActionForward();
+                }
+            }
         }
-	else {
-	    final DomainException ex = (DomainException) e;
-	    
-	    addMessage(request, ex.getKey(), ex.getArgs());
-	    
-	    if (RenderUtils.getViewState()!=null){
-		ViewDestination destination = RenderUtils.getViewState().getDestination("exception");
-		RenderUtils.invalidateViewState();
-		if(destination!=null) {
-		    return destination.getActionForward();
-		}
-	    }
-	}
-	
-	return input;
+
+        return input;
     }
-    
-    private void addMessage(HttpServletRequest request, String key, String...args){
-	ActionMessages messages = getMessages(request);
+
+    private void addMessage(HttpServletRequest request, String key, String... args) {
+        ActionMessages messages = getMessages(request);
 
         if (messages == null) {
             messages = new ActionMessages();
