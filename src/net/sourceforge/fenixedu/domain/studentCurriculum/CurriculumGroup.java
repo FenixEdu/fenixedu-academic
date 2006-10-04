@@ -253,15 +253,18 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
     
     public Integer getChildOrder() {
+	return getChildOrder(ExecutionPeriod.readActualExecutionPeriod());
+    }
+    
+    public Integer getChildOrder(ExecutionPeriod executionPeriod) {
 	final CourseGroup parentCourseGroup = getCurriculumGroup().getDegreeModule();
 	final CourseGroup courseGroup = getDegreeModule();
 	
-	for (final Context context : parentCourseGroup.getChildContexts(ExecutionPeriod.readActualExecutionPeriod())) {
+	for (final Context context : parentCourseGroup.getChildContexts(executionPeriod)) {
 	    if (context.getChildDegreeModule() == courseGroup) {
 		return context.getChildOrder();
 	    }
 	}
-	
 	return null;
     }
 
