@@ -6,9 +6,9 @@ public enum CompetenceCourseLevel {
     
     SECOND_CYCLE,
     
-    TECHNOLOGICAL,
+    FORMATION,
     
-    SCIENTIFIC,
+    DOCTORATE,
     
     SPECIALIZATION;
     

@@ -62,8 +62,8 @@
 			<f:selectItem itemValue="" itemLabel="#{enumerationBundle['dropDown.Default']}"/>
 			<f:selectItem itemValue="FIRST_CYCLE" itemLabel="#{enumerationBundle['FIRST_CYCLE']}"/>
 			<f:selectItem itemValue="SECOND_CYCLE" itemLabel="#{enumerationBundle['SECOND_CYCLE']}"/>
-			<f:selectItem itemValue="TECHNOLOGICAL" itemLabel="#{enumerationBundle['TECHNOLOGICAL']}"/>
-			<f:selectItem itemValue="SCIENTIFIC" itemLabel="#{enumerationBundle['SCIENTIFIC']}"/>
+			<f:selectItem itemValue="FORMATION" itemLabel="#{enumerationBundle['FORMATION']}"/>
+			<f:selectItem itemValue="DOCTORATE" itemLabel="#{enumerationBundle['DOCTORATE']}"/>
 			<f:selectItem itemValue="SPECIALIZATION" itemLabel="#{enumerationBundle['SPECIALIZATION']}"/>
 		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
