@@ -207,7 +207,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
     private String getStudent(HttpServletRequest request) {
         String studentNumber = request.getParameter("studentNumber");
-        if (studentNumber == null && StringUtils.isNumeric(studentNumber)) {
+        if (studentNumber == null || !StringUtils.isNumeric(studentNumber)) {
             studentNumber = (String) request.getAttribute("studentNumber");
         }
         return studentNumber;
