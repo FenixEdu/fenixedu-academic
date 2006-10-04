@@ -13,7 +13,7 @@
 <span class="error"><!-- Error messages go here --><html:errors/><br /></span>
 
 <fr:form action="/externalPerson.do">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="create"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createExternalPersonAndParkingParty"/>
 
 	<h2><strong><bean:message key="label.person.title.personal.info" bundle="MANAGER_RESOURCES" /></strong></h2>
 	<fr:edit id="personData" name="externalPersonBean" schema="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" >

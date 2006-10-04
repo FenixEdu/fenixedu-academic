@@ -12,6 +12,10 @@
 
 <br/>
 
+<bean:define id="url" type="java.lang.String">/externalPerson.do?method=search&amp;name=<bean:write name="searchPartyBean" property="partyName"/></bean:define>
+<html:link page="<%= url %>"><bean:message key="link.create.external.person" /></html:link>
+<br/>
+
 <logic:present name="searchPartyBean">
 
 	<logic:notEmpty name="searchPartyBean" property="party">
