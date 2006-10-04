@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public abstract class ConferenceArticles extends ConferenceArticles_Base {
 
     public ConferenceArticles() {
-        super();
+	super();
     }
 
     @Checked("ResultPredicates.writePredicate")
     public void delete() {
-        super.setEvent(null);
-        super.delete();
+	super.setEvent(null);
+	super.delete();
     }
 
     @Override
@@ -29,7 +29,7 @@ public abstract class ConferenceArticles extends ConferenceArticles_Base {
 
     @Override
     public void removeEvent() {
-        throw new DomainException("error.researcher.ConferenceArticles.call", "removeEvent");
+	throw new DomainException("error.researcher.ConferenceArticles.call", "removeEvent");
     }
 
 }

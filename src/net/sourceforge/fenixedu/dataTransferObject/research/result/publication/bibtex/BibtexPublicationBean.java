@@ -19,54 +19,54 @@ public class BibtexPublicationBean implements Serializable {
     private String bibtex;
 
     public List<BibtexParticipatorBean> getAuthors() {
-        return authors;
+	return authors;
     }
 
     public void setAuthors(List<BibtexParticipatorBean> authors) {
-        this.authors = authors;
+	this.authors = authors;
     }
 
     public List<BibtexParticipatorBean> getEditors() {
-        return editors;
+	return editors;
     }
 
     public void setEditors(List<BibtexParticipatorBean> editors) {
-        this.editors = editors;
+	this.editors = editors;
     }
 
     public ResultPublicationBean getPublicationBean() {
-        return publicationBean;
+	return publicationBean;
     }
 
     public void setPublicationBean(ResultPublicationBean publicationBean) {
-        this.publicationBean = publicationBean;
+	this.publicationBean = publicationBean;
     }
 
     public boolean isProcessedParticipators() {
-        return processedParticipators;
+	return processedParticipators;
     }
 
     public void setProcessedParticipators(boolean processedParticipators) {
-        this.processedParticipators = processedParticipators;
+	this.processedParticipators = processedParticipators;
     }
 
     public String getBibtex() {
-        return bibtex;
+	return bibtex;
     }
 
     public void setBibtex(String bibtex) {
-        this.bibtex = bibtex;
+	this.bibtex = bibtex;
     }
 
     public List<BibtexParticipatorBean> getParticipators() {
-        List<BibtexParticipatorBean> participators = new ArrayList<BibtexParticipatorBean>();
-        if (authors != null)
-            participators.addAll(authors);
-        if (editors != null)
-            participators.addAll(editors);
-        if (participators.size() > 0)
-            return participators;
-        return null;
+	List<BibtexParticipatorBean> participators = new ArrayList<BibtexParticipatorBean>();
+	if (authors != null)
+	    participators.addAll(authors);
+	if (editors != null)
+	    participators.addAll(editors);
+	if (participators.size() > 0)
+	    return participators;
+	return null;
     }
 
 }

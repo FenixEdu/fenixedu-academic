@@ -36,115 +36,115 @@ public class BibtexParticipatorBean implements Serializable {
     /**/
 
     public Unit getOrganization() {
-        return (this.organization == null) ? null : this.organization.getObject();
+	return (this.organization == null) ? null : this.organization.getObject();
     }
 
     public void setOrganization(Unit organization) {
-        this.organization = (organization != null) ? new DomainReference<Unit>(organization) : null;
+	this.organization = (organization != null) ? new DomainReference<Unit>(organization) : null;
     }
 
     public String getOrganizationName() {
-        return organizationName;
+	return organizationName;
     }
 
     public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
+	this.organizationName = organizationName;
     }
 
     public Person getPerson() {
-        return (this.person == null) ? null : this.person.getObject();
+	return (this.person == null) ? null : this.person.getObject();
     }
 
     public void setPerson(Person person) {
-        this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	this.person = (person != null) ? new DomainReference<Person>(person) : null;
     }
 
     public String getPersonName() {
-        return personName;
+	return personName;
     }
 
     public void setPersonName(String personName) {
-        this.personName = personName;
+	this.personName = personName;
     }
 
     public ResultParticipationRole getPersonRole() {
-        return personRole;
+	return personRole;
     }
 
     public void setPersonRole(ResultParticipationRole personRole) {
-        this.personRole = personRole;
+	this.personRole = personRole;
     }
 
     public String getBibtexPerson() {
-        return bibtexPerson;
+	return bibtexPerson;
     }
 
     public void setBibtexPerson(String bibtexPerson) {
-        this.bibtexPerson = bibtexPerson;
+	this.bibtexPerson = bibtexPerson;
     }
 
     public String getActiveSchema() {
-        return activeSchema;
+	return activeSchema;
     }
 
     public void setActiveSchema(String activeSchema) {
-        this.activeSchema = activeSchema;
+	this.activeSchema = activeSchema;
     }
 
     public boolean isCreateExternalPerson() {
-        return createExternalPerson;
+	return createExternalPerson;
     }
 
     public void setCreateExternalPerson(boolean createExternalPerson) {
-        this.createExternalPerson = createExternalPerson;
+	this.createExternalPerson = createExternalPerson;
     }
 
     public String getPersonDescription() {
-        String personDescription = "";
-        if (person != null)
-            personDescription = personDescription + getPerson().getName();
-        else {
-            personDescription = personDescription + personName;
-            if ((organizationName != null) && (organizationName.length() > 0))
-                personDescription = personDescription + " - " + organizationName;
-        }
-        return personDescription;
+	String personDescription = "";
+	if (person != null)
+	    personDescription = personDescription + getPerson().getName();
+	else {
+	    personDescription = personDescription + personName;
+	    if ((organizationName != null) && (organizationName.length() > 0))
+		personDescription = personDescription + " - " + organizationName;
+	}
+	return personDescription;
     }
 
     public void setBibtexPerson(BibtexPerson bp) {
-        String fullName = "";
-        if (bp.getFirst() != null)
-            fullName = fullName + bp.getFirst();
-        if (bp.getPreLast() != null)
-            fullName = fullName + ' ' + bp.getPreLast();
-        if (bp.getLast() != null)
-            fullName = fullName + ' ' + bp.getLast();
-        if (bp.getLineage() != null)
-            fullName = fullName + ' ' + bp.getLineage();
-        setBibtexPerson(fullName);
+	String fullName = "";
+	if (bp.getFirst() != null)
+	    fullName = fullName + bp.getFirst();
+	if (bp.getPreLast() != null)
+	    fullName = fullName + ' ' + bp.getPreLast();
+	if (bp.getLast() != null)
+	    fullName = fullName + ' ' + bp.getLast();
+	if (bp.getLineage() != null)
+	    fullName = fullName + ' ' + bp.getLineage();
+	setBibtexPerson(fullName);
     }
 
     public List<ParticipatorBean> getPersonsFound() {
-        return personsFound;
+	return personsFound;
     }
 
     public void setPersonsFound(List<ParticipatorBean> personsFound) {
-        this.personsFound = personsFound;
+	this.personsFound = personsFound;
     }
 
     public ParticipatorBean getPersonChosen() {
-        return personChosen;
+	return personChosen;
     }
 
     public void setPersonChosen(ParticipatorBean personChosen) {
-        this.personChosen = personChosen;
+	this.personChosen = personChosen;
     }
 
     public boolean isParticipatorProcessed() {
-        return participatorProcessed;
+	return participatorProcessed;
     }
 
     public void setParticipatorProcessed(boolean participatorProcessed) {
-        this.participatorProcessed = participatorProcessed;
+	this.participatorProcessed = participatorProcessed;
     }
 }
