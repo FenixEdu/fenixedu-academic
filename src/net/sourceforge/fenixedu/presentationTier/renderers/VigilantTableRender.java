@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
@@ -239,6 +241,7 @@ public class VigilantTableRender extends OutputRenderer {
     @Override
     protected Layout getLayout(Object object, Class type) {
         ComparatorChain chain = new ComparatorChain();
+        chain.addComparator(Vigilant.POINTS_COMPARATOR);
         chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
         chain.addComparator(Vigilant.USERNAME_COMPARATOR);
         
@@ -274,15 +277,7 @@ public class VigilantTableRender extends OutputRenderer {
 
         @Override
         protected boolean hasHeader() {
-            return thereIsAtLeastOneConvoke();
-        }
-
-        private boolean thereIsAtLeastOneConvoke() {
-            for (Vigilant vigilant : vigilants) {
-                if (getConvokes(vigilant).size() > 0)
-                    return true;
-            }
-            return false;
+            return true;
         }
 
         @Override
@@ -367,10 +362,10 @@ public class VigilantTableRender extends OutputRenderer {
         }
 
         private MetaObject getConvokeMetaObject(MetaObject vigilantMetaObject, int index) {
-            Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
 
-            List<VigilancyWithCredits> convokes = getConvokes(vigilant);
+            List<VigilancyWithCredits> convokes = Vigilancy.getAllVigilancyWithCredits();
             VigilancyWithCredits oneConvoke = convokes.get(0);
+            
             MetaObject convokeMetaObject = MetaObjectFactory
                     .createObject(oneConvoke, this.convokeSchema);
 
@@ -426,9 +421,15 @@ public class VigilantTableRender extends OutputRenderer {
 
         private int getNumberOfConvokeSlots() {
             Vigilant vigilant = (Vigilant) this.getVigilantWithConvokes().getObject();
-            MetaObject convokeMetaObject = MetaObjectFactory.createObject(getConvokes(vigilant).get(0),
+            List<VigilancyWithCredits> convokes = getConvokes(vigilant);
+            if(convokes.isEmpty()) {
+            	return 0;
+            }
+            else {
+            	MetaObject convokeMetaObject = MetaObjectFactory.createObject(convokes.get(0),
                     this.convokeSchema);
-            return convokeMetaObject.getSlots().size();
+            	return convokeMetaObject.getSlots().size();
+            }
 
         }
 
@@ -458,7 +459,7 @@ public class VigilantTableRender extends OutputRenderer {
                 if (!getConvokes(vigilant).isEmpty())
                     return this.vigilants.size();
             }
-            return 0; // no vigilants have convokes for the given period we
+            return this.vigilants.size(); // no vigilants have convokes for the given period we
             // will not display anyone.
         }
 
@@ -466,7 +467,7 @@ public class VigilantTableRender extends OutputRenderer {
         public HtmlComponent createComponent(Object object, Class type) {
             Collection vigilants = (Collection) object;
             HtmlComponent component;
-
+	/*
             if (getEmptyMessageKey() != null && (vigilants.isEmpty() || !thereIsAtLeastOneConvoke())) {
                 component = new HtmlText(RenderUtils.getResourceString(getEmptyMessageBundle(),
                         getEmptyMessageKey()));
@@ -476,7 +477,9 @@ public class VigilantTableRender extends OutputRenderer {
                 this.empty = false;
             }
             return component;
-        }
+	*/
+            return super.createComponent(object,type);       
+	 }
 
         @Override
         public void applyStyle(HtmlComponent component) {

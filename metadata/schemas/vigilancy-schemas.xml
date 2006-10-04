@@ -769,7 +769,7 @@
 </schema>
 
 <schema name="editStartPoints" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES">
-	<slot name="teacherCategoryCode" read-only="true" key="label.vigilancy.category"/>
+	<slot name="teacherCategoryCode" read-only="true" key="label.vigilancy.category.header"/>
 	<slot name="person.username" read-only="true" key="label.vigilancy.username"/>
 	<slot name="person.name" read-only="true" key="label.vigilancy.vigilant"/>
 	<slot name="startPoints" key="label.vigilancy.startPoints">
