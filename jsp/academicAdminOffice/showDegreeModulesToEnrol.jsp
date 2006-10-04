@@ -17,6 +17,7 @@
 	<fr:edit id="showDegreeModulesToEnrol"
 			 name="studentEnrolmentBean"
 			 layout="student-enrolments"/>
-			 
+	<br/>
+	<br/>	
 	<html:submit><bean:message key="button.submit"/></html:submit>
 </fr:form>
