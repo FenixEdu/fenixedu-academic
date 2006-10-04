@@ -52,6 +52,18 @@
 			<forward name="showParkingPartyRequests" path="show-party-parking-requests"/>
 		</action>
 
+       	<action path="/externalPerson"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ExternalPersonDA"
+       			scope="request"
+				input="/externalPerson.do?method=prepareCreate"
+       			parameter="method">
+			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key=""
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>
+       		<forward name="showSearch" path="df.search.external.person.before.create"/>
+       		<forward name="showCreateForm" path="df.create.external.person"/>
+       		<forward name="showCreatedPerson" path="df.show.created.external.person"/>
+       	</action>
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
@@ -69,6 +81,8 @@
 		key="APPLICATION_RESOURCES" null="false" />
 	<message-resources parameter="resources.EnumerationResources"
 		key="ENUMERATION_RESOURCES" null="false" />
+	<message-resources parameter="resources.ManagerResources"
+		key="MANAGER_RESOURCES" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">

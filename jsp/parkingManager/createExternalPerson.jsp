@@ -7,7 +7,7 @@
 <html:xhtml/>
 
 <br/>
-<h2><strong><bean:message key="link.create.external.person" bundle="MANAGER_RESOURCES"/></strong></h2>
+<h2><strong><bean:message key="link.create.external.person"/></strong></h2>
 <br/>
 
 <span class="error"><!-- Error messages go here --><html:errors/><br /></span>

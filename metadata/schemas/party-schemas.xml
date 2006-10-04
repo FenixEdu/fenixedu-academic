@@ -66,3 +66,14 @@
 	<slot name="username"/>
 	<slot name="active"/>
 </schema>
+<schema name="net.sourceforge.fenixedu.domain.Person.AnyPersonSearchBean" type="net.sourceforge.fenixedu.domain.Person$AnyPersonSearchBean" bundle="MANAGER_RESOURCES" > 
+	<slot name="name"/>
+	<slot name="documentIdNumber" key="label.identificationNumber"/>
+	<slot name="idDocumentType" key="label.idDocumentType"/>
+</schema>
+<schema name="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean.Unit" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
+	<slot name="unitName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.organizationalStructure.Unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="MANAGER_RESOURCES" > 
+	<slot name="name" key="unitName"/>
+</schema>

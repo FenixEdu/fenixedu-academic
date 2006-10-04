@@ -7,18 +7,7 @@
 <html:xhtml/>
 
 <br/>
-<h2><strong><bean:message key="link.create.external.person" bundle="MANAGER_RESOURCES"/></strong></h2>
-<br/>
-<h2><strong><bean:message key="label.login.info" bundle="MANAGER_RESOURCES" /></strong></h2>
-<logic:iterate id="identification" name="person" property="user.identifications">
-	<fr:view name="identification" schema="net.sourceforge.fenixedu.domain.Login" >
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
-		</fr:layout>
-	</fr:view>
-<br/>
-</logic:iterate>
+<h2><strong><bean:message key="link.create.external.person"/></strong></h2>
 <br/>
 <h2><strong><bean:message key="label.person.title.personal.info" bundle="MANAGER_RESOURCES" /></strong></h2>
 <fr:view name="person" schema="net.sourceforge.fenixedu.domain.Person" >

@@ -563,6 +563,10 @@
 		<put name="body" value="/manager/showCronScriptInvocationLog.jsp" />
 	</definition>
 
+	<definition name="df.search.external.person.before.create" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/searchForExternalPersonBeforeCreate.jsp" />
+	</definition>
+
 	<definition name="df.create.external.person" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/createExternalPerson.jsp" />
 	</definition>

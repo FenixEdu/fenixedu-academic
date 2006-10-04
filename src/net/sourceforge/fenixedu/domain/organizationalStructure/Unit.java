@@ -776,4 +776,18 @@ public class Unit extends Unit_Base {
     public List<ExternalContract> getExternalPersons() {	
 	return new ArrayList(getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class));
     }
+
+    public static Unit findFirstExternalUnitByName(final String unitName) {
+	if (unitName == null || unitName.length() == 0) {
+	    return null;
+	}
+	for (final Party party : RootDomainObject.getInstance().getExternalInstitutionUnit().getSubUnits()) {
+	    if (!party.isPerson() && unitName.equalsIgnoreCase(party.getName())) {
+		final Unit unit = (Unit) party;
+		return unit;
+	    }
+	}
+	return null;
+    }
+
 }

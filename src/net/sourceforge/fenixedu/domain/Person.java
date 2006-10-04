@@ -1763,10 +1763,72 @@ public class Person extends Person_Base {
             super();
         }
 
-        public Object execute() {
-            return new Person(this, true);
-        }
+	public Object execute() {
+	    final Person person = new Person(this, true);
+	    final Unit unit = Unit.findFirstExternalUnitByName(getUnitName());
+	    if (unit == null) {
+		throw new DomainException("error.unit.does.not.exist");
+	    }
+	    new ExternalContract(person, unit, new YearMonthDay(), null);
+	    return person;
+	}
     }
+
+    public static class AnyPersonSearchBean implements Serializable {
+	String name;
+	String documentIdNumber;
+	IDDocumentType idDocumentType;
+
+	public String getDocumentIdNumber() {
+	    return documentIdNumber;
+	}
+	public void setDocumentIdNumber(String documentIdNumber) {
+	    this.documentIdNumber = documentIdNumber;
+	}
+	public IDDocumentType getIdDocumentType() {
+	    return idDocumentType;
+	}
+	public void setIdDocumentType(IDDocumentType idDocumentType) {
+	    this.idDocumentType = idDocumentType;
+	}
+	public String getName() {
+	    return name;
+	}
+	public void setName(String name) {
+	    this.name = name;
+	}
+
+	private boolean matchesAnyCriteria(final Person person) {
+	    return (isSpecified(documentIdNumber) && documentIdNumber.equalsIgnoreCase(person.getDocumentIdNumber()))
+	    		|| (isSpecified(name) && name.equalsIgnoreCase(person.getName()));
+	}
+
+	public SortedSet<Person> search() {
+	    final SortedSet<Person> people = new TreeSet<Person>(COMPARATOR_BY_NAME);
+	    for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+		if (party.isPerson()) {
+		    final Person person = (Person) party;
+		    if (matchesAnyCriteria(person)) {
+			people.add(person);
+		    }
+		}
+	    }
+	    return people;
+	}
+
+	public SortedSet<Person> getSearch() {
+	    return search();
+	}
+
+	public boolean getHasBeenSubmitted() {
+	    return isSpecified(name) || isSpecified(documentIdNumber);
+	}
+
+	private boolean isSpecified(final String string) {
+	    return string != null && string.length() > 0;
+	}
+    }
+
 
     public Registration getRegistration(ExecutionCourse executionCourse) {
     	return executionCourse.getRegistration(this);
