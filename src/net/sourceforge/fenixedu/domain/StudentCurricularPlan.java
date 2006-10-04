@@ -1407,9 +1407,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Set<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
-	final Comparator<ExecutionPeriod> comparator = new ReverseComparator(
-		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
-	Set<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(comparator);
+	final Set<ExecutionPeriod> result = new HashSet<ExecutionPeriod>();
 
 	for (final Enrolment enrolment : this.getEnrolmentsSet()) {
 	    result.add(enrolment.getExecutionPeriod());
@@ -1720,4 +1718,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
+    public String getName() {
+	return getDegreeCurricularPlan().getName();
+    }
+    
 }
