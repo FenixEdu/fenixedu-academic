@@ -72,7 +72,19 @@
 	<slot name="idDocumentType" key="label.idDocumentType"/>
 </schema>
 <schema name="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean.Unit" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
-	<slot name="unitName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="unit" key="unitName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="labelField" value="name"/>
+		<property name="format" value="${name}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="ExternalUnitSearchService"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
+		<property name="minChars" value="1"/>
+		<property name="maxCount" value="100"/>		
+		<property name="rawSlotName" value="unitName"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.organizationalStructure.Unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="MANAGER_RESOURCES" > 
 	<slot name="name" key="unitName"/>

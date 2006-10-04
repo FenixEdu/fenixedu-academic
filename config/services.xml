@@ -11023,4 +11023,12 @@
         	<chain name="ParkingManagerAuthorizationFilter"></chain>
         </filterChains>   
     </service> 
+    <service>
+    	<name>ExternalUnitSearchService</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ExternalUnitSearchService</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>   
+    </service> 
 </serviceDefinitions>
