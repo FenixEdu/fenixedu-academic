@@ -10,6 +10,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
@@ -875,4 +876,9 @@ public class Enrolment extends Enrolment_Base {
 	public List<ExecutionCourse> getExecutionCourses() {
 		return this.getCurricularCourse().getAssociatedExecutionCourses();
 	}
+	
+	public boolean isNormal() {
+	    return getCurricularCourse().getType() == CurricularCourseType.NORMAL_COURSE;
+	}
+	
 }
