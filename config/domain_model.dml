@@ -2896,8 +2896,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer keyEmployee;
-		Integer keyTeacher;
-		Integer keyExternalPerson;	
+		Integer keyTeacher;	
 		Integer keyGrantOwner;
 		Integer keyPersonalPhoto;
 		Integer keyAssociatedPersonAccount;
