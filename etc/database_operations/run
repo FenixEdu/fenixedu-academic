@@ -27,5 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Creating Test Module" createTestModule.sql
 execute "Change Competence Course Levels" changeCompetenceCourseLevels.sql
