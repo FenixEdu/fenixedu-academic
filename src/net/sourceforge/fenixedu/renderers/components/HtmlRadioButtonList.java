@@ -209,7 +209,7 @@ public class HtmlRadioButtonList extends HtmlSimpleValueComponent {
         getRadioButtons().add(radio);
         
         HtmlListItem item = this.list.createItem();
-        item.setBody(component);
+        item.addChild(component);
         
         radio.setName(getName());
         return radio;
@@ -244,9 +244,12 @@ public class HtmlRadioButtonList extends HtmlSimpleValueComponent {
             HtmlInlineContainer container = new HtmlInlineContainer();
             
             container.addChild(getRadioButtons().get(i));
-            container.addChild(item.getBody());
             
-            item.setBody(container);
+            for (HtmlComponent component : item.getChildren()) {
+                container.addChild(component);
+            }
+            
+            item.addChild(container);
         }
         
         return this.list.getOwnTag(context);
