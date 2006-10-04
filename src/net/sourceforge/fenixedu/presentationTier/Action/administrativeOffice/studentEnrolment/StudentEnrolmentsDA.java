@@ -51,4 +51,10 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	}
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
+    
+    public ActionForward end(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException{
+	StudentEnrolmentBean studentEnrolmentBean = (StudentEnrolmentBean) getRenderedObject();
+	request.setAttribute("studentNumber", studentEnrolmentBean.getStudentCurricularPlan().getStudent().getNumber().toString());
+	return mapping.findForward("viewCurriculum");
+    }
 }
