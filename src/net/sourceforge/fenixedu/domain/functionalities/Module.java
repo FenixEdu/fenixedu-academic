@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
 import net.sourceforge.fenixedu.domain.functionalities.exceptions.CyclicModuleException;
@@ -35,6 +34,8 @@ public class Module extends Module_Base {
      */
     protected Module() {
         super();
+        
+        setMaximized(false);
     }
 
     /**
@@ -54,6 +55,10 @@ public class Module extends Module_Base {
         setName(name);
         setPrefix(prefix);
         changeUuid(uuid);
+    }
+
+    public Boolean isMaximized() {
+        return getMaximized() == null ? false : getMaximized();
     }
 
     @Override

@@ -103,7 +103,6 @@ public class ImportFunctionalities extends Service {
                 Boolean relative  = new Boolean(functionalityElement.getAttributeValue("relative"));
                 Boolean principal = new Boolean(functionalityElement.getAttributeValue("principal"));
                 Boolean visible   = new Boolean(functionalityElement.getAttributeValue("visible"));
-                Boolean maximized = new Boolean(functionalityElement.getAttributeValue("maximized"));
     
                 Integer order = null;
                 String orderValue = functionalityElement.getAttributeValue("order");
@@ -113,7 +112,12 @@ public class ImportFunctionalities extends Service {
                 
                 String type = functionalityElement.getAttributeValue("type");
                 if (type.equals(Module.class.getName())) {
-                    functionality = considerUUID ? new Module(uuid, name, prefix) : new Module(name, prefix);
+                    Module createdModule;
+                    
+                    functionality = createdModule = considerUUID ? new Module(uuid, name, prefix) : new Module(name, prefix);
+                    
+                    Boolean maximized = new Boolean(functionalityElement.getAttributeValue("maximized"));
+                    createdModule.setMaximized(maximized);
                 }
                 else {
                     functionality = considerUUID ? new ConcreteFunctionality(uuid, name) : new ConcreteFunctionality(name);
@@ -132,7 +136,6 @@ public class ImportFunctionalities extends Service {
                 functionality.setDescription(description);
                 functionality.setRelative(relative);
                 functionality.setVisible(visible);
-                functionality.setMaximized(maximized);
                 
                 if (expression != null) {
                     new GroupAvailability(functionality, expression);

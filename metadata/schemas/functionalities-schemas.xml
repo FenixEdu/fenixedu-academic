@@ -20,7 +20,6 @@
         <property name="columns" value="40"/>
     </slot>
     <slot name="visible" default="true"/>
-    <slot name="maximized"/>
 </schema>
 
 <schema name="functionalities.module.input" 
@@ -84,7 +83,6 @@
         <property name="label" value="--"/>
     </slot>
     <slot name="visible"/>
-    <slot name="maximized"/>
 </schema>
 
 <schema name="functionalities.functionality.availability" 

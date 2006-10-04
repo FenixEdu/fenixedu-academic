@@ -72,7 +72,6 @@ public abstract class Functionality extends Functionality_Base {
         setRelative(true);
         setEnabled(true);
         setVisible(true);
-        setMaximized(false);
         setPrincipal(true);
 
         // TODO: check if we can make a CommitListener to do this
@@ -224,10 +223,6 @@ public abstract class Functionality extends Functionality_Base {
 
     public Boolean isPrincipal() {
         return getPrincipal() == null ? true : getPrincipal();
-    }
-
-    public Boolean isMaximized() {
-        return getMaximized() == null ? false : getMaximized();
     }
 
     public void setPathAndPrincipal(String path, Boolean principal) {

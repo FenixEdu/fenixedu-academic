@@ -319,7 +319,6 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         element.setAttribute("enabled", String.valueOf(functionality.isEnabled()));
         element.setAttribute("relative", String.valueOf(functionality.isRelative()));
         element.setAttribute("visible", String.valueOf(functionality.isVisible()));
-        element.setAttribute("maximized", String.valueOf(functionality.isMaximized()));
 
         if (functionality.getAvailabilityPolicy() != null) {
             String expression = ((GroupAvailability) functionality.getAvailabilityPolicy()).getExpression();
@@ -330,6 +329,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
             Module module = (Module) functionality;
             
             element.setAttribute("prefix", module.getPrefix());
+            element.setAttribute("maximized", String.valueOf(module.isMaximized()));
             
             Element children = new Element("children");
             for (Functionality child : module.getOrderedFunctionalities()) {
