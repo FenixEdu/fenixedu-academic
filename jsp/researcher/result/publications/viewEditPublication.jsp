@@ -12,7 +12,7 @@
 	<bean:define id="result" name="result"/>	
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>"/>
 
-	<em>Publicações</em> <!-- tobundle -->
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.details.title"/></h2>
 	
 	
@@ -44,7 +44,7 @@
 	</ul>
 	
 	<%-- Data --%>
-	<p class="mtop2 mbottom0"><b>Detalhes da publicação</b></p> <!-- tobundle -->
+	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.details.title"/></b></p>
 	<fr:view name="result" layout="tabular" schema="<%="result.publication.details."+resultPublicationType %>">
  		<fr:layout name="tabular">
     	    <fr:property name="classes" value="tstyle1 thlight thright thtop width600px"/>

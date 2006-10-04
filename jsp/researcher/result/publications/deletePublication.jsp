@@ -9,8 +9,8 @@
 	<bean:define id="resultId" name="result" property="idInternal"/>
 	<bean:define id="resultPublicationType" name="resultPublicationType"/>
 
-	<em>Publicações</em> <!-- tobundle -->
-	<h2>Apagar Publicação</h2> <!-- tobundle -->
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.delete"/></h2>
 	
 	<p class="mvert2"><span class="warning0"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.delete.useCase.title"/></span></p>
 
