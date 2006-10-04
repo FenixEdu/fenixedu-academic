@@ -39,42 +39,51 @@
 				<th scope="col"></th>
 			</tr>
 			<logic:iterate id="person" name="people">
-				<bean:size id="numberUnitsTemp" name="person" property="parentsSet"/>
+				<bean:define id="organizationalUnitsPresentation" name="person" property="organizationalUnitsPresentation"/>
+				<bean:size id="numberUnitsTemp" name="person" property="organizationalUnitsPresentation"/>
 				<bean:define id="numberUnits"><bean:write name="numberUnitsTemp"/></bean:define>
-				<logic:empty name="person" property="parentsSet">
+				<logic:empty name="organizationalUnitsPresentation">
 					<bean:define id="numberUnits" value="1"/>
 				</logic:empty>
 				<tr>
-					<td colspan="<%= numberUnits %>"><bean:write name="person" property="name"/></td>
+					<td rowspan="<%= numberUnits %>"><bean:write name="person" property="name"/></td>
 					<bean:define id="docIDTitle" type="java.lang.String"><logic:present name="person" property="idDocumentType"><bean:message name="person" property="idDocumentType.name" bundle="ENUMERATION_RESOURCES"/></logic:present></bean:define>
-					<td colspan="<%= numberUnits %>" title="<%= docIDTitle %>"><bean:write name="person" property="documentIdNumber"/></td>
-					<logic:empty name="person" property="parentsSet">
+					<td rowspan="<%= numberUnits %>" title="<%= docIDTitle %>"><bean:write name="person" property="documentIdNumber"/></td>
+					<logic:empty name="person" property="organizationalUnitsPresentation">
 						<td>
 						</td>
 					</logic:empty>
-					<logic:iterate id="accountability" name="person" property="parentsSet">
+					<logic:iterate id="unitName" name="organizationalUnitsPresentation" length="1">
 						<td>
-							<bean:write name="accountability" property="parentParty.name"/>
+							<bean:write name="unitName"/>
 							<br/>
 						</td>
 					</logic:iterate>
 					<logic:present name="person" property="parkingParty">
-						<td colspan="<%= numberUnits %>">
+						<td rowspan="<%= numberUnits %>">
 							<bean:message key="label.yes"/>
 						</td>
-						<td colspan="<%= numberUnits %>">
+						<td rowspan="<%= numberUnits %>">
 						</td>
 					</logic:present>
 					<logic:notPresent name="person" property="parkingParty">
-						<td colspan="<%= numberUnits %>">
+						<td rowspan="<%= numberUnits %>">
 							<bean:message key="label.no"/>
 						</td>
-						<td colspan="<%= numberUnits %>">
+						<td rowspan="<%= numberUnits %>">
 							<bean:define id="url" type="java.lang.String">/externalPerson.do?method=createParkingParty&amp;personID=<bean:write name="person" property="idInternal"/></bean:define>
 							<html:link page="<%= url %>"><bean:message key="link.create.external.person" /></html:link>
 						</td>
 					</logic:notPresent>
 				</tr>
+				<logic:iterate id="unitName" name="organizationalUnitsPresentation"offset="1">
+					<tr>
+						<td>
+							<bean:write name="unitName"/>
+							<br/>
+						</td>
+					</tr>
+				</logic:iterate>
 			</logic:iterate>
 		</tbody></table>
 	<br/>

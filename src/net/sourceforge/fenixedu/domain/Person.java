@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -1852,6 +1853,37 @@ public class Person extends Person_Base {
 
     public Registration getRegistration(ExecutionCourse executionCourse) {
     	return executionCourse.getRegistration(this);
+    }
+
+    public SortedSet<String> getOrganizationalUnitsPresentation() {
+        final SortedSet<String> organizationalUnits = new TreeSet<String>();
+        for (final Accountability accountability : getParentsSet()) {
+            if (isOrganizationalUnitsForPresentation(accountability)) {
+                System.out.println("Adding: " + accountability.getAccountabilityType().getName());
+                final Party party = accountability.getParentParty();
+                organizationalUnits.add(party.getName());
+            }
+        }
+        if (getStudent() != null) {
+            for (final Registration registration : getStudent().getRegistrationsSet()) {
+                if (registration.isActive()) {
+                    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+                        if (studentCurricularPlan.isActive()) {
+                            final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+                            final Degree degree = degreeCurricularPlan.getDegree();
+                            organizationalUnits.add(degree.getPresentationName());
+                        }
+                    }
+                }
+            }
+        }
+        return organizationalUnits;
+    }
+
+    private boolean isOrganizationalUnitsForPresentation(final Accountability accountability) {
+        final AccountabilityType accountabilityType = accountability.getAccountabilityType();
+        final AccountabilityTypeEnum accountabilityTypeEnum = accountabilityType.getType();
+        return accountabilityTypeEnum == AccountabilityTypeEnum.EMPLOYEE_CONTRACT;
     }
 
 }
