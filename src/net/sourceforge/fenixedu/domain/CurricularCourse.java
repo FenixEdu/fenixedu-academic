@@ -150,12 +150,12 @@ public class CurricularCourse extends CurricularCourse_Base {
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
 	// FIXME: in the future, a curricular course may be included in contexts
 	// of diferent curricular plans
-	return getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan();
+	return (isBolonha()) ? getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan() : super.getDegreeCurricularPlan();
     }
 
     @Override
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return (isBolonha()) ? this.getParentDegreeCurricularPlan() : super.getDegreeCurricularPlan();
+	return getParentDegreeCurricularPlan();
     }
 
     @Override
@@ -1138,6 +1138,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return null;
     }
 
+    @Override
     public boolean isOptional() {
 	return getType().equals(CurricularCourseType.OPTIONAL_COURSE);
     }
