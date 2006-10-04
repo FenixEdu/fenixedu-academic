@@ -374,7 +374,7 @@
 	</slot>
 	<slot name="country" layout="menu-select">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/> 
-		<property name="format" value="${name}"/>
+		<property name="format" value="${name}  (${nationality})"/>
 		<property name="sortBy" value="name"/>
 	</slot>
 	<slot name="local"/>
@@ -611,6 +611,7 @@
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="format" value="${name}  (${nationality})"/>
 		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="scope"/>
@@ -696,6 +697,7 @@
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="format" value="${name}  (${nationality})"/>
 		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="url"><property name="size" value="40"/></slot>
@@ -788,6 +790,7 @@
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="format" value="${name}  (${nationality})"/>
 		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="url"><property name="size" value="40"/></slot>
@@ -880,6 +883,7 @@
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="format" value="${name}  (${nationality})"/>
 		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="scope"/>
@@ -1127,13 +1131,21 @@
 		<property name="size" value="60"/>
 	</slot>
 	<slot name="thesisType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
- 	<slot name="year">
+ 	<slot name="year" key="label.yearEnd">
  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="yyyy"/>
 		</validator>
  		<property name="size" value="5"/>
-	</slot>	
-	<slot name="month"/>
+	</slot>
+	<slot name="month" key="label.monthEnd"/>
+	<slot name="yearBegin" key="label.yearBegin">
+ 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="dateFormat" value="yyyy"/>
+			<property name="required" value="false"/>
+		</validator>
+ 		<property name="size" value="5"/>
+	</slot>
+	<slot name="monthBegin" key="label.monthBegin"/>
 	<slot name="organization" layout="autoComplete" key="label.school" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
@@ -1162,8 +1174,10 @@
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Thesis">
 	<slot name="title"/>
 	<slot name="thesisType"/>
- 	<slot name="year"/>	
-	<slot name="month"/>
+ 	<slot name="year" key="label.yearEnd"/>
+	<slot name="month" key="label.monthEnd"/>
+ 	<slot name="yearBegin" key="label.yearBegin"/>	
+	<slot name="monthBegin" key="label.monthBegin"/>
 	<slot name="organization" layout="null-as-label" key="label.school">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
@@ -1325,6 +1339,7 @@
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="format" value="${name}  (${nationality})"/>
 		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="url"><property name="size" value="40"/></slot>
@@ -1414,8 +1429,47 @@
 <schema name="bibtex.participatorDescription" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean">
  	<slot name="personDescription"/>
 </schema>
-
-
+<!-- Schemas used in bibtex importation. simple remove slot publicationType (not possible to change publicationType!) -->
+<schema name="result.publication.import.Book" bundle="RESEARCHER_RESOURCES" extends="result.publication.create.Book"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean">
+	<remove name="publicationType"/>
+</schema>
+<schema name="result.publication.import.Article" bundle="RESEARCHER_RESOURCES" extends="result.publication.create.Article"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean">
+	<remove name="publicationType"/>
+</schema>
+<schema name="result.publication.import.Inbook" bundle="RESEARCHER_RESOURCES" extends="result.publication.create.Inbook"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean">
+	<remove name="publicationType"/>
+</schema>
+<schema name="result.publication.import.Incollection" bundle="RESEARCHER_RESOURCES" extends="result.publication.create.Incollection"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean">
+	<remove name="publicationType"/>
+</schema>
+<schema name="result.publication.import.Inproceedings" bundle="RESEARCHER_RESOURCES" extends="result.publication.create.Inproceedings"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean">
+	<remove name="publicationType"/>
+</schema>
+<schema name="result.publication.import.Proceedings" bundle="RESEARCHER_RESOURCES" extends="result.publication.create.Proceedings"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean">
+	<remove name="publicationType"/>
+</schema>
+<schema name="result.publication.import.Thesis" bundle="RESEARCHER_RESOURCES" extends="result.publication.create.Thesis"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean">
+	<remove name="publicationType"/>
+</schema>
+<schema name="result.publication.import.Manual" bundle="RESEARCHER_RESOURCES" extends="result.publication.create.Manual"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean">
+	<remove name="publicationType"/>
+</schema>
+<schema name="result.publication.import.TechnicalReport" bundle="RESEARCHER_RESOURCES" extends="result.publication.create.TechnicalReport"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean">
+	<remove name="publicationType"/>
+</schema>
+<schema name="result.publication.import.OtherPublication" bundle="RESEARCHER_RESOURCES" extends="result.publication.create.OtherPublication"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean">
+	<remove name="publicationType"/>
+</schema>
 
 
 <!-- Publications presentation -->
