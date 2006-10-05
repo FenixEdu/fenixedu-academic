@@ -129,7 +129,7 @@ public class InfoShift extends InfoObject {
         return shift == null ? null : new InfoShift(shift);
     }
 
-    private Shift getShift() {
+    public Shift getShift() {
         return shift == null ? null : shift.getObject();
     }
 

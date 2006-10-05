@@ -54,46 +54,49 @@ Turno: <bean:write name="shiftName"/>
 <br />
 Alunos Inscritos
 </h2>
-
 <br />
+
 <logic:present name="<%= SessionConstants.STUDENT_LIST %>" scope="request">
-	<html:form action="/manageShiftStudents">
-	<!--
-		<html:link href="javascript:invertSelect()" titleKey="label.invertSelect">
-			<bean:message key="label.invertSelect" />
-		</html:link>
-	-->
-		<table>
-			<tr>
-				<th class="listClasses-header">
-				</th>
-				<th class="listClasses-header">
-					<bean:message key="label.number"/>
-				</th>
-				<th class="listClasses-header">
-					<bean:message key="label.name"/>
-				</th>
-				<th class="listClasses-header">
-					<bean:message key="label.mail"/>
-				</th>
+<html:form action="/manageShiftStudents">
+	<table>
+		<tr>
+			<th class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
+				<bean:message key="label.number"/>
+			</th>
+			<th class="listClasses-header">
+				<bean:message key="label.name"/>
+			</th>
+			<th class="listClasses-header">
+				<bean:message key="label.mail"/>
+			</th>
+			<th class="listClasses-header">
+			</th>
+		</tr>
+		<logic:iterate id="shiftEnrolment" name="shift" property="shift.shiftEnrolmentsOrderedByDate">
+			<bean:define id="student" name="shiftEnrolment" property="registration"/>
+			<tr align="center">
+				<td class="listClasses">
+					<html:multibox property="studentIDs"><bean:write name="student" property="idInternal"/></html:multibox>
+				</td>
+				<td class="listClasses">
+					<bean:write name="student" property="number"/>
+				</td>
+				<td class="listClasses">
+					<bean:write name="student" property="student.person.nome"/>
+				</td>
+				<td class="listClasses">
+					<bean:write name="student" property="student.person.email"/>
+				</td>
+				<td class="listClasses">
+					<dt:format pattern="dd/MM/yyyy HH:mm:ss">
+						<bean:write name="shiftEnrolment" property="createdOn.millis"/>
+					</dt:format>
+				</td>
 			</tr>
-			<logic:iterate id="student" name="<%= SessionConstants.STUDENT_LIST %>">
-				<tr align="center">
-					<td class="listClasses">
-						<html:multibox property="studentIDs"><bean:write name="student" property="idInternal"/></html:multibox>
-					</td>
-					<td class="listClasses">
-						<bean:write name="student" property="number"/>
-					</td>
-					<td class="listClasses">
-						<bean:write name="student" property="infoPerson.nome"/>
-					</td>
-					<td class="listClasses">
-						<bean:write name="student" property="infoPerson.email"/>
-					</td>
-				</tr>
-			</logic:iterate>
-		</table>
+		</logic:iterate>
+	</table>
 
 <br />
 <h2><bean:message key="title.transfer.students.shif"/></h2>

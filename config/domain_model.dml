@@ -2612,6 +2612,12 @@ class net.sourceforge.fenixedu.domain.ShiftProfessorship extends net.sourceforge
     Double percentage;
 }
 
+class net.sourceforge.fenixedu.domain.ShiftEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyShift;
+    Integer keyRegistration;
+    DateTime createdOn;
+}
+
 
 class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile extends net.sourceforge.fenixedu.domain.DomainObject {
 	String filename;
@@ -6544,6 +6550,20 @@ relation ShiftStudent {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.student.Registration playsRole students {
+		multiplicity *;
+	}
+}
+
+relation ShiftEnrolmentShift {
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+	net.sourceforge.fenixedu.domain.ShiftEnrolment playsRole shiftEnrolments {
+		multiplicity *;
+	}
+}
+
+relation ShiftEnrolmentRegistration {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+	net.sourceforge.fenixedu.domain.ShiftEnrolment playsRole shiftEnrolments {
 		multiplicity *;
 	}
 }

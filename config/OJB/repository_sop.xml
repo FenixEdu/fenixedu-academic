@@ -76,6 +76,11 @@
 	
 	</class-descriptor>
 
+   <class-descriptor class="net.sourceforge.fenixedu.domain.ShiftEnrolment"
+   	  table="SHIFT_ENROLMENT"
+   >
+	</class-descriptor>
+
 <!-- Definitions for net.sourceforge.fenixedu.domain.Lesson -->
    <class-descriptor class="net.sourceforge.fenixedu.domain.Lesson"
    	  table="LESSON"

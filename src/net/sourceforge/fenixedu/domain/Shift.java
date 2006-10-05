@@ -158,4 +158,10 @@ public class Shift extends Shift_Base {
 	    return false;
 	}
     }
+
+    public SortedSet<ShiftEnrolment> getShiftEnrolmentsOrderedByDate() {
+	final SortedSet<ShiftEnrolment> shiftEnrolments = new TreeSet<ShiftEnrolment>(ShiftEnrolment.COMPARATOR_BY_DATE);
+	shiftEnrolments.addAll(getShiftEnrolmentsSet());
+	return shiftEnrolments;
+    }
 }
