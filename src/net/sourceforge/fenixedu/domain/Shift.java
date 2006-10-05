@@ -28,6 +28,10 @@ public class Shift extends Shift_Base {
 		.addComparator(new BeanComparator("idInternal"));
     }
 
+    static {
+	Registration.ShiftStudent.addListener(new ShiftStudentListener());
+    }
+
     public Shift(final ExecutionCourse executionCourse, final ShiftType shiftType,
 	    final Integer lotacao, final Integer availabilityFinal) {
 	super();
@@ -164,4 +168,35 @@ public class Shift extends Shift_Base {
 	shiftEnrolments.addAll(getShiftEnrolmentsSet());
 	return shiftEnrolments;
     }
+
+    private static class ShiftStudentListener extends dml.runtime.RelationAdapter<Registration, Shift> {
+
+        @Override
+        public void afterAdd(Registration registration, Shift shift) {
+            new ShiftEnrolment(shift, registration);
+        }
+
+        @Override
+        public void afterRemove(Registration registration, Shift shift) {
+            shift.unEnrolStudent(registration);
+        }
+
+    }
+
+    public void unEnrolStudent(final Registration registration) {
+	final ShiftEnrolment shiftEnrolment = findShiftEnrolment(registration);
+	if (shiftEnrolment != null) {
+	    shiftEnrolment.delete();
+	}
+    }
+
+    private ShiftEnrolment findShiftEnrolment(final Registration registration) {
+	for (final ShiftEnrolment shiftEnrolment : getShiftEnrolmentsSet()) {
+	    if (shiftEnrolment.getRegistration() == registration) {
+		return shiftEnrolment;
+	    }
+	}
+	return null;
+    }
+
 }

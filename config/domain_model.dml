@@ -10639,3 +10639,10 @@ relation RootDomainObjectNewCorrector {
 		multiplicity *;
 	}
 }
+
+relation RootDomainObjectShiftEnrolment {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.ShiftEnrolment playsRole shiftEnrolments {
+		multiplicity *;
+	}
+}

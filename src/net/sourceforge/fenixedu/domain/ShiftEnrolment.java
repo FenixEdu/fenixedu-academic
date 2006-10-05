@@ -2,8 +2,11 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.student.Registration;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.joda.time.DateTime;
 
 public class ShiftEnrolment extends ShiftEnrolment_Base {
 
@@ -13,8 +16,19 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
 	((ComparatorChain) COMPARATOR_BY_DATE).addComparator(new BeanComparator("idInternal"));
     }
 
-    public  ShiftEnrolment() {
+    public ShiftEnrolment(final Shift shift, final Registration registration) {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setRegistration(registration);
+        setShift(shift);
+        setCreatedOn(new DateTime());
+    }
+
+    public void delete() {
+	removeShift();
+	removeRegistration();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
 }

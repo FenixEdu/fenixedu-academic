@@ -11,7 +11,7 @@ public class EnrollStudentInShifts extends Service {
     public class StudentNotFoundServiceException extends FenixServiceException {}
 
     public ShiftEnrollmentErrorReport run(final Registration registration, final Integer shiftId) throws FenixServiceException {
-    	
+
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
         if (registration == null) {
