@@ -4,18 +4,25 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class InfoUnit extends InfoObject {
 
-    private String name = null;
+    private String name = "";
 
-    private String costCenterCode = null;
+    private String costCenterCode = "";
 
-    private List superiorUnitsNames = new ArrayList();
+    private String superiorUnitsNames = "";
+    
+    private String presentationName = "";
+
+    public String getPresentationName() {
+        return presentationName;
+    }
+
+    public void setPresentationName(String presentationName) {
+        this.presentationName = presentationName;
+    }
 
     public String getCostCenterCode() {
         return costCenterCode;
@@ -27,17 +34,17 @@ public class InfoUnit extends InfoObject {
 
     public String getName() {
         return name;
-    }
+    }       
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public List getSuperiorUnitsNames() {
+    public String getSuperiorUnitsNames() {
         return superiorUnitsNames;
     }
 
-    public void setSuperiorUnitsNames(List superiorUnitsNames) {
+    public void setSuperiorUnitsNames(String superiorUnitsNames) {
         this.superiorUnitsNames = superiorUnitsNames;
     }
 
@@ -45,43 +52,10 @@ public class InfoUnit extends InfoObject {
         super.copyFromDomain(unit);
         if (unit != null) {            
             setCostCenterCode(unit.getCostCenterCode().toString());
-            setName(unit.getName());
-            Unit unitBase = unit;
-            getParentUnitsNames(unit, unitBase);
+            setName(unit.getName());            
+            setSuperiorUnitsNames(unit.getParentUnitsPresentationNameWithBreakLine());
+            setPresentationName(unit.getPresentationName());
         }
-    }
-
-  
-    private void getParentUnitsNames(Unit unit, Unit unitBase) {
-        
-        List superiorUnits = new ArrayList();
-        String unitName = unitBase.getName();                
-        unitName = unitBase.getCostCenterCode().toString() + " - " + unitName; 
-        
-        if (!unit.getTopUnits().isEmpty() && unit.getTopUnits().size() == 1) {                     
-            superiorUnits.add(0, unit.getTopUnits().get(0).getName());
-            superiorUnits.add(1, unitName);
-            setSuperiorUnitsNames(superiorUnits);
-        }
-        else{
-            StringBuilder buffer = new StringBuilder();
-            int size = unit.getTopUnits().size(), i = 0;
-            for (Unit unit2 : unit.getTopUnits()) {
-                buffer.append(unit2.getName());
-                i++;
-                if(i < size){
-                    buffer.append(" / ");
-                }
-            }
-            if(size != 0){
-                superiorUnits.add(0, buffer.toString());
-                superiorUnits.add(1, unitName);
-            }
-            else{
-                superiorUnits.add(0, unitName);
-            }
-            setSuperiorUnitsNames(superiorUnits);
-        }                
     }
 
     public static InfoUnit newInfoFromDomain(Unit unit) {

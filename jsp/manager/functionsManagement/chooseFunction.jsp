@@ -19,7 +19,7 @@
 		<h:outputText value="<H2>#{bundle['label.search.function']}</H2>" escape="false"/>		
 		<h:outputText value="<br/>" escape="false" />
 		
-		<h:panelGrid columns="2">
+		<h:panelGrid columns="2" columnClasses="valigntop">
 			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
 			<h:outputText value="#{managerFunctionsManagementBackingBean.person.nome}" escape="false"/>									
 				

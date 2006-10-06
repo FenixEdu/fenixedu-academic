@@ -34,7 +34,7 @@
 	
 	<h:outputText value="<br/>" escape="false" />
 	
-	<h:panelGrid columns="2">		
+	<h:panelGrid columns="2" columnClasses="valigntop">		
 		<h:outputText value="<b>#{bundle['label.new.function']}</b>" escape="false"/>	
 		<h:outputText value="#{functionsManagementBackingBean.function.name}"/>
 				

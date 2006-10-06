@@ -247,14 +247,11 @@ function check(e,v){
 						<logic:present name="personalInfo" property="infoEmployee.workingUnit" >
 							<bean:define id="infoUnit" name="personalInfo" property="infoEmployee.workingUnit"/>	    			
 							<tr>
-								<td class="ppleft2"><bean:message key="label.person.workPlace" /></td>
-								<bean:size id="numberOfElem" name="infoUnit" property="superiorUnitsNames"/>     			      	
-								<logic:iterate id="superiorUnit" name="infoUnit" property="superiorUnitsNames" indexId="elem">
-									<td class="ppright"><bean:write name="superiorUnit"/></td>
-									<logic:notEqual name="numberOfElem" value="<%= String.valueOf(elem.intValue()+1) %>">
-										<tr><td></td>
-									</logic:notEqual>
-								</logic:iterate>					
+								<td valign="top" class="ppleft2"><bean:message key="label.person.workPlace" /></td>
+								<td class="ppright">
+									<bean:write name="infoUnit" property="superiorUnitsNames" filter="false"/><br/>
+									<bean:write name="infoUnit" property="costCenterCode"/> - <bean:write name="infoUnit" property="name"/>
+								</td>
 							</tr>
 						</logic:present>
 						<logic:present  name="personalInfo" property="infoEmployee.mailingUnit" >
@@ -290,15 +287,17 @@ function check(e,v){
 						</logic:present>
 					</logic:equal>
 					<logic:present name="personalInfo" property="infoStudentCurricularPlanList" >
-						<tr>   
-							<td class="ppleft2" style="vertical-align: top;"><bean:message key="label.degree.name" />:</td>  
-							<td class="ppright">
-								<logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
-									<bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>									
-									<bean:message name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name" bundle="ENUMERATION_RESOURCES" /> <bean:message key="label.in"/> <bean:write name="degreeName" /><br/>																		
-								</logic:iterate>
-							</td>
-						</tr>
+						<logic:notEmpty name="personalInfo" property="infoStudentCurricularPlanList" >
+							<tr>   
+								<td class="ppleft2" style="vertical-align: top;"><bean:message key="label.degree.name" />:</td>  
+								<td class="ppright">
+									<logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
+										<bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>									
+										<bean:message name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name" bundle="ENUMERATION_RESOURCES" /> <bean:message key="label.in"/> <bean:write name="degreeName" /><br/>																		
+									</logic:iterate>
+								</td>
+							</tr>
+						</logic:notEmpty>
 					</logic:present>
 				</table>			</div>
 		</div>

@@ -17,13 +17,13 @@
 		<h:outputText value="<H2>#{bundle['label.edit.function']}</H2>" escape="false"/>		
 		<h:outputText value="<br/>" escape="false" />
 		
-		<h:panelGrid columns="2">
+		<h:panelGrid columns="2" columnClasses="valigntop">
 			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
 			<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.person.nome}" escape="false"/>									
 				
 			<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>	
 			<h:panelGroup>
-				<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.unit.parentUnitsPresentationNameWithBreakLine}"/>				
+				<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.unit.parentUnitsPresentationNameWithBreakLine}" escape="false"/>				
 				<h:outputText value="<br/>" escape="false"/>
 				<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.unit.presentationName}"/>	
 			</h:panelGroup>					
