@@ -27,5 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-executeWithTempFile "Create Shift Enrolment Table" createTableShiftEnrolment.sql
-execute "Load Shift Enrolment Date" loadShiftEnrolmentData.sql

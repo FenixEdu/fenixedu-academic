@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Change Competence Course Levels" changeCompetenceCourseLevels.sql
+executeWithTempFile "Create Shift Enrolment Table" createTableShiftEnrolment.sql
+execute "Load Shift Enrolment Date" loadShiftEnrolmentData.sql
