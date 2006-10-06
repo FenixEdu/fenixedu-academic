@@ -72,6 +72,9 @@ Alunos Inscritos
 				<bean:message key="label.mail"/>
 			</th>
 			<th class="listClasses-header">
+				<bean:message key="label.degree"/>
+			</th>
+			<th class="listClasses-header">
 			</th>
 		</tr>
 		<logic:iterate id="shiftEnrolment" name="shift" property="shift.shiftEnrolmentsOrderedByDate">
@@ -88,6 +91,9 @@ Alunos Inscritos
 				</td>
 				<td class="listClasses">
 					<bean:write name="student" property="student.person.email"/>
+				</td>
+				<td class="listClasses">
+					<bean:write name="student" property="activeOrConcludedStudentCurricularPlan.degreeCurricularPlan.degree.sigla"/>
 				</td>
 				<td class="listClasses">
 					<dt:format pattern="dd/MM/yyyy HH:mm:ss">
