@@ -147,13 +147,14 @@ public class ConvokeByPoints extends Strategy {
 			Vigilant v1 = (Vigilant) o1;
 			Vigilant v2 = (Vigilant) o2;
 
-			Integer p1 = v1.getPoints();
-			Integer p2 = v2.getPoints();
+			Double p1 = v1.getPoints();
+			Double p2 = v2.getPoints();
 
 			p1 += v1.getActiveConvokesAfterCurrentDate().size();
 			p2 += v2.getActiveConvokesAfterCurrentDate().size();
 			
-			return p1.compareTo(p2);
+			
+			return p1.compareTo(p2); 
 
 		}
 

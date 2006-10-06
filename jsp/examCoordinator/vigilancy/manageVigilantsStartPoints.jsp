@@ -20,8 +20,7 @@
 	<fr:hasMessages for="editPoints">
 		<p>
 			<span class="error0">			
-			<fr:message for="editPoints" type="conversion" show="message"/>
-			<fr:message for="editPoints" type="validation" show="message"/>
+			<fr:message for="editPoints" show="message"/>
 			</span>
 		</p>
 	</fr:hasMessages>

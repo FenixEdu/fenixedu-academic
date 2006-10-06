@@ -31,6 +31,8 @@ public class VigilantBean implements Serializable {
     
     private boolean showNotActiveConvokes = Boolean.FALSE;
     
+    private boolean showPointsWeight = Boolean.FALSE;
+    
     private final HashMap<String,String> schemas = new HashMap<String, String>();
     
     
@@ -242,6 +244,14 @@ public class VigilantBean implements Serializable {
 
 	public void setShowNotActiveConvokes(boolean showNotActiveConvokes) {
 		this.showNotActiveConvokes = showNotActiveConvokes;
+	}
+
+	public boolean isShowPointsWeight() {
+		return showPointsWeight;
+	}
+
+	public void setShowPointsWeight(boolean showPointsWeight) {
+		this.showPointsWeight = showPointsWeight;
 	}
 
 }

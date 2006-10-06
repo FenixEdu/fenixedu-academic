@@ -48,10 +48,13 @@ public class VigilancyWithCredits extends VigilancyWithCredits_Base {
 
 	@Override
 	public int getPoints() {
+		
+		
 		if (this.getWrittenEvaluation() == null) {
 			throw new DomainException(
 					"vigilancy.error.InvalidConvokeNoEvaluationAvailable");
 		}
+		
 		DateTime currentDate = new DateTime();
 		if (currentDate.isBefore(this.getBeginDate()))
 			return this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN;

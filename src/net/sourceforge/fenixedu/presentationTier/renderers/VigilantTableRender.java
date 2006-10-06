@@ -61,7 +61,17 @@ public class VigilantTableRender extends OutputRenderer {
     
     private boolean showNotActiveConvokes = Boolean.FALSE;
     
-    public String getEmptyMessageClasses() {
+    private boolean showPointsWeight = Boolean.FALSE;
+    
+    public boolean isShowPointsWeight() {
+		return showPointsWeight;
+	}
+
+	public void setShowPointsWeight(boolean showPointsWeight) {
+		this.showPointsWeight = showPointsWeight;
+	}
+
+	public String getEmptyMessageClasses() {
         return emptyMessageClasses;
     }
 
@@ -218,6 +228,10 @@ public class VigilantTableRender extends OutputRenderer {
 		schema.addSlotDescription(getSlot("teacherCategoryCode","label.vigilancy.category.header"));
 		schema.addSlotDescription(getSlot("person.username","label.vigilancy.username"));
 		schema.addSlotDescription(getSlot("person.name","label.vigilancy.vigilant"));
+		
+		if(isShowPointsWeight()) {
+		schema.addSlotDescription(getSlot("pointsWeight","label.vigilancy.pointsWeight"));
+		}
 		
 		if(isShowUnavailables()) {
 			schema.addSlotDescription(getSlot("unavailablePeriodsAsString", "label.vigilancy.unavailablePeriodsShortLabel"));

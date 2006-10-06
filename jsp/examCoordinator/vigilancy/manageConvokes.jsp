@@ -82,6 +82,7 @@
 		<fr:property name="showBoundsJustification" value="<%= String.valueOf(bean.isShowBoundsJustification()) %>"/>
 		<fr:property name="showStartPoints" value="<%= String.valueOf(bean.isShowStartPoints()) %>"/>
 		<fr:property name="showNotActiveConvokes" value="<%= String.valueOf(bean.isShowNotActiveConvokes()) %>"/>
+		<fr:property name="showPointsWeight" value="<%= String.valueOf(bean.isShowPointsWeight()) %>"/>
 		
 		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
 			<fr:property name="convokeSchema" value="present.convokesForFuture"/>	
@@ -112,6 +113,8 @@
 		<fr:property name="showBoundsJustification" value="<%= String.valueOf(bean.isShowBoundsJustification()) %>"/>
 		<fr:property name="showStartPoints" value="<%= String.valueOf(bean.isShowStartPoints())%>"/>
 		<fr:property name="showNotActiveConvokes" value="<%= String.valueOf(bean.isShowNotActiveConvokes()) %>"/>
+		<fr:property name="showPointsWeight" value="<%= String.valueOf(bean.isShowPointsWeight()) %>"/>
+		
 		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
 			<fr:property name="convokeSchema" value="present.convokesForPast"/>	
 		</logic:equal>
@@ -141,6 +144,7 @@
 		<fr:property name="showBoundsJustification" value="<%= String.valueOf(bean.isShowBoundsJustification()) %>"/>
 		<fr:property name="showStartPoints" value="<%= String.valueOf(bean.isShowStartPoints())%>"/>
 		<fr:property name="showNotActiveConvokes" value="<%= String.valueOf(bean.isShowNotActiveConvokes()) %>"/>
+		<fr:property name="showPointsWeight" value="<%= String.valueOf(bean.isShowPointsWeight()) %>"/>
 		
 		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
 			<fr:property name="convokeSchema" value="present.convokesForCoordinator"/>	

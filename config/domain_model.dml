@@ -3988,6 +3988,7 @@ class net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipVa
 
 class net.sourceforge.fenixedu.domain.vigilancy.Vigilant extends net.sourceforge.fenixedu.domain.DomainObject{
 	Integer startPoints;
+	BigDecimal pointsWeight;
 	Integer keyPerson;
 	Integer keyIncompatiblePerson;
 	Integer keyExecutionYear;

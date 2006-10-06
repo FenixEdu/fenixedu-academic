@@ -387,6 +387,7 @@
 		<slot name="showUnavailables" key="label.vigilancy.displayUnavailableInformation" layout="option-select-postback"/>
 		<slot name="showBoundsJustification" key="label.vigilancy.displayBoundsJustification" layout="option-select-postback"/>
 		<slot name="showStartPoints" key="label.vigilancy.startPoints" layout="option-select-postback"/>
+		<slot name="showPointsWeight" key="label.vigilancy.showWeightPoints" layout="option-select-postback"/>
 		<slot name="showAllVigilancyInfo" key="label.vigilancy.showAllVigilancyInfo" layout="option-select-postback"/>
 		<slot name="showNotActiveConvokes" key="label.vigilancy.showNotActiveConvokes" layout="option-select-postback"/>
 </schema>
@@ -746,6 +747,7 @@
 		<slot name="showUnavailables" key="label.vigilancy.displayUnavailableInformation" layout="option-select-postback"/>
 		<slot name="showBoundsJustification" key="label.vigilancy.displayBoundsJustification" layout="option-select-postback"/>
 		<slot name="showStartPoints" key="label.vigilancy.startPoints" layout="option-select-postback"/>
+		<slot name="showPointsWeight" key="label.vigilancy.showWeightPoints" layout="option-select-postback"/>
 		<slot name="showAllVigilancyInfo" key="label.vigilancy.showAllVigilancyInfo" layout="option-select-postback"/>
 		<slot name="showNotActiveConvokes" key="label.vigilancy.showNotActiveConvokes" layout="option-select-postback"/>
 </schema>
@@ -777,4 +779,9 @@
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
 	</slot>
+	<slot name="pointsWeight" key="label.vigilancy.pointsWeight">
+		<property name="size" value="5"/>
+		<property name="maxLength" value="5"/>
+	</slot>
+	
 </schema>

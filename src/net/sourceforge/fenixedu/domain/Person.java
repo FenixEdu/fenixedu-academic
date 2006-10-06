@@ -526,7 +526,7 @@ public class Person extends Person_Base {
 	return getVigilantForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
     }
 
-    public Integer getVigilancyPointsForGivenYear(ExecutionYear executionYear) {
+    public double getVigilancyPointsForGivenYear(ExecutionYear executionYear) {
 	Vigilant vigilant = this.getVigilantForGivenExecutionYear(executionYear);
 	if (vigilant == null)
 	    return 0;
@@ -534,10 +534,10 @@ public class Person extends Person_Base {
 	    return vigilant.getPoints();
     }
 
-    public Integer getTotalVigilancyPoints() {
+    public double getTotalVigilancyPoints() {
 	List<Vigilant> vigilants = this.getVigilants();
 
-	int points = 0;
+	double points = 0;
 	for (Vigilant vigilant : vigilants) {
 	    points += vigilant.getPoints();
 	}

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.vigilancy;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -55,6 +56,7 @@ public class Vigilant extends Vigilant_Base {
 	protected Vigilant() {
 		super();
 		this.setStartPoints(0);
+		this.setPointsWeight(new BigDecimal(1));
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
@@ -70,26 +72,28 @@ public class Vigilant extends Vigilant_Base {
 		this.setExecutionYear(executionYear);
 	}
 
-	public Integer getPoints() {
-		int points = this.getStartPoints();
+	public double getPoints() {
+		double points = this.getStartPoints();
+		BigDecimal weight = this.getPointsWeight();
+		
 		List<VigilancyWithCredits> vigilancies = Vigilancy.getAllVigilancyWithCredits(this); 
 
 		for(Vigilancy vigilancy : vigilancies) {
-			points += vigilancy.getPoints();
+			points += weight.doubleValue() * vigilancy.getPoints();
 		}
 		
-		return Integer.valueOf(points);
+		return points;
 	}
 
 	public String getEmail() {
 		return this.getPerson().getEmail();
 	}
 
-	public Integer getPointsInExecutionYear(ExecutionYear executionYear) {
+	public double getPointsInExecutionYear(ExecutionYear executionYear) {
 		return this.getPerson().getVigilancyPointsForGivenYear(executionYear);
 	}
 
-	public Integer getTotalPoints() {
+	public double getTotalPoints() {
 		Person person = this.getPerson();
 		return person.getTotalVigilancyPoints();
 	}
@@ -508,5 +512,4 @@ public class Vigilant extends Vigilant_Base {
 			
 		return new ArrayList<VigilantGroup>(groups);
 	}
-	
 }
