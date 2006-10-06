@@ -249,7 +249,7 @@ public class HtmlRadioButtonList extends HtmlSimpleValueComponent {
                 container.addChild(component);
             }
             
-            item.addChild(container);
+            item.setBody(container);
         }
         
         return this.list.getOwnTag(context);

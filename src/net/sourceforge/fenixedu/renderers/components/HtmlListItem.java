@@ -17,19 +17,11 @@ public class HtmlListItem extends HtmlComponent {
         this.body = new ArrayList<HtmlComponent>();
     }
 
-    /**
-     * @deprecated Use {@link #addChild(HtmlComponent)}.
-     */
-    @Deprecated
     public void setBody(HtmlComponent body) {
         this.body = new ArrayList<HtmlComponent>();
         this.body.add(body);
     }
     
-    /**
-     * @deprecated Use {@link #getChildren()}.
-     */
-    @Deprecated
     public HtmlComponent getBody() {
         if (this.body.isEmpty()) {
             return null;
