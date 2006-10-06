@@ -61,14 +61,18 @@
 			<html:textarea rows="7" cols="45" property="note"/>
 			<p class="mtop2">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="accept"><bean:message key="button.accept"/></html:submit>
+			<%--
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="acceptPrint"><bean:message key="button.acceptPrint"/></html:submit>
+			--%>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="notify"><bean:message key="button.notify"/></html:submit>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="reject"><bean:message key="button.reject"/></html:submit>
 			</p>
 		</html:form>
 		<bean:define id="parkingPartyId" name="parkingRequest" property="parkingParty.idInternal" />	
+		<%--
 		<html:link target="printFrame" page="<%= "/parking.do?method=printParkingCard&amp;parkingPartyID=" + parkingPartyId.toString()%>">
 		<bean:message key="label.printCard" bundle="PARKING_RESOURCES"/></html:link>
+		--%>
 		<html:link target="printFrame" page="<%= "/parking.do?method=exportToPDFParkingCard&amp;parkingPartyID=" + parkingPartyId.toString()%>">
 		<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/></html:link>
 	</logic:equal>
