@@ -142,21 +142,19 @@ public class WorkSchedule extends WorkSchedule_Base {
                     if (firstClockingDate != null) {
                         if (wsType.getMeal().getMealBreak().contains(firstClockingDate, false)) {
                             // funcionario entrou no intervalo de almoco
-                            // considera-se o periodo desde o inicio do intervalo de almoco + desconto
-                            // obrigatorio de almoco
-                            // se funcionario entrar nesse periodo de tempo e'-lhe descontado desde a
-                            // entrada
-                            // ate' (inicio do intervalo de almoco + desconto obrigatorio de almoco)
-
-                            TimeOfDay lunchEnd = wsType.getMeal().getLunchEnd();
-                            TimeInterval lunchTime = new TimeInterval(wsType.getMeal()
-                                    .getBeginMealBreak(), lunchEnd, false);
-
-                            if (lunchTime.contains(firstClockingDate, false)) {
-                                workPeriod = workPeriod.minus(new TimeInterval(firstClockingDate,
-                                        lunchEnd, false).getDurationMillis());
+                            Duration lunchDuration = new Duration(wsType.getMeal().getBeginMealBreak()
+                                    .toDateTimeToday(), firstClockingDate.toDateTimeToday());
+                            if (lastClockingDate != null
+                                    && wsType.getMeal().getMealBreak().contains(lastClockingDate, false)) {
+                                lunchDuration = lunchDuration.plus(new Duration(lastClockingDate
+                                        .toDateTimeToday(), wsType.getMeal().getEndMealBreak()
+                                        .toDateTimeToday()));
                             }
-                            // calcular o periodo fixo
+
+                            if (lunchDuration.isShorterThan(wsType.getMeal().getMandatoryMealDiscount())) {
+                                workPeriod = workPeriod.minus(wsType.getMeal()
+                                        .getMandatoryMealDiscount().minus(lunchDuration));
+                            }
                             workDaySheet.setUnjustifiedTime(wsType
                                     .calculateFixedPeriodDuration(timeline));
                             workDaySheet.setBalanceTime(subtractDurationsWithoutSeconds(workPeriod,
