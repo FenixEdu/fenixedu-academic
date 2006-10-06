@@ -68,7 +68,7 @@
 						key="image-3"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA["W:\\workspace\\fenix-patches\\jsp\\images\\LogoIST.gif"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA[$P{imageUrl}]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement
