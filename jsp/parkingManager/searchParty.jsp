@@ -22,15 +22,23 @@
 	
 		<logic:notEmpty name="searchPartyBean" property="party.parkingParty">
 			<bean:define id="parkingParty" name="searchPartyBean" property="party.parkingParty" type="net.sourceforge.fenixedu.domain.parking.ParkingParty"/>
-			
+			<bean:define id="personID" name="parkingParty" property="party.idInternal" />
 			<h3><bean:message key="label.parkUserInfo" /></h3>
+			<p><html:img src="<%= request.getContextPath() +"/parkingManager/parking.do?method=showPhoto&amp;personID="+personID.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></p>
 			<logic:iterate id="occupation" name="parkingParty" property="occupations">
 				<bean:write name="occupation" filter="false"/><br/>
 			</logic:iterate>
 			<p><logic:equal name="parkingParty" property="hasFirstCar" value="false">
 				<bean:message key="label.newUser" bundle="PARKING_RESOURCES"/>
 			</logic:equal></p>
-			<p class="mbottom05"><html:link page="<%= "/parking.do?method=prepareEditParkingParty&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">Editar utente</html:link></p>
+			<p class="mbottom05">
+				<html:link page="<%= "/parking.do?method=prepareEditParkingParty&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">
+				<bean:message key="title.editUser" bundle="PARKING_RESOURCES"/></html:link>
+				<logic:notEmpty name="parkingParty" property="cardNumber">
+					<html:link target="printFrame" page="<%= "/parking.do?method=printParkingCard&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">
+					<bean:message key="label.printCard" bundle="PARKING_RESOURCES"/></html:link>
+				</logic:notEmpty>
+			</p>
 			<fr:view name="parkingParty" schema="view.parkingParty.personalInfo">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
@@ -184,7 +192,14 @@
 						</logic:equal>
 					</logic:equal>
 			
-					<p class="mtop05"><html:link page="<%= "/parking.do?method=prepareEditParkingParty&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">Editar utente</html:link></p>
+					<p class="mtop05">
+						<html:link page="<%= "/parking.do?method=prepareEditParkingParty&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">
+						<bean:message key="title.editUser" bundle="PARKING_RESOURCES"/></html:link>
+						<logic:notEmpty name="parkingParty" property="cardNumber">
+							<html:link target="printFrame" page="<%= "/parking.do?method=printParkingCard&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">
+							<bean:message key="label.printCard" bundle="PARKING_RESOURCES"/></html:link>
+						</logic:notEmpty>
+					</p>
 				<h3><bean:message key="label.requestList" /></h3>
 			<logic:notEmpty name="parkingRequests">		
 				<fr:view name="parkingRequests" schema="show.parkingRequest.noDetail">
@@ -208,7 +223,6 @@
 		</logic:empty>
 	</logic:notEmpty>
 </logic:present>
-
 <logic:present name="partyList">
 	<logic:notEmpty name="partyList">
 	<table class="tstyle1"><tbody>
@@ -264,4 +278,7 @@
 		<bean:message key="label.noRecordFound"/>
 	</logic:empty>
 </logic:present>
+
+<iframe style="display:none;" name="printFrame" src="" height="0" width="0">
+</iframe>
 

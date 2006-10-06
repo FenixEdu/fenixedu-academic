@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.parkingManager;
 
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -322,7 +321,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         request.setAttribute("personName", personName);
         request.setAttribute("carPlateNumber", carPlateNumber);
 
-        if (request.getParameter("accept") != null) {
+        if (request.getParameter("accept") != null || request.getParameter("acceptPrint") != null) {
             Integer cardNumber = null;
             Integer group = null;
             try {
@@ -372,28 +371,54 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         } else {
             args[1] = ParkingRequestState.PENDING;
         }
+
         ServiceUtils.executeService(SessionUtils.getUserView(request), "UpdateParkingParty", args);
+        if (request.getParameter("acceptPrint") != null) {
+            request.setAttribute("parkingPartyID", parkingRequest.getParkingParty().getIdInternal());
+            printParkingCard(mapping, actionForm, request, response);
+            // ServiceUtils.executeService(SessionUtils.getUserView(request), "UpdateParkingParty",
+            // args);
+            //
+            // Map<String, Object> parameters = new HashMap<String, Object>();
+            // parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat(
+            // "/images/LogoIST.gif"));
+            // Person person = (Person) parkingRequest.getParkingParty().getParty();
+            // parameters.put("number", getMostSignificantNumber(person));
+            //
+            // List<Person> persons = new ArrayList<Person>();
+            // persons.add(person);
+            //
+            // ReportsUtils.printReport("parkingManager.parkingCard", parameters, null, persons, 91, 58);
+        }
+        return showParkingRequests(mapping, actionForm, request, response);
+    }
+
+    public ActionForward printParkingCard(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        Integer parkingPartyID = getPopertyID(request, "parkingPartyID");
+        final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(parkingPartyID);
 
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat(
                 "/images/LogoIST.gif"));
-        Person person = (Person) parkingRequest.getParkingParty().getParty();
+
+        Person person = (Person) parkingParty.getParty();
         parameters.put("number", getMostSignificantNumber(person));
 
         List<Person> persons = new ArrayList<Person>();
         persons.add(person);
 
         ReportsUtils.printReport("parkingManager.parkingCard", parameters, null, persons, 91, 58);
-
-        return showParkingRequests(mapping, actionForm, request, response);
+        return null;
     }
 
-    private Integer getMostSignificantNumber(Person p) {
+    private String getMostSignificantNumber(Person p) {
         if (p.getTeacher() != null) {
-            return p.getTeacher().getTeacherNumber();
+            return "Nº Mec: " + p.getTeacher().getTeacherNumber();
         }
         if (p.getEmployee() != null && p.getEmployee().getCurrentWorkingContract() != null) {
-            return p.getEmployee().getEmployeeNumber();
+            return "Nº Mec: " + p.getEmployee().getEmployeeNumber();
         }
         if (p.getStudent() != null) {
             DegreeType degreeType = p.getStudent().getMostSignificantDegreeType();
@@ -402,15 +427,15 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             for (Registration registration : registrations) {
                 StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
                 if (scp != null) {
-                    return p.getStudent().getNumber();
+                    return "Nº: " + p.getStudent().getNumber();
                 }
             }
         }
         if (p.getGrantOwner() != null && p.getGrantOwner().hasCurrentContract()) {
-            return p.getGrantOwner().getNumber();
+            return "Nº: " + p.getGrantOwner().getNumber();
         }
 
-        return null;
+        return "";
     }
 
     private boolean isValidGroup(Integer groupId) {

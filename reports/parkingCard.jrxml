@@ -24,7 +24,7 @@
 	<import value="net.sf.jasperreports.engine.data.*" />
 
 	<parameter name="imageUrl" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="number" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="number" isForPrompting="false" class="java.lang.String"/>
 
 	<field name="name" class="java.lang.String"/>
 
@@ -48,10 +48,10 @@
 			<band height="157"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="59"
-						y="100"
+						x="62"
+						y="105"
 						width="187"
-						height="37"
+						height="32"
 						key="textField"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
@@ -75,7 +75,7 @@
 						x="62"
 						y="7"
 						width="187"
-						height="35"
+						height="17"
 						key="staticText-1"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center">
@@ -83,6 +83,33 @@
 					</textElement>
 				<text><![CDATA[Instituto Superior Técnico]]></text>
 				</staticText>
+				<staticText>
+					<reportElement
+						x="62"
+						y="25"
+						width="187"
+						height="17"
+						forecolor="#CCCCCC"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+				<text><![CDATA[Gestão do Parque de Estacionamento]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="62"
+						y="87"
+						width="187"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{number}]]></textFieldExpression>
+				</textField>
 			</band>
 		</detail>
 		<columnFooter>

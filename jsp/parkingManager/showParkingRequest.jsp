@@ -60,9 +60,10 @@
 			<p class="mbottom025"><strong><bean:message key="label.note"/></strong></p>
 			<html:textarea rows="7" cols="45" property="note"/>
 			<p class="mtop2">
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" property="accept"><bean:message key="button.accept"/></html:submit>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" property="notify"><bean:message key="button.notify"/></html:submit>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" property="reject"><bean:message key="button.reject"/></html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="accept"><bean:message key="button.accept"/></html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="acceptPrint"><bean:message key="button.acceptPrint"/></html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="notify"><bean:message key="button.notify"/></html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="reject"><bean:message key="button.reject"/></html:submit>
 			</p>
 		</html:form>
 	</logic:equal>
