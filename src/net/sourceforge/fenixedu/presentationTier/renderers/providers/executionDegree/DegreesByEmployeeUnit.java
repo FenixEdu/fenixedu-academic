@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.executionD
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -20,7 +21,7 @@ public class DegreesByEmployeeUnit implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 
 	final List<Degree> result = new ArrayList<Degree>();
-	List<Party> childParties = AccessControl.getUserView().getPerson().getEmployee().getCurrentWorkingPlace().getChildParties(
+	Set<Party> childParties = AccessControl.getUserView().getPerson().getEmployee().getCurrentWorkingPlace().getChildParties(
 		AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
 	for (Party party : childParties) {
 	    result.add(((Unit) party).getDegree());

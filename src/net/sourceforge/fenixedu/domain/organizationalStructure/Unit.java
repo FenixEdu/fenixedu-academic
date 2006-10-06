@@ -490,6 +490,10 @@ public class Unit extends Unit_Base {
     public List<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
 	return new ArrayList(getParentParties(accountabilityTypeEnum, getClass()));
     }
+    
+    public List<Unit> getParentUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+	return new ArrayList(getParentParties(accountabilityTypeEnums, getClass()));
+    }
 
     public List<Unit> getSubUnits() {
 	return new ArrayList(getChildParties(getClass()));

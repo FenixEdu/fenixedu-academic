@@ -1096,7 +1096,7 @@ public class Registration extends Registration_Base {
 
     public boolean isActiveForOffice(Unit office) {
 
-	List<Party> officeDegreeUnits = office.getChildParties(
+	Set<Party> officeDegreeUnits = office.getChildParties(
 		AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
 
 	StudentCurricularPlan activeStudentCurricularPlan = getActiveStudentCurricularPlan();
@@ -1111,7 +1111,7 @@ public class Registration extends Registration_Base {
 
     public boolean isForOffice(Unit office) {
 
-	List<Party> officeDegreeUnits = office.getChildParties(
+	Set<Party> officeDegreeUnits = office.getChildParties(
 		AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
 
 	StudentCurricularPlan studentCurricularPlan = getActiveOrConcludedOrLastStudentCurricularPlan();

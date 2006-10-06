@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
@@ -843,17 +844,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return unit;
     }
 
-    public List<Accountability> getParentAccountabilities() throws FenixFilterException,
+    public Set<Accountability> getParentAccountabilities() throws FenixFilterException,
 	    FenixServiceException {
 	return getUnit().getParentAccountabilities(Unit.class);
     }
 
-    public List<Accountability> getChildAccountabilities() throws FenixFilterException,
+    public Set<Accountability> getChildAccountabilities() throws FenixFilterException,
 	    FenixServiceException {
 	return getUnit().getChildAccountabilities(Unit.class);
     }
 
-    private void getParentUnitsRelationTypes() {
+    private void getParentUnitsRelationTypes() throws FenixFilterException, FenixServiceException {
 	ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 	getUnitRelationsAccountabilityTypes().clear();
 	for (Accountability accountability : unit.getParentsSet()) {
@@ -869,8 +870,21 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	getUnitRelationsAccountabilityTypes().clear();
 	for (Accountability accountability : unit.getChildsSet()) {
 	    if (accountability.getChildParty() instanceof Unit) {
-		getUnitRelationsAccountabilityTypes().put(accountability.getIdInternal(),
-			bundle.getString(accountability.getAccountabilityType().getType().getName()));
+		Integer subUnitIdInternal = accountability.getChildParty().getIdInternal();
+		if (getUnitRelationsAccountabilityTypes().containsKey(subUnitIdInternal)) {
+		    getUnitRelationsAccountabilityTypes().put(
+			    subUnitIdInternal,
+			    getUnitRelationsAccountabilityTypes().get(subUnitIdInternal).concat(
+				    ", "
+					    + bundle.getString(accountability.getAccountabilityType()
+						    .getType().getName())));
+		} else {
+		    getUnitRelationsAccountabilityTypes()
+			    .put(
+				    subUnitIdInternal,
+				    bundle.getString(accountability.getAccountabilityType().getType()
+					    .getName()));
+		}
 	    }
 	}
     }
