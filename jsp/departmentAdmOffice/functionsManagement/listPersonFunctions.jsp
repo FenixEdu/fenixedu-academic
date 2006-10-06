@@ -44,15 +44,16 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.search.unit']}" />
 				</f:facet>				
-				<h:outputText value="#{person_function.function.unit.name}"/>
+				<h:outputText value="#{person_function.function.unit.presentationName}"/>
 			</h:column>	
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.belongs.to']}" />
 				</f:facet>				
-				<fc:dataRepeater value="#{person_function.function.unit.topUnits}" var="topUnit">
+				<h:outputText value="#{person_function.function.unit.presentationName}"/>
+				<%--<fc:dataRepeater value="#{person_function.function.unit.topUnits}" var="topUnit">
 					<h:outputText value="#{topUnit.name}<br/>" escape="false" />
-				</fc:dataRepeater>
+				</fc:dataRepeater>--%>
 			</h:column>	
 			<h:column>
 				<f:facet name="header">
@@ -136,7 +137,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.search.unit']}" />
 				</f:facet>				
-				<h:outputText value="#{person_function.function.unit.name}"/>
+				<h:outputText value="#{person_function.function.unit.presentationName}"/>
 			</h:column>	
 			<h:column>
 				<f:facet name="header">

@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -37,6 +38,8 @@ import net.sourceforge.fenixedu.util.ContractType;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
+
+import sun.security.krb5.internal.crypto.b;
 
 public class Unit extends Unit_Base {
 
@@ -490,7 +493,7 @@ public class Unit extends Unit_Base {
     public List<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
 	return new ArrayList(getParentParties(accountabilityTypeEnum, getClass()));
     }
-    
+
     public List<Unit> getParentUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
 	return new ArrayList(getParentParties(accountabilityTypeEnums, getClass()));
     }
@@ -780,4 +783,37 @@ public class Unit extends Unit_Base {
 	return null;
     }
 
+    public String getPresentationName() {
+	StringBuilder builder = new StringBuilder();
+	builder.append(getName());
+	if (getCostCenterCode() != null) {
+	    builder.append(" [c.c.").append(getCostCenterCode()).append("]");
+	}
+	return builder.toString();
+    }
+
+    public String getParentUnitsPresentationName() {
+	StringBuilder builder = new StringBuilder();
+	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
+	Unit institutionUnit = UnitUtils.readInstitutionUnit();
+
+	Unit initialUnit = this;
+	while (initialUnit.getParentUnits().size() == 1) {
+	    Unit unit = initialUnit.getParentUnits().get(0);
+	    if (unit != institutionUnit && unit != externalInstitutionUnit) {
+		builder.append(unit.getName()).append(" - ");
+		initialUnit = unit;
+	    } else {
+		break;
+	    }
+	}
+
+	if (getPartyType() == null
+		|| !getPartyType().getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
+	    builder.append(institutionUnit.getName());
+	} else {
+	    builder.append(externalInstitutionUnit.getName());
+	}
+	return builder.toString();
+    }
 }
