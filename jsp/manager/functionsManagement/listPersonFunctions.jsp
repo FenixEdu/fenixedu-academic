@@ -50,10 +50,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.belongs.to']}" />
 				</f:facet>				
-				<h:outputText value="#{person_function.function.unit.parentUnitsPresentationName}"/>
-				<%--<fc:dataRepeater value="#{person_function.function.unit.topUnits}" var="topUnit">
-					<h:outputText value="#{topUnit.name}<br/>" escape="false" />
-				</fc:dataRepeater>--%>
+				<h:outputText value="#{person_function.function.unit.parentUnitsPresentationName}"/>				
 			</h:column>	
 			<h:column>
 				<f:facet name="header">

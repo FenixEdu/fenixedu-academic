@@ -40,11 +40,9 @@
 				
 		<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>
 		<h:panelGroup>
-			<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.unit.name}"/>	
-			<h:outputText value=" - " rendered="#{!empty scientificCouncilFunctionsManagementBackingBean.unit.topUnits}"/>	
-			<fc:dataRepeater value="#{scientificCouncilFunctionsManagementBackingBean.unit.topUnits}" var="topUnit">
-				<h:outputText value="#{topUnit.name}<br/>" escape="false" />
-			</fc:dataRepeater>	
+			<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.unit.parentUnitsPresentationNameWithBreakLine}" escape="false"/>
+			<h:outputText value="<br/>" escape="false" />			
+			<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.unit.presentationName}"/> 			
 		</h:panelGroup>	
 	
 		<h:outputText value="<b>#{bundle['label.credits']}</b>" escape="false"/>	

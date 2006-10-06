@@ -10,7 +10,6 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -19,7 +18,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -38,8 +36,6 @@ import net.sourceforge.fenixedu.util.ContractType;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
-
-import sun.security.krb5.internal.crypto.b;
 
 public class Unit extends Unit_Base {
 
@@ -787,12 +783,20 @@ public class Unit extends Unit_Base {
 	StringBuilder builder = new StringBuilder();
 	builder.append(getName());
 	if (getCostCenterCode() != null) {
-	    builder.append(" [c.c.").append(getCostCenterCode()).append("]");
+	    builder.append(" [c.c. ").append(getCostCenterCode()).append("]");
 	}
 	return builder.toString();
     }
 
+    public String getParentUnitsPresentationNameWithBreakLine() {
+	return getParentUnitsPresentationName("<br/>");
+    }
+
     public String getParentUnitsPresentationName() {
+	return getParentUnitsPresentationName(" - ");
+    }
+
+    private String getParentUnitsPresentationName(String separator) {
 	StringBuilder builder = new StringBuilder();
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
 	Unit institutionUnit = UnitUtils.readInstitutionUnit();
@@ -801,18 +805,27 @@ public class Unit extends Unit_Base {
 	while (initialUnit.getParentUnits().size() == 1) {
 	    Unit unit = initialUnit.getParentUnits().get(0);
 	    if (unit != institutionUnit && unit != externalInstitutionUnit) {
-		builder.append(unit.getName()).append(" - ");
+		builder.insert(0, unit.getName() + separator);
 		initialUnit = unit;
 	    } else {
+		if (initialUnit != this) {
+		    int start = Math.max(builder.length() - separator.length(), separator.length()
+			    - builder.length());
+		    builder.replace(start, builder.length(), "");
+		}
 		break;
 	    }
 	}
 
-	if (getPartyType() == null
-		|| !getPartyType().getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
-	    builder.append(institutionUnit.getName());
-	} else {
-	    builder.append(externalInstitutionUnit.getName());
+	if ((getPartyType() == null || !getPartyType().getType().equals(
+		PartyTypeEnum.EXTERNAL_INSTITUTION))
+		&& !this.equals(institutionUnit)) {
+	    builder.insert(0, institutionUnit.getName() + ((initialUnit != this) ? separator : ""));
+	} else if (getPartyType() != null
+		&& getPartyType().getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)
+		&& !this.equals(institutionUnit)) {
+	    builder.insert(0, externalInstitutionUnit.getName()
+		    + ((initialUnit != this) ? separator : ""));
 	}
 	return builder.toString();
     }

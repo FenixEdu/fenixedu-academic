@@ -23,11 +23,9 @@
 				
 			<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>	
 			<h:panelGroup>
-				<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.unit.name}"/>	
-				<h:outputText value=" - " rendered="#{!empty facultyAdmOfficeFunctionsManagementBackingBean.unit.topUnits}"/>	
-				<fc:dataRepeater value="#{facultyAdmOfficeFunctionsManagementBackingBean.unit.topUnits}" var="topUnit">
-					<h:outputText value="#{topUnit.name}<br/>" escape="false" />
-				</fc:dataRepeater>
+				<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.unit.parentUnitsPresentationNameWithBreakLine}"/>				
+				<h:outputText value="<br/>" escape="false"/>
+				<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.unit.presentationName}"/>	
 			</h:panelGroup>					
 		</h:panelGrid>	
 						

@@ -382,14 +382,9 @@
 				<td><bean:write name="personFunction" property="function.name"/></td>
 				<td>
 					<bean:define id="unit" name="personFunction" property="function.unit"/>
-					<bean:write name="unit" property="name"/> -
-					<bean:write name="unit" property="parentUnitsPresentationName"/>
-					<%--<logic:notEmpty name="unit" property="topUnits">
-						-
-						<logic:iterate id="topUnit" name="unit" property="topUnits">
-							<bean:write name="topUnit" property="name"/>,							
-						</logic:iterate>								
-					</logic:notEmpty>--%>
+					<bean:write name="unit" property="parentUnitsPresentationName"/>					
+					-
+					<bean:write name="unit" property="presentationName"/> 															
 				</td>
 				<td style="text-align: center;">
 					De 
