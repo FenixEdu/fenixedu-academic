@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Clean Parking Party table" cleanParkingParty.sql
