@@ -96,8 +96,8 @@ public class ReportsUtils extends PropertiesManager {
                         MediaPrintableArea.MM));
                 exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET,
                         printRequestAttributeSet);
-                exporter
-                        .setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
+//                exporter
+//                        .setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
                 exporter.exportReport();
                 System.out.println("Printer Job Sent");
                 return true;
