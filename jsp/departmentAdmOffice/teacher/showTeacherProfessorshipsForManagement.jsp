@@ -6,7 +6,10 @@
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="infoTeacher" property="teacherNumber"/> <br />
-	<b> <bean:message key="label.teacher.department"/> </b> <bean:write name="teacherDepartment" property="name"/> 
+	<b> <bean:message key="label.teacher.department"/> </b> 
+		<logic:present name="teacherDepartment">
+			<bean:write name="teacherDepartment" property="name"/> 
+		</logic:present>
 	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 		<logic:equal name="isDepartmentManager" value="true">
 		</logic:equal>
