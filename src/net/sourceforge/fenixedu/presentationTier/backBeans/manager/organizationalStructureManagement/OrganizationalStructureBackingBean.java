@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
@@ -446,10 +445,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	SelectItem selectItem = null;
 	for (AccountabilityTypeEnum type : AccountabilityTypeEnum.values()) {
-	    selectItem = new SelectItem();
-	    selectItem.setLabel(bundle.getString(type.getName()));
-	    selectItem.setValue(type.getName());
-	    list.add(selectItem);
+	    if (!type.equals(AccountabilityTypeEnum.EMPLOYEE_CONTRACT)
+		    && !type.equals(AccountabilityTypeEnum.MANAGEMENT_FUNCTION)) {
+		selectItem = new SelectItem();
+		selectItem.setLabel(bundle.getString(type.getName()));
+		selectItem.setValue(type.getName());
+		list.add(selectItem);
+	    }
 	}
 	Collections.sort(list, new BeanComparator("label"));
 
