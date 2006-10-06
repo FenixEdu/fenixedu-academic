@@ -440,15 +440,29 @@ public class ParkingParty extends ParkingParty_Base {
         setSecondCarDeclarationDocumentState(null);
         setSecondCarInsuranceDocumentState(null);
         setSecondCarOwnerIdDocumentState(null);
-        setSecondCarPropertyRegistryDocumentState(null);        
-        
-        deleteCarFile(ParkingDocumentType.SECOND_CAR_INSURANCE);
-        deleteCarFile(ParkingDocumentType.SECOND_CAR_OWNER_ID);
-        deleteCarFile(ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER);
-        deleteCarFile(ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION);
+        setSecondCarPropertyRegistryDocumentState(null);
+
+        deleteFile(ParkingDocumentType.SECOND_CAR_INSURANCE);
+        deleteFile(ParkingDocumentType.SECOND_CAR_OWNER_ID);
+        deleteFile(ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER);
+        deleteFile(ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION);
     }
 
-    private void deleteCarFile(ParkingDocumentType documentType) {
+    private void deleteFirstCar() {
+        setFirstCarMake(null);
+        setFirstCarPlateNumber(null);
+        setFirstCarDeclarationDocumentState(null);
+        setFirstCarInsuranceDocumentState(null);
+        setFirstCarOwnerIdDocumentState(null);
+        setFirstCarPropertyRegistryDocumentState(null);
+
+        deleteFile(ParkingDocumentType.FIRST_CAR_INSURANCE);
+        deleteFile(ParkingDocumentType.FIRST_CAR_OWNER_ID);
+        deleteFile(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
+        deleteFile(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
+    }
+    
+    private void deleteFile(ParkingDocumentType documentType) {
         ParkingDocument parkingDocument = getParkingDocument(documentType);
         if (parkingDocument != null) {
             String externalIdentifier = parkingDocument.getParkingFile()
@@ -457,22 +471,28 @@ public class ParkingParty extends ParkingParty_Base {
             if (externalIdentifier != null) {
                 FileManagerFactory.getFileManager().deleteFile(externalIdentifier);
             }
-        }        
+        }
     }
 
     public boolean hasCar() {
         return !StringUtils.isEmpty(getFirstCarMake());
     }
 
-
     public void delete() {
-        if(canBeDeleted()){
+        if (canBeDeleted()) {
             setParty(null);
+            deleteFile(ParkingDocumentType.DRIVER_LICENSE);
+            deleteFirstCar();
+            deleteSecondCar();
+            List<ParkingRequest> parkingRequests = new ArrayList<ParkingRequest>(getParkingRequests());
+            for (ParkingRequest parkingRequest : parkingRequests) {
+                parkingRequest.delete();
+            }
             deleteDomainObject();
-        }        
+        }
     }
 
     private boolean canBeDeleted() {
-        return !hasCar();        
+        return !hasCar();
     }
 }
