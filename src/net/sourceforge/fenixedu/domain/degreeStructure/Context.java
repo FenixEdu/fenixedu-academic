@@ -55,7 +55,11 @@ public class Context extends Context_Base implements Comparable<Context> {
         removeCurricularPeriod();
         removeChildDegreeModule();
         removeParentCourseGroup();
-        removeBeginExecutionPeriod();
+
+        // Cannot remove becuase setBeginExecutionPeriod(null) is not allowed.
+        // however, since deleteDomainObject will be called, all will be ok, it will just disapear
+        //removeBeginExecutionPeriod();
+
         removeEndExecutionPeriod();
         removeRootDomainObject();
         super.deleteDomainObject();
