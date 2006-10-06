@@ -495,4 +495,13 @@ public class ParkingParty extends ParkingParty_Base {
     private boolean canBeDeleted() {
         return !hasCar();
     }
+
+    public boolean hasFirstTimeRequest() {
+        for(ParkingRequest parkingRequest: getParkingRequests()){
+            if(parkingRequest.getFirstRequest()){
+                return true;
+            }
+        }
+        return false;
+    }
 }

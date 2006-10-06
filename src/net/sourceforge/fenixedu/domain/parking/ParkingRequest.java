@@ -656,11 +656,14 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
 
         public ParkingRequest execute() {
-            ParkingRequest parkingRequest = new ParkingRequest(this);
-            FilePath filePath = getFilePath(parkingRequest.getIdInternal());
-
-            writeParkingFiles(parkingRequest, filePath);
-            return parkingRequest;
+            if (!getParkingParty().hasFirstTimeRequest()) {
+                ParkingRequest parkingRequest = new ParkingRequest(this);
+                FilePath filePath = getFilePath(parkingRequest.getIdInternal());
+                writeParkingFiles(parkingRequest, filePath);
+                return parkingRequest;
+            } else {
+                return null;
+            }
         }
     }
 
@@ -991,12 +994,12 @@ public class ParkingRequest extends ParkingRequest_Base {
         return (getDriverLicenseFileName() != null && getDriverLicenseFileName().length() > 0)
                 || getDriverLicenseDocumentState() != null;
     }
- 
-    public boolean getIsFileUploaded(String documentType){
+
+    public boolean getIsFileUploaded(String documentType) {
         ParkingDocumentType parkingDocumentType = ParkingDocumentType.valueOf(documentType);
         return getParkingDocument(parkingDocumentType) != null;
     }
-    
+
     private void deleteFirstCar() {
         setFirstCarMake(null);
         setFirstCarPlateNumber(null);
@@ -1010,7 +1013,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         deleteFile(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
         deleteFile(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
     }
-    
+
     private void deleteSecondCar() {
         setSecondCarMake(null);
         setSecondCarPlateNumber(null);
@@ -1036,17 +1039,17 @@ public class ParkingRequest extends ParkingRequest_Base {
             }
         }
     }
-    
+
     public void delete() {
-        if(canBeDeleted()){
+        if (canBeDeleted()) {
             deleteFile(ParkingDocumentType.DRIVER_LICENSE);
             deleteFirstCar();
             deleteSecondCar();
             setParkingParty(null);
             deleteDomainObject();
-        }        
+        }
     }
-    
+
     private boolean canBeDeleted() {
         return getParkingRequestState() != ParkingRequestState.ACCEPTED;
     }
