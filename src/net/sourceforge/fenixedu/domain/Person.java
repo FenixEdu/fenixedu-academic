@@ -842,6 +842,10 @@ public class Person extends Person_Base {
             getPersonalPhoto().delete();
         }
 
+        if(hasParkingParty()){
+            getParkingParty().delete();
+        }
+        
         getPersonRoles().clear();
         getManageableDepartmentCredits().clear();
         getAdvisories().clear();
@@ -928,9 +932,8 @@ public class Person extends Person_Base {
     }
 
     private boolean hasParking() {
-        ParkingParty parkingParty = getParkingParty();
-        if(parkingParty != null){
-            return parkingParty.hasCar();             
+        if(hasParkingParty()){
+            return getParkingParty().hasCar();             
         }
         return false;
     }

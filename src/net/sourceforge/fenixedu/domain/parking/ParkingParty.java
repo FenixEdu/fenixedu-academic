@@ -463,4 +463,16 @@ public class ParkingParty extends ParkingParty_Base {
     public boolean hasCar() {
         return !StringUtils.isEmpty(getFirstCarMake());
     }
+
+
+    public void delete() {
+        if(canBeDeleted()){
+            setParty(null);
+            deleteDomainObject();
+        }        
+    }
+
+    private boolean canBeDeleted() {
+        return !hasCar();        
+    }
 }
