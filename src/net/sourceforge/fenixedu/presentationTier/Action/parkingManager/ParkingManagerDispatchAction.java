@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -78,6 +79,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                 parkingRequestSearch.setCarPlateNumber(carPlateNumber);
             }
         }
+        rootDomainObject.readParkingPartyByOID(1).getOccupations();
         request.setAttribute("parkingRequestSearch", parkingRequestSearch);
         return mapping.findForward("showParkingRequests");
     }
@@ -376,19 +378,6 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         if (request.getParameter("acceptPrint") != null) {
             request.setAttribute("parkingPartyID", parkingRequest.getParkingParty().getIdInternal());
             printParkingCard(mapping, actionForm, request, response);
-            // ServiceUtils.executeService(SessionUtils.getUserView(request), "UpdateParkingParty",
-            // args);
-            //
-            // Map<String, Object> parameters = new HashMap<String, Object>();
-            // parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat(
-            // "/images/LogoIST.gif"));
-            // Person person = (Person) parkingRequest.getParkingParty().getParty();
-            // parameters.put("number", getMostSignificantNumber(person));
-            //
-            // List<Person> persons = new ArrayList<Person>();
-            // persons.add(person);
-            //
-            // ReportsUtils.printReport("parkingManager.parkingCard", parameters, null, persons, 91, 58);
         }
         return showParkingRequests(mapping, actionForm, request, response);
     }
@@ -411,6 +400,35 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
         ReportsUtils.printReport("parkingManager.parkingCard", parameters, null, persons, 91, 58);
         return null;
+    }
+
+    public ActionForward exportToPDFParkingCard(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        Integer parkingPartyID = getPopertyID(request, "parkingPartyID");
+        final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(parkingPartyID);
+
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat(
+                "/images/LogoIST.gif"));
+
+        Person person = (Person) parkingParty.getParty();
+        parameters.put("number", getMostSignificantNumber(person));
+
+        List<Person> persons = new ArrayList<Person>();
+        persons.add(person);
+
+        byte[] data = ReportsUtils.exportToPdf("parkingManager.parkingCard", parameters, null, persons);
+        response.setContentType("application/pdf");
+        response.addHeader("Content-Disposition", "attachment; filename=cartao.pdf");
+        response.setContentLength(data.length);
+        ServletOutputStream writer = response.getOutputStream();
+        writer.write(data);
+        writer.flush();
+        writer.close();
+        response.flushBuffer();
+
+        return mapping.findForward("");
     }
 
     private String getMostSignificantNumber(Person p) {

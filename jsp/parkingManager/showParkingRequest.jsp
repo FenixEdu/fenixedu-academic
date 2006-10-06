@@ -69,6 +69,8 @@
 		<bean:define id="parkingPartyId" name="parkingRequest" property="parkingParty.idInternal" />	
 		<html:link target="printFrame" page="<%= "/parking.do?method=printParkingCard&amp;parkingPartyID=" + parkingPartyId.toString()%>">
 		<bean:message key="label.printCard" bundle="PARKING_RESOURCES"/></html:link>
+		<html:link target="printFrame" page="<%= "/parking.do?method=exportToPDFParkingCard&amp;parkingPartyID=" + parkingPartyId.toString()%>">
+		<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/></html:link>
 	</logic:equal>
 	
 </logic:present>

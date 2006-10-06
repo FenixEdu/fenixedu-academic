@@ -10,6 +10,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
@@ -61,8 +62,12 @@ public class Employee extends Employee_Base {
     }
 
     public List<Contract> getContracts() {
-	return new ArrayList(getPerson().getParentAccountabilities(
-		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class));
+        final List<Contract> contracts = new ArrayList();
+        for (final Accountability accountability : getPerson().getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
+            if (accountability instanceof Contract) 
+                contracts.add((Contract) accountability);
+        }
+	return contracts;
     }
 
     public List<Contract> getContractsByContractType(ContractType contractType) {
