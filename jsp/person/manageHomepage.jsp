@@ -66,7 +66,7 @@
 				<p><bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/></p>
 			</td>
 		</tr>
-		<logic:present name="UserView" property="person.employee.currentContract.workingUnit">
+		<logic:present name="UserView" property="person.employee.currentWorkingContract.workingUnit">
 			<tr>
 				<th>
 					<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
@@ -76,14 +76,14 @@
 				</td>
 				<td>
 					<p>
-						<bean:define id="currentUnit" name="UserView" property="person.employee.currentContract.workingUnit" toScope="request"/>
+						<bean:define id="currentUnit" name="UserView" property="person.employee.currentWorkingContract.workingUnit" toScope="request"/>
 						<jsp:include page="unitStructure.jsp"/>
 					</p>
 				</td>
 			</tr>
 		</logic:present>
 		<logic:present name="UserView" property="person.teacher">
-			<logic:present name="UserView" property="person.employee.currentContract">
+			<logic:present name="UserView" property="person.employee.currentWorkingContract">
 				<tr>
 					<th>
 						<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>:
@@ -239,8 +239,8 @@
 	<tr><td class="leftcol"><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:</td>
 		<td>
 			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showUnit" property="showUnit" value="true"/>
-			<logic:present name="UserView" property="person.employee.currentContract.workingUnit">
-				<bean:write name="UserView" property="person.employee.currentContract.workingUnit.name"/>
+			<logic:present name="UserView" property="person.employee.currentWorkingContract.workingUnit">
+				<bean:write name="UserView" property="person.employee.currentWorkingContract.workingUnit.name"/>
 			</logic:present>
 			<logic:iterate id="student" name="UserView" property="person.students">
 				<logic:present name="student" property="activeStudentCurricularPlan">
@@ -326,7 +326,7 @@
 		</tr>
 	
 		<logic:present name="UserView" property="person.teacher">
-			<logic:present name="UserView" property="person.employee.currentContract">
+			<logic:present name="UserView" property="person.employee.currentWorkingContract">
 				<tr>
 					<th>
 						<bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
