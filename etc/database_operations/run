@@ -26,5 +26,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-execute "Make Specialization enum values uniques" makeSpecializationEnumValuesUniques.sql
