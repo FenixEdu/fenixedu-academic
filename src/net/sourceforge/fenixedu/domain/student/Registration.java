@@ -1151,4 +1151,23 @@ public class Registration extends Registration_Base {
 	return testGroups;
     }
 
+    public int calculateCurricularYear() {
+        double ectsCredits = 0;
+        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+            for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+                if (enrolment.isApproved()) {
+                    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+                    ectsCredits += curricularCourse.getEctsCredits().doubleValue();
+                }
+            }
+        }
+        int ectsCreditsCurricularYear = (int) Math.floor((((ectsCredits + 24) / 60) + 1));
+        int degreeCurricularYears = getActiveOrConcludedOrLastStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
+        return Math.min(ectsCreditsCurricularYear, degreeCurricularYears);
+    }
+
+    public int getCalculateCurricularYear() {
+        return calculateCurricularYear();
+    }
+
 }
