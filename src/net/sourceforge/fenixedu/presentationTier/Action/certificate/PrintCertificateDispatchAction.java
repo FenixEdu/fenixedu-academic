@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.util.CertificateList;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionError;
@@ -71,16 +72,19 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
             InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) session
                     .getAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY);
             String certificate = (String) session.getAttribute(SessionConstants.CERTIFICATE_TYPE);
+ 
             String anoLectivo = new String();
             InfoExecutionYear infoExecutionYear = null;
             try {
                 infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(
                         userView, "ReadCurrentExecutionYear", null);
             } catch (RuntimeException e) {
+               
                 throw new RuntimeException("Error", e);
             }
             if ((certificate.equals("Matrícula")) || (certificate.equals("Matrícula e Inscrição"))
-                    || (certificate.equals("Duração do Degree"))) {
+                    || (certificate.equals(CertificateList.DURACAO_CURSO_STRING))) {
+
                 List enrolmentList = null;
                 Object args[] = { infoStudentCurricularPlan.getIdInternal() };
                 try {
@@ -100,7 +104,8 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                     session
                             .setAttribute(SessionConstants.MATRICULA_ENROLMENT, certificate
                                     .toUpperCase());
-                if (certificate.equals("Duração do Degree")) {
+                if (certificate.equals(CertificateList.DURACAO_CURSO_STRING)) {
+   
                     if (infoStudentCurricularPlan.getSpecialization().equals(
                             Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
                         certificate = new String("Matrícula");

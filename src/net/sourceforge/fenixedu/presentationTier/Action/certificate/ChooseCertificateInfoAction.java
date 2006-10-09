@@ -134,7 +134,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
             try {
                 if (certificateString.equals("Matrícula")
                         || certificateString.equals("Matrícula e Inscrição")
-                        || certificateString.equals("Duração do Degree")
+                        || certificateString.equals(CertificateList.DURACAO_CURSO_STRING)
                         || certificateString.equals("Inscrição")) {
                     ArrayList states = new ArrayList();
                     states.add(StudentCurricularPlanState.ACTIVE);
