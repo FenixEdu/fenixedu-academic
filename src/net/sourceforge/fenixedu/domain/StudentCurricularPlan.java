@@ -1722,21 +1722,4 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getDegreeCurricularPlan().getName();
     }
 
-    public int calculateCurricularYear() {
-        double ectsCredits = 0;
-        for (final Enrolment enrolment : getEnrolmentsSet()) {
-            if (enrolment.isApproved()) {
-                final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-                ectsCredits += curricularCourse.getEctsCredits().doubleValue();
-            }
-        }
-        int ectsCreditsCurricularYear = (int) Math.floor((((ectsCredits + 24) / 60) + 1));
-        int degreeCurricularYears = getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
-        return Math.min(ectsCreditsCurricularYear, degreeCurricularYears);
-    }
-
-    public int getCalculateCurricularYear() {
-        return calculateCurricularYear();
-    }
-
 }
