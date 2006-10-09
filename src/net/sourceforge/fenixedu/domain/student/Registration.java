@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -71,6 +73,7 @@ import net.sourceforge.fenixedu.util.StudentState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.YearMonthDay;
 
@@ -1168,20 +1171,66 @@ public class Registration extends Registration_Base {
     }
 
     public int calculateCurricularYear() {
+	int degreeCurricularYears = getActiveOrConcludedOrLastStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
         double ectsCredits = 0;
+        final ExecutionYear executionYear = findMostRecenteExecutionYearWithEnrolments();
+        if (executionYear == null) {
+            return 1;
+        }
         final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
+        final ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("name", Collator.getInstance()));
+        comparatorChain.addComparator(new BeanComparator("idInternal"));
         final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
+        final Set<CurricularCourse> curricularCoursesToDisplay = new TreeSet<CurricularCourse>(comparatorChain);
+        int nacc = 0;
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
-            if (isCurricularCourseApproved(curricularCourse) && !containsSameCurricularCours(curricularCourses, curricularCourse)) {
+            if (isActive(curricularCourse, executionYear)
+        	    && isCurricularCourseApproved(curricularCourse)
+        	    && !containsSameCurricularCours(curricularCourses, curricularCourse)) {
+        	nacc++;
+        	curricularCoursesToDisplay.add(curricularCourse);
                 curricularCourses.add(curricularCourse);
+                curricularCourses.addAll(curricularCourse.getEquivalentCurricularCoursesSet());
+                curricularCourses.addAll(curricularCourse.getOldCurricularCoursesSet());
+                for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getOldCurricularCourseEquivalencesSet()) {
+                    curricularCourses.addAll(curricularCourseEquivalence.getOldCurricularCoursesSet());
+                    curricularCourses.add(curricularCourseEquivalence.getEquivalentCurricularCourse());
+                }
                 final Double ccEctsCredits = curricularCourse.getEctsCredits();
                 ectsCredits += ccEctsCredits == null || ccEctsCredits.doubleValue() == 0 ? 6 : ccEctsCredits;
             }
         }
 
+        System.out.println("lastExecutionYear: " + executionYear.getYear() + "   ectsCredits: " + ectsCredits + "   nacc: " + nacc);
+        for (final CurricularCourse curricularCourse : curricularCoursesToDisplay) {
+            System.out.println("\t" + curricularCourse.getName() + "   " + curricularCourse.getEctsCredits());
+        }
         int ectsCreditsCurricularYear = (int) Math.floor((((ectsCredits + 24) / 60) + 1));
-        int degreeCurricularYears = getActiveOrConcludedOrLastStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
         return Math.min(ectsCreditsCurricularYear, degreeCurricularYears);
+    }
+
+    private boolean isActive(final CurricularCourse curricularCourse, final ExecutionYear executionYear) {
+	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+	    if (curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod).size() > 0
+		    || curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod).size() > 0) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private ExecutionYear findMostRecenteExecutionYearWithEnrolments() {
+	ExecutionYear executionYear = null;
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+		final ExecutionYear enrolmentExecutionYear = enrolment.getExecutionPeriod().getExecutionYear();
+		if (executionYear == null || enrolmentExecutionYear.compareTo(executionYear) > 0) {
+		    executionYear = enrolmentExecutionYear;
+		}
+	    }
+	}
+	return executionYear;
     }
 
     private boolean containsSameCurricularCours(final Set<CurricularCourse> curricularCourses, CurricularCourse curricularCourse) {
