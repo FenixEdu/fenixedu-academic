@@ -20,6 +20,6 @@
 			 layout="student-enrolments"/>
 	<br />
 	<br />	
-	<html:submit><bean:message key="button.submit"/></html:submit>
-	<html:submit onclick="this.form.method.value='end'; return true;"><bean:message key="button.end"/></html:submit>
+	<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.submit"/></html:submit>
+	<html:submit onclick="this.form.method.value='end'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.end"/></html:submit>
 </fr:form>
