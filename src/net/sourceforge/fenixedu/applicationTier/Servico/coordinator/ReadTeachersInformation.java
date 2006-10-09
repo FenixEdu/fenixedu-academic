@@ -88,7 +88,7 @@ public class ReadTeachersInformation extends Service {
         teachers = removeDuplicates(teachers);
         List<InfoSiteTeacherInformation> infoSiteTeachersInformation = new ArrayList<InfoSiteTeacherInformation>();
         for (Teacher teacher : teachers) {
-            infoSiteTeachersInformation.add(getTeacherInformation(teacher.getPerson().getUsername(), executionYear));
+            infoSiteTeachersInformation.add(getTeacherInformation(teacher, executionYear));
         }
         Collections.sort(infoSiteTeachersInformation, new Comparator() {
             public int compare(Object o1, Object o2) {
@@ -113,10 +113,8 @@ public class ReadTeachersInformation extends Service {
         return result;
     }
 
-    private InfoSiteTeacherInformation getTeacherInformation(String user, ExecutionYear executionYear) throws ExcepcaoPersistencia {
+    private InfoSiteTeacherInformation getTeacherInformation(Teacher teacher, ExecutionYear executionYear) throws ExcepcaoPersistencia {
         InfoSiteTeacherInformation infoSiteTeacherInformation = new InfoSiteTeacherInformation();
-
-        Teacher teacher = Teacher.readTeacherByUsername(user);
 
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
         infoSiteTeacherInformation.setInfoTeacher(infoTeacher);
