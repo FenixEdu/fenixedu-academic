@@ -253,7 +253,8 @@ public class ManageShiftDA extends
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
         Integer oldShiftId = new Integer((String) dynaActionForm.get("oldShiftId"));
-        Integer newShiftId = dynaActionForm.get("newShiftId") == null ? null : new Integer((String) dynaActionForm.get("newShiftId"));
+        final String newShiftIdString = (String) dynaActionForm.get("newShiftId");
+        Integer newShiftId = newShiftIdString == null || newShiftIdString.length() == 0 ? null : Integer.valueOf(newShiftIdString);
 
         final String[] studentIDs = (String[]) dynaActionForm.get("studentIDs");
         final Set<Registration> registrations = new HashSet<Registration>();
