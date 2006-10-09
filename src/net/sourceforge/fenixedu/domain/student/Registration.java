@@ -1151,16 +1151,32 @@ public class Registration extends Registration_Base {
 	return testGroups;
     }
 
-    public int calculateCurricularYear() {
-        double ectsCredits = 0;
+    public DegreeCurricularPlan getActiveOrConcludedOrLastDegreeCurricularPlan() {
+        final StudentCurricularPlan studentCurricularPlan = getActiveOrConcludedOrLastStudentCurricularPlan();
+        return studentCurricularPlan == null ? null : studentCurricularPlan.getDegreeCurricularPlan();
+        
+    }
+
+    public boolean isCurricularCourseApproved(final CurricularCourse curricularCourse) {
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-                if (enrolment.isApproved()) {
-                    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-                    ectsCredits += curricularCourse.getEctsCredits().doubleValue();
-                }
+            if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
+                return true;
             }
         }
+        return false;
+    }
+
+    public int calculateCurricularYear() {
+        double ectsCredits = 0;
+        final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
+
+        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
+            if (isCurricularCourseApproved(curricularCourse)) {
+                final Double ccEctsCredits = curricularCourse.getEctsCredits();
+                ectsCredits += ccEctsCredits == null || ccEctsCredits.doubleValue() == 0 ? 6 : ccEctsCredits;
+            }
+        }
+
         int ectsCreditsCurricularYear = (int) Math.floor((((ectsCredits + 24) / 60) + 1));
         int degreeCurricularYears = getActiveOrConcludedOrLastStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
         return Math.min(ectsCreditsCurricularYear, degreeCurricularYears);
