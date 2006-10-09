@@ -20,7 +20,7 @@
        	<tr>
         	 <td><bean:message key="label.masterDegree.administrativeOffice.graduationType"/>: </td>
          	<td>
-         		<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" excludedFields="INTEGRATED_MASTER_DEGREE" bundle="ENUMERATION_RESOURCES"/>
+         		<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" excludedFields="STUDENT_CURRICULAR_PLAN_INTEGRATED_MASTER_DEGREE" bundle="ENUMERATION_RESOURCES"/>
             	<html:select bundle="HTMLALT_RESOURCES" altKey="select.graduationType" property="graduationType">
             		<html:option key="dropDown.Default" value=""/>
                		<html:options collection="values" property="value" labelProperty="label" />

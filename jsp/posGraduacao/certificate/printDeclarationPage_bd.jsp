@@ -18,7 +18,7 @@
 			<br />
 			<%-- The Original Declaration --%>
 				<jsp:include page="./declarationTemplate1.jsp" flush="true" />
-   					<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.MASTER_DEGREE.toString()%>'>
+   					<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE.toString()%>'>
     		<%-- Candidate Information if necessary --%>
    				<jsp:include page="./declarationTemplate2.jsp" flush="true" />
 					</logic:equal >	

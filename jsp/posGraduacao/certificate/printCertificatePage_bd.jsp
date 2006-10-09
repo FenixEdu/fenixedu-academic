@@ -21,11 +21,11 @@
 			<jsp:include page="./certificateTemplate2.jsp" flush="true" />
 				</logic:present>	
 				<logic:present name="<%= SessionConstants.DURATION_DEGREE%>">
-    	  			<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.MASTER_DEGREE.toString()%>'>
+    	  			<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE.toString()%>'>
     	 	<jsp:include page="./certificateTemplate2.jsp" flush="true" />
     	 	<jsp:include page="./certificateTemplate3.jsp" flush="true" />
     	  			</logic:equal >	
-    	  			<logic:notEqual name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.MASTER_DEGREE.toString()%>'>
+    	  			<logic:notEqual name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE.toString()%>'>
     	  	<jsp:include page="./certificateTemplate2.jsp" flush="true" />	  
     	  			</logic:notEqual >	
 				</logic:present>
@@ -132,7 +132,7 @@
 	</tr>	
 </table>
 
-	<%--<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.MASTER_DEGREE.toString()%>'>
+	<%--<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE.toString()%>'>
     	<%-- Candidate Information if necessary --%>
    		<%--<jsp:include page="./declarationTemplate2.jsp" flush="true" />
 	</logic:equal >	

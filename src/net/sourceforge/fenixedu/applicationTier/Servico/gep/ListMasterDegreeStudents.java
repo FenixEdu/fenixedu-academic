@@ -65,9 +65,9 @@ public class ListMasterDegreeStudents extends Service {
             }
 
             boolean firstTimeEnrolment = true;
-            if (studentCurricularPlan.getSpecialization().equals(Specialization.MASTER_DEGREE)) {
+            if (studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
 
-            	Collection<StudentCurricularPlan> previousStudentCurricularPlans = studentCurricularPlan.getStudent().getStudentCurricularPlansBySpecialization(Specialization.MASTER_DEGREE);
+            	Collection<StudentCurricularPlan> previousStudentCurricularPlans = studentCurricularPlan.getStudent().getStudentCurricularPlansBySpecialization(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE);
 
                 previousStudentCurricularPlans.remove(studentCurricularPlan);
                 for (StudentCurricularPlan previousStudentCurricularPlan : previousStudentCurricularPlans) {
@@ -77,7 +77,7 @@ public class ListMasterDegreeStudents extends Service {
                         break;
                     }
                 }
-            } else if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+            } else if (studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
                 if (!getFirstExecutionDegree(studentCurricularPlan.getDegreeCurricularPlan())
                         .getExecutionYear().equals(executionYear)) {
                     continue;

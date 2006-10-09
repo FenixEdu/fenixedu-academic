@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Make Specialization enum values uniques" makeSpecializationEnumValuesUniques.sql

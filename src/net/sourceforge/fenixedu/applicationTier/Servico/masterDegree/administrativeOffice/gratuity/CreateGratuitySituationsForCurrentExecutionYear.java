@@ -95,7 +95,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
 
         // check if there isnt any persistentSupportecialization for a 2nd year
         if (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
-                Specialization.SPECIALIZATION)) {
+                Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
 
             if (this.firstYear == null) {
                 this.firstYear = gratuitySituation.getGratuityValues().getExecutionDegree()
@@ -144,7 +144,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
     private void createGratuitySituation(GratuityValues gratuityValues,
             StudentCurricularPlan studentCurricularPlan) {
 
-        if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)
+        if (studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)
                 && !this.firstYear) {
             return;
         }

@@ -37,7 +37,7 @@ public class ReadAdmitedCandidates extends Service {
                     || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)) {
 
                 MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(new Integer(ids[i]));
-                if (!masterDegreeCandidate.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+                if (!masterDegreeCandidate.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
                     result.add(candidateList[i]);
                 }
             }

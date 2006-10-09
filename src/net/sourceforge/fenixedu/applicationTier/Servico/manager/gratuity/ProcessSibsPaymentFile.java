@@ -321,9 +321,9 @@ public class ProcessSibsPaymentFile extends Service {
         if (sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL)
                 || sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE)
                 || sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE)) {
-            return Specialization.SPECIALIZATION;
+            return Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION;
         }
-        return Specialization.MASTER_DEGREE;
+        return Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE;
         // degree code goes here
     }
 

@@ -31,9 +31,9 @@ public class GratuitySituation extends GratuitySituation_Base {
         setWhen(Calendar.getInstance().getTime());
         Double totalValue = null;
 
-        if (studentCurricularPlan.getSpecialization().equals(Specialization.MASTER_DEGREE)) {
+        if (studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
             totalValue = gratuityValues.calculateTotalValueForMasterDegree();
-        } else if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+        } else if (studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
             totalValue = gratuityValues.calculateTotalValueForSpecialization(studentCurricularPlan);
         }
 
@@ -57,10 +57,10 @@ public class GratuitySituation extends GratuitySituation_Base {
         double totalValue = 0.0;
 
         Specialization specialization = getStudentCurricularPlan().getSpecialization();
-        if (specialization.equals(Specialization.SPECIALIZATION)) {
+        if (specialization.equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
             totalValue = this.getGratuityValues().calculateTotalValueForSpecialization(
                     this.getStudentCurricularPlan());
-        } else if (specialization.equals(Specialization.MASTER_DEGREE)) {
+        } else if (specialization.equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
             totalValue = this.getGratuityValues().calculateTotalValueForMasterDegree();
         }
 

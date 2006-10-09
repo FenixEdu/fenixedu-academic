@@ -75,7 +75,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
                 StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 
-                if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+                if (studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
                     if (!executionDegree.isFirstYear()) {
                         continue;
                     }
@@ -342,7 +342,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
     private Double getScholarShipPartValue(GratuitySituation gratuitySituation) {
         Double scholarShipPartValue = null;
         if (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
-                Specialization.SPECIALIZATION)) {
+                Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
 
             scholarShipPartValue = gratuitySituation.getRemainingValue();
 
@@ -472,7 +472,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
         int sibsPaymentCode = 0;
         Specialization specialization = studentCurricularPlan.getSpecialization();
 
-        if (specialization.equals(Specialization.MASTER_DEGREE)) {
+        if (specialization.equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
 
             sibsPaymentCode = SibsPaymentCodeFactory
                     .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_TOTAL);

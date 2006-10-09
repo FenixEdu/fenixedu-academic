@@ -22,8 +22,8 @@ public class PrintAllCandidatesFilterType extends FenixUtil {
 
 	// filtros a aplicar de especializacao
 	private static Object[] specializationFilters = {
-			new LabelValueBean("Mestrado",Specialization.MASTER_DEGREE.getName()),
-			new LabelValueBean("Especializacao",Specialization.SPECIALIZATION.getName())
+			new LabelValueBean("Mestrado",Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE.getName()),
+			new LabelValueBean("Especializacao",Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION.getName())
 	};
 	
 	// filtros de situacao

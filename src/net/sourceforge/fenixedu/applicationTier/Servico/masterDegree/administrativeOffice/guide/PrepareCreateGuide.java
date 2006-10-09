@@ -37,7 +37,7 @@ import org.apache.commons.collections.Predicate;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class PrepareCreateGuide extends Service {
-
+    
     public InfoGuide run(String graduationType, InfoExecutionDegree infoExecutionDegree, Integer number,
             String requesterType, Party contributorParty) throws FenixServiceException, ExcepcaoPersistencia {
 
@@ -149,18 +149,16 @@ public class PrepareCreateGuide extends Service {
     }
 
     private String getDescription(String graduationType) {
-
         switch (Specialization.valueOf(graduationType)) {
-        case MASTER_DEGREE:
+        case STUDENT_CURRICULAR_PLAN_MASTER_DEGREE:
             return "Mestrado";
-        case INTEGRATED_MASTER_DEGREE:
+        case STUDENT_CURRICULAR_PLAN_INTEGRATED_MASTER_DEGREE:
             return "Integrado";
-        case SPECIALIZATION:
+        case STUDENT_CURRICULAR_PLAN_SPECIALIZATION:
             return "Especialização";
         }
-
+        
         return null;
-
     }
 
 }

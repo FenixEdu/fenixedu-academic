@@ -102,7 +102,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                                     .toUpperCase());
                 if (certificate.equals("Duração do Degree")) {
                     if (infoStudentCurricularPlan.getSpecialization().equals(
-                            Specialization.MASTER_DEGREE)) {
+                            Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
                         certificate = new String("Matrícula");
                         session
                                 .setAttribute(SessionConstants.DURATION_DEGREE, certificate
@@ -219,7 +219,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                         }
                     } else {
                         if (infoStudentCurricularPlan.getSpecialization().equals(
-                                Specialization.MASTER_DEGREE)) {
+                                Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
                             if ((certificate.equals("Fim parte escolar simples"))
                                     || (certificate.equals("Fim parte escolar discriminada sem média"))
                                     || (certificate.equals("Fim parte escolar discriminada com média"))

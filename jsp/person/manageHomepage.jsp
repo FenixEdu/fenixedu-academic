@@ -125,10 +125,10 @@
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
 						<html:link href="<%= url %>">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
-								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+								<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
 									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
 								</logic:equal>
-								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
 									<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
 								</logic:notEqual>
 							</logic:present>
@@ -144,10 +144,10 @@
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
 						<html:link href="<%= url %>">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
-								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+								<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
 									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
 								</logic:equal>
-								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
 									<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
 								</logic:notEqual>
 							</logic:present>
@@ -199,10 +199,10 @@
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
 						<html:link href="<%= url %>">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
-								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+								<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
 									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
 								</logic:equal>
-								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
 									<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
 								</logic:notEqual>
 							</logic:present>
@@ -218,10 +218,10 @@
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
 						<html:link href="<%= url %>">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
-								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+								<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
 									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
 								</logic:equal>
-								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
 									<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
 								</logic:notEqual>
 							</logic:present>

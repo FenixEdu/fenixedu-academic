@@ -125,11 +125,11 @@ public class GratuityFile {
         //code
         if (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization() != null
                 && (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization()
-                        .equals(Specialization.MASTER_DEGREE))) {
+                        .equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE))) {
             reference.append(CODE_MASTERDEGREE);
         } else if (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization() != null
                 && (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization()
-                        .equals(Specialization.SPECIALIZATION))) {
+                        .equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION))) {
 
             reference.append(CODE_SPECIALIZATION);
         }
