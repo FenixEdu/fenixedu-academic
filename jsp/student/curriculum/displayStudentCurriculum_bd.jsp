@@ -79,12 +79,21 @@
 			<div class="infoop2 mvert2 mtop0">
 				<p>
 					<strong>
+						<bean:message key="label.number" />: 
+					</strong>
+					<bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/>
+				</p>
+				<p>
+					<strong>
 						<bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />: 
 					</strong> 
 					<bean:message bundle="ENUMERATION_RESOURCES" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name"/>
 					<bean:message bundle="APPLICATION_RESOURCES" key="label.in"/> 
 					<bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/>,
 					<bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.name"/>
+					<logic:present name="infoStudentCurricularPlan" property="specialization">
+						- <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
+					</logic:present>
 				</p>
 				<p>
 					<strong>
@@ -92,15 +101,14 @@
 					</strong> 
 					<bean:write name="dateFormated"/>
 				</p>
+<%-- 
 				<p>
-					<logic:present name="infoStudentCurricularPlan" property="specialization">
-						<bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
-					</logic:present>
 					<strong>
-						<bean:message key="label.number" />: 
+						<bean:message key="label.curricular.year" />: 
 					</strong>
-					<bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/>
+					<bean:write name="infoStudentCurricularPlan" property="studentCurricularPlan.student.calculateCurricularYear"/>
 				</p>
+--%>
 			</div>
 	
 			<fr:view name="infoStudentCurricularPlan" property="studentCurricularPlan">
@@ -116,6 +124,8 @@
 				</fr:layout>
 			</fr:view>
 <%--
+			<br/><br/><br/><hr size="3"/><br/>
+
 			<table class="tstyle3 mbottom4" style="width: 650px;">
 		
 				<bean:define id="id" name="infoStudentCurricularPlan" property="idInternal"/>
