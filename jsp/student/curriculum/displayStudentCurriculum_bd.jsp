@@ -12,7 +12,8 @@
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 
-<bean:define id="organizedByGroups" name="organizedByGroups" scope="request" type="java.lang.Boolean" />	
+<bean:define id="organizedByGroups" name="organizedByGroups" scope="request" type="java.lang.Boolean" />
+<bean:define id="enrolmentStateSelectionType" name="enrolmentStateSelectionType" scope="request" type="java.lang.Integer" />	
 
 <bean:define id="infoStudentCPs" name="studentCPs" scope="request" type="net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments" />	
 <bean:define id="selectedStudentCPs" name="infoStudentCPs" property="infoStudentCurricularPlans" />
@@ -102,104 +103,100 @@
 				</p>
 			</div>
 	
-			<logic:equal name="organizedByGroups" value="true">
-				<logic:equal name="infoStudentCurricularPlan" property="studentCurricularPlan.bolonha" value="true">
-					<fr:view name="infoStudentCurricularPlan" property="studentCurricularPlan">
-						<fr:layout>
-							<fr:property name="organizedByGroups" value="<%=organizedByGroups.toString()%>"/>
-							<fr:property name="initialWidth" value="70"/>
-							<fr:property name="widthDecreasePerLevel" value="3"/>
-							<fr:property name="tablesClasses" value="showinfo3 mvert0"/>
-							<fr:property name="groupRowClasses" value="bgcolor2"/>
-							<fr:property name="groupNameClasses" value="aleft"/>
-							<fr:property name="enrolmentClasses" value="smalltxt aright,,aright"/>
-						</fr:layout>
-					</fr:view>
-				</logic:equal>
-				<logic:equal name="infoStudentCurricularPlan" property="studentCurricularPlan.bolonha" value="false">
-					<bean:message bundle="STUDENT_RESOURCES" key="not.applicable"/>
-				</logic:equal>
-			</logic:equal>
-	
-			<logic:equal name="organizedByGroups" value="false">
-				<table class="tstyle3 mbottom4" style="width: 650px;">
-			
-					<bean:define id="id" name="infoStudentCurricularPlan" property="idInternal"/>
-					<bean:define id="curriculum" name="infoStudentCPs" property='<%="infoEnrollmentsForStudentCPById("+ id +")"%>'/>
-	
-					<%
-						String actualYear = "0";
-						String actualSemester = "0";			
-					%>
-	
-					<bean:size id="numEnrollments" name="curriculum"/>
-					
-					<logic:notEqual name="numEnrollments" value="0">
-					  	<logic:iterate id="enrolment" name="curriculum"> 
-							<%
-								if(!actualYear.equals(((InfoEnrolment)enrolment).getInfoExecutionPeriod().getInfoExecutionYear().getYear()) ||
-								   !actualSemester.equals(((InfoEnrolment)enrolment).getInfoExecutionPeriod().getSemester().toString()))
-								{
-									actualYear = ((InfoEnrolment)enrolment).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
-									actualSemester = ((InfoEnrolment)enrolment).getInfoExecutionPeriod().getSemester().toString();
-							%>	
-							<tr>
-							  	<th style="width: 80px;">
-							  		<bean:message key="label.executionYear" />
-							  	</th >
-							  	<th style="width: 40px;">
-							  		<bean:message bundle="STUDENT_RESOURCES" key="label.semester.abbreviation" />
-							  	</th >
-							  	<th style="width: 60px;">
-							  		<bean:message bundle="APPLICATION_RESOURCES" key="label.degree.name" />
-							  	</th>
-							  	<th>
-							  		<bean:message bundle="APPLICATION_RESOURCES" key="label.curricular.course.name" />
-							  	</th>
-							  	<th style="width: 100px;">
-							  		<bean:message bundle="APPLICATION_RESOURCES" key="label.finalEvaluation" />
-							  	</th>
-						  	</tr>	
-							<%		
-								}
-							%>
-					  		<tr>
-								<td class="acenter">
-							    	<bean:write name="enrolment" property="infoExecutionPeriod.infoExecutionYear.year"/>
-							 	</td>
-							  				 
-								<td class="acenter">
-							    	<bean:write name="enrolment" property="infoExecutionPeriod.semester"/>
-							 	</td>
-							 	<td class="acenter">
-							    	<bean:write name="enrolment" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>
-							 	</td>
-							 	<td style="text-align:left">
-							    	<bean:write name="enrolment" property="infoCurricularCourse.name"/>
-									<% if ( !((InfoEnrolment) enrolment).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
-										(<bean:message name="enrolment" bundle="APPLICATION_RESOURCES" property="enrollmentTypeResourceKey" />)
-									<% } %>
-							 	</td>
-							 	<td class="acenter">
-									<logic:notEqual name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
-										<bean:message name="enrolment" property="enrollmentState.name" bundle="ENUMERATION_RESOURCES" />
-									</logic:notEqual>
-									<logic:equal name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
-										<bean:write name="enrolment" property="grade"/>
-									</logic:equal>
-						 		</td>
-					  		</tr>
-						</logic:iterate>
-					</logic:notEqual>
-				    <logic:equal name="numEnrollments" value="0">
+			<fr:view name="infoStudentCurricularPlan" property="studentCurricularPlan">
+				<fr:layout>
+					<fr:property name="organizedByGroups" value="<%=organizedByGroups.toString()%>"/>
+					<fr:property name="initialWidth" value="70"/>
+					<fr:property name="widthDecreasePerLevel" value="3"/>
+					<fr:property name="tablesClasses" value="showinfo3 mvert0"/>
+					<fr:property name="groupRowClasses" value="bgcolor2"/>
+					<fr:property name="groupNameClasses" value="aleft"/>
+					<fr:property name="enrolmentClasses" value="smalltxt acenter,smalltxt acenter,smalltxt acenter,smalltxt acenter,acenter"/>
+					<fr:property name="enrolmentStateSelectionType" value="<%=enrolmentStateSelectionType.toString()%>"/>
+				</fr:layout>
+			</fr:view>
+<%--
+			<table class="tstyle3 mbottom4" style="width: 650px;">
+		
+				<bean:define id="id" name="infoStudentCurricularPlan" property="idInternal"/>
+				<bean:define id="curriculum" name="infoStudentCPs" property='<%="infoEnrollmentsForStudentCPById("+ id +")"%>'/>
+
+				<%
+					String actualYear = "0";
+					String actualSemester = "0";			
+				%>
+
+				<bean:size id="numEnrollments" name="curriculum"/>
+				
+				<logic:notEqual name="numEnrollments" value="0">
+				  	<logic:iterate id="enrolment" name="curriculum"> 
+						<%
+							if(!actualYear.equals(((InfoEnrolment)enrolment).getInfoExecutionPeriod().getInfoExecutionYear().getYear()) ||
+							   !actualSemester.equals(((InfoEnrolment)enrolment).getInfoExecutionPeriod().getSemester().toString()))
+							{
+								actualYear = ((InfoEnrolment)enrolment).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+								actualSemester = ((InfoEnrolment)enrolment).getInfoExecutionPeriod().getSemester().toString();
+						%>	
 						<tr>
-							<td>
-								<span class="error"><!-- Error messages go here --><bean:message key="message.no.enrolments" bundle="STUDENT_RESOURCES"/></span>
-							</td>
-						</tr>
-					</logic:equal>
-				</table>
-			</logic:equal>
+						  	<th style="width: 80px;">
+						  		<bean:message key="label.executionYear" />
+						  	</th >
+						  	<th style="width: 40px;">
+						  		<bean:message bundle="STUDENT_RESOURCES" key="label.semester.abbreviation" />
+						  	</th >
+						  	<th style="width: 60px;">
+						  		<bean:message bundle="APPLICATION_RESOURCES" key="label.degree.name" />
+						  	</th>
+						  	<th>
+						  		<bean:message bundle="APPLICATION_RESOURCES" key="label.curricular.course.name" />
+						  	</th>
+						  	<th style="width: 100px;">
+						  		<bean:message bundle="APPLICATION_RESOURCES" key="label.finalEvaluation" />
+						  	</th>
+					  	</tr>	
+						<%		
+							}
+						%>
+				  		<tr>
+							<td class="acenter">
+						    	<bean:write name="enrolment" property="infoExecutionPeriod.infoExecutionYear.year"/>
+						 	</td>
+						  				 
+							<td class="acenter">
+						    	<bean:write name="enrolment" property="infoExecutionPeriod.semester"/>
+						 	</td>
+						 	<td class="acenter">
+						    	<bean:write name="enrolment" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>
+						 	</td>
+						 	<td style="text-align:left">
+						    	<bean:write name="enrolment" property="infoCurricularCourse.name"/>
+								<% if ( !((InfoEnrolment) enrolment).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
+									(<bean:message name="enrolment" bundle="APPLICATION_RESOURCES" property="enrollmentTypeResourceKey" />)
+								<% } %>
+						 	</td>
+						 	<td class="acenter">
+								<logic:notEqual name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
+									<bean:message name="enrolment" property="enrollmentState.name" bundle="ENUMERATION_RESOURCES" />
+								</logic:notEqual>
+								<logic:equal name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
+									<bean:write name="enrolment" property="grade"/>
+								</logic:equal>
+					 		</td>
+				  		</tr>
+					</logic:iterate>
+				</logic:notEqual>
+			    <logic:equal name="numEnrollments" value="0">
+					<tr>
+						<td>
+							<span class="error"><!-- Error messages go here --><bean:message key="message.no.enrolments" bundle="STUDENT_RESOURCES"/></span>
+						</td>
+					</tr>
+				</logic:equal>
+			</table>
+--%>
+
+		<br/><br/><br/>
+		
 		</logic:iterate>
 	</logic:notEqual>
 	 	

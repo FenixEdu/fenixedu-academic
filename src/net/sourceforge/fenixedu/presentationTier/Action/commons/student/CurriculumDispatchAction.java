@@ -79,6 +79,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("studentPerson", InfoPerson.newInfoFromDomain(person));
         request.setAttribute("organizedByGroups", Boolean.valueOf(request.getParameter("organizedByGroups")));
+        request.setAttribute("enrolmentStateSelectionType", request.getParameter("select") == null ? EnrollmentStateSelectionType.ALL_TYPE : Integer.valueOf(request.getParameter("select")));
 
         if (degreeCurricularPlanID != null && degreeCurricularPlanID.intValue() != 0) {
             return mapping.findForward("ShowStudentCurriculumForCoordinator");
