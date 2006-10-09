@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
  */
 public enum DegreeType {
 
-    DEGREE(GradeScale.TYPE20, null, 0, 0, false),
+    DEGREE(GradeScale.TYPE20, null, 5, 0, false),
 
-    MASTER_DEGREE(GradeScale.TYPE5, null, 0, 0, false),
+    MASTER_DEGREE(GradeScale.TYPE5, null, 2, 0, false),
 
     BOLONHA_DEGREE(null, CurricularPeriodType.THREE_YEAR, 3, 180, true),
 
