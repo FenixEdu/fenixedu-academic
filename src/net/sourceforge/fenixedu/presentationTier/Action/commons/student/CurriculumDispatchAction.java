@@ -239,11 +239,12 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
             StringBuilder label = new StringBuilder();
 
             label.append(enumerationResources.getString(infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().name()));
-            label.append(" ").append(applicationResources.getString("label.in")).append(" ");
-            label.append(infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
+            label.append(" ").append(applicationResources.getString("label.in"));
+            label.append(" ").append(infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
+            label.append(", ").append(infoSCP.getInfoDegreeCurricularPlan().getName());
 
             if (infoSCP.getSpecialization() != null) {
-        	label.append(" - ").append(infoSCP.getSpecialization());
+        	label.append(" - ").append(enumerationResources.getString(infoSCP.getSpecialization().name()));
             }
                 
             label.append(" - ").append(DateFormatUtil.format("dd.MM.yyyy", infoSCP.getStartDate()));
