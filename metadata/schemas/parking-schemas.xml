@@ -287,6 +287,7 @@
 
 <schema name="show.parkingRequest.noDetail"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">
+	<slot name="parkingParty.mostSignificantNumber" key="label.number" bundle="PARKING_RESOURCES"/>
 	<slot name="parkingParty.party.name" key="label.name" bundle="PARKING_RESOURCES" />
 	<slot name="parkingRequestState" key="label.state" bundle="PARKING_RESOURCES" />
 	<slot name="creationDate" key="label.creationDate" bundle="PARKING_RESOURCES" />

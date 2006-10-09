@@ -4,6 +4,20 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@page import="net.sourceforge.fenixedu.domain.parking.ParkingDocumentType"%>
+
+<script language="Javascript" type="text/javascript">
+<!--
+
+function confirmation(){
+	var result = confirm("Os ficheiros submetidos electronicamente vão ser apagados. Deseja continuar ?");
+	if( result ) {
+		document.forms[0].accepted.value="true";
+		document.forms[0].submit();
+	}
+}
+// -->
+</script>
+
 <em><bean:message key="label.parking" /></em>
 <h2><bean:message key="label.request" /></h2>
 
@@ -31,6 +45,7 @@
 			<html:hidden property="parkingPartyClassification" value="<%= pageContext.findAttribute("parkingPartyClassification").toString() %>"/>
 			<html:hidden property="personName" value="<%= pageContext.findAttribute("personName").toString() %>"/>
 			<html:hidden property="carPlateNumber" value="<%= pageContext.findAttribute("carPlateNumber").toString() %>"/>
+			<html:hidden property="accepted" value=""/>			
 			
 			<p class="mbottom025"><strong><bean:message key="label.cardNumber"/></strong></p>
 			<html:text size="10" property="cardNumber"/><span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -60,7 +75,7 @@
 			<p class="mbottom025"><strong><bean:message key="label.note"/></strong></p>
 			<html:textarea rows="7" cols="45" property="note"/>
 			<p class="mtop2">
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="accept"><bean:message key="button.accept"/></html:submit>
+			<html:button bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="accept" onclick="confirmation();"><bean:message key="button.accept"/></html:button>
 			<%--
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="acceptPrint"><bean:message key="button.acceptPrint"/></html:submit>
 			--%>

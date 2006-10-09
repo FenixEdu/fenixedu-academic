@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -56,7 +55,6 @@ import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -1740,8 +1738,7 @@ public class Person extends Person_Base {
     public ParkingPartyClassification getPartyClassification() {
         final Teacher teacher = getTeacher();
         if (teacher != null) {
-            final TeacherLegalRegimen legalRegimen = teacher.getCurrentLegalRegimenWithoutEndSitutions();
-            if (legalRegimen != null) {
+            if (teacher.getCurrentWorkingDepartment() != null) {
                 return ParkingPartyClassification.TEACHER;
             }
         }
@@ -1899,5 +1896,4 @@ public class Person extends Person_Base {
         final AccountabilityTypeEnum accountabilityTypeEnum = accountabilityType.getType();
         return accountabilityTypeEnum == AccountabilityTypeEnum.EMPLOYEE_CONTRACT;
     }
-
 }

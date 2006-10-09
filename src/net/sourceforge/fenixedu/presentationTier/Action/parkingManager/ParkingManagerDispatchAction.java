@@ -78,8 +78,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             if (!StringUtils.isEmpty(carPlateNumber)) {
                 parkingRequestSearch.setCarPlateNumber(carPlateNumber);
             }
-        }
-        rootDomainObject.readParkingPartyByOID(1).getOccupations();
+        }        
         request.setAttribute("parkingRequestSearch", parkingRequestSearch);
         return mapping.findForward("showParkingRequests");
     }
@@ -323,7 +322,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         request.setAttribute("personName", personName);
         request.setAttribute("carPlateNumber", carPlateNumber);
 
-        if (request.getParameter("accept") != null || request.getParameter("acceptPrint") != null) {
+        DynaActionForm dynaForm = (DynaActionForm) actionForm;
+        if (!StringUtils.isEmpty((String)dynaForm.get("accepted")) || request.getParameter("acceptPrint") != null) {
             Integer cardNumber = null;
             Integer group = null;
             try {
@@ -410,7 +410,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat(
-                "/images/LogoIST.gif"));
+                "/images/Logo_IST_color.tiff"));
 
         Person person = (Person) parkingParty.getParty();
         parameters.put("number", getMostSignificantNumber(person));

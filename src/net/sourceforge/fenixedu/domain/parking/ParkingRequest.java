@@ -1008,12 +1008,16 @@ public class ParkingRequest extends ParkingRequest_Base {
         setFirstCarOwnerIdDocumentState(null);
         setFirstCarPropertyRegistryDocumentState(null);
 
+        deleteFirstCarFiles();
+    }
+
+    public void deleteFirstCarFiles() {
         deleteFile(ParkingDocumentType.FIRST_CAR_INSURANCE);
         deleteFile(ParkingDocumentType.FIRST_CAR_OWNER_ID);
         deleteFile(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
         deleteFile(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
     }
-
+    
     private void deleteSecondCar() {
         setSecondCarMake(null);
         setSecondCarPlateNumber(null);
@@ -1022,12 +1026,20 @@ public class ParkingRequest extends ParkingRequest_Base {
         setSecondCarOwnerIdDocumentState(null);
         setSecondCarPropertyRegistryDocumentState(null);
 
+        deleteSecondCarFiles();
+    }
+
+    public void deleteSecondCarFiles() {
         deleteFile(ParkingDocumentType.SECOND_CAR_INSURANCE);
         deleteFile(ParkingDocumentType.SECOND_CAR_OWNER_ID);
         deleteFile(ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER);
         deleteFile(ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION);
     }
 
+    public void deleteDriverLicenseFile() {
+        deleteFile(ParkingDocumentType.DRIVER_LICENSE);
+    }
+    
     private void deleteFile(ParkingDocumentType documentType) {
         ParkingDocument parkingDocument = getParkingDocument(documentType);
         if (parkingDocument != null) {

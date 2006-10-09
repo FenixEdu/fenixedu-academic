@@ -20,7 +20,8 @@
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="page" type="java.lang.Integer" />
 			<form-property name="deleteFirstCar" type="java.lang.Boolean" />
-			<form-property name="deleteSecondCar" type="java.lang.Boolean" />			
+			<form-property name="deleteSecondCar" type="java.lang.Boolean" />		
+			<form-property name="accepted" type="java.lang.String" />
 		</form-bean>
 	</form-beans>
 

@@ -461,7 +461,7 @@ public class ParkingParty extends ParkingParty_Base {
         deleteFile(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
         deleteFile(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
     }
-    
+
     private void deleteFile(ParkingDocumentType documentType) {
         ParkingDocument parkingDocument = getParkingDocument(documentType);
         if (parkingDocument != null) {
@@ -497,11 +497,38 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public boolean hasFirstTimeRequest() {
-        for(ParkingRequest parkingRequest: getParkingRequests()){
-            if(parkingRequest.getFirstRequest()){
+        for (ParkingRequest parkingRequest : getParkingRequests()) {
+            if (parkingRequest.getFirstRequest()) {
                 return true;
             }
         }
         return false;
+    }
+
+    public Integer getMostSignificantNumber() {
+        if (getParty().isPerson()) {
+            Person person = (Person) getParty();
+            if (person.getTeacher() != null) {
+                return person.getTeacher().getTeacherNumber();
+            }
+            if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null) {
+                return person.getEmployee().getEmployeeNumber();
+            }
+            if (person.getStudent() != null) {
+                DegreeType degreeType = person.getStudent().getMostSignificantDegreeType();
+                Collection<Registration> registrations = person.getStudent().getRegistrationsByDegreeType(
+                        degreeType);
+                for (Registration registration : registrations) {
+                    StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
+                    if (scp != null) {
+                        return person.getStudent().getNumber();
+                    }
+                }
+            }
+            if (person.getGrantOwner() != null && person.getGrantOwner().hasCurrentContract()) {
+                return person.getGrantOwner().getNumber();
+            }
+        }
+        return 0;
     }
 }

@@ -36,9 +36,17 @@
 		<bean:define id="query" value="<%=query+"&carPlateNumber="+ carPlateNumber.toString()%>"/>
 	</logic:notEmpty>
 	
+	<%
+		String sortCriteria = request.getParameter("sortBy");
+	
+		if (sortCriteria == null) {
+		    sortCriteria = "parkingParty.creationDate=descending";
+		}
+	%>
+		
 	<logic:notEmpty name="parkingRequests">
 		<fr:view name="parkingRequests" schema="show.parkingRequest.noDetail">
-			<fr:layout name="tabular">
+			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle1" />
 				<fr:property name="link(viewUser)" value="/parking.do?method=showParkingPartyRequests" />
 				<fr:property name="key(viewUser)" value="link.viewUser" />
@@ -48,6 +56,9 @@
 				<fr:property name="key(viewRequest)" value="link.viewRequest" />
 				<fr:property name="param(viewRequest)" value="idInternal" />
 				<fr:property name="bundle(viewRequest)" value="PARKING_RESOURCES" />
+				<fr:property name="sortUrl" value="<%= "/parking.do?method=showParkingRequests"+query.toString()%>"/>
+				<fr:property name="sortParameter" value="sortBy"/>
+				<fr:property name="sortBy" value="<%= sortCriteria %>"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

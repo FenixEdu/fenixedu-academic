@@ -49,9 +49,14 @@ public class UpdateParkingParty extends Service {
 
             ParkingGroup parkingGroup = rootDomainObject.readParkingGroupByOID(groupId);
             parkingRequest.getParkingParty().setParkingGroup(parkingGroup);
-            for (ParkingDocument parkingDocument : parkingRequest.getParkingDocuments()) {
-                parkingDocument.setParkingParty(parkingRequest.getParkingParty());
-            }
+            
+            parkingRequest.deleteFirstCarFiles();
+            parkingRequest.deleteSecondCarFiles();
+            parkingRequest.deleteDriverLicenseFile();
+            //dont copy files to parking party
+//            for (ParkingDocument parkingDocument : parkingRequest.getParkingDocuments()) {
+//                parkingDocument.setParkingParty(parkingRequest.getParkingParty());
+//            }
         }
         parkingRequest.setParkingRequestState(parkingRequestState);
         parkingRequest.setNote(note);
