@@ -46,14 +46,16 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         String executionYear = (String) request.getAttribute("executionYear");
         String degree = (String) request.getAttribute("degree");
 
-        Integer executionDegree = (Integer) request.getAttribute("executionDegreeID");
-        if (executionDegree == null) {
-            executionDegree = Integer.valueOf((String) request.getAttribute(SessionConstants.EXECUTION_DEGREE));
+        Integer executionDegree = Integer.valueOf (getFromRequest("executionDegreeID",request));
+        if (executionDegree == null) {       
+           executionDegree = Integer.valueOf((String) request.getAttribute(SessionConstants.EXECUTION_DEGREE));           
         }
         request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
 
-        Integer degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
-
+        Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID",request));
+        if (degreeCurricularPlanID == null) {       
+            degreeCurricularPlanID = Integer.valueOf((String)request.getAttribute(SessionConstants.EXECUTION_DEGREE));           
+         }
         if (executionYear == null) {
             executionYear = (String) approvalForm.get("executionYear");
         }
@@ -629,6 +631,13 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
                 return true;
         }
         return false;
+    }
+    private String getFromRequest(String parameter, HttpServletRequest request) {
+        String parameterString = request.getParameter(parameter);
+        if (parameterString == null) {
+            parameterString = (String) request.getAttribute(parameter);
+        }
+        return parameterString;
     }
 
 }
