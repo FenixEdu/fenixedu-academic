@@ -11,6 +11,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -1169,9 +1170,10 @@ public class Registration extends Registration_Base {
     public int calculateCurricularYear() {
         double ectsCredits = 0;
         final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
-
+        final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
-            if (isCurricularCourseApproved(curricularCourse)) {
+            if (isCurricularCourseApproved(curricularCourse) && !containsSameCurricularCours(curricularCourses, curricularCourse)) {
+                curricularCourses.add(curricularCourse);
                 final Double ccEctsCredits = curricularCourse.getEctsCredits();
                 ectsCredits += ccEctsCredits == null || ccEctsCredits.doubleValue() == 0 ? 6 : ccEctsCredits;
             }
@@ -1180,6 +1182,19 @@ public class Registration extends Registration_Base {
         int ectsCreditsCurricularYear = (int) Math.floor((((ectsCredits + 24) / 60) + 1));
         int degreeCurricularYears = getActiveOrConcludedOrLastStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
         return Math.min(ectsCreditsCurricularYear, degreeCurricularYears);
+    }
+
+    private boolean containsSameCurricularCours(final Set<CurricularCourse> curricularCourses, CurricularCourse curricularCourse) {
+        final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+        for (final CurricularCourse otherCurricularCourse : curricularCourses) {
+            if (otherCurricularCourse == curricularCourse
+                    || (competenceCourse != null && competenceCourse == otherCurricularCourse.getCompetenceCourse())
+                    || curricularCourse.isEquivalent(otherCurricularCourse)
+                    || otherCurricularCourse.isEquivalent(curricularCourse)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getCalculateCurricularYear() {
