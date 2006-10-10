@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Bigger Justification field in unavailable Period" alterTableUnavailablePeriod.sql
