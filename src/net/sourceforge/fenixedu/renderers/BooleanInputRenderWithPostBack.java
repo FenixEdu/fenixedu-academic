@@ -35,7 +35,8 @@ public class BooleanInputRenderWithPostBack extends BooleanInputRenderer {
                 HtmlCheckBox checkBox = (HtmlCheckBox) layout.createComponent(object, type);
 
                 checkBox.setController(new PostBackController(getDestination()));
-                checkBox.setOnChange("this.form.submit();");
+                checkBox.setOnClick("this.form.submit();");
+                checkBox.setOnDblClick("this.form.submit();");
 
                 return checkBox;
             }
