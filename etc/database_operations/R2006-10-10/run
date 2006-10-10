@@ -28,3 +28,12 @@ function executeWithTempFile() {
 }
 
 execute "Bigger Justification field in unavailable Period" alterTableUnavailablePeriod.sql
+
+execute "Create LoginAlias table" CreateLoginAliasTable.sql
+
+execute "Add new stuff to executin course table" alterExecutionCourseTableToAddKeyAnnouncementBoard.sql
+execute "Create new announcement table" createNewAnnouncementTables.sql
+execute "Migrate execution course announcements" migrateAnnouncements.sql
+execute "Migrate institution site announcements" migrateInstitutionAnnouncements.sql
+execute "Update Invalid StudentKind keys" updateRegistrationStudentKind.sql
+execute  "Functionality changes" changes-20061010210255.sql
