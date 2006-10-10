@@ -738,7 +738,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	});
     }
 
-    public List getActiveCurricularCoursesByYearAndSemester(int year, Integer semester) {
+    public List<CurricularCourse> getActiveCurricularCoursesByYearAndSemester(int year, Integer semester) {
 	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	for (final CurricularCourse curricularCourse : getCurricularCourses()) {
 	    for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
