@@ -282,13 +282,13 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		    // Year
 		    final HtmlTableCell yearCell = lineRow.createCell();
 		    yearCell.setClasses(getEnrolmentYearClasses());
-		    yearCell.setStyle("width: 6em;");
+		    yearCell.setStyle("width: 8em;");
 		    yearCell.setBody(new HtmlText(enrolment.getExecutionPeriod().getYear()));
 
 		    // Semester
 		    final HtmlTableCell semesterCell = lineRow.createCell();
 		    semesterCell.setClasses(getEnrolmentSemesterClasses());
-		    semesterCell.setStyle("width: 6em;");
+		    semesterCell.setStyle("width: 8em;");
 
 		    final StringBuilder semester = new StringBuilder();
 		    semester.append(enrolment.getExecutionPeriod().getSemester().toString());
@@ -300,7 +300,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		// DegreeCurricularPlan
 		final HtmlTableCell degreeCurricularPlanCell = lineRow.createCell();
 		degreeCurricularPlanCell.setClasses(getEnrolmentDegreeCurricularPlanClasses());
-		degreeCurricularPlanCell.setStyle("width: 6em;");
+		degreeCurricularPlanCell.setStyle("width: 8em;");
 		if (studentCurricularPlan.getDegreeCurricularPlan() == enrolment.getDegreeModule().getParentDegreeCurricularPlan()) {
 		    degreeCurricularPlanCell.setBody(new HtmlText(StringUtils.EMPTY));
 		} else {
@@ -310,14 +310,14 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		// Enrolment Type Info
 		final HtmlTableCell enrolmentTypeInfoCell = lineRow.createCell();
 		enrolmentTypeInfoCell.setClasses(getEnrolmentTypeInfoClasses());
-		enrolmentTypeInfoCell.setStyle("width: 6em;");
+		enrolmentTypeInfoCell.setStyle("width: 8em;");
 		String enrolmentTypeInfo = (enrolment.isNormal()) ? StringUtils.EMPTY : applicationResources.getString(InfoEnrolment.newInfoFromDomain(enrolment).getEnrollmentTypeResourceKey());
 		enrolmentTypeInfoCell.setBody(new HtmlText(enrolmentTypeInfo));
 
 		// Enrolment Info
 		final HtmlTableCell enrolmentInfoCell = lineRow.createCell();
 		enrolmentInfoCell.setClasses(getEnrolmentInfoClasses());
-		enrolmentInfoCell.setStyle("width: 6em;");
+		enrolmentInfoCell.setStyle("width: 8em;");
 
 		if (enrolment.isApproved()) {
 		    final String grade = enrolment.getLatestEnrolmentEvaluation().getGrade();
