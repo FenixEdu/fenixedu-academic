@@ -14,27 +14,28 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class CreateDFACandidacy extends Service {
     public DFACandidacy run(ExecutionDegree executionDegree, String name,
-            String identificationDocumentNumber, IDDocumentType identificationDocumentType, String contributorNumber) {
-        Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
-                identificationDocumentType);
-        if (person == null) {
-            person = new Person(name, identificationDocumentNumber, identificationDocumentType,
-                    Gender.MALE, "X" + System.currentTimeMillis());
-        }
-        
-        person.setSocialSecurityNumber(contributorNumber);
-        person.addPersonRoleByRoleType(RoleType.CANDIDATE);
-        person.addPersonRoleByRoleType(RoleType.PERSON);
+	    String identificationDocumentNumber, IDDocumentType identificationDocumentType,
+	    String contributorNumber) {
+	Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
+		identificationDocumentType);
+	if (person == null) {
+	    person = new Person(name, identificationDocumentNumber, identificationDocumentType,
+		    Gender.MALE);
+	}
 
-        final DFACandidacy candidacy = new DFACandidacy(person, executionDegree);
+	person.setSocialSecurityNumber(contributorNumber);
+	person.addPersonRoleByRoleType(RoleType.CANDIDATE);
+	person.addPersonRoleByRoleType(RoleType.PERSON);
 
-        final AdministrativeOffice administrativeOffice = AdministrativeOffice
-                .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-        new DFACandidacyEvent(administrativeOffice, person, candidacy);
+	final DFACandidacy candidacy = new DFACandidacy(person, executionDegree);
 
-        new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan()
-                .getServiceAgreementTemplate());
+	final AdministrativeOffice administrativeOffice = AdministrativeOffice
+		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+	new DFACandidacyEvent(administrativeOffice, person, candidacy);
 
-        return candidacy;
+	new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan()
+		.getServiceAgreementTemplate());
+
+	return candidacy;
     }
 }

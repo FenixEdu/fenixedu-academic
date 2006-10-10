@@ -4,17 +4,18 @@
 package net.sourceforge.fenixedu.util;
 
 import java.util.Collection;
-import java.util.Collections;
 
+import net.sourceforge.fenixedu.domain.Login;
+import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentType;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * 
@@ -27,91 +28,77 @@ import net.sourceforge.fenixedu.domain.student.StudentType;
 public class UsernameUtils extends FenixUtil {
 
     public static boolean shouldHaveUID(Person person) {
-	if (person.getUsername().matches("[A-Z]+[0-9]+")) {
-	    String letters = person.getUsername().replaceFirst("[0-9]+", "");
-	    return (letters.equals("D") || letters.equals("F") || letters.equals("B")
-		    || letters.equals("M") || letters.equals("L") || letters.equals("P"));
-	} else {
-	    return false;
-	}
-
-    }
-
-    /**
-         * This method is used to determine what should be the person's current
-         * username. Note - this method is NOT resposible for actually removing
-         * the role but or setting the new username.
-         * 
-         * @param person
-         *                person for whom the username is being determined
-         * @return a string representing what should be the person's username
-         */
-    public static String updateUsername(Person person) {
-
-	Role mostImportantRole = getMostImportantRole(person.getPersonRoles());
-
-	if (mostImportantRole == null) {
-	    return person.getUsername();
-	}
-	try {
-	    return generateNewUsername(person.getUsername(), mostImportantRole.getRoleType(), person);
-	} catch (DomainException e) {
-	    e.printStackTrace();
-	    return person.getUsername();
-	}
-
-    }
-
-    /*
-         * Rewrite method
-         */
-    public static String updateIstUsername(Person person) {
-	if (person.getIstUsername() == null) {
-	    String ist = "ist";
-	    String istUsername = null;
-	    String username = person.getUsername().toUpperCase().trim();
-
-	    if (username.startsWith("D") && person.getTeacher() != null) {
-		istUsername = ist + sumNumber(username.substring(1), 10000);
-	    } else if (username.startsWith("F") && person.getEmployee() != null) {
-		istUsername = ist + sumNumber(username.substring(1), 20000);
-	    } else if (username.startsWith("B") && person.getGrantOwner() != null) {
-		istUsername = ist + sumNumber(username.substring(1), 30000);
-	    } else if (username.startsWith("M")
-		    && person.getStudentByType(DegreeType.MASTER_DEGREE) != null) {
-		istUsername = ist + sumNumber(username.substring(1), 40000);
-	    } else if (username.startsWith("T")
-		    && person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) != null) {
-		istUsername = ist + sumNumber(username.substring(1), 100000);
-	    } else if (username.startsWith("L")) {
-
-		if (person.getStudentByType(DegreeType.DEGREE) != null
-			|| person.getStudentByType(DegreeType.BOLONHA_DEGREE) != null
-			|| person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) != null) {
-
-		    istUsername = ist + sumNumber(username.substring(1), 100000);
-		}
-
-	    } else if (username.startsWith("C")) {
-		return person.getIstUsername();
-	    } else if (username.startsWith("P")) {
-		if (RootDomainObject.getInstance().getUsers().size() == 1) {
-		    istUsername = ist + "0000001";
-		} else {
-		    User user = Collections.max(RootDomainObject.getInstance().getUsers(),
-			    User.USER_UID_COMPARATOR);
-		    Integer maxIstNumber = Integer.valueOf(user.getUserUId().replaceFirst("[a-zA-Z]+",
-			    ""));
-		    istUsername = ist + (maxIstNumber + 1);
+	Login loginIdentification = person.getLoginIdentification();
+	if (loginIdentification != null) {
+	    for (LoginAlias loginAlias : loginIdentification.getAlias()) {
+		if (loginAlias.getAlias().matches("[A-Z]+[0-9]+")) {
+		    String letters = loginAlias.getAlias().replaceFirst("[0-9]+", "");
+		    if (letters.equals("D") || letters.equals("F") || letters.equals("B")
+			    || letters.equals("M") || letters.equals("L")) {
+			return true;
+		    }
 		}
 	    }
-
-	    return istUsername;
 	}
-	return person.getIstUsername();
+	return false;
     }
 
-    private static String generateNewUsername(String oldUsername, RoleType roleType, Person person) {
+    public static String updateIstUsername(Person person) {
+
+	String currentISTUsername = person.getIstUsername();
+	if (currentISTUsername == null && shouldHaveUID(person)) {
+
+	    String ist = "ist";
+	    String istUsername = null;
+
+	    Role mostImportantRole = getMostImportantRole(person.getPersonRoles());
+	    
+	    if (mostImportantRole.getRoleType() == RoleType.TEACHER) {
+		istUsername = ist + sumNumber(person.getTeacher().getTeacherNumber(), 10000);
+
+	    } else if (mostImportantRole.getRoleType() == RoleType.EMPLOYEE) {
+		istUsername = ist + sumNumber(person.getEmployee().getEmployeeNumber(), 20000);
+
+	    } else if (mostImportantRole.getRoleType() == RoleType.GRANT_OWNER
+		    && person.getGrantOwner() != null) {
+		istUsername = ist + sumNumber(person.getGrantOwner().getNumber(), 30000);
+
+	    } else if (mostImportantRole.getRoleType() == RoleType.STUDENT
+		    && person.getStudentByType(DegreeType.MASTER_DEGREE) != null) {
+		istUsername = ist
+			+ sumNumber(person.getStudentByType(DegreeType.MASTER_DEGREE).getNumber(), 40000);
+
+	    } else if (mostImportantRole.getRoleType() == RoleType.STUDENT
+		    && person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) != null) {
+		istUsername = ist
+			+ sumNumber(person.getStudentByType(
+				DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA).getNumber(), 100000);
+
+	    } else if (mostImportantRole.getRoleType() == RoleType.STUDENT) {
+		Registration registration = person.getStudentByType(DegreeType.DEGREE);
+		if (registration == null) {
+		    registration = person.getStudentByType(DegreeType.BOLONHA_DEGREE);
+		}
+		if (registration == null) {
+		    registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+		}
+		if (registration != null) {
+		    istUsername = ist + sumNumber(registration.getNumber(), 100000);
+		}
+
+	    }	    
+	    
+	    if(StringUtils.isEmpty(istUsername)) {
+		throw new DomainException("error.setting.istUsername.not.authorized");
+	    }
+	    
+	    return istUsername;
+	}
+	
+	return currentISTUsername;
+    }
+
+    public static String generateNewUsername(RoleType roleType, Person person) {
 
 	if (roleType.equals(RoleType.TEACHER)) {
 	    if (person.getTeacher() != null) {
@@ -119,12 +106,14 @@ public class UsernameUtils extends FenixUtil {
 	    } else {
 		throw new DomainException("error.person.addingInvalidRole", RoleType.TEACHER.getName());
 	    }
+	
 	} else if (roleType.equals(RoleType.EMPLOYEE)) {
 	    if (person.getEmployee() != null) {
 		return "F" + person.getEmployee().getEmployeeNumber();
 	    } else {
 		throw new DomainException("error.person.addingInvalidRole", RoleType.EMPLOYEE.getName());
 	    }
+	
 	} else if (roleType.equals(RoleType.STUDENT)) {
 
 	    Registration registration = person
@@ -198,30 +187,30 @@ public class UsernameUtils extends FenixUtil {
 	    if (person.getGrantOwner() != null) {
 		return "B" + person.getGrantOwner().getNumber();
 	    }
+	
 	} else if (roleType.equals(RoleType.PROJECTS_MANAGER)
 		|| roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
 	    return "G" + person.getIdInternal();
+	
 	} else if (roleType.equals(RoleType.ALUMNI)) {
 	    Registration registration = person.getStudentByType(DegreeType.DEGREE);
 	    if (registration != null) {
 		return "L" + registration.getNumber();
 	    }
 	    throw new DomainException("error.person.addingInvalidRole", RoleType.ALUMNI.getName());
+	    
 	} else if (roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE)
 		|| roleType.equals(RoleType.CANDIDATE)) {
 	    return "C" + person.getIdInternal();
+	
 	} else if (roleType.equals(RoleType.PERSON)) {
 	    return "P" + person.getIdInternal();
 	}
-
-	return oldUsername;
-
+	
+	return null;	
     }
 
-    /*
-         * Given a list of roles returns the most important role
-         */
-    private static Role getMostImportantRole(Collection<Role> roles) {
+    public static Role getMostImportantRole(Collection<Role> roles) {
 	for (RoleType roleType : RoleType.getRolesImportance()) {
 	    for (Role role : roles) {
 		if (role.getRoleType().equals(roleType)) {
@@ -232,9 +221,7 @@ public class UsernameUtils extends FenixUtil {
 	return null;
     }
 
-    private static String sumNumber(String number, Integer sum) {
-	Integer num = Integer.valueOf(number);
-	Integer result = num + sum;
-	return result.toString();
+    private static String sumNumber(Integer number, Integer sum) {
+	return Integer.toString(number.intValue() + sum.intValue());
     }
 }

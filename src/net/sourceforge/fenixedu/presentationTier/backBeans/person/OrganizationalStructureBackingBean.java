@@ -448,16 +448,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             buffer.append("\t<ul class='unit1'>\r\n");
             for (PersonFunction personFunction : getValidPersonFunction(iExecutionYear, function)) {
 
-                if (personFunction.belongsToPeriod(YearMonthDay.fromDateFields(iExecutionYear
-                        .getBeginDate()), YearMonthDay.fromDateFields(iExecutionYear.getEndDate()))) {
+                if (personFunction.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear.getEndDateYearMonthDay())) {
                     if (personFunction.getEndDate() == null) {
                         buffer.append("\t\t<li class='eo_highlight'>");
                     } else {
                         buffer.append("\t\t<li>");
                     }
-                    // String userName =
-                    // personFunction.getPerson().getUsername().substring(1);
-                    buffer.append(personFunction.getPerson().getNome());
+                    buffer.append(personFunction.getPerson().getNome()).append(" ");
+                    buffer.append(personFunction.getBeginDate().toString()).append(" - ").append(personFunction.getEndDate().toString());
                     buffer.append("</li>\r\n");
                 }
             }

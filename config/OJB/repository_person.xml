@@ -2,53 +2,6 @@
      Definitions for net.sourceforge.fenixedu.domain.Person 
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Person" table="PARTY">
-    
-		
-	
-	
-	
-	
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-    
-	
-   	
- 	
-          
-     
-	
-	
-		
     	
 </class-descriptor>
 
@@ -56,13 +9,6 @@
      Definitions for net.sourceforge.fenixedu.domain.User 
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.User" table="USER">
-	
-	
-	
-	
-	
-	
-		  
 	  
 </class-descriptor>
 
@@ -70,17 +16,8 @@
      Definitions for net.sourceforge.fenixedu.domain.Identification 
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Identification" table="IDENTIFICATION">
-	
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.Login"/>
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard"/>
-		
-	
-	
-	
-	
-    	
-    
-	  
+	 <extent-class class-ref="net.sourceforge.fenixedu.domain.Login"/>
+	 <extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard"/>  				
 </class-descriptor>
 
 <!-- ***********************************
@@ -88,32 +25,18 @@
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Login" table="IDENTIFICATION">
 	
-	
-	
-	
-	
-	
-    	
-    
-	
-	
-     
 </class-descriptor>
-<!--
- ***********************************
+
+<!-- ***********************************
      Definitions for net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard" table="IDENTIFICATION">
-	
-	
-	
-	
-	
-	
-    	
-    
-    	
-    
-	
-     	
+	 	
+</class-descriptor> 
+
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.LoginAlias" table="LOGIN_ALIAS">
+	 	
 </class-descriptor> 

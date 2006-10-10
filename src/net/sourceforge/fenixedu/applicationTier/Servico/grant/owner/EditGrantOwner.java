@@ -12,13 +12,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditGrantOwner extends Service {
-
-    private String generateGrantOwnerPersonUsername(Integer grantOwnerNumber) {
-	String result = null;
-	result = "b" + grantOwnerNumber.toString();
-	return result;
-    }
-
+  
     private GrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber) throws FenixServiceException,
 	    ExcepcaoPersistencia {
 	return GrantOwner.readGrantOwnerByNumber(grantOwnerNumber);
@@ -92,8 +86,8 @@ public class EditGrantOwner extends Service {
 	}
 	grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner, maxNumber);
 
-	if (infoGrantOwner.getInfoPersonEditor().getIdInternal() == null) {
-	    person.changeUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()));
+	if (infoGrantOwner.getInfoPersonEditor().getIdInternal() == null) {	    
+	    person.changeUsername(RoleType.GRANT_OWNER);
 	}
 	return grantOwner.getIdInternal();
     }

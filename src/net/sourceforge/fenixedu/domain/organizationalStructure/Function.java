@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class Function extends Function_Base {
@@ -27,7 +28,7 @@ public class Function extends Function_Base {
     }       
 
     private void checkParameters(String functionName, Date beginDate, Date endDate) {
-        if(functionName == null && functionName.equals("")){
+        if(StringUtils.isEmpty(functionName)){
             throw new DomainException("error.no.function.name");
         }
         if(beginDate == null) {

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -579,8 +580,8 @@ public final class DadosForm extends ActionForm {
             pessoa.setConcelhoNaturalidade(getConcelhoNaturalidade());
             pessoa.setDistritoNaturalidade(getDistritoNaturalidade());
             pessoa.setNumContribuinte(getNumContribuinte());
-            pessoa.setCodigoFiscal(getCodigoFiscal());
-            pessoa.setUsername(getUsername());
+            pessoa.setCodigoFiscal(getCodigoFiscal());                      
+            pessoa.setUsername(RoleType.PERSON);                       
             pessoa.setPassword(getPassword());
         }
     }

@@ -134,17 +134,12 @@ public class Authenticate extends Service implements Serializable {
             FenixServiceException {
 
         Person person = Person.readPersonByUsername(username);
-
-        if (person == null) {
-            person = Person.readPersonByIstUsername(username);
-        }
-
+        
         if (person == null || !PasswordEncryptor.areEquals(person.getPassword(), password)) {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }
 
         setLoginHostNameAndDateTime(remoteHost, person);
-
         return getUserView(person, requestURL);
     }
 
@@ -162,18 +157,14 @@ public class Authenticate extends Service implements Serializable {
         }
 
         final String username = receipt.getUserName();
+        
         Person person = Person.readPersonByUsername(username);
-
-        if (person == null) {
-            person = Person.readPersonByIstUsername(username);
-        }
-
+        
         if (person == null) {
             throw new ExcepcaoAutenticacao("error.Exception");
         }
       
         setLoginHostNameAndDateTime(remoteHost, person);
-
         return getUserView(person, requestURL);
     }
 

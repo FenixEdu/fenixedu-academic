@@ -63,7 +63,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
             final String studentUsername = (String) args[0];
             for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
                 for (final Attends attend : executionCourse.getAttends()) {
-                    if (attend.getAluno().getPerson().getUsername().equals(studentUsername)) {
+                    if (attend.getAluno().getPerson().hasUsername(studentUsername)) {
                         return true;
                     }
                 }

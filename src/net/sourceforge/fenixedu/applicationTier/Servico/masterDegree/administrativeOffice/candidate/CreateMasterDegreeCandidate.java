@@ -42,7 +42,7 @@ public class CreateMasterDegreeCandidate extends Service {
         if (person == null) {
             // Create the new Person
             person = new Person(name, identificationDocumentNumber,
-                    identificationDocumentType, Gender.MALE, "T" + System.currentTimeMillis());
+                    identificationDocumentType, Gender.MALE);
         } else {
             MasterDegreeCandidate existingMasterDegreeCandidate = person
                     .getMasterDegreeCandidateByExecutionDegree(executionDegree);

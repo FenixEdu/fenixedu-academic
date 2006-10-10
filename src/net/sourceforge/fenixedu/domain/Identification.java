@@ -15,17 +15,7 @@ public abstract class Identification extends Identification_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
-    public static List<Login> readAllLogins() {
-        List<Login> logins = new ArrayList<Login>();
-        for (Identification identification : RootDomainObject.getInstance().getIdentifications()) {
-            if (identification instanceof Login) {
-                logins.add((Login) identification);
-            }
-        }
-        return logins;
-    }
-
-    public void delete() {
+    public void delete() {	
         removeUser();
         removeRootDomainObject();
         deleteDomainObject();
@@ -34,5 +24,14 @@ public abstract class Identification extends Identification_Base {
     public boolean isLogin() {
         return false;
     }
-
+    
+    public static List<Login> readAllLogins() {
+        List<Login> logins = new ArrayList<Login>();
+        for (Identification identification : RootDomainObject.getInstance().getIdentifications()) {
+            if (identification.isLogin()) {
+                logins.add((Login) identification);
+            }
+        }
+        return logins;
+    }
 }

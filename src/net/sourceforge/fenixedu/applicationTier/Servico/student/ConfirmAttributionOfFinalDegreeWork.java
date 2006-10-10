@@ -44,7 +44,7 @@ public class ConfirmAttributionOfFinalDegreeWork extends Service {
                     for (int i = 0; i < groupStudents.size(); i++) {
                         GroupStudent groupStudent = (GroupStudent) groupStudents.get(i);
                         if (groupStudent != null
-                                && groupStudent.getStudent().getPerson().getUsername().equals(username)) {
+                                && groupStudent.getStudent().getPerson().hasUsername(username)) {
                             groupStudent.setFinalDegreeWorkProposalConfirmation(groupProposal
                                     .getFinalDegreeWorkProposal());
                         }

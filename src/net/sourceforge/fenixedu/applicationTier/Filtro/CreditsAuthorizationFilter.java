@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -28,39 +27,38 @@ public class CreditsAuthorizationFilter extends Filtro {
     }
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView requester = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+	IUserView requester = getRemoteUser(request);
+	Object[] arguments = getServiceCallArguments(request);
 
-        boolean authorizedRequester = false;
-        // ATTENTION: ifs order matters...
-        if (requester.hasRoleType(RoleType.CREDITS_MANAGER)) {
-            authorizedRequester = true;
-        } else if (requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
-            Teacher teacherToEdit = readTeacher(arguments[0]);
-            Person requesterPerson = Person.readPersonByUsername(requester.getUtilizador());
-            List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();            
-            Department department = teacherToEdit.getCurrentWorkingDepartment();
-            authorizedRequester = departmentsWithAccessGranted.contains(department);
-        } else if (requester.hasRoleType(RoleType.TEACHER)) {
-            Teacher teacherToEdit = readTeacher(arguments[0]);
-            authorizedRequester = teacherToEdit.getPerson().getUsername().equals(
-                    requester.getUtilizador());
-        }
+	boolean authorizedRequester = false;
+	// ATTENTION: ifs order matters...
+	if (requester.hasRoleType(RoleType.CREDITS_MANAGER)) {
+	    authorizedRequester = true;
+	} else if (requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
+	    Teacher teacherToEdit = readTeacher(arguments[0]);
+	    Person requesterPerson = Person.readPersonByUsername(requester.getUtilizador());
+	    List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
+	    Department department = teacherToEdit.getCurrentWorkingDepartment();
+	    authorizedRequester = departmentsWithAccessGranted.contains(department);
+	} else if (requester.hasRoleType(RoleType.TEACHER)) {
+	    Teacher teacherToEdit = readTeacher(arguments[0]);
+	    authorizedRequester = teacherToEdit.getPerson().getUsername().equals(requester.getUtilizador());
+	}
 
-        if (!authorizedRequester) {
-            throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador()
-                    + "ACCESS NOT GRANTED!");
-        }
+	if (!authorizedRequester) {
+	    throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador()
+		    + "ACCESS NOT GRANTED!");
+	}
 
     }
 
     private Teacher readTeacher(Object object) throws ExcepcaoPersistencia {
-        Integer teacherOID = null;
-        if (object instanceof InfoTeacher) {
-            teacherOID = ((InfoTeacher) object).getIdInternal();
-        } else if (object instanceof Integer) {
-            teacherOID = (Integer) object;
-        }
-        return rootDomainObject.readTeacherByOID(teacherOID);
+	Integer teacherOID = null;
+	if (object instanceof InfoTeacher) {
+	    teacherOID = ((InfoTeacher) object).getIdInternal();
+	} else if (object instanceof Integer) {
+	    teacherOID = (Integer) object;
+	}
+	return rootDomainObject.readTeacherByOID(teacherOID);
     }
 }

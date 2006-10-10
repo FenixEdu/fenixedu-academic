@@ -95,7 +95,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
 	    while (listIterator.hasNext()) {
 		Coordinator coordinator = (Coordinator) listIterator.next();
 
-		if (id.getUtilizador().equals(coordinator.getTeacher().getPerson().getUsername())) {
+		if (coordinator.getTeacher().getPerson().getUsername().equals(id.getUtilizador())) {
 		    return true;
 		}
 	    }

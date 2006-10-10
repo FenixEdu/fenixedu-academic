@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -82,11 +84,9 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
             //Change username of the old person if is a "b***" to
             // INA(NumeroDocumentoIdentificacao)
             if (oldInfoPerson.getUsername().charAt(0) == 'B') {
-                String newUsernameOldPerson = "INA";
-                newUsernameOldPerson += oldInfoPerson.getNumeroDocumentoIdentificacao();
-
-                Object[] argsChangeUsername = { newUsernameOldPerson, oldInfoPerson.getIdInternal() };
-                ServiceUtils.executeService(userView, "ChangePersonUsername", argsChangeUsername);
+        	Person person = (Person) rootDomainObject.readPartyByOID(oldInfoPerson.getIdInternal());         	
+                Object[] argsChangeUsername = { person.getLoginIdentification()};
+                ServiceUtils.executeService(userView, "CloseLogin", argsChangeUsername);
             }
 
             //Change username of the new person if is a "INA***" to
@@ -96,7 +96,7 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
                 String newUsernameNewPerson = "B";
                 newUsernameNewPerson += infoGrantOwner.getGrantOwnerNumber().toString();
 
-                Object[] argsChangeUsername = { newUsernameNewPerson, infoPerson.getIdInternal() };
+                Object[] argsChangeUsername = { newUsernameNewPerson, infoPerson.getIdInternal(), RoleType.GRANT_OWNER};
                 ServiceUtils.executeService(userView, "ChangePersonUsername", argsChangeUsername);
             }
 

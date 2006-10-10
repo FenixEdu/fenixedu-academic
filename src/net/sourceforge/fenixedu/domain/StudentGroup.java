@@ -17,78 +17,79 @@ import dml.runtime.RelationAdapter;
  */
 public class StudentGroup extends StudentGroup_Base {
 
-    public static final Comparator<StudentGroup> COMPARATOR_BY_GROUP_NUMBER = new BeanComparator("groupNumber");
+    public static final Comparator<StudentGroup> COMPARATOR_BY_GROUP_NUMBER = new BeanComparator(
+	    "groupNumber");
 
     static {
-        StudentGroupAttend.addListener(new StudentGroupAttendListener());
+	StudentGroupAttend.addListener(new StudentGroupAttendListener());
     }
 
     private static class StudentGroupAttendListener extends RelationAdapter<StudentGroup, Attends> {
-        @Override
-        public void beforeRemove(StudentGroup studentGroup, Attends attends) {
-            if (!studentGroup.getProjectSubmissions().isEmpty()) {
-                throw new DomainException(
-                        "error.studentGroup.cannotRemoveAttendsBecauseAlreadyHasProjectSubmissions");
-            }
+	@Override
+	public void beforeRemove(StudentGroup studentGroup, Attends attends) {
+	    if (!studentGroup.getProjectSubmissions().isEmpty()) {
+		throw new DomainException(
+			"error.studentGroup.cannotRemoveAttendsBecauseAlreadyHasProjectSubmissions");
+	    }
 
-            super.beforeRemove(studentGroup, attends);
-        }
+	    super.beforeRemove(studentGroup, attends);
+	}
 
     }
 
     public StudentGroup() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public StudentGroup(Integer groupNumber, Grouping grouping) {
-        this();
-        super.setGroupNumber(groupNumber);
-        super.setGrouping(grouping);
+	this();
+	super.setGroupNumber(groupNumber);
+	super.setGrouping(grouping);
     }
 
     public StudentGroup(Integer groupNumber, Grouping grouping, Shift shift) {
-        this();
-        super.setGroupNumber(groupNumber);
-        super.setGrouping(grouping);
-        super.setShift(shift);
+	this();
+	super.setGroupNumber(groupNumber);
+	super.setGrouping(grouping);
+	super.setShift(shift);
     }
 
     public void delete() {
-        if (!hasAnyAttends() && !hasAnyProjectSubmissions()) {
-            removeShift();
-            removeGrouping();
-            removeRootDomainObject();
-            deleteDomainObject();
-        } else {
-            throw new DomainException("student.group.cannot.be.deleted");
-        }
+	if (!hasAnyAttends() && !hasAnyProjectSubmissions()) {
+	    removeShift();
+	    removeGrouping();
+	    removeRootDomainObject();
+	    deleteDomainObject();
+	} else {
+	    throw new DomainException("student.group.cannot.be.deleted");
+	}
     }
 
     public void editShift(Shift shift) {
-        if (this.getGrouping().getShiftType() == null
-                || (!this.getGrouping().getShiftType().equals(shift.getTipo()))) {
-            throw new DomainException(this.getClass().getName(), "");
-        }
+	if (this.getGrouping().getShiftType() == null
+		|| (!this.getGrouping().getShiftType().equals(shift.getTipo()))) {
+	    throw new DomainException(this.getClass().getName(), "");
+	}
 
-        this.setShift(shift);
+	this.setShift(shift);
     }
 
     public boolean checkStudentUsernames(List<String> studentUsernames) {
-        boolean found;
-        for (final String studentUsername : studentUsernames) {
-            found = false;
-            for (final Attends attend : this.getAttends()) {
-                if (attend.getAluno().getPerson().getUsername() == studentUsername) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                return true;
-            }
-        }
-        return false;
+	boolean found;
+	for (final String studentUsername : studentUsernames) {
+	    found = false;
+	    for (final Attends attend : this.getAttends()) {
+		if (attend.getAluno().getPerson().hasUsername(studentUsername)) {
+		    found = true;
+		    break;
+		}
+	    }
+	    if (!found) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

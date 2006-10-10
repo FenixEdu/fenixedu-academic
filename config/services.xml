@@ -11031,4 +11031,12 @@
         <filterChains>
         </filterChains>   
     </service> 
+    <service>
+    	<name>CloseLogin</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.CloseLogin</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>   
+    </service> 
 </serviceDefinitions>

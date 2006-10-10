@@ -23,148 +23,147 @@
  * ValueTypes declarations
  * 
  */
-valueType net.sourceforge.fenixedu.domain.teacher.AdviseType									as AdviseType;
-valueType net.sourceforge.fenixedu.util.AgreementType                                           as AgreementType;
-valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                    as AreaType;
-valueType net.sourceforge.fenixedu.domain.branch.BranchType                                     as BranchType;
-valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope                          as CurricularCourseExecutionScope;
-valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType                       as CurricularCourseType;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage                       as CurricularStage;
-valueType net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState as DegreeCurricularPlanState;
-valueType net.sourceforge.fenixedu.domain.degree.DegreeType                                     as DegreeType;
-valueType net.sourceforge.fenixedu.util.DelegateYearType                                        as DelegateYearType; 
-valueType net.sourceforge.fenixedu.util.DiaSemana                                               as DiaSemana;
-valueType net.sourceforge.fenixedu.domain.DocumentType                                          as DocumentType;
-valueType net.sourceforge.fenixedu.util.EnrolmentAction                                         as EnrolmentAction;
-valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition                        as EnrollmentCondition;
-valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState                                as EnrolmentEvaluationState;
-valueType net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType                    as EnrolmentEvaluationType;
-valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType                                as EnrolmentGroupPolicyType;
-valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentState                            as EnrollmentState;
-valueType net.sourceforge.fenixedu.util.EntryPhase                                              as EntryPhase;
-valueType net.sourceforge.fenixedu.domain.research.event.EventType							    as EventType;
-valueType net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                        as ExemptionGratuityType;
-valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus                           as FinalDegreeWorkProposalStatus;  
-valueType net.sourceforge.fenixedu.domain.person.Gender                                         as Gender;
-valueType net.sourceforge.fenixedu.domain.curriculum.GradeType									as GradeType;
-valueType net.sourceforge.fenixedu.domain.GraduationType                                        as GraduationType;
-valueType net.sourceforge.fenixedu.domain.masterDegree.GuideRequester                           as GuideRequester;
-valueType net.sourceforge.fenixedu.domain.GuideState                                            as GuideState;
-valueType net.sourceforge.fenixedu.domain.person.IDDocumentType                                 as IDDocumentType;
-valueType net.sourceforge.fenixedu.domain.person.MaritalStatus                                  as MaritalStatus;
-valueType net.sourceforge.fenixedu.util.MarkType                                                as MarkType;
-valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification               as MasterDegreeClassification;
-valueType net.sourceforge.fenixedu.util.OldPublicationType                                      as OldPublicationType;
-valueType net.sourceforge.fenixedu.util.OrientationType                                         as OrientationType;
-valueType net.sourceforge.fenixedu.domain.transactions.PaymentType                              as PaymentType;
-valueType net.sourceforge.fenixedu.util.PeriodToApplyRestriction                                as PeriodToApplyRestriction;
-valueType net.sourceforge.fenixedu.util.PeriodState                                             as PeriodState;
-valueType net.sourceforge.fenixedu.util.ProposalState                                           as ProposalState;
-valueType net.sourceforge.fenixedu.util.ProviderRegimeType                                      as ProviderRegimeType;
-valueType net.sourceforge.fenixedu.util.PublicationArea                                         as PublicationArea;
-valueType net.sourceforge.fenixedu.util.PublicationType                                         as PublicationType;
-valueType net.sourceforge.fenixedu.domain.person.RoleType                                       as RoleType;
-valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                      as ReimbursementGuideState;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                      		as RegimeType;
-valueType net.sourceforge.fenixedu.util.Season                                                  as Season;
-valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason                         as SecretaryEnrolmentStudentReason; 
-valueType net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType                          as ServiceExemptionType;
-valueType net.sourceforge.fenixedu.domain.ShiftType                                             as ShiftType; 
-valueType net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus                            as SibsPaymentStatus; 
-valueType net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType                              as SibsPaymentType;
-valueType net.sourceforge.fenixedu.util.SituationName                                           as SituationName;
-valueType net.sourceforge.fenixedu.domain.sms.SmsDeliveryType                                   as SmsDeliveryType; 
-valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization                  as Specialization;
-valueType net.sourceforge.fenixedu.util.State                                                   as State;
-valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState      as StudentCurricularPlanState;
-valueType net.sourceforge.fenixedu.util.StudentState                                            as StudentState;
-valueType net.sourceforge.fenixedu.domain.student.StudentType									as StudentType;
-valueType net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice					as StudentPersonalDataAuthorizationChoice;
-valueType net.sourceforge.fenixedu.util.TipoAula                                                as TipoAula;
-valueType net.sourceforge.fenixedu.util.TipoSala                                                as TipoSala; 
-valueType net.sourceforge.fenixedu.domain.transactions.TransactionType                          as TransactionType;
-valueType net.sourceforge.fenixedu.util.tests.CorrectionFormula                                 as CorrectionFormula;
-valueType net.sourceforge.fenixedu.util.tests.CorrectionAvailability                            as CorrectionAvailability;
-valueType net.sourceforge.fenixedu.util.tests.TestType                  				        as TestType;
-valueType net.sourceforge.fenixedu.util.tests.Response                  				        as Response;
-valueType net.sourceforge.fenixedu.domain.organizationalStructure.UnitType                  	as UnitType;
-valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType                 	as FunctionType;
-valueType net.sourceforge.fenixedu.domain.QualificationType										as QualificationType;
-valueType net.sourceforge.fenixedu.util.ByteArray												as ByteArray;
-valueType net.sourceforge.fenixedu.util.ContentType                                             as ContentType;
-valueType net.sourceforge.fenixedu.domain.GradeScale											as GradeScale;
-valueType net.sourceforge.fenixedu.util.EvaluationType											as EvaluationType;
-valueType net.sourceforge.fenixedu.util.RegimenType                      			            as RegimenType;
-valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                                as LegalRegimenType;
-valueType net.sourceforge.fenixedu.util.WeekDay													as WeekDay;
-valueType net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType					as CurricularPeriodType;
-valueType net.sourceforge.fenixedu.domain.accessControl.Group                                   as Group;
-valueType org.joda.time.YearMonthDay															as YearMonthDay;
-valueType java.math.BigDecimal																	as BigDecimal;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.CardState                          as CardState;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.CardType                           as CardType;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.DayType                            as DayType;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup                 as JustificationGroup;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType                  as JustificationType;
-valueType net.sourceforge.fenixedu.domain.assiduousness.WorkWeek                                as WorkWeek;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState                 as AssiduousnessState;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.AnulationState           			as AnulationState;
-valueType org.joda.time.DateTime                                                                as DateTime;
-valueType org.joda.time.Duration                                                                as Duration;
-valueType org.joda.time.Interval                                                                as Interval;
-valueType org.joda.time.Period                                                                  as Period;
-valueType org.joda.time.TimeOfDay                                                               as TimeOfDay;
-valueType org.joda.time.Partial                                                                 as Partial;
-valueType net.sourceforge.fenixedu.util.ContractType  		                                	as ContractType;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences    			as BibliographicReferences;
-valueType net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType    				as CurricularRuleType;
-valueType net.sourceforge.fenixedu.domain.util.LogicOperators   								as LogicOperators;
-valueType net.sourceforge.fenixedu.domain.research.project.ProjectType							as ProjectType;
-valueType net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum					as PartyType;
-valueType net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum		as AccountabilityType;
-valueType net.sourceforge.fenixedu.util.MultiLanguageString										as MultiLanguageString;
-valueType net.sourceforge.fenixedu.domain.system.WhenToSendEmail                                as WhenToSendEmail;
-valueType net.sourceforge.fenixedu.domain.FileItemPermittedGroupType							as FileItemPermittedGroupType;
-valueType net.sourceforge.fenixedu.util.HourMinuteSecond										as HourMinuteSecond;
-valueType net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType		    as ThesisType;
-valueType net.sourceforge.fenixedu.domain.MarkSheetType					as MarkSheetType;
-valueType net.sourceforge.fenixedu.domain.MarkSheetState					as MarkSheetState;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel     as CompetenceCourseLevel;
-valueType net.sourceforge.fenixedu.domain.accounting.AccountType     as AccountType;
-valueType net.sourceforge.fenixedu.domain.accounting.EventType     as AccountingEventType;
-valueType net.sourceforge.fenixedu.domain.accounting.EntryType     as EntryType;
-valueType net.sourceforge.fenixedu.domain.accounting.PaymentMode   as PaymentMode;
-valueType net.sourceforge.fenixedu.domain.accounting.EventState     as AccountingEventState;
-valueType net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType     as AdministrativeOfficeType;
-valueType net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType   as AcademicServiceRequestSituationType;
-valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType  as DocumentRequestType;
-valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType  as DocumentPurposeType;
-valueType net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent.ResultPatentType  as ResultPatentType;
-valueType net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType		as BookPartType;
-valueType net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent.ResultPatentStatus as ResultPatentStatus;
-valueType net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType as ScopeType;
-valueType net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.ProjectParticipationType as ProjectParticipationType;
-valueType net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole as ProjectEventAssociationRole;
-valueType net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole as ResultUnitAssociationRole;
-valueType net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole as ResultEventAssociationRole;
-valueType net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole as ResultParticipationRole;
-valueType net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile.FileResultPermittedGroupType as FileResultPermittedGroupType;
-valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.EventParticipationRole as EventParticipationRole;
-valueType net.sourceforge.fenixedu.util.Month																			as Month;
+valueType net.sourceforge.fenixedu.domain.teacher.AdviseType													as AdviseType;
+valueType net.sourceforge.fenixedu.util.AgreementType                                          					as AgreementType;
+valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                    				as AreaType;
+valueType net.sourceforge.fenixedu.domain.branch.BranchType                                    			 		as BranchType;
+valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope                          				as CurricularCourseExecutionScope;
+valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType                       				as CurricularCourseType;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage                       				as CurricularStage;
+valueType net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState 				as DegreeCurricularPlanState;
+valueType net.sourceforge.fenixedu.domain.degree.DegreeType                                     				as DegreeType;
+valueType net.sourceforge.fenixedu.util.DelegateYearType                                        				as DelegateYearType; 
+valueType net.sourceforge.fenixedu.util.DiaSemana                                               				as DiaSemana;
+valueType net.sourceforge.fenixedu.domain.DocumentType                                          				as DocumentType;
+valueType net.sourceforge.fenixedu.util.EnrolmentAction                                         				as EnrolmentAction;
+valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition                        				as EnrollmentCondition;
+valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState                                				as EnrolmentEvaluationState;
+valueType net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType                   					as EnrolmentEvaluationType;
+valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType                                				as EnrolmentGroupPolicyType;
+valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentState                            				as EnrollmentState;
+valueType net.sourceforge.fenixedu.util.EntryPhase                                              				as EntryPhase;
+valueType net.sourceforge.fenixedu.domain.research.event.EventType							    				as EventType;
+valueType net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                        				as ExemptionGratuityType;
+valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus                           				as FinalDegreeWorkProposalStatus;  
+valueType net.sourceforge.fenixedu.domain.person.Gender                                         				as Gender;
+valueType net.sourceforge.fenixedu.domain.curriculum.GradeType													as GradeType;
+valueType net.sourceforge.fenixedu.domain.GraduationType                                        				as GraduationType;
+valueType net.sourceforge.fenixedu.domain.masterDegree.GuideRequester                          	 				as GuideRequester;
+valueType net.sourceforge.fenixedu.domain.GuideState                                            				as GuideState;
+valueType net.sourceforge.fenixedu.domain.person.IDDocumentType                                 				as IDDocumentType;
+valueType net.sourceforge.fenixedu.domain.person.MaritalStatus                                  				as MaritalStatus;
+valueType net.sourceforge.fenixedu.util.MarkType                                                				as MarkType;
+valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification               				as MasterDegreeClassification;
+valueType net.sourceforge.fenixedu.util.OldPublicationType                                      				as OldPublicationType;
+valueType net.sourceforge.fenixedu.util.OrientationType                                         				as OrientationType;
+valueType net.sourceforge.fenixedu.domain.transactions.PaymentType                              				as PaymentType;
+valueType net.sourceforge.fenixedu.util.PeriodToApplyRestriction                                				as PeriodToApplyRestriction;
+valueType net.sourceforge.fenixedu.util.PeriodState                                             				as PeriodState;
+valueType net.sourceforge.fenixedu.util.ProposalState                                         					as ProposalState;
+valueType net.sourceforge.fenixedu.util.ProviderRegimeType                                     					as ProviderRegimeType;
+valueType net.sourceforge.fenixedu.util.PublicationArea                                         				as PublicationArea;
+valueType net.sourceforge.fenixedu.util.PublicationType                                        					as PublicationType;
+valueType net.sourceforge.fenixedu.domain.person.RoleType                                       				as RoleType;
+valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                     				 	as ReimbursementGuideState;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                      						as RegimeType;
+valueType net.sourceforge.fenixedu.util.Season                                                  				as Season;
+valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason                         				as SecretaryEnrolmentStudentReason; 
+valueType net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType                          				as ServiceExemptionType;
+valueType net.sourceforge.fenixedu.domain.ShiftType                                             				as ShiftType; 
+valueType net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus                            				as SibsPaymentStatus; 
+valueType net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType                              				as SibsPaymentType;
+valueType net.sourceforge.fenixedu.util.SituationName                                          					as SituationName;
+valueType net.sourceforge.fenixedu.domain.sms.SmsDeliveryType                                 					as SmsDeliveryType; 
+valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization                 					as Specialization;
+valueType net.sourceforge.fenixedu.util.State                                                   				as State;
+valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState     					as StudentCurricularPlanState;
+valueType net.sourceforge.fenixedu.util.StudentState                                            				as StudentState;
+valueType net.sourceforge.fenixedu.domain.student.StudentType													as StudentType;
+valueType net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice									as StudentPersonalDataAuthorizationChoice;
+valueType net.sourceforge.fenixedu.util.TipoAula                                                				as TipoAula;
+valueType net.sourceforge.fenixedu.util.TipoSala                                                				as TipoSala; 
+valueType net.sourceforge.fenixedu.domain.transactions.TransactionType                          				as TransactionType;
+valueType net.sourceforge.fenixedu.util.tests.CorrectionFormula                                					as CorrectionFormula;
+valueType net.sourceforge.fenixedu.util.tests.CorrectionAvailability                           					as CorrectionAvailability;
+valueType net.sourceforge.fenixedu.util.tests.TestType                  				       					as TestType;
+valueType net.sourceforge.fenixedu.util.tests.Response                  				        				as Response;
+valueType net.sourceforge.fenixedu.domain.organizationalStructure.UnitType                  					as UnitType;
+valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType                 					as FunctionType;
+valueType net.sourceforge.fenixedu.domain.QualificationType														as QualificationType;
+valueType net.sourceforge.fenixedu.util.ByteArray																as ByteArray;
+valueType net.sourceforge.fenixedu.util.ContentType                                          				    as ContentType;
+valueType net.sourceforge.fenixedu.domain.GradeScale															as GradeScale;
+valueType net.sourceforge.fenixedu.util.EvaluationType															as EvaluationType;
+valueType net.sourceforge.fenixedu.util.RegimenType                      			        				    as RegimenType;
+valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                            				    as LegalRegimenType;
+valueType net.sourceforge.fenixedu.util.WeekDay																	as WeekDay;
+valueType net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType									as CurricularPeriodType;
+valueType net.sourceforge.fenixedu.domain.accessControl.Group                                   				as Group;
+valueType org.joda.time.YearMonthDay																			as YearMonthDay;
+valueType java.math.BigDecimal																					as BigDecimal;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.CardState                          				as CardState;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.CardType                           				as CardType;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.DayType                            				as DayType;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup                 				as JustificationGroup;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType                  				as JustificationType;
+valueType net.sourceforge.fenixedu.domain.assiduousness.WorkWeek                                				as WorkWeek;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState                 				as AssiduousnessState;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.AnulationState           							as AnulationState;
+valueType org.joda.time.DateTime                                                               					as DateTime;
+valueType org.joda.time.Duration                                                              					as Duration;
+valueType org.joda.time.Interval                                                               					as Interval;
+valueType org.joda.time.Period                                                               					as Period;
+valueType org.joda.time.TimeOfDay                                                               				as TimeOfDay;
+valueType org.joda.time.Partial                                                                					as Partial;
+valueType net.sourceforge.fenixedu.util.ContractType  		                                					as ContractType;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences    							as BibliographicReferences;
+valueType net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType    								as CurricularRuleType;
+valueType net.sourceforge.fenixedu.domain.util.LogicOperators   												as LogicOperators;
+valueType net.sourceforge.fenixedu.domain.research.project.ProjectType											as ProjectType;
+valueType net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum									as PartyType;
+valueType net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum						as AccountabilityType;
+valueType net.sourceforge.fenixedu.util.MultiLanguageString														as MultiLanguageString;
+valueType net.sourceforge.fenixedu.domain.system.WhenToSendEmail                               					as WhenToSendEmail;
+valueType net.sourceforge.fenixedu.domain.FileItemPermittedGroupType											as FileItemPermittedGroupType;
+valueType net.sourceforge.fenixedu.util.HourMinuteSecond														as HourMinuteSecond;
+valueType net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType		   					as ThesisType;
+valueType net.sourceforge.fenixedu.domain.MarkSheetType															as MarkSheetType;
+valueType net.sourceforge.fenixedu.domain.MarkSheetState														as MarkSheetState;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel     							as CompetenceCourseLevel;
+valueType net.sourceforge.fenixedu.domain.accounting.AccountType     											as AccountType;
+valueType net.sourceforge.fenixedu.domain.accounting.EventType     												as AccountingEventType;
+valueType net.sourceforge.fenixedu.domain.accounting.EntryType     												as EntryType;
+valueType net.sourceforge.fenixedu.domain.accounting.PaymentMode   												as PaymentMode;
+valueType net.sourceforge.fenixedu.domain.accounting.EventState     											as AccountingEventState;
+valueType net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType     					as AdministrativeOfficeType;
+valueType net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType  					as AcademicServiceRequestSituationType;
+valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType  				as DocumentRequestType;
+valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType  				as DocumentPurposeType;
+valueType net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent.ResultPatentType  				as ResultPatentType;
+valueType net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType						as BookPartType;
+valueType net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent.ResultPatentStatus 				as ResultPatentStatus;
+valueType net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType 				as ScopeType;
+valueType net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.ProjectParticipationType 		as ProjectParticipationType;
+valueType net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole 	as ProjectEventAssociationRole;
+valueType net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole 		as ResultUnitAssociationRole;
+valueType net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole 	as ResultEventAssociationRole;
+valueType net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole			as ResultParticipationRole;
+valueType net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile.FileResultPermittedGroupType		as FileResultPermittedGroupType;
+valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.EventParticipationRole 				as EventParticipationRole;
+valueType net.sourceforge.fenixedu.util.Month																	as Month;
+valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhaseStatus						as ValuationPhaseStatus;
+valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationValueType							as ValuationValueType;
+valueType net.sourceforge.fenixedu.domain.parking.ParkingRequestState											as ParkingRequestState;
+valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentType											as ParkingDocumentType;
+valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentState											as ParkingDocumentState;
+valueType java.util.UUID 																						as UUID;
+valueType net.sourceforge.fenixedu.domain.tests.NewPermission													as Permission;
+valueType net.sourceforge.fenixedu.domain.tests.predicates.Predicate											as Predicate;
+valueType net.sourceforge.fenixedu.domain.tests.Grade															as Grade;
+valueType net.sourceforge.fenixedu.domain.tests.TestGroupStatus													as TestGroupStatus;
+valueType net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer											as ConcreteAnswer;
+valueType net.sourceforge.fenixedu.domain.LoginAliasType														as LoginAliasType;
 
-valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhaseStatus		as ValuationPhaseStatus;
-valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationValueType		as ValuationValueType;
-valueType net.sourceforge.fenixedu.domain.parking.ParkingRequestState							as ParkingRequestState;
-valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentType							as ParkingDocumentType;
-valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentState							as ParkingDocumentState;
-
-valueType java.util.UUID as UUID;
-
-valueType net.sourceforge.fenixedu.domain.tests.NewPermission					as Permission;
-valueType net.sourceforge.fenixedu.domain.tests.predicates.Predicate			as Predicate;
-valueType net.sourceforge.fenixedu.domain.tests.Grade							as Grade;
-valueType net.sourceforge.fenixedu.domain.tests.TestGroupStatus					as TestGroupStatus;
-valueType net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer			as ConcreteAnswer;
 
 /*
 *
@@ -1766,7 +1765,6 @@ class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fen
 }
 
 	class net.sourceforge.fenixedu.domain.Login extends net.sourceforge.fenixedu.domain.Identification {				
-		String username;
 		String password;
 		Boolean isPassInKerberos;
 	}
@@ -1778,8 +1776,13 @@ class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fen
 		Integer keyModifiedBy;
 	}
 
-	
-  
+class net.sourceforge.fenixedu.domain.LoginAlias extends net.sourceforge.fenixedu.domain.DomainObject {
+	String alias;
+	Integer keyLogin;	
+	LoginAliasType type;
+	RoleType roleType;
+}
+	  
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
     Integer keyExecutionCourse;
@@ -10644,6 +10647,20 @@ relation RootDomainObjectNewCorrector {
 relation RootDomainObjectShiftEnrolment {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.ShiftEnrolment playsRole shiftEnrolments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectLoginAlias {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.LoginAlias playsRole loginAlias {
+		multiplicity *;
+	}
+}
+
+relation LoginAliasLogin {
+	net.sourceforge.fenixedu.domain.Login playsRole login;
+	net.sourceforge.fenixedu.domain.LoginAlias playsRole alias {
 		multiplicity *;
 	}
 }

@@ -188,7 +188,7 @@ public class SearchPerson extends Service {
             Person person = (Person) arg0;
 
             return verifyParameter(person.getEmail(), searchParameters.getEmail())
-                    && verifyParameter(person.getUsername(), searchParameters.getUsername())
+                    && (searchParameters.getUsername() == null || person.hasUsername(searchParameters.getUsername()))
                     && verifyParameter(person.getDocumentIdNumber(), searchParameters
                             .getDocumentIdNumber())
                     && verifyNameEquality(searchParameters.getNameWords(), person)

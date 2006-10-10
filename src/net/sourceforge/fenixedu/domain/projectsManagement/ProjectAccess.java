@@ -130,7 +130,7 @@ public class ProjectAccess extends ProjectAccess_Base {
 
                 Login login = (Login) identification;
 
-                if (!username.equals(login.getUsername())) {
+                if (!login.hasUsername(username)) {
                     continue outter;
                 }
             }

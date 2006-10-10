@@ -62,11 +62,12 @@ public class Employee extends Employee_Base {
     }
 
     public List<Contract> getContracts() {
-        final List<Contract> contracts = new ArrayList();
-        for (final Accountability accountability : getPerson().getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
-            if (accountability instanceof Contract) 
-                contracts.add((Contract) accountability);
-        }
+	final List<Contract> contracts = new ArrayList();
+	for (final Accountability accountability : getPerson().getParentAccountabilities(
+		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
+	    if (accountability instanceof Contract)
+		contracts.add((Contract) accountability);
+	}
 	return contracts;
     }
 
