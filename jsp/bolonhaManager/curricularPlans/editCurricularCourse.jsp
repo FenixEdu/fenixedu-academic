@@ -129,7 +129,7 @@
 					<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 					
 					<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
-					<h:outputText value="#{context.parentCourseGroup.name}</p>" escape="false"/>
+					<h:outputText value="#{context.parentCourseGroup.oneFullName}</p>" escape="false"/>
 					
 					<h:outputText value="<p><label>#{bolonhaBundle['curricularPeriod']}:</label>" escape="false"/>
 					<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
