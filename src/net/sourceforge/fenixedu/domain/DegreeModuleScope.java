@@ -55,5 +55,9 @@ public abstract class DegreeModuleScope {
         }
         return false;
     }
+    
+    public boolean isActive() {
+	return isActiveForExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
+    }
 
 }
