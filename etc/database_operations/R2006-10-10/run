@@ -37,3 +37,6 @@ execute "Migrate execution course announcements" migrateAnnouncements.sql
 execute "Migrate institution site announcements" migrateInstitutionAnnouncements.sql
 execute "Update Invalid StudentKind keys" updateRegistrationStudentKind.sql
 execute  "Functionality changes" changes-20061010210255.sql
+
+execute  "Fix Mark Table" fixMarkTable.sql
+execute  "Fix Final Degree Work Proposal Table" fixFinalDegreeWorkProposalTable.sql
