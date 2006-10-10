@@ -765,6 +765,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return result;
     }
 
+    public Set<CurricularCourse> getActiveCurricularCourses(final ExecutionPeriod executionPeriod) {
+	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+	for (final CurricularCourse curricularCourse : getCurricularCourses()) {
+	    if (curricularCourse.hasAnyActiveDegreModuleScope(executionPeriod)) {
+		result.add(curricularCourse);
+	    }
+	}
+	return result;
+    }
+
     public List<CurricularCourseScope> getActiveCurricularCourseScopes() {
 	final List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
 	for (final CurricularCourse course : getCurricularCourses()) {
