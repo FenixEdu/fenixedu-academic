@@ -50,7 +50,7 @@
 					<reportElement
 						x="62"
 						y="105"
-						width="187"
+						width="180"
 						height="32"
 						key="textField"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
@@ -72,7 +72,7 @@
 				</image>
 				<staticText>
 					<reportElement
-						x="62"
+						x="47"
 						y="7"
 						width="187"
 						height="17"
@@ -85,11 +85,11 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="62"
+						x="47"
 						y="25"
 						width="187"
 						height="17"
-						forecolor="#CCCCCC"
+						forecolor="#333333"
 						key="staticText-2"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center">
@@ -101,7 +101,7 @@
 					<reportElement
 						x="62"
 						y="87"
-						width="187"
+						width="180"
 						height="18"
 						key="textField"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
