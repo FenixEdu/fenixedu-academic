@@ -305,6 +305,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public boolean isDraft() {
 	return getCurricularStage() == CurricularStage.DRAFT;
     }
+    
+    public boolean isActive() {
+	return getState() == DegreeCurricularPlanState.ACTIVE;
+    }
 
     private Boolean getCanBeDeleted() {
 	return (getRoot().getCanBeDeleted() && !(hasAnyStudentCurricularPlans()
@@ -751,6 +755,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return result;
     }
 
+    public Set<CurricularCourse> getActiveCurricularCourses() {
+	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+	for (final CurricularCourse curricularCourse : getCurricularCourses()) {
+	    if (curricularCourse.hasAnyActiveDegreModuleScope()) {
+		result.add(curricularCourse);
+	    }
+	}
+	return result;
+    }
+
     public List<CurricularCourseScope> getActiveCurricularCourseScopes() {
 	final List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
 	for (final CurricularCourse course : getCurricularCourses()) {
@@ -983,10 +997,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public static Set<DegreeCurricularPlan> readBolonhaDegreeCurricularPlans() {
-        Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+        final Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
 
-        List<Degree> degrees = Degree.readBolonhaDegrees();
-        for (Degree degree : degrees) {
+        for (final Degree degree : Degree.readBolonhaDegrees()) {
+            result.addAll(degree.getDegreeCurricularPlans());
+        }
+        
+        return result;
+    }
+
+    public static Set<DegreeCurricularPlan> readPreBolonhaDegreeCurricularPlans() {
+        final Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+
+        for (final Degree degree : Degree.readOldDegrees()) {
             result.addAll(degree.getDegreeCurricularPlans());
         }
         
