@@ -564,8 +564,9 @@ public class ExecutionCourseForwardFilter implements Filter {
                 Iterator iter = listCurricularCourses.iterator();
                 while (iter.hasNext()) {
                     InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iter.next();
+                    final String curricularCourseAcronym = infoCurricularCourse.getAcronym();
 
-                    if (infoCurricularCourse.getAcronym().equalsIgnoreCase(acronym))
+                    if (curricularCourseAcronym != null && curricularCourseAcronym.equalsIgnoreCase(acronym))
                         return infoCurricularCourse;
                 }
                 return null;
