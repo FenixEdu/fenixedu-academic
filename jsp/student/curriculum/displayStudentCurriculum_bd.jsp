@@ -114,12 +114,16 @@
 			<fr:view name="infoStudentCurricularPlan" property="studentCurricularPlan">
 				<fr:layout>
 					<fr:property name="organizedByGroups" value="<%=organizedByGroups.toString()%>"/>
-					<fr:property name="initialWidth" value="70"/>
-					<fr:property name="widthDecreasePerLevel" value="3"/>
+					<fr:property name="initialWidth" value="65"/>
+					<fr:property name="widthDecreasePerLevel" value="2"/>
 					<fr:property name="tablesClasses" value="showinfo3 mvert0"/>
+					<%-- tableClasses--%>
 					<fr:property name="groupRowClasses" value="bgcolor2"/>
+					<%-- groupHeaderRowClasses--%>
 					<fr:property name="groupNameClasses" value="aleft"/>
-					<fr:property name="enrolmentClasses" value="smalltxt acenter,smalltxt acenter,smalltxt acenter,smalltxt acenter,acenter"/>
+					<%-- groupHeaderClasses--%>
+					<fr:property name="enrolmentClasses" value="smalltxt acenter width6em,smalltxt acenter width5em,smalltxt acenter width7em,smalltxt acenter width5em,acenter width6em"/>
+					<%-- enrolmentColumnClasses--%>
 					<fr:property name="enrolmentStateSelectionType" value="<%=enrolmentStateSelectionType.toString()%>"/>
 				</fr:layout>
 			</fr:view>
