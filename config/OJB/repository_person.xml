@@ -72,7 +72,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.Identification" table="IDENTIFICATION">
 	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.Login"/>
-<!-- <extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard"/>  -->	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard"/>
 		
 	
 	
