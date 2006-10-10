@@ -241,6 +241,16 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return false;
     }
 
+    public boolean hasAnyActiveDegreModuleScope(final ExecutionPeriod executionPeriod) {
+	for (final DegreeModuleScope degreeModuleScope : this.getDegreeModuleScopes()) {
+	    if (degreeModuleScope.isActiveForExecutionPeriod(executionPeriod)) {
+		return true;
+	    }
+	}
+	
+	return false;
+    }
+
     public List<CurricularCourseScope> getActiveScopesInExecutionPeriod(
 	    final ExecutionPeriod executionPeriod) {
 	final List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
