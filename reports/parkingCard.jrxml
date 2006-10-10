@@ -72,7 +72,7 @@
 				</image>
 				<staticText>
 					<reportElement
-						x="47"
+						x="43"
 						y="7"
 						width="187"
 						height="17"
@@ -85,7 +85,7 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="47"
+						x="43"
 						y="25"
 						width="187"
 						height="17"
