@@ -1,6 +1,6 @@
 CREATE TABLE `LOGIN_ALIAS` (
   `ID_INTERNAL` int(11) unsigned NOT NULL auto_increment,
-  `ALIAS` varchar(50) not NULL default '',  
+  `ALIAS` varchar(50) NOT NULL default '',  
   `KEY_LOGIN` int(11) unsigned NOT NULL default '0', 
   `TYPE` varchar(50) NOT NULL default NULL,
   `ROLE_TYPE`  varchar(50) default NULL,

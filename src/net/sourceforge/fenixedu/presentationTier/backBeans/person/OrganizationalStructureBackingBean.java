@@ -454,7 +454,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     } else {
                         buffer.append("\t\t<li>");
                     }
-                    buffer.append(personFunction.getPerson().getNome()).append(" ");
+                    buffer.append(personFunction.getPerson().getNome()).append("  ");
                     buffer.append(personFunction.getBeginDate().toString()).append(" - ").append(personFunction.getEndDate().toString());
                     buffer.append("</li>\r\n");
                 }
