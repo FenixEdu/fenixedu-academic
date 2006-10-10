@@ -169,7 +169,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                                     .append(unit.getIdInternal()).append("'));return false;").append(
                                             "\"/> ");
                             buffer.append("<a href=\"").append(getContextPath()).append(
-                                    "/person/organizationalStructure/chooseUnit.faces?unitID=").append(
+                                    "/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(
                                     unit.getIdInternal()).append("&amp;subUnit=").append(
                                     unit.getIdInternal()).append("#").append(unit.getIdInternal())
                                     .append("\">").append(unit.getName()).append("</a></li>\r\n");
@@ -186,7 +186,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                                 unit.getIdInternal()).append("'),document.getElementById('").append(
                                 unit.getIdInternal()).append("'));return false;").append("\"/> ");
                         buffer.append("<a href=\"").append(getContextPath()).append(
-                                "/person/organizationalStructure/chooseUnit.faces?unitID=").append(
+                                "/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(
                                 unit.getIdInternal()).append("&amp;subUnit=").append(
                                 unit.getIdInternal()).append("#").append(unit.getIdInternal()).append(
                                 "\">").append(unit.getName()).append("</a></li>\r\n");
@@ -194,7 +194,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
                 } else {
                     buffer.append("\t<li><a href=\"").append(getContextPath()).append(
-                            "/person/organizationalStructure/chooseUnit.faces?unitID=").append(
+                            "/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(
                             unit.getIdInternal()).append("&amp;subUnit=").append(unit.getIdInternal())
                             .append("#").append(unit.getIdInternal()).append("\">").append(
                                     unit.getName()).append("</a></li>\r\n");
@@ -245,7 +245,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                                 subUnit.getIdInternal()).append("'),document.getElementById('").append(
                                 subUnit.getIdInternal()).append("'));return false;").append("\"/> ");
                 buffer.append("<a href=\"").append(getContextPath()).append(
-                        "/person/organizationalStructure/chooseUnit.faces?unitID=").append(
+                        "/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(
                         subUnit.getIdInternal()).append("&amp;subUnit=").append(subUnit.getIdInternal())
                         .append("#").append(subUnit.getIdInternal()).append("\">").append(
                                 subUnit.getName()).append("</a></li>\r\n");
@@ -279,7 +279,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 
         if (parentUnit.getIdInternal() != parentUnitId) {
             buffer.append("\t\t<li>").append("<a href=\"").append(getContextPath()).append(
-                    "/person/organizationalStructure/chooseUnit.faces?unitID=").append(parentUnitId)
+                    "/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(parentUnitId)
                     .append("&amp;subUnit=").append(parentUnit.getIdInternal()).append("#").append(
                             parentUnit.getIdInternal()).append("\">").append(parentUnit.getName())
                     .append("</a>").append("</li>\r\n");
@@ -454,8 +454,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     } else {
                         buffer.append("\t\t<li>");
                     }
-                    buffer.append(personFunction.getPerson().getNome()).append("  ");
-                    buffer.append(personFunction.getBeginDate().toString()).append(" - ").append(personFunction.getEndDate().toString());
+                    buffer.append(personFunction.getPerson().getNome()).append(" (");
+                    buffer.append(personFunction.getBeginDate().toString()).append(" - ").append(personFunction.getEndDate().toString()).append(")");
                     buffer.append("</li>\r\n");
                 }
             }

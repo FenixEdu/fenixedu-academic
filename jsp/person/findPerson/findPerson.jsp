@@ -183,7 +183,7 @@ function check(e,v){
 			<table class="ppid" cellpadding="0" cellspacing="0">
 				<tr>
 					<td width="70%"> 
-						<strong><bean:write name="personalInfo" property="nome"/> (<bean:write name="personalInfo" property="username"/><logic:notEmpty name="personalInfo" property="istUsername"> | <bean:write name="personalInfo" property="istUsername"/></logic:notEmpty>)</strong>
+						<strong><bean:write name="personalInfo" property="nome"/> (<bean:write name="personalInfo" property="username"/>)</strong>
 						<bean:size id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size> 
 						<logic:greaterThan name="mainRolesSize" value="0">
 							<logic:iterate id="role" name="personalInfo" property="mainRoles" indexId="i">
