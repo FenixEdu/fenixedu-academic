@@ -75,7 +75,7 @@
 						<fr:property name="rowClasses" value="listClasses"/>
 						<fr:property name="columnClasses" value=",,,,,,,bold,,bold"/>
 						<fr:property name="suffixes" value=",,,,,h,h,%,h,%"/>
-							<fr:property name="sortUrl" value="<%= "/summariesControl.do?method=listSummariesControl&department=" + department + "&executionPeriod=" + executionPeriod %>"/>
+						<fr:property name="sortUrl" value="<%= "/summariesControl.do?method=listSummariesControl&department=" + department + "&executionPeriod=" + executionPeriod %>"/>
 						<fr:property name="sortParameter" value="sortBy"/>
 						<fr:property name="sortBy" value="<%= sortCriteria %>"/>
 					</fr:layout>
