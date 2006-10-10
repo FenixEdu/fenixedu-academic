@@ -74,10 +74,6 @@
 		<put name="body" value="/manager/readExecutionPeriods_bd.jsp" />
 		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
 	</definition>
-	<definition name="df.page.manage.edit.execution-period" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/editExecutionPeriod.jsp" />
-		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
-	</definition>
 	<definition name="df.page.read-execution-courses" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readExecutionCoursesByExecutionPeriod_bd.jsp" />
 		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
@@ -586,5 +582,94 @@
 	<definition name="show-create-curricular-course-equivalencies" extends="definition.manager.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/equivalences/createCurricularCourseEquivalencies.jsp"></put>
 	</definition>
+
+	<!--  ######### ANNOUNCEMENTS ################# -->
+	 <definition name="index" extends="definition.manager.masterPage" >
+        <put name="body" value="/messaging/welcomeScreen.jsp"/>
+    </definition>
+    
+   	<definition name="df.page.structure" extends="definition.manager.masterPage" >
+		<put name="body"  value="/common/blank.jsp"/>
+	</definition>   
+
+	<definition name="manager-add-announcement" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
+	</definition>	
+	<definition name="manager-list-announcement-boards" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />
+	</definition>		
+	<definition name="manager-list-announcements" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+	</definition>	
+	<definition name="manager-edit-announcement" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
+	</definition>
+	
+	<!-- ##########################################-->
+	
+	<!-- ################BOARDS#####################-->
+	<definition name="manager-announcement-boards-management-statistics" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/announcements/statistics.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>
+	
+	<definition name="manager-announcement-boards-management-firstPage" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/announcements/firstPage.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>
+	
+	<definition name="manager-announcement-boards-management-chooseBoardType" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/announcements/chooseBoardType.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>    
+
+	<definition name="manager-announcement-boards-management-createUnitAnnouncementBoard" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/createUnitAnnouncementBoard.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>    	
+
+	<definition name="manager-announcement-boards-management-choose-unit" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/announcements/chooseUnit.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>
+	
+	<definition name="manager-announcement-boards-management-edit-unit-board" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/editUnitAnnouncementBoard.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>	
+	
+	<definition name="manager-unit-board-add-announcement" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>	
+	
+	<definition name="manager-unit-board-edit-announcement" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>	
+	
+	<definition name="manager-unit-board-list-announcement-boards" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>	
+	
+	<definition name="manager-board-list-announcements" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>					
+	<definition name="manager-not-available-yet" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/notAvailableYet.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>	
+	<definition name="manager-view-announcement" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />		
+	</definition>								
+	<definition name="manager-boards-add-announcement" extends="definition.manager.masterPage" >
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+		<put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
+	</definition>		
+	
+	<!-- ##########################################-->
 
 </tiles-definitions>

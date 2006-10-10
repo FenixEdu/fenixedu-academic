@@ -44,7 +44,6 @@ public class DateTag extends TagSupport {
     }
 
     public int doStartTag() throws JspException {
-
         // Special case for name anchors
         if (date != null) {
             StringBuilder results = new StringBuilder("");

@@ -42,50 +42,7 @@ public class SiteTest extends DomainTestBase {
         checkIfSiteAttributesAreCorrect("initialStatementEdited", "introductionEdited", "mailEdited",
                 "alternativeSiteEdited", 0, 1);
     }
-
-    public void testCreateAnnouncement() {
-        try {
-            site.createAnnouncement(null, null);
-            fail("Expected NullPointerException!");
-        } catch (NullPointerException e) {
-            assertEquals("Size unexpected!", 0, site.getAssociatedAnnouncementsCount());
-        }
-
-        try {
-            site.createAnnouncement("Title", null);
-            fail("Expected NullPointerException!");
-        } catch (NullPointerException e) {
-            assertEquals("Size unexpected!", 0, site.getAssociatedAnnouncementsCount());
-        }
-
-        try {
-            site.createAnnouncement(null, "Information");
-            fail("Expected NullPointerException!");
-        } catch (NullPointerException e) {
-            assertEquals("Size unexpected!", 0, site.getAssociatedAnnouncementsCount());
-        }
-
-        final Date dateBeforeCreation = Calendar.getInstance().getTime();
-        sleep(1000);
-        site.createAnnouncement("Title", "Information");
-        sleep(1000);
-        final Date dateAfterCreation = Calendar.getInstance().getTime();
-
-        assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
-        Announcement announcement = (Announcement) site.getAssociatedAnnouncements().get(0);
-
-        assertEquals("Different Announcement Title!", "Title", announcement.getTitle());
-        assertEquals("Different Announcement Information!", "Information", announcement.getInformation());
-        assertEquals("Different Announcement Site!", site, announcement.getSite());
-        assertTrue("Expected CreationDate After an initial timestamp!", announcement.getCreationDate()
-                .after(dateBeforeCreation));
-        assertTrue("Expected CreationDate Before an end timestamp!", announcement.getCreationDate()
-                .before(dateAfterCreation));
-        assertTrue("Expected ModificationDate After an initial timestamp!", announcement
-                .getLastModifiedDate().after(dateBeforeCreation));
-        assertTrue("Expected ModificationDate Before an initial timestamp!", announcement
-                .getLastModifiedDate().before(dateAfterCreation));
-    }
+    
 
     public void testCreateSection() {
         Date dateBeforeCreation;
@@ -286,7 +243,6 @@ public class SiteTest extends DomainTestBase {
         assertEquals("Different Site Introduction!", introduction, site.getIntroduction());
         assertEquals("Different Site Mail!", mail, site.getMail());
         assertEquals("Different Site AlternativeSite!", alternativeSite, site.getAlternativeSite());
-        assertEquals("Size unexpected!", announcementsSize, site.getAssociatedAnnouncementsCount());
         assertEquals("Size unexpected!", sectionsSize, site.getAssociatedSectionsCount());
     }
 

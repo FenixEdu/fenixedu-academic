@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -63,21 +62,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
         readSiteView(request, firstPageComponent, infoExecutionCourseCode, null, null);
         return mapping.findForward("sucess");
     }
-
-    public ActionForward announcements(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException, FenixFilterException
-    {
-		setFromRequest(request);
-        ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
-        readSiteView(request, announcementsComponent, null, null, null);
-
-        return mapping.findForward("sucess");
-    }
-
+    
     public ActionForward objectives(
         ActionMapping mapping,
         ActionForm form,

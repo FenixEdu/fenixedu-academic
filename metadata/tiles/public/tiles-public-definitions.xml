@@ -19,6 +19,22 @@
 		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
 
+	<definition name="definition.publico.executionCourseSitePage.without.stupid.controller" 
+		page="/layout/publicGesDisLayout_2col.jsp" >
+		<put name="title" value=".Instituto Superior Técnico" />	
+	 	<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>	 	
+	  	<put name="serviceName" value="Instituto Superior Técnico" />
+		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
+		<put name="lateral_nav" value="/publico/executionCourseLateralNav.jsp"/>
+		<!--<put name="curricular_nav" value="/publico/executionCourseCurricularNav.jsp"/>-->
+	 	<put name="executionCourseName" value="/publico/executionCourseName.jsp"/>
+		<put name="executionCoursePeriod" value="/publico/executionCoursePeriod.jsp"/>
+	 	<put name="body" value="/commons/blank.jsp"/>
+		<put name="footer" value="/publico/degreeSite/footer.jsp" />
+	</definition>
+
 	<definition name="definition.public.executionCourse" page="/layout/publicExecutionCourse.jsp">
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
@@ -26,6 +42,8 @@
 		<put name="body_header" value="/publico/executionCourse/executionCourseHeader.jsp" />
 		<put name="body" value="/commons/blank.jsp" />
 		<put name="footer" value="/publico/degreeSite/footer.jsp" />
+	 	<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
 	</definition>
 
 	<definition name="definition.publico.executionCourseSitePage1" 

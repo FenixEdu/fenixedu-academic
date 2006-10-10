@@ -91,20 +91,22 @@
 	<slot name="activeAnnouncementsCount" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.activeAnnouncementsCount"/>
 </schema>
 
-<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-subject-creationDate-authorName-hidden-publicationBegin-publicationEnd-lastModification" type="net.sourceforge.fenixedu.domain.messaging.NewAnnouncement">
-	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>
+<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-creationDate-subject-body" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
 	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate">
 		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
 	</slot>
-	<slot name="author" key="net.sourceforge.fenixedu.domain.messaging.Announcement.authorName.label"/>	
-	<slot name="hidden" key="net.sourceforge.fenixedu.domain.messaging.Announcement.hidden.label"/>	
-	<slot name="publicationBegin" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.short.label">	
-		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
-	</slot>
-	<slot name="publicationEnd" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.short.label">	
-		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
-	</slot>
-	<slot name="lastModification" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.lastModification">	
-		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
-	</slot>
+	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
+	<slot name="body" key="net.sourceforge.fenixedu.domain.messaging.Announcement.body.label"/>	
+</schema>
+
+<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-creationDate-subject-online" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
+	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
+	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate"/>
+	<slot name="online" key="net.sourceforge.fenixedu.domain.messaging.Announcement.online.label"/>	
+	<slot name="visible" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>	
+</schema>
+
+<schema bundle="MESSAGING_RESOURCES" name="unitAnnouncementBoard.create" type="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard">
+	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
+	<slot name="body" key="net.sourceforge.fenixedu.domain.messaging.Announcement.body.label"/>	
 </schema>

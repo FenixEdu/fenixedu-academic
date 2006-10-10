@@ -11,7 +11,6 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +18,8 @@ import java.util.Set;
 import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
+
+import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * A <code>Group</code> is a dynamic aggregation of persons. It works as a
@@ -50,7 +51,6 @@ public abstract class Group implements Serializable, IGroup {
 
     protected Group() {
         super();
-
         this.creationDate = new Date();
     }
 
@@ -78,15 +78,15 @@ public abstract class Group implements Serializable, IGroup {
      * override this method
      */
     public boolean isMember(Person person) {
-        return this.getElements().contains(person);
+	return (person == null) ? false : getElements().contains(person);
     }
 
     public boolean allows(IUserView userView) {
-        return this.isMember(userView.getPerson());
+	return (userView == null) ? false : isMember(userView.getPerson());
     }
 
     protected Set<Person> freezeSet(Set<Person> elements) {
-        return Collections.unmodifiableSet(elements);
+        return UnmodifiableSet.decorate(elements);
     }
 
     protected Set<Person> buildSet() {

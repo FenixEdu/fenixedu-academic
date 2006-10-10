@@ -362,10 +362,10 @@
 	</managed-bean>	
 	
 	<navigation-rule>
-		<from-view-id>/person/organizationalStructure/structurePage.jsp</from-view-id>
+		<from-view-id>/messaging/organizationalStructure/structurePage.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>choose</from-outcome>
-			<to-view-id>/person/organizationalStructure/structurePage.jsp</to-view-id>
+			<to-view-id>/messaging/organizationalStructure/structurePage.jsp</to-view-id>
 		</navigation-case>			
 	</navigation-rule>
 	

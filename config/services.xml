@@ -121,6 +121,22 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>AddAnnouncementBoardBookmark</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.AddAnnouncementBoardBookmark</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>	
+	<service>
+		<name>RemoveAnnouncementBoardBookmark</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.RemoveAnnouncementBoardBookmark</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>		
+	<service>
 		<name>DeleteShift</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteShift</implementationClass>
 		<description />
@@ -155,6 +171,24 @@
 		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
 		</filterChains>
+	</service>
+	<service>
+		<name>CreateUnitAnnouncementBoard</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.CreateUnitAnnouncementBoard</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>		
+	</service>	
+	<service>
+		<name>EditUnitAnnouncementBoard</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.EditUnitAnnouncementBoard</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>		
+	<service>
+		<name>DeleteAnnouncementBoard</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.DeleteAnnouncementBoard</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
 	</service>
 	<service>
 		<name>EditLesson</name>
@@ -2621,13 +2655,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadAnnouncements</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadAnnouncements</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>ReadSections</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadSections</implementationClass>
 		<description />
@@ -2711,13 +2738,6 @@
 		<name>ReadTeachersByExecutionCourseResponsibility</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadTeachersByExecutionCourseResponsibility</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadLastAnnouncement</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadLastAnnouncement</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -2807,35 +2827,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateAnnouncement</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateAnnouncement</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>EditAnnouncementService</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditAnnouncementService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseAndAnnouncementLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>DeleteAnnouncementService</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteAnnouncementService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseAndAnnouncementLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>CreateProgram</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateProgram</implementationClass>
 		<description />
@@ -2921,6 +2912,13 @@
 			<chain name="ExecutionCourseResponsibleForTeacherAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>DeleteAnnouncement</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.messaging.DeleteAnnouncement</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>	
 	<service>
 		<name>DeleteProfessorship</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship</implementationClass>
@@ -4674,64 +4672,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadWebSiteByObjectCode</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.webSiteManager.ReadWebSiteByObjectCode</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="WebSiteManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadWebSiteBySectionCode</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.webSiteManager.ReadWebSiteBySectionCode</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="WebSiteManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>AddItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.webSiteManager.AddItem</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="WebSiteManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>DeleteItems</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.webSiteManager.DeleteItems</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="WebSiteManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>EditWebSiteItem</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.webSiteManager.EditWebSiteItem</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="WebSiteManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>SendWebSiteSectionFileToServer</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.webSiteManager.SendWebSiteSectionFileToServer</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="WebSiteManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan</implementationClass>
@@ -4970,22 +4910,6 @@
 		<name>ReadExecutionDegreesByDegree</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadExecutionDegreesByDegree</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadLimitedWebSiteSectionByName</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadLimitedWebSiteSectionByName</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadWebSiteSectionByCode</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadWebSiteSectionByCode</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -6313,14 +6237,6 @@
 	<service>
 		<name>AttributeFinalDegreeWork</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AttributeFinalDegreeWork</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>
-	</service>
-	<service>
-		<name>ConfigureWebSiteSections</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.webSiteManager.ConfigureWebSiteSections</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8033,8 +7949,8 @@
 			<chain name="StudentAuthorization" />
 			<chain name="ClassEnrollmentAuthorization" />
 		</filterChains>
-    </service>  
-    <service>
+    </service>
+	<service>
         <name>ReadActiveDegreeCurricularPlansByDegreeType</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.ReadActiveDegreeCurricularPlansByDegreeType</implementationClass>
         <description/>
@@ -9524,7 +9440,7 @@
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
-    </service>  
+    </service>
 	<service>
         <name>SearchPersonsForParticipations</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations</implementationClass>

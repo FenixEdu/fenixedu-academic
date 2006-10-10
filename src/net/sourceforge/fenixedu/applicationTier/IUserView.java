@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public interface IUserView extends Serializable {
 
-	public Person getPerson();
+    public Person getPerson();
 
     public String getUtilizador();
 

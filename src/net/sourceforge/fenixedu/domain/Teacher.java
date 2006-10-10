@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -1149,5 +1151,31 @@ public class Teacher extends Teacher_Base {
 	    }
 	}
 	return false;
+    }
+
+    public boolean isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear executionYear) {
+	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] {
+		DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE }));
+
+    }
+
+    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
+	    ExecutionYear executionYear) {
+	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
+		DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE }));
+
+    }
+
+    public boolean isCoordinatorFor(ExecutionYear executionYear, List<DegreeType> degreeTypes) {
+	for (final Coordinator coordinator : getCoordinatorsSet()) {
+	    if (coordinator.getExecutionDegree().getExecutionYear() == executionYear
+		    && degreeTypes
+			    .contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
+		return true;
+	    }
+	}
+
+	return false;
+
     }
 }

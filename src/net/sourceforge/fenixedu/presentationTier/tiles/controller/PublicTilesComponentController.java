@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCourse;
@@ -33,7 +32,7 @@ import org.apache.struts.tiles.ControllerSupport;
  * 
  * @author João Mota
  * 
- *  
+ * 
  */
 public class PublicTilesComponentController extends ControllerSupport {
 
@@ -50,17 +49,12 @@ public class PublicTilesComponentController extends ControllerSupport {
 
         if (component instanceof InfoSiteFirstPage) {
             tileContext.putAttribute("body", "/publico/viewExecutionCourse_bd.jsp");
-
-        } else if (component instanceof InfoSiteAnnouncement) {
-            tileContext.putAttribute("body", "/publico/announcements_bd.jsp");
         } else if (component instanceof InfoSiteCurricularCourse) {
-
             tileContext.putAttribute("body", "/publico/viewCurricularCourse_bd.jsp");
         } else if (component instanceof InfoSiteObjectives) {
             tileContext.putAttribute("body", "/publico/objectives_bd.jsp");
         } else if (component instanceof InfoSiteProgram) {
             tileContext.putAttribute("body", "/publico/program_bd.jsp");
-
         } else if (component instanceof InfoSiteEvaluationMethods) {
             tileContext.putAttribute("body", "/publico/viewEvaluation_bd.jsp");
         } else if (component instanceof InfoEvaluationMethod) {
@@ -73,7 +67,6 @@ public class PublicTilesComponentController extends ControllerSupport {
             tileContext.putAttribute("body", "/publico/viewTimeTable_bd.jsp");
         } else if (component instanceof InfoSiteShifts) {
             tileContext.putAttribute("body", "/publico/viewExecutionCourseShifts_bd.jsp");
-
         } else if (component instanceof InfoSiteSection) {
             tileContext.putAttribute("body", "/publico/viewSection_bd.jsp");
         } else if (component instanceof InfoSiteEvaluations) {
@@ -85,8 +78,6 @@ public class PublicTilesComponentController extends ControllerSupport {
         } else
 
         if (component instanceof InfoSiteProjects) {
-            //List infoGroupPropertiesList =
-            // ((InfoSiteProjects)component).getInfoGroupPropertiesList();
             tileContext.putAttribute("body", "/publico/viewProjectsName_bd.jsp");
         } else if (component instanceof InfoSiteShiftsAndGroups) {
             tileContext.putAttribute("body", "/publico/viewShiftsAndGroups_bd.jsp");
@@ -94,8 +85,7 @@ public class PublicTilesComponentController extends ControllerSupport {
 
         else if (component instanceof InfoSiteStudentGroup) {
             tileContext.putAttribute("body", "/publico/viewStudentGroupInformation_bd.jsp");
-        }
-        else if (component instanceof InfoSiteStudentsAndGroups) {
+        } else if (component instanceof InfoSiteStudentsAndGroups) {
             tileContext.putAttribute("body", "/publico/viewStudentsAndgroups_bd.jsp");
         }
     }

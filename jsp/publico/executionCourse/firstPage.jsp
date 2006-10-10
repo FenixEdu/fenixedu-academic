@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <bean:define id="site" name="executionCourse" property="site"/>
 
@@ -15,49 +16,34 @@
 	</div>
 </logic:notEmpty>
 
-<bean:define id="announcements" name="site" property="sortedAnnouncements"/>
-<logic:notEmpty name="announcements">
-	<div id="announcs">
-		<h2 class="announcs-head">
-			<bean:message key="label.lastAnnouncements"/>
-		</h2>
-		<logic:iterate id="announcement" name="announcements" length="1">
-			<div class="last-announc">
-				<div class="last-announc-name">
-					<bean:write name="announcement" property="title"/>
+<logic:notEmpty name="lastAnnouncement">		
+			<bean:define id="announcement" name="lastAnnouncement"/>
+			<div id="announcs">
+				<h2 class="announcs-head"><bean:message key="label.lastAnnouncements"/></h2>
+				<div class="last-announc">
+					<div class="last-announc-name"><fr:view name="announcement" property="subject"/></div>
+					<div class="last-announc-post-date">
+							<fr:view name="announcement" property="lastModification"/>
+					</div>
+					<p class="last-announc-info"><fr:view name="announcement" property="body"/></p>
 				</div>
-				<div class="last-announc-post-date">
-					<dt:format pattern="dd/MM/yyyy  HH:mm">
-						<bean:write name="announcement" property="lastModifiedDate.time"/>
-					</dt:format>
-				</div>
-				<p class="last-announc-info">
-					<bean:write name="announcement" property="information" filter="false"/>
-				</p>
-			</div>
-		</logic:iterate>
-		<ul class="more-announc">
-			<logic:iterate id="announcement" name="announcements" offset="1" length="4">
-				<bean:define id="anchor" type="java.lang.String">a<bean:write name ="announcement" property="idInternal" /></bean:define>
-				<bean:define id="announcementInformation" type="java.lang.String" name="announcement" property="information"/>
-				<li class="more-announc">
-					<span class="more-announc-date">
-						<dt:format pattern="dd/MM/yyyy">
-							<bean:write name="announcement" property="lastModifiedDate.time"/>
-						</dt:format>
-						-
-					</span>
-					<html:link page="/executionCourse.do?method=announcements"
-							paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal"
-							anchor="<%= anchor %>"
-							title="">
-						<bean:write name="announcement" property="title"/>
-					</html:link>
-				</li>
-			</logic:iterate>
-		</ul>
-	</div>
-</logic:notEmpty>
+				<logic:empty name="lastFiveAnnouncements" ></div></logic:empty>
+		</logic:notEmpty>
+
+		<logic:notEmpty name="lastFiveAnnouncements">		    	
+				<ul class="more-announc">
+				<logic:iterate id="announcement" name="lastFiveAnnouncements">
+					<bean:define id="announcementId" name ="announcement" property="idInternal" />
+					<li class="more-announc"><span class="more-announc-date">
+						<fr:view name="announcement" property="lastModification"/> - </span>
+						<html:link  page="<%="/announcementManagement.do"+"?method=viewAnnouncements&amp;executionCourseID=" + request.getParameter("executionCourseID") + "#" + announcementId%>"
+									anchor="<%= announcementId.toString() %>">
+							<fr:view name="announcement" property="subject"/>
+						</html:link></li>
+				</logic:iterate>
+				</ul>
+			</div>		    
+        </logic:notEmpty>
 
 <logic:notEmpty name="site" property="alternativeSite">
 	<div style="margin-top: 2em; margin-bottom: 1em;">

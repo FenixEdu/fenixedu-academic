@@ -71,20 +71,6 @@
         <form-property name="method" type="java.lang.String" />
       </form-bean>
       
-	  <!-- ================= FIND PERSON FORM ===================-->
-	  <form-bean name="findPersonForm"
-	  	type="org.apache.struts.validator.DynaValidatorForm"
-	    dynamic="true">
-	    	<form-property name="name" type="java.lang.String"/>
-	    	<form-property name="startIndex" type="java.lang.String"/>
-	    	<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
-			<form-property name="viewPhoto" type="java.lang.String"/>
-			<form-property name="roleType" type="java.lang.String"/>
-			<form-property name="departmentId" type="java.lang.Integer" />
-			<form-property name="degreeType" type="java.lang.String"/>
-			<form-property name="degreeId" type="java.lang.Integer"/>
-	  </form-bean> 	         
-
       <form-bean name="homepageForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -170,12 +156,10 @@
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
       
       <action path="/switchAction" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixSwitchAction" />
-
-     
+      
       <action path="/index"
-      		  type="net.sourceforge.fenixedu.presentationTier.Action.person.MainPage">
-      		<forward name="ShowWelcomePage" path="/personMainPage.jsp"/>
-      </action>
+				type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
+            	parameter="/person/personMainPage.jsp"/>
      
       <!-- Action for Visualization Of the Person's Personal Information -->
       <action path="/visualizePersonalInfo"
@@ -270,33 +254,6 @@
 			<forward name="start" path="df.page.viewSmsDeliveryReports"/>	
 		</action>
 		
-		<!-- ========== FIND PERSON MANAGEMENT ========== -->
-		<action path="/findPerson"
-			type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonAction"
-			parameter="method"
-			scope="request"
-			name="findPersonForm"
-			input="/findPerson.do?method=prepareFindPerson&amp;page=0"
-			>
-			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
-					key="resources.Action.exceptions.FenixActionException"
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>				
-			<forward name="prepareFindPerson" path="/findPerson.do?method=prepareFindPerson&amp;page=0"/>
-			<forward name="findPerson" path="findPerson"/>
-			<forward name="displayPerson" path="displayPerson"/>
-		</action>
-		
-		<action path="/preparePerson"
-			type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonAction"
-			parameter="method"
-			scope="request"
-			name="findPersonForm"
-			input="findPerson"
-			>
-			<forward name="findPerson" path="findPerson"/>
-			
-		</action>
-
 	<!-- ========== VIEW PHOTO ========== -->
 		<action path="/viewPhoto"
 			type="net.sourceforge.fenixedu.presentationTier.Action.person.ViewPhotoAction"
@@ -370,4 +327,3 @@
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    
 </struts-config>
-

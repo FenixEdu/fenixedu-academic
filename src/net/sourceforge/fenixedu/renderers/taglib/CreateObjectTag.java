@@ -79,11 +79,23 @@ public class CreateObjectTag extends EditObjectTag {
     protected MetaObject createMetaObject(Object targetObject, Schema schema) {
         MetaObject metaObject = super.createMetaObject(targetObject, schema);
         
-        for (DefaultValue defaultValue : this.defaultValues) {
-            for (MetaSlot slot : metaObject.getSlots()) {
+        if (getSlot() != null && metaObject instanceof MetaSlot) {
+            MetaSlot slot = (MetaSlot) metaObject;
+            
+            for (DefaultValue defaultValue : this.defaultValues) {
                 if (slot.getName().equals(defaultValue.getSlot())) {
                     Object value = getConvertedValue(slot, defaultValue.getConverter(), defaultValue.getValue());
                     slot.setObject(value);
+                }
+            }
+        }
+        else {
+            for (DefaultValue defaultValue : this.defaultValues) {
+                for (MetaSlot slot : metaObject.getSlots()) {
+                    if (slot.getName().equals(defaultValue.getSlot())) {
+                        Object value = getConvertedValue(slot, defaultValue.getConverter(), defaultValue.getValue());
+                        slot.setObject(value);
+                    }
                 }
             }
         }

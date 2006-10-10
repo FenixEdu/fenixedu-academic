@@ -1,0 +1,41 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+#
+#   Runs sql scripts to update database from previous release.
+#
+# -----------------------------------------------------------------------------
+#
+
+DB=$1
+USER=$2
+
+echo Using database: $DB
+echo Enter password for $USER:
+read -s password
+
+function execute() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password $DB < $2
+	echo
+}
+
+function executeWithTempFile() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password $DB < $2 > tmp.sql
+	mysql -u$USER -f -p$password $DB < tmp.sql	
+	rm tmp.sql
+	echo
+}
+
+execute "TeacherServiceDistribution Table Definitions" teacherServiceDistributionTableDefinitions.sql
+execute "Transfer Tutor From Registration To SCP" transferTutorFromRegistrationToSCP.sql
+
+
+execute "Add DegreeCurricularPlanLEBL" addDegreeCurricularPlanLEBL.sql
+execute "Add DegreeCurricularPlanLEQ" addDegreeCurricularPlanLEQ.sql
+execute "Add DegreeCurricularPlanLEGM" addDegreeCurricularPlanLEGM.sql
+execute "Add DegreeCurricularPlanLEMAT" addDegreeCurricularPlanLEMAT.sql
+execute "Add DegreeCurricularPlanLEGI" addDegreeCurricularPlanLEGI.sql
+execute "Change EnrolmentPeriod" changeEnrolmentPeriodTable.sql
+
+execute "Create RegistrationData Table" createRegistrationDataByPeriodTable.sql

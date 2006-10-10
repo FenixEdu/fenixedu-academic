@@ -14,7 +14,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -27,7 +26,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -38,7 +36,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -84,9 +81,6 @@ public class ExecutionCourseSiteComponentBuilder {
 	    return getInfoSiteCommon((InfoSiteCommon) component, site);
 	} else if (component instanceof InfoSiteFirstPage) {
 	    return getInfoSiteFirstPage((InfoSiteFirstPage) component, site);
-
-	} else if (component instanceof InfoSiteAnnouncement) {
-	    return getInfoSiteAnnouncement((InfoSiteAnnouncement) component, site);
 	} else if (component instanceof InfoEvaluationMethod) {
 	    return getInfoEvaluationMethod((InfoEvaluationMethod) component, site);
 	} else if (component instanceof InfoSiteBibliography) {
@@ -303,22 +297,11 @@ public class ExecutionCourseSiteComponentBuilder {
 
 	ExecutionCourse executionCourse = site.getExecutionCourse();
 
-	InfoAnnouncement infoAnnouncement = readLastAnnouncement(executionCourse);
-
-	List infoAnnouncements = readLastFiveAnnouncements(executionCourse);
-
 	List responsibleInfoTeachersList = readResponsibleTeachers(executionCourse);
 
 	List lecturingInfoTeachersList = readLecturingTeachers(executionCourse);
 
 	// set all the required information to the component
-
-	if (!infoAnnouncements.isEmpty()) {
-	    infoAnnouncements.remove(0);
-	}
-
-	component.setLastAnnouncement(infoAnnouncement);
-	component.setLastFiveAnnouncements(infoAnnouncements);
 
 	component.setAlternativeSite(site.getAlternativeSite());
 	component.setInitialStatement(site.getInitialStatement());
@@ -334,35 +317,6 @@ public class ExecutionCourseSiteComponentBuilder {
 	    component.setLecturingTeachers(lecturingInfoTeachersList);
 	}
 
-	return component;
-    }
-
-    private List readLastFiveAnnouncements(ExecutionCourse executionCourse) {
-	Set<Announcement> announcements = executionCourse.getSite().getSortedAnnouncements();
-
-	int count = 5;
-	List infoAnnouncementsList = new ArrayList(count);
-
-	for (Announcement ann : announcements) {
-	    infoAnnouncementsList.add(copyFromDomain(ann));
-	    count--;
-	    if (count == 0) {
-		break;
-	    }
-	}
-
-	return infoAnnouncementsList;
-    }
-
-    private InfoSiteAnnouncement getInfoSiteAnnouncement(InfoSiteAnnouncement component, Site site) {
-	Set<Announcement> announcements = site.getSortedAnnouncements();
-	List infoAnnouncementsList = new ArrayList(announcements.size());
-
-	for (Announcement ann : announcements) {
-	    infoAnnouncementsList.add(copyFromDomain(ann));
-	}
-
-	component.setAnnouncements(infoAnnouncementsList);
 	return component;
     }
 
@@ -399,16 +353,6 @@ public class ExecutionCourseSiteComponentBuilder {
 
 	}
 	return responsibleInfoTeachersList;
-    }
-
-    private InfoAnnouncement readLastAnnouncement(ExecutionCourse executionCourse)
-	    throws ExcepcaoPersistencia {
-	Announcement announcement = executionCourse.getSite().getLastAnnouncement();
-	InfoAnnouncement infoAnnouncement = null;
-	if (announcement != null) {
-	    infoAnnouncement = copyFromDomain(announcement);
-	}
-	return infoAnnouncement;
     }
 
     private List readCurricularCourses(ExecutionCourse executionCourse) {
@@ -546,14 +490,6 @@ public class ExecutionCourseSiteComponentBuilder {
 		    .getExecutionCourse()));
 	}
 	return infoSite;
-    }
-
-    /**
-         * @param announcement
-         * @return
-         */
-    private InfoAnnouncement copyFromDomain(Announcement announcement) {
-	return InfoAnnouncement.newInfoFromDomain(announcement);
     }
 
     /**

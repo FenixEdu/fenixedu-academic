@@ -10,23 +10,29 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * @author Fernanda Quitério
  */
 public class PublishMarks extends Service {
-    
+
     private final static int MOBILE_NUMBER_LENGHT = 9;
+
     private final static String VODAFONE_NETWORK_PREFIX = "91";
+
     private final static String TMN_NETWORK_PREFIX = "96";
+
     private final static String OPTIMUS_NETWORK_PREFIX = "93";
 
     public Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage,
             Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
 
-    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        final ExecutionCourse executionCourse = rootDomainObject
+                .readExecutionCourseByOID(executionCourseCode);
         final Site site = executionCourse.getSite();
         final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
 
@@ -34,7 +40,11 @@ public class PublishMarks extends Service {
             evaluation.setPublishmentMessage(" ");
         } else {
             evaluation.setPublishmentMessage(publishmentMessage);
-            site.createAnnouncement(announcementTitle, publishmentMessage);                       
+            Announcement announcement = new Announcement();
+            announcement.setSubject(new MultiLanguageString(announcementTitle));
+            announcement.setBody(new MultiLanguageString(publishmentMessage));
+            announcement.setVisible(true);
+            site.getExecutionCourse().getBoard().addAnnouncements(announcement);
         }
 
         for (Mark mark : evaluation.getMarks()) {
@@ -44,7 +54,8 @@ public class PublishMarks extends Service {
                 if (sendSMS != null && sendSMS) {
                     if (mark.getAttend().getAluno().getPerson().getMobile() != null
                             || mark.getAttend().getAluno().getPerson().getMobile().length() == MOBILE_NUMBER_LENGHT) {
-                        String StringDestinationNumber = mark.getAttend().getAluno().getPerson().getMobile();
+                        String StringDestinationNumber = mark.getAttend().getAluno().getPerson()
+                                .getMobile();
 
                         if (StringDestinationNumber.startsWith(TMN_NETWORK_PREFIX)
                                 || StringDestinationNumber.startsWith(VODAFONE_NETWORK_PREFIX)
@@ -67,5 +78,5 @@ public class PublishMarks extends Service {
 
         return Boolean.TRUE;
     }
-    
+
 }

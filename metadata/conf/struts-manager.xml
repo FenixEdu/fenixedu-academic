@@ -24,7 +24,7 @@
 				<form-property name="destinationExecutionCourseId" type="java.lang.Integer" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
-		
+		<form-bean name="unitAnnouncementBoardsManagementForm" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.UnitAnnouncementBoardsManagementForm" dynamic="false"/>
 		<form-bean name="degreeForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
@@ -1425,8 +1425,69 @@
               validate="true"
               scope="request"
               >
-          <forward name="Manage" path="df.page.manage-advisories"/>
+          <forward name="add" path="manager-add-announcement"/>
+          <forward name="edit" path="manager-edit-announcement"/>
+          <forward name="listAnnouncementBoards" path="manager-list-announcement-boards"/>
           <forward name="success" path="/advisoriesManagement/listCurrentAdvisories.faces"/>
+		  <forward name="listAnnouncements" path="manager-list-announcements" />
+      </action>
+      
+      
+
+	<!-- ========== BOARDS MANIPULATION ========== -->
+	<action path="/announcements/announcementBoardsManagement"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.messaging.announcements.AnnouncementBoardsManagement"
+              parameter="method"
+              validate="true"
+              scope="request"
+              >
+		  <forward name="statistics" path="manager-announcement-boards-management-statistics"/>
+		  <forward name="firstPage" path="manager-announcement-boards-management-firstPage"/>
+		  <forward name="chooseBoardType" path="manager-announcement-boards-management-chooseBoardType"/>
+		  <forward name="createUnitAnnouncementBoard" path="manager-announcement-boards-management-createUnitAnnouncementBoard"/>
+      </action>
+      
+	  <action path="/announcements/manageExecutionCourseAnnouncementBoard"
+              type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.NotAvailableYet"
+              name="unitAnnouncementBoardsManagementForm"
+              validate="true"
+              scope="request"
+              >
+		  <forward name="notAvailable" path="manager-not-available-yet"/>
+      </action>
+      
+      <action path="/announcements/manageUnitAnnouncementBoard"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.messaging.announcements.UnitAnnouncementBoardsManagement"
+              name="unitAnnouncementBoardsManagementForm"
+              parameter="method"
+              validate="true"
+              scope="request"
+              >
+		  <forward name="chooseUnit" path="manager-announcement-boards-management-choose-unit"/>
+		  <forward name="createBoard" path="manager-announcement-boards-management-createUnitAnnouncementBoard"/>
+          <forward name="add" path="manager-boards-add-announcement"/>
+          <forward name="listAnnouncementBoards" path="manager-list-announcement-boards"/>
+		  <forward name="listAnnouncements" path="manager-board-list-announcements"/>		  
+		  <forward name="editAnnouncementBoard" path="manager-announcement-boards-management-edit-unit-board"/>		  		  
+		  <forward name="edit" path="manager-unit-board-edit-announcement"/>
+		  <forward name="viewAnnouncement" path="manager-view-announcement"/>
+      </action>
+      
+      <action path="/manageUnitAnnouncementBoard"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.messaging.announcements.UnitAnnouncementBoardsManagement"
+              name="unitAnnouncementBoardsManagementForm"
+              parameter="method"
+              validate="true"
+              scope="request"
+              >
+		  <forward name="chooseUnit" path="manager-announcement-boards-management-choose-unit"/>
+		  <forward name="createBoard" path="manager-announcement-boards-management-createUnitAnnouncementBoard"/>
+          <forward name="add" path="manager-boards-add-announcement"/>
+          <forward name="listAnnouncementBoards" path="manager-list-announcement-boards"/>
+		  <forward name="listAnnouncements" path="manager-board-list-announcements"/>		  
+		  <forward name="editAnnouncementBoard" path="manager-announcement-boards-management-edit-unit-board"/>		  		  
+		  <forward name="edit" path="manager-unit-board-edit-announcement"/>
+		  <forward name="viewAnnouncement" path="manager-view-announcement"/>
       </action>
 
 	<!-- ========== ROLE MANIPULATION ========== -->
@@ -2060,6 +2121,7 @@
 	<message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
 	<message-resources parameter="resources.CandidateResources" key="CANDIDATE_RESOURCES" null="false"/>
     <message-resources parameter="resources.FunctionalityResources" key="FUNCTIONALITY_RESOURCES" null="false"/>
+	<message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 
@@ -2069,9 +2131,9 @@
       <set-property property="pathnames" 
 		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-manager.xml"/>
 	</plug-in>
-	    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/manager/tiles-manager-definitions.xml,/WEB-INF/tiles/manager/tiles-manager-pages-definitions.xml" />
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/manager/tiles-manager-definitions.xml,/WEB-INF/tiles/manager/tiles-manager-pages-definitions.xml,/WEB-INF/tiles/messaging/tiles-messaging-definitions.xml,/WEB-INF/tiles/messaging/tiles-messaging-pages-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    

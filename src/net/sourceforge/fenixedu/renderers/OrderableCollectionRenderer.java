@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
  * This renderer provides a tabular presentation for a collection that allows
  * rows of the table to be sorted by clicking the table headers. The behaviour
  * of this renderer is very similar to the one of {@link net.sourceforge.fenixedu.renderers.CollectionRenderer}.
- * The main difference is that the rows can be ordered and it does not support
- * control links.
  * 
  * <p>
  * Example:

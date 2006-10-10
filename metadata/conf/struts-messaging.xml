@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE struts-config PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <!-- ========== Data Source Configuration =============================== -->
+    <!-- ========== Form Bean Definitions ================================== -->
+    <form-beans type="org.apache.struts.action.ActionFormBean">	
+		<form-bean name="announcementsStartPageForm" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementsStartPageForm"/>
+		
+		<form-bean name="unitAnnouncementBoardsManagementForm" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.UnitAnnouncementBoardsManagementForm" dynamic="false"/>
+		
+		<!-- ================= FIND PERSON FORM ===================-->
+		<form-bean name="findPersonForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	    	<form-property name="name" type="java.lang.String"/>
+	    	<form-property name="startIndex" type="java.lang.String"/>
+	    	<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
+			<form-property name="viewPhoto" type="java.lang.String"/>
+			<form-property name="roleType" type="java.lang.String"/>
+			<form-property name="departmentId" type="java.lang.Integer" />
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="degreeId" type="java.lang.Integer"/>
+		</form-bean>
+		
+    </form-beans>
+    
+    <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
+			/>
+	</global-exceptions>
+
+    <!-- ========== Global Forward Definitions =============================== -->
+    <global-forwards type="org.apache.struts.action.ActionForward">
+    </global-forwards>
+    <!-- ========== Action Mapping Definitions =============================== -->
+    <action-mappings type="org.apache.struts.action.ActionMapping">
+        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+            <forward name="Success" path="/announcements/announcementsStartPageHandler.do?method=news"/>
+        </action>        
+        
+	 <action path="/announcements/announcementsStartPageHandler"
+              type="net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementsStartPageHandler"
+              parameter="method"
+              validate="true"
+              scope="request"
+              name="announcementsStartPageForm"
+              >
+		  <forward name="news" path="view-news"/>
+          <forward name="startPage" path="start-page"/>
+          <forward name="add" path="add-announcement"/>
+          <forward name="edit" path="edit-announcement"/>
+          <forward name="listAnnouncementBoards" path="list-announcement-boards"/>
+		  <forward name="listAnnouncements" path="list-announcements"/>
+		  <forward name="boardListingWithCriteria" path="board-listing-with-criteria"/>
+		  <forward name="viewAnnouncement" path="view-announcement"/>
+      </action>               
+  
+  	  <action path="/announcements/manageExecutionCourseAnnouncementBoard"
+              type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.NotAvailableYet"
+              name="unitAnnouncementBoardsManagementForm"
+              validate="true"
+              scope="request"
+              >
+		  <forward name="notAvailable" path="not-available-yet"/>
+      </action>
+  
+      <action path="/announcements/manageUnitAnnouncementBoard"
+              type="net.sourceforge.fenixedu.presentationTier.Action.messaging.UnitAnnouncementBoardsManagement"
+              name="unitAnnouncementBoardsManagementForm"
+              parameter="method"
+              validate="true"
+              scope="request"
+              >
+
+          <forward name="add" path="add-announcement"/>
+          <forward name="listAnnouncementBoards" path="announcement-boards-unit-list-announcement-boards"/>
+		  <forward name="listAnnouncements" path="board-list-announcements"/>		  
+		  <forward name="editAnnouncementBoard" path="announcement-boards-management-edit-unit-board"/>
+		  <forward name="createBoard" path="announcement-boards-management-createUnitAnnouncementBoard"/>
+		  <forward name="edit" path="edit-announcement"/>
+		  <forward name="viewAnnouncement" path="view-announcement"/>
+     </action>
+     
+    <!-- ========== FIND PERSON MANAGEMENT ========== -->
+	<action path="/findPerson"
+		type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonAction"
+		parameter="method"
+		scope="request"
+		name="findPersonForm"
+		input="/findPerson.do?method=prepareFindPerson&amp;page=0"
+		>
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
+				key="resources.Action.exceptions.FenixActionException"
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>				
+				
+		<forward name="prepareFindPerson" path="/findPerson.do?method=prepareFindPerson&amp;page=0"/>
+		<forward name="findPerson" path="find-person"/>
+		<forward name="displayPerson" path="display-person"/>
+	</action>
+	
+	<action path="/preparePerson"
+		type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonAction"
+		parameter="method"
+		scope="request"
+		name="findPersonForm"
+		input="findPerson"
+		>
+		<forward name="findPerson" path="find-person"/>		
+	</action>
+      
+    </action-mappings>
+    
+    <!-- ========== Controller Configuration ================================ -->
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
+    <!-- ========== Message Resources Definitions ============================ -->
+    <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
+	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+
+    <!-- ========== Plug Ins Configuration ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames" 
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml"/>
+    </plug-in>
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/messaging/tiles-messaging-definitions.xml,/WEB-INF/tiles/messaging/tiles-messaging-pages-definitions.xml" 
+            />
+        <set-property property="moduleAware" value="true" />
+        <set-property property="definitions-parser-validate" value="true" />
+    </plug-in>
+    <plug-in className="net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin">
+	    <set-property property="config" 
+	                  value="/WEB-INF/fenix-renderers-config.xml"/>
+	    <set-property property="schemas" 
+	                  value="/WEB-INF/fenix-renderers-schemas.xml"/>
+	    <set-property property="metaObjectFactory" 
+	                  value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory"/>
+	    <set-property property="userIdentityFactory" 
+	                  value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory"/>
+	    <set-property property="schemaFactory" 
+	                  value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory"/>
+	</plug-in>
+</struts-config>

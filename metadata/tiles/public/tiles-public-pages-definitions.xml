@@ -246,4 +246,15 @@
 		<put name="footer" value="/publico/commonFooterPub.jsp" />
 	</definition>	
 
+	<!-- =================== Announcements ============== -->
+	<definition name="public-list-announcements" extends="definition.public.executionCourse">
+		<put name="body" value="/messaging/announcements/listAnnouncements.jsp" />
+	</definition>		
+	<definition name="public-view-announcement" extends="definition.public.mainPage">
+		<put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+	</definition>			
+	<definition name="executionCoruse-view-announcement" extends="definition.public.executionCourse">
+		<put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+	</definition>			
+
 </tiles-definitions>

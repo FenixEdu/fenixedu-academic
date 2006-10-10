@@ -106,5 +106,5 @@ public class RoleGroup extends DomainBackedGroup<Role> {
         }
         
     }
-
+    
 }

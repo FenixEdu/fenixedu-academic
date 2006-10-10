@@ -801,4 +801,20 @@
  		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" />
 	</definition>
 	<!-- End Tests Pages Definitions -->
+
+	<!-- =================== Announcements ============== -->
+	<definition name="teacher-list-announcements" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/announcements/listBoardAnnouncements.jsp" />
+	</definition>	
+	<definition name="teacher-add-announcement" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/announcements/addAnnouncement.jsp" />
+	</definition>		
+	<definition name="teacher-edit-announcement" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/announcements/editAnnouncement.jsp" />
+	</definition>	
+	<definition name="teacher-view-announcement" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/announcements/viewAnnouncement.jsp" />
+	</definition>		
+	<!-- =================== end announcements ============== -->
+
 </tiles-definitions>

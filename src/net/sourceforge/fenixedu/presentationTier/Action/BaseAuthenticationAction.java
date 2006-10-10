@@ -69,7 +69,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	createNewSession(request, session, userView);
 
 	int numberOfSubApplications = getNumberOfSubApplications(userView.getRoleTypes());
-	if (numberOfSubApplications == 1 || !userView.hasRoleType(RoleType.PERSON)) {
+	if (numberOfSubApplications == 1 || !userView.hasRoleType(RoleType.MESSAGING)) {
 	    final Role firstInfoRole = userView.getRoleTypes().isEmpty() ? null : Role
 		    .getRoleByRoleType(userView.getRoleTypes().iterator().next());
 	    return buildRoleForward(firstInfoRole);

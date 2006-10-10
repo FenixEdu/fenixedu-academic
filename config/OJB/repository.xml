@@ -21,7 +21,6 @@
 <!ENTITY tests SYSTEM "repository_tests.xml">
 <!ENTITY seminary SYSTEM "repository_seminary.xml">
 <!ENTITY advisory SYSTEM "repository_advisory.xml">
-<!ENTITY website SYSTEM "repository_website.xml">
 <!ENTITY coordinator SYSTEM "repository_coordinator.xml">
 <!ENTITY places SYSTEM "repository_places.xml">
 <!ENTITY grant_owner_management SYSTEM "repository_grant_owner_management.xml">
@@ -116,7 +115,6 @@
 	&tests;
 	&seminary;
     &advisory;
-    &website;
 	&coordinator;
 	&places;
     &grant_owner_management;

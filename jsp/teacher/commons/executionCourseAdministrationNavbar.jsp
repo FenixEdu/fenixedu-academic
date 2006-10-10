@@ -32,7 +32,7 @@
 		
 	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.communication"/></li>
 		<li>
-			<html:link page="/announcementManagementAction.do?method=showAnnouncements" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/announcementManagement.do?method=start" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.announcements"/>
 			</html:link>
 		</li>

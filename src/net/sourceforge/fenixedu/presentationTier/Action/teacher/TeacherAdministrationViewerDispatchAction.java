@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
@@ -37,7 +36,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
@@ -84,7 +82,6 @@ import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -241,165 +238,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	return mapping.findForward("viewSite");
     }
 
-    // ======================== Announcements Management
-    // ========================
-    public ActionForward showAnnouncements(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException {
-
-	ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
-	readSiteView(request, announcementsComponent, null, null, null);
-	TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
-		.getAttribute("siteView");
-
-	List announcementsList = ((InfoSiteAnnouncement) siteView.getComponent()).getAnnouncements();
-	if (!announcementsList.isEmpty()) {
-	    Collections.sort(announcementsList, new ComparatorChain(new BeanComparator(
-		    "lastModifiedDate"), true));
-	    return mapping.findForward("showAnnouncements");
-	}
-
-	DynaActionForm actionForm = (DynaActionForm) form;
-	htmlEditorConfigurations(request, actionForm);
-
-	return mapping.findForward("insertAnnouncement");
-
-    }
-
-    public ActionForward prepareCreateAnnouncement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException {
-	readSiteView(request, null, null, null, null);
-
-	DynaActionForm actionForm = (DynaActionForm) form;
-	htmlEditorConfigurations(request, actionForm);
-
-	return mapping.findForward("insertAnnouncement");
-    }
-
-    public ActionForward createAnnouncement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException {
-	HttpSession session = request.getSession(false);
-	Integer objectCode = getObjectCode(request);
-	DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
-	String title = (String) insertAnnouncementForm.get("title");
-	String information = (String) insertAnnouncementForm.get("information");
-
-	IUserView userView = getUserView(request);
-	Object args[] = { objectCode, title, information };
-	try {
-	    ServiceManagerServiceFactory.executeService(userView, "CreateAnnouncement", args);
-	} catch (ExistingServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("existingAnnouncementErrot", new ActionError("error.existingAnnouncement"));
-	    saveErrors(request, actionErrors);
-	    return mapping.getInputForward();
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-	ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
-	readSiteView(request, announcementsComponent, null, null, null);
-	return showAnnouncements(mapping, form, request, response);
-    }
-
-    public ActionForward prepareEditAnnouncement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException {
-	// retrieve announcement
-	Integer announcementCode = getAnnouncementCode(request);
-	ISiteComponent announcementComponent = new InfoAnnouncement(rootDomainObject
-		.readAnnouncementByOID(announcementCode));
-	SiteView siteView = readSiteView(request, announcementComponent, null, announcementCode, null);
-
-	String information = ((InfoAnnouncement) siteView.getComponent()).getInformation();
-
-	DynaActionForm actionForm = (DynaActionForm) form;
-	if (information != null)
-	    actionForm.set("information", information);
-
-	if (request.getAttribute("announcementTextFlag") != null)
-	    actionForm.set("information", request.getAttribute("announcementTextFlag"));
-
-	htmlEditorConfigurations(request, actionForm);
-
-	return mapping.findForward("editAnnouncement");
-    }
-
-    private Integer getAnnouncementCode(HttpServletRequest request) {
-	String announcementCodeString = request.getParameter("announcementCode");
-	Integer announcementCode = null;
-	if (announcementCodeString == null) {
-	    announcementCodeString = (String) request.getAttribute("announcementCode");
-	}
-	if (announcementCodeString != null)
-	    announcementCode = new Integer(announcementCodeString);
-	return announcementCode;
-    }
-
-    public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException {
-	HttpSession session = request.getSession(false);
-	String announcementCodeString = request.getParameter("announcementCode");
-	if (announcementCodeString == null) {
-	    announcementCodeString = (String) request.getAttribute("announcementCode");
-	}
-	Integer announcementCode = new Integer(announcementCodeString);
-	DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
-	String newTitle = (String) insertAnnouncementForm.get("title");
-	String newInformation = (String) insertAnnouncementForm.get("information");
-
-	IUserView userView = getUserView(request);
-	Object args[] = { announcementCode, newTitle, newInformation };
-	try {
-	    ServiceManagerServiceFactory.executeService(userView, "EditAnnouncementService", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-	ISiteComponent announecementsComponent = new InfoSiteAnnouncement();
-	readSiteView(request, announecementsComponent, null, null, null);
-
-	return showAnnouncements(mapping, form, request, response);
-    }
-
-    public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException {
-
-	HttpSession session = request.getSession(false);
-	String announcementCodeString = request.getParameter("announcementCode");
-
-	if (announcementCodeString == null) {
-	    announcementCodeString = (String) request.getAttribute("announcementCode");
-	}
-
-	Integer announcementCode = new Integer(announcementCodeString);
-	IUserView userView = getUserView(request);
-	Object args[] = { announcementCode };
-
-	try {
-	    ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncementService", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-
-	ISiteComponent announecementsComponent = new InfoSiteAnnouncement();
-	readSiteView(request, announecementsComponent, null, null, null);
-	TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
-		.getAttribute("siteView");
-
-	if (!((InfoSiteAnnouncement) siteView.getComponent()).getAnnouncements().isEmpty()) {
-	    return showAnnouncements(mapping, form, request, response);
-	}
-
-	DynaActionForm actionForm = (DynaActionForm) form;
-	htmlEditorConfigurations(request, actionForm);
-	return mapping.findForward("insertAnnouncement");
-    }
-
-    // ======================== Objectives Management
-    // ========================
+    // ======================== Objectives Management ========================
     public ActionForward viewObjectives(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
@@ -1173,8 +1012,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    obj2 = getUsername(request);
 	} else if (siteComponent instanceof InfoSiteRegularSections) {
 	    obj1 = getSectionCode(request);
-	} else if (siteComponent instanceof InfoAnnouncement) {
-	    obj1 = getAnnouncementCode(request);
 	} else if (siteComponent instanceof InfoSiteSections) {
 	    obj1 = getSectionCode(request);
 	} else if (siteComponent instanceof InfoSiteSection) {

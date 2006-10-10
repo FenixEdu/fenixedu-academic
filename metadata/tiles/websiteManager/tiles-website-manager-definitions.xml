@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.websiteManager.masterPage" extends="df.layout.two-column">
+		<put name="serviceName" value="Gestão WebSite" />
+		<put name="institutionName" value="Instituto Superior Técnico" />
+		<put name="navGeral" value="/webSiteManager/commonNavGeral.jsp" />  
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="navLocal" value="/webSiteManager/navbar.jsp" type="page"/>
+		<put name="footer" value="/sop/commonFooterSop.jsp" />
+	</definition>	
+</tiles-definitions>

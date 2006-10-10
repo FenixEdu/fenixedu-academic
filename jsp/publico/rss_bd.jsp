@@ -22,7 +22,7 @@
 	<br />
 	<h2><bean:message key="message.rss.7"/></h2>
 	
-	<p>Copie os URL's para o leitor RSS.</p>	
+	<p>Copie os URL's para o leitor RSS.</p>	PAPADA SHORT !!!
 	
 		<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
 		<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
@@ -34,10 +34,10 @@
 				<strong><bean:message key="label.announcements"/></strong>
 			</td>
 			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
-				<a href="<%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%></a>
+				<a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + pageContext.findAttribute("announcementBoardId")%>"><%= linkRSS %><%="/publico/announcementsRSS.do?announcementBoardId=" + pageContext.findAttribute("announcementBoardId")%></a>
 			</td>
 			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
-				<a href="<%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><img src="<%= request.getContextPath() %>/images/rss_ico.png" alt="<bean:message key="rss_ico" bundle="IMAGE_RESOURCES" />" /></a>
+				<a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + pageContext.findAttribute("announcementBoardId")%>"><img src="<%= request.getContextPath() %>/images/rss_ico.png" alt="<bean:message key="rss_ico" bundle="IMAGE_RESOURCES" />" /></a>
 			</td>
 		</tr>
 		<tr>
@@ -50,6 +50,13 @@
 			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
 				<a href="<%= linkRSS %><%="/publico/summariesRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif" alt="<bean:message key="rss_ico" bundle="IMAGE_RESOURCES" />" /></a>
 			</td>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><strong><bean:message key="label.announcements"/></strong></td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getIdInternal()%>"><%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getIdInternal()%></a></td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getIdInternal()%>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif"></td>
 		</tr>
 	</table>
 </logic:present>

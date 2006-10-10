@@ -173,8 +173,7 @@
         </description>
         <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter</filter-class>
         <init-param>
-                <!-- 
-                 the value of this param MUST be the same as the prefix for the url-pattern below 
+            <!-- the value of this param MUST be the same as the prefix for the url-pattern below 
                  but without the trailing 
               -->
             <param-name>testing.prefix</param-name>
@@ -448,7 +447,11 @@
         <init-param>
             <param-name>config/alumni</param-name>
             <param-value>/WEB-INF/conf/struts-alumni.xml</param-value>
-        </init-param>       
+        </init-param>
+		<init-param>
+            <param-name>config/messaging</param-name>
+            <param-value>/WEB-INF/conf/struts-messaging.xml</param-value>
+        </init-param>
         <init-param>
             <param-name>config/parkingManager</param-name>
             <param-value>/WEB-INF/conf/struts-parkingManager.xml</param-value>

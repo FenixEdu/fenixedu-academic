@@ -1,0 +1,48 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+
+  	<definition name="df.page.index" extends="definition.websiteManager.masterPage" >
+		<put name="body" value="/webSiteManager/firstPage.jsp" />
+	</definition>
+	
+<!--
+  	<definition name="df.page.sectionsFirstPage" extends="definition.websiteManager.masterPage" >
+     	<put name="navLocal" value="/webSiteManager/sectionsNavbar.jsp"/>
+		<put name="body" value="/webSiteManager/sectionsFirstPage_bd.jsp" />
+	</definition>	
+  	<definition name="df.page.sectionPage" extends="definition.websiteManager.masterPage" >
+		<put name="body" value="/webSiteManager/sectionPage_bd.jsp" />
+	</definition>		
+  	<definition name="df.page.sectionsConfiguration" extends="definition.websiteManager.masterPage" >
+		<put name="body" value="/webSiteManager/sectionsConfiguration_bd.jsp" />
+	</definition>		
+-->
+
+  	<definition name="websiteManager-list-announcement-boards" extends="definition.websiteManager.masterPage" >
+		<put name="navLocal" value="/webSiteManager/sectionsNavbar.jsp"/>
+		<put name="body" value="/webSiteManager/sectionsFirstPage_bd.jsp" />
+	</definition>			
+
+  	<definition name="websiteManager-view-announcementBoard" extends="definition.websiteManager.masterPage" >
+	    <put name="navLocal" value="/webSiteManager/sectionsNavbar.jsp"/>
+		<put name="body" value="/webSiteManager/sectionPage.jsp" />
+	</definition>			
+
+  	<definition name="websiteManager-list-announcements" extends="definition.websiteManager.masterPage" >
+	    <put name="navLocal" value="/webSiteManager/sectionsNavbar.jsp"/>
+	    <put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+	</definition>					
+
+  	<definition name="websiteManager-add-announcement" extends="definition.websiteManager.masterPage" >
+	    <put name="navLocal" value="/webSiteManager/sectionsNavbar.jsp"/>
+	    <put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
+	</definition>					
+
+  	<definition name="websiteManager-view-announcement" extends="definition.websiteManager.masterPage" >
+	    <put name="navLocal" value="/webSiteManager/sectionsNavbar.jsp"/>
+	    <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+	</definition>					
+	
+</tiles-definitions>

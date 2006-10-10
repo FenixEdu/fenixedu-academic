@@ -23,6 +23,7 @@
  * ValueTypes declarations
  * 
  */
+ 
 valueType net.sourceforge.fenixedu.domain.teacher.AdviseType													as AdviseType;
 valueType net.sourceforge.fenixedu.util.AgreementType                                          					as AgreementType;
 valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                    				as AreaType;
@@ -163,7 +164,8 @@ valueType net.sourceforge.fenixedu.domain.tests.Grade															as Grade;
 valueType net.sourceforge.fenixedu.domain.tests.TestGroupStatus													as TestGroupStatus;
 valueType net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer											as ConcreteAnswer;
 valueType net.sourceforge.fenixedu.domain.LoginAliasType														as LoginAliasType;
-
+valueType net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType											as UnitBoardPermittedGroupType;
+valueType net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType								as ExecutionCourseBoardPermittedGroupType;
 
 /*
 *
@@ -248,13 +250,13 @@ class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge
     Integer year;
     DateTime whenCreated;
 	Integer keyEmployee;
-	}
-	
+}
+
 class net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion extends net.sourceforge.fenixedu.domain.DomainObject {
     DateTime whenCreated;
     Integer keyReceipt;
-   	 	Integer keyEmployee;
-	}
+    Integer keyEmployee;
+}
 
 class net.sourceforge.fenixedu.domain.accounting.ServiceAgreement extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
@@ -330,15 +332,6 @@ class net.sourceforge.fenixedu.domain.Advisory extends net.sourceforge.fenixedu.
 	String sender;
 }
 
-
-class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keySite;
-	String information;
-	String title;
-	DateTime creationDateDateTime;
-	DateTime lastModifiedDateDateTime;
-}
-
 class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyDisciplinaExecucao;
 	Integer keyAluno;
@@ -368,7 +361,7 @@ class net.sourceforge.fenixedu.domain.homepage.BlogEntry extends net.sourceforge
 }
 
 class net.sourceforge.fenixedu.domain.homepage.BlogEntryComment extends net.sourceforge.fenixedu.domain.DomainObject {
-        Integer keyBlogEntry;
+    Integer keyBlogEntry;
 	DateTime postedDateTime;
 	String comment;
 }
@@ -467,7 +460,7 @@ class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.f
 	Integer weight;
 }
 
-class net.sourceforge.fenixedu.domain.messaging.NewAnnouncement extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.messaging.Announcement extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCreator;
 	Integer keyAnnouncementBoard;
 	DateTime creationDate;
@@ -482,16 +475,26 @@ class net.sourceforge.fenixedu.domain.messaging.NewAnnouncement extends net.sour
 	MultiLanguageString excerpt;	
 	String author;
 	String authorEmail;
-	Boolean hidden;		
+	String place;
+	Boolean visible;		
 }
 
 class net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard extends net.sourceforge.fenixedu.domain.DomainObject {
+	DateTime creationDate;
 	String ojbConcreteClass;
 	String name;
 	Group readers;
 	Group writers;	
+	Group managers;	
 	Boolean mandatory;
 }
+
+	class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard {
+		Integer keyExecutionCourse;
+		ExecutionCourseBoardPermittedGroupType executionCoursePermittedWriteGroupType;
+		ExecutionCourseBoardPermittedGroupType executionCoursePermittedReadGroupType;
+		ExecutionCourseBoardPermittedGroupType executionCoursePermittedManagementGroupType;
+	}
 
 class net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard {
 	Integer keyParty;
@@ -501,14 +504,18 @@ class net.sourceforge.fenixedu.domain.messaging.PersonAnnouncementBoard extends 
 }
 
 class net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard {
+	UnitBoardPermittedGroupType unitPermittedWriteGroupType;
+	UnitBoardPermittedGroupType unitPermittedReadGroupType;
+	UnitBoardPermittedGroupType unitPermittedManagementGroupType;
 }
  
 class net.sourceforge.fenixedu.domain.messaging.ConversationThread extends net.sourceforge.fenixedu.domain.DomainObject {
 	DateTime creationDateDateTime;
-   String subject;
-   Integer keyForum;
-   Integer keyCreator;
+	String subject;
+	Integer keyForum;
+	Integer keyCreator;
 }
+
    
 class net.sourceforge.fenixedu.domain.messaging.ConversationMessage extends net.sourceforge.fenixedu.domain.DomainObject {
 	DateTime creationDateDateTime;
@@ -798,7 +805,7 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     String enrolmentPeriod;
     String additionalInfo;
     String links;
-    
+
     String testIngression;
     String classifications;
     String accessRequisites;
@@ -1186,7 +1193,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
         Integer maxSubmissionsToKeep;
         Integer keyGrouping;
 	}
-	
+
 	class net.sourceforge.fenixedu.domain.ProjectSubmission extends net.sourceforge.fenixedu.domain.DomainObject {
 	    DateTime submissionDateTime;
 	    Integer keyStudentGroup;
@@ -1194,7 +1201,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	    Integer keyProject;
 	    Integer keyProjectSubmissionFile;
 	}
-	
+
 	class net.sourceforge.fenixedu.domain.ProjectSubmissionLog extends net.sourceforge.fenixedu.domain.DomainObject {
 	    DateTime submissionDateTime;
 	    String filename;
@@ -1250,6 +1257,7 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	Integer keyEvaluationMethod;
 	Integer keySite;
 	Integer keyVigilantGroup;
+	Integer keyBoard;
 	String comment;
 	Double theoreticalHours;
 	Double praticalHours;
@@ -1640,15 +1648,14 @@ class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.
 }
 
 class net.sourceforge.fenixedu.domain.ExportGrouping extends net.sourceforge.fenixedu.domain.DomainObject {
-        Integer keySenderExecutionCourse;
-        Integer keySenderPerson;
-        Integer keyExecutionCourse;
-        Integer keyReceiverPerson;
-        Integer keyGrouping;
+    Integer keySenderExecutionCourse;
+    Integer keySenderPerson;
+    Integer keyExecutionCourse;
+    Integer keyReceiverPerson;
+    Integer keyGrouping;
     ProposalState proposalState;
 }
-        
-        
+               
 class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyContributor;
 	Integer keyContributorParty;
@@ -1685,24 +1692,24 @@ class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fen
 }
 
 class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.domain.DomainObject {
-  String ojbConcreteClass;
-  String filename;
-  String displayName;
-  String mimeType;
-  String checksum;
-  String checksumAlgorithm;
-  Integer size;
-  String externalStorageIdentification;
-  DateTime uploadTime;
-  Group permittedGroup;
+	String ojbConcreteClass;
+	String filename;
+	String displayName;
+	String mimeType;
+	String checksum;
+	String checksumAlgorithm;
+	Integer size;
+	String externalStorageIdentification;
+	DateTime uploadTime;
+	Group permittedGroup;
 }
 
 	class net.sourceforge.fenixedu.domain.FileItem extends net.sourceforge.fenixedu.domain.File {
-	  FileItemPermittedGroupType fileItemPermittedGroupType;
+		FileItemPermittedGroupType fileItemPermittedGroupType;
 	}
 	
 	class net.sourceforge.fenixedu.domain.ProjectSubmissionFile extends net.sourceforge.fenixedu.domain.File {
-	 Integer keyProjectSubmission;
+		Integer keyProjectSubmission;
 	}
 
 	class net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile extends net.sourceforge.fenixedu.domain.File {
@@ -1882,8 +1889,8 @@ class net.sourceforge.fenixedu.domain.Mark extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.FinalMark extends net.sourceforge.fenixedu.domain.Mark {
 		String submitedMark;
 		Integer gradeListVersion;
-	YearMonthDay submitDateYearMonthDay;
-	YearMonthDay whenSubmitedYearMonthDay;
+		YearMonthDay submitDateYearMonthDay;
+		YearMonthDay whenSubmitedYearMonthDay;
 	}
 
 class net.sourceforge.fenixedu.domain.material.Material extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1892,7 +1899,7 @@ class net.sourceforge.fenixedu.domain.material.Material extends net.sourceforge.
 	Integer barCodeNumber;
 	YearMonthDay acquisition;
 	YearMonthDay cease;
-	}
+}
 	class net.sourceforge.fenixedu.domain.material.Extension extends net.sourceforge.fenixedu.domain.material.Material {
 		Integer number;	
 	}			
@@ -2528,12 +2535,11 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 		Integer keyRoom;
 		Integer keyPeriod;
 	    DiaSemana dayOfWeek;
-	HourMinuteSecond startTimeDateHourMinuteSecond;
-	HourMinuteSecond endTimeDateHourMinuteSecond;
+		HourMinuteSecond startTimeDateHourMinuteSecond;
+		HourMinuteSecond endTimeDateHourMinuteSecond;
 	    Integer keyWrittenEvaluation;
 	    Integer keyLesson;
 	}
-
 
 class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.DomainObject {
 	YearMonthDay begin;
@@ -3098,51 +3104,9 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
     Boolean required;
 }
 
-
 class net.sourceforge.fenixedu.domain.Tutor extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
     Integer keyStudentCurricularPlan;
-}
-
-
-class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.domain.DomainObject {
-    String ojbConcreteClass;
-    String style;
-    String mail;
-    String name;
-}
-
-
-    class net.sourceforge.fenixedu.domain.SiteIST extends net.sourceforge.fenixedu.domain.WebSite {
-    }
-
-
-class net.sourceforge.fenixedu.domain.WebSiteItem extends net.sourceforge.fenixedu.domain.DomainObject {
-    String authorName;
-	YearMonthDay onlineEndDayYearMonthDay;
-    String title;
-	YearMonthDay itemBeginDayYearMonthDay;
-    Integer keyWebSiteSection;
-    String keywords;
-	YearMonthDay onlineBeginDayYearMonthDay;
-	YearMonthDay itemEndDayYearMonthDay;
-    Boolean published;
-    String excerpt;
-    String authorEmail;
-    String mainEntryText;
-    Integer keyEditor;
-	DateTime creationDateDateTime;
-}
-
-
-class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keyWebSite;
-    String whatToSort;
-    String ftpName;
-    Integer size;
-    Integer excerptSize;
-    String name;
-    String sortingOrder;
 }
 
 class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3343,6 +3307,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.Justification extends net.so
 	Integer keyModifiedBy;
 	String notes;
 }
+
 class net.sourceforge.fenixedu.domain.assiduousness.MissingClocking extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
 }
 
@@ -4205,20 +4170,20 @@ class net.sourceforge.fenixedu.domain.tests.NewCorrector extends net.sourceforge
 
 relation AnnouncementCreator {
 	net.sourceforge.fenixedu.domain.Person playsRole creator;
-	net.sourceforge.fenixedu.domain.messaging.NewAnnouncement playsRole announcements {
+	net.sourceforge.fenixedu.domain.messaging.Announcement playsRole announcements {
 		multiplicity *;
 	}
 }
 
 relation AnnouncementBoardAnnouncements {
 	net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard playsRole announcementBoard;
-	net.sourceforge.fenixedu.domain.messaging.NewAnnouncement playsRole announcements {
+	net.sourceforge.fenixedu.domain.messaging.Announcement playsRole announcements {
 	    multiplicity *;
 	}
 }
 
 relation AnnouncementBoardBookmark {
-	net.sourceforge.fenixedu.domain.Person playsRole persons {
+	net.sourceforge.fenixedu.domain.Person playsRole bookmarkOwner {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard playsRole bookmarkedBoards {
@@ -5033,6 +4998,11 @@ relation EvaluationExecutionCourse {
 	}
 }
 
+relation ExecutionCourseAnnouncementBoardExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard playsRole board;
+}
+
 relation ExecutionCourseForumExecutionCourse {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 	
@@ -5040,8 +5010,6 @@ relation ExecutionCourseForumExecutionCourse {
 		multiplicity *;
 	}
 }
-
-
 
 relation WrittenEvaluationEnrolmentExam {
 	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
@@ -6600,14 +6568,6 @@ relation SiteSection {
 	net.sourceforge.fenixedu.domain.Site playsRole site;
 }
 
-relation SiteAnnouncement {
-	net.sourceforge.fenixedu.domain.Announcement playsRole associatedAnnouncements {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Site playsRole site;
-}
-
-
 relation SpaceSpace {
 	net.sourceforge.fenixedu.domain.space.Space playsRole containedSpaces {
 		multiplicity *;
@@ -7106,27 +7066,6 @@ relation SeminaryCourseEquivalency {
     net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole equivalencies {
         multiplicity *;
     }
-}
-
-relation WebSiteItemPerson {
-    net.sourceforge.fenixedu.domain.WebSiteItem playsRole editedWebSiteItems {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Person playsRole editor;
-}
-
-relation WebSiteItemWebSiteSection {
-    net.sourceforge.fenixedu.domain.WebSiteItem playsRole includedWebSiteItems {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.WebSiteSection playsRole webSiteSection;
-}
-
-relation WebSiteSectionWebSite {
-    net.sourceforge.fenixedu.domain.WebSiteSection playsRole associatedWebSiteSections {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.WebSite playsRole webSite;
 }
 
 relation GroupingAttends {
@@ -8137,13 +8076,6 @@ relation RootDomainObjectTeacherExpectationDefinitionPeriod {
 	}
 }
 
-relation RootDomainObjectWebSiteItem {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.WebSiteItem playsRole webSiteItems {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectCurricularYear {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.CurricularYear playsRole curricularYears {
@@ -8462,13 +8394,6 @@ relation RootDomainObjectPaymentPhase {
 relation RootDomainObjectEnrolmentEvaluation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole enrolmentEvaluations {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectWebSiteSection {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.WebSiteSection playsRole webSiteSections {
 		multiplicity *;
 	}
 }
@@ -9033,13 +8958,6 @@ relation RootDomainObjectProjectEventAssociation {
 	}
 }
 
-relation RootDomainObjectWebSite {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.WebSite playsRole webSites {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectProjectAccess {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess playsRole projectAccesss {
@@ -9397,13 +9315,6 @@ relation RootDomainObjectCaseStudyChoice {
 	}
 }
 
-relation RootDomainObjectAnnouncement {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.Announcement playsRole announcements {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectAnnouncementBoard {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard playsRole announcementBoards {
@@ -9411,9 +9322,9 @@ relation RootDomainObjectAnnouncementBoard {
 	}
 }
 
-relation RootDomainObjectNewAnnouncement {
+relation RootDomainObjectAnnouncement {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.messaging.NewAnnouncement playsRole newAnnouncements {
+	net.sourceforge.fenixedu.domain.messaging.Announcement playsRole announcements {
 		multiplicity *;
 	}
 }
@@ -9536,6 +9447,7 @@ relation MarkSheetExecutionPeriod {
         multiplicity *;
     }
 }
+
 relation RectificationEnrolmentEvaluationRectifiedEnrolmentEvaluation {
     net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole rectification;
     net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole rectified;

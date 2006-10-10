@@ -5,6 +5,8 @@ import java.util.List;
 
 public enum RoleType {
 
+    MESSAGING("Messaging"),
+
     PERSON("Person"),
 
     STUDENT("Registration"),
@@ -75,8 +77,6 @@ public enum RoleType {
 
     ALUMNI("Alumni"),
 
-    MESSAGING("Messaging"),
-
     PEDAGOGICAL_COUNCIL("Pedagogical Council"),
 
     CANDIDATE("Candidate"),
@@ -102,6 +102,7 @@ public enum RoleType {
 	rolesImportance.add(RoleType.MASTER_DEGREE_CANDIDATE);
 	rolesImportance.add(RoleType.CANDIDATE);
 	rolesImportance.add(RoleType.ALUMNI);
+	rolesImportance.add(RoleType.MESSAGING);
 	rolesImportance.add(RoleType.PERSON);
 	rolesImportance.add(RoleType.EXAM_COORDINATOR);
 	return rolesImportance;

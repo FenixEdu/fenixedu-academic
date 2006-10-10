@@ -197,14 +197,6 @@
             <form-property name="programEn" type="java.lang.String" />
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
-        <!-- Announcement Forms  -->
-        <form-bean name="insertAnnouncementForm" type="org.apache.struts.validator.DynaValidatorForm" 
-            dynamic="true">
-            <form-property name="editor" type="java.lang.String" initial="true"/>
-            <form-property name="title" type="java.lang.String" />
-            <form-property name="information" type="java.lang.String" initial=""/>
-            <form-property name="page" type="java.lang.Integer" initial="0" />
-        </form-bean>
         <!--Teacher form -->
         <form-bean name="teacherForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="teacherNumber" type="java.lang.String" />
@@ -876,26 +868,7 @@
             <forward name="importCustomizationOptions" path="import-customization-options"/>
             <forward name="viewSite" path="/viewSite.jsp"/>
         </action>
-        <!-- input of actions for announcement management -->
-        <action name="insertAnnouncementForm" attribute="insertAnnouncementForm"
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            scope="request" parameter="method" path="/announcementManagementAction" validate="true" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement"/>
-            <set-property property="inputForwardName" value="insertAnnouncement"/>
-            <forward name="showAnnouncements" path="/announcementManagement.jsp" />
-            <forward name="insertAnnouncement" path="/insertAnnouncement.jsp" />
-            <forward name="editAnnouncement" path="/editAnnouncement.jsp" />
-        </action>
-        <action name="insertAnnouncementForm" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            scope="request" parameter="method" path="/editAnnouncement" input="/editAnnouncement.jsp" 
-            validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement"/>
-            <set-property property="inputForwardName" value="editAnnouncement"/>
-            <forward name="editAnnouncement" path="/editAnnouncement.jsp" />
-            <forward name="showAnnouncements" path="/announcementManagement.jsp" />
-        </action>
+                      
         <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
         <!-- Actions For Teachers  -->
         <action parameter="method" path="/teachersManagerDA" 
@@ -2146,6 +2119,17 @@
         	
         </action>
         
+        <action path="/announcementManagement"
+              type="net.sourceforge.fenixedu.presentationTier.Action.teacher.messaging.ExecutionCourseAnnouncementManagement"
+              parameter="method"
+              scope="request"
+              >
+              
+          <forward name="listAnnouncements" path="teacher-list-announcements"/>
+		  <forward name="add" path="teacher-add-announcement"/>
+		  <forward name="edit" path="teacher-edit-announcement"/>
+		  <forward name="viewAnnouncement" path="teacher-view-announcement"/>
+      </action>
         
         <!-- ===== Project Submissions Management === -->
         <action path="/projectSubmissionsManagement"
@@ -2183,7 +2167,12 @@
     </plug-in>
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
         <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/credits/tiles-credits-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,
+			/WEB-INF/tiles/credits/tiles-credits-definitions.xml,
+			/WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,
+			/WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml,
+			/WEB-INF/tiles/messaging/tiles-messaging-definitions.xml,
+            /WEB-INF/tiles/messaging/tiles-messaging-pages-definitions.xml"
             />
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />

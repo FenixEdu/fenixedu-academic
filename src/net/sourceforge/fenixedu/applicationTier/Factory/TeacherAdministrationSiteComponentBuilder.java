@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -14,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
@@ -34,7 +32,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithInfoSiteAndInfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
@@ -66,7 +63,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAndGroupingAndShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -121,10 +117,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 			return getInfoSiteInstructions((InfoSiteInstructions) component, site);
 		} else if (component instanceof InfoSite) {
 			return getInfoSiteCustomizationOptions((InfoSite) component, site);
-		} else if (component instanceof InfoSiteAnnouncement) {
-			return getInfoSiteAnnouncement((InfoSiteAnnouncement) component, site);
-		} else if (component instanceof InfoAnnouncement) {
-			return getInfoAnnouncement((InfoAnnouncement) component, site, (Integer) obj1);
 		} else if (component instanceof InfoSiteObjectives) {
 			return getInfoSiteObjectives((InfoSiteObjectives) component, site);
 		} else if (component instanceof InfoSitePrograms) {
@@ -239,30 +231,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 		component.setInfoExecutionCourse(InfoExecutionCourse
 				.newInfoFromDomain(site.getExecutionCourse()));
 		return component;
-	}
-
-	private InfoSiteAnnouncement getInfoSiteAnnouncement(InfoSiteAnnouncement component, Site site) {
-		Set<Announcement> announcements = site.getSortedAnnouncements();
-		List<InfoAnnouncement> infoAnnouncementsList = new ArrayList<InfoAnnouncement>(announcements.size());
-
-		for (Announcement ann : announcements) {
-			infoAnnouncementsList.add(InfoAnnouncement.newInfoFromDomain(ann));
-		}
-
-		component.setAnnouncements(infoAnnouncementsList);
-		return component;
-	}
-
-	/**
-	 * @param announcement
-	 * @param site
-	 * @return
-	 * @throws ExcepcaoPersistencia
-	 */
-	private ISiteComponent getInfoAnnouncement(InfoAnnouncement component, Site site,
-			Integer announcementCode) throws FenixServiceException {
-		Announcement iAnnouncement = RootDomainObject.getInstance().readAnnouncementByOID(announcementCode);
-		return InfoAnnouncement.newInfoFromDomain(iAnnouncement);
 	}
 
 	/**

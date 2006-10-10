@@ -20,8 +20,6 @@ public class InfoSiteFirstPage extends DataTranferObject implements ISiteCompone
 
     private String introduction;
 
-    private InfoAnnouncement lastAnnouncement;
-
     private List lastFiveAnnouncements;
 
     private List responsibleTeachers;
@@ -49,13 +47,6 @@ public class InfoSiteFirstPage extends DataTranferObject implements ISiteCompone
      */
     public String getIntroduction() {
         return introduction;
-    }
-
-    /**
-     * @return
-     */
-    public InfoAnnouncement getLastAnnouncement() {
-        return lastAnnouncement;
     }
 
     /**
@@ -91,13 +82,6 @@ public class InfoSiteFirstPage extends DataTranferObject implements ISiteCompone
      */
     public void setIntroduction(String string) {
         introduction = string;
-    }
-
-    /**
-     * @param announcement
-     */
-    public void setLastAnnouncement(InfoAnnouncement announcement) {
-        lastAnnouncement = announcement;
     }
 
     /**

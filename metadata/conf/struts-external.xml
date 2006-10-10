@@ -73,6 +73,20 @@
 	        parameter="method"
 			validate="true">
     	</action>
+
+		<action path="/announcementsRSS"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.AnnouncementRSS"
+    		parameter="method"
+			scope="request"
+			validate="false"
+    	/>
+    	
+    	<action path="/exportAnnouncementBoard"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.AnnouncementBoardExport"
+    		parameter="method"
+			scope="request"
+			validate="false"
+    	/>
     	   		
 	</action-mappings>
   
@@ -92,7 +106,5 @@
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />
   </plug-in>
-
-
 
 </struts-config>

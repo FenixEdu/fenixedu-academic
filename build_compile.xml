@@ -743,6 +743,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		<jar destfile="${deploy.home}/${app.name}.jar">
 			<fileset dir="${build.home.webinf.classes}">
 				<include name="net/sourceforge/fenixedu/_development/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/accessControl/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/constants/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/commons/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/dataTransferObject/**/*.class"/>

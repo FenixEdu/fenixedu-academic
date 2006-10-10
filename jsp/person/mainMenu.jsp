@@ -10,7 +10,4 @@
 	<li><html:link page="/manageHomepage.do?method=prepare" titleKey="link.manage.homepage"><bean:message key="link.manage.homepage"  /></html:link></li>
 	<li><html:link page="/parking.do?method=prepareParking"><bean:message key="label.parking"  bundle="PARKING_RESOURCES"/></html:link></li>
 	<%-- <li><html:link page="/sendSms.do?method=prepare" ><bean:message key="label.person.sendSms"  /></html:link></li>  --%>
-	<li class="navheader"><bean:message key="label.navheader.services"  /></li>
-	<li><html:link page="/findPerson.do?method=prepareFindPerson" ><bean:message key="label.person.findPerson"  /></html:link></li>
-	<li><html:link page="/organizationalStructure/structurePage.faces"><bean:message key="label.orgUnit"  /></html:link></li>
 </ul>

@@ -14,7 +14,7 @@
 		</html:link>
 	</li>
 	<li>
-		<html:link page="/executionCourse.do?method=announcements"
+		<html:link page="/announcementManagement.do?method=start"
 				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 			<bean:message  key="link.announcements"/>
 		</html:link>

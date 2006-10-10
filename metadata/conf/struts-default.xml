@@ -91,7 +91,8 @@
 
         <action path="/home"
 				type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
-            	parameter="/person/index.do"/>
+            	parameter="/messaging/index.do"/>
+            	
         <action path="/login"
 				type="net.sourceforge.fenixedu.presentationTier.Action.LocalAuthenticationAction"
             	name="authenticationForm"
@@ -196,4 +197,3 @@
     </plug-in>
 
 </struts-config>
-

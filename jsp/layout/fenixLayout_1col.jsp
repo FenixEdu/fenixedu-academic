@@ -12,6 +12,8 @@
 <link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+<tiles:insert attribute="rss" ignore="true" />
+<tiles:insert attribute="keywords" ignore="true" />
 </head>
 <body>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>

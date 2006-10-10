@@ -6,6 +6,13 @@
 
 h2 { margin: 0.5em 0 0.75em 0; }
 
+
+/* ----------------------
+ ---- Anchors ---------
+----------------------- */
+
+a img { border: none; }
+
 /* ----------------------
  ---- Show Info --------
 ----------------------- */
@@ -152,7 +159,7 @@ table.thright th { text-align: right; }
 table.thcenter th { text-align: center; }
 .tdleft td { text-align: left; }
 .tdright td { text-align: right; } /* take table from all, to work with tr ? */
-.tdcenter td { text-align: right; }
+.tdcenter td { text-align: center; }
 
 	/* delete? */
 table .aleft  { text-align: left; }
@@ -387,6 +394,7 @@ padding-right: 0.5em;
 ----------------------- */
 
 .smalltxt { font-size: 0.85em; }
+.smalltxt2 { font-size: 0.80em; }
 .p_mvert015 p { margin: 0.15em 0; }
 .prenomargin { margin: 0; padding: 0; font-family: Verdana, Arial, Helvetica, sans-serif;}
 .aleft { text-align: left; }

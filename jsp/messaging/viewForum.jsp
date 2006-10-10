@@ -1,12 +1,11 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <html:messages id="message" message="true" bundle="MESSAGING_RESOURCES">
-	<span class="error"><!-- Error messages go here -->
+	<span class="error">
 		<bean:write name="message"/>
 	</span>
 </html:messages>
@@ -45,7 +44,7 @@
 	</logic:equal>
 
 	<logic:empty name="conversationThreads">
-		<span class="error"><!-- Error messages go here --><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.noThreads"/></span>
+		<span class="error"><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.noThreads"/></span>
 	</logic:empty>
 	<logic:notEmpty name="conversationThreads">
 		<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/>
@@ -56,13 +55,11 @@
 				<bean:write name="pageNumber"/>
 			</logic:equal>
 			<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
-				<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId=" + forumId.toString() + "&amp;pageNumber=" + pageNumber%>">
+				<html:link action="<%= contextPrefix + "method=viewForum&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber%>">
 					<bean:write name="pageNumber"/>
 				</html:link>			
 			</logic:notEqual>
 		</logic:iterate>
-
-
 	
 		<fr:view name="conversationThreads" schema="conversationThread.view-full">
 			<fr:layout name="tabular">
@@ -74,37 +71,6 @@
 				<fr:property name="bundle(view)" value="MESSAGING_RESOURCES"/>
 		    </fr:layout>
 		</fr:view>
-
-
-<%--
-		<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/>
-		<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
-			<logic:equal name="currentPageNumberString" value="<%=pageNumber.toString()%>">
-				<bean:write name="pageNumber"/>
-			</logic:equal>
-			<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
-				<bean:define id="forumId" name="forum" property="idInternal" />
-				<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId=" + forumId.toString() + "&amp;pageNumber=" + pageNumber%>">
-					<bean:write name="pageNumber"/>
-				</html:link>			
-			</logic:notEqual>	
-		</logic:iterate>
---%>
-
 	</logic:notEmpty>
-
-
-<%--
-	<p>Pretende anular a subscri��o deste f�rum? <a href="">Anular Subscri��o</a></p>
-	
-	<logic:equal name="receivingMessagesByEmail" value="true">
-		<strong><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.receivingMessagesByEmail"/></strong>
-		<html:link action="<%= contextPrefix + "method=emailUnsubscribe"%>" paramId="forumId" paramName="forumId"><bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.here"/></html:link>
-	</logic:equal>
-	<logic:equal name="receivingMessagesByEmail" value="false">
-		<strong><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.notReceivingMessagesByEmail"/></strong>
-		<html:link action="<%= contextPrefix + "method=emailSubscribe"%>" paramId="forumId" paramName="forumId"><bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.here"/></html:link>
-	</logic:equal>
---%>
 			
 </logic:present>

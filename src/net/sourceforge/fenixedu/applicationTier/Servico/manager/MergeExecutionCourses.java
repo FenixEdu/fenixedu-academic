@@ -232,10 +232,7 @@ public class MergeExecutionCourses extends Service {
         final Site siteFrom = executionCourseFrom.getSite();
         final Site siteTo = executionCourseTo.getSite();
 
-        if (siteFrom != null) {
-            for (; !siteFrom.getAssociatedAnnouncements().isEmpty(); siteTo
-                    .addAssociatedAnnouncements(siteFrom.getAssociatedAnnouncements().get(0)))
-                ;
+        if (siteFrom != null) {            
             for (; !siteFrom.getAssociatedSections().isEmpty(); siteTo.addAssociatedSections(siteFrom
                     .getAssociatedSections().get(0)))
                 ;

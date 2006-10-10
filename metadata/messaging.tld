@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!--
+ Copyright 2005 FenixEdu, Inc. All rights reserved.
+ IST PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+<!DOCTYPE taglib
+  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+
+<taglib>
+
+
+  <!-- ========== Tag Library Description Elements ========================= -->
+
+
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>messaging</short-name>
+  <uri>http://fenix-ashes.ist.utl.pt</uri>
+  <description>
+  	Messaging renders
+  </description>
+
+
+  <!-- ========== Tag Descriptions ========================================= -->
+
+  <!-- =======================By gedl 27-07-2007============================================ -->
+  <tag>
+     <name>archive</name>
+    <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.messaging.ArchiveTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Renders announcements archive
+    </description>
+    
+     <attribute>
+      <name>locale</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+        Locale to use for localizing this page.  Expressions
+        must evaluate to a java.util.Locale or to a String
+        that is converted to a Locale.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>bundle</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      	Ressource Bundle
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+      	The name of the variable holding an announcements archive
+      </description>
+    </attribute>
+
+	<attribute>
+		<name>property</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+      <description>
+      	The property of the 'name' variable that holds the archive object
+      </description>		
+	</attribute>   
+	
+	<attribute>
+		<name>scope</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+      <description>
+      	The scope of the name and property variables
+      </description>		
+	</attribute> 	 
+	
+	<attribute>
+		<name>targetUrl</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+      <description>
+	The style for each 'td' element that is rendered for each month. 
+      	Do NOT specify request parameters as they will be generated automatically: selectedYear and selectedMonth. 
+      	Thus the target URL should look for these parameters to compute.
+      	Plese DO specify the method and other parameters you may need.
+      	Also specify the proper query symbol (interrogation mark or ampersand) as adequate since this tag will only concatenate selectedMonth=x'ampersand'selectedYear=x as query string to the end of the provided targetUrl.
+      </description>		
+	</attribute> 	
+  </tag>   
+</taglib>

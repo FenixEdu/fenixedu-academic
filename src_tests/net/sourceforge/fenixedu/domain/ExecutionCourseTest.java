@@ -176,8 +176,6 @@ public class ExecutionCourseTest extends DomainTestBase {
         assertNotNull("Expected Not Null Site in ExecutionCourse!", executionCourse.getSite());
         assertTrue("Expected the Same Execution Course in created Site!", executionCourse.getSite()
                 .getExecutionCourse().equals(executionCourse));
-        assertEquals("Size unexpected in Site Announcements!", 0, executionCourse.getSite()
-                .getAssociatedAnnouncementsCount());
         assertEquals("Size unexpected in Site Sections!", 0, executionCourse.getSite()
                 .getAssociatedSectionsCount());
     }

@@ -11,5 +11,7 @@
 	  <put name="body-context" value="/commons/functionalities/breadCrumbs.jsp"/>
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
-	</definition>	
+	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+      <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>
 </tiles-definitions>

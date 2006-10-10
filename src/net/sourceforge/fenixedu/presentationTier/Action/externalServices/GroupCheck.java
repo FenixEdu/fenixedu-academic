@@ -13,13 +13,7 @@ import org.apache.struts.action.ActionMapping;
 
 public class GroupCheck extends ExternalInterfaceDispatchAction {
 
-    private static final String SUCCESS_CODE = "SUCCESS";
-
     private static final String NON_EXISTING_GROUP_CODE = "NON_EXISTING_GROUP";
-
-    private static final String NOT_AUTHORIZED_CODE = "NOT_AUTHORIZED";
-
-    private static final String UNEXPECTED_ERROR_CODE = "UNEXPECTED_ERROR";
 
     /**
      * Checks if the user belongs to the group specified in query.

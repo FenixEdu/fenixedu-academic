@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -166,14 +164,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         site.setExecutionCourse(this);
     }
 
-    public void copySectionsAndItemsFrom(final ExecutionCourse executionCourseFrom)
-	    throws DomainException {
+    public void copySectionsAndItemsFrom(final ExecutionCourse executionCourseFrom) {
 	this.getSite().copySectionsAndItemsFrom(executionCourseFrom.getSite());
     }
 
     public void createEvaluationMethod(final MultiLanguageString evaluationElements) {
-	if (evaluationElements == null)
+	if (evaluationElements == null) {
             throw new NullPointerException();
+	}
 
         final EvaluationMethod evaluationMethod = new EvaluationMethod();
         evaluationMethod.setEvaluationElements(evaluationElements);
@@ -240,7 +238,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	final CourseReport courseReport = new CourseReport();
 	courseReport.setReport(report);
-	courseReport.setLastModificationDate(Calendar.getInstance().getTime());
+	courseReport.setLastModificationDateDateTime(new DateTime());
 	courseReport.setExecutionCourse(this);
 
 	return courseReport;
@@ -341,7 +339,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (hasAnyAssociatedSummaries() || !getGroupings().isEmpty()
                 || hasAnyAssociatedBibliographicReferences() || hasAnyAssociatedEvaluations()
                 || hasEvaluationMethod() || hasAnyAssociatedShifts() || hasCourseReport()
-                || hasAnyAttends() || (hasSite() && !getSite().canBeDeleted())) {
+                || hasAnyAttends() || (hasSite() && !getSite().canBeDeleted())
+                || (hasBoard() && !getBoard().canDelete())) {
             return false;
         }
         for (final Professorship professorship : getProfessorships()) {
@@ -792,9 +791,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public Interval getInterval() {
         final ExecutionPeriod executionPeriod = getExecutionPeriod();
-        final DateTime beginningOfSemester = new DateTime(executionPeriod.getBeginDate());
+        final DateTime beginningOfSemester = new DateTime(executionPeriod.getBeginDateYearMonthDay());
         final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
-        final DateTime endOfSemester = new DateTime(executionPeriod.getEndDate());
+        final DateTime endOfSemester = new DateTime(executionPeriod.getEndDateYearMonthDay());
         final DateTime nextLastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1)
                 .plusWeeks(1);
         return new Interval(firstMonday, nextLastMonday);

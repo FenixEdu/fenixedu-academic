@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -30,7 +29,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class ReadSite extends FenixAction {
 
@@ -41,14 +40,7 @@ public class ReadSite extends FenixAction {
         session.removeAttribute(SessionConstants.INFO_SECTION);
         IUserView userView = getUserView(request);
 
-        //		InfoTeacher infoTeacher =
-        //			(InfoTeacher) session.getAttribute(SessionConstants.INFO_TEACHER);
-        //		List infoSites =
-        //			(List) session.getAttribute(SessionConstants.INFO_SITES_LIST);
-
         InfoSite site = null;
-
-        //		String index = (String) request.getParameter("index");
 
         try {
 
@@ -63,30 +55,14 @@ public class ReadSite extends FenixAction {
 
         }
 
-        //		if (index != null) {
-        //			site = (InfoSite) infoSites.get((new Integer(index)).intValue());
-        //		} else {
-        //			site = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-        //		}
-
         session.setAttribute(SessionConstants.INFO_SITE, site);
         session.setAttribute(SessionConstants.ALTERNATIVE_SITE, site.getAlternativeSite());
         session.setAttribute(SessionConstants.MAIL, site.getMail());
 
-        //Read last Anouncement
+        // read sections
         Object[] args = new Object[1];
         args[0] = site;
-        //TODO: the last announcemnet is to be removed
-        InfoAnnouncement lastAnnouncement = null;
-        try {
-            lastAnnouncement = (InfoAnnouncement) ServiceManagerServiceFactory.executeService(userView,
-                    "ReadLastAnnouncement", args);
-            session.setAttribute(SessionConstants.LAST_ANNOUNCEMENT, lastAnnouncement);
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
-        }
 
-        // read sections
         List sections = null;
         try {
             sections = (List) ServiceManagerServiceFactory

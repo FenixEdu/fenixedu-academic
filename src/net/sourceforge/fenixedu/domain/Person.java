@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
@@ -891,9 +892,6 @@ public class Person extends Person_Base {
 	if (getExportGroupingSendersCount() > 0) {
 	    return false;
 	}
-	if (getEditedWebSiteItemsCount() > 0) {
-	    return false;
-	}
 	if (getResponsabilityTransactionsCount() > 0) {
 	    return false;
 	}
@@ -985,14 +983,17 @@ public class Person extends Person_Base {
 	    }
 	}
 
-	@Override
-	public void afterAdd(Role role, Person person) {
-	    if (role.getRoleType().equals(RoleType.TEACHER)) {
-		person.addPersonRoles(Role.getRoleByRoleType(RoleType.RESEARCHER));
-	    }
-	    person.addAlias(role);
-	    person.updateIstUsername();
-	}
+        @Override
+        public void afterAdd(Role role, Person person) {
+            if (role.getRoleType().equals(RoleType.PERSON)) {
+        	person.addPersonRoles(Role.getRoleByRoleType(RoleType.MESSAGING));
+            }
+            if (role.getRoleType().equals(RoleType.TEACHER)) {
+                person.addPersonRoles(Role.getRoleByRoleType(RoleType.RESEARCHER));
+            }
+            person.addAlias(role);
+            person.updateIstUsername();
+        }
 
 	/**
          * This method is called transparently to the programmer when he removes
@@ -1048,19 +1049,20 @@ public class Person extends Person_Base {
 	    }
 	}
 
-	private static void removeDependencies(Person person, Role removedRole) {
-	    switch (removedRole.getRoleType()) {
-	    case PERSON:
-		removeRoleIfPresent(person, RoleType.TEACHER);
-		removeRoleIfPresent(person, RoleType.EMPLOYEE);
-		removeRoleIfPresent(person, RoleType.STUDENT);
-		removeRoleIfPresent(person, RoleType.GEP);
-		removeRoleIfPresent(person, RoleType.GRANT_OWNER);
-		removeRoleIfPresent(person, RoleType.MANAGER);
-		removeRoleIfPresent(person, RoleType.OPERATOR);
-		removeRoleIfPresent(person, RoleType.TIME_TABLE_MANAGER);
-		removeRoleIfPresent(person, RoleType.WEBSITE_MANAGER);
-		break;
+        private static void removeDependencies(Person person, Role removedRole) {
+            switch (removedRole.getRoleType()) {
+            case PERSON:
+                removeRoleIfPresent(person, RoleType.TEACHER);
+                removeRoleIfPresent(person, RoleType.EMPLOYEE);
+                removeRoleIfPresent(person, RoleType.STUDENT);
+                removeRoleIfPresent(person, RoleType.GEP);
+                removeRoleIfPresent(person, RoleType.GRANT_OWNER);
+                removeRoleIfPresent(person, RoleType.MANAGER);
+                removeRoleIfPresent(person, RoleType.OPERATOR);
+                removeRoleIfPresent(person, RoleType.TIME_TABLE_MANAGER);
+                removeRoleIfPresent(person, RoleType.WEBSITE_MANAGER);
+                //removeRoleIfPresent(person, RoleType.MESSAGING);
+                break;
 
 	    case TEACHER:
 		removeRoleIfPresent(person, RoleType.COORDINATOR);
@@ -1722,6 +1724,42 @@ public class Person extends Person_Base {
 	final String institutionalEmail = getInstitutionalEmail();
 	return institutionalEmail != null && institutionalEmail.length() > 0 ? institutionalEmail
 		: super.getEmail();
+    }
+    
+    public Collection<AnnouncementBoard> getCurrentExecutionCoursesAnnouncementBoards() {
+        final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
+        result.addAll(getStudentCurrentExecutionCourseAnnouncementBoards());
+        result.addAll(getTeacherCurrentExecutionCourseAnnouncementBoards());    
+        return result;
+    }
+    
+    private Collection<AnnouncementBoard> getStudentCurrentExecutionCourseAnnouncementBoards() {
+	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
+	for (final Registration registration : this.getStudents()) {
+	    for (final Enrolment enrolment : registration.getCurrentEnrolments()) {
+		for (final Attends attends : enrolment.getAttends()) {
+		    final AnnouncementBoard board = attends.getDisciplinaExecucao().getBoard();
+		    if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
+			result.add(board);
+		    }
+		}
+	    }
+        }
+	return result;
+    }
+    
+    private Collection<AnnouncementBoard> getTeacherCurrentExecutionCourseAnnouncementBoards() {
+	if (hasTeacher()) {
+	    final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
+            for (final Professorship professorship : getTeacher().getProfessorships()) {
+                final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
+                if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
+                    result.add(board);
+                }
+            }
+            return result;
+        }
+	return Collections.EMPTY_SET;
     }
 
     @Override

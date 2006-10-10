@@ -10,6 +10,8 @@
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <title><tiles:getAsString name="title" ignore="true" /></title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+<tiles:insert attribute="rss" ignore="true" />
+<tiles:insert attribute="keywords" ignore="true" />
 </head>
 <body>
 <%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>

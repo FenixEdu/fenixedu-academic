@@ -96,4 +96,35 @@ public class Mes extends FenixUtil {
         }
         return "Erro: Invalid month";
     }
+    
+    public String toAbbreviationString() {
+        int mes = this._Mes.intValue();
+        switch (mes) {
+        case JANEIRO:
+            return "Jan.";
+        case FEVEREIRO:
+            return "Fev.";
+        case MARCO:
+            return "Mar.";
+        case ABRIL:
+            return "Abr.";
+        case MAIO:
+            return "Mai.";
+        case JUNHO:
+            return "Jun.";
+        case JULHO:
+            return "Jul.";
+        case AGOSTO:
+            return "Ago.";
+        case SETEMBRO:
+            return "Set.";
+        case OUTUBRO:
+            return "Out.";
+        case NOVEMBRO:
+            return "Nov.";
+        case DEZEMBRO:
+            return "Dez.";
+        }
+        return "Erro: Invalid month";
+    }
 }

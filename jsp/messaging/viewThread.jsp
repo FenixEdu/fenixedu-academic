@@ -24,25 +24,12 @@
 						<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.executionCourse.backToForum" />
 					</html:link>
 					</p>
-<!--					
-					<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId="+ forumId %>">
-						<bean:write name="forum" property="name"/>
-					</html:link>
-					<bean:message bundle="MESSAGING_RESOURCES" key="messaging.breadCrumSeparator.label"/> 
-					<bean:write name="thread" property="subject"/>
-					
-					<br/><br/>		
-					
-					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.Messages"/></h2>
--->
 
 					<fr:view name="thread" layout="tabular" schema="conversationThread.view-with-subject-creation-date-and-message-count">
 						<fr:layout>
 						    <fr:property name="classes" value="tstyle5 thlight thright"/>
 						</fr:layout>
 					</fr:view>
-
-
 
 					<logic:notEqual name="showReplyBox" value="true">
 						<logic:equal name="loggedPersonCanWrite" value="true">
@@ -51,8 +38,6 @@
 							</html:link>
 						</logic:equal>
 					</logic:notEqual>
-
-
 
 					<logic:equal name="showReplyBox" value="true">						
 						<fr:create id="createMessage"
@@ -74,7 +59,6 @@
 						<br/>
 					</logic:equal>
 					
-
 				    <p class="mbottom0">
 					<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>	
 					<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/>
@@ -88,8 +72,7 @@
 							</html:link>			
 						</logic:notEqual>
 					</logic:iterate>
-					</p>
-								
+					</p>								
 					
 					<logic:iterate indexId="currentMessageId" id="conversationMessage" name="messages" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
 						<html:link linkName="<%=currentMessageId.toString()%>"/>
@@ -118,7 +101,7 @@
 							<bean:write name="pageNumber"/>
 						</logic:equal>
 						<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
-							<html:link action="<%= contextPrefix + "method=viewThread&amp;forumId=" + forumId.toString() + "&amp;pageNumber=" + pageNumber +"&amp;threadId="+threadId%>">								
+<html:link action="<%= contextPrefix + "method=viewThread&amp;forumId=" + forumId.toString() + "&amp;pageNumber=" + pageNumber +"&amp;threadId="+threadId%>">								
 								<bean:write name="pageNumber"/>
 							</html:link>			
 						</logic:notEqual>

@@ -12,49 +12,39 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum" table="FORUM">
-
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum" table="FORUM"/>
 
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ConversationThread -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ConversationThread" table="CONVERSATION_THREAD">
- 
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ConversationThread" table="CONVERSATION_THREAD"/>
 
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ConversationMessage -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ConversationMessage" table="CONVERSATION_MESSAGE">
-        
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ConversationMessage" table="CONVERSATION_MESSAGE"/>
 
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ForumSubscription -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ForumSubscription" table="FORUM_SUBSCRIPTION">
-        
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ForumSubscription" table="FORUM_SUBSCRIPTION"/>
 
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.Announcement -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.NewAnnouncement" table="ANNOUNCEMENT_MESSAGING">
-        
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.Announcement" table="ANNOUNCEMENT"/>
 
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard" table="ANNOUNCEMENT_BOARD">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard" />        
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard" />
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard" table="ANNOUNCEMENT_BOARD">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard" />    
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard" table="ANNOUNCEMENT_BOARD">
-
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard" table="ANNOUNCEMENT_BOARD"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard" table="ANNOUNCEMENT_BOARD"/>

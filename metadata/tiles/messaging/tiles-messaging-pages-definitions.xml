@@ -1,0 +1,68 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>   
+    <definition name="index" extends="definition.messaging.masterPage" >
+        <put name="body" value="/messaging/welcomeScreen.jsp"/>
+    </definition>
+    
+   	<definition name="df.page.structure" extends="definition.messaging.masterPage" >
+		<put name="body"  value="/common/blank.jsp"/>
+	</definition>   
+
+	<definition name="add-announcement" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
+	</definition>	
+	<definition name="list-announcement-boards" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />
+	</definition>
+	<definition name="announcement-boards-unit-list-announcement-boards" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/listUnitAnnouncementBoards.jsp" />
+	</definition>		
+	<definition name="list-announcements" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+	</definition>	
+	<definition name="edit-announcement" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
+	</definition>	
+	<definition name="start-page" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/startPage.jsp" />
+	</definition>		
+	<definition name="edit-announcement-board" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/editAnnouncementBoard.jsp" />
+	</definition>
+	<definition name="board-listing-with-criteria" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/boardListingWithCriteria.jsp" />
+	</definition>
+	<definition name="announcement-boards-management-edit-unit-board" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/editUnitAnnouncementBoard.jsp" />
+	</definition>	
+	<definition name="announcement-boards-management-create-board" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/createUnitAnnouncementBoard.jsp" />
+	</definition>	
+	<definition name="board-list-announcements" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+	</definition>	
+	<definition name="not-available-yet" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/notAvailableYet.jsp" />
+	</definition>	
+	<definition name="view-announcement" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+	</definition>		
+	<definition name="announcement-boards-management-createUnitAnnouncementBoard" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/createUnitAnnouncementBoard.jsp" />
+	</definition>			
+	<definition name="view-news" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/news.jsp" />
+	</definition>		
+	
+	<!-- ========== BEGIN: FIND PERSON MANAGEMENT ========== -->
+	<definition name="find-person" extends="definition.messaging.masterPage" >
+		<put name="body" value="/person/findPerson/findPerson.jsp" />
+	</definition>
+	<definition name="display-person" extends="definition.messaging.masterPage" >
+		<put name="body" value="/person/findPerson/displayPerson.jsp" />
+	</definition>
+	<!-- ========== END: FIND PERSON MANAGEMENT ========== -->
+	
+</tiles-definitions>

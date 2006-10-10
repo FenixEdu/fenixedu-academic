@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
+import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -31,6 +34,7 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ExecutionCourseDA extends FenixDispatchAction {
 
+    public final static int ANNOUNCEMENTS_TO_SHOW = 5;
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         final String executionCourseIDString = request.getParameter("executionCourseID");
@@ -45,11 +49,22 @@ public class ExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	final ExecutionCourse course = (ExecutionCourse)request.getAttribute("executionCourse");
+	
+	final Iterator<Announcement> announcementsIterator = course.getBoard().getActiveAnnouncements().iterator();
+	if (announcementsIterator.hasNext()) {
+	    request.setAttribute("lastAnnouncement", announcementsIterator.next());
+	}
+	
+	int i = 0;
+	final Collection<Announcement> lastFiveAnnouncements = new ArrayList<Announcement>(ANNOUNCEMENTS_TO_SHOW);
+	while (announcementsIterator.hasNext() && i < ANNOUNCEMENTS_TO_SHOW) {
+	    lastFiveAnnouncements.add(announcementsIterator.next());
+	    i++;
+	}
+	request.setAttribute("lastFiveAnnouncements",lastFiveAnnouncements);
+	
         return mapping.findForward("execution-course-first-page");
-    }
-
-    public ActionForward announcements(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("execution-course-announcements");
     }
 
     public ActionForward summaries(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

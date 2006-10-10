@@ -81,8 +81,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return rootDomainObject.readAllDomainObjects(clazz);
     }
 
-    protected Person getLoggedPerson(HttpServletRequest request) throws FenixFilterException,
-            FenixServiceException {
+    protected Person getLoggedPerson(HttpServletRequest request) {
         return getUserView(request).getPerson();
     }
 
@@ -253,7 +252,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return args;
     }
 
-    private StrutsMessageResourceProvider getMessageResourceProvider(HttpServletRequest request) {
+    protected StrutsMessageResourceProvider getMessageResourceProvider(HttpServletRequest request) {
         final StrutsMessageResourceProvider strutsMessageResourceProvider = new StrutsMessageResourceProvider(
                 getLocale(request), getServlet().getServletContext(), request);
         for (final Entry<String, String> entry : getMessageResourceProviderBundleMappings().entrySet()) {

@@ -1,6 +1,5 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%> 
@@ -18,7 +17,7 @@
 	
 	<logic:messagesPresent message="true">
 		<html:messages id="messages" message="true" bundle="MESSAGING_RESOURCES">
-			<span class="error"><!-- Error messages go here --><bean:write name="messages" /></span>
+			<span class="error"><bean:write name="messages" /></span>
 		</html:messages>
 		<br/><br/>
 	</logic:messagesPresent>
@@ -28,7 +27,7 @@
 	<fr:create id="createThreadAndMessage"
 			type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean" 
            	schema="conversationThreadAndMessage.create"
-           	action="<%= contextPrefix + "method=createThreadAndMessage&amp;forumId="+forumId+"&amp;goToLastPage=true" %>">
+           	action="<%= contextPrefix + "method=createThreadAndMessage&forumId="+forumId+"&goToLastPage=true" %>">
 
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="thlight mtop05"/>
@@ -36,8 +35,8 @@
 
            <fr:hidden slot="creator" name="person"/>
            <fr:hidden slot="forum" name="forum"/>
-           <fr:destination name="cancel" path="<%= contextPrefix + "method=viewForum&amp;forumId="+forumId%>"/>
-           <fr:destination name="exception" path="<%= contextPrefix + "method=viewForum&amp;forumId="+forumId%>"/>
+           <fr:destination name="cancel" path="<%= contextPrefix + "method=viewForum&forumId="+forumId%>"/>
+           <fr:destination name="exception" path="<%= contextPrefix + "method=viewForum&forumId="+forumId%>"/>
 	</fr:create>
 
 

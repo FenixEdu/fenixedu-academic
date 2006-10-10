@@ -42,7 +42,7 @@ Documentation:
         <!- -@ the comment with <tt>HTML</tt> embeded - ->
  -->
   
-    <!-- ouptut -->
+    <!-- output -->
 
     <!--@ The default presentation for a custom component that was "manually" created. -->  
     <renderer type="net.sourceforge.fenixedu.renderers.components.HtmlComponent" class="net.sourceforge.fenixedu.renderers.StandardComponentRenderer"/>
@@ -79,7 +79,7 @@ Documentation:
     <renderer type="java.lang.Object" layout="values" class="net.sourceforge.fenixedu.renderers.ValuesRenderer"/>
     
     <!--@ The format offers other way of presenting objects inline. The <tt>format</tt> property accepts a special
-          syntax that allows you to choose how the information is presented. The the renderer documentation for
+          syntax that allows you to choose how the information is presented. Read the renderer documentation for
           more details. -->
     <renderer type="java.lang.Object" layout="format" class="net.sourceforge.fenixedu.renderers.FormatRenderer"/>
     
@@ -117,11 +117,13 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" layout="degree-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
         <property name="format" value="${degree.sigla} ${initialDateYearMonthDay.year}"/>
     </renderer>
+    
     <renderer type="net.sourceforge.fenixedu.domain.Shift" layout="shift-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.ShiftPlainRenderer"/>
 
 	<renderer type="net.sourceforge.fenixedu.domain.Summary" layout="summary-plain-to-create-summary" class="net.sourceforge.fenixedu.presentationTier.renderers.SummaryPlainRenderer"/>
 
     <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer"/>
+
     <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer">
     	<property name="escaped" value="false"/>
     </renderer>
@@ -385,7 +387,16 @@ Documentation:
 	<!--@ The default layout for a DateTime automatically includes the hour, minute, and second in the partial -->
 	<renderer type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}"/>
-	</renderer>	
+	</renderer>
+
+	<renderer type="org.joda.time.DateTime" layout="no-time" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
+	</renderer>
+
+	<renderer type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeDataDependentRenderer" layout="dataDependent">
+		<property name="formatWithTime" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}"/>
+		<property name="formatWithoutTime" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
+	</renderer>
 	
 	<!--@ The default layout for a HourMinuteSecond automatically includes the hour and minute -->	
 	<renderer type="net.sourceforge.fenixedu.util.HourMinuteSecond" class="net.sourceforge.fenixedu.renderers.FormatRenderer">

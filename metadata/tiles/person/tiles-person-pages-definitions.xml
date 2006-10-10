@@ -22,17 +22,10 @@
 	<definition name="df.page.viewSmsDeliveryReports" extends="definition.person.masterPage">
 		<put name="body" value="/person/viewSmsDeliveryReports.jsp" />
 	</definition>
-	
-	<!-- ========== FIND PERSON MANAGEMENT ========== -->
-	<definition name="findPerson" extends="definition.person.masterPage" >
-		<put name="body" value="/person/findPerson/findPerson.jsp" />
-	</definition>
-	<definition name="displayPerson" extends="definition.person.masterPage" >
-		<put name="body" value="/person/findPerson/displayPerson.jsp" />
-	</definition>
+
 	<!-- ========== Organizational Structure ========== -->	
 	<definition name="df.page.structure" extends="definition.person.masterPage" >
-	<put name="body"  value="/common/blank.jsp"/>
+		<put name="body"  value="/common/blank.jsp"/>
 	</definition>
 
 	<!-- ========== RENDERERS ========== -->

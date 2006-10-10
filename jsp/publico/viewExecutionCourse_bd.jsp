@@ -4,9 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ page import="org.apache.struts.util.RequestUtils" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-
 <logic:notPresent name="siteView">
 	<span class="error"><!-- Error messages go here --><p><bean:message key="errors.invalidSiteExecutionCourse"/></p></span>
 </logic:notPresent>
@@ -19,23 +19,6 @@
 
 	<bean:define id="component" name="siteView" property="commonComponent" />
 	<bean:define id="curricularCoursesList" name="component" property="associatedDegreesByDegree" />
-
-<%--
-	<p><bean:message key="label.curricular.plans"/>: 
-		<logic:iterate id="curricularCourse" name="curricularCoursesList">
-			<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
-			<bean:define id="degreeID" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.idInternal" />
-			<bean:define id="degreeCurricularPlanID" name="curricularCourse" property="infoDegreeCurricularPlan.idInternal" />
-			<span>
-				<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseId") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  pageContext.getAttribute("degreeID") %>">
-					<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.name"/>
-				</html:link>
-				&nbsp;
-			</span>
-		</logic:iterate>
-	</p>
---%>
-
 
 	<div id="contextual_nav">
 		<h2 class="brown"><bean:message key="label.curricular.information"/></h2>
@@ -78,32 +61,29 @@
 				<p><bean:write name="component" property="initialStatement" filter="false"/></p>
 			</div>
 		</logic:notEmpty>
-		
-        <logic:notEmpty name="component" property="lastAnnouncement">		
-			<bean:define id="announcement" name="component" property="lastAnnouncement"/>
+        <logic:notEmpty name="lastAnnouncement">		
+			<bean:define id="announcement" name="lastAnnouncement"/>
 			<div id="announcs">
 				<h2 class="announcs-head"><bean:message key="label.lastAnnouncements"/></h2>
 				<div class="last-announc">
-					<div class="last-announc-name"><bean:write name="announcement" property="title"/></div>
+					<div class="last-announc-name"><fr:view name="announcement" property="subject"/></div>
 					<div class="last-announc-post-date">
-						<dt:format pattern="dd/MM/yyyy  HH:mm">
-							<bean:write name="announcement" property="lastModifiedDate.time"/>
-						</dt:format>
+							<fr:view name="announcement" property="lastModification"/>
 					</div>
-					<p class="last-announc-info"><bean:write name="announcement" property="information" filter="false"/></p>
+					<p class="last-announc-info"><fr:view name="announcement" property="body"/></p>
 				</div>
-				<logic:empty name="component" property="lastFiveAnnouncements" ></div></logic:empty>
+				<logic:empty name="lastFiveAnnouncements" ></div></logic:empty>
 		</logic:notEmpty>
 
-		<logic:notEmpty name="component" property="lastFiveAnnouncements">		    	
+		<logic:notEmpty name="lastFiveAnnouncements">		    	
 				<ul class="more-announc">
-				<logic:iterate id="announcement" name="component" property="lastFiveAnnouncements">
+				<logic:iterate id="announcement" name="lastFiveAnnouncements">
 					<bean:define id="announcementId" name ="announcement" property="idInternal" />
-					<li class="more-announc"><span class="more-announc-date"><dt:format pattern="dd/MM/yyyy">
-						<bean:write name="announcement" property="lastModifiedDate.time"/></dt:format> - </span>
-						<html:link  page="<%="/viewSite.do"+"?method=announcements&amp;objectCode=" + pageContext.findAttribute("objectCode")%>"
+					<li class="more-announc"><span class="more-announc-date">
+						<fr:view name="announcement" property="lastModification"/> - </span>
+						<html:link  page="<%="/announcementManagement.do"+"?method=viewAnnouncements&amp;objectCode=" + pageContext.findAttribute("objectCode") + "#" + announcementId%>"
 									anchor="<%= announcementId.toString() %>">
-							<bean:write name="announcement" property="title"/>
+							<fr:view name="announcement" property="subject"/>
 						</html:link></li>
 				</logic:iterate>
 				</ul>

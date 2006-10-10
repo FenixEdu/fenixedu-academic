@@ -768,6 +768,16 @@
     		<forward name="homepage-stats" path="homepage-stats"/>
     		<forward name="not-found-homepage" path="not-found-homepage"/>
 		</action>
+		
+        <action path="/announcementManagement"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.messaging.ExecutionCoursePublicAnnouncementManagement"
+              parameter="method"
+              scope="request"
+              >
+              
+          <forward name="listAnnouncements" path="public-list-announcements"/>
+          <forward name="viewAnnouncement" path="executionCoruse-view-announcement"/>
+      </action>		
 
 	<!-- =========== RSS ======================== -->
 		<action path="/announcementsRSS"
@@ -777,6 +787,12 @@
 		<action path="/summariesRSS"
     			type="net.sourceforge.fenixedu.presentationTier.Action.publico.rss.GenerateSummariesRSS"
     			>
+		</action>
+		<action path="/publicAnnouncements"
+	            parameter="method"
+            	scope="request"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.messaging.PublicAnnouncementDispatchAction">
+    			<forward name="viewAnnouncement" path="public-view-announcement"/>
 		</action>
      </action-mappings>     
     
@@ -797,6 +813,7 @@
     <message-resources parameter="resources.PublicDegreeInformation" key="PUBLIC_DEGREE_INFORMATION" null="false"/>
     <message-resources parameter="resources.PublicDepartmentResources" key="PUBLIC_DEPARTMENT_RESOURCES" null="false"/>    
     <message-resources parameter="resources.HomepageResources" key="HOMEPAGE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
@@ -809,4 +826,16 @@
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in> 
+	<plug-in className="net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin">
+	    <set-property property="config" 
+	                  value="/WEB-INF/fenix-renderers-config.xml"/>
+	    <set-property property="schemas" 
+	                  value="/WEB-INF/fenix-renderers-schemas.xml"/>
+	    <set-property property="metaObjectFactory" 
+	                  value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory"/>
+	    <set-property property="userIdentityFactory" 
+	                  value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory"/>
+	    <set-property property="schemaFactory" 
+	                  value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory"/>
+	</plug-in>	
 </struts-config>

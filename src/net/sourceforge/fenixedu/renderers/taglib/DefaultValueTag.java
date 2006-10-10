@@ -80,15 +80,29 @@ public class DefaultValueTag extends TagSupport {
     public int doStartTag() throws JspException {
         validateAttributes();
 
-        CreateObjectTag parent = (CreateObjectTag) getParentCreateTag(); 
+        CreateObjectTag parent = getParentCreateTag(); 
         
         if (parent == null) {
             throw new JspException("the default value tag can only be used inside a create tag");
         }
         
-        parent.setDefaultValue(getSlot(), findObject(), getConverterClass());
+        parent.setDefaultValue(findSlot(), findObject(), getConverterClass());
         
         return SKIP_BODY;
+    }
+
+    private String findSlot() {
+        String slot = getSlot();
+        
+        if (slot == null) {
+            slot = getParentCreateTag().getSlot();
+        }
+        
+        if (slot == null) {
+            throw new RuntimeException("you must define the slot attribute or have a parent create tag with a slot defined");
+        }
+        
+        return slot;
     }
 
     protected void validateAttributes() throws JspException {
@@ -113,8 +127,8 @@ public class DefaultValueTag extends TagSupport {
         }
     }
 
-    protected Tag getParentCreateTag() {
-        return findAncestorWithClass(this, CreateObjectTag.class);
+    protected CreateObjectTag getParentCreateTag() {
+        return (CreateObjectTag) findAncestorWithClass(this, CreateObjectTag.class);
     }
 
     @Override

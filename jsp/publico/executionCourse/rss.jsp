@@ -26,7 +26,7 @@
 <bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=context%></bean:define>
 <table>
 	<tr>
-		<bean:define id="urlA" type="java.lang.String"><%= linkRSS %>/publico/announcementsRSS.do?id=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+		<bean:define id="urlA" type="java.lang.String"><%= linkRSS %>/external/announcementsRSS.do?announcementBoardId=<bean:write name="executionCourse" property="board.idInternal"/></bean:define>
 		<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
 			<strong><bean:message key="label.announcements"/></strong>
 		</td>

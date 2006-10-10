@@ -15,7 +15,7 @@ import de.nava.informa.core.ItemIF;
 import de.nava.informa.impl.basic.ChannelBuilder;
 import de.nava.informa.impl.basic.Item;
 
-public abstract class GenerateExecutionCourseRSS extends RSSAction{
+public abstract class GenerateExecutionCourseRSS extends InformaRSSAction{
 	
  	@Override
 	protected ChannelIF getRSSChannel(final HttpServletRequest request) throws Exception {
