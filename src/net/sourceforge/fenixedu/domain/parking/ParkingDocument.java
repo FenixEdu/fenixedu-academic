@@ -18,6 +18,6 @@ public class ParkingDocument extends ParkingDocument_Base {
         setRootDomainObject(null);
         setParkingRequest(null);
         getParkingFile().delete();
-        super.deleteDomainObject();
+        deleteDomainObject();
     }
 }
