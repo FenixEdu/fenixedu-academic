@@ -329,16 +329,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         DegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan()
                 .getDegreeCurricularPlan();
 
-        if (grade == null || grade.length() == 0) {
-
-            if (getGrade() != null && getGrade().length() > 0)
+        if (grade == null ) {
                 edit(null, null, null, null);
         }
-
-        else if (grade != null && grade.length() > 0) {
-
-            if (degreeCurricularPlan.isGradeValid(grade)) {
-                Calendar calendar = Calendar.getInstance();
+        else if (grade != null ) {
+            Calendar calendar = Calendar.getInstance();
+            if(grade.length() == 0){
+                edit(responsibleFor, grade, calendar.getTime(), examDate);
+            }else if (grade.length() > 0 && degreeCurricularPlan.isGradeValid(grade)) {  
                 edit(responsibleFor, grade, calendar.getTime(), examDate);
             }
 
