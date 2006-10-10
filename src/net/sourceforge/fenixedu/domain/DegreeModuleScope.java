@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -58,6 +60,10 @@ public abstract class DegreeModuleScope {
     
     public boolean isActive() {
 	return isActiveForExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
+    }
+    
+    public boolean isActive(int year, int semester) {
+	return getCurricularYear().intValue() == year && getCurricularSemester().intValue() == semester;
     }
 
 }
