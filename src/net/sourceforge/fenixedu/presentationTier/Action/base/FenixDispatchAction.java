@@ -82,7 +82,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected Person getLoggedPerson(HttpServletRequest request) {
-        return getUserView(request).getPerson();
+	final IUserView userView = getUserView(request);
+        return (userView == null) ? null : userView.getPerson();
     }
 
     protected HttpSession getSession(HttpServletRequest request) throws InvalidSessionActionException {

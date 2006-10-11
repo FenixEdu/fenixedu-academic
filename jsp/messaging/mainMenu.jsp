@@ -23,7 +23,7 @@
 		</html:link>
 	</li>
 	
-	<li class="navheader"><bean:message key="label.navheader.services"  /></li>
+	<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.navheader.search"  /></li>
 	<li>
 		<html:link page="/findPerson.do?method=prepareFindPerson">
 			<bean:message bundle="MESSAGING_RESOURCES" key="label.person.findPerson"  />

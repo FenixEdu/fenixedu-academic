@@ -68,7 +68,7 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
     @Override
     public String getFullName() {
 	final StringBuilder result = new StringBuilder(20);
-	result.append(getExecutionCourse().getSigla()).append(" ");
+	result.append(getExecutionCourse().getNome()).append(" ");
 	result.append(getExecutionCourse().getExecutionPeriod().getSemester()).append("ºSem. ");
 	result.append(getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 	return result.toString();

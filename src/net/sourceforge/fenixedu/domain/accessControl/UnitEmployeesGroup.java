@@ -33,7 +33,7 @@ public class UnitEmployeesGroup extends DomainBackedGroup<Unit> {
     
     @Override
     public boolean isMember(Person person) {
-	return (person.hasEmployee() && person.getEmployee().getCurrentWorkingPlace() == getObject());
+	return (person != null && person.hasEmployee() && person.getEmployee().getCurrentWorkingPlace() == getObject());
     }
 
 }

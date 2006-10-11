@@ -51,7 +51,7 @@ public class ExecutionCourseResponsiblesGroup extends Group {
 
     @Override
     public boolean isMember(Person person) {
-	if (person.hasTeacher()) {
+	if (person != null && person.hasTeacher()) {
 	    for (final Professorship professorship : person.getTeacher().getProfessorships(
 		    ExecutionYear.readCurrentExecutionYear())) {
 		if (professorship.isResponsibleFor()) {

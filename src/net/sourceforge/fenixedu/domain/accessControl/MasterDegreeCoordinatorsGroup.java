@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -53,7 +52,7 @@ public class MasterDegreeCoordinatorsGroup extends Group {
 
     @Override
     public boolean isMember(Person person) {
-	return person.hasTeacher()
+	return person != null && person.hasTeacher()
 		&& person.getTeacher().isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(
 			ExecutionYear.readCurrentExecutionYear());
     }
