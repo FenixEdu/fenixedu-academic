@@ -19,7 +19,7 @@ public class SqlTable {
         mySqlTypeTranslation.put("INTEGER", "int(11)");
         mySqlTypeTranslation.put("LONGVARCHAR", "text");
         mySqlTypeTranslation.put("TIME", "time");
-        mySqlTypeTranslation.put("TIMESTAMP", "timestamp");
+        mySqlTypeTranslation.put("TIMESTAMP", "timestamp NULL default NULL");
         mySqlTypeTranslation.put("VARCHAR", "text");
         mySqlTypeTranslation.put("BLOB", "blob");
         mySqlTypeTranslation.put("BIGINT", "bigint(20)");
@@ -47,6 +47,9 @@ public class SqlTable {
             	typeTranslated=type;
             }
             stringBuilder.append(typeTranslated);
+            if (name.equals("ID_INTERNAL")) {
+        	stringBuilder.append(" NOT NULL auto_increment");
+            }
         }
 
         public boolean equals(Object obj) {

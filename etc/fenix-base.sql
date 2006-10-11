@@ -13,8 +13,12 @@ create table ROLE (
 
 create table ROOT_DOMAIN_OBJECT (
 	ID_INTERNAL int(11) NOT NULL auto_increment,
-	PRIMARY KEY (ID_INTERNAL)
+	KEY_ROOT_DOMAIN_OBJECT int(11) default null,
+	KEY_EXTERNAL_INSTITUTION_UNIT int(11) default NULL,
+	KEY_INSTITUTION_UNIT int(11) default NULL,
+	primary key (ID_INTERNAL),
+	index (KEY_EXTERNAL_INSTITUTION_UNIT),
+	index (KEY_INSTITUTION_UNIT)
 ) TYPE=InnoDB;
 
-alter table ROOT_DOMAIN_OBJECT add column KEY_ROOT_DOMAIN_OBJECT int(11) default null;
-insert into ROOT_DOMAIN_OBJECT values (1,null);
+insert into ROOT_DOMAIN_OBJECT values (1,null, null, null);
