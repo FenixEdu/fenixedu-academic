@@ -10,7 +10,7 @@
 		<li class="navheader"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></li>
 		
 		<logic:equal name="UserView" property="person.currentExamCoordinator.allowedToCreateGroups" value="true">
-		<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.VigilantGroupManagement"/></html:link></li>
+		<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.VigilantGroupManagement"/></html:link></li>
 		</logic:equal>
 	
 		<li><html:link page="/vigilancy/convokeManagement.do?method=prepareEditConvoke" ><bean:message bundle="VIGILANCY_RESOURCES" key="label.manage"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.convokes"/></html:link></li>

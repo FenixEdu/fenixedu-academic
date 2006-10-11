@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
@@ -33,7 +34,7 @@ public class Vigilant extends Vigilant_Base {
 
 	public static final Comparator<Vigilant> POINTS_COMPARATOR = new BeanComparator("totalPoints");
 	public static final Comparator<Vigilant> NAME_COMPARATOR = new BeanComparator("person.name"); 
-	public static final Comparator<Vigilant> USERNAME_COMPARATOR = new ReverseComparator(new BeanComparator("person.username"));
+	public static final Comparator<Vigilant> USERNAME_COMPARATOR = new ReverseComparator(new BeanComparator("number"));	
 	public static final Comparator<Vigilant> CATEGORY_COMPARATOR = new Comparator() {
 
 		public int compare(Object o1, Object o2) {
@@ -63,6 +64,7 @@ public class Vigilant extends Vigilant_Base {
 	public Vigilant(Person person) {
 		this();
 		this.setPerson(person);
+		this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	}
 
 	public Vigilant(Person person, ExecutionYear executionYear) {
@@ -85,6 +87,17 @@ public class Vigilant extends Vigilant_Base {
 		return points;
 	}
 
+	public Integer getNumber() {
+		Person person = this.getPerson();
+		Employee employee = person.getEmployee();
+		if(employee!=null) return employee.getEmployeeNumber();
+		
+		Student student = person.getStudent();
+		if(student!=null) return student.getNumber();
+		
+		return 0;
+	}
+	
 	public String getEmail() {
 		return this.getPerson().getEmail();
 	}
@@ -106,6 +119,24 @@ public class Vigilant extends Vigilant_Base {
 		return groups;
 	}
 
+	private List<VigilantGroup> getVigilantGroupsForGivenBoundValue(Boolean value) {
+		List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
+		for (VigilantBound bound : this.getBounds()) {
+			if(bound.getConvokable()==value) {
+				groups.add(bound.getVigilantGroup());
+			}
+		}
+		return groups;
+	}
+
+	public List<VigilantGroup> getVigilantsGroupsWhereCanBeConvoked() {
+		return getVigilantGroupsForGivenBoundValue(true); 
+	}
+	
+	public List<VigilantGroup> getVigilantsGroupsWhereCannotBeConvoked() {
+		return getVigilantGroupsForGivenBoundValue(false); 
+	}
+	
 	public void addVigilantGroups(VigilantGroup group) {
 		VigilantBound bound = new VigilantBound(this, group);
 		this.addBounds(bound);
@@ -120,6 +151,15 @@ public class Vigilant extends Vigilant_Base {
 		}
 	}
 
+	public boolean hasVigilantGroup(VigilantGroup group) {
+		for(VigilantBound bound : this.getBounds()) {
+			if(bound.getVigilantGroup().equals(group)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public int getVigilantGroupsCount() {
 		return this.getVigilantGroups().size();
 	}

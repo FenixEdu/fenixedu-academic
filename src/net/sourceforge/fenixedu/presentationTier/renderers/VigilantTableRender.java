@@ -5,9 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.collections.comparators.ComparatorChain;
-
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -22,6 +19,8 @@ import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class VigilantTableRender extends OutputRenderer {
 
@@ -226,7 +225,7 @@ public class VigilantTableRender extends OutputRenderer {
 		Schema schema = new Schema(Vigilant.class);
 
 		schema.addSlotDescription(getSlot("teacherCategoryCode","label.vigilancy.category.header"));
-		schema.addSlotDescription(getSlot("person.username","label.vigilancy.username"));
+		schema.addSlotDescription(getSlot("number","label.vigilancy.username"));
 		schema.addSlotDescription(getSlot("person.name","label.vigilancy.vigilant"));
 		
 		if(isShowPointsWeight()) {

@@ -223,6 +223,8 @@ Documentation:
     	<property name="convokeTitleBundle" value="VIGILANCY_RESOURCES"/> 
     </renderer>
 
+    <renderer mode="input" type="java.util.Collection" layout="vigilantsInGroup-render" class="net.sourceforge.fenixedu.presentationTier.renderers.VigilantsInGroupRender"/>
+
     <!--@ The default layout for a list really creates an html list were each object is presented in a list item. -->
     <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
     

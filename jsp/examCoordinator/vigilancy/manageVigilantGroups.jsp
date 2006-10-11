@@ -11,12 +11,41 @@
 <logic:equal name="bean" property="executionYear.current" value="true">
 <ul>
 	<li><html:link page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupCreation"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.newVigilantGroup"/></html:link></li>
+	<li><html:link page="/vigilancy/vigilantGroupManagement.do?method=prepareManageVigilantsInGroup"><bean:message key="label.vigilancy.manageVigilantsInGroups" bundle="VIGILANCY_RESOURCES"/></html:link></li>
 </ul>
 </logic:equal>
 </logic:present>
 
+<logic:notPresent name="show">
+<bean:define id="show" value="groups"/>
+</logic:notPresent>
+
+<logic:equal name="show" value="groups">
+<ul>
+	<li>
+		<span class="highlight1"><bean:message key="label.vigilancy.showByGroups" bundle="VIGILANCY_RESOURCES"/></span>, 
+		<html:link page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=vigilants">
+		<bean:message key="label.vigilancy.showByVigilant" bundle="VIGILANCY_RESOURCES"/>
+		</html:link> 
+	</li>
+</ul>
+</logic:equal>
+
+<logic:equal name="show" value="vigilants">
+<ul>
+	<li>
+		<html:link page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"><bean:message key="label.vigilancy.showByGroups" bundle="VIGILANCY_RESOURCES"/>
+		</html:link>, 
+		<span class="highlight1">
+		<bean:message key="label.vigilancy.showByVigilant" bundle="VIGILANCY_RESOURCES"/></span>
+
+	</li>
+</ul>
+</logic:equal>
+
 <logic:present name="bean" property="executionYear">
 
+<logic:equal name="show" value="groups">
 <div>
 	<fr:form action="/vigilancy/vigilantGroupManagement.do?method=changeDisplaySettings">
 	<fr:edit id="options" name="bean" schema="selectColumnsToDisplay">
@@ -27,6 +56,7 @@
 	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 	</fr:form>
 </div>
+</logic:equal>
 
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
@@ -37,6 +67,7 @@
 </logic:messagesPresent>
 
 <logic:equal name="bean" property="executionYear.current" value="true">
+<logic:equal name="show" value="groups">
 <logic:notEmpty name="bean" property="vigilantGroups">
 <logic:iterate id="vigilantGroup" name="bean" property="vigilantGroups">
 <bean:define id="group" name="vigilantGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup"/>
@@ -123,7 +154,6 @@
 	</logic:equal>
 	
 	<bean:message key="label.manage" bundle="VIGILANCY_RESOURCES"/>: 
-	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareEdition&forwardTo=vigilants&oid=" + group.getIdInternal() %>"> <bean:message key="label.vigilancy.vigilants" bundle="VIGILANCY_RESOURCES"/></a>,  
 	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareBoundPropertyEdition&oid=" +  group.getIdInternal() %>"><bean:message key="label.vigilancy.editPermissions" bundle="VIGILANCY_RESOURCES"/></a>, 
 	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareStartPointsPropertyEdition&oid=" + group.getIdInternal() %>"><bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></a>,
 	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilancyCourseGroupManagement.do?method=prepareEdition&gid=" + group.getIdInternal() %>"> <bean:message key="label.vigilancy.courses" bundle="VIGILANCY_RESOURCES"/></a>, 
@@ -186,14 +216,57 @@
 </tr>
 </table>
 </logic:iterate>
-
 </logic:notEmpty>
-
+</logic:equal>
 
 <logic:empty name="bean" property="vigilantGroups">
 <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.noVigilantGroupsToDisplay"/> 
 </logic:empty>
 </logic:equal>
+
+
+
+<logic:equal name="show" value="vigilants">
+<table class="tstyle1">
+<tr>
+	<th colspan="3"><bean:message key="label.vigilancy.vigilants" bundle="VIGILANCY_RESOURCES"/></th>
+	<th colspan="2"><bean:message key="label.vigilancy.listInformationForGroups" bundle="VIGILANCY_RESOURCES"/></th>
+</tr>
+<tr>
+	<th><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/></th>
+	<th><bean:message key="label.vigilancy.username" bundle="VIGILANCY_RESOURCES"/></th>
+	<th><bean:message key="label.vigilancy.name" bundle="VIGILANCY_RESOURCES"/></th>
+	<th><bean:message key="label.vigilancy.convokable" bundle="VIGILANCY_RESOURCES"/></th>
+	<th><bean:message key="label.vigilancy.notConvokable" bundle="VIGILANCY_RESOURCES"/></th>	
+</tr>
+<logic:iterate id="vigilant" name="bean" property="vigilantsForGroupsInBean">
+<tr>
+	<td><fr:view name="vigilant" property="teacherCategoryCode"/></td>
+	<td><fr:view name="vigilant" property="number"/></td>
+	<td><fr:view name="vigilant" property="person.name"/></td>
+	<td><fr:view name="vigilant" property="vigilantsGroupsWhereCanBeConvoked">
+		<fr:layout name="flowLayout">
+		<fr:property name="eachLayout" value="values"/>
+		<fr:property name="eachSchema" value="presentVigilantGroupName"/>
+		<fr:property name="htmlSeparator" value=","/>
+		</fr:layout>
+	</fr:view>
+	</td>
+	<td>
+	<fr:view name="vigilant" property="vigilantsGroupsWhereCannotBeConvoked">
+			<fr:layout name="flowLayout">
+		<fr:property name="eachLayout" value="values"/>
+		<fr:property name="eachSchema" value="presentVigilantGroupName"/>
+		<fr:property name="htmlSeparator" value=","/>
+		</fr:layout>
+	</fr:view>
+	</td>
+</tr>
+</logic:iterate>
+</table>
+
+</logic:equal>
+
 
 </logic:present>
 <script type="text/javascript" language="javascript">
