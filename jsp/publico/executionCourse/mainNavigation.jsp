@@ -98,7 +98,7 @@
 	<%
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(ExecutionCourseAliasExpandingAction.emailAddressPrefix);
-		buffer.append(request.getParameter("objectCode")).append("@");
+		buffer.append(request.getParameter("executionCourseID")).append("@");
 		buffer.append(TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration());
 	%>
 	<bean:define id="advisoryText">

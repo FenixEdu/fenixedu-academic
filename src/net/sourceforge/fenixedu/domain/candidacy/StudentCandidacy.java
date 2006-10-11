@@ -10,26 +10,27 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+import net.sourceforge.fenixedu.util.EntryPhase;
 
 public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     public StudentCandidacy() {
 	super();
     }
-    
+
     protected void init(Person person, ExecutionDegree executionDegree) {
-        if (executionDegree == null) {
-            throw new DomainException("execution degree cannot be null");
-        }
-        if (person == null) {
-            throw new DomainException("person cannot be null");
-        }
-        if (person.hasStudentCandidacyForExecutionDegree(executionDegree)) {
-            throw new DomainException("error.candidacy.already.created");
-        }
-        setExecutionDegree(executionDegree);
-        setPerson(person);        
-        setPrecedentDegreeInformation(new PrecedentDegreeInformation());
+	if (executionDegree == null) {
+	    throw new DomainException("execution degree cannot be null");
+	}
+	if (person == null) {
+	    throw new DomainException("person cannot be null");
+	}
+	if (person.hasStudentCandidacyForExecutionDegree(executionDegree)) {
+	    throw new DomainException("error.candidacy.already.created");
+	}
+	setExecutionDegree(executionDegree);
+	setPerson(person);
+	setPrecedentDegreeInformation(new PrecedentDegreeInformation());
     }
 
     public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree,
@@ -89,14 +90,17 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	return result;
     }
 
-    public static Set<StudentCandidacy> readByExecutionDegreeAndExecutionYear(
-	    final ExecutionDegree executionDegree, final ExecutionYear executionYear) {
+    public static Set<StudentCandidacy> readByExecutionDegreeAndExecutionYearAndEntryPhase(
+	    final ExecutionDegree executionDegree, final ExecutionYear executionYear,
+	    final EntryPhase entryPhase) {
 	final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
 	for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
 	    if (candidacy instanceof StudentCandidacy) {
 		final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
 		if (studentCandidacy.getExecutionDegree() == executionDegree
-			&& studentCandidacy.getExecutionDegree().getExecutionYear() == executionYear) {
+			&& studentCandidacy.getExecutionDegree().getExecutionYear() == executionYear
+			&& studentCandidacy.getEntryPhase() != null
+			&& studentCandidacy.getEntryPhase().equals(entryPhase)) {
 		    result.add(studentCandidacy);
 		}
 	    }

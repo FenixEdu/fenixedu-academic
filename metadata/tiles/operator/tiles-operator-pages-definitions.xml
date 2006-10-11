@@ -8,8 +8,8 @@
 
 	
 	<!-- ===================== Candidacy ====================== -->
-	<definition name="df.candidacy.password.chooseExecutionDegree" extends="definition.operator.two-column">
-		<put name="body" value="/operator/candidacy/password/chooseExecutionDegree.jsp"></put>
+	<definition name="df.candidacy.password.chooseExecutionDegreeAndEntryPhase" extends="definition.operator.two-column">
+		<put name="body" value="/operator/candidacy/password/chooseExecutionDegreeAndEntryPhase.jsp"></put>
 	</definition>
 	<definition name="df.candidacy.password.generate" 
 		extends="definition.operator.two-column">

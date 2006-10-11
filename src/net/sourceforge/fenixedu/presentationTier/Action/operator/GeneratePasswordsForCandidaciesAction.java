@@ -22,12 +22,14 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 
 /**
  * 
@@ -45,18 +47,21 @@ public class GeneratePasswordsForCandidaciesAction extends FenixDispatchAction {
 		ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 
 	request.setAttribute("executionDegrees", executionDegrees);
+	request.setAttribute("entryPhases", EntryPhase.getAll());
 
 	return mapping.findForward("chooseExecutionDegree");
     }
 
-    public ActionForward chooseExecutionDegree(ActionMapping mapping, ActionForm form,
+    public ActionForward showCandidacies(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
+	final DynaActionForm actionForm = (DynaActionForm) form;
+	final Integer executionDegreeId = (Integer) actionForm.get("executionDegreeId");
+	final EntryPhase entryPhase = new EntryPhase((Integer) actionForm.get("entryPhase"));
 	final ExecutionDegree executionDegree = rootDomainObject
 		.readExecutionDegreeByOID(executionDegreeId);
 	final Set<StudentCandidacy> studentCandidacies = new HashSet<StudentCandidacy>(StudentCandidacy
-		.readByExecutionDegreeAndExecutionYear(executionDegree, ExecutionYear
-			.readCurrentExecutionYear()));
+		.readByExecutionDegreeAndExecutionYearAndEntryPhase(executionDegree, ExecutionYear
+			.readCurrentExecutionYear(), entryPhase));
 
 	request.setAttribute("studentCandidacies", studentCandidacies);
 
