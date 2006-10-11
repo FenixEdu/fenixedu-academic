@@ -33,9 +33,17 @@
           </tr>
           <!-- Username -->
           <tr>
-            <td style="width: 20em;"><bean:message key="label.person.username" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="username"/></td> 
-          </tr>
+            <td style="width: 20em;"><bean:message key="label.person.username" /></td>          
+			<td class="greytxt">
+				<bean:size name="personalInfo" property="loginAlias" id="aliasSize"/>
+	          	<logic:iterate name="personalInfo" property="loginAlias" id="username" indexId="index">
+		          	<bean:write name="username" property="alias"/>
+		          	<logic:notEqual name="index" value="<%= String.valueOf(aliasSize.intValue() - 1) %>">
+		          		;		          	
+		          	</logic:notEqual>
+	          	</logic:iterate>
+          	</td>          
+          </tr>          
           <!-- IST Username -->
           <logic:notEmpty name="personalInfo" property="istUsername">
 	          <tr>

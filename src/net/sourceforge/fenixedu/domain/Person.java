@@ -294,7 +294,12 @@ public class Person extends Person_Base {
 	User personUser = getUser();
 	return (personUser == null) ? null : personUser.readUserLoginIdentification();
     }
-
+    
+    public Set<LoginAlias> getLoginAliasOrderByImportance(){
+	Login login = getLoginIdentification();
+	return (login != null) ? login.getLoginAliasOrderByImportance() : new HashSet<LoginAlias>();
+    }
+    
     public boolean hasUsername(String username) {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.hasUsername(username) : false;

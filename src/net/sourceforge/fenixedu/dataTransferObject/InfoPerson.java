@@ -3,9 +3,11 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -184,6 +186,10 @@ public class InfoPerson extends InfoObject {
 
     public Boolean getAvailablePhoto() {
         return getPerson().getAvailablePhoto();
+    }
+    
+    public Set<LoginAlias> getLoginAlias(){
+	return getPerson().getLoginAliasOrderByImportance();
     }
 
     public InfoExternalPerson getInfoExternalPerson() {

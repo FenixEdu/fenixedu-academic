@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/units.tld" prefix="un" %>
 
 <h2><bean:message key="manager.announcements.title.label" bundle="MANAGER_RESOURCES"/></h2>
 
@@ -25,4 +26,4 @@ function check(e,v)
 }
 </script>
 
-<bean:write name="tree" filter="false"/>
+<un:tree initialUnit="initialUnit" unitParamName="keyUnit" path="/manager/announcements/manageUnitAnnouncementBoard.do?method=prepareCreateBoard" state="true"/>

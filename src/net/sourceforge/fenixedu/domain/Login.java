@@ -6,6 +6,8 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -106,9 +108,11 @@ public class Login extends Login_Base {
 	final LoginAlias loginAlias = getInstitutionalLoginAlias();
 	if (loginAlias == null) {
 	    final String userUId = UsernameUtils.updateIstUsername(getUser().getPerson());
-	    LoginAlias.createNewInstitutionalLoginAlias(this, userUId);
-	    getUser().setUserUId(userUId);
-	    openLogin();
+	    if (!StringUtils.isEmpty(userUId)) {
+		LoginAlias.createNewInstitutionalLoginAlias(this, userUId);
+		getUser().setUserUId(userUId);
+		openLogin();
+	    }
 	}
     }
 
@@ -138,6 +142,12 @@ public class Login extends Login_Base {
 		result.add(loginAlias);
 	    }
 	}
+	return result;
+    }
+
+    public Set<LoginAlias> getLoginAliasOrderByImportance() {
+	Set<LoginAlias> result = new TreeSet<LoginAlias>(LoginAlias.COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS);
+	result.addAll(getAlias());
 	return result;
     }
 

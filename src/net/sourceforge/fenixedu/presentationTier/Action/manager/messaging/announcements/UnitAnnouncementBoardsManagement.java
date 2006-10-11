@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.UnitAnnouncementBoardsManagementForm;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.util.OrganizationalStructureTreeProducer;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -38,12 +38,8 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
     public ActionForward showTree(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        OrganizationalStructureTreeProducer producer = new OrganizationalStructureTreeProducer(request
-                .getContextPath(),
-                "/manager/announcements/manageUnitAnnouncementBoard.do?method=prepareCreateBoard");
-
-        request.setAttribute("tree", producer.getUnits());
+     
+        request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
         return mapping.findForward("chooseUnit");
 
     }

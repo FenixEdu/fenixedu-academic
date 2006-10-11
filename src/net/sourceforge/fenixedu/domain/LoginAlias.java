@@ -1,12 +1,42 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.text.Collator;
+import java.util.Comparator;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
 public class LoginAlias extends LoginAlias_Base {
 
+    public final static Comparator<LoginAlias> COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS = new ComparatorChain();
+    static {
+	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator("type"));
+	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new Comparator() {
+	    public int compare(Object o1, Object o2) {
+		LoginAlias loginAlias1 = (LoginAlias) o1;
+		LoginAlias loginAlias2 = (LoginAlias) o2;		
+		if(loginAlias1.getRoleType() != null && loginAlias2.getRoleType() != null) {
+		    List<RoleType> rolesImportance = RoleType.getRolesImportance();		    
+		    Integer indexOfRoleType1 = Integer.valueOf(rolesImportance.indexOf(loginAlias1.getRoleType()));		    		    
+		    Integer indexOfRoleType2 = Integer.valueOf(rolesImportance.indexOf(loginAlias2.getRoleType()));		    
+		    return indexOfRoleType1.compareTo(indexOfRoleType2);		    
+		} else if(loginAlias1.getRoleType() != null && loginAlias2.getRoleType() == null) {
+		    return 1;
+		} else if(loginAlias1.getRoleType() == null && loginAlias2.getRoleType() != null) {
+		    return -1;
+		}
+		return 0;
+	    }	    
+	});
+	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator("alias", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator("idInternal"));
+    }
+    
     private LoginAlias() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
