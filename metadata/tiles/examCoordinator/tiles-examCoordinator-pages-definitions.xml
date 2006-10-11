@@ -81,4 +81,9 @@
 		<put name="body" value="/examCoordinator/vigilancy/manageVigilantsStartPoints.jsp"/>
     </definition>   
 
+
+    <definition name="edit-Vigilants-In-Group" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/manageVigilantsInGroups.jsp"/>
+    </definition>   
+
 </tiles-definitions>
