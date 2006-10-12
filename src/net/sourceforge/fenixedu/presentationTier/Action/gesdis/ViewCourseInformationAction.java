@@ -54,8 +54,7 @@ public class ViewCourseInformationAction extends FenixAction {
             errors.add("notResponsible", new ActionError("label.notAuthorized.courseInformation"));
             saveErrors(request, errors);
 
-            request.setAttribute("objectCode", executionCourseId);
-            return mapping.getInputForward();
+            throw new FenixActionException(e);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
