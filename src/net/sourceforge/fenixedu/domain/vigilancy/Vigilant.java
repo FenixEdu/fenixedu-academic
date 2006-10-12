@@ -34,7 +34,7 @@ public class Vigilant extends Vigilant_Base {
 
 	public static final Comparator<Vigilant> POINTS_COMPARATOR = new BeanComparator("totalPoints");
 	public static final Comparator<Vigilant> NAME_COMPARATOR = new BeanComparator("person.name"); 
-	public static final Comparator<Vigilant> USERNAME_COMPARATOR = new ReverseComparator(new BeanComparator("number"));	
+	public static final Comparator<Vigilant> USERNAME_COMPARATOR = new ReverseComparator(new BeanComparator("person.username"));	
 	public static final Comparator<Vigilant> CATEGORY_COMPARATOR = new Comparator() {
 
 		public int compare(Object o1, Object o2) {

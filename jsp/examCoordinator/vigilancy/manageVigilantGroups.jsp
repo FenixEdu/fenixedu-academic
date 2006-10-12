@@ -242,7 +242,7 @@
 <logic:iterate id="vigilant" name="bean" property="vigilantsForGroupsInBean">
 <tr>
 	<td><fr:view name="vigilant" property="teacherCategoryCode"/></td>
-	<td><fr:view name="vigilant" property="number"/></td>
+	<td><fr:view name="vigilant" property="person.username"/></td>
 	<td><fr:view name="vigilant" property="person.name"/></td>
 	<td><fr:view name="vigilant" property="vigilantsGroupsWhereCanBeConvoked">
 		<fr:layout name="flowLayout">

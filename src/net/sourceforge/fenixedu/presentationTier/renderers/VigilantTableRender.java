@@ -225,7 +225,7 @@ public class VigilantTableRender extends OutputRenderer {
 		Schema schema = new Schema(Vigilant.class);
 
 		schema.addSlotDescription(getSlot("teacherCategoryCode","label.vigilancy.category.header"));
-		schema.addSlotDescription(getSlot("number","label.vigilancy.username"));
+		schema.addSlotDescription(getSlot("person.username","label.vigilancy.username"));
 		schema.addSlotDescription(getSlot("person.name","label.vigilancy.vigilant"));
 		
 		if(isShowPointsWeight()) {

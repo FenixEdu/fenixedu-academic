@@ -7,8 +7,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.UnavailableInformation;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class ConvokeBean extends VigilantGroupBean implements Serializable {
 
@@ -179,8 +181,26 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
     	String vigilants = "";
     	for(Object object : this.getVigilants()) {
     		Vigilant  vigilant = (Vigilant) object;
-    		vigilants += vigilant.getPerson().getName() + " (" + vigilant.getPerson().getUsername() + ")\n"; 
+    		vigilants += vigilant.getPerson().getName() + " (" + vigilant.getPerson().getUsername() + ") " + "-" + vigilant.getPerson().getEmail() + "\n"; 
     	}
     	return vigilants;
+    }
+    
+    public String getTeachersAsString() {
+    	String teachers="";
+    	for(Object object : this.getTeachersForAGivenCourse()) {
+    		Vigilant  vigilant = (Vigilant) object;
+    		teachers += vigilant.getPerson().getName() + " (" + vigilant.getPerson().getUsername() + ") " + "-" + vigilant.getPerson().getEmail() + "\n"; 
+    	}
+    	return teachers;
+    }
+    
+    public String getRoomsAsString() {
+    	
+    	String rooms="";
+    	for(OldRoom room : this.getWrittenEvaluation().getAssociatedRooms()) {
+    		rooms += room.getName() + "-" + RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.vigilancy.capacity") + ":"+ room.getCapacidadeExame() + "\n";
+    	}
+    	return rooms;
     }
 }

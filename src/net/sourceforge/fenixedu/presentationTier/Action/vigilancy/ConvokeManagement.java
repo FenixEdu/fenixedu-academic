@@ -179,6 +179,9 @@ public class ConvokeManagement extends FenixDispatchAction {
 		vigilants = beanWithVigilants.getVigilants();
 		unavailables = beanWithUnavailables.getSelectedUnavailableVigilants();
 
+		String convokedVigilants = beanWithVigilants.getTeachersAsString();
+		String teachersVigilancies = beanWithTeachers.getVigilantsAsString();
+		
 		vigilants.addAll(teachers);
 		vigilants.addAll(unavailables);
 		beanWithVigilants.setVigilants(vigilants);
@@ -192,8 +195,8 @@ public class ConvokeManagement extends FenixDispatchAction {
 
 	  String minutes = String.format("%02d", new Object[]{beginDate.getMinuteOfHour()});
 	  
-	  Object[] args = { evaluation.getFullName(), date, beginDate.getHourOfDay(), minutes, evaluation.getAssociatedRoomsAsString(),
-			  beanWithVigilants.getVigilantsAsString(), beanWithVigilants.getSelectedVigilantGroup().getRulesLink() };
+	  Object[] args = { evaluation.getFullName(), date, beginDate.getHourOfDay(), minutes, beanWithVigilants.getRoomsAsString(),
+			  teachersVigilancies, convokedVigilants, beanWithVigilants.getSelectedVigilantGroup().getRulesLink() };
 	  beanWithVigilants.setEmailMessage(format.format(args));
 	  request.setAttribute("bean", beanWithVigilants);
 	  return mapping.findForward("confirmConvokes");

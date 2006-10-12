@@ -194,10 +194,8 @@ public class VigilantsInGroupRender extends InputRenderer {
 				Person p2 = (Person) ((MetaObject)o2).getObject();
 				ComparatorChain chain = new ComparatorChain();
 			    chain.addComparator(new CategoryComparator());
-			    
-			    if(p1.getEmployee()!=null && p2.getEmployee()!=null) {
-			    	chain.addComparator(new ReverseComparator(new BeanComparator("employee.employeeNumber")));
-			    }
+			    chain.addComparator(new ReverseComparator(new BeanComparator("username")));
+			   
 			    return chain.compare(p1, p2);
 			}
 
