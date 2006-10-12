@@ -86,8 +86,9 @@ public class FENIX_LIDQuestionCorrectionStrategy extends QuestionCorrectionStrat
                 ResponseProcessing responseProcessing = getLIDResponseProcessing(studentTestQuestion
                         .getSubQuestionByItem().getResponseProcessingInstructions(),
                         ((ResponseLID) studentTestQuestion.getResponse()).getResponse());
-                studentTestQuestion.getSubQuestionByItem().setNextItemId(
-                        responseProcessing.getNextItem());
+                if (responseProcessing != null) {
+                    studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
+                }
                 return studentTestQuestion;
             } else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getCardinalityType()
                     .getType().intValue() == CardinalityType.SINGLE) {
