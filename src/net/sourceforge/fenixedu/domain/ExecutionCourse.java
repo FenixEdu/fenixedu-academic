@@ -934,7 +934,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	this.addForuns(new ExecutionCourseForum(name, description));
     }
 
-    private ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
+    public ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
 	return new ExecutionCourseAnnouncementBoard(name, this, new ExecutionCourseTeachersGroup(this),
 		null, new RoleTypeGroup(RoleType.MANAGER),
 		ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
