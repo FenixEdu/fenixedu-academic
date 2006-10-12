@@ -327,7 +327,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void getSubUnitsFunctions(Unit subUnit, YearMonthDay currentDate,
 	    ExecutionYear iExecutionYear, StringBuffer buffer) {
 
-	buffer.append("<ul class='nobullet'><li><strong id=\"").append(subUnit.getIdInternal()).append(
+	buffer.append("<ul class='mtop1 nobullet'><li><strong id=\"").append(subUnit.getIdInternal()).append(
 		"\" >").append(subUnit.getName()).append("</strong>");
 
 	for (Function function : getSortFunctionList(subUnit)) {

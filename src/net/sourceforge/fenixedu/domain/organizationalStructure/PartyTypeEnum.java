@@ -33,11 +33,13 @@ public enum PartyTypeEnum {
     DIVERSE_CONSTRUCTION_BUILDING,
     OUT,
     SERVICES,
+    AGGREGATE_UNIT,
 
     // PERSON ENUMERATIONS
     
-    // GERAL
-    AGGREGATE_UNIT,
+    
+    
+    // GERAL    
     UNKNOWN;
             
     public String getName() {

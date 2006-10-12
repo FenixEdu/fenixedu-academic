@@ -575,8 +575,8 @@ public class Unit extends Unit_Base {
     }
 
     /**
-         * This method should be used only for Degree and Department Unit types,
-         * because acronyms of this two types are unique. *
+         * This method should be used only for Unit types where acronyms are
+         * unique.
          */
     public static Unit readUnitByAcronymAndType(String acronym, PartyTypeEnum partyTypeEnum) {
 	if (acronym != null
@@ -585,8 +585,8 @@ public class Unit extends Unit_Base {
 		&& (partyTypeEnum.equals(PartyTypeEnum.DEGREE_UNIT)
 			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT) || partyTypeEnum
 			.equals(PartyTypeEnum.ACADEMIC_SERVICES_SUPERVISION))) {
-	    for (Unit unit : readAllUnits()) {
 
+	    for (Unit unit : readAllUnits()) {
 		if (unit.getAcronym() != null && unit.getAcronym().equals(acronym)
 			&& unit.getType() != null && unit.getType().equals(partyTypeEnum)) {
 		    return unit;
@@ -800,13 +800,14 @@ public class Unit extends Unit_Base {
 	StringBuilder builder = new StringBuilder();
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
 	Unit institutionUnit = UnitUtils.readInstitutionUnit();
-	List<Unit> parentUnits = new ArrayList<Unit>();	
+	List<Unit> parentUnits = new ArrayList<Unit>();
 	Unit searchedUnit = this;
-	
+
 	while (searchedUnit.getParentUnits().size() == 1) {
-	    Unit parentUnit = searchedUnit.getParentUnits().get(0);	    
+	    Unit parentUnit = searchedUnit.getParentUnits().get(0);
 	    if (parentUnit != institutionUnit && parentUnit != externalInstitutionUnit) {
-		if (parentUnit.getType() == null || !parentUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
+		if (parentUnit.getType() == null
+			|| !parentUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
 		    parentUnits.add(0, parentUnit);
 		}
 		searchedUnit = parentUnit;
@@ -815,25 +816,26 @@ public class Unit extends Unit_Base {
 		break;
 	    }
 	}
-	
-	if(searchedUnit.getParentUnits().size() > 1) {
-	    if(searchedUnit.getType() != null && searchedUnit.getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
+
+	if (searchedUnit.getParentUnits().size() > 1) {
+	    if (searchedUnit.getType() != null
+		    && searchedUnit.getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
 		parentUnits.add(0, externalInstitutionUnit);
 	    } else {
 		parentUnits.add(0, institutionUnit);
 	    }
 	}
-	
+
 	int index = 1;
 	for (Unit unit : parentUnits) {
-	    if(index == parentUnits.size()) {
+	    if (index == parentUnits.size()) {
 		builder.append(unit.getName());
 	    } else {
 		builder.append(unit.getName() + separator);
 	    }
 	    index++;
 	}
-		
+
 	return builder.toString();
     }
 }
