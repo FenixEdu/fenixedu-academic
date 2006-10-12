@@ -1713,7 +1713,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    if(degreeModuleToEnrol.getContext().getChildDegreeModule().isLeaf()) {
 		new Enrolment(this, degreeModuleToEnrol.getCurriculumGroup(), (CurricularCourse) degreeModuleToEnrol.getContext().getChildDegreeModule(), executionPeriod, enrollmentCondition, AccessControl.getUserView().getUtilizador());
 	    } else {
-		new CurriculumGroup(degreeModuleToEnrol.getCurriculumGroup(), (CourseGroup) degreeModuleToEnrol.getContext().getChildDegreeModule());
+		new CurriculumGroup(degreeModuleToEnrol.getCurriculumGroup(), (CourseGroup) degreeModuleToEnrol.getContext().getChildDegreeModule(), executionPeriod);
 	    }
 	}
     }
