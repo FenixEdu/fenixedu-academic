@@ -190,7 +190,7 @@ public class VigilantGroupTest extends TestNGBase {
             vigilants.add(new Vigilant(new Person()));
         }
         
-        ExecutionCourse executionCourse = new ExecutionCourse();
+        ExecutionCourse executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         WrittenEvaluation writtenEvaluation = new WrittenEvaluation();
         YearMonthDay currentDate = new YearMonthDay();
         writtenEvaluation.setDayDateYearMonthDay(currentDate.plusMonths(1));

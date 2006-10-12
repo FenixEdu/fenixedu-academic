@@ -354,10 +354,10 @@ public class GroupingTest extends DomainTestBase {
         grouping2 = new Grouping();
         grouping2.setIdInternal(1);
 
-        executionCourse1 = new ExecutionCourse();
+        executionCourse1 = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse1.setIdInternal(0);
 
-        executionCourse2 = new ExecutionCourse();
+        executionCourse2 = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse2.setIdInternal(1);
 
         exportGrouping = new ExportGrouping();
@@ -449,7 +449,7 @@ public class GroupingTest extends DomainTestBase {
         groupingToEdit.setProjectDescription("projectDescription");
         groupingToEdit.setShiftType(ShiftType.TEORICA);
 
-        ExecutionCourse executionCourse = new ExecutionCourse();
+        ExecutionCourse executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse.setIdInternal(1);
 
         ExportGrouping exportGrouping = new ExportGrouping();
@@ -484,7 +484,7 @@ public class GroupingTest extends DomainTestBase {
     }
 
     private void setupTestCreate() {
-        executionCourse = new ExecutionCourse();
+        executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse.setIdInternal(1);
 
         Attends attend1 = new Attends();

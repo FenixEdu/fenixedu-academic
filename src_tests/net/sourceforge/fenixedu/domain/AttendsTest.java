@@ -20,7 +20,7 @@ public class AttendsTest extends DomainTestBase {
 		
 		Registration registration = new Registration();
 		Enrolment enrolment = new Enrolment();
-		ExecutionCourse executionCourse = new ExecutionCourse();		
+		ExecutionCourse executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());		
 		
 		Mark mark1 = new Mark();
 		Mark mark2 = new Mark();

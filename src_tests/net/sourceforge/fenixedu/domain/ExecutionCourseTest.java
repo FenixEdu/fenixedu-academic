@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -31,14 +30,10 @@ public class ExecutionCourseTest extends DomainTestBase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        executionCourse = new ExecutionCourse();
+        executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
 
-        executionCourse.setNome("name");
-        executionCourse.setSigla("acronym");
         executionCourse.setTheoreticalHours(4.0);
-        executionCourse.setTheoPratHours(0.0);
         executionCourse.setPraticalHours(2.0);
-        executionCourse.setLabHours(0.0);
         executionCourse.setComment("comment");
         
         setUpForGetAttendsByStudentCase();
@@ -57,7 +52,7 @@ public class ExecutionCourseTest extends DomainTestBase {
     }
 
     private void setUpForGetAttendsByStudentCase() {
-		executionCourseToReadFrom = new ExecutionCourse();
+		executionCourseToReadFrom = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
 		thisStudent = new Registration();
 		attendsForThisStudent = new Attends();
 		

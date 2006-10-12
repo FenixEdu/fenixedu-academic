@@ -10,48 +10,42 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author lmac1 modified by Fernanda Quitério
  */
 public class InsertExecutionCourseAtExecutionPeriod extends Service {
 
-    public void run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException, ExcepcaoPersistencia {
-        ExecutionCourse executionCourse = new ExecutionCourse();
-        ExecutionPeriod executionPeriod = null;
-        ExecutionCourse existentExecutionCourse = null;
-
-        executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
-
-        if (executionPeriod == null) {
-        	throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-        }
-
-        existentExecutionCourse = executionPeriod.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
-
-        if (existentExecutionCourse != null) {
-        	throw new ExistingServiceException("A disciplina execução com sigla "
-        			+ existentExecutionCourse.getSigla() + " e período execução "
-        			+ executionPeriod.getName() + "-" + executionPeriod.getExecutionYear().getYear());
-        }
-
-        executionCourse.setNome(infoExecutionCourse.getNome());
-        executionCourse.createForum(executionCourse.getNome(), executionCourse.getNome());
-        executionCourse.setExecutionPeriod(executionPeriod);
-        executionCourse.setSigla(infoExecutionCourse.getSigla());
-        executionCourse.setLabHours(infoExecutionCourse.getLabHours());
-        executionCourse.setPraticalHours(infoExecutionCourse.getPraticalHours());
-        executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
-        executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
-        executionCourse.setSeminaryHours(infoExecutionCourse.getSeminaryHours());
-        executionCourse.setProblemsHours(infoExecutionCourse.getProblemsHours());
-        executionCourse.setFieldWorkHours(infoExecutionCourse.getFieldWorkHours());
-        executionCourse.setTrainingPeriodHours(infoExecutionCourse.getTrainingPeriodHours());
-        executionCourse.setTutorialOrientationHours(infoExecutionCourse.getTutorialOrientationHours());
-        executionCourse.setComment(infoExecutionCourse.getComment());
-
-        executionCourse.createSite();            
+    public void run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException {
+	final ExecutionPeriod executionPeriod = rootDomainObject
+		.readExecutionPeriodByOID(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+	if (executionPeriod == null) {
+	    throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 	}
+
+	final ExecutionCourse existentExecutionCourse = executionPeriod
+		.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
+	if (existentExecutionCourse != null) {
+	    throw new ExistingServiceException("A disciplina execução com sigla "
+		    + existentExecutionCourse.getSigla() + " e período execução "
+		    + executionPeriod.getName() + "-" + executionPeriod.getExecutionYear().getYear());
+	}
+
+	final ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourse.getNome(),
+		infoExecutionCourse.getSigla(), executionPeriod);
+
+	executionCourse.setLabHours(infoExecutionCourse.getLabHours());
+	executionCourse.setPraticalHours(infoExecutionCourse.getPraticalHours());
+	executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
+	executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
+	executionCourse.setSeminaryHours(infoExecutionCourse.getSeminaryHours());
+	executionCourse.setProblemsHours(infoExecutionCourse.getProblemsHours());
+	executionCourse.setFieldWorkHours(infoExecutionCourse.getFieldWorkHours());
+	executionCourse.setTrainingPeriodHours(infoExecutionCourse.getTrainingPeriodHours());
+	executionCourse.setTutorialOrientationHours(infoExecutionCourse.getTutorialOrientationHours());
+	executionCourse.setComment(infoExecutionCourse.getComment());
+
+	executionCourse.createSite();
+    }
 
 }

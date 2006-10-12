@@ -99,12 +99,12 @@ public class EnrolmentTest extends DomainTestBase {
 	private void setUpCreateEnrolmentEvaluationForImprovement() {
 		enrolmentToImprove = new Enrolment();
 		curricularCourseToImprove = new CurricularCourse();
-		executionCourseToEnrollImprovement = new ExecutionCourse();
-		studentToImprove = new Registration();
 		executionPeriodForImprovement = new ExecutionPeriod();
+		executionCourseToEnrollImprovement = new ExecutionCourse("name", "acronym", executionPeriodForImprovement);
+		studentToImprove = new Registration();
+		
 //		someEmployee = new Employee();
 		
-		executionCourseToEnrollImprovement.setExecutionPeriod(executionPeriodForImprovement);
 		curricularCourseToImprove.addAssociatedExecutionCourses(executionCourseToEnrollImprovement);
 		enrolmentToImprove.setCurricularCourse(curricularCourseToImprove);
 	}
@@ -123,13 +123,13 @@ public class EnrolmentTest extends DomainTestBase {
 		
 		executionPeriodToUnEnrollImprovement = new ExecutionPeriod();
 		attendsToDelete = new Attends();
-		executionCourseToUnEnrollImprovement = new ExecutionCourse();
+		executionCourseToUnEnrollImprovement = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
 		
 		StudentCurricularPlan scp = new StudentCurricularPlan();
 		Registration registration = new Registration();
 		Registration otherStudent = new Registration();
 		CurricularCourse cc = new CurricularCourse();
-		ExecutionCourse ec1 = new ExecutionCourse();
+		ExecutionCourse ec1 = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
 		ExecutionPeriod ep1 = new ExecutionPeriod();
 		Attends otherAttends = new Attends();
 
@@ -308,8 +308,7 @@ public class EnrolmentTest extends DomainTestBase {
 		nonImprovementEnrolment = new Enrolment();
 		
 		ExecutionPeriod sameExecutionPeriod = new ExecutionPeriod();
-		executionCourseForImprovement = new ExecutionCourse();
-		executionCourseForImprovement.setExecutionPeriod(sameExecutionPeriod);
+		executionCourseForImprovement = new ExecutionCourse("name", "acronym", sameExecutionPeriod);
 		nonImprovementEnrolment.setExecutionPeriod(sameExecutionPeriod);
 		
 		ExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
@@ -360,12 +359,10 @@ public class EnrolmentTest extends DomainTestBase {
 		enrolmentCondition = EnrollmentCondition.FINAL;
 		createdBy = "XxX";
 		
-		ExecutionCourse ec1 = new ExecutionCourse();
-		ec1.setExecutionPeriod(otherExecutionPeriod);
+		ExecutionCourse ec1 = new ExecutionCourse("name", "acronym", otherExecutionPeriod);
 		curricularCourseToEnroll.addAssociatedExecutionCourses(ec1);
 		
-		executionCourseToEnroll = new ExecutionCourse();
-		executionCourseToEnroll.setExecutionPeriod(currentExecutionPeriod);		
+		executionCourseToEnroll = new ExecutionCourse("name", "acronym", currentExecutionPeriod);
 		executionCourseToEnroll.addAttends(attends2);
 		curricularCourseToEnroll.addAssociatedExecutionCourses(executionCourseToEnroll);
 
@@ -374,8 +371,7 @@ public class EnrolmentTest extends DomainTestBase {
 		enrolmentToInitializeForAnotherExecutionPeriod = new Enrolment();
 		anotherExecutionPeriod = new ExecutionPeriod();
 		
-		executionCourseToEnrollWithAttendsForThisStudent = new ExecutionCourse();
-		executionCourseToEnrollWithAttendsForThisStudent.setExecutionPeriod(anotherExecutionPeriod);
+		executionCourseToEnrollWithAttendsForThisStudent = new ExecutionCourse("name", "acronym", anotherExecutionPeriod);
 		executionCourseToEnrollWithAttendsForThisStudent.addAttends(attendsToEnroll);
 		curricularCourseToEnroll.addAssociatedExecutionCourses(executionCourseToEnrollWithAttendsForThisStudent);
 	}

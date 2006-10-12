@@ -15,6 +15,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
@@ -22,9 +24,11 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
+import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -62,9 +66,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     }
 
-    public ExecutionCourse() {
+    public ExecutionCourse(final String nome, final String sigla, final ExecutionPeriod executionPeriod) {
         super();
         init();
+        
+        setNome(nome);
+        setSigla(sigla);
+        setExecutionPeriod(executionPeriod);
+        
+        createForum(nome, nome);
+        createExecutionCourseAnnouncementBoard(nome);
     }
 
     private void init() {
@@ -923,6 +934,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	this.addForuns(new ExecutionCourseForum(name, description));
     }
 
+    private ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
+	return new ExecutionCourseAnnouncementBoard(name, this, new ExecutionCourseTeachersGroup(this),
+		null, new RoleTypeGroup(RoleType.MANAGER),
+		ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
+		ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC,
+		ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
+    }
+    
     public boolean hasForumWithName(String name) {
 	return getForumByName(name) != null;
     }

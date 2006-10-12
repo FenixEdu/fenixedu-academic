@@ -42,22 +42,18 @@ public class CurricularCourseTest extends DomainTestBase {
 		
 		ExecutionPeriod otherExecutionPeriod = new ExecutionPeriod(); 
 		
-		ExecutionCourse ec1 = new ExecutionCourse();
-		ec1.setExecutionPeriod(executionPeriod);
+		ExecutionCourse ec1 = new ExecutionCourse("name", "acronym", executionPeriod);
 		curricularCourseToReadFrom.addAssociatedExecutionCourses(ec1);
 		executionCoursesToBeRead.add(ec1);
 		
-		ExecutionCourse ec2 = new ExecutionCourse();
-		ec2.setExecutionPeriod(executionPeriod);
+		ExecutionCourse ec2 = new ExecutionCourse("name", "acronym", executionPeriod);
 		curricularCourseToReadFrom.addAssociatedExecutionCourses(ec2);
 		executionCoursesToBeRead.add(ec2);
 		
-		ExecutionCourse ec3 = new ExecutionCourse();
-		ec3.setExecutionPeriod(otherExecutionPeriod);
+		ExecutionCourse ec3 = new ExecutionCourse("name", "acronym", otherExecutionPeriod);
 		curricularCourseToReadFrom.addAssociatedExecutionCourses(ec3);
 		
-		ExecutionCourse ec4 = new ExecutionCourse();
-		ec4.setExecutionPeriod(otherExecutionPeriod);
+		ExecutionCourse ec4 = new ExecutionCourse("name", "acronym", otherExecutionPeriod);
 		curricularCourseToReadFrom.addAssociatedExecutionCourses(ec4);
 		
 	}

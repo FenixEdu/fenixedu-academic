@@ -13,7 +13,7 @@ public class DistributionTeacherServiceByTeacherTest extends DomainTestBase {
 		
 		// Prepare shifts of an executionCourse
 		
-		executionCourse = new ExecutionCourse();
+		executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
 		executionCourse.setIdInternal(0);
 		
 		/* Create Theoretical Shift 1 */

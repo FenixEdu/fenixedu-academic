@@ -109,36 +109,32 @@ public class SeperateExecutionCourse extends Service {
         }
     }
 
-    private ExecutionCourse createNewExecutionCourse(ExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
-        ExecutionCourse destinationExecutionCourse = new ExecutionCourse();
-        destinationExecutionCourse.setComment("");
-        destinationExecutionCourse.setExecutionPeriod(originExecutionCourse.getExecutionPeriod());
-        destinationExecutionCourse.setLabHours(originExecutionCourse.getLabHours());
-        destinationExecutionCourse.setNome(originExecutionCourse.getNome());
-        destinationExecutionCourse.createForum(originExecutionCourse.getNome(), originExecutionCourse.getNome());
-        destinationExecutionCourse.setPraticalHours(originExecutionCourse.getPraticalHours());
-        destinationExecutionCourse.setSigla(originExecutionCourse.getSigla() + System.currentTimeMillis());
+    private ExecutionCourse createNewExecutionCourse(ExecutionCourse originExecutionCourse) {
+	final String sigla = getUniqueExecutionCourseCode(originExecutionCourse.getNome(),
+		originExecutionCourse.getExecutionPeriod(), originExecutionCourse.getSigla());
 
-        for (int i = 0; i < originExecutionCourse.getProfessorships().size(); i++) {
-            Professorship professorship = originExecutionCourse.getProfessorships().get(i);
-            Professorship newProfessorship = new Professorship();
-            newProfessorship.setExecutionCourse(destinationExecutionCourse);
-            newProfessorship.setTeacher(professorship.getTeacher());
-            newProfessorship.setResponsibleFor(professorship.getResponsibleFor());
-            destinationExecutionCourse.getProfessorships().add(newProfessorship);
-        }      
+	final ExecutionCourse destinationExecutionCourse = new ExecutionCourse(originExecutionCourse
+		.getNome(), sigla, originExecutionCourse.getExecutionPeriod());
 
-        destinationExecutionCourse.setSigla(getUniqueExecutionCourseCode(
-                originExecutionCourse.getNome(), originExecutionCourse.getExecutionPeriod(),
-                originExecutionCourse.getSigla()));
-        destinationExecutionCourse.setTheoPratHours(originExecutionCourse.getTheoPratHours());
-        destinationExecutionCourse.setTheoreticalHours(originExecutionCourse.getTheoreticalHours());
-        return destinationExecutionCourse;
+	destinationExecutionCourse.setTheoreticalHours(originExecutionCourse.getTheoreticalHours());
+	destinationExecutionCourse.setTheoPratHours(originExecutionCourse.getTheoPratHours());
+	destinationExecutionCourse.setLabHours(originExecutionCourse.getLabHours());
+	destinationExecutionCourse.setPraticalHours(originExecutionCourse.getPraticalHours());
+
+	for (final Professorship professorship : originExecutionCourse.getProfessorships()) {
+	    final Professorship newProfessorship = new Professorship();
+	    newProfessorship.setExecutionCourse(destinationExecutionCourse);
+	    newProfessorship.setTeacher(professorship.getTeacher());
+	    newProfessorship.setResponsibleFor(professorship.getResponsibleFor());
+
+	    destinationExecutionCourse.getProfessorships().add(newProfessorship);
+	}
+
+	return destinationExecutionCourse;
     }
 
     private String getUniqueExecutionCourseCode(final String executionCourseName,
-            final ExecutionPeriod executionPeriod, final String originalExecutionCourseCode)
-            throws ExcepcaoPersistencia {
+            final ExecutionPeriod executionPeriod, final String originalExecutionCourseCode) {
         Set executionCourseCodes = getExecutionCourseCodes(executionPeriod);
 
         StringBuilder executionCourseCode = new StringBuilder(originalExecutionCourseCode);
@@ -154,7 +150,7 @@ public class SeperateExecutionCourse extends Service {
         return destinationExecutionCourseCode;
     }
 
-    private Set getExecutionCourseCodes(ExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+    private Set getExecutionCourseCodes(ExecutionPeriod executionPeriod) {
         List executionCourses = executionPeriod.getAssociatedExecutionCourses();
         return new HashSet(CollectionUtils.collect(executionCourses, new Transformer() {
             public Object transform(Object arg0) {

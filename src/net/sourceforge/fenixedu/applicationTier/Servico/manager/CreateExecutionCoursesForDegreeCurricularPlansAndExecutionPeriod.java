@@ -37,26 +37,16 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
 
                 if (curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod).isEmpty()) {
 
-                    ExecutionCourse executionCourse = new ExecutionCourse();
-                    Site site = new Site();
+		    String sigla = getUniqueSigla(existentsExecutionCoursesSiglas, curricularCourse
+			    .getCode());
 
-                    executionCourse.setSite(site);
-                    executionCourse.setExecutionPeriod(executionPeriod);
-                    executionCourse.setNome(curricularCourse.getName());
-                    executionCourse.createForum(executionCourse.getNome(), executionCourse.getNome());
-                    
-                    String sigla = getUniqueSigla(existentsExecutionCoursesSiglas, curricularCourse
-                            .getCode());
+		    ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(),
+			    sigla, executionPeriod);
 
-                    executionCourse.setSigla(sigla);
-                    executionCourse.setTheoreticalHours(0.0);
-                    executionCourse.setTheoPratHours(0.0);
-                    executionCourse.setPraticalHours(0.0);
-                    executionCourse.setLabHours(0.0);
-                    executionCourse.setComment("");
+		    executionCourse.setSite(new Site());
 
-                    curricularCourse.addAssociatedExecutionCourses(executionCourse);
-                }
+		    curricularCourse.addAssociatedExecutionCourses(executionCourse);
+		}
             }
         }
     }
