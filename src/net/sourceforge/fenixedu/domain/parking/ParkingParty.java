@@ -362,7 +362,42 @@ public class ParkingParty extends ParkingParty_Base {
         return (getDriverLicenseFileName() != null && getDriverLicenseFileName().length() > 0)
                 || getDriverLicenseDocumentState() != null;
     }
-
+    
+    public List<RoleType> getSubmitAsRoles(){
+        List<RoleType> roles = new ArrayList<RoleType>();
+        if (getParty().isPerson()) {
+            Person person = (Person) getParty();
+            Teacher teacher = person.getTeacher();
+            if (teacher != null && person.getPersonRole(RoleType.TEACHER) != null) {
+                roles.add(RoleType.TEACHER);
+            }
+            Employee employee = person.getEmployee();
+            if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
+                    && person.getPersonRole(RoleType.EMPLOYEE) != null
+                    && employee.getCurrentContractByContractType(ContractType.WORKING) != null) {
+                roles.add(RoleType.EMPLOYEE);
+            }
+            Student student = person.getStudent();
+            if (student != null && person.getPersonRole(RoleType.STUDENT) != null) {
+                DegreeType degreeType = student.getMostSignificantDegreeType();
+                Collection<Registration> registrations = student.getRegistrationsByDegreeType(degreeType);
+                for (Registration registration : registrations) {
+                    StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
+                    if (scp != null) {
+                        roles.add(RoleType.STUDENT);
+                        break;
+                    }
+                }
+            }
+            GrantOwner grantOwner = person.getGrantOwner();
+            if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null
+                    && grantOwner.hasCurrentContract()) {
+                roles.add(RoleType.GRANT_OWNER);
+            }
+        }
+        return roles;
+    }
+    
     public List<String> getOccupations() {
         List<String> occupations = new ArrayList<String>();
         if (getParty().isPerson()) {

@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add a new column to Parking Request Table" alterTableParkingRequest.sql

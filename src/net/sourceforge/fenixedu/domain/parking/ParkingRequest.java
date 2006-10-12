@@ -66,6 +66,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         setSecondCarInsuranceDocumentState(creator.getSecondCarInsuranceDocumentState());
         setSecondCarOwnerIdDocumentState(creator.getSecondCarOwnerIdDocumentState());
         setSecondCarPropertyRegistryDocumentState(creator.getSecondCarPropertyRegistryDocumentState());
+        setRequestedAs(creator.getRequestAs());
     }
 
     public ParkingRequestFactoryEditor getParkingRequestFactoryEditor() {
@@ -172,6 +173,8 @@ public class ParkingRequest extends ParkingRequest_Base {
         ParkingDocumentState secondCarOwnerIdDocumentState;
 
         ParkingDocumentState secondCarDeclarationDocumentState;
+        
+        RoleType requestAs;
 
         public ParkingRequestFactory(ParkingParty parkingParty) {
             super();
@@ -647,6 +650,14 @@ public class ParkingRequest extends ParkingRequest_Base {
                 ParkingDocumentState secondCarPropertyRegistryDocumentState) {
             this.secondCarPropertyRegistryDocumentState = secondCarPropertyRegistryDocumentState;
         }
+
+        public RoleType getRequestAs() {
+            return requestAs;
+        }
+
+        public void setRequestAs(RoleType requestAs) {
+            this.requestAs = requestAs;
+        }
     }
 
     public static class ParkingRequestFactoryCreator extends ParkingRequestFactory {
@@ -703,6 +714,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             setSecondCarOwnerIdDocumentState(parkingRequest.getSecondCarOwnerIdDocumentState());
             setSecondCarPropertyRegistryDocumentState(parkingRequest
                     .getSecondCarPropertyRegistryDocumentState());
+            setRequestAs(parkingRequest.getRequestedAs());
         }
 
         public ParkingRequest getParkingRequest() {
@@ -745,6 +757,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         setSecondCarOwnerIdDocumentState(parkingRequestFactoryEditor.getSecondCarOwnerIdDocumentState());
         setSecondCarPropertyRegistryDocumentState(parkingRequestFactoryEditor
                 .getSecondCarPropertyRegistryDocumentState());
+        setRequestedAs(parkingRequestFactoryEditor.getRequestAs());
     }
 
     public ParkingDocument getParkingDocument(ParkingDocumentType documentType) {
@@ -1064,5 +1077,5 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     private boolean canBeDeleted() {
         return getParkingRequestState() != ParkingRequestState.ACCEPTED;
-    }
+    }   
 }

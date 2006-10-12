@@ -171,6 +171,13 @@
 	</slot>
 </schema>	
 
+<schema name="create.parkingRequestFactory.submitAs" type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryCreator">
+	<slot name="requestAs" key="label.submitAs" bundle="PARKING_RESOURCES" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.parking.ParkingRequestAsProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />		
+	</slot>
+</schema>
+
 <!-- EDIT -->
 <schema name="edit.parkingRequestFactory.driverLicense"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
@@ -263,6 +270,13 @@
 	</slot>
 </schema>
 
+<schema name="edit.parkingRequestFactory.submitAs" type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
+	<slot name="requestAs" key="label.submitAs" bundle="PARKING_RESOURCES" layout="menu-select"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.parking.ParkingRequestAsProvider" />	
+		<property name="eachLayout" value="this-does-not-exist" />		
+	</slot>
+</schema>
+
 <schema name="edit.parkingParty.user" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
 	<slot name="cardNumber" key="label.cardNumber">
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
@@ -283,7 +297,7 @@
 <schema name="edit.parkingParty.secondCar" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
 	<slot name="secondCarMake" key="label.secondCarMake" />
 	<slot name="secondCarPlateNumber" key="label.secondCarPlateNumber" />	
-</schema>
+</schema>	
 
 <schema name="show.parkingRequest.noDetail"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest">

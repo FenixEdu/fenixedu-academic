@@ -78,7 +78,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             if (!StringUtils.isEmpty(carPlateNumber)) {
                 parkingRequestSearch.setCarPlateNumber(carPlateNumber);
             }
-        }        
+        }
         request.setAttribute("parkingRequestSearch", parkingRequestSearch);
         return mapping.findForward("showParkingRequests");
     }
@@ -136,13 +136,15 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         if (party.isPerson()) {
             Person person = (Person) party;
             FileEntry personalPhoto = person.getPersonalPhoto();
-            try {
-                response.setContentType(personalPhoto.getContentType().getMimeType());
-                DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-                dos.write(personalPhoto.getContents());
-                dos.close();
-            } catch (java.io.IOException e) {
-                throw new FenixActionException(e);
+            if (personalPhoto != null) {
+                try {
+                    response.setContentType(personalPhoto.getContentType().getMimeType());
+                    DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+                    dos.write(personalPhoto.getContents());
+                    dos.close();
+                } catch (java.io.IOException e) {
+                    throw new FenixActionException(e);
+                }
             }
         }
         return null;
@@ -323,7 +325,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         request.setAttribute("carPlateNumber", carPlateNumber);
 
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
-        if (!StringUtils.isEmpty((String)dynaForm.get("accepted")) || request.getParameter("acceptPrint") != null) {
+        if (!StringUtils.isEmpty((String) dynaForm.get("accepted"))
+                || request.getParameter("acceptPrint") != null) {
             Integer cardNumber = null;
             Integer group = null;
             try {

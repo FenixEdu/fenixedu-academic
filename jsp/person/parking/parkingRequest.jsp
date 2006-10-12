@@ -90,6 +90,13 @@
 		</ul>
 
 
+		<logic:notEmpty name="parkingParty" property="firstRequest.requestedAs">
+			<p><span class="infoop2"><bean:message key="message.userRequestedAs" bundle="PARKING_RESOURCES"/>
+				<strong><bean:message name="parkingParty" property="firstRequest.requestedAs.name" bundle="ENUMERATION_RESOURCES"/></strong>
+				</span>
+			</p>
+		</logic:notEmpty>
+		
 		<logic:notEmpty name="parkingParty" property="firstRequest.note">
 			<p class="infoop2"><bean:message key="label.note" bundle="PARKING_RESOURCES"/>:
 				<bean:write name="parkingParty" property="firstRequest.note"/>

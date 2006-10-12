@@ -3678,6 +3678,7 @@ class net.sourceforge.fenixedu.domain.parking.ParkingGroup extends net.sourcefor
 
 class net.sourceforge.fenixedu.domain.parking.ParkingRequest extends net.sourceforge.fenixedu.domain.DomainObject {
 	ParkingRequestState parkingRequestState;
+	RoleType requestedAs;
 	Boolean firstRequest;
 	DateTime creationDate;
 	Integer keyParkingParty;	

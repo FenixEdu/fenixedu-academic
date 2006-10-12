@@ -680,9 +680,7 @@ margin: 0.5em 0;
 		</tr>
 		</table>
 		</div>
-<%-- 
-		</div> <!-- oiahsdo -->
---%>
+
 		<div id="registry2Student" style="display:none">
 		<logic:notEmpty name="<%= factoryName %>" property="secondCarPropertyRegistryFileName">
 			<table class="tstyle8 thright thlight mbottom0 mtop0 tstylepark">
@@ -930,6 +928,23 @@ margin: 0.5em 0;
 
 		</div>
 
+		
+		<logic:notEmpty name="<%= factoryName %>" property="parkingParty.submitAsRoles">
+			<bean:size id="size" name="<%= factoryName %>" property="parkingParty.submitAsRoles"/>
+			<logic:notEqual name="size" value="1">
+			<p class="mtop2">
+			<div class="separator1"></div>		
+				<fr:edit name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.submitAs" %>" type="<%= type %>">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle8 thright thlight mtop0 mbottom0"/>
+						<fr:property name="columnClasses" value="width150px,,noborder"/>
+					</fr:layout>	
+				</fr:edit>			
+			<div class="separator1"></div>
+			</p>
+			</logic:notEqual>
+		</logic:notEmpty>
+		
 		<p class="mtop2">
 			<input type="submit" value="<%= submit.toString() %>" />		
 		</p>

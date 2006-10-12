@@ -32,6 +32,11 @@ function confirmation(){
 	<logic:iterate id="occupation" name="parkingParty" property="occupations">
 		<p><bean:write name="occupation" filter="false"/></p>
 	</logic:iterate>
+	<logic:notEmpty name="parkingRequest" property="requestedAs">
+		<p><span class="infoop2"><bean:message key="message.userRequestedAs" bundle="PARKING_RESOURCES"/> 
+		<strong><bean:message name="parkingRequest" property="requestedAs.name" bundle="ENUMERATION_RESOURCES"/></strong></span></p>
+	</logic:notEmpty>
+	
 	<logic:notEqual name="parkingRequest" property="parkingRequestState" value="PENDING">		
 		<jsp:include page="viewParkingPartyAndRequest.jsp"/>
 	</logic:notEqual>
