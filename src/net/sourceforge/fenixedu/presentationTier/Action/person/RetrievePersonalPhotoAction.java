@@ -63,8 +63,9 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 
 	    if (!person.getAvailablePhoto()) {
 		Person requester = userView.getPerson();
-		if (!(person.hasRole(RoleType.STUDENT) || requester.hasRole(RoleType.TEACHER) || requester
-			.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE))) {
+		if (!(person.hasRole(RoleType.STUDENT)
+                        && (requester.hasRole(RoleType.TEACHER)
+                                || requester.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)))) {
 		    return null;
 		}
 	    }
