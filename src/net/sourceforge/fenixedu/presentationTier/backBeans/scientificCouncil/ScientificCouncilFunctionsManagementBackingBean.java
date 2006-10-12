@@ -11,7 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.ManagerFunctionsManagementBackingBean;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 public class ScientificCouncilFunctionsManagementBackingBean extends ManagerFunctionsManagementBackingBean {
@@ -21,7 +20,7 @@ public class ScientificCouncilFunctionsManagementBackingBean extends ManagerFunc
         openLITag(buffer);
 
         List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
-        Collections.sort(subUnits, new BeanComparator("name"));
+        Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
 
         if (!subUnits.isEmpty()) {
             putImage(parentUnit, buffer, parentUnitParent);

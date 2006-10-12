@@ -37,8 +37,9 @@ public enum PartyTypeEnum {
     // PERSON ENUMERATIONS
     
     // GERAL
-    UNKNOWN;       
-        
+    AGGREGATE_UNIT,
+    UNKNOWN;
+            
     public String getName() {
         return name();
     }      

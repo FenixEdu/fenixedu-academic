@@ -31,19 +31,6 @@
             <td style="width: 20em;"><bean:message key="label.person.name" />:</td>
             <td class="greytxt"><bean:write name="personalInfo" property="nome"/></td>
           </tr>
-          <!-- Username -->
-          <tr>
-            <td style="width: 20em;"><bean:message key="label.person.username" /></td>          
-			<td class="greytxt">
-				<bean:size name="personalInfo" property="loginAlias" id="aliasSize"/>
-	          	<logic:iterate name="personalInfo" property="loginAlias" id="username" indexId="index">
-		          	<bean:write name="username" property="alias"/>
-		          	<logic:notEqual name="index" value="<%= String.valueOf(aliasSize.intValue() - 1) %>">
-		          		;		          	
-		          	</logic:notEqual>
-	          	</logic:iterate>
-          	</td>          
-          </tr>          
           <!-- IST Username -->
           <logic:notEmpty name="personalInfo" property="istUsername">
 	          <tr>
@@ -51,6 +38,21 @@
 	            <td class="greytxt"><bean:write name="personalInfo" property="istUsername"/></td> 
 	          </tr>
           </logic:notEmpty>
+          <!-- Username -->
+          <logic:notEmpty name="personalInfo" property="loginAlias">
+	          <tr>
+	            <td style="width: 20em;"><bean:message key="label.person.username" /></td>          
+				<td class="greytxt">
+					<bean:size name="personalInfo" property="loginAlias" id="aliasSize"/>
+		          	<logic:iterate name="personalInfo" property="loginAlias" id="username" indexId="index">
+			          	<bean:write name="username" property="alias"/>
+			          	<logic:notEqual name="index" value="<%= String.valueOf(aliasSize.intValue() - 1) %>">
+			          		;		          	
+			          	</logic:notEqual>
+		          	</logic:iterate>
+	          	</td>          
+	          </tr>       
+          </logic:notEmpty>            
           <!-- Sexo -->
           <tr>
             <td style="width: 20em;"><bean:message key="label.person.sex" /></td>

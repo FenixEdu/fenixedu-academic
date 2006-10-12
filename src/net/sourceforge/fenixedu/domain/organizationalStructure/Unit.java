@@ -800,33 +800,40 @@ public class Unit extends Unit_Base {
 	StringBuilder builder = new StringBuilder();
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
 	Unit institutionUnit = UnitUtils.readInstitutionUnit();
-
-	Unit initialUnit = this;
-	while (initialUnit.getParentUnits().size() == 1) {
-	    Unit unit = initialUnit.getParentUnits().get(0);
-	    if (unit != institutionUnit && unit != externalInstitutionUnit) {
-		builder.insert(0, unit.getName() + separator);
-		initialUnit = unit;
-	    } else {
-		if (initialUnit != this) {
-		    int start = Math.max(builder.length() - separator.length(), separator.length()
-			    - builder.length());
-		    builder.replace(start, builder.length(), "");
+	List<Unit> parentUnits = new ArrayList<Unit>();	
+	Unit searchedUnit = this;
+	
+	while (searchedUnit.getParentUnits().size() == 1) {
+	    Unit parentUnit = searchedUnit.getParentUnits().get(0);	    
+	    if (parentUnit != institutionUnit && parentUnit != externalInstitutionUnit) {
+		if (parentUnit.getType() == null || !parentUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
+		    parentUnits.add(0, parentUnit);
 		}
+		searchedUnit = parentUnit;
+	    } else {
+		parentUnits.add(0, parentUnit);
 		break;
 	    }
 	}
-
-	if ((getPartyType() == null || !getPartyType().getType().equals(
-		PartyTypeEnum.EXTERNAL_INSTITUTION))
-		&& !this.equals(institutionUnit)) {
-	    builder.insert(0, institutionUnit.getName() + ((initialUnit != this) ? separator : ""));
-	} else if (getPartyType() != null
-		&& getPartyType().getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)
-		&& !this.equals(institutionUnit)) {
-	    builder.insert(0, externalInstitutionUnit.getName()
-		    + ((initialUnit != this) ? separator : ""));
+	
+	if(searchedUnit.getParentUnits().size() > 1) {
+	    if(searchedUnit.getType() != null && searchedUnit.getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
+		parentUnits.add(0, externalInstitutionUnit);
+	    } else {
+		parentUnits.add(0, institutionUnit);
+	    }
 	}
+	
+	int index = 1;
+	for (Unit unit : parentUnits) {
+	    if(index == parentUnits.size()) {
+		builder.append(unit.getName());
+	    } else {
+		builder.append(unit.getName() + separator);
+	    }
+	    index++;
+	}
+		
 	return builder.toString();
     }
 }

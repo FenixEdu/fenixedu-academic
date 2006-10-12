@@ -219,7 +219,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	    this.activeFunctions = new ArrayList<PersonFunction>();
 
 	    addValidFunctions(activeFunctions, this.activeFunctions);
-	    Collections.sort(this.activeFunctions, new BeanComparator("endDate"));
+	    Collections.sort(this.activeFunctions, PersonFunction.COMPARATOR_BY_BEGIN_DATE);
 	}
 	return this.activeFunctions;
     }
@@ -233,7 +233,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	    this.inactiveFunctions = new ArrayList<PersonFunction>();
 
 	    addValidFunctions(inactiveFunctions, this.inactiveFunctions);
-	    Collections.sort(this.inactiveFunctions, new BeanComparator("endDate"));
+	    Collections.sort(this.inactiveFunctions, PersonFunction.COMPARATOR_BY_BEGIN_DATE);
 	}
 	return this.inactiveFunctions;
     }
@@ -310,7 +310,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 	allPersons = (List<Person>) CollectionUtils.select(allPersons, predicate);
 
-	Collections.sort(allPersons, new BeanComparator("nome"));
+	Collections.sort(allPersons, Person.COMPARATOR_BY_NAME);
 	return allPersons;
     }
 
@@ -510,7 +510,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	openLITag(buffer);
 
 	List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
-	Collections.sort(subUnits, new BeanComparator("name"));
+	Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
 
 	if (!subUnits.isEmpty()) {
 	    putImage(parentUnit, buffer, parentUnitParent);

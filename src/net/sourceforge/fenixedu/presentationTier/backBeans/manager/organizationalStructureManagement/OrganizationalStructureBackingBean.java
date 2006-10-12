@@ -172,7 +172,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	if (!subUnits.isEmpty()) {
 	    openULTag(parentUnit, buffer, parentUnitParent);
-	    Collections.sort(subUnits, new BeanComparator("name"));
+	    Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
 	}
 
 	for (Unit subUnit : subUnits) {
@@ -206,7 +206,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
 	StringBuilder buffer = new StringBuilder();
 	List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
-	Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
+	Collections.sort(allUnitsWithoutParent, Unit.UNIT_COMPARATOR_BY_NAME);
 	YearMonthDay currentDate = new YearMonthDay();
 
 	for (Unit unit : allUnitsWithoutParent) {
@@ -246,7 +246,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	if (!subUnits.isEmpty()) {
 	    openULTag(parentUnit, buffer, parentUnitParent);
-	    Collections.sort(subUnits, new BeanComparator("name"));
+	    Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
 	}
 
 	for (Unit subUnit : subUnits) {
@@ -297,7 +297,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	if (!subUnits.isEmpty()) {
 	    openULTag(parentUnit, buffer, parentUnitParent);
-	    Collections.sort(subUnits, new BeanComparator("name"));
+	    Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
 	}
 
 	for (Unit subUnit : subUnits) {

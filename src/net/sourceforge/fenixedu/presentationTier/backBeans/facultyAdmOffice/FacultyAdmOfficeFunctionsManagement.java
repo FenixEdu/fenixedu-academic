@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.ManagerFunctionsManagementBackingBean;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagementBackingBean {
@@ -51,7 +50,7 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
 
         List<Unit> subUnits = new ArrayList<Unit>();
         subUnits.addAll(parentUnit.getSubUnits());
-        Collections.sort(subUnits, new BeanComparator("name"));
+        Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
         
         for (Unit subUnit : subUnits) {
             if (subUnit.isActive(new YearMonthDay())) {

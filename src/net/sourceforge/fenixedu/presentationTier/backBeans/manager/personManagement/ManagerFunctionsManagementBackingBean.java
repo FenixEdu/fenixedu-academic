@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.FunctionsManagementBackingBean;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBackingBean {
@@ -87,7 +86,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         openLITag(buffer);
 
         List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
-        Collections.sort(subUnits, new BeanComparator("name"));
+        Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
         
         if (!subUnits.isEmpty()) {
             putImage(parentUnit, buffer, parentUnitParent);
@@ -116,7 +115,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         if (this.activeFunctions == null) {
             Person person = this.getPerson();
             List<PersonFunction> activeFunctions = person.getActivePersonFunctions();
-            Collections.sort(activeFunctions, new BeanComparator("endDate"));
+            Collections.sort(activeFunctions, PersonFunction.COMPARATOR_BY_BEGIN_DATE);
             this.activeFunctions = activeFunctions;
         }
         return activeFunctions;
@@ -128,7 +127,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         if (this.inactiveFunctions == null) {
             Person person = this.getPerson();
             List<PersonFunction> inactiveFunctions = person.getInactivePersonFunctions();
-            Collections.sort(inactiveFunctions, new BeanComparator("endDate"));
+            Collections.sort(inactiveFunctions, PersonFunction.COMPARATOR_BY_BEGIN_DATE);
             this.inactiveFunctions = inactiveFunctions;
         }
         return inactiveFunctions;
