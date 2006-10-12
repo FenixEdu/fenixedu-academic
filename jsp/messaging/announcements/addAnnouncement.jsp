@@ -23,7 +23,7 @@
 
 <fr:form action="<%= contextPrefix + "method=viewAnnouncements&announcementBoardId="+announcementBoardId+ "&"+extraParameters%>">
 
-<p class="mtop2 mbottom025">Campos obrigatórios:</p>
+<p class="mtop2 mbottom025"><strong>Campos obrigatórios:</strong></p>
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
@@ -65,7 +65,7 @@
 	</tr>
 </table>
 
-<p class="mtop1 mbottom025">Campos opcionais:</p>
+<p class="mtop1 mbottom025"><strong>Campos opcionais:</strong></p>
 <table class="tstyle5 thlight thtop thright mtop025">
 <%-- Excerto --%>
 	<tr>

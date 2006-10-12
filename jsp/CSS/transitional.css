@@ -446,6 +446,7 @@ padding-right: 0.5em;
 .mbottom1 { margin-bottom: 1em;}
 .mbottom15 { margin-bottom: 1.5em;}
 .mbottom2 { margin-bottom: 2em;}
+.mbottom25 { margin-bottom: 2.5em;}
 .mbottom3 { margin-bottom: 3em;}
 .mbottom4 { margin-bottom: 3em;}
 .mvert0 { margin-top: 0; margin-bottom: 0; }
@@ -1096,6 +1097,8 @@ td.parking { width: 400px;}
 
 tr.trhighlight1 td { background: #fff; }
 
+
+
 /* Testes online */
 
 .qcontainer {}
@@ -1107,3 +1110,17 @@ tr.trhighlight1 td { background: #fff; }
 .qsanswered .qheader .qshowstate { background-color: #dfb ;}
 .qsnotanswered .qheader .qshowstate { background-color: #def; }
 .qsgivenup .qheader .qshowstate { background-color: #fff7bb; }
+
+
+div.announcement {
+width: 500px;
+/*border-top: 1px dotted #ccc;*/
+padding-top: 0.5em;
+background: url(../images/ann_sep.gif) top left repeat-x;
+}
+div.announcement div, div.announcement p {
+margin: 0;
+padding: 0;
+}
+div.announcement h3 a { text-decoration: none; }
+.greytxt2 { color: #999; }

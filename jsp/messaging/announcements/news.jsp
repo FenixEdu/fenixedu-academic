@@ -19,7 +19,7 @@
 			<td>Visualizar:</td>
 			<td>
 		    <html:select property="howManyAnnouncementsToShow" onchange="this.form.submit();">
-		        <html:option value="6">6 anúncios (default) </html:option>
+		        <html:option value="6">6 anúncios</html:option>
 	   	        <html:option value="12">12 anúncios</html:option>
 		        <html:option value="24">24 anúncios</html:option>
 		    </html:select>

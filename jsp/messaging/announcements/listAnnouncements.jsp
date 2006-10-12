@@ -39,12 +39,12 @@ if (month != null && year!=null)
 		
 		<logic:iterate id="announcement" name="announcements" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
 		
-		<div class="mtop15 mbottom2" style="width: 550px;">
+		<div class="announcement mtop15 mbottom25">
 
 		<%-- Event Date OR Publication Date --%>
-			<p class="mvert025 smalltxt greytxt1">
+			<p class="mvert025 smalltxt greytxt2">
 				<span id="10367">
-				
+					<img src="/ciapl/images/dotist_post.gif" alt="Publicar">
 					<logic:notEmpty name="announcement" property="publicationBegin">
 						Publicado em 
 							<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
@@ -68,7 +68,6 @@ if (month != null && year!=null)
 			</p>
 
 		<%-- Título --%>
-		
 			<logic:equal name="announcement" property="visible" value="true">
 				<h3 class="mvert025">
 				<html:link action="<%=contextPrefix +extraParameters +"&method=viewAnnouncement&announcementId=" + announcement.getIdInternal()%>">
