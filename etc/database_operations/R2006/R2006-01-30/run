@@ -21,6 +21,6 @@ function execute() {
 
 execute "Modify column BIBLIOGRAPHIC_REFERENCES on CompetenceCourseInformation" alterTableCompetenceCourseInformation.sql
 execute "Update column TYPE on Unit" updateUnit.sql > res.sql
-execute "Update column TYPE on Unit" < res.sql
+execute "Update column TYPE on Unit" res.sql
 execute "Update column TYPE on Function" updateFunctionTypes.sql 
 
