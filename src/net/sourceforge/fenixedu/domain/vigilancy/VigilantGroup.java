@@ -65,6 +65,14 @@ public class VigilantGroup extends VigilantGroup_Base {
     }
 
 
+	public VigilantBound getBounds(Vigilant vigilant) {
+		for(VigilantBound bound : this.getBounds()) {
+			if(bound.getVigilant().equals(vigilant)) {
+				return bound;
+			}
+		}
+		return null;
+	}
     public List<Vigilant> getVigilants() {
     	List<Vigilant> vigilants = new ArrayList<Vigilant>();
     	for(VigilantBound bound: this.getBounds()) {

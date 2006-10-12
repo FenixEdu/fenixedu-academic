@@ -40,6 +40,7 @@
 <fr:layout name="vigilantsInGroup-render">
 	<fr:property name="personSchema" value="presentPersonWithCatAndNumber"/>
 	<fr:property name="classes" value="tstyle1"/>
+
 </fr:layout>
 <fr:destination name="cancel" path="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"/>
 </fr:edit>
@@ -49,6 +50,7 @@
 <fr:layout name="vigilantsInGroup-render">
 	<fr:property name="personSchema" value="presentExternalPersonWithCatAndNumber"/>
 	<fr:property name="classes" value="tstyle1"/>
+
 </fr:layout>
 
 </fr:edit>
@@ -57,21 +59,30 @@
 
 </fr:form>
 
+<p class="mbottom0"><em><bean:message key="label.vigilancy.label" bundle="VIGILANCY_RESOURCES"/>:</em></p>
+<p class="mvert0"><em><bean:message key="label.vigilancy.convokable.abbr" bundle="VIGILANCY_RESOURCES"/>-<bean:message key="label.vigilancy.convokable" bundle="VIGILANCY_RESOURCES"/></em></p>
+<p class="mtop0"><em><bean:message key="label.vigilancy.notConvokable.abbr" bundle="VIGILANCY_RESOURCES"/>-<bean:message key="label.vigilancy.notConvokable" bundle="VIGILANCY_RESOURCES"/></em></p>
+
+
+<p class="mtop3 mbottom05"><strong><bean:message key="label.vigilancy.externalPersonToGroup" bundle="VIGILANCY_RESOURCES"/></strong></p>
+
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
-		<p>
+		<p class="mtop1 mvert05">
 			<span class="error0"><bean:write name="messages" /></span>
 		</p>
 	</html:messages>
 </logic:messagesPresent>
 
-<p class="mtop3"><strong><bean:message key="label.vigilanclabel.vigilancy.isConvokabley.externalPersonToGroup" bundle="VIGILANCY_RESOURCES"/></strong></p>
-<p>
 
 <fr:form id="addSingleVigilant" action="/vigilancy/vigilantGroupManagement.do?method=addVigilantToGroupByUsername">
 <fr:edit name="bean" id="addExternalPersonToGroup" schema="addExternalPerson"
 	nested="true">
 	<fr:destination name="cancel" path="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"/>
+	<fr:layout>
+		<fr:property name="classes" value="tstyle5 thlight mtop05 thright"/>
+		<fr:property name="columnClasses" value=",,tdclear"/>
+	</fr:layout>
 </fr:edit>
 <p class="mtop0">
 	<span class="switchInline"><a href="javascript:document.getElementById('addSingleVigilant').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.add"/></a></span>

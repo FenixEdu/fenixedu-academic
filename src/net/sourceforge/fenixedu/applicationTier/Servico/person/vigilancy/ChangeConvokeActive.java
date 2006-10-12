@@ -64,7 +64,7 @@ public class ChangeConvokeActive extends Service {
     	
   	  	String minutes = String.format("%02d", new Object[]{beginDate.getMinuteOfHour()});
   	  	
-    	message = "Caro docente,\n\n";
+    	message = "Caro(a) " + convoke.getVigilant().getPerson().getName() + ",\n\n";
   	    message += (bool) ? RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.convokedAgain") : RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.uncovoked");
         message += "\n\nProva de avaliacao: " + writtenEvaluation.getFullName();
         message +="\nData: " + date + " (" + beginDate.getHourOfDay() + ":" + minutes +"h)";
