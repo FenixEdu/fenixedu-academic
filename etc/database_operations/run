@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Update Advisories Functionalities" updateAdvisoriesFunctionalities.sql
