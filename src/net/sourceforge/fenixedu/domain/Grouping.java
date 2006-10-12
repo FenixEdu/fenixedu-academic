@@ -346,15 +346,17 @@ public class Grouping extends Grouping_Base {
     public Map<Shift, SortedSet<StudentGroup>> getStudentGroupsIndexedByShift() {
         final Map<Shift, SortedSet<StudentGroup>> map = new TreeMap<Shift, SortedSet<StudentGroup>>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
         for (final StudentGroup studentGroup : getStudentGroupsSet()) {
-            final Shift shift = studentGroup.getShift();
-            final SortedSet<StudentGroup> studentGroups;
-            if (map.containsKey(shift)) {
-                studentGroups = map.get(shift);
-            } else {
-                studentGroups = new TreeSet<StudentGroup>(StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
-                map.put(shift, studentGroups);
+            if (studentGroup.hasShift()) {
+                final Shift shift = studentGroup.getShift();
+                final SortedSet<StudentGroup> studentGroups;
+                if (map.containsKey(shift)) {
+                    studentGroups = map.get(shift);
+                } else {
+                    studentGroups = new TreeSet<StudentGroup>(StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
+                    map.put(shift, studentGroups);
+                }
+                studentGroups.add(studentGroup);
             }
-            studentGroups.add(studentGroup);
         }
         return map;
     }
