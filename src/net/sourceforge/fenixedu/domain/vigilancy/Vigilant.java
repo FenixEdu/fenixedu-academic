@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -334,7 +335,7 @@ public class Vigilant extends Vigilant_Base {
 
 	public void delete() {
 
-		if (this.getVigilancysCount() == 0) {
+		if (this.getActiveVigilancysInList(this.getVigilancyWithCredits()).size()==0) {
 			removeIncompatiblePerson();
 			for (; !this.getUnavailablePeriods().isEmpty(); this
 					.getUnavailablePeriods().get(0).delete())
@@ -342,6 +343,8 @@ public class Vigilant extends Vigilant_Base {
 			for (; !this.getBounds().isEmpty(); this.getBounds().get(0)
 					.delete())
 				;
+			for(; !this.getVigilancys().isEmpty(); this.getVigilancys().get(0).delete());
+			for(; !this.getVigilancyWithCredits().isEmpty(); this.getVigilancyWithCredits().get(0).delete());
 			removeExecutionYear();
 			removePerson();
 			removeRootDomainObject();

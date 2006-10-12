@@ -125,5 +125,11 @@ public class Vigilancy extends Vigilancy_Base {
     	}
     	return vigilancies;
     }
- 
+
+    public void delete() {
+    	removeWrittenEvaluation();
+    	removeVigilant();
+    	removeRootDomainObject();
+    	super.deleteDomainObject();
+    }
 }
