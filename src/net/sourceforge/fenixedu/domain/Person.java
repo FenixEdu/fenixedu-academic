@@ -1522,7 +1522,7 @@ public class Person extends Person_Base {
     public static List<Person> readAllPersons() {
 	List<Person> allPersons = new ArrayList<Person>();
 	for (Party party : RootDomainObject.getInstance().getPartys()) {
-	    if (party instanceof Person) {
+	    if (party.isPerson()) {
 		allPersons.add((Person) party);
 	    }
 	}
@@ -1732,40 +1732,42 @@ public class Person extends Person_Base {
     }
     
     public Collection<AnnouncementBoard> getCurrentExecutionCoursesAnnouncementBoards() {
-        final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
-        result.addAll(getStudentCurrentExecutionCourseAnnouncementBoards());
-        result.addAll(getTeacherCurrentExecutionCourseAnnouncementBoards());    
+	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
+	result.addAll(getTeacherCurrentExecutionCourseAnnouncementBoards());    
+	result.addAll(getStudentCurrentExecutionCourseAnnouncementBoards());
         return result;
     }
     
-    private Collection<AnnouncementBoard> getStudentCurrentExecutionCourseAnnouncementBoards() {
+    private Collection<AnnouncementBoard> getTeacherCurrentExecutionCourseAnnouncementBoards() {
+	if (!hasTeacher()) {
+	    return Collections.emptyList();
+        }
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
-	for (final Registration registration : this.getStudents()) {
-	    for (final Enrolment enrolment : registration.getCurrentEnrolments()) {
-		for (final Attends attends : enrolment.getAttends()) {
-		    final AnnouncementBoard board = attends.getDisciplinaExecucao().getBoard();
-		    if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
-			result.add(board);
-		    }
+	for (final Professorship professorship : getTeacher().getProfessorships()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod.readActualExecutionPeriod()) {
+		final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
+		if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
+		    result.add(board);
 		}
 	    }
-        }
+	}
 	return result;
     }
     
-    private Collection<AnnouncementBoard> getTeacherCurrentExecutionCourseAnnouncementBoards() {
-	if (hasTeacher()) {
-	    final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
-            for (final Professorship professorship : getTeacher().getProfessorships()) {
-                final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
-                if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
-                    result.add(board);
-                }
-            }
-            return result;
-        }
-	return Collections.EMPTY_SET;
+    private Collection<AnnouncementBoard> getStudentCurrentExecutionCourseAnnouncementBoards() {
+	if (!hasStudent()) {
+	    return Collections.emptyList();
+	}
+	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
+	for (final ExecutionCourse executionCourse : ExecutionPeriod.readActualExecutionPeriod().getAssociatedExecutionCoursesSet()) {
+	    final AnnouncementBoard board = executionCourse.getBoard();
+	    if (board != null && (board.hasReader(this) || board.hasWriter(this)) && getStudent().attends(executionCourse)) {
+		result.add(board);
+	    }
+	}
+	return result;
     }
+
 
     @Override
     public boolean isPerson() {
@@ -1773,10 +1775,7 @@ public class Person extends Person_Base {
     }
 
     public List<Registration> getStudents() {
-	if (getStudent() != null) {
-	    return getStudent().getRegistrations();
-	}
-	return new ArrayList<Registration>();
+	return hasStudent() ? getStudent().getRegistrations() : Collections.EMPTY_LIST; 
     }
 
     public int getStudentsCount() {

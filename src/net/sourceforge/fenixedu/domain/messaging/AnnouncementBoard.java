@@ -23,7 +23,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     
     public static final Comparator<AnnouncementBoard> BY_NAME = new Comparator<AnnouncementBoard>() {
 	public int compare(AnnouncementBoard o1, AnnouncementBoard o2) {
-	    int result = -o1.getName().compareTo(o2.getName());
+	    int result = o1.getName().compareTo(o2.getName());
 	    return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
 	}
     };

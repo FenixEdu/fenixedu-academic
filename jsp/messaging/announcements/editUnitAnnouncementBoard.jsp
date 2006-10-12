@@ -8,6 +8,8 @@
 <em>Portal de Comunicação</em>
 <h2>Gerir Canal</h2>
 
+<jsp:include flush="true" page="/messaging/context.jsp"/>
+
 <p class="mbottom0"><b>Unidade</b>: <span class="emphasis1"><bean:write name="unit" property="name"/><span></p>
 
 <logic:present name="announcementBoard">

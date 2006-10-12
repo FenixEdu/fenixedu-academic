@@ -23,15 +23,15 @@ public class RoleTypeGroup extends Group {
 
     @Override
     public Set<Person> getElements() {
-        final Set<Person> elements = new HashSet<Person>();
-        elements.addAll(Role.getRoleByRoleType(getRoleType()).getAssociatedPersons());
-        return elements;
+        return new HashSet<Person>(Role.getRoleByRoleType(getRoleType()).getAssociatedPersons());
     }
     
+    @Override
     public boolean isMember(Person person) {
 	return (person == null) ? false : person.hasRole(getRoleType());
     }
 
+    @Override
     public boolean allows(IUserView userView) {
 	return (userView == null) ? false : isMember(userView.getPerson());
     }

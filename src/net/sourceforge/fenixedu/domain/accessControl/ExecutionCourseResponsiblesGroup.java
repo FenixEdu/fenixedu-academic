@@ -23,6 +23,8 @@ import net.sourceforge.fenixedu.util.PeriodState;
  * 
  */
 public class ExecutionCourseResponsiblesGroup extends Group {
+    
+    private static final long serialVersionUID = -1670838873686375271L;
 
     @Override
     public Set<Person> getElements() {
@@ -59,11 +61,8 @@ public class ExecutionCourseResponsiblesGroup extends Group {
 		}
 
 	    }
-
 	}
-
 	return false;
-
     }
 
 }

@@ -187,19 +187,21 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = getUserView(request);
-	Announcement announcement = this.getRequestedAnnouncement(request);
-	if (announcement.getAnnouncementBoard().getWriters() != null
-		&& !announcement.getAnnouncementBoard().getWriters().isMember(getLoggedPerson(request))) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
-		    "error.not.allowed.to.write.board"));
-	    saveErrors(request, actionMessages);
+	if (!deleteAnnouncement(request)) {
 	    return this.start(mapping, form, request, response);
 	}
-	ServiceUtils.executeService(userView, "DeleteAnnouncement", new Object[] { announcement });
-
 	return this.viewAnnouncements(mapping, form, request, response);
+    }
+    
+    protected boolean deleteAnnouncement(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+	IUserView userView = getUserView(request);
+	final Announcement announcement = getRequestedAnnouncement(request);
+	if (!announcement.getAnnouncementBoard().hasWriter(getLoggedPerson(request))) {
+	    addActionMessage(request, "error.not.allowed.to.write.board");
+	    return false;
+	}
+	ServiceUtils.executeService(userView, "DeleteAnnouncement", new Object[] { announcement });
+	return true;
     }
 
     private String getContextPrefix(HttpServletRequest request) {

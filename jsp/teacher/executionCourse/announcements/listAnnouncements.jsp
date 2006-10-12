@@ -84,7 +84,7 @@ if (month != null && year!=null)
 
 		<%-- Corpo --%>
 			 <logic:notPresent name="announcementBoard">
-				 <p class="mvert025">
+				 <p class="ann_body mvert025">
 				 <% if (!announcement.isExcerptEmpty())
 				 	{
 				 %>				 
@@ -105,7 +105,7 @@ if (month != null && year!=null)
 			 </logic:notPresent>
 				
 			<logic:present name="announcementBoard">
-				<p class="mvert0">
+				<p class="ann_body mvert025">
 				<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html"/>
 				</p>
 			</logic:present>

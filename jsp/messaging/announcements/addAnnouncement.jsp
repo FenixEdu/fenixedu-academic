@@ -21,7 +21,9 @@
 	String suffix = contextPrefix.substring(indexOfDot,contextPrefix.length());
 %>
 
-<fr:form action="<%= contextPrefix + "method=viewAnnouncements&announcementBoardId="+announcementBoardId+ "&"+extraParameters%>">
+<bean:define id="action"><%= "method=prepareEditAnnouncementBoard&announcementBoardId=" + announcementBoardId + "&" + extraParameters %></bean:define>
+
+<fr:form action="<%=  contextPrefix + action %>">
 
 <p class="mtop2 mbottom025"><strong>Campos obrigatórios:</strong></p>
 
@@ -133,8 +135,8 @@
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
 		</th>
 		<td>
-			<fr:create id="referedSubjectBegin-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="referedSubjectBegin" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>		
-			<fr:message for="referedSubjectBegin-validated"/>
+			<fr:create id="referedSubjectBegin-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="referedSubjectBegin" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
+			 <span class="error0"><fr:message for="referedSubjectBegin-validated"/></span>
 		</td>
 	</tr>
 
@@ -145,7 +147,7 @@
 		</th>
 		<td>
 			<fr:create id="referedSubjectEnd-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="referedSubjectEnd" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
-			<fr:message for="referedSubjectEnd-validated"/>
+			<span class="error0"><fr:message for="referedSubjectEnd-validated"/></span>
 		</td>
 	</tr>
 
@@ -172,8 +174,7 @@
 		</th>
 		<td>
 			<fr:create id="publicationBegin-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="publicationBegin" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
-			<fr:message for="publicationBegin-validated" type="conversion"/>
-			<fr:message for="publicationBegin-validated" type="validation"/>
+			<span class="error0"><fr:message for="publicationBegin-validated"/></span>
 		</td>
 	</tr>
 
@@ -184,7 +185,7 @@
 		</th>
 		<td>
 			<fr:create id="publicationEnd-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="publicationEnd" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
-			<fr:message for="publicationEnd-validated"/>
+			<span class="error0"><fr:message for="publicationEnd-validated"/></span>
 		</td>
 	</tr>
 

@@ -36,7 +36,7 @@
 	<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" />
 
 <p class="mvert025">
-	<em class="smalltxt" style="color: #888;" >
+	<em class="smalltxt" style="color: #888;">
 
 
 <%-- Autor --%>		 		
@@ -76,7 +76,7 @@
 <%-- Autor --%>
 	<logic:notEmpty name="announcement" property="author">
 		<logic:empty name="announcement" property="authorEmail">
-			<p class="mvert025 graytxt1">Autor: <fr:view name="announcement" property="author"/></p>
+			Autor: <fr:view name="announcement" property="author"/>
 			 - 
 		</logic:empty>
 	</logic:notEmpty>

@@ -89,7 +89,7 @@ if (month != null && year!=null)
 
 		<%-- Corpo --%>
 			 <logic:notPresent name="announcementBoard">
-				 <p class="mvert025">
+				 <p class="ann_body mvert025">
 				 <% if (!announcement.isExcerptEmpty())
 				 	{
 				 %>				 
@@ -110,13 +110,13 @@ if (month != null && year!=null)
 			 </logic:notPresent>
 				
 			<logic:present name="announcementBoard">
-				<p class="mvert0">
-				<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html"/>
+				<p class="ann_body mvert025">
+					<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html"/>
 				</p>
 			</logic:present>
 
 		<p class="mvert025">
-			<em class="smalltxt" style="color: #888;" >
+			<em class="smalltxt greytxt2" >
 
 		<%-- Board e RSS --%>
 				Canal: 
@@ -125,26 +125,24 @@ if (month != null && year!=null)
 				</html:link>
 				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
 
-		<%-- Editar, Apagar --%>
+		<%-- Gerir --%>
 			<%
 				if (!request.getRequestURI().contains("public") && announcement.getAnnouncementBoard().hasManager(person)) {
 			%>
 				Permissões:
-				<html:link action="<%= "/announcements/manageUnitAnnouncementBoard.do?method=prepareEditAnnouncementBoard" +"&announcementBoardId="+announcement.getAnnouncementBoard().getIdInternal() + "&announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "&tabularVersion=true" %>">
+				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=prepareEditAnnouncementBoard" + "&announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "&tabularVersion=true" %>">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.manage.link"/>
 				</html:link>
 				 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
-				
 			<%	
 				} else if (!request.getRequestURI().contains("public") && announcement.getAnnouncementBoard().hasWriter(person)) {
 			%>
 				
 				Permissões:
-				<html:link action="<%= "/announcements/announcementsStartPageHandler.do?method=viewAnnouncements" +"&announcementBoardId="+announcement.getAnnouncementBoard().getIdInternal() + "&announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() %>">
+				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=viewAnnouncements" + "&announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() %>">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.write.link"/>
 				</html:link>
 				 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
-				
 			<%	
 				}
 			%>		
@@ -260,6 +258,7 @@ if (month != null && year!=null)
 		</p>
 	</logic:empty>
 </logic:present>
+
 <logic:present name="archive">
 	<logic:present name="announcementBoard">
 		<bean:define id="board" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>

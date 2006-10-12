@@ -1168,9 +1168,9 @@ public class Teacher extends Teacher_Base {
 
     public boolean isCoordinatorFor(ExecutionYear executionYear, List<DegreeType> degreeTypes) {
 	for (final Coordinator coordinator : getCoordinatorsSet()) {
-	    if (coordinator.getExecutionDegree().getExecutionYear() == executionYear
-		    && degreeTypes
-			    .contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
+	    if (coordinator.hasExecutionDegree()
+		    && coordinator.getExecutionDegree().getExecutionYear() == executionYear
+		    && degreeTypes.contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
 		return true;
 	    }
 	}

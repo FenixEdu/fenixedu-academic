@@ -13,7 +13,7 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 
     public static final Comparator<ExecutionCourseAnnouncementBoard> COMPARE_BY_EXECUTION_PERIOD_AND_NAME = new Comparator<ExecutionCourseAnnouncementBoard>() {
 	public int compare(ExecutionCourseAnnouncementBoard o1, ExecutionCourseAnnouncementBoard o2) {
-	    int result = o1.getExecutionCourse().getExecutionPeriod().compareTo(o2.getExecutionCourse().getExecutionPeriod());
+	    int result = -o1.getExecutionCourse().getExecutionPeriod().compareTo(o2.getExecutionCourse().getExecutionPeriod());
 	    if (result == 0) {
 		result = o1.getExecutionCourse().getNome().compareTo(o2.getExecutionCourse().getNome());
 	    }

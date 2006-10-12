@@ -33,7 +33,7 @@ else
 					</div>
 					<div id="<%="I"+infoMessageNumber%>" <%if(infoMessages instanceof StartHiddenActionMessages) {%> style="display:none"<%} %>>
 						<li onclick="check(document.getElementById('<%=infoMessageNumber %>'));">
-							<bean:write name="infoMsg" filter="false"/>
+							<span class="error0"><bean:write name="infoMsg" filter="false"/></span>
 						</li>
 					</div>
 				</ul>
@@ -56,7 +56,7 @@ else
 					</div>
 					<div id="<%="E"+errorMessageNumber%>" <%if(errorMessages instanceof StartHiddenActionMessages) {%> style="display:none"<%} %>>
 						<li>
-							<bean:write name="errorMsg" filter="false"/>
+							<span class="error0"><bean:write name="errorMsg" filter="false"/></span>
 						</li>
 					</div>
 				</ul>

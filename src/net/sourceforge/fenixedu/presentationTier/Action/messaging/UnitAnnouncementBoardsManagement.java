@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
@@ -35,12 +36,16 @@ public class UnitAnnouncementBoardsManagement
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
                     "error.not.allowed.to.delete.board"));
             saveErrors(request, actionMessages);
-            
-            return super.editAnnouncementBoard(mapping, actionForm, request, response);
+            return prepareEditAnnouncementBoard(mapping, actionForm, request, response);
         }
 	
-	ServiceUtils.executeService(getUserView(request), "DeleteAnnouncementBoard",
-		new Object[] { this.getRequestedAnnouncementBoard(request) });
+	try {
+	    ServiceUtils.executeService(getUserView(request), "DeleteAnnouncementBoard",
+		    new Object[] { this.getRequestedAnnouncementBoard(request) });
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey());
+	    return prepareEditAnnouncementBoard(mapping, actionForm, request, response);
+	}
 	
 	return this.start(mapping, actionForm, request, response);
     }

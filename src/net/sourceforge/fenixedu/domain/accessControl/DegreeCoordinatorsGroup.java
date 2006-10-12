@@ -1,7 +1,3 @@
-/*
- * Author : Goncalo Luiz
- * Creation Date: Jul 13, 2006,4:44:38 PM
- */
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Collection;
@@ -18,13 +14,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.PeriodState;
 
-/**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
- *         Created on Jul 13, 2006,4:44:38 PM
- * 
- */
 public class DegreeCoordinatorsGroup extends Group {
+    
+    private static final long serialVersionUID = -7559780015187749338L;
 
     @Override
     public Set<Person> getElements() {
@@ -49,5 +41,14 @@ public class DegreeCoordinatorsGroup extends Group {
             }
         }
         return elements;
+    }
+    
+    @Override
+    public boolean isMember(Person person) {
+	return person != null
+		&& person.hasTeacher()
+		&& person.getTeacher()
+			.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
+				ExecutionYear.readCurrentExecutionYear());
     }
 }

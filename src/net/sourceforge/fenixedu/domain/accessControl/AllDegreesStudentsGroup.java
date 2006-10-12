@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  * 
  */
 public class AllDegreesStudentsGroup extends Group {
+    
+    private static final long serialVersionUID = 2693414643122716513L;
 
     @Override
     public Set<Person> getElements() {

@@ -23,6 +23,7 @@ public class AnnouncementsStartPageForm extends ValidatorForm {
     private String announcementBoardAccessType = AnnouncementBoardAccessType.ABAT_ALL.name();
     private String announcementBoardAccessLevel = AnnouncementBoardAccessLevel.ABAL_ALL.name();
     private Integer howManyAnnouncementsToShow = Integer.valueOf(6);
+    private String boardType = "BOOKMARKED";
 
     public Integer getHowManyAnnouncementsToShow() {
         return howManyAnnouncementsToShow;
@@ -54,5 +55,13 @@ public class AnnouncementsStartPageForm extends ValidatorForm {
 
     public void setRecentBoardsTimeSpanSelection(String recentBoardsTimeSpanSelection) {
         this.recentBoardsTimeSpanSelection = recentBoardsTimeSpanSelection;
+    }
+
+    public String getBoardType() {
+        return boardType;
+    }
+
+    public void setBoardType(String boardType) {
+        this.boardType = boardType;
     }
 }

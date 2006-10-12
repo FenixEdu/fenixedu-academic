@@ -5,8 +5,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
-<em>Portal de Comunicação</em>
-<h2>Canais de Anúncios</h2>
+<em><bean:message key="label.messaging.portal"/></em>
+<h2><bean:message key="label.messaging.board.announcements"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
 
@@ -15,7 +15,7 @@
 	<e:labelValues id="levelValues" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessLevel" /> 
 	<e:labelValues id="typeValues" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessType" /> 
 	
-	<p class="mbottom025">Mostrar canais:</p>
+	<p class="mbottom025"><strong><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board.filtering"/></strong></p>
 	<table class="tstyle5 thlight thright mtop0">
 	<tr>
 		<td>Privilégios:</td>
@@ -153,7 +153,7 @@
 						if (ableToRead)
 						{
 						%>
-							<html:link page="<%= contextPrefix + "method=viewAnnouncements" +"&" +extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal()%>">
+							<html:link title="<%= announcementBoard.getQualifiedName()%>" page="<%= contextPrefix + "method=viewAnnouncements" +"&" +extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal()%>">
 								<bean:write name="announcementBoard" property="name"/>
 							</html:link>
 						<%
@@ -178,50 +178,39 @@
 							</logic:notEmpty>					
 						</td>
 					<%
-					if (!announcementBoard.getMandatory()) {
-						if (!announcementBoard.getBookmarkOwner().contains(person))
-						{
+					if (!announcementBoard.getBookmarkOwner().contains(person)) {
 					%>						
 						<td class="acenter">
 							Não 
 							(<html:link page="<%= contextPrefix + "method=addBookmark" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal() + "&returnAction=" + request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")%>">Adicionar</html:link>)
 						</td>									
-						<%
-						}
-						else
-						{
-						%>
+					<%
+					} else {
+					%>
 						<td class="acenter">
 							Sim 
 							(<html:link page="<%= contextPrefix + "method=removeBookmark" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal() + "&returnAction=" + request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")%>">Remover</html:link>)
 						</td>
 					<%
-						} // Mandatory
-					} else {
+					} 
+					%>						
+					<%
+					if (announcementBoard.getManagers() == null || announcementBoard.getManagers().isMember(person))
+					{
 					%>
 						<td class="acenter">
-							Institucional
+							<html:link page="<%= prefix +"manage" + announcementBoard.getClass().getSimpleName() + suffix + "method=prepareEditAnnouncementBoard" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal() + "&returnAction="+request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")+"&tabularVersion=true"%>">
+									Gerir
+							</html:link>				
 						</td>
 					<%
-					} 
+					}
+					else if (canManageAtLeastOneUnitBoard)
+					{
 					%>
-						<%
-						if (announcementBoard.getManagers() == null || announcementBoard.getManagers().isMember(person))
-						{
-						%>
-							<td class="acenter">
-								<html:link page="<%= prefix +"manage" + announcementBoard.getClass().getSimpleName() + suffix + "method=prepareEditAnnouncementBoard" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal() + "&returnAction="+request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")+"&tabularVersion=true"%>">
-										Gerir
-								</html:link>				
-							</td>
-						<%
-						}
-						else if (canManageAtLeastOneUnitBoard)
-						{
-						%>
-							<td>
-							</td>
-						<%
+						<td>
+						</td>
+					<%
 						}
 						java.util.Map parameters = new java.util.HashMap();
 						parameters.put("method","simple");
@@ -281,10 +270,9 @@
 	       %>		
 	</logic:notEmpty>
 	<logic:empty name="unitAnnouncementBoards">
-			NÃ£o existem canais de unidade<br/>
+			Não existem canais de unidade<br/>
 	</logic:empty>
 </logic:present>
-
 
 <h3 class="mtop2 mbottom05">Canais de Disciplinas</h3>
 
@@ -406,7 +394,7 @@
 					if (ableToRead)
 						{
 					%>
-							<html:link page="<%= contextPrefix + "method=viewAnnouncements" +"&" +extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal()%>">
+							<html:link title="<%= announcementBoard.getQualifiedName()%>" page="<%= contextPrefix + "method=viewAnnouncements" +"&" +extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal()%>">
 								<bean:write name="announcementBoard" property="name"/>
 							</html:link>
 						<%

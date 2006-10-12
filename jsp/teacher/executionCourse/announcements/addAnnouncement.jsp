@@ -130,7 +130,7 @@
 		</th>
 		<td>
 			<fr:create id="referedSubjectBegin-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="referedSubjectBegin" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>		
-			<fr:message for="referedSubjectBegin-validated"/>
+			<span class="error0"><fr:message for="referedSubjectBegin-validated"/><span class="error0">
 		</td>
 	</tr>
 
@@ -141,7 +141,7 @@
 		</th>
 		<td>
 			<fr:create id="referedSubjectEnd-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="referedSubjectEnd" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
-			<fr:message for="referedSubjectEnd-validated"/>
+			<span class="error0"><fr:message for="referedSubjectEnd-validated"/><span class="error0">
 		</td>
 	</tr>
 
@@ -168,8 +168,7 @@
 		</th>
 		<td>
 			<fr:create id="publicationBegin-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="publicationBegin" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
-			<fr:message for="publicationBegin-validated" type="conversion"/>
-			<fr:message for="publicationBegin-validated" type="validation"/>
+			<span class="error0"><fr:message for="publicationBegin-validated"/></span>
 		</td>
 	</tr>
 
@@ -180,7 +179,7 @@
 		</th>
 		<td>
 			<fr:create id="publicationEnd-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="publicationEnd" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
-			<fr:message for="publicationEnd-validated"/>
+			<span class="error0"><fr:message for="publicationEnd-validated"/></span>
 		</td>
 	</tr>
 

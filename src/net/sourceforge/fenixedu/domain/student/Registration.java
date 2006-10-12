@@ -1260,19 +1260,6 @@ public class Registration extends Registration_Base {
 	return calculateCurricularYear();
     }
 
-    public Collection<Enrolment> getEnrolments(final ExecutionPeriod executionPeriod) {
-	final Collection<Enrolment> result = new ArrayList<Enrolment>();
-	for (StudentCurricularPlan scp : this.getStudentCurricularPlans()) {
-	    result.addAll(scp.getEnrolmentsByExecutionPeriod(executionPeriod));
-	}
-
-	return result;
-    }
-
-    public Collection<Enrolment> getCurrentEnrolments() {
-	return getEnrolments(ExecutionPeriod.readActualExecutionPeriod());
-    }
-
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
 	final DegreeType degreeType = getDegreeType();
 	return (degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);

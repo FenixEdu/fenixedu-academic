@@ -25,6 +25,9 @@ import net.sourceforge.fenixedu.util.PeriodState;
  * 
  */
 public class MasterDegreeCoordinatorsGroup extends Group {
+    
+    private static final long serialVersionUID = 5928255128153111582L;
+    
     @Override
     public Set<Person> getElements() {
 	Set<Person> elements = super.buildSet();
@@ -56,4 +59,5 @@ public class MasterDegreeCoordinatorsGroup extends Group {
 		&& person.getTeacher().isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(
 			ExecutionYear.readCurrentExecutionYear());
     }
+
 }

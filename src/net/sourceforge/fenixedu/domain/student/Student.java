@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -204,6 +205,15 @@ public class Student extends Student_Base {
 		return true;
 	    }
 	}	
+	return false;
+    }
+
+    public boolean attends(ExecutionCourse executionCourse) {
+	for (final Registration registration : getRegistrationsSet()) {
+	    if (registration.attends(executionCourse)) {
+		return true;		
+	    }
+	}
 	return false;
     }    
 

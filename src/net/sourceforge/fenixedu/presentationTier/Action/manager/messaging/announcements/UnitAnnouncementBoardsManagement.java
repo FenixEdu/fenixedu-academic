@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.CreateUnitAnnouncementBoard.UnitAnnouncementBoardParameters;
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -66,9 +67,11 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
     }
 
     @Override
-    public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        super.deleteAnnouncement(mapping, form, request, response);
-        return this.prepareEditAnnouncementBoard(mapping, form, request, response);
+    public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	super.deleteAnnouncement(request);
+	return this.prepareEditAnnouncementBoard(mapping, form, request, response);
     }
 
     public ActionForward deleteAnnouncementBoard(ActionMapping mapping, ActionForm actionForm,
@@ -81,8 +84,13 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
             saveErrors(request, actionMessages);
         } else {
 
-            ServiceUtils.executeService(getUserView(request), "DeleteAnnouncementBoard",
-                    new Object[] { this.getRequestedAnnouncementBoard(request) });
+            try {
+        	ServiceUtils.executeService(getUserView(request), "DeleteAnnouncementBoard",
+        		new Object[] { this.getRequestedAnnouncementBoard(request) });
+            } catch (DomainException e) {
+    	    	addActionMessage(request, e.getKey());
+    	    	return prepareCreateBoard(mapping, actionForm, request, response);
+            }
 
             if (request.getParameter("returnAction") != null
                     && !request.getParameter("returnAction").equals("")
@@ -100,7 +108,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
             }
         }
         
-        return this.prepareCreateBoard(mapping, actionForm, request, response);
+        return prepareCreateBoard(mapping, actionForm, request, response);
     }
 
     public ActionForward createBoard(ActionMapping mapping, ActionForm actionForm,

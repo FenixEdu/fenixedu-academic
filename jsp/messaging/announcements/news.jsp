@@ -5,24 +5,37 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
-<em>Portal de Comunicação</em>
-<h2>Novidades</h2>
+<em><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.portal"/></em>
+<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.news.title"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
 
-<h3>Últimos Anúncios dos Favoritos e Canais do IST</h3>
+<h3><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.news"/></h3>
 
 <html:form action="/announcements/announcementsStartPageHandler.do" method="get">
 	<html:hidden property="method" value="news"/>
-	<table class="tstyle5 mvert05">
+	<html:hidden property="recentBoardsTimeSpanSelection"/>
+	<table class="tstyle5 thright thlight thmiddle mvert05">
 		<tr>
-			<td>Visualizar:</td>
+			<th><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.show"/>:</th>
 			<td>
 		    <html:select property="howManyAnnouncementsToShow" onchange="this.form.submit();">
-		        <html:option value="6">6 anúncios</html:option>
-	   	        <html:option value="12">12 anúncios</html:option>
-		        <html:option value="24">24 anúncios</html:option>
+		        <html:option value="6">6 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
+	   	        <html:option value="12">12 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
+		        <html:option value="24">24 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
 		    </html:select>
+			</td>
+		</tr>
+		<tr>
+			<th><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board.view" />:</th>
+			<td>
+				<html:radio property="boardType" value="BOOKMARKED" onchange="this.form.submit();">
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.bookmarked" />
+				</html:radio>
+				<br/>
+				<html:radio property="boardType" value="INSTITUTIONAL" onchange="this.form.submit();">
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.institutional" />
+				</html:radio>
 			</td>
 		</tr>
 	</table>
@@ -30,7 +43,7 @@
 
 <jsp:include page="/messaging/announcements/listAnnouncements.jsp" flush="true"/>
 
-<h3 class="mtop2 mbottom05">Últimas Boards Criadas</h3>
+<h3 class="mtop2 mbottom05"><bean:message bundle="MESSAGING_RESOURCES" key="label.last.created.boards"/></h3>
 <html:form action="/announcements/announcementsStartPageHandler.do" method="get">
 	<html:hidden property="method" value="news"/>
 	<html:hidden property="howManyAnnouncementsToShow"/>

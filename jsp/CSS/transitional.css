@@ -1118,9 +1118,10 @@ width: 500px;
 padding-top: 0.5em;
 background: url(../images/ann_sep.gif) top left repeat-x;
 }
-div.announcement div, div.announcement p {
+div.announcement .ann_body div, div.announcement .ann_body p {
 margin: 0;
 padding: 0;
 }
 div.announcement h3 a { text-decoration: none; }
 .greytxt2 { color: #999; }
+.ann_body 

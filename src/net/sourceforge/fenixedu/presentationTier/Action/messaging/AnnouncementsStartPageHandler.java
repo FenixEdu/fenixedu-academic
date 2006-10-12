@@ -39,19 +39,16 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
     private static final int RECENT_BOARDS_TO_SHOW = 40;
-    private static final int PAGE_SIZE = 25;
+    private static final int PAGE_SIZE = 20;
 
     public ActionForward news(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 	
-	setMainPageInformation(actionForm, request);
 	request.setAttribute("returnMethod", "news");
-        return mapping.findForward("news");
-    }
-
-    private void setMainPageInformation(ActionForm actionForm, HttpServletRequest request) throws Exception {
 	request.setAttribute("announcements", getAnnouncementsToShow(request, actionForm));
 	request.setAttribute("announcementBoards", boardsToView(request));
+	
+        return mapping.findForward("news");
     }
     
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -59,7 +56,6 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
 	request.setAttribute("returnMethod", "start");
         request.setAttribute("bookmarkedAnnouncementBoards", getSortedBookmarkedBoards(request));
-        request.setAttribute("mandatoryAnnouncementBoards", getMandatoryBoards(request));
         request.setAttribute("currentExecutionCoursesAnnouncementBoards", getCurrentExecutionCoursesAnnouncementBoards(request));
         
         return mapping.findForward("startPage");
@@ -73,20 +69,10 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
     }
 
     private Collection<AnnouncementBoard> getCurrentExecutionCoursesAnnouncementBoards(HttpServletRequest request) {
-	final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>(getLoggedPerson(request).getCurrentExecutionCoursesAnnouncementBoards());
+	final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>(getLoggedPerson(request)
+		.getCurrentExecutionCoursesAnnouncementBoards());
 	Collections.sort(result, new BeanComparator("name"));
 	return result;
-    }
-
-    private Collection<AnnouncementBoard> getMandatoryBoards(HttpServletRequest request) {
-	final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>();
-        for (final AnnouncementBoard board : rootDomainObject.getAnnouncementBoards()) {
-            if (board.getMandatory() && (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request)))) {
-                result.add(board);
-            }
-        }
-        Collections.sort(result, new BeanComparator("name"));
-        return result;
     }
 
     private List<AnnouncementBoard> getRecentBoards(HttpServletRequest request) {
@@ -150,23 +136,27 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
     private List<Announcement> getAnnouncementsToShow(HttpServletRequest request, ActionForm actionForm) {
 	
-        final List<Announcement> announcementsToShow = new ArrayList<Announcement>();
-        
-        for (final AnnouncementBoard board : getLoggedPerson(request).getBookmarkedBoards()) {
-            if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
-        	announcementsToShow.addAll(board.getVisibleAnnouncements());
-            }
-        }
+	final List<Announcement> result = new ArrayList<Announcement>();
+	final AnnouncementsStartPageForm form = (AnnouncementsStartPageForm) actionForm;
+	
+	if (form.getBoardType().equals("BOOKMARKED")) {
+	    for (final AnnouncementBoard board : getLoggedPerson(request).getBookmarkedBoards()) {
+		addBoardAnnouncements(request, result, board);
+	    }
+	} else if (form.getBoardType().equals("INSTITUTIONAL")) {
+	    for (final AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoardsSet()) {
+		addBoardAnnouncements(request, result, board);
+	    }
+	}
 
-        for (final AnnouncementBoard board : rootDomainObject.getAnnouncementBoards()) {
-            if (board.getMandatory() && (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request)))) {
-        	announcementsToShow.addAll(board.getVisibleAnnouncements());
-            }
-        }
+        Collections.sort(result, Announcement.NEWEST_FIRST);
+        return result.subList(0, Math.min(form.getHowManyAnnouncementsToShow(), result.size()));
+    }
 
-        final AnnouncementsStartPageForm form = (AnnouncementsStartPageForm) actionForm;
-        Collections.sort(announcementsToShow, Announcement.NEWEST_FIRST);
-        return announcementsToShow.subList(0, Math.min(form.getHowManyAnnouncementsToShow(), announcementsToShow.size()));
+    private void addBoardAnnouncements(HttpServletRequest request, final List<Announcement> result, final AnnouncementBoard board) {
+	if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
+	    result.addAll(board.getVisibleAnnouncements());
+	}
     }
 
     @Override
@@ -180,6 +170,15 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         }
         if (announcementBoardAccessLevel != null) {
             buffer.append("&announcementBoardAccessLevel=").append(announcementBoardAccessLevel);
+        }
+        if (request.getParameter("howManyAnnouncementsToShow") != null) {
+            buffer.append("&howManyAnnouncementsToShow=").append(request.getParameter("howManyAnnouncementsToShow"));
+        }
+        if (request.getParameter("recentBoardsTimeSpanSelection") != null) {
+            buffer.append("&recentBoardsTimeSpanSelection=").append(request.getParameter("recentBoardsTimeSpanSelection"));
+        }
+        if (request.getParameter("boardType") != null) {
+            buffer.append("&boardType=").append(request.getParameter("boardType"));
         }
 
         return buffer.toString();
@@ -221,26 +220,24 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         final AnnouncementBoardAccessLevel level = AnnouncementBoardAccessLevel.valueOf(form.getAnnouncementBoardAccessLevel());
         final AnnouncementBoardAccessType type = AnnouncementBoardAccessType.valueOf(form.getAnnouncementBoardAccessType());
 
-        unitAnnouncementBoards = CollectionUtils.select(unitAnnouncementBoards,
-                new AnnouncementBoard.AcessLevelPredicate(level, getLoggedPerson(request)));
-        unitAnnouncementBoards = CollectionUtils.select(unitAnnouncementBoards,
-                new AnnouncementBoard.AcessTypePredicate(type, getLoggedPerson(request)));
-        
-        executionCourseAnnouncementBoards = CollectionUtils.select(executionCourseAnnouncementBoards,
-        	new AnnouncementBoard.AcessLevelPredicate(level, getLoggedPerson(request)));
-        
-        executionCourseAnnouncementBoards = CollectionUtils.select(executionCourseAnnouncementBoards,
-        	new AnnouncementBoard.AcessTypePredicate(type, getLoggedPerson(request)));
+        unitAnnouncementBoards = (Collection<UnitAnnouncementBoard>) filterAnnouncementBoardsByLevelAndType(request, unitAnnouncementBoards, level, type);
+        executionCourseAnnouncementBoards = (Collection<ExecutionCourseAnnouncementBoard>) filterAnnouncementBoardsByLevelAndType(request, executionCourseAnnouncementBoards, level, type);
 
-        request.setAttribute("executionCourseAnnouncementBoards",
-                getPagedExecutionCourseAnnouncementBoard(executionCourseAnnouncementBoards, request));
-        
-        request.setAttribute("unitAnnouncementBoards", getPagedUnitAnnouncementBoard(
-                unitAnnouncementBoards, request));
-        
+        request.setAttribute("unitAnnouncementBoards", getPagedUnitAnnouncementBoard(unitAnnouncementBoards, request));
+        request.setAttribute("executionCourseAnnouncementBoards", getPagedExecutionCourseAnnouncementBoard(executionCourseAnnouncementBoards, request));
         request.setAttribute("returnMethod", "handleBoardListing");
         
         return mapping.findForward("boardListingWithCriteria");
+    }
+
+    private Collection<? extends AnnouncementBoard> filterAnnouncementBoardsByLevelAndType(HttpServletRequest request,
+	    Collection<? extends AnnouncementBoard> announcementBoards,
+	    final AnnouncementBoardAccessLevel level, final AnnouncementBoardAccessType type) {
+	announcementBoards = CollectionUtils.select(announcementBoards,
+                new AnnouncementBoard.AcessLevelPredicate(level, getLoggedPerson(request)));
+        announcementBoards = CollectionUtils.select(announcementBoards,
+                new AnnouncementBoard.AcessTypePredicate(type, getLoggedPerson(request)));
+	return announcementBoards;
     }
 
     private Collection<UnitAnnouncementBoard> getPagedUnitAnnouncementBoard(
@@ -278,11 +275,13 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
 	final String returnMethod = getReturnMethod(request);
 	if (returnMethod != null) {
-	    if (returnMethod.equals("start")) {
+	    if (returnMethod.equals("news")) {
+		return this.news(mapping, form, request, response);
+	    } else if (returnMethod.equals("start")) {
 		return this.start(mapping, form, request, response);
 	    } else if (returnMethod.equals("handleBoardListing")) {
 		return this.handleBoardListing(mapping, form, request, response);
-	    }
+	    } 
 	}
 	return this.start(mapping, form, request, response);
     }

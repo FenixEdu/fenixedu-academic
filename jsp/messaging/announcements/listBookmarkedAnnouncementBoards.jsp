@@ -190,6 +190,6 @@
 		</table>		
 	</logic:notEmpty>
 	<logic:empty name="bookmarkedAnnouncementBoards">
-		<em><bean:message key="view.announcementBoards.noBoardsToCurrentSelection" bundle="MESSAGING_RESOURCES"/></em>
+		<em><bean:message key="label.messaging.no.bookmarked.announcement.boards" bundle="MESSAGING_RESOURCES"/></em>
 	</logic:empty>
 </logic:present>

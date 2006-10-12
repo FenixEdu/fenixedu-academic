@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
  * 
  */
 public class UnitEmployeesGroup extends DomainBackedGroup<Unit> {
+    
+    private static final long serialVersionUID = 1L;
 
     public UnitEmployeesGroup(Unit unit) {
         super(unit);
