@@ -20,6 +20,7 @@ import java.util.GregorianCalendar;
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Login;
+import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -685,7 +686,7 @@ public class Installer extends Task implements TaskContainer {
 				persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 				persistentSupport.iniciarTransaccao();
 
-				Person pUserAdmin = new Person(username, name, gender, null, null, null, null, null, null, null);
+				Person pUserAdmin = new Person(name, gender, null, null, null, null, null, null, null);
 				Login login = Login.readLoginByUsername(username);
 				// crypt password? PasswordEncryptor.encryptPassword(newPassword)
 				login.setPassword(PasswordEncryptor.encryptPassword(password));
@@ -695,7 +696,8 @@ public class Installer extends Task implements TaskContainer {
 				pUserAdmin.addPersonRoleByRoleType(RoleType.PERSON);
 				//The strategy of adding person to PERSON role changes the username...
 				//So change it back to what it was
-				pUserAdmin.setUsername(username);
+				//pUserAdmin.setUsername(username);
+				LoginAlias.createNewCustomLoginAlias(login, username);
 				//If it changes the username, maybe it may also change the password,
 				//so redefine it!!!
 				login.setPassword(PasswordEncryptor.encryptPassword(password));
