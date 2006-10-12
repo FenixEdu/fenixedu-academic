@@ -44,6 +44,7 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 
 	setName(name);
 	setExecutionCourse(executionCourse);
+	setMandatory(Boolean.FALSE);
 
 	setWriters(writers);
 	setReaders(readers);
