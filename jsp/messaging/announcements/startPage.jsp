@@ -13,6 +13,6 @@
 </div>
 
 <logic:notEmpty name="currentExecutionCoursesAnnouncementBoards">
-	<h3 class="mbottom05"><bean:message key="label.messaging.my.executionCourse.boards"/></h3>
+	<h3 class="mbottom05"><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.my.executionCourse.boards"/></h3>
 	<jsp:include page="/messaging/announcements/listCurrentExecutionCoursesAnnouncementBoards.jsp" flush="true"/>
 </logic:notEmpty>

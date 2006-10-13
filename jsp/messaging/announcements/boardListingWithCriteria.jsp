@@ -5,8 +5,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
-<em><bean:message key="label.messaging.portal"/></em>
-<h2><bean:message key="label.messaging.board.announcements"/></h2>
+<em><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.portal"/></em>
+<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board.announcements"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
 
