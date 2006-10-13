@@ -197,7 +197,8 @@ public class UsernameUtils extends FenixUtil {
 	    if (registration != null) {
 		return "L" + registration.getNumber();
 	    }
-	    throw new DomainException("error.person.addingInvalidRole", RoleType.ALUMNI.getName());
+	    //throw new DomainException("error.person.addingInvalidRole", RoleType.ALUMNI.getName());
+	    return null;
 	    
 	} else if (roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE)
 		|| roleType.equals(RoleType.CANDIDATE)) {
