@@ -90,14 +90,14 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	return result;
     }
 
-    public static Set<StudentCandidacy> readByExecutionDegreeAndExecutionYearAndEntryPhase(
-	    final ExecutionDegree executionDegree, final ExecutionYear executionYear,
-	    final EntryPhase entryPhase) {
+    public static Set<StudentCandidacy> readNotConcludedBy(final ExecutionDegree executionDegree,
+	    final ExecutionYear executionYear, final EntryPhase entryPhase) {
 	final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
 	for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
 	    if (candidacy instanceof StudentCandidacy) {
 		final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
-		if (studentCandidacy.getExecutionDegree() == executionDegree
+		if (!studentCandidacy.isConcluded()
+			&& studentCandidacy.getExecutionDegree() == executionDegree
 			&& studentCandidacy.getExecutionDegree().getExecutionYear() == executionYear
 			&& studentCandidacy.getEntryPhase() != null
 			&& studentCandidacy.getEntryPhase().equals(entryPhase)) {

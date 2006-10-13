@@ -29,7 +29,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.util.LabelValueBean;
 
 /**
  * 
@@ -60,8 +59,8 @@ public class GeneratePasswordsForCandidaciesAction extends FenixDispatchAction {
 	final ExecutionDegree executionDegree = rootDomainObject
 		.readExecutionDegreeByOID(executionDegreeId);
 	final Set<StudentCandidacy> studentCandidacies = new HashSet<StudentCandidacy>(StudentCandidacy
-		.readByExecutionDegreeAndExecutionYearAndEntryPhase(executionDegree, ExecutionYear
-			.readCurrentExecutionYear(), entryPhase));
+		.readNotConcludedBy(executionDegree, ExecutionYear.readCurrentExecutionYear(),
+			entryPhase));
 
 	request.setAttribute("studentCandidacies", studentCandidacies);
 
