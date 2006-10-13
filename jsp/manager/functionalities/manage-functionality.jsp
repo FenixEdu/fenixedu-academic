@@ -30,22 +30,30 @@
      ======================  -->
 
 <fr:view name="functionality" layout="tabular" 
-         schema="functionalities.functionality.view.simple"/>
+         schema="functionalities.functionality.view.simple">
+	<fr:layout>
+		<fr:property name="classes" value="tstyle1 thlight thright mvert05"/>
+	</fr:layout>
+</fr:view>
 
 <!-- ======================
         enable disable
      ======================  -->
 
 <logic:equal name="functionality" property="enabled" value="true">
+	<p class="mtop025">
     <html:link page="/functionality/disable.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
         <bean:message key="link.functionality.disable" bundle="FUNCTIONALITY_RESOURCES"/>
     </html:link>
+    </p>
 </logic:equal>
 
 <logic:equal name="functionality" property="enabled" value="false">
+	<p class="mtop025">
     <html:link page="/functionality/enable.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
         <bean:message key="link.functionality.enable" bundle="FUNCTIONALITY_RESOURCES"/>
     </html:link>
+    </p>
 </logic:equal>
 
 <!-- ======================
@@ -54,8 +62,9 @@
 
 <logic:present name="contextAvailabilities">
     <fr:view name="contextAvailabilities" schema="functionalities.availability.manage.context">
-        <fr:layout name="tabular">
-        </fr:layout>
+		<fr:layout>
+			<fr:property name="classes" value="tstyle5 thlight thright mvert05"/>
+		</fr:layout>
         <fr:destination name="viewModule" path="/module/view.do?module=${module.idInternal}"/>
     </fr:view>
 </logic:present>
@@ -64,7 +73,7 @@
         expression help
      ======================  -->
 
-<div>
+<div class="infoop2 mvert1">
     <bean:message key="functionalities.expression.help" bundle="FUNCTIONALITY_RESOURCES" arg0="<%= request.getContextPath() %>"/>
 </div>
 
@@ -106,4 +115,8 @@
 <fr:edit name="bean" schema="functionalities.expression"
          action="<%= "/functionality/parse.do?functionality=" + oid %>">
     <fr:destination name="cancel" path="<%= "/functionality/manage.do?functionality=" + oid %>" redirect="true"/>
+	<fr:layout>
+		<fr:property name="classes" value="tstyle5 thlight thright mvert1"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	</fr:layout>
 </fr:edit>

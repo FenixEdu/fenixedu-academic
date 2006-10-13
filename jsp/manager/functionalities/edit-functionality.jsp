@@ -43,6 +43,9 @@
 
 <bean:define id="id" name="functionality" property="idInternal"/>
 
-<fr:edit name="functionality" layout="tabular" 
-         schema="functionalities.functionality.edit"
-         action="<%= "/functionality/view.do?functionality=" + id %>"/>
+<fr:edit name="functionality" layout="tabular" schema="functionalities.functionality.edit" action="<%= "/functionality/view.do?functionality=" + id %>">
+	<fr:layout>
+		<fr:property name="classes" value="tstyle5 thlight thright mvert05"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	</fr:layout>
+</fr:edit>

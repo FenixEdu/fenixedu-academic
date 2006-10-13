@@ -8,7 +8,6 @@
 <!-- ======================
          bread crumbs
      ======================  -->
-
 <div>
     <html:link page="/toplevel/view.do">
         <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
@@ -43,7 +42,9 @@
 
 <bean:define id="id" name="module" property="idInternal"/>
 
-<fr:edit name="module" 
-         layout="tabular" 
-         schema="functionalities.module.edit"
-         action="<%= "/module/view.do?module=" + id %>"/>
+<fr:edit name="module" layout="tabular" schema="functionalities.module.edit" action="<%= "/module/view.do?module=" + id %>">
+	<fr:layout>
+		<fr:property name="classes" value="tstyle5 thlight thright mvert05"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	</fr:layout>
+</fr:edit>

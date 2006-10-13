@@ -33,4 +33,9 @@
 
 <fr:create type="net.sourceforge.fenixedu.domain.functionalities.Module"
            schema="functionalities.module.create"
-           action="/toplevel/view.do"/>
+           action="/toplevel/view.do">
+  	<fr:layout>
+		<fr:property name="classes" value="tstyle5 thlight thright mvert05"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	</fr:layout>
+</fr:create>

@@ -48,4 +48,8 @@
 <fr:edit id="structure" name="bean" schema="functionalities.structure.bean"
          action="<%= action %>">
          <fr:destination name="cancel" path="<%= cancel %>"/>
+	<fr:layout>
+		<fr:property name="classes" value="tstyle5 thlight thright mvert1"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	</fr:layout>
 </fr:edit>

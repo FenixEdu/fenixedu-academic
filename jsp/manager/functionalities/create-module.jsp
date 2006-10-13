@@ -44,4 +44,8 @@
            action="<%= "/module/view.do?module=" + id %>">
     <fr:hidden slot="parent" name="parent"/>
     <fr:destination name="invalid" path="<%= "/module/create.do?parent=" + id %>"/>
+	<fr:layout>
+		<fr:property name="classes" value="tstyle5 thlight thright mvert05"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	</fr:layout>
 </fr:create>
