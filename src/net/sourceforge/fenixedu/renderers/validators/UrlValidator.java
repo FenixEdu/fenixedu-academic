@@ -8,6 +8,8 @@ public class UrlValidator extends HtmlValidator {
 
     private static final String DEFAULT_SCHEME = "http";
 
+    private boolean required;
+    
     /**
      * Required constructor.
      */
@@ -16,14 +18,26 @@ public class UrlValidator extends HtmlValidator {
         // default messsage
         setKey(true);
         setMessage("renderers.validator.url");
+        setRequired(true);
     }
 
+    public boolean isRequired() {
+        return this.required;
+    }
+    
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+    
     @Override
     public void performValidation() {
         if (hasValue()) {
             org.apache.commons.validator.UrlValidator urlValidator = new org.apache.commons.validator.UrlValidator(
                     validSchemes);
             setValid(urlValidator.isValid(buildUrlForValidation()));
+        }
+        else {
+            setValid(!isRequired());
         }
     }
 
