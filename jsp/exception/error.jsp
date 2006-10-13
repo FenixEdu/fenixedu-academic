@@ -38,7 +38,13 @@
 					    <bean:message key="property.email"/>
 					</td>
 					<td>
-						<html:text size="30" bundle="HTMLALT_RESOURCES" altKey="text.email" property="email" value=""/> 
+						<logic:present name="loggedPersonEmail">
+							<bean:define id="loggedPersonEmail" name="loggedPersonEmail" type="java.lang.String"/>
+							<html:text size="30" bundle="HTMLALT_RESOURCES" altKey="text.email" property="email" value="<%= loggedPersonEmail %>"/>
+						</logic:present>
+						<logic:notPresent name="loggedPersonEmail">
+							<html:text size="30" bundle="HTMLALT_RESOURCES" altKey="text.email" property="email" value=""/>
+						</logic:notPresent>
 					</td>
 				</tr>
 				<tr>
