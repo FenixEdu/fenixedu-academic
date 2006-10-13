@@ -122,7 +122,6 @@
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources parameter="resources.MessagingResources" null="false"/>
     <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 
