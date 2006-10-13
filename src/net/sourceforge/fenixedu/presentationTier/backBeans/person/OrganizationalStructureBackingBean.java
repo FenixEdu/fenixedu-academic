@@ -19,9 +19,11 @@ import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -29,7 +31,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -37,6 +38,7 @@ import net.sourceforge.fenixedu.util.ContractType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
@@ -142,16 +144,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		    buffer.append("<a href=\"").append(getContextPath()).append(
 			    "/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(
 			    unit.getIdInternal()).append("&amp;subUnit=").append(unit.getIdInternal())
-			    .append("#").append(unit.getIdInternal()).append("\">").append(
-				    unit.getName()).append("</a></li>\r\n");
+			    .append("\">").append(unit.getName()).append("</a></li>\r\n");
 
 		} else {
 
 		    buffer.append("\t<li><a href=\"").append(getContextPath()).append(
 			    "/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(
 			    unit.getIdInternal()).append("&amp;subUnit=").append(unit.getIdInternal())
-			    .append("#").append(unit.getIdInternal()).append("\">").append(
-				    unit.getName()).append("</a></li>\r\n");
+			    .append("\">").append(unit.getName()).append("</a></li>\r\n");
 
 		}
 
@@ -181,8 +181,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	buffer.append("\t\t<li><a href=\"").append(getContextPath()).append(
 		"/messaging/organizationalStructure/chooseUnit.faces?unitID=").append(
 		parentUnit.getIdInternal()).append("&amp;subUnit=").append(parentUnit.getIdInternal())
-		.append("#").append(parentUnit.getIdInternal()).append("\">").append(
-			parentUnit.getName()).append("</a></li>\r\n");
+		.append("\">").append(parentUnit.getName()).append("</a></li>\r\n");
 
 	List<Unit> activeSubUnits = parentUnit.getActiveSubUnits(currentDate,
 		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
@@ -302,9 +301,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	Unit chooseUnit = this.getUnit();
 	ExecutionYear iExecutionYear = getExecutionYear(this.choosenExecutionYearID);
 
-	buffer.append("<ul class='mtop3 nobullet'><li>").append("<image src='").append(getContextPath())
-		.append("/images/unit-icon1.gif'/>").append(" ").append(
-			"<strong class='eo_highlight' id=\"");
+	buffer.append("<ul class='mtop3 nobullet'><li>");
+	// buffer.append("<image
+	// src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
+	// .append(" ");
+	buffer.append("<strong class='eo_highlight' id=\"");
 	buffer.append(chooseUnit.getIdInternal()).append("\" >");
 	buffer.append(chooseUnit.getName()).append("</strong>");
 
@@ -335,10 +336,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void getSubUnitsFunctions(Unit subUnit, YearMonthDay currentDate,
 	    ExecutionYear iExecutionYear, StringBuffer buffer) {
 
-	buffer.append("<ul class='mtop1 nobullet'><li>").append("<image src='").append(getContextPath())
-		.append("/images/unit-icon1.gif'/>").append(" ").append("<strong id=\"").append(
-			subUnit.getIdInternal()).append("\" >").append(subUnit.getName()).append(
-			"</strong>");
+	buffer.append("<ul class='mtop1 nobullet'><li>");
+	// buffer.append("<image
+	// src='").append(getContextPath()).append("/images/unit-icon.gif'/>").append("
+	// ");
+	buffer.append("<strong id=\"").append(subUnit.getIdInternal()).append("\" >").append(
+		subUnit.getName()).append("</strong>");
 
 	printUnitWorkingEmployees(subUnit, iExecutionYear, buffer);
 
@@ -361,27 +364,62 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	buffer.append("</li></ul>");
     }
 
+    private String getHomePageUrl(Person person) {
+	StringBuffer buffer = new StringBuffer();
+	if (person.getHomepage() != null && person.getHomepage().getActivated()) {
+	    buffer.append(getRequest().getScheme()).append("://").append(getRequest().getServerName())
+		    .append(":").append(getRequest().getServerPort()).append("/").append(
+			    PropertiesManager.getProperty("app.context")).append("/homepage/").append(
+			    person.getIstUsername());
+	}
+	return buffer.toString();
+    }
+
+    private void printPersonHomePage(Person person, StringBuffer buffer) {
+	String homePageUrl = getHomePageUrl(person);
+	if (!StringUtils.isEmpty(homePageUrl)) {
+	    buffer.append("<a href=\"").append(homePageUrl).append("\" target=\"_blank\" \">").append(
+		    person.getName()).append("</a>");
+	    buffer.append(" <image src='").append(getContextPath()).append("/images/external.gif'/>");
+	} else {
+	    buffer.append(person.getName());
+	}
+    }
+
     private void printUnitWorkingEmployees(Unit subUnit, ExecutionYear iExecutionYear,
 	    StringBuffer buffer) {
+
 	buffer.append("<ul class='unit3'>");
 	List<Contract> contractsByContractType = subUnit
 		.getContractsByContractType(ContractType.WORKING);
 	Collections.sort(contractsByContractType, Contract.CONTRACT_COMPARATOR_BY_PERSON_NAME);
+
 	for (Contract contract : contractsByContractType) {
 	    if (contract.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
 		    .getEndDateYearMonthDay())) {
+
 		buffer.append("<li>");
-		if (contract.getEmployee().getPerson().getGender().equals(Gender.MALE)) {
-		    buffer.append("<image src='").append(getContextPath()).append(
-			    "/images/worker-icon.png'/>").append(" ");
-		} else if (contract.getEmployee().getPerson().getGender().equals(Gender.FEMALE)) {
-		    buffer.append("<image src='").append(getContextPath()).append(
-			    "/images/woman-icon.png'/>").append(" ");
-		} else {
-		    buffer.append("<image src='").append(getContextPath()).append(
-			    "/images/person-icon.gif'/>").append(" ");
-		}
-		buffer.append(contract.getEmployee().getPerson().getName()).append("</li>");
+
+		// if
+		// (contract.getEmployee().getPerson().getGender().equals(Gender.MALE))
+		// {
+		// buffer.append("<image
+		// src='").append(getContextPath()).append(
+		// "/images/worker-icon.png'/>").append(" ");
+		// } else if
+		// (contract.getEmployee().getPerson().getGender().equals(Gender.FEMALE))
+		// {
+		// buffer.append("<image
+		// src='").append(getContextPath()).append(
+		// "/images/woman-icon.png'/>").append(" ");
+		// } else {
+		// buffer.append("<image
+		// src='").append(getContextPath()).append(
+		// "/images/person-icon.gif'/>").append(" ");
+		// }
+
+		printPersonHomePage(contract.getPerson(), buffer);
+		buffer.append("</li>");
 	    }
 	}
 	buffer.append("</ul>");
@@ -417,9 +455,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    buffer.append("<ul class='unit1'>");
 	    for (PersonFunction personFunction : validPersonFunction) {
 		buffer.append("<li>");
-		buffer.append("<image src='").append(getContextPath()).append(
-			"/images/person-icon.gif'/>").append(" ");
-		buffer.append(personFunction.getPerson().getNome()).append(" (");
+		// buffer.append("<image
+		// src='").append(getContextPath()).append(
+		// "/images/person-icon.gif'/>").append(" ");
+		printPersonHomePage(personFunction.getPerson(), buffer);
+		buffer.append(" (");
 		buffer.append(personFunction.getBeginDate().toString()).append(" - ");
 		buffer.append(personFunction.getEndDate().toString()).append(")");
 		buffer.append("</li>");
