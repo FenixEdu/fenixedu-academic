@@ -38,7 +38,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
                 if (curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod).isEmpty()) {
 
 		    String sigla = getUniqueSigla(existentsExecutionCoursesSiglas, curricularCourse
-			    .getCode());
+			    .getAcronym());
 
 		    ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(),
 			    sigla, executionPeriod);

@@ -60,12 +60,21 @@ public class User extends User_Base {
     }
 
     public void delete() {
-
-	for (; !getIdentifications().isEmpty(); getIdentifications().get(0).delete())
-	    ;
-	
+	for (; !getIdentifications().isEmpty(); getIdentifications().get(0).delete()) ;
 	removePerson();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
+
+    public String getAliass() {
+        final StringBuilder aliass = new StringBuilder();
+        for (final LoginAlias loginAlias : readUserLoginIdentification().getLoginAliasOrderByImportance()) {
+            if (aliass.length() > 0) {
+                aliass.append(", ");
+            }
+            aliass.append(loginAlias.getAlias());
+        }
+        return aliass.toString();
+    }
+
 }

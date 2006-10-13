@@ -163,7 +163,7 @@
      
       <!-- Action for Visualization Of the Person's Personal Information -->
       <action path="/visualizePersonalInfo"
-             input="personMainPage.jsp"
+             input="/visualizePersonalInfo.jsp"
       	      type="net.sourceforge.fenixedu.presentationTier.Action.person.VisualizePersonalInfoAction">
       	  <forward name="Success" path="/visualizePersonalInfo.jsp"/>      	      
       </action>

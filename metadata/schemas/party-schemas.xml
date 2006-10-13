@@ -89,3 +89,67 @@
 <schema name="net.sourceforge.fenixedu.domain.organizationalStructure.Unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="MANAGER_RESOURCES" > 
 	<slot name="name" key="unitName"/>
 </schema>
+<schema name="net.sourceforge.fenixedu.domain.Person.information.to.publish" type="net.sourceforge.fenixedu.domain.Person"> 
+	<slot name="availableEmail" key="label.person.availableEmail"/>
+	<slot name="availableWebSite" key="label.person.availableWebSite"/>
+	<slot name="availablePhoto" key="label.person.availablePhoto"/>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Person.nickname" type="net.sourceforge.fenixedu.domain.Person"> 
+	<slot name="nickname" key="label.person.nickname">
+		<property name="size" value="50"/>
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Person.contact.info" type="net.sourceforge.fenixedu.domain.Person"> 
+	<slot name="phone" key="label.person.telephone">
+		 <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+            <property name="required" value="false"/>
+        </validator>
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="mobile" key="label.person.mobilePhone">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="email" key="label.person.email" validator="net.sourceforge.fenixedu.renderers.validators.EmailValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="webAddress" key="label.person.webSite">
+		 <validator class="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+            <property name="required" value="false"/>
+        </validator>
+		<property name="size" value="50"/>
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Person.personal.info" type="net.sourceforge.fenixedu.domain.Person"> 
+	<slot name="nome" key="label.person.name"/>
+	<slot name="gender" key="label.person.sex"/>
+	<slot name="documentIdNumber" key="label.person.identificationDocumentNumber"/>
+	<slot name="idDocumentType" key="label.person.identificationDocumentType"/>
+	<slot name="emissionLocationOfDocumentId" key="label.person.identificationDocumentIssuePlace"/>
+	<slot name="emissionDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentIssueDate"/>
+	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate"/>
+	<slot name="socialSecurityNumber" key="label.person.contributorNumber"/>
+	<slot name="profession" key="label.person.occupation"/>
+	<slot name="maritalStatus" key="label.person.maritalStatus"/>
+	<slot name="dateOfBirthYearMonthDay" key="label.person.birth"/>
+	<slot name="nationality.nationality" key="label.person.country"/>
+	<slot name="parishOfBirth" key="label.person.birthPlaceParish"/>
+	<slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
+	<slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Person.family" type="net.sourceforge.fenixedu.domain.Person"> 
+	<slot name="nameOfFather" key="label.person.fatherName"/>
+	<slot name="nameOfMother" key="label.person.motherName"/>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Person.residence" type="net.sourceforge.fenixedu.domain.Person"> 
+	<slot name="address" key="label.person.address"/>
+	<slot name="areaCode" key="label.person.postCode"/>
+	<slot name="areaOfAreaCode" key="label.person.areaOfPostCode"/>
+	<slot name="area" key="label.person.place"/>
+	<slot name="parishOfResidence" key="label.person.addressParish"/>
+	<slot name="districtSubdivisionOfResidence" key="label.person.addressMunicipality"/>
+	<slot name="districtOfResidence" key="label.person.addressDistrict"/>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Person.user.info" type="net.sourceforge.fenixedu.domain.Person"> 
+	<slot name="user.userUId" key="label.person.istUsername"/>
+	<slot name="user.aliass" key="label.person.aliass"/>
+</schema>

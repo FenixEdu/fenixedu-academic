@@ -57,15 +57,6 @@
 	<p><strong><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/>:</strong></p>
 
 	<table class="tstyle5 thlight thright">
-		<tr>
-			<th>
-				<bean:message key="label.homepage.name" bundle="HOMEPAGE_RESOURCES"/>:
-			</th>
-			<td colspan="3">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="50"/>
-				<p><bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/></p>
-			</td>
-		</tr>
 		<logic:present name="UserView" property="person.employee.currentWorkingContract.workingUnit">
 			<tr>
 				<th>

@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Add a new column to Parking Request Table" alterTableParkingRequest.sql
+execute "Set person nickname from homepage" updatePerson.sql

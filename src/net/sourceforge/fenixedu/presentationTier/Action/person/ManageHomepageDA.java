@@ -31,11 +31,6 @@ public class ManageHomepageDA extends FenixDispatchAction {
         final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
     	if (homepage != null) {
             dynaActionForm.set("activated", homepage.getActivated().toString());
-            if (homepage.getName() == null || homepage.getName().length() == 0) {
-            	dynaActionForm.set("name", person.getName());
-            } else {
-            	dynaActionForm.set("name", homepage.getName());
-            }
             dynaActionForm.set("showUnit", homepage.getShowUnit().toString());
             dynaActionForm.set("showCategory", homepage.getShowCategory().toString());
             dynaActionForm.set("showPhoto", homepage.getShowPhoto().toString());
@@ -51,8 +46,6 @@ public class ManageHomepageDA extends FenixDispatchAction {
             dynaActionForm.set("researchUnitHomepage", homepage.getResearchUnitHomepage());
             dynaActionForm.set("researchUnit", homepage.getResearchUnit() != null ? homepage.getResearchUnit().getContent() : null);
             dynaActionForm.set("showCurrentAttendingExecutionCourses", homepage.getShowCurrentAttendingExecutionCourses().toString());
-    	} else {
-            dynaActionForm.set("name", person.getName());
         }
         
         SortedSet<Attends> personAttendsSortedByExecutionCourseName = new TreeSet<Attends>(
@@ -69,7 +62,6 @@ public class ManageHomepageDA extends FenixDispatchAction {
     	final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
 
     	final String activated = (String) dynaActionForm.get("activated");
-    	final String name = (String) dynaActionForm.get("name");
     	final String showUnit = (String) dynaActionForm.get("showUnit");
     	final String showCategory = (String) dynaActionForm.get("showCategory");
     	final String showPhoto = (String) dynaActionForm.get("showPhoto");
@@ -96,7 +88,6 @@ public class ManageHomepageDA extends FenixDispatchAction {
     	final Object[] args = {
     			getUserView(request).getPerson(),
     			Boolean.valueOf(activated),
-    			name,
     			Boolean.valueOf(showUnit),
     			Boolean.valueOf(showCategory),
     			Boolean.valueOf(showPhoto),

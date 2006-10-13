@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class SubmitHomepage extends Service {
 
-    public void run(final Person person, final Boolean activated, final String name, final Boolean showUnit,
+    public void run(final Person person, final Boolean activated, final Boolean showUnit,
     		final Boolean showCategory, final Boolean showPhoto, final Boolean showEmail, final Boolean showTelephone,
     		final Boolean showWorkTelephone, final Boolean showMobileTelephone, final Boolean showAlternativeHomepage,
     		final Boolean showResearchUnitHomepage, final Boolean showCurrentExecutionCourses,
@@ -22,7 +22,6 @@ public class SubmitHomepage extends Service {
     	}
 
     	homepage.setActivated(activated);
-    	homepage.setName(name);
     	homepage.setShowUnit(showUnit);
     	homepage.setShowCategory(showCategory);
     	homepage.setShowPhoto(showPhoto);
