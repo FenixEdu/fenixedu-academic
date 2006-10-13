@@ -280,12 +280,27 @@ function check(e,v){
 								<td class="ppright">	            	
 									<logic:present name="personalInfo" property="enderecoWeb">
 										<bean:define id="homepage" name="personalInfo" property="enderecoWeb" />
-										<html:link href="<%= pageContext.findAttribute("homepage").toString() %>"><bean:write name="personalInfo" property="enderecoWeb"/></html:link>
+										<html:link target="_blank" href="<%= pageContext.findAttribute("homepage").toString() %>"><bean:write name="personalInfo" property="enderecoWeb"/></html:link>
 									</logic:present>
 								</td>
 							</tr>
 						</logic:present>
 					</logic:equal>
+					
+					<logic:notEmpty name="personalInfo" property="homepage">
+						<logic:equal name="personalInfo" property="homepage.activated" value="true">
+							<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+							<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>				
+							<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="personalInfo" property="istUsername"/></bean:define>						
+							<tr>
+								<td class="ppleft2"><bean:message key="label.homepage"/></td>		            
+								<td class="ppright">	            	
+									<html:link href="<%= homepageURL %>" target="_blank"><bean:write name="homepageURL"/></html:link>
+								</td>
+							</tr>
+						</logic:equal>					
+					</logic:notEmpty>
+					
 					<logic:present name="personalInfo" property="infoStudentCurricularPlanList" >
 						<logic:notEmpty name="personalInfo" property="infoStudentCurricularPlanList" >
 							<tr>   

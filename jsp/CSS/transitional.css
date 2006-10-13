@@ -317,6 +317,11 @@ ul.unit2 li {
 background-color: #fff;
 list-style: circle;
 }
+ul.unit3 li {
+background-color: #fff;
+list-style: none;
+color: #606080;
+}
 
 ul.padding1 li { padding: 0.25em 0; }
 
@@ -1124,4 +1129,3 @@ padding: 0;
 }
 div.announcement h3 a { text-decoration: none; }
 .greytxt2 { color: #999; }
-.ann_body 

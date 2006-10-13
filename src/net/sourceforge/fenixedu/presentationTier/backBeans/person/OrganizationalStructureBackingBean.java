@@ -23,14 +23,17 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.ContractType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -197,7 +200,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
     }
 
-    private void getSubUnitsWithoutAggregatedUnitsList(StringBuilder buffer, YearMonthDay currentDate, Unit subUnit) {
+    private void getSubUnitsWithoutAggregatedUnitsList(StringBuilder buffer, YearMonthDay currentDate,
+	    Unit subUnit) {
 	List<Unit> validInstitutionSubUnits = null;
 	if (subUnit.getType() != null && subUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
 	    validInstitutionSubUnits = getValidInstitutionSubUnits(subUnit, currentDate);
@@ -210,7 +214,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    getSubUnitsList(subUnit, buffer, currentDate);
 	}
     }
-    
+
     public Map<PartyTypeEnum, Set<Unit>> getAllInstitutionSubUnits() throws FenixFilterException,
 	    FenixServiceException, ExcepcaoPersistencia {
 
@@ -298,9 +302,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	Unit chooseUnit = this.getUnit();
 	ExecutionYear iExecutionYear = getExecutionYear(this.choosenExecutionYearID);
 
-	buffer.append("<ul class='mtop3 nobullet'><li><strong class='eo_highlight' id=\"");
+	buffer.append("<ul class='mtop3 nobullet'><li>").append("<image src='").append(getContextPath())
+		.append("/images/unit-icon1.gif'/>").append(" ").append(
+			"<strong class='eo_highlight' id=\"");
 	buffer.append(chooseUnit.getIdInternal()).append("\" >");
 	buffer.append(chooseUnit.getName()).append("</strong>");
+
+	printUnitWorkingEmployees(chooseUnit, iExecutionYear, buffer);
 
 	for (Function function : getSortFunctionList(chooseUnit)) {
 	    if (function.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
@@ -327,8 +335,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void getSubUnitsFunctions(Unit subUnit, YearMonthDay currentDate,
 	    ExecutionYear iExecutionYear, StringBuffer buffer) {
 
-	buffer.append("<ul class='mtop1 nobullet'><li><strong id=\"").append(subUnit.getIdInternal()).append(
-		"\" >").append(subUnit.getName()).append("</strong>");
+	buffer.append("<ul class='mtop1 nobullet'><li>").append("<image src='").append(getContextPath())
+		.append("/images/unit-icon1.gif'/>").append(" ").append("<strong id=\"").append(
+			subUnit.getIdInternal()).append("\" >").append(subUnit.getName()).append(
+			"</strong>");
+
+	printUnitWorkingEmployees(subUnit, iExecutionYear, buffer);
 
 	for (Function function : getSortFunctionList(subUnit)) {
 	    if (function.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
@@ -342,13 +354,41 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	for (Unit subUnit2 : subUnit.getActiveSubUnits(currentDate,
 		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)) {
-	    getSubUnitsWithoutAggregatedUnitsToFunctionList(buffer, iExecutionYear, currentDate, subUnit2);
+	    getSubUnitsWithoutAggregatedUnitsToFunctionList(buffer, iExecutionYear, currentDate,
+		    subUnit2);
 	}
 
 	buffer.append("</li></ul>");
     }
 
-    private void getSubUnitsWithoutAggregatedUnitsToFunctionList(StringBuffer buffer, ExecutionYear iExecutionYear, YearMonthDay currentDate, Unit subUnit) {
+    private void printUnitWorkingEmployees(Unit subUnit, ExecutionYear iExecutionYear,
+	    StringBuffer buffer) {
+	buffer.append("<ul class='unit3'>");
+	List<Contract> contractsByContractType = subUnit
+		.getContractsByContractType(ContractType.WORKING);
+	Collections.sort(contractsByContractType, Contract.CONTRACT_COMPARATOR_BY_PERSON_NAME);
+	for (Contract contract : contractsByContractType) {
+	    if (contract.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
+		    .getEndDateYearMonthDay())) {
+		buffer.append("<li>");
+		if (contract.getEmployee().getPerson().getGender().equals(Gender.MALE)) {
+		    buffer.append("<image src='").append(getContextPath()).append(
+			    "/images/worker-icon.png'/>").append(" ");
+		} else if (contract.getEmployee().getPerson().getGender().equals(Gender.FEMALE)) {
+		    buffer.append("<image src='").append(getContextPath()).append(
+			    "/images/woman-icon.png'/>").append(" ");
+		} else {
+		    buffer.append("<image src='").append(getContextPath()).append(
+			    "/images/person-icon.gif'/>").append(" ");
+		}
+		buffer.append(contract.getEmployee().getPerson().getName()).append("</li>");
+	    }
+	}
+	buffer.append("</ul>");
+    }
+
+    private void getSubUnitsWithoutAggregatedUnitsToFunctionList(StringBuffer buffer,
+	    ExecutionYear iExecutionYear, YearMonthDay currentDate, Unit subUnit) {
 	List<Unit> validInstitutionSubUnits = null;
 	if (subUnit.getType() != null && subUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
 	    validInstitutionSubUnits = getValidInstitutionSubUnits(subUnit, currentDate);
@@ -361,7 +401,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    getSubUnitsFunctions(subUnit, currentDate, iExecutionYear, buffer);
 	}
     }
-    
+
     private void getPersonFunctionsList(Unit unit, Function function, StringBuffer buffer,
 	    ExecutionYear iExecutionYear) {
 
@@ -377,6 +417,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    buffer.append("<ul class='unit1'>");
 	    for (PersonFunction personFunction : validPersonFunction) {
 		buffer.append("<li>");
+		buffer.append("<image src='").append(getContextPath()).append(
+			"/images/person-icon.gif'/>").append(" ");
 		buffer.append(personFunction.getPerson().getNome()).append(" (");
 		buffer.append(personFunction.getBeginDate().toString()).append(" - ");
 		buffer.append(personFunction.getEndDate().toString()).append(")");
@@ -422,6 +464,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		list.add((PersonFunction) personFunction);
 	    }
 	}
+	Collections.sort(list, PersonFunction.COMPARATOR_BY_PERSON_NAME);
 	return list;
     }
 

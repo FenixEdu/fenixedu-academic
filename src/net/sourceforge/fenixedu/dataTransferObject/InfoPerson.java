@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -196,6 +197,10 @@ public class InfoPerson extends InfoObject {
         return InfoExternalPerson.newInfoFromDomain(getPerson().getExternalPerson());
     }
 
+    public Homepage getHomepage() {
+	return getPerson().getHomepage();
+    }
+    
     private List<String> getImportantRoles(Person person, List<String> mainRoles) {
 
         if (person.getPersonRolesCount() != 0) {

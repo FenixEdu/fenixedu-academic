@@ -16,6 +16,12 @@ public class PersonFunction extends PersonFunction_Base {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"));
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
     }
+    
+    public final static Comparator<PersonFunction> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
+    static {
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("person.name"));
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("idInternal"));
+    }
 
     public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin,
 	    YearMonthDay end, Double credits) {

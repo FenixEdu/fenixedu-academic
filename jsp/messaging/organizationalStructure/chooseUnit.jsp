@@ -28,5 +28,10 @@
 			<h:outputText value="#{organizationalStructure.functions}" escape="false"/>		
 		</h:panelGroup>
 	</h:form>
-
+	
+		<h:outputText value="<p class='mtop2 mbottom025'><em>Legenda:</em></p>" escape="false" />
+		<h:outputText value="<p class='mvert025'><div style='width: 10px; height: 10px; background-color: #606080; margin-top: 4px; float: left;'></div> <div style='padding-left: 15px;'><em>Funcionários da unidade</em></div></p>" escape="false" />
+		<h:outputText value="<p class='mvert025'><div style='width: 10px; height: 10px; background-color: #808060; margin-top: 4px; float: left;'></div> <div style='padding-left: 15px;'><em>Pessoas com cargos de gestão</em></div></p>" escape="false" />
+		
+		
 </ft:tilesView> 

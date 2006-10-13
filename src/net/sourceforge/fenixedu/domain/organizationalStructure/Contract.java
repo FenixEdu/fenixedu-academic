@@ -27,6 +27,14 @@ public class Contract extends Contract_Base {
 		"idInternal"));
     }
 
+    public static final Comparator CONTRACT_COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
+    static {
+	((ComparatorChain) CONTRACT_COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator(
+		"person.name"));
+	((ComparatorChain) CONTRACT_COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator(
+		"idInternal"));
+    }
+
     private Contract() {
 	super();
     }
