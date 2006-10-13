@@ -72,6 +72,7 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.NotAdmittedCandidacySituation"/>			
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.SubstituteCandidacySituation"/>		
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation"/>		
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.CancelledCandidacySituation"/>		
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.PreCandidacySituation" table="CANDIDACY_SITUATION">
@@ -103,6 +104,10 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation" table="CANDIDACY_SITUATION">
+
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.CancelledCandidacySituation" table="CANDIDACY_SITUATION">
 
 </class-descriptor>
 

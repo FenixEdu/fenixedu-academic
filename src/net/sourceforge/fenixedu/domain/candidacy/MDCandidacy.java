@@ -37,6 +37,6 @@ public class MDCandidacy extends MDCandidacy_Base {
     @Override
     public boolean isConcluded() {
         return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
-                .getCandidacySituationType() == CandidacySituationType.CANCELED);
+                .getCandidacySituationType() == CandidacySituationType.CANCELLED);
     }
 }

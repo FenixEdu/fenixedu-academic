@@ -6,7 +6,7 @@ public enum CandidacySituationType {
     STAND_BY_FILLED_DATA,
     STAND_BY_CONFIRMED_DATA,
     ADMITTED,
-    CANCELED,
+    CANCELLED,
     SUBSTITUTE, 
     NOT_ADMITTED, 
     REGISTERED;

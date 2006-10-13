@@ -3617,6 +3617,9 @@ class net.sourceforge.fenixedu.domain.candidacy.CandidacySituation extends net.s
 	class net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
 	}	
 	
+	class net.sourceforge.fenixedu.domain.candidacy.CancelledCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
+	}	
+	
 class net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument extends net.sourceforge.fenixedu.domain.DomainObject {
 	String documentDescription;
 	Integer keyCandidacy;

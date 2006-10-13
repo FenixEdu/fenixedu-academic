@@ -60,22 +60,22 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 
 	// if (entryGrade == null) {
 	// throw new
-        // DomainException("error.candidacy.DegreeCandidacy.entryGrade.cannot.be.null");
+	// DomainException("error.candidacy.DegreeCandidacy.entryGrade.cannot.be.null");
 	// }
 	//
 	// if (contigent == null) {
 	// throw new
-        // DomainException("error.candidacy.DegreeCandidacy.contigent.cannot.be.null");
+	// DomainException("error.candidacy.DegreeCandidacy.contigent.cannot.be.null");
 	// }
 	//
 	// if (ingression == null) {
 	// throw new
-        // DomainException("error.candidacy.DegreeCandidacy.ingression.cannot.be.null");
+	// DomainException("error.candidacy.DegreeCandidacy.ingression.cannot.be.null");
 	// }
 	//
 	// if (istUniversity == null) {
 	// throw new
-        // DomainException("error.candidacy.DegreeCandidacy.istUniversity.cannot.be.null");
+	// DomainException("error.candidacy.DegreeCandidacy.istUniversity.cannot.be.null");
 	// }
 
 	if (entryPhase == null) {
@@ -105,21 +105,24 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	// }
     }
 
-//    @Override
-//    public void setExecutionDegree(ExecutionDegree executionDegree) {
-//	//throw new DomainException("error.candidacy.DegreeCandidacy.cannot.modify.executionDegree");
-//    }
+    // @Override
+    // public void setExecutionDegree(ExecutionDegree executionDegree) {
+    // //throw new
+        // DomainException("error.candidacy.DegreeCandidacy.cannot.modify.executionDegree");
+    // }
 
-//    @Override
-//    public void setPerson(Person person) {
-//	throw new DomainException("error.candidacy.DegreeCandidacy.cannot.modify.person");
-//    }
-//
-//    @Override
-//    public void setPrecedentDegreeInformation(PrecedentDegreeInformation precedentDegreeInformation) {
-//	throw new DomainException(
-//		"error.candidacy.DegreeCandidacy.cannot.modify.precedentDegreeInformation");
-//    }
+    // @Override
+    // public void setPerson(Person person) {
+    // throw new
+        // DomainException("error.candidacy.DegreeCandidacy.cannot.modify.person");
+    // }
+    //
+    // @Override
+    // public void setPrecedentDegreeInformation(PrecedentDegreeInformation
+        // precedentDegreeInformation) {
+    // throw new DomainException(
+    // "error.candidacy.DegreeCandidacy.cannot.modify.precedentDegreeInformation");
+    // }
 
     public String getDescription() {
 	return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale())
@@ -223,7 +226,8 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 
     @Override
     public boolean isConcluded() {
-	return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED);
+	return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
+		.getCandidacySituationType() == CandidacySituationType.CANCELLED);
     }
 
 }
