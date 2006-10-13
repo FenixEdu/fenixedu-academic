@@ -110,7 +110,7 @@
 						}
 						%>
 					</td>
-					<td class="aleft smalltxt2 lowlight1">
+					<td class="smalltxt2 lowlight1" style="text-align: left;">
 						<bean:write name="announcementBoard" property="fullName"/>
 					</td>
 					<td>
