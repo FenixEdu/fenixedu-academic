@@ -62,7 +62,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private HashMap<Integer, String> unitRelationsAccountabilityTypes;
 
-    private Boolean toRemoveParentUnit;
+    private Boolean toRemoveParentUnit, viewExternalUnits;;
 
     public OrganizationalStructureBackingBean() {
 	if (!StringUtils.isEmpty(getRequestParameter("unitID"))) {
@@ -88,6 +88,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		    .toString());
 	} else {
 	    this.toRemoveParentUnit = false;
+	}	
+	if(getViewExternalUnits() == null) {
+	    setViewExternalUnits(Boolean.FALSE);
 	}
     }
 
@@ -200,15 +203,23 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	hidden.setValue("0");
 	this.setListingTypeValueToUnitsHidden(hidden);
 	this.setListingTypeValueToUnits("0");
+	this.setViewExternalUnits(Boolean.FALSE);
 	return "listAllUnits";
     }
-
+    
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
 	StringBuilder buffer = new StringBuilder();
-	List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
-	Collections.sort(allUnitsWithoutParent, Unit.UNIT_COMPARATOR_BY_NAME);
+	List<Unit> allUnitsWithoutParent;
 	YearMonthDay currentDate = new YearMonthDay();
-
+	
+	if (getViewExternalUnits()) {
+	    allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
+	    Collections.sort(allUnitsWithoutParent, Unit.UNIT_COMPARATOR_BY_NAME);
+	} else {
+	    allUnitsWithoutParent = new ArrayList<Unit>();
+	    allUnitsWithoutParent.add(UnitUtils.readInstitutionUnit());
+	}
+	
 	for (Unit unit : allUnitsWithoutParent) {
 	    boolean active = this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0");
 	    if (active) {
@@ -1179,5 +1190,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void setAccountabilityID(Integer accountabilityID) {
 	this.accountabilityID = accountabilityID;
+    }
+
+    public Boolean getViewExternalUnits() {
+	return viewExternalUnits;
+    }
+
+    public void setViewExternalUnits(Boolean viewExternalUnits) {
+	this.viewExternalUnits = viewExternalUnits;
     }
 }

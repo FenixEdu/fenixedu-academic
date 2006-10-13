@@ -48,6 +48,10 @@
 			<f:selectItems value="#{organizationalStructureBackingBean.listingTypeToUnits}"/>				
 		</fc:selectOneMenu>		
 		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+		
+		<h:outputText value="<br/><br/>" escape="false"/>									
+		<h:outputText value="<b>#{bundle['message.viewExternalUnits']}</b>" escape="false"/>	
+		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.viewExternalUnits}" onclick="this.form.submit()"/>
 			
 		<h:outputText value="<br/><br/>#{organizationalStructureBackingBean.units}" escape="false"/>
 				
