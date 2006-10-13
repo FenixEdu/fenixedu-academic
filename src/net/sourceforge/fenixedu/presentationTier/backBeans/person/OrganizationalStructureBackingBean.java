@@ -379,10 +379,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	String homePageUrl = getHomePageUrl(person);
 	if (!StringUtils.isEmpty(homePageUrl)) {
 	    buffer.append("<a href=\"").append(homePageUrl).append("\" target=\"_blank\" \">").append(
-		    person.getName()).append("</a>");
+		    person.getNickname()).append("</a>");
 	    buffer.append(" <image src='").append(getContextPath()).append("/images/external.gif'/>");
 	} else {
-	    buffer.append(person.getName());
+	    buffer.append(person.getNickname());
 	}
     }
 

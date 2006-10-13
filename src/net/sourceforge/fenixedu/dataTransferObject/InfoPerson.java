@@ -269,7 +269,7 @@ public class InfoPerson extends InfoObject {
         throw new Error("Method should not be called!");
     }
 
-    private Person getPerson() {
+    public Person getPerson() {
         return person == null ? null : person.getObject();
     }
 

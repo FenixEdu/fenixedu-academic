@@ -9,12 +9,7 @@
 <div id="logged">
 	<div class="user">
 		<strong>Utilizador:</strong> 
-		<str:getPrechomp delimiter=" ">
-			<bean:write name="<%= SessionConstants.U_VIEW %>" property="fullName"/>
-		</str:getPrechomp> 
-		<str:getChomp delimiter=" ">
-			<bean:write name="<%= SessionConstants.U_VIEW %>" property="fullName"/>
-		</str:getChomp>
+		<bean:write name="<%= SessionConstants.U_VIEW %>" property="person.nickname"/>
 	</div>
 	<div class="info"><dt:format pattern="dd.MM.yyyy"><dt:currentTime/></dt:format></div>
 	<div class="clear"></div>
