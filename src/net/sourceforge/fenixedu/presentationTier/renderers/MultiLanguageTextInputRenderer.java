@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import net.sourceforge.fenixedu.renderers.components.HtmlActionLink;
+import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlTextArea;
 
@@ -41,6 +43,15 @@ public class MultiLanguageTextInputRenderer extends MultiLanguageStringInputRend
 
     public Integer getRows() {
         return this.rows;
+    }
+    
+    @Override
+    protected void configureLanguageContainer(HtmlContainer languageContainer, HtmlSimpleValueComponent input, HtmlSimpleValueComponent languageComponent, HtmlActionLink removeLink) {
+        languageComponent.setStyle("display: block;");
+        
+        languageContainer.addChild(languageComponent);
+        languageContainer.addChild(input);
+        languageContainer.addChild(removeLink);
     }
 
     @Override

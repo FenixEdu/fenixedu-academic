@@ -432,12 +432,15 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
 
             @Override
             public void linkPressed(IViewState viewState, HtmlActionLink link) {
+                viewState.setSkipValidation(true);
+                
                 Integer index = updateLastIndex(0);
                 updateLastIndex(index++);
 
                 if (this.link != null) {
                     this.link.setVisible(true);
                 }
+                
                 addLanguageInput(this.container, index, "", null, true);
             }
             
@@ -462,6 +465,8 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
 
             @Override
             public void linkPressed(IViewState viewState, HtmlActionLink link) {
+                viewState.setSkipValidation(true);
+                
                 this.container.removeChild(this.inputContainer);
                 if (this.link != null) {
                     this.link.setVisible(false);
