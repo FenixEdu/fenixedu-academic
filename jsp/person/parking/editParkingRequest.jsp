@@ -945,6 +945,26 @@ margin: 0.5em 0;
 			</logic:notEqual>
 		</logic:notEmpty>
 		
+		<bean:define id="person" name="<%= factoryName %>" property="parkingParty.party" type="net.sourceforge.fenixedu.domain.Person"/>
+		<logic:notEqual name="person" property="partyClassification" value="TEACHER">
+		<logic:notEqual name="person" property="partyClassification" value="EMPLOYEE">		
+		<p class="mtop2">
+			<span class="infoop2">
+				<bean:define id="link"><html:link page="/parking.do?method=downloadParkingRegulamentation">Regulamento</html:link></bean:define>
+				<bean:message key="message.requestQuotas" bundle="PARKING_RESOURCES" arg0="<%= link %>"/>
+			</span>
+			<div class="separator1"></div>		
+				<fr:edit name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.limitlessAccessCard" %>" type="<%= type %>">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle8 thright thlight mtop0 mbottom0"/>
+						<fr:property name="columnClasses" value="width150px,,noborder"/>
+					</fr:layout>	
+				</fr:edit>			
+			<div class="separator1"></div>
+		</p>
+		</logic:notEqual>
+		</logic:notEqual>
+		
 		<p class="mtop2">
 			<input type="submit" value="<%= submit.toString() %>" />		
 		</p>

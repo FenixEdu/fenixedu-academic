@@ -36,6 +36,20 @@ function confirmation(){
 		<p><span class="infoop2"><bean:message key="message.userRequestedAs" bundle="PARKING_RESOURCES"/> 
 		<strong><bean:message name="parkingRequest" property="requestedAs.name" bundle="ENUMERATION_RESOURCES"/></strong></span></p>
 	</logic:notEmpty>
+	<bean:define id="person" name="parkingParty" property="party" type="net.sourceforge.fenixedu.domain.Person"/>
+	<logic:notEqual name="person" property="partyClassification" value="TEACHER">
+	<logic:notEqual name="person" property="partyClassification" value="EMPLOYEE">
+		<bean:write	name="parkingRequest" property="limitlessAccessCard"/>
+		<logic:equal name="parkingRequest" property="limitlessAccessCard" value="false">
+			<bean:define id="cardTypeRequest"><bean:message key="label.limitedCard" bundle="PARKING_RESOURCES"></bean:message></bean:define>
+		</logic:equal>
+		<logic:equal name="parkingRequest" property="limitlessAccessCard" value="true">
+			<bean:define id="cardTypeRequest"><bean:message key="label.limitlessCard" bundle="PARKING_RESOURCES"></bean:message></bean:define>
+		</logic:equal>
+		<p><span class="infoop2"><bean:message key="message.userRequestedCardType" bundle="PARKING_RESOURCES"/>
+		<strong><bean:write name="cardTypeRequest"/></strong></span></p>
+	</logic:notEqual>
+	</logic:notEqual>
 	
 	<logic:notEqual name="parkingRequest" property="parkingRequestState" value="PENDING">		
 		<jsp:include page="viewParkingPartyAndRequest.jsp"/>

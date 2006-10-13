@@ -27,5 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add a new column to Parking Request Table" alterTableParkingRequest.sql
 execute "Set person nickname from homepage" updatePerson.sql
+execute "Added a new column to Parking Request Table" alterTableParkingRequest.sql

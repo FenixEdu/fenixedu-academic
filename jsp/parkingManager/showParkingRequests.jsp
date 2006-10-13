@@ -40,7 +40,7 @@
 		String sortCriteria = request.getParameter("sortBy");
 	
 		if (sortCriteria == null) {
-		    sortCriteria = "creationDate=descending";
+		    sortCriteria = "parkingParty.mostSignificantNumber=ascending";
 		}
 	%>
 		

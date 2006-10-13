@@ -178,6 +178,10 @@
 	</slot>
 </schema>
 
+<schema name="create.parkingRequestFactory.limitlessAccessCard" type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryCreator">
+	<slot name="limitlessAccessCard" key="label.requestLimitlessAccessCard" bundle="PARKING_RESOURCES" />
+</schema>	
+
 <!-- EDIT -->
 <schema name="edit.parkingRequestFactory.driverLicense"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
@@ -275,6 +279,10 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.parking.ParkingRequestAsProvider" />	
 		<property name="eachLayout" value="this-does-not-exist" />		
 	</slot>
+</schema>
+
+<schema name="edit.parkingRequestFactory.limitlessAccessCard" type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
+	<slot name="limitlessAccessCard" key="label.requestLimitlessAccessCard" bundle="PARKING_RESOURCES" />
 </schema>
 
 <schema name="edit.parkingParty.user" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">

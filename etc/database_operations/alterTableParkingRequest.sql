@@ -1,1 +1,1 @@
-alter table PARKING_REQUEST add column REQUESTED_AS varchar(50) default null;
+alter table PARKING_REQUEST add column LIMITLESS_ACCESS_CARD tinyint(1) NOT NULL default '0';

@@ -67,6 +67,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         setSecondCarOwnerIdDocumentState(creator.getSecondCarOwnerIdDocumentState());
         setSecondCarPropertyRegistryDocumentState(creator.getSecondCarPropertyRegistryDocumentState());
         setRequestedAs(creator.getRequestAs());
+        setLimitlessAccessCard(creator.isLimitlessAccessCard());
     }
 
     public ParkingRequestFactoryEditor getParkingRequestFactoryEditor() {
@@ -175,6 +176,8 @@ public class ParkingRequest extends ParkingRequest_Base {
         ParkingDocumentState secondCarDeclarationDocumentState;
         
         RoleType requestAs;
+        
+        boolean limitlessAccessCard;
 
         public ParkingRequestFactory(ParkingParty parkingParty) {
             super();
@@ -658,6 +661,14 @@ public class ParkingRequest extends ParkingRequest_Base {
         public void setRequestAs(RoleType requestAs) {
             this.requestAs = requestAs;
         }
+
+        public boolean isLimitlessAccessCard() {
+            return limitlessAccessCard;
+        }
+
+        public void setLimitlessAccessCard(boolean limitlessAccessCard) {
+            this.limitlessAccessCard = limitlessAccessCard;
+        }
     }
 
     public static class ParkingRequestFactoryCreator extends ParkingRequestFactory {
@@ -715,6 +726,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             setSecondCarPropertyRegistryDocumentState(parkingRequest
                     .getSecondCarPropertyRegistryDocumentState());
             setRequestAs(parkingRequest.getRequestedAs());
+            setLimitlessAccessCard(parkingRequest.getLimitlessAccessCard());
         }
 
         public ParkingRequest getParkingRequest() {
@@ -758,6 +770,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         setSecondCarPropertyRegistryDocumentState(parkingRequestFactoryEditor
                 .getSecondCarPropertyRegistryDocumentState());
         setRequestedAs(parkingRequestFactoryEditor.getRequestAs());
+        setLimitlessAccessCard(parkingRequestFactoryEditor.isLimitlessAccessCard());
     }
 
     public ParkingDocument getParkingDocument(ParkingDocumentType documentType) {
