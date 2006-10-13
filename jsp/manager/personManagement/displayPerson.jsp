@@ -27,12 +27,22 @@
 		    	<td class="infoop"><strong><bean:write name="personalInfo" property="nome"/></strong></td>
           </tr>
 	 	</table>
-		<table width="100%">
+		<table width="100%">       
           <!-- Username -->
-          <tr>
-            <td width="30%"><bean:message bundle="MANAGER_RESOURCES" key="label.person.username" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="username"/></td> 
-          </tr>
+          <logic:notEmpty name="personalInfo" property="loginAlias">
+	          <tr>
+	            <td width="30%"><bean:message bundle="MANAGER_RESOURCES" key="label.person.username" /></td>
+				<td class="greytxt">
+					<bean:size name="personalInfo" property="loginAlias" id="aliasSize"/>
+		          	<logic:iterate name="personalInfo" property="loginAlias" id="username" indexId="index">
+			          	<bean:write name="username" property="alias"/>
+			          	<logic:notEqual name="index" value="<%= String.valueOf(aliasSize.intValue() - 1) %>">
+			          		;		          	
+			          	</logic:notEqual>
+		          	</logic:iterate>
+	          	</td>          
+	          </tr>       
+          </logic:notEmpty>   
   	      <!-- Numero do Documento de Identificacao -->
           <tr>
             <td width="30%"><bean:message bundle="MANAGER_RESOURCES" key="label.person.identificationDocumentNumber" /></td>

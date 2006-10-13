@@ -49,6 +49,7 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
@@ -219,7 +220,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	    this.activeFunctions = new ArrayList<PersonFunction>();
 
 	    addValidFunctions(activeFunctions, this.activeFunctions);
-	    Collections.sort(this.activeFunctions, PersonFunction.COMPARATOR_BY_BEGIN_DATE);
+	    Collections.sort(this.activeFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
 	}
 	return this.activeFunctions;
     }
@@ -233,7 +234,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	    this.inactiveFunctions = new ArrayList<PersonFunction>();
 
 	    addValidFunctions(inactiveFunctions, this.inactiveFunctions);
-	    Collections.sort(this.inactiveFunctions, PersonFunction.COMPARATOR_BY_BEGIN_DATE);
+	    Collections.sort(this.inactiveFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
 	}
 	return this.inactiveFunctions;
     }
