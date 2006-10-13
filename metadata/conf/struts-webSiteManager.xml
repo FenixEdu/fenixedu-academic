@@ -46,8 +46,8 @@
               validate="true"
               scope="request"
               >
-          <forward name="add" path="websiteManager-add-announcement"/>
-          <forward name="edit" path="edit-announcement"/>
+          <forward name="add"  path="websiteManager-add-announcement"/>
+          <forward name="edit" path="websiteManager-edit-announcement"/>
           <forward name="listAnnouncementBoards" path="websiteManager-list-announcement-boards"/>
 		  <forward name="listAnnouncements" path="websiteManager-list-announcements"/>
           <forward name="unitStructuredBoards" path="unit-structured-boards"/>

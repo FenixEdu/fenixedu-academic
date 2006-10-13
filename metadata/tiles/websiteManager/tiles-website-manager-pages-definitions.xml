@@ -32,13 +32,19 @@
 
   	<definition name="websiteManager-list-announcements" extends="definition.websiteManager.masterPage" >
 	    <put name="navLocal" value="/webSiteManager/sectionsNavbar.jsp"/>
-	    <put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+	    <put name="body" value="/webSiteManager/listBoardAnnouncements.jsp" />
 	</definition>					
 
   	<definition name="websiteManager-add-announcement" extends="definition.websiteManager.masterPage" >
 	    <put name="navLocal" value="/webSiteManager/sectionsNavbar.jsp"/>
-	    <put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
+	    <put name="body" value="/webSiteManager/addAnnouncement.jsp" />
 	</definition>					
+	
+	<definition name="websiteManager-edit-announcement" extends="definition.websiteManager.masterPage" >
+	    <put name="navLocal" value="/webSiteManager/sectionsNavbar.jsp"/>
+	    <put name="body" value="/webSiteManager/editAnnouncement.jsp" />
+	</definition>					
+	
 
   	<definition name="websiteManager-view-announcement" extends="definition.websiteManager.masterPage" >
 	    <put name="navLocal" value="/webSiteManager/sectionsNavbar.jsp"/>

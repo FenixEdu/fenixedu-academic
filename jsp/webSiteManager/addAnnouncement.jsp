@@ -21,9 +21,11 @@
 	String suffix = contextPrefix.substring(indexOfDot,contextPrefix.length());
 %>
 
-<fr:form action="<%= contextPrefix + "method=viewAnnouncements&announcementBoardId="+announcementBoardId+ "&"+extraParameters%>">
+<bean:define id="action"><%= "method=viewAnnouncementBoard&announcementBoardId=" + announcementBoardId + "&" + extraParameters %></bean:define>
 
-<p class="mtop15 mbottom025"><strong>Campos obrigatórios:</strong></p>
+<fr:form action="<%=  contextPrefix + action %>">
+
+<p class="mtop2 mbottom025"><strong>Campos obrigatórios:</strong></p>
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
@@ -133,8 +135,8 @@
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
 		</th>
 		<td>
-			<fr:create id="referedSubjectBegin-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="referedSubjectBegin" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>		
-			<span class="error0"><fr:message for="referedSubjectBegin-validated"/><span class="error0">
+			<fr:create id="referedSubjectBegin-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="referedSubjectBegin" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
+			 <span class="error0"><fr:message for="referedSubjectBegin-validated"/></span>
 		</td>
 	</tr>
 
@@ -145,7 +147,7 @@
 		</th>
 		<td>
 			<fr:create id="referedSubjectEnd-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="referedSubjectEnd" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
-			<span class="error0"><fr:message for="referedSubjectEnd-validated"/><span class="error0">
+			<span class="error0"><fr:message for="referedSubjectEnd-validated"/></span>
 		</td>
 	</tr>
 
