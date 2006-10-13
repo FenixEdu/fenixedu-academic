@@ -548,9 +548,12 @@
     	<property name="size" value="30"/>
 		<property name="maxLength" value="100"/>
     </slot>
-    <slot name="webAddress" validator="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+    <slot name="webAddress">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="200"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+			<property name="required" value="false" />
+		</validator>
     </slot>
     <slot name="emailAvailable" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="homepageAvailable" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
