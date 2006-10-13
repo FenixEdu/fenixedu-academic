@@ -88,15 +88,25 @@ public class HtmlText extends HtmlComponent {
     }
     
     public static String escape(String text) {
-        	if (text == null) {
-        	    return null;
-        	}
-        
-        	return text
-        		.replaceAll("&", "&amp;") // must appear first
-        		.replaceAll("<", "&lt;")
-        		.replaceAll(">", "&gt;")
-        		.replaceAll("  ", " &nbsp;") // TODO: check this
+        	return escape(text, true);
+    }
+
+    public static String escape(String text, boolean preserveSpaces) {
+        if (text == null) {
+            return null;
+        }
+    
+        String result = text
+            .replaceAll("&", "&amp;") // must appear first
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
             .replaceAll("\"", "&quot;");
+        
+        if (preserveSpaces) {
+            return result.replaceAll("  ", " &nbsp;");
+        }
+        else {
+            return result;
+        }
     }
 }
