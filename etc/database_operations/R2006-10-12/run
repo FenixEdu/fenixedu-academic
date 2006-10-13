@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Alter Execution Course Table" alterExecutionCourseTable.sql
 execute "Update Advisories Functionalities" updateAdvisoriesFunctionalities.sql
+execute "Add a new column to Parking Request Table" alterTableParkingRequest.sql
