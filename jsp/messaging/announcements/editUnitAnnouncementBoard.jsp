@@ -84,7 +84,6 @@
 	</html:link>
 </p>
 
-<br/>
 
 	<logic:present name="announcements">
 		<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>

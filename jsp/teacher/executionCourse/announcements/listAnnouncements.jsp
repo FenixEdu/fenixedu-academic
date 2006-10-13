@@ -18,7 +18,7 @@ if (month != null && year!=null)
 {
 %>
 
-<p><em style="background: #fff8cc;"><%= new net.sourceforge.fenixedu.util.Mes(Integer.valueOf(month)).toString()%> de <%=year%></em></p>
+<p><em style="background: #fff8dd;"><%= new net.sourceforge.fenixedu.util.Mes(Integer.valueOf(month)).toString()%> de <%=year%></em></p>
 <%
 } else if (request.getRequestURI().contains("teacher")) {
     YearMonthDay currentDate = new YearMonthDay();
@@ -39,7 +39,7 @@ if (month != null && year!=null)
 		<%-- Event Date OR Publication Date --%>
 			<p class="mvert025 smalltxt greytxt2">
 				<span id="10367">
-					<img src="/ciapl/images/dotist_post.gif" alt="Publicar">
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar">
 					<logic:notEmpty name="announcement" property="publicationBegin">
 						Publicado em 
 							<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
@@ -84,7 +84,7 @@ if (month != null && year!=null)
 
 		<%-- Corpo --%>
 			 <logic:notPresent name="announcementBoard">
-				 <p class="ann_body mvert025">
+				 <div class="ann_body mvert025">
 				 <% if (!announcement.isExcerptEmpty())
 				 	{
 				 %>				 
@@ -101,16 +101,16 @@ if (month != null && year!=null)
 				 <% 
 				 	}
 				 %>
-				 </p>
+				 </div>
 			 </logic:notPresent>
 				
 			<logic:present name="announcementBoard">
-				<p class="ann_body mvert025">
+				<div class="ann_body mvert025">
 				<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html"/>
-				</p>
+				</div>
 			</logic:present>
 
-		<p class="mvert025">
+		<p class="mtop05 mbottom025">
 			<em class="smalltxt greytxt2">
 
 		<%-- Board e RSS --%>
@@ -217,7 +217,7 @@ if (month != null && year!=null)
 	
 	<logic:empty name="announcements">
 		<p class="mtop2">
-			<em>Não existem anúncios para a selecção actual.</em>
+			<em>Não existem anúncios.</em>
 		</p>
 	</logic:empty>
 </logic:present>

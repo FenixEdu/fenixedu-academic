@@ -19,7 +19,9 @@
 <fr:form action="<%=  contextPrefix + action %>">
 
 
-<table class="tstyle8 thlight thtop thright">
+<p class="mtop2 mbottom025"><strong>Campos obrigatórios:</strong></p>
+
+<table class="tstyle5 thlight thtop thright mtop025">
 
 <%-- Título --%>
 	<tr>
@@ -54,7 +56,10 @@
 			<fr:message for="announcement-body-validated" />
 		</td>
 	</tr>
+</table>
 
+<p class="mtop1 mbottom025"><strong>Campos opcionais:</strong></p>
+<table class="tstyle5 thlight thtop thright mtop025">
 <%-- Excerto --%>
 	<tr>
 		<th>

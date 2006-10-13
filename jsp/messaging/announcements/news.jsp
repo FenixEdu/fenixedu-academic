@@ -15,26 +15,32 @@
 <html:form action="/announcements/announcementsStartPageHandler.do" method="get">
 	<html:hidden property="method" value="news"/>
 	<html:hidden property="recentBoardsTimeSpanSelection"/>
+
+<%--
+<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.show"/>
+<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board.view" />
+--%>
+
 	<table class="tstyle5 thright thlight thmiddle mvert05">
 		<tr>
-			<th><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.show"/>:</th>
+			<th rowspan="2">Visualizar:</th>
 			<td>
-		    <html:select property="howManyAnnouncementsToShow" onchange="this.form.submit();">
-		        <html:option value="6">6 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
-	   	        <html:option value="12">12 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
-		        <html:option value="24">24 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
-		    </html:select>
+			    <html:select property="howManyAnnouncementsToShow" onchange="this.form.submit();">
+			        <html:option value="6">6 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
+		   	        <html:option value="12">12 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
+			        <html:option value="24">24 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
+			    </html:select>
 			</td>
+
 		</tr>
 		<tr>
-			<th><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board.view" />:</th>
 			<td>
 				<html:radio property="boardType" value="BOOKMARKED" onchange="this.form.submit();">
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.bookmarked" />
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.bookmarked.boards" />
 				</html:radio>
 				<br/>
 				<html:radio property="boardType" value="INSTITUTIONAL" onchange="this.form.submit();">
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.institutional" />
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.institutional.boards" />
 				</html:radio>
 			</td>
 		</tr>

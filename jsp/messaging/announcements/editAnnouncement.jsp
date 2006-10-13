@@ -7,6 +7,7 @@
 <em>Gestão de Canais</em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.edit.label"/></h2>
 
+
 <bean:define id="contextPrefix" name="contextPrefix" />
 <bean:define id="extraParameters" name="extraParameters" />
 <bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
@@ -17,7 +18,9 @@
 <fr:form action="<%=  contextPrefix + action %>">
 
 
-<table class="tstyle8 thlight thtop thright">
+<p class="mtop2 mbottom025"><strong>Campos obrigatórios:</strong></p>
+
+<table class="tstyle5 thlight thtop thright mtop025">
 
 <%-- Título --%>
 	<tr>
@@ -53,7 +56,10 @@
 		</td>
 	</tr>
 
+</table>
 
+<p class="mtop1 mbottom025"><strong>Campos opcionais:</strong></p>
+<table class="tstyle5 thlight thtop thright mtop025">
 <%-- Excerto --%>
 	<tr>
 		<th>

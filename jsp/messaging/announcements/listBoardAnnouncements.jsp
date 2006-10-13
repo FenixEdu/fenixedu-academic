@@ -33,6 +33,24 @@
 	
 	</h2>
 
+
+	<ul>
+			<%
+				if (announcementBoard.hasWriter(person))
+				{
+			%>
+			<li>
+				<html:link action="<%= contextPrefix + "method=addAnnouncement&announcementBoardId="+announcementBoardId+"&"+extraParameters%>">
+					Criar Anúncio
+				</html:link>
+			</li>				
+			<%
+				}
+			%>
+	</ul>
+
+
+
 	<jsp:include page="/messaging/announcements/listAnnouncements.jsp" flush="true"/>
 
 </logic:present>
