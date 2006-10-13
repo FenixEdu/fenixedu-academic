@@ -33,9 +33,7 @@
 	</logic:equal>
 	<fr:view schema="PersonSpaceOccupations" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 		<fr:layout name="tabular">      			
-   			<fr:property name="rowClasses" value="listClasses"/>	
-   			<fr:property name="columnClasses" value="listClasses"/>
-   			<fr:property name="headerClasses" value="listClasses-header"/>
+   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
    			   			
    			<fr:property name="link(edit)" value="<%="/managePersonSpaceOccupations.do?method=prepareEditSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/spaceOccupationID"/>
@@ -78,9 +76,7 @@
 	</logic:equal>
 	<fr:view schema="PersonSpaceOccupations" name="selectedSpaceInformation" property="space.inactivePersonSpaceOccupations">
 		<fr:layout name="tabular">      			
-   			<fr:property name="rowClasses" value="listClasses"/>	
-   			<fr:property name="columnClasses" value="listClasses"/>
-   			<fr:property name="headerClasses" value="listClasses-header"/>
+   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
    			   			   			
    			<fr:property name="link(edit)" value="<%="/managePersonSpaceOccupations.do?method=prepareEditSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/spaceOccupationID"/>
@@ -100,8 +96,12 @@
 	<bean:define id="backLink">
 		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
 	</bean:define>	
-		
-	<html:link page="<%= backLink %>">
-		<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
-	</html:link>	
+	
+	<ul>
+		<li>
+			<html:link page="<%= backLink %>">
+				<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
+			</html:link>
+		</li>
+	</ul>
 </logic:present>

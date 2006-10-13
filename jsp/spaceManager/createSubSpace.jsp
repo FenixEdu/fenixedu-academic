@@ -6,16 +6,15 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
-<h2><bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/></h2>
+<h2><bean:message bundle="SPACE_RESOURCES" key="title.create.subspace"/></h2>
 
 <bean:define id="selectedSpace" name="selectedSpaceInformation" property="space"/>
 <bean:define id="suroundingSpaceID" type="java.lang.Integer" name="selectedSpace" property="idInternal"/>
 <bean:define id="suroundingSpaceInformationID" type="java.lang.Integer" name="selectedSpace" property="spaceInformation.idInternal"/>
 
-<p><span class="warning0"><bean:message key="label.space.createIn" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="selectedSpace" property="spaceInformation.presentationName"/></strong></span></p>
+<p class="mvert1"><span class="warning0"><bean:message key="label.space.createIn" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="selectedSpace" property="spaceInformation.presentationName"/></strong></span></p>
 
-
-<p class="mbottom05"><strong><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/>:</strong></p>
+<p class="mbottom05"><strong><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/></strong></p>
 <html:form action="/manageSpaces">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showCreateSubSpaceForm"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.spaceInformationID" property="spaceInformationID" value="<%= suroundingSpaceInformationID.toString() %>"/>
@@ -35,7 +34,7 @@
 </bean:define>	
 
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
-    <p class="mtop2 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/>:</strong></p>
+    <p class="mtop2 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator"
 			schema="BuildingFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">

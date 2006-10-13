@@ -17,7 +17,7 @@
 	</logic:messagesPresent>
 	
 	<bean:define id="material" name="materialSpaceOccupation" property="material" />
-	<div class="infoop2">
+	<div class="infoop2 mvert1">
 		<fr:view name="material" type="net.sourceforge.fenixedu.domain.material.Material" schema="ViewMaterialDetails" layout="tabular"/>
 	</div>	
 	
@@ -26,6 +26,6 @@
 	<bean:define id="type" name="materialSpaceOccupation" property="material.materialSpaceOccupationSubClass.name"/>		
 	<bean:define id="materialSlotName" name="materialSpaceOccupation" property="material.materialSpaceOccupationSlotName" />
 	
-	<fr:edit name="materialSpaceOccupation" type="<%= type.toString() %>" schema="<%= schemaName %>" action="<%= showMaterialSpaceOccupationLink %>" />
-	
+	<fr:edit name="materialSpaceOccupation" type="<%= type.toString() %>" schema="<%= schemaName %>" action="<%= showMaterialSpaceOccupationLink %>"/>
+
 </logic:present>

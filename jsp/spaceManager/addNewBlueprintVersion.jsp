@@ -45,9 +45,12 @@
 		
 	</logic:notEmpty>
 
+<%--
 	<p>
 		<html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
 		</html:link>	
 	</p>
+--%>
+
 </logic:present>	

@@ -7,8 +7,8 @@
 
 <logic:present name="selectedSpaceInformation">
 	
-	<em>Gestão de Espaços</em>
-	<h2>Gerir Espaço</h2>
+	<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
+	<h2><bean:message bundle="SPACE_RESOURCES" key="title.manage.space"/></h2>
 	
 	<bean:define id="selectedSpaceInformationIDString" type="java.lang.String"><bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>	
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
@@ -185,12 +185,10 @@
 	</p>
 
 	<%-- Responsability --%>	
-	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></h3>
+	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></h3>
 	<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
 		<fr:layout name="tabular">      			
-   			<fr:property name="rowClasses" value="listClasses"/>	
-   			<fr:property name="columnClasses" value="listClasses"/>
-   			<fr:property name="headerClasses" value="listClasses-header"/>	
+   			<fr:property name="classes" value="tstyle4 thlight tdcenter mvert0"/>
    		</fr:layout>	
 	</fr:view>
 	<p>
@@ -200,34 +198,30 @@
 	</p>
 	
 	<%-- Person Occupations --%>
-	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.active.person.occupations"/></h3>
+	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.person.occupations"/></h3>
 	<fr:view schema="PersonSpaceOccupationsWithUsername" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 		<fr:layout name="tabular">      			
-   			<fr:property name="rowClasses" value="listClasses"/>	
-   			<fr:property name="columnClasses" value="listClasses"/>
-   			<fr:property name="headerClasses" value="listClasses-header"/>
+   			<fr:property name="classes" value="tstyle4 thlight tdcenter mvert0"/>
    		</fr:layout>	
 	</fr:view>	
-	<p><html:link page="/managePersonSpaceOccupations.do?method=showSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+	<p class="mtop05"><html:link page="/managePersonSpaceOccupations.do?method=showSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.person.occupations"/>
 	</html:link></p>
 
 	<%-- Material --%>
-	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></h3>
+	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></h3>
 	<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial">
 		<fr:layout name="tabular">      			
-   			<fr:property name="rowClasses" value="listClasses"/>	
-   			<fr:property name="columnClasses" value="listClasses"/>
-   			<fr:property name="headerClasses" value="listClasses-header"/>   			
+   			<fr:property name="classes" value="tstyle4 thlight tdcenter mvert0"/>  			
    		</fr:layout>	
 	</fr:view>			
-	<p><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+	<p class="mtop05"><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.material.occupations"/>
 	</html:link></p>
 	
 	<%-- Access Groups --%>
 	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.access.groups"/></h3>
-	<p><html:link page="/manageSpaces.do?method=manageAccessGroups&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+	<p class="mtop05"><html:link page="/manageSpaces.do?method=manageAccessGroups&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.access.groups"/>
 	</html:link></p>
 	

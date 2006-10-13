@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/units.tld" prefix="un" %>
 
+<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message key="label.space.responsibility.management" bundle="SPACE_RESOURCES"/></h2>
 
 <logic:present name="selectedSpaceInformation">
@@ -27,35 +28,43 @@
 		}
 	</script>
 
-	<br/>
+
 		
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
 	<jsp:include page="spaceCrumbs.jsp"/>
 	
-	<br/><br/>	
+	<bean:define id="backLink">
+		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
+	</bean:define>	
+	
+	<ul class="mvert15 list5">
+		<li>
+			<html:link page="<%= backLink %>">
+				<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
+			</html:link>
+		</li>
+	</ul>
 			
 	<logic:messagesPresent message="true">
-		<span class="error"><!-- Error messages go here -->
+		<em><!-- Error messages go here -->
 			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
 				<bean:write name="message"/>
 			</html:messages>
-		</span>
+		</em>
 	</logic:messagesPresent>
 
-	<h3><bean:message key="label.active.responsible.units" bundle="SPACE_RESOURCES"/>:</h3>
+	<p class="mtop2 mbottom05"><strong><bean:message key="label.active.responsible.units" bundle="SPACE_RESOURCES"/></strong></p>
 	<bean:size id="activeSize" name="selectedSpaceInformation" property="space.activeSpaceResponsibility"/>
 	<logic:equal name="activeSize" value="0">
-		<span class="error"><!-- Error messages go here -->
+		<em><!-- Error messages go here -->
 			<bean:message key="label.space.no.current.responsible.units" bundle="SPACE_RESOURCES"/>
-		</span>	
+		</em>	
 	</logic:equal>
 	<fr:view schema="ViewSpaceResponsibleUnitsWithInterval" name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
 		<fr:layout name="tabular">      			
-   			<fr:property name="rowClasses" value="listClasses"/>	
-   			<fr:property name="columnClasses" value="listClasses"/>
-   			<fr:property name="headerClasses" value="listClasses-header"/>
-   			   			
+   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
+   			
    			<fr:property name="link(edit)" value="<%="/manageSpaceResponsibility.do?method=prepareEditSpaceResponsibility&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/spaceResponsibilityID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
@@ -70,25 +79,22 @@
     	</fr:layout>
 	</fr:view>
 		
-	<h3><bean:message key="label.choose.unit" bundle="SPACE_RESOURCES"/>:</h3>
-	
+	<p class="mtop2 mbottom05"><strong><bean:message key="label.choose.unit" bundle="SPACE_RESOURCES"/></strong></p>
 	<bean:define id="path">
 		/SpaceManager/manageSpaceResponsibility.do?method=manageResponsabilityInterval&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
 	</bean:define>	
 	<un:tree initialUnit="initialUnit" unitParamName="unitID" path="<%= path %>" state="true"/>
 	
-	<h3><bean:message key="label.other.responsible.units" bundle="SPACE_RESOURCES"/>:</h3>
+	<p class="mtop2 mbottom05"><strong><bean:message key="label.other.responsible.units" bundle="SPACE_RESOURCES"/></strong></p>
 	<bean:size id="inactiveSize" name="selectedSpaceInformation" property="space.inactiveSpaceResponsibility"/>
 	<logic:equal name="inactiveSize" value="0">
-		<span class="error"><!-- Error messages go here -->
+		<em><!-- Error messages go here -->
 			<bean:message key="label.space.no.other.responsible.units" bundle="SPACE_RESOURCES"/>
-		</span>	
+		</em>	
 	</logic:equal>
 	<fr:view schema="ViewSpaceResponsibleUnitsWithInterval" name="selectedSpaceInformation" property="space.inactiveSpaceResponsibility">
 		<fr:layout name="tabular">      			
-   			<fr:property name="rowClasses" value="listClasses"/>	
-   			<fr:property name="columnClasses" value="listClasses"/>
-   			<fr:property name="headerClasses" value="listClasses-header"/>
+   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
    			   			
    			<fr:property name="link(edit)" value="<%="/manageSpaceResponsibility.do?method=prepareEditSpaceResponsibility&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/spaceResponsibilityID"/>
@@ -104,13 +110,6 @@
     	</fr:layout>
 	</fr:view>			
 
-	<br/>
-	<bean:define id="backLink">
-		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
-	</bean:define>	
-		
-	<html:link page="<%= backLink %>">
-		<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
-	</html:link>	
+
 	
 </logic:present>	
