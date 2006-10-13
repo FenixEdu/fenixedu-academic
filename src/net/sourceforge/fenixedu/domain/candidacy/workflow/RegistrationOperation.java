@@ -5,10 +5,15 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
@@ -42,38 +47,40 @@ public class RegistrationOperation extends CandidacyOperation {
     private void changePersonRoles() {
 	getDegreeCandidacy().getPerson().addPersonRoleByRoleType(RoleType.PERSON);
 	getDegreeCandidacy().getPerson().addPersonRoleByRoleType(RoleType.STUDENT);
-
-	/*
-	boolean needsCandidateRole = false;
-	for (final Candidacy candidacy : getDegreeCandidacy().getPerson().getCandidaciesSet()) {
-	    if (candidacy.equals(getDegreeCandidacy())) {
-		continue;
-	    }
-
-	    if (!candidacy.isConcluded()) {
-		needsCandidateRole = true;
-		break;
-	    }
-	}
-
-	if (!needsCandidateRole) {
-	    getDegreeCandidacy().getPerson().removeRoleByType(RoleType.CANDIDATE);
-	}
-	*/
     }
 
     protected void associateShiftsFor(final Registration registration) {
 
 	if (getExecutionYear().hasShiftDistribution()) {
 
-	    final List<Registration> registrations = getExecutionDegree()
-		    .getRegistrationsForDegreeCandidacies();
+	    final List<Registration> registrations = getExecutionDegree().getRegistrationsForDegreeCandidacies();
 	    Collections.sort(registrations, Registration.NUMBER_COMPARATOR);
 
 	    for (final ShiftDistributionEntry shiftEntry : getExecutionDegree()
 		    .getNotDistributedShiftsFromShiftDistributionBasedOn(registrations.indexOf(registration))) {
 		shiftEntry.setDistributed(Boolean.TRUE);
 		shiftEntry.getShift().addStudents(registration);
+		correctExecutionCourseIfNecessary(registration, shiftEntry.getShift());
+	    }
+	}
+    }
+
+    private void correctExecutionCourseIfNecessary(Registration registration, Shift shift) {
+	
+	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+	final ExecutionCourse finalExecutionCourse = shift.getDisciplinaExecucao();
+	
+	for (final CurricularCourse curricularCourse : finalExecutionCourse.getAssociatedCurricularCoursesSet()) {
+	    
+	    final Enrolment enrolment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, ExecutionPeriod.readActualExecutionPeriod());
+	    if (enrolment != null) {
+		
+		final Attends attends = enrolment.getAttendsFor(ExecutionPeriod.readActualExecutionPeriod());
+		if (! attends.isFor(finalExecutionCourse)) {
+		    attends.delete();
+		    enrolment.addAttends(new Attends(registration, finalExecutionCourse));
+		}
+		break;
 	    }
 	}
     }
@@ -105,7 +112,7 @@ public class RegistrationOperation extends CandidacyOperation {
     }
 
     private ExecutionPeriod getExecutionPeriod() {
-	return ExecutionPeriod.readBySemesterAndExecutionYear(1, getExecutionYear().getYear());
+	return getExecutionYear().readExecutionPeriodForSemester(1);
     }
 
     protected Registration createRegistration() {

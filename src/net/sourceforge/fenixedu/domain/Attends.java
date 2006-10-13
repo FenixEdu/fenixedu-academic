@@ -306,4 +306,12 @@ public class Attends extends Attends_Base {
 	    return EnrolmentEvaluationType.NORMAL;
 	}
     }
+    
+    public boolean isFor(final ExecutionPeriod executionPeriod) {
+	return getDisciplinaExecucao().getExecutionPeriod() == executionPeriod;
+    }
+
+    public boolean isFor(final ExecutionCourse executionCourse) {
+	return getDisciplinaExecucao() == executionCourse;
+    }
 }

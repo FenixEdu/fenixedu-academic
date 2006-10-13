@@ -873,12 +873,21 @@ public class Enrolment extends Enrolment_Base {
         return this.getExecutionPeriod().equals(executionPeriod) && this.getCurricularCourse().equals(curricularCourse);
     }
 	
-	public List<ExecutionCourse> getExecutionCourses() {
-		return this.getCurricularCourse().getAssociatedExecutionCourses();
+    public List<ExecutionCourse> getExecutionCourses() {
+	return this.getCurricularCourse().getAssociatedExecutionCourses();
+    }
+
+    public boolean isNormal() {
+	return getCurricularCourse().getType() == CurricularCourseType.NORMAL_COURSE;
+    }
+
+    public Attends getAttendsFor(final ExecutionPeriod executionPeriod) {
+	for (final Attends attends : getAttendsSet()) {
+	    if (attends.isFor(executionPeriod)) {
+		return attends;
+	    }
 	}
-	
-	public boolean isNormal() {
-	    return getCurricularCourse().getType() == CurricularCourseType.NORMAL_COURSE;
-	}
+	return null;
+    }
 	
 }

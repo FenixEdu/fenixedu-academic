@@ -72,6 +72,7 @@ public class Shift extends Shift_Base {
     }
 
     public boolean canBeDeleted() {
+	
 	if (hasAnyAssociatedStudentGroups()) {
 	    throw new DomainException("error.deleteShift.with.studentGroups", getNome());
 	}
@@ -86,6 +87,10 @@ public class Shift extends Shift_Base {
 
 	if (hasAnyDegreeTeachingServices()) {
 	    throw new DomainException("error.deleteShift.with.degreeTeachingServices", getNome());
+	}
+	
+	if (hasAnyShiftDistributionEntries()) {
+	    throw new DomainException("error.deleteShift.with.shiftDistributionEntries", getNome());
 	}
 
 	return true;
