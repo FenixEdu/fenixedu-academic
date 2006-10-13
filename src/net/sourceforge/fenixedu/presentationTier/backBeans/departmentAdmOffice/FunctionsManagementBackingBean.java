@@ -520,7 +520,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	buffer.append("<a href=\"").append(getContextPath()).append(
 		"/departmentAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(
 		personID).append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
-		parentUnit.getName()).append("</a>").append("</li>");
+		parentUnit.getPresentationName()).append("</a>").append("</li>");
 
 	if (!subUnits.isEmpty()) {
 	    openULTag(parentUnit, buffer, parentUnitParent);

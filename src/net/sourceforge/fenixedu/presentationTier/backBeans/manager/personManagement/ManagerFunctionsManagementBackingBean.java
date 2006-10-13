@@ -96,7 +96,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         buffer.append("<a href=\"").append(getContextPath()).append(
                 "/manager/functionsManagement/chooseFunction.faces?personID=").append(personID).append(
                 "&unitID=").append(parentUnit.getIdInternal()).append("\">")
-                .append(parentUnit.getName()).append("</a>").append("</li>");
+                .append(parentUnit.getPresentationName()).append("</a>").append("</li>");
 
         if (!subUnits.isEmpty()) {
             openULTag(parentUnit, buffer, parentUnitParent);
