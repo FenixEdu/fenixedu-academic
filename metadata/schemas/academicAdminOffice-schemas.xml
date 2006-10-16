@@ -262,3 +262,32 @@
 		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
 	</slot>
 </schema>
+
+<schema name="thesis.list.choose.degree"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.thesis.ListMasterDegreeProofsBean" bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="degree" key="label.degree" 
+		layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.PreBolonhaMasterDegrees" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.Degree" />
+		<property name="format" value="${name}" />
+	</slot>
+    <slot name="year">
+       	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+        <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4}|)"/>
+            <property name="message" value="error.conclusionYear.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+    </slot>
+</schema>
+
+<schema name="thesis.list.showProofs"
+	type="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion" bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="masterDegreeThesis.studentCurricularPlan.student.number" key="label.studentNumber" />
+	<slot name="masterDegreeThesis.studentCurricularPlan.student.student.person.name" key="label.name" />
+	<slot name="proofDateYearMonthDay" key="label.proofDate" />
+</schema>

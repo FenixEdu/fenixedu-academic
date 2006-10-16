@@ -221,6 +221,11 @@
 		<put name="navLocal" value="/posGraduacao/lists/listsMenu.jsp" />
 		<put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp" />
 	</definition>
+	<definition name="showMasterDegreeProofsList" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/lists/listConcludedMasterDegreeProofs.jsp"/>
+		<put name="navLocal" value="/posGraduacao/lists/listsMenu.jsp" />
+		<put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp" />
+	</definition>
 
 	<!-- ************* Payments ************* -->
 	<definition name="payments.management.searchPerson" extends="definition.masterDegreeAdministrativeOffice.masterPage">

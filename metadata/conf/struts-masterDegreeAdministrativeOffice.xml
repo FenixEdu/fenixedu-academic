@@ -2580,6 +2580,16 @@
 	         <forward name="showList" path="showMasterDegreeThesisList"/>
 	  </action>
 
+	<!-- List Concluded Master Degree Proofs -->
+	<action path="/listConcludedMasterDegreeProofs"
+	     parameter="method"
+	     scope="request"
+	           type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.ListConcludedMasterDegreeProofsDispatchAction"
+	  >		  
+	       <forward name="showList" path="showMasterDegreeProofsList"/>
+	</action>
+
+
 	  <!-- Payments -->
 	  <action path="/payments"
 		      parameter="method"

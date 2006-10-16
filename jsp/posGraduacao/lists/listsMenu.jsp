@@ -15,6 +15,7 @@
 	<li><html:link page="/listMasterDegrees.do?method=chooseDegreeFromList&jspTitle=title.studentListByDegree&page=0"><bean:message key="link.studentListByDegree" /></html:link></li>
 	<li><html:link page="/listCourseStudents.do?method=chooseDegreeFromList&jspTitle=title.studentListByCourse&page=0"><bean:message key="link.studentListByCourse" /></html:link></li>
 	<li><html:link page="/listMasterDegreeThesis.do?method=prepare"><bean:message key="link.masterDegreeThesisList" /></html:link></li>
+	<li><html:link page="/listConcludedMasterDegreeProofs.do?method=prepare"><bean:message key="link.concludedMasterDegreeProofList" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>	
 	<br/>
     <li><html:link page="/dfaCandidacySection.do"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacyManagement" bundle="ADMIN_OFFICE_RESOURCES"/> </html:link></li>
 	<li><html:link page="/payments.do?method=prepareSearchPerson"><bean:message key="link.masterDegree.administrativeOffice.payments" /></html:link></li>
