@@ -29,30 +29,30 @@ public class ExecutionCourseTeachersGroup extends ExecutionCourseGroup {
 
     @Override
     public int getElementsCount() {
-	return this.getExecutionCourse().getProfessorshipsCount();
+	return hasExecutionCourse() ? this.getExecutionCourse().getProfessorshipsCount() : 0;
     }
 
     @Override
     public Set<Person> getElements() {
-	Set<Person> elements = super.buildSet();
-	Collection<Professorship> professorships = this.getExecutionCourse().getProfessorships();
-	Collection<Person> persons = CollectionUtils.collect(professorships,
-		new ProfessorshipPersonTransformer());
-
-	elements.addAll(persons);
+	final Set<Person> elements = super.buildSet();
+	if (hasExecutionCourse()) {
+	    final Collection<Professorship> professorships = getExecutionCourse().getProfessorships();
+	    final Collection<Person> persons = CollectionUtils.collect(professorships, new ProfessorshipPersonTransformer());
+	    elements.addAll(persons);
+	}
 
 	return super.freezeSet(elements);
     }
-    
+
     @Override
     public boolean isMember(Person person) {
-        if (person != null && person.hasTeacher()) {
-            for (final Professorship professorship : getExecutionCourse().getProfessorshipsSet()) {
-        	if (professorship.getTeacher() == person.getTeacher()) {
-        	    return true;
-        	}
-            }
-        }
-        return false;
+	if (person != null && person.hasTeacher() && hasExecutionCourse()) {
+	    for (final Professorship professorship : getExecutionCourse().getProfessorshipsSet()) {
+		if (professorship.getTeacher() == person.getTeacher()) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 }

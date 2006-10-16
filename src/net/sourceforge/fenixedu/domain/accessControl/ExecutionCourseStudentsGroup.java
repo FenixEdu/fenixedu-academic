@@ -38,7 +38,7 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup {
 
     @Override
     public boolean isMember(Person person) {
-	if (person != null && person.hasStudent()) {
+	if (person != null && person.hasStudent() && hasExecutionCourse()) {
 	    for (final Attends attends : getExecutionCourse().getAttendsSet()) {
 		if (attends.getAluno().getStudent() == person.getStudent()) {
 		    return true;

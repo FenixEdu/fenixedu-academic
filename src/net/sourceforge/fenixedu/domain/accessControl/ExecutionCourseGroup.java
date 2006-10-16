@@ -13,4 +13,8 @@ public abstract class ExecutionCourseGroup extends DomainBackedGroup<ExecutionCo
     public ExecutionCourse getExecutionCourse() {
         return getObject();
     }
+    
+    public boolean hasExecutionCourse() {
+	return getExecutionCourse() != null;
+    }
 }
