@@ -224,4 +224,8 @@ public class ExecutionCourseDA extends FenixDispatchAction {
         return null;
     }
 
+    public ActionForward notFound(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("execution-course-not-found");
+    }
+
 }

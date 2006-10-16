@@ -354,7 +354,8 @@
 		<forward name="execution-course-student-groups-by-shift" path="execution-course-student-groups-by-shift"/>
 		<forward name="execution-course-section" path="execution-course-section"/>
 		<forward name="execution-course-rss" path="execution-course-rss"/>
-		<forward name="execution-course-lesson-plannings" path="execution-course-lesson-plannings"/>		
+		<forward name="execution-course-lesson-plannings" path="execution-course-lesson-plannings"/>
+		<forward name="execution-course-not-found" path="execution-course-not-found"/>
    	</action>
 
 	<action path="/searchSummaries" parameter="method"

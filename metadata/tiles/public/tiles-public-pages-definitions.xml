@@ -256,5 +256,9 @@
 	<definition name="executionCoruse-view-announcement" extends="definition.public.executionCourse">
 		<put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
 	</definition>			
+	<definition name="execution-course-not-found" extends="definition.public.executionCourse">
+		<put name="body" value="/executionCourse/resourceDoesNotExist.jsp" />
+	</definition>			
+
 
 </tiles-definitions>
