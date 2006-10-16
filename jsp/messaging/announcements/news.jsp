@@ -43,6 +43,7 @@
 
 <jsp:include page="/messaging/announcements/listAnnouncements.jsp" flush="true"/>
 
+<%-- 
 <h3 class="mtop2 mbottom05"><bean:message bundle="MESSAGING_RESOURCES" key="label.last.created.boards"/></h3>
 <html:form action="/announcements/announcementsStartPageHandler.do" method="get">
 	<html:hidden property="method" value="news"/>
@@ -60,3 +61,4 @@
     </table>
 </html:form>
 <jsp:include page="/messaging/announcements/listAnnouncementBoards.jsp" flush="true"/>
+--%>

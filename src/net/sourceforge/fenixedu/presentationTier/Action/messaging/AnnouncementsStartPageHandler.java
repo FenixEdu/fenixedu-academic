@@ -46,7 +46,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 	
 	request.setAttribute("returnMethod", "news");
 	request.setAttribute("announcements", getAnnouncementsToShow(request, actionForm));
-	request.setAttribute("announcementBoards", boardsToView(request));
+	//request.setAttribute("announcementBoards", boardsToView(request));
 	
         return mapping.findForward("news");
     }
