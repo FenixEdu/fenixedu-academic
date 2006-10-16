@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Alter Parking Party, change card number from int to long" alterTableParkingParty.sql
+execute "Alter Table Academic Service Request" alterTableAcademicServiceRequest.sql
