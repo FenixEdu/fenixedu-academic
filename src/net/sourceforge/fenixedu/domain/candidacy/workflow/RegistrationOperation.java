@@ -77,8 +77,9 @@ public class RegistrationOperation extends CandidacyOperation {
 		
 		final Attends attends = enrolment.getAttendsFor(ExecutionPeriod.readActualExecutionPeriod());
 		if (! attends.isFor(finalExecutionCourse)) {
-		    attends.delete();
-		    enrolment.addAttends(new Attends(registration, finalExecutionCourse));
+//		    attends.delete();
+                    attends.setDisciplinaExecucao(finalExecutionCourse);
+//		    enrolment.addAttends(new Attends(registration, finalExecutionCourse));
 		}
 		break;
 	    }
