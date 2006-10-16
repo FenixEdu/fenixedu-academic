@@ -6,6 +6,7 @@
 
 <em><bean:message key="administrative.office.services"/></em>
 <h2><bean:message key="documents.requirement"/></h2>
+<hr/>
 
 <logic:messagesPresent message="true">
 	<span class="error"><!-- Error messages go here -->
@@ -26,7 +27,7 @@
 					<bean:message key="student.male.capitalized"/>:
 				</th>
 				<td colspan="3">
-					<bean:write name="student" property="person.name"/>:
+					<bean:write name="student" property="person.name"/>
 				</td>
 			</tr>
 			<tr>
@@ -34,7 +35,7 @@
 					<bean:message key="label.number"/>:
 				</th>
 				<td>
-					<bean:write name="student" property="number"/>:
+					<bean:write name="student" property="number"/>
 				</td>
 			</tr>
 			<tr>
