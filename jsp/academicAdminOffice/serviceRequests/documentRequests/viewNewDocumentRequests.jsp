@@ -4,9 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<logic:present role="DEGREE_ADMINISTRATIVE_OFFICE">
-
-<h2><bean:message key="label.documentRequestsManagement.newDocumentRequests" /></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.newDocumentRequests" /></h2>
 
 <hr/><br/>
 <logic:messagesPresent message="true">
@@ -32,14 +30,12 @@
 				<fr:property name="sortBy" value="urgentRequest=desc,creationDate=desc"/>
 			</fr:layout>
 		</fr:view>
-		<html:submit onclick="this.form.method.value='processNewDocuments';" styleClass="inputbutton"><bean:message key="label.documentRequestsManagement.process" /></html:submit>
-		<html:submit onclick="this.form.method.value='showOperations';" styleClass="inputbutton"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
+		<html:submit onclick="this.form.method.value='processNewDocuments';" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.process" /></html:submit>
+		<html:submit onclick="this.form.method.value='showOperations';" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.back" /></html:submit>
 	</html:form>
 </logic:notEmpty>
 
 <logic:empty name="academicServiceRequestList">
 	<br/>
-	<span class="error0"><bean:message key="label.documentRequestsManagement.noNewDocumentRequest"/></span>
+	<span class="error0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.noNewDocumentRequest"/></span>
 </logic:empty>
-
-</logic:present>

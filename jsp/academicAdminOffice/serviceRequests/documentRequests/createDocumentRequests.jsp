@@ -190,8 +190,7 @@
 				<e:labelValues 
 					id="documentPurposeTypes" 
 					enumeration="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType" 
-					bundle="ENUMERATION_RESOURCES"
-					excludedFields="SCHOOL_REGISTRATION_DECLARATION,ENROLMENT_DECLARATION,IRS_DECLARATION,DEGREE_DIPLOMA"/>
+					bundle="ENUMERATION_RESOURCES"/>
 				<logic:iterate id="documentPurposeType" name="documentPurposeTypes">
 					<p>
 						<html:radio property="chosenDocumentPurposeType" idName="documentPurposeType" value="value"/><bean:write name="documentPurposeType" property="label"/>

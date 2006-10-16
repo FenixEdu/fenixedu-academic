@@ -5,67 +5,69 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 
 public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCertificateRequest_Base {
 
-	private SchoolRegistrationCertificateRequest() {
-		super();
+    private SchoolRegistrationCertificateRequest() {
+	super();
+    }
+
+    public SchoolRegistrationCertificateRequest(StudentCurricularPlan studentCurricularPlan,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
+	    Boolean urgentRequest, ExecutionYear executionYear) {
+
+	this();
+
+	init(studentCurricularPlan, documentPurposeType, otherDocumentPurposeTypeDescription,
+		urgentRequest, executionYear);
+    }
+
+    protected void init(StudentCurricularPlan studentCurricularPlan,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
+	    Boolean urgentRequest, ExecutionYear executionYear) {
+
+	init(studentCurricularPlan, DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE,
+		documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+
+	checkParameters(executionYear);
+	super.setExecutionYear(executionYear);
+    }
+
+    private void checkParameters(ExecutionYear executionYear) {
+	if (executionYear == null) {
+	    throw new DomainException(
+		    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.cannot.be.null");
+	} else if (!getStudentCurricularPlan().hasSchoolRegistration(executionYear)) {
+	    throw new DomainException(
+		    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.before.studentCurricularPlan.start");
 	}
+    }
 
-	public SchoolRegistrationCertificateRequest(StudentCurricularPlan studentCurricularPlan,
-			AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-			String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
-			ExecutionYear executionYear) {
+    @Override
+    public void setExecutionYear(ExecutionYear executionYear) {
+	throw new DomainException(
+		"error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.cannot.modify.executionYear");
+    }
 
-		this();
+    @Override
+    protected void internalChangeState(
+	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
 
-		init(studentCurricularPlan, administrativeOffice, documentPurposeType,
-				otherDocumentPurposeTypeDescription, urgentRequest, executionYear);
+	super.internalChangeState(academicServiceRequestSituationType, employee);
+
+	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
+		&& !isFirstRequestFromExecutionYear()) {
+	    new CertificateRequestEvent(getAdministrativeOffice(),
+		    EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
 	}
+    }
 
-	protected void init(StudentCurricularPlan studentCurricularPlan,
-			AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-			String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
-			ExecutionYear executionYear) {
-
-		init(studentCurricularPlan, administrativeOffice,
-				DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE, documentPurposeType,
-				otherDocumentPurposeTypeDescription, urgentRequest);
-
-		checkParameters(executionYear);
-		super.setExecutionYear(executionYear);
-	}
-
-	private void checkParameters(ExecutionYear executionYear) {
-		if (executionYear == null) {
-			throw new DomainException(
-					"error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.cannot.be.null");
-		} else if (!getStudentCurricularPlan().hasSchoolRegistration(executionYear)) {
-			throw new DomainException(
-					"error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.before.studentCurricularPlan.start");
-		}
-	}
-
-	@Override
-	public void setExecutionYear(ExecutionYear executionYear) {
-		throw new DomainException(
-				"error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.cannot.modify.executionYear");
-	}
-
-	@Override
-	protected void internalChangeState(
-			AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-
-		super.internalChangeState(academicServiceRequestSituationType, employee);
-
-		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
-				&& !isFirstRequestFromExecutionYear()) {
-			new CertificateRequestEvent(getAdministrativeOffice(),
-					EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
-		}
-	}
+    @Override
+    public String getDocumentTemplateKey() {
+	return null;
+    }
 
 }
+

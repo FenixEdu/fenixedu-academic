@@ -6,7 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 
 public class CreateDocumentRequests extends Service {
 
@@ -16,15 +18,28 @@ public class CreateDocumentRequests extends Service {
         for (final DocumentRequestCreateBean documentRequestCreateBean : documentRequestCreateBeans) {
             
             try {
-                DocumentRequest.create(documentRequestCreateBean.getStudentCurricularPlan(),
-                        documentRequestCreateBean.getChosenDocumentRequestType(), 
-                        documentRequestCreateBean.getChosenDocumentPurposeType(),
-                        documentRequestCreateBean.getOtherPurpose(), 
-                        documentRequestCreateBean.getNotes(),
-                        documentRequestCreateBean.getUrgentRequest(),
-                        documentRequestCreateBean.getAverage(), 
-                        documentRequestCreateBean.getDetailed(),
-                        documentRequestCreateBean.getExecutionYear());
+        	final DocumentRequestType documentRequestType = documentRequestCreateBean.getChosenDocumentRequestType();
+        	if (documentRequestType.isCertificate()) {
+                    CertificateRequest.create(documentRequestCreateBean.getStudentCurricularPlan(),
+                            documentRequestCreateBean.getChosenDocumentRequestType(), 
+                            documentRequestCreateBean.getChosenDocumentPurposeType(),
+                            documentRequestCreateBean.getOtherPurpose(), 
+                            documentRequestCreateBean.getNotes(),
+                            documentRequestCreateBean.getUrgentRequest(),
+                            documentRequestCreateBean.getAverage(), 
+                            documentRequestCreateBean.getDetailed(),
+                            documentRequestCreateBean.getExecutionYear());
+        	} else if (documentRequestType.isDeclaration()) {
+                    DeclarationRequest.create(documentRequestCreateBean.getStudentCurricularPlan(),
+                            documentRequestCreateBean.getChosenDocumentRequestType(), 
+                            documentRequestCreateBean.getChosenDocumentPurposeType(),
+                            documentRequestCreateBean.getOtherPurpose(), 
+                            documentRequestCreateBean.getNotes(),
+                            documentRequestCreateBean.getUrgentRequest(),
+                            documentRequestCreateBean.getAverage(), 
+                            documentRequestCreateBean.getDetailed(),
+                            documentRequestCreateBean.getExecutionYear());
+        	}
             } catch (DomainException e) {
                 messages.add(e.getMessage());
             }

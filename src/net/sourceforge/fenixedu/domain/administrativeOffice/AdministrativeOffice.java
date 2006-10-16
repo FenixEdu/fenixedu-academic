@@ -2,16 +2,24 @@ package net.sourceforge.fenixedu.domain.administrativeOffice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class AdministrativeOffice extends AdministrativeOffice_Base {
 
@@ -93,7 +101,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
                     continue;
                 }
 
-                if (isUrgent != null && documentRequest.isUrgentRequest() != isUrgent.booleanValue()) {
+                if (isUrgent != null && documentRequest.isCertificate() && ((CertificateRequest)documentRequest).isUrgentRequest() != isUrgent.booleanValue()) {
                     continue;
                 }
 
@@ -135,18 +143,36 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     }
 
-    public static AdministrativeOffice getResponsibleAdministrativeOffice(DegreeType degreeType) {
+    public static AdministrativeOffice getResponsibleAdministrativeOffice(Degree degree) {
+	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance().getAdministrativeOffices()) {
+	    List<Unit> parentUnits = degree.getUnit().getParentUnits(AccountabilityTypeEnum.ACADEMIC_STRUCTURE);
+	    if (parentUnits.contains(administrativeOffice.getUnit())) {
+		return administrativeOffice;
+	    }
+	}
+	
+	return null;
+    }
+    
+    public static AdministrativeOffice readByEmployee(Employee employee) {
+	final Unit employeeWorkingPlace = employee.getCurrentWorkingPlace();
+	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance().getAdministrativeOffices()) {
+	    if (administrativeOffice.getUnit() == employeeWorkingPlace) {
+		return administrativeOffice;
+	    }
+	}
+	
+	return null;
+    }
 
-        switch (degreeType) {
-        case DEGREE:
-            return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+    public Set<Degree> getAdministratedDegrees() {
+	final Set<Degree> result = new TreeSet<Degree>(new BeanComparator("name"));
+	Set<Party> childParties = getUnit().getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
+	for (Party party : childParties) {
+	    result.add(((Unit) party).getDegree());
+	}
 
-        case MASTER_DEGREE:
-        case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-            return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-        }
-
-        return null;
+	return result;
     }
 
 }

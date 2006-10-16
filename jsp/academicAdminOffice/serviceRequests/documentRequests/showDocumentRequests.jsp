@@ -6,9 +6,7 @@
 
 <html:xhtml/>
 
-<logic:present role="DEGREE_ADMINISTRATIVE_OFFICE">
-
-<h2><bean:message key="label.documentRequestsManagement.showDocumentRequests" /></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.showDocumentRequests" /></h2>
 
 <hr/><br/>
 
@@ -42,13 +40,11 @@
 </logic:notEmpty>
 
 <logic:empty name="documentRequestsResult">
-	<bean:message key="label.documentRequestsManagement.noDocumentRequests" />
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.noDocumentRequests" />
 	<br/>
 	<br/>
 </logic:empty>
 
 <html:form action="/documentRequestsManagement.do?method=prepareSearch">
-	<html:submit styleClass="inputbutton"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
+	<html:submit styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.back" /></html:submit>
 </html:form>
-
-</logic:present>

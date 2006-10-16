@@ -4,9 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<logic:present role="DEGREE_ADMINISTRATIVE_OFFICE">
-
-<h2><bean:message key="label.documentRequestsManagement.editDocumentRequest" /></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.editDocumentRequest" /></h2>
 
 <hr/><br/>
 
@@ -19,7 +17,7 @@
 	<br />
 </logic:messagesPresent>
 
-<strong><bean:message  key="label.documentRequestsManagement.documentRequestInformation"/></strong>
+<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.documentRequestsManagement.documentRequestInformation"/></strong>
 <bean:define id="documentRequest" name="documentRequestEditBean" property="documentRequest"/>
 <bean:define id="simpleClassName" name="documentRequest" property="class.simpleName" />
 <fr:view name="documentRequestEditBean" property="documentRequest" schema="<%= simpleClassName  + ".view"%>">
@@ -43,7 +41,7 @@
 </fr:edit>
 </logic:equal>
 <logic:notEqual name="documentRequest" property="editable" value="true">
-	<strong><bean:message  key="label.documentRequestsManagement.documentRequestSituation"/></strong>
+	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.documentRequestsManagement.documentRequestSituation"/></strong>
 	<fr:view name="documentRequest" property="activeSituation" schema="AcademicServiceRequestSituation.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4" />
@@ -51,15 +49,13 @@
 		</fr:layout>
 	</fr:view>
 	<br/><br/>
-	<span class="success0"><bean:message key="label.documentRequestsManagement.documentRequestNotModifiable"/></span>
+	<span class="success0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.documentRequestNotModifiable"/></span>
 	
 	<br/><br/>
 	<html:form action="<%="/documentRequestsManagement.do?method=search" + url%>">
 		<bean:define id="documentRequestId" name="documentRequest" property="idInternal" />
 		<html:hidden property="documentRequestId" value="<%= documentRequestId.toString() %>"/>
 		
-		<html:submit styleClass="inputbutton"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
+		<html:submit styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.back" /></html:submit>
 	</html:form>
 </logic:notEqual>
-
-</logic:present>

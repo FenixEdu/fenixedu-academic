@@ -210,17 +210,6 @@
 			<form-property name="documentNumber" type="java.lang.String" />
 	    </form-bean>
 	    		
-		<!-- Document Requests Management -->	    
-   		<form-bean name="documentRequestsManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="method" type="java.lang.String" />
-			<form-property name="documentRequestType" type="java.lang.String" />
-			<form-property name="requestSituationType" type="java.lang.String" />
-			<form-property name="isUrgent" type="java.lang.String" />
-			<form-property name="studentNumber" type="java.lang.String" />
-			<form-property name="documentRequestId" type="java.lang.String" />
-			<form-property name="documentIdsToProcess" type="java.lang.Integer[]" />
-	    </form-bean>
-
 	</form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -618,20 +607,6 @@
 		       	<forward name="editPrice" path="prices.management.editPrice"/>
 		</action>	
 
-		<!-- Document Requests Management -->
-		<action path="/documentRequestsManagement"
-				name="documentRequestsManagementForm"
-		     	parameter="method"
-		        type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.serviceRequests.documentRequests.DocumentRequestsManagementDispatchAction"
-				scope="request">
-				<forward name="showOperations" path="documentRequests.management.showOperations"/>
-				<forward name="viewNewDocumentRequests" path="documentRequests.management.viewNewDocumentRequests"/>
-				<forward name="prepareSearch" path="documentRequests.management.prepareSearch"/>
-				<forward name="showDocumentRequests" path="documentRequests.management.showDocumentRequests"/>
-				<forward name="viewDocumentRequest" path="documentRequests.management.viewDocumentRequest"/>
-				<forward name="editDocumentRequest" path="documentRequests.management.editDocumentRequest"/>
-		</action>
-	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

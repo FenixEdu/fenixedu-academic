@@ -20,6 +20,17 @@
 			<form-property name="organizedByGroups" type="java.lang.Boolean" initial="false"/>			
 		</form-bean>	
 
+		<!-- Document Requests Management -->	    
+   		<form-bean name="documentRequestsManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="documentRequestType" type="java.lang.String" />
+			<form-property name="requestSituationType" type="java.lang.String" />
+			<form-property name="isUrgent" type="java.lang.String" />
+			<form-property name="studentNumber" type="java.lang.String" />
+			<form-property name="documentRequestId" type="java.lang.String" />
+			<form-property name="documentIdsToProcess" type="java.lang.Integer[]" />
+	    </form-bean>
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -98,6 +109,23 @@
 			<forward name="viewCurriculum" path="/viewCurriculum.do?method=getCurriculum"/>
 		</action>        
 		
+		<!-- Document Requests Management -->
+		<action path="/documentRequestsManagement"
+				name="documentRequestsManagementForm"
+		     	parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests.DocumentRequestsManagementDispatchAction"
+				scope="request">
+				<forward name="showOperations" path="documentRequests.management.showOperations"/>
+				<forward name="viewNewDocumentRequests" path="documentRequests.management.viewNewDocumentRequests"/>
+				<forward name="prepareSearch" path="documentRequests.management.prepareSearch"/>
+				<forward name="showDocumentRequests" path="documentRequests.management.showDocumentRequests"/>
+				<forward name="viewDocumentRequest" path="documentRequests.management.viewDocumentRequest"/>
+				<forward name="editDocumentRequest" path="documentRequests.management.editDocumentRequest"/>
+				<forward name="prepareCreateDocumentRequest" path="documentRequests.management.prepareCreateDocumentRequest"/>
+				<forward name="createDocumentRequests" path="documentRequests.management.createDocumentRequests"/>				
+				<forward name="chooseStudentToCreateDocumentRequest" path="documentRequests.management.chooseStudentToCreateDocumentRequest"/>				
+				<forward name="confirmCreateDocumentRequest" path="documentRequests.management.confirmCreateDocumentRequest"/>				
+		</action>
 	
     </action-mappings>
 
@@ -109,6 +137,7 @@
     <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>	
 	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
    	<message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

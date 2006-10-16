@@ -40,4 +40,42 @@
     <definition name="student.enrolment.showDegreeModulesToEnrol" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/showDegreeModulesToEnrol.jsp"></put>
     </definition>     
+    
+    	<!-- ************* Document Requests Management ************* -->
+	<definition name="documentRequests.management.showOperations" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/showOperations.jsp"/>
+	</definition>
+	
+	<definition name="documentRequests.management.viewNewDocumentRequests" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewNewDocumentRequests.jsp"/>
+	</definition>
+	
+	<definition name="documentRequests.management.prepareSearch" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/prepareSearch.jsp"/>
+	</definition>
+	
+	<definition name="documentRequests.management.showDocumentRequests" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/showDocumentRequests.jsp"/>
+	</definition>
+
+	<definition name="documentRequests.management.viewDocumentRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequest.jsp"/>
+	</definition>
+	
+	<definition name="documentRequests.management.editDocumentRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/editDocumentRequest.jsp"/>
+	</definition>	
+	
+	<definition name="documentRequests.management.prepareCreateDocumentRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/searchStudentToCreateDocumentRequest.jsp"/>
+	</definition>	
+	
+	<definition name="documentRequests.management.createDocumentRequests" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/createDocumentRequests.jsp"/>
+	</definition>	
+	
+	<definition name="documentRequests.management.chooseStudentToCreateDocumentRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/searchStudentToCreateDocumentRequest.jsp"/>
+	</definition>	
+	
 </tiles-definitions>

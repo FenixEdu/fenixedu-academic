@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
@@ -198,10 +199,10 @@ public class Student extends Student_Base {
 	return hasActiveRegistrationForOffice(workingPlace);
     }
     
-    public boolean hasRegistrationForOffice(Unit office){	
+    public boolean hasRegistrationForOffice(final AdministrativeOffice administrativeOffice){	
 	Set<Registration> registrations = getRegistrationsSet();
 	for (Registration registration : registrations) {
-	    if(registration.isForOffice(office)){
+	    if(registration.isForOffice(administrativeOffice)){
 		return true;
 	    }
 	}	

@@ -1452,6 +1452,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return result;
     }
+    
+    public boolean hasDegreeDiplomaRequest() {
+	for (final DocumentRequest documentRequest : this.getDocumentRequests()) {
+	    if (documentRequest.isDegreeDiploma()) {
+		return true;
+	    }
+	}
+	
+	return false;
+    }
 
     public Set<DocumentRequest> getSucessfullyFinishedDocumentRequestsBy(ExecutionYear executionYear,
 	    DocumentRequestType documentRequestType) {

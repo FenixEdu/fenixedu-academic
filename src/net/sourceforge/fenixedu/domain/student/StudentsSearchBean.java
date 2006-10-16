@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
@@ -48,10 +49,10 @@ public class StudentsSearchBean implements Serializable {
 	return students;
     }
 
-    public Set<Student> searchForOffice(Unit office) {
+    public Set<Student> searchForOffice(final AdministrativeOffice administrativeOffice) {
 	final Set<Student> students = new HashSet<Student>();
 	for (Student student : search()) {
-	    if (student.hasRegistrationForOffice(office)) {
+	    if (student.hasRegistrationForOffice(administrativeOffice)) {
 		students.add(student);
 	    }
 	}

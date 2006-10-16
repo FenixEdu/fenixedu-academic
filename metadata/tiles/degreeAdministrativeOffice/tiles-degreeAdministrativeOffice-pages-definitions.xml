@@ -262,31 +262,6 @@
 		<put name="body" value="/degreeAdministrativeOffice/pricesManagement/viewPrices.jsp"/>
 	</definition>
 
-	<!-- ************* Document Requests Management ************* -->
-	<definition name="documentRequests.management.showOperations" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/showOperations.jsp"/>
-	</definition>
-	
-	<definition name="documentRequests.management.viewNewDocumentRequests" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/viewNewDocumentRequests.jsp"/>
-	</definition>
-	
-	<definition name="documentRequests.management.prepareSearch" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/prepareSearch.jsp"/>
-	</definition>
-	
-	<definition name="documentRequests.management.showDocumentRequests" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/showDocumentRequests.jsp"/>
-	</definition>
-
-	<definition name="documentRequests.management.viewDocumentRequest" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/viewDocumentRequest.jsp"/>
-	</definition>
-	
-	<definition name="documentRequests.management.editDocumentRequest" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/editDocumentRequest.jsp"/>
-	</definition>	
-	
 		<definition name="examCoordinator-management" extends="definition.degreeAdministrativeOffice.masterPage" >
 		<put name="body" value="/vigilancy/manageExamCoordinator.jsp" />
     </definition>			

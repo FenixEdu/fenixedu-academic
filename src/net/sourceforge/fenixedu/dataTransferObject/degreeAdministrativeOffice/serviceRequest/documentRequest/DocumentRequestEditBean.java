@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 
 public class DocumentRequestEditBean implements Serializable {
@@ -28,7 +29,10 @@ public class DocumentRequestEditBean implements Serializable {
         setEmployee(employee);
         setAcademicServiceRequestSituationType(documentRequest.getAcademicServiceRequestSituationType());
         setJustification(documentRequest.getActiveSituation().getJustification());
-        setNumberOfPages(documentRequest.getNumberOfPages());
+        
+        if (documentRequest.isCertificate()) {
+            setNumberOfPages(((CertificateRequest)documentRequest).getNumberOfPages());
+        }
     }
 
     public DocumentRequest getDocumentRequest() {
