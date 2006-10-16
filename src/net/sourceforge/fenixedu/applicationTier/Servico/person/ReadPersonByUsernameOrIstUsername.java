@@ -16,13 +16,6 @@ import net.sourceforge.fenixedu.domain.Person;
 public class ReadPersonByUsernameOrIstUsername extends Service {
 
     public Person run(String username) throws FenixServiceException {
-        Person person = Person.readPersonByUsername(username);
-
-        if (person == null) {
-            person = Person.readPersonByIstUsername(username);
-        }
-
-        return person;
-
+	return Person.readPersonByUsername(username);
     }
 }
