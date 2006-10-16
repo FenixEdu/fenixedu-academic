@@ -335,6 +335,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
             for (; !getForuns().isEmpty(); getForuns().get(0).delete())
                 ;
+            
+            if (hasBoard()) {
+        	getBoard().delete();
+            }
 
             getAssociatedCurricularCourses().clear();
             getNonAffiliatedTeachers().clear();
