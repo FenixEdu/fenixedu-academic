@@ -63,10 +63,11 @@ public abstract class Transaction extends jvstm.Transaction {
 	initializeIfNeeded();	
         if ((WARN_TX_QUEUE_SIZE_LIMIT > 0) && (ACTIVE_TXS.getQueueSize() > WARN_TX_QUEUE_SIZE_LIMIT)) {
             System.out.printf("WARNING: the number of active transactions is %d\n", ACTIVE_TXS.getQueueSize());
-            System.out.printf("    The oldest active transaction is %s\n", ACTIVE_TXS.getOldestTx());
+            final jvstm.Transaction transaction = ACTIVE_TXS.getOldestTx();
+            System.out.printf("    The oldest active transaction is %s\n", transaction);
             final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("### Begin #########################################");
-            for (final StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
+            for (final StackTraceElement stackTraceElement : transaction.getThread().getStackTrace()) {
                 stringBuilder.append(stackTraceElement.getClassName());
                 stringBuilder.append(" : ");
                 stringBuilder.append(stackTraceElement.getMethodName());
