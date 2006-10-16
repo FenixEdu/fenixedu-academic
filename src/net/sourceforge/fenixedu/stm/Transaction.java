@@ -65,7 +65,7 @@ public abstract class Transaction extends jvstm.Transaction {
             System.out.printf("WARNING: the number of active transactions is %d\n", ACTIVE_TXS.getQueueSize());
             System.out.printf("    The oldest active transaction is %s\n", ACTIVE_TXS.getOldestTx());
             final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("### Begin #########################################")
+            stringBuilder.append("### Begin #########################################");
             for (final StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
                 stringBuilder.append(stackTraceElement.getClassName());
                 stringBuilder.append(" : ");
@@ -74,7 +74,7 @@ public abstract class Transaction extends jvstm.Transaction {
                 stringBuilder.append(stackTraceElement.getLineNumber());
             }
             System.out.println(stringBuilder.toString());
-            stringBuilder.append("--- End -------------------------------------------")
+            stringBuilder.append("--- End -------------------------------------------");
         }
 	jvstm.Transaction tx = jvstm.Transaction.begin(readOnly);
         if (TRANSACTION_MAX_DURATION_MILLIS > 0) {
