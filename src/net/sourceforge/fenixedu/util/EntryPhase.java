@@ -8,11 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author João Mota
- * 
- */
-public class EntryPhase implements Serializable {
+public class EntryPhase implements Serializable, Comparable<EntryPhase> {
 
     public static final int FIRST_PHASE = 1;
 
@@ -46,17 +42,10 @@ public class EntryPhase implements Serializable {
 	    this.entryPhase = new Integer(EntryPhase.SECOND_PHASE);
     }
 
-    /**
-         * @return Returns the entryPhase.
-         */
     public Integer getEntryPhase() {
 	return entryPhase;
     }
 
-    /**
-         * @param entryPhase
-         *                The entryPhase to set.
-         */
     public void setEntryPhase(Integer entryPhase) {
 	this.entryPhase = entryPhase;
     }
@@ -95,6 +84,21 @@ public class EntryPhase implements Serializable {
 	    return ((EntryPhase) obj).getEntryPhase().equals(this.getEntryPhase());
 	}
 	return false;
+    }
+
+    public static EntryPhase valueOf(int phase) {
+	switch (phase) {
+	case 1:
+	    return FIRST_PHASE_OBJ;
+	case 2:
+	    return SECOND_PHASE_OBJ;
+	default:
+	    return null;
+	}
+    }
+
+    public int compareTo(EntryPhase entryPhase) {
+	return this.getEntryPhase().compareTo(entryPhase.getEntryPhase());
     }
 
 }
