@@ -10,12 +10,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.department.CompetenceCourseStatisticsDTO;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -28,6 +31,22 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
     public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionPeriodID)
             throws FenixServiceException, ExcepcaoPersistencia {
+
+        final StringBuilder stringBuilder = new StringBuilder();
+        final IUserView userView = AccessControl.getUserView();
+        if (userView != null) {
+            final Person person = userView.getPerson();
+            stringBuilder.append("Loggend user: ");
+            stringBuilder.append(person.getUsername());
+            stringBuilder.append(" : ");
+            stringBuilder.append(person.getName());
+        }
+        stringBuilder.append(" department: ");
+        stringBuilder.append(departementID);
+        stringBuilder.append(" executionPeriod: ");
+        stringBuilder.append(executionPeriodID);
+        System.out.println(stringBuilder.toString());
+
         Department department = rootDomainObject.readDepartmentByOID(
                 departementID);
 
