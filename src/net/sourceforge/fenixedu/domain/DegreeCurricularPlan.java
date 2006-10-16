@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.De
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
+import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
@@ -1208,6 +1209,36 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	} else {
 	    return super.getEndDateYearMonthDay();
 	}
+    }
+
+    public Set<ExecutionCourseView> getExecutionCourseViews(final ExecutionPeriod ... executionPeriods) {
+        final Set<ExecutionCourseView> executionCourseViews = new HashSet<ExecutionCourseView>();
+        if (executionPeriods != null && executionPeriods.length > 0) {
+            for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
+                for (final ExecutionPeriod executionPeriod : executionPeriods) {
+                    for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+                        if (executionCourse.getExecutionPeriod() == executionPeriod) {
+                            for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
+                                curricularCourseScope.isActiveForExecutionPeriod(executionPeriod);
+                                final ExecutionCourseView executionCourseView = new ExecutionCourseView(executionCourse);
+                                executionCourseView.setCurricularYear(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear());
+                                executionCourseView.setAnotation(curricularCourseScope.getAnotation());
+                                executionCourseView.setDegreeCurricularPlanAnotation(getAnotation());
+                                executionCourseViews.add(executionCourseView);
+                            }
+                        }
+                    }
+                }
+            }
+
+            for (final ExecutionPeriod executionPeriod : executionPeriods) {
+                final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+                for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class, executionYear)) {
+                    // TODO : complete this portion.
+                }            
+            }
+        }
+        return executionCourseViews;
     }
 
 }
