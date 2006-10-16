@@ -211,66 +211,42 @@ public class Teacher extends Teacher_Base {
 
     public Unit getCurrentWorkingUnit() {
 	Employee employee = this.getPerson().getEmployee();
-	if (employee != null) {
-	    return employee.getCurrentWorkingPlace();
-	}
-	return null;
+	return (employee != null) ? employee.getCurrentWorkingPlace() : null;
     }
 
     public Unit getLastWorkingUnit() {
 	Employee employee = this.getPerson().getEmployee();
-	if (employee != null) {
-	    return employee.getLastWorkingPlace();
-	}
-	return null;
+	return (employee != null) ? employee.getLastWorkingPlace() : null;
     }
 
     public Unit getLastWorkingUnit(YearMonthDay begin, YearMonthDay end) {
 	Employee employee = this.getPerson().getEmployee();
-	if (employee != null) {
-	    return employee.getLastWorkingPlaceByPeriod(begin, end);
-	}
-	return null;
+	return (employee != null) ? employee.getLastWorkingPlaceByPeriod(begin, end) : null;
     }
 
     public Department getCurrentWorkingDepartment() {
 	Employee employee = this.getPerson().getEmployee();
-	if (employee != null) {
-	    return employee.getCurrentDepartmentWorkingPlace();
-	}
-	return null;
+	return (employee != null) ? employee.getCurrentDepartmentWorkingPlace() : null;
     }
 
     public Department getLastWorkingDepartment(YearMonthDay begin, YearMonthDay end) {
 	Employee employee = this.getPerson().getEmployee();
-	if (employee != null) {
-	    return employee.getLastDepartmentWorkingPlace(begin, end);
-	}
-	return null;
+	return (employee != null) ? employee.getLastDepartmentWorkingPlace(begin, end) : null;
     }
 
     public Department getLastWorkingDepartment() {
 	Employee employee = this.getPerson().getEmployee();
-	if (employee != null) {
-	    return employee.getLastDepartmentWorkingPlace();
-	}
-	return null;
+	return (employee != null) ? employee.getLastDepartmentWorkingPlace() : null;
     }
 
     public List<Unit> getWorkingPlacesByPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
 	Employee employee = this.getPerson().getEmployee();
-	if (employee != null) {
-	    return employee.getWorkingPlacesByPeriod(beginDate, endDate);
-	}
-	return new ArrayList<Unit>();
+	return (employee != null) ? employee.getWorkingPlacesByPeriod(beginDate, endDate) : new ArrayList<Unit>();
     }
 
     public Category getCategory() {
 	TeacherLegalRegimen regimen = getLastLegalRegimenWithoutEndSituations();
-	if (regimen != null) {
-	    return regimen.getCategory();
-	}
-	return null;
+	return (regimen != null) ? regimen.getCategory() : null;
     }
 
     public TeacherLegalRegimen getCurrentLegalRegimenWithoutEndSitutions() {

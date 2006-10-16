@@ -19,7 +19,7 @@ import org.joda.time.YearMonthDay;
 
 public class Contract extends Contract_Base {
 
-    public static final Comparator CONTRACT_COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
+    public static final Comparator<Contract> CONTRACT_COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
     static {
 	((ComparatorChain) CONTRACT_COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator(
 		"beginDate"));
@@ -27,7 +27,7 @@ public class Contract extends Contract_Base {
 		"idInternal"));
     }
 
-    public static final Comparator CONTRACT_COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
+    public static final Comparator<Contract> CONTRACT_COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) CONTRACT_COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator(
 		"person.name"));

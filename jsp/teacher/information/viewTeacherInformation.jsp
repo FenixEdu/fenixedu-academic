@@ -5,21 +5,27 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <h2><bean:message key="title.teacherInformation"/></h2>
+
 <logic:present name="infoSiteTeacherInformation"> 
+	<bean:define id="datePattern" value="dd-MM-yyyy"/>
 		<table class="infoselected" width="100%">
 			<tr>
-				<td width="70%"><bean:message key="message.teacherInformation.name" />
-					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nome" /> </td> 
-				<td width="30%"><bean:message key="message.teacherInformation.birthDate" />
-					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nascimento" /> </td>	
+				<td width="70%">
+					<bean:message key="message.teacherInformation.name" />
+					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nome" /></td> 
+				<td width="30%">
+					<bean:message key="message.teacherInformation.birthDate" />
+					&nbsp;<dt:format patternId="datePattern"><bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nascimento.time" /></dt:format>
+				</td>	
 			</tr>
 			<tr>
-				<td><bean:message key="message.teacherInformation.category" />
-					<logic:present name="infoSiteTeacherInformation" property="infoTeacher">
-						<logic:present name="infoSiteTeacherInformation" property="infoCategory">
+				<td>
+					<bean:message key="message.teacherInformation.category" />
+					<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeacher">
+						<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeacher.infoCategory">
 							&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName" />
-						</logic:present>
-					</logic:present>
+						</logic:notEmpty>
+					</logic:notEmpty>
 				</td>
 			</tr>
 		</table>
@@ -36,20 +42,40 @@
 					<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsMark" /></th>
 				</tr>
 				<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
-				<tr>
-					<td class="listClasses">
-						<logic:present name="infoQualification" property="date">
-	 							<dt:format pattern="yyyy">
-									<bean:write name="infoQualification" property="date.time" />	
-								</dt:format>
+					<tr>
+						<td class="listClasses">
+								<logic:notEmpty name="infoQualification" property="year">
+									<bean:write name="infoQualification" property="year" />							
+								</logic:notEmpty>			 								
+								<logic:empty name="infoQualification" property="year">
+									<logic:notEmpty name="infoQualification" property="date">
+										<dt:format pattern="yyyy">
+											<bean:write name="infoQualification" property="date.time" />							
+										</dt:format>
+									</logic:notEmpty>
+								</logic:empty>
+								<logic:empty name="infoQualification" property="year">
+									<logic:empty name="infoQualification" property="date">
+										--
+									</logic:empty>
+								</logic:empty>
+						</td>
+						<td class="listClasses"><bean:write name="infoQualification" property="school" /></td>
+						<td class="listClasses"><bean:write name="infoQualification" property="degree" /></td>
+						<logic:notEmpty name="infoQualification" property="type">												
+							<bean:define id="qualificationType" name="infoQualification" property="type.name" />
+							<td class="listClasses"><bean:message name="qualificationType" bundle="ENUMERATION_RESOURCES"/></td>
+						</logic:notEmpty>
+						<logic:empty name="infoQualification" property="type">																			
+							<td class="listClasses"><bean:write name="infoQualification" property="title"/></td>
+						</logic:empty>	
+						<logic:present name="infoQualification" property="mark">												
+							<td class="listClasses">&nbsp;<bean:write name="infoQualification" property="mark" /></td>																
 						</logic:present>
-						<logic:notPresent name="infoQualification" property="date">-</logic:notPresent>
-					</td>
-					<td class="listClasses"><bean:write name="infoQualification" property="school" /></td>
-					<td class="listClasses"><bean:write name="infoQualification" property="degree" /></td>
-					<td class="listClasses"><bean:write name="infoQualification" property="title" /></td>
-					<td class="listClasses">&nbsp;<bean:write name="infoQualification" property="mark" /></td>
-				</tr>
+						<logic:notPresent name="infoQualification" property="mark">												
+							<td class="listClasses">--</td>																
+						</logic:notPresent>
+					</tr>
 				</logic:iterate>
 			</table>
 		</logic:notEmpty>
@@ -412,7 +438,58 @@
 			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
-		<br/>&nbsp;<br/>
-		<bean:message key="message.teacherInformation.notYetAvailable" />
-		<br/>&nbsp;<br/>
+		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+			<bean:define id="datePattern" value="dd-MM-yyyy"/>
+			<logic:notEmpty name="infoSiteTeacherInformation" property="personFunctions">		
+				<tr>
+					<th class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.position" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+					<th class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.unit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>										
+					<th class="listClasses-header" width="10%"><bean:message key="label.managementPosition.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>					
+					<th class="listClasses-header" width="10%"><bean:message key="label.managementPosition.end" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				</tr>
+				<logic:iterate id="personFunction" name="infoSiteTeacherInformation" property="personFunctions">
+					<tr>
+						<td class="listClasses" style="text-align:left">
+							<bean:write name="personFunction" property="function.name"/>
+						</td>
+						<td class="listClasses" style="text-align:left">
+							<bean:define id="unit" name="personFunction" property="function.unit"/>
+							<bean:write name="unit" property="name"/>
+							<logic:notEmpty name="unit" property="topUnits">
+								-
+								<logic:iterate id="topUnit" name="unit" property="topUnits">
+									<bean:write name="topUnit" property="name"/>,							
+								</logic:iterate>								
+							</logic:notEmpty>
+						</td>				
+						<td class="listClasses">
+							<bean:define id="beginDate" type="org.joda.time.YearMonthDay" name="personFunction" property="beginDate"/>
+							<bean:define id="beginDateTime" ><%= beginDate.toDateTimeAtCurrentTime().toDate().getTime() %></bean:define>
+							<dt:format patternId="datePattern">
+								<bean:write name="beginDateTime"/>
+							</dt:format>
+						</td>
+						<logic:notEmpty name="personFunction" property="endDate">
+							<td class="listClasses">
+								<bean:define id="endDate" type="org.joda.time.YearMonthDay" name="personFunction" property="endDate"/>
+								<bean:define id="endDateTime" ><%= endDate.toDateTimeAtCurrentTime().toDate().getTime() %></bean:define>
+								<dt:format patternId="datePattern">
+									<bean:write name="endDateTime"/>
+								</dt:format>
+							</td>
+						</logic:notEmpty>
+						<logic:empty name="personFunction" property="endDate">
+						-			
+						</logic:empty>
+					</tr>
+				</logic:iterate>
+			</logic:notEmpty>
+			<logic:empty name="infoSiteTeacherInformation" property="personFunctions">
+				<tr>
+					<td colspan="4" class="listClasses"> 
+						<i><bean:message key="message.managementPositions.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
+					</td>
+				</tr>
+			</logic:empty>		
+		</table>
 </logic:present>

@@ -45,10 +45,11 @@
 			<tr>
 				<td>
 					<b><bean:message key="message.teacherInformation.category" /></b>
-					&nbsp;
-					<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeacher.infoCategory" >
-						<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName" />
-					</logic:notEmpty>
+					<logic:present name="infoSiteTeacherInformation" property="infoTeacher">
+						<logic:present name="infoSiteTeacherInformation" property="infoTeacher.infoCategory">
+							&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName" />
+						</logic:present>
+					</logic:present>
 				</td>
 			</tr>
 		</table>

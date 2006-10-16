@@ -14,12 +14,19 @@ import net.sourceforge.fenixedu.util.LegalRegimenType;
 import net.sourceforge.fenixedu.util.RegimenType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 
-    public static final Comparator TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE = new BeanComparator("beginDateYearMonthDay");
-        
+    public static final Comparator<TeacherLegalRegimen> TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
+    static {
+	((ComparatorChain) TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator(
+		"beginDateYearMonthDay"));
+	((ComparatorChain) TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator(
+		"idInternal"));
+    }
+    
     public TeacherLegalRegimen(Teacher teacher, Category category, Date beginDate, 
             Date endDate, Double totalHoursNumber, Integer lessonHoursNumber, 
             LegalRegimenType legalRegimenType, RegimenType regimenType, Integer percentage) {
