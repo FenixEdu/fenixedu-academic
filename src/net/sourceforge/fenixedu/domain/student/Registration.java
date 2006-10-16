@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -1113,9 +1114,10 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
-    public boolean isForOffice(Unit office) {
-
-	Set<Party> officeDegreeUnits = office.getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE,
+    public boolean isForOffice(final AdministrativeOffice administrativeOffice) {
+	final Unit administrativeOfficeUnit = administrativeOffice.getUnit();
+	
+	Set<Party> officeDegreeUnits = administrativeOfficeUnit.getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE,
 		Unit.class);
 
 	StudentCurricularPlan studentCurricularPlan = getActiveOrConcludedOrLastStudentCurricularPlan();
@@ -1128,9 +1130,8 @@ public class Registration extends Registration_Base {
     }
 
     public boolean getIsForOffice() {
-	Unit workingPlace = AccessControl.getUserView().getPerson().getEmployee()
-		.getCurrentWorkingPlace();
-	return isForOffice(workingPlace);
+	final AdministrativeOffice administrativeOffice = AdministrativeOffice.readByEmployee(AccessControl.getUserView().getPerson().getEmployee());
+	return isForOffice(administrativeOffice);
     }
 
     public List<NewTestGroup> getPublishedTestGroups() {
