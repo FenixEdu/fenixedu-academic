@@ -26,24 +26,26 @@
 	<%-- AccessGroups --%>		
 	<e:labelValues id="accessGroupTypes" enumeration="net.sourceforge.fenixedu.domain.space.Space$SpaceAccessGroupType" bundle="ENUMERATION_RESOURCES" />
 	<logic:iterate id="accessGroupType" name="accessGroupTypes" type="org.apache.struts.util.LabelValueBean">		
-		<bean:define id="accessGroup" name="space" property="<%= SpaceAccessGroupType.valueOf(accessGroupType.getValue()).getSpaceAccessGroupSlotName() %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>
-		<logic:notEmpty name="accessGroup">	
-			<logic:notEmpty name="accessGroup" property="elements">	
-				<h3 class="mtop2 mbottom0"><bean:write name="accessGroupType" property="label"/></h3>				
-				<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
-					<fr:layout name="tabular">      										  
-			   			<fr:property name="rowClasses" value="listClasses"/>	
-			   			<fr:property name="columnClasses" value="listClasses"/>
-			   			<fr:property name="headerClasses" value="listClasses-header"/>
-			            
-			            <fr:property name="link(delete)" value="<%= "/manageSpaces.do?method=removePersonFromAccessGroup&spaceInformationID=" + selectedSpaceInformationId + "&spaceAccessGroupType=" + accessGroupType.getValue() %>"/>
-			            <fr:property name="param(delete)" value="idInternal/personID"/>
-				        <fr:property name="key(delete)" value="label.remove"/>
-			            <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
-	                	<fr:property name="order(delete)" value="0"/>                                           
-	      			</fr:layout>    	
-				</fr:view>		
-			</logic:notEmpty>		
+		<logic:notEmpty name="space" property="<%= SpaceAccessGroupType.valueOf(accessGroupType.getValue()).getSpaceAccessGroupSlotName() %>">
+			<bean:define id="accessGroup" name="space" property="<%= SpaceAccessGroupType.valueOf(accessGroupType.getValue()).getSpaceAccessGroupSlotName() %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>
+			<logic:notEmpty name="accessGroup">	
+				<logic:notEmpty name="accessGroup" property="elements">	
+					<h3 class="mtop2 mbottom0"><bean:write name="accessGroupType" property="label"/></h3>				
+					<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
+						<fr:layout name="tabular">      										  
+				   			<fr:property name="rowClasses" value="listClasses"/>	
+				   			<fr:property name="columnClasses" value="listClasses"/>
+				   			<fr:property name="headerClasses" value="listClasses-header"/>
+				            
+				            <fr:property name="link(delete)" value="<%= "/manageSpaces.do?method=removePersonFromAccessGroup&spaceInformationID=" + selectedSpaceInformationId + "&spaceAccessGroupType=" + accessGroupType.getValue() %>"/>
+				            <fr:property name="param(delete)" value="idInternal/personID"/>
+					        <fr:property name="key(delete)" value="label.remove"/>
+				            <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
+		                	<fr:property name="order(delete)" value="0"/>                                           
+		      			</fr:layout>    	
+					</fr:view>		
+				</logic:notEmpty>		
+			</logic:notEmpty>	
 		</logic:notEmpty>	
 	</logic:iterate>	
 		
