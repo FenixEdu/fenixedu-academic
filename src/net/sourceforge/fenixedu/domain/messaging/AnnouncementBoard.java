@@ -14,6 +14,41 @@ import org.joda.time.DateTime;
 
 public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
+    public static class AnnouncementPresentationBean extends TreeSet<Announcement> {
+
+        private int maxElements = 0;
+
+        private Comparator<Announcement> comparator;
+
+        public AnnouncementPresentationBean(final int maxElements, final Comparator<Announcement> comparator) {
+            super(comparator);
+            this.maxElements = maxElements;
+            this.comparator = comparator;
+        }
+
+        @Override
+        public boolean add(Announcement announcement) {
+            if (size() < maxElements) {
+                return super.add(announcement);
+            }
+            final Announcement oldestAnnouncement = last();
+            if (comparator.compare(announcement, oldestAnnouncement) < 0) {
+                remove(oldestAnnouncement);
+                return super.add(announcement);
+            }
+            return false;
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Announcement> c) {
+            for (final Announcement announcement : c) {
+                add(announcement);
+            }
+            return true;
+        }
+
+    }
+
     public static final Comparator<AnnouncementBoard> NEWEST_FIRST = new Comparator<AnnouncementBoard>() {
 	public int compare(AnnouncementBoard o1, AnnouncementBoard o2) {
 	    int result = -o1.getCreationDate().compareTo(o2.getCreationDate());
@@ -104,13 +139,6 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	setCreationDate(new DateTime());
     }
 
-    @Override
-    public java.util.List<Announcement> getAnnouncements() {
-	Collection<Announcement> orderedAnnouncements = new TreeSet<Announcement>(Announcement.NEWEST_FIRST);
-	orderedAnnouncements.addAll(super.getAnnouncements());
-	return new ArrayList<Announcement>(orderedAnnouncements); 
-    }
-
     public Collection<Announcement> getActiveAnnouncements() {
 	final Collection<Announcement> activeAnnouncements = new ArrayList<Announcement>();
 	for (final Announcement announcement : this.getAnnouncements()) {
@@ -131,8 +159,12 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	return activeAnnouncements;
     }
 
-    public int getActiveAnnouncementsCount() {
-	return this.getActiveAnnouncements().size();
+    public void addVisibleAnnouncements(final AnnouncementPresentationBean announcementPresentationBean) {
+        for (final Announcement announcement : this.getAnnouncements()) {
+            if (announcement.getVisible()) {
+                announcementPresentationBean.add(announcement);
+            }
+        }
     }
 
     public void delete() {
@@ -182,4 +214,5 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     abstract public String getFullName();
 
     abstract public String getQualifiedName();
+
 }

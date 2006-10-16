@@ -17,11 +17,7 @@ public class Announcement extends Announcement_Base {
     };
     
     private DateTime getBeginComparationDate() {
-	if (getPublicationBegin() != null) {
-	    return getPublicationBegin();
-	} else {
-	    return getCreationDate();
-	}
+	return getPublicationBegin() != null ? getPublicationBegin() : getCreationDate();
     }
     
     public Announcement() {

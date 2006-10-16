@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessLevel;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessType;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
+import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard.AnnouncementPresentationBean;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -134,28 +136,29 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         return startDate;
     }
 
-    private List<Announcement> getAnnouncementsToShow(HttpServletRequest request, ActionForm actionForm) {
-	
-	final List<Announcement> result = new ArrayList<Announcement>();
+    private Collection<Announcement> getAnnouncementsToShow(HttpServletRequest request, ActionForm actionForm) {
 	final AnnouncementsStartPageForm form = (AnnouncementsStartPageForm) actionForm;
-	
+
+        final AnnouncementPresentationBean announcementPresentationBean
+                = new AnnouncementPresentationBean(form.getHowManyAnnouncementsToShow(), Announcement.NEWEST_FIRST);
+
 	if (form.getBoardType().equals("BOOKMARKED")) {
 	    for (final AnnouncementBoard board : getLoggedPerson(request).getBookmarkedBoards()) {
-		addBoardAnnouncements(request, result, board);
+		addBoardAnnouncements(request, board, announcementPresentationBean);
 	    }
 	} else if (form.getBoardType().equals("INSTITUTIONAL")) {
 	    for (final AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoardsSet()) {
-		addBoardAnnouncements(request, result, board);
+		addBoardAnnouncements(request, board, announcementPresentationBean);
 	    }
 	}
 
-        Collections.sort(result, Announcement.NEWEST_FIRST);
-        return result.subList(0, Math.min(form.getHowManyAnnouncementsToShow(), result.size()));
+        return announcementPresentationBean;
     }
 
-    private void addBoardAnnouncements(HttpServletRequest request, final List<Announcement> result, final AnnouncementBoard board) {
+    private void addBoardAnnouncements(HttpServletRequest request, final AnnouncementBoard board,
+                final AnnouncementPresentationBean announcementPresentationBean) {
 	if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
-	    result.addAll(board.getVisibleAnnouncements());
+            board.addVisibleAnnouncements(announcementPresentationBean);
 	}
     }
 
