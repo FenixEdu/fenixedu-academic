@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.parking.ParkingDocument;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
@@ -16,7 +15,7 @@ import pt.utl.ist.fenix.tools.smtp.EmailSender;
 public class UpdateParkingParty extends Service {
 
     public void run(ParkingRequest parkingRequest, final ParkingRequestState parkingRequestState,
-            final Integer cardCode, final Integer groupId, final String note) {
+            final Long cardCode, final Integer groupId, final String note) {
         if (parkingRequestState == ParkingRequestState.ACCEPTED) {
             parkingRequest.getParkingParty().setAuthorized(true);
             parkingRequest.getParkingParty().setCardNumber(cardCode);

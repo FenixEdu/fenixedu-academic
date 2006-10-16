@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Parking Party, change card number from int to long" alterTableParkingParty.sql

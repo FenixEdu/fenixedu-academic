@@ -327,10 +327,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
         if (!StringUtils.isEmpty((String) dynaForm.get("accepted"))
                 || request.getParameter("acceptPrint") != null) {
-            Integer cardNumber = null;
+            Long cardNumber = null;
             Integer group = null;
             try {
-                cardNumber = new Integer(request.getParameter("cardNumber"));
+                cardNumber = new Long(request.getParameter("cardNumber"));
                 if (cardNumber <= 0) {
                     saveErrorMessage(request, "cardNumber", "error.number.below.minimum");
                     request.setAttribute("idInternal", parkingRequestID);
@@ -468,7 +468,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         return false;
     }
 
-    private boolean isValidCardNumber(Integer cardNumber) {
+    private boolean isValidCardNumber(Long cardNumber) {
         for (ParkingParty parkingParty : rootDomainObject.getParkingParties()) {
             if (parkingParty.getCardNumber() != null && parkingParty.getCardNumber().equals(cardNumber)) {
                 return false;

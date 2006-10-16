@@ -1,0 +1,1 @@
+alter table PARKING_PARTY modify CARD_NUMBER BIGINT(20) default NULL;

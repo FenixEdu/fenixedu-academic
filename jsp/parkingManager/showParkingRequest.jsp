@@ -67,7 +67,7 @@ function confirmation(){
 			<html:hidden property="accepted" value=""/>			
 			
 			<p class="mbottom025"><strong><bean:message key="label.cardNumber"/></strong></p>
-			<html:text size="10" property="cardNumber"/><span class="error"><!-- Error messages go here --><html:errors /></span>
+			<html:text size="12" property="cardNumber"/><span class="error"><!-- Error messages go here --><html:errors /></span>
 			<span class="error0 mtop0"><html:messages id="message" property="cardNumber" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>

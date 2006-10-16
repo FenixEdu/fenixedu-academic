@@ -15,7 +15,7 @@
 			<form-property name="personName" type="java.lang.String" />
 			<form-property name="group" type="java.lang.Integer" />
 			<form-property name="code" type="java.lang.Integer" />
-			<form-property name="cardNumber" type="java.lang.Integer"/>
+			<form-property name="cardNumber" type="java.lang.Long"/>
 			<form-property name="note" type="java.lang.String"/>
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="page" type="java.lang.Integer" />
