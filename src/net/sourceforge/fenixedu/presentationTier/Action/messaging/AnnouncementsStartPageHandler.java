@@ -210,7 +210,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
                 } else if (board instanceof ExecutionCourseAnnouncementBoard) {
                     ExecutionCourseAnnouncementBoard executionCourseBoard = (ExecutionCourseAnnouncementBoard) board;
-                    if (executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+                    if (executionCourseBoard.hasExecutionCourse() && executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
                 	executionCourseAnnouncementBoards.add(executionCourseBoard);
                     }
                 }
