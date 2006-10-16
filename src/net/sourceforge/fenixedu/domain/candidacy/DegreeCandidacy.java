@@ -36,7 +36,7 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	    final String ingression, final String istUniversity, EntryPhase entryPhase) {
 	super();
 	init(person, executionDegree, creator, entryGrade, contigent, ingression, istUniversity,
-		entryPhase);
+		entryPhase);	
     }
 
     private void checkParameters(final Person person, final ExecutionDegree executionDegree,
@@ -97,12 +97,6 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	super.setIngression(ingression);
 	super.setIstUniversity(istUniversity);
 	super.setEntryPhase(entryPhase);
-
-	// if (person.hasRole(RoleType.PERSON)) {
-	// new AdmittedCandidacySituation(this, creator);
-	// } else {
-	new StandByCandidacySituation(this, creator);
-	// }
     }
 
     // @Override
