@@ -68,6 +68,7 @@ public abstract class Transaction extends jvstm.Transaction {
             final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("### Begin #########################################");
             for (final StackTraceElement stackTraceElement : transaction.getThread().getStackTrace()) {
+                stringBuilder.append("\n");
                 stringBuilder.append(stackTraceElement.getClassName());
                 stringBuilder.append(" : ");
                 stringBuilder.append(stackTraceElement.getMethodName());
@@ -75,7 +76,7 @@ public abstract class Transaction extends jvstm.Transaction {
                 stringBuilder.append(stackTraceElement.getLineNumber());
             }
             System.out.println(stringBuilder.toString());
-            stringBuilder.append("--- End -------------------------------------------");
+            stringBuilder.append("\n--- End -------------------------------------------");
         }
 	jvstm.Transaction tx = jvstm.Transaction.begin(readOnly);
         if (TRANSACTION_MAX_DURATION_MILLIS > 0) {
