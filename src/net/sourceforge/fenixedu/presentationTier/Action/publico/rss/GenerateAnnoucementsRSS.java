@@ -18,14 +18,18 @@ public class GenerateAnnoucementsRSS extends FenixDispatchAction {
 	final String executionCourseIdString = request.getParameter("id");
 	final Integer executionCourseId = Integer.valueOf(executionCourseIdString);
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-	final ExecutionCourseAnnouncementBoard announcementBoard = executionCourse.getBoard();
-	final ActionForward actionForward;
-	if (announcementBoard == null) {
-	    actionForward = new ActionForward("/publico/executionCourse.do?method=notFound&executionCourseID=" + executionCourse.getIdInternal());
-	} else {
-	    actionForward = new ActionForward("/external/announcementsRSS.do?announcementBoardId=" + announcementBoard.getIdInternal());
+	if (executionCourse == null) {
+	    return forward("/publico/notFound.do");
 	}
-	return actionForward;
+	final ExecutionCourseAnnouncementBoard announcementBoard = executionCourse.getBoard();
+	if (announcementBoard == null) {
+	    return forward("/publico/executionCourse.do?method=notFound&executionCourseID=" + executionCourse.getIdInternal());
+	}
+	return forward("/external/announcementsRSS.do?announcementBoardId=" + announcementBoard.getIdInternal());
+    }
+
+    private ActionForward forward(String purl) {
+	return new ActionForward(purl);
     }
 
 }

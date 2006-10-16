@@ -18,8 +18,11 @@ public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 
     public InfoGroup run(final Person personUser) throws ExcepcaoPersistencia {
 	final Registration registration = personUser.getStudentByType(DegreeType.DEGREE);
-        final Group group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
-        
+	if (registration == null) {
+	    return null;
+	}
+
+	final Group group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
         return InfoGroup.newInfoFromDomain(group);
     }
 
