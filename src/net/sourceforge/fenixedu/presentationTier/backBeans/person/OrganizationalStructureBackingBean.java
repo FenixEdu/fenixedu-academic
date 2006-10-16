@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -56,6 +57,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public ResourceBundle bundle;
 
+    public String listType;
+
     public OrganizationalStructureBackingBean() {
 	if (getRequestParameter("unitID") != null) {
 	    this.unitID = Integer.valueOf(getRequestParameter("unitID"));
@@ -69,6 +72,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
 		.getLocale());
+    }
+
+    public String getListType() {
+	return listType;
+    }
+
+    public void setListType(String listType) {
+	this.listType = listType;
     }
 
     public List getExecutionYears() throws FenixFilterException, FenixServiceException {
@@ -302,22 +313,26 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	ExecutionYear iExecutionYear = getExecutionYear(this.choosenExecutionYearID);
 
 	buffer.append("<ul class='mtop3 nobullet'><li>");
-	// buffer.append("<image
-	// src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
-	// .append(" ");
+	buffer.append("<image src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
+		.append(" ");
 	buffer.append("<strong class='eo_highlight' id=\"");
 	buffer.append(chooseUnit.getIdInternal()).append("\" >");
 	buffer.append(chooseUnit.getName()).append("</strong>");
 
-	printUnitWorkingEmployees(chooseUnit, iExecutionYear, buffer);
+	if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("0")) {
+	    printUnitWorkingEmployees(chooseUnit, iExecutionYear, buffer);
+	}
 
 	for (Function function : getSortFunctionList(chooseUnit)) {
 	    if (function.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
 		    .getEndDateYearMonthDay())) {
-		buffer.append("<ul><li class='tree_label'>").append(function.getName()).append(": ");
-		buffer.append((function.getParentInherentFunction() != null) ? " (Cargo Inerente)" : "");
-		getPersonFunctionsList(chooseUnit, function, buffer, iExecutionYear);
-		buffer.append("</li></ul>");
+		if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("1")) {
+		    buffer.append("<ul><li class='tree_label'>").append(function.getName()).append(": ");
+		    buffer.append((function.getParentInherentFunction() != null) ? " (Cargo Inerente)"
+			    : "");
+		    getPersonFunctionsList(chooseUnit, function, buffer, iExecutionYear);
+		    buffer.append("</li></ul>");
+		}
 	    }
 	}
 
@@ -337,21 +352,25 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    ExecutionYear iExecutionYear, StringBuffer buffer) {
 
 	buffer.append("<ul class='mtop1 nobullet'><li>");
-	// buffer.append("<image
-	// src='").append(getContextPath()).append("/images/unit-icon.gif'/>").append("
-	// ");
+	buffer.append("<image src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
+		.append(" ");
 	buffer.append("<strong id=\"").append(subUnit.getIdInternal()).append("\" >").append(
 		subUnit.getName()).append("</strong>");
 
-	printUnitWorkingEmployees(subUnit, iExecutionYear, buffer);
+	if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("0")) {
+	    printUnitWorkingEmployees(subUnit, iExecutionYear, buffer);
+	}
 
 	for (Function function : getSortFunctionList(subUnit)) {
 	    if (function.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
 		    .getEndDateYearMonthDay())) {
-		buffer.append("<ul><li class='tree_label'>").append(function.getName()).append(": ");
-		buffer.append((function.getParentInherentFunction() != null) ? " (Cargo Inerente)" : "");
-		getPersonFunctionsList(subUnit, function, buffer, iExecutionYear);
-		buffer.append("</li></ul>");
+		if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("1")) {
+		    buffer.append("<ul><li class='tree_label'>").append(function.getName()).append(": ");
+		    buffer.append((function.getParentInherentFunction() != null) ? " (Cargo Inerente)"
+			    : "");
+		    getPersonFunctionsList(subUnit, function, buffer, iExecutionYear);
+		    buffer.append("</li></ul>");
+		}
 	    }
 	}
 
@@ -400,23 +419,16 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 		buffer.append("<li>");
 
-		// if
-		// (contract.getEmployee().getPerson().getGender().equals(Gender.MALE))
-		// {
-		// buffer.append("<image
-		// src='").append(getContextPath()).append(
-		// "/images/worker-icon.png'/>").append(" ");
-		// } else if
-		// (contract.getEmployee().getPerson().getGender().equals(Gender.FEMALE))
-		// {
-		// buffer.append("<image
-		// src='").append(getContextPath()).append(
-		// "/images/woman-icon.png'/>").append(" ");
-		// } else {
-		// buffer.append("<image
-		// src='").append(getContextPath()).append(
-		// "/images/person-icon.gif'/>").append(" ");
-		// }
+		if (contract.getEmployee().getPerson().getGender().equals(Gender.MALE)) {
+		    buffer.append("<image src='").append(getContextPath()).append(
+			    "/images/worker-icon.png'/>").append(" ");
+		} else if (contract.getEmployee().getPerson().getGender().equals(Gender.FEMALE)) {
+		    buffer.append("<image src='").append(getContextPath()).append(
+			    "/images/woman-icon.png'/>").append(" ");
+		} else {
+		    buffer.append("<image src='").append(getContextPath()).append(
+			    "/images/person-icon.gif'/>").append(" ");
+		}
 
 		printPersonHomePage(contract.getPerson(), buffer);
 		buffer.append("</li>");
@@ -455,9 +467,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    buffer.append("<ul class='unit1'>");
 	    for (PersonFunction personFunction : validPersonFunction) {
 		buffer.append("<li>");
-		// buffer.append("<image
-		// src='").append(getContextPath()).append(
-		// "/images/person-icon.gif'/>").append(" ");
+		buffer.append("<image src='").append(getContextPath()).append(
+			"/images/person-icon.gif'/>").append(" ");
 		printPersonHomePage(personFunction.getPerson(), buffer);
 		buffer.append(" (");
 		buffer.append(personFunction.getBeginDate().toString()).append(" - ");
@@ -506,6 +517,32 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
 	Collections.sort(list, PersonFunction.COMPARATOR_BY_PERSON_NAME);
 	return list;
+    }
+
+    public List<SelectItem> getListingType() {
+	List<SelectItem> list = new ArrayList<SelectItem>();
+
+	SelectItem selectItem = new SelectItem();
+	selectItem.setLabel("Funcionários");
+	selectItem.setValue("0");
+	SelectItem selectItem2 = new SelectItem();
+	selectItem2.setLabel("Cargos de Gestão");
+	selectItem2.setValue("1");
+
+	list.add(selectItem);
+	list.add(selectItem2);
+
+	ResourceBundle bundle = getResourceBundle("resources/MessagingResources");
+	addDefaultSelectedItem(list, bundle);
+
+	return list;
+    }
+
+    private void addDefaultSelectedItem(List<SelectItem> list, ResourceBundle bundle) {
+	SelectItem firstItem = new SelectItem();
+	firstItem.setLabel(bundle.getString("label.find.organization.listing.type.default"));
+	firstItem.setValue("#");
+	list.add(0, firstItem);
     }
 
     public void setChoosenExecutionYearID(Integer choosenExecutionYearID) {

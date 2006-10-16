@@ -5,12 +5,12 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="df.page.structure" attributeName="body-inline">
-<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 <style>
 	.eo_highlight { background-color: #ffc; }
 </style>
 
+<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 <f:loadBundle basename="resources/MessagingResources" var="messagingResources"/>
 	
 <h:form>
@@ -18,18 +18,27 @@
 	<h:inputHidden value="#{organizationalStructure.subUnit}" />		
 	<h:inputHidden value="#{organizationalStructure.choosenExecutionYearID}" />
 
-	<h:panelGroup >	
+	<h:panelGroup>	
 		<h:outputText value="#{organizationalStructure.title}" escape="false"/>	
 	</h:panelGroup>
 
-	<h:outputText value="#{bundleDegreeAdministrativeOffice['label.choose.year.execution']}" />
-	<fc:selectOneMenu value="#{organizationalStructure.choosenExecutionYearID}" onchange="this.form.submit();">
-		<f:selectItems value="#{organizationalStructure.executionYears}" />
-	</fc:selectOneMenu>
-
+	<h:outputText value="<br/>" escape="false"/>
+	
+	<h:panelGrid columns="2">	
+		<h:outputText value="<b>#{messagingResources['label.choose.year']}:</b>" escape="false"/>
+		<fc:selectOneMenu value="#{organizationalStructure.choosenExecutionYearID}" onchange="this.form.submit();">
+			<f:selectItems value="#{organizationalStructure.executionYears}" />
+		</fc:selectOneMenu>
+		
+		<h:outputText value="<b>#{messagingResources['label.find.organization.listing.type']}:</b>" escape="false"/>
+		<fc:selectOneMenu value="#{organizationalStructure.listType}" onchange="this.form.submit();">
+			<f:selectItems value="#{organizationalStructure.listingType}"/>				
+		</fc:selectOneMenu>		
+	</h:panelGrid>
+	
 	<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'" escape="false"/>	
-
-	<h:outputText value="<br/><br/>" escape="false"/>
+				
+	<h:outputText value="<br/>" escape="false"/>
 	<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/messaging/organizationalStructure/structurePage.faces">
 		<h:outputText value="#{messagingResources['messaging.back.label']}" escape="false"/>
 	</h:outputLink>
