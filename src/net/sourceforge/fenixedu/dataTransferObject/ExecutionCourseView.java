@@ -64,4 +64,19 @@ public class ExecutionCourseView {
         return getExecutionCourse().getExecutionPeriod().getIdInternal();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+	if (obj instanceof ExecutionCourseView) {
+	    final ExecutionCourseView executionCourseView = (ExecutionCourseView) obj;
+	    final Integer curricularYear = executionCourseView.getCurricularYear();
+	    return getExecutionCourse() == executionCourseView.getExecutionCourse() && getCurricularYear().equals(curricularYear);
+	}
+	return false;
+    }
+
+    @Override
+    public int hashCode() {
+	return getExecutionCourse().hashCode();
+    }
+
 }

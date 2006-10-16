@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -1211,34 +1212,67 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
     }
 
-    public Set<ExecutionCourseView> getExecutionCourseViews(final ExecutionPeriod ... executionPeriods) {
-        final Set<ExecutionCourseView> executionCourseViews = new HashSet<ExecutionCourseView>();
-        if (executionPeriods != null && executionPeriods.length > 0) {
-            for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
-                for (final ExecutionPeriod executionPeriod : executionPeriods) {
-                    for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                        if (executionCourse.getExecutionPeriod() == executionPeriod) {
-                            for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
-                                curricularCourseScope.isActiveForExecutionPeriod(executionPeriod);
-                                final ExecutionCourseView executionCourseView = new ExecutionCourseView(executionCourse);
-                                executionCourseView.setCurricularYear(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear());
-                                executionCourseView.setAnotation(curricularCourseScope.getAnotation());
-                                executionCourseView.setDegreeCurricularPlanAnotation(getAnotation());
-                                executionCourseViews.add(executionCourseView);
-                            }
-                        }
-                    }
-                }
-            }
 
-            for (final ExecutionPeriod executionPeriod : executionPeriods) {
-                final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-                for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class, executionYear)) {
-                    // TODO : complete this portion.
-                }            
-            }
-        }
-        return executionCourseViews;
+
+    public void addExecutionCourses(final Collection<ExecutionCourseView> executionCourseViews, final ExecutionPeriod ... executionPeriods) {
+	if (executionCourseViews != null && executionPeriods != null) {
+	    // Pre-Bolonha structure search
+	    for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
+		for (final ExecutionPeriod executionPeriod : executionPeriods) {
+		    for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+			if (executionCourse.getExecutionPeriod() == executionPeriod) {
+			    for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
+				if (curricularCourseScope.isActiveForExecutionPeriod(executionPeriod)) {
+				    executionCourseViews.add(constructExecutionCourseView(executionCourse, curricularCourseScope));
+				}
+			    }
+			}
+		    }
+		}
+	    }
+
+	    // Bolonha structure search
+	    CourseGroup root = getRoot();
+	    if (root != null) {
+		addExecutionCourses(root, executionCourseViews, executionPeriods);
+	    }
+	}
+    }
+
+    private void addExecutionCourses(final CourseGroup courseGroup, final Collection<ExecutionCourseView> executionCourseViews, final ExecutionPeriod ... executionPeriods) {
+	for (final Context context : courseGroup.getChildContextsSet()) {
+	    for (final ExecutionPeriod executionPeriod : executionPeriods) {
+		if (context.isValid(executionPeriod)) {
+		    final DegreeModule degreeModule = context.getChildDegreeModule();
+		    if (degreeModule.isLeaf()) {
+			final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
+			for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+			    if (executionCourse.getExecutionPeriod() == executionPeriod) {
+				final Integer curricularYear = context.getCurricularYear();
+				executionCourseViews.add(constructExecutionCourseView(executionCourse, curricularYear));
+			    }
+			}
+		    } else {
+			final CourseGroup childCourseGroup = (CourseGroup) degreeModule;
+			addExecutionCourses(childCourseGroup, executionCourseViews, executionPeriods);
+		    }
+		}
+	    }
+	}
+    }
+
+    private ExecutionCourseView constructExecutionCourseView(final ExecutionCourse executionCourse, final Integer curricularYear) {
+	final ExecutionCourseView executionCourseView = new ExecutionCourseView(executionCourse);
+	executionCourseView.setCurricularYear(curricularYear);
+	executionCourseView.setDegreeCurricularPlanAnotation(getAnotation());
+	return executionCourseView;
+    }
+
+    private ExecutionCourseView constructExecutionCourseView(final ExecutionCourse executionCourse, final CurricularCourseScope curricularCourseScope) {
+	final Integer curricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear();
+	final ExecutionCourseView executionCourseView = constructExecutionCourseView(executionCourse, curricularYear);
+	executionCourseView.setAnotation(curricularCourseScope.getAnotation());
+	return executionCourseView;
     }
 
 }

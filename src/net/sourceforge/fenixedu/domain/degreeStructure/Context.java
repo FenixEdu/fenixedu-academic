@@ -206,8 +206,9 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
 
         @Override
-        public Integer getCurricularYear() {       
-            return context.getCurricularPeriod().getParent().getAbsoluteOrderOfChild(); 
+        public Integer getCurricularYear() {
+            return context.getCurricularYear();
+            //return context.getCurricularPeriod().getParent().getAbsoluteOrderOfChild(); 
         }
 
         @Override
@@ -235,5 +236,9 @@ public class Context extends Context_Base implements Comparable<Context> {
 	}
 	
     }
-    
+
+    public Integer getCurricularYear() {
+	return getCurricularPeriod().getParent().getAbsoluteOrderOfChild();
+    }
+
 }

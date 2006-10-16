@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,8 +61,8 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
     private List<ExecutionCourseView> getExecutionCourseViews(HttpServletRequest request, Degree degree)
 	    throws FenixServiceException, FenixFilterException {
 	final Object[] args = { degree };
-	List<ExecutionCourseView> result = (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree", args);
-
+	List<ExecutionCourseView> result = new ArrayList((Collection<ExecutionCourseView>)
+		ServiceManagerServiceFactory.executeService(null, "ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree", args));
 	BeanComparator beanComparator = new BeanComparator("executionCourseName", Collator.getInstance());
 	Collections.sort(result, beanComparator);
 
