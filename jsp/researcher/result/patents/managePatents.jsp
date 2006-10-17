@@ -32,11 +32,9 @@
 	<logic:empty name="resultPatents">
 		<p><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.emptyList"/></p>
 	</logic:empty>
-
-
-	<p class="mtop15 mbottom05"><bean:message key="researcher.ResultPatent.list.label" bundle="RESEARCHER_RESOURCES"/>:</p>
 	
 	<logic:notEmpty name="resultPatents">
+		<p class="mtop15 mbottom05"><bean:message key="researcher.ResultPatent.list.label" bundle="RESEARCHER_RESOURCES"/>:</p>
 		<fr:view name="resultPatents" layout="tabular" schema="result.patentShortList" >
 			<fr:layout>
 				<fr:property name="classes" value="tstyle1 mtop0"/>
