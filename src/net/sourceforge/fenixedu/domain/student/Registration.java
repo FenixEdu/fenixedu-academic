@@ -966,8 +966,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isActive() {
-	// FIXME: this sould not be hardcoded!!
-	return true;
+	return (getActiveStudentCurricularPlan() != null);
     }
 
     public Tutor getAssociatedTutor() {
