@@ -1280,6 +1280,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return results;
     }
+    
+    public List<Enrolment> getEnrolmentsByExecutionYear(final ExecutionYear executionYear) {
+	final List<Enrolment> result = new ArrayList<Enrolment>();
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.getExecutionPeriod().getExecutionYear() == executionYear) {
+		result.add(enrolment);
+	    }
+	}
+
+	return result;
+    }
 
     public MasterDegreeProofVersion readActiveMasterDegreeProofVersion() {
 	MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
