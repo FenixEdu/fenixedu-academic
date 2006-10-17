@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -22,7 +23,7 @@ public class ReadExternalPersonsByInstitution extends Service {
         List infoExternalPersons = new ArrayList();
         
         Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);
-        List<ExternalContract> externalPersons = institution.getExternalPersons();               
+        Collection<ExternalContract> externalPersons = institution.getExternalPersons();               
 
         for (ExternalContract externalPerson : externalPersons) {
             infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));

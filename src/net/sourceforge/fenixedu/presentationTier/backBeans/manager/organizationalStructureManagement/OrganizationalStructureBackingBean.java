@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -88,8 +89,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		    .toString());
 	} else {
 	    this.toRemoveParentUnit = false;
-	}	
-	if(getViewExternalUnits() == null) {
+	}
+	if (getViewExternalUnits() == null) {
 	    setViewExternalUnits(Boolean.FALSE);
 	}
     }
@@ -206,18 +207,19 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	this.setViewExternalUnits(Boolean.FALSE);
 	return "listAllUnits";
     }
-    
+
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
 	StringBuilder buffer = new StringBuilder();
-	List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();;
+	List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
+	;
 	YearMonthDay currentDate = new YearMonthDay();
-	
-	if (getViewExternalUnits()) {	    
+
+	if (getViewExternalUnits()) {
 	    Collections.sort(allUnitsWithoutParent, Unit.UNIT_COMPARATOR_BY_NAME);
-	} else {	    
+	} else {
 	    allUnitsWithoutParent.remove(UnitUtils.readExternalInstitutionUnit());
 	}
-	
+
 	for (Unit unit : allUnitsWithoutParent) {
 	    boolean active = this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0");
 	    if (active) {
@@ -855,14 +857,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return unit;
     }
 
-    public List<Accountability> getParentAccountabilities() throws FenixFilterException,
+    public Collection<Accountability> getParentAccountabilities() throws FenixFilterException,
 	    FenixServiceException {
-	return new ArrayList(getUnit().getParentAccountabilities(Unit.class));
+	return (Collection<Accountability>) getUnit().getParentAccountabilities(Unit.class);
     }
 
-    public List<Accountability> getChildAccountabilities() throws FenixFilterException,
+    public Collection<Accountability> getChildAccountabilities() throws FenixFilterException,
 	    FenixServiceException {
-	return new ArrayList(getUnit().getChildAccountabilities(Unit.class));
+	return (Collection<Accountability>) getUnit().getChildAccountabilities(Unit.class);
     }
 
     private void getParentUnitsRelationTypes() throws FenixFilterException, FenixServiceException {

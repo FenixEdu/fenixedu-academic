@@ -613,7 +613,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 		throw new DomainException("compentence.course.should.have.only.one.scientific.area");
 	    }
 
-	    return (Unit) this.getCompetenceCourseGroupUnit().getParentUnits().get(0);
+	    return (Unit) this.getCompetenceCourseGroupUnit().getParentUnits().iterator().next();
 	}
 	return null;
     }

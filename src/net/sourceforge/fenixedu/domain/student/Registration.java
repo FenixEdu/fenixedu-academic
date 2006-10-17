@@ -1100,8 +1100,8 @@ public class Registration extends Registration_Base {
 
     public boolean isActiveForOffice(Unit office) {
 
-	Set<Party> officeDegreeUnits = office.getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE,
-		Unit.class);
+	Collection<Party> officeDegreeUnits = (Collection<Party>) office.getChildParties(
+		AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
 
 	StudentCurricularPlan activeStudentCurricularPlan = getActiveStudentCurricularPlan();
 	if (activeStudentCurricularPlan != null) {
@@ -1115,9 +1115,9 @@ public class Registration extends Registration_Base {
 
     public boolean isForOffice(final AdministrativeOffice administrativeOffice) {
 	final Unit administrativeOfficeUnit = administrativeOffice.getUnit();
-	
-	Set<Party> officeDegreeUnits = administrativeOfficeUnit.getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE,
-		Unit.class);
+
+	Collection<Party> officeDegreeUnits = (Collection<Party>) administrativeOfficeUnit
+		.getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
 
 	StudentCurricularPlan studentCurricularPlan = getActiveOrConcludedOrLastStudentCurricularPlan();
 	if (officeDegreeUnits.contains(studentCurricularPlan.getDegreeCurricularPlan().getDegree()
@@ -1129,7 +1129,8 @@ public class Registration extends Registration_Base {
     }
 
     public boolean getIsForOffice() {
-	final AdministrativeOffice administrativeOffice = AdministrativeOffice.readByEmployee(AccessControl.getUserView().getPerson().getEmployee());
+	final AdministrativeOffice administrativeOffice = AdministrativeOffice
+		.readByEmployee(AccessControl.getUserView().getPerson().getEmployee());
 	return isForOffice(administrativeOffice);
     }
 

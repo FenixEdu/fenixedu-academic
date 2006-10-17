@@ -4,21 +4,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.accessControl.Checked;
-import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.ValuationGroupingDTOEntry;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class ValuationPhase extends ValuationPhase_Base {
 
@@ -101,7 +100,8 @@ public class ValuationPhase extends ValuationPhase_Base {
 	HashMap<Unit, ValuationGrouping> unitScientificAreaGrouping = new HashMap<Unit, ValuationGrouping>();
 
 	for (Unit courseUnit : unitCoursesNewGrouping.keySet()) {
-	    Unit scientificAreaUnit = courseUnit.getParentUnits().get(0);
+	    Iterator<Unit> iter = courseUnit.getParentUnits().iterator();
+	    Unit scientificAreaUnit = (!iter.hasNext()) ? null : iter.next();
 	    ValuationGrouping scientificAreaGrouping = unitScientificAreaGrouping
 		    .get(scientificAreaUnit);
 	    ValuationGrouping teachersNewGrouping = unitTeachersNewGrouping.get(scientificAreaUnit);

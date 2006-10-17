@@ -7,9 +7,11 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -70,7 +72,7 @@ public class Unit extends Unit_Base {
     }
 
     public Unit getDepartmentUnit() {
-	List<Unit> parentUnits = this.getParentUnits();
+	Collection<Unit> parentUnits = this.getParentUnits();
 	if (isUnitDepartment(this)) {
 	    return this;
 	} else if (!parentUnits.isEmpty()) {
@@ -318,14 +320,15 @@ public class Unit extends Unit_Base {
 	return contracts;
     }
 
-    public List<Contract> getContracts() {
-	return new ArrayList(getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT,
-		Contract.class));
+    public Collection<Contract> getContracts() {
+	return (Collection<Contract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT,
+		Contract.class);
     }
 
     public List<Contract> getContractsByContractType(ContractType contractType) {
 	List<Contract> contracts = new ArrayList<Contract>();
-	for (Contract contract : getContracts()) {
+	for (Contract contract : (Collection<Contract>) getChildAccountabilities(
+		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
 	    if (contract.getContractType().equals(contractType)) {
 		contracts.add(contract);
 	    }
@@ -482,28 +485,28 @@ public class Unit extends Unit_Base {
 	return new ArrayList<Employee>(employees);
     }
 
-    public List<Unit> getParentUnits() {
-	return new ArrayList(getParentParties(getClass()));
+    public Collection<Unit> getParentUnits() {
+	return (Collection<Unit>) getParentParties(getClass());
     }
 
-    public List<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
-	return new ArrayList(getParentParties(accountabilityTypeEnum, getClass()));
+    public Collection<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
+	return (Collection<Unit>) getParentParties(accountabilityTypeEnum, getClass());
     }
 
-    public List<Unit> getParentUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
-	return new ArrayList(getParentParties(accountabilityTypeEnums, getClass()));
+    public Collection<Unit> getParentUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+	return (Collection<Unit>) getParentParties(accountabilityTypeEnums, getClass());
     }
 
-    public List<Unit> getSubUnits() {
-	return new ArrayList(getChildParties(getClass()));
+    public Collection<Unit> getSubUnits() {
+	return (Collection<Unit>) getChildParties(getClass());
     }
 
-    public List<Unit> getSubUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
-	return new ArrayList(getChildParties(accountabilityTypeEnum, getClass()));
+    public Collection<Unit> getSubUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
+	return (Collection<Unit>) getChildParties(accountabilityTypeEnum, getClass());
     }
 
-    public List<Unit> getSubUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
-	return new ArrayList(getChildParties(accountabilityTypeEnums, getClass()));
+    public Collection<Unit> getSubUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+	return (Collection<Unit>) getChildParties(accountabilityTypeEnums, getClass());
     }
 
     public boolean hasAnyParentUnits() {
@@ -631,8 +634,8 @@ public class Unit extends Unit_Base {
 	super.setCostCenterCode(costCenterCode);
     }
 
-    public Set<Unit> getParentByOrganizationalStructureAccountabilityType() {
-	return (Set) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, getClass());
+    public Collection<Unit> getParentByOrganizationalStructureAccountabilityType() {
+	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, getClass());
     }
 
     public static Unit createNewUnit(String unitName, Integer costCenterCode, String acronym,
@@ -760,9 +763,9 @@ public class Unit extends Unit_Base {
 	return ParkingPartyClassification.UNIT;
     }
 
-    public List<ExternalContract> getExternalPersons() {
-	return new ArrayList(getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT,
-		ExternalContract.class));
+    public Collection<ExternalContract> getExternalPersons() {
+	return (Collection<ExternalContract>) getChildAccountabilities(
+		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class);
     }
 
     public static Unit findFirstExternalUnitByName(final String unitName) {
@@ -804,7 +807,8 @@ public class Unit extends Unit_Base {
 	Unit searchedUnit = this;
 
 	while (searchedUnit.getParentUnits().size() == 1) {
-	    Unit parentUnit = searchedUnit.getParentUnits().get(0);
+	    Iterator<Unit> iter = searchedUnit.getParentUnits().iterator();
+	    Unit parentUnit = iter.hasNext() ? iter.next() : null;
 	    if (parentUnit != institutionUnit && parentUnit != externalInstitutionUnit) {
 		if (parentUnit.getType() == null
 			|| !parentUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {

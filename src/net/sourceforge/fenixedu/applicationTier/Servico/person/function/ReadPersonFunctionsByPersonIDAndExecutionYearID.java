@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.function;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class ReadPersonFunctionsByPersonIDAndExecutionYearID extends Service {
                     YearMonthDay.fromDateFields(endDate));
 
         } else {
-            personFunctions = person.getPersonFunctions();
+            personFunctions = new ArrayList<PersonFunction>(person.getPersonFunctions());
         }
 
         return personFunctions;

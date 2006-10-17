@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.administrativeOffice;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -151,16 +152,16 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	if (!degree.hasUnit()) {
 	    switch (degree.getDegreeType()) {
 	    case DEGREE:
-		return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE); 
+		return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
 	    case MASTER_DEGREE:
-		return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE); 
+		return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
 	    default:
 		return null;
 	    }
 	} else {
 	    for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
 		    .getAdministrativeOffices()) {
-		List<Unit> parentUnits = degree.getUnit().getParentUnits(
+		Collection<Unit> parentUnits = degree.getUnit().getParentUnits(
 			AccountabilityTypeEnum.ACADEMIC_STRUCTURE);
 		if (parentUnits.contains(administrativeOffice.getUnit())) {
 		    return administrativeOffice;
@@ -184,8 +185,8 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     public Set<Degree> getAdministratedDegrees() {
 	final Set<Degree> result = new TreeSet<Degree>(new BeanComparator("name"));
-	Set<Party> childParties = getUnit().getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE,
-		Unit.class);
+	Collection<Party> childParties = (Collection<Party>) getUnit().getChildParties(
+		AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
 	for (Party party : childParties) {
 	    result.add(((Unit) party).getDegree());
 	}

@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -123,7 +124,7 @@ public class Person extends Person_Base {
     }
 
     public Person(PersonBean personBean) {
-	
+
 	super();
 	checkConditionsToCreateNewPerson(personBean.getDocumentIdNumber(), personBean
 		.getIdDocumentType(), this);
@@ -294,12 +295,12 @@ public class Person extends Person_Base {
 	User personUser = getUser();
 	return (personUser == null) ? null : personUser.readUserLoginIdentification();
     }
-    
-    public Set<LoginAlias> getLoginAliasOrderByImportance(){
+
+    public Set<LoginAlias> getLoginAliasOrderByImportance() {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.getLoginAliasOrderByImportance() : new HashSet<LoginAlias>();
     }
-    
+
     public boolean hasUsername(String username) {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.hasUsername(username) : false;
@@ -803,14 +804,15 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public List<PersonFunction> getPersonFunctions() {
-	return new ArrayList(getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION,
-		PersonFunction.class));
+    public Collection<PersonFunction> getPersonFunctions() {
+	return (Collection<PersonFunction>) getParentAccountabilities(
+		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
     }
 
     public List<PersonFunction> getPersonFunctions(Unit unit) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
-	for (PersonFunction personFunction : getPersonFunctions()) {
+	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
+		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
 	    if (personFunction.getUnit().equals(unit)) {
 		result.add(personFunction);
 	    }
@@ -950,14 +952,15 @@ public class Person extends Person_Base {
     }
 
     public ExternalContract getExternalPerson() {
-	List<Accountability> accountabilities = new ArrayList<Accountability>(getParentAccountabilities(
-		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class));
+	Collection<ExternalContract> externalContracts = (Collection<ExternalContract>) getParentAccountabilities(
+		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class);
 
-	if (accountabilities.size() > 1) {
+	if (externalContracts.size() > 1) {
 	    throw new DomainException("error.person.has.two.or.more.externalPersons");
 	}
 
-	return (ExternalContract) ((accountabilities.isEmpty()) ? null : accountabilities.get(0));
+	Iterator<ExternalContract> iter = externalContracts.iterator();
+	return !iter.hasNext() ? null : externalContracts.iterator().next();
     }
 
     public boolean hasExternalPerson() {
@@ -988,17 +991,17 @@ public class Person extends Person_Base {
 	    }
 	}
 
-        @Override
-        public void afterAdd(Role role, Person person) {
-            if (role.getRoleType().equals(RoleType.PERSON)) {
-        	person.addPersonRoles(Role.getRoleByRoleType(RoleType.MESSAGING));
-            }
-            if (role.getRoleType().equals(RoleType.TEACHER)) {
-                person.addPersonRoles(Role.getRoleByRoleType(RoleType.RESEARCHER));
-            }
-            person.addAlias(role);
-            person.updateIstUsername();
-        }
+	@Override
+	public void afterAdd(Role role, Person person) {
+	    if (role.getRoleType().equals(RoleType.PERSON)) {
+		person.addPersonRoles(Role.getRoleByRoleType(RoleType.MESSAGING));
+	    }
+	    if (role.getRoleType().equals(RoleType.TEACHER)) {
+		person.addPersonRoles(Role.getRoleByRoleType(RoleType.RESEARCHER));
+	    }
+	    person.addAlias(role);
+	    person.updateIstUsername();
+	}
 
 	/**
          * This method is called transparently to the programmer when he removes
@@ -1054,20 +1057,20 @@ public class Person extends Person_Base {
 	    }
 	}
 
-        private static void removeDependencies(Person person, Role removedRole) {
-            switch (removedRole.getRoleType()) {
-            case PERSON:
-                removeRoleIfPresent(person, RoleType.TEACHER);
-                removeRoleIfPresent(person, RoleType.EMPLOYEE);
-                removeRoleIfPresent(person, RoleType.STUDENT);
-                removeRoleIfPresent(person, RoleType.GEP);
-                removeRoleIfPresent(person, RoleType.GRANT_OWNER);
-                removeRoleIfPresent(person, RoleType.MANAGER);
-                removeRoleIfPresent(person, RoleType.OPERATOR);
-                removeRoleIfPresent(person, RoleType.TIME_TABLE_MANAGER);
-                removeRoleIfPresent(person, RoleType.WEBSITE_MANAGER);
-                //removeRoleIfPresent(person, RoleType.MESSAGING);
-                break;
+	private static void removeDependencies(Person person, Role removedRole) {
+	    switch (removedRole.getRoleType()) {
+	    case PERSON:
+		removeRoleIfPresent(person, RoleType.TEACHER);
+		removeRoleIfPresent(person, RoleType.EMPLOYEE);
+		removeRoleIfPresent(person, RoleType.STUDENT);
+		removeRoleIfPresent(person, RoleType.GEP);
+		removeRoleIfPresent(person, RoleType.GRANT_OWNER);
+		removeRoleIfPresent(person, RoleType.MANAGER);
+		removeRoleIfPresent(person, RoleType.OPERATOR);
+		removeRoleIfPresent(person, RoleType.TIME_TABLE_MANAGER);
+		removeRoleIfPresent(person, RoleType.WEBSITE_MANAGER);
+		// removeRoleIfPresent(person, RoleType.MESSAGING);
+		break;
 
 	    case TEACHER:
 		removeRoleIfPresent(person, RoleType.COORDINATOR);
@@ -1730,21 +1733,22 @@ public class Person extends Person_Base {
 	return institutionalEmail != null && institutionalEmail.length() > 0 ? institutionalEmail
 		: super.getEmail();
     }
-    
+
     public Collection<AnnouncementBoard> getCurrentExecutionCoursesAnnouncementBoards() {
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
-	result.addAll(getTeacherCurrentExecutionCourseAnnouncementBoards());    
+	result.addAll(getTeacherCurrentExecutionCourseAnnouncementBoards());
 	result.addAll(getStudentCurrentExecutionCourseAnnouncementBoards());
-        return result;
+	return result;
     }
-    
+
     private Collection<AnnouncementBoard> getTeacherCurrentExecutionCourseAnnouncementBoards() {
 	if (!hasTeacher()) {
 	    return Collections.emptyList();
-        }
+	}
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Professorship professorship : getTeacher().getProfessorships()) {
-	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod.readActualExecutionPeriod()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod
+		    .readActualExecutionPeriod()) {
 		final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
 		if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
 		    result.add(board);
@@ -1753,21 +1757,22 @@ public class Person extends Person_Base {
 	}
 	return result;
     }
-    
+
     private Collection<AnnouncementBoard> getStudentCurrentExecutionCourseAnnouncementBoards() {
 	if (!hasStudent()) {
 	    return Collections.emptyList();
 	}
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
-	for (final ExecutionCourse executionCourse : ExecutionPeriod.readActualExecutionPeriod().getAssociatedExecutionCoursesSet()) {
+	for (final ExecutionCourse executionCourse : ExecutionPeriod.readActualExecutionPeriod()
+		.getAssociatedExecutionCoursesSet()) {
 	    final AnnouncementBoard board = executionCourse.getBoard();
-	    if (board != null && (board.hasReader(this) || board.hasWriter(this)) && getStudent().attends(executionCourse)) {
+	    if (board != null && (board.hasReader(this) || board.hasWriter(this))
+		    && getStudent().attends(executionCourse)) {
 		result.add(board);
 	    }
 	}
 	return result;
     }
-
 
     @Override
     public boolean isPerson() {
@@ -1775,7 +1780,7 @@ public class Person extends Person_Base {
     }
 
     public List<Registration> getStudents() {
-	return hasStudent() ? getStudent().getRegistrations() : Collections.EMPTY_LIST; 
+	return hasStudent() ? getStudent().getRegistrations() : Collections.EMPTY_LIST;
     }
 
     public int getStudentsCount() {
@@ -1969,65 +1974,66 @@ public class Person extends Person_Base {
 
     @Override
     public String getNickname() {
-        final String nickname = super.getNickname();
-        return nickname == null ? getName() : nickname;
+	final String nickname = super.getNickname();
+	return nickname == null ? getName() : nickname;
     }
 
     @Override
     public void setNickname(String nickname) {
-        if (!validNickname(nickname)) {
-            throw new DomainException("error.invalid.nickname");
-        }
-        super.setNickname(nickname);
+	if (!validNickname(nickname)) {
+	    throw new DomainException("error.invalid.nickname");
+	}
+	super.setNickname(nickname);
     }
 
     private static final Set<String> namePartsToIgnore = new HashSet<String>(5);
     static {
-        namePartsToIgnore.add("de");
-        namePartsToIgnore.add("da");
-        namePartsToIgnore.add("do");
-        namePartsToIgnore.add("a");
-        namePartsToIgnore.add("e");
-        namePartsToIgnore.add("i");
-        namePartsToIgnore.add("o");
-        namePartsToIgnore.add("u");
+	namePartsToIgnore.add("de");
+	namePartsToIgnore.add("da");
+	namePartsToIgnore.add("do");
+	namePartsToIgnore.add("a");
+	namePartsToIgnore.add("e");
+	namePartsToIgnore.add("i");
+	namePartsToIgnore.add("o");
+	namePartsToIgnore.add("u");
     }
 
     private boolean validNickname(final String name) {
-        if (name != null && name.length() > 0) {
-            final String normalizedName = StringNormalizer.normalize(name.replace('-', ' ')).toLowerCase();
-            final String normalizedPersonName = StringNormalizer.normalize(getName().replace('-', ' ')).toLowerCase();
+	if (name != null && name.length() > 0) {
+	    final String normalizedName = StringNormalizer.normalize(name.replace('-', ' '))
+		    .toLowerCase();
+	    final String normalizedPersonName = StringNormalizer.normalize(getName().replace('-', ' '))
+		    .toLowerCase();
 
-            final String[] nameParts = normalizedName.split(" ");
-            final String[] personNameParts = normalizedPersonName.split(" ");
-            int matches = 0;
-            for (final String namePart : nameParts) {
-                if (!contains(personNameParts, namePart)) {
-                    return false;
-                }
-                if (!namePartsToIgnore.contains(namePart)) {
-                    matches++;
-                }
-            }
-            if (matches >= 2) {
-                return true;
-            }
-        }
-        return false;
+	    final String[] nameParts = normalizedName.split(" ");
+	    final String[] personNameParts = normalizedPersonName.split(" ");
+	    int matches = 0;
+	    for (final String namePart : nameParts) {
+		if (!contains(personNameParts, namePart)) {
+		    return false;
+		}
+		if (!namePartsToIgnore.contains(namePart)) {
+		    matches++;
+		}
+	    }
+	    if (matches >= 2) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean contains(final String[] strings, final String xpto) {
-        if (xpto == null) {
-            return false;
-        }
-        for (final String string : strings) {
-            if (string.length() == xpto.length()
-                    && string.hashCode() == xpto.hashCode()
-                    && string.equals(xpto)) {
-                return true;
-            }
-        }
-        return false;
+	if (xpto == null) {
+	    return false;
+	}
+	for (final String string : strings) {
+	    if (string.length() == xpto.length() && string.hashCode() == xpto.hashCode()
+		    && string.equals(xpto)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }
