@@ -208,7 +208,7 @@ public class Student extends Student_Base {
 	}	
 	return false;
     }
-
+    
     public boolean attends(ExecutionCourse executionCourse) {
 	for (final Registration registration : getRegistrationsSet()) {
 	    if (registration.attends(executionCourse)) {
@@ -217,5 +217,15 @@ public class Student extends Student_Base {
 	}
 	return false;
     }    
+    
+    public boolean hasAnyActiveRegistration() {
+	for (final Registration registration : getRegistrationsSet()) {
+	    if (registration.isActive()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
 
 }
