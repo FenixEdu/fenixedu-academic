@@ -393,11 +393,15 @@
 	<setter signature="setEditAll(title,note,patentType,patentStatus,registrationDate,approvalDate,country,local,patentNumber,url)"/>
 </schema>
 <schema name="patent.viewEditData" extends="patent-default" bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" >
+		type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent">
+	<slot name="title"/>
 	<slot name="note"/>
+	<slot name="registrationDate"/>
+	<slot name="approvalDate"/>
 	<slot name="country" layout="format">
 		<property name="format" value="${name}"/>
 	</slot>
+	<slot name="url"/>
 </schema>
 <schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent">
 	<slot name="title" layout="link">
