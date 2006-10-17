@@ -28,15 +28,41 @@
 		</logic:equal>
 		<logic:equal name="studentsSize" value="1">
 			<logic:iterate id="student" name="students">
-				<bean:write name="student" property="number"/>
-				<bean:write name="student" property="person.name"/>
+				<table>
+					<tr>
+						<td rowspan="3">
+							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=<bean:write name="student" property="person.idInternal"/></bean:define>
+				  			<html:img src="<%= url %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+						</td>
+						<td rowspan="3">
+						</td>
+						<td><bean:message key="label.number"/></td>
+						<td><bean:write name="student" property="number"/></td>
+					</tr>
+					<tr>
+						<td><bean:message key="label.person.name"/></td>
+						<td><bean:write name="student" property="person.name"/></td>
+					</tr>
+					<tr>
+						<td><bean:message bundle="ENUMERATION_RESOURCES" name="student" property="person.idDocumentType.name"/></td>
+						<td><bean:write name="student" property="person.documentIdNumber"/></td>
+					</tr>
+				</table>
 				<br/>
 				<logic:iterate id="registration" name="student" property="registrations">
-					<logic:present name="registration" property="activeStudentCurricularPlan">
-						<bean:define id="url" type="java.lang.String">/declarations.do?method=registrationDeclaration&amp;registrationID=<bean:write name="registration" property="idInternal"/></bean:define>
-						<html:link action="<%= url %>"><bean:message key="link.declaration.registration"/></html:link>
-						<br/>
-					</logic:present>
+					<logic:equal name="registration" property="payedTuition" value="true">
+						<logic:present name="registration" property="activeStudentCurricularPlan">
+							<bean:define id="url" type="java.lang.String">/declarations.do?method=registrationDeclaration&amp;registrationID=<bean:write name="registration" property="idInternal"/></bean:define>
+							<html:link action="<%= url %>"><bean:message key="link.declaration.registration.with.curricular.year.and.number.enroled.courses"/></html:link>
+							<br/>
+						</logic:present>
+						<logic:notPresent name="registration" property="activeStudentCurricularPlan">
+							<span class="error"><bean:message key="message.student.has.no.active.student.curricular.plan"/></span>
+						</logic:notPresent>
+					</logic:equal>
+					<logic:notEqual name="registration" property="payedTuition" value="true">
+						<span class="error"><bean:message key="message.student.has.not.payed.all.tuition"/></span>
+					</logic:notEqual>
 				</logic:iterate>
 			</logic:iterate>
 		</logic:equal>
