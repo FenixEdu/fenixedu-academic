@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 
@@ -13,21 +15,21 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	super.setNumberOfPages(0);
     }
 
-    public DeclarationRequest(StudentCurricularPlan studentCurricularPlan,
+    public DeclarationRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
 	    DocumentRequestType documentRequestType, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
 
 	this();
-	init(studentCurricularPlan, documentRequestType, documentPurposeType,
+	init(studentCurricularPlan, administrativeOffice, documentRequestType, documentPurposeType,
 		otherDocumentPurposeTypeDescription, urgentRequest);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan,
+    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
             DocumentRequestType documentRequestType,
             DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
             Boolean urgentRequest) {
 
-        init(studentCurricularPlan, documentRequestType);
+        init(studentCurricularPlan, administrativeOffice, documentRequestType);
         checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
         super.setDocumentPurposeType(documentPurposeType);
@@ -53,6 +55,8 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	    DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
 	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear) {
+
+	final AdministrativeOffice administrativeOffice = AdministrativeOffice.readByEmployee(AccessControl.getUserView().getPerson().getEmployee());
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_DECLARATION:

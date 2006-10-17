@@ -1,10 +1,15 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 
@@ -14,21 +19,21 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	super();
     }
 
-    public EnrolmentCertificateRequest(StudentCurricularPlan studentCurricularPlan,
+    public EnrolmentCertificateRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
 	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
 	    Boolean urgentRequest, Boolean detailed, ExecutionYear executionYear) {
 
 	this();
 
-	init(studentCurricularPlan, documentPurposeType, otherDocumentPurposeTypeDescription,
+	init(studentCurricularPlan, administrativeOffice, documentPurposeType, otherDocumentPurposeTypeDescription,
 		urgentRequest, detailed, executionYear);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan,
+    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
 	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
 	    Boolean urgentRequest, Boolean detailed, ExecutionYear executionYear) {
 
-	init(studentCurricularPlan, DocumentRequestType.ENROLMENT_CERTIFICATE, documentPurposeType,
+	init(studentCurricularPlan, administrativeOffice, DocumentRequestType.ENROLMENT_CERTIFICATE, documentPurposeType,
 		otherDocumentPurposeTypeDescription, urgentRequest);
 
 	checkParameters(detailed, executionYear);
@@ -78,6 +83,15 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     @Override
     public String getDocumentTemplateKey() {
 	return null;
+    }
+
+    @Override
+    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
+	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
+	
+	result.add(AdministrativeOfficeType.DEGREE);
+	
+	return result;
     }
 
 }

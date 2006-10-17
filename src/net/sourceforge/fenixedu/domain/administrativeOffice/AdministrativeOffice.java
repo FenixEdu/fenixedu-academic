@@ -24,150 +24,168 @@ import org.apache.commons.beanutils.BeanComparator;
 public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     private AdministrativeOffice() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public AdministrativeOffice(AdministrativeOfficeType administrativeOfficeType, Unit unit) {
-        this();
-        init(administrativeOfficeType, unit);
+	this();
+	init(administrativeOfficeType, unit);
     }
 
     private void checkParameters(AdministrativeOfficeType administrativeOfficeType, Unit unit) {
-        if (administrativeOfficeType == null) {
-            throw new DomainException(
-                    "error.administrativeOffice.AdministrativeOffice.administrativeOfficeType.cannot.be.null");
-        }
-        if (unit == null) {
-            throw new DomainException(
-                    "error.administrativeOffice.AdministrativeOffice.unit.cannot.be.null");
-        }
+	if (administrativeOfficeType == null) {
+	    throw new DomainException(
+		    "error.administrativeOffice.AdministrativeOffice.administrativeOfficeType.cannot.be.null");
+	}
+	if (unit == null) {
+	    throw new DomainException(
+		    "error.administrativeOffice.AdministrativeOffice.unit.cannot.be.null");
+	}
 
-        checkIfExistsAdministrativeOfficeForType(administrativeOfficeType);
+	checkIfExistsAdministrativeOfficeForType(administrativeOfficeType);
     }
 
     private void checkIfExistsAdministrativeOfficeForType(
-            AdministrativeOfficeType administrativeOfficeType) {
+	    AdministrativeOfficeType administrativeOfficeType) {
 
-        for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
-                .getAdministrativeOffices()) {
-            if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
-                throw new DomainException(
-                        "error.administrativeOffice.AdministrativeOffice.already.exists.with.administrativeOfficeType");
-            }
-        }
+	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
+		.getAdministrativeOffices()) {
+	    if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
+		throw new DomainException(
+			"error.administrativeOffice.AdministrativeOffice.already.exists.with.administrativeOfficeType");
+	    }
+	}
     }
-    
+
     protected void init(AdministrativeOfficeType administrativeOfficeType, Unit unit) {
-        checkParameters(administrativeOfficeType, unit);
-        super.setAdministrativeOfficeType(administrativeOfficeType);
-        super.setUnit(unit);
+	checkParameters(administrativeOfficeType, unit);
+	super.setAdministrativeOfficeType(administrativeOfficeType);
+	super.setUnit(unit);
 
     }
 
     @Override
     public void setAdministrativeOfficeType(AdministrativeOfficeType administrativeOfficeType) {
-        throw new DomainException(
-                "error.administrativeOffice.AdministrativeOffice.cannot.modify.administrativeOfficeType");
+	throw new DomainException(
+		"error.administrativeOffice.AdministrativeOffice.cannot.modify.administrativeOfficeType");
     }
 
     @Override
     public void setUnit(Unit unit) {
-        throw new DomainException("error.administrativeOffice.AdministrativeOffice.cannot.modify.unit");
+	throw new DomainException("error.administrativeOffice.AdministrativeOffice.cannot.modify.unit");
     }
-    
+
     public List<DocumentRequest> searchDocumentsBy(DocumentRequestType documentRequestType,
-            AcademicServiceRequestSituationType requestSituationType, Boolean isUrgent, Registration registration) {
+	    AcademicServiceRequestSituationType requestSituationType, Boolean isUrgent,
+	    Registration registration) {
 
-        final List<DocumentRequest> result = new ArrayList<DocumentRequest>();
+	final List<DocumentRequest> result = new ArrayList<DocumentRequest>();
 
-        for (final AcademicServiceRequest serviceRequest : getAcademicServiceRequestsSet()) {
+	for (final AcademicServiceRequest serviceRequest : getAcademicServiceRequestsSet()) {
 
-            if (serviceRequest.isNewRequest()) {
-                continue;
-            }
+	    if (serviceRequest.isNewRequest()) {
+		continue;
+	    }
 
-            if (serviceRequest instanceof DocumentRequest) {
+	    if (serviceRequest instanceof DocumentRequest) {
 
-                final DocumentRequest documentRequest = (DocumentRequest) serviceRequest;
+		final DocumentRequest documentRequest = (DocumentRequest) serviceRequest;
 
-                if (documentRequestType != null
-                        && documentRequest.getDocumentRequestType() != documentRequestType) {
-                    continue;
-                }
+		if (documentRequestType != null
+			&& documentRequest.getDocumentRequestType() != documentRequestType) {
+		    continue;
+		}
 
-                if (requestSituationType != null
-                        && documentRequest.getAcademicServiceRequestSituationType() != requestSituationType) {
-                    continue;
-                }
+		if (requestSituationType != null
+			&& documentRequest.getAcademicServiceRequestSituationType() != requestSituationType) {
+		    continue;
+		}
 
-                if (isUrgent != null && documentRequest.isCertificate() && ((CertificateRequest)documentRequest).isUrgentRequest() != isUrgent.booleanValue()) {
-                    continue;
-                }
+		if (isUrgent != null
+			&& documentRequest.isCertificate()
+			&& ((CertificateRequest) documentRequest).isUrgentRequest() != isUrgent
+				.booleanValue()) {
+		    continue;
+		}
 
-                if (registration != null && documentRequest.getStudent() != registration) {
-                    continue;
-                }
+		if (registration != null && documentRequest.getStudent() != registration) {
+		    continue;
+		}
 
-                result.add(documentRequest);
-            }
-        }
+		result.add(documentRequest);
+	    }
+	}
 
-        return result;
+	return result;
     }
 
     public List<AcademicServiceRequest> getNewAcademicServiceRequests() {
-    	
-        final List<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
-        for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequests()) {
-            if (academicServiceRequest.isNewRequest()) {
-                result.add(academicServiceRequest);
-            }
-        }
-        return result;
+
+	final List<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequests()) {
+	    if (academicServiceRequest.isNewRequest()) {
+		result.add(academicServiceRequest);
+	    }
+	}
+	return result;
     }
 
     // static methods
     public static AdministrativeOffice readByAdministrativeOfficeType(
-            AdministrativeOfficeType administrativeOfficeType) {
+	    AdministrativeOfficeType administrativeOfficeType) {
 
-        for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
-                .getAdministrativeOffices()) {
+	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
+		.getAdministrativeOffices()) {
 
-            if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
-                return administrativeOffice;
-            }
+	    if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
+		return administrativeOffice;
+	    }
 
-        }
-        return null;
+	}
+	return null;
 
     }
 
     public static AdministrativeOffice getResponsibleAdministrativeOffice(Degree degree) {
-	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance().getAdministrativeOffices()) {
-	    List<Unit> parentUnits = degree.getUnit().getParentUnits(AccountabilityTypeEnum.ACADEMIC_STRUCTURE);
-	    if (parentUnits.contains(administrativeOffice.getUnit())) {
-		return administrativeOffice;
+	if (!degree.hasUnit()) {
+	    switch (degree.getDegreeType()) {
+	    case DEGREE:
+		return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE); 
+	    case MASTER_DEGREE:
+		return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE); 
+	    default:
+		return null;
 	    }
+	} else {
+	    for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
+		    .getAdministrativeOffices()) {
+		List<Unit> parentUnits = degree.getUnit().getParentUnits(
+			AccountabilityTypeEnum.ACADEMIC_STRUCTURE);
+		if (parentUnits.contains(administrativeOffice.getUnit())) {
+		    return administrativeOffice;
+		}
+	    }
+	    return null;
 	}
-	
-	return null;
     }
-    
+
     public static AdministrativeOffice readByEmployee(Employee employee) {
 	final Unit employeeWorkingPlace = employee.getCurrentWorkingPlace();
-	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance().getAdministrativeOffices()) {
+	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
+		.getAdministrativeOffices()) {
 	    if (administrativeOffice.getUnit() == employeeWorkingPlace) {
 		return administrativeOffice;
 	    }
 	}
-	
+
 	return null;
     }
 
     public Set<Degree> getAdministratedDegrees() {
 	final Set<Degree> result = new TreeSet<Degree>(new BeanComparator("name"));
-	Set<Party> childParties = getUnit().getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
+	Set<Party> childParties = getUnit().getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE,
+		Unit.class);
 	for (Party party : childParties) {
 	    result.add(((Unit) party).getDegree());
 	}

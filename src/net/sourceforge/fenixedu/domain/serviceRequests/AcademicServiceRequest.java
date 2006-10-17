@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -27,15 +28,12 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setCreationDate(new DateTime());
     }
 
-    protected AcademicServiceRequest(StudentCurricularPlan studentCurricularPlan) {
+    protected AcademicServiceRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice ) {
 	this();
-	init(studentCurricularPlan);
+	init(studentCurricularPlan, administrativeOffice);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan) {
-	final AdministrativeOffice administrativeOffice = AdministrativeOffice
-		.getResponsibleAdministrativeOffice(studentCurricularPlan.getDegree());
-
+    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice) {
 	checkParameters(studentCurricularPlan, administrativeOffice);
 	super.setAdministrativeOffice(administrativeOffice);
 	super.setStudentCurricularPlan(studentCurricularPlan);
@@ -222,5 +220,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     public boolean finishedSuccessfully() {
 	return (isConcluded() || isDelivered());
     }
+    
+    public abstract Set<AdministrativeOfficeType> getPossibleAdministrativeOffices();
 
 }

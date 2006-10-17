@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 
@@ -14,20 +16,20 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super.setNumberOfPages(0);
     }
 
-    public CertificateRequest(StudentCurricularPlan studentCurricularPlan,
+    public CertificateRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice, 
 	    DocumentRequestType documentRequestType, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
 
 	this();
-	init(studentCurricularPlan, documentRequestType, documentPurposeType,
+	init(studentCurricularPlan, administrativeOffice, documentRequestType, documentPurposeType,
 		otherDocumentPurposeTypeDescription, urgentRequest);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan,
+    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice, 
 	    DocumentRequestType documentRequestType, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
 
-	init(studentCurricularPlan, documentRequestType);
+	init(studentCurricularPlan, administrativeOffice, documentRequestType);
 	checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
 	super.setDocumentPurposeType(documentPurposeType);
@@ -54,23 +56,32 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	return getUrgentRequest().booleanValue();
     }
 
-    public static CertificateRequest create(StudentCurricularPlan studentCurricularPlan,
+    public static CertificateRequest create(StudentCurricularPlan studentCurricularPlan, 
 	    DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
 	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear) {
 
+	AdministrativeOffice administrativeOffice = null;
+	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	if (employee != null) {
+	    administrativeOffice = AdministrativeOffice.readByEmployee(employee);    
+	} 
+	if (administrativeOffice == null) {
+	    administrativeOffice = AdministrativeOffice.getResponsibleAdministrativeOffice(studentCurricularPlan.getDegree());
+	}
+	
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
-	    return new SchoolRegistrationCertificateRequest(studentCurricularPlan,
+	    return new SchoolRegistrationCertificateRequest(studentCurricularPlan, administrativeOffice,
 		    chosenDocumentPurposeType, otherPurpose, urgentRequest, executionYear);
 	case ENROLMENT_CERTIFICATE:
-	    return new EnrolmentCertificateRequest(studentCurricularPlan, chosenDocumentPurposeType,
+	    return new EnrolmentCertificateRequest(studentCurricularPlan, administrativeOffice, chosenDocumentPurposeType,
 		    otherPurpose, urgentRequest, detailed, executionYear);
 	case APPROVEMENT_CERTIFICATE:
-	    return new ApprovementCertificateRequest(studentCurricularPlan, chosenDocumentPurposeType,
+	    return new ApprovementCertificateRequest(studentCurricularPlan, administrativeOffice, chosenDocumentPurposeType,
 		    otherPurpose, urgentRequest);
 	case DEGREE_FINALIZATION_CERTIFICATE:
-	    return new DegreeFinalizationCertificateRequest(studentCurricularPlan,
+	    return new DegreeFinalizationCertificateRequest(studentCurricularPlan, administrativeOffice,
 		    chosenDocumentPurposeType, otherPurpose, urgentRequest, average, detailed);
 	}
 

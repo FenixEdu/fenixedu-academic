@@ -1,9 +1,14 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 
@@ -13,7 +18,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super();
     }
 
-    public DegreeFinalizationCertificateRequest(StudentCurricularPlan studentCurricularPlan,
+    public DegreeFinalizationCertificateRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
 	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
 	    Boolean urgentRequest, Boolean average, Boolean detailed) {
 	this();
@@ -22,14 +27,14 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	    throw new DomainException("error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.has.no.degree.diploma.request");
 	}
 	
-	init(studentCurricularPlan, documentPurposeType, otherDocumentPurposeTypeDescription,
+	init(studentCurricularPlan, administrativeOffice, documentPurposeType, otherDocumentPurposeTypeDescription,
 		urgentRequest, average, detailed);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan,
+    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
 	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
 	    Boolean urgentRequest, Boolean average, Boolean detailed) {
-	init(studentCurricularPlan, DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE,
+	init(studentCurricularPlan, administrativeOffice, DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE,
 		documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
 	checkParameters(average, detailed);
@@ -76,6 +81,15 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     public String getDocumentTemplateKey() {
 	return null;
+    }
+
+    @Override
+    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
+	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
+	
+	result.add(AdministrativeOfficeType.DEGREE);
+	
+	return result;
     }
 
 }
