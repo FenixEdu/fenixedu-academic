@@ -48,23 +48,28 @@ public class EditMasterDegreeCandidate extends Service {
 	// Change Situation
 	CandidateSituation oldCandidateSituation = oldMasterDegreeCandidate
 		.getActiveCandidateSituation();
+     CandidateSituation newCandidateSituation = null;
 	if (!oldCandidateSituation.getSituation().equals(
 		newCandidate.getInfoCandidateSituation().getSituation())) {
 
 	    oldCandidateSituation.setValidation(new State(State.INACTIVE));
-
-	    CandidateSituation newCandidateSituation = new CandidateSituation();
+	    newCandidateSituation = new CandidateSituation();
 	    newCandidateSituation.setDateYearMonthDay(new YearMonthDay());
 	    newCandidateSituation.setMasterDegreeCandidate(oldMasterDegreeCandidate);
 	    newCandidateSituation.setRemarks(newCandidate.getInfoCandidateSituation().getRemarks());
 	    newCandidateSituation.setSituation(newCandidate.getInfoCandidateSituation().getSituation());
 	    newCandidateSituation.setValidation(new State(State.ACTIVE));
 
-	    if (person.getEmail() != null) {
-		sendEmailToCandidate(oldMasterDegreeCandidate, newCandidateSituation);
-	    }
-	}
-
+	}else if(oldCandidateSituation.getSituation().equals(newCandidate.getInfoCandidateSituation().getSituation())){  
+        newCandidateSituation = oldCandidateSituation;
+        newCandidateSituation.setDateYearMonthDay(oldCandidateSituation.getDateYearMonthDay());
+        newCandidateSituation.setMasterDegreeCandidate(oldMasterDegreeCandidate);
+        newCandidateSituation.setRemarks(newCandidate.getInfoCandidateSituation().getRemarks());
+        newCandidateSituation.setSituation(newCandidate.getInfoCandidateSituation().getSituation());    
+    }
+    if (person.getEmail() != null) {
+      sendEmailToCandidate(oldMasterDegreeCandidate, newCandidateSituation);
+      }
 	return InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(oldMasterDegreeCandidate);
     }
 
