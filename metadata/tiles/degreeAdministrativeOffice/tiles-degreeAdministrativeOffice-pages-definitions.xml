@@ -264,5 +264,9 @@
 
 		<definition name="examCoordinator-management" extends="definition.degreeAdministrativeOffice.masterPage" >
 		<put name="body" value="/vigilancy/manageExamCoordinator.jsp" />
-    </definition>			
+    </definition>
+
+	<definition name="declarations-search-form" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/declarations.jsp"/>
+	</definition>
 </tiles-definitions>

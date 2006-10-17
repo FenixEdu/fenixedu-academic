@@ -607,6 +607,13 @@
 		       	<forward name="editPrice" path="prices.management.editPrice"/>
 		</action>	
 
+		<action path="/declarations"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.DeclarationsDA"
+				scope="request">
+			<forward name="declarations-search-form" path="declarations-search-form"/>
+		</action>	
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
@@ -614,6 +621,7 @@
 
 	<!-- ========== Message Resources Definitions =========================== -->
 	<message-resources parameter="resources.DegreeAdministrativeOfficeResources" null="false"/>
+	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>

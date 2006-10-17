@@ -28,5 +28,8 @@
 	<li class="navheader"><bean:message key="label.payments" /></li>
     <li><html:link page="/pricesManagement.do?method=viewPrices"><bean:message key="link.pricesManagement" /></html:link></li>
 	<li><html:link page="/payments.do?method=prepareSearchPerson"><bean:message key="link.payments" /></html:link></li>
+
+	<li class="navheader"><bean:message key="label.documentRequestsManagement.documents" /></li>
+	<li><html:link page="/declarations.do?method=search"><bean:message key="link.declarations" /></html:link></li>
 	
 </ul>

@@ -1743,4 +1743,25 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getDegreeCurricularPlan().getName();
     }
 
+    public int countCurrentEnrolments() {
+        int result = 0;
+        for (final Enrolment enrolment : getEnrolmentsSet()) {
+            final ExecutionYear executionYear = enrolment.getExecutionPeriod().getExecutionYear();
+            if (executionYear.getState().equals(PeriodState.CURRENT) && enrolment.isEnroled()) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    public Campus getCurrentCampus() {
+        for (final ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegreesSet()) {
+            final ExecutionYear executionYear = executionDegree.getExecutionYear();
+            if (executionYear.getState().equals(PeriodState.CURRENT)) {
+                return executionDegree.getCampus();
+            }
+        }
+        return null;
+    }
+
 }
