@@ -153,7 +153,12 @@ public class Guide extends Guide_Base {
 
     @Deprecated
     public void setTotal(Double total) {
-	setTotalBigDecimal(BigDecimal.valueOf(total));
+	if(total != null){
+	    setTotalBigDecimal(BigDecimal.valueOf(total));
+	}
+	else{
+	    setTotalBigDecimal(null);
+	}
     }
 
     @Deprecated
