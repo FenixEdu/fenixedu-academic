@@ -37,7 +37,7 @@
 		<td>
 			<fr:create id="announcement-subject-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="subject" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 				<fr:layout>
-					<fr:property name="size" value="40"/>
+					<fr:property name="size" value="80" />
 				</fr:layout>
 			</fr:create>
 		</td>
@@ -106,7 +106,6 @@
 		</th>
 		<td>
 			<fr:create type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="author">
-				<fr:default value="<%=person.getName()%>" slot="author"/>
 				<fr:layout>			
 					<fr:property name="size" value="40"/>
 				</fr:layout>
@@ -121,7 +120,6 @@
 		</th>
 		<td>
 			<fr:create type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="authorEmail">
-				<fr:default value="<%=person.getEmail()%>" slot="authorEmail"/>
 				<fr:layout>
 					<fr:property name="size" value="40"/>
 				</fr:layout>
