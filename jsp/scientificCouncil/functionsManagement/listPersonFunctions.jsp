@@ -26,7 +26,7 @@
 		
 		<h:commandLink value="#{bundle['label.associate']}" action="associateNewFunction" />
 		
-		<h:outputText value="<br/>" escape="false" rendered="#{!empty scientificCouncilFunctionsManagementBackingBean.errorMessage}"/>	
+		<h:outputText value="<br/><br/>" escape="false" rendered="#{!empty scientificCouncilFunctionsManagementBackingBean.errorMessage}"/>	
 		<h:outputText styleClass="error" rendered="#{!empty scientificCouncilFunctionsManagementBackingBean.errorMessage}"
 				value="#{bundle[scientificCouncilFunctionsManagementBackingBean.errorMessage]}" escape="false"/>		
 					
@@ -82,7 +82,7 @@
 				</h:commandLink>				
 			</h:column>
 			<h:column> 						
-				<h:commandLink action="#{scientificCouncilFunctionsManagementBackingBean.deletePersonFunction}">
+				<h:commandLink action="deletePersonFunction">
 					<h:outputText value="#{bundle['link.delete']}"/>					
 					<f:param name="personFunctionID" id="personFunctionID2" value="#{person_function.idInternal}"/>					
 				</h:commandLink>				

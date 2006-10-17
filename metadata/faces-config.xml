@@ -1122,6 +1122,18 @@
 			<from-outcome>associateNewFunction</from-outcome>
 			<to-view-id>/departmentAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>deletePersonFunction</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/deletePersonFunction.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/departmentAdmOffice/functionsManagement/deletePersonFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule> 	
 	
 	<navigation-rule>
@@ -1187,6 +1199,18 @@
 		<navigation-case>
 			<from-outcome>associateNewFunction</from-outcome>
 			<to-view-id>/manager/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>deletePersonFunction</from-outcome>
+			<to-view-id>/manager/functionsManagement/deletePersonFunction.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/deletePersonFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/manager/functionsManagement/listPersonFunctions.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule> 	
 	
@@ -1254,6 +1278,18 @@
 			<from-outcome>associateNewFunction</from-outcome>
 			<to-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>deletePersonFunction</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/deletePersonFunction.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/deletePersonFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule> 	
 	
 	<navigation-rule>
@@ -1319,6 +1355,18 @@
 		<navigation-case>
 			<from-outcome>associateNewFunction</from-outcome>
 			<to-view-id>/scientificCouncil/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>deletePersonFunction</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/deletePersonFunction.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/functionsManagement/deletePersonFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/listPersonFunctions.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule> 	
 	

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -196,21 +195,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public String deletePersonFunction() throws FenixFilterException, FenixServiceException {
-	activeFunctionsClear();
 	final Object[] argsToRead = { this.getPersonFunctionID() };
 	ServiceUtils.executeService(getUserView(), "DeletePersonFunction", argsToRead);
 	setErrorMessage("message.success");
-	return "";
-    }
-
-    private void activeFunctionsClear() throws FenixFilterException, FenixServiceException {
-	this.activeFunctions.remove(this.getPersonFunction());
-	Iterator<Function> iter = this.inherentFunctions.iterator();
-	while (iter.hasNext()) {
-	    if (iter.next().getParentInherentFunction().equals(this.getPersonFunction().getFunction())) {
-		iter.remove();
-	    }
-	}
+	return "success";
     }
 
     public List<PersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {

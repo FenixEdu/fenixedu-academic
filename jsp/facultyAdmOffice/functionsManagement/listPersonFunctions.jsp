@@ -82,7 +82,7 @@
 				</h:commandLink>				
 			</h:column>
 			<h:column> 						
-				<h:commandLink action="#{facultyAdmOfficeFunctionsManagementBackingBean.deletePersonFunction}">
+				<h:commandLink action="deletePersonFunction">
 					<h:outputText value="#{bundle['link.delete']}"/>					
 					<f:param name="personFunctionID" id="personFunctionID2" value="#{person_function.idInternal}"/>					
 				</h:commandLink>				
