@@ -1,9 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -21,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.Module;
 
 import org.apache.log4j.Logger;
 
@@ -45,6 +49,9 @@ import org.apache.log4j.Logger;
  */
 public class CheckAvailabilityFilter implements Filter {
 
+    private static Pattern ACTION_PATTERN  = Pattern.compile("[^.]*\\.(jsp|do|faces).*");
+    private static Pattern SERVLET_PATTERN = Pattern.compile("[^.?]*(\\?.*)?");
+    
     private static final Logger logger = Logger.getLogger(CheckAvailabilityFilter.class);
     
     private String errorPage;
@@ -95,7 +102,7 @@ public class CheckAvailabilityFilter implements Filter {
                 setupRequest(servletRequest, context);
             }
             else {
-                if (servletRequest.getServletPath().matches("[^.]*\\.(jsp|do|faces).*") || servletRequest.getServletPath().matches("[^.]*")) {
+                if (isExecutableResource(servletRequest.getServletPath())) {
                     logger.debug("not mappped: " + servletRequest.getServletPath() + (servletRequest.getQueryString() != null ? "?" + servletRequest.getQueryString() : ""));
                 }
             }
@@ -119,6 +126,10 @@ public class CheckAvailabilityFilter implements Filter {
     private Functionality getFunctionality(HttpServletRequest servletRequest) {
         String requestedPath = servletRequest.getServletPath();
 
+        if (! isExecutableResource(requestedPath)) {
+            return null;
+        }
+        
         if (hasTestingPrefix(servletRequest)) {
             requestedPath = requestedPath.substring(getTestingPrefix().length());
         }
@@ -127,20 +138,85 @@ public class CheckAvailabilityFilter implements Filter {
         if (requestedPath.matches("/dotIstPortal.do")) {
             requestedPath = servletRequest.getParameter("prefix") + servletRequest.getParameter("page");
         }
-        
+
+        Collection<Functionality> nonRelativeFunctionalities = new ArrayList<Functionality>();
         for (Functionality functionality : RootDomainObject.getInstance().getFunctionalities()) {
-            if (! functionality.isPrincipal()) {
-                continue;
+            if (! functionality.isRelative()) {
+                nonRelativeFunctionalities.add(functionality);
             }
-            
-            String matchPath = functionality.getMatchPath();
-            
-            if (matchPath != null && matchPath.equals(requestedPath)) {
-                return functionality;
-            }
+        }
+        
+        Functionality matching = getMatchingFunctionality(requestedPath, nonRelativeFunctionalities);
+        if (matching != null) {
+            return matching;
+        }
+        
+        matching = getMatchingFunctionality(requestedPath, Functionality.getTopLevelFunctionalities());
+        if (matching != null) {
+            return matching;
+        }
+        
+        matching = getMatchingSubFunctionality(requestedPath, Module.getTopLevelModules());
+        if (matching != null) {
+            return matching;
         }
 
         return null;
+    }
+
+    private boolean matchesFunctionality(String path, Functionality functionality) {
+        if (! functionality.isPrincipal()) {
+            return false;
+        }
+        
+        String matchPath = functionality.getMatchPath();
+        
+        if (matchPath != null && matchPath.equals(path)) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private Functionality getMatchingFunctionality(String path, Collection<Functionality> functionalities) {
+        for (Functionality functionality : functionalities) {
+            if (matchesFunctionality(path, functionality)) {
+                return functionality;
+            }
+        }
+        
+        return null;
+    }
+    
+    private Functionality getMatchingSubFunctionality(String path, Collection<Module> modules) {
+        for (Module module : modules) {
+            String prefix = module.getPublicPrefix();
+            
+            if (! path.startsWith(prefix)) {
+                continue;
+            }
+            
+            Functionality matching = getMatchingFunctionality(path, module.getFunctionalities());
+            if (matching != null) {
+                return matching;
+            }
+            
+            return getMatchingSubFunctionality(path, module.getModules());
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Verifies if the requested path is an executable resource and not a simple resource like 
+     * and image or a stylesheet.
+     * 
+     * @param requestedPath the requested path
+     * 
+     * @return <code>true</code> if the path is a executable resource like and action
+     */
+    private boolean isExecutableResource(String requestedPath) {
+        return ACTION_PATTERN.matcher(requestedPath).matches() || SERVLET_PATTERN.matcher(requestedPath).matches();
     }
 
     /**
