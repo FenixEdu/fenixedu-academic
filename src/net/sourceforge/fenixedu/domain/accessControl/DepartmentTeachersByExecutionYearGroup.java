@@ -11,25 +11,38 @@ import net.sourceforge.fenixedu.domain.Teacher;
 public class DepartmentTeachersByExecutionYearGroup extends DepartmentByExecutionYearGroup {
 
     /**
-     * 
-     */
+         * 
+         */
     private static final long serialVersionUID = 8466471514890333054L;
 
     public DepartmentTeachersByExecutionYearGroup(ExecutionYear executionYear, Department department) {
-        super(executionYear, department);
+	super(executionYear, department);
 
     }
 
     @Override
     public Set<Person> getElements() {
-        Set<Person> elements = super.buildSet();
-        Collection<Teacher> departmentTeachers = getDepartment().getAllTeachers(
-                getExecutionYear().getBeginDateYearMonthDay(), getExecutionYear().getEndDateYearMonthDay());
+	Set<Person> elements = super.buildSet();
+	Collection<Teacher> departmentTeachers = getDepartment().getAllTeachers(
+		getExecutionYear().getBeginDateYearMonthDay(),
+		getExecutionYear().getEndDateYearMonthDay());
 
-        for (Teacher teacher : departmentTeachers) {
-            elements.add(teacher.getPerson());
-        }
+	for (Teacher teacher : departmentTeachers) {
+	    elements.add(teacher.getPerson());
+	}
 
-        return super.freezeSet(elements);
+	return super.freezeSet(elements);
+    }
+
+    @Override
+    public boolean isMember(Person person) {
+	if (person != null && person.hasTeacher()) {
+	    final Department lastWorkingDepartment = person.getTeacher().getLastWorkingDepartment(
+		    getExecutionYear().getBeginDateYearMonthDay(),
+		    getExecutionYear().getEndDateYearMonthDay());
+	    return (lastWorkingDepartment != null && lastWorkingDepartment.equals(getDepartment()));
+	}
+
+	return false;
     }
 }
