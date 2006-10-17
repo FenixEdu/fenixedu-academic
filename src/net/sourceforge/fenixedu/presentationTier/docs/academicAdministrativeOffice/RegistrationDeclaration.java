@@ -146,7 +146,6 @@ public class RegistrationDeclaration implements Serializable {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        System.out.println(stringBuilder.toString());
         return stringBuilder.toString();
     }
 
