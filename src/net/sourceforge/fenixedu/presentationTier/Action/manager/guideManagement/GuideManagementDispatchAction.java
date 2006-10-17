@@ -44,292 +44,295 @@ import org.apache.struts.util.LabelValueBean;
 public class GuideManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("firstPage");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	return mapping.findForward("firstPage");
     }
 
     public ActionForward prepareChooseGuide(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        return mapping.findForward("chooseGuide");
+	return mapping.findForward("chooseGuide");
     }
 
     public ActionForward chooseGuide(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm guideForm = (DynaActionForm) actionForm;
-        Integer number = (Integer) guideForm.get("number");
-        Integer year = (Integer) guideForm.get("year");
-        Integer version = (Integer) guideForm.get("version");
+	DynaActionForm guideForm = (DynaActionForm) actionForm;
+	Integer number = (Integer) guideForm.get("number");
+	Integer year = (Integer) guideForm.get("year");
+	Integer version = (Integer) guideForm.get("version");
 
-        // read guide
-        InfoGuide guide = null;
-        try {
+	// read guide
+	InfoGuide guide = null;
+	try {
 
-            if (version.intValue() == 0) {
-                Object[] args = { number, year };
-                List guidesList = (List) ServiceUtils.executeService(userView, "ChooseGuide", args);
-                guide = (InfoGuide) guidesList.get(0);
-            } else {
-                Object[] args = { number, year, version };
-                guide = (InfoGuide) ServiceUtils.executeService(userView, "ChooseGuide", args);
-            }
+	    if (version.intValue() == 0) {
+		Object[] args = { number, year };
+		List guidesList = (List) ServiceUtils.executeService(userView, "ChooseGuide", args);
+		guide = (InfoGuide) guidesList.get(0);
+	    } else {
+		Object[] args = { number, year, version };
+		guide = (InfoGuide) ServiceUtils.executeService(userView, "ChooseGuide", args);
+	    }
 
-        } catch (NonExistingServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (FenixServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+	} catch (NonExistingServiceException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (FenixServiceException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 
-        // read transactions
-        List paymentTransactions = new ArrayList();
-        for (Iterator iter = guide.getInfoGuideEntries().iterator(); iter.hasNext();) {
-            InfoGuideEntry guideEntry = (InfoGuideEntry) iter.next();
-            InfoPaymentTransaction paymentTransaction = null;
+	// read transactions
+	List paymentTransactions = new ArrayList();
+	for (Iterator iter = guide.getInfoGuideEntries().iterator(); iter.hasNext();) {
+	    InfoGuideEntry guideEntry = (InfoGuideEntry) iter.next();
+	    InfoPaymentTransaction paymentTransaction = null;
 
-            Object[] argsPaymentTransactions = { guideEntry.getIdInternal() };
-            try {
-                paymentTransaction = (InfoPaymentTransaction) ServiceUtils.executeService(userView,
-                        "ReadPaymentTransactionByGuideEntryID", argsPaymentTransactions);
-            } catch (FenixServiceException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+	    Object[] argsPaymentTransactions = { guideEntry.getIdInternal() };
+	    try {
+		paymentTransaction = (InfoPaymentTransaction) ServiceUtils.executeService(userView,
+			"ReadPaymentTransactionByGuideEntryID", argsPaymentTransactions);
+	    } catch (FenixServiceException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
 
-            paymentTransactions.add(paymentTransaction);
-        }
+	    paymentTransactions.add(paymentTransaction);
+	}
 
-        List executionYears = null;
-        Object[] argsEmpty = {};
-        try {
-            executionYears = (List) ServiceUtils.executeService(userView, "ReadExecutionYears",
-                    argsEmpty);
-        } catch (FenixServiceException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
+	List executionYears = null;
+	Object[] argsEmpty = {};
+	try {
+	    executionYears = (List) ServiceUtils.executeService(userView, "ReadExecutionYears",
+		    argsEmpty);
+	} catch (FenixServiceException e1) {
+	    // TODO Auto-generated catch block
+	    e1.printStackTrace();
+	}
 
-        List degreeCurricularPlans = null;
-        try {
-            degreeCurricularPlans = (List) ServiceUtils.executeService(userView,
-                    "ReadDegreeCurricularPlans", argsEmpty);
-        } catch (FenixServiceException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
+	List degreeCurricularPlans = null;
+	try {
+	    degreeCurricularPlans = (List) ServiceUtils.executeService(userView,
+		    "ReadDegreeCurricularPlans", argsEmpty);
+	} catch (FenixServiceException e1) {
+	    // TODO Auto-generated catch block
+	    e1.printStackTrace();
+	}
 
-        Collection degreeCurricularPlansInLabelValueBeanList = CollectionUtils.collect(
-                degreeCurricularPlans, new Transformer() {
+	Collection degreeCurricularPlansInLabelValueBeanList = CollectionUtils.collect(
+		degreeCurricularPlans, new Transformer() {
 
-                    public Object transform(Object arg0) {
-                        InfoDegreeCurricularPlan degreeCurricularPlan = (InfoDegreeCurricularPlan) arg0;
-                        return new LabelValueBean(degreeCurricularPlan.getName(), degreeCurricularPlan
-                                .getIdInternal().toString());
-                    }
+		    public Object transform(Object arg0) {
+			InfoDegreeCurricularPlan degreeCurricularPlan = (InfoDegreeCurricularPlan) arg0;
+			return new LabelValueBean(degreeCurricularPlan.getName(), degreeCurricularPlan
+				.getIdInternal().toString());
+		    }
 
-                });
+		});
 
-        guideForm.set("guideID", guide.getIdInternal());
-        guideForm.set("newExecutionYear", guide.getInfoExecutionDegree().getInfoExecutionYear()
-                .getYear());
-        guideForm.set("newDegreeCurricularPlanID", guide.getInfoExecutionDegree()
-                .getInfoDegreeCurricularPlan().getIdInternal());
-        guideForm.set("newPaymentType", (guide.getPaymentType() != null) ? guide.getPaymentType().name()
-                : null);
-        request.setAttribute("paymentTransactions", paymentTransactions);
-        request.setAttribute("degreeCurricularPlans", degreeCurricularPlansInLabelValueBeanList);
-        request.setAttribute("executionYears", executionYears);
-        request.setAttribute("guide", guide);
-        request.setAttribute("days", Data.getMonthDays());
-        request.setAttribute("months", Data.getMonths());
-        request.setAttribute("years", Data.getYears());
+	guideForm.set("guideID", guide.getIdInternal());
+	if (guide.getInfoExecutionDegree() != null) {
+	    guideForm.set("newExecutionYear", guide.getInfoExecutionDegree().getInfoExecutionYear()
+		    .getYear());
+	    guideForm.set("newDegreeCurricularPlanID", guide.getInfoExecutionDegree()
+		    .getInfoDegreeCurricularPlan().getIdInternal());
+	}
+	
+	guideForm.set("newPaymentType", (guide.getPaymentType() != null) ? guide.getPaymentType().name()
+		: null);
+	request.setAttribute("paymentTransactions", paymentTransactions);
+	request.setAttribute("degreeCurricularPlans", degreeCurricularPlansInLabelValueBeanList);
+	request.setAttribute("executionYears", executionYears);
+	request.setAttribute("guide", guide);
+	request.setAttribute("days", Data.getMonthDays());
+	request.setAttribute("months", Data.getMonths());
+	request.setAttribute("years", Data.getYears());
 
-        return mapping.findForward("editGuide");
+	return mapping.findForward("editGuide");
     }
 
     public ActionForward addGuideEntry(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm guideForm = (DynaActionForm) actionForm;
-        Integer guideID = (Integer) guideForm.get("guideID");
-        String newEntryDescription = (String) guideForm.get("newEntryDescription");
-        Integer newEntryQuantity = (Integer) guideForm.get("newEntryQuantity");
-        Double newEntryPrice = (Double) guideForm.get("newEntryPrice");
-        String newEntryDocumentType = (String) guideForm.get("newEntryDocumentType");
+	DynaActionForm guideForm = (DynaActionForm) actionForm;
+	Integer guideID = (Integer) guideForm.get("guideID");
+	String newEntryDescription = (String) guideForm.get("newEntryDescription");
+	Integer newEntryQuantity = (Integer) guideForm.get("newEntryQuantity");
+	Double newEntryPrice = (Double) guideForm.get("newEntryPrice");
+	String newEntryDocumentType = (String) guideForm.get("newEntryDocumentType");
 
-        Object[] args = { guideID, GraduationType.MASTER_DEGREE,
-                DocumentType.valueOf(newEntryDocumentType), newEntryDescription, newEntryPrice,
-                newEntryQuantity };
-        try {
-            ServiceUtils.executeService(userView, "CreateGuideEntry", args);
-        } catch (FenixServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+	Object[] args = { guideID, GraduationType.MASTER_DEGREE,
+		DocumentType.valueOf(newEntryDocumentType), newEntryDescription, newEntryPrice,
+		newEntryQuantity };
+	try {
+	    ServiceUtils.executeService(userView, "CreateGuideEntry", args);
+	} catch (FenixServiceException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 
-        guideForm.set("newEntryDescription", null);
-        guideForm.set("newEntryQuantity", null);
-        guideForm.set("newEntryPrice", null);
-        guideForm.set("newEntryDocumentType", null);
+	guideForm.set("newEntryDescription", null);
+	guideForm.set("newEntryQuantity", null);
+	guideForm.set("newEntryPrice", null);
+	guideForm.set("newEntryDocumentType", null);
 
-        return chooseGuide(mapping, actionForm, request, response);
+	return chooseGuide(mapping, actionForm, request, response);
     }
 
     public ActionForward addGuideSituation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm guideForm = (DynaActionForm) actionForm;
+	DynaActionForm guideForm = (DynaActionForm) actionForm;
 
-        /** ***************** */
+	/** ***************** */
 
-        Integer guideID = (Integer) guideForm.get("guideID");
-        String newSituationRemarks = (String) guideForm.get("newSituationRemarks");
-        Integer newSituationDay = (Integer) guideForm.get("newSituationDay");
-        Integer newSituationMonth = (Integer) guideForm.get("newSituationMonth");
-        Integer newSituationYear = (Integer) guideForm.get("newSituationYear");
-        String newSituationType = (String) guideForm.get("newSituationType");
+	Integer guideID = (Integer) guideForm.get("guideID");
+	String newSituationRemarks = (String) guideForm.get("newSituationRemarks");
+	Integer newSituationDay = (Integer) guideForm.get("newSituationDay");
+	Integer newSituationMonth = (Integer) guideForm.get("newSituationMonth");
+	Integer newSituationYear = (Integer) guideForm.get("newSituationYear");
+	String newSituationType = (String) guideForm.get("newSituationType");
 
-        Date date = (new GregorianCalendar(newSituationYear.intValue(), newSituationMonth.intValue(),
-                newSituationDay.intValue())).getTime();
+	Date date = (new GregorianCalendar(newSituationYear.intValue(), newSituationMonth.intValue(),
+		newSituationDay.intValue())).getTime();
 
-        Object[] args = { guideID, newSituationRemarks, GuideState.valueOf(newSituationType), date };
+	Object[] args = { guideID, newSituationRemarks, GuideState.valueOf(newSituationType), date };
 
-        try {
-            ServiceUtils.executeService(userView, "CreateGuideSituation", args);
-        } catch (FenixServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+	try {
+	    ServiceUtils.executeService(userView, "CreateGuideSituation", args);
+	} catch (FenixServiceException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 
-        guideForm.set("newSituationRemarks", null);
-        guideForm.set("newSituationDay", null);
-        guideForm.set("newSituationMonth", null);
-        guideForm.set("newSituationYear", null);
-        guideForm.set("newSituationType", null);
+	guideForm.set("newSituationRemarks", null);
+	guideForm.set("newSituationDay", null);
+	guideForm.set("newSituationMonth", null);
+	guideForm.set("newSituationYear", null);
+	guideForm.set("newSituationType", null);
 
-        return chooseGuide(mapping, actionForm, request, response);
+	return chooseGuide(mapping, actionForm, request, response);
     }
 
     public ActionForward createPaymentTransaction(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm guideForm = (DynaActionForm) actionForm;
+	DynaActionForm guideForm = (DynaActionForm) actionForm;
 
-        String selectedGuideEntryDocumentType = (String) guideForm.get("selectedGuideEntryDocumentType");
-        Integer selectedGuideEntryID = (Integer) guideForm.get("selectedGuideEntryID");
+	String selectedGuideEntryDocumentType = (String) guideForm.get("selectedGuideEntryDocumentType");
+	Integer selectedGuideEntryID = (Integer) guideForm.get("selectedGuideEntryID");
 
-        Object[] args = { selectedGuideEntryID, userView };
+	Object[] args = { selectedGuideEntryID, userView };
 
-        try {
+	try {
 
-            if (selectedGuideEntryDocumentType.equals(DocumentType.GRATUITY.name())) {
-                ServiceUtils.executeService(userView, "CreateGratuityTransaction", args);
-            } else if (selectedGuideEntryDocumentType.equals(DocumentType.INSURANCE.name())) {
-                ServiceUtils.executeService(userView, "CreateInsuranceTransaction", args);
-            }
+	    if (selectedGuideEntryDocumentType.equals(DocumentType.GRATUITY.name())) {
+		ServiceUtils.executeService(userView, "CreateGratuityTransaction", args);
+	    } else if (selectedGuideEntryDocumentType.equals(DocumentType.INSURANCE.name())) {
+		ServiceUtils.executeService(userView, "CreateInsuranceTransaction", args);
+	    }
 
-        } catch (FenixServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+	} catch (FenixServiceException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 
-        return chooseGuide(mapping, actionForm, request, response);
+	return chooseGuide(mapping, actionForm, request, response);
 
     }
 
     public ActionForward editExecutionDegree(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm guideForm = (DynaActionForm) actionForm;
+	DynaActionForm guideForm = (DynaActionForm) actionForm;
 
-        Integer newDegreeCurricularPlanID = (Integer) guideForm.get("newDegreeCurricularPlanID");
-        String newExecutionYear = (String) guideForm.get("newExecutionYear");
-        Integer guideID = (Integer) guideForm.get("guideID");
-        String newPaymentType = (String) guideForm.get("newPaymentType");
+	Integer newDegreeCurricularPlanID = (Integer) guideForm.get("newDegreeCurricularPlanID");
+	String newExecutionYear = (String) guideForm.get("newExecutionYear");
+	Integer guideID = (Integer) guideForm.get("guideID");
+	String newPaymentType = (String) guideForm.get("newPaymentType");
 
-        Object[] args = { guideID, newDegreeCurricularPlanID, newExecutionYear, newPaymentType };
-        try {
-            ServiceUtils.executeService(userView, "EditGuideInformationInManager", args);
-        } catch (FenixServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+	Object[] args = { guideID, newDegreeCurricularPlanID, newExecutionYear, newPaymentType };
+	try {
+	    ServiceUtils.executeService(userView, "EditGuideInformationInManager", args);
+	} catch (FenixServiceException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 
-        return chooseGuide(mapping, actionForm, request, response);
+	return chooseGuide(mapping, actionForm, request, response);
 
     }
 
     public ActionForward deleteGuideSituation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm guideForm = (DynaActionForm) actionForm;
-        Integer guideSituationID = (Integer) guideForm.get("guideSituationID");
+	DynaActionForm guideForm = (DynaActionForm) actionForm;
+	Integer guideSituationID = (Integer) guideForm.get("guideSituationID");
 
-        Object[] args = { guideSituationID };
-        try {
-            ServiceUtils.executeService(userView, "DeleteGuideSituationInManager", args);
-        } catch (FenixServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+	Object[] args = { guideSituationID };
+	try {
+	    ServiceUtils.executeService(userView, "DeleteGuideSituationInManager", args);
+	} catch (FenixServiceException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 
-        return chooseGuide(mapping, actionForm, request, response);
+	return chooseGuide(mapping, actionForm, request, response);
 
     }
 
     public ActionForward deleteGuideEntry(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm guideForm = (DynaActionForm) actionForm;
-        Integer selectedGuideEntryID = (Integer) guideForm.get("selectedGuideEntryID");
+	DynaActionForm guideForm = (DynaActionForm) actionForm;
+	Integer selectedGuideEntryID = (Integer) guideForm.get("selectedGuideEntryID");
 
-        Object[] args = { selectedGuideEntryID };
-        try {
-            ServiceUtils
-                    .executeService(userView, "DeleteGuideEntryAndPaymentTransactionInManager", args);
-        } catch (FenixServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+	Object[] args = { selectedGuideEntryID };
+	try {
+	    ServiceUtils
+		    .executeService(userView, "DeleteGuideEntryAndPaymentTransactionInManager", args);
+	} catch (FenixServiceException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 
-        return chooseGuide(mapping, actionForm, request, response);
+	return chooseGuide(mapping, actionForm, request, response);
 
     }
 
     public ActionForward deleteGuide(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm guideForm = (DynaActionForm) actionForm;
-        Integer guideID = (Integer) guideForm.get("guideID");
+	DynaActionForm guideForm = (DynaActionForm) actionForm;
+	Integer guideID = (Integer) guideForm.get("guideID");
 
-        Object[] args = { guideID };
-        try {
-            ServiceUtils.executeService(userView, "DeleteGuideVersionInManager", args);
-        } catch (FenixServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return chooseGuide(mapping, actionForm, request, response);
-        }
+	Object[] args = { guideID };
+	try {
+	    ServiceUtils.executeService(userView, "DeleteGuideVersionInManager", args);
+	} catch (FenixServiceException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	    return chooseGuide(mapping, actionForm, request, response);
+	}
 
-        return mapping.findForward("firstPage");
+	return mapping.findForward("firstPage");
 
     }
 
