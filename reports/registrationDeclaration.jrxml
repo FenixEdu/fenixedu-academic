@@ -17,7 +17,7 @@
 		 whenNoDataType="NoPages"
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
-	<property name="ireport.scriptlethandling" value="2" />
+	<property name="ireport.scriptlethandling" value="0" />
 	<property name="ireport.encoding" value="ISO-8859-1" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
@@ -30,11 +30,23 @@
 			</band>
 		</background>
 		<title>
-			<band height="50"  isSplitAllowed="true" >
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="750"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="296"
-						y="11"
+						y="34"
 						width="233"
 						height="19"
 						key="staticText-1"/>
@@ -47,7 +59,7 @@
 				<line direction="TopDown">
 					<reportElement
 						x="103"
-						y="30"
+						y="53"
 						width="425"
 						height="0"
 						key="line-1"/>
@@ -56,7 +68,7 @@
 				<staticText>
 					<reportElement
 						x="296"
-						y="28"
+						y="51"
 						width="233"
 						height="20"
 						key="staticText-10"/>
@@ -66,22 +78,10 @@
 					</textElement>
 				<text><![CDATA[Secção de Graduação]]></text>
 				</staticText>
-			</band>
-		</title>
-		<pageHeader>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</pageHeader>
-		<columnHeader>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</columnHeader>
-		<detail>
-			<band height="700"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="218"
-						y="49"
+						y="138"
 						width="131"
 						height="21"
 						key="staticText-2"/>
@@ -94,7 +94,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="49"
-						y="120"
+						y="200"
 						width="483"
 						height="393"
 						key="textField-1"/>
