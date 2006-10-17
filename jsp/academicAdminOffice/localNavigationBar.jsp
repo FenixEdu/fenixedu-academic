@@ -12,4 +12,10 @@
 	    <li><html:link page="/documentRequestsManagement.do?method=showOperations"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="link.documentRequestsManagement" /></html:link></li>
 	</ul>
 
+	<ul>
+		<li class="navheader"><bean:message key="link.documentsOperations" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
+		<li><html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.createDocumentRequest" /></html:link></li>
+		<li><html:link action="/documentRequestsManagement.do?method=prepareSearch"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchDocumentRequests" /></html:link></li>
+	</ul>
+
 </logic:present>
