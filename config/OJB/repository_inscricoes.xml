@@ -5,50 +5,23 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses" />
-	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.CandidacyPeriodInDegreeCurricularPlan" />		
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses"
 		table="ENROLMENT_PERIOD">
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses"
 		table="ENROLMENT_PERIOD">
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
 </class-descriptor>
-
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason"
 		table="ENROLMENT_PERIOD">
-	
-	
-	
-	
-	
-	
-	
+</class-descriptor>
 
-	
-	
+<class-descriptor class="net.sourceforge.fenixedu.domain.CandidacyPeriodInDegreeCurricularPlan"
+		table="ENROLMENT_PERIOD">
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
