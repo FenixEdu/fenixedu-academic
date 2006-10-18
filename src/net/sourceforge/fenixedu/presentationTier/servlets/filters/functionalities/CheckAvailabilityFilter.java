@@ -201,7 +201,10 @@ public class CheckAvailabilityFilter implements Filter {
                 return matching;
             }
             
-            return getMatchingSubFunctionality(path, module.getModules());
+            matching = getMatchingSubFunctionality(path, module.getModules());
+            if (matching != null) {
+                return matching;
+            }
         }
         
         return null;
