@@ -14,8 +14,17 @@
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
 	<jsp:include page="spaceCrumbs.jsp"/>
 	
-	<br/><br/>	
-			
+	<bean:define id="backLink">
+		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
+	</bean:define>		
+	<ul class="mvert15 list5">
+		<li>
+			<html:link page="<%= backLink %>">
+				<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
+			</html:link>
+		</li>
+	</ul>
+		
 	<logic:messagesPresent message="true">
 		<span class="error"><!-- Error messages go here -->
 			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
@@ -24,12 +33,12 @@
 		</span>
 	</logic:messagesPresent>
 	
-	<h3><bean:message key="label.active.person.occupations" bundle="SPACE_RESOURCES"/>:</h3>
+	<p class="mtop2 mbottom05"><strong><bean:message key="label.active.person.occupations" bundle="SPACE_RESOURCES"/></strong></p>
 	<bean:size id="activeSize" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations"/>
 	<logic:equal name="activeSize" value="0">
-		<span class="error"><!-- Error messages go here -->
+		<em><!-- Error messages go here -->
 			<bean:message key="label.space.no.current.personOccupations" bundle="SPACE_RESOURCES"/>
-		</span>	
+		</em>	
 	</logic:equal>
 	<fr:view schema="PersonSpaceOccupations" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 		<fr:layout name="tabular">      			
@@ -49,30 +58,28 @@
     	</fr:layout>
 	</fr:view>			
 
-	<br/>
 	<bean:define id="exceptionParams" value="<%="/managePersonSpaceOccupations.do?method=showSpaceOccupations&spaceInformationID="+ selectedSpaceInformationId %>" />		
 	<logic:empty name="personSpaceOccupation">
-		<h3><bean:message key="label.add.person" bundle="SPACE_RESOURCES"/>:</h3>		
+		<p class="mbottom05"><strong><bean:message key="label.add.person" bundle="SPACE_RESOURCES"/></strong></p>
 		<fr:create id="create" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" schema="AddPersonSpaceOccupation">	   	
 			<fr:hidden slot="space" name="selectedSpaceInformation" property="space" />
 			<fr:destination name="exception" path="<%= exceptionParams %>" />
 		</fr:create>
 	</logic:empty>
 	<logic:notEmpty name="personSpaceOccupation">	
-		<h3><bean:message key="label.edit.occupation" bundle="SPACE_RESOURCES"/>:</h3>							
+		<p class="mbottom05"><strong><bean:message key="label.edit.occupation" bundle="SPACE_RESOURCES"/></strong></p>							
 		<p><i><bean:write name="personSpaceOccupation" property="person.name"/> -> <bean:write name="personSpaceOccupation" property="person.username"/></i></p>
 		<fr:edit name="personSpaceOccupation" action="<%= exceptionParams %>" schema="EditPersonSpaceOccupation">	   				
 			<fr:destination name="exception" path="<%= exceptionParams %>" />
 		</fr:edit>	
 	</logic:notEmpty>
-	<br/>
 		
-	<h3><bean:message key="label.inactive.person.occupations" bundle="SPACE_RESOURCES"/>:</h3>
+	<p class="mtop2 mbottom05"><strong><bean:message key="label.inactive.person.occupations" bundle="SPACE_RESOURCES"/></strong></p>
 	<bean:size id="inactiveSize" name="selectedSpaceInformation" property="space.inactivePersonSpaceOccupations"/>
 	<logic:equal name="inactiveSize" value="0">
-		<span class="error"><!-- Error messages go here -->
+		<em><!-- Error messages go here -->
 			<bean:message key="label.space.no.other.personOccupations" bundle="SPACE_RESOURCES"/>
-		</span>	
+		</em>
 	</logic:equal>
 	<fr:view schema="PersonSpaceOccupations" name="selectedSpaceInformation" property="space.inactivePersonSpaceOccupations">
 		<fr:layout name="tabular">      			
@@ -90,18 +97,5 @@
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
             <fr:property name="order(delete)" value="0"/>               
     	</fr:layout>
-	</fr:view>	
-	
-	<br/>
-	<bean:define id="backLink">
-		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
-	</bean:define>	
-	
-	<ul>
-		<li>
-			<html:link page="<%= backLink %>">
-				<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
-			</html:link>
-		</li>
-	</ul>
+	</fr:view>			
 </logic:present>

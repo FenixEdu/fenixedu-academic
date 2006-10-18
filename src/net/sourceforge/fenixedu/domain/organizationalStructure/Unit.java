@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.util.ContractType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class Unit extends Unit_Base {
@@ -179,13 +180,13 @@ public class Unit extends Unit_Base {
     }
 
     private List<Unit> getSubUnitsByState(YearMonthDay currentDate, boolean state) {
-	List<Unit> allActiveSubUnits = new ArrayList<Unit>();
+	List<Unit> allSubUnits = new ArrayList<Unit>();
 	for (Unit subUnit : this.getSubUnits()) {
 	    if (subUnit.isActive(currentDate) == state) {
-		allActiveSubUnits.add(subUnit);
+		allSubUnits.add(subUnit);
 	    }
 	}
-	return allActiveSubUnits;
+	return allSubUnits;
     }
 
     public List<Unit> getInactiveParentUnits(YearMonthDay currentDate) {
@@ -197,13 +198,13 @@ public class Unit extends Unit_Base {
     }
 
     private List<Unit> getParentUnitsByState(YearMonthDay currentDate, boolean state) {
-	List<Unit> allActiveParentUnits = new ArrayList<Unit>();
+	List<Unit> allParentUnits = new ArrayList<Unit>();
 	for (Unit subUnit : this.getParentUnits()) {
 	    if (subUnit.isActive(currentDate) == state) {
-		allActiveParentUnits.add(subUnit);
+		allParentUnits.add(subUnit);
 	    }
 	}
-	return allActiveParentUnits;
+	return allParentUnits;
     }
 
     public List<Unit> getInactiveSubUnits(YearMonthDay currentDate,
@@ -218,13 +219,13 @@ public class Unit extends Unit_Base {
 
     private List<Unit> getSubUnitsByState(YearMonthDay currentDate,
 	    AccountabilityTypeEnum accountabilityTypeEnum, boolean state) {
-	List<Unit> allActiveSubUnits = new ArrayList<Unit>();
-	for (Unit subUnit : this.getSubUnits(accountabilityTypeEnum)) {
+	List<Unit> allSubUnits = new ArrayList<Unit>();
+	for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
 	    if (subUnit.isActive(currentDate) == state) {
-		allActiveSubUnits.add(subUnit);
+		allSubUnits.add(subUnit);
 	    }
 	}
-	return allActiveSubUnits;
+	return allSubUnits;
     }
 
     public List<Unit> getActiveSubUnits(YearMonthDay currentDate,
@@ -239,13 +240,13 @@ public class Unit extends Unit_Base {
 
     private List<Unit> getSubUnitsByState(YearMonthDay currentDate,
 	    List<AccountabilityTypeEnum> accountabilityTypeEnums, boolean state) {
-	List<Unit> allActiveSubUnits = new ArrayList<Unit>();
+	List<Unit> allSubUnits = new ArrayList<Unit>();
 	for (Unit subUnit : this.getSubUnits(accountabilityTypeEnums)) {
 	    if (subUnit.isActive(currentDate) == state) {
-		allActiveSubUnits.add(subUnit);
+		allSubUnits.add(subUnit);
 	    }
 	}
-	return allActiveSubUnits;
+	return allSubUnits;
     }
 
     public List<Unit> getAllInactiveParentUnits(YearMonthDay currentDate) {
@@ -604,6 +605,32 @@ public class Unit extends Unit_Base {
 	}
 	return null;
     }
+    
+    public static List<Unit> readUnitsByAcronym(String acronym){
+	List<Unit> result = new ArrayList<Unit>();
+	if (!StringUtils.isEmpty(acronym.trim())) {	    
+	    for (Party party : RootDomainObject.getInstance().getPartys()) {
+		if (party instanceof Unit && ((Unit) party).getAcronym() != null
+			&& ((Unit) party).getAcronym().equals(acronym)) {
+		    result.add((Unit) party);
+		}
+	    }
+	}
+	return result;
+    }
+    
+    public static List<Unit> readUnitsByName(String name){
+	List<Unit> result = new ArrayList<Unit>();
+	if (!StringUtils.isEmpty(name.trim())) {	    
+	    for (Party party : RootDomainObject.getInstance().getPartys()) {
+		if (party instanceof Unit && party.getName() != null
+			&& party.getName().equalsIgnoreCase(name)) {
+		    result.add((Unit) party);
+		}
+	    }
+	}
+	return result;
+    }
 
     public static Unit readByCostCenterCode(Integer costCenterCode) {
 	if (costCenterCode != null) {
@@ -650,7 +677,7 @@ public class Unit extends Unit_Base {
 	    AccountabilityType accountabilityType, String webAddress) throws FenixFilterException,
 	    FenixServiceException {
 
-	if (unitName == null) {
+	if (unitName == null || StringUtils.isEmpty(unitName.trim())) {
 	    throw new DomainException("error.unit.empty.name");
 	}
 
@@ -673,7 +700,7 @@ public class Unit extends Unit_Base {
 
     public static Unit createNewExternalInstitution(String unitName) {
 
-	if (unitName == null) {
+	if (unitName == null || StringUtils.isEmpty(unitName.trim())) {
 	    throw new DomainException("error.unit.empty.name");
 	}
 
@@ -788,10 +815,16 @@ public class Unit extends Unit_Base {
 	}
 	return null;
     }
+     
+    public String getNameWithAcronym() {
+	String name = super.getName().trim();
+	return (getAcronym() == null || StringUtils.isEmpty(getAcronym().trim())) ? name : name + " ("
+		+ getAcronym().trim() + ")";
+    }
 
     public String getPresentationName() {
 	StringBuilder builder = new StringBuilder();
-	builder.append(getName());
+	builder.append(getNameWithAcronym());
 	if (getCostCenterCode() != null) {
 	    builder.append(" [c.c. ").append(getCostCenterCode()).append("]");
 	}
@@ -848,5 +881,5 @@ public class Unit extends Unit_Base {
 	}
 
 	return builder.toString();
-    }
+    }    
 }

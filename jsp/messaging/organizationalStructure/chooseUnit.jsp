@@ -14,8 +14,7 @@
 <f:loadBundle basename="resources/MessagingResources" var="messagingResources"/>
 	
 <h:form>
-	<h:inputHidden value="#{organizationalStructure.unitID}" />		
-	<h:inputHidden value="#{organizationalStructure.subUnit}" />		
+	<h:inputHidden value="#{organizationalStructure.unitID}" />			
 	<h:inputHidden value="#{organizationalStructure.choosenExecutionYearID}" />
 
 	<h:panelGroup>	

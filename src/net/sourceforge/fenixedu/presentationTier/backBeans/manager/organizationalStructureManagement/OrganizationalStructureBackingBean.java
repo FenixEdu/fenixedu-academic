@@ -171,7 +171,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	buffer.append("<a href=\"").append(getContextPath()).append(
 		"/manager/organizationalStructureManagament/").append("chooseParentUnit.faces?").append(
 		"unitID=").append(this.getUnit().getIdInternal()).append("&chooseUnitID=").append(
-		parentUnit.getIdInternal()).append("\">").append(parentUnit.getName()).append("</a>")
+		parentUnit.getIdInternal()).append("\">").append(parentUnit.getNameWithAcronym()).append("</a>")
 		.append("</li>");
 
 	if (!subUnits.isEmpty()) {
@@ -252,7 +252,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	buffer.append("<a href=\"").append(getContextPath()).append(
 		"/manager/organizationalStructureManagament/").append("unitDetails.faces?").append(
-		"unitID=").append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getName())
+		"unitID=").append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getNameWithAcronym())
 		.append("</a>").append("</li>");
 
 	if (!subUnits.isEmpty()) {
@@ -303,7 +303,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		"/manager/organizationalStructureManagament/").append("chooseFunction.faces?").append(
 		"unitID=").append(this.getUnit().getIdInternal()).append("&chooseUnitID=").append(
 		parentUnit.getIdInternal()).append("&functionID=").append(
-		this.getFunction().getIdInternal()).append("\">").append(parentUnit.getName()).append(
+		this.getFunction().getIdInternal()).append("\">").append(parentUnit.getNameWithAcronym()).append(
 		"</a>").append("</li>");
 
 	if (!subUnits.isEmpty()) {

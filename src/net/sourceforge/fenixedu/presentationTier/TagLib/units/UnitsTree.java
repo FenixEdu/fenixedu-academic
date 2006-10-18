@@ -144,7 +144,7 @@ public class UnitsTree extends TagSupport {
 
 	buffer.append("<a href=\"").append(request.getContextPath()).append(path).append("&").append(
 		paramName).append("=").append(parentUnit.getIdInternal()).append("\">").append(
-		parentUnit.getName()).append("</a>").append("</li>");
+		parentUnit.getNameWithAcronym()).append("</a>").append("</li>");
 
 	if (!subUnits.isEmpty()) {
 	    buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(

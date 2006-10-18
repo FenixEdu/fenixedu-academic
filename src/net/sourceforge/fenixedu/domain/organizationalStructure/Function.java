@@ -28,7 +28,7 @@ public class Function extends Function_Base {
     }       
 
     private void checkParameters(String functionName, Date beginDate, Date endDate) {
-        if(StringUtils.isEmpty(functionName)){
+        if(functionName == null || StringUtils.isEmpty(functionName.trim())){
             throw new DomainException("error.no.function.name");
         }
         if(beginDate == null) {

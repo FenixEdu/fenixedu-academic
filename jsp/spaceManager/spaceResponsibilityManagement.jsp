@@ -36,8 +36,7 @@
 	
 	<bean:define id="backLink">
 		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
-	</bean:define>	
-	
+	</bean:define>		
 	<ul class="mvert15 list5">
 		<li>
 			<html:link page="<%= backLink %>">
@@ -79,7 +78,7 @@
     	</fr:layout>
 	</fr:view>
 		
-	<p class="mtop2 mbottom05"><strong><bean:message key="label.choose.unit" bundle="SPACE_RESOURCES"/></strong></p>
+	<span class="mtop2 mbottom05"><strong><bean:message key="label.choose.unit" bundle="SPACE_RESOURCES"/></strong></span>
 	<bean:define id="path">
 		/SpaceManager/manageSpaceResponsibility.do?method=manageResponsabilityInterval&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
 	</bean:define>	
