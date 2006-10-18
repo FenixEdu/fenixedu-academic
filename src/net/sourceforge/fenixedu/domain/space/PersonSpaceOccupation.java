@@ -28,7 +28,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	checkParameters(space, person, begin, end);
 	setPerson(person);
 	setSpace(space);
-	checkPermissionsToMakeOperations();
+	//checkPermissionsToMakeOperations();
 	super.setBegin(begin);
 	super.setEnd(end);
     }
@@ -65,7 +65,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	super.setBegin(begin);
 	super.setEnd(end);
     }
-
+    
     public void delete() {
 	checkPermissionsToMakeOperations();
 	removePerson();

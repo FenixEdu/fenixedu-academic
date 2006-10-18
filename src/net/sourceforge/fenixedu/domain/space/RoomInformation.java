@@ -20,7 +20,7 @@ public class RoomInformation extends RoomInformation_Base {
         setDistanceFromSanitaryInstalationsQuality(roomFactory.getDistanceFromSanitaryInstalationsQuality());
         setSecurityQuality(roomFactory.getSecurityQuality());
         setAgeQuality(roomFactory.getAgeQuality());
-        setObservations(roomFactory.getObservations());
+        setObservations(roomFactory.getObservations());        
     }
 
     @Override

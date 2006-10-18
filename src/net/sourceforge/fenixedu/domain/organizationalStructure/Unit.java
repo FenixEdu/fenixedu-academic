@@ -873,9 +873,9 @@ public class Unit extends Unit_Base {
 	int index = 1;
 	for (Unit unit : parentUnits) {
 	    if (index == parentUnits.size()) {
-		builder.append(unit.getName());
+		builder.append(unit.getNameWithAcronym());
 	    } else {
-		builder.append(unit.getName() + separator);
+		builder.append(unit.getNameWithAcronym() + separator);
 	    }
 	    index++;
 	}
