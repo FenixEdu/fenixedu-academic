@@ -52,6 +52,79 @@ public class Unit extends Unit_Base {
 	super();
     }
 
+    public void edit(String unitName, Integer unitCostCenter, String acronym, Date beginDate,
+	    Date endDate, PartyTypeEnum type, String webAddress) {
+
+	checkUnitDates(beginDate, endDate);
+	setCostCenterCode(unitCostCenter);
+	checkAcronym(acronym, this.getType());
+	setName(unitName);
+	setBeginDate(beginDate);
+	setEndDate(endDate);
+	setType(type);
+	setWebAddress(webAddress);
+	setAcronym(acronym);
+    }
+
+    private void checkCostCenterCode(Integer costCenterCode) {
+	Unit unit = readByCostCenterCode(costCenterCode);
+	if (unit != null && !unit.equals(this)) {
+	    throw new DomainException("error.costCenter.alreadyExists");
+	}
+    }
+
+    private void checkUnitDates(Date beginDate, Date endDate) {
+	if (beginDate == null) {
+	    throw new DomainException("error.unit.no.beginDate");
+	}
+	if (endDate != null && endDate.before(beginDate)) {
+	    throw new DomainException("error.unit.endDateBeforeBeginDate");
+	}
+    }
+
+    private void checkAcronym(String acronym, PartyTypeEnum partyTypeEnum) {
+	Unit unit = readUnitByAcronymAndType(acronym, partyTypeEnum);
+	if (unit != null && !unit.equals(this)) {
+	    throw new DomainException("error.existent.acronym");
+	}
+    }
+
+    public void delete() {
+	if (!canBeDeleted()) {
+	    throw new DomainException("error.unit.cannot.be.deleted");
+	}
+
+	if (hasAnyParentUnits()) {
+	    this.getParents().get(0).delete();
+	}
+
+	for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
+		.get(0).delete())
+	    ;
+
+	removeDepartment();
+	removeDegree();
+	super.delete();
+    }
+
+    private boolean canBeDeleted() {
+	return (!hasAnyParents() || (this.getParentUnits().size() == 1 && this.getParents().size() == 1))
+		&& !hasAnyFunctions()
+		&& !hasAnyChilds()
+		&& !hasAnySpaceResponsibility()
+		&& !hasAnyMaterials()
+		&& !hasAnyVigilantGroups()
+		&& !hasAnyCompetenceCourses()
+		&& !hasAnyAssociatedNonAffiliatedTeachers()
+		&& !hasAnyPayedGuides()
+		&& !hasAnyPayedReceipts() && !hasAdministrativeOffice();
+    }
+
+    public boolean isActive(YearMonthDay currentDate) {
+	return (!this.getBeginDateYearMonthDay().isAfter(currentDate) && (this.getEndDateYearMonthDay() == null || !this
+		.getEndDateYearMonthDay().isBefore(currentDate)));
+    }
+
     public List<Unit> getTopUnits() {
 	Unit unit = this;
 	List<Unit> allTopUnits = new ArrayList<Unit>();
@@ -237,92 +310,21 @@ public class Unit extends Unit_Base {
 	return new ArrayList<Unit>(allInactiveSubUnits);
     }
 
-    public void edit(String unitName, Integer unitCostCenter, String acronym, Date beginDate,
-	    Date endDate, PartyTypeEnum type, String webAddress) {
-
-	checkUnitDates(beginDate, endDate);
-	setCostCenterCode(unitCostCenter);
-	checkAcronym(acronym, this.getType());
-	setName(unitName);
-	setBeginDate(beginDate);
-	setEndDate(endDate);
-	setType(type);
-	setWebAddress(webAddress);
-	setAcronym(acronym);
-    }
-
-    private void checkCostCenterCode(Integer costCenterCode) {
-	Unit unit = readByCostCenterCode(costCenterCode);
-	if (unit != null && !unit.equals(this)) {
-	    throw new DomainException("error.costCenter.alreadyExists");
-	}
-    }
-
-    private void checkUnitDates(Date beginDate, Date endDate) {
-	if (beginDate == null) {
-	    throw new DomainException("error.unit.no.beginDate");
-	}
-	if (endDate != null && endDate.before(beginDate)) {
-	    throw new DomainException("error.unit.endDateBeforeBeginDate");
-	}
-    }
-
-    private void checkAcronym(String acronym, PartyTypeEnum partyTypeEnum) {
-	Unit unit = readUnitByAcronymAndType(acronym, partyTypeEnum);
-	if (unit != null && !unit.equals(this)) {
-	    throw new DomainException("error.existent.acronym");
-	}
-    }
-
-    public boolean isActive(YearMonthDay currentDate) {
-	return (!this.getBeginDateYearMonthDay().isAfter(currentDate) && (this.getEndDateYearMonthDay() == null || !this
-		.getEndDateYearMonthDay().isBefore(currentDate)));
-    }
-
-    public void delete() {
-	if (!canBeDeleted()) {
-	    throw new DomainException("error.unit.cannot.be.deleted");
-	}
-
-	if (hasAnyParentUnits()) {
-	    this.getParents().get(0).delete();
-	}
-
-	for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
-		.get(0).delete())
-	    ;
-
-	removeDepartment();
-	removeDegree();
-	super.delete();
-    }
-
-    private boolean canBeDeleted() {
-	return (!hasAnyParents() || (this.getParentUnits().size() == 1 && this.getParents().size() == 1))
-		&& !hasAnyFunctions()
-		&& !hasAnyChilds()
-		&& !hasAnySpaceResponsibility()
-		&& !hasAnyMaterials()
-		&& !hasAnyVigilantGroups()
-		&& !hasAnyCompetenceCourses()
-		&& !hasAnyAssociatedNonAffiliatedTeachers()
-		&& !hasAnyPayedGuides()
-		&& !hasAnyPayedReceipts() && !hasAdministrativeOffice();
+    public Collection<Contract> getContracts() {
+	return (Collection<Contract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT,
+		Contract.class);
     }
 
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
 	List<Contract> contracts = new ArrayList<Contract>();
-	for (Contract contract : getContractsByContractType(ContractType.WORKING)) {
-	    if (contract.belongsToPeriod(begin, end)) {
+	for (Contract contract : (Collection<Contract>) getChildAccountabilities(
+		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
+	    if (contract.getContractType().equals(ContractType.WORKING)
+		    && contract.belongsToPeriod(begin, end)) {
 		contracts.add(contract);
 	    }
 	}
 	return contracts;
-    }
-
-    public Collection<Contract> getContracts() {
-	return (Collection<Contract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT,
-		Contract.class);
     }
 
     public List<Contract> getContractsByContractType(ContractType contractType) {
@@ -334,6 +336,10 @@ public class Unit extends Unit_Base {
 	    }
 	}
 	return contracts;
+    }
+
+    public List<Contract> getWorkingContracts() {
+	return getContractsByContractType(ContractType.WORKING);
     }
 
     // begin SCIENTIFIC AREA UNITS, COMPETENCE COURSE GROUP UNITS AND
@@ -397,6 +403,18 @@ public class Unit extends Unit_Base {
 
     // end SCIENTIFIC AREA UNITS, COMPETENCE COURSE GROUP UNITS AND RELATED
 
+    public List<Teacher> getAllTeachers() {
+	List<Teacher> teachers = new ArrayList<Teacher>();
+	List<Employee> employees = getAllWorkingEmployees();
+	for (Employee employee : employees) {
+	    Teacher teacher = employee.getPerson().getTeacher();
+	    if (teacher != null && !teacher.getAllLegalRegimensWithoutEndSituations().isEmpty()) {
+		teachers.add(teacher);
+	    }
+	}
+	return teachers;
+    }
+
     public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
 	List<Teacher> teachers = new ArrayList<Teacher>();
 	List<Employee> employees = getAllWorkingEmployees(begin, end);
@@ -404,18 +422,6 @@ public class Unit extends Unit_Base {
 	    Teacher teacher = employee.getPerson().getTeacher();
 	    if (teacher != null
 		    && !teacher.getAllLegalRegimensWithoutEndSituations(begin, end).isEmpty()) {
-		teachers.add(teacher);
-	    }
-	}
-	return teachers;
-    }
-
-    public List<Teacher> getAllTeachers() {
-	List<Teacher> teachers = new ArrayList<Teacher>();
-	List<Employee> employees = getAllWorkingEmployees();
-	for (Employee employee : employees) {
-	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null && !teacher.getAllLegalRegimensWithoutEndSituations().isEmpty()) {
 		teachers.add(teacher);
 	    }
 	}
@@ -450,7 +456,7 @@ public class Unit extends Unit_Base {
 
     public List<Employee> getAllWorkingEmployees() {
 	Set<Employee> employees = new HashSet<Employee>();
-	for (Contract contract : getContractsByContractType(ContractType.WORKING)) {
+	for (Contract contract : getWorkingContracts()) {
 	    employees.add(contract.getEmployee());
 	}
 	for (Unit subUnit : getSubUnits()) {
@@ -473,7 +479,7 @@ public class Unit extends Unit_Base {
     public List<Employee> getAllCurrentActiveWorkingEmployees() {
 	Set<Employee> employees = new HashSet<Employee>();
 	YearMonthDay currentDate = new YearMonthDay();
-	for (Contract contract : getContractsByContractType(ContractType.WORKING)) {
+	for (Contract contract : getWorkingContracts()) {
 	    Employee employee = contract.getEmployee();
 	    if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
 		employees.add(employee);
@@ -635,7 +641,8 @@ public class Unit extends Unit_Base {
     }
 
     public Collection<Unit> getParentByOrganizationalStructureAccountabilityType() {
-	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, getClass());
+	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
+		getClass());
     }
 
     public static Unit createNewUnit(String unitName, Integer costCenterCode, String acronym,

@@ -221,7 +221,7 @@ public class Teacher extends Teacher_Base {
 
     public Unit getLastWorkingUnit(YearMonthDay begin, YearMonthDay end) {
 	Employee employee = this.getPerson().getEmployee();
-	return (employee != null) ? employee.getLastWorkingPlaceByPeriod(begin, end) : null;
+	return (employee != null) ? employee.getLastWorkingPlace(begin, end) : null;
     }
 
     public Department getCurrentWorkingDepartment() {
@@ -241,7 +241,7 @@ public class Teacher extends Teacher_Base {
 
     public List<Unit> getWorkingPlacesByPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
 	Employee employee = this.getPerson().getEmployee();
-	return (employee != null) ? employee.getWorkingPlacesByPeriod(beginDate, endDate) : new ArrayList<Unit>();
+	return (employee != null) ? employee.getWorkingPlaces(beginDate, endDate) : new ArrayList<Unit>();
     }
 
     public Category getCategory() {

@@ -70,8 +70,9 @@ public class Employee extends Employee_Base {
 	final List<Contract> contracts = new ArrayList();
 	for (final Contract accountability : (Collection<Contract>) getPerson()
 		.getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
-	    if (accountability.getContractType().equals(contractType))
-		contracts.add((Contract) accountability);
+	    if (accountability.getContractType().equals(contractType)) {
+		contracts.add(accountability);
+	    }
 	}
 	return contracts;
     }
@@ -94,64 +95,87 @@ public class Employee extends Employee_Base {
 	return (!contracts.isEmpty()) ? contracts.last() : null;
     }
 
-    public Department getCurrentDepartmentWorkingPlace() {
-	Contract contract = getCurrentWorkingContract();
-	if (contract != null && contract.getWorkingUnit() != null) {
-	    return getEmployeeDepartmentUnit(contract.getWorkingUnit(), true);
+    public Contract getLastContractByContractType(ContractType contractType, YearMonthDay begin,
+	    YearMonthDay end) {
+	final SortedSet<Contract> contracts = new TreeSet<Contract>(
+		Contract.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
+	for (final Contract accountability : (Collection<Contract>) getPerson()
+		.getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
+	    if (accountability.getContractType().equals(contractType)
+		    && accountability.belongsToPeriod(begin, end)) {
+		contracts.add(accountability);
+	    }
 	}
-	return null;
+	return (!contracts.isEmpty()) ? contracts.last() : null;
     }
 
-    public Department getLastDepartmentWorkingPlace() {
-	Contract contract = getLastContractByContractType(ContractType.WORKING);
-	if (contract != null && contract.getWorkingUnit() != null) {
-	    return getEmployeeDepartmentUnit(contract.getWorkingUnit(), false);
+    public List<Contract> getWorkingContracts() {
+	return getContractsByContractType(ContractType.WORKING);
+    }
+
+    public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
+	final List<Contract> contracts = new ArrayList();
+	for (final Contract accountability : (Collection<Contract>) getPerson()
+		.getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
+	    if (accountability.getContractType().equals(ContractType.WORKING)
+		    && accountability.belongsToPeriod(begin, end)) {
+		contracts.add(accountability);
+	    }
 	}
-	return null;
+	return contracts;
     }
 
     public Contract getCurrentWorkingContract() {
 	return getCurrentContractByContractType(ContractType.WORKING);
     }
 
+    public Contract getLastWorkingContract() {
+	return getLastContractByContractType(ContractType.WORKING);
+    }
+
     public Unit getCurrentWorkingPlace() {
 	Contract contract = getCurrentWorkingContract();
-	if (contract != null) {
-	    return contract.getWorkingUnit();
-	}
-	return null;
+	return (contract != null) ? contract.getWorkingUnit() : null;
     }
 
     public Unit getLastWorkingPlace() {
-	Contract contract = getLastContractByContractType(ContractType.WORKING);
-	if (contract != null) {
-	    return contract.getWorkingUnit();
-	}
-	return null;
+	Contract contract = getLastWorkingContract();
+	return (contract != null) ? contract.getWorkingUnit() : null;
     }
 
-    public Unit getLastWorkingPlaceByPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
-	SortedSet<Contract> contracts = new TreeSet<Contract>(Contract.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
-	contracts.addAll(getWorkingContractsByPeriod(beginDate, endDate));
-	return (!contracts.isEmpty()) ? contracts.last().getWorkingUnit() : null;
+    public Unit getLastWorkingPlace(YearMonthDay beginDate, YearMonthDay endDate) {
+	Contract lastContract = getLastContractByContractType(ContractType.WORKING, beginDate, endDate);
+	return lastContract != null ? lastContract.getWorkingUnit() : null;
     }
 
-    public List<Unit> getWorkingPlacesByPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
+    public List<Unit> getWorkingPlaces(YearMonthDay beginDate, YearMonthDay endDate) {
 	List<Unit> units = new ArrayList<Unit>();
-	for (Contract contract : getWorkingContractsByPeriod(beginDate, endDate)) {
-	    units.add(contract.getWorkingUnit());
+	for (final Contract accountability : (Collection<Contract>) getPerson()
+		.getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
+	    if (accountability.getContractType().equals(ContractType.WORKING)
+		    && accountability.belongsToPeriod(beginDate, endDate)) {
+		units.add(accountability.getWorkingUnit());
+	    }
 	}
 	return units;
     }
 
-    public List<Contract> getWorkingContractsByPeriod(YearMonthDay begin, YearMonthDay end) {
-	List<Contract> contracts = new ArrayList<Contract>();
-	for (Contract contract : getContractsByContractType(ContractType.WORKING)) {
-	    if (contract.belongsToPeriod(begin, end)) {
-		contracts.add(contract);
-	    }
-	}
-	return contracts;
+    public Department getCurrentDepartmentWorkingPlace() {
+	Contract contract = getCurrentWorkingContract();
+	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(
+		contract.getWorkingUnit(), true) : null;
+    }
+
+    public Department getLastDepartmentWorkingPlace() {
+	Contract contract = getLastContractByContractType(ContractType.WORKING);
+	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(
+		contract.getWorkingUnit(), false) : null;
+    }
+
+    public Department getLastDepartmentWorkingPlace(YearMonthDay begin, YearMonthDay end) {
+	Unit unit = getLastWorkingPlace(begin, end);
+	Unit departmentUnit = (unit != null) ? unit.getDepartmentUnit() : null;
+	return (departmentUnit != null) ? departmentUnit.getDepartment() : null;
     }
 
     private Department getEmployeeDepartmentUnit(Unit unit, boolean onlyActiveEmployees) {
@@ -174,14 +198,9 @@ public class Employee extends Employee_Base {
     }
 
     private boolean unitDepartment(Unit unit, boolean onlyActiveEmployees) {
-	if (unit.getType() != null
-		&& unit.getType().equals(PartyTypeEnum.DEPARTMENT)
-		&& unit.getDepartment() != null
-		&& (!onlyActiveEmployees || unit.getDepartment().getAllCurrentActiveWorkingEmployees()
-			.contains(this))) {
-	    return true;
-	}
-	return false;
+	return (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT)
+		&& unit.getDepartment() != null && (!onlyActiveEmployees || unit.getDepartment()
+		.getAllCurrentActiveWorkingEmployees().contains(this)));
     }
 
     public static Employee readByNumber(final Integer employeeNumber) {
@@ -192,11 +211,5 @@ public class Employee extends Employee_Base {
 	    }
 	}
 	return null;
-    }
-
-    public Department getLastDepartmentWorkingPlace(YearMonthDay begin, YearMonthDay end) {
-	Unit unit = getLastWorkingPlaceByPeriod(begin, end);
-	Unit departmentUnit = (unit != null) ? unit.getDepartmentUnit() : null;
-	return (departmentUnit != null) ? departmentUnit.getDepartment() : null;
     }
 }

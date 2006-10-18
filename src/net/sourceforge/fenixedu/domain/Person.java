@@ -758,9 +758,11 @@ public class Person extends Person_Base {
     }
 
     public List<PersonFunction> getActivePersonFunctions() {
+	YearMonthDay current = new YearMonthDay();
 	List<PersonFunction> activeFunctions = new ArrayList<PersonFunction>();
-	for (PersonFunction personFunction : getPersonFunctions()) {
-	    if (personFunction.isActive(new YearMonthDay())) {
+	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
+		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
+	    if (personFunction.isActive(current)) {
 		activeFunctions.add(personFunction);
 	    }
 	}
@@ -768,9 +770,11 @@ public class Person extends Person_Base {
     }
 
     public List<PersonFunction> getInactivePersonFunctions() {
+	YearMonthDay current = new YearMonthDay();
 	List<PersonFunction> inactiveFunctions = new ArrayList<PersonFunction>();
-	for (PersonFunction personFunction : getPersonFunctions()) {
-	    if (!personFunction.isActive(new YearMonthDay())) {
+	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
+		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
+	    if (!personFunction.isActive(current)) {
 		inactiveFunctions.add(personFunction);
 	    }
 	}
@@ -794,21 +798,22 @@ public class Person extends Person_Base {
 	return false;
     }
 
+    public Collection<PersonFunction> getPersonFunctions() {
+	return (Collection<PersonFunction>) getParentAccountabilities(
+		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
+    }
+    
     public List<PersonFunction> getPersonFuntions(YearMonthDay begin, YearMonthDay end) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
-	for (Accountability accountability : getPersonFunctions()) {
+	for (Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(
+		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
 	    if (accountability.belongsToPeriod(begin, end)) {
 		result.add((PersonFunction) accountability);
 	    }
 	}
 	return result;
     }
-
-    public Collection<PersonFunction> getPersonFunctions() {
-	return (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
-    }
-
+   
     public List<PersonFunction> getPersonFunctions(Unit unit) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(

@@ -202,7 +202,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
         EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
         employeeWorkSheet.setWorkDaySheetList(workSheet);
         employeeWorkSheet.setEmployee(assiduousness.getEmployee());
-        Unit unit = assiduousness.getEmployee().getLastWorkingPlaceByPeriod(beginDate, endDate);
+        Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);
         if (assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING) != null
                 && assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING).getMailingUnit() != null) {
             unit = assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING).getMailingUnit();

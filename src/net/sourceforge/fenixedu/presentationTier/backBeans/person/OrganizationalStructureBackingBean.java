@@ -31,11 +31,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.ContractType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -313,8 +311,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	ExecutionYear iExecutionYear = getExecutionYear(this.choosenExecutionYearID);
 
 	buffer.append("<ul class='mtop3 nobullet'><li>");
-	buffer.append("<image src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
-		.append(" ");
+//	buffer.append("<image src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
+//		.append(" ");
 	buffer.append("<strong class='eo_highlight' id=\"");
 	buffer.append(chooseUnit.getIdInternal()).append("\" >");
 	buffer.append(chooseUnit.getName()).append("</strong>");
@@ -326,7 +324,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	for (Function function : getSortFunctionList(chooseUnit)) {
 	    if (function.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
 		    .getEndDateYearMonthDay())) {
-		if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("1")) {
+		if (StringUtils.isEmpty(getListType()) || getListType().equals("#")
+			|| getListType().equals("1")) {
 		    buffer.append("<ul><li class='tree_label'>").append(function.getName()).append(": ");
 		    buffer.append((function.getParentInherentFunction() != null) ? " (Cargo Inerente)"
 			    : "");
@@ -352,8 +351,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    ExecutionYear iExecutionYear, StringBuffer buffer) {
 
 	buffer.append("<ul class='mtop1 nobullet'><li>");
-	buffer.append("<image src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
-		.append(" ");
+//	buffer.append("<image src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
+//		.append(" ");
 	buffer.append("<strong id=\"").append(subUnit.getIdInternal()).append("\" >").append(
 		subUnit.getName()).append("</strong>");
 
@@ -364,7 +363,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	for (Function function : getSortFunctionList(subUnit)) {
 	    if (function.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
 		    .getEndDateYearMonthDay())) {
-		if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("1")) {
+		if (StringUtils.isEmpty(getListType()) || getListType().equals("#")
+			|| getListType().equals("1")) {
 		    buffer.append("<ul><li class='tree_label'>").append(function.getName()).append(": ");
 		    buffer.append((function.getParentInherentFunction() != null) ? " (Cargo Inerente)"
 			    : "");
@@ -399,7 +399,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	if (!StringUtils.isEmpty(homePageUrl)) {
 	    buffer.append("<a href=\"").append(homePageUrl).append("\" target=\"_blank\" \">").append(
 		    person.getNickname()).append("</a>");
-	    buffer.append(" <image src='").append(getContextPath()).append("/images/external.gif'/>");
+	    //buffer.append(" <image src='").append(getContextPath()).append("/images/external.gif'/>");
 	} else {
 	    buffer.append(person.getNickname());
 	}
@@ -409,8 +409,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    StringBuffer buffer) {
 
 	buffer.append("<ul class='unit3'>");
-	List<Contract> contractsByContractType = subUnit
-		.getContractsByContractType(ContractType.WORKING);
+	List<Contract> contractsByContractType = subUnit.getWorkingContracts();
 	Collections.sort(contractsByContractType, Contract.CONTRACT_COMPARATOR_BY_PERSON_NAME);
 
 	for (Contract contract : contractsByContractType) {
@@ -419,16 +418,16 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 		buffer.append("<li>");
 
-		if (contract.getEmployee().getPerson().getGender().equals(Gender.MALE)) {
-		    buffer.append("<image src='").append(getContextPath()).append(
-			    "/images/worker-icon.png'/>").append(" ");
-		} else if (contract.getEmployee().getPerson().getGender().equals(Gender.FEMALE)) {
-		    buffer.append("<image src='").append(getContextPath()).append(
-			    "/images/woman-icon.png'/>").append(" ");
-		} else {
-		    buffer.append("<image src='").append(getContextPath()).append(
-			    "/images/person-icon.gif'/>").append(" ");
-		}
+//		if (contract.getEmployee().getPerson().getGender().equals(Gender.MALE)) {
+//		    buffer.append("<image src='").append(getContextPath()).append(
+//			    "/images/worker-icon.png'/>").append(" ");
+//		} else if (contract.getEmployee().getPerson().getGender().equals(Gender.FEMALE)) {
+//		    buffer.append("<image src='").append(getContextPath()).append(
+//			    "/images/woman-icon.png'/>").append(" ");
+//		} else {
+//		    buffer.append("<image src='").append(getContextPath()).append(
+//			    "/images/person-icon.gif'/>").append(" ");
+//		}
 
 		printPersonHomePage(contract.getPerson(), buffer);
 		buffer.append("</li>");
@@ -467,8 +466,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    buffer.append("<ul class='unit1'>");
 	    for (PersonFunction personFunction : validPersonFunction) {
 		buffer.append("<li>");
-		buffer.append("<image src='").append(getContextPath()).append(
-			"/images/person-icon.gif'/>").append(" ");
+//		buffer.append("<image src='").append(getContextPath()).append(
+//			"/images/person-icon.gif'/>").append(" ");
 		printPersonHomePage(personFunction.getPerson(), buffer);
 		buffer.append(" (");
 		buffer.append(personFunction.getBeginDate().toString()).append(" - ");
