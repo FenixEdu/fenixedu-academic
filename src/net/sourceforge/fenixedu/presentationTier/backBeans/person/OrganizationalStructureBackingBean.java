@@ -287,7 +287,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	buffer.append("<p><em>");
 	buffer.append(this.getUnit().getParentUnitsPresentationName());
 	buffer.append("</em></p>");
-	buffer.append("<h2>").append(this.getUnit().getName()).append("</h2>");
+	buffer.append("<h2>").append(this.getUnit().getNameWithAcronym()).append("</h2>");
 	return buffer.toString();
     }
 
