@@ -1271,4 +1271,34 @@ public class Registration extends Registration_Base {
 	return (degreeType == DegreeType.MASTER_DEGREE || degreeType == DegreeType.BOLONHA_MASTER_DEGREE);
     }
 
+    public EnrolmentModel getEnrolmentModelForCurrentExecutionYear() {
+	return getEnrolmentModelForExecutionYear(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public EnrolmentModel getEnrolmentModelForExecutionYear(ExecutionYear year) {
+	RegistrationDataByExecutionYear registrationData = getRegistrationDataByExecutionYear(year);
+	return registrationData != null ? registrationData.getEnrolmentModel() : null;
+    }
+
+    public void setEnrolmentModelForCurrentExecutionYear(EnrolmentModel model) {
+	setEnrolmentModelForExecutionYear(ExecutionYear.readCurrentExecutionYear(), model);
+    }
+
+    private void setEnrolmentModelForExecutionYear(ExecutionYear year, EnrolmentModel model) {
+	RegistrationDataByExecutionYear registrationData = getRegistrationDataByExecutionYear(year);
+	if (registrationData == null) {
+	    registrationData = new RegistrationDataByExecutionYear(this, year);
+	}
+	registrationData.setEnrolmentModel(model);
+    }
+
+    private RegistrationDataByExecutionYear getRegistrationDataByExecutionYear(ExecutionYear year) {
+	for (RegistrationDataByExecutionYear registrationData : getRegistrationDataByExecutionYearSet()) {
+	    if (registrationData.getExecutionYear().equals(year)) {
+		return registrationData;
+	    }
+	}
+	return null;
+    }
+
 }
