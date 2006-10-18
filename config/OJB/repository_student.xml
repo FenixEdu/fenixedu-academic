@@ -12,3 +12,6 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear" table="STUDENT_DATA_BY_EXECUTION_YEAR">
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear" table="REGISTRATION_DATA_BY_EXECUTION_YEAR">
+</class-descriptor>
