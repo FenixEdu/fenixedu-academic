@@ -62,7 +62,7 @@
 	</fr:layout>
 </fr:view>
 
-
+<%-- 
 <br/>
 <h2><strong><bean:message key="documentRequests" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 <bean:define id="documentRequests" name="registration" property="documentRequests"/>
@@ -82,6 +82,7 @@
 		<fr:property name="sortBy" value="creationDate=desc, documentRequestType=asc, urgentRequest=desc"/>
 	</fr:layout>
 </fr:view>
+--%>
 
 <html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="registration" paramProperty="student.idInternal">
 	<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
