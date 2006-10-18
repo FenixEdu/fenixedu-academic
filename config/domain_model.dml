@@ -166,6 +166,7 @@ valueType net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer										
 valueType net.sourceforge.fenixedu.domain.LoginAliasType														as LoginAliasType;
 valueType net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType											as UnitBoardPermittedGroupType;
 valueType net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType								as ExecutionCourseBoardPermittedGroupType;
+valueType net.sourceforge.fenixedu.domain.student.EnrolmentModel												as EnrolmentModel;
 
 /*
 *
@@ -1164,6 +1165,9 @@ class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fe
     }
 
 	class net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason extends net.sourceforge.fenixedu.domain.EnrolmentPeriod {
+	}	
+
+	class net.sourceforge.fenixedu.domain.CandidacyPeriodInDegreeCurricularPlan extends net.sourceforge.fenixedu.domain.EnrolmentPeriod {
 	}	
     	
 class net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2691,6 +2695,12 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	Integer keyDfaRegistrationEvent;
 }
 
+class net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionYear;
+	Integer keyRegistration;
+	EnrolmentModel enrolmentModel;
+}
+
 class net.sourceforge.fenixedu.domain.student.Student extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Integer number;
@@ -2702,7 +2712,6 @@ class net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear extends
 	Integer keyResidenceCandidacy;
 	Boolean workingStudent;
 	StudentPersonalDataAuthorizationChoice personalDataAuthorization;
-
 }
 
 class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3654,16 +3663,16 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 		
 			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
 				Integer keyCertificateRequestEvent;
-				DocumentPurposeType documentPurposeType;
-				String otherDocumentPurposeTypeDescription;
-				Boolean urgentRequest;
-				Integer numberOfPages;
-			}
-			
+			DocumentPurposeType documentPurposeType;
+			String otherDocumentPurposeTypeDescription;
+			Boolean urgentRequest;
+			Integer numberOfPages;
+		}
+		
 				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
 					Integer keyExecutionYear;
-				}
-	
+		}
+		
 				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
 					Integer keyExecutionYear;
 					Boolean detailed;
@@ -3672,26 +3681,26 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
 				}
 				
-				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
-					Boolean average;
-					Boolean detailed;				
-				}
-				
+			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+				Boolean average;
+				Boolean detailed;				
+			}
+			
 
 			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
 				DocumentPurposeType documentPurposeType;
 				String otherDocumentPurposeTypeDescription;
 				Integer numberOfPages;
 			}
-	
+			
 				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest {
-					Integer keyExecutionYear;
-				}
-	
+				Integer keyExecutionYear;
+			}
+			
 				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest {
-					Integer keyExecutionYear;
-				}
-				
+				Integer keyExecutionYear;
+			}
+			
 				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest {
 					Integer year;
 				}
@@ -7686,6 +7695,27 @@ relation StudentDataByExecutionYearResidenceCandidacy {
 
 relation StudentDataByExecutionYearRootDomainObject {
 	net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear playsRole studentDataByExecutionYear {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+}
+
+relation RegistrationDataByExecutionYearRegistration {
+	net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear playsRole registrationDataByExecutionYear {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+}
+
+relation RegistrationDataByExecutionYearExecutionYear {
+	net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear playsRole registrationDataByExecutionYear {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation RegistrationDataByExecutionYearRootDomainObject {
+	net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear playsRole registrationDataByExecutionYear {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
