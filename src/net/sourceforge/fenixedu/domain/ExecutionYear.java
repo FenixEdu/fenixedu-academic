@@ -178,6 +178,15 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return null;
     }
 
+    public static ExecutionYear readByDateTime(final DateTime dateTime) {
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+	    if (executionYear.containsDate(dateTime)) {
+		return executionYear;
+	    }
+	}
+	return null;
+    }
+
     public boolean containsDate(DateTime dateTime) {
 	return new Interval(getBeginDateYearMonthDay().toDateMidnight(), getEndDateYearMonthDay()
 		.plusDays(1).toDateMidnight()).contains(dateTime);

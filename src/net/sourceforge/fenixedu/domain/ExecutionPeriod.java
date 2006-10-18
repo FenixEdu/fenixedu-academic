@@ -258,6 +258,18 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
         return null;
     }
 
+    public static ExecutionPeriod readByDateTime(final DateTime dateTime) {
+        final YearMonthDay yearMonthDay = new YearMonthDay(dateTime);
+	
+	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+            if (executionPeriod.containsDay(yearMonthDay)) {
+                return executionPeriod;
+            }
+        }
+        
+        return null;
+    }
+
     public void checkValidCreditsPeriod(RoleType roleType) {
         if (roleType != RoleType.SCIENTIFIC_COUNCIL) {
             Interval validCreditsPerid = getValidCreditsPeriod(roleType);
