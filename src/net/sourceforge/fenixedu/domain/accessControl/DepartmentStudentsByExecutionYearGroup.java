@@ -45,8 +45,9 @@ public class DepartmentStudentsByExecutionYearGroup extends DepartmentByExecutio
 	    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
 		for (final Enrolment enrolment : registration.getLastStudentCurricularPlan()
 			.getEnrolmentsByExecutionYear(getExecutionYear())) {
-		    if (enrolment.getCurricularCourse().getCompetenceCourse().getDepartmentsSet()
-			    .contains(getDepartment())) {
+		    if (enrolment.getCurricularCourse().hasCompetenceCourse()
+			    && enrolment.getCurricularCourse().getCompetenceCourse().getDepartmentsSet()
+				    .contains(getDepartment())) {
 			return true;
 		    }
 		}
