@@ -72,6 +72,8 @@
        		<forward name="showParkingParty" path="df.show.created.external.person"/>
        	</action>
 
+		<action path="/exportParkingDB"
+				type="net.sourceforge.fenixedu.presentationTier.Action.parkingManager.ExportParkingDataToAccessDatabaseAction"/>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

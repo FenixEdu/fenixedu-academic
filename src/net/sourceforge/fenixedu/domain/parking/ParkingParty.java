@@ -28,6 +28,15 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 public class ParkingParty extends ParkingParty_Base {
 
+    public static ParkingParty readByCardNumber(Long cardNumber) {
+        for (ParkingParty parkingParty : RootDomainObject.getInstance().getParkingParties()) {
+            if(parkingParty.getCardNumber() != null && parkingParty.getCardNumber().equals(cardNumber)){
+                return parkingParty;
+            }
+        }
+        return null;
+    }
+
     public ParkingParty(Party party) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
@@ -565,5 +574,9 @@ public class ParkingParty extends ParkingParty_Base {
             }
         }
         return 0;
+    }
+
+    public static  List<ParkingParty> getAll() {
+        return RootDomainObject.getInstance().getParkingParties();
     }
 }

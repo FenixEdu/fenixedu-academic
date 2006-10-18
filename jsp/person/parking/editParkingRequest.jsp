@@ -201,7 +201,9 @@ margin: 0.5em 0;
 	</logic:notEmpty>
 
 	
-
+	<span class="error0 mtop0"><html:messages id="message" property="errorFile" message="true" bundle="PARKING_RESOURCES">
+		<bean:write name="message"/><br/>
+	</html:messages></span>
 	<fr:form action="<%= "/parking.do?method="+method%>" encoding="multipart/form-data">
 		<p class="mtop2 mbottom025"><strong><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES" /></strong></p>
 		<div id="driverLicenseRadio">	
