@@ -129,7 +129,7 @@ public class RegistrationDeclaration implements Serializable {
         stringBuilder.append(" ");
         stringBuilder.append(resourceBundle.getString("message.declaration.registration.of"));
         stringBuilder.append(" ");
-        stringBuilder.append(enumResourceBundle.getString(StringUtils.upperCase(today.toString(fmt))));
+        stringBuilder.append(today.toString(fmt));
         stringBuilder.append(" ");
         stringBuilder.append(resourceBundle.getString("message.declaration.registration.of"));
         stringBuilder.append(" ");
