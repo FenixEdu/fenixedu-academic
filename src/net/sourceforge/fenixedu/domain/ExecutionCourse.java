@@ -1433,4 +1433,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     	return null;
     }
 
+    public ExecutionYear getExecutionYear() {
+	return getExecutionPeriod().getExecutionYear();
+    }
+
 }
