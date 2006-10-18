@@ -11,13 +11,10 @@ import java.util.Date;
  */
 public class EnrolmentPeriodInClasses extends EnrolmentPeriodInClasses_Base {
 
-    public EnrolmentPeriodInClasses(final DegreeCurricularPlan degreeCurricularPlan, 
-            final ExecutionPeriod executionPeriod, final Date startDate, final Date endDate) {
-        setOjbConcreteClass(EnrolmentPeriodInClasses.class.getName());
-        setDegreeCurricularPlan(degreeCurricularPlan);
-        setExecutionPeriod(executionPeriod);
-        setStartDate(startDate);
-        setEndDate(endDate);
+    public EnrolmentPeriodInClasses(final DegreeCurricularPlan degreeCurricularPlan,
+	    final ExecutionPeriod executionPeriod, final Date startDate, final Date endDate) {
+	super();
+	init(degreeCurricularPlan, executionPeriod, startDate, endDate);
     }
 
 }
