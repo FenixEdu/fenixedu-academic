@@ -62,6 +62,27 @@
 	</fr:layout>
 </fr:view>
 
+
+<br/>
+<h2><strong><bean:message key="documentRequests" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<bean:define id="documentRequests" name="registration" property="documentRequests"/>
+<logic:empty name="documentRequests">
+	<p class="warning0"><bean:message key="no.document.requests"/><bean:write name="registration" property="person.username"/></p>
+</logic:empty>
+<fr:view name="documentRequests" schema="DocumentRequest.summary-view-by-student">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thlight thright" />
+		
+		<fr:property name="linkFormat(view)" value="/documentRequest.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
+		<fr:property name="key(view)" value="view"/>
+
+		<fr:property name="linkFormat(process)" value="/documentRequest.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
+		<fr:property name="key(process)" value="process"/>
+
+		<fr:property name="sortBy" value="creationDate=desc, documentRequestType=asc, urgentRequest=desc"/>
+	</fr:layout>
+</fr:view>
+
 <html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="registration" paramProperty="student.idInternal">
 	<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 </html:link>
