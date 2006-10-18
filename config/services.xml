@@ -2827,15 +2827,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateProgram</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateProgram</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseResponsibleForTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>EditProgram</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditProgram</implementationClass>
 		<description />
