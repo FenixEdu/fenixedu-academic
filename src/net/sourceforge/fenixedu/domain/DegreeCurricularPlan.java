@@ -536,6 +536,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	return null;
     }
+    
+    public CandidacyPeriodInDegreeCurricularPlan getCurrentCandidacyPeriodInDCP() {
+	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
+	    if ((enrolmentPeriod instanceof CandidacyPeriodInDegreeCurricularPlan)
+		    && enrolmentPeriod.getExecutionPeriod().getExecutionYear().isCurrent()) {
+		return (CandidacyPeriodInDegreeCurricularPlan) enrolmentPeriod;
+	    }
+	}
+	return null;
+    }
 
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
@@ -1224,13 +1234,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 			    for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
 				if (curricularCourseScope.isActiveForExecutionPeriod(executionPeriod)) {
 				    executionCourseViews.add(constructExecutionCourseView(executionCourse, curricularCourseScope));
-				}
+}
 			    }
 			}
 		    }
 		}
 	    }
-
+	    
 	    // Bolonha structure search
 	    CourseGroup root = getRoot();
 	    if (root != null) {
