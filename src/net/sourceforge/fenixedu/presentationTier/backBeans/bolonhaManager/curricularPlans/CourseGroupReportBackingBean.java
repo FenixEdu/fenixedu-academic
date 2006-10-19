@@ -167,22 +167,6 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         } else {
             fillStudiesPlan(contextsWithCurricularCourses, spreadsheet);            
         }
-        
-        if (rootWasClicked) {
-            // first level contexts are to be reported
-            for (Context context : this.getCourseGroup().getSortedChildContextsWithCourseGroups()) {
-                CourseGroup toBeReported = (CourseGroup) context.getChildDegreeModule();
-                contextsWithCurricularCourses = contextsWithCurricularCoursesToList(toBeReported);
-                
-                if (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) {
-                    fillCurricularStructure(toBeReported.getName(), contextsWithCurricularCourses, spreadsheet);
-                    spreadsheet.addRow();
-                } else {
-                    fillStudiesPlan(contextsWithCurricularCourses, spreadsheet);
-                    spreadsheet.addRow();
-                }
-            }
-        } 
     }
 
     private List<Object> getCurricularStructureHeader() {
