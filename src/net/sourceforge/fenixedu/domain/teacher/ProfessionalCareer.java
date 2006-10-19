@@ -42,4 +42,12 @@ public class ProfessionalCareer extends ProfessionalCareer_Base {
 		
 	}
 
+    @Override
+    public void setFunction(String function) {
+        if (function != null && function.length() > 50) {
+            throw new DomainException("error.function.max.length.exceeded");
+        }
+        super.setFunction(function);
+    }
+
 }
