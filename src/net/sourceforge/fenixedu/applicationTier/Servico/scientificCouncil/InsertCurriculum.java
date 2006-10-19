@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
+import org.joda.time.DateTime;
+
 /**
  * @author João Mota
  * 
@@ -22,7 +24,7 @@ public class InsertCurriculum extends Service {
 
     public Boolean run(Integer curricularCourseId, String program, String programEn,
             String operacionalObjectives, String operacionalObjectivesEn, String generalObjectives,
-            String generalObjectivesEn, Boolean basic) throws FenixServiceException,
+            String generalObjectivesEn, DateTime lastModification, Boolean basic) throws FenixServiceException,
             ExcepcaoPersistencia {
 
         CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
@@ -40,7 +42,7 @@ public class InsertCurriculum extends Service {
         if (curricularCourse.getBasic().equals(basic)) {
             
             curricularCourse.insertCurriculum(program, programEn, operacionalObjectives,
-                    operacionalObjectivesEn, generalObjectives, generalObjectivesEn);
+                    operacionalObjectivesEn, generalObjectives, generalObjectivesEn, lastModification);
            
             return new Boolean(true);
         }

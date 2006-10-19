@@ -45,7 +45,13 @@
 			</fr:edit>
 		</logic:present>
 		<logic:notPresent name="curricularCourse" property="findLatestCurriculum">
-			<fr:edit name="curricularCourse" property="curriculumFactoryInsertCurriculum"
+			<%
+			net.sourceforge.fenixedu.domain.ExecutionCourse executionCourse = (net.sourceforge.fenixedu.domain.ExecutionCourse) pageContext.findAttribute("executionCourse");
+			net.sourceforge.fenixedu.domain.CurricularCourse curricularCourse = (net.sourceforge.fenixedu.domain.CurricularCourse) pageContext.findAttribute("curricularCourse");
+			net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculum curriculumFactoryInsertCurriculum = new net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculum(curricularCourse, executionCourse); 
+			request.setAttribute("curriculumFactoryInsertCurriculum", curriculumFactoryInsertCurriculum);
+			%>
+			<fr:edit name="curriculumFactoryInsertCurriculum"
 					schema="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumObjectives"
 					action="<%= url %>"
 					>

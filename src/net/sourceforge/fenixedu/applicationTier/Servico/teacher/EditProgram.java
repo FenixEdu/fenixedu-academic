@@ -2,13 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Fernanda Quitério
@@ -17,64 +16,41 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditProgram extends Service {
 
-    public boolean run(Integer infoExecutionCourseCode, Integer infoCurricularCourseCode,
-            InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public boolean run(Integer executionCourseOID, Integer curricularCourseOID,
+	    InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException {
 
-        // Person who change all information
-        Person person = Person.readPersonByUsername(username);
-        if (person == null) {
-            throw new NonExistingServiceException("noPerson");
-        }
+	final Person person = Person.readPersonByUsername(username);
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseOID);
+	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseOID);
+	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-        // inexistent new information
-        if (infoCurriculumNew == null) {
-            throw new FenixServiceException("nullCurriculum");
-        }
+	Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionCourse.getExecutionYear().getEndDate());
+	if (curriculum == null) {
+	    // information doesn't exists, so it's necessary create it
+	    curriculum = curricularCourse.insertCurriculum("", "", "", "", "", "", executionCourse.getExecutionPeriod().getBeginDateYearMonthDay().toDateTimeAtMidnight());
+	}
 
-        // Curricular Course
-        if (infoCurricularCourseCode == null) {
-            throw new FenixServiceException("nullCurricularCourseCode");
-        }
+	if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
+		&& !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
 
-        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourseCode);
-        if (curricularCourse == null) {
-            throw new NonExistingServiceException("noCurricularCourse");
-        }
+	    curriculum.edit(curriculum.getGeneralObjectives(), curriculum.getOperacionalObjectives(),
+		    infoCurriculumNew.getProgram(), curriculum.getGeneralObjectivesEn(), curriculum
+			    .getOperacionalObjectivesEn(), infoCurriculumNew.getProgramEn());
 
-        // Curriculum       
-        Curriculum curriculum = curricularCourse.findLatestCurriculum();
+	    curriculum.edit(curriculum.getGeneralObjectives(), curriculum.getOperacionalObjectives(),
+		    infoCurriculumNew.getProgram(), curriculum.getGeneralObjectivesEn(), curriculum
+			    .getOperacionalObjectivesEn(), infoCurriculumNew.getProgramEn());
 
-        // information doesn't exists, so it's necessary create it
-        if (curriculum == null) {
-            curriculum = curricularCourse.insertCurriculum("", "", "", "", "", "");
-        }
+	} else {
+	    final Curriculum newCurriculum = curricularCourse.insertCurriculum(infoCurriculumNew
+		    .getProgram(), infoCurriculumNew.getProgramEn(), curriculum
+		    .getOperacionalObjectives(), curriculum.getOperacionalObjectivesEn(), curriculum
+		    .getGeneralObjectivesEn(), curriculum.getGeneralObjectivesEn(), executionCourse.getExecutionPeriod().getEndDateYearMonthDay().toDateTimeAtMidnight());
 
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	    newCurriculum.setPersonWhoAltered(person);
+	}
 
-        if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
-                && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
-
-            curriculum.edit(curriculum.getGeneralObjectives(), curriculum.getOperacionalObjectives(),
-                    infoCurriculumNew.getProgram(), curriculum.getGeneralObjectivesEn(), curriculum
-                            .getOperacionalObjectivesEn(), infoCurriculumNew.getProgramEn());
-
-            curriculum.edit(curriculum.getGeneralObjectives(), curriculum.getOperacionalObjectives(),
-                    infoCurriculumNew.getProgram(), curriculum.getGeneralObjectivesEn(), curriculum
-                            .getOperacionalObjectivesEn(), infoCurriculumNew.getProgramEn());
-
-        } else {
-
-            Curriculum newCurriculum;
-
-            newCurriculum = curricularCourse.insertCurriculum(infoCurriculumNew.getProgram(),
-                    infoCurriculumNew.getProgramEn(), curriculum.getOperacionalObjectives(), curriculum
-                            .getOperacionalObjectivesEn(), curriculum.getGeneralObjectivesEn(), curriculum
-                            .getGeneralObjectivesEn());
-
-            newCurriculum.setPersonWhoAltered(person);
-        }
-
-        return true;
+	return true;
     }
+    
 }

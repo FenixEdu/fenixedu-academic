@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -577,6 +576,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         private String generalObjectivesEn;
         private String operacionalObjectives;
         private String operacionalObjectivesEn;
+        private DateTime lastModification;
 
         public CurriculumFactory(final CurricularCourse curricularCourse) {
             setCurricularCourse(curricularCourse);
@@ -618,6 +618,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         public void setProgramEn(String programEn) {
             this.programEn = programEn;
         }
+	public DateTime getLastModification() {
+	    return lastModification;
+	}
+	public void setLastModification(DateTime lastModification) {
+	    this.lastModification = lastModification;
+	}
         public CurricularCourse getCurricularCourse() {
             return curricularCourseDomainReference == null ? null : curricularCourseDomainReference.getObject();
         }
@@ -627,8 +633,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public static class CurriculumFactoryInsertCurriculum extends CurriculumFactory implements FactoryExecutor {
-        public CurriculumFactoryInsertCurriculum(CurricularCourse curricularCourse) {
+        public CurriculumFactoryInsertCurriculum(CurricularCourse curricularCourse, ExecutionCourse executionCourse) {
             super(curricularCourse);
+            setLastModification(executionCourse.getExecutionPeriod().getBeginDateYearMonthDay().toDateTimeAtMidnight());
         }
 
         public Curriculum execute() {
@@ -636,13 +643,15 @@ public class CurricularCourse extends CurricularCourse_Base {
             return curricularCourse == null ? null
                     : curricularCourse.insertCurriculum(getProgram(), getProgramEn(),
                     		getGeneralObjectives(), getGeneralObjectivesEn(),
-                            getOperacionalObjectives(), getOperacionalObjectivesEn());
+                            getOperacionalObjectives(), getOperacionalObjectivesEn(), getLastModification());
         }
+
     }
 
     public static class CurriculumFactoryEditCurriculum extends CurriculumFactory implements FactoryExecutor {
         public CurriculumFactoryEditCurriculum(CurricularCourse curricularCourse) {
             super(curricularCourse);
+            setLastModification(new DateTime());
         }
 
         public Curriculum execute() {
@@ -650,12 +659,8 @@ public class CurricularCourse extends CurricularCourse_Base {
             return curricularCourse == null ? null
                     : curricularCourse.editCurriculum(getProgram(), getProgramEn(),
                     		getGeneralObjectives(), getGeneralObjectivesEn(),
-                            getOperacionalObjectives(), getOperacionalObjectivesEn());
+                            getOperacionalObjectives(), getOperacionalObjectivesEn(), getLastModification());
         }
-    }
-
-    public CurriculumFactoryInsertCurriculum getCurriculumFactoryInsertCurriculum() {
-	return new CurriculumFactoryInsertCurriculum(this);
     }
 
     public CurriculumFactoryEditCurriculum getCurriculumFactoryEditCurriculum() {
@@ -671,7 +676,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public Curriculum editCurriculum(String program, String programEn, String generalObjectives,
-	    String generalObjectivesEn, String operacionalObjectives, String operacionalObjectivesEn) {
+	    String generalObjectivesEn, String operacionalObjectives, String operacionalObjectivesEn, DateTime lastModification) {
 	Curriculum curriculum = findLatestCurriculum();
 	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	if (!curriculum.getLastModificationDateDateTime().isBefore(
@@ -682,13 +687,13 @@ public class CurricularCourse extends CurricularCourse_Base {
 		    operacionalObjectivesEn, programEn);
 	} else {
 	    curriculum = insertCurriculum(program, programEn, operacionalObjectives,
-		    operacionalObjectivesEn, generalObjectives, generalObjectivesEn);
+		    operacionalObjectivesEn, generalObjectives, generalObjectivesEn, lastModification);
 	}
 	return curriculum;
     }
 
     public Curriculum insertCurriculum(String program, String programEn, String operacionalObjectives,
-	    String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn) {
+	    String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, DateTime lastModification) {
 
 	Curriculum curriculum = new Curriculum();
 
@@ -699,9 +704,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	curriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
 	curriculum.setGeneralObjectives(generalObjectives);
 	curriculum.setGeneralObjectivesEn(generalObjectivesEn);
-
-	Calendar today = Calendar.getInstance();
-	curriculum.setLastModificationDate(today.getTime());
+	curriculum.setLastModificationDateDateTime(lastModification);
 
 	return curriculum;
     }
