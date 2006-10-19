@@ -25,11 +25,14 @@
 	
 	<%-- AccessGroups --%>		
 	<e:labelValues id="accessGroupTypes" enumeration="net.sourceforge.fenixedu.domain.space.Space$SpaceAccessGroupType" bundle="ENUMERATION_RESOURCES" />
-	<logic:iterate id="accessGroupType" name="accessGroupTypes" type="org.apache.struts.util.LabelValueBean">		
+	<logic:iterate id="accessGroupType" name="accessGroupTypes" type="org.apache.struts.util.LabelValueBean">				
 		<logic:notEmpty name="space" property="<%= SpaceAccessGroupType.valueOf(accessGroupType.getValue()).getSpaceAccessGroupSlotName() %>">
+			1
 			<bean:define id="accessGroup" name="space" property="<%= SpaceAccessGroupType.valueOf(accessGroupType.getValue()).getSpaceAccessGroupSlotName() %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>
 			<logic:notEmpty name="accessGroup">	
+				2
 				<logic:notEmpty name="accessGroup" property="elements">	
+					3
 					<h3 class="mtop2 mbottom0"><bean:write name="accessGroupType" property="label"/></h3>				
 					<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
 						<fr:layout name="tabular">      										  

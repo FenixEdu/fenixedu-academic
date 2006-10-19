@@ -17,9 +17,12 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 
     public static final Comparator COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("begin"));
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("person.name", Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL)
+		.addComparator(new BeanComparator("begin"));
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL)
+		.addComparator(new BeanComparator("person.name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL)
+		.addComparator(new BeanComparator("idInternal"));
     }
 
     public PersonSpaceOccupation(final Space space, final Person person, final YearMonthDay begin,
@@ -28,20 +31,20 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	checkParameters(space, person, begin, end);
 	setPerson(person);
 	setSpace(space);
-	//checkPermissionsToMakeOperations();
+	checkPermissionsToMakeOperations();
 	super.setBegin(begin);
 	super.setEnd(end);
     }
 
     private void checkParameters(final Space space, final Person person, YearMonthDay begin,
 	    YearMonthDay end) {
-	
+
 	if (person == null) {
 	    throw new DomainException("error.inexistente.person");
 	}
 	if (space == null) {
 	    throw new DomainException("error.inexistente.space");
-	}	
+	}
 	checkPersonSpaceOccupationIntersection(begin, end, person, space);
     }
 
@@ -65,7 +68,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	super.setBegin(begin);
 	super.setEnd(end);
     }
-    
+
     public void delete() {
 	checkPermissionsToMakeOperations();
 	removePerson();
@@ -87,11 +90,23 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 		.getEnd().isBefore(begin)));
     }
 
-    private void checkPermissionsToMakeOperations() {
-	if (getAccessGroup() == null
-		|| !getAccessGroup().isMember(AccessControl.getUserView().getPerson())) {
-	    throw new DomainException("error.logged.person.not.authorized.to.make.operation");
+    private void checkPermissionsToMakeOperations() {	
+	Space parentSpace = this.getSpace();
+	while (parentSpace != null) {
+	    if (isMemberOfAccessGroup()) {
+		return;
+	    }
+	    parentSpace = parentSpace.getSuroundingSpace();
 	}
+	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
+    }
+
+    private boolean isMemberOfAccessGroup() {
+	if (getAccessGroup() != null
+		&& getAccessGroup().isMember(AccessControl.getUserView().getPerson())) {
+	    return true;
+	}
+	return false;
     }
 
     private void checkEndDate(final YearMonthDay begin, final YearMonthDay end) {
@@ -102,7 +117,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 
     private void checkPersonSpaceOccupationIntersection(final YearMonthDay begin,
 	    final YearMonthDay end, Person person, Space space) {
-	
+
 	checkEndDate(begin, end);
 	List<PersonSpaceOccupation> personSpaceOccupations = person.getPersonSpaceOccupations();
 	for (PersonSpaceOccupation personSpaceOccupation : personSpaceOccupations) {

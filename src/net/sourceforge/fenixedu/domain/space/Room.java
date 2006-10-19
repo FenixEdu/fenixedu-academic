@@ -3,24 +3,25 @@ package net.sourceforge.fenixedu.domain.space;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.Collator;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class Room extends Room_Base {
 
-    public static Comparator<Room> ROOM_COMPARATOR_BY_DESCRIPTION = new BeanComparator(
-	    "spaceInformation.description", Collator.getInstance());
+    public final static Comparator<Room> ROOM_COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();
+    static {
+	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
+		"spaceInformation.presentationName", Collator.getInstance()));
+	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
+		"idInternal"));
+    }
 
     public static abstract class RoomFactory implements Serializable, FactoryExecutor {
 	private String blueprintNumber;
@@ -142,10 +143,6 @@ public class Room extends Room_Base {
     public static class RoomFactoryCreator extends RoomFactory {
 	private DomainReference<Space> surroundingSpaceReference;
 
-	private List<DomainReference<Unit>> responsabilityUnitsReference;
-
-	private List<DomainReference<Person>> personOccupationsReference;
-
 	public Space getSurroundingSpace() {
 	    return surroundingSpaceReference == null ? null : surroundingSpaceReference.getObject();
 	}
@@ -153,44 +150,6 @@ public class Room extends Room_Base {
 	public void setSurroundingSpace(Space surroundingSpace) {
 	    if (surroundingSpace != null) {
 		this.surroundingSpaceReference = new DomainReference<Space>(surroundingSpace);
-	    }
-	}
-
-	public List<Unit> getResponsabilityUnits() {
-	    List<Unit> units = new ArrayList<Unit>();
-	    if (this.responsabilityUnitsReference != null) {
-		for (DomainReference<Unit> domainReference : this.responsabilityUnitsReference) {
-		    units.add(domainReference.getObject());
-		}
-	    }
-	    return units;
-	}
-
-	public void setResponsabilityUnits(List<Unit> units) {
-	    this.responsabilityUnitsReference = new ArrayList<DomainReference<Unit>>();
-	    if (units != null) {
-		for (Unit unit : units) {
-		    this.responsabilityUnitsReference.add(new DomainReference<Unit>(unit));
-		}
-	    }
-	}
-
-	public List<Person> getPersonOccupations() {
-	    List<Person> persons = new ArrayList<Person>();
-	    if (this.personOccupationsReference != null) {
-		for (DomainReference<Person> domainReference : this.personOccupationsReference) {
-		    persons.add(domainReference.getObject());
-		}
-	    }
-	    return persons;
-	}
-
-	public void setPersonOccupations(Set<Person> persons) {
-	    this.personOccupationsReference = new ArrayList<DomainReference<Person>>();
-	    if (persons != null) {
-		for (Person person : persons) {
-		    this.personOccupationsReference.add(new DomainReference<Person>(person));
-		}
 	    }
 	}
 
@@ -217,7 +176,7 @@ public class Room extends Room_Base {
 	}
     }
 
-    public Room() {
+    protected Room() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setOjbConcreteClass(this.getClass().getName());
@@ -225,25 +184,12 @@ public class Room extends Room_Base {
 
     public Room(RoomFactoryCreator roomFactoryCreator) {
 	this();
-	YearMonthDay current = new YearMonthDay();
-
 	final Space suroundingSpace = roomFactoryCreator.getSurroundingSpace();
 	if (suroundingSpace == null) {
 	    throw new NullPointerException("error.surrounding.space");
 	}
-	setSuroundingSpace(suroundingSpace);
-
+	setSuroundingSpace(suroundingSpace);	
 	new RoomInformation(this, roomFactoryCreator);
-
-	List<Unit> responsabilityUnits = roomFactoryCreator.getResponsabilityUnits();
-	for (Unit unit : responsabilityUnits) {
-	    this.addSpaceResponsibility(new SpaceResponsibility(this, unit, current, null));
-	}
-
-	List<Person> personOccupations = roomFactoryCreator.getPersonOccupations();
-	for (Person person : personOccupations) {
-	    this.addSpaceOccupations(new PersonSpaceOccupation(this, person, current, null));
-	}
     }
 
     @Override

@@ -7,85 +7,89 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.YearMonthDay;
 
 public class Floor extends Floor_Base {
 
-	public static Comparator<Floor> FLOOR_COMPARATOR_BY_LEVEL = new BeanComparator("spaceInformation.level");
+    public static Comparator<Floor> FLOOR_COMPARATOR_BY_LEVEL = new ReverseComparator(
+	    new BeanComparator("spaceInformation.level"));
 
-	public static abstract class FloorFactory implements Serializable, FactoryExecutor {
-		private Integer level;
+    public static abstract class FloorFactory implements Serializable, FactoryExecutor {
+	private Integer level;
 
-		public Integer getLevel() {
-			return level;
-		}
-
-		public void setLevel(Integer level) {
-			this.level = level;
-		}
+	public Integer getLevel() {
+	    return level;
 	}
 
-	public static class FloorFactoryCreator extends FloorFactory {
+	public void setLevel(Integer level) {
+	    this.level = level;
+	}
+    }
 
-		private DomainReference<Space> surroundingSpaceReference;
+    public static class FloorFactoryCreator extends FloorFactory {
 
-		public Space getSurroundingSpace() {
-			return surroundingSpaceReference == null ? null : surroundingSpaceReference.getObject();
-		}
-		public void setSurroundingSpace(Space surroundingSpace) {
-			if (surroundingSpace != null) {
-				this.surroundingSpaceReference = new DomainReference<Space>(surroundingSpace);
-			}
-		}
+	private DomainReference<Space> surroundingSpaceReference;
 
-		public Floor execute() {
-			return new Floor(this);
-		}
+	public Space getSurroundingSpace() {
+	    return surroundingSpaceReference == null ? null : surroundingSpaceReference.getObject();
 	}
 
-	public static class FloorFactoryEditor extends FloorFactory {
-
-		private DomainReference<Floor> floorReference;
-
-		public Floor getSpace() {
-			return floorReference == null ? null : floorReference.getObject();
-		}
-		public void setSpace(Floor floor) {
-			if (floor != null) {
-				this.floorReference = new DomainReference<Floor>(floor);
-			}
-		}
-
-		public FloorInformation execute() {
-			return new FloorInformation(getSpace(), this);
-		}
-
+	public void setSurroundingSpace(Space surroundingSpace) {
+	    if (surroundingSpace != null) {
+		this.surroundingSpaceReference = new DomainReference<Space>(surroundingSpace);
+	    }
 	}
+
+	public Floor execute() {
+	    return new Floor(this);
+	}
+    }
+
+    public static class FloorFactoryEditor extends FloorFactory {
+
+	private DomainReference<Floor> floorReference;
+
+	public Floor getSpace() {
+	    return floorReference == null ? null : floorReference.getObject();
+	}
+
+	public void setSpace(Floor floor) {
+	    if (floor != null) {
+		this.floorReference = new DomainReference<Floor>(floor);
+	    }
+	}
+
+	public FloorInformation execute() {
+	    return new FloorInformation(getSpace(), this);
+	}
+
+    }
 
     protected Floor() {
-    	super();
+	super();
     }
 
     public Floor(final FloorFactoryCreator floorFactoryCreator) {
-        this();
+	this();
 
-        final Space suroundingSpace = floorFactoryCreator.getSurroundingSpace();
-        if (suroundingSpace == null) {
-            throw new NullPointerException("error.surrounding.space");
-        }
-        setSuroundingSpace(suroundingSpace);
+	final Space suroundingSpace = floorFactoryCreator.getSurroundingSpace();
+	if (suroundingSpace == null) {
+	    throw new NullPointerException("error.surrounding.space");
+	}
+	setSuroundingSpace(suroundingSpace);
 
-        new FloorInformation(this, floorFactoryCreator);
+	new FloorInformation(this, floorFactoryCreator);
     }
 
     @Override
     public FloorInformation getSpaceInformation() {
-        return (FloorInformation) super.getSpaceInformation();
+	return (FloorInformation) super.getSpaceInformation();
     }
 
     @Override
     public FloorInformation getSpaceInformation(final YearMonthDay when) {
-        return (FloorInformation) super.getSpaceInformation(when);
+	return (FloorInformation) super.getSpaceInformation(when);
     }
 
 }

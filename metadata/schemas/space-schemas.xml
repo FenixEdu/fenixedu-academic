@@ -99,6 +99,21 @@
 		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />			
 	</slot>
 </schema>
+<schema name="search.external.party.autocomplete" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean" bundle="SPACE_RESOURCES">
+	<slot name="party" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.name">
+		<property name="size" value="50"/>
+		<property name="labelField" value="name"/>
+		<property name="format" value="${name}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="ExternalUnitSearchService"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
+		<property name="minChars" value="3"/>
+		<property name="maxCount" value="100"/>		
+		<property name="rawSlotName" value="partyName"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
 <schema name="ViewSpaceResponsibleUnitsWithInterval" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES">
 	<slot name="unit.name"/>	
 	<slot name="unit.costCenterCode"/>	

@@ -9,80 +9,89 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class Building extends Building_Base {
 
-	public static Comparator<Building> BUILDING_COMPARATOR_BY_NAME = new BeanComparator("spaceInformation.name", Collator.getInstance());
+    public final static Comparator<Building> BUILDING_COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();
+    static {
+	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
+		"spaceInformation.presentationName", Collator.getInstance()));
+	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("idInternal"));
+    }
 
-	public static abstract class BuildingFactory implements Serializable, FactoryExecutor {
-		private String name;
+    public static abstract class BuildingFactory implements Serializable, FactoryExecutor {
+	private String name;
 
-		public String getName() {
-			return name;
-		}
-		public void setName(String name) {
-			this.name = name;
-		}
+	public String getName() {
+	    return name;
 	}
 
-	public static class BuildingFactoryCreator extends BuildingFactory {
+	public void setName(String name) {
+	    this.name = name;
+	}
+    }
 
-		private DomainReference<Space> surroundingSpaceReference;
+    public static class BuildingFactoryCreator extends BuildingFactory {
 
-		public Space getSurroundingSpace() {
-			return surroundingSpaceReference == null ? null : surroundingSpaceReference.getObject();
-		}
-		public void setSurroundingSpace(Space surroundingSpace) {
-			if (surroundingSpace != null) {
-				this.surroundingSpaceReference = new DomainReference<Space>(surroundingSpace);
-			}
-		}
+	private DomainReference<Space> surroundingSpaceReference;
 
-		public Building execute() {
-			return new Building(this);
-		}
+	public Space getSurroundingSpace() {
+	    return surroundingSpaceReference == null ? null : surroundingSpaceReference.getObject();
 	}
 
-	public static class BuildingFactoryEditor extends BuildingFactory {
-
-		private DomainReference<Building> buildingReference;
-
-		public Building getSpace() {
-			return buildingReference == null ? null : buildingReference.getObject();
-		}
-		public void setSpace(Building building) {
-			if (building != null) {
-				this.buildingReference = new DomainReference<Building>(building);
-			}
-		}
-
-		public BuildingInformation execute() {
-			return new BuildingInformation(getSpace(), this);
-		}
-
+	public void setSurroundingSpace(Space surroundingSpace) {
+	    if (surroundingSpace != null) {
+		this.surroundingSpaceReference = new DomainReference<Space>(surroundingSpace);
+	    }
 	}
+
+	public Building execute() {
+	    return new Building(this);
+	}
+    }
+
+    public static class BuildingFactoryEditor extends BuildingFactory {
+
+	private DomainReference<Building> buildingReference;
+
+	public Building getSpace() {
+	    return buildingReference == null ? null : buildingReference.getObject();
+	}
+
+	public void setSpace(Building building) {
+	    if (building != null) {
+		this.buildingReference = new DomainReference<Building>(building);
+	    }
+	}
+
+	public BuildingInformation execute() {
+	    return new BuildingInformation(getSpace(), this);
+	}
+
+    }
 
     protected Building() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setOjbConcreteClass(getClass().getName());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setOjbConcreteClass(getClass().getName());
     }
 
     public Building(final BuildingFactoryCreator buildingFactoryCreator) {
-        this();
-        setSuroundingSpace(buildingFactoryCreator.getSurroundingSpace());
-        new BuildingInformation(this, buildingFactoryCreator);
+	this();
+	setSuroundingSpace(buildingFactoryCreator.getSurroundingSpace());
+	new BuildingInformation(this, buildingFactoryCreator);
     }
 
     @Override
     public BuildingInformation getSpaceInformation() {
-        return (BuildingInformation) super.getSpaceInformation();
+	return (BuildingInformation) super.getSpaceInformation();
     }
 
     @Override
     public BuildingInformation getSpaceInformation(final YearMonthDay when) {
-        return (BuildingInformation) super.getSpaceInformation(when);
+	return (BuildingInformation) super.getSpaceInformation(when);
     }
 
 }

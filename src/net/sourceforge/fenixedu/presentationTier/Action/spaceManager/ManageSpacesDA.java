@@ -32,6 +32,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     public ActionForward viewSpaces(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	
 	final SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
 
 	// Filter OldBuildings and OldRooms. These two classes will soon be
@@ -65,9 +66,12 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     protected ActionForward manageSpace(final ActionMapping mapping, final HttpServletRequest request,
 	    final SpaceInformation spaceInformation) {
+	
 	final Space space = spaceInformation.getSpace();
-	request.setAttribute("selectedSpace", space);
-	request.setAttribute("spaces", space.getContainedSpaces());
+	request.setAttribute("selectedSpace", space);	
+	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
+	spaces.addAll(space.getContainedSpaces());	
+	request.setAttribute("spaces", spaces);
 	request.setAttribute("selectedSpaceInformation", spaceInformation);
 	return mapping.findForward("ManageSpace");
     }

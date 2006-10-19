@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -13,6 +14,8 @@ import net.sourceforge.fenixedu.domain.space.SpaceResponsibility;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -51,6 +54,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
         readAndSetInitialUnit(request);
+        request.setAttribute("searchExternalPartyBean", new SearchPartyBean());
     }
 
     public ActionForward prepareEditSpaceResponsibility(ActionMapping mapping, ActionForm form,
@@ -73,6 +77,23 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
         Unit responsibleUnit = getResponsibleUnit(request);
         request.setAttribute("unit", responsibleUnit);
         return mapping.findForward("manageResponsabilityInterval");
+    }
+    
+    public ActionForward prepareAddExternalUnit(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException, ExcepcaoPersistencia {
+
+        SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+        setSpaceInformation(request, spaceInformation);
+        Unit responsibleUnit = getExternalResponsibleUnit(request);
+        request.setAttribute("unit", responsibleUnit);
+        return mapping.findForward("manageResponsabilityInterval");
+    }
+
+    private Unit getExternalResponsibleUnit(HttpServletRequest request) {
+	IViewState summaryViewState = RenderUtils.getViewState();
+	SearchPartyBean bean = (SearchPartyBean) summaryViewState.getMetaObject().getObject();	
+	return (Unit) bean.getParty();
     }
 
     private void saveActionMessageOnRequest(HttpServletRequest request, String errorKey, String[] args) {
