@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.util;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Login;
-import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -30,15 +29,10 @@ public class UsernameUtils extends FenixUtil {
     public static boolean shouldHaveUID(Person person) {
 	Login loginIdentification = person.getLoginIdentification();
 	if (loginIdentification != null) {
-	    for (LoginAlias loginAlias : loginIdentification.getAlias()) {
-		if (loginAlias.getAlias().matches("[A-Z]+[0-9]+")) {
-		    String letters = loginAlias.getAlias().replaceFirst("[0-9]+", "");
-		    if (letters.equals("D") || letters.equals("F") || letters.equals("B")
-			    || letters.equals("M") || letters.equals("L")) {
-			return true;
-		    }
-		}
-	    }
+            return person.hasRole(RoleType.TEACHER)
+                    || person.hasRole(RoleType.EMPLOYEE)
+                    || person.hasRole(RoleType.STUDENT)
+                    || person.hasRole(RoleType.GRANT_OWNER);
 	}
 	return false;
     }
