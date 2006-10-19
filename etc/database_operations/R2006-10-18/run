@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Functionalities Changes" changes-20061017114550.sql
+execute "add RegistrationDataByExecutionYear" addRegistrationDataByExecutionYear.sql

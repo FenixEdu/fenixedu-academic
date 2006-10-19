@@ -27,5 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-
-execute "add RegistrationDataByExecutionYear" addRegistrationDataByExecutionYear.sql
