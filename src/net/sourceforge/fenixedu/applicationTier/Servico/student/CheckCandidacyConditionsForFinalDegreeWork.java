@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
 
+
     public boolean run(IUserView userView, Integer executionDegreeOID) throws ExcepcaoPersistencia,
             FenixServiceException {
     	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
@@ -53,6 +54,10 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
         }
 
         Registration registration = findStudent(userView.getPerson());
+
+        if (registration == null) {
+            throw new NoDegreeStudentCurricularPlanFoundException();
+        }
 
         if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
             throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();
@@ -206,6 +211,9 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
             super(message, cause);
         }
 
+    }
+
+    public class NoDegreeStudentCurricularPlanFoundException extends FenixServiceException {
     }
 
 }

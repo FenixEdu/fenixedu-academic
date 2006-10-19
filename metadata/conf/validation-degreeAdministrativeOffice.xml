@@ -98,8 +98,15 @@
 				<arg0 key="label.printer" resource="true"/>
 			</field>
 		</form>
-		
-	
-		
+
+		<form name="studentsNumbersBetweenForm">
+			<field property="firstStudentNumber" depends="required,integer" page="1">
+				<arg0 key="label.choose.firstStudent" resource="true"/>
+			</field>
+			<field property="lastStudentNumber" depends="required,integer" page="1">
+				<arg0 key="label.choose.lastStudent" resource="true"/>
+			</field>
+		</form>
+
 	</formset>
 </form-validation>

@@ -747,6 +747,9 @@
 			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.RemoveProposalFromFinalDegreeWorkStudentGroup$GroupProposalAttributedByTeacherException"
 						key="error.message.GroupProposalAttributedByTeacherException"
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$NoDegreeStudentCurricularPlanFoundException"
+						key="error.message.NoDegreeStudentCurricularPlanFoundException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="showCandidacyForm" path="df.page.finalDegreeWork.candidacy"/>
 			<forward name="showSelectProposalsForm" path="df.page.finalDegreeWork.selectProposals"/>
 		</action>
@@ -763,6 +766,9 @@
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.student.finalDegreeWork.FinalDegreeWorkAttributionDA$NoConfirmationInProcessException"
 						key="error.message.NoConfirmationInProcessException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.finalDegreeWork.CheckCandidacyConditionsForFinalDegreeWork$NoDegreeStudentCurricularPlanFoundException"
+						key="error.message.NoDegreeStudentCurricularPlanFoundException"
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="showFinalDegreeWorkList" path="df.page.finalDegreeWork.attribution"/>
 			<forward name="prepareShowFinalDegreeWorkList" path="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0"/>
