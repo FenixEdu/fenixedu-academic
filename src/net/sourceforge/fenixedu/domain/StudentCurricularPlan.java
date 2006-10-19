@@ -1754,6 +1754,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return result;
     }
 
+    public int getCountCurrentEnrolments() {
+        return countCurrentEnrolments();
+    }
+
     public Campus getCurrentCampus() {
         for (final ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegreesSet()) {
             final ExecutionYear executionYear = executionDegree.getExecutionYear();

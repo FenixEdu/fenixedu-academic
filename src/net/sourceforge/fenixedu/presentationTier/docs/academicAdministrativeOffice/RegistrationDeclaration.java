@@ -49,13 +49,13 @@ public class RegistrationDeclaration implements Serializable {
 
         final StringBuilder stringBuilder = new StringBuilder();
         try {
-        if (employee.getGender() == Gender.MALE) {
-            stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.title.male"));
-        } else if (employee.getGender() == Gender.FEMALE) {
+//        if (employee.getGender() == Gender.MALE) {
+//            stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.title.male"));
+//        } else if (employee.getGender() == Gender.FEMALE) {
             stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.title.female"));
-        } else {
-            throw new Error("unknown.gender.type.of.employee");
-        }
+//        } else {
+//            throw new Error("unknown.gender.type.of.employee");
+//        }
         stringBuilder.append(" ");
         stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.tail"));
         stringBuilder.append("\n");
@@ -135,14 +135,14 @@ public class RegistrationDeclaration implements Serializable {
         stringBuilder.append(" ");
         stringBuilder.append(today.getYear());
         stringBuilder.append(" ");
-        stringBuilder.append("\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
-        if (employee.getGender() == Gender.MALE) {
-            stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.title.male"));
-        } else if (employee.getGender() == Gender.FEMALE) {
+        stringBuilder.append("\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
+//        if (employee.getGender() == Gender.MALE) {
+//            stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.title.male"));
+//        } else if (employee.getGender() == Gender.FEMALE) {
             stringBuilder.append(resourceBundle.getString("message.declaration.registration.person.title.female"));
-        } else {
-            throw new Error("unknown.gender.type.of.employee");
-        }
+//        } else {
+//            throw new Error("unknown.gender.type.of.employee");
+//        }
         } catch (Throwable t) {
             t.printStackTrace();
         }

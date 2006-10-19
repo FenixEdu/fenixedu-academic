@@ -52,9 +52,16 @@
 				<logic:iterate id="registration" name="student" property="registrations">
 					<logic:equal name="registration" property="payedTuition" value="true">
 						<logic:present name="registration" property="activeStudentCurricularPlan">
-							<bean:define id="url" type="java.lang.String">/declarations.do?method=registrationDeclaration&amp;registrationID=<bean:write name="registration" property="idInternal"/></bean:define>
-							<html:link action="<%= url %>"><bean:message key="link.declaration.registration.with.curricular.year.and.number.enroled.courses"/></html:link>
-							<br/>
+							<bean:define id="studentCurricularPlan" name="registration" property="activeStudentCurricularPlan"/>
+							<bean:define id="numberCompetedCourses" name="studentCurricularPlan" property="countCurrentEnrolments"/>
+							<logic:greaterThan name="numberCompetedCourses" value="0">
+								<bean:define id="url" type="java.lang.String">/declarations.do?method=registrationDeclaration&amp;registrationID=<bean:write name="registration" property="idInternal"/></bean:define>
+								<html:link action="<%= url %>"><bean:message key="link.declaration.registration.with.curricular.year.and.number.enroled.courses"/></html:link>
+								<br/>
+							</logic:greaterThan>
+							<logic:lessEqual name="numberCompetedCourses" value="0">
+								<span class="error"><bean:message key="message.student.has.no.enrolments"/></span>
+							</logic:lessEqual>
 						</logic:present>
 						<logic:notPresent name="registration" property="activeStudentCurricularPlan">
 							<span class="error"><bean:message key="message.student.has.no.active.student.curricular.plan"/></span>
