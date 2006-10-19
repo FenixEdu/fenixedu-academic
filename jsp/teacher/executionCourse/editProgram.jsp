@@ -25,6 +25,7 @@
 </p>
 
 <logic:present name="curriculum">
+	<bean:define id="curriculum" name="curriculum" type="net.sourceforge.fenixedu.domain.Curriculum"/>
 	<bean:define id="curricularCourse" name="curriculum" property="curricularCourse"/>
 	<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
 	<h3>
@@ -36,7 +37,16 @@
 	</h3>
 	<blockquote>
 		<bean:define id="url" type="java.lang.String">/editProgram.do?method=editProgram&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
-		<fr:edit name="curricularCourse" property="curriculumFactoryEditCurriculum"
+		<bean:define id="curricularCourse" name="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse"/>
+
+		<bean:define id="curriculumFactoryEditCurriculum" name="curricularCourse" property="curriculumFactoryEditCurriculum" type="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryEditCurriculum"/>
+		<logic:notEqual name="executionCourse" property="executionPeriod.executionYear.state.stateCode" value="C">
+			<%
+				curriculumFactoryEditCurriculum.setCurriculum(curriculum);
+			%>
+		</logic:notEqual>
+
+		<fr:edit name="curriculumFactoryEditCurriculum"
 				schema="net.sourceforge.fenixedu.domain.Curriculum.Program"
 				action="<%= url %>"
 				>

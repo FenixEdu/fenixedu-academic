@@ -96,6 +96,7 @@
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumObjectives"
 		type="net.sourceforge.fenixedu.domain.CurricularCourse$CurriculumFactoryInsertCurriculum">
+	<slot name="curriculum" hidden="true"/>
 	<slot name="generalObjectives" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
@@ -123,6 +124,7 @@
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumProgram"
 		type="net.sourceforge.fenixedu.domain.CurricularCourse$CurriculumFactoryInsertCurriculum">
+	<slot name="curriculum" hidden="true"/>
 	<slot name="program" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>

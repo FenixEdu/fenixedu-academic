@@ -103,7 +103,12 @@
 					</logic:notPresent>
 				</blockquote>
 				<logic:present name="curriculum">
-					<% if (lastCurriculum == curriculum && (curricularCourse.getBasic() == null || !curricularCourse.getBasic().booleanValue())) { %>
+					<% if ((lastCurriculum == curriculum && (curricularCourse.getBasic() == null || !curricularCourse.getBasic().booleanValue()))
+						|| curriculum.getOperacionalObjectives() == null || curriculum.getOperacionalObjectivesEn() == null
+						|| curriculum.getOperacionalObjectives().equals(org.apache.commons.lang.StringUtils.EMPTY) || curriculum.getOperacionalObjectivesEn().equals(org.apache.commons.lang.StringUtils.EMPTY)
+						|| curriculum.getGeneralObjectives() == null || curriculum.getGeneralObjectivesEn() == null
+						|| curriculum.getGeneralObjectives().equals(org.apache.commons.lang.StringUtils.EMPTY) || curriculum.getGeneralObjectivesEn().equals(org.apache.commons.lang.StringUtils.EMPTY)) { %>
+
 						<bean:define id="url" type="java.lang.String">/editObjectives.do?method=prepareEditObjectives&amp;curriculumID=<bean:write name="curriculum" property="idInternal"/></bean:define>
 						<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 							<bean:message key="button.edit"/>

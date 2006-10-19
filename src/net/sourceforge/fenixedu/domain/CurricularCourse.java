@@ -649,30 +649,59 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public static class CurriculumFactoryEditCurriculum extends CurriculumFactory implements FactoryExecutor {
+	private DomainReference<Curriculum> curriculum;
+
         public CurriculumFactoryEditCurriculum(CurricularCourse curricularCourse) {
             super(curricularCourse);
             setLastModification(new DateTime());
+            curriculum = null;            
+        }
+
+        public CurriculumFactoryEditCurriculum(Curriculum curriculum) {
+            super(curriculum.getCurricularCourse());
+            this.curriculum = new DomainReference(curriculum);
+        }
+
+        public Curriculum getCurriculum() {
+            return curriculum == null ? null : curriculum.getObject();
+        }
+
+        public void setCurriculum(Curriculum curriculum) {
+            this.curriculum = new DomainReference(curriculum);
+            populateCurriculum(this, curriculum);
         }
 
         public Curriculum execute() {
-            final CurricularCourse curricularCourse = getCurricularCourse();
-            return curricularCourse == null ? null
-                    : curricularCourse.editCurriculum(getProgram(), getProgramEn(),
-                    		getGeneralObjectives(), getGeneralObjectivesEn(),
-                            getOperacionalObjectives(), getOperacionalObjectivesEn(), getLastModification());
+            final Curriculum curriculum = getCurriculum();
+            if (curriculum == null) {
+        	final CurricularCourse curricularCourse = getCurricularCourse();
+        	return curricularCourse == null ? null
+        		: curricularCourse.editCurriculum(getProgram(), getProgramEn(),
+        			getGeneralObjectives(), getGeneralObjectivesEn(),
+        			getOperacionalObjectives(), getOperacionalObjectivesEn(), getLastModification());
+            } else {
+        	final DateTime dt = curriculum.getLastModificationDateDateTime();
+        	curriculum.edit(getGeneralObjectives(), getOperacionalObjectives(), getProgram(), getGeneralObjectivesEn(), getOperacionalObjectivesEn(), getProgramEn());
+        	curriculum.setLastModificationDateDateTime(dt);
+        	return curriculum;
+            }
         }
     }
 
     public CurriculumFactoryEditCurriculum getCurriculumFactoryEditCurriculum() {
     	final CurriculumFactoryEditCurriculum curriculumFactoryEditCurriculum = new CurriculumFactoryEditCurriculum(this);
     	final Curriculum curriculum = findLatestCurriculum();
-    	curriculumFactoryEditCurriculum.setGeneralObjectives(curriculum.getGeneralObjectives());
+    	populateCurriculum(curriculumFactoryEditCurriculum, curriculum);
+    	return curriculumFactoryEditCurriculum;
+    }
+
+    private static void populateCurriculum(final CurriculumFactoryEditCurriculum curriculumFactoryEditCurriculum, final Curriculum curriculum) {
+	curriculumFactoryEditCurriculum.setGeneralObjectives(curriculum.getGeneralObjectives());
     	curriculumFactoryEditCurriculum.setGeneralObjectivesEn(curriculum.getGeneralObjectivesEn());
     	curriculumFactoryEditCurriculum.setOperacionalObjectives(curriculum.getOperacionalObjectives());
     	curriculumFactoryEditCurriculum.setOperacionalObjectivesEn(curriculum.getOperacionalObjectivesEn());
     	curriculumFactoryEditCurriculum.setProgram(curriculum.getProgram());
     	curriculumFactoryEditCurriculum.setProgramEn(curriculum.getProgramEn());
-    	return curriculumFactoryEditCurriculum;
     }
 
     public Curriculum editCurriculum(String program, String programEn, String generalObjectives,
