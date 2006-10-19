@@ -50,4 +50,12 @@ public class ProfessionalCareer extends ProfessionalCareer_Base {
         super.setFunction(function);
     }
 
+    @Override
+    public void setEntity(String entity) {
+        if (entity != null && entity.length() > 50) {
+            throw new DomainException("error.entity.max.length.exceeded");
+        }
+        super.setEntity(entity);
+    }
+
 }
