@@ -42,6 +42,7 @@ public class SelectDFACandidacyBean implements Serializable {
             this.selectionSituation = CandidacySituationType.NOT_ADMITTED;
         
         }
+        this.remarks=candidacy.getActiveCandidacySituation().getRemarks();
     }
     }
 
