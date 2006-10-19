@@ -7,7 +7,7 @@
 <h2><bean:message key="link.concludedMasterDegreeProofList" bundle="ADMIN_OFFICE_RESOURCES"/></h2>
 
 <fr:edit id="degree" name="chooseDegreeAndYearBean"
-		 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.thesis.ChooseDegreeAndYearBean"
+		 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.thesis.ListMasterDegreeProofsBean"
 		 schema="thesis.list.choose.degree">
 	<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4"/>
