@@ -10,8 +10,7 @@
 
 
 <logic:present name="parkingParty">
-	<p class="mbottom025"><bean:message
-		key="label.person.title.personal.info" /></p>
+	<p class="mbottom025"><bean:message	key="label.person.title.personal.info" /></p>
 
 	<fr:view name="parkingParty" property="party" schema="viewPersonInfo">
 		<fr:layout name="tabular">
@@ -26,10 +25,7 @@
 			<p><bean:message key="message.no.necessaryPersonalInfo"
 				bundle="PARKING_RESOURCES" /></p>
 		</logic:equal>
-		<logic:notEqual name="parkingParty"
-			property="hasAllNecessaryPersonalInfo" value="false">
-			
-
+		<logic:notEqual name="parkingParty"	property="hasAllNecessaryPersonalInfo" value="false">
 			<ul class="mvert025">
 				<li>
 					<html:link page="/parking.do?method=downloadParkingRegulamentation">
@@ -39,24 +35,18 @@
 			</ul>
 
 
-			<logic:equal name="parkingParty" property="acceptedRegulation"
-				value="false">
-				
+			<logic:equal name="parkingParty" property="acceptedRegulation" value="false">				
 				<p class="infoop2 mvert1"><bean:message key="message.acceptRegulationCondition" bundle="PARKING_RESOURCES" /></p>
-					
-					
-				<bean:message key="message.acceptRegulation"
-					bundle="PARKING_RESOURCES" />
+										
+				<bean:message key="message.acceptRegulation" bundle="PARKING_RESOURCES" />
 				<ul>
 					<li><html:link page="/parking.do?method=acceptRegulation">
 						<bean:message key="button.acceptRegulation"
 							bundle="PARKING_RESOURCES" />
 					</html:link></li>
-				</ul>
-				
+				</ul>				
 			</logic:equal>
-			<logic:notEqual name="parkingParty" property="acceptedRegulation"
-				value="false">
+			<logic:notEqual name="parkingParty" property="acceptedRegulation" value="false">
 				
 				<div class="simpleblock5"> <%-- message.acceptedRegulation --%>
 					<bean:write name="parkingParty" property="parkingAcceptedRegulationMessage" filter="false"/>
@@ -98,11 +88,17 @@
 		</logic:notEmpty>
 		
 		<logic:notEmpty name="parkingParty" property="firstRequest.note">
-			<p class="infoop2"><bean:message key="label.note" bundle="PARKING_RESOURCES"/>:
+			<p><span class="infoop2"><bean:message key="label.note" bundle="PARKING_RESOURCES"/>:
 				<bean:write name="parkingParty" property="firstRequest.note"/>
-			</p>
+			</span></p>
 		</logic:notEmpty>
 
+		<logic:equal name="parkingParty" property="firstRequest.limitlessAccessCard" value="true">
+			<p><span class="infoop2"><bean:message key="label.requestedLimitlessAccessCard" bundle="PARKING_RESOURCES"/>						 
+				<strong><bean:message key="label.limitlessAccessCard" bundle="PARKING_RESOURCES"/></strong>
+			</span></p>
+		</logic:equal>
+		
 		<logic:equal name="parkingParty" property="firstRequest.hasDriverLicense" value="true">
 			<p class="mtop15 mbottom025"><strong><bean:message key="label.driverLicense"
 				bundle="PARKING_RESOURCES" /></strong></p>
