@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fixing problem in relation PERSON TEACHER" fixTeachersWithoutPerson.sql
