@@ -43,12 +43,11 @@ public class DeleteStudentGroupMembers extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        if (!studentGroup.checkStudentUsernames(studentUsernames)) {
-            throw new InvalidSituationServiceException();
-        }
         for (final String studentUsername : (List<String>) studentUsernames) {
             Attends attend = grouping.getStudentAttend(studentUsername);
-            attend.removeStudentGroups(studentGroup);
+            if (attend != null) {
+                attend.removeStudentGroups(studentGroup);
+            }
         }
         return true;
     }
