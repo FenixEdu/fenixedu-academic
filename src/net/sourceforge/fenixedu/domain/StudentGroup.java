@@ -75,21 +75,4 @@ public class StudentGroup extends StudentGroup_Base {
 	this.setShift(shift);
     }
 
-    public boolean checkStudentUsernames(List<String> studentUsernames) {
-	boolean found;
-	for (final String studentUsername : studentUsernames) {
-	    found = false;
-	    for (final Attends attend : this.getAttends()) {
-		if (attend.getAluno().getPerson().hasUsername(studentUsername)) {
-		    found = true;
-		    break;
-		}
-	    }
-	    if (!found) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
 }
