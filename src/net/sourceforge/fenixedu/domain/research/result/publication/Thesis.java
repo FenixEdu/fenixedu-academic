@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.util.Month;
 public class Thesis extends Thesis_Base {
 
     public enum ThesisType {
-	PhD_Thesis, Masters_Thesis;
+	PhD_Thesis, Masters_Thesis, Graduation_Thesis;
     }
 
     public Thesis() {
