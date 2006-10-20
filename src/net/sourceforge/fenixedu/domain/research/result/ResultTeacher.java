@@ -20,7 +20,13 @@ public class ResultTeacher extends ResultTeacher_Base {
     }
     
     public ResultTeacher(Result result, Teacher teacher, PublicationArea area) {
-        this();
+	this();
+	if (result == null)
+	    throw new DomainException("error.researcher.ResultTeacher.Result.null");
+	if (teacher == null)
+	    throw new DomainException("error.researcher.ResultTeacher.Teacher.null");
+	if (area == null)
+	    throw new DomainException("error.researcher.ResultTeacher.PublicationArea.null");
         verifyIfParticipator(teacher, result);
         setPublicationArea(area);
         setResult(result);
