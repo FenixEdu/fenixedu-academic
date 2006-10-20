@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -1300,5 +1302,30 @@ public class Registration extends Registration_Base {
 	}
 	return null;
     }
+    
 
+    private transient Map<ExecutionYear, StudentCurricularPlan> studentCurricularPlansByExecutionYear = null;
+
+    private Map<ExecutionYear, StudentCurricularPlan> initializeStudentCurricularPlansByExecutionYear() {
+	if (studentCurricularPlansByExecutionYear == null) {
+	    studentCurricularPlansByExecutionYear = new HashMap<ExecutionYear, StudentCurricularPlan>();
+	    
+	    for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+		for (final ExecutionYear executionYear : studentCurricularPlan.getEnrolmentsExecutionYears()) {
+		    studentCurricularPlansByExecutionYear.put(executionYear, studentCurricularPlan);
+		}
+	    }
+	}
+	
+	return studentCurricularPlansByExecutionYear;
+    }
+
+    public Set<ExecutionYear> getEnrolmentsExecutionYears() {
+	return initializeStudentCurricularPlansByExecutionYear().keySet();
+    }
+
+    public StudentCurricularPlan getStudentCurricularPlan(ExecutionYear executionYear) {
+	return executionYear == null ? null : initializeStudentCurricularPlansByExecutionYear().get(executionYear);
+    }
+    
 }
