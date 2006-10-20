@@ -69,7 +69,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		studentCurricularPlanToDelete.addEnrolments(e1);
 		
 		Registration s1 = new Registration();
-		studentCurricularPlanToDelete.setStudent(s1);
+		studentCurricularPlanToDelete.setRegistration(s1);
 		
 		DegreeCurricularPlan dcp1 = new DegreeCurricularPlan();
 		studentCurricularPlanToDelete.setDegreeCurricularPlan(dcp1);
@@ -129,7 +129,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		startDateForNewStudentCurricularPlan = DateFormatUtil.parse("yyyy/mm/dd", "2002/04/13");
 		stateForNewStudentCurricularPlan = StudentCurricularPlanState.CONCLUDED;
 		givenCreditsForNewStudentCurricularPlan = 10.0;
-		specializationForNewStudentCurricularPlan = Specialization.MASTER_DEGREE; 
+		specializationForNewStudentCurricularPlan = Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE; 
 	}
 	
 	
@@ -142,8 +142,8 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		concludedStudentCurricularPlan.setCurrentState(StudentCurricularPlanState.CONCLUDED);
 		
 		
-		activeStudentCurricularPlan.setStudent(student);
-		concludedStudentCurricularPlan.setStudent(student);
+		activeStudentCurricularPlan.setRegistration(student);
+		concludedStudentCurricularPlan.setRegistration(student);
 
 		
 		
@@ -170,7 +170,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 				new YearMonthDay(startDateForNewStudentCurricularPlan), stateForNewStudentCurricularPlan, 
 				givenCreditsForNewStudentCurricularPlan, specializationForNewStudentCurricularPlan) ;
 		
-		assertEquals("Failed to assign Registration", scp.getStudent(),studentForNewStudentCurricularPlan);
+		assertEquals("Failed to assign Registration", scp.getRegistration(),studentForNewStudentCurricularPlan);
 		assertEquals("Failed to assign DegreeCurricularPlan", scp.getDegreeCurricularPlan(),degreeCurricularPlanForNewStudentCurricularPlan);
 		assertEquals("Failed to assign Branch", scp.getBranch(),branchForNewStudentCurricularPlan);
 		assertEquals("Failed to assign startDate", scp.getStartDate(),startDateForNewStudentCurricularPlan);

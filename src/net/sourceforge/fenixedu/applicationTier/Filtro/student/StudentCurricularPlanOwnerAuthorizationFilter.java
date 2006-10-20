@@ -53,7 +53,7 @@ public class StudentCurricularPlanOwnerAuthorizationFilter extends AccessControl
         if (studentCurricularPlan == null) {
             return "noAuthorization";
         }
-        if (studentCurricularPlan.getStudent().getPerson() != id.getPerson()) {
+        if (studentCurricularPlan.getRegistration().getPerson() != id.getPerson()) {
             return "noAuthorization";
         }
 

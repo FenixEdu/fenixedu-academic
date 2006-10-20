@@ -60,7 +60,7 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
     }
 
     public InfoStudent getInfoStudent() {
-        return InfoStudent.newInfoFromDomain(getStudentCurricularPlan().getStudent());
+        return InfoStudent.newInfoFromDomain(getStudentCurricularPlan().getRegistration());
     }
 
     public Date getStartDate() {

@@ -67,7 +67,7 @@ public class ListMasterDegreeStudents extends Service {
             boolean firstTimeEnrolment = true;
             if (studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
 
-            	Collection<StudentCurricularPlan> previousStudentCurricularPlans = studentCurricularPlan.getStudent().getStudentCurricularPlansBySpecialization(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE);
+            	Collection<StudentCurricularPlan> previousStudentCurricularPlans = studentCurricularPlan.getRegistration().getStudentCurricularPlansBySpecialization(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE);
 
                 previousStudentCurricularPlans.remove(studentCurricularPlan);
                 for (StudentCurricularPlan previousStudentCurricularPlan : previousStudentCurricularPlans) {

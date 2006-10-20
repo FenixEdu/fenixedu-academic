@@ -64,7 +64,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer() {
             public Object transform(Object input) {
                 Enrolment enrolment = (Enrolment) input;
-                Registration registration = enrolment.getStudentCurricularPlan().getStudent();
+                Registration registration = enrolment.getStudentCurricularPlan().getRegistration();
 
                 InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
                 return infoStudent;

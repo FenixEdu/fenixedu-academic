@@ -57,7 +57,7 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 
         Formatter resultFormatter = new Formatter();
         for (MasterDegreeThesis thesis : masterDegreeThesisCollection) {
-            resultFormatter.format("%d\t%s\tFénix\t", thesis.getStudentCurricularPlan().getStudent()
+            resultFormatter.format("%d\t%s\tFénix\t", thesis.getStudentCurricularPlan().getRegistration()
                     .getNumber(), thesis.getStudentCurricularPlan().getDegreeCurricularPlan()
                     .getDegree().getNome());
 

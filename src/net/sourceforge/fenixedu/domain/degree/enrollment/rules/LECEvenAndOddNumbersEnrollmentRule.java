@@ -24,7 +24,7 @@ public class LECEvenAndOddNumbersEnrollmentRule implements IEnrollmentRule {
 
     public LECEvenAndOddNumbersEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
             ExecutionPeriod executionPeriod) {
-        studentNumber = studentCurricularPlan.getStudent().getNumber().floatValue();
+        studentNumber = studentCurricularPlan.getRegistration().getNumber().floatValue();
         this.executionPeriod = executionPeriod;
     }
 

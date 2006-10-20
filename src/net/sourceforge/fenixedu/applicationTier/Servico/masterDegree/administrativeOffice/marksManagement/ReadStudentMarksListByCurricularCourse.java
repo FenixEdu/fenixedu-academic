@@ -57,9 +57,9 @@ public class ReadStudentMarksListByCurricularCourse extends Service {
             Enrolment enrolment = (Enrolment) iterator.next();
 
             if ((numberAux == null)
-                    || (numberAux.intValue() != enrolment.getStudentCurricularPlan().getStudent()
+                    || (numberAux.intValue() != enrolment.getStudentCurricularPlan().getRegistration()
                             .getNumber().intValue())) {
-                numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
+                numberAux = enrolment.getStudentCurricularPlan().getRegistration().getNumber();
 
                 result.add(InfoEnrolment.newInfoFromDomain(enrolment));
             }

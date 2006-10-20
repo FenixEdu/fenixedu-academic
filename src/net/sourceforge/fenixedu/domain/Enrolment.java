@@ -67,7 +67,7 @@ public class Enrolment extends Enrolment_Base {
     	this();
 	initializeAsNew(studentCurricularPlan, curricularCourse, executionPeriod, enrolmentCondition,
 		createdBy);
-    	createEnrolmentLog(studentCurricularPlan.getStudent(), EnrolmentAction.ENROL);
+    	createEnrolmentLog(studentCurricularPlan.getRegistration(), EnrolmentAction.ENROL);
     }
     
     @Deprecated
@@ -127,7 +127,7 @@ public class Enrolment extends Enrolment_Base {
         setEnrolmentCondition(enrolmentCondition);
         setCreatedBy(createdBy);
 
-        createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod);
+        createAttend(studentCurricularPlan.getRegistration(), curricularCourse, executionPeriod);
     }
     //end
     
@@ -160,7 +160,7 @@ public class Enrolment extends Enrolment_Base {
         setCondition(enrolmentCondition);
         setCreatedBy(createdBy);
 
-        createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod);
+        createAttend(studentCurricularPlan.getRegistration(), curricularCourse, executionPeriod);
     }
 
     public void unEnroll() throws DomainException {
@@ -181,7 +181,7 @@ public class Enrolment extends Enrolment_Base {
     public void delete() {
     	createEnrolmentLog(EnrolmentAction.UNENROL);
     	//TODO: falta ver se � dos antigos enrolments ou dos novos
-        final Registration registration = getStudentCurricularPlan().getStudent();
+        final Registration registration = getStudentCurricularPlan().getRegistration();
 
         removeExecutionPeriod();
         removeStudentCurricularPlan();
@@ -491,7 +491,7 @@ public class Enrolment extends Enrolment_Base {
 
             improvmentEnrolmentEvaluation.delete();
 
-            final Registration registration = getStudentCurricularPlan().getStudent();
+            final Registration registration = getStudentCurricularPlan().getRegistration();
             List<ExecutionCourse> executionCourses = getCurricularCourse()
                     .getAssociatedExecutionCourses();
 
@@ -629,7 +629,7 @@ public class Enrolment extends Enrolment_Base {
     }
     
     protected void createEnrolmentLog(EnrolmentAction action) {
-	new EnrolmentLog(action, this.getStudentCurricularPlan().getStudent(), this
+	new EnrolmentLog(action, this.getStudentCurricularPlan().getRegistration(), this
 		.getCurricularCourse(), this.getExecutionPeriod(), getCurrentUser());
     }
 

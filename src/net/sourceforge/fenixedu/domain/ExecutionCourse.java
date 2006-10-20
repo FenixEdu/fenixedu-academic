@@ -585,9 +585,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         private static void associateAttend(Enrolment enrolment, ExecutionCourse executionCourse) {
             if (!alreadyHasAttend(enrolment, executionCourse.getExecutionPeriod())) {
                 Attends attends = executionCourse.getAttendsByStudent(enrolment
-                        .getStudentCurricularPlan().getStudent());
+                        .getStudentCurricularPlan().getRegistration());
                 if (attends == null) {
-                    attends = new Attends(enrolment.getStudentCurricularPlan().getStudent(),
+                    attends = new Attends(enrolment.getStudentCurricularPlan().getRegistration(),
                             executionCourse);
                 }
                 enrolment.addAttends(attends);

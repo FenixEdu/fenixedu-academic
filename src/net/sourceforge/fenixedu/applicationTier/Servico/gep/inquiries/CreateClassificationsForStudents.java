@@ -99,7 +99,7 @@ public class CreateClassificationsForStudents extends Service {
 
         for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
             if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
-                Registration registration = studentCurricularPlan.getStudent();
+                Registration registration = studentCurricularPlan.getRegistration();
                 if (registration.getRegistrationYear() == currentExecutionYear) {
                     firstYearStudents.add(registration);
                 } else {

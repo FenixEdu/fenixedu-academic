@@ -22,7 +22,7 @@ public class PastEnrolmentsFilter extends Filtro {
             Integer studentCurricularPlanID = (Integer) args[1];
             StudentCurricularPlan studentCurricularPlan = rootDomainObject
                     .readStudentCurricularPlanByOID(studentCurricularPlanID);
-            registration = studentCurricularPlan.getStudent();
+            registration = studentCurricularPlan.getRegistration();
         } else if (args.length > 2 && args[2] != null) {
             Integer studentNumber = (Integer) args[2];
             registration = Registration.readByUsername("L" + studentNumber);

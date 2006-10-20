@@ -189,7 +189,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	List<Enrolment> allEnrollments = new ArrayList<Enrolment>();
 	addNonInvisibleEnrolments(allEnrollments, getEnrolments());
 
-	for (final StudentCurricularPlan studentCurricularPlan : getStudent()
+	for (final StudentCurricularPlan studentCurricularPlan : getRegistration()
 		.getStudentCurricularPlans()) {
 	    if (studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.PAST)
 		    || studentCurricularPlan.getCurrentState().equals(
@@ -240,15 +240,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Integer getMinimumNumberOfCoursesToEnroll() {
-	return getStudent().getStudentKind().getMinCoursesToEnrol();
+	return getRegistration().getStudentKind().getMinCoursesToEnrol();
     }
 
     public Integer getMaximumNumberOfCoursesToEnroll() {
-	return getStudent().getStudentKind().getMaxCoursesToEnrol();
+	return getRegistration().getStudentKind().getMaxCoursesToEnrol();
     }
 
     public Integer getMaximumNumberOfAcumulatedEnrollments() {
-	return getStudent().getStudentKind().getMaxNACToEnrol();
+	return getRegistration().getStudentKind().getMaxNACToEnrol();
     }
 
     public int getNumberOfApprovedCurricularCourses() {
@@ -1051,7 +1051,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	setCurrentState(studentCurricularPlanState);
 	setDegreeCurricularPlan(degreeCurricularPlan);
 	setStartDateYearMonthDay(startDate);
-	setStudent(registration);
+	setRegistration(registration);
 	setWhenDateTime(new DateTime());
 
 	if (!canSetStateToActive()
@@ -1093,7 +1093,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    inactivateTheActiveStudentCurricularPlanFor(registration, degreeCurricularPlan);
 	}
 
-	setStudent(registration);
+	setRegistration(registration);
 	setDegreeCurricularPlan(degreeCurricularPlan);
 	setCurrentState(curricularPlanState);
 	setStartDateYearMonthDay(startDate);
@@ -1128,7 +1128,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private boolean canSetStateToActive() {
-	for (final StudentCurricularPlan studentCurricularPlan : getStudent()
+	for (final StudentCurricularPlan studentCurricularPlan : getRegistration()
 		.getStudentCurricularPlans()) {
 	    if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE
 		    && studentCurricularPlan.getDegreeCurricularPlan() == getDegreeCurricularPlan()) {
@@ -1384,7 +1384,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public int numberCompletedCoursesForSpecifiedDegrees(final Set<Degree> degrees) {
 	int numberCompletedCourses = 0;
-	for (final StudentCurricularPlan studentCurricularPlan : getStudent()
+	for (final StudentCurricularPlan studentCurricularPlan : getRegistration()
 		.getStudentCurricularPlansSet()) {
 	    for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 		if (enrolment.getEnrolmentCondition() != EnrollmentCondition.INVISIBLE
@@ -1768,14 +1768,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return null;
     }
 
+    @Override
     @Deprecated
     public Registration getStudent() {
-	return super.getStudent();
+	return this.getRegistration();
     }
     
+    @Override
     @Deprecated
     public void setStudent(final Registration registration) {
-	super.setStudent(registration);
+	this.setRegistration(registration);
     }
     
     public Registration getRegistration() {

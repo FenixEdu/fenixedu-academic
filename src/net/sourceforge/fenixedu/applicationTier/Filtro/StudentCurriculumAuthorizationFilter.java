@@ -58,11 +58,11 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 
 	studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
-	if (studentCurricularPlan == null || studentCurricularPlan.getStudent() == null) {
+	if (studentCurricularPlan == null || studentCurricularPlan.getRegistration() == null) {
 	    return "noAuthorization";
 	}
 
-	Registration registration = studentCurricularPlan.getStudent();
+	Registration registration = studentCurricularPlan.getRegistration();
 
 	Group group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
 	if (group != null) {
@@ -153,7 +153,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 	}
 	if (id.hasRoleType(RoleType.STUDENT)) {
 	    try {
-		if (!studentCurricularPlan.getStudent().getPerson().getUsername().equals(id.getUtilizador())) {
+		if (!studentCurricularPlan.getRegistration().getPerson().getUsername().equals(id.getUtilizador())) {
 		    return "noAuthorization";
 		}
 	    } catch (Exception e) {
@@ -168,9 +168,9 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 		return "noAuthorization";
 	    }
 
-	    if (!verifyStudentTutor(teacher, studentCurricularPlan.getStudent())) {
+	    if (!verifyStudentTutor(teacher, studentCurricularPlan.getRegistration())) {
 		return new String("error.enrollment.notStudentTutor+"
-			+ studentCurricularPlan.getStudent().getNumber().toString());
+			+ studentCurricularPlan.getRegistration().getNumber().toString());
 	    }
 	    return null;
 	}

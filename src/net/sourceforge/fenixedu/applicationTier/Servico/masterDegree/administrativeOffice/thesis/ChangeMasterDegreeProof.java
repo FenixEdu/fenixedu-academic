@@ -69,7 +69,7 @@ public class ChangeMasterDegreeProof extends Service {
                 new State(State.ACTIVE), teacherJuries, externalJuries);
 
         if (finalResult.equals(MasterDegreeClassification.APPROVED)) {
-            Person person = studentCurricularPlan.getStudent().getPerson();
+            Person person = studentCurricularPlan.getRegistration().getPerson();
             person.addPersonRoles(Role.getRoleByRoleType(RoleType.ALUMNI));
             person.removeRoleByType(RoleType.STUDENT);
         }

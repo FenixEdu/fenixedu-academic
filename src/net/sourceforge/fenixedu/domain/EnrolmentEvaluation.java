@@ -93,7 +93,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         String otherGrade = enrolmentEvaluation.getGrade();
         Date otherWhenAltered = enrolmentEvaluation.getWhen();
 
-        if (this.getEnrolment().getStudentCurricularPlan().getStudent().getDegreeType().equals(
+        if (this.getEnrolment().getStudentCurricularPlan().getRegistration().getDegreeType().equals(
                 DegreeType.MASTER_DEGREE)) {
             return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
         } else if (this.getObservation() != null && this.getObservation().equals(RECTIFICATION)
@@ -383,7 +383,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getExamDateYearMonthDay().toString()).append(getGrade());
         stringBuilder.append(getEnrolmentEvaluationType());
-        stringBuilder.append(getEnrolment().getStudentCurricularPlan().getStudent().getNumber());
+        stringBuilder.append(getEnrolment().getStudentCurricularPlan().getRegistration().getNumber());
         setCheckSum(FenixDigestUtils.createDigest(stringBuilder.toString()));
     }
     
@@ -409,7 +409,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
     
     public Registration getStudent() {
-        return this.getEnrolment().getStudentCurricularPlan().getStudent();
+        return this.getEnrolment().getStudentCurricularPlan().getRegistration();
     }
     
     public MarkSheet getRectificationMarkSheet() {

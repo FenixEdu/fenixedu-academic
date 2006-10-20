@@ -172,7 +172,7 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		enrolment.addAttends(attendsNotToDelete);
 		curricularCourse.addAssociatedExecutionCourses(currentExecutionCourse);
 		curricularCourse.addAssociatedExecutionCourses(notCurrentExecutionCourse);
-		studentCurricularPlan.setStudent(registration);
+		studentCurricularPlan.setRegistration(registration);
 		attendsToDelete.setAluno(registration);
 		attendsNotToDelete.setAluno(registration);
 		attendsToDelete.setDisciplinaExecucao(currentExecutionCourse);

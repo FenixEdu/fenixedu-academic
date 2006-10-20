@@ -91,7 +91,7 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 	Enrolment enrolment = null;
 	if (executionYear != null) {
 	    enrolment = curricularCourse.getEnrolmentByStudentAndYear(
-		    studentCurricularPlan.getStudent(), executionYear);
+		    studentCurricularPlan.getRegistration(), executionYear);
 
 	} else {
 	    // TODO: Não se sabe se este comportamento está correcto!

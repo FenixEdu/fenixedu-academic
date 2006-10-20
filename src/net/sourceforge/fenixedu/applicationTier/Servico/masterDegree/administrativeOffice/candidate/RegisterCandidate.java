@@ -195,7 +195,7 @@ public class RegisterCandidate extends Service {
         List<StudentCurricularPlan> studentCurricularPlans = masterDegreeCandidate.getExecutionDegree()
                 .getDegreeCurricularPlan().getStudentCurricularPlans();
         for (StudentCurricularPlan scp : studentCurricularPlans) {
-            if (scp.getStudent().equals(registration)
+            if (scp.getRegistration().equals(registration)
                     && scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) {
                 throw new ExistingServiceException();
             }

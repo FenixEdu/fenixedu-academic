@@ -194,7 +194,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public Registration getStudent() {
-	return getStudentCurricularPlan().getStudent();
+	return getStudentCurricularPlan().getRegistration();
     }
 
     public boolean isNewRequest() {

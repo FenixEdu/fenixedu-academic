@@ -30,7 +30,7 @@ public class DepartmentStudentsByExecutionYearGroup extends DepartmentByExecutio
 	    for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
 		for (Enrolment enrolment : curricularCourse
 			.getEnrolmentsByExecutionYear(getExecutionYear())) {
-		    elements.add(enrolment.getStudentCurricularPlan().getStudent().getPerson());
+		    elements.add(enrolment.getStudentCurricularPlan().getRegistration().getPerson());
 		}
 	    }
 	}

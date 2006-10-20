@@ -46,10 +46,10 @@ public class ReadStudentListByCurricularCourseScope extends Service {
 	for (final Enrolment enrolment : (List<Enrolment>) enrolmentList) {
 
 	    if (studentNumber == null
-		    || studentNumber.intValue() != enrolment.getStudentCurricularPlan().getStudent()
+		    || studentNumber.intValue() != enrolment.getStudentCurricularPlan().getRegistration()
 			    .getNumber().intValue()) {
 
-		studentNumber = enrolment.getStudentCurricularPlan().getStudent().getNumber();
+		studentNumber = enrolment.getStudentCurricularPlan().getRegistration().getNumber();
 		result.add(InfoEnrolment.newInfoFromDomain(enrolment));
 	    }
 	}

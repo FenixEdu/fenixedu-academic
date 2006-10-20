@@ -81,7 +81,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
                     }
                 }
 
-                Registration registration = studentCurricularPlan.getStudent();
+                Registration registration = studentCurricularPlan.getRegistration();
 
                 if (studentsWithInsuranceChecked.contains(registration.getIdInternal()) == false) {
 
@@ -244,7 +244,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
         addLine(outgoingSibsPaymentFile, SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
                 SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear, studentCurricularPlan
-                        .getStudent().getNumber(), sibsPaymentCode, Calendar.getInstance().getTime(),
+                        .getRegistration().getNumber(), sibsPaymentCode, Calendar.getInstance().getTime(),
                 totalPaymentEndDate, scholarShipPartValue, scholarShipPartValue);
 
         totalLinesAdded++;
@@ -262,7 +262,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
         // addLine(outgoingSibsPaymentFile,
         // SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
         // SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear,
-        // studentCurricularPlan.getStudent().getNumber(), sibsPaymentCode,
+        // studentCurricularPlan.getRegistration().getNumber(), sibsPaymentCode,
         // totalPaymentStartDate, totalPaymentEndDate, scholarShipPartValue,
         // scholarShipPartValue);
         //
@@ -324,7 +324,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
         // addLine(outgoingSibsPaymentFile,
         // SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
         // SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear,
-        // studentCurricularPlan.getStudent().getNumber(), sibsPaymentCode,
+        // studentCurricularPlan.getRegistration().getNumber(), sibsPaymentCode,
         // paymentPhase
         // .getStartDate(), paymentPhase.getEndDate(), paymentPhase.getValue(),
         // paymentPhase.getValue());

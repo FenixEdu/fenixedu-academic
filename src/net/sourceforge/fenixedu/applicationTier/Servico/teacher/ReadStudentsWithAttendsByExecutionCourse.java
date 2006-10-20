@@ -299,7 +299,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	    String curricularCourseName) {
 	int count = 0;
 	Degree degree = studentCurricularPlan.getDegreeCurricularPlan().getDegree();
-	for (StudentCurricularPlan scp : studentCurricularPlan.getStudent().getStudentCurricularPlans()) {
+	for (StudentCurricularPlan scp : studentCurricularPlan.getRegistration().getStudentCurricularPlans()) {
 	    if (scp.getDegreeCurricularPlan().getDegree() == degree) {
 		for (Enrolment enrolment : scp.getEnrolments()) {
 		    CurricularCourse course = enrolment.getCurricularCourse();

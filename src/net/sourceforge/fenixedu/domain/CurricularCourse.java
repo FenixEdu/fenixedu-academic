@@ -1013,7 +1013,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    filters &= executionPeriod == null
 		    || enrollment.getExecutionPeriod().equals(executionPeriod);
 	    filters &= registration == null
-		    || enrollment.getStudentCurricularPlan().getStudent().equals(registration);
+		    || enrollment.getStudentCurricularPlan().getRegistration().equals(registration);
 
 	    if (filters) {
 		results.add(enrollment);
@@ -1055,7 +1055,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Enrolment getEnrolmentByStudentAndYear(Registration registration, String year) {
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    final Enrolment enrolment = (Enrolment) curriculumModule;
-	    if (enrolment.getStudentCurricularPlan().getStudent().equals(registration)
+	    if (enrolment.getStudentCurricularPlan().getRegistration().equals(registration)
 		    && enrolment.getExecutionPeriod().getExecutionYear().getYear().equals(year)) {
 		return enrolment;
 	    }
@@ -1369,7 +1369,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 	if (enrolmentEvaluation.hasRectification()) {
 	    throw new DomainException("error.markSheet.student.alreadyRectified", enrolmentEvaluation
-		    .getEnrolment().getStudentCurricularPlan().getStudent().getNumber().toString());
+		    .getEnrolment().getStudentCurricularPlan().getRegistration().getNumber().toString());
 	}
 
 	enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);

@@ -136,7 +136,7 @@ public class EnrolmentTest extends DomainTestBase {
 		enrolmentToUnEnrollImprovement.addEvaluations(improvementEnrolmentEvaluation);
 		enrolmentToUnEnrollImprovement.addEvaluations(nonImprovementEnrolmentEvaluation);
 		
-		scp.setStudent(registration);
+		scp.setRegistration(registration);
 		attendsToDelete.setAluno(registration);
 		attendsToDelete.setDisciplinaExecucao(executionCourseToUnEnrollImprovement);
 		otherAttends.setAluno(otherStudent);
@@ -351,7 +351,7 @@ public class EnrolmentTest extends DomainTestBase {
 
 		
 		studentCurricularPlan = new StudentCurricularPlan();
-		studentCurricularPlan.setStudent(thisStudent);
+		studentCurricularPlan.setRegistration(thisStudent);
 		curricularCourseToEnroll = new CurricularCourse();
 		currentExecutionPeriod = new ExecutionPeriod();
 		ExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
@@ -557,7 +557,7 @@ public class EnrolmentTest extends DomainTestBase {
 		
 		assertTrue("Initialized Enrolment should only have 1 Attends", enrolmentToInitialize.getAttendsCount() == 1);
 		Attends attends = enrolmentToInitialize.getAttends().get(0);
-		assertEquals("Newly created Attends has wrong Registration", attends.getAluno(),studentCurricularPlan.getStudent());
+		assertEquals("Newly created Attends has wrong Registration", attends.getAluno(),studentCurricularPlan.getRegistration());
 		assertEquals("Newly created Attends has wrong ExecutionCourse", attends.getDisciplinaExecucao(),executionCourseToEnroll);
 		assertEquals("Newly created Attends has wrong Enrolment", attends.getEnrolment(),enrolmentToInitialize);
 		

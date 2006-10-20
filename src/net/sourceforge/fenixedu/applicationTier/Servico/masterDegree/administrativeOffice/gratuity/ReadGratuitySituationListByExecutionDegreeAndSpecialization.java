@@ -133,7 +133,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 
                     fillSituationType(infoGratuitySituation);
 
-                    List insuranceTransactionList = studentCurricularPlan.getStudent()
+                    List insuranceTransactionList = studentCurricularPlan.getRegistration()
                             .readAllNonReimbursedInsuranceTransactionsByExecutionYear(
                                     executionDegree.getExecutionYear());
 

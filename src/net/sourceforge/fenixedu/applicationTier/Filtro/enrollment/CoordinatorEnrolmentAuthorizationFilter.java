@@ -80,7 +80,7 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
             return null;
         }
 
-        return studentCurricularPlan.getStudent();
+        return studentCurricularPlan.getRegistration();
     }
 
     protected Teacher readTeacher(IUserView id) {

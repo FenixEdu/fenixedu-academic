@@ -200,7 +200,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
             return false;
         }
 
-        final double arithmeticMean = studentCurricularPlan.getStudent().getArithmeticMean().doubleValue();
+        final double arithmeticMean = studentCurricularPlan.getRegistration().getArithmeticMean().doubleValue();
 
         final Double minGrade = getMinGrade();
         if (minGrade != null && minGrade.doubleValue() > arithmeticMean) {
@@ -212,7 +212,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
             return false;
         }
 
-        final int approvedEnrollmentsNumber = studentCurricularPlan.getStudent().getApprovedEnrollmentsNumber();
+        final int approvedEnrollmentsNumber = studentCurricularPlan.getRegistration().getApprovedEnrollmentsNumber();
 
         final Double minNumberApproved = getMinNumberApproved();
         if (minNumberApproved != null && minNumberApproved.doubleValue() > approvedEnrollmentsNumber) {
@@ -224,7 +224,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
             return false;
         }
 
-        final int studentNumber = studentCurricularPlan.getStudent().getNumber();
+        final int studentNumber = studentCurricularPlan.getRegistration().getNumber();
 
         final Double minStudentNumber = getMinStudentNumber();
         if (minStudentNumber != null && minStudentNumber.doubleValue() > studentNumber) {

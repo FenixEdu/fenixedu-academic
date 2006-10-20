@@ -31,7 +31,7 @@ public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
     public boolean doesThisSCPBelongToASeminaryCandidate(Integer SCPIDInternal) {
         StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(SCPIDInternal);
         if (scp != null) {
-            List<SeminaryCandidacy> candidacies = scp.getStudent().getAssociatedCandidancies();
+            List<SeminaryCandidacy> candidacies = scp.getRegistration().getAssociatedCandidancies();
             return !candidacies.isEmpty();
         }
         

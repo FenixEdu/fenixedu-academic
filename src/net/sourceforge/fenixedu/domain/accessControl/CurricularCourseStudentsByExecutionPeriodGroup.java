@@ -37,7 +37,7 @@ public class CurricularCourseStudentsByExecutionPeriodGroup extends LeafGroup {
                 getExecutionPeriod());
 
         for (Enrolment enrolment : enrolments) {
-            elements.add(enrolment.getStudentCurricularPlan().getStudent().getPerson());
+            elements.add(enrolment.getStudentCurricularPlan().getRegistration().getPerson());
         }
 
         return super.freezeSet(elements);

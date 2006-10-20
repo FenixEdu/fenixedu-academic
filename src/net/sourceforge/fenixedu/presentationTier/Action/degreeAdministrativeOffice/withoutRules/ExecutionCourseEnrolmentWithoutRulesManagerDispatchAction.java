@@ -189,8 +189,8 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
     private void checkIfStudentHasPayedTuition(HttpServletRequest request,
 	    StudentCurricularPlan studentCurricularPlan) {
-	if (studentCurricularPlan.getStudent().getPayedTuition().equals(Boolean.FALSE)
-		&& !studentCurricularPlan.getStudent().getDegreeType().equals(
+	if (studentCurricularPlan.getRegistration().getPayedTuition().equals(Boolean.FALSE)
+		&& !studentCurricularPlan.getRegistration().getDegreeType().equals(
 			DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
 	    addActionMessage(request, "error.message.noTuitonPayed");
 	}

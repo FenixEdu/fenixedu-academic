@@ -29,7 +29,7 @@ public class ReadAllTransactionsByGratuitySituationID extends Service {
         GratuitySituation gratuitySituation = rootDomainObject
                 .readGratuitySituationByOID(gratuitySituationID);
         List<InsuranceTransaction> insuranceTransactionList = gratuitySituation
-                .getStudentCurricularPlan().getStudent().readAllInsuranceTransactionByExecutionYear(
+                .getStudentCurricularPlan().getRegistration().readAllInsuranceTransactionByExecutionYear(
                         gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear());
 
         List<PaymentTransaction> paymentTransactionList = new ArrayList<PaymentTransaction>();

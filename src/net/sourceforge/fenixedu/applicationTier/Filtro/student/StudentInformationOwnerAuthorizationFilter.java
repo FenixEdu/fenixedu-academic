@@ -26,7 +26,7 @@ public class StudentInformationOwnerAuthorizationFilter extends Filtro {
 
     private boolean curriculumOwner(IUserView id, Object[] arguments) {
         final StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) arguments[1]);
-        return studentCurricularPlan != null && studentCurricularPlan.getStudent().getPerson() == id.getPerson();
+        return studentCurricularPlan != null && studentCurricularPlan.getRegistration().getPerson() == id.getPerson();
     }
 
     protected RoleType getRoleType() {

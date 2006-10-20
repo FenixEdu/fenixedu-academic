@@ -162,7 +162,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 
 		final ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 
-		request.setAttribute("studentNumber", studentCurricularPlan.getStudent().getNumber());
+		request.setAttribute("studentNumber", studentCurricularPlan.getRegistration().getNumber());
 		request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 		request.setAttribute("executionPeriod", actualExecutionPeriod);
 

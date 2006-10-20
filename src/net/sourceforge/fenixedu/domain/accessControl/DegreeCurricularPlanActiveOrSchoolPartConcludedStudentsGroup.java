@@ -49,7 +49,7 @@ public class DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup extend
 	        public Object transform(Object arg0) {
 	            StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
 
-	            return scp.getStudent().getPerson();
+	            return scp.getRegistration().getPerson();
 	        }
 	    }
 	 
