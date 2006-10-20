@@ -41,11 +41,7 @@
         <put name="body" value="/academicAdminOffice/showDegreeModulesToEnrol.jsp"></put>
     </definition>     
     
-    	<!-- ************* Document Requests Management ************* -->
-	<definition name="documentRequests.management.showOperations" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/showOperations.jsp"/>
-	</definition>
-	
+	<!-- ************* Document Requests Management ************* -->
 	<definition name="documentRequests.management.viewNewDocumentRequests" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewNewDocumentRequests.jsp"/>
 	</definition>
