@@ -30,7 +30,8 @@ public abstract class Result extends Result_Base {
     public Result() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-        setOnCreateAtributes();
+        super.setOjbConcreteClass(getClass().getName());
+        updateModifiedByAndDate();
     }
     
     public abstract String getResume();
@@ -60,12 +61,6 @@ public abstract class Result extends Result_Base {
         return resume;
     }
 
-    @Checked("ResultPredicates.createPredicate")
-    private void setOnCreateAtributes() {
-        super.setOjbConcreteClass(getClass().getName());
-        super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
-        super.setLastModificationDate(new DateTime());
-    }
 
     @Checked("ResultPredicates.createPredicate")
     public ResultParticipation setCreatorParticipation(Person participator, ResultParticipationRole role) {
@@ -259,6 +254,8 @@ public abstract class Result extends Result_Base {
 
     private void updateModifiedByAndDate() {
         super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
+	//Used for migration of old publications
+        //super.setModifiedBy("Fénix");
         super.setLastModificationDate(new DateTime());
     }
 
