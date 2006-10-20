@@ -102,6 +102,11 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return null;
     }
 
+    public ExecutionPeriod readFirstExecutionPeriod() {
+	return (ExecutionPeriod) Collections.min(this.getExecutionPeriods(),
+		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+    }
+
     public List<ExecutionPeriod> readNotClosedPublicExecutionPeriods() {
 	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
 	for (final ExecutionPeriod executionPeriod : this.getExecutionPeriodsSet()) {
@@ -205,7 +210,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     public boolean isCurrent() {
 	return this.getState() == PeriodState.CURRENT;
     }
-    public static ExecutionYear getExecutionYearByDate(YearMonthDay date){
+
+    public static ExecutionYear getExecutionYearByDate(YearMonthDay date) {
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
 	    if (executionYear.containsDate(date.toDateTimeAtMidnight())) {
 		return executionYear;
@@ -217,5 +223,5 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     public ShiftDistribution createShiftDistribution() {
 	return new ShiftDistribution(this);
     }
-    
+
 }
