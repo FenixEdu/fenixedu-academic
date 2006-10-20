@@ -4,7 +4,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="academicAdminOffice.masterPage" extends="df.layout.two-column">
-	  <put name="title" value="" />
+	  <put name="title" value="Secretaria Académica" />
 	  <put name="serviceName" value="" />
 	  <put name="navLocal" value="/academicAdminOffice/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
