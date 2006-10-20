@@ -1768,4 +1768,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return null;
     }
 
+    @Deprecated
+    public Registration getStudent() {
+	return super.getStudent();
+    }
+    
+    @Deprecated
+    public void setStudent(final Registration registration) {
+	super.setStudent(registration);
+    }
+    
+    public Registration getRegistration() {
+	return super.getStudent();
+    }
+    
+    public void setRegistration(final Registration registration) {
+	super.setStudent(registration);
+    }
+    
 }
