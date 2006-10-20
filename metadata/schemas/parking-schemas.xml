@@ -353,3 +353,10 @@
 	</slot>
 	<slot name="carPlateNumber" key="label.firstCarPlateNumber"/>
 </schema>
+
+<schema name="read.msAccessFile" type="net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean">
+	<slot name="inputStream" key="label.msAccessFile" bundle="PARKING_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="fileNameSlot" value="fileName"/>
+	</slot>
+</schema>

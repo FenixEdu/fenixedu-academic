@@ -73,7 +73,13 @@
        	</action>
 
 		<action path="/exportParkingDB"
-				type="net.sourceforge.fenixedu.presentationTier.Action.parkingManager.ExportParkingDataToAccessDatabaseAction"/>
+				type="net.sourceforge.fenixedu.presentationTier.Action.parkingManager.ExportParkingDataToAccessDatabaseDA"
+				scope="request"
+				input="/exportParkingDB.do?method=prepareExportFile"
+				parameter="method">
+       		<forward name="exportFile" path="export-file"/>
+       	</action>
+				
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
