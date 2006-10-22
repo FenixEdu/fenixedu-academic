@@ -28,3 +28,7 @@ function executeWithTempFile() {
 }
 
 execute "Add Alumni Role" addRoles.sql
+execute "" AlterTableItem.sql
+execute "" CreateFileItem.sql
+execute "" CreateItemFileItem.sql
+execute "" DeleteItemsWithoutSection.sql

@@ -3,7 +3,7 @@ alter table DEGREE_MODULE add column KEY_ROOT_DOMAIN_OBJECT int(11) not null def
 alter table INSURANCE_VALUE add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;
 alter table COORDINATOR add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;
 alter table SPACE_INFORMATION add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;
-alter table null add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;
+--alter table null add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;
 alter table EXTRA_WORK_HISTORIC add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;
 alter table GROUPING add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;
 alter table OLD_PUBLICATION add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;

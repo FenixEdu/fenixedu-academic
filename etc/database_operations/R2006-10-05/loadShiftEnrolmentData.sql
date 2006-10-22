@@ -1,6 +1,6 @@
 update SHIFT_ENROLMENT set SHIFT_ENROLMENT.CREATED_ON = '2006-09-02 14:00:00';
 
-drop temporary table XPTO;
+drop temporary table IF EXISTS XPTO;
 
 create temporary table XPTO
 select INVOCATION_DATE as CREATED_ON,

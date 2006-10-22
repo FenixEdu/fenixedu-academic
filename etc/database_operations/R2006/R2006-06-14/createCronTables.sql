@@ -1,4 +1,4 @@
-drop table CRON_REGISTRY;
+drop table IF EXISTS CRON_REGISTRY;
 create table CRON_REGISTRY (
 	ID_INTERNAL int(11) not null auto_increment,
 	KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1,
@@ -7,7 +7,7 @@ create table CRON_REGISTRY (
 	index (KEY_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB;
 
-drop table CRON_SCRIPT_STATE;
+drop table IF EXISTS CRON_SCRIPT_STATE;
 create table CRON_SCRIPT_STATE (
 	ID_INTERNAL int(11) not null auto_increment,
 	KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1,
@@ -22,7 +22,7 @@ create table CRON_SCRIPT_STATE (
 	index (KEY_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB;
 
-drop table CRON_SCRIPT_INVOCATION;
+drop table IF EXISTS CRON_SCRIPT_INVOCATION;
 create table CRON_SCRIPT_INVOCATION (
 	ID_INTERNAL int(11) not null auto_increment,
 	KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1,

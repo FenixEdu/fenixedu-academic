@@ -28,7 +28,6 @@ function executeWithTempFile() {
 }
 
 execute "Fix StudentCurricularPlan Table" fixStudentCurricularPlanTable.sql
-execute "Fix ExecutionYear Table" fixExecutionYearTable.sql
 executeWithTempFile "Fix Person Accounts" fixPersonAccounts.sql
 execute "Add new Roles" addRoles.sql
 execute "Create Identification Table" createIdentificationTable.sql
