@@ -13,6 +13,13 @@
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
+<logic:notPresent name="UserView" property="person.user.userUId">
+	<span class="error">
+		<bean:message key="message.resource.not.available.for.external.users" bundle="HOMEPAGE_RESOURCES"/>
+	</span>
+</logic:notPresent>
+
+<logic:present name="UserView" property="person.user.userUId">
 <html:form action="/manageHomepage">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="submitHomepage"/>
 
@@ -49,7 +56,6 @@
 		</logic:present>
 	</logic:present>
 	</p>
-
 
 	<br/>
 
@@ -309,10 +315,12 @@
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showAlternativeHomepage" property="showAlternativeHomepage" value="true"/>
 			</td>
 			<td>
-				<bean:define id="url" type="java.lang.String" name="UserView" property="person.webAddress"/>
-				<html:link href="<%= url %>">
-					<bean:write name="UserView" property="person.webAddress"/>
-				</html:link>
+				<logic:present name="UserView" property="person.webAddress">
+					<bean:define id="url" type="java.lang.String" name="UserView" property="person.webAddress"/>
+					<html:link href="<%= url %>">
+						<bean:write name="UserView" property="person.webAddress"/>
+					</html:link>
+				</logic:present>
 			</td>
 		</tr>
 	
@@ -356,3 +364,4 @@
 	</table>
 
 </html:form>
+</logic:present>

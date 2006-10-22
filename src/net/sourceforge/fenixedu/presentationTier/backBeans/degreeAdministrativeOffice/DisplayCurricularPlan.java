@@ -61,8 +61,10 @@ public class DisplayCurricularPlan extends FenixBackingBean {
         for (InfoExecutionYear executionYear : executionYears) {
             result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
         }
-        
-        setChoosenExecutionYearID(executionYears.get(executionYears.size() - 1).getIdInternal());
+
+        if (executionYears.size() > 0) {
+            setChoosenExecutionYearID(executionYears.get(executionYears.size() - 1).getIdInternal());
+        }
 
         return result;
     }
