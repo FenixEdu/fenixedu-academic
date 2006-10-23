@@ -166,21 +166,9 @@ if (month != null && year!=null)
 		
 		<%-- Autor --%>
 				<logic:notEmpty name="announcement" property="author">
-				 	<logic:notEmpty name="announcement" property="authorEmail">
-				 	Autor: 
-				 		<html:link href="<%="mailto:"+announcement.getAuthorEmail()%>">
-						 	<fr:view name="announcement" property="author"/>
-						</html:link>
-					  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
-				 	</logic:notEmpty>
-				</logic:notEmpty>
-				 			 
-				 <logic:notEmpty name="announcement" property="author">
-				 	<logic:empty name="announcement" property="authorEmail">
 					 	Autor: <fr:view name="announcement" property="author"/>
 					  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
-				 	</logic:empty>
-				 </logic:notEmpty>
+				</logic:notEmpty>
 
 		<%-- Local --%> 
 				 <logic:notEmpty name="announcement" property="place">
