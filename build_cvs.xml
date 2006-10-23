@@ -130,4 +130,24 @@
 		</java>
     </target>
 
+	<target name="registerDeploy"
+            description="Registers deploy on wiki page">
+		<java classname="pt.utl.ist.fenix.tools.http.client.DeployRegister"
+				fork="yes"
+				failonerror="false"
+				maxmemory="128m">
+			<arg value="${wiki.host}"/>
+			<arg value="${wiki.port}"/>
+			<arg value="${wiki.username}"/>
+			<arg value="${wiki.password}"/>
+			<arg value="${tagName}"/>
+			<arg value="${comment}"/>
+			<classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    </target>
+
 </project>
