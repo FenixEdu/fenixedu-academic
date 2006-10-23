@@ -1286,7 +1286,7 @@ public class Registration extends Registration_Base {
 	setEnrolmentModelForExecutionYear(ExecutionYear.readCurrentExecutionYear(), model);
     }
 
-    private void setEnrolmentModelForExecutionYear(ExecutionYear year, EnrolmentModel model) {
+    public void setEnrolmentModelForExecutionYear(ExecutionYear year, EnrolmentModel model) {
 	RegistrationDataByExecutionYear registrationData = getRegistrationDataByExecutionYear(year);
 	if (registrationData == null) {
 	    registrationData = new RegistrationDataByExecutionYear(this, year);
@@ -1302,7 +1302,7 @@ public class Registration extends Registration_Base {
 	}
 	return null;
     }
-    
+
 
     private transient Map<ExecutionYear, StudentCurricularPlan> studentCurricularPlansByExecutionYear = null;
 
