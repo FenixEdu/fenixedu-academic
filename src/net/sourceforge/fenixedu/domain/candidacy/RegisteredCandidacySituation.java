@@ -82,14 +82,18 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 
     private void createQualification() {
 	DFACandidacy dfaCandidacy = (DFACandidacy) getCandidacy();
-	Qualification qualification = new Qualification();
-	qualification.setPerson(dfaCandidacy.getPerson());
-	qualification.setMark(dfaCandidacy.getPrecedentDegreeInformation().getConclusionGrade());
-	qualification.setSchool(dfaCandidacy.getPrecedentDegreeInformation().getInstitution().getName());
-	qualification.setDegree(dfaCandidacy.getPrecedentDegreeInformation().getDegreeDesignation());
-	qualification.setDateYearMonthDay(new YearMonthDay(dfaCandidacy.getPrecedentDegreeInformation()
-		.getConclusionYear(), 1, 1));
-	qualification.setCountry(dfaCandidacy.getPrecedentDegreeInformation().getCountry());
+	if (dfaCandidacy.hasPrecedentDegreeInformation()) {
+	    Qualification qualification = new Qualification();
+	    qualification.setPerson(dfaCandidacy.getPerson());
+	    qualification.setMark(dfaCandidacy.getPrecedentDegreeInformation().getConclusionGrade());
+	    qualification.setSchool(dfaCandidacy.getPrecedentDegreeInformation().getInstitutionName());
+	    qualification.setDegree(dfaCandidacy.getPrecedentDegreeInformation().getDegreeDesignation());
+	    if (dfaCandidacy.getPrecedentDegreeInformation().getConclusionYear() != null) {
+		qualification.setDateYearMonthDay(new YearMonthDay(dfaCandidacy
+			.getPrecedentDegreeInformation().getConclusionYear(), 1, 1));
+	    }
+	    qualification.setCountry(dfaCandidacy.getPrecedentDegreeInformation().getCountry());
+	}
     }
 
     @Override
