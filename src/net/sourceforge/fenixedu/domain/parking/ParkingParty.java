@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -30,7 +31,7 @@ public class ParkingParty extends ParkingParty_Base {
 
     public static ParkingParty readByCardNumber(Long cardNumber) {
         for (ParkingParty parkingParty : RootDomainObject.getInstance().getParkingParties()) {
-            if(parkingParty.getCardNumber() != null && parkingParty.getCardNumber().equals(cardNumber)){
+            if (parkingParty.getCardNumber() != null && parkingParty.getCardNumber().equals(cardNumber)) {
                 return parkingParty;
             }
         }
@@ -371,8 +372,8 @@ public class ParkingParty extends ParkingParty_Base {
         return (getDriverLicenseFileName() != null && getDriverLicenseFileName().length() > 0)
                 || getDriverLicenseDocumentState() != null;
     }
-    
-    public List<RoleType> getSubmitAsRoles(){
+
+    public List<RoleType> getSubmitAsRoles() {
         List<RoleType> roles = new ArrayList<RoleType>();
         if (getParty().isPerson()) {
             Person person = (Person) getParty();
@@ -389,7 +390,8 @@ public class ParkingParty extends ParkingParty_Base {
             Student student = person.getStudent();
             if (student != null && person.getPersonRole(RoleType.STUDENT) != null) {
                 DegreeType degreeType = student.getMostSignificantDegreeType();
-                Collection<Registration> registrations = student.getRegistrationsByDegreeType(degreeType);
+                Collection<Registration> registrations = student
+                        .getRegistrationsByDegreeType(degreeType);
                 for (Registration registration : registrations) {
                     StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
                     if (scp != null) {
@@ -406,7 +408,7 @@ public class ParkingParty extends ParkingParty_Base {
         }
         return roles;
     }
-    
+
     public List<String> getOccupations() {
         List<String> occupations = new ArrayList<String>();
         if (getParty().isPerson()) {
@@ -417,8 +419,13 @@ public class ParkingParty extends ParkingParty_Base {
                 if (teacher.getCurrentWorkingDepartment() != null) {
                     currenteDepartment = teacher.getCurrentWorkingDepartment().getName();
                 }
-                occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber()
-                        + "<br/>" + currenteDepartment);
+                if (teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+                    occupations.add("<strong>Monitor</strong><br/> Nº " + teacher.getTeacherNumber()
+                            + "<br/>" + currenteDepartment);;
+                } else {
+                    occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber()
+                            + "<br/>" + currenteDepartment);
+                }
             }
             Employee employee = person.getEmployee();
             if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
@@ -560,8 +567,8 @@ public class ParkingParty extends ParkingParty_Base {
             }
             if (person.getStudent() != null) {
                 DegreeType degreeType = person.getStudent().getMostSignificantDegreeType();
-                Collection<Registration> registrations = person.getStudent().getRegistrationsByDegreeType(
-                        degreeType);
+                Collection<Registration> registrations = person.getStudent()
+                        .getRegistrationsByDegreeType(degreeType);
                 for (Registration registration : registrations) {
                     StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
                     if (scp != null) {
@@ -576,7 +583,7 @@ public class ParkingParty extends ParkingParty_Base {
         return 0;
     }
 
-    public static  List<ParkingParty> getAll() {
+    public static List<ParkingParty> getAll() {
         return RootDomainObject.getInstance().getParkingParties();
     }
 }
