@@ -12,6 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -43,18 +44,33 @@ public class AnnouncementRSS extends RSSAction {
     }
 
     private String getAuthor(Announcement announcement) {
-        if (announcement.getAuthor() == null) {
+        final Person person = announcement.getCreator();
+        final String name;
+        final String email;
+        if (person != null) {
+            name = person.getNickname();
+            email = person.getEmail();
+        } else {
+            name = announcement.getAuthor();
+            email = announcement.getAuthorEmail();
+        }
+        return autherString(name, email);
+    }
+
+    private String autherString(final String name, final String email) {
+        if (name == null) {
             return "";
         }
-        StringBuffer buffer = new StringBuffer();
-        if (announcement.getAuthorEmail() != null && !announcement.getAuthorEmail().equals("")) {
-            buffer.append("<a href=\"mailto:");
-            buffer.append(announcement.getAuthorEmail());
-            buffer.append("\">");
-        }
-        if (announcement.getAuthorEmail() != null && !announcement.getAuthorEmail().equals("")) {
-            buffer.append("</a>");
-        }
+        final StringBuffer buffer = new StringBuffer();
+//        if (email != null && !email.equals("")) {
+//            buffer.append("<a href=\"mailto:");
+//            buffer.append(email);
+//            buffer.append("\">");
+//        }
+        buffer.append(name);
+//        if (email != null && !email.equals("")) {
+//            buffer.append("</a>");
+//        }
         return buffer.toString();
     }
 
