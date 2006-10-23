@@ -107,10 +107,31 @@ public class WorkSchedule extends WorkSchedule_Base {
                         TimeOfDay lunchEnd = wsType.getMeal().getLunchEnd();
                         TimeInterval lunchTime = new TimeInterval(wsType.getMeal().getBeginMealBreak(),
                                 lunchEnd, false);
+
+                        Duration lunch = Duration.ZERO;
                         if (lunchTime.contains(firstClockingDate, false)
                                 && !workPeriod.isEqual(Duration.ZERO)) {
-                            workPeriod = workPeriod.minus(new TimeInterval(firstClockingDate, lunchEnd,
-                                    false).getDurationMillis());
+
+                            lunch = new TimeInterval(firstClockingDate, lunchEnd, false).getDuration();
+                        }
+
+                        // pode ter de descontar tb no final
+                        if (lastClockingDate != null
+                                && wsType.getMeal().getMealBreak().contains(lastClockingDate, false)) {
+                            lunchTime = wsType.getMeal().getEndOfMealBreakMinusDiscountInterval();
+                            if (wsType.getMeal().getEndOfMealBreakMinusDiscountInterval().contains(
+                                    lastClockingDate, timeline.getLastWorkTimePoint().isNextDay())) {
+                                lunch = lunch.plus(new TimeInterval(wsType.getMeal()
+                                        .getEndOfMealBreakMinusMealDiscount(), lastClockingDate, false)
+                                        .getDuration());
+                            } else {
+                                // já fez mais de 1 hora
+                                lunch = Duration.ZERO;
+                            }
+
+                        }
+                        if (!wsType.getMeal().getMandatoryMealDiscount().isShorterThan(lunch)) {
+                            workPeriod = workPeriod.minus(lunch);
                         }
 
                     } else if (firstClockingDate != null
