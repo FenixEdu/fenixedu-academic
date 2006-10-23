@@ -291,3 +291,9 @@
 	<slot name="masterDegreeThesis.studentCurricularPlan.student.student.person.name" key="label.name" />
 	<slot name="proofDateYearMonthDay" key="label.proofDate" />
 </schema>
+
+<schema name="student.manageEnrolmentModel" 
+	type="net.sourceforge.fenixedu.dataTransferObject.student.ManageEnrolmentModelBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear.year" key="label.executionYear" read-only="true" />
+	<slot name="enrolmentModel" key="label.enrolmentModel" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>

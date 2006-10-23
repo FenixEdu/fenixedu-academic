@@ -100,6 +100,15 @@
 	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
 	    </action>			
 
+		<action path="/manageEnrolmentModel"
+		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ManageEnrolmentModelDA"
+	        parameter="method"
+			scope="request"
+			validate="true"
+			input="/manageEnrolmentModel.do?method=prepare">
+	        	<forward name="showManageEnrolmentModel" path="student.showManageEnrolmentModel"/>
+	    </action>			
+	    
 		<action path="/studentEnrolments"
 				scope="request"		
 		        parameter="method"
