@@ -11,6 +11,10 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
+    
+    public String getInstitutionName(){
+	return hasInstitution() ? getInstitution().getName() : null;
+    }
 
     public void edit(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
 
