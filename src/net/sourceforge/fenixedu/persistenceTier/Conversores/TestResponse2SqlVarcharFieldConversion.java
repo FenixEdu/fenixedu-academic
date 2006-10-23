@@ -4,7 +4,10 @@ import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 
+import net.sourceforge.fenixedu.util.StringNormalizer;
+import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.tests.Response;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
@@ -24,12 +27,23 @@ public class TestResponse2SqlVarcharFieldConversion implements FieldConversion {
 
     public Object sqlToJava(Object source) {
         if (source instanceof String) {
-            XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(((String) source).getBytes()));
-            Response respose = (Response) decoder.readObject();
+            String xmlResponse = source.toString();
+            try {
+                xmlResponse = new String(source.toString().getBytes(), "UTF-8");
+            } catch (UnsupportedEncodingException e2) {
+            }
+            XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(xmlResponse.getBytes()));
+            Response respose = null;
+            try {
+                respose = (Response) decoder.readObject();
+            } catch (ArrayIndexOutOfBoundsException e) {
+                decoder = new XMLDecoder(new ByteArrayInputStream(StringNormalizer
+                        .normalize(xmlResponse).getBytes()));
+                respose = (Response) decoder.readObject();
+            }
             decoder.close();
             return respose;
         }
         return source;
     }
-
 }
