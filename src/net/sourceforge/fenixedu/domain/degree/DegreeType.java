@@ -18,21 +18,21 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
  */
 public enum DegreeType {
 
-    DEGREE(GradeScale.TYPE20, null, 5, 0, false),
+    DEGREE(GradeScale.TYPE20, null, 5, 0, false, false, false),
 
-    MASTER_DEGREE(GradeScale.TYPE5, null, 2, 0, false),
+    MASTER_DEGREE(GradeScale.TYPE5, null, 2, 0, false, false, true),
 
-    BOLONHA_DEGREE(null, CurricularPeriodType.THREE_YEAR, 3, 180, true),
+    BOLONHA_DEGREE(null, CurricularPeriodType.THREE_YEAR, 3, 180, true, true, false),
 
-    BOLONHA_MASTER_DEGREE(null, CurricularPeriodType.TWO_YEAR, 2, 120, true),
+    BOLONHA_MASTER_DEGREE(null, CurricularPeriodType.TWO_YEAR, 2, 120, true, true, false),
 
-    BOLONHA_INTEGRATED_MASTER_DEGREE(null, CurricularPeriodType.FIVE_YEAR, 5, 300, true),
+    BOLONHA_INTEGRATED_MASTER_DEGREE(null, CurricularPeriodType.FIVE_YEAR, 5, 300, true, true, false),
 
-    BOLONHA_PHD_PROGRAM(null, CurricularPeriodType.YEAR, 1, 30, true),
+    BOLONHA_PHD_PROGRAM(null, CurricularPeriodType.YEAR, 1, 30, true, true, true),
 
-    BOLONHA_ADVANCED_FORMATION_DIPLOMA(null, CurricularPeriodType.YEAR, 1, 30, true),
+    BOLONHA_ADVANCED_FORMATION_DIPLOMA(null, CurricularPeriodType.YEAR, 1, 30, true, true, true),
 
-    BOLONHA_SPECIALIZATION_DEGREE(null, CurricularPeriodType.YEAR, 1, 30, true);
+    BOLONHA_SPECIALIZATION_DEGREE(null, CurricularPeriodType.YEAR, 1, 30, true, true, true);
 
     private GradeScale gradeScale;
 
@@ -44,13 +44,20 @@ public enum DegreeType {
 
     private boolean bolonhaType;
 
+    private boolean canCreateStudent;
+
+    private boolean canCreateStudentOnlyWithCandidacy;
+
     private DegreeType(GradeScale gradeScale, CurricularPeriodType curricularPeriodType, int years,
-	    double defaultEctsCredits, boolean bolonhaType) {
+	    double defaultEctsCredits, boolean bolonhaType, boolean canCreateStudent,
+	    boolean canCreateStudentOnlyWithCandidacy) {
 	this.gradeScale = gradeScale;
 	this.curricularPeriodType = curricularPeriodType;
 	this.years = years;
 	this.defaultEctsCredits = defaultEctsCredits;
 	this.bolonhaType = bolonhaType;
+	this.canCreateStudent = canCreateStudent;
+	this.canCreateStudentOnlyWithCandidacy = canCreateStudentOnlyWithCandidacy;
     }
 
     public String getName() {
@@ -75,6 +82,14 @@ public enum DegreeType {
 
     public boolean isBolonhaType() {
 	return bolonhaType;
+    }
+
+    public boolean canCreateStudent() {
+	return canCreateStudent;
+    }
+
+    public boolean canCreateStudentOnlyWithCandidacy() {
+	return canCreateStudentOnlyWithCandidacy;
     }
 
     public String getLocalizedName() {
