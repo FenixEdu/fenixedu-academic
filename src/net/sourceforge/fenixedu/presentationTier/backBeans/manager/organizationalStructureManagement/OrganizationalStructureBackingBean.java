@@ -857,14 +857,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return unit;
     }
 
-    public Collection<Accountability> getParentAccountabilities() throws FenixFilterException,
+    public List<Accountability> getParentAccountabilities() throws FenixFilterException,
 	    FenixServiceException {
-	return (Collection<Accountability>) getUnit().getParentAccountabilities(Unit.class);
+	return new ArrayList<Accountability>((Collection<Accountability>)getUnit().getParentAccountabilities(Unit.class));
     }
 
-    public Collection<Accountability> getChildAccountabilities() throws FenixFilterException,
+    public List<Accountability> getChildAccountabilities() throws FenixFilterException,
 	    FenixServiceException {
-	return (Collection<Accountability>) getUnit().getChildAccountabilities(Unit.class);
+	return new ArrayList<Accountability>((Collection<Accountability>)getUnit().getChildAccountabilities(Unit.class));
     }
 
     private void getParentUnitsRelationTypes() throws FenixFilterException, FenixServiceException {
