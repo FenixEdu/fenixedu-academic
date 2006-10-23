@@ -40,6 +40,13 @@
 	<bean:message key="link.student.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 </html:link>
 
+<logic:equal name="registration" property="degreeType.name" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA">
+	<br/>
+	<html:link page="/manageEnrolmentModel.do?method=prepare" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+		<bean:message key="link.student.manageEnrolmentModel" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	</html:link>
+</logic:equal>
+
 <br/><br/>
 <h2><strong><bean:message key="label.studentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 <fr:view name="registration" property="studentCurricularPlans" schema="student.studentCurricularPlans" >
