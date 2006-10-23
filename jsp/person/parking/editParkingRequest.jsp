@@ -201,7 +201,7 @@ margin: 0.5em 0;
 	</logic:notEmpty>
 
 	
-	<span class="error0 mtop0"><html:messages id="message" property="errorFile" message="true" bundle="PARKING_RESOURCES">
+	<span class="error0 mtop0"><html:messages id="message" property="fileError" message="true" bundle="PARKING_RESOURCES">
 		<bean:write name="message"/><br/>
 	</html:messages></span>
 	<fr:form action="<%= "/parking.do?method="+method%>" encoding="multipart/form-data">

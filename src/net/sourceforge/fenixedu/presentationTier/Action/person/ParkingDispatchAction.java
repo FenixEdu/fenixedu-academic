@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.parking.ParkingDocumentState;
 import net.sourceforge.fenixedu.domain.parking.ParkingFile;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
@@ -29,6 +31,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class ParkingDispatchAction extends FenixDispatchAction {
@@ -42,11 +45,12 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         }
         ParkingRequest parkingRequest = parkingParty.getFirstRequest();
         boolean canEdit = true;
-        if(parkingRequest != null && (parkingRequest.getParkingRequestState() == ParkingRequestState.ACCEPTED || 
-                parkingRequest.getParkingRequestState() == ParkingRequestState.REJECTED)){
+        if (parkingRequest != null
+                && (parkingRequest.getParkingRequestState() == ParkingRequestState.ACCEPTED || parkingRequest
+                        .getParkingRequestState() == ParkingRequestState.REJECTED)) {
             canEdit = false;
         }
-        request.setAttribute("canEdit",canEdit);
+        request.setAttribute("canEdit", canEdit);
         request.setAttribute("parkingParty", parkingParty);
         return mapping.findForward("prepareParking");
     }
@@ -63,7 +67,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditParking(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
 
         IUserView userView = SessionUtils.getUserView(request);
         ParkingParty parkingParty = userView.getPerson().getParkingParty();
@@ -191,7 +195,15 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         }
 
         fillInDocumentStates(parkingForm, parkingRequestFactoryEditor);
-        executeService(request, "ExecuteFactoryMethod", new Object[] { parkingRequestFactoryEditor });
+        try {
+            executeService(request, "ExecuteFactoryMethod", new Object[] { parkingRequestFactoryEditor });
+        } catch (FileManagerException ex) {
+            ActionMessages actionMessages = getActionMessages(request);
+            actionMessages.add("fileError", new ActionMessage(ex.getKey(), ex.getArgs()));
+            saveMessages(request, actionMessages);
+            RenderUtils.invalidateViewState();
+            return mapping.getInputForward();
+        }
         return prepareParking(mapping, actionForm, request, response);
     }
 
@@ -619,7 +631,16 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         }
 
         fillInDocumentStates(parkingForm, parkingRequestFactoryCreator);
-        executeService(request, "ExecuteFactoryMethod", new Object[] { parkingRequestFactoryCreator });
+        try {
+            executeService(request, "ExecuteFactoryMethod",
+                    new Object[] { parkingRequestFactoryCreator });
+        } catch (FileManagerException ex) {
+            ActionMessages actionMessages = getActionMessages(request);
+            actionMessages.add("fileError", new ActionMessage(ex.getKey(), ex.getArgs()));
+            saveMessages(request, actionMessages);
+            RenderUtils.invalidateViewState();
+            return mapping.getInputForward();
+        }
         return prepareParking(mapping, actionForm, request, response);
     }
 
@@ -643,7 +664,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             parkingRequestFactory.setSecondCarPropertyRegistryInputStream(null);
         } else if (parkingRequestFactory.getParkingParty().isStudent()
                 && !isOwner(parkingForm, "vehicle2")) {
-            parkingForm.set("registry2",null);
+            parkingForm.set("registry2", null);
             parkingRequestFactory.setSecondCarPropertyRegistryFileName(null);
             parkingRequestFactory.setSecondCarPropertyRegistryInputStream(null);
             parkingRequestFactory.setSecondCarPropertyRegistryDocumentState(null);
@@ -653,7 +674,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             parkingRequestFactory.setSecondInsuranceInputStream(null);
         } else if (parkingRequestFactory.getParkingParty().isStudent()
                 && !isOwner(parkingForm, "vehicle2")) {
-            parkingForm.set("insurance2",null);
+            parkingForm.set("insurance2", null);
             parkingRequestFactory.setSecondInsuranceFileName(null);
             parkingRequestFactory.setSecondInsuranceInputStream(null);
             parkingRequestFactory.setSecondCarInsuranceDocumentState(null);
@@ -672,11 +693,11 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             parkingRequestFactory.setFirstCarOwnerIdFileName(null);
             parkingRequestFactory.setFirstCarOwnerIdInputStream(null);
             parkingRequestFactory.setFirstCarOwnerIdDocumentState(null);
-            parkingForm.set("Id1",null);
+            parkingForm.set("Id1", null);
             parkingRequestFactory.setFirstDeclarationAuthorizationFileName(null);
             parkingRequestFactory.setFirstDeclarationAuthorizationInputStream(null);
             parkingRequestFactory.setFirstCarDeclarationDocumentState(null);
-            parkingForm.set("declaration1",null);
+            parkingForm.set("declaration1", null);
         }
         if (!isOwner(parkingForm, "ownVehicle2")) {
             if (!isElectronicDelivery(parkingForm, "Id2")) {
@@ -691,13 +712,13 @@ public class ParkingDispatchAction extends FenixDispatchAction {
             parkingRequestFactory.setSecondCarOwnerIdFileName(null);
             parkingRequestFactory.setSecondCarOwnerIdInputStream(null);
             parkingRequestFactory.setSecondCarOwnerIdDocumentState(null);
-            parkingForm.set("Id2",null);            
+            parkingForm.set("Id2", null);
             parkingRequestFactory.setSecondDeclarationAuthorizationFileName(null);
             parkingRequestFactory.setSecondDeclarationAuthorizationInputStream(null);
             parkingRequestFactory.setSecondCarDeclarationDocumentState(null);
-            parkingForm.set("declaration2",null);            
+            parkingForm.set("declaration2", null);
         }
-        if(!isOwner(parkingForm, "vehicle2")) {
+        if (!isOwner(parkingForm, "vehicle2")) {
             parkingRequestFactory.setSecondCarMake(null);
             parkingRequestFactory.setSecondCarPlateNumber(null);
         }

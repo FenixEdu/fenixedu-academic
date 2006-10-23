@@ -106,7 +106,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell(""); // clientRef
         row.setCell(""); // comment
         row.setCell("0"); // price
-        row.setCell(""); // endValidityDate*
+        row.setCell(""); // endValidityDate
         row.setCell("1/1/2000"); // lastUsedDate
         row.setCell("FALSE"); // invoice
         row.setCell("TRUE"); // unlimited (if true, start and end validity dates are ignored
@@ -114,9 +114,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell("FALSE"); // payDirect
         row.setCell("FALSE"); // apbCorrect (if it's already in the park)
         row.setCell("TRUE"); // noFee
-        row.setCell(""); // startValidityDate*
-
-        //* what values to put here ? maybe we should have them in our side too
+        row.setCell(""); // startValidityDate
     }
 
     private String getName(String name) {
@@ -305,7 +303,8 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell((String) accessTableRow.get("Comment"));
         row.setCell(((Integer) accessTableRow.get("Price")).toString());
 
-        row.setCell("3/10/2007"); // endValidityDate*
+        Date endDate = (Date) accessTableRow.get("EndValidityDate");
+        row.setCell(endDate != null ? DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", endDate) : ""); // endValidityDate
 
         row.setCell(DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", (Date) accessTableRow
                 .get("LastUsedDate")));
@@ -316,9 +315,8 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell(getBooleanString(accessTableRow.get("APBCorrect"))); // if it's already in the park
         row.setCell(getBooleanString(accessTableRow.get("NoFee")));
 
-        row.setCell("3/10/2006"); // startValidityDate*
-
-        //* what values to put here ? maybe we should have them in our side too
+        Date startDate = (Date) accessTableRow.get("StartValidityDate");
+        row.setCell(startDate != null ? DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", startDate) : ""); // startValidityDate
     }
     
     private String getBooleanString(Object object) {
