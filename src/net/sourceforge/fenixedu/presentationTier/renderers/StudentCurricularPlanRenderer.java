@@ -42,9 +42,9 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
     
     private Boolean organizedByGroups;
 
-    private Integer initialWidth = Integer.valueOf(70);
+    private Double initialWidth = Double.valueOf(70);
 
-    private Integer widthDecreasePerLevel = Integer.valueOf(3);
+    private Double widthDecreasePerLevel = Double.valueOf(3);
 
     private String tablesClasses = "showinfo3 mvert0";
 
@@ -68,19 +68,19 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	this.organizedByGroups = organizedByGroups;
     }
 
-    public Integer getInitialWidth() {
+    public Double getInitialWidth() {
 	return initialWidth;
     }
 
-    public void setInitialWidth(Integer initialWidth) {
+    public void setInitialWidth(Double initialWidth) {
 	this.initialWidth = initialWidth;
     }
 
-    public Integer getWidthDecreasePerLevel() {
+    public Double getWidthDecreasePerLevel() {
 	return widthDecreasePerLevel;
     }
 
-    public void setWidthDecreasePerLevel(Integer widthDecreasePerLevel) {
+    public void setWidthDecreasePerLevel(Double widthDecreasePerLevel) {
 	this.widthDecreasePerLevel = widthDecreasePerLevel;
     }
 
@@ -187,7 +187,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    return scpDiv;
 	}
 
-	private void generateGroup(final CurriculumGroup group, int depth) {
+	private void generateGroup(final CurriculumGroup group, double depth) {
 	    final HtmlTable groupTable = new HtmlTable();
 	    scpDiv.addChild(groupTable);
 	    groupTable.setClasses(getTablesClasses());
@@ -242,7 +242,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    return result;
 	}
 
-	private void generateGroupLines(int depth, CurriculumGroup group) {
+	private void generateGroupLines(double depth, CurriculumGroup group) {
 	    final Set<CurriculumLine> sortedCurriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_NAME);
 	    sortedCurriculumLines.addAll(group.getCurriculumLines());
 	    
@@ -346,7 +346,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    }
 	}
 
-	private void generateGroupChilds(int depth, final CurriculumGroup group) {
+	private void generateGroupChilds(double depth, final CurriculumGroup group) {
 	    final Set<CurriculumGroup> sortedCurriculumGroups = new TreeSet<CurriculumGroup>(new BeanComparator("childOrder"));
 	    sortedCurriculumGroups.addAll(group.getCurriculumGroups());
 	    
