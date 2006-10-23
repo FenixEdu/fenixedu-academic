@@ -25,7 +25,11 @@ public class DegreesByEmployeeUnit implements DataProvider {
 		.getEmployee().getCurrentWorkingPlace().getChildParties(
 			AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
 	for (Party party : childParties) {
-	    result.add(((Unit) party).getDegree());
+	    final Degree degree = ((Unit) party).getDegree();
+	    if (degree.getDegreeType().canCreateStudent()
+		    && !degree.getDegreeType().canCreateStudentOnlyWithCandidacy()) {
+		result.add(degree);
+	    }
 	}
 
 	Collections.sort(result, new BeanComparator("name"));
