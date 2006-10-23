@@ -1093,6 +1093,12 @@ padding: 0.5em 1em;
 font-weight: normal;
 }
 
+
+/**********************************************
+	 to organize
+***********************************************/
+
+
 td.noborder {
 border: none;
 }
@@ -1127,6 +1133,15 @@ div.announcement div.ann_body div, div.announcement div.ann_body p {
 margin: 0;
 padding: 0;
 }
+div.announcement div.ann_body br {
+margin: -4px 0;
+padding: 0;
+}
+
 div.announcement h3 a { text-decoration: none; }
 .greytxt2 { color: #999; }
 .ann_body 
+
+
+
+

@@ -17,7 +17,7 @@
 	<html:hidden property="recentBoardsTimeSpanSelection"/>
 	<table class="tstyle5 thright thlight thmiddle mvert05">
 		<tr>
-			<th><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.show"/>:</th>
+			<th rowspan="2"><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.show"/>:</th>
 			<td>
 		    <html:select property="howManyAnnouncementsToShow" onchange="this.form.submit();">
 		        <html:option value="6">6 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
@@ -27,7 +27,6 @@
 			</td>
 		</tr>
 		<tr>
-			<th><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board.view" />:</th>
 			<td>
 				<html:radio property="boardType" value="BOOKMARKED" onchange="this.form.submit();">
 					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.bookmarked" />
