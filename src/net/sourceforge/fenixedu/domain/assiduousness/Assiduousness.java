@@ -110,7 +110,7 @@ public class Assiduousness extends Assiduousness_Base {
                                 .getWorkScheduleType().getFixedWorkPeriod().getWorkPeriodDuration());
                     }
                     if (balanceLeaves.isEmpty()) {
-                        workDaySheet.setNotes(workDaySheet.getNotes().concat("FALTA INJ"));
+                        workDaySheet.setNotes(workDaySheet.getNotes().concat("FALTA"));
                     }
                 }
                 workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
