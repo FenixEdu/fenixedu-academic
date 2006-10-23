@@ -29,10 +29,8 @@ public class UsernameUtils extends FenixUtil {
     public static boolean shouldHaveUID(Person person) {
 	Login loginIdentification = person.getLoginIdentification();
 	if (loginIdentification != null) {
-            return person.hasRole(RoleType.TEACHER)
-                    || person.hasRole(RoleType.EMPLOYEE)
-                    || person.hasRole(RoleType.STUDENT)
-                    || person.hasRole(RoleType.GRANT_OWNER);
+	    return person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE)
+		    || person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.GRANT_OWNER);
 	}
 	return false;
     }
@@ -46,7 +44,7 @@ public class UsernameUtils extends FenixUtil {
 	    String istUsername = null;
 
 	    Role mostImportantRole = getMostImportantRole(person.getPersonRoles());
-	    
+
 	    if (mostImportantRole.getRoleType() == RoleType.TEACHER) {
 		istUsername = ist + sumNumber(person.getTeacher().getTeacherNumber(), 10000);
 
@@ -77,18 +75,28 @@ public class UsernameUtils extends FenixUtil {
 		    registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 		}
 		if (registration != null) {
-		    istUsername = ist + sumNumber(registration.getNumber(), 100000);
+		    final StudentType studentType = registration.getStudentKind().getStudentType();
+		    switch (studentType) {
+		    case EXTERNAL_STUDENT:
+		    case FOREIGN_STUDENT:
+			istUsername = ist + sumNumber(registration.getNumber(), 50000 - 100000);
+			// we subtract 100000 from the external/foreign student
+                        // number to get his original legacy system number
+			break;
+		    default:
+			istUsername = ist + sumNumber(registration.getNumber(), 100000);
+			break;
+		    }
 		}
+	    }
 
-	    }	    
-	    
-	    if(StringUtils.isEmpty(istUsername)) {
+	    if (StringUtils.isEmpty(istUsername)) {
 		throw new DomainException("error.setting.istUsername.not.authorized");
 	    }
-	    
+
 	    return istUsername;
 	}
-	
+
 	return currentISTUsername;
     }
 
@@ -100,14 +108,14 @@ public class UsernameUtils extends FenixUtil {
 	    } else {
 		throw new DomainException("error.person.addingInvalidRole", RoleType.TEACHER.getName());
 	    }
-	
+
 	} else if (roleType.equals(RoleType.EMPLOYEE)) {
 	    if (person.getEmployee() != null) {
 		return "F" + person.getEmployee().getEmployeeNumber();
 	    } else {
 		throw new DomainException("error.person.addingInvalidRole", RoleType.EMPLOYEE.getName());
 	    }
-	
+
 	} else if (roleType.equals(RoleType.STUDENT)) {
 
 	    Registration registration = person
@@ -181,28 +189,29 @@ public class UsernameUtils extends FenixUtil {
 	    if (person.getGrantOwner() != null) {
 		return "B" + person.getGrantOwner().getNumber();
 	    }
-	
+
 	} else if (roleType.equals(RoleType.PROJECTS_MANAGER)
 		|| roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
 	    return "G" + person.getIdInternal();
-	
+
 	} else if (roleType.equals(RoleType.ALUMNI)) {
 	    Registration registration = person.getStudentByType(DegreeType.DEGREE);
 	    if (registration != null) {
 		return "L" + registration.getNumber();
 	    }
-	    //throw new DomainException("error.person.addingInvalidRole", RoleType.ALUMNI.getName());
+	    // throw new DomainException("error.person.addingInvalidRole",
+	    // RoleType.ALUMNI.getName());
 	    return null;
-	    
+
 	} else if (roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE)
 		|| roleType.equals(RoleType.CANDIDATE)) {
 	    return "C" + person.getIdInternal();
-	
+
 	} else if (roleType.equals(RoleType.PERSON)) {
 	    return "P" + person.getIdInternal();
 	}
-	
-	return null;	
+
+	return null;
     }
 
     public static Role getMostImportantRole(Collection<Role> roles) {
