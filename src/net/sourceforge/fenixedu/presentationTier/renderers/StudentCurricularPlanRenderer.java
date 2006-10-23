@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlTable;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
@@ -319,8 +320,12 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		    enrolmentInfoCell.setBody(new HtmlText(grade));
 		} else {
 		    final String enrolmentState = enumerationResources.getString(enrolment.getEnrollmentState().toString());
-		    enrolmentInfoCell.setBody(new HtmlText(enrolmentState));
-		    enrolmentInfoCell.setClasses(getEnrolmentInfoClasses() + " smalltxt");
+		    
+		    final HtmlInlineContainer span = new HtmlInlineContainer();
+		    span.setClasses("smalltxt");
+		    span.addChild(new HtmlText(enrolmentState));
+		    
+		    enrolmentInfoCell.setBody(span);
 		}
 	    }
 	}
