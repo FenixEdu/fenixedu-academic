@@ -12,8 +12,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
+import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.rss.RSSAction;
 
@@ -136,11 +136,6 @@ public class AnnouncementRSS extends RSSAction {
         }
 
         return result;
-    }
-
-    @Override
-    protected String getFeedType() {
-        return "rss_2.0";
     }
 
     @Override
