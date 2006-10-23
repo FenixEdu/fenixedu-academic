@@ -64,8 +64,8 @@
 	<logic:notEqual name="numCPs" value="0">
 		<br/>
 		<bean:message bundle="BOLONHA_MANAGER_RESOURCES" key="view.structure.organized.by"/>:<br/>
-		<html:radio property="organizedByGroups" value="true" onchange='this.form.submit();'/><bean:message key="groups" bundle="BOLONHA_MANAGER_RESOURCES"/>
-		<html:radio property="organizedByGroups" value="false" onchange='this.form.submit();'/><bean:message key="years" bundle="BOLONHA_MANAGER_RESOURCES"/>
+		<html:radio property="organizedByGroups" value="true" onclick='this.form.submit();'/><bean:message key="groups" bundle="BOLONHA_MANAGER_RESOURCES"/>
+		<html:radio property="organizedByGroups" value="false" onclick='this.form.submit();'/><bean:message key="years" bundle="BOLONHA_MANAGER_RESOURCES"/>
 		<br/>
 		<br/>
 		<logic:iterate id="infoStudentCurricularPlan" name="selectedStudentCPs">
@@ -107,6 +107,12 @@
 						<bean:message key="label.curricular.year" />: 
 					</strong>
 					<bean:write name="infoStudentCurricularPlan" property="studentCurricularPlan.student.calculateCurricularYear"/>
+				</p>
+				<p>
+					<strong>
+						<bean:message key="arithmeticMean" />: 
+					</strong>
+					<bean:write name="infoStudentCurricularPlan" property="studentCurricularPlan.student.arithmeticMean"/>
 				</p>
 --%>
 			</div>
