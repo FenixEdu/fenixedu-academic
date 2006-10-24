@@ -864,7 +864,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		CurricularCourseType type; 
 	
 		Boolean mandatory; 
-		Double weigth; 
+		Double weigth;
 		String prerequisites;
 		String prerequisitesEn;
 		Boolean mandatoryEnrollment; 
@@ -1092,6 +1092,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
             EnrollmentState enrollmentState;
             EnrollmentCondition enrolmentCondition;
             EnrolmentEvaluationType enrolmentEvaluationType;
+       		Double weigth;
         }
 
 	// Isto � da estrutura antiga, faz sentido ainda?
