@@ -20,9 +20,30 @@
 
 <div class="mvert2">
 
-<%-- Publicado em --%>
+<%-- Publication Date --%>
 	<p class="mvert025 smalltxt greytxt1">
-		<span id="10367">Publicado em 01-08-2006</span>
+		<span id="10367">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar">
+			<logic:notEmpty name="announcement" property="publicationBegin">
+				Publicado em 
+					<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
+				<%
+				if (announcement.getAnnouncementBoard().hasWriter(person)) {
+				%>
+					<logic:notEmpty name="announcement" property="publicationEnd">
+					 	até 
+						<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
+					</logic:notEmpty>
+				<%
+				}
+				%>
+			</logic:notEmpty>
+				
+			<logic:empty name="announcement" property="publicationBegin">
+				Publicado em 
+				<fr:view name="announcement" property="creationDate" layout="no-time"/>
+			</logic:empty>
+		</span>
 	</p>
 				
 <%-- Título --%>
