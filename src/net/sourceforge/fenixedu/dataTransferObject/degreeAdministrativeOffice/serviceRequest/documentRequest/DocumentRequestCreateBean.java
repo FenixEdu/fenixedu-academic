@@ -134,7 +134,6 @@ public class DocumentRequestCreateBean implements Serializable {
             
             if (chosenDocumentRequestType == DocumentRequestType.APPROVEMENT_CERTIFICATE) {
                 if (chosenDocumentPurposeType == DocumentPurposeType.PROFESSIONAL) {
-                    warningsToReport.add("aprovementType.professionalPurpose.fithGrade");
                     warningsToReport.add("aprovementType.professionalPurpose.thirdGrade");
                 }
 
