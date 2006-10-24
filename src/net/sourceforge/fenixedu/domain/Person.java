@@ -1052,13 +1052,13 @@ public class Person extends Person_Base {
 		return person.hasRole(RoleType.STUDENT);
 	    case MASTER_DEGREE_CANDIDATE:
 	    case CANDIDATE:
-		return true;
 	    case STUDENT:
-		return true;
+        case GRANT_OWNER:
+	        return person.hasRole(RoleType.PERSON);
 	    case PERSON:
-		return true;
+	        return true;
 	    default:
-		return person.hasRole(RoleType.PERSON);
+	        return true;
 	    }
 	}
 
