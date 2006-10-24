@@ -103,7 +103,7 @@ public class RegistrationDeclaration implements Serializable {
         //stringBuilder.append(resourceBundle.getString("message.declaration.registration.was.enroled"));
         stringBuilder.append(resourceBundle.getString("message.declaration.registration.in"));
         stringBuilder.append(" ");
-        stringBuilder.append(registration.calculateCurricularYear());
+        stringBuilder.append(registration.getCurricularYear());
         stringBuilder.append(resourceBundle.getString("message.declaration.registration.degree.prefix"));
         stringBuilder.append(" ");
         stringBuilder.append(enumResourceBundle.getString(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().getName()));
