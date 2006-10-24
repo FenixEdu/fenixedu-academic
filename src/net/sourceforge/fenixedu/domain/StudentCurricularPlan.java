@@ -606,6 +606,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	});
     }
+    
+    public boolean hasAnyApprovedEnrolment() {
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.isApproved()) {
+		return true;
+	    }
+	}
+	return false;
+    }
 
     public Double getEctsCredits(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 	if (getAcumulatedEnrollmentsMap() == null) {

@@ -1327,5 +1327,15 @@ public class Registration extends Registration_Base {
     public StudentCurricularPlan getStudentCurricularPlan(ExecutionYear executionYear) {
 	return executionYear == null ? null : initializeStudentCurricularPlansByExecutionYear().get(executionYear);
     }
+
+    public boolean hasAnyApprovedEnrolment() {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.hasAnyApprovedEnrolment()) {
+		return true;
+	    }
+	}
+	
+	return false;
+    }
     
 }
