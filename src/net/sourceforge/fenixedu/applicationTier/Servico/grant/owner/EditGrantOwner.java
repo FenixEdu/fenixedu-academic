@@ -21,17 +21,19 @@ public class EditGrantOwner extends Service {
     private GrantOwner prepareGrantOwner(GrantOwner grantOwner, Person person,
 	    InfoGrantOwner infoGrantOwner, Integer maxNumber) throws ExcepcaoPersistencia {
 
-	grantOwner.setPerson(person);
+    if (infoGrantOwner.getGrantOwnerNumber() == null) {
+        // Generate the GrantOwner's number
+        int aux = maxNumber + 1;
+        Integer nextNumber = Integer.valueOf(aux);
+        grantOwner.setNumber(nextNumber);
+    } else{
+        grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
+    }
+    grantOwner.setPerson(person);
 	grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
 	grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
 
-	if (infoGrantOwner.getGrantOwnerNumber() == null) {
-	    // Generate the GrantOwner's number
-	    int aux = maxNumber + 1;
-	    Integer nextNumber = Integer.valueOf(aux);
-	    grantOwner.setNumber(nextNumber);
-	} else
-	    grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
+	
 
 	return grantOwner;
     }
@@ -59,7 +61,7 @@ public class EditGrantOwner extends Service {
 
 	// create or edit person information
 	if (infoGrantOwner.getInfoPersonEditor().getIdInternal() == null) {
-	    infoGrantOwner.getInfoPersonEditor().setUsername("T" + System.currentTimeMillis());
+	    infoGrantOwner.getInfoPersonEditor().setUsername("X" + System.currentTimeMillis());
 	    person = new Person(infoGrantOwner.getInfoPersonEditor(), country);
 	} else {
 	    person = (Person) rootDomainObject.readPartyByOID(infoGrantOwner.getInfoPersonEditor()
@@ -75,20 +77,18 @@ public class EditGrantOwner extends Service {
 	// create or edit grantOwner information
 	Integer maxNumber = null;
 	if (grantOwner == null) {
-
 	    maxNumber = GrantOwner.readMaxGrantOwnerNumber();
 	    grantOwner = new GrantOwner();
-
-	    if (!person.hasRole(RoleType.PERSON)) {
-		person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
-	    }
-	    person.addPersonRoles(Role.getRoleByRoleType(RoleType.GRANT_OWNER));
+ 	    
 	}
+	
 	grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner, maxNumber);
-
-	if (infoGrantOwner.getInfoPersonEditor().getIdInternal() == null) {	    
-	    person.changeUsername(RoleType.GRANT_OWNER);
+    
+	if (!person.hasRole(RoleType.PERSON)) {
+	    person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
 	}
+	person.addPersonRoles(Role.getRoleByRoleType(RoleType.GRANT_OWNER));
+
 	return grantOwner.getIdInternal();
     }
 }
