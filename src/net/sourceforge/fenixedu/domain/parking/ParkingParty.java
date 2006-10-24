@@ -423,7 +423,6 @@ public class ParkingParty extends ParkingParty_Base {
                 if (teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
                     occupations.add("<strong>Monitor</strong><br/> Nº " + teacher.getTeacherNumber()
                             + "<br/>" + currenteDepartment);
-                    ;
                 } else {
                     occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber()
                             + "<br/>" + currenteDepartment);
