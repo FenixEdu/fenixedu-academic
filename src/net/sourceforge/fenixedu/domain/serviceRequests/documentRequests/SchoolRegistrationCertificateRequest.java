@@ -62,7 +62,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
     }
 
     @Override
-    public void conclude() throws DomainException {
+    public void checkConditions() throws DomainException {
 	// TODO Auto-generated method stub
 	
     }
@@ -92,7 +92,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
 		&& !isFirstRequestFromExecutionYear()) {
 	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
+		    EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST, getRegistration().getPerson(), this);
 	}
     }
 

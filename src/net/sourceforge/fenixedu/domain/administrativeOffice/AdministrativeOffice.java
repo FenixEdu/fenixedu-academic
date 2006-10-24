@@ -110,7 +110,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 		    continue;
 		}
 
-		if (registration != null && documentRequest.getStudent() != registration) {
+		if (registration != null && documentRequest.getRegistration() != registration) {
 		    continue;
 		}
 

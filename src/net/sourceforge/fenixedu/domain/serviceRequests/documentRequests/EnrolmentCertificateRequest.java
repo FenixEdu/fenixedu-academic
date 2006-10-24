@@ -67,7 +67,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     }
 
     @Override
-    public void conclude() throws DomainException {
+    public void checkConditions() throws DomainException {
 	// TODO Auto-generated method stub
 	
     }
@@ -103,7 +103,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
 		&& !isFirstRequestFromExecutionYear()) {
 	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    EventType.ENROLMENT_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
+		    EventType.ENROLMENT_CERTIFICATE_REQUEST, getRegistration().getPerson(), this);
 	}
     }
 

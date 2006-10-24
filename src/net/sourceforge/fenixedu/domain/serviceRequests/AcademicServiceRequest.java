@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -56,7 +57,20 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     public abstract Set<AdministrativeOfficeType> getPossibleAdministrativeOffices();
 
-    public abstract void conclude() throws DomainException;
+    /**
+     * Each AcademicServiceRequest must verify the conditions necessary for it to be concluded and
+     * throw DomainExceptions if otherwise
+     * 
+     * @throws DomainException
+     */
+    protected abstract void checkConditions() throws DomainException;
+    
+    final public void conclude(String justification) {
+	checkConditions();
+	
+	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	edit(AcademicServiceRequestSituationType.CONCLUDED, employee, justification);
+    }
     
     @Override
     public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
@@ -205,7 +219,12 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	// nothing to be done
     }
 
+    @Deprecated
     public Registration getStudent() {
+	return this.getRegistration();
+    }
+
+    public Registration getRegistration() {
 	return getStudentCurricularPlan().getRegistration();
     }
 

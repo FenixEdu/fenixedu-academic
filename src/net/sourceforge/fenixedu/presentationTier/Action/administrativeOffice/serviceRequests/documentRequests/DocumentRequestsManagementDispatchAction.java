@@ -54,7 +54,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final DocumentRequest documentRequest = getDocumentRequest(request);
-	documentRequest.conclude();
+	documentRequest.conclude(null);
 	
 	request.setAttribute("registration", documentRequest.getStudentCurricularPlan().getRegistration());
 	return mapping.findForward("student.viewRegistrationDetails");

@@ -38,7 +38,30 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     @Override
-    public void conclude() throws DomainException {
+    protected void checkConditions() throws DomainException {
+	if (!getStudentCurricularPlan().isBolonha()) {
+	    throw new DomainException(
+		    "ApprovementCertificateRequest.print.preBolonha.documentRequest.in.aplica");
+	}
+
+	if (!getRegistration().hasAnyApprovedEnrolment()) {
+	    throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
+	}
+
+	if (getRegistration().isConcluded()) {
+	    throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+	}
+	
+	// FIXME For now, the following conditions are only valid for 5 year degrees
+	if (getRegistration().getDegreeType().getYears() == 5
+		&& getDocumentPurposeType() == DocumentPurposeType.PROFESSIONAL) {
+	    
+	    int curricularYear = getRegistration().getCurricularYear();
+	    
+	    if (curricularYear <= 3) {
+		throw new DomainException("ApprovementCertificateRequest.registration.hasnt.finished.third.year");
+	    }
+	}
     }
 
     @Override
@@ -60,7 +83,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
 
 	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    EventType.APPROVEMENT_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
+		    EventType.APPROVEMENT_CERTIFICATE_REQUEST, getRegistration().getPerson(), this);
 	}
     }
 

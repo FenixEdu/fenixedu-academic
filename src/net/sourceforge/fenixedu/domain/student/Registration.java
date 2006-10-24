@@ -634,7 +634,8 @@ public class Registration extends Registration_Base {
 	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
 	    final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
 	    final ExecutionDegree executionDegree = group.getExecutionDegree();
-	    final ExecutionYear executionYear = executionDegree.getExecutionYear().getNextExecutionYear();
+	    final ExecutionYear executionYear = executionDegree.getExecutionYear()
+		    .getNextExecutionYear();
 	    if (executionYear != null && executionYear.getState().equals(PeriodState.CURRENT)) {
 		return group;
 	    }
@@ -1173,9 +1174,19 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
-    public int calculateCurricularYear() {
-	int degreeCurricularYears = getActiveOrConcludedOrLastStudentCurricularPlan()
-		.getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
+    public boolean isConcluded() {
+	final double ectsCredits = calculateEctsCredits();
+	final int curricularYear = calculateCurricularYear(ectsCredits);
+	final DegreeType degreeType = getDegreeType();
+	
+	return ectsCredits == degreeType.getDefaultEctsCredits() && curricularYear == degreeType.getYears();
+    }
+    
+    public double getEctsCredits() {
+	return calculateEctsCredits();
+    }
+
+    private double calculateEctsCredits() {
 	double ectsCredits = 0;
 	final ExecutionYear executionYear = findMostRecenteExecutionYearWithEnrolments();
 	if (executionYear == null) {
@@ -1215,6 +1226,17 @@ public class Registration extends Registration_Base {
 	    System.out.println("\t" + curricularCourse.getName() + "   "
 		    + curricularCourse.getEctsCredits());
 	}
+
+	return ectsCredits;
+    }
+
+    public int getCurricularYear() {
+	return calculateCurricularYear(calculateEctsCredits());
+    }
+
+    private int calculateCurricularYear(double ectsCredits) {
+	int degreeCurricularYears = getActiveOrConcludedOrLastStudentCurricularPlan()
+		.getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
 	int ectsCreditsCurricularYear = (int) Math.floor((((ectsCredits + 24) / 60) + 1));
 	return Math.min(ectsCreditsCurricularYear, degreeCurricularYears);
     }
@@ -1259,10 +1281,6 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
-    public int getCalculateCurricularYear() {
-	return calculateCurricularYear();
-    }
-
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
 	final DegreeType degreeType = getDegreeType();
 	return (degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
@@ -1303,20 +1321,20 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-
     private transient Map<ExecutionYear, StudentCurricularPlan> studentCurricularPlansByExecutionYear = null;
 
     private Map<ExecutionYear, StudentCurricularPlan> initializeStudentCurricularPlansByExecutionYear() {
 	if (studentCurricularPlansByExecutionYear == null) {
 	    studentCurricularPlansByExecutionYear = new HashMap<ExecutionYear, StudentCurricularPlan>();
-	    
+
 	    for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-		for (final ExecutionYear executionYear : studentCurricularPlan.getEnrolmentsExecutionYears()) {
+		for (final ExecutionYear executionYear : studentCurricularPlan
+			.getEnrolmentsExecutionYears()) {
 		    studentCurricularPlansByExecutionYear.put(executionYear, studentCurricularPlan);
 		}
 	    }
 	}
-	
+
 	return studentCurricularPlansByExecutionYear;
     }
 
@@ -1325,7 +1343,8 @@ public class Registration extends Registration_Base {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan(ExecutionYear executionYear) {
-	return executionYear == null ? null : initializeStudentCurricularPlansByExecutionYear().get(executionYear);
+	return executionYear == null ? null : initializeStudentCurricularPlansByExecutionYear().get(
+		executionYear);
     }
 
     public boolean hasAnyApprovedEnrolment() {
@@ -1334,8 +1353,8 @@ public class Registration extends Registration_Base {
 		return true;
 	    }
 	}
-	
+
 	return false;
     }
-    
+
 }

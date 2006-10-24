@@ -66,7 +66,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     @Override
-    public void conclude() throws DomainException {
+    public void checkConditions() throws DomainException {
 	// TODO Auto-generated method stub
 	
     }
@@ -101,7 +101,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
 	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
+		    EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST, getRegistration().getPerson(), this);
 	}
 
     }
