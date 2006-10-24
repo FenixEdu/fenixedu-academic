@@ -378,7 +378,8 @@ public class ParkingParty extends ParkingParty_Base {
         if (getParty().isPerson()) {
             Person person = (Person) getParty();
             Teacher teacher = person.getTeacher();
-            if (teacher != null && person.getPersonRole(RoleType.TEACHER) != null) {
+            if (teacher != null && person.getPersonRole(RoleType.TEACHER) != null
+                    && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
                 roles.add(RoleType.TEACHER);
             }
             Employee employee = person.getEmployee();
@@ -421,7 +422,8 @@ public class ParkingParty extends ParkingParty_Base {
                 }
                 if (teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
                     occupations.add("<strong>Monitor</strong><br/> Nº " + teacher.getTeacherNumber()
-                            + "<br/>" + currenteDepartment);;
+                            + "<br/>" + currenteDepartment);
+                    ;
                 } else {
                     occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber()
                             + "<br/>" + currenteDepartment);
