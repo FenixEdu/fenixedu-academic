@@ -74,7 +74,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 
     @Override
     public String getDocumentTemplateKey() {
-	return null;
+	return getClass().getName();
     }
 
     @Override

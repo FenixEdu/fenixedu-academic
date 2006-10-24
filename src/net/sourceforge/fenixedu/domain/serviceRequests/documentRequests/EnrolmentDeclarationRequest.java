@@ -34,7 +34,7 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
 
     @Override
     public String getDocumentTemplateKey() {
-	return null;
+	return getClass().getName();
     }
 
 }

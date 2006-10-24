@@ -32,7 +32,7 @@ public class DegreeDiploma extends DegreeDiploma_Base {
 
     @Override
     public String getDocumentTemplateKey() {
-	return null;
+	return getClass().getName();
     }
     
 }
