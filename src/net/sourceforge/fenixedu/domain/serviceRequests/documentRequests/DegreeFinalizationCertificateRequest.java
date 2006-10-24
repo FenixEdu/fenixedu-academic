@@ -18,24 +18,27 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super();
     }
 
-    public DegreeFinalizationCertificateRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest, Boolean average, Boolean detailed) {
+    public DegreeFinalizationCertificateRequest(StudentCurricularPlan studentCurricularPlan,
+	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean average,
+	    Boolean detailed) {
 	this();
-	
+
 	if (!studentCurricularPlan.hasDegreeDiplomaRequest()) {
-	    throw new DomainException("error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.has.no.degree.diploma.request");
+	    throw new DomainException(
+		    "error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.has.no.degree.diploma.request");
 	}
-	
-	init(studentCurricularPlan, administrativeOffice, documentPurposeType, otherDocumentPurposeTypeDescription,
-		urgentRequest, average, detailed);
+
+	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
+		otherDocumentPurposeTypeDescription, urgentRequest, average, detailed);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest, Boolean average, Boolean detailed) {
-	init(studentCurricularPlan, administrativeOffice, DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE,
-		documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+    protected void init(StudentCurricularPlan studentCurricularPlan,
+	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean average,
+	    Boolean detailed) {
+	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
+		otherDocumentPurposeTypeDescription, urgentRequest);
 
 	checkParameters(average, detailed);
 	super.setAverage(average);
@@ -51,6 +54,31 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.detailed.cannot.be.null");
 	}
+    }
+
+    @Override
+    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
+	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
+
+	result.add(AdministrativeOfficeType.DEGREE);
+
+	return result;
+    }
+
+    @Override
+    public void conclude() throws DomainException {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public DocumentRequestType getDocumentRequestType() {
+	return DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE;
+    }
+
+    @Override
+    public String getDocumentTemplateKey() {
+	return getClass().getName();
     }
 
     @Override
@@ -76,20 +104,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 		    EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
 	}
 
-    }
-
-    @Override
-    public String getDocumentTemplateKey() {
-	return null;
-    }
-
-    @Override
-    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
-	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
-	
-	result.add(AdministrativeOfficeType.DEGREE);
-	
-	return result;
     }
 
 }

@@ -124,7 +124,8 @@
 		     	parameter="method"
 		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests.DocumentRequestsManagementDispatchAction"
 				scope="request">
-				<forward name="showOperations" path="documentRequests.management.showOperations"/>
+				<forward name="printDocument" path="documentRequests.management.printDocument"/>
+				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
 				<forward name="viewNewDocumentRequests" path="documentRequests.management.viewNewDocumentRequests"/>
 				<forward name="prepareSearch" path="documentRequests.management.prepareSearch"/>
 				<forward name="showDocumentRequests" path="documentRequests.management.showDocumentRequests"/>

@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 
 public class ApprovementCertificateRequest extends ApprovementCertificateRequest_Base {
@@ -17,14 +18,37 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	super();
     }
 
-    public ApprovementCertificateRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest) {
+    public ApprovementCertificateRequest(StudentCurricularPlan studentCurricularPlan,
+	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
 
 	this();
 
-	init(studentCurricularPlan, administrativeOffice, DocumentRequestType.APPROVEMENT_CERTIFICATE, documentPurposeType,
+	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
 		otherDocumentPurposeTypeDescription, urgentRequest);
+    }
+
+    @Override
+    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
+	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
+
+	result.add(AdministrativeOfficeType.DEGREE);
+
+	return result;
+    }
+
+    @Override
+    public void conclude() throws DomainException {
+    }
+
+    @Override
+    public DocumentRequestType getDocumentRequestType() {
+	return DocumentRequestType.APPROVEMENT_CERTIFICATE;
+    }
+
+    @Override
+    public String getDocumentTemplateKey() {
+	return getClass().getName();
     }
 
     @Override
@@ -38,20 +62,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	    new CertificateRequestEvent(getAdministrativeOffice(),
 		    EventType.APPROVEMENT_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
 	}
-    }
-
-    @Override
-    public String getDocumentTemplateKey() {
-	return null;
-    }
-
-    @Override
-    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
-	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
-	
-	result.add(AdministrativeOfficeType.DEGREE);
-	
-	return result;
     }
 
 }

@@ -36,10 +36,28 @@ import org.apache.struts.action.DynaActionForm;
 
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward showOperations(ActionMapping mapping, ActionForm form,
+    private DocumentRequest getDocumentRequest(HttpServletRequest request) {
+	return (DocumentRequest) rootDomainObject
+		.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
+			"documentRequestId"));
+    }
+
+    public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	return mapping.findForward("showOperations");
+	request.setAttribute("documentRequest", getDocumentRequest(request));
+
+	return mapping.findForward("printDocument");
+    }
+    
+    public ActionForward concludeDocumentRequest(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final DocumentRequest documentRequest = getDocumentRequest(request);
+	documentRequest.conclude();
+	
+	request.setAttribute("registration", documentRequest.getStudentCurricularPlan().getRegistration());
+	return mapping.findForward("student.viewRegistrationDetails");
     }
 
     public ActionForward viewNewDocumentRequests(ActionMapping mapping, ActionForm form,
@@ -51,27 +69,28 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        StudentsSearchBean studentsSearchBean = (StudentsSearchBean) getRenderedObject();
-        
-        if (studentsSearchBean == null) { //1st time
-            studentsSearchBean = new StudentsSearchBean();
-        } else {
-            final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
-            final AdministrativeOffice administrativeOffice = AdministrativeOffice.readByEmployee(employee); 
-            
-            final Set<Student> students = studentsSearchBean.searchForOffice(administrativeOffice);
-        
-            if (students.size() == 1){
-                request.setAttribute("student", students.iterator().next());
-                return mapping.findForward("createDocumentRequests");
-            }
-            request.setAttribute("students", students);
-        }
+	StudentsSearchBean studentsSearchBean = (StudentsSearchBean) getRenderedObject();
 
-        request.setAttribute("studentsSearchBean", studentsSearchBean);
-        return mapping.findForward("chooseStudentToCreateDocumentRequest");
+	if (studentsSearchBean == null) { //1st time
+	    studentsSearchBean = new StudentsSearchBean();
+	} else {
+	    final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	    final AdministrativeOffice administrativeOffice = AdministrativeOffice
+		    .readByEmployee(employee);
+
+	    final Set<Student> students = studentsSearchBean.searchForOffice(administrativeOffice);
+
+	    if (students.size() == 1) {
+		request.setAttribute("student", students.iterator().next());
+		return mapping.findForward("createDocumentRequests");
+	    }
+	    request.setAttribute("students", students);
+	}
+
+	request.setAttribute("studentsSearchBean", studentsSearchBean);
+	return mapping.findForward("chooseStudentToCreateDocumentRequest");
     }
 
     public ActionForward processNewDocuments(ActionMapping mapping, ActionForm actionForm,
@@ -212,12 +231,6 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    return mapping.findForward("editDocumentRequest");
 	}
 
-    }
-
-    private DocumentRequest getDocumentRequest(HttpServletRequest request) {
-	return (DocumentRequest) rootDomainObject
-		.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
-			"documentRequestId"));
     }
 
 }

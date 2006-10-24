@@ -19,21 +19,23 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	super();
     }
 
-    public EnrolmentCertificateRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest, Boolean detailed, ExecutionYear executionYear) {
+    public EnrolmentCertificateRequest(StudentCurricularPlan studentCurricularPlan,
+	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean detailed,
+	    ExecutionYear executionYear) {
 
 	this();
 
-	init(studentCurricularPlan, administrativeOffice, documentPurposeType, otherDocumentPurposeTypeDescription,
-		urgentRequest, detailed, executionYear);
+	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
+		otherDocumentPurposeTypeDescription, urgentRequest, detailed, executionYear);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest, Boolean detailed, ExecutionYear executionYear) {
+    protected void init(StudentCurricularPlan studentCurricularPlan,
+	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean detailed,
+	    ExecutionYear executionYear) {
 
-	init(studentCurricularPlan, administrativeOffice, DocumentRequestType.ENROLMENT_CERTIFICATE, documentPurposeType,
+	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
 		otherDocumentPurposeTypeDescription, urgentRequest);
 
 	checkParameters(detailed, executionYear);
@@ -53,6 +55,31 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
 	}
+    }
+
+    @Override
+    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
+	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
+
+	result.add(AdministrativeOfficeType.DEGREE);
+
+	return result;
+    }
+
+    @Override
+    public void conclude() throws DomainException {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public DocumentRequestType getDocumentRequestType() {
+	return DocumentRequestType.ENROLMENT_CERTIFICATE;
+    }
+
+    @Override
+    public String getDocumentTemplateKey() {
+	return getClass().getName();
     }
 
     @Override
@@ -78,20 +105,6 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	    new CertificateRequestEvent(getAdministrativeOffice(),
 		    EventType.ENROLMENT_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
 	}
-    }
-
-    @Override
-    public String getDocumentTemplateKey() {
-	return null;
-    }
-
-    @Override
-    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
-	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
-	
-	result.add(AdministrativeOfficeType.DEGREE);
-	
-	return result;
     }
 
 }

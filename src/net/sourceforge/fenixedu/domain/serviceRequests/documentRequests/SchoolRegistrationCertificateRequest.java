@@ -19,22 +19,24 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	super();
     }
 
-    public SchoolRegistrationCertificateRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest, ExecutionYear executionYear) {
+    public SchoolRegistrationCertificateRequest(StudentCurricularPlan studentCurricularPlan,
+	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
+	    ExecutionYear executionYear) {
 
 	this();
 
-	init(studentCurricularPlan, administrativeOffice, documentPurposeType, otherDocumentPurposeTypeDescription,
-		urgentRequest, executionYear);
+	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
+		otherDocumentPurposeTypeDescription, urgentRequest, executionYear);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest, ExecutionYear executionYear) {
+    protected void init(StudentCurricularPlan studentCurricularPlan,
+	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
+	    ExecutionYear executionYear) {
 
-	init(studentCurricularPlan, administrativeOffice, DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE,
-		documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
+		otherDocumentPurposeTypeDescription, urgentRequest);
 
 	checkParameters(executionYear);
 	super.setExecutionYear(executionYear);
@@ -48,6 +50,31 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.before.studentCurricularPlan.start");
 	}
+    }
+
+    @Override
+    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
+	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
+
+	result.add(AdministrativeOfficeType.DEGREE);
+
+	return result;
+    }
+
+    @Override
+    public void conclude() throws DomainException {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public DocumentRequestType getDocumentRequestType() {
+	return DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE;
+    }
+
+    @Override
+    public String getDocumentTemplateKey() {
+	return null;
     }
 
     @Override
@@ -67,20 +94,6 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	    new CertificateRequestEvent(getAdministrativeOffice(),
 		    EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
 	}
-    }
-
-    @Override
-    public String getDocumentTemplateKey() {
-	return null;
-    }
-
-    @Override
-    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
-	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
-	
-	result.add(AdministrativeOfficeType.DEGREE);
-	
-	return result;
     }
 
 }

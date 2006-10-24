@@ -44,7 +44,11 @@
         <put name="body" value="/academicAdminOffice/manageEnrolmentModel.jsp"></put>
     </definition>      
     
-    	<!-- ************* Document Requests Management ************* -->
+	<!-- ************* Document Requests Management ************* -->
+	<definition name="documentRequests.management.printDocument" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"/>
+	</definition>
+	
 	<definition name="documentRequests.management.viewNewDocumentRequests" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewNewDocumentRequests.jsp"/>
 	</definition>

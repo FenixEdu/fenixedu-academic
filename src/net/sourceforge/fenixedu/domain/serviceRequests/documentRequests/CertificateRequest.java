@@ -16,20 +16,21 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super.setNumberOfPages(0);
     }
 
-    public CertificateRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice, 
-	    DocumentRequestType documentRequestType, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
+    public CertificateRequest(StudentCurricularPlan studentCurricularPlan,
+	    AdministrativeOffice administrativeOffice, DocumentRequestType documentRequestType,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
+	    Boolean urgentRequest) {
 
 	this();
-	init(studentCurricularPlan, administrativeOffice, documentRequestType, documentPurposeType,
+	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
 		otherDocumentPurposeTypeDescription, urgentRequest);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice, 
-	    DocumentRequestType documentRequestType, DocumentPurposeType documentPurposeType,
+    protected void init(StudentCurricularPlan studentCurricularPlan,
+	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
 
-	init(studentCurricularPlan, administrativeOffice, documentRequestType);
+	init(studentCurricularPlan, administrativeOffice);
 	checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
 	super.setDocumentPurposeType(documentPurposeType);
@@ -56,7 +57,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	return getUrgentRequest().booleanValue();
     }
 
-    public static CertificateRequest create(StudentCurricularPlan studentCurricularPlan, 
+    public static CertificateRequest create(StudentCurricularPlan studentCurricularPlan,
 	    DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
 	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear) {
@@ -64,34 +65,29 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	AdministrativeOffice administrativeOffice = null;
 	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
 	if (employee != null) {
-	    administrativeOffice = AdministrativeOffice.readByEmployee(employee);    
-	} 
-	if (administrativeOffice == null) {
-	    administrativeOffice = AdministrativeOffice.getResponsibleAdministrativeOffice(studentCurricularPlan.getDegree());
+	    administrativeOffice = AdministrativeOffice.readByEmployee(employee);
 	}
-	
+	if (administrativeOffice == null) {
+	    administrativeOffice = AdministrativeOffice
+		    .getResponsibleAdministrativeOffice(studentCurricularPlan.getDegree());
+	}
+
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
 	    return new SchoolRegistrationCertificateRequest(studentCurricularPlan, administrativeOffice,
 		    chosenDocumentPurposeType, otherPurpose, urgentRequest, executionYear);
 	case ENROLMENT_CERTIFICATE:
-	    return new EnrolmentCertificateRequest(studentCurricularPlan, administrativeOffice, chosenDocumentPurposeType,
-		    otherPurpose, urgentRequest, detailed, executionYear);
+	    return new EnrolmentCertificateRequest(studentCurricularPlan, administrativeOffice,
+		    chosenDocumentPurposeType, otherPurpose, urgentRequest, detailed, executionYear);
 	case APPROVEMENT_CERTIFICATE:
-	    return new ApprovementCertificateRequest(studentCurricularPlan, administrativeOffice, chosenDocumentPurposeType,
-		    otherPurpose, urgentRequest);
+	    return new ApprovementCertificateRequest(studentCurricularPlan, administrativeOffice,
+		    chosenDocumentPurposeType, otherPurpose, urgentRequest);
 	case DEGREE_FINALIZATION_CERTIFICATE:
 	    return new DegreeFinalizationCertificateRequest(studentCurricularPlan, administrativeOffice,
 		    chosenDocumentPurposeType, otherPurpose, urgentRequest, average, detailed);
 	}
 
 	return null;
-    }
-
-    @Override
-    public void setDocumentRequestType(DocumentRequestType documentRequestType) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.documentRequestType");
     }
 
     @Override

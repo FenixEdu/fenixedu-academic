@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table AcademicServiceRequest" alterTableAcademicServiceRequest.sql

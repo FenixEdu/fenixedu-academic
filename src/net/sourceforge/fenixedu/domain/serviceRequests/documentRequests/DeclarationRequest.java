@@ -29,7 +29,7 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
             DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
             Boolean urgentRequest) {
 
-        init(studentCurricularPlan, administrativeOffice, documentRequestType);
+        init(studentCurricularPlan, administrativeOffice);
         checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
         super.setDocumentPurposeType(documentPurposeType);
@@ -70,12 +70,6 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	return null;
     }
     
-
-    @Override
-    public void setDocumentRequestType(DocumentRequestType documentRequestType) {
-        throw new DomainException(
-                "error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.documentRequestType");
-    }
 
     @Override
     public void setDocumentPurposeType(DocumentPurposeType documentPurposeType) {

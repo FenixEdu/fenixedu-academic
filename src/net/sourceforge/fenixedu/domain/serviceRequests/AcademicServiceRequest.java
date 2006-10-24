@@ -25,7 +25,10 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setOjbConcreteClass(this.getClass().getName());
-	super.setCreationDate(new DateTime());
+	
+	final DateTime now = new DateTime();
+	super.setCreationDate(now);
+	super.setServiceRequestNumber(now.year().getAsShortText() + "/" + getIdInternal().toString());
     }
 
     protected AcademicServiceRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice ) {
@@ -49,9 +52,12 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	    throw new DomainException(
 		    "error.serviceRequests.AcademicServiceRequest.administrativeOffice.cannot.be.null");
 	}
-
     }
 
+    public abstract Set<AdministrativeOfficeType> getPossibleAdministrativeOffices();
+
+    public abstract void conclude() throws DomainException;
+    
     @Override
     public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	throw new DomainException(
@@ -68,6 +74,12 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     public void setCreationDate(DateTime creationDate) {
 	throw new DomainException(
 		"error.serviceRequests.AcademicServiceRequest.cannot.modify.creationDate");
+    }
+
+    @Override
+    public void setServiceRequestNumber(String serviceRequestNumber) {
+	throw new DomainException(
+		"error.serviceRequests.AcademicServiceRequest.cannot.modify.serviceRequestNumber");
     }
 
     @Override
@@ -221,6 +233,4 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return (isConcluded() || isDelivered());
     }
     
-    public abstract Set<AdministrativeOfficeType> getPossibleAdministrativeOffices();
-
 }
