@@ -39,7 +39,6 @@ function confirmation(){
 	<bean:define id="person" name="parkingParty" property="party" type="net.sourceforge.fenixedu.domain.Person"/>
 	<logic:notEqual name="person" property="partyClassification" value="TEACHER">
 	<logic:notEqual name="person" property="partyClassification" value="EMPLOYEE">
-		<bean:write	name="parkingRequest" property="limitlessAccessCard"/>
 		<logic:equal name="parkingRequest" property="limitlessAccessCard" value="false">
 			<bean:define id="cardTypeRequest"><bean:message key="label.limitedCard" bundle="PARKING_RESOURCES"></bean:message></bean:define>
 		</logic:equal>

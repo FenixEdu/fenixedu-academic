@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -83,8 +85,18 @@ public class ParkingRequestSearch implements Serializable {
     }
 
     private boolean satisfiedPersonClassification(ParkingRequest request) {
-        return getParkingPartyClassification() == null
-                || request.getParkingParty().getParty().getPartyClassification() == getParkingPartyClassification();
+        if (getParkingPartyClassification() == null
+                || request.getParkingParty().getParty().getPartyClassification() == getParkingPartyClassification()) {
+            if (getParkingPartyClassification() == ParkingPartyClassification.TEACHER) {
+                Person person = (Person) request.getParkingParty().getParty();
+                if (person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+                    return false;
+                }
+                return true;
+            }
+            return true;
+        }
+        return false;
     }
 
     private boolean satisfiedPersonName(ParkingRequest request) {
