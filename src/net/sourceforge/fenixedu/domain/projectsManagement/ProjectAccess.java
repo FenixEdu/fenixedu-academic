@@ -124,17 +124,13 @@ public class ProjectAccess extends ProjectAccess_Base {
 
             for (Identification identification : projectAccess.getPerson().getUser()
                     .getIdentifications()) {
-                if (!(identification instanceof Login)) {
-                    continue outter;
-                }
-
-                Login login = (Login) identification;
-
-                if (!login.hasUsername(username)) {
-                    continue outter;
+                if (identification instanceof Login) {
+                    Login login = (Login) identification;
+                    if (!login.hasUsername(username)) {
+                        continue outter;
+                    }
                 }
             }
-
             result.add(projectAccess);
         }
 
