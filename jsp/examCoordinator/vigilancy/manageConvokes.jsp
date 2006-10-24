@@ -379,12 +379,12 @@
 			</td>
 			<td>
 				<logic:equal name="vigilancyWithCredits" property="attended" value="false">
-				<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do?oid=" + vigilancyWithCredits.getIdInternal() + "&method=convokeAttended&bool=true&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "" ) %>"><bean:message key="label.unconfirm" bundle="VIGILANCY_RESOURCES"/></a>
+				<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do?oid=" + vigilancyWithCredits.getIdInternal() + "&method=convokeAttended&bool=true&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "" ) %>"><bean:message key="label.confirm" bundle="VIGILANCY_RESOURCES"/></a>
 				</logic:equal>
 			</td>
 			<td>
 				<logic:equal name="vigilancyWithCredits" property="attended" value="true">
-				<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do?oid=" + vigilancyWithCredits.getIdInternal() + "&method=convokeAttended&bool=false&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "" ) %>"><bean:message key="label.confirm" bundle="VIGILANCY_RESOURCES"/></a>
+				<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do?oid=" + vigilancyWithCredits.getIdInternal() + "&method=convokeAttended&bool=false&temporalInformation=" + bean.getTemporalInformation() + "&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&whatToShow=evaluations" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "" ) %>"><bean:message key="label.unconfirm" bundle="VIGILANCY_RESOURCES"/></a>
 				</logic:equal>
 			</td>
 		</tr>
