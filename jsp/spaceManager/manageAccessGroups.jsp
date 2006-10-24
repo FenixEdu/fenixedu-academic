@@ -13,16 +13,25 @@
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
 	<jsp:include page="spaceCrumbs.jsp"/>
-			
+
+	<ul class="mvert15 list5">
+		<li>
+			<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformationId">
+				<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
+			</html:link>
+		</li>
+	</ul>
+
 	<logic:messagesPresent message="true">
-		<br/><br/>
-		<span class="error"><!-- Error messages go here -->
+		<p>
+		<span class="error0"><!-- Error messages go here -->
 			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
 				<bean:write name="message"/>
 			</html:messages>
 		</span>
+		</p>
 	</logic:messagesPresent>
-	
+
 	<%-- AccessGroups --%>		
 	<e:labelValues id="accessGroupTypes" enumeration="net.sourceforge.fenixedu.domain.space.Space$SpaceAccessGroupType" bundle="ENUMERATION_RESOURCES" />
 	<logic:iterate id="accessGroupType" name="accessGroupTypes" type="org.apache.struts.util.LabelValueBean">				
@@ -32,12 +41,10 @@
 			<bean:define id="accessGroup" name="space" property="<%= slotName %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>
 			<logic:notEmpty name="accessGroup">	
 				<logic:notEmpty name="accessGroup" property="elements">	
-					<h3 class="mtop2 mbottom0"><bean:write name="accessGroupType" property="label"/></h3>				
+					<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/></strong></p>
 					<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
-						<fr:layout name="tabular">      										  
-				   			<fr:property name="rowClasses" value="listClasses"/>	
-				   			<fr:property name="columnClasses" value="listClasses"/>
-				   			<fr:property name="headerClasses" value="listClasses-header"/>
+						<fr:layout name="tabular">     										  
+				   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
 				            
 				            <fr:property name="link(delete)" value="<%= "/manageSpaces.do?method=removePersonFromAccessGroup&spaceInformationID=" + selectedSpaceInformationId + "&spaceAccessGroupType=" + accessGroupType.getValue() %>"/>
 				            <fr:property name="param(delete)" value="idInternal/personID"/>
@@ -52,15 +59,18 @@
 	</logic:iterate>	
 		
 	<%-- Add New Person --%>
-	<h3><bean:message key="label.add.person" bundle="SPACE_RESOURCES"/></h3>				
+	<p class="mbottom05"><strong><bean:message key="label.add.person" bundle="SPACE_RESOURCES"/></strong></p>
 	<bean:define id="addPersonToAccessGroupUrl">/manageSpaces.do?method=addPersonToAccessGroup&spaceInformationID=<bean:write name="selectedSpaceInformationId"/></bean:define>
 	<fr:form action="<%= addPersonToAccessGroupUrl %>">
-		<fr:create nested="true" id="addPersonToPersonOccupationAccessGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" schema="AddPersonToAccessGroup" />	   			
+		<fr:create nested="true" id="addPersonToPersonOccupationAccessGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" schema="AddPersonToAccessGroup">
+			<fr:layout name="tabular">  
+				<fr:property name="classes" value="tstyle5 thmiddle thright thlight mtop05 mbottom1"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>		
+		</fr:create>
+		<p>
 		<html:submit><bean:message key="button.add" bundle="SPACE_RESOURCES"/></html:submit>
+		</p>
 	</fr:form>
-			
-	<p><html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformationId">
-			<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
-	</html:link></p>
-	
+				
 </logic:notEmpty>

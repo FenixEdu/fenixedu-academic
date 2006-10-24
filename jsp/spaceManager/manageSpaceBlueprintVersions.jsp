@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em>Gestão de Espaços</em>
+<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message key="label.space.blueprints.management" bundle="SPACE_RESOURCES"/></h2>
 
 <logic:present name="selectedSpaceInformation">
@@ -39,7 +39,7 @@
 	</logic:messagesPresent>	
 	
 	<logic:notEmpty name="selectedSpaceBlueprint">
-		<div class="mvert15">		
+		<div class="mvert15">
 			<bean:define id="selectedSpaceBlueprintId" name="selectedSpaceBlueprint" property="idInternal" />
 			<logic:iterate id="blueprint" name="selectedSpaceInformation" property="space.orderedBlueprints">
 				<bean:define id="blueprint" name="blueprint" toScope="request"/>								
@@ -59,7 +59,7 @@
 		
 		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="selectedSpaceBlueprintId"/></bean:define>
 		<p>
-			<html:img align="middle" src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
+			<html:img src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
 		</p>
 		
 		<bean:define id="editLink">

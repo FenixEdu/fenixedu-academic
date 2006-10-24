@@ -63,6 +63,7 @@
 	<fr:view schema="ViewSpaceResponsibleUnitsWithInterval" name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
 		<fr:layout name="tabular">      			
    			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
+   			<fr:property name="columnClasses" value="aleft,,,,"/>
    			
    			<fr:property name="link(edit)" value="<%="/manageSpaceResponsibility.do?method=prepareEditSpaceResponsibility&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/spaceResponsibilityID"/>
@@ -105,6 +106,7 @@
 	<fr:view schema="ViewSpaceResponsibleUnitsWithInterval" name="selectedSpaceInformation" property="space.inactiveSpaceResponsibility">
 		<fr:layout name="tabular">      			
    			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
+   			<fr:property name="columnClasses" value="aleft,,,,"/>
    			   			
    			<fr:property name="link(edit)" value="<%="/manageSpaceResponsibility.do?method=prepareEditSpaceResponsibility&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/spaceResponsibilityID"/>

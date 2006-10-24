@@ -12,9 +12,9 @@
 <bean:define id="suroundingSpaceID" type="java.lang.Integer" name="selectedSpace" property="idInternal"/>
 <bean:define id="suroundingSpaceInformationID" type="java.lang.Integer" name="selectedSpace" property="spaceInformation.idInternal"/>
 
-<p class="mvert1"><span class="warning0"><bean:message key="label.space.createIn" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="selectedSpace" property="spaceInformation.presentationName"/></strong></span></p>
+<p class="mvert15"><span class="warning0"><bean:message key="label.space.createIn" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="selectedSpace" property="spaceInformation.presentationName"/></strong></span></p>
 
-<p class="mbottom05"><strong><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/></strong></p>
+<p class="mtop15 mbottom05"><strong><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/></strong></p>
 <html:form action="/manageSpaces">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showCreateSubSpaceForm"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.spaceInformationID" property="spaceInformationID" value="<%= suroundingSpaceInformationID.toString() %>"/>
@@ -34,41 +34,44 @@
 </bean:define>	
 
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
-    <p class="mtop2 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>
+    <p class="mtop15 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator"
 			schema="BuildingFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
 		<fr:destination name="cancel" path="<%= cancelPath %>"/>
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="thlight mtop0 mbottom1"/>
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0 mbottom1"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>		
 		</fr:layout>	
 	</fr:create>
 </logic:equal>
 
 
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Floor">
-	<p class="mtop2 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong>:</p>
+	<p class="mtop15 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Floor$FloorFactoryCreator"
 			schema="FloorFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
 		<fr:destination name="cancel" path="<%= cancelPath %>"/>
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="thlight mtop0 mbottom1"/>
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0 mbottom1"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>		
 	</fr:create>
 </logic:equal>
 
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Room">
-    <p class="mtop2 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/>:</strong></p>
+    <p class="mtop15 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator"
 			schema="RoomFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
 		<fr:destination name="cancel" path="<%= cancelPath %>"/>
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight mtop0"/>
+			<fr:property name="classes" value="tstyle5 thlight thmiddle mtop0 mbottom1"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>	
 	</fr:create>
 </logic:equal>

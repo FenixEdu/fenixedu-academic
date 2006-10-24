@@ -18,7 +18,7 @@
 	<table class="tstyle4">
 		<tr>
 			<th>
-				<bean:message bundle="SPACE_RESOURCES" key="title.space.type"/>
+				<bean:message bundle="SPACE_RESOURCES" key="title.type"/>
 			</th>
 			<th>
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>
@@ -50,7 +50,7 @@
 							</logic:equal>
 						</html:link>
 					</td>
-					<td>
+					<td class="acenter">
 						<bean:write name="space" property="containedSpacesCount"/>
 					</td>
 					<td>

@@ -9,7 +9,7 @@
 <logic:present name="materialSpaceOccupation">	
 	
 	<logic:messagesPresent message="true">
-		<span class="error"><!-- Error messages go here -->
+		<span class="error0"><!-- Error messages go here -->
 			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
 				<bean:write name="message"/>
 			</html:messages>
@@ -17,7 +17,7 @@
 	</logic:messagesPresent>
 	
 	<bean:define id="material" name="materialSpaceOccupation" property="material" />
-	<div class="infoop2 mvert1">
+	<div class="infoop3 mvert1">
 		<fr:view name="material" type="net.sourceforge.fenixedu.domain.material.Material" schema="ViewMaterialDetails" layout="tabular"/>
 	</div>	
 	

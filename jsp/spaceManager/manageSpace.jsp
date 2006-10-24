@@ -18,7 +18,7 @@
 				
 	<logic:messagesPresent message="true">
 		<p>
-		<span class="error"><!-- Error messages go here -->
+		<span class="error0"><!-- Error messages go here -->
 			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
 				<bean:write name="message"/>
 			</html:messages>
@@ -45,7 +45,7 @@
 	<table class="tstyle4 thleft thlight">
 		<tr>
 			<th>
-				<bean:message bundle="SPACE_RESOURCES" key="title.space.type"/>:
+				<bean:message bundle="SPACE_RESOURCES" key="title.type"/>:
 			</th>
 			<td>
 				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
@@ -66,7 +66,7 @@
 			<th>
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>:
 			</th>
-			<td>
+			<td style="background: #fafaca;">
 				<bean:write name="selectedSpaceInformation" property="presentationName"/>
 			</td>
 		</tr>
@@ -109,7 +109,9 @@
 	<logic:notEmpty name="selectedSpaceInformation" property="space.mostRecentBlueprint">		
 		<bean:define id="blueprint" name="selectedSpaceInformation" property="space.mostRecentBlueprint"/>		
 		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="blueprint" property="idInternal"/></bean:define>
-		<html:img align="middle" src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
+		<p>
+		<html:img src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
+		</p>
 	</logic:notEmpty>	
 	<p>
 		<html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
@@ -127,10 +129,10 @@
 		<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="title.subspaces"/></h3>
 		<bean:size id="spacesSize" name="spaces"/>
 		<logic:greaterEqual name="spacesSize" value="1">
-			<table class="tstyle4 thleft thlight mbottom05">				
+			<table class="tstyle4 thlight mbottom05">				
 				<tr>
 					<th>
-						<bean:message bundle="SPACE_RESOURCES" key="title.space.type"/>
+						<bean:message bundle="SPACE_RESOURCES" key="title.type"/>
 					</th>
 					<th>
 						<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>
@@ -162,7 +164,7 @@
 								<bean:write name="space" property="spaceInformation.presentationName"/>
 							</html:link>
 						</td>
-						<td>
+						<td class="acenter">
 							<bean:write name="space" property="containedSpacesCount"/>
 						</td>
 						<td>

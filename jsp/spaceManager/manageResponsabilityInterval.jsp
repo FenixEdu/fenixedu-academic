@@ -8,21 +8,21 @@
 <em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message key="label.space.responsibility.management" bundle="SPACE_RESOURCES"/></h2>
 
-<logic:present name="selectedSpaceInformation">	
-	
+<logic:present name="selectedSpaceInformation">
+
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
 	<jsp:include page="spaceCrumbs.jsp"/>
 
 	<bean:define id="backLink">
 		/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
-	</bean:define>	
+	</bean:define>
 
 	<ul class="mvert15 list5">
 		<li>
 			<html:link page="<%= backLink %>">
 				<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
-			</html:link>	
+			</html:link>
 		</li>
 	</ul>
 
@@ -36,37 +36,36 @@
 			</span>
 		</p>
 	</logic:messagesPresent>
-		
-	<logic:empty name="spaceResponsibility">
-	<div class="infoop2 mtop15">
-		<p><bean:message key="label.unit.name" bundle="SPACE_RESOURCES"/>: <bean:write name="unit" property="name"/></p> 
-		<p><bean:message key="label.unit.costCenterCode" bundle="SPACE_RESOURCES"/>: <bean:write name="unit" property="costCenterCode"/></p> 			
-	</div>		
 
+
+	<logic:empty name="spaceResponsibility">
+		<div class="infoop2 mtop15">
+			<p><bean:message key="label.unit.name" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="unit" property="name"/></strong></p>
+			<p><bean:message key="label.unit.costCenterCode" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="unit" property="costCenterCode"/></strong></p>
+		</div>
 		<fr:create id="create" action="<%= backLink %>" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility"
-				   schema="CreateSpaceResponsibilityInterval">	   	
+				   schema="CreateSpaceResponsibilityInterval">
 			<fr:hidden slot="space" name="selectedSpaceInformation" property="space" />
 			<fr:hidden slot="unit" name="unit" />
 			<fr:layout>
-				<fr:property name="classes" value="tstyle5 thright thlight mtop15 mbottom1"/>
-				<fr:property name="columnClasses" value=",,tdclear"/>
+				<fr:property name="classes" value="tstyle5 thmiddle thright thlight mtop15 mbottom1"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 		</fr:create>
-			
-	</logic:empty>	
-	
-	
+	</logic:empty>
+
+
 	<logic:notEmpty name="spaceResponsibility">
 		<div class="infoop2 mvert1">
-			<p><bean:message key="label.unit.name" bundle="SPACE_RESOURCES"/>: <bean:write name="spaceResponsibility" property="unit.name"/></p> 
-			<p><bean:message key="label.unit.costCenterCode" bundle="SPACE_RESOURCES"/>: <bean:write name="spaceResponsibility" property="unit.costCenterCode"/></p> 			
-		</div>		
+			<p><bean:message key="label.unit.name" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="spaceResponsibility" property="unit.name"/></strong></p>
+			<p><bean:message key="label.unit.costCenterCode" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="spaceResponsibility" property="unit.costCenterCode"/></strong></p>
+		</div>
 		<fr:edit name="spaceResponsibility" action="<%= backLink %>" schema="EditSpaceResponsibility">
-			<fr:layout name="tabular">      										  
-	   			<fr:property name="classes" value="thlight mtop05 mbottom1"/>
+			<fr:layout name="tabular">
+	   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
 	   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	    	</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
-			
+
 </logic:present>
