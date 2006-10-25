@@ -49,6 +49,16 @@ function confirmation(){
 		<strong><bean:write name="cardTypeRequest"/></strong></span></p>
 	</logic:notEqual>
 	</logic:notEqual>
+	<logic:present name="monitor">
+		<logic:equal name="parkingRequest" property="limitlessAccessCard" value="false">
+			<bean:define id="cardTypeRequest"><bean:message key="label.limitedCard" bundle="PARKING_RESOURCES"></bean:message></bean:define>
+		</logic:equal>
+		<logic:equal name="parkingRequest" property="limitlessAccessCard" value="true">
+			<bean:define id="cardTypeRequest"><bean:message key="label.limitlessCard" bundle="PARKING_RESOURCES"></bean:message></bean:define>
+		</logic:equal>
+		<p><span class="infoop2"><bean:message key="message.userRequestedCardType" bundle="PARKING_RESOURCES"/>
+		<strong><bean:write name="cardTypeRequest"/></strong></span></p>
+	</logic:present>
 	
 	<logic:notEqual name="parkingRequest" property="parkingRequestState" value="PENDING">		
 		<jsp:include page="viewParkingPartyAndRequest.jsp"/>

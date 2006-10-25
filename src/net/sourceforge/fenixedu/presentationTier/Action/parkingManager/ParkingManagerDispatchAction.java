@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -99,6 +100,13 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             request.setAttribute("groups", ParkingGroup.getAll());
         }
         request.setAttribute("parkingRequest", parkingRequest);
+        
+        if(parkingRequest.getParkingParty().getParty().isPerson()){
+            Person person = (Person) parkingRequest.getParkingParty().getParty();
+            if(person.getTeacher() != null && person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())){
+                request.setAttribute("monitor","true");
+            }
+        }
 
         String parkingRequestState = request.getParameter("parkingRequestState");
         if (parkingRequestState == null) {
