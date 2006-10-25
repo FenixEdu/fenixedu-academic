@@ -224,6 +224,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    return goToSummaryManagementPage(mapping, request, (DynaActionForm) form, bean);
 	}
 	
+	RenderUtils.invalidateViewState();
 	return prepareInsertSummary(mapping, form, request, response);
     }
 
@@ -246,6 +247,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    return goToSummaryManagementPage(mapping, request, (DynaActionForm) form, bean);
 	}
 
+	RenderUtils.invalidateViewState();	
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
 	Professorship loggedProfessorship = (Professorship) request
 		.getAttribute("loggedTeacherProfessorship");
@@ -255,7 +257,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 		SummariesManagementBean.SummaryType.NORMAL_SUMMARY, executionCourse, loggedProfessorship, null);
 	newBean.setSummaryText(bean.getSummaryText());
 	newBean.setTitle(bean.getTitle());
-	request.setAttribute("summariesManagementBean", newBean);
+	request.setAttribute("summariesManagementBean", newBean);	
 	return mapping.findForward("prepareInsertSummary");
     }
 
