@@ -63,7 +63,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
      * 
      * @throws DomainException
      */
-    protected abstract void checkConditions() throws DomainException;
+    public abstract void checkConditions() throws DomainException;
     
     final public void conclude(String justification) {
 	checkConditions();
