@@ -27,4 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add WEIGTH column" updateCurriculumModuleTable.sql
+
