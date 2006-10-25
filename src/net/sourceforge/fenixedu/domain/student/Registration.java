@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -78,6 +79,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class Registration extends Registration_Base {
@@ -713,7 +715,7 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
-    
+
     public Collection<DocumentRequest> getNewDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
@@ -723,7 +725,7 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
-    
+
     public Collection<DocumentRequest> getProcessingDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
@@ -733,17 +735,16 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
-    
+
     public boolean hasDegreeDiplomaDocumentRequest() {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
 	    if (documentRequest.isDegreeDiploma()) {
 		return true;
 	    }
 	}
-	
+
 	return false;
     }
-    
 
     // Special Season
 
@@ -848,6 +849,17 @@ public class Registration extends Registration_Base {
 		result.add(attends.getDisciplinaExecucao());
 	    }
 	}
+	return result;
+    }
+
+    public List<ExecutionCourse> getAttendingExecutionCoursesFor(final ExecutionYear executionYear) {
+	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	for (final Attends attends : getAssociatedAttendsSet()) {
+	    if (attends.isFor(executionYear)) {
+		result.add(attends.getExecutionCourse());
+	    }
+	}
+
 	return result;
     }
 
@@ -1209,10 +1221,11 @@ public class Registration extends Registration_Base {
 	final double ectsCredits = calculateEctsCredits();
 	final int curricularYear = calculateCurricularYear(ectsCredits);
 	final DegreeType degreeType = getDegreeType();
-	
-	return ectsCredits == degreeType.getDefaultEctsCredits() && curricularYear == degreeType.getYears();
+
+	return ectsCredits == degreeType.getDefaultEctsCredits()
+		&& curricularYear == degreeType.getYears();
     }
-    
+
     public double getEctsCredits() {
 	return calculateEctsCredits();
     }
@@ -1386,6 +1399,40 @@ public class Registration extends Registration_Base {
 	}
 
 	return false;
+    }
+
+    public boolean isCustomEnrolmentModel(final ExecutionYear executionYear) {
+	return getEnrolmentModelForExecutionYear(executionYear) == EnrolmentModel.CUSTOM;
+    }
+
+    public boolean isCustomEnrolmentModel() {
+	return isCustomEnrolmentModel(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public boolean isCompleteEnrolmentModel(final ExecutionYear executionYear) {
+	return getEnrolmentModelForExecutionYear(executionYear) == EnrolmentModel.COMPLETE;
+    }
+
+    public boolean isCompleteEnrolmentModel() {
+	return isCompleteEnrolmentModel(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public BigDecimal getTotalEctsCredits(final ExecutionYear executionYear) {
+	BigDecimal totalEctsCredits = BigDecimal.ZERO;
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    for (final Enrolment enrolment : studentCurricularPlan
+		    .getEnrolmentsByExecutionYear(executionYear)) {
+		totalEctsCredits = totalEctsCredits.add(BigDecimal.valueOf(enrolment
+			.getCurricularCourse().getEctsCredits()));
+	    }
+	}
+
+	return totalEctsCredits;
+    }
+
+    public DateTime getRegistrationDate() {
+	// TODO: fix me
+	return getStudentCandidacy().getActiveCandidacySituation().getSituationDate();
     }
 
 }
