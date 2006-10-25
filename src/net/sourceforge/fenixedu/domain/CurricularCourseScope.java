@@ -140,16 +140,16 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	}
 
     public Boolean isActive(Date date) {
-    	Calendar calendar = Calendar.getInstance();
-    	calendar.setTime(date);
-    	CalendarDateComparator calendarDateComparator = new CalendarDateComparator();
-    	Boolean result = Boolean.FALSE;
-    	if(calendarDateComparator.compare(getBeginDate(), calendar) <= 0) {
-    		if(getEnd() == null || calendarDateComparator.compare(getEndDate(), calendar) >= 0) {
-    			result = Boolean.TRUE;
-			}
-    	}
-    	return result;
+	Calendar calendar = Calendar.getInstance();
+	calendar.setTime(date);
+	CalendarDateComparator calendarDateComparator = new CalendarDateComparator();
+	Boolean result = Boolean.FALSE;
+	if (calendarDateComparator.compare(getBeginDate(), calendar) <= 0) {
+	    if (getEndDate() == null || calendarDateComparator.compare(getEndDate(), calendar) >= 0) {
+		result = Boolean.TRUE;
+	    }
+	}
+	return result;
     }
 
     public boolean intersects(final Date begin, final Date end) {
