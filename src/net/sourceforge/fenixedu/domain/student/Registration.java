@@ -715,7 +715,7 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
-
+    
     public Collection<DocumentRequest> getNewDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
@@ -725,7 +725,7 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
-
+    
     public Collection<DocumentRequest> getProcessingDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
@@ -735,16 +735,27 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
+    
+    public Collection<DocumentRequest> getHistoricalDocumentRequests() {
+	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.addAll(studentCurricularPlan.getHistoricalDocumentRequests());
+	}
+
+	return result;
+    }
+    
     public boolean hasDegreeDiplomaDocumentRequest() {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
 	    if (documentRequest.isDegreeDiploma()) {
 		return true;
 	    }
 	}
-
+	
 	return false;
     }
+    
 
     // Special Season
 
@@ -1221,11 +1232,11 @@ public class Registration extends Registration_Base {
 	final double ectsCredits = calculateEctsCredits();
 	final int curricularYear = calculateCurricularYear(ectsCredits);
 	final DegreeType degreeType = getDegreeType();
-
+	
 	return ectsCredits == degreeType.getDefaultEctsCredits()
 		&& curricularYear == degreeType.getYears();
     }
-
+    
     public double getEctsCredits() {
 	return calculateEctsCredits();
     }
@@ -1403,8 +1414,7 @@ public class Registration extends Registration_Base {
 
     public boolean isCustomEnrolmentModel(final ExecutionYear executionYear) {
 	return getEnrolmentModelForExecutionYear(executionYear) == EnrolmentModel.CUSTOM;
-    }
-
+}
     public boolean isCustomEnrolmentModel() {
 	return isCustomEnrolmentModel(ExecutionYear.readCurrentExecutionYear());
     }

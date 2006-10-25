@@ -1498,6 +1498,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getDocumentRequests(AcademicServiceRequestSituationType.PROCESSING);
     }
     
+    public Collection<DocumentRequest> getHistoricalDocumentRequests() {
+	Set<DocumentRequest> result = new HashSet<DocumentRequest>();
+
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if (academicServiceRequest instanceof DocumentRequest) {
+		if (!academicServiceRequest.isNewRequest() && !academicServiceRequest.isProcessing()) {
+		    result.add((DocumentRequest) academicServiceRequest);    
+		}
+	    }
+	}
+
+	return result;
+    }
+    
     public boolean hasDegreeDiplomaRequest() {
 	for (final DocumentRequest documentRequest : this.getDocumentRequests()) {
 	    if (documentRequest.isDegreeDiploma()) {
