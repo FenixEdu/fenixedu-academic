@@ -5,18 +5,20 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message key="label.occupations.management" bundle="SPACE_RESOURCES"/></h2>
+
 
 <logic:present name="selectedSpaceInformation">	
 	
-	<br/>		
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
 	<jsp:include page="spaceCrumbs.jsp"/>
 	
 	<bean:define id="backLink">
 		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
-	</bean:define>		
+	</bean:define>
+
 	<ul class="mvert15 list5">
 		<li>
 			<html:link page="<%= backLink %>">
@@ -64,6 +66,10 @@
 		<fr:create id="create" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" schema="AddPersonSpaceOccupation">	   	
 			<fr:hidden slot="space" name="selectedSpaceInformation" property="space" />
 			<fr:destination name="exception" path="<%= exceptionParams %>" />
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
 		</fr:create>
 	</logic:empty>
 	<logic:notEmpty name="personSpaceOccupation">	
@@ -71,6 +77,10 @@
 		<p><i><bean:write name="personSpaceOccupation" property="person.name"/> -> <bean:write name="personSpaceOccupation" property="person.username"/></i></p>
 		<fr:edit name="personSpaceOccupation" action="<%= exceptionParams %>" schema="EditPersonSpaceOccupation">	   				
 			<fr:destination name="exception" path="<%= exceptionParams %>" />
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
 		</fr:edit>	
 	</logic:notEmpty>
 		

@@ -106,7 +106,7 @@
 	</p>
 
 	<%-- BluePrints --%>
-	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>			
+	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>			
 	<logic:notEmpty name="selectedSpaceInformation" property="space.mostRecentBlueprint">		
 		<bean:define id="blueprint" name="selectedSpaceInformation" property="space.mostRecentBlueprint"/>		
 		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="blueprint" property="idInternal"/></bean:define>
@@ -114,7 +114,7 @@
 		<html:img src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
 		</p>
 	</logic:notEmpty>	
-	<p>
+	<p class="mtop05">
 		<html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.manage.blueprints"/>
 		</html:link>
@@ -127,7 +127,7 @@
 
 	<%-- Subspaces --%>
 	<logic:present name="spaces">
-		<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="title.subspaces"/></h3>
+		<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="title.subspaces"/></h3>
 		<bean:size id="spacesSize" name="spaces"/>
 		<logic:greaterEqual name="spacesSize" value="1">
 			<table class="tstyle4 thlight mbottom05">				
@@ -196,7 +196,7 @@
 	   		</fr:layout>	
 		</fr:view>
 	</logic:notEmpty>
-	<p>
+	<p class="mtop05">
 		<html:link page="/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.manage.space.responsibility"/>
 		</html:link>

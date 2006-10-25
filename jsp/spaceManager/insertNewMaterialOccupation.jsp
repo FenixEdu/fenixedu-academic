@@ -13,7 +13,7 @@
 	<bean:define id="prepareInsertMaterialOccupationLink">/manageMaterialSpaceOccupations.do?method=prepareInsertMaterialOccupation&page=0</bean:define>	
 
 	<logic:messagesPresent message="true">
-		<p>
+		<p class="mtop15">
 		<span class="error0"><!-- Error messages go here -->
 			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
 				<bean:write name="message"/>
@@ -22,7 +22,7 @@
 		</p>
 	</logic:messagesPresent>
 
-	<p class="mtop2 mbottom05"><strong><bean:message key="title.choose.material.type" bundle="SPACE_RESOURCES"/></strong></p>
+	<p class="mtop15 mbottom05"><strong><bean:message key="title.choose.material.type" bundle="SPACE_RESOURCES"/></strong></p>
 	<fr:form>
 		<fr:edit nested="true" name="materialTypeBean" id="materialTypeWithMaterialType" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean"
 			schema="ChooseMaterialType">						

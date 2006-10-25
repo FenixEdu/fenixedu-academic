@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ page import="net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType" %>
 
+<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message key="label.access.groups.management" bundle="SPACE_RESOURCES"/></h2>
 
 <logic:notEmpty name="selectedSpaceInformation">

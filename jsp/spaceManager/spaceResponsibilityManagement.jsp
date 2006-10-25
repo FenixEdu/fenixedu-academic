@@ -79,22 +79,23 @@
     	</fr:layout>
 	</fr:view>
 	
-	<span class="mtop2 mbottom05"><strong><bean:message key="label.choose.unit" bundle="SPACE_RESOURCES"/></strong></span>
+	<p class="mtop15 mbottom05"><strong><bean:message key="label.choose.unit" bundle="SPACE_RESOURCES"/></strong></p>
 	<bean:define id="path">/SpaceManager/manageSpaceResponsibility.do?method=manageResponsabilityInterval&spaceInformationID=<bean:write name="selectedSpaceInformationId"/></bean:define>	
 	<un:tree initialUnit="initialUnit" unitParamName="unitID" path="<%= path %>" state="true"/>
 				
-	<span class="mtop2 mbottom05"><strong><bean:message key="label.choose.external.unit" bundle="SPACE_RESOURCES"/></strong></span>
-	
+	<p class="mtop2 mbottom05"><strong><bean:message key="label.choose.external.unit" bundle="SPACE_RESOURCES"/></strong></p>
 	<bean:define id="pathToAddExternalUnit">/manageSpaceResponsibility.do?method=prepareAddExternalUnit&spaceInformationID=<bean:write name="selectedSpaceInformationId"/></bean:define>	
+
 	<fr:form action="<%= pathToAddExternalUnit %>">	
 		<fr:edit id="externalUnit" name="searchExternalPartyBean" schema="search.external.party.autocomplete" >
-			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle1"/>
-		        <fr:property name="columnClasses" value=",,noborder"/>
-			</fr:layout>
+			<fr:layout name="tabular">      										  
+	   			<fr:property name="classes" value="tstyle1 thmiddle thlight mtop05 mbottom1"/>
+	   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+     		</fr:layout>
 		</fr:edit>
 		<html:submit><bean:message key="button.next" bundle="SPACE_RESOURCES" /></html:submit>
 	</fr:form>
+
 			
 	<p class="mtop2 mbottom05"><strong><bean:message key="label.other.responsible.units" bundle="SPACE_RESOURCES"/></strong></p>
 	<bean:size id="inactiveSize" name="selectedSpaceInformation" property="space.inactiveSpaceResponsibility"/>
