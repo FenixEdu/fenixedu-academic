@@ -89,6 +89,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setFieldWorkHours(Double.valueOf(0));
 	setTrainingPeriodHours(Double.valueOf(0));
 	setTutorialOrientationHours(Double.valueOf(0));
+	addAssociatedEvaluations(new FinalEvaluation());
     }
 
     public List<Grouping> getGroupings() {
