@@ -4,7 +4,7 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -31,9 +31,8 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	checkParameters(space, person, begin, end);
 	setPerson(person);
 	setSpace(space);
-	checkPermissionsToMakeOperations();
-	super.setBegin(begin);
-	super.setEnd(end);
+	checkPermissions();
+	setOccupationInterval(begin, end);
     }
 
     private void checkParameters(final Space space, final Person person, YearMonthDay begin,
@@ -42,35 +41,38 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	if (person == null) {
 	    throw new DomainException("error.inexistente.person");
 	}
-	if (space == null) {
-	    throw new DomainException("error.inexistente.space");
+	if (begin == null) {
+	    throw new DomainException("error.personSpaceOccupation.no.beginDate");
 	}
-	checkPersonSpaceOccupationIntersection(begin, end, person, space);
+    }
+
+    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
+    private void checkPermissions() {
     }
 
     @Override
+    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
     public void setBegin(YearMonthDay begin) {
-	checkPermissionsToMakeOperations();
 	checkPersonSpaceOccupationIntersection(begin, getEnd(), getPerson(), getSpace());
 	super.setBegin(begin);
     }
 
     @Override
+    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
     public void setEnd(YearMonthDay end) {
-	checkPermissionsToMakeOperations();
 	checkPersonSpaceOccupationIntersection(getBegin(), end, getPerson(), getSpace());
 	super.setEnd(end);
     }
 
+    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
-	checkPermissionsToMakeOperations();
 	checkPersonSpaceOccupationIntersection(begin, end, getPerson(), getSpace());
 	super.setBegin(begin);
 	super.setEnd(end);
     }
 
+    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
     public void delete() {
-	checkPermissionsToMakeOperations();
 	removePerson();
 	super.delete();
     }
@@ -85,28 +87,9 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	return getSpace().getPersonOccupationsAccessGroup();
     }
 
-    private boolean checkIntersections(YearMonthDay begin, YearMonthDay end) {
+    private boolean occupationsIntersection(YearMonthDay begin, YearMonthDay end) {
 	return ((end == null || !this.getBegin().isAfter(end)) && (this.getEnd() == null || !this
 		.getEnd().isBefore(begin)));
-    }
-
-    private void checkPermissionsToMakeOperations() {	
-	Space parentSpace = this.getSpace();
-	while (parentSpace != null) {
-	    if (isMemberOfAccessGroup()) {
-		return;
-	    }
-	    parentSpace = parentSpace.getSuroundingSpace();
-	}
-	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
-    }
-
-    private boolean isMemberOfAccessGroup() {
-	if (getAccessGroup() != null
-		&& getAccessGroup().isMember(AccessControl.getUserView().getPerson())) {
-	    return true;
-	}
-	return false;
     }
 
     private void checkEndDate(final YearMonthDay begin, final YearMonthDay end) {
@@ -115,14 +98,14 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	}
     }
 
-    private void checkPersonSpaceOccupationIntersection(final YearMonthDay begin,
-	    final YearMonthDay end, Person person, Space space) {
+    public void checkPersonSpaceOccupationIntersection(final YearMonthDay begin, final YearMonthDay end,
+	    Person person, Space space) {
 
 	checkEndDate(begin, end);
 	List<PersonSpaceOccupation> personSpaceOccupations = person.getPersonSpaceOccupations();
 	for (PersonSpaceOccupation personSpaceOccupation : personSpaceOccupations) {
 	    if (!personSpaceOccupation.equals(this) && personSpaceOccupation.getSpace().equals(space)
-		    && personSpaceOccupation.checkIntersections(begin, end)) {
+		    && personSpaceOccupation.occupationsIntersection(begin, end)) {
 		throw new DomainException("error.person.space.occupation.intersection");
 	    }
 	}

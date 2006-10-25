@@ -17,11 +17,32 @@ public class Campus extends Campus_Base {
     static {
 	((ComparatorChain) CAMPUS_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
 		"spaceInformation.presentationName", Collator.getInstance()));
-	((ComparatorChain) CAMPUS_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) CAMPUS_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
+		"idInternal"));
     }
 
     public static abstract class CampusFactory implements Serializable, FactoryExecutor {
 	private String name;
+
+	private YearMonthDay begin;
+
+	private YearMonthDay end;
+
+	public YearMonthDay getBegin() {
+	    return begin;
+	}
+
+	public void setBegin(YearMonthDay begin) {
+	    this.begin = begin;
+	}
+
+	public YearMonthDay getEnd() {
+	    return end;
+	}
+
+	public void setEnd(YearMonthDay end) {
+	    this.end = end;
+	}
 
 	public String getName() {
 	    return name;

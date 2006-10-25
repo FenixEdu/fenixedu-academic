@@ -32,7 +32,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     public ActionForward viewSpaces(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	final SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
 
 	// Filter OldBuildings and OldRooms. These two classes will soon be
@@ -53,12 +53,17 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     protected SpaceInformation executeSpaceFactoryMethod(final HttpServletRequest request)
-	    throws FenixFilterException, FenixServiceException {
-	final Object serviceResult = executeFactoryMethod(request);
+	    throws FenixFilterException, FenixServiceException, DomainException {
+
+	Object serviceResult = executeFactoryMethod(request);
 	if (serviceResult instanceof Space) {
-	    return ((Space) serviceResult).getSpaceInformation();
+	    return ((Space) serviceResult).getSuroundingSpace() != null ? ((Space) serviceResult)
+		    .getSuroundingSpace().getSpaceInformation() : ((Space) serviceResult)
+		    .getSpaceInformation();
 	} else if (serviceResult instanceof SpaceInformation) {
-	    return (SpaceInformation) serviceResult;
+	    return ((SpaceInformation) serviceResult).getSpace().getSuroundingSpace() != null ? ((SpaceInformation) serviceResult)
+		    .getSpace().getSuroundingSpace().getSpaceInformation()
+		    : ((SpaceInformation) serviceResult);
 	} else {
 	    return null;
 	}
@@ -66,11 +71,11 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     protected ActionForward manageSpace(final ActionMapping mapping, final HttpServletRequest request,
 	    final SpaceInformation spaceInformation) {
-	
+
 	final Space space = spaceInformation.getSpace();
-	request.setAttribute("selectedSpace", space);	
+	request.setAttribute("selectedSpace", space);
 	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
-	spaces.addAll(space.getContainedSpaces());	
+	spaces.addAll(space.getContainedSpaces());
 	request.setAttribute("spaces", spaces);
 	request.setAttribute("selectedSpaceInformation", spaceInformation);
 	return mapping.findForward("ManageSpace");
@@ -84,7 +89,16 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final SpaceInformation spaceInformation = executeSpaceFactoryMethod(request);
+
+	SpaceInformation spaceInformation = null;
+	try {
+	    spaceInformation = executeSpaceFactoryMethod(request);
+	} catch (DomainException e) {
+	    ActionMessages actionMessages = new ActionMessages();
+	    actionMessages.add(e.getKey(), new ActionMessage(e.getKey(), e.getArgs()));
+	    saveMessages(request, actionMessages);
+	    spaceInformation = getSpaceInformationFromParameter(request);
+	}
 	return (spaceInformation == null) ? viewSpaces(mapping, form, request, response) : manageSpace(
 		mapping, request, spaceInformation);
     }

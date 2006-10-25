@@ -7,9 +7,10 @@ import net.sourceforge.fenixedu.domain.space.Floor.FloorFactoryEditor;
 public class FloorInformation extends FloorInformation_Base {
     
     protected FloorInformation(final Floor floor, final FloorFactory floorFactory) {
-        super();
-        super.setSpace(floor);
+        super();        
+        super.setSpace(floor);        
         setLevel(floorFactory.getLevel());
+        setTimeInterval(floorFactory.getBegin(), floorFactory.getEnd());
     }
 
     @Override
@@ -30,9 +31,10 @@ public class FloorInformation extends FloorInformation_Base {
     	final FloorFactoryEditor floorFactoryEditor = new FloorFactoryEditor();
     	floorFactoryEditor.setSpace(getSpace());
     	floorFactoryEditor.setLevel(getLevel());
+    	floorFactoryEditor.setBegin(getNextPossibleValidFromDate());
     	return floorFactoryEditor;
     }
-
+    
     @Override
     public String getPresentationName() {       
         return String.valueOf(getLevel());

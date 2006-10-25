@@ -6,6 +6,16 @@
 
 <h2><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></h2>
 
+<logic:messagesPresent message="true">
+<p>
+	<em><!-- Error messages go here -->
+		<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
+			<bean:write name="message"/>
+		</html:messages>
+	</em>
+</p>
+</logic:messagesPresent>	
+
 <ul>
 	<li><html:link page="/showCreateSpaceForm.do"><bean:message bundle="SPACE_RESOURCES" key="link.create.space"/></html:link></li>
 </ul>

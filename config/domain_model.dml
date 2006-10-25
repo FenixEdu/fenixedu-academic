@@ -2482,10 +2482,10 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 	    TipoSala tipo;
 	}
 
-
 class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
 	YearMonthDay validUntil;
+	YearMonthDay validFrom;
 	Integer keySpace;
 }
 	class net.sourceforge.fenixedu.domain.space.CampusInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
@@ -2514,7 +2514,6 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 		String observations;
 		Integer keyRoomClassification;
 	}
-
 
 class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keySpace;
@@ -2889,7 +2888,7 @@ class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.f
 }
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyPartyType;
+	//Integer keyPartyType;
     String ojbConcreteClass;
 	PartyType type;
 	String name;
@@ -7420,12 +7419,14 @@ relation PartyAnnouncementBoard {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
 }
 
+/*
 relation PartyPartyType {
 	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole partyType;	 
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parties {
 	   multiplicity *;
 	}
 }
+*/
 
 relation PartyTypeParentConnectionRule {
 	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole allowedParentPartyType;

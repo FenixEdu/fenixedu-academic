@@ -8,5 +8,4 @@ public class DeleteSpace extends Service {
     public void run(final Space space) {
         space.delete();
     }
-
 }

@@ -12,6 +12,16 @@
 <bean:define id="suroundingSpaceID" type="java.lang.Integer" name="selectedSpace" property="idInternal"/>
 <bean:define id="suroundingSpaceInformationID" type="java.lang.Integer" name="selectedSpace" property="spaceInformation.idInternal"/>
 
+<logic:messagesPresent message="true">
+<p>
+	<em><!-- Error messages go here -->
+		<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
+			<bean:write name="message"/>
+		</html:messages>
+	</em>
+</p>
+</logic:messagesPresent>	
+
 <p class="mvert15"><span class="warning0"><bean:message key="label.space.createIn" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="selectedSpace" property="spaceInformation.presentationName"/></strong></span></p>
 
 <p class="mtop15 mbottom05"><strong><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/></strong></p>

@@ -23,7 +23,27 @@ public class Building extends Building_Base {
 
     public static abstract class BuildingFactory implements Serializable, FactoryExecutor {
 	private String name;
+	
+	private YearMonthDay begin;
+	
+	private YearMonthDay end;
 
+	public YearMonthDay getBegin() {
+	    return begin;
+	}
+
+	public void setBegin(YearMonthDay begin) {
+	    this.begin = begin;
+	}
+
+	public YearMonthDay getEnd() {
+	    return end;
+	}
+
+	public void setEnd(YearMonthDay end) {
+	    this.end = end;
+	}
+	
 	public String getName() {
 	    return name;
 	}
@@ -55,7 +75,7 @@ public class Building extends Building_Base {
     public static class BuildingFactoryEditor extends BuildingFactory {
 
 	private DomainReference<Building> buildingReference;
-
+		
 	public Building getSpace() {
 	    return buildingReference == null ? null : buildingReference.getObject();
 	}
@@ -65,11 +85,10 @@ public class Building extends Building_Base {
 		this.buildingReference = new DomainReference<Building>(building);
 	    }
 	}
-
+	
 	public BuildingInformation execute() {
 	    return new BuildingInformation(getSpace(), this);
-	}
-
+	}	
     }
 
     protected Building() {

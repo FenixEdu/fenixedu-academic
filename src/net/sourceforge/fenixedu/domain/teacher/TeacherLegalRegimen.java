@@ -75,8 +75,7 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
     }
     
     public boolean isActive(YearMonthDay currentDate) {
-        return (!this.getBeginDateYearMonthDay().isAfter(currentDate) &&
-                (this.getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(currentDate)));
+        return belongsToPeriod(currentDate, currentDate);
     }
     
     public void delete(){

@@ -27,8 +27,4 @@ public abstract class MaterialSpaceOccupation extends MaterialSpaceOccupation_Ba
         return (!this.getBegin().isAfter(currentDate) && (this.getEnd() == null || !this.getEnd()
                 .isBefore(currentDate)));
     }       
-    
-    public void delete() {
-        super.delete();
-    }
 }

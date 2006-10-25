@@ -91,8 +91,8 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
     }
 
     private Unit getExternalResponsibleUnit(HttpServletRequest request) {
-	IViewState summaryViewState = RenderUtils.getViewState();
-	SearchPartyBean bean = (SearchPartyBean) summaryViewState.getMetaObject().getObject();	
+	IViewState viewState = RenderUtils.getViewState();	
+	SearchPartyBean bean = (SearchPartyBean) viewState.getMetaObject().getObject();	
 	return (Unit) bean.getParty();
     }
 

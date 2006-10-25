@@ -23,173 +23,172 @@ import net.sourceforge.fenixedu.util.TipoSala;
 
 public class OldRoom extends OldRoom_Base {
 
-    public static final Comparator OLD_ROOM_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
-    
+    public static final Comparator OLD_ROOM_COMPARATOR_BY_NAME = new BeanComparator("name", Collator
+	    .getInstance());
+
     public OldRoom() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
-
-	/** @deprecated */
-    public void createRoomOccupation(OccupationPeriod period, Calendar startTime, Calendar endTime,
-			DiaSemana dayOfWeek, Integer frequency, Integer week, WrittenEvaluation writtenEvaluation) {
-		boolean isFree = isFree(period, startTime, endTime, dayOfWeek, RoomOccupation.DIARIA, null);
-		if (!isFree) {
-			throw new DomainException("error.roomOccupied");
-		}
-
-		RoomOccupation roomOccupation = new RoomOccupation(this, startTime, endTime, dayOfWeek,
-				RoomOccupation.DIARIA);
-		roomOccupation.setPeriod(period);
-		roomOccupation.setWrittenEvaluation(writtenEvaluation);
-	}
-
-    /** @deprecated */
-	public void delete() {
-        if (canBeDeleted()) {
-            removeBuilding();
-            deleteDomainObject();
-        } else {
-            String[] args = { "a sala", "as aulas" };
-            throw new DomainException("errors.invalid.delete.with.objects", args);            
-        }
-	}
-
-	/** @deprecated */
-    public boolean isFree(OccupationPeriod period, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
-            Integer frequency, Integer week) {
-        for (final RoomOccupation roomOccupation : getRoomOccupations()) {
-            if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek,
-                    frequency, week, this)) {
-                return false;
-            }
-        }
-        return true;
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     /** @deprecated */
-    public Set<RoomOccupation> findOccupationSet(OccupationPeriod period, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
-            Integer frequency, Integer week) {
-        final Set<RoomOccupation> roomOccupations = new HashSet<RoomOccupation>();
-        for (final RoomOccupation roomOccupation : getRoomOccupations()) {
-            if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek, frequency, week, this)) {
-                roomOccupations.add(roomOccupation);
-            }
-        }
-        return roomOccupations;
+    public void createRoomOccupation(OccupationPeriod period, Calendar startTime, Calendar endTime,
+	    DiaSemana dayOfWeek, Integer frequency, Integer week, WrittenEvaluation writtenEvaluation) {
+	boolean isFree = isFree(period, startTime, endTime, dayOfWeek, RoomOccupation.DIARIA, null);
+	if (!isFree) {
+	    throw new DomainException("error.roomOccupied");
+	}
+
+	RoomOccupation roomOccupation = new RoomOccupation(this, startTime, endTime, dayOfWeek,
+		RoomOccupation.DIARIA);
+	roomOccupation.setPeriod(period);
+	roomOccupation.setWrittenEvaluation(writtenEvaluation);
+    }
+
+    /** @deprecated */
+    public void delete() {
+	if (canBeDeleted()) {
+	    removeBuilding();
+	    deleteDomainObject();
+	} else {
+	    String[] args = { "a sala", "as aulas" };
+	    throw new DomainException("errors.invalid.delete.with.objects", args);
+	}
+    }
+
+    /** @deprecated */
+    public boolean isFree(OccupationPeriod period, Calendar startTime, Calendar endTime,
+	    DiaSemana dayOfWeek, Integer frequency, Integer week) {
+	for (final RoomOccupation roomOccupation : getRoomOccupations()) {
+	    if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek,
+		    frequency, week, this)) {
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    /** @deprecated */
+    public Set<RoomOccupation> findOccupationSet(OccupationPeriod period, Calendar startTime,
+	    Calendar endTime, DiaSemana dayOfWeek, Integer frequency, Integer week) {
+	final Set<RoomOccupation> roomOccupations = new HashSet<RoomOccupation>();
+	for (final RoomOccupation roomOccupation : getRoomOccupations()) {
+	    if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek,
+		    frequency, week, this)) {
+		roomOccupations.add(roomOccupation);
+	    }
+	}
+	return roomOccupations;
     }
 
     /** @deprecated */
     private boolean canBeDeleted() {
-        return getAssociatedLessons().isEmpty()
-                && getAssociatedSummaries().isEmpty()
-                && getRoomOccupations().isEmpty()
-                && getWrittenEvaluationEnrolments().isEmpty();
+	return getAssociatedLessons().isEmpty() && getAssociatedSummaries().isEmpty()
+		&& getRoomOccupations().isEmpty() && getWrittenEvaluationEnrolments().isEmpty();
     }
 
     public List<Lesson> findLessonsForExecutionPeriod(final ExecutionPeriod executionPeriod) {
-        final List<Lesson> lessons = new ArrayList<Lesson>();
-        for (final RoomOccupation roomOccupation : getRoomOccupations()) {
-            final Lesson lesson = roomOccupation.getLesson();
-            if (lesson != null && lesson.getExecutionPeriod() == executionPeriod) {
-                lessons.add(lesson);
-            }
-        }
-        return lessons;
+	final List<Lesson> lessons = new ArrayList<Lesson>();
+	for (final RoomOccupation roomOccupation : getRoomOccupations()) {
+	    final Lesson lesson = roomOccupation.getLesson();
+	    if (lesson != null && lesson.getExecutionPeriod() == executionPeriod) {
+		lessons.add(lesson);
+	    }
+	}
+	return lessons;
     }
 
     public static OldRoom findOldRoomByName(final String name) {
-    	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
-    		if (oldRoom.getName().equalsIgnoreCase(name)) {
-    			return oldRoom;
-    		}
-    	}
-    	return null;
+	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
+	    if (oldRoom.getName().equalsIgnoreCase(name)) {
+		return oldRoom;
+	    }
+	}
+	return null;
     }
 
-    public static Set<OldRoom> findOldRoomsBySpecifiedArguments(
-    		String nome, String edificio, Integer piso, Integer tipo, Integer capacidadeNormal, Integer capacidadeExame)
-            throws ExcepcaoPersistencia {        
-        final Set<OldRoom> oldRooms = OldRoom.getOldRooms();
-        final Set<OldRoom> result = new HashSet<OldRoom>();
-        for (OldRoom room : oldRooms) {
-            boolean isAcceptable = true;
-            if (nome != null && !room.getName().equalsIgnoreCase(nome)) {
-                continue;
-            }
-            if (edificio != null && !room.getBuilding().getName().equalsIgnoreCase(edificio)) {
-                continue;
-            }
-            if (piso != null && !room.getPiso().equals(piso)) {
-                continue;
-            }
-            if (tipo != null && !room.getTipo().getTipo().equals(tipo)) {
-                continue;
-            }
-            if (capacidadeNormal != null
-                    && room.getCapacidadeNormal().intValue() < capacidadeNormal.intValue()) {
-                continue;
-            }
-            if (capacidadeExame != null
-                    && room.getCapacidadeExame().intValue() < capacidadeExame.intValue()) {
-                continue;
-            }
-            if (isAcceptable) {
-                result.add(room);
-            }
-        }
-        return result;
+    public static Set<OldRoom> findOldRoomsBySpecifiedArguments(String nome, String edificio,
+	    Integer piso, Integer tipo, Integer capacidadeNormal, Integer capacidadeExame)
+	    throws ExcepcaoPersistencia {
+	final Set<OldRoom> oldRooms = OldRoom.getOldRooms();
+	final Set<OldRoom> result = new HashSet<OldRoom>();
+	for (OldRoom room : oldRooms) {
+	    boolean isAcceptable = true;
+	    if (nome != null && !room.getName().equalsIgnoreCase(nome)) {
+		continue;
+	    }
+	    if (edificio != null && !room.getBuilding().getName().equalsIgnoreCase(edificio)) {
+		continue;
+	    }
+	    if (piso != null && !room.getPiso().equals(piso)) {
+		continue;
+	    }
+	    if (tipo != null && !room.getTipo().getTipo().equals(tipo)) {
+		continue;
+	    }
+	    if (capacidadeNormal != null
+		    && room.getCapacidadeNormal().intValue() < capacidadeNormal.intValue()) {
+		continue;
+	    }
+	    if (capacidadeExame != null
+		    && room.getCapacidadeExame().intValue() < capacidadeExame.intValue()) {
+		continue;
+	    }
+	    if (isAcceptable) {
+		result.add(room);
+	    }
+	}
+	return result;
     }
 
     public static Set<OldRoom> findOldRoomsOfAnyOtherType(final TipoSala tipoSala) {
-    	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
-    	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
-    		if (!oldRoom.getTipo().equals(tipoSala)) {
-    			oldRooms.add(oldRoom);
-    		}
-    	}
-    	return oldRooms;
+	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
+	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
+	    if (!oldRoom.getTipo().equals(tipoSala)) {
+		oldRooms.add(oldRoom);
+	    }
+	}
+	return oldRooms;
     }
 
     public static Set<OldRoom> findOldRoomsByBuildingNames(final Collection<String> buildingNames) {
-    	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
-    	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
-    		if (buildingNames.contains(oldRoom.getBuilding().getName())) {
-    			oldRooms.add(oldRoom);
-    		}
-    	}
-    	return oldRooms;
+	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
+	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
+	    if (buildingNames.contains(oldRoom.getBuilding().getName())) {
+		oldRooms.add(oldRoom);
+	    }
+	}
+	return oldRooms;
     }
-    
+
     public static Set<OldRoom> findOldRoomsWithNormalCapacity(final Integer normalCapacity) {
-    	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
-    	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
-    		if (oldRoom.getCapacidadeNormal().intValue() >= normalCapacity.intValue()) {
-    			oldRooms.add(oldRoom);
-    		}
-    	}
-    	return oldRooms;
+	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
+	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
+	    if (oldRoom.getCapacidadeNormal().intValue() >= normalCapacity.intValue()) {
+		oldRooms.add(oldRoom);
+	    }
+	}
+	return oldRooms;
     }
 
     @Deprecated
     public String getNome() {
-        return super.getName();
+	return super.getName();
     }
 
     @Deprecated
     public void setNome(String name) {
-        super.setName(name);
+	super.setName(name);
     }
 
-    
     public static Set<OldRoom> getOldRooms() {
-    	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
-    	for (final Space space : RootDomainObject.getInstance().getSpacesSet()) {
-    		if (space instanceof OldRoom) {
-				OldRoom oldRoom = (OldRoom) space;
-				oldRooms.add(oldRoom);
-			}
-    	}
-    	return oldRooms;
+	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
+	for (final Space space : RootDomainObject.getInstance().getSpacesSet()) {
+	    if (space instanceof OldRoom) {
+		OldRoom oldRoom = (OldRoom) space;
+		oldRooms.add(oldRoom);
+	    }
+	}
+	return oldRooms;
     }
 }

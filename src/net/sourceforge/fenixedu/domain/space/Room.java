@@ -46,6 +46,26 @@ public class Room extends Room_Base {
 
 	private String observations;
 
+	private YearMonthDay begin;
+
+	private YearMonthDay end;
+
+	public YearMonthDay getBegin() {
+	    return begin;
+	}
+
+	public void setBegin(YearMonthDay begin) {
+	    this.begin = begin;
+	}
+
+	public YearMonthDay getEnd() {
+	    return end;
+	}
+
+	public void setEnd(YearMonthDay end) {
+	    this.end = end;
+	}
+
 	public Boolean getAgeQuality() {
 	    return ageQuality;
 	}
@@ -188,7 +208,7 @@ public class Room extends Room_Base {
 	if (suroundingSpace == null) {
 	    throw new NullPointerException("error.surrounding.space");
 	}
-	setSuroundingSpace(suroundingSpace);	
+	setSuroundingSpace(suroundingSpace);
 	new RoomInformation(this, roomFactoryCreator);
     }
 

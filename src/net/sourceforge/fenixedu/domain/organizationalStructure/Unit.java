@@ -310,6 +310,26 @@ public class Unit extends Unit_Base {
 	}
 	return new ArrayList<Unit>(allInactiveSubUnits);
     }
+    
+    public Collection<Unit> getAllSubUnits(){
+	Set<Unit> allSubUnits = new HashSet<Unit>();
+	Collection<Unit> subUnits = getSubUnits();
+	allSubUnits.addAll(subUnits);
+	for (Unit subUnit : subUnits) {
+	    allSubUnits.addAll(subUnit.getAllSubUnits());
+	}
+	return allSubUnits;
+    }
+       
+    public Collection<Unit> getAllParentUnits(){
+	Set<Unit> allParentUnits = new HashSet<Unit>();
+	Collection<Unit> parentUnits = getSubUnits();
+	allParentUnits.addAll(parentUnits);
+	for (Unit subUnit : parentUnits) {
+	    allParentUnits.addAll(subUnit.getAllParentUnits());
+	}
+	return allParentUnits;
+    }
 
     public Collection<Contract> getContracts() {
 	return (Collection<Contract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT,
@@ -605,10 +625,10 @@ public class Unit extends Unit_Base {
 	}
 	return null;
     }
-    
-    public static List<Unit> readUnitsByAcronym(String acronym){
+
+    public static List<Unit> readUnitsByAcronym(String acronym) {
 	List<Unit> result = new ArrayList<Unit>();
-	if (!StringUtils.isEmpty(acronym.trim())) {	    
+	if (!StringUtils.isEmpty(acronym.trim())) {
 	    for (Party party : RootDomainObject.getInstance().getPartys()) {
 		if (party instanceof Unit && ((Unit) party).getAcronym() != null
 			&& ((Unit) party).getAcronym().equals(acronym)) {
@@ -618,20 +638,7 @@ public class Unit extends Unit_Base {
 	}
 	return result;
     }
-    
-    public static List<Unit> readUnitsByName(String name){
-	List<Unit> result = new ArrayList<Unit>();
-	if (!StringUtils.isEmpty(name.trim())) {	    
-	    for (Party party : RootDomainObject.getInstance().getPartys()) {
-		if (party instanceof Unit && party.getName() != null
-			&& party.getName().equalsIgnoreCase(name)) {
-		    result.add((Unit) party);
-		}
-	    }
-	}
-	return result;
-    }
-
+   
     public static Unit readByCostCenterCode(Integer costCenterCode) {
 	if (costCenterCode != null) {
 	    for (Party party : RootDomainObject.getInstance().getPartys()) {
@@ -815,7 +822,7 @@ public class Unit extends Unit_Base {
 	}
 	return null;
     }
-     
+
     public String getNameWithAcronym() {
 	String name = super.getName().trim();
 	return (getAcronym() == null || StringUtils.isEmpty(getAcronym().trim())) ? name : name + " ("
@@ -881,5 +888,5 @@ public class Unit extends Unit_Base {
 	}
 
 	return builder.toString();
-    }    
+    }
 }

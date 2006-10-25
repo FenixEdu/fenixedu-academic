@@ -16,13 +16,12 @@
 	
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/></strong></p>  
 
-	<bean:define id="cancelLink">
-		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="space" property="spaceInformation.idInternal"/>
-	</bean:define>
-		
+	<bean:define id="cancelLink">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="space" property="spaceInformation.idInternal"/></bean:define>
+	<bean:define id="submitLink">/manageSpaces.do?method=executeFactoryMethod&page=0&spaceInformationID=<bean:write name="space" property="spaceInformation.idInternal"/></bean:define>
+			
 	<logic:equal name="SpaceFactoryEditor" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 		<fr:edit name="SpaceFactoryEditor" schema="CampusFactoryEditor"
-				action="/manageSpaces.do?method=executeFactoryMethod">
+				action="<%= submitLink %>">
 			<fr:destination name="cancel" path="<%= cancelLink %>"/>
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
@@ -31,7 +30,7 @@
 	</logic:equal>
 	<logic:equal name="SpaceFactoryEditor" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
 		<fr:edit name="SpaceFactoryEditor" schema="BuildingFactoryEditor"
-				action="/manageSpaces.do?method=executeFactoryMethod">
+				action="<%= submitLink %>">
 			<fr:destination name="cancel" path="<%= cancelLink %>"/>	
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
@@ -40,7 +39,7 @@
 	</logic:equal>
 	<logic:equal name="SpaceFactoryEditor" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
 		<fr:edit name="SpaceFactoryEditor" schema="FloorFactoryEditor"
-				action="/manageSpaces.do?method=executeFactoryMethod">
+				action="<%= submitLink %>">
 			<fr:destination name="cancel" path="<%= cancelLink %>"/>
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
@@ -49,7 +48,7 @@
 	</logic:equal>
 	<logic:equal name="SpaceFactoryEditor" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 		<fr:edit name="SpaceFactoryEditor" schema="RoomFactoryEditor"
-				action="/manageSpaces.do?method=executeFactoryMethod">				
+				action="<%= submitLink %>">				
 			<fr:destination name="cancel" path="<%= cancelLink %>"/>	
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>

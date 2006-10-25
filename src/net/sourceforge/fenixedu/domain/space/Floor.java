@@ -7,16 +7,41 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.YearMonthDay;
 
 public class Floor extends Floor_Base {
 
-    public static Comparator<Floor> FLOOR_COMPARATOR_BY_LEVEL = new ReverseComparator(
-	    new BeanComparator("spaceInformation.level"));
+    public final static Comparator<Floor> FLOOR_COMPARATOR_BY_LEVEL = new ComparatorChain();
+    static {
+	((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(new ReverseComparator(
+		new BeanComparator("spaceInformation.level")));
+	((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(new BeanComparator("idInternal"));
+    }
 
     public static abstract class FloorFactory implements Serializable, FactoryExecutor {
 	private Integer level;
+
+	private YearMonthDay begin;
+
+	private YearMonthDay end;
+
+	public YearMonthDay getBegin() {
+	    return begin;
+	}
+
+	public void setBegin(YearMonthDay begin) {
+	    this.begin = begin;
+	}
+
+	public YearMonthDay getEnd() {
+	    return end;
+	}
+
+	public void setEnd(YearMonthDay end) {
+	    this.end = end;
+	}
 
 	public Integer getLevel() {
 	    return level;

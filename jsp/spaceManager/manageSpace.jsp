@@ -15,6 +15,7 @@
 	<div class="mbottom2">
 		<jsp:include page="spaceCrumbs.jsp"/>
 	</div>
+	<bean:define id="space" name="selectedSpaceInformation" property="space"/>
 				
 	<logic:messagesPresent message="true">
 		<p>
@@ -99,9 +100,9 @@
 		<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/>
 		</html:link>&nbsp;,
-		<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal">
+		<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço e todos os seus subespaços?')">
 			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
-		</html:link>
+		</html:link>		
 	</p>
 
 	<%-- BluePrints --%>
@@ -171,7 +172,7 @@
 							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
 								<bean:message bundle="SPACE_RESOURCES" key="label.view"/>
 							</html:link>,&nbsp; 
-							<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="space" paramProperty="idInternal">
+							<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="space" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço e todos os seus subespaços?')">
 								<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 							</html:link>
 						</td>
@@ -188,11 +189,13 @@
 
 	<%-- Responsability --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></h3>
-	<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
-		<fr:layout name="tabular">      			
-   			<fr:property name="classes" value="tstyle4 thlight tdcenter mvert0"/>
-   		</fr:layout>	
-	</fr:view>
+	<logic:notEmpty name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
+		<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
+			<fr:layout name="tabular">      			
+	   			<fr:property name="classes" value="tstyle4 thlight tdcenter mvert0"/>
+	   		</fr:layout>	
+		</fr:view>
+	</logic:notEmpty>
 	<p>
 		<html:link page="/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.manage.space.responsibility"/>
@@ -201,22 +204,26 @@
 	
 	<%-- Person Occupations --%>
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.person.occupations"/></h3>
-	<fr:view schema="PersonSpaceOccupationsWithUsername" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
-		<fr:layout name="tabular">      			
-   			<fr:property name="classes" value="tstyle4 thlight tdcenter mvert0"/>
-   		</fr:layout>	
-	</fr:view>	
+	<logic:notEmpty name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
+		<fr:view schema="PersonSpaceOccupationsWithUsername" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
+			<fr:layout name="tabular">      			
+	   			<fr:property name="classes" value="tstyle4 thlight tdcenter mvert0"/>
+	   		</fr:layout>	
+		</fr:view>	
+	</logic:notEmpty>
 	<p class="mtop05"><html:link page="/managePersonSpaceOccupations.do?method=showSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.person.occupations"/>
 	</html:link></p>
 
 	<%-- Material --%>
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></h3>
-	<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial">
-		<fr:layout name="tabular">      			
-   			<fr:property name="classes" value="tstyle4 thlight tdcenter mvert0"/>  			
-   		</fr:layout>	
-	</fr:view>			
+	<logic:notEmpty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
+		<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial">
+			<fr:layout name="tabular">      			
+	   			<fr:property name="classes" value="tstyle4 thlight tdcenter mvert0"/>  			
+	   		</fr:layout>	
+		</fr:view>			
+	</logic:notEmpty>
 	<p class="mtop05"><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.material.occupations"/>
 	</html:link></p>

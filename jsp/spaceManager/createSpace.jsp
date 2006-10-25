@@ -8,6 +8,15 @@
 <em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message bundle="SPACE_RESOURCES" key="link.create.space"/></h2>
 
+<logic:messagesPresent message="true">
+<p>
+	<em><!-- Error messages go here -->
+		<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
+			<bean:write name="message"/>
+		</html:messages>
+	</em>
+</p>
+</logic:messagesPresent>	
 
 <p class="mbottom05"><strong><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/></strong></p>
 
@@ -21,8 +30,6 @@
 		<bean:message key="button.submit"/>
 	</html:submit>
 </html:form>
-
-
 
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Campus">
 	<p class="mtop2 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>

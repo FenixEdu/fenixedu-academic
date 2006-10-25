@@ -14,9 +14,8 @@
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
 	<jsp:include page="spaceCrumbs.jsp"/>
 
-	<bean:define id="backLink">
-		/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
-	</bean:define>
+	<bean:define id="backLink">/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/></bean:define>	
+	<bean:define id="exceptionLink">/manageSpaceResponsibility.do?method=manageResponsabilityInterval&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&unitID=<bean:write name="unit" property="idInternal"/></bean:define>	
 
 	<ul class="mvert15 list5">
 		<li>
@@ -47,6 +46,7 @@
 				   schema="CreateSpaceResponsibilityInterval">
 			<fr:hidden slot="space" name="selectedSpaceInformation" property="space" />
 			<fr:hidden slot="unit" name="unit" />
+			<fr:destination name="exception" path="<%= exceptionLink %>"/>
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thmiddle thright thlight mtop15 mbottom1"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>

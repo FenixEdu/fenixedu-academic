@@ -37,8 +37,8 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     }
 
     public void delete() {
-	removeSpace();
-	removeUnit();
+	super.setSpace(null);
+	super.setUnit(null);
 	removeRootDomainObject();
 	deleteDomainObject();
     }
@@ -49,6 +49,22 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
 	super.setEnd(end);
     }
 
+    @Override
+    public void setSpace(Space space) {
+	if (space == null) {
+	    throw new DomainException("error.space.responsability.no.space");
+	}
+	super.setSpace(space);
+    }
+
+    @Override
+    public void setUnit(Unit unit) {
+	if (unit == null) {
+	    throw new DomainException("error.space.responsability.no.unit");
+	}
+	super.setUnit(unit);
+    }
+    
     @Override
     public void setBegin(YearMonthDay begin) {
 	checkSpaceResponsabilityIntersection(begin, getEnd(), getUnit(), getSpace());
