@@ -23,7 +23,9 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
+import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
@@ -126,6 +128,7 @@ public class Person extends Person_Base {
     public Person(PersonBean personBean) {
 
 	super();
+
 	checkConditionsToCreateNewPerson(personBean.getDocumentIdNumber(), personBean
 		.getIdDocumentType(), this);
 
@@ -802,7 +805,7 @@ public class Person extends Person_Base {
 	return (Collection<PersonFunction>) getParentAccountabilities(
 		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
     }
-    
+
     public List<PersonFunction> getPersonFuntions(YearMonthDay begin, YearMonthDay end) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 	for (Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(
@@ -813,7 +816,7 @@ public class Person extends Person_Base {
 	}
 	return result;
     }
-   
+
     public List<PersonFunction> getPersonFunctions(Unit unit) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
@@ -1050,15 +1053,14 @@ public class Person extends Person_Base {
 		return person.hasRole(RoleType.EMPLOYEE);
 	    case DELEGATE:
 		return person.hasRole(RoleType.STUDENT);
+	    case GRANT_OWNER:
+		return person.hasRole(RoleType.PERSON);
 	    case MASTER_DEGREE_CANDIDATE:
 	    case CANDIDATE:
 	    case STUDENT:
-        case GRANT_OWNER:
-	        return person.hasRole(RoleType.PERSON);
 	    case PERSON:
-	        return true;
 	    default:
-	        return true;
+		return true;
 	    }
 	}
 
@@ -2041,4 +2043,35 @@ public class Person extends Person_Base {
 	return false;
     }
 
+    public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
+	for (final InsuranceEvent insuranceEvent : getInsuranceEvents()) {
+	    if (insuranceEvent.getExecutionYear() == executionYear) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public Set<InsuranceEvent> getInsuranceEvents() {
+	final Set<InsuranceEvent> result = new HashSet<InsuranceEvent>();
+	for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
+	    result.add((InsuranceEvent) event);
+	}
+
+	return result;
+
+    }
+
+    public Set<Event> getEventsByEventType(final EventType eventType) {
+	final Set<Event> result = new HashSet<Event>();
+
+	for (final Event event : getEventsSet()) {
+	    if (event.getEventType() == eventType) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+    }
 }
