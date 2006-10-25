@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Space Information Table" alterSpaceInformationTable.sql
