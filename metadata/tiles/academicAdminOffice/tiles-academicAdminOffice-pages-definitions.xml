@@ -45,6 +45,10 @@
     </definition>      
     
 	<!-- ************* Document Requests Management ************* -->
+	<definition name="documentRequests.management.viewRegistrationDocumentRequestsHistoric" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewRegistrationDocumentRequestsHistoric.jsp"/>
+	</definition>
+
 	<definition name="documentRequests.management.printDocument" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"/>
 	</definition>

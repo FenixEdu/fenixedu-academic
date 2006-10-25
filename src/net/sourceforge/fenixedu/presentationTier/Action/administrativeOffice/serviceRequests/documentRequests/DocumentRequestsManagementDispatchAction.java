@@ -53,34 +53,32 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     public ActionForward viewRegistrationDocumentRequestsHistoric(ActionMapping mapping,
 	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("academicServiceRequestList", getRegistration(request)
-		.getNewDocumentRequests());
-	return mapping.findForward("viewNewDocumentRequests");
+	request.setAttribute("registration", getRegistration(request));
+	return mapping.findForward("viewRegistrationDocumentRequestsHistoric");
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final DocumentRequest documentRequest = getDocumentRequest(request);
-
+	
 	try {
-	    documentRequest.checkConditions();
+	    documentRequest.checkConditions();    
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
 	}
-
+	
 	request.setAttribute("documentRequest", documentRequest);
 	return mapping.findForward("printDocument");
     }
-
+    
     public ActionForward concludeDocumentRequest(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final DocumentRequest documentRequest = getDocumentRequest(request);
 	documentRequest.conclude(null);
-
-	request.setAttribute("registration", documentRequest.getStudentCurricularPlan()
-		.getRegistration());
+	
+	request.setAttribute("registration", documentRequest.getRegistration());
 	return mapping.findForward("student.viewRegistrationDetails");
     }
 
@@ -97,7 +95,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
 	StudentsSearchBean studentsSearchBean = (StudentsSearchBean) getRenderedObject();
 
-	if (studentsSearchBean == null) { // 1st time
+	if (studentsSearchBean == null) { //1st time
 	    studentsSearchBean = new StudentsSearchBean();
 	} else {
 	    final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
@@ -128,10 +126,12 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 		    "ProcessNewAcademicServiceRequests", new Object[] {
 			    SessionUtils.getUserView(request).getPerson().getEmployee(),
 			    documentIdsToProcess });
-	    return mapping.findForward("showOperations");
+	    
+	    request.setAttribute("registration", getRegistration(request));
+	    return mapping.findForward("viewRegistrationDetails");
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
-	    return mapping.findForward("showOperations");
+	    return mapping.findForward("viewRegistrationDetails");
 	}
 
     }
