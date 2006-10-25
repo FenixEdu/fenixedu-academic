@@ -104,13 +104,13 @@
 <%-- 
 				<p>
 					<strong>
-						<bean:message key="label.curricular.year" />: 
+						<bean:message key="label.curricular.year" bundle="STUDENT_RESOURCES"/>: 
 					</strong>
-					<bean:write name="infoStudentCurricularPlan" property="studentCurricularPlan.student.calculateCurricularYear"/>
+					<bean:write name="infoStudentCurricularPlan" property="studentCurricularPlan.registration.curricularYear"/>
 				</p>
 				<p>
 					<strong>
-						<bean:message key="arithmeticMean" />: 
+						<bean:message key="arithmeticMean" bundle="STUDENT_RESOURCES"/>: 
 					</strong>
 					<bean:write name="infoStudentCurricularPlan" property="studentCurricularPlan.student.arithmeticMean"/>
 				</p>
