@@ -38,7 +38,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     @Override
-    protected void checkConditions() throws DomainException {
+    public void checkConditions() throws DomainException {
 	if (!getStudentCurricularPlan().isBolonha()) {
 	    throw new DomainException(
 		    "ApprovementCertificateRequest.print.preBolonha.documentRequest.in.aplica");
