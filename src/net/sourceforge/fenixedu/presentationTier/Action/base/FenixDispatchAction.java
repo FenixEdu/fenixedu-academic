@@ -47,6 +47,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     protected static final ResourceBundle enumerationResources = ResourceBundle.getBundle(
             "resources.EnumerationResources", LanguageUtils.getLocale());
+    
+    protected static final ResourceBundle domainExceptionResources = ResourceBundle.getBundle(
+            "resources.DomainExceptionResources", LanguageUtils.getLocale());
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
