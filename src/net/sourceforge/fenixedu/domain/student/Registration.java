@@ -714,6 +714,26 @@ public class Registration extends Registration_Base {
 	return result;
     }
     
+    public Collection<DocumentRequest> getNewDocumentRequests() {
+	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
+
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.addAll(studentCurricularPlan.getNewDocumentRequests());
+	}
+
+	return result;
+    }
+    
+    public Collection<DocumentRequest> getProcessingDocumentRequests() {
+	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
+
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.addAll(studentCurricularPlan.getProcessingDocumentRequests());
+	}
+
+	return result;
+    }
+    
     public boolean hasDegreeDiplomaDocumentRequest() {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
 	    if (documentRequest.isDegreeDiploma()) {

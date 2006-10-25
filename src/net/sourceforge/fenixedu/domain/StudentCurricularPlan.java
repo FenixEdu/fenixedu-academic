@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -1473,6 +1474,30 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
     
+    public Collection<DocumentRequest> getDocumentRequests(final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+	Set<DocumentRequest> result = new HashSet<DocumentRequest>();
+
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if (academicServiceRequest instanceof DocumentRequest) {
+		if (academicServiceRequestSituationType == null && academicServiceRequest.isNewRequest()) {
+		    result.add((DocumentRequest) academicServiceRequest);    
+		} else if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING && academicServiceRequest.isProcessing()) {
+		    result.add((DocumentRequest) academicServiceRequest);
+		}
+	    }
+	}
+
+	return result;
+    }
+    
+    public Collection<? extends DocumentRequest> getNewDocumentRequests() {
+	return getDocumentRequests(null);
+    }
+    
+    public Collection<? extends DocumentRequest> getProcessingDocumentRequests() {
+	return getDocumentRequests(AcademicServiceRequestSituationType.PROCESSING);
+    }
+    
     public boolean hasDegreeDiplomaRequest() {
 	for (final DocumentRequest documentRequest : this.getDocumentRequests()) {
 	    if (documentRequest.isDegreeDiploma()) {
@@ -1796,5 +1821,5 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public void setRegistration(final Registration registration) {
 	super.setStudent(registration);
     }
-    
+
 }
