@@ -24,7 +24,7 @@
 	<bean:write name="selectedSpace" property="idInternal"/>
 </logic:present>
 
-<logic:present name="spaces">
+<logic:notEmpty name="spaces">
 	<table class="tstyle4">
 		<tr>
 			<th>
@@ -72,4 +72,4 @@
 			</logic:notPresent>
 		</logic:iterate>
 	</table>
-</logic:present>
+</logic:notEmpty>

@@ -32,7 +32,13 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
             FenixServiceException, ExcepcaoPersistencia {
                
         IViewState viewState = RenderUtils.getViewState("materialTypeWithMaterial");
-        viewState = (viewState == null) ? RenderUtils.getViewState("materialTypeToCreate") : viewState;
+        if(viewState != null) {
+            MaterialTypeBean materialTypeBean = (MaterialTypeBean) viewState.getMetaObject().getObject();
+            if(materialTypeBean.getMaterial() == null) {
+        	addActionMessage(request, "error.material.not.found");
+            }
+        }
+        viewState = (viewState == null) ? RenderUtils.getViewState("materialTypeToCreate") : viewState;               
         return setMaterialTypeBean(mapping, request, viewState);
     }       
     
