@@ -72,10 +72,11 @@ public class ManageSpacesDA extends FenixDispatchAction {
     protected ActionForward manageSpace(final ActionMapping mapping, final HttpServletRequest request,
 	    final SpaceInformation spaceInformation) {
 
-	final Space space = spaceInformation.getSpace();
-	request.setAttribute("selectedSpace", space);
+	final Space space = spaceInformation.getSpace();	
 	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
 	spaces.addAll(space.getContainedSpaces());
+	
+	request.setAttribute("selectedSpace", space);
 	request.setAttribute("spaces", spaces);
 	request.setAttribute("selectedSpaceInformation", spaceInformation);
 	return mapping.findForward("ManageSpace");

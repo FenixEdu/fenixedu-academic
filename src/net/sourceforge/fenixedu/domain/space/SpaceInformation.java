@@ -11,6 +11,8 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
 
     public abstract String getPresentationName();
 
+    public abstract FactoryExecutor getSpaceFactoryEditor();
+
     protected SpaceInformation() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -116,7 +118,4 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
 	    return mostRecentSpaceInformation.getValidFrom().plusDays(2);
 	}
     }
-
-    public abstract FactoryExecutor getSpaceFactoryEditor();
-
 }

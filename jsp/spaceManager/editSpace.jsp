@@ -29,30 +29,30 @@
 
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 		<fr:edit name="selectedSpaceInformation" schema="CampusInformation" action="<%= url %>">
-		<fr:layout>
-			<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
-		</fr:layout>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
+			</fr:layout>
 		</fr:edit>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
 		<fr:edit name="selectedSpaceInformation" schema="BuildingInformation" action="<%= url %>">
-		<fr:layout>
-			<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
-		</fr:layout>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
+			</fr:layout>
 		</fr:edit>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
 		<fr:edit name="selectedSpaceInformation" schema="FloorInformation" action="<%= url %>">
-		<fr:layout>
-			<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
-		</fr:layout>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
+			</fr:layout>
 		</fr:edit>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 		<fr:edit name="selectedSpaceInformation" schema="RoomInformation" action="<%= url %>">
-		<fr:layout>
-			<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
-		</fr:layout>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
+			</fr:layout>
 		</fr:edit>
 	</logic:equal>
 

@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Room.RoomFactory;
 import net.sourceforge.fenixedu.domain.space.Room.RoomFactoryEditor;

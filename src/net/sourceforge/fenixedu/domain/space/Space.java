@@ -9,7 +9,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
 
 import org.joda.time.YearMonthDay;
@@ -48,7 +47,7 @@ public abstract class Space extends Space_Base {
 		return spaceInformation;
 	    }
 	}
-	return null;
+	return getMostRecentSpaceInformation();	
     }
 
     public SortedSet<SpaceInformation> getOrderedSpaceInformations() {

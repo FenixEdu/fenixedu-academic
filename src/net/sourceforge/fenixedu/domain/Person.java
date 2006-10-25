@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
-import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
@@ -2042,27 +2041,7 @@ public class Person extends Person_Base {
 	}
 	return false;
     }
-
-    public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
-	for (final InsuranceEvent insuranceEvent : getInsuranceEvents()) {
-	    if (insuranceEvent.getExecutionYear() == executionYear) {
-		return true;
-	    }
-	}
-
-	return false;
-    }
-
-    public Set<InsuranceEvent> getInsuranceEvents() {
-	final Set<InsuranceEvent> result = new HashSet<InsuranceEvent>();
-	for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
-	    result.add((InsuranceEvent) event);
-	}
-
-	return result;
-
-    }
-
+    
     public Set<Event> getEventsByEventType(final EventType eventType) {
 	final Set<Event> result = new HashSet<Event>();
 
