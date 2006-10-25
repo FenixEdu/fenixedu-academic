@@ -42,11 +42,33 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 			"documentRequestId"));
     }
 
+    private Registration getRegistration(final HttpServletRequest request) {
+	final String registrationID = request.getParameter("registrationID");
+	final Registration registration = rootDomainObject.readRegistrationByOID(Integer
+		.valueOf(registrationID));
+	request.setAttribute("registration", registration);
+	return registration;
+    }
+
+    public ActionForward viewRegistrationDocumentRequestsHistoric(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("academicServiceRequestList", getRegistration(request).getNewDocumentRequests());
+	return mapping.findForward("viewNewDocumentRequests");
+    }
+
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("documentRequest", getDocumentRequest(request));
-
+	final DocumentRequest documentRequest = getDocumentRequest(request);
+	
+	try {
+	    documentRequest.checkConditions();    
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey());
+	}
+	
+	request.setAttribute("documentRequest", documentRequest);
 	return mapping.findForward("printDocument");
     }
     
