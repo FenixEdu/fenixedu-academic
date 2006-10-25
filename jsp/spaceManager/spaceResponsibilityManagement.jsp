@@ -46,11 +46,13 @@
 	</ul>
 			
 	<logic:messagesPresent message="true">
-		<em><!-- Error messages go here -->
-			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
-				<bean:write name="message"/>
-			</html:messages>
-		</em>
+		<p>
+			<span class="error0"><!-- Error messages go here -->
+				<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages>
+			</span>
+		</p>
 	</logic:messagesPresent>
 
 	<p class="mtop2 mbottom05"><strong><bean:message key="label.active.responsible.units" bundle="SPACE_RESOURCES"/></strong></p>

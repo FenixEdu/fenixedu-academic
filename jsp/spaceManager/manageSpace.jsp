@@ -130,7 +130,7 @@
 		<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="title.subspaces"/></h3>
 		<bean:size id="spacesSize" name="spaces"/>
 		<logic:greaterEqual name="spacesSize" value="1">
-			<table class="tstyle4 thlight mbottom05">				
+			<table class="tstyle4 thlight mtop05 mbottom05">				
 				<tr>
 					<th>
 						<bean:message bundle="SPACE_RESOURCES" key="title.type"/>
