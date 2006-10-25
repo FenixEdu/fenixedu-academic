@@ -28,3 +28,9 @@ function executeWithTempFile() {
 }
 
 execute "Alter Space Information Table" alterSpaceInformationTable.sql
+execute "Changing Table AccountingEvent" AlterTableAccountingEvent.sql
+execute "Updating Table AccountingEvent" UpdateTableAccountingEvent.sql
+execute "Changing Table ServiceAgreementTemplate" AlterTableServiceAgreementTemplate.sql
+execute "Changing Table Party" AlterTableParty.sql
+execute "Changing Table PostingRule" AlterTablePostingRule.sql
+execute "Updating Table PostingRule" UpdateTablePostingRule.sql
