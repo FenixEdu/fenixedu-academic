@@ -7,7 +7,7 @@
 <h2><strong><bean:message key="label.studentDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
+	<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 	<br/>
 </html:messages>
 
@@ -85,12 +85,14 @@
 
 <p>
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.document.requests"/>
+	<bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 	<bean:define id="newDocumentRequests" name="registration" property="newDocumentRequests"/>
 	<logic:notEmpty name="newDocumentRequests">
-		<html:form action="/documentRequestsManagement.do">
+
+		<html:form action="<%= "/documentRequestsManagement.do?registrationID=" + registration.getIdInternal()%>">
 			<html:hidden property="method"/>
 			
-			<fr:view name="newDocumentRequests" schema="DocumentRequest.view-without-numberOfPages">
+			<fr:view name="newDocumentRequests" schema="DocumentRequest.for-given-registration">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4 thlight thcenter" />
 					<fr:property name="checkable" value="true" />
@@ -140,7 +142,7 @@
 
 --%>
 
-<p>
+<p style="margin-top: 4em;">
 	<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="registration" paramProperty="student.idInternal">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
