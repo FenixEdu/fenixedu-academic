@@ -11,7 +11,7 @@ public class LEABolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private static final String PROJECTO_CODE = "A72";
 
-    private static final String DISSERTACAO_CODE = "$66";
+    private static final String DISSERTACAO_CODE = "B80";
 
     public LEABolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
 	    ExecutionPeriod executionPeriod) {

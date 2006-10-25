@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 public class LEGMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
 
-    private static final String DISSERTACAO_CODE = "$48";
+    private static final String DISSERTACAO_CODE = "B7S";
 
-    private static final String[] COMMONS = { "AZY", "AZX", "AZZ", "$47"};
+    private static final String[] COMMONS = { "AZY", "AZX", "AZZ", "B7T"};
 
     private static final String[] DEGREE = { "AG3", "5Q", "B0B", "B07", "B04", "B03"};
 

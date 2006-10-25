@@ -18,13 +18,13 @@ public class LEGIBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     
     private static final String[] DEGREE_EMPREENDIMENTOS = { "B5T", "B31", "AA9"};
     
-    private static final String[] PRODUCAO = { "$107"};
+    private static final String[] PRODUCAO = { "B9W"};
     
-    private static final String[] EMPREENDIMENTOS = { "A4O", "1A", "A4H", "$108"};
+    private static final String[] EMPREENDIMENTOS = { "A4O", "1A", "A4H", "B9X"};
     
-    private static final String[] COMMONS_PRODUCAO = { "A4G", "AA9", "A4B", "AFY", "$83"}; 
+    private static final String[] COMMONS_PRODUCAO = { "A4G", "AA9", "A4B", "AFY", "B98"}; 
     
-    private static final String[] COMMONS_EMPREENDIMENTOS = { "A4G", "AFY", "$83"};
+    private static final String[] COMMONS_EMPREENDIMENTOS = { "A4G", "AFY", "B98"};
     
     private static final String PRODUCAO_CODE = "1120";
 

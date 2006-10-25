@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 public class LEMATBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
 
-    private static final String DISSERTACAO_CODE = "$60";
+    private static final String DISSERTACAO_CODE = "B81";
     
     private static final String MECANICA_COMPUTACIONAL = "A6P";
 

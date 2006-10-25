@@ -23,7 +23,7 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     
     private static final String AUTOMACAO_ROBOTICA_CODE = "330";
 
-    private static final String DISSERTACAO_CODE = "$66";
+    private static final String DISSERTACAO_CODE = "B80";
     
     private static final String PROJECTO_SISTEMASI_CODE = "A9C";
     

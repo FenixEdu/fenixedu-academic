@@ -19,7 +19,7 @@ public class LEANBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private static final String PROJECTOI_CODE = "LU";
 
-    private static final String DISSERTACAO_CODE = "$64";
+    private static final String DISSERTACAO_CODE = "B85";
 
     private static final String[] COMMONS_810 = { "MD", "L1", "72", "AVI", "LT", "A3Q", "A7B" };
 

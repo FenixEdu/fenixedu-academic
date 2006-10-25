@@ -16,9 +16,9 @@ public class LEICBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private static final String[] DEGREE = {"B63"};
 
-    private static final String[] MASTER_DEGREE = {"$129"};
+    private static final String[] MASTER_DEGREE = {"BAI"};
     
-    private static final String[] INVESTIGACAO = {"$38"};
+    private static final String[] INVESTIGACAO = {"B7N"};
     
     public LEICBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
 	    ExecutionPeriod executionPeriod) {

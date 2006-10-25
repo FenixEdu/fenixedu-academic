@@ -11,7 +11,7 @@ public class LEECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private static final String TFCI_CODE = "B65";
 
-    private static final String DISSERTACAO_CODE = "$65";
+    private static final String DISSERTACAO_CODE = "B86";
 
     public LEECBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
 	    ExecutionPeriod executionPeriod) {
