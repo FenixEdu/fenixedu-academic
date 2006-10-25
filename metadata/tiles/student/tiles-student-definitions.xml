@@ -3,7 +3,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.student.masterPage" extends="df.layout.two-column">
-	  <put name="title" value="portalEstudante" />
+	  <put name="title" value="Portal do Estudante" />
 	  <put name="serviceName" value="Portal do Estudante" />	
 	  <put name="navLocal" value="/student/commons/commonNavLocalStudent.jsp" />
 	  <put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />
@@ -11,7 +11,7 @@
 	  <put name="footer" value="/copyright.jsp" />
 	</definition>
 	<definition name="definition.student.one-column" extends="df.layout.one-column">
-	  <put name="title" value="portalEstudante" />
+	  <put name="title" value="Portal do Estudante" />
 	  <put name="serviceName" value="Portal do Estudante" />	
 	  <put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />
 	  <put name="body" value="/commons/blank.jsp" />
