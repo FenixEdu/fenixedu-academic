@@ -24,71 +24,82 @@ public class EntryDTO implements Serializable {
 
     private LabelFormatter description;
 
+    private BigDecimal debtAmount;
+
     public EntryDTO(EntryType entryType, Event event, BigDecimal totalAmount, BigDecimal payedAmount,
-            BigDecimal amountToPay, LabelFormatter description) {
-        setEntryType(entryType);
-        setEvent(event);
-        setTotalAmount(totalAmount);
-        setPayedAmount(payedAmount);
-        setAmountToPay(amountToPay);
-        setDescription(description);
+	    BigDecimal amountToPay, LabelFormatter description, BigDecimal debtAmount) {
+	setEntryType(entryType);
+	setEvent(event);
+	setTotalAmount(totalAmount);
+	setPayedAmount(payedAmount);
+	setAmountToPay(amountToPay);
+	setDescription(description);
+	setDebtAmount(debtAmount);
 
     }
 
     public BigDecimal getTotalAmount() {
-        return totalAmount;
+	return totalAmount;
     }
 
     public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
+	this.totalAmount = totalAmount;
     }
 
     public BigDecimal getPayedAmount() {
-        return payedAmount;
+	return payedAmount;
     }
 
     public void setPayedAmount(BigDecimal payedAmount) {
-        this.payedAmount = payedAmount;
+	this.payedAmount = payedAmount;
     }
 
     public EntryType getEntryType() {
-        return entryType;
+	return entryType;
     }
 
     public void setEntryType(EntryType entryType) {
-        this.entryType = entryType;
+	this.entryType = entryType;
     }
 
     public boolean isSelected() {
-        return selected;
+	return selected;
     }
 
     public void setSelected(boolean selected) {
-        this.selected = selected;
+	this.selected = selected;
     }
 
     public BigDecimal getAmountToPay() {
-        return amountToPay;
+	return amountToPay;
     }
 
     public void setAmountToPay(BigDecimal amountToPay) {
-        this.amountToPay = amountToPay;
+	this.amountToPay = amountToPay;
     }
 
     public Event getEvent() {
-        return (this.event != null) ? this.event.getObject() : null;
+	return (this.event != null) ? this.event.getObject() : null;
     }
 
     public void setEvent(Event event) {
-        this.event = (event != null) ? new DomainReference<Event>(event) : null;
+	this.event = (event != null) ? new DomainReference<Event>(event) : null;
     }
 
     public LabelFormatter getDescription() {
-        return description;
+	return description;
     }
 
     public void setDescription(LabelFormatter description) {
-        this.description = description;
+	this.description = description;
+    }
+
+    public void setDebtAmount(BigDecimal debtAmount) {
+	this.debtAmount = debtAmount;
+    }
+
+    public BigDecimal getDebtAmount() {
+	return this.debtAmount;
     }
 
 }

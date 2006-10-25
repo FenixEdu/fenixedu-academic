@@ -46,385 +46,393 @@ import org.joda.time.DateTime;
 public abstract class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        return mapping.findForward("searchPerson");
+	return mapping.findForward("searchPerson");
     }
 
     public ActionForward searchPersonByCandidacyNumber(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        final DynaActionForm form = (DynaActionForm) actionForm;
+	final DynaActionForm form = (DynaActionForm) actionForm;
 
-        final Integer candidacyNumber = getCandidacyNumber(form);
-        if (candidacyNumber == null) {
-            addActionMessage(request, "error.administrativeOffice.payments.invalid.candidacyNumber");
-            form.set("candidacyNumber", candidacyNumber);
-            return prepareSearchPerson(mapping, actionForm, request, response);
-        }
-        final Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
-        if (candidacy == null) {
-            addActionMessage(request,
-                    "error.administrativeOffice.payments.invalid.candidacyNumber.withNumber",
-                    candidacyNumber.toString());
-            form.set("candidacyNumber", candidacyNumber.toString());
-            return prepareSearchPerson(mapping, actionForm, request, response);
-        }
+	final Integer candidacyNumber = getCandidacyNumber(form);
+	if (candidacyNumber == null) {
+	    addActionMessage(request, "error.administrativeOffice.payments.invalid.candidacyNumber");
+	    form.set("candidacyNumber", candidacyNumber);
+	    return prepareSearchPerson(mapping, actionForm, request, response);
+	}
+	final Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
+	if (candidacy == null) {
+	    addActionMessage(request,
+		    "error.administrativeOffice.payments.invalid.candidacyNumber.withNumber",
+		    candidacyNumber.toString());
+	    form.set("candidacyNumber", candidacyNumber.toString());
+	    return prepareSearchPerson(mapping, actionForm, request, response);
+	}
 
-        request.setAttribute("person", candidacy.getPerson());
-        return mapping.findForward("showOperations");
+	request.setAttribute("person", candidacy.getPerson());
+	return mapping.findForward("showOperations");
     }
 
     public ActionForward searchPersonByUsername(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        final DynaActionForm form = (DynaActionForm) actionForm;
-        final String username = (String) form.get("username");
-        final Person person = getPersonByUsername(username);
+	final DynaActionForm form = (DynaActionForm) actionForm;
+	final String username = (String) form.get("username");
+	final Person person = getPersonByUsername(username);
 
-        if (person == null) {
-            addActionMessage(request, "error.administrativeOffice.payments.person.not.found");
-            return prepareSearchPerson(mapping, actionForm, request, response);
-        }
+	if (person == null) {
+	    addActionMessage(request, "error.administrativeOffice.payments.person.not.found");
+	    return prepareSearchPerson(mapping, actionForm, request, response);
+	}
 
-        request.setAttribute("person", person);
-        return mapping.findForward("showOperations");
+	request.setAttribute("person", person);
+	return mapping.findForward("showOperations");
     }
 
     public ActionForward searchPersonByDocumentIDandDocumentType(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 
-        final DynaActionForm form = (DynaActionForm) actionForm;
-        final IDDocumentType documentType = IDDocumentType.valueOf(form.getString("documentType"));
-        final String documentNumber = (String) form.get("documentNumber");
+	final DynaActionForm form = (DynaActionForm) actionForm;
+	final IDDocumentType documentType = IDDocumentType.valueOf(form.getString("documentType"));
+	final String documentNumber = (String) form.get("documentNumber");
 
-        final Person person = getPersonByDocumentNumberIdAndDocumentType(documentNumber, documentType);
+	final Person person = getPersonByDocumentNumberIdAndDocumentType(documentNumber, documentType);
 
-        if (person == null) {
-            addActionMessage(request, "error.administrativeOffice.payments.person.not.found");
-            return prepareSearchPerson(mapping, actionForm, request, response);
-        }
+	if (person == null) {
+	    addActionMessage(request, "error.administrativeOffice.payments.person.not.found");
+	    return prepareSearchPerson(mapping, actionForm, request, response);
+	}
 
-        request.setAttribute("person", person);
-        return mapping.findForward("showOperations");
+	request.setAttribute("person", person);
+	return mapping.findForward("showOperations");
     }
 
     protected Integer getCandidacyNumber(final DynaActionForm form) {
-        final String candidacyNumberString = (String) form.get("candidacyNumber");
-        try {
-            return (candidacyNumberString != null && !candidacyNumberString.equals("")) ? Integer
-                    .valueOf(candidacyNumberString) : null;
-        } catch (NumberFormatException ex) {
-            return null;
-        }
+	final String candidacyNumberString = (String) form.get("candidacyNumber");
+	try {
+	    return (candidacyNumberString != null && !candidacyNumberString.equals("")) ? Integer
+		    .valueOf(candidacyNumberString) : null;
+	} catch (NumberFormatException ex) {
+	    return null;
+	}
     }
 
     protected Person getPersonByUsername(String username) {
-        return Person.readPersonByUsername(username);
+	return Person.readPersonByUsername(username);
     }
 
     protected Person getPersonByDocumentNumberIdAndDocumentType(String documentNumber,
-            IDDocumentType documentType) {
-        return Person.readByDocumentIdNumberAndIdDocumentType(documentNumber, documentType);
+	    IDDocumentType documentType) {
+	return Person.readByDocumentIdNumberAndIdDocumentType(documentNumber, documentType);
     }
 
     protected Person getPersonByCandidacyNumber(Integer candidacyNumber) {
-        final Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
-        return (candidacy != null) ? candidacy.getPerson() : null;
+	final Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
+	return (candidacy != null) ? candidacy.getPerson() : null;
     }
 
     protected PaymentsManagementDTO searchNotPayedEventsForPerson(HttpServletRequest request,
-            Person person) {
+	    Person person) {
 
-        final PaymentsManagementDTO paymentsManagementDTO = new PaymentsManagementDTO(person);
-        for (final Event event : person
-                .getNotPayedEventsPayableOnAdministrativeOffice(getAdministrativeOffice())) {
-            paymentsManagementDTO.addEntryDTOs(event.calculateEntries());
-        }
-        return paymentsManagementDTO;
+	final PaymentsManagementDTO paymentsManagementDTO = new PaymentsManagementDTO(person);
+	for (final Event event : person
+		.getNotPayedEventsPayableOnAdministrativeOffice(getAdministrativeOffice())) {
+	    paymentsManagementDTO.addEntryDTOs(event.calculateEntries());
+	}
+	return paymentsManagementDTO;
     }
 
     public ActionForward showEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+	    HttpServletResponse response) {
 
-        final PaymentsManagementDTO paymentsManagementDTO = searchNotPayedEventsForPerson(request,
-                getPerson(request));
-        request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+	final PaymentsManagementDTO paymentsManagementDTO = searchNotPayedEventsForPerson(request,
+		getPerson(request));
+	request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
 
-        return mapping.findForward("showEvents");
+	return mapping.findForward("showEvents");
     }
 
     public ActionForward showPaymentsWithoutReceipt(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        final Person person = getPerson(request);
-        final CreateReceiptBean receiptBean = new CreateReceiptBean();
-        final IViewState viewState = RenderUtils.getViewState("entriesToSelect");
-        final Collection<Entry> entriesToSelect = (Collection<Entry>) ((viewState != null) ? viewState
-                .getMetaObject().getObject() : null);
+	final Person person = getPerson(request);
+	final CreateReceiptBean receiptBean = new CreateReceiptBean();
+	final IViewState viewState = RenderUtils.getViewState("entriesToSelect");
+	final Collection<Entry> entriesToSelect = (Collection<Entry>) ((viewState != null) ? viewState
+		.getMetaObject().getObject() : null);
 
-        receiptBean.setPerson(person);
-        receiptBean.setEntries(getSelectableEntryBeans(person
-                .getPaymentsWithoutReceiptByAdministrativeOffice(getAdministrativeOffice()),
-                (entriesToSelect != null) ? entriesToSelect : new HashSet<Entry>()));
+	receiptBean.setPerson(person);
+	receiptBean.setEntries(getSelectableEntryBeans(person
+		.getPaymentsWithoutReceiptByAdministrativeOffice(getAdministrativeOffice()),
+		(entriesToSelect != null) ? entriesToSelect : new HashSet<Entry>()));
 
-        request.setAttribute("createReceiptBean", receiptBean);
+	request.setAttribute("createReceiptBean", receiptBean);
 
-        return mapping.findForward("showPaymentsWithoutReceipt");
+	return mapping.findForward("showPaymentsWithoutReceipt");
     }
 
     public ActionForward confirmCreateReceipt(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState(
-                "createReceiptBean").getMetaObject().getObject();
+	final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState(
+		"createReceiptBean").getMetaObject().getObject();
 
-        if (createReceiptBean.getContributorParty() == null) {
-            final Party contributor = Party.readByContributorNumber(createReceiptBean
-                    .getContributorNumber());
-            if (contributor == null) {
-                addActionMessage(request,
-                        "error.administrativeOffice.payments.receipt.contributor.does.not.exist");
+	if (createReceiptBean.getContributorParty() == null) {
+	    final Party contributor = Party.readByContributorNumber(createReceiptBean
+		    .getContributorNumber());
+	    if (contributor == null) {
+		addActionMessage(request,
+			"error.administrativeOffice.payments.receipt.contributor.does.not.exist");
 
-                request.setAttribute("personId", createReceiptBean.getPerson().getIdInternal());
-                return showPaymentsWithoutReceipt(mapping, actionForm, request, response);
+		request.setAttribute("personId", createReceiptBean.getPerson().getIdInternal());
+		return showPaymentsWithoutReceipt(mapping, actionForm, request, response);
 
-            } else {
-                createReceiptBean.setContributorParty(contributor);
-            }
-        }
+	    } else {
+		createReceiptBean.setContributorParty(contributor);
+	    }
+	}
 
-        if (createReceiptBean.getSelectedEntries().isEmpty()) {
-            addActionMessage(request,
-                    "error.administrativeOffice.payments.receipt.entries.selection.is.required");
+	if (createReceiptBean.getSelectedEntries().isEmpty()) {
+	    addActionMessage(request,
+		    "error.administrativeOffice.payments.receipt.entries.selection.is.required");
 
-            request.setAttribute("personId", createReceiptBean.getPerson().getIdInternal());
-            return showPaymentsWithoutReceipt(mapping, actionForm, request, response);
-        }
+	    request.setAttribute("personId", createReceiptBean.getPerson().getIdInternal());
+	    return showPaymentsWithoutReceipt(mapping, actionForm, request, response);
+	}
 
-        request.setAttribute("createReceiptBean", createReceiptBean);
-        return mapping.findForward("confirmCreateReceipt");
+	request.setAttribute("createReceiptBean", createReceiptBean);
+	return mapping.findForward("confirmCreateReceipt");
     }
 
     public ActionForward createReceipt(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
 
-        final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState(
-                "createReceiptBeanConfirm").getMetaObject().getObject();
+	final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState(
+		"createReceiptBeanConfirm").getMetaObject().getObject();
 
-        try {
-            final Receipt receipt = (Receipt) ServiceUtils.executeService(getUserView(request),
-                    "CreateReceipt", new Object[] { getUserView(request).getPerson().getEmployee(),
-                            createReceiptBean.getPerson(), createReceiptBean.getContributorParty(),
-                            createReceiptBean.getSelectedEntries() });
+	try {
+	    final Receipt receipt = (Receipt) ServiceUtils.executeService(getUserView(request),
+		    "CreateReceipt", new Object[] { getUserView(request).getPerson().getEmployee(),
+			    createReceiptBean.getPerson(), createReceiptBean.getContributorParty(),
+			    createReceiptBean.getSelectedEntries() });
 
-            request.setAttribute("personId", receipt.getPerson().getIdInternal());
-            request.setAttribute("receiptID", receipt.getIdInternal());
+	    request.setAttribute("personId", receipt.getPerson().getIdInternal());
+	    request.setAttribute("receiptID", receipt.getIdInternal());
 
-            return prepareShowReceipt(mapping, form, request, response);
+	    return prepareShowReceipt(mapping, form, request, response);
 
-        } catch (DomainException ex) {
+	} catch (DomainException ex) {
 
-            addActionMessage(request, ex.getKey(), ex.getArgs());
-            request.setAttribute("createReceiptBean", createReceiptBean);
-            return mapping.findForward("confirmCreateReceipt");
-        }
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+	    request.setAttribute("createReceiptBean", createReceiptBean);
+	    return mapping.findForward("confirmCreateReceipt");
+	}
     }
 
     private List<SelectableEntryBean> getSelectableEntryBeans(final Set<Entry> entries,
-            final Collection<Entry> entriesToSelect) {
-        final List<SelectableEntryBean> selectableEntryBeans = new ArrayList<SelectableEntryBean>();
-        for (final Entry entry : entries) {
-            selectableEntryBeans.add(new SelectableEntryBean(entriesToSelect.contains(entry) ? true
-                    : false, entry));
-        }
-        return selectableEntryBeans;
+	    final Collection<Entry> entriesToSelect) {
+	final List<SelectableEntryBean> selectableEntryBeans = new ArrayList<SelectableEntryBean>();
+	for (final Entry entry : entries) {
+	    selectableEntryBeans.add(new SelectableEntryBean(entriesToSelect.contains(entry) ? true
+		    : false, entry));
+	}
+	return selectableEntryBeans;
     }
 
     public ActionForward showReceipts(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        request.setAttribute("person", getPerson(request));
-        request.setAttribute("receiptsForAdministrativeOffice", getPerson(request)
-                .getReceiptsByAdministrativeOffice(getAdministrativeOffice()));
+	request.setAttribute("person", getPerson(request));
+	request.setAttribute("receiptsForAdministrativeOffice", getPerson(request)
+		.getReceiptsByAdministrativeOffice(getAdministrativeOffice()));
 
-        return mapping.findForward("showReceipts");
+	return mapping.findForward("showReceipts");
     }
 
     public ActionForward preparePayment(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
-                .getViewState("paymentsManagementDTO").getMetaObject().getObject();
+	final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
+		.getViewState("paymentsManagementDTO").getMetaObject().getObject();
 
-        paymentsManagementDTO.setPaymentDate(new DateTime());
+	paymentsManagementDTO.setPaymentDate(new DateTime());
 
-        request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+	request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
 
-        if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
-            addActionMessage(request,
-                    "error.administrativeOffice.payments.payment.entries.selection.is.required");
-            return mapping.findForward("showEvents");
+	if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
+	    addActionMessage(request,
+		    "error.administrativeOffice.payments.payment.entries.selection.is.required");
+	    return mapping.findForward("showEvents");
 
-        } else {
-            return mapping.findForward("preparePayment");
-        }
+	} else {
+	    return mapping.findForward("preparePayment");
+	}
 
     }
 
     public ActionForward doPayment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
-                .getViewState("paymentsManagementDTO-edit").getMetaObject().getObject();
+	final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
+		.getViewState("paymentsManagementDTO-edit").getMetaObject().getObject();
 
-        if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
+	if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
 
-            addActionMessage(request,
-                    "error.administrativeOffice.payments.payment.entries.selection.is.required");
-            request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
-            return mapping.findForward("showEvents");
-        }
+	    addActionMessage(request,
+		    "error.administrativeOffice.payments.payment.entries.selection.is.required");
+	    request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+	    return mapping.findForward("showEvents");
+	}
 
-        try {
-            final Collection<Entry> resultingEntries = (Collection<Entry>) ServiceUtils.executeService(
-                    getUserView(request), "CreatePaymentsForEvents", new Object[] {
-                            getUserView(request).getPerson().getUser(),
-                            paymentsManagementDTO.getSelectedEntries(), PaymentMode.CASH,
-                            paymentsManagementDTO.isDifferedPayment(),
-                            paymentsManagementDTO.getPaymentDate() });
+	try {
+	    final Collection<Entry> resultingEntries = (Collection<Entry>) ServiceUtils.executeService(
+		    getUserView(request), "CreatePaymentsForEvents", new Object[] {
+			    getUserView(request).getPerson().getUser(),
+			    paymentsManagementDTO.getSelectedEntries(), PaymentMode.CASH,
+			    paymentsManagementDTO.isDifferedPayment(),
+			    paymentsManagementDTO.getPaymentDate() });
 
-            request.setAttribute("person", paymentsManagementDTO.getPerson());
-            request.setAttribute("entriesToSelect", resultingEntries);
+	    request.setAttribute("person", paymentsManagementDTO.getPerson());
+	    request.setAttribute("entriesToSelect", resultingEntries);
 
-            return mapping.findForward("paymentConfirmed");
+	    return mapping.findForward("paymentConfirmed");
 
-        } catch (DomainExceptionWithLabelFormatter ex) {
-            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
-                    .getLabelFormatterArgs()));
-            request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
-            return mapping.findForward("showEvents");
-        } catch (DomainException ex) {
+	} catch (DomainExceptionWithLabelFormatter ex) {
+	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
+		    .getLabelFormatterArgs()));
+	    request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+	    return mapping.findForward("showEvents");
+	} catch (DomainException ex) {
 
-            addActionMessage(request, ex.getKey(), ex.getArgs());
-            request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
-            return mapping.findForward("showEvents");
-        }
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+	    request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+	    return mapping.findForward("showEvents");
+	}
 
     }
 
     private Person getPerson(HttpServletRequest request) {
-        return (Person) rootDomainObject.readPartyByOID(Integer.valueOf(getFromRequest(request,
-                "personId").toString()));
+	return (Person) rootDomainObject.readPartyByOID(Integer.valueOf(getFromRequest(request,
+		"personId").toString()));
     }
 
     public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        final PaymentsManagementDTO managementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
-                "paymentsManagementDTO").getMetaObject().getObject();
-        request.setAttribute("paymentsManagementDTO", managementDTO);
+	final PaymentsManagementDTO managementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
+		"paymentsManagementDTO").getMetaObject().getObject();
+	request.setAttribute("paymentsManagementDTO", managementDTO);
 
-        if (managementDTO.getSelectedEntries().isEmpty()) {
-            addActionMessage(request,
-                    "error.administrativeOffice.payments.guide.entries.selection.is.required");
-            return mapping.findForward("showEvents");
+	if (managementDTO.getSelectedEntries().isEmpty()) {
+	    addActionMessage(request,
+		    "error.administrativeOffice.payments.guide.entries.selection.is.required");
+	    return mapping.findForward("showEvents");
 
-        } else {
-            return mapping.findForward("showGuide");
-        }
+	} else {
+	    return mapping.findForward("showGuide");
+	}
     }
 
     public ActionForward printGuide(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        PaymentsManagementDTO managementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
-                "paymentsManagementDTO").getMetaObject().getObject();
-        request.setAttribute("paymentsManagementDTO", managementDTO);
-        request.setAttribute("currentUnit", getUserView(request).getPerson().getEmployee()
-                .getCurrentWorkingPlace());
-        return mapping.findForward("printGuide");
+	PaymentsManagementDTO managementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
+		"paymentsManagementDTO").getMetaObject().getObject();
+	request.setAttribute("paymentsManagementDTO", managementDTO);
+	request.setAttribute("currentUnit", getUserView(request).getPerson().getEmployee()
+		.getCurrentWorkingPlace());
+	return mapping.findForward("printGuide");
     }
 
     public ActionForward prepareShowReceipt(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        final Person person = getPerson(request);
-        final Integer receiptID = Integer.valueOf(getFromRequest(request, "receiptID").toString());
-        final Receipt receipt = rootDomainObject.readReceiptByOID(receiptID);
+	final Person person = getPerson(request);
+	final Integer receiptID = Integer.valueOf(getFromRequest(request, "receiptID").toString());
+	final Receipt receipt = rootDomainObject.readReceiptByOID(receiptID);
 
-        if (receipt == null) {
-            addActionMessage(request, "error.administrativeOffice.payments.receipt.not.found");
-            request.setAttribute("person", person);
-            return mapping.findForward("showReceipts");
-        }
-        if (!person.getReceiptsSet().contains(receipt)) {
-            addActionMessage(request,
-                    "error.administrativeOffice.payments.person.doesnot.contain.receipt");
-            request.setAttribute("person", person);
-            return mapping.findForward("showReceipts");
-        }
+	if (receipt == null) {
+	    addActionMessage(request, "error.administrativeOffice.payments.receipt.not.found");
+	    request.setAttribute("person", person);
+	    return mapping.findForward("showReceipts");
+	}
+	if (!person.getReceiptsSet().contains(receipt)) {
+	    addActionMessage(request,
+		    "error.administrativeOffice.payments.person.doesnot.contain.receipt");
+	    request.setAttribute("person", person);
+	    return mapping.findForward("showReceipts");
+	}
 
-        request.setAttribute("receipt", receipt);
-        return mapping.findForward("showReceipt");
+	request.setAttribute("receipt", receipt);
+	return mapping.findForward("showReceipt");
     }
 
     public ActionForward printReceipt(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
 
-        final Receipt receipt = (Receipt) RenderUtils.getViewState("receipt").getMetaObject()
-                .getObject();
-        final SortedSet<Entry> sortedEntries = new TreeSet<Entry>(
-                Entry.COMPARATOR_BY_MOST_RECENT_WHEN_REGISTERED);
-        sortedEntries.addAll(receipt.getEntries());
+	final Receipt receipt = (Receipt) RenderUtils.getViewState("receipt").getMetaObject()
+		.getObject();
+	final SortedSet<Entry> sortedEntries = new TreeSet<Entry>(
+		Entry.COMPARATOR_BY_MOST_RECENT_WHEN_REGISTERED);
+	sortedEntries.addAll(receipt.getEntries());
 
-        request.setAttribute("receipt", receipt);
-        request.setAttribute("sortedEntries", sortedEntries);
-        request.setAttribute("currentUnit", getUserView(request).getPerson().getEmployee()
-                .getCurrentWorkingPlace());
+	request.setAttribute("receipt", receipt);
+	request.setAttribute("sortedEntries", sortedEntries);
+	request.setAttribute("currentUnit", getUserView(request).getPerson().getEmployee()
+		.getCurrentWorkingPlace());
 
-        try {
+	try {
 
-            ServiceUtils.executeService(getUserView(request), "CreateReceiptVersion", new Object[] {
-                    receipt, getUserView(request).getPerson().getEmployee() });
+	    ServiceUtils.executeService(getUserView(request), "CreateReceiptVersion", new Object[] {
+		    receipt, getUserView(request).getPerson().getEmployee() });
 
-            return mapping.findForward("printReceipt");
+	    return mapping.findForward("printReceipt");
 
-        } catch (InvalidArgumentsServiceException e) {
-            addActionMessage(request, e.getMessage());
+	} catch (InvalidArgumentsServiceException e) {
+	    addActionMessage(request, e.getMessage());
 
-            return prepareShowReceipt(mapping, actionForm, request, response);
-        }
+	    return prepareShowReceipt(mapping, actionForm, request, response);
+	}
 
     }
 
     public ActionForward prepareShowPaymentsWithoutReceiptInvalid(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 
-        request.setAttribute("createReceiptBean", RenderUtils.getViewState("createReceiptBean")
-                .getMetaObject().getObject());
-        return mapping.findForward("showPaymentsWithoutReceipt");
+	request.setAttribute("createReceiptBean", RenderUtils.getViewState("createReceiptBean")
+		.getMetaObject().getObject());
+	return mapping.findForward("showPaymentsWithoutReceipt");
     }
 
     public ActionForward preparePaymentInvalid(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState(
-                "paymentsManagementDTO-edit").getMetaObject().getObject());
-        return mapping.findForward("preparePayment");
+	request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState(
+		"paymentsManagementDTO-edit").getMetaObject().getObject());
+	return mapping.findForward("preparePayment");
+    }
+
+    public ActionForward prepareShowEventsInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState("paymentsManagementDTO")
+		.getMetaObject().getObject());
+	return mapping.findForward("showEvents");
     }
 
     public ActionForward backToShowOperations(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        request.setAttribute("person", getPerson(request));
-        return mapping.findForward("showOperations");
+	request.setAttribute("person", getPerson(request));
+	return mapping.findForward("showOperations");
     }
 
     private AdministrativeOffice getAdministrativeOffice() {
-        return AdministrativeOffice.readByAdministrativeOfficeType(getAdministrativeOfficeType());
+	return AdministrativeOffice.readByAdministrativeOfficeType(getAdministrativeOfficeType());
     }
 
     protected abstract AdministrativeOfficeType getAdministrativeOfficeType();

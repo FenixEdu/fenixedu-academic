@@ -351,4 +351,21 @@
 		<put name="body" value="/posGraduacao/pricesManagement/viewPrices.jsp"/>
 	</definition>
 	
+	<!-- ************* DFA Periods Management ************* -->
+	<definition name="dfa.periodsManagement.chooseExecutionYear" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/dfa/periodsManagement/chooseExecutionYear.jsp"/>
+	</definition>
+	
+	<definition name="dfa.periodsManagement.showExecutionDegrees" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/dfa/periodsManagement/showExecutionDegrees.jsp"/>
+	</definition>
+	
+	<definition name="dfa.periodsManagement.editCandidacyPeriod" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/dfa/periodsManagement/editCandidacyPeriod.jsp"/>
+	</definition>
+	
+		<definition name="dfa.periodsManagement.editRegistrationPeriod" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/dfa/periodsManagement/editRegistrationPeriod.jsp"/>
+	</definition>
+	
 </tiles-definitions>

@@ -50,10 +50,11 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	return registration;
     }
 
-    public ActionForward viewRegistrationDocumentRequestsHistoric(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewRegistrationDocumentRequestsHistoric(ActionMapping mapping,
+	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("academicServiceRequestList", getRegistration(request).getNewDocumentRequests());
+	request.setAttribute("academicServiceRequestList", getRegistration(request)
+		.getNewDocumentRequests());
 	return mapping.findForward("viewNewDocumentRequests");
     }
 
@@ -61,24 +62,25 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final DocumentRequest documentRequest = getDocumentRequest(request);
-	
+
 	try {
-	    documentRequest.checkConditions();    
+	    documentRequest.checkConditions();
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
 	}
-	
+
 	request.setAttribute("documentRequest", documentRequest);
 	return mapping.findForward("printDocument");
     }
-    
+
     public ActionForward concludeDocumentRequest(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final DocumentRequest documentRequest = getDocumentRequest(request);
 	documentRequest.conclude(null);
-	
-	request.setAttribute("registration", documentRequest.getStudentCurricularPlan().getRegistration());
+
+	request.setAttribute("registration", documentRequest.getStudentCurricularPlan()
+		.getRegistration());
 	return mapping.findForward("student.viewRegistrationDetails");
     }
 
@@ -95,7 +97,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
 	StudentsSearchBean studentsSearchBean = (StudentsSearchBean) getRenderedObject();
 
-	if (studentsSearchBean == null) { //1st time
+	if (studentsSearchBean == null) { // 1st time
 	    studentsSearchBean = new StudentsSearchBean();
 	} else {
 	    final Employee employee = AccessControl.getUserView().getPerson().getEmployee();

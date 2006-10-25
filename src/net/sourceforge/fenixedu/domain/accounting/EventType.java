@@ -13,6 +13,8 @@ public enum EventType {
     DEGREE_FINALIZATION_CERTIFICATE_REQUEST,
 
     GRATUITY,
+    
+    INSURANCE,
 
     DFA_REGISTRATION;
 

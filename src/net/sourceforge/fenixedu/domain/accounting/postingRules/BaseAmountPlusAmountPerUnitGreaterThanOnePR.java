@@ -10,24 +10,24 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import org.joda.time.DateTime;
 
 public abstract class BaseAmountPlusAmountPerUnitGreaterThanOnePR extends
-        BaseAmountPlusAmountPerUnitGreaterThanOnePR_Base {
+	BaseAmountPlusAmountPerUnitGreaterThanOnePR_Base {
 
     protected BaseAmountPlusAmountPerUnitGreaterThanOnePR() {
-        super();
+	super();
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-            ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal baseAmount,
-            BigDecimal amountPerUnit) {
-        super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount,
-                amountPerUnit);
+	    ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal baseAmount,
+	    BigDecimal amountPerUnit) {
+	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount,
+		amountPerUnit);
     }
 
     @Override
     public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
-        return ((getNumberOfUnits(event) > 1) ? getBaseAmount().add(
-                getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event) - 1)))
-                : getBaseAmount()).subtract(event.calculatePayedAmount());
+	return ((getNumberOfUnits(event) > 1) ? getBaseAmount().add(
+		getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event) - 1)))
+		: getBaseAmount());
 
     }
 

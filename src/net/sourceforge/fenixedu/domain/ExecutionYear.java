@@ -102,7 +102,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return null;
     }
 
-    public ExecutionPeriod readFirstExecutionPeriod() {
+    public ExecutionPeriod getFirstExecutionPeriod() {
 	return (ExecutionPeriod) Collections.min(this.getExecutionPeriods(),
 		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
     }

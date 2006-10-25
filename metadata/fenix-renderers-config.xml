@@ -117,13 +117,11 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" layout="degree-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
         <property name="format" value="${degree.sigla} ${initialDateYearMonthDay.year}"/>
     </renderer>
-    
     <renderer type="net.sourceforge.fenixedu.domain.Shift" layout="shift-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.ShiftPlainRenderer"/>
 
 	<renderer type="net.sourceforge.fenixedu.domain.Summary" layout="summary-plain-to-create-summary" class="net.sourceforge.fenixedu.presentationTier.renderers.SummaryPlainRenderer"/>
 
     <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer"/>
-
     <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer">
     	<property name="escaped" value="false"/>
     </renderer>
@@ -244,7 +242,7 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.TopLevelMenuRenderer"/>
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.BreadCrumbsRenderer"/>
     
-    <!--@ File displayed as an html picture -->
+	<!--@ File displayed as an html picture -->
     <renderer type="net.sourceforge.fenixedu.domain.File"
               class="net.sourceforge.fenixedu.presentationTier.renderers.FileAsPictureRenderer"
               layout="image" />
@@ -254,6 +252,10 @@ Documentation:
               class="net.sourceforge.fenixedu.presentationTier.renderers.MathMlMaterialRenderer"
               layout="equation" />
     
+	<!--@ Decimal output. -->
+    <renderer type="java.math.BigDecimal" class="net.sourceforge.fenixedu.renderers.DecimalRenderer" layout="decimal-format"/>
+    <renderer type="java.lang.Double" class="net.sourceforge.fenixedu.renderers.DecimalRenderer" layout="decimal-format"/>
+
     <!-- input -->
 
     <!--@ The default layout for editing objects.  -->  
@@ -332,10 +334,10 @@ Documentation:
     <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
           The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
     <renderer mode="input" type="boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
-
+    
     <!--@ The default input layout for an enumeration presents an html menu with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->
-    <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>
+    <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/> 
     <!--@ The input layout for an enumeration presents radio buttons with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->     
     <renderer mode="input" type="java.lang.Enum" layout="radio" class="net.sourceforge.fenixedu.renderers.EnumRadioInputRenderer">
@@ -389,7 +391,7 @@ Documentation:
 	<!--@ The default layout for a DateTime automatically includes the hour, minute, and second in the partial -->
 	<renderer type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}"/>
-	</renderer>
+	</renderer>	
 
 	<renderer type="org.joda.time.DateTime" layout="no-time" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>

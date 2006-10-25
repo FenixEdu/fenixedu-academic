@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -22,79 +23,76 @@ import org.joda.time.DateTime;
 public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmountPerUnitPR_Base {
 
     protected BaseAmountPlusAmountPerUnitPR() {
-        super();
+	super();
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-            ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal baseAmount,
-            BigDecimal amountPerUnit) {
-        super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
-        checkParameters(baseAmount, amountPerUnit);
-        super.setBaseAmount(baseAmount);
-        super.setAmountPerUnit(amountPerUnit);
+	    ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal baseAmount,
+	    BigDecimal amountPerUnit) {
+	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
+	checkParameters(baseAmount, amountPerUnit);
+	super.setBaseAmount(baseAmount);
+	super.setAmountPerUnit(amountPerUnit);
     }
 
     private void checkParameters(BigDecimal baseAmount, BigDecimal amountPerUnit) {
-        if (baseAmount == null) {
-            throw new DomainException(
-                    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.baseAmount.cannot.be.null");
-        }
-        if (amountPerUnit == null) {
-            throw new DomainException(
-                    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.amountPerUnit.cannot.be.null");
-        }
+	if (baseAmount == null) {
+	    throw new DomainException(
+		    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.baseAmount.cannot.be.null");
+	}
+	if (amountPerUnit == null) {
+	    throw new DomainException(
+		    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.amountPerUnit.cannot.be.null");
+	}
 
     }
 
     @Override
     public void setBaseAmount(BigDecimal baseAmount) {
-        throw new DomainException(
-                "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.cannot.modify.baseAmount");
+	throw new DomainException(
+		"error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.cannot.modify.baseAmount");
     }
 
     @Override
     public void setAmountPerUnit(BigDecimal amountPerUnit) {
-        throw new DomainException(
-                "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.cannot.modify.amountPerUnit");
+	throw new DomainException(
+		"error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.cannot.modify.amountPerUnit");
     }
 
-    //FIXME: this method should be in superclass. subclasses should only reimplement variable part...
     @Override
     public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
-	return getBaseAmount().add(getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event))))
-		.subtract(event.calculatePayedAmount());
+	return getBaseAmount().add(getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event))));
 
     }
 
     @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(
-                event, when), new BigDecimal("0"), calculateTotalAmountToPay(event, when), event
-                .getDescriptionForEntryType(getEntryType())));
+    public List<GenericPair<EntryType, BigDecimal>> calculateEntries(Event event, DateTime when) {
+	return Collections.singletonList(new GenericPair<EntryType, BigDecimal>(getEntryType(),
+		calculateTotalAmountToPay(event, when)));
     }
 
     @Override
     protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
-            PaymentMode paymentMode, DateTime whenRegistered, Event event, Account fromAccount,
-            Account toAccount) {
-        if (entryDTOs.size() != 1) {
-            throw new DomainException(
-                    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.invalid.number.of.entryDTOs");
-        }
+	    PaymentMode paymentMode, DateTime whenRegistered, Event event, Account fromAccount,
+	    Account toAccount) {
+	if (entryDTOs.size() != 1) {
+	    throw new DomainException(
+		    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.invalid.number.of.entryDTOs");
+	}
 
-        final EntryDTO entryDTO = entryDTOs.get(0);
-        checkIfCanAddAmount(entryDTO.getAmountToPay(), event, whenRegistered);
+	final EntryDTO entryDTO = entryDTOs.get(0);
+	checkIfCanAddAmount(entryDTO.getAmountToPay(), event, whenRegistered);
 
-        return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
-                entryDTO.getEntryType(), entryDTO.getAmountToPay(), paymentMode, whenRegistered));
+	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
+		entryDTO.getEntryType(), entryDTO.getAmountToPay(), paymentMode, whenRegistered));
     }
 
     private void checkIfCanAddAmount(BigDecimal amountToPay, Event event, DateTime when) {
-        if (!amountToPay.equals(calculateTotalAmountToPay(event, when))) {
-            throw new DomainExceptionWithLabelFormatter(
-                    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.amount.being.payed.must.match.amount.to.pay",
-                    event.getDescriptionForEntryType(getEntryType()));
-        }
+	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) != 0) {
+	    throw new DomainExceptionWithLabelFormatter(
+		    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.amount.being.payed.must.match.amount.to.pay",
+		    event.getDescriptionForEntryType(getEntryType()));
+	}
 
     }
 

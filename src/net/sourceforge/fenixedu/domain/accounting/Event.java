@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
@@ -28,19 +30,19 @@ public abstract class Event extends Event_Base {
 	super.setEventState(EventState.OPEN);
     }
 
+    protected void init(EventType eventType, Person person) {
+	init(null, eventType, person);
+    }
+
     protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person) {
-	checkParameters(administrativeOffice, eventType, person);
+	checkParameters(eventType, person);
 	super.setAdministrativeOffice(administrativeOffice);
 	super.setEventType(eventType);
 	super.setPerson(person);
 
     }
 
-    private void checkParameters(AdministrativeOffice administrativeOffice, EventType eventType,
-	    Person person) throws DomainException {
-	if (administrativeOffice == null) {
-	    throw new DomainException("error.accounting.Event.administrativeOffice.cannot.be.null");
-	}
+    private void checkParameters(EventType eventType, Person person) throws DomainException {
 	if (eventType == null) {
 	    throw new DomainException("error.accounting.Event.invalid.eventType");
 	}
@@ -175,13 +177,13 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
-    public BigDecimal calculatePayedAmount() {
+    protected BigDecimal calculatePayedAmount() {
 	if (isCancelled()) {
 	    throw new DomainException(
 		    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
 	}
 
-	BigDecimal payedAmount = new BigDecimal("0");
+	BigDecimal payedAmount = BigDecimal.ZERO;
 	for (final AccountingTransaction transaction : getAccountingTransactions()) {
 	    payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
 	}
@@ -195,8 +197,11 @@ public abstract class Event extends Event_Base {
 	}
     }
 
-    private BigDecimal calculateAmountToPay(DateTime whenRegistered) {
-	return getPostingRule(whenRegistered).calculateTotalAmountToPay(this, whenRegistered);
+    public BigDecimal calculateAmountToPay(DateTime whenRegistered) {
+	final BigDecimal totalAmountToPay = getPostingRule(whenRegistered).calculateTotalAmountToPay(
+		this, whenRegistered);
+	return (totalAmountToPay.compareTo(BigDecimal.ZERO) > 0) ? totalAmountToPay
+		.subtract(calculatePayedAmount()) : BigDecimal.ZERO;
 
     }
 
@@ -205,11 +210,19 @@ public abstract class Event extends Event_Base {
     }
 
     public List<EntryDTO> calculateEntries(DateTime when) {
-	return getPostingRule(when).calculateEntries(this, when);
+	final List<EntryDTO> result = new ArrayList<EntryDTO>();
+	for (final GenericPair<EntryType, BigDecimal> entry : getPostingRule(when).calculateEntries(
+		this, when)) {
+	    result.add(new EntryDTO(entry.getLeft(), this, entry.getRight(), calculatePayedAmount(),
+		    calculateAmountToPay(when), getDescriptionForEntryType(entry.getLeft()),
+		    calculateAmountToPay(when)));
+	}
+
+	return result;
     }
 
     public final boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice) {
-	return (getAdministrativeOffice() == administrativeOffice);
+	return (!hasAdministrativeOffice() || getAdministrativeOffice() == administrativeOffice);
     }
 
     public void cancel(final Employee responsibleEmployee) {
@@ -224,20 +237,25 @@ public abstract class Event extends Event_Base {
 	    throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
 	}
 
-	if (!calculatePayedAmount().equals(BigDecimal.ZERO)) {
+	if (calculatePayedAmount().compareTo(BigDecimal.ZERO) != 0) {
 	    throw new DomainException(
 		    "error.accounting.Event.cannot.cancel.events.with.payed.amount.greater.or.equal.than.zero");
 	}
 
     }
 
+    protected Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
+	    PaymentMode paymentMode, DateTime whenRegistered) {
+	return getPostingRule(whenRegistered).process(responsibleUser, entryDTOs, paymentMode,
+		whenRegistered, this, getFromAccount(), getToAccount());
+    }
+
+    protected abstract Account getFromAccount();
+
     public abstract Account getToAccount();
 
     public abstract LabelFormatter getDescriptionForEntryType(EntryType entryType);
 
     protected abstract PostingRule getPostingRule(DateTime whenRegistered);
-
-    protected abstract Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
-	    PaymentMode paymentMode, DateTime whenRegistered);
 
 }

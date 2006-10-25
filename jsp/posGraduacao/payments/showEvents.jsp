@@ -22,6 +22,14 @@
 		</ul>
 		<br />
 	</logic:messagesPresent>
+	
+	<fr:hasMessages for="payment-entries">
+		<ul>
+			<fr:messages>
+				<li><span class="error0"><fr:message show="label" />: <fr:message /></span></li>
+			</fr:messages>
+		</ul>
+	</fr:hasMessages>
 
 	<strong><bean:message key="label.masterDegree.administrativeOffice.payments.person" /></strong>:
 	<fr:view name="paymentsManagementDTO" property="person"

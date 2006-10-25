@@ -49,7 +49,7 @@
 	</td>
   </tr>
   <tr>
-    <td  align="right"><strong><bean:message key="label.payments.totalAmount"/></strong>:<bean:define id="totalAmount" name="createReceiptBean" property="totalAmount" type="java.math.BigDecimal"/>&nbsp;<%= totalAmount.toPlainString() %>&nbsp;<bean:message key="label.payments.currencySymbol"/></td>
+    <td  align="right"><strong><bean:message key="label.payments.totalAmount"/></strong>:<bean:define id="totalAmount" name="createReceiptBean" property="totalAmount" type="java.math.BigDecimal"/>&nbsp;<%= totalAmount.setScale(2).toPlainString() %>&nbsp;<bean:message key="label.payments.currencySymbol"/></td>
   </tr>
 </table>
 

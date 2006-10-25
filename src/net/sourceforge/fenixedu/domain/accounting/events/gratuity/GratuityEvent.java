@@ -1,19 +1,17 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
-import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -30,22 +28,28 @@ public class GratuityEvent extends GratuityEvent_Base {
     }
 
     public GratuityEvent(AdministrativeOffice administrativeOffice, Person person,
-	    Registration registration) {
+	    Registration registration, ExecutionYear executionYear) {
 	this();
-	init(administrativeOffice, person, registration);
+	init(administrativeOffice, person, registration, executionYear);
     }
 
     protected void init(AdministrativeOffice administrativeOffice, Person person,
-	    Registration registration) {
+	    Registration registration, ExecutionYear executionYear) {
 	super.init(administrativeOffice, EventType.GRATUITY, person);
-	checkParameters(registration);
+	checkParameters(registration, executionYear);
 	super.setRegistrationForGratuityEvent(registration);
+	super.setExecutionYear(executionYear);
     }
 
-    private void checkParameters(Registration registration) {
+    private void checkParameters(Registration registration, ExecutionYear executionYear) {
 	if (registration == null) {
 	    throw new DomainException(
 		    "error.accounting.events.gratuity.GratuityEvent.registration.cannot.be.null");
+	}
+
+	if (executionYear == null) {
+	    throw new DomainException(
+		    "error.accounting.events.gratuity.GratuityEvent.executionYear.cannot.be.null");
 	}
 
     }
@@ -53,6 +57,11 @@ public class GratuityEvent extends GratuityEvent_Base {
     @Override
     public Account getToAccount() {
 	return getUnit().getAccountBy(AccountType.INTERNAL);
+    }
+
+    @Override
+    protected Account getFromAccount() {
+	return getPerson().getAccountBy(AccountType.EXTERNAL);
     }
 
     private Unit getUnit() {
@@ -72,8 +81,8 @@ public class GratuityEvent extends GratuityEvent_Base {
 	final LabelFormatter labelFormatter = new LabelFormatter();
 	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(
 		getDegree().getDegreeType().name(), "enum").appendLabel(" - ").appendLabel(
-		getDegree().getName()).appendLabel(" - ").appendLabel(
-		getExecutionDegree().getExecutionYear().getYear()).appendLabel(")");
+		getDegree().getName()).appendLabel(" - ").appendLabel(getExecutionYear().getYear())
+		.appendLabel(")");
 
 	return labelFormatter;
     }
@@ -85,13 +94,6 @@ public class GratuityEvent extends GratuityEvent_Base {
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
-	    PaymentMode paymentMode, DateTime whenRegistered) {
-	return getPostingRule(whenRegistered).process(responsibleUser, entryDTOs, paymentMode,
-		whenRegistered, this, getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount());
-    }
-
-    @Override
     public void setRegistrationForGratuityEvent(Registration registration) {
 	throw new DomainException(
 		"error.accounting.events.gratuity.GratuityEvent.cannot.modify.registration");
@@ -99,6 +101,24 @@ public class GratuityEvent extends GratuityEvent_Base {
 
     public Registration getRegistration() {
 	return getRegistrationForGratuityEvent();
+    }
+
+    @Override
+    public void setExecutionYear(ExecutionYear executionYear) {
+	throw new DomainException(
+		"error.accounting.events.gratuity.GratuityEvent.cannot.modify.executionYear");
+    }
+
+    public boolean isCompleteEnrolmentModel() {
+	return getRegistration().isCompleteEnrolmentModel(getExecutionYear());
+    }
+
+    public boolean isCustomEnrolmentModel() {
+	return getRegistration().isCustomEnrolmentModel(getExecutionYear());
+    }
+
+    public BigDecimal getTotalEctsCreditsForRegistration() {
+	return getRegistration().getTotalEctsCredits(getExecutionYear());
     }
 
 }

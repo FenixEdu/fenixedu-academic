@@ -2657,6 +2657,19 @@
    	         <forward name="showCandidaciesForSelectionSuccess" path="df.page.showCandidaciesForSelectionSuccess"/>
    	         <forward name="printAcceptanceDispatch" path="/candidacy/acceptanceDispatchTemplate.jsp"/>
 	  </action>
+	  
+	  
+  	  <action path="/dfaPeriodsManagement"
+		      parameter="method"
+		      scope="request"
+              type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.candidacy.DFAPeriodsManagementDispatchAction"
+              name="chooseExecutionYearForm"
+			  >
+			  <forward name="chooseExecutionYear" path="dfa.periodsManagement.chooseExecutionYear"/>
+  			  <forward name="showExecutionDegrees" path="dfa.periodsManagement.showExecutionDegrees"/>
+   			  <forward name="editCandidacyPeriod" path="dfa.periodsManagement.editCandidacyPeriod"/>
+   			  <forward name="editRegistrationPeriod" path="dfa.periodsManagement.editRegistrationPeriod"/>
+	  </action>
 	
 	  
 	  <!-- Price Management -->

@@ -93,7 +93,7 @@
         				</app:labelFormatter>
         			</td>
         			<td>...................................&nbsp;</td>
-        			<td> <bean:define id="amountToPay" name="entryDTO" property="amountToPay" type="java.math.BigDecimal" /> <%= amountToPay.toPlainString() %> &nbsp;<bean:message key="label.currencySymbol"/></td>
+        			<td> <bean:define id="amountToPay" name="entryDTO" property="amountToPay" type="java.math.BigDecimal" /> <%= amountToPay.setScale(2).toPlainString() %> &nbsp;<bean:message key="label.currencySymbol"/></td>
         		</tr>
         	</logic:iterate >
         <tr>
@@ -104,7 +104,7 @@
     	<tr>
     	  	<td><strong><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.totalAmountToPay"/></strong></td>
    			<td>_________________&nbsp;</td>
-   			<td><strong><bean:define id="totalAmountToPay" name="paymentsManagementDTO" property="totalAmountToPay" type="java.math.BigDecimal"/><%= totalAmountToPay.toPlainString() %>&nbsp;<bean:message key="label.currencySymbol"/></strong></td>
+   			<td><strong><bean:define id="totalAmountToPay" name="paymentsManagementDTO" property="totalAmountToPay" type="java.math.BigDecimal"/><%= totalAmountToPay.setScale(2).toPlainString() %>&nbsp;<bean:message key="label.currencySymbol"/></strong></td>
     	</tr>
 	   </table>
 	 </td>

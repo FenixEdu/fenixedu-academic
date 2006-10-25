@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -22,7 +23,7 @@ import org.joda.time.DateTime;
 
 public class FixedAmountPR extends FixedAmountPR_Base {
 
-    private FixedAmountPR() {
+    protected FixedAmountPR() {
 	super();
     }
 
@@ -58,7 +59,7 @@ public class FixedAmountPR extends FixedAmountPR_Base {
 	}
 
 	final EntryDTO entryDTO = entryDTOs.get(0);
-	checkIfCanAddAmount(entryDTO.getAmountToPay(), event);
+	checkIfCanAddAmount(entryDTO.getAmountToPay(), event, whenRegistered);
 
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
 		entryDTO.getEntryType(), entryDTO.getAmountToPay(), paymentMode, whenRegistered));
@@ -71,8 +72,8 @@ public class FixedAmountPR extends FixedAmountPR_Base {
 		"error.accounting.postingRules.FixedAmountPR.cannot.modify.fixedAmount");
     }
 
-    private void checkIfCanAddAmount(final BigDecimal amountToPay, final Event event) {
-	if (!amountToPay.equals(getFixedAmount())) {
+    private void checkIfCanAddAmount(final BigDecimal amountToPay, final Event event, final DateTime when) {
+	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) != 0) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay",
 		    event.getDescriptionForEntryType(getEntryType()));
@@ -80,18 +81,14 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	return Collections
-		.singletonList(new EntryDTO(getEntryType(), event, getFixedAmount(),
-			new BigDecimal("0"), getFixedAmount(), event
-				.getDescriptionForEntryType(getEntryType())));
+    public List<GenericPair<EntryType, BigDecimal>> calculateEntries(Event event, DateTime when) {
+	return Collections.singletonList(new GenericPair<EntryType, BigDecimal>(getEntryType(),
+		calculateTotalAmountToPay(event, when)));
     }
 
-    // FIXME: this method should be in superclass. subclasses should only
-    // reimplement variable part...
     @Override
     public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
-	return getFixedAmount().subtract(event.calculatePayedAmount());
+	return getFixedAmount();
     }
 
     @Checked("PostingRulePredicates.editPredicate")

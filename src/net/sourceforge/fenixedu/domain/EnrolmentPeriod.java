@@ -28,6 +28,14 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 	setStartDate(startDate);
 	setEndDate(endDate);
     }
+    
+    protected void init(final DegreeCurricularPlan degreeCurricularPlan,
+	    final ExecutionPeriod executionPeriod, final DateTime startDate, final DateTime endDate) {
+	setDegreeCurricularPlan(degreeCurricularPlan);
+	setExecutionPeriod(executionPeriod);
+	setStartDateDateTime(startDate);
+	setEndDateDateTime(endDate);
+    }
 
     public boolean isValid() {
 	Date date = new Date();

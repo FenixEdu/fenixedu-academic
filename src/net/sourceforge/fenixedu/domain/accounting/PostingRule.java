@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
@@ -84,6 +85,14 @@ public abstract class PostingRule extends PostingRule_Base {
 
     public final Set<Entry> process(User user, List<EntryDTO> entryDTOs, PaymentMode paymentMode,
 	    DateTime whenRegistered, Event event, Account fromAccount, Account toAccount) {
+
+	for (final EntryDTO entryDTO : entryDTOs) {
+	    if (entryDTO.getAmountToPay().compareTo(BigDecimal.ZERO) <= 0) {
+		throw new DomainException(
+			"error.accounting.PostingRule.amount.to.pay.must.be.greater.than.zero");
+	    }
+	}
+
 	final Set<AccountingTransaction> resultingTransactions = internalProcess(user, entryDTOs,
 		paymentMode, whenRegistered, event, fromAccount, toAccount);
 
@@ -100,7 +109,7 @@ public abstract class PostingRule extends PostingRule_Base {
 	return result;
     }
 
-    public final List<EntryDTO> calculateEntries(Event event) {
+    public final List<GenericPair<EntryType, BigDecimal>> calculateEntries(Event event) {
 	return calculateEntries(event, new DateTime());
     }
 
@@ -150,6 +159,10 @@ public abstract class PostingRule extends PostingRule_Base {
 	setEndDate(new DateTime().minus(10000));
     }
 
+    public final void delete() {
+	throw new DomainException("error.accounting.PostingRule.cannot.be.deleted");
+    }
+
     @Override
     public void setServiceAgreementTemplate(ServiceAgreementTemplate serviceAgreementTemplate) {
 	throw new DomainException(
@@ -169,7 +182,7 @@ public abstract class PostingRule extends PostingRule_Base {
 
     public abstract BigDecimal calculateTotalAmountToPay(Event event, DateTime when);
 
-    public abstract List<EntryDTO> calculateEntries(Event event, DateTime when);
+    public abstract List<GenericPair<EntryType, BigDecimal>> calculateEntries(Event event, DateTime when);
 
     protected abstract Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
 	    PaymentMode paymentMode, DateTime whenRegistered, Event event, Account fromAccount,

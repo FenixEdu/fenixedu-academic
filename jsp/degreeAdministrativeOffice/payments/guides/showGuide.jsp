@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td align="right">
-				<strong><bean:message key="label.payments.totalAmount"/></strong>:<bean:write name="paymentsManagementDTO" property="totalAmountToPay" />&nbsp;<bean:message key="label.payments.currencySymbol"/>
+				<strong><bean:message key="label.payments.totalAmount"/></strong>: <bean:write name="paymentsManagementDTO" property="totalAmountToPay" />&nbsp;<bean:message key="label.payments.currencySymbol"/>
 			</td>
 		</tr>
 	</table>

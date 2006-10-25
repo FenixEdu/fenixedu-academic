@@ -9,20 +9,36 @@
 <schema name="FixedAmountPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" layout="decimal-format" />
+</schema>
+
+<schema name="FixedAmountWithPenaltyPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+</schema>
+
+<schema name="DFACandidacyPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DFACandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
+</schema>
+
+<schema name="DfaRegistrationPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
 </schema>
 
 <schema name="BaseAmountPlusAmountPerUnitPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount" />
-	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit"/>
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount" layout="decimal-format" />
+	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" layout="decimal-format"/>
 </schema>
 
 <schema name="CertificateRequestPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="BaseAmountPlusAmountPerUnitPR.view">
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage" />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage" layout="decimal-format" />
 </schema>
 
 
@@ -32,6 +48,24 @@
 	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
 	<setter signature="edit(fixedAmount)"/>
 </schema>
+
+<schema name="FixedAmountWithPenaltyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
+	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+	<setter signature="edit(fixedAmount,fixedAmountPenalty)"/>
+</schema>
+
+<schema name="DFACandidacyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DFACandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
+</schema>
+
+<schema name="DfaRegistrationPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
+</schema>
+
 
 <schema name="BaseAmountPlusAmountPerUnitPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR"

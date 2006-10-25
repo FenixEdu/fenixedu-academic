@@ -102,7 +102,6 @@ public class Unit extends Unit_Base {
 	for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
 		.get(0).delete())
 	    ;
-
 	removeDepartment();
 	removeDegree();
 	super.delete();
@@ -118,7 +117,9 @@ public class Unit extends Unit_Base {
 		&& !hasAnyCompetenceCourses()
 		&& !hasAnyAssociatedNonAffiliatedTeachers()
 		&& !hasAnyPayedGuides()
-		&& !hasAnyPayedReceipts() && !hasAdministrativeOffice();
+		&& !hasAnyPayedReceipts()
+		&& !hasAdministrativeOffice()
+		&& !hasUnitServiceAgreementTemplate();
     }
 
     public boolean isActive(YearMonthDay currentDate) {
@@ -687,7 +688,6 @@ public class Unit extends Unit_Base {
 	if (unitName == null || StringUtils.isEmpty(unitName.trim())) {
 	    throw new DomainException("error.unit.empty.name");
 	}
-
 	Unit unit = new Unit();
 	unit.checkUnitDates(beginDate, endDate);
 	unit.checkAcronym(acronym, type);
@@ -701,7 +701,6 @@ public class Unit extends Unit_Base {
 	if (parentUnit != null && accountabilityType != null) {
 	    unit.addParentUnit(parentUnit, accountabilityType);
 	}
-
 	return unit;
     }
 

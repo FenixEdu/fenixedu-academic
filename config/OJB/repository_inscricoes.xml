@@ -6,6 +6,7 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.CandidacyPeriodInDegreeCurricularPlan" />		
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.RegistrationPeriodInDegreeCurricularPlan" />
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses"
@@ -21,6 +22,10 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.CandidacyPeriodInDegreeCurricularPlan"
+		table="ENROLMENT_PERIOD">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.RegistrationPeriodInDegreeCurricularPlan"
 		table="ENROLMENT_PERIOD">
 </class-descriptor>
 

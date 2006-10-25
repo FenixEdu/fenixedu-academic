@@ -937,11 +937,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Branch getBranchByName(final String branchName) {
 	if (branchName != null) {
-	    for (final Branch branch : getAreas()) {
-		if (branchName.equals(branch.getName())) {
-		    return branch;
-		}
+	for (final Branch branch : getAreas()) {
+	    if (branchName.equals(branch.getName())) {
+		return branch;
 	    }
+	}
 	}
 	return null;
     }
@@ -1112,12 +1112,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
 		.getDegreeCurricularPlans()) {
-	    if (!degreeCurricularPlan.isBolonha()) {
-		if (degreeCurricularPlan.getDegree().getTipoCurso().equals(degreeType)
-			&& degreeCurricularPlan.getState().equals(state)
-			&& !degreeCurricularPlan.isBolonha()) {
-		    result.add(degreeCurricularPlan);
-		}
+	    if (!degreeCurricularPlan.isBolonha()
+		    && degreeCurricularPlan.getDegree().getTipoCurso().equals(degreeType)
+		    && degreeCurricularPlan.getState().equals(state)) {
+		result.add(degreeCurricularPlan);
 	    }
 	}
 	return result;
@@ -1299,6 +1297,57 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		curricularYear);
 	executionCourseView.setAnotation(curricularCourseScope.getAnotation());
 	return executionCourseView;
+    }
+
+    public CandidacyPeriodInDegreeCurricularPlan getCandidacyPeriod(final ExecutionYear executionYear) {
+	final List<EnrolmentPeriod> enrolmentPeriods = getEnrolmentPeriodsBy(executionYear
+		.getFirstExecutionPeriod(), CandidacyPeriodInDegreeCurricularPlan.class);
+	return (CandidacyPeriodInDegreeCurricularPlan) (!enrolmentPeriods.isEmpty() ? enrolmentPeriods
+		.iterator().next() : null);
+
+    }
+
+    public boolean hasCandidacyPeriodFor(final ExecutionYear executionYear) {
+	return hasEnrolmentPeriodFor(executionYear.getFirstExecutionPeriod(),
+		CandidacyPeriodInDegreeCurricularPlan.class);
+    }
+
+    public RegistrationPeriodInDegreeCurricularPlan getRegistrationPeriod(
+	    final ExecutionYear executionYear) {
+	final List<EnrolmentPeriod> enrolmentPeriods = getEnrolmentPeriodsBy(executionYear
+		.getFirstExecutionPeriod(), RegistrationPeriodInDegreeCurricularPlan.class);
+	return (RegistrationPeriodInDegreeCurricularPlan) (!enrolmentPeriods.isEmpty() ? enrolmentPeriods
+		.iterator().next()
+		: null);
+    }
+
+    public boolean hasRegistrationPeriodFor(final ExecutionYear executionYear) {
+	return hasEnrolmentPeriodFor(executionYear.getFirstExecutionPeriod(),
+		RegistrationPeriodInDegreeCurricularPlan.class);
+    }
+
+    private List<EnrolmentPeriod> getEnrolmentPeriodsBy(final ExecutionPeriod executionPeriod,
+	    Class clazz) {
+	final List<EnrolmentPeriod> result = new ArrayList<EnrolmentPeriod>();
+	for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodsSet()) {
+	    if (enrolmentPeriod.getClass().equals(clazz)
+		    && enrolmentPeriod.getExecutionPeriod() == executionPeriod) {
+		result.add(enrolmentPeriod);
+	    }
+	}
+
+	return result;
+    }
+
+    private boolean hasEnrolmentPeriodFor(final ExecutionPeriod executionPeriod, Class clazz) {
+	for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodsSet()) {
+	    if (enrolmentPeriod.getClass().equals(clazz)
+		    && enrolmentPeriod.getExecutionPeriod() == executionPeriod) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
 }

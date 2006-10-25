@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.joda.time.DateTime;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -33,6 +36,11 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	setPrecedentDegreeInformation(new PrecedentDegreeInformation());
     }
 
+    public DateTime getCandidacyDate() {
+	return Collections.min(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR)
+		.getSituationDate();
+    }
+    
     public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree,
 	    Person studentPerson) {
 
@@ -108,4 +116,5 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
 	return result;
     }
+
 }

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Role;
@@ -55,7 +56,8 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	final AdministrativeOffice administrativeOffice = AdministrativeOffice
 		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
 
-	new GratuityEvent(administrativeOffice, person, registration);
+	new GratuityEvent(administrativeOffice, person, registration, ExecutionYear
+		.readCurrentExecutionYear());
 
 	new DfaRegistrationEvent(administrativeOffice, person, registration);
 
