@@ -67,8 +67,9 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     @Override
     public void checkConditions() throws DomainException {
-	// TODO Auto-generated method stub
-	
+	if (!getRegistration().hasDegreeDiplomaDocumentRequest()) {
+	    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutDegreeDiplomaDocumentRequest");
+	}
     }
 
     @Override
