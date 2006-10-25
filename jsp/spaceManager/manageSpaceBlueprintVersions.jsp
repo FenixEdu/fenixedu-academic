@@ -29,13 +29,13 @@
 	</ul>
 	
 	<logic:messagesPresent message="true">
-	<p>
-		<em><!-- Error messages go here -->
-			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
-				<bean:write name="message"/>
-			</html:messages>
-		</em>
-	</p>
+		<p>
+			<span class="error0"><!-- Error messages go here -->
+				<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages>
+			</span>
+		</p>
 	</logic:messagesPresent>	
 	
 	<logic:notEmpty name="selectedSpaceBlueprint">

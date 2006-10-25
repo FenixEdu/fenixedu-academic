@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
 
 import org.joda.time.YearMonthDay;
@@ -47,7 +48,7 @@ public abstract class Space extends Space_Base {
 		return spaceInformation;
 	    }
 	}
-	return getMostRecentSpaceInformation();	
+	return getMostRecentSpaceInformation();
     }
 
     public SortedSet<SpaceInformation> getOrderedSpaceInformations() {
@@ -169,21 +170,32 @@ public abstract class Space extends Space_Base {
     }
 
     public void delete() {
-	for (; !getContainedSpaces().isEmpty(); getContainedSpaces().get(0).delete())
-	    ;
-	for (; !getPersonSpaceOccupations().isEmpty(); getPersonSpaceOccupations().get(0).delete())
-	    ;
+	if (!canBeDeleted()) {
+	    throw new DomainException("error.space.cannot.be.deleted");
+	}
 	for (; !getBlueprints().isEmpty(); getBlueprints().get(0).delete())
 	    ;
-	for (; !getMaterialSpaceOccupations().isEmpty(); getMaterialSpaceOccupations().get(0).delete())
+	for (; !getSpaceInformations().isEmpty(); getSpaceInformations().get(0)
+		.deleteWithoutCheckNumberOfSpaceInformations())
 	    ;
-	for (final SpaceInformation spaceInformation : getSpaceInformations()) {
-	    spaceInformation.deleteMaintainingReferenceToSpace();
-	}
+
 	removeSuroundingSpace();
 	removeRootDomainObject();
 	deleteDomainObject();
-    }        
+    }
+
+    private boolean canBeDeleted() {
+	if (hasAnyContainedSpaces()) {
+	    return false;
+	}
+	if (hasAnySpaceOccupations()) {
+	    return false;
+	}
+	if (hasAnySpaceResponsibility()) {
+	    return false;
+	}
+	return true;
+    }
 
     public boolean isActive() {
 	return getMostRecentSpaceInformation().isActive(new YearMonthDay());
@@ -198,7 +210,7 @@ public abstract class Space extends Space_Base {
 	}
 	return campus;
     }
-    
+
     public static enum SpaceAccessGroupType {
 
 	PERSON_OCCUPATION_ACCESS_GROUP("personOccupationsAccessGroup"),

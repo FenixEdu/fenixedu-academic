@@ -23,11 +23,11 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
 	if (getSpace().getSpaceInformationsCount() == 1) {
 	    throw new DomainException("space.must.have.at.least.one.space.information");
 	}
-	super.setSpace(null);
-	deleteMaintainingReferenceToSpace();
+	deleteWithoutCheckNumberOfSpaceInformations();
     }
 
-    protected void deleteMaintainingReferenceToSpace() {
+    protected void deleteWithoutCheckNumberOfSpaceInformations() {
+	super.setSpace(null);
 	removeRootDomainObject();
 	deleteDomainObject();
     }

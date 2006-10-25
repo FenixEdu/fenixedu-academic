@@ -14,14 +14,14 @@
 	<jsp:include page="spaceCrumbs.jsp"/>
 	
 	<logic:messagesPresent message="true">
-	<p>
-		<em><!-- Error messages go here -->
-			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
-				<bean:write name="message"/>
-			</html:messages>
-		</em>
-	</p>
-	</logic:messagesPresent>	
+		<p>
+			<span class="error0"><!-- Error messages go here -->
+				<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages>
+			</span>
+		</p>
+	</logic:messagesPresent>
 	
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="SPACE_RESOURCES" key="link.edit.space.information"/></strong></p>
 		

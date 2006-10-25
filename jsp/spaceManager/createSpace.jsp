@@ -9,13 +9,13 @@
 <h2><bean:message bundle="SPACE_RESOURCES" key="link.create.space"/></h2>
 
 <logic:messagesPresent message="true">
-<p>
-	<em><!-- Error messages go here -->
-		<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
-			<bean:write name="message"/>
-		</html:messages>
-	</em>
-</p>
+	<p>
+		<span class="error0"><!-- Error messages go here -->
+			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
+				<bean:write name="message"/>
+			</html:messages>
+		</span>
+	</p>
 </logic:messagesPresent>	
 
 <p class="mbottom05"><strong><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/></strong></p>

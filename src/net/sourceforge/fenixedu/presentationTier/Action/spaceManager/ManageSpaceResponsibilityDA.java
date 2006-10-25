@@ -26,114 +26,121 @@ import org.apache.struts.action.ActionMessages;
 public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 
     public ActionForward showSpaceResponsibility(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException, ExcepcaoPersistencia {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException, ExcepcaoPersistencia {
 
-        readAndSetAllAttributes(request);
-        return mapping.findForward("showSpaceResponsibility");
+	readAndSetAllAttributes(request);
+	return mapping.findForward("showSpaceResponsibility");
     }
 
     public ActionForward deleteSpaceResponsibility(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException, ExcepcaoPersistencia {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException, ExcepcaoPersistencia {
 
-        SpaceResponsibility spaceResponsibility = getSpaceResponsibility(request);
-        Object[] args = { spaceResponsibility };
-        try {
-            ServiceUtils.executeService(getUserView(request), "DeleteSpaceResponsibility", args);
-        } catch (DomainException domainException) {
-            saveActionMessageOnRequest(request, domainException.getKey(), domainException.getArgs());
-        }
+	SpaceResponsibility spaceResponsibility = getSpaceResponsibility(request);
+	Object[] args = { spaceResponsibility };
+	try {
+	    ServiceUtils.executeService(getUserView(request), "DeleteSpaceResponsibility", args);
+	} catch (DomainException domainException) {
+	    saveMessages(request, domainException);
+	}
 
-        readAndSetAllAttributes(request);
-        return mapping.findForward("showSpaceResponsibility");
+	readAndSetAllAttributes(request);
+	return mapping.findForward("showSpaceResponsibility");
     }
 
     private void readAndSetAllAttributes(HttpServletRequest request) throws FenixFilterException,
-            FenixServiceException, ExcepcaoPersistencia {
-        SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-        setSpaceInformation(request, spaceInformation);
-        readAndSetInitialUnit(request);
-        request.setAttribute("searchExternalPartyBean", new SearchPartyBean());
+	    FenixServiceException, ExcepcaoPersistencia {
+	SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+	setSpaceInformation(request, spaceInformation);
+	readAndSetInitialUnit(request);
+	request.setAttribute("searchExternalPartyBean", new SearchPartyBean());
     }
 
     public ActionForward prepareEditSpaceResponsibility(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException, ExcepcaoPersistencia {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException, ExcepcaoPersistencia {
 
-        SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-        setSpaceInformation(request, spaceInformation);
-        SpaceResponsibility spaceResponsibility = getSpaceResponsibility(request);
-        request.setAttribute("spaceResponsibility", spaceResponsibility);
-        return mapping.findForward("manageResponsabilityInterval");
+	SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+	setSpaceInformation(request, spaceInformation);
+	SpaceResponsibility spaceResponsibility = getSpaceResponsibility(request);
+	request.setAttribute("spaceResponsibility", spaceResponsibility);
+	request.setAttribute("unit", spaceResponsibility.getUnit());
+	return mapping.findForward("manageResponsabilityInterval");
     }
 
     public ActionForward manageResponsabilityInterval(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException, ExcepcaoPersistencia {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException, ExcepcaoPersistencia {
 
-        SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-        setSpaceInformation(request, spaceInformation);
-        Unit responsibleUnit = getResponsibleUnit(request);
-        request.setAttribute("unit", responsibleUnit);
-        return mapping.findForward("manageResponsabilityInterval");
+	SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+	setSpaceInformation(request, spaceInformation);
+	Unit responsibleUnit = getResponsibleUnit(request);
+	request.setAttribute("unit", responsibleUnit);
+	return mapping.findForward("manageResponsabilityInterval");
     }
-    
-    public ActionForward prepareAddExternalUnit(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException, ExcepcaoPersistencia {
 
-        SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-        setSpaceInformation(request, spaceInformation);
-        Unit responsibleUnit = getExternalResponsibleUnit(request);
-        request.setAttribute("unit", responsibleUnit);
-        return mapping.findForward("manageResponsabilityInterval");
+    public ActionForward prepareAddExternalUnit(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException, ExcepcaoPersistencia {
+
+	SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+	setSpaceInformation(request, spaceInformation);
+	Unit responsibleUnit = getExternalResponsibleUnit(request);
+	if (responsibleUnit == null) {
+	    ActionMessages actionMessages = new ActionMessages();
+	    actionMessages.add("", new ActionMessage("error.space.responsability.empty.external.unit"));
+	    saveMessages(request, actionMessages);
+	    return showSpaceResponsibility(mapping, form, request, response);
+	}
+	request.setAttribute("unit", responsibleUnit);
+	return mapping.findForward("manageResponsabilityInterval");
     }
 
     private Unit getExternalResponsibleUnit(HttpServletRequest request) {
-	IViewState viewState = RenderUtils.getViewState();	
-	SearchPartyBean bean = (SearchPartyBean) viewState.getMetaObject().getObject();	
+	IViewState viewState = RenderUtils.getViewState();
+	SearchPartyBean bean = (SearchPartyBean) viewState.getMetaObject().getObject();
 	return (Unit) bean.getParty();
     }
 
-    private void saveActionMessageOnRequest(HttpServletRequest request, String errorKey, String[] args) {
-        ActionMessages actionMessages = new ActionMessages();
-        actionMessages.add(errorKey, new ActionMessage(errorKey, args));
-        saveMessages(request, actionMessages);
+    private void saveMessages(HttpServletRequest request, DomainException e) {
+	ActionMessages actionMessages = new ActionMessages();
+	actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
+	saveMessages(request, actionMessages);
     }
 
-    private void readAndSetInitialUnit(HttpServletRequest request)
-            throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {       
-        request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
+    private void readAndSetInitialUnit(HttpServletRequest request) throws FenixFilterException,
+	    FenixServiceException, ExcepcaoPersistencia {
+	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
     }
 
     private void setSpaceInformation(HttpServletRequest request, final SpaceInformation spaceInformation) {
-        request.setAttribute("selectedSpaceInformation", spaceInformation);
-        request.setAttribute("selectedSpace", spaceInformation.getSpace());
+	request.setAttribute("selectedSpaceInformation", spaceInformation);
+	request.setAttribute("selectedSpace", spaceInformation.getSpace());
     }
 
     private SpaceInformation getSpaceInformationFromParameter(final HttpServletRequest request) {
-        final String spaceInformationIDString = request.getParameterMap().containsKey(
-                "spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
-                .getAttribute("spaceInformationID");
-        final Integer spaceInformationID = spaceInformationIDString != null ? Integer
-                .valueOf(spaceInformationIDString) : null;
-        return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+	final String spaceInformationIDString = request.getParameterMap().containsKey(
+		"spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
+		.getAttribute("spaceInformationID");
+	final Integer spaceInformationID = spaceInformationIDString != null ? Integer
+		.valueOf(spaceInformationIDString) : null;
+	return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
     }
 
     private SpaceResponsibility getSpaceResponsibility(final HttpServletRequest request) {
-        final String spaceResponsibilityIDString = request.getParameterMap().containsKey(
-                "spaceResponsibilityID") ? request.getParameter("spaceResponsibilityID")
-                : (String) request.getAttribute("spaceResponsibilityID");
-        final Integer spaceResponsibilityID = spaceResponsibilityIDString != null ? Integer
-                .valueOf(spaceResponsibilityIDString) : null;
-        return rootDomainObject.readSpaceResponsibilityByOID(spaceResponsibilityID);
+	final String spaceResponsibilityIDString = request.getParameterMap().containsKey(
+		"spaceResponsibilityID") ? request.getParameter("spaceResponsibilityID")
+		: (String) request.getAttribute("spaceResponsibilityID");
+	final Integer spaceResponsibilityID = spaceResponsibilityIDString != null ? Integer
+		.valueOf(spaceResponsibilityIDString) : null;
+	return rootDomainObject.readSpaceResponsibilityByOID(spaceResponsibilityID);
     }
 
     private Unit getResponsibleUnit(final HttpServletRequest request) {
-        final String unitIDString = request.getParameterMap().containsKey("unitID") ? request
-                .getParameter("unitID") : (String) request.getAttribute("unitID");
-        final Integer unitID = unitIDString != null ? Integer.valueOf(unitIDString) : null;
-        return (Unit) rootDomainObject.readPartyByOID(unitID);
+	final String unitIDString = request.getParameterMap().containsKey("unitID") ? request
+		.getParameter("unitID") : (String) request.getAttribute("unitID");
+	final Integer unitID = unitIDString != null ? Integer.valueOf(unitIDString) : null;
+	return (Unit) rootDomainObject.readPartyByOID(unitID);
     }
 }

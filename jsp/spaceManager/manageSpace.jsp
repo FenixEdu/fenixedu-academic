@@ -100,7 +100,7 @@
 		<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/>
 		</html:link>&nbsp;,
-		<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço e todos os seus subespaços?')">
+		<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
 			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 		</html:link>		
 	</p>
@@ -172,7 +172,7 @@
 							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
 								<bean:message bundle="SPACE_RESOURCES" key="label.view"/>
 							</html:link>,&nbsp; 
-							<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="space" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço e todos os seus subespaços?')">
+							<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="space" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
 								<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 							</html:link>
 						</td>

@@ -72,10 +72,10 @@ public class ManageSpacesDA extends FenixDispatchAction {
     protected ActionForward manageSpace(final ActionMapping mapping, final HttpServletRequest request,
 	    final SpaceInformation spaceInformation) {
 
-	final Space space = spaceInformation.getSpace();	
+	final Space space = spaceInformation.getSpace();
 	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
 	spaces.addAll(space.getContainedSpaces());
-	
+
 	request.setAttribute("selectedSpace", space);
 	request.setAttribute("spaces", spaces);
 	request.setAttribute("selectedSpaceInformation", spaceInformation);
@@ -95,9 +95,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	try {
 	    spaceInformation = executeSpaceFactoryMethod(request);
 	} catch (DomainException e) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(e.getKey(), new ActionMessage(e.getKey(), e.getArgs()));
-	    saveMessages(request, actionMessages);
+	    saveMessages(request, e);
 	    spaceInformation = getSpaceInformationFromParameter(request);
 	}
 	return (spaceInformation == null) ? viewSpaces(mapping, form, request, response) : manageSpace(
@@ -111,13 +109,17 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	final Space surroundingSpace = space.getSuroundingSpace();
 
 	final Object[] args = { space };
-	executeService(request, "DeleteSpace", args);
+	try {
+	    executeService(request, "DeleteSpace", args);
+	} catch (DomainException e) {
+	    saveMessages(request, e);
+	    return manageSpace(mapping, request, space.getSpaceInformation());
+	}
 
 	if (surroundingSpace == null) {
 	    return viewSpaces(mapping, form, request, response);
 	} else {
-	    final SpaceInformation surroundingSpaceInformation = surroundingSpace
-		    .getOrderedSpaceInformations().last();
+	    final SpaceInformation surroundingSpaceInformation = surroundingSpace.getSpaceInformation();
 	    return manageSpace(mapping, request, surroundingSpaceInformation);
 	}
     }
@@ -165,7 +167,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    saveMessages(request, e);
 	}
 
-	final SpaceInformation previousSpaceInformation = space.getOrderedSpaceInformations().last();
+	final SpaceInformation previousSpaceInformation = space.getSpaceInformation();
 	return manageSpace(mapping, request, previousSpaceInformation);
     }
 

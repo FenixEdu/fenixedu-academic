@@ -13,13 +13,13 @@
 <bean:define id="suroundingSpaceInformationID" type="java.lang.Integer" name="selectedSpace" property="spaceInformation.idInternal"/>
 
 <logic:messagesPresent message="true">
-<p>
-	<em><!-- Error messages go here -->
-		<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
-			<bean:write name="message"/>
-		</html:messages>
-	</em>
-</p>
+	<p>
+		<span class="error0"><!-- Error messages go here -->
+			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
+				<bean:write name="message"/>
+			</html:messages>
+		</span>
+	</p>
 </logic:messagesPresent>	
 
 <p class="mvert15"><span class="warning0"><bean:message key="label.space.createIn" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="selectedSpace" property="spaceInformation.presentationName"/></strong></span></p>
@@ -39,9 +39,8 @@
 	</html:submit>
 </html:form>
 
-<bean:define id="cancelPath">
-	/manageSpaces.do?method=manageSpace&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>
-</bean:define>	
+<bean:define id="cancelPath">/manageSpaces.do?method=manageSpace&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>	
+<bean:define id="invalidLink">/manageSpaces.do?method=showCreateSubSpaceForm&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>	
 
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
     <p class="mtop15 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>
@@ -50,6 +49,7 @@
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
 		<fr:destination name="cancel" path="<%= cancelPath %>"/>
+		<fr:destination name="invalid" path="<%= invalidLink %>"/>		
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0 mbottom1"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>		
@@ -65,6 +65,7 @@
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
 		<fr:destination name="cancel" path="<%= cancelPath %>"/>
+		<fr:destination name="invalid" path="<%= invalidLink %>"/>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0 mbottom1"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -79,6 +80,7 @@
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
 		<fr:destination name="cancel" path="<%= cancelPath %>"/>
+		<fr:destination name="invalid" path="<%= invalidLink %>"/>		
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thmiddle mtop0 mbottom1"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
