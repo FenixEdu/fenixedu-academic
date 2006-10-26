@@ -44,7 +44,7 @@ function check(e,v){
 	
 	<logic:messagesPresent message="true">
 		<p>
-		<span class="error"><!-- Error messages go here -->
+		<span class="error0"><!-- Error messages go here -->
 			<html:messages id="message" message="true">
 				<bean:write name="message" filter="true"/>
 			</html:messages>
@@ -90,20 +90,29 @@ function check(e,v){
 		</table>
 	</logic:empty>
 		
+	<bean:define id="invalidLink">/summariesManagement.do?method=prepareCreateComplexSummary&executionCourseID=<bean:write name="executionCourseID"/></bean:define>						
+		
 	<fr:form action="/summariesManagement.do">							
 		<html:hidden property="method" name="summariesManagementForm" value="createComplexSummary"/>	
-		
+				
 		<%-- Lessons --%>
 		<h3 class="mbottom0"><bean:message key="label.lesson.or.lessons"/></h3>
 		<logic:notEmpty name="summariesManagementBean" property="nextPossibleSummaryLessonsAndDatesBean">
 			<logic:iterate name="summariesManagementBean" property="nextPossibleSummaryLessonsAndDatesBean" id="lesson" indexId="index" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">				
-				<fr:view name="lesson" schema="PossibleNextSummaryLessonAndDate">
+				<fr:hasMessages for="<%= "nextPossibleLessonsDatesBean" + String.valueOf(index.intValue() + 1) %>">
+					<p>
+						<span class="error0">			
+							<fr:message for="<%= "nextPossibleLessonsDatesBean" + String.valueOf(index.intValue() + 1) %>" show="message"/>
+						</span>
+					</p>
+				</fr:hasMessages>
+				<fr:view name="lesson" schema="PossibleNextSummaryLessonAndDate">					
 					<fr:layout>
 						<fr:property name="classes" value="tstyle5 thlight mtop1 mbottom0"/>
 						<fr:property name="columnClasses" value="width8em aright,width30em"/>
 					</fr:layout>
 				</fr:view>
-				<fr:edit nested="true" name="lesson" id="<%= "nextPossibleLessonsDatesBean" + String.valueOf(index.intValue() + 1) %>" schema="EditPossibleNextSummaryLessonAndDates">
+				<fr:edit nested="true" name="lesson" id="<%= "nextPossibleLessonsDatesBean" + String.valueOf(index.intValue() + 1) %>" schema="EditPossibleNextSummaryLessonAndDates">										
 					<fr:layout>
 						<fr:property name="classes" value="tstyle5 thlight mbottom1 mtop0"/>
 						<fr:property name="columnClasses" value="width8em aright,width30em,tdclear"/>
@@ -114,9 +123,13 @@ function check(e,v){
 									
 		<%-- Teacher --%>
 		<jsp:include page="chooseTeacher.jsp"/>							
+		
 		<%-- Summary --%>	
 		<h3 class="mbottom0"><bean:message key="message.summaryText"/></h3>			
-		<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalComplexSummary">
+		<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalComplexSummary">			
+			<fr:destination name="input" path="<%= invalidLink %>"/>
+			<fr:destination name="invalid" path="<%= invalidLink %>"/>
+			<fr:destination name="exception" path="<%= invalidLink %>"/>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight"/>
 			</fr:layout>

@@ -49,10 +49,16 @@ function check(e,v){
 	
 	<bean:define id="executionCourseID" name="summariesManagementBean" property="executionCourse.idInternal" />
 	<bean:define id="teacherNumber" name="loggedTeacherProfessorship" property="teacher.teacherNumber" />
+
+	<fr:hasMessages for="summariesManagementBeanWithSummary" type="conversion">
+		<p><span class="error0">			
+			<fr:message for="summariesManagementBeanWithSummary" show="message"/>
+		</span></p>
+	</fr:hasMessages>	
 	
 	<logic:messagesPresent message="true">
 		<p>
-		<span class="error"><!-- Error messages go here -->
+		<span class="error0"><!-- Error messages go here -->
 			<html:messages id="message" message="true">
 				<bean:write name="message"/>
 			</html:messages>
@@ -168,18 +174,25 @@ function check(e,v){
 				</fr:form>	
 			</td>
 		</tr>
-	</table>			
-						
+	</table>								
+	
+	<bean:define id="invalidLink">/summariesManagement.do?method=goToInsertSummaryAgain&executionCourseID=<bean:write name="executionCourseID"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>									
 	<bean:define id="createSummaryURL">/summariesManagement.do?teacherNumber_=<bean:write name="teacherNumber"/></bean:define>		
+
 	<fr:form action="<%= createSummaryURL %>">		
 		<html:hidden property="method" name="summariesManagementForm" value="createSummary"/>	
-		
+				
 		<logic:equal name="summariesManagementBean" property="summaryType" value="NORMAL_SUMMARY">				
+		
 			<%-- Teacher --%>
 			<jsp:include page="../../../teacher/executionCourse/chooseTeacher.jsp"/>						
+		
 			<%-- Summary --%>	
 			<h3 class="mbottom0"><bean:message key="message.summaryText" bundle="DEFAULT"/></h3>
 			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalSummary">
+				<fr:destination name="invalid" path="<%= invalidLink %>"/>
+				<fr:destination name="exception" path="<%= invalidLink %>"/>			
+				<fr:destination name="input" path="<%= invalidLink %>"/>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thlight"/>
 				</fr:layout>
@@ -193,11 +206,16 @@ function check(e,v){
 		</logic:equal>
 		
 		<logic:equal name="summariesManagementBean" property="summaryType" value="EXTRA_SUMMARY">		
+			
 			<%-- Teacher --%>
 			<jsp:include page="../../../teacher/executionCourse/chooseTeacher.jsp"/>						
+			
 			<%-- Summary --%>	
 			<h3 class="mbottom0"><bean:message key="message.summaryText" bundle="DEFAULT"/></h3>
 			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToExtraSummary" >				
+				<fr:destination name="invalid" path="<%= invalidLink %>"/>
+				<fr:destination name="exception" path="<%= invalidLink %>"/>
+				<fr:destination name="input" path="<%= invalidLink %>"/>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thlight"/>
 				</fr:layout>

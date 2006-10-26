@@ -18,6 +18,14 @@
 	</p>
 </logic:messagesPresent>	
 
+<fr:hasMessages type="conversion">
+	<p>
+		<span class="error0">			
+			<fr:message show="message"/>
+		</span>
+	</p>
+</fr:hasMessages>	
+
 <p class="mbottom05"><strong><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/></strong></p>
 
 <html:form action="/showCreateSpaceForm">
@@ -35,10 +43,8 @@
 
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Campus">
 	<p class="mtop2 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>
-	<fr:create type="net.sourceforge.fenixedu.domain.space.Campus$CampusFactoryCreator"
-			schema="CampusFactoryCreator"
-			action="/manageSpaces.do?method=executeFactoryMethod">
-		<fr:destination name="invalid" path="<%= invalidLink %>"/>	
+	<fr:create id="createCampus" type="net.sourceforge.fenixedu.domain.space.Campus$CampusFactoryCreator" schema="CampusFactoryCreator"	action="/manageSpaces.do?method=executeFactoryMethod">
+		<fr:destination name="invalid" path="<%= invalidLink %>"/>			
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
 		</fr:layout>
@@ -46,10 +52,8 @@
 </logic:equal>
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
     <p class="mtop2 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>
-	<fr:create type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator"
-			schema="BuildingFactoryCreator"
-			action="/manageSpaces.do?method=executeFactoryMethod">
-		<fr:destination name="invalid" path="<%= invalidLink %>"/>	
+	<fr:create id="createBuilding" type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator"	schema="BuildingFactoryCreator"	action="/manageSpaces.do?method=executeFactoryMethod">
+		<fr:destination name="invalid" path="<%= invalidLink %>"/>			
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
 		</fr:layout>

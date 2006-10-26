@@ -702,7 +702,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         request.setAttribute("lessonPlanningBean", new CreateLessonPlanningBean(executionCourse));        
         return mapping.findForward("create-lessonPlanning");
     }
-    
+       
     public ActionForward prepareEditLessonPlanning(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         
@@ -724,6 +724,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             executeService(request, "CreateLessonPlanning", args);    
         } catch (DomainException e) {            
             addActionMessage(request, e.getKey(), e.getArgs());
+            request.setAttribute("lessonPlanningBean", lessonPlanningBean);        
+            return mapping.findForward("create-lessonPlanning");
         }        
         return lessonPlannings(mapping, form, request, response);
     }
