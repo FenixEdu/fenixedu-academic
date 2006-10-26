@@ -647,7 +647,7 @@ public class Enrolment extends Enrolment_Base {
             EnrolmentEvaluationType enrolmentEvaluationType, Person responsibleFor, String grade,
             Date availableDate, Date examDate) {
         return new EnrolmentEvaluation(this, enrolmentEvaluationState, enrolmentEvaluationType,
-                responsibleFor, grade, availableDate, examDate);
+                responsibleFor, grade, availableDate, examDate, new DateTime());
     }
 
     public boolean hasAssociatedMarkSheet(MarkSheetType markSheetType) {
