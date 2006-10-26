@@ -5,20 +5,35 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h2>
-	<bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.title"/>
-</h2>
-<br/>
+<h2><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.title"/></h2>
+
+<logic:messagesPresent message="true">
+	<p>
+		<span class="error0"><!-- Error messages go here -->
+			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
+				<bean:write name="message"/>
+			</html:messages>
+		</span>
+	</p>
+</logic:messagesPresent>
 
 <logic:notPresent name="roomClassificationEditor">
 	<h4>
 		<bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.create"/>
 	</h4>
-
-	<fr:create type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactoryCreator"
+	<fr:hasMessages for="create" type="conversion">
+		<p>
+			<span class="error0">			
+				<fr:message for="create" show="message"/>
+			</span>
+		</p>
+	</fr:hasMessages>
+	<fr:create id="create" type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactoryCreator"
 			schema="RoomClassificationFactory"
-			action="/roomClassification.do?method=executeFactoryMethod"
-			>
+			action="/roomClassification.do?method=executeFactoryMethod"	>
+		<fr:destination name="exception" path="/roomClassification.do?method=viewRoomClassifications"/>	
+		<fr:destination name="invalid" path="/roomClassification.do?method=viewRoomClassifications"/>	
+		<fr:destination name="cancel" path="/roomClassification.do?method=viewRoomClassifications"/>				
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="style1,style1,"/>
 	        <fr:property name="columnClasses" value="listClasses,listClasses,"/>
@@ -31,12 +46,20 @@
 	<h4>
 		<bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.edit"/>
 	</h4>
-
-	<fr:edit name="roomClassificationEditor"
+	<fr:hasMessages for="edit" type="conversion">
+		<p>
+			<span class="error0">			
+				<fr:message for="edit" show="message"/>
+			</span>
+		</p>
+	</fr:hasMessages>
+	<fr:edit id="edit" name="roomClassificationEditor"
 			type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactoryEditor"
 			schema="RoomClassificationFactory"
-			action="/roomClassification.do?method=executeFactoryMethod"
-			>
+			action="/roomClassification.do?method=executeFactoryMethod"	>
+		<fr:destination name="exception" path="/roomClassification.do?method=viewRoomClassifications"/>	
+		<fr:destination name="invalid" path="/roomClassification.do?method=viewRoomClassifications"/>	
+		<fr:destination name="cancel" path="/roomClassification.do?method=viewRoomClassifications"/>				
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="style1,style1,"/>
 	        <fr:property name="columnClasses" value="listClasses,listClasses,"/>
@@ -51,9 +74,7 @@
 	<bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.list"/>
 </h4>
 
-<fr:view name="roomClassifications"
-		schema="RoomClassificationInList"
-		>
+<fr:view name="roomClassifications"	schema="RoomClassificationInList">
 	<fr:layout name="tabular" >
 		<fr:property name="classes" value="style1"/>
         <fr:property name="columnClasses" value="listClasses,listClasses,listClasses,listClasses"/>

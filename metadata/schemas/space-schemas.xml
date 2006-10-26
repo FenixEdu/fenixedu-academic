@@ -96,8 +96,8 @@
 	<slot name="presentationCode" />
 </schema>
 <schema name="RoomClassificationFactory" type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactory" bundle="SPACE_RESOURCES">
-	<slot name="code"/>
-	<slot name="name"/>
+	<slot name="code" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 <schema name="RoomClassificationInList" type="net.sourceforge.fenixedu.domain.space.RoomClassification" bundle="SPACE_RESOURCES">
 	<slot name="presentationCode"/>

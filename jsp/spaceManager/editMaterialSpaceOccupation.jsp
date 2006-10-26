@@ -25,7 +25,14 @@
 	<bean:define id="schemaName">Edit<bean:write name="materialSpaceOccupation" property="material.class.simpleName"/>SpaceOccupation</bean:define>		
 	<bean:define id="type" name="materialSpaceOccupation" property="material.materialSpaceOccupationSubClass.name"/>		
 	<bean:define id="materialSlotName" name="materialSpaceOccupation" property="material.materialSpaceOccupationSlotName" />
-	
-	<fr:edit name="materialSpaceOccupation" type="<%= type.toString() %>" schema="<%= schemaName %>" action="<%= showMaterialSpaceOccupationLink %>"/>
+
+	<fr:hasMessages for="edit" type="conversion">
+		<p>
+			<span class="error0">			
+				<fr:message for="edit" show="message"/>
+			</span>
+		</p>
+	</fr:hasMessages>
+	<fr:edit id="edit" name="materialSpaceOccupation" type="<%= type.toString() %>" schema="<%= schemaName %>" action="<%= showMaterialSpaceOccupationLink %>"/>
 
 </logic:present>
