@@ -57,37 +57,52 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 
     public Duration checkMealDurationAccordingToRules(TimeInterval lunchBreak, boolean justification,
             Timeline timeline, TimePoint firstClocking) {
+
         if (definedMeal()) {
-            if (!justification
-                    && lunchBreak.getDuration().isShorterThan(getMeal().getMinimumMealBreakInterval())) {
-                return null;
-            } else {
-                Duration discount = calculateNotWorkedMealDuration(timeline, lunchBreak.getStartTime(),
-                        lunchBreak.getEndTime(), firstClocking);
-                if (discount.isLongerThan(getMeal().getMandatoryMealDiscount())
-                        || discount.isEqual(getMeal().getMandatoryMealDiscount())) {
+
+            Duration discount = calculateNotWorkedMealDuration(timeline, lunchBreak.getStartTime(),
+                    lunchBreak.getEndTime(), firstClocking);
+            if (discount.isLongerThan(getMeal().getMandatoryMealDiscount())
+                    || discount.isEqual(getMeal().getMandatoryMealDiscount())) {
+                return Duration.ZERO;
+            }
+            // /////////remove in 2007
+            if (getMeal().getMinimumMealBreakInterval() != Duration.ZERO) {
+                if (getMeal().getMealBreak().overlap(lunchBreak) == null) {
                     return Duration.ZERO;
                 }
-                // /////////remove in 2007
-                if (getMeal().getMinimumMealBreakInterval() != Duration.ZERO) {
-                    if (getMeal().getMealBreak().overlap(lunchBreak) == null) {
-                        return Duration.ZERO;
-                    }
-                    Duration mealDiscount = getMeal().calculateMealDiscount(
-                            getMeal().getMealBreak().overlap(lunchBreak).toDuration());
-                    if (discount.isLongerThan(mealDiscount)) {
-                        return Duration.ZERO;
-                    }
-                    return mealDiscount.minus(discount);
-                }
-                // /////////////////////////
-                Duration mealDiscount = getMeal().calculateMealDiscount(lunchBreak.getDuration());
+                Duration mealDiscount = getMeal().calculateMealDiscount(
+                        getMeal().getMealBreak().overlap(lunchBreak).toDuration());
                 if (discount.isLongerThan(mealDiscount)) {
                     return Duration.ZERO;
                 }
-                return mealDiscount.minus(discount);
+                Duration finalDiscount = mealDiscount.minus(discount);
+                if (!justification
+                        && getMeal().getMandatoryMealDiscount() != Duration.ZERO
+                        && lunchBreak.getDuration().isShorterThan(
+                                getMeal().getMinimumMealBreakInterval())
+                        && getMeal().getMandatoryMealDiscount().minus(finalDiscount).isShorterThan(
+                                getMeal().getMinimumMealBreakInterval())) {
+                    return null;
+                }
+                return finalDiscount;
             }
+            // /////////////////////////
+            Duration mealDiscount = getMeal().calculateMealDiscount(lunchBreak.getDuration());
+            if (discount.isLongerThan(mealDiscount)) {
+                return Duration.ZERO;
+            }
+            Duration finalDiscount = mealDiscount.minus(discount);
+            if (!justification
+                    && getMeal().getMandatoryMealDiscount() != Duration.ZERO
+                    && lunchBreak.getDuration().isShorterThan(getMeal().getMinimumMealBreakInterval())
+                    && getMeal().getMandatoryMealDiscount().minus(finalDiscount).isShorterThan(
+                            getMeal().getMinimumMealBreakInterval())) {
+                return null;
+            }
+            return finalDiscount;
         }
+
         return Duration.ZERO;
     }
 
@@ -107,8 +122,14 @@ public class WorkScheduleType extends WorkScheduleType_Base {
                     totalDuration = totalDuration.plus(new Duration(scheduleMealBreak.getStart(),
                             timePointDateTime));
                 } else if (!timePoint.getTime().isBefore(endLunch)) {
-                    totalDuration = totalDuration.plus(new Duration(timePointDateTime, scheduleMealBreak
-                            .getEnd()));
+                    TimePoint nextWorkedTimePoint = timeline.getNextWorkedPoint(timePoint);
+                    DateTime endDateTime = scheduleMealBreak.getEnd();
+                    if (nextWorkedTimePoint != null
+                            && nextWorkedTimePoint.getDateTime(endDateTime.toYearMonthDay()).isBefore(
+                                    endDateTime)) {
+                        endDateTime = nextWorkedTimePoint.getDateTime(endDateTime.toYearMonthDay());
+                    }
+                    totalDuration = totalDuration.plus(new Duration(timePointDateTime, endDateTime));
                 }
             }
         }

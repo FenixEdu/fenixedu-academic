@@ -181,10 +181,10 @@ public class Timeline {
         }
     }
 
-    private int getTimePointIndex(TimePoint mealStart) {
+    private int getTimePointIndex(TimePoint timePoint) {
         for (int i = 0; i < timePoints.size(); i++) {
-            TimePoint timePoint = timePoints.get(i);
-            if (timePoint.equals(mealStart)) {
+            TimePoint timePointList = timePoints.get(i);
+            if (timePointList.equals(timePoint)) {
                 return i;
             }
         }
@@ -816,4 +816,14 @@ public class Timeline {
         return new TimePoint(timeIn, clockIn.getDate().toYearMonthDay().isAfter(day), attribute);
     }
 
+    public TimePoint getNextWorkedPoint(TimePoint timePoint) {
+        int timepointPosition = getTimePointIndex(timePoint);
+        for (int iter=timepointPosition+1; iter < getTimePoints().size(); iter++) {
+            TimePoint tempTimePoint = getTimePoints().get(iter);
+            if(tempTimePoint.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)){
+                return tempTimePoint;
+            }
+        }
+        return null;
+    }
 }
