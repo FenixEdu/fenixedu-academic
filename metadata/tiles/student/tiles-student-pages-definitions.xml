@@ -224,7 +224,7 @@
 
 	<!-- ADMINISTRATIVE OFFICE SERVICES -->
 	<definition name="df.page.administrativeOfficeServicesIndex" extends="definition.student.administrativeOfficeServices">
-		<put name="body" value="/student/main_bd.jsp" />
+		<put name="body" value="/student/administrativeOfficeServices/administrativeOfficeServicesIntro.jsp" />
 	</definition>
 		
 	<definition name="df.page.documentRequest.createDocumentRequests" extends="definition.student.administrativeOfficeServices">
