@@ -61,13 +61,6 @@
 								<br/>
 
 								<bean:define id="curricularCourses" name="registration" property="curricularCoursesOfCurrentCurricularPlanThatTheStudentHasConcluded"/>
-								<fr:view name="curricularCourses" schema="student.approved.curricular.courses.with.ects.credits" >
-									<fr:layout name="tabular" >
-										<fr:property name="classes" value="tstyle4"/>
-								        <fr:property name="columnClasses" value="listClasses,,"/>
-									</fr:layout>
-								</fr:view>
-
 								<br/>
 								<bean:size id="numberAprovedCurricularCourses" name="curricularCourses"/>
 								<bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/>
@@ -75,6 +68,13 @@
 								<br/>
 								<bean:message key="label.total.ects.credits" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 								<bean:write name="registration" property="ectsCredits"/>
+								<br/>
+								<fr:view name="curricularCourses" schema="student.approved.curricular.courses.with.ects.credits" >
+									<fr:layout name="tabular" >
+										<fr:property name="classes" value="tstyle4"/>
+								        <fr:property name="columnClasses" value="listClasses,,"/>
+									</fr:layout>
+								</fr:view>
 							</logic:greaterThan>
 							<logic:lessEqual name="numberCompetedCourses" value="0">
 								<span class="error"><bean:message key="message.student.has.no.enrolments"/></span>
