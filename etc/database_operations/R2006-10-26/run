@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Add start dates to registration and candidacy" addStartDates2RegistrationAndCandidacy.sql
