@@ -13,17 +13,16 @@
 </fr:view>
 
 <h2><strong><bean:message key="label.candidacy.title.detail" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
-<fr:view name="candidacy" schema="candidacy.short" >
-	<fr:layout name="tabular" >
-		<fr:property name="classes" value="tstyle4"/>
-        <fr:property name="columnClasses" value="listClasses,,"/>
-	</fr:layout>
-</fr:view>
-
-
 <html:form action="/dfaCandidacy.do">
 	<html:hidden property="method" value="registerCandidacy" />
 	<html:hidden property="candidacyNumber" />
+	
+	<fr:edit name="registerCandidacyBean" schema="candidacy.short.forRegistration" >
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
+	</fr:edit>
 	
 	<h2><strong><bean:message key="message.candidacy.registerCandidacy.confirm" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 	

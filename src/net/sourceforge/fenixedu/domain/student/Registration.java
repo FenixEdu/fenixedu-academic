@@ -99,6 +99,7 @@ public class Registration extends Registration_Base {
     public Registration() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setStartDate(new YearMonthDay());
     }
 
     @Deprecated
@@ -715,7 +716,7 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
-    
+
     public Collection<DocumentRequest> getNewDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
@@ -725,7 +726,7 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
-    
+
     public Collection<DocumentRequest> getProcessingDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
@@ -735,7 +736,7 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
-    
+
     public Collection<DocumentRequest> getHistoricalDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
@@ -752,10 +753,9 @@ public class Registration extends Registration_Base {
 		return true;
 	    }
 	}
-	
+
 	return false;
     }
-    
 
     // Special Season
 
@@ -1232,11 +1232,11 @@ public class Registration extends Registration_Base {
 	final double ectsCredits = calculateEctsCredits();
 	final int curricularYear = calculateCurricularYear(ectsCredits);
 	final DegreeType degreeType = getDegreeType();
-	
+
 	return ectsCredits == degreeType.getDefaultEctsCredits()
 		&& curricularYear == degreeType.getYears();
     }
-    
+
     public double getEctsCredits() {
 	return calculateEctsCredits();
     }
@@ -1412,6 +1412,12 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    @Override
+    public YearMonthDay getStartDate() {
+	return super.getStartDate() != null ? super.getStartDate() : getStudentCandidacy()
+		.getActiveCandidacySituation().getSituationDate().toYearMonthDay();
+    }
+
     public boolean isCustomEnrolmentModel(final ExecutionYear executionYear) {
 	return getEnrolmentModelForExecutionYear(executionYear) == EnrolmentModel.CUSTOM;
 }
@@ -1438,11 +1444,6 @@ public class Registration extends Registration_Base {
 	}
 
 	return totalEctsCredits;
-    }
-
-    public DateTime getRegistrationDate() {
-	// TODO: fix me
-	return getStudentCandidacy().getActiveCandidacySituation().getSituationDate();
     }
 
 }

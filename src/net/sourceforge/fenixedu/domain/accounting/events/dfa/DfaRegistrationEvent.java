@@ -96,7 +96,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     }
 
     public DateTime getRegistrationDate() {
-	return getRegistration().getRegistrationDate();
+	return getRegistration().getStartDate().toDateTimeAtMidnight();
     }
 
     public RegistrationPeriodInDegreeCurricularPlan getRegistrationPeriodInDegreeCurricularPlan() {

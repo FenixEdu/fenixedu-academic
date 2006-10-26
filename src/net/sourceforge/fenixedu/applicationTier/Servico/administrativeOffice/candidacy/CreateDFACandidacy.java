@@ -12,10 +12,12 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.joda.time.YearMonthDay;
+
 public class CreateDFACandidacy extends Service {
     public DFACandidacy run(ExecutionDegree executionDegree, String name,
 	    String identificationDocumentNumber, IDDocumentType identificationDocumentType,
-	    String contributorNumber) {
+	    String contributorNumber, YearMonthDay startDate) {
 	Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
 		identificationDocumentType);
 	if (person == null) {
@@ -27,7 +29,7 @@ public class CreateDFACandidacy extends Service {
 	person.addPersonRoleByRoleType(RoleType.CANDIDATE);
 	person.addPersonRoleByRoleType(RoleType.PERSON);
 
-	final DFACandidacy candidacy = new DFACandidacy(person, executionDegree);
+	final DFACandidacy candidacy = new DFACandidacy(person, executionDegree, startDate);
 
 	final AdministrativeOffice administrativeOffice = AdministrativeOffice
 		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);

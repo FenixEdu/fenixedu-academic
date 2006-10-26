@@ -35,6 +35,11 @@
 	<slot name="idDocumentType" key="label.idDocumentType" 
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
 	<slot name="contributorNumber" key="label.contributorNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="candidacyDate" >
+		<validator class="net.sourceforge.fenixedu.renderers.validators.AdvancedDateValidator">
+			<property name="validationPeriod" value="pastOrToday" />
+		</validator>
+	</slot>	
 </schema>	
 <schema name="candidacy.show.candidady"
 		type="net.sourceforge.fenixedu.domain.candidacy.Candidacy" bundle="ADMIN_OFFICE_RESOURCES">
@@ -164,13 +169,25 @@
 </schema>
 
 <schema name="candidacy.short" type="net.sourceforge.fenixedu.domain.candidacy.Candidacy" bundle="CANDIDATE_RESOURCES">
-	<slot name="number"/>
-	<slot name="description"/>
+	<slot name="number" />
+	<slot name="description" />
 </schema>
 
 <schema name="candidacy.short.withNumber" extends="candidacy.short" 
 	type="net.sourceforge.fenixedu.domain.candidacy.Candidacy" bundle="CANDIDATE_RESOURCES">
 	<slot name="registration.number" key="label.studentNumber"/>
+</schema>
+
+<schema name="candidacy.short.forRegistration" 
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.RegisterCandidacyBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="candidacy.number" read-only="true" />
+	<slot name="candidacy.description" read-only="true" key="label.description" />
+	<slot name="enrolmentModel" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="startDate" >
+		<validator class="net.sourceforge.fenixedu.renderers.validators.AdvancedDateValidator">
+			<property name="validationPeriod" value="pastOrToday" />
+		</validator>
+	</slot>
 </schema>
 
 <schema name="registration.short" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="CANDIDATE_RESOURCES">

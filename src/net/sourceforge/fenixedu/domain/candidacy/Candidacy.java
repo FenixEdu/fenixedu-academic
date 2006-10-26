@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.YearMonthDay;
 
 public abstract class Candidacy extends Candidacy_Base {
 
@@ -18,6 +19,7 @@ public abstract class Candidacy extends Candidacy_Base {
 	setOjbConcreteClass(this.getClass().getName());
 	setNumber(createCandidacyNumber());
 	setRootDomainObject(RootDomainObject.getInstance());
+	setStartDate(new YearMonthDay());
     }
 
     public Candidacy(CandidacySituation candidacySituation) {
@@ -39,6 +41,10 @@ public abstract class Candidacy extends Candidacy_Base {
 
     public CandidacySituation getActiveCandidacySituation() {
 	return Collections.max(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR);
+    }
+
+    private CandidacySituation getFirstCandidacySituation() {
+	return Collections.min(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR);
     }
 
     // static methods
@@ -93,4 +99,11 @@ public abstract class Candidacy extends Candidacy_Base {
     abstract void moveToNextState(CandidacyOperationType candidacyOperationType, Person person);
 
     public abstract boolean isConcluded();
+
+    @Override
+    public YearMonthDay getStartDate() {
+	return super.getStartDate() != null ? super.getStartDate() : getFirstCandidacySituation()
+		.getSituationDate().toYearMonthDay();
+    }
+
 }

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunn
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.RegisterCandidacyBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -123,7 +125,8 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 			    createDFACandidacyBean.getName(),
 			    createDFACandidacyBean.getIdentificationNumber(),
 			    createDFACandidacyBean.getIdDocumentType(),
-			    createDFACandidacyBean.getContributorNumber() });
+			    createDFACandidacyBean.getContributorNumber(),
+			    createDFACandidacyBean.getCandidacyDate() });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), null);
 	    RenderUtils.invalidateViewState();
@@ -358,6 +361,8 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	}
 
 	request.setAttribute("candidacy", candidacy);
+	request.setAttribute("registerCandidacyBean", new RegisterCandidacyBean(
+		(StudentCandidacy) candidacy));
 	((DynaActionForm) actionForm).set("candidacyNumber", candidacyNumber);
 
 	return mapping.findForward("candidacyRegistration");
@@ -367,14 +372,13 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException, FenixServiceException {
 
-	DynaActionForm candidacyForm = (DynaActionForm) actionForm;
-	Integer candidacyNumber = (Integer) candidacyForm.get("candidacyNumber");
-	Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
+	RegisterCandidacyBean registerCandidacyBean = (RegisterCandidacyBean) RenderUtils.getViewState()
+		.getMetaObject().getObject();
+	Candidacy candidacy = registerCandidacyBean.getCandidacy();
 
-	Object[] args = { new StateMachineRunner.RunnerArgs(candidacy.getActiveCandidacySituation(),
-		CandidacySituationType.REGISTERED.toString()) };
+	Object[] args = { registerCandidacyBean };
 	try {
-	    ServiceUtils.executeService(getUserView(request), "StateMachineRunner", args);
+	    ServiceUtils.executeService(getUserView(request), "RegisterCandidate", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), null);
 	    request.setAttribute("candidacy", candidacy);
