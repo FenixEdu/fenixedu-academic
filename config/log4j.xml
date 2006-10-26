@@ -15,7 +15,7 @@
 		</layout>
 	</appender>
 
-	<appender name= "profileLog" class= "org.apache.log4j.ConsoleAppender">
+	<appender name= "profileLog" class= "org.apache.log4j.FileAppender">
 		<param name= "File" value= "@log.profile.dir@/@log.profile.filename@"/>
 		<param name= "DatePattern" value= "'.'yyyy-MM-dd"/>
 		<layout class= "org.apache.log4j.PatternLayout">
