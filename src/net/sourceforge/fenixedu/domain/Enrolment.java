@@ -794,24 +794,23 @@ public class Enrolment extends Enrolment_Base {
     }
     
     public void deleteSpecialSeasonEvaluation() {
-	if (getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON
-		&& getEnrollmentState().equals(EnrollmentState.ENROLLED) && hasSpecialSeason()) {
-    		setEnrolmentCondition(EnrollmentCondition.FINAL);
-    		setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+	if (getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON && hasSpecialSeason()) {
+	    setEnrolmentCondition(EnrollmentCondition.FINAL);
+	    setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
 	    EnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
 		    EnrolmentEvaluationState.TEMPORARY_OBJ, EnrolmentEvaluationType.SPECIAL_SEASON);
-    		if(enrolmentEvaluation != null) {
-    			enrolmentEvaluation.delete();
-    		}
-    		
+	    if (enrolmentEvaluation != null) {
+		enrolmentEvaluation.delete();
+	    }
+
 	    EnrolmentEvaluation normalEnrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
 		    EnrolmentEvaluationState.FINAL_OBJ, EnrolmentEvaluationType.NORMAL);
-    		if(normalEnrolmentEvaluation != null) {
-    			setEnrollmentState(normalEnrolmentEvaluation.getEnrollmentStateByGrade());
-    		}
-    	} else {
-    		throw new DomainException("error.invalid.enrolment.state");
-    	}
+	    if (normalEnrolmentEvaluation != null) {
+		setEnrollmentState(normalEnrolmentEvaluation.getEnrollmentStateByGrade());
+	    }
+	} else {
+	    throw new DomainException("error.invalid.enrolment.state");
+	}
     }
     
     public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
