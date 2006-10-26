@@ -10946,4 +10946,13 @@
         <filterChains>
         </filterChains>   
     </service> 
+	<service>
+    	<name>RegisterCandidate</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.RegisterCandidate</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="MasterDegreeAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>    
 </serviceDefinitions>
