@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -47,11 +48,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     public static final Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
-		.addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name"));
+		.addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name", Collator.getInstance()));
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
-		.addComparator(new BeanComparator("degreeCurricularPlan.degree.nome"));
+		.addComparator(new BeanComparator("degreeCurricularPlan.degree.nome", Collator.getInstance()));
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
-		.addComparator(new BeanComparator("name"));
+		.addComparator(new BeanComparator("name", Collator.getInstance()));
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
 		.addComparator(new BeanComparator("idInternal"));
     }
@@ -1599,6 +1600,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Integer getSecondTimeEnrolmentStudentNumber(ExecutionPeriod executionPeriod) {
 	return getTotalEnrolmentStudentNumber(executionPeriod)
 		- getFirstTimeEnrolmentStudentNumber(executionPeriod);
+    }
+
+    public double getEctsCreditsForCurricularYearCalculation() {
+        final Double ccEctsCredits = getEctsCredits();
+        return ccEctsCredits == null || ccEctsCredits.doubleValue() == 0 ? 6 : ccEctsCredits;
     }
 
 }

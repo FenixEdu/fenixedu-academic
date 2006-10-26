@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import java.math.BigDecimal;
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -77,9 +76,7 @@ import net.sourceforge.fenixedu.util.StudentState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class Registration extends Registration_Base {
@@ -1248,12 +1245,9 @@ public class Registration extends Registration_Base {
 	    return 1;
 	}
 	final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
-	final ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("name", Collator.getInstance()));
-	comparatorChain.addComparator(new BeanComparator("idInternal"));
 	final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
 	final Set<CurricularCourse> curricularCoursesToDisplay = new TreeSet<CurricularCourse>(
-		comparatorChain);
+		CurricularCourse.CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME);
 	int nacc = 0;
 	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
 	    if (isActive(curricularCourse, executionYear)
@@ -1269,9 +1263,7 @@ public class Registration extends Registration_Base {
 		    curricularCourses.addAll(curricularCourseEquivalence.getOldCurricularCoursesSet());
 		    curricularCourses.add(curricularCourseEquivalence.getEquivalentCurricularCourse());
 		}
-		final Double ccEctsCredits = curricularCourse.getEctsCredits();
-		ectsCredits += ccEctsCredits == null || ccEctsCredits.doubleValue() == 0 ? 6
-			: ccEctsCredits;
+                ectsCredits += curricularCourse.getEctsCreditsForCurricularYearCalculation();
 	    }
 	}
 
@@ -1283,6 +1275,32 @@ public class Registration extends Registration_Base {
 	}
 
 	return ectsCredits;
+    }
+
+    public Set<CurricularCourse> getCurricularCoursesOfCurrentCurricularPlanThatTheStudentHasConcluded() {
+        final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
+        final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
+        final Set<CurricularCourse> curricularCoursesToDisplay = new TreeSet<CurricularCourse>(
+                CurricularCourse.CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME);
+        final ExecutionYear executionYear = findMostRecenteExecutionYearWithEnrolments();
+        if (executionYear != null) {
+            for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
+                if (isActive(curricularCourse, executionYear)
+                        && isCurricularCourseApproved(curricularCourse)
+                        && !containsSameCurricularCours(curricularCourses, curricularCourse)) {
+                    curricularCoursesToDisplay.add(curricularCourse);
+                    curricularCourses.add(curricularCourse);
+                    curricularCourses.addAll(curricularCourse.getEquivalentCurricularCoursesSet());
+                    curricularCourses.addAll(curricularCourse.getOldCurricularCoursesSet());
+                    for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse
+                            .getOldCurricularCourseEquivalencesSet()) {
+                        curricularCourses.addAll(curricularCourseEquivalence.getOldCurricularCoursesSet());
+                        curricularCourses.add(curricularCourseEquivalence.getEquivalentCurricularCourse());
+                    }
+                }
+            }
+        }
+        return curricularCoursesToDisplay;
     }
 
     public int getCurricularYear() {

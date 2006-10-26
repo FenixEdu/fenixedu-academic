@@ -212,6 +212,11 @@
 	<slot name="documentType" key="label.idDocumentType"/>
 </schema>
 
+<schema name="student.approved.curricular.courses.with.ects.credits" type="net.sourceforge.fenixedu.domain.CurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="name"/>
+	<slot name="ectsCreditsForCurricularYearCalculation"  key="label.ects.credits"/>
+</schema>
+
 <schema name="student.searchResult" type="net.sourceforge.fenixedu.domain.student.Student" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="number" key="label.studentNumber"/>
 </schema>
