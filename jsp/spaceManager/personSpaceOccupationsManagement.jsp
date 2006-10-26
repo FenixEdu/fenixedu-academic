@@ -15,10 +15,7 @@
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
 	<jsp:include page="spaceCrumbs.jsp"/>
 	
-	<bean:define id="backLink">
-		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
-	</bean:define>
-
+	<bean:define id="backLink">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/></bean:define>
 	<ul class="mvert15 list5">
 		<li>
 			<html:link page="<%= backLink %>">
@@ -59,24 +56,40 @@
             <fr:property name="order(delete)" value="0"/>                                           
     	</fr:layout>
 	</fr:view>			
-
-	<bean:define id="exceptionParams" value="<%="/managePersonSpaceOccupations.do?method=showSpaceOccupations&spaceInformationID="+ selectedSpaceInformationId %>" />		
-	<logic:empty name="personSpaceOccupation">
+	
+	<bean:define id="exceptionLink" value="<%="/managePersonSpaceOccupations.do?method=showSpaceOccupations&spaceInformationID="+ selectedSpaceInformationId %>" />		
+	<logic:empty name="personSpaceOccupation">		
 		<p class="mbottom05"><strong><bean:message key="label.add.person" bundle="SPACE_RESOURCES"/></strong></p>
+		<fr:hasMessages for="create" type="conversion">
+			<p>
+				<span class="error0">			
+					<fr:message for="create" show="message"/>
+				</span>
+			</p>
+		</fr:hasMessages>
 		<fr:create id="create" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" schema="AddPersonSpaceOccupation">	   	
 			<fr:hidden slot="space" name="selectedSpaceInformation" property="space" />
-			<fr:destination name="exception" path="<%= exceptionParams %>" />
+			<fr:destination name="exception" path="<%= exceptionLink %>" />
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 		</fr:create>
 	</logic:empty>
+		
 	<logic:notEmpty name="personSpaceOccupation">	
+		<bean:define id="exceptionLink2">/managePersonSpaceOccupations.do?method=prepareEditSpacePersonOccupation&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&spaceOccupationID=<bean:write name="personSpaceOccupation" property="idInternal"/></bean:define>			
 		<p class="mbottom05"><strong><bean:message key="label.edit.occupation" bundle="SPACE_RESOURCES"/></strong></p>							
 		<p><i><bean:write name="personSpaceOccupation" property="person.name"/> -> <bean:write name="personSpaceOccupation" property="person.username"/></i></p>
-		<fr:edit name="personSpaceOccupation" action="<%= exceptionParams %>" schema="EditPersonSpaceOccupation">	   				
-			<fr:destination name="exception" path="<%= exceptionParams %>" />
+		<fr:hasMessages for="edit" type="conversion">
+			<p>
+				<span class="error0">			
+					<fr:message for="edit" show="message"/>
+				</span>
+			</p>
+		</fr:hasMessages>
+		<fr:edit id="edit" name="personSpaceOccupation" action="<%= exceptionLink %>" schema="EditPersonSpaceOccupation">	   				
+			<fr:destination name="exception" path="<%= exceptionLink2 %>" />
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>

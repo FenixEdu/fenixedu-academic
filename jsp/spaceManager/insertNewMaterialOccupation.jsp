@@ -24,8 +24,7 @@
 
 	<p class="mtop15 mbottom05"><strong><bean:message key="title.choose.material.type" bundle="SPACE_RESOURCES"/></strong></p>
 	<fr:form>
-		<fr:edit nested="true" name="materialTypeBean" id="materialTypeWithMaterialType" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean"
-			schema="ChooseMaterialType">						
+		<fr:edit nested="true" name="materialTypeBean" id="materialTypeWithMaterialType" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean" schema="ChooseMaterialType">						
 			<fr:destination name="postBack" path="/manageMaterialSpaceOccupations.do?method=prepareChooseMaterial&page=0"/>
 				<fr:layout name="tabular">      										  
 		   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05"/>
@@ -36,15 +35,21 @@
 	<logic:notEmpty name="materialTypeBean" property="materialType">	
 		<p class="mtop1 mbottom05"><strong><bean:message key="title.choose.material" bundle="SPACE_RESOURCES"/></strong></p>
 		<bean:define id="chooseMaterialSchema">Choose<bean:write name="materialTypeBean" property="materialType.simpleName"/></bean:define>
-
-		<fr:edit name="materialTypeBean" id="materialTypeWithMaterial" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean"
-			schema="<%= chooseMaterialSchema %>" action="<%= prepareInsertMaterialOccupationLink %>">			
+		<fr:hasMessages for="materialTypeWithMaterial" type="conversion">
+			<p>
+				<span class="error0">			
+					<fr:message for="materialTypeWithMaterial" show="message"/>
+				</span>
+			</p>
+		</fr:hasMessages>
+		<fr:edit name="materialTypeBean" id="materialTypeWithMaterial" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean"	schema="<%= chooseMaterialSchema %>" action="<%= prepareInsertMaterialOccupationLink %>">			
 			<fr:destination name="cancel" path="<%= showMaterialSpaceOccupationLink %>"/>			
 			<fr:destination name="invalid" path="<%= prepareInsertMaterialOccupationLink %>"/>
-				<fr:layout name="tabular">      										  
-		   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
-		   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-      			</fr:layout>
+			<fr:destination name="exception" path="<%= prepareInsertMaterialOccupationLink %>"/>
+			<fr:layout name="tabular">      										  
+	   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
+	   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+     		</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
 	
@@ -57,10 +62,18 @@
 		<bean:define id="materialSlotName" name="materialTypeBean" property="material.materialSpaceOccupationSlotName" />
 
 		<fr:form action="<%= showMaterialSpaceOccupationLink %>">
+			<fr:hasMessages for="materialTypeWithDates" type="conversion">
+				<p>
+					<span class="error0">			
+						<fr:message for="materialTypeWithDates" show="message"/>
+					</span>
+				</p>
+			</fr:hasMessages>
 			<fr:create nested="true" id="materialTypeWithDates" type="<%= type.toString() %>" schema="<%= schemaName %>">			
 				<fr:hidden slot="space" name="materialTypeBean" property="spaceInformation.space"/>								
 				<fr:hidden slot="<%= materialSlotName.toString() %>" name="materialTypeBean" property="material" />								
 				<fr:destination name="invalid" path="<%= prepareInsertMaterialOccupationLink %>"/>
+				<fr:destination name="exception" path="<%= prepareInsertMaterialOccupationLink %>"/>
 				<fr:layout name="tabular">      										  
 		   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05"/>
 		   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>

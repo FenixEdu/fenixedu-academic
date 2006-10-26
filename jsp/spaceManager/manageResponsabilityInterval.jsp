@@ -15,8 +15,7 @@
 	<jsp:include page="spaceCrumbs.jsp"/>
 
 	<bean:define id="backLink">/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/></bean:define>	
-	<bean:define id="exceptionLink">/manageSpaceResponsibility.do?method=manageResponsabilityInterval&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&unitID=<bean:write name="unit" property="idInternal"/></bean:define>	
-
+	
 	<ul class="mvert15 list5">
 		<li>
 			<html:link page="<%= backLink %>">
@@ -35,19 +34,19 @@
 		</p>
 	</logic:messagesPresent>
 	
-	<fr:hasMessages>
-		<p>
-			<span class="error0">			
-				<fr:message show="message"/>
-			</span>
-		</p>
-	</fr:hasMessages>
-
 	<logic:empty name="spaceResponsibility">
 		<div class="infoop2 mtop15">
 			<p><bean:message key="label.unit.name" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="unit" property="name"/></strong></p>
 			<p><bean:message key="label.unit.costCenterCode" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="unit" property="costCenterCode"/></strong></p>
 		</div>
+		<bean:define id="exceptionLink">/manageSpaceResponsibility.do?method=manageResponsabilityInterval&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&unitID=<bean:write name="unit" property="idInternal"/></bean:define>	
+		<fr:hasMessages for="create" type="conversion">
+			<p>
+				<span class="error0">			
+					<fr:message for="create" show="message"/>
+				</span>
+			</p>
+		</fr:hasMessages>
 		<fr:create id="create" action="<%= backLink %>" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" schema="CreateSpaceResponsibilityInterval">
 			<fr:hidden slot="space" name="selectedSpaceInformation" property="space" />
 			<fr:hidden slot="unit" name="unit" />
@@ -56,7 +55,7 @@
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thmiddle thright thlight mtop15 mbottom1"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			</fr:layout>
+			</fr:layout>			
 		</fr:create>
 	</logic:empty>
 
@@ -66,13 +65,21 @@
 			<p><bean:message key="label.unit.name" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="spaceResponsibility" property="unit.name"/></strong></p>
 			<p><bean:message key="label.unit.costCenterCode" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="spaceResponsibility" property="unit.costCenterCode"/></strong></p>
 		</div>
+		<bean:define id="exceptionLink2">/manageSpaceResponsibility.do?method=prepareEditSpaceResponsibility&page=0&spaceResponsibilityID=<bean:write name="spaceResponsibility" property="idInternal"/></bean:define>	
+		<fr:hasMessages for="edit" type="conversion">
+			<p>
+				<span class="error0">			
+					<fr:message for="edit" show="message"/>
+				</span>
+			</p>
+		</fr:hasMessages>
 		<fr:edit id="edit" name="spaceResponsibility" action="<%= backLink %>" schema="EditSpaceResponsibility">
-			<fr:destination name="exception" path="<%= exceptionLink %>"/>
-			<fr:destination name="invalid" path="<%= exceptionLink %>"/>			
+			<fr:destination name="exception" path="<%= exceptionLink2 %>"/>
+			<fr:destination name="invalid" path="<%= exceptionLink2 %>"/>			
 			<fr:layout name="tabular">
 	   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
 	   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-	    	</fr:layout>
+	    	</fr:layout>	    	
 		</fr:edit>
 	</logic:notEmpty>
 
