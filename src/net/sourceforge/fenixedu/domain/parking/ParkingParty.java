@@ -533,6 +533,7 @@ public class ParkingParty extends ParkingParty_Base {
     public void delete() {
         if (canBeDeleted()) {
             setParty(null);
+            setDriverLicenseDocumentState(null);
             deleteFile(ParkingDocumentType.DRIVER_LICENSE);
             deleteFirstCar();
             deleteSecondCar();
