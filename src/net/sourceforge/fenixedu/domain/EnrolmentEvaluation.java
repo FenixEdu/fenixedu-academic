@@ -76,6 +76,13 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
         generateCheckSum();
     }
+    
+    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,
+            EnrolmentEvaluationType type, Person responsibleFor, String grade, Date availableDate,
+            Date examDate, DateTime when) {
+	this(enrolment, enrolmentEvaluationState, type, responsibleFor, grade, availableDate, examDate);
+	setWhenDateTime(when);
+    }
 
     public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType, EnrolmentEvaluationState evaluationState) {
 		this(enrolment, enrolmentEvaluationType);
@@ -85,7 +92,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 		setEnrolmentEvaluationState(evaluationState);
 	}
 
-	public int compareTo(Object o) {
+    public int compareTo(Object o) {
         EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
         EnrollmentState myEnrolmentState = this.getEnrollmentStateByGrade(this.getGrade());
         EnrollmentState otherEnrolmentState = this.getEnrollmentStateByGrade(enrolmentEvaluation
