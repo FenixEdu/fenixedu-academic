@@ -33,11 +33,19 @@
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
 </schema>	
 
-<schema name="student.personalData-edit" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
-	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />	
-	<slot name="documentIdNumber" key="label.identificationNumber" read-only="true"/>	
+<schema name="student.personalData-edit" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="socialSecurityNumber" />
+	<slot name="profession" />
+	<slot name="maritalStatus" />
+</schema>
+
+<schema name="student.documentId-edit" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
 	<slot name="idDocumentType" key="label.idDocumentType" read-only="true" />
+	<slot name="documentIdNumber" key="label.identificationNumber" read-only="true"/>	
 	<slot name="documentIdEmissionLocation" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	<slot name="documentIdEmissionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
 		<property name="size" value="12"/>
@@ -47,9 +55,6 @@
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="socialSecurityNumber" />
-	<slot name="profession" />
-	<slot name="maritalStatus" />  
 </schema>
 
 <schema name="student.filiation-edit" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean"  bundle="ACADEMIC_OFFICE_RESOURCES" >
@@ -70,14 +75,21 @@
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name"/>
 	</slot>
-	<slot name="fatherName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="motherName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />	
+	<slot name="fatherName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="motherName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
 
 <schema name="student.address-edit" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
-	<slot name="address" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="address" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 	<slot name="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	<slot name="areaCode">
+		<property name="size" value="10"/>
 		 <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             <property name="regexp" value="\d{4}-\d{3}"/>
             <property name="message" value="error.areaCode.invalidFormat"/>
@@ -99,7 +111,9 @@
 	<slot name="phone" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="mobile"/>
 	<slot name="email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator"/> 	
-	<slot name="webAddress"/>
+	<slot name="webAddress">
+		<property name="size" value="40"/>
+	</slot>
 </schema>
 
 <schema name="student.precedentDegreeInformation-edit" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
@@ -144,7 +158,7 @@
 
 <schema name="ingression.information"
 	type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="ingression" key="label.ingression" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+	<slot name="ingression" key="label.ingression.short" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
 		<property name="format" value="${name} - ${description}" />
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.candidacy.Ingression" />
 		<property name="destination" value="ingressionPostBack"/>
@@ -160,15 +174,15 @@
 <schema name="student.show.personInformation"
 		type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="name" key="label.name"/>
-	<slot name="documentIdNumber" key="label.identificationNumber"/>		
-	<slot name="idDocumentType" key="label.idDocumentType"/>	
+	<slot name="idDocumentType" key="label.idDocumentType.descriptive"/>
+	<slot name="documentIdNumber" key="label.identificationNumber.descriptive"/>
 </schema>
 
 <schema name="student.show.personInformationWithIstUsername"
 		type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="student.person.name" key="label.name"/>
-	<slot name="student.person.documentIdNumber" key="label.identificationNumber"/>		
-	<slot name="student.person.idDocumentType" key="label.idDocumentType"/>	
+	<slot name="student.person.documentIdNumber" key="label.identificationNumber.descriptive"/>		
+	<slot name="student.person.idDocumentType" key="label.idDocumentType.descriptive"/>	
 	<slot name="student.person.istUsername" key="label.username"/>
 </schema>
 
