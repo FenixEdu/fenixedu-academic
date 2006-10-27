@@ -32,3 +32,4 @@ execute "Add 'visible' and 'orderInItem' columns to FileItem, change relation wi
 execute "Refactor GroupAvailability" RefactorGroupAvailability.sql
 execute "Add functionalities to execution course site location" AddExecutionCourseSiteFunctionalities.sql
 execute "Separate ExecutionCourseSite from Site" CreateExecutionCourseSite.sql
+execute "Delete parking party with key party zero" DeleteParkingPartyKeyZero.sql
