@@ -65,11 +65,18 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
      */
     public abstract void checkConditions() throws DomainException;
     
-    final public void conclude(String justification) {
+    final public void process() throws DomainException {
 	checkConditions();
 	
 	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
-	edit(AcademicServiceRequestSituationType.CONCLUDED, employee, justification);
+	edit(AcademicServiceRequestSituationType.PROCESSING, employee, null);
+    }
+    
+    final public void conclude() throws DomainException {
+	checkConditions();
+	
+	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	edit(AcademicServiceRequestSituationType.CONCLUDED, employee, null);
     }
     
     @Override
