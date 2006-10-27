@@ -86,28 +86,26 @@
 	</slot>
 </schema>
 
-<schema name="show.schedule"
-	type="net.sourceforge.fenixedu.domain.assiduousness.Schedule">
-	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="workSchedules" key="label.schedule" bundle="ASSIDUOUSNESS_RESOURCES"
-		schema="show.workSchedule" layout="tabular-list">
-		<property name="subLayout" value="tabular" />
-		<property name="subSchema" value="show.workSchedule" />
-		<property name="columnClasses" value="tstyle6" />
-	</slot>
+<schema name="show.justificationMotives"
+	type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="justificationType" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="dayType" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="justificationGroup" key="label.group" bundle="ASSIDUOUSNESS_RESOURCES"/>		
 </schema>
 
-<schema name="show.workSchedule"
-	type="net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule">
-	<slot name="workScheduleType.acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<!-- 	<slot name="periodicity.workWeekNumber" key="label.week" /> -->
-	<slot name="workWeek.days" key="label.days" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="workScheduleType.normalWorkPeriod"
-		schema="show.WorkPeriod" layout="values" key="label.normalWorkPeriod" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="workScheduleType.fixedWorkPeriod"
-		schema="show.WorkPeriod" layout="values" key="label.fixedWorkPeriod" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="workScheduleType.meal" schema="show.MealBreak"
-		layout="values" key="label.mealPeriod" bundle="ASSIDUOUSNESS_RESOURCES"/>
+<schema name="show.regularizationMotives"
+	type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
+<schema name="show.workScheduleType" type="net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="normalWorkPeriod" key="label.normalWorkPeriod" schema="show.WorkPeriod" layout="values" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="fixedWorkPeriod" key="label.fixedWorkPeriod" schema="show.WorkPeriod" layout="values" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="meal" key="label.mealPeriod" schema="show.MealBreak" layout="values" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="show.WorkPeriod"

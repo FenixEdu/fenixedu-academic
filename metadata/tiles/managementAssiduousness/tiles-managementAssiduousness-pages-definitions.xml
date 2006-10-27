@@ -5,11 +5,31 @@
 	<definition name="managementAssiduousnessWelcome" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/welcomeScreen.jsp"/>
 	</definition>
+	<!-- Consults by employee -->
 	<definition name="choose-employee" extends="definition.managementAssiduousness.masterPage">
-		<put name="body" value="/managementAssiduousness/chooseEmployee.jsp"/>
+		<put name="body" value="/managementAssiduousness/employee/chooseEmployee.jsp"/>
 	</definition>
 	<definition name="show-employee-work-sheet" extends="definition.managementAssiduousness.masterPage">
-		<put name="body" value="/managementAssiduousness/showWorkSheet.jsp"/>
+		<put name="body" value="/managementAssiduousness/employee/showWorkSheet.jsp"/>
+	</definition>
+	<definition name="show-schedule" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/showSchedule.jsp"/>
+	</definition>
+	<definition name="show-clockings" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/showClockings.jsp"/>
+	</definition>
+	<definition name="show-justifications" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/showJustifications.jsp"/>
+	</definition>
+	<!-- Consults -->
+	<definition name="show-all-schedules" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/showSchedules.jsp"/>
+	</definition>
+	<definition name="show-justification-motives" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/showJustificationMotives.jsp"/>
+	</definition>
+	<definition name="show-regularization-motives" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/showRegularizationMotives.jsp"/>
 	</definition>
 	<definition name="choose-year-month" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/chooseYearMonth.jsp"/>

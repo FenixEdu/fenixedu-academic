@@ -6,7 +6,10 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.io.Serializable;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkScheduleDaySheet;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateTime;
@@ -73,5 +76,17 @@ public class WorkWeek implements Serializable {
             return true;
         }
         return false;
+    }
+
+    public void validateWorkScheduleDays(HashMap<String, WorkScheduleDaySheet> workScheduleDays,
+            ResourceBundle bundle) {
+        for (WeekDay weekDay : getDays()) {
+            if (workScheduleDays.get(weekDay.toString()) == null) {
+                WorkScheduleDaySheet workScheduleDaySheet = new WorkScheduleDaySheet();
+                workScheduleDaySheet.setSchedule("");
+                workScheduleDaySheet.setWeekDay(bundle.getString(weekDay.toString() + "_ACRONYM"));
+                workScheduleDays.put(weekDay.toString(), workScheduleDaySheet);
+            }
+        }
     }
 }

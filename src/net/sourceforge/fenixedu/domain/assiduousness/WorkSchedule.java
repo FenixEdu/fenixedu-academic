@@ -1,14 +1,18 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkScheduleDaySheet;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.Duration;
@@ -270,6 +274,17 @@ public class WorkSchedule extends WorkSchedule_Base {
             }
         }
         return false;
+    }
+
+    public void setWorkScheduleDays(
+            HashMap<String, WorkScheduleDaySheet> workScheduleDays, ResourceBundle bundle) {
+        for (WeekDay weekDay : getWorkWeek().getDays()) {
+            WorkScheduleDaySheet workScheduleDaySheet = new WorkScheduleDaySheet();
+            workScheduleDaySheet.setSchedule(getWorkScheduleType().getAcronym());
+            workScheduleDaySheet.setWeekDay(bundle.getString(weekDay.toString() + "_ACRONYM"));
+            workScheduleDaySheet.setWorkSchedule(this);
+            workScheduleDays.put(weekDay.toString(), workScheduleDaySheet);
+        }
     }
 
     public void delete() {

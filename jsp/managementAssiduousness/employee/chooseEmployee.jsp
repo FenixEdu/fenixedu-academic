@@ -13,7 +13,7 @@
 	</html:messages>
 </logic:messagesPresent>
 
-<html:form action="viewAssiduousness">
+<html:form action="viewEmployeeAssiduousness">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 	<bean:define id="nextAction" name="action" type="java.lang.String"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="<%=nextAction%>" />

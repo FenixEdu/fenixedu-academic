@@ -23,16 +23,30 @@
 		<action path="/index" 
 	      		  type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
 	      		  forward="managementAssiduousnessWelcome"/>
-	    <action path="/viewAssiduousness" name="employeeForm"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ViewAssiduousnessDispatchAction" 
+	    <action path="/viewEmployeeAssiduousness" name="employeeForm"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ViewEmployeeAssiduousnessDispatchAction" 
 				parameter="method"
 				scope="request"
 				validate="true"
-				input="/viewAssiduousness.do?method=chooseEmployee&amp;page=0">
+				input="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;page=0">
 			<forward name="index" path="managementAssiduousnessWelcome"/>
 			<forward name="choose-employee" path="choose-employee"/>
 			<forward name="show-employee-work-sheet" path="show-employee-work-sheet"/>
-		</action>	
+			<forward name="show-schedule" path="show-schedule"/>
+			<forward name="show-clockings" path="show-clockings"/>
+			<forward name="show-justifications" path="show-justifications"/>
+			<forward name="show-all-schedules" path="show-all-schedules"/>
+		</action>
+		<action path="/viewAssiduousness"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ViewAssiduousnessDispatchAction" 
+				parameter="method"
+				scope="request"
+				validate="true">
+			<forward name="index" path="managementAssiduousnessWelcome"/>
+			<forward name="show-all-schedules" path="show-all-schedules"/>
+			<forward name="show-justification-motives" path="show-justification-motives"/>
+			<forward name="show-regularization-motives" path="show-regularization-motives"/>
+		</action>
 		<action path="/exportAssiduousness"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ExportAssiduousnessDispatchAction" 
 				parameter="method"
