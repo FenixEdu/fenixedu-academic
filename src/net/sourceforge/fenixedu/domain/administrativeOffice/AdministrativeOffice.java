@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.administrativeOffice;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -9,9 +8,8 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -149,26 +147,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     public static AdministrativeOffice getResponsibleAdministrativeOffice(Degree degree) {
-	if (!degree.hasUnit()) {
-	    switch (degree.getDegreeType()) {
-	    case DEGREE:
-		return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-	    case MASTER_DEGREE:
-		return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-	    default:
-		return null;
-	    }
-	} else {
-	    for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
-		    .getAdministrativeOffices()) {
-		Collection<Unit> parentUnits = degree.getUnit().getParentUnits(
-			AccountabilityTypeEnum.ACADEMIC_STRUCTURE);
-		if (parentUnits.contains(administrativeOffice.getUnit())) {
-		    return administrativeOffice;
-		}
-	    }
-	    return null;
-	}
+	return readByAdministrativeOfficeType(degree.getDegreeType().getAdministrativeOfficeType());
     }
 
     public static AdministrativeOffice readByEmployee(Employee employee) {
@@ -185,10 +164,24 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     public Set<Degree> getAdministratedDegrees() {
 	final Set<Degree> result = new TreeSet<Degree>(new BeanComparator("name"));
-	Collection<Party> childParties = (Collection<Party>) getUnit().getChildParties(
-		AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
-	for (Party party : childParties) {
-	    result.add(((Unit) party).getDegree());
+	for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+	    final DegreeType degreeType = degree.getDegreeType();
+	    if (degreeType.getAdministrativeOfficeType().equals(this.getAdministrativeOfficeType())) {
+		result.add(degree);
+	    }
+	}
+
+	return result;
+    }
+
+    public Set<Degree> getAdministratedDegreesForStudentCreationWithoutCandidacy() {
+	final Set<Degree> result = new TreeSet<Degree>(new BeanComparator("name"));
+	for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+	    final DegreeType degreeType = degree.getDegreeType();
+	    if (degreeType.getAdministrativeOfficeType().equals(this.getAdministrativeOfficeType())
+		    && degreeType.canCreateStudent() && !degreeType.canCreateStudentOnlyWithCandidacy()) {
+		result.add(degree);
+	    }
 	}
 
 	return result;

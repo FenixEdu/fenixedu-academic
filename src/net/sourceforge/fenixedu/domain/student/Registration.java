@@ -743,7 +743,7 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
-    
+
     public boolean hasDegreeDiplomaDocumentRequest() {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
 	    if (documentRequest.isDegreeDiploma()) {
@@ -1168,18 +1168,10 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isForOffice(final AdministrativeOffice administrativeOffice) {
-	final Unit administrativeOfficeUnit = administrativeOffice.getUnit();
 
-	Collection<Party> officeDegreeUnits = (Collection<Party>) administrativeOfficeUnit
-		.getChildParties(AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
+	return getDegreeType().getAdministrativeOfficeType().equals(
+		administrativeOffice.getAdministrativeOfficeType());
 
-	StudentCurricularPlan studentCurricularPlan = getActiveOrConcludedOrLastStudentCurricularPlan();
-	if (officeDegreeUnits.contains(studentCurricularPlan.getDegreeCurricularPlan().getDegree()
-		.getUnit())) {
-	    return true;
-	}
-
-	return false;
     }
 
     public boolean getIsForOffice() {
@@ -1438,7 +1430,8 @@ public class Registration extends Registration_Base {
 
     public boolean isCustomEnrolmentModel(final ExecutionYear executionYear) {
 	return getEnrolmentModelForExecutionYear(executionYear) == EnrolmentModel.CUSTOM;
-}
+    }
+
     public boolean isCustomEnrolmentModel() {
 	return isCustomEnrolmentModel(ExecutionYear.readCurrentExecutionYear());
     }

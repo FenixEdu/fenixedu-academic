@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
@@ -228,4 +229,19 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    public void delete(){
+	
+	if(getRegistrationsCount() > 0){
+	    throw new DomainException("error.person.cannot.be.deleted");
+	}
+
+	if(getStudentDataByExecutionYearCount() > 0){
+	    throw new DomainException("error.person.cannot.be.deleted");
+	}
+
+	removePerson();
+	
+	deleteDomainObject();
+    }
+    
 }

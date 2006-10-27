@@ -9,6 +9,7 @@ package net.sourceforge.fenixedu.domain.degree;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -18,21 +19,28 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
  */
 public enum DegreeType {
 
-    DEGREE(GradeScale.TYPE20, null, 5, 0, false, false, false),
+    DEGREE(GradeScale.TYPE20, null, 5, 0, false, false, false, AdministrativeOfficeType.DEGREE),
 
-    MASTER_DEGREE(GradeScale.TYPE5, null, 2, 0, false, false, true),
+    MASTER_DEGREE(GradeScale.TYPE5, null, 2, 0, false, false, true,
+	    AdministrativeOfficeType.MASTER_DEGREE),
 
-    BOLONHA_DEGREE(null, CurricularPeriodType.THREE_YEAR, 3, 180, true, true, false),
+    BOLONHA_DEGREE(null, CurricularPeriodType.THREE_YEAR, 3, 180, true, true, false,
+	    AdministrativeOfficeType.DEGREE),
 
-    BOLONHA_MASTER_DEGREE(null, CurricularPeriodType.TWO_YEAR, 2, 120, true, true, false),
+    BOLONHA_MASTER_DEGREE(null, CurricularPeriodType.TWO_YEAR, 2, 120, true, true, false,
+	    AdministrativeOfficeType.DEGREE),
 
-    BOLONHA_INTEGRATED_MASTER_DEGREE(null, CurricularPeriodType.FIVE_YEAR, 5, 300, true, true, false),
+    BOLONHA_INTEGRATED_MASTER_DEGREE(null, CurricularPeriodType.FIVE_YEAR, 5, 300, true, true, false,
+	    AdministrativeOfficeType.DEGREE),
 
-    BOLONHA_PHD_PROGRAM(null, CurricularPeriodType.YEAR, 1, 30, true, true, true),
+    BOLONHA_PHD_PROGRAM(null, CurricularPeriodType.YEAR, 1, 30, true, true, true,
+	    AdministrativeOfficeType.MASTER_DEGREE),
 
-    BOLONHA_ADVANCED_FORMATION_DIPLOMA(null, CurricularPeriodType.YEAR, 1, 30, true, true, true),
+    BOLONHA_ADVANCED_FORMATION_DIPLOMA(null, CurricularPeriodType.YEAR, 1, 30, true, true, true,
+	    AdministrativeOfficeType.MASTER_DEGREE),
 
-    BOLONHA_SPECIALIZATION_DEGREE(null, CurricularPeriodType.YEAR, 1, 30, true, true, true);
+    BOLONHA_SPECIALIZATION_DEGREE(null, CurricularPeriodType.YEAR, 1, 30, true, true, true,
+	    AdministrativeOfficeType.MASTER_DEGREE);
 
     private GradeScale gradeScale;
 
@@ -48,9 +56,11 @@ public enum DegreeType {
 
     private boolean canCreateStudentOnlyWithCandidacy;
 
+    private AdministrativeOfficeType administrativeOfficeType;
+
     private DegreeType(GradeScale gradeScale, CurricularPeriodType curricularPeriodType, int years,
 	    double defaultEctsCredits, boolean bolonhaType, boolean canCreateStudent,
-	    boolean canCreateStudentOnlyWithCandidacy) {
+	    boolean canCreateStudentOnlyWithCandidacy, AdministrativeOfficeType administrativeOfficeType) {
 	this.gradeScale = gradeScale;
 	this.curricularPeriodType = curricularPeriodType;
 	this.years = years;
@@ -58,6 +68,7 @@ public enum DegreeType {
 	this.bolonhaType = bolonhaType;
 	this.canCreateStudent = canCreateStudent;
 	this.canCreateStudentOnlyWithCandidacy = canCreateStudentOnlyWithCandidacy;
+	this.administrativeOfficeType = administrativeOfficeType;
     }
 
     public String getName() {
@@ -90,6 +101,10 @@ public enum DegreeType {
 
     public boolean canCreateStudentOnlyWithCandidacy() {
 	return canCreateStudentOnlyWithCandidacy;
+    }
+
+    public AdministrativeOfficeType getAdministrativeOfficeType() {
+	return administrativeOfficeType;
     }
 
     public String getLocalizedName() {
