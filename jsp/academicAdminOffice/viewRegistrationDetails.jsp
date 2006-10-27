@@ -38,6 +38,15 @@
 	</fr:layout>
 </fr:view>
 </logic:present>
+<logic:notPresent name="registration" property="ingressionEnum">
+<h2><strong><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<fr:view name="registration" schema="student.registrationsWithStartData" >
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4"/>
+      	<fr:property name="columnClasses" value="listClasses,,"/>
+	</fr:layout>
+</fr:view>
+</logic:notPresent>
 
 <html:link page="/viewCurriculum.do?method=getCurriculum" paramId="studentNumber" paramName="registration" paramProperty="number">
 	<bean:message key="link.student.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
