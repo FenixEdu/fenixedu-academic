@@ -290,8 +290,28 @@
           <forward name="prepareParking" path="prepare-parking"/>
           <forward name="editParkingRequest" path="edit-parking-request"/>
         </action>               
+    <!-- ===== VIGILANCY ======== -->
+    <action path="/vigilancy/vigilantManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantManagement"
+			parameter="method"
+			scope="request">
+			<forward name="displayConvokeMap" path="display-convoke-map"/>			
+			<forward name="prepareEditIncompatiblePerson" path="prepare-incompatible-person"/>
+		</action>
+		<action path="/vigilancy/unavailablePeriodManagement" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.UnavailablePeriodManagement"
+			parameter="method"
+			scope="request"
+			>
+			<forward name="editUnavailablePeriod" path="edit-unavailable-periods"/>
+			<forward name="deleteUnavailablePeriod" path="display-convoke-map"/>
+			<forward name="addUnavailablePeriod" path="create-unavailablePeriod"/>
+			<forward name="addedUnavailablePeriod" path="display-convoke-map"/>
+		</action>
     </action-mappings>
     
+    
+
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     
@@ -321,7 +341,8 @@
 					  		 /WEB-INF/tiles/person/tiles-person-definitions.xml,
 					  		 /WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,
 					  		 /WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml,
-					  		 /WEB-INF/tiles/layouts/tiles-layout-definitions.xml"
+					  		 /WEB-INF/tiles/layouts/tiles-layout-definitions.xml
+					  		 "
 		/>		            	     
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />

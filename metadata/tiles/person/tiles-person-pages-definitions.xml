@@ -67,4 +67,22 @@
 	<definition name="edit-parking-request" extends="definition.person.masterPage">
 		 <put name="body" value="/person/parking/editParkingRequest.jsp"/>
 	</definition>
+	
+	<!--  ===== VIGILANCY ====== -->
+	
+	<definition name="display-convoke-map" extends="definition.person.masterPage" >
+		<put name="body" value="/departmentMember/vigilancy/manageVigilant.jsp" />
+    </definition>	    
+
+	<definition name="edit-unavailable-periods" extends="definition.person.masterPage" >
+		<put name="body" value="/departmentMember/vigilancy/editUnavailablePeriod.jsp" />
+    </definition>    
+
+	<definition name="prepare-incompatible-person" extends="definition.person.masterPage" >
+		<put name="body" value="/departmentMember/vigilancy/editIncompatiblePerson.jsp" />
+    </definition>  
+
+   	<definition name="create-unavailablePeriod" extends="definition.person.masterPage" >
+		<put name="body" value="/departmentMember/vigilancy/createUnavailable.jsp" />
+    </definition>	
 </tiles-definitions>
