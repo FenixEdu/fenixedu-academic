@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -306,7 +307,14 @@
 					<td class="<%= rowColor %>"><bean:message bundle="ENUMERATION_RESOURCES" name="curricularCourseScopeElem" property="infoCurricularCourse.type.name"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.credits"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.ectsCredits"/></td>
-					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.weigth"/></td>
+					<!-- this is only for 2006/2007 execution year -->
+					<bean:define id="execDegree" name="exeDegree" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree"/>
+					<% if(execDegree.getInfoExecutionYear().getIdInternal() < 45) { %>
+						<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.weigth"/></td>
+					<% } else { %>
+						<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.ectsCredits"/></td>
+					<% } %>						
+					<!-- end -->
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.theoreticalHours"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.praticalHours"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.theoPratHours"/></td>
