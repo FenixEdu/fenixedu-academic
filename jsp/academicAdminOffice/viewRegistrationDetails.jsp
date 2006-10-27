@@ -28,6 +28,8 @@
 	</tr>
 </table>
 <br/>
+
+<logic:present name="registration" property="ingressionEnum">
 <h2><strong><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
@@ -35,6 +37,7 @@
       	<fr:property name="columnClasses" value="listClasses,,"/>
 	</fr:layout>
 </fr:view>
+</logic:present>
 
 <html:link page="/viewCurriculum.do?method=getCurriculum" paramId="studentNumber" paramName="registration" paramProperty="number">
 	<bean:message key="link.student.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
@@ -61,13 +64,16 @@
 	</fr:layout>
 </fr:view>
 <br/>
-<h2><strong><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
-<fr:view name="registration" property="studentCandidacy.precedentDegreeInformation" schema="student.precedentDegreeInformation" >
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4"/>
-      	<fr:property name="columnClasses" value="listClasses,,"/>
-	</fr:layout>
-</fr:view>
+
+<logic:present name="registration" property="studentCandidacy">
+	<h2><strong><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+	<fr:view name="registration" property="studentCandidacy.precedentDegreeInformation" schema="student.precedentDegreeInformation" >
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4"/>
+	      	<fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
+	</fr:view>
+</logic:present>
 
 <%-- 
 <br/>
