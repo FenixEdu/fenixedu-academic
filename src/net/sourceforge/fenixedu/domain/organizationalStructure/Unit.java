@@ -836,6 +836,10 @@ public class Unit extends Unit_Base {
 	}
 	return builder.toString();
     }
+    
+    public String getPresentationNameWithParents() {
+	return getParentUnitsPresentationName() + " - " + getName();
+    }
 
     public String getParentUnitsPresentationNameWithBreakLine() {
 	return getParentUnitsPresentationName("<br/>");

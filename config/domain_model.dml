@@ -2464,6 +2464,7 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 	YearMonthDay createdOn;
 	Group personOccupationsAccessGroup;
 	Group extensionOccupationsAccessGroup;	
+	Group spaceManagementAccessGroup;	
 }
 	class net.sourceforge.fenixedu.domain.space.Campus extends net.sourceforge.fenixedu.domain.space.Space {
 	}

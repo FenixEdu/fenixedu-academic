@@ -39,6 +39,7 @@
 			<th>
 			</th>
 		</tr>
+		<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 		<logic:iterate id="space" name="spaces">
 			<logic:notPresent name="space" property="suroundingSpace">
 				<tr>
@@ -64,9 +65,16 @@
 						<bean:write name="space" property="containedSpacesCount"/>
 					</td>
 					<td>
+						<bean:define id="thisSpace" name="space" type="net.sourceforge.fenixedu.domain.space.Space"/>
+						<%
+							if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+						%>
 						<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="space" paramProperty="idInternal">
 							<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 						</html:link>
+						<%
+							}
+						%>
 					</td>
 				</tr>
 			</logic:notPresent>

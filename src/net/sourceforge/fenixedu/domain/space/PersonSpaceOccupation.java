@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -80,6 +81,11 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     public boolean contains(YearMonthDay currentDate) {
 	return (!this.getBegin().isAfter(currentDate) && (this.getEnd() == null || !this.getEnd()
 		.isBefore(currentDate)));
+    }
+
+    public Unit getPersonWorkingPlace() {
+	return (getPerson().getEmployee() != null) ? getPerson().getEmployee().getLastWorkingPlace(
+		getBegin(), getEnd()) : null;
     }
 
     @Override

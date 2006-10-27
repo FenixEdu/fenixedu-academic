@@ -1,0 +1,1 @@
+alter table SPACE add column SPACE_MANAGEMENT_ACCESS_GROUP blob;

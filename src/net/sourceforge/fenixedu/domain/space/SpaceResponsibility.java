@@ -83,8 +83,8 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     }
 
     private boolean checkIntersections(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null && !begin.isAfter(this.getBegin())) || (end != null && (!this.getBegin()
-		.isAfter(end) && (this.getEnd() == null || !this.getEnd().isBefore(begin)))));
+	return ((end == null || !this.getBegin().isAfter(end)) && (this.getEnd() == null || !this
+		.getEnd().isBefore(begin)));
     }
 
     private void checkParameters(Space space, Unit unit, YearMonthDay begin, YearMonthDay end) {

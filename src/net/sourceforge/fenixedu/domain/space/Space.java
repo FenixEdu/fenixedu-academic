@@ -7,10 +7,14 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.YearMonthDay;
 
@@ -211,11 +215,89 @@ public abstract class Space extends Space_Base {
 	return campus;
     }
 
+    public static boolean personBelongsToWorkmanshipsNucleus(Person person) {
+	if (person.getEmployee() != null) {
+	    String workmanshipsNucleusCostCenterCode = PropertiesManager
+		    .getProperty("workmanshipsNucleusCostCenterCode");
+	    Unit workmanshipsNucleus = Unit.readByCostCenterCode(Integer
+		    .valueOf(workmanshipsNucleusCostCenterCode));
+	    Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
+	    return (currentWorkingPlace != null && workmanshipsNucleus != null && currentWorkingPlace
+		    .equals(workmanshipsNucleus));
+	}
+	return false;
+    }
+
+    public boolean personHasSpecialPermissionToManageSpace(Person person) {
+	Group spaceManagementAccessGroup = getSpaceManagementAccessGroup();
+	if (spaceManagementAccessGroup != null && spaceManagementAccessGroup.isMember(person)) {
+	    return true;
+	}
+	return false;
+    }
+    
+    public boolean personHasPermissionToManagePersonOccupations(Person person) {
+	Group spaceManagementAccessGroup = getPersonOccupationsAccessGroup();
+	if (spaceManagementAccessGroup != null && spaceManagementAccessGroup.isMember(person)) {
+	    return true;
+	}
+	return false;
+    }
+    
+    public boolean personHasPermissionToManageExtensionOccupations(Person person) {
+	Group spaceManagementAccessGroup = getExtensionOccupationsAccessGroup();
+	if (spaceManagementAccessGroup != null && spaceManagementAccessGroup.isMember(person)) {
+	    return true;
+	}
+	return false;
+    }
+
+    @Override
+    public Group getPersonOccupationsAccessGroup() {
+	final Group thisGroup = super.getPersonOccupationsAccessGroup();
+	if (thisGroup != null) {
+	    return thisGroup;
+	}
+	final Space surroundingSpace = getSuroundingSpace();
+	if (surroundingSpace != null) {
+	    return surroundingSpace.getPersonOccupationsAccessGroup();
+	}
+	return null;
+    }
+
+    @Override
+    public Group getExtensionOccupationsAccessGroup() {
+	final Group thisGroup = super.getExtensionOccupationsAccessGroup();
+	if (thisGroup != null) {
+	    return thisGroup;
+	}
+	final Space surroundingSpace = getSuroundingSpace();
+	if (surroundingSpace != null) {
+	    return surroundingSpace.getExtensionOccupationsAccessGroup();
+	}
+	return null;
+    }
+
+    @Override
+    public Group getSpaceManagementAccessGroup() {
+	final Group thisGroup = super.getSpaceManagementAccessGroup();
+	if (thisGroup != null) {
+	    return thisGroup;
+	}
+	final Space surroundingSpace = getSuroundingSpace();
+	if (surroundingSpace != null) {
+	    return surroundingSpace.getSpaceManagementAccessGroup();
+	}
+	return null;
+    }
+   
     public static enum SpaceAccessGroupType {
 
 	PERSON_OCCUPATION_ACCESS_GROUP("personOccupationsAccessGroup"),
 
-	EXTENSION_OCCUPATION_ACCESS_GROUP("extensionOccupationsAccessGroup");
+	EXTENSION_OCCUPATION_ACCESS_GROUP("extensionOccupationsAccessGroup"),
+
+	SPACE_MANAGEMENT_ACCESS_GROUP("spaceManagementAccessGroup");
 
 	private String spaceAccessGroupSlotName;
 

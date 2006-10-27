@@ -105,12 +105,25 @@
 </schema>
 <schema name="PersonSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">
 	<slot name="person.name"/>
+	<slot name="personWorkingPlace" layout="null-as-label" key="label.person.working.place">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="personWorkingPlace.presentationName"/>
+	</slot>
 	<slot name="begin"/>
 	<slot name="end"/>
 </schema>
 <schema name="PersonSpaceOccupationsWithUsername" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">
 	<slot name="person.name"/>	
-	<slot name="person.username"/>
+	<slot name="person.username"/>	
+	<slot name="personWorkingPlace" layout="null-as-label" key="label.person.working.place">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="personWorkingPlace.presentationName"/>
+	</slot>	
+</schema>
+<schema name="personWorkingPlace.presentationName" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="SPACE_RESOURCES">	
+	<slot name="presentationNameWithParents"/>
 </schema>
 <schema name="EditPersonSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">	
 	<slot name="begin" key="label.begin.date">
@@ -148,12 +161,14 @@
 <schema name="ViewSpaceResponsibleUnitsWithInterval" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES">
 	<slot name="unit.nameWithAcronym" key="label.unit.name"/>	
 	<slot name="unit.costCenterCode"/>	
+	<slot name="unit.parentUnitsPresentationName" key="label.responsibilityUnit.parent"/>
 	<slot name="begin" key="label.begin.date" />
 	<slot name="end" key="label.end.date" />
 </schema>
 <schema name="ViewSpaceResponsibleUnits" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES">
-	<slot name="unit.nameWithAcronym" key="label.unit.name"/>	
+	<slot name="unit.nameWithAcronym" key="label.unit.name"/>				
 	<slot name="unit.costCenterCode"/>	
+	<slot name="unit.parentUnitsPresentationName" key="label.responsibilityUnit.parent"/>
 </schema>
 <schema name="CreateSpaceResponsibilityInterval" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES"
 	constructor="space, unit, begin, end">	

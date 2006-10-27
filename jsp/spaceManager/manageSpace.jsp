@@ -10,12 +10,16 @@
 	<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 	<h2><bean:message bundle="SPACE_RESOURCES" key="title.manage.space"/></h2>
 	
+	<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 	<bean:define id="selectedSpaceInformationIDString" type="java.lang.String"><bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>	
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
+	
 	<div class="mbottom2">
 		<jsp:include page="spaceCrumbs.jsp"/>
 	</div>
-	<bean:define id="space" name="selectedSpaceInformation" property="space"/>
+	
+	<bean:define id="space" name="selectedSpaceInformation" property="space"/>	
+	<bean:define id="thisSpace" name="selectedSpaceInformation" property="space" type="net.sourceforge.fenixedu.domain.space.Space"/>
 				
 	<logic:messagesPresent message="true">
 		<p>
@@ -90,6 +94,9 @@
 		</tr>
 	</table>
 	
+	<%
+		if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+	%>
 	<p class="mtop0 mbottom2">
 		<html:link page="/manageSpaces.do?method=prepareEditSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.edit.space.information"/>
@@ -104,8 +111,14 @@
 			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 		</html:link>		
 	</p>
+	<%
+		}
+	%>
 
 	<%-- BluePrints --%>
+	<%
+		if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+	%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>			
 	<logic:notEmpty name="selectedSpaceInformation" property="space.mostRecentBlueprint">		
 		<bean:define id="blueprint" name="selectedSpaceInformation" property="space.mostRecentBlueprint"/>		
@@ -119,6 +132,9 @@
 			<bean:message bundle="SPACE_RESOURCES" key="link.manage.blueprints"/>
 		</html:link>
 	</p>
+	<%
+		}
+	%>
 	
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 		<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
@@ -147,58 +163,74 @@
 					<th>
 					</th>
 				</tr>
-				<logic:iterate id="space" name="spaces">
+				<logic:iterate id="subSpace" name="spaces">
 					<tr>
 						<td>
-							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
+							<logic:equal name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 								<bean:message bundle="SPACE_RESOURCES" key="select.item.campus"/>
 							</logic:equal>
-							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
+							<logic:equal name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
 								<bean:message bundle="SPACE_RESOURCES" key="select.item.building"/>
 							</logic:equal>
-							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
+							<logic:equal name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
 								<bean:message bundle="SPACE_RESOURCES" key="select.item.floor"/>
 							</logic:equal>
-							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+							<logic:equal name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 								<bean:message bundle="SPACE_RESOURCES" key="select.item.room"/>
 							</logic:equal>
 						</td>
 						<td>
-							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
-								<bean:write name="space" property="spaceInformation.presentationName"/>
+							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="subSpace" paramProperty="spaceInformation.idInternal">
+								<bean:write name="subSpace" property="spaceInformation.presentationName"/>
 							</html:link>
 						</td>
 						<td class="acenter">							
-							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-								<bean:write name="space" property="spaceInformation.blueprintNumber"/>							
+							<logic:equal name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+								<bean:write name="subSpace" property="spaceInformation.blueprintNumber"/>							
 							</logic:equal>
-							<logic:notEqual name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+							<logic:notEqual name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 							
 							</logic:notEqual>
 						</td>
 						<td class="acenter">
-							<bean:write name="space" property="containedSpacesCount"/>
+							<bean:write name="subSpace" property="containedSpacesCount"/>
 						</td>
 						<td>
-							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
+							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="subSpace" paramProperty="spaceInformation.idInternal">
 								<bean:message bundle="SPACE_RESOURCES" key="label.view"/>
-							</html:link>,&nbsp; 
-							<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="space" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
+							</html:link>
+							<%
+								if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+							%>	
+							,&nbsp; 
+							<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="subSpace" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
 								<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 							</html:link>
+							<% 
+								}
+							%>
 						</td>
 					</tr>
 				</logic:iterate>
 			</table>
 		</logic:greaterEqual>
 	</logic:present>
+	<%
+		if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+	%>	
 	<p class="mtop05">
 		<html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/>
 		</html:link>
 	</p>
+	<%
+		}
+	%>
 
-	<%-- Responsability --%>	
+	<%-- Responsability --%>
+	<%
+		if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+	%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></h3>
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
 		<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
@@ -212,8 +244,14 @@
 			<bean:message bundle="SPACE_RESOURCES" key="link.manage.space.responsibility"/>
 		</html:link>
 	</p>
+	<%
+		}
+	%>
 	
 	<%-- Person Occupations --%>
+	<%
+		if(thisSpace.personHasPermissionToManagePersonOccupations(person)){
+	%>
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.person.occupations"/></h3>
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 		<fr:view schema="PersonSpaceOccupationsWithUsername" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
@@ -225,8 +263,14 @@
 	<p class="mtop05"><html:link page="/managePersonSpaceOccupations.do?method=showSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.person.occupations"/>
 	</html:link></p>
+	<% 
+		}
+	%>
 
 	<%-- Material --%>
+	<%
+		if(thisSpace.personHasPermissionToManagePersonOccupations(person) || thisSpace.personHasPermissionToManageExtensionOccupations(person)){
+	%>
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></h3>
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
 		<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial">
@@ -238,11 +282,20 @@
 	<p class="mtop05"><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.material.occupations"/>
 	</html:link></p>
-	
+	<%
+		}
+	%>	
+		
+	<%
+		if(net.sourceforge.fenixedu.domain.space.Space.personBelongsToWorkmanshipsNucleus(person)){
+	%>
 	<%-- Access Groups --%>
 	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.access.groups"/></h3>
 	<p class="mtop05"><html:link page="/manageSpaces.do?method=manageAccessGroups&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.access.groups"/>
-	</html:link></p>
+	</html:link></p>	
+	<% 
+		}
+	%>
 	
 </logic:present>	

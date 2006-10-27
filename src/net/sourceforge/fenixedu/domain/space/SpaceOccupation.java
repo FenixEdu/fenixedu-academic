@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -21,15 +22,18 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
 
     public abstract Group getAccessGroup();
 
-    public void checkPermissionsToMakeOperations() {
-	Space parentSpace = this.getSpace();
-	while (parentSpace != null) {
-	    if (getAccessGroup() != null
-		    && getAccessGroup().isMember(AccessControl.getUserView().getPerson())) {
-		return;
-	    }
-	    parentSpace = parentSpace.getSuroundingSpace();
+    public void checkPermissionsToManageSpaceOccupations() {
+	Person loggedPerson = AccessControl.getUserView().getPerson();
+	if (Space.personBelongsToWorkmanshipsNucleus(loggedPerson)
+		|| getSpace().personHasSpecialPermissionToManageSpace(loggedPerson)) {
+	    return;
 	}
+
+	final Group group = getAccessGroup();
+	if (group != null && group.isMember(loggedPerson)) {
+	    return;
+	}
+	
 	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
     }
 

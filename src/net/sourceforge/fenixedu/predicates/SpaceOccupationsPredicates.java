@@ -7,7 +7,7 @@ public class SpaceOccupationsPredicates {
 
     public static final AccessControlPredicate<SpaceOccupation> permissionsToMakeOperations = new AccessControlPredicate<SpaceOccupation>() {
 	public boolean evaluate(SpaceOccupation spaceOccupation) {
-	    spaceOccupation.checkPermissionsToMakeOperations();
+	    spaceOccupation.checkPermissionsToManageSpaceOccupations();
 	    return true;
 	}
     };

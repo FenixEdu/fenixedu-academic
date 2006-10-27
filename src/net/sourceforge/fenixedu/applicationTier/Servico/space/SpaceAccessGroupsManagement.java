@@ -7,13 +7,21 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 
 public class SpaceAccessGroupsManagement extends Service {
 
-    public void run(Space space, SpaceAccessGroupType accessGroupType, Person person, boolean toAdd) throws FenixServiceException {
+    public void run(Space space, SpaceAccessGroupType accessGroupType, Person person, boolean toAdd)
+	    throws FenixServiceException {
+
 	if (person != null) {
+	    if (Space.personBelongsToWorkmanshipsNucleus(person)
+		    || space.personHasSpecialPermissionToManageSpace(person)) {
+		throw new FenixServiceException(
+			"error.space.access.groups.management.person.already.have.permission");
+	    }
 	    if (accessGroupType.equals(SpaceAccessGroupType.PERSON_OCCUPATION_ACCESS_GROUP)) {
 		if (space.getPersonOccupationsAccessGroup() == null) {
 		    space.setPersonOccupationsAccessGroup(new FixedSetGroup());
@@ -49,6 +57,7 @@ public class SpaceAccessGroupsManagement extends Service {
 	Set<Person> newList = new TreeSet<Person>(Person.COMPARATOR_BY_NAME);
 	newList.addAll(elements);
 	newList.add(person);
+	addSpaceManagerRole(person);
 	return newList;
     }
 
@@ -56,6 +65,25 @@ public class SpaceAccessGroupsManagement extends Service {
 	Set<Person> newList = new TreeSet<Person>(Person.COMPARATOR_BY_NAME);
 	newList.addAll(elements);
 	newList.remove(person);
+	removeSpaceManagerRoleIfPossible(person);
 	return newList;
+    }
+
+    private void addSpaceManagerRole(Person person) {
+	if (!person.hasRole(RoleType.SPACE_MANAGER)) {
+	    person.addPersonRoleByRoleType(RoleType.SPACE_MANAGER);
+	}
+    }
+
+    private void removeSpaceManagerRoleIfPossible(Person person) {
+	Set<Space> spacesSet = rootDomainObject.getSpacesSet();
+	for (Space space : spacesSet) {
+	    if (space.personHasPermissionToManageExtensionOccupations(person)
+		    || space.personHasPermissionToManagePersonOccupations(person)
+		    || space.personHasSpecialPermissionToManageSpace(person)) {
+		return;
+	    }
+	}
+	person.removeRoleByType(RoleType.SPACE_MANAGER);
     }
 }
