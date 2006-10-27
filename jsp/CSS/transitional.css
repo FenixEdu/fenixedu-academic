@@ -488,8 +488,11 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width8em { width: 8em; } /*used in forums*/
 .width10em { width: 10em; }
 .width12em { width: 12em; }
+.width13em { width: 13em; }
 .width14em { width: 14em; }
 .width15em { width: 15em; }
+.width18em { width: 18em; }
+.width20em { width: 20em; }
 .width30em { width: 30em; }
 .width50em { width: 50em; }
 .width100px { width: 100px; }
