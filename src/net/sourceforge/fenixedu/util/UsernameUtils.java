@@ -81,12 +81,15 @@ public class UsernameUtils extends FenixUtil {
 		    case FOREIGN_STUDENT:
 			istUsername = ist + sumNumber(registration.getNumber(), 50000 - 100000);
 			// we subtract 100000 from the external/foreign student
-                        // number to get his original legacy system number
+			// number to get his original legacy system number
 			break;
 		    default:
 			istUsername = ist + sumNumber(registration.getNumber(), 100000);
 			break;
 		    }
+		} else if (person.hasStudent() && person.getStudent().getNumber() < 10000) {
+
+		    istUsername = ist + sumNumber(person.getStudent().getNumber(), 60000);
 		}
 	    }
 
@@ -181,6 +184,10 @@ public class UsernameUtils extends FenixUtil {
 		} else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
 		    return "A" + registration.getNumber();
 		}
+	    }
+
+	    if (person.hasStudent()) {// phd...
+		return "T" + person.getStudent().getNumber();
 	    }
 
 	    throw new DomainException("error.person.addingInvalidRole", RoleType.STUDENT.getName());
