@@ -313,7 +313,10 @@ public class ConfigurationReader {
         }
 
         Signature programmaticSignature = new Signature(name);
-
+        if (parameters.trim().length() == 0) {
+            return programmaticSignature;
+        }
+        
         String[] allParameters = parameters.split(",");
         for (int i = 0; i < allParameters.length; i++) {
             String singleParameter = allParameters[i].trim();

@@ -50,7 +50,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -73,7 +73,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	return instance;
     }
 
-    public ISiteComponent getComponent(ISiteComponent component, Site site,
+    public ISiteComponent getComponent(ISiteComponent component, ExecutionCourseSite site,
 	    ISiteComponent commonComponent, Integer sectionIndex, Integer curricularCourseId)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 
@@ -104,14 +104,14 @@ public class ExecutionCourseSiteComponentBuilder {
 	return null;
     }
 
-    private ISiteComponent getInfoSiteEvaluations(InfoSiteEvaluations component, Site site) {
+    private ISiteComponent getInfoSiteEvaluations(InfoSiteEvaluations component, ExecutionCourseSite site) {
 	ExecutionCourse executionCourse = site.getExecutionCourse();
 	List<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
 	component.setEvaluations(evaluations);
 	return component;
     }
 
-    private ISiteComponent getInfoSiteEvaluationMarks(InfoSiteEvaluationMarks component, Site site) {
+    private ISiteComponent getInfoSiteEvaluationMarks(InfoSiteEvaluationMarks component, ExecutionCourseSite site) {
 	final Integer evaluationID = component.getEvaluationID();
 
 	final ExecutionCourse executionCourse = site.getExecutionCourse();
@@ -125,7 +125,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	return component;
     }
 
-    private ISiteComponent getInfoSiteCommon(InfoSiteCommon component, Site site)
+    private ISiteComponent getInfoSiteCommon(InfoSiteCommon component, ExecutionCourseSite site)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 
 	List allSections = null;
@@ -164,7 +164,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	return component;
     }
 
-    private ISiteComponent getInfoSiteSection(InfoSiteSection component, Site site,
+    private ISiteComponent getInfoSiteSection(InfoSiteSection component, ExecutionCourseSite site,
 	    InfoSiteCommon commonComponent, Integer sectionIndex) throws FenixServiceException,
 	    ExcepcaoPersistencia {
 
@@ -186,7 +186,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	return component;
     }
 
-    private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Site site)
+    private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, ExecutionCourseSite site)
 	    throws FenixServiceException {
 	List shiftsWithAssociatedClassesAndLessons = new ArrayList();
 
@@ -222,7 +222,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	return component;
     }
 
-    private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, Site site)
+    private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, ExecutionCourseSite site)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 	List infoLessonList = null;
 
@@ -249,7 +249,7 @@ public class ExecutionCourseSiteComponentBuilder {
     }
 
     private ISiteComponent getInfoSiteAssociatedCurricularCourses(
-	    InfoSiteAssociatedCurricularCourses component, Site site) {
+	    InfoSiteAssociatedCurricularCourses component, ExecutionCourseSite site) {
 	List infoCurricularCourseList = new ArrayList();
 
 	ExecutionCourse executionCourse = site.getExecutionCourse();
@@ -260,7 +260,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	return component;
     }
 
-    private ISiteComponent getInfoSiteBibliography(InfoSiteBibliography component, Site site)
+    private ISiteComponent getInfoSiteBibliography(InfoSiteBibliography component, ExecutionCourseSite site)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 	ExecutionCourse executionCourse = site.getExecutionCourse();
 
@@ -281,7 +281,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	return component;
     }
 
-    private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, Site site)
+    private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, ExecutionCourseSite site)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 
 	final EvaluationMethod evaluationMethod = site.getExecutionCourse().getEvaluationMethod();
@@ -292,7 +292,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	return component;
     }
 
-    private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component, Site site)
+    private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component, ExecutionCourseSite site)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 
 	ExecutionCourse executionCourse = site.getExecutionCourse();
@@ -474,7 +474,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	    infoSection.setName(section.getName().getContent(Language.pt));
 	    infoSection.setSectionOrder(section.getSectionOrder());
 	    infoSection.setSuperiorInfoSection(copyISection2InfoSection(section.getSuperiorSection()));
-	    infoSection.setInfoSite(copyISite2InfoSite(section.getSite()));
+	    infoSection.setInfoSite(copyISite2InfoSite((ExecutionCourseSite) section.getSite()));
 	}
 	return infoSection;
     }
@@ -483,7 +483,7 @@ public class ExecutionCourseSiteComponentBuilder {
          * @param site
          * @return
          */
-    private InfoSite copyISite2InfoSite(Site site) {
+    private InfoSite copyISite2InfoSite(ExecutionCourseSite site) {
 	InfoSite infoSite = InfoSite.newInfoFromDomain(site);
 	if (site != null) {
 	    infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(site

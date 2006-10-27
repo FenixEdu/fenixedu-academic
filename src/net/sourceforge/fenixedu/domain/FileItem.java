@@ -1,56 +1,86 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class FileItem extends FileItem_Base {
 
-    public static Comparator<FileItem> COMPARATOR_BY_DISPLAY_NAME = new Comparator<FileItem>() {
-	public int compare(FileItem leftFileItem, FileItem rightFileItem) {
-	    int comparationResult = leftFileItem.getDisplayName().compareTo(
-		    rightFileItem.getDisplayName());
-	    return (comparationResult == 0) ? leftFileItem.getIdInternal().compareTo(
-		    rightFileItem.getIdInternal()) : comparationResult;
-	}
+    public static Comparator<FileItem> COMPARATOR_BY_ORDER = new Comparator<FileItem>() {
+        public int compare(FileItem one, FileItem other) {
+            int comparison = one.getOrderInItem().compareTo(other.getOrderInItem());
+
+            // keep old behaviour
+            if (comparison != 0) {
+                return comparison;
+            } else {
+                return String.valueOf(one.getDisplayName()).compareTo(
+                        String.valueOf(other.getDisplayName()));
+            }
+        }
     };
 
-    static {
-	ItemFileItem.addListener(new ItemFileItemListener());
-    }
-
     public FileItem() {
-	super();
+        super();
     }
 
     public FileItem(String filename, String displayName, String mimeType, String checksum,
-	    String checksumAlgorithm, Integer size, String externalStorageIdentification,
-	    Group permittedGroup, FileItemPermittedGroupType fileItemPermittedGroupType) {
-	this();
-	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
-		externalStorageIdentification, permittedGroup);
-	setFileItemPermittedGroupType(fileItemPermittedGroupType);
+            String checksumAlgorithm, Integer size, String externalStorageIdentification,
+            Group permittedGroup) {
+        this();
+        init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
+                externalStorageIdentification, permittedGroup);
+        
+        setOrderInItem(getNextOrderInItem());
     }
 
+    private Integer getNextOrderInItem() {
+        int order = 0;
+        
+        for (FileItem fileItem : getItem().getFileItems()) {
+            if (fileItem == this) {
+                continue;
+            }
+            
+            order = Math.max(order, fileItem.getOrderInItem());
+        }
+        
+        return order++;
+    }
+
+    @Deprecated
+    public Boolean getVisible() {
+        return super.getVisible();
+    }
+    
+    public Boolean isVisible() {
+        return super.getVisible();
+    }
+    
     public void delete() {
+        if (this.hasItem()) {
+            throw new DomainException("fileItem.cannotBeDeleted");
+        }
 
-	if (this.getItems().size() != 0) {
-	    throw new DomainException("fileItem.cannotBeDeleted");
-	}
-	super.deleteDomainObject();
-    }
-
-    private static class ItemFileItemListener extends dml.runtime.RelationAdapter<FileItem, Item> {
-	@Override
-	public void afterRemove(FileItem fileItem, Item item) {
-	    fileItem.delete();
-	}
-
+        super.deleteDomainObject();
     }
 
     public static FileItem readByOID(Integer idInternal) {
-	return (FileItem) RootDomainObject.getInstance().readFileByOID(idInternal);
+        return (FileItem) RootDomainObject.getInstance().readFileByOID(idInternal);
     }
 
+    public static List<FileItem> readAllFileItems() {
+        List<FileItem> fileItems = new ArrayList<FileItem>();
+        
+        for (File file : RootDomainObject.getInstance().getFiles()) {
+            if (file instanceof FileItem) {
+                fileItems.add((FileItem) file);
+            }
+        }
+        
+        return fileItems;
+    }
 }

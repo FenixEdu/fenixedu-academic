@@ -4,6 +4,8 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 import org.joda.time.DateTime;
 
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+
 public abstract class File extends File_Base {
 
     public File() {
@@ -33,6 +35,16 @@ public abstract class File extends File_Base {
         } else {
             return this.getPermittedGroup().isMember(person);
         }
+    }
+
+    /**
+     * @return returns a public url that can be used by a client to download the
+     *         associated file from the external file storage
+     */
+    public String getDownloadUrl() {
+        // TODO: remove the dependancy between the domain and the dspace infrastructure
+        return FileManagerFactory.getFileManager().getDirectDownloadUrlFormat() + "/"
+                + getExternalStorageIdentification() + "/" + getFilename();
     }
 
     // -------------------------------------------------------------

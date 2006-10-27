@@ -758,14 +758,6 @@
    			<form-property name="fileName" type="java.lang.String"/>
 		</form-bean>		
 		
-		<form-bean name="editItemFilePermissionsForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-				dynamic="true">
-	   		<form-property name="fileItemId" type="java.lang.Integer"/>
-	   		<form-property name="itemCode" type="java.lang.Integer" />
-   			<form-property name="permittedGroupType" type="java.lang.String"/>
-		</form-bean>		
-
 		<form-bean name="showProfessorshipsForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
@@ -912,7 +904,7 @@
         </action>
         <action path="/manageExecutionCourse"
         		parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">				
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">	
 			<forward name="instructions" path="manage-execution-course-instructions"/>
 			<forward name="program" path="manage-execution-course-program"/>
 			<forward name="objectives" path="manage-execution-course-objectives"/>
@@ -932,6 +924,12 @@
 			<forward name="editItem" path="manage-execution-course-editItem"/>
 			<forward name="uploadFile" path="manage-execution-course-uploadFile"/>
 			<forward name="editFile" path="manage-execution-course-editFile"/>			
+            <forward name="organizeItems" path="manage-execution-course-organizeItems"/>
+            <forward name="organizeFiles" path="manage-execution-course-organizeFiles"/>
+            <forward name="confirmSectionDelete" path="manage-execution-course-confirmSectionDelete"/>
+            <forward name="editSectionPermissions" path="manage-execution-course-editSectionPermissions"/>
+            <forward name="editItemPermissions" path="manage-execution-course-editItemPermissions"/>
+            <forward name="editFile" path="manage-execution-course-editFile"/>
         </action>
         <action path="/createProgram"
         		parameter="method"
@@ -2082,8 +2080,6 @@
 		<action path="/editItemFilePermissions"
 			input="/editItemFilePermissions.do?method=prepareEditItemFilePermissions" parameter="method" name="editItemFilePermissionsForm"
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA" scope="request">
-			<forward name="section" path="manage-execution-course-section"/>
-			<forward name="editFile" path="manage-execution-course-editFile"/>
         </action>
         
         <!-- Execution Course Forum Management -->
@@ -2159,6 +2155,7 @@
     <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
     <message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/> 
     <message-resources parameter="resources.TestsResources" key="TESTS_RESOURCES" null="false"/>
+    <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class GroupSiteComponentService extends Service {
@@ -15,9 +15,9 @@ public class GroupSiteComponentService extends Service {
     public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent,
             Integer infoSiteCode, Integer groupPropertiesCode, Integer code, Integer shiftCode,
             Integer value) throws FenixServiceException, ExcepcaoPersistencia {
-        Site site = null;
+        ExecutionCourseSite site = null;
         if (infoSiteCode != null) {
-            site = rootDomainObject.readSiteByOID(infoSiteCode);
+            site = rootDomainObject.readExecutionCourseSiteByOID(infoSiteCode);
             if (site == null) {
                 throw new NonExistingServiceException();
             }

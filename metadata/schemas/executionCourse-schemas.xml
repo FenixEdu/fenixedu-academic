@@ -179,59 +179,92 @@
 	</slot>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.SectionCreator"
-		type="net.sourceforge.fenixedu.domain.Section$SectionFactoryCreator"
-		bundle="DEFAULT"
-		>
-	<slot name="site" hidden="true"/>
-	<slot name="superiorSection" hidden="true"/>
+		type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SectionCreator"
+		bundle="DEFAULT">
 	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
-	<slot name="sectionOrder" key="label.sectionOrder.before" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionOrderProvider" />
-		<property name="format" value="${name}" />
-		<property name="defaultText" value="Fim"/>
-	</slot>
-	<setter signature="execute(site, superiorSection)"/>
+    <slot name="nextSection" key="label.sectionOrder.before" layout="menu-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionOrderProvider" />
+        <property name="format" value="${name}" />
+        <property name="defaultText" value="label.section.last"/>
+        <property name="bundle" value="SITE_RESOURCES"/>
+        <property name="key" value="true"/>
+    </slot>
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
+    <setter signature="createSection()"/>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.SectionEditor"
 		type="net.sourceforge.fenixedu.domain.Section"
 		bundle="DEFAULT"
 		>
 	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
-	<slot name="sectionOrder" key="label.sectionOrder.before" layout="menu-select">
+	<slot name="nextSection" key="label.sectionOrder.before" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionOrderProvider" />
-		<property name="format" value="${name}" />
-		<property name="defaultText" value="Fim"/>
+        <property name="format" value="${name}" />
+        <property name="defaultText" value="label.section.last"/>
+        <property name="bundle" value="SITE_RESOURCES"/>
+        <property name="key" value="true"/>
 	</slot>
-	<setter signature="edit(name,sectionOrder)"/>
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
+	<setter signature="edit(name, nextSection, permittedGroup)"/>
+</schema>
+<schema name="site.section.edit.permittedGroup"
+        type="net.sourceforge.fenixedu.domain.Section"
+        bundle="DEFAULT"
+        >
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.ItemCreator"
-		type="net.sourceforge.fenixedu.domain.Item"
+		type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ItemCreator"
 		bundle="DEFAULT"
 		>
-	<slot name="section" hidden="true"/>
 	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
-	<slot name="itemOrder" key="label.itemOrder.before" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemOrderProvider" />
-		<property name="format" value="${name}" />
-		<property name="defaultText" value="Fim"/>
-	</slot>
-	<slot name="information" layout="rich-text">
+	<slot name="nextItem" key="label.itemOrder.before" layout="menu-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemOrderProvider" />
+        <property name="format" value="${name}" />
+        <property name="defaultText" value="label.section.last"/>
+        <property name="bundle" value="SITE_RESOURCES"/>
+        <property name="key" value="true"/>
+    </slot>
+    <slot name="information" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
    		<property name="config" value="advanced" />
 	</slot>
-	<setter signature="execute(section)"/>
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
+    <setter signature="createItem()"/>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.ItemEditor"
 		type="net.sourceforge.fenixedu.domain.Item"
 		bundle="DEFAULT"
 		>
 	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
-	<slot name="itemOrder" key="label.itemOrder.before" layout="menu-select">
+	<slot name="nextItem" key="label.itemOrder.before" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemOrderProvider" />
 		<property name="format" value="${name}" />
-		<property name="defaultText" value="Fim"/>
+		<property name="defaultText" value="label.section.last"/>
+        <property name="bundle" value="SITE_RESOURCES"/>
+        <property name="key" value="true"/>
 	</slot>
 	<slot name="information" layout="rich-text">
    		<property name="safe" value="true" />
@@ -239,7 +272,23 @@
    		<property name="rows" value="15"/>
    		<property name="config" value="advanced" />
 	</slot>
-	<setter signature="edit(name,information,itemOrder)"/>
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
+</schema>
+<schema name="site.section.item.edit.group"
+        type="net.sourceforge.fenixedu.domain.Item"
+        bundle="DEFAULT"
+        >
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
 </schema>
 <schema name="ChooseSummaryType" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
 	<slot name="summaryType" key="property.type" layout="radio-postback">
@@ -389,4 +438,68 @@
 	<slot name="studentsNumber" key="property.number.students.attending.course">
 		<property name="size" value="4"/>	
 	</slot>
+</schema>
+
+<schema name="site.item.file.basic" type="net.sourceforge.fenixedu.domain.FileItem">
+    <slot name="displayName" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="contextRelative" value="false"/>
+        <property name="linkFormat" value="${downloadUrl}"/>
+    </slot>
+</schema>
+
+<schema name="site.item.files.visible" type="net.sourceforge.fenixedu.domain.FileItem" bundle="SITE_RESOURCES">
+    <slot name="visible"/>
+    <slot name="displayName" layout="link" read-only="true">
+        <property name="useParent" value="true"/>
+        <property name="contextRelative" value="false"/>
+        <property name="linkFormat" value="${downloadUrl}"/>
+    </slot>
+</schema>
+
+<schema name="section.group.edit" type="net.sourceforge.fenixedu.domain.Section">
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
+</schema>
+
+<schema name="item.group.edit" type="net.sourceforge.fenixedu.domain.Item">
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
+</schema>
+
+<schema name="permittedGroup.class.text" type="java.lang.Object">
+    <slot name="class" layout="label">
+        <property name="bundle" value="SITE_RESOURCES"/>
+    </slot>
+</schema>
+
+<schema name="item.file.basic" type="net.sourceforge.fenixedu.domain.FileItem" bundle="SITE_RESOURCES">
+    <slot name="displayName"/>
+    <slot name="filename"/>
+</schema>
+
+<schema name="item.file.permittedGroup" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemPermissionBean" bundle="SITE_RESOURCES">
+    <slot name="permittedGroup" layout="radio-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.FileItemGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
+</schema>
+
+<schema name="item.file.create" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemCreationBean" bundle="SITE_RESOURCES">
+    <slot name="permittedGroup" layout="radio-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.FileItemGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
 </schema>

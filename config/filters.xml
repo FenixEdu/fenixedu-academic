@@ -86,6 +86,24 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
+        <name>TeacherFromSiteContainingSectionsAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TeacherFromSiteContainingSectionsAuthorization</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
+        <name>TeacherFromSiteContainingItemsAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TeacherFromSiteContainingItemsAuthorization</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
+        <name>TeacherFromSiteContainingFilesAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TeacherFromSiteContainingFilesAuthorization</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
         <name>MasterDegreeAdministrativeOfficeAuthorization</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter</implementationClass>
@@ -352,20 +370,6 @@
         <name>ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorization</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>false</isTransactional>
-    </filter>
-    <filter>
-        <name>ExecutionCourseAndItemLecturingTeacherAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndItemLecturingTeacherAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>false</isTransactional>
-    </filter>
-    <filter>
-        <name>ExecutionCourseAndSectionLecturingTeacherAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>

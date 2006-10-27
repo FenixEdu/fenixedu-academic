@@ -40,6 +40,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -132,7 +133,7 @@ public class ReadCourseInformation extends Service {
                 .getExecutionPeriod(), curricularCourses);
         infoSiteCourseInformation.setInfoSiteEvaluationInformations(infoSiteEvaluationInformations);
 
-        Site site = executionCourse.getSite();
+        ExecutionCourseSite site = executionCourse.getSite();
 
         siteView.setComponent(infoSiteCourseInformation);
         ISiteComponent commonComponent = new InfoSiteCommon();

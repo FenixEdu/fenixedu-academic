@@ -171,9 +171,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setComment(comment);
     }
 
-    public void createSite() {
-	final Site site = new Site();
-	site.setExecutionCourse(this);
+    public ExecutionCourseSite createSite() {
+        return new ExecutionCourseSite(this);
     }
 
     public void copySectionsAndItemsFrom(final ExecutionCourse executionCourseFrom) {

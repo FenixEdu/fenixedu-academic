@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -42,7 +42,7 @@ public class ReadStudentsAndMarksByEvaluation extends Service {
                 .readExecutionCourseByOID(executionCourseCode);
 
         // Site
-        final Site site = executionCourse.getSite();
+        final ExecutionCourseSite site = executionCourse.getSite();
 
         // Evaluation
         Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);

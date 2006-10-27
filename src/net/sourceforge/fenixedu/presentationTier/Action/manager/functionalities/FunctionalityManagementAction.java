@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality.Movement;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
+import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
@@ -141,7 +142,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
             return viewTopLevel(mapping, actionForm, request, response);
         }
 
-        GroupAvailability availability = (GroupAvailability) functionality.getAvailabilityPolicy();
+        ExpressionGroupAvailability availability = (ExpressionGroupAvailability) functionality.getAvailabilityPolicy();
         
         if (availability != null) {
             request.setAttribute("availability", availability);
@@ -321,7 +322,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         element.setAttribute("visible", String.valueOf(functionality.isVisible()));
 
         if (functionality.getAvailabilityPolicy() != null) {
-            String expression = ((GroupAvailability) functionality.getAvailabilityPolicy()).getExpression();
+            String expression = ((ExpressionGroupAvailability) functionality.getAvailabilityPolicy()).getExpression();
             element.addContent(new Element("availability").addContent(new Text(expression)));
         }
         

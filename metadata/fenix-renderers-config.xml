@@ -225,7 +225,7 @@ Documentation:
 
     <!--@ The default layout for a list really creates an html list were each object is presented in a list item. -->
     <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
-    
+    <renderer type="java.util.Collection" layout="list" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
     
     <!--@ LabelFormatter output. -->
     <renderer type="net.sourceforge.fenixedu.util.resources.LabelFormatter" class="net.sourceforge.fenixedu.presentationTier.renderers.LabelFormatterRenderer">
@@ -241,6 +241,7 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer"/>
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.TopLevelMenuRenderer"/>
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.BreadCrumbsRenderer"/>
+    <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="site-side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.SiteMenuRenderer"/>
     
 	<!--@ File displayed as an html picture -->
     <renderer type="net.sourceforge.fenixedu.domain.File"
@@ -432,7 +433,8 @@ Documentation:
           an radio button associated. This layout allows to choose an object from a list. The choosen object will be 
           the slot's value.  -->
     <renderer mode="input" type="java.lang.Object" layout="radio-select" class="net.sourceforge.fenixedu.renderers.RadioButtonListRenderer">
-    	<property name="eachClasses" value="dinline" />
+        	<property name="eachClasses" value="dinline" />
+        <property name="style" value="list-style: none; padding: 0; margin: 0;" />
     </renderer>
     
     <!--@ This layout allows you to construct a list of objects for input. The deletion if managed by the renderer the

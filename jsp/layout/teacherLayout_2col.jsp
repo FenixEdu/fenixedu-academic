@@ -14,7 +14,10 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 	<title><bean:message key="title.teaching"/></title>
+
+    <tiles:insert attribute="head" ignore="true"/>
 </head>
+
 <body>
 <%-- Layout component parameters : header, navLocal, body --%>
 <!-- Header -->

@@ -1,12 +1,12 @@
-<class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.Functionality" table="FUNCTIONALITY">
+<class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.Functionality" table="ACCESSIBLE_ITEM">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.functionalities.Module" />
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality" table="FUNCTIONALITY">
+<class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality" table="ACCESSIBLE_ITEM">
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.Module" table="FUNCTIONALITY">
+<class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.Module" table="ACCESSIBLE_ITEM">
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy" table="AVAILABILITY_POLICY">
@@ -14,4 +14,8 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.GroupAvailability" table="AVAILABILITY_POLICY">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability"/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability" table="AVAILABILITY_POLICY">
 </class-descriptor>

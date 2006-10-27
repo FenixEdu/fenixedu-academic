@@ -1054,7 +1054,7 @@ public class CollectionRenderer extends OutputRenderer {
 
             if (tableLink.getCustom() != null) {
                 return new HtmlText(RenderUtils
-                        .getFormattedProperties(tableLink.getCustom(), realObject));
+                        .getFormattedProperties(tableLink.getCustom(), realObject), false);
             } else {
                 HtmlLink link = new HtmlLink();
     

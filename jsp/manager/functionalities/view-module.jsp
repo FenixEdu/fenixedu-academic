@@ -142,7 +142,7 @@
 	       | <a href="#" onclick="<%= "treeRenderer_collapseAll('" + tree + "');" %>"><bean:message key="link.tree.collapse-all" bundle="FUNCTIONALITY_RESOURCES"/></a>
 	   </p>
 	   
-	   <fr:form action="/toplevel/view.do">
+	   <fr:form action="<%= "/module/view.do?module=" + thisModule %>">
 	       <!-- submits the form on top of the page, search for: tree-structure -->
 	       <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('" + tree + "');" %>">
 	           <bean:message key="button.tree.save" bundle="FUNCTIONALITY_RESOURCES"/>

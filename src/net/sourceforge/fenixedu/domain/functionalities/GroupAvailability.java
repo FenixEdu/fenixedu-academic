@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
+import net.sourceforge.fenixedu.domain.AccessibleItem;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.ExpressionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
 
@@ -13,36 +13,31 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  */
 public class GroupAvailability extends GroupAvailability_Base {
 
-    /** cached group */
-    private ExpressionGroup group;
-
     protected GroupAvailability() {
         super();
     }
 
     /**
-     * Creates a <code>GroupAvailability</code> to the given functionality and
-     * with the given expression. The expression is converted into an
-     * {@link ExpressionGroup} so if the expression is invalid an exception will
-     * be thrown.
+     * Creates a <code>GroupAvailability</code> to the given accessible item that relies on
+     * the given group to determine the availability
      * 
-     * @param functionality
-     *            the target functionality
+     * @param item
+     *            the target item
      * @param expression
      *            the group expression
      * 
      * @exception GroupExpressionException
      *                when the expression is not correct
      */
-    public GroupAvailability(Functionality functionality, String expression) {
+    public GroupAvailability(AccessibleItem item, Group group) {
         super();
 
-        setFunctionality(functionality);
-        setExpression(expression);
+        setAccessibleItem(item);
+        setTargetGroup(group);
     }
 
     @Override
-    public void setFunctionality(Functionality functionality) {
+    public void setAccessibleItem(AccessibleItem item) {
         // The field is required but since the deletion sets this to null and we
         // want to delete this objects the verification is not done.
         //
@@ -51,42 +46,7 @@ public class GroupAvailability extends GroupAvailability_Base {
         // "functionalities.availability.required.functionality");
         // }
 
-        super.setFunctionality(functionality);
-    }
-
-    /**
-     * Changes the current expression to the given one. An
-     * {@link ExpressionGroup} is created with the given expression.
-     * 
-     * @exception GroupExpressionException
-     *                when the expression is not correct
-     */
-    @Override
-    public void setExpression(String expression) {
-        super.setExpression(expression);
-
-        // we build the group immediatly to detect problems with the expression
-        // as soon as possible. Nevertheless the group has a lazy construction
-        // built in getGroup(). This is used after obtaining the group for the
-        // persistent storage.
-        this.group = new ExpressionGroup(expression);
-    }
-
-    /**
-     * Obtains a group from the current expression obtained by
-     * {@link #getExpression()}.
-     * 
-     * @return a group from the current expression
-     * 
-     * @exception GroupExpressionException
-     *                when the expression is not correct
-     */
-    public ExpressionGroup getGroup() {
-        if (this.group == null) {
-            this.group = new ExpressionGroup(getExpression());
-        }
-
-        return this.group;
+        super.setAccessibleItem(item);
     }
 
     /**
@@ -104,7 +64,7 @@ public class GroupAvailability extends GroupAvailability_Base {
     @Override
     public boolean isAvailable(FunctionalityContext context) {
         try {
-            return getGroup().allows(new GroupContextFromFunctionality(context), context.getUserView());
+            return getTargetGroup().allows(context.getUserView());
         } catch (GroupDynamicExpressionException e) {
             throw e;
         } catch (Exception e) {
@@ -112,5 +72,4 @@ public class GroupAvailability extends GroupAvailability_Base {
                     "accessControl.group.expression.evaluation.error");
         }
     }
-
 }

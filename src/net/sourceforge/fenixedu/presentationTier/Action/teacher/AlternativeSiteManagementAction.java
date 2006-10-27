@@ -66,7 +66,7 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        session.setAttribute(SessionConstants.INFO_SITE, InfoSite.newInfoFromDomain(rootDomainObject.readSiteByOID(infoSite.getIdInternal())));
+        session.setAttribute(SessionConstants.INFO_SITE, InfoSite.newInfoFromDomain(rootDomainObject.readExecutionCourseSiteByOID(infoSite.getIdInternal())));
         session.setAttribute("alternativeSiteForm", alternativeSiteForm);
 
         return mapping.findForward("viewSite");

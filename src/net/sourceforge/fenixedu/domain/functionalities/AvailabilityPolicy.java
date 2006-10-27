@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
+import net.sourceforge.fenixedu.domain.AccessibleItem;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import dml.runtime.RelationAdapter;
 
 /**
  * An <code>AvailabilityPolicy</code> allows a functionality to indicate whom
@@ -10,6 +12,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
 
+    static {
+        AccessibleItemHasAvailabilityPolicy.addListener(new DeletePreviousAvailability());
+    }
+    
     protected AvailabilityPolicy() {
         super();
 
@@ -34,8 +40,20 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
      * Deletes this object from persistent storage.
      */
     public void delete() {
-        removeFunctionality();
+        removeAccessibleItem();
         deleteDomainObject();
     }
 
+    public static class DeletePreviousAvailability extends RelationAdapter<AvailabilityPolicy, AccessibleItem> {
+
+        @Override
+        public void afterRemove(AvailabilityPolicy availabilityPolicy, AccessibleItem accessibleItem) {
+            super.afterRemove(availabilityPolicy, accessibleItem);
+
+            if (accessibleItem != null) {
+                availabilityPolicy.delete();
+            }
+        }
+        
+    }
 }

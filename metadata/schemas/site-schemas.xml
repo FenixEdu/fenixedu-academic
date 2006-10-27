@@ -1,0 +1,10 @@
+<schema name="site.section.name" type="net.sourceforge.fenixedu.domain.Section">
+    <slot name="name" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="destination" value="section.view"/>
+    </slot>
+</schema>
+
+<schema name="site.item.name" type="net.sourceforge.fenixedu.domain.Item">
+    <slot name="name"/>
+</schema>

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
@@ -35,7 +35,7 @@ public class ReadStudentsEnrolledInWrittenEvaluation extends Service {
         }
 
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-        final Site site = executionCourse.getSite();
+        final ExecutionCourseSite site = executionCourse.getSite();
         if (site == null) {
             throw new FenixServiceException("error.noSite");
         }

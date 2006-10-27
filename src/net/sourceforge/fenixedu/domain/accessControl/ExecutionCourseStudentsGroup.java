@@ -15,37 +15,37 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup {
     private static final long serialVersionUID = 1L;
 
     private class AttendPersonTransformer implements Transformer {
-	public Object transform(Object object) {
-	    Attends attend = (Attends) object;
-	    return attend.getAluno().getPerson();
-	}
+        public Object transform(Object object) {
+            Attends attend = (Attends) object;
+            return attend.getAluno().getPerson();
+        }
     }
 
     public ExecutionCourseStudentsGroup(ExecutionCourse executionCourse) {
-	super(executionCourse);
+        super(executionCourse);
     }
 
     @Override
     public int getElementsCount() {
-	return this.getExecutionCourse().getAttendsCount();
+        return this.getExecutionCourse().getAttendsCount();
     }
 
     @Override
     public Set<Person> getElements() {
-	return super.freezeSet(new HashSet<Person>(CollectionUtils.collect(getExecutionCourse()
-		.getAttends(), new AttendPersonTransformer())));
+        return super.freezeSet(new HashSet<Person>(CollectionUtils.collect(getExecutionCourse()
+                .getAttends(), new AttendPersonTransformer())));
     }
 
     @Override
     public boolean isMember(Person person) {
-	if (person != null && person.hasStudent() && hasExecutionCourse()) {
-	    for (final Attends attends : getExecutionCourse().getAttendsSet()) {
-		if (attends.getAluno().getStudent() == person.getStudent()) {
-		    return true;
-		}
-	    }
-	}
-	return false;
+        if (person != null && person.hasStudent() && hasExecutionCourse()) {
+            for (final Attends attends : getExecutionCourse().getAttendsSet()) {
+                if (attends.getAluno().getStudent() == person.getStudent()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

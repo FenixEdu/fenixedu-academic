@@ -4,10 +4,10 @@ import java.io.InputStream;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FileItem;
-import net.sourceforge.fenixedu.domain.FileItemPermittedGroupType;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Section;
@@ -22,34 +22,31 @@ import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.Node;
 
 /**
- * 
  * @author naat
- * 
  */
 public class CreateFileItemForItem extends FileItemService {
 
-    public void run(Integer itemId, InputStream inputStream, String originalFilename,
-            String displayName, FileItemPermittedGroupType fileItemPermittedGroupType)
+    public void run(Item item, InputStream inputStream, String originalFilename,
+            String displayName, Group permittedGroup)
             throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
-        final Item item = rootDomainObject.readItemByOID(itemId);
-        final ExecutionCourse executionCourse = item.getSection().getSite().getExecutionCourse();
-        final Group permittedGroup = createPermittedGroup(fileItemPermittedGroupType, executionCourse);
+        ExecutionCourseSite site = (ExecutionCourseSite) item.getSection().getSite();
+        
         final FilePath filePath = getFilePath(item);
-        final FileMetadata fileMetadata = new FileMetadata(displayName, item.getSection().getSite()
+        final FileMetadata fileMetadata = new FileMetadata(displayName, site
                 .getExecutionCourse().getNome());
         final IFileManager fileManager = FileManagerFactory.getFileManager();
         final FileDescriptor fileDescriptor = fileManager.saveFile(filePath, originalFilename,
-                (permittedGroup != null) ? true : false, fileMetadata, inputStream);
+                isPublic(permittedGroup), fileMetadata, inputStream);
         final FileItem fileItem = new FileItem(fileDescriptor.getFilename(), displayName, fileDescriptor
                 .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
-                fileDescriptor.getSize(), fileDescriptor.getUniqueId(), permittedGroup,
-                fileItemPermittedGroupType);
+                fileDescriptor.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
 
         item.addFileItems(fileItem);
 
     }
 
+    // TODO: avoid depending on ExecutionCourseSite, use Site only
     private FilePath getFilePath(Item item) {
         final FilePath filePath = new FilePath();
         filePath.addNode(new Node("I" + item.getIdInternal(), item.getName().getContent(Language.pt)));
@@ -67,7 +64,8 @@ public class CreateFileItemForItem extends FileItemService {
             }
         }
 
-        final ExecutionCourse executionCourse = section.getSite().getExecutionCourse();
+        ExecutionCourseSite site = (ExecutionCourseSite) section.getSite();
+        final ExecutionCourse executionCourse = site.getExecutionCourse();
         filePath.addNode(0, new Node("EC" + executionCourse.getIdInternal(), executionCourse.getNome()));
 
         final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();

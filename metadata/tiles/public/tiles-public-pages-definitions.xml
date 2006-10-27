@@ -171,9 +171,6 @@
 	<definition name="execution-course-first-page" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/firstPage.jsp"/>
 	</definition>
-	<definition name="execution-course-announcements" extends="definition.public.executionCourse">
-		<put name="body" value="/publico/executionCourse/announcements.jsp"/>
-	</definition>
 	<definition name="execution-course-summaries" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/summaries.jsp"/>
 	</definition>

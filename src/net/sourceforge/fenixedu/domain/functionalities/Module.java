@@ -80,8 +80,10 @@ public class Module extends Module_Base {
      * @return the prefix of this module as seen be the client
      */
     public String getPublicPrefix() {
-        if (getParent() != null) {
-            return getParent().getPublicPrefix() + getNormalizedPrefix();
+        Module parent = getParent();
+        
+        if (parent != null) {
+            return parent.getPublicPrefix() + getNormalizedPrefix();
         } else {
             return getNormalizedPrefix();
         }
@@ -146,11 +148,6 @@ public class Module extends Module_Base {
         }
 
         return false;
-    }
-
-    @Override
-    protected void checkDeletion() {
-        // can be deleted
     }
 
     @Override

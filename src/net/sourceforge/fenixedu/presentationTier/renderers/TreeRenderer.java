@@ -134,13 +134,13 @@ public class TreeRenderer extends OutputRenderer {
      * id is generated so you have to specify a valid javascript identifier.
      * 
      * <p>
-     * The fiven identifier can be used in javascript to invoke operations in the tree.
+     * The given identifier can be used in javascript to invoke operations in the tree.
      * The most important are:
      * 
      * <ul>
-     *  <li><strong><tt>saveTree()</tt></strong>: submits the current tree structure to be saved</li>
-     *  <li><strong><tt>expandAll()</tt></strong>: expands all nodes of the tree</li>
-     *  <li><strong><tt>collapseAll()</tt></strong>: collapse all nodes of the tree</li>
+     *  <li><strong><tt>treeRenderer_saveTree(<em>id</em>)</tt></strong>: submits the current tree structure to be saved</li>
+     *  <li><strong><tt>treeRenderer_expandAll(<em>id</em>)</tt></strong>: expands all nodes of the tree</li>
+     *  <li><strong><tt>treeRenderer_collapseAll(<em>id</em>)</tt></strong>: collapse all nodes of the tree</li>
      * </ul>
      * 
      * @property

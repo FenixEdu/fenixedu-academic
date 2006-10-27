@@ -62,8 +62,8 @@
 
 <logic:present name="contextAvailabilities">
     <fr:view name="contextAvailabilities" schema="functionalities.availability.manage.context">
-		<fr:layout>
-			<fr:property name="classes" value="tstyle5 thlight thright mvert05"/>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thleft mvert05"/>
 		</fr:layout>
         <fr:destination name="viewModule" path="/module/view.do?module=${module.idInternal}"/>
     </fr:view>

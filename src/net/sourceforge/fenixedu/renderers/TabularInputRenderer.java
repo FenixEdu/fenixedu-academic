@@ -145,6 +145,26 @@ public class TabularInputRenderer extends InputRenderer {
         return this.collectionRenderer.getContextRelative(name);
     }
 
+    public String getCustomLink(String name) {
+        return this.collectionRenderer.getCustomLink(name);
+    }
+
+    public boolean getDisplayHeaders() {
+        return this.collectionRenderer.getDisplayHeaders();
+    }
+
+    public String getLinkGroupSeparator() {
+        return this.collectionRenderer.getLinkGroupSeparator();
+    }
+
+    public boolean isGroupLinks() {
+        return this.collectionRenderer.isGroupLinks();
+    }
+
+    public boolean isRowForLinks() {
+        return this.collectionRenderer.isRowForLinks();
+    }
+
     /**
      * @property
      */
@@ -353,6 +373,52 @@ public class TabularInputRenderer extends InputRenderer {
     public void setContextRelative(String name, String value) {
         this.collectionRenderer.setContextRelative(name, value);
     }
+
+    /**
+     * See {@link CollectionRenderer#setCustomLink(String, String)}.
+     * 
+     * @property
+     */
+    public void setCustomLink(String name, String value) {
+        this.collectionRenderer.setCustomLink(name, value);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setDisplayHeaders(boolean)}.
+     * 
+     * @property
+     */
+    public void setDisplayHeaders(boolean displayHeaders) {
+        this.collectionRenderer.setDisplayHeaders(displayHeaders);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setGroupLinks(boolean)}.
+     * 
+     * @property
+     */
+    public void setGroupLinks(boolean groupLinks) {
+        this.collectionRenderer.setGroupLinks(groupLinks);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setLinkGroupSeparator(String)}.
+     * 
+     * @property
+     */
+    public void setLinkGroupSeparator(String linkGroupSeparator) {
+        this.collectionRenderer.setLinkGroupSeparator(linkGroupSeparator);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setRowForLinks(boolean)}.
+     * 
+     * @property
+     */
+    public void setRowForLinks(boolean rowForLinks) {
+        this.collectionRenderer.setRowForLinks(rowForLinks);
+    }
+
 
     @Override
     protected Layout getLayout(Object object, Class type) {

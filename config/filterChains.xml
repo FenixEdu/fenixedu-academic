@@ -58,6 +58,27 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>TeacherFromSiteContainingSectionsAuthorization</name>
+        <expression>TeacherFromSiteContainingSectionsAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
+        <name>TeacherFromSiteContainingItemsAuthorization</name>
+        <expression>TeacherFromSiteContainingItemsAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
+        <name>TeacherFromSiteContainingFilesAuthorization</name>
+        <expression>TeacherFromSiteContainingFilesAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>StudentCurriculumAccess</name>
         <expression>StudentCurriculumAuthorization || SeminaryCoordinator</expression>
         <description/>
@@ -368,20 +389,6 @@
     <filterChain>
         <name>ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorization</name>
         <expression>ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
-        <name>ExecutionCourseAndItemLecturingTeacherAuthorization</name>
-        <expression>ExecutionCourseAndItemLecturingTeacherAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
-        <name>ExecutionCourseAndSectionLecturingTeacherAuthorization</name>
-        <expression>ExecutionCourseAndSectionLecturingTeacherAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

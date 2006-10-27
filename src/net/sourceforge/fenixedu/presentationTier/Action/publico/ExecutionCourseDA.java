@@ -67,10 +67,6 @@ public class ExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("execution-course-first-page");
     }
 
-    public ActionForward announcements(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("execution-course-announcements");
-    }
-
     public ActionForward summaries(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
     	final ExecutionCourse executionCourse = getExecutionCourse(request);
     	final DynaActionForm dynaActionForm = (DynaActionForm) form;

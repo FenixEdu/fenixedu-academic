@@ -16,7 +16,7 @@ public class ReadSections extends Service {
 
 	public List<InfoSection> run(InfoSite infoSite) throws FenixServiceException, ExcepcaoPersistencia {
         
-		final Site site = rootDomainObject.readSiteByOID(infoSite.getIdInternal());
+		final Site site = rootDomainObject.readExecutionCourseSiteByOID(infoSite.getIdInternal());
 		
         final List<InfoSection> infoSections = new ArrayList<InfoSection>(site.getAssociatedSectionsCount());
         for (final Section section : site.getAssociatedSectionsSet()) {

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.FileItem;
-import net.sourceforge.fenixedu.domain.FileItemPermittedGroupType;
 
 /**
  * 
@@ -24,8 +23,6 @@ public class InfoFileItem extends InfoObject {
 
     private String externalStorageIdentification;
     
-    private FileItemPermittedGroupType permittedGroupType;
-
     public InfoFileItem() {
 
     }
@@ -40,7 +37,6 @@ public class InfoFileItem extends InfoObject {
             setChecksumAlgorithm(fileItem.getChecksumAlgorithm());
             setSize(fileItem.getSize());
             setExternalStorageIdentification(fileItem.getExternalStorageIdentification());
-            setPermittedGroupType(fileItem.getFileItemPermittedGroupType());
             
         }
     }
@@ -114,14 +110,6 @@ public class InfoFileItem extends InfoObject {
         this.size = size;
     }
 
-    public FileItemPermittedGroupType getPermittedGroupType() {
-        return permittedGroupType;
-    }
-
-    public void setPermittedGroupType(FileItemPermittedGroupType fileItemPermittedGroupType) {
-        this.permittedGroupType = fileItemPermittedGroupType;
-    }
-    
     public String getHtmlFriendlyFilename() {
         return getFilename().replaceAll("&", "&amp;").replaceAll(" ", "%20");
     }

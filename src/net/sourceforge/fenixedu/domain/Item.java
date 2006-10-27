@@ -1,177 +1,208 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
+ * An Item represents a piece of text a user can add to a section of a site. It contains a title 
+ * and a body text: the item's information.
  * 
  * @author ars
  */
-
 public class Item extends Item_Base {
 
-    public static final Comparator<Item> COMPARATOR_BY_ORDER = new BeanComparator("itemOrder");
+    public static final Comparator<Item> COMPARATOR_BY_ORDER = new Comparator<Item>() {
+
+        private ComparatorChain chain = null;
+        
+        public int compare(Item one, Item other) {
+            if (this.chain == null) {
+                chain = new ComparatorChain();
+                
+                chain.addComparator(new BeanComparator("itemOrder"));
+                chain.addComparator(new BeanComparator("name"));
+                chain.addComparator(new BeanComparator("idInternal"));
+            }
+            
+            return chain.compare(one, other);
+        }
+    };
 
     protected Item() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
+        super();
+        
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Item(final Section section, final MultiLanguageString name,
-	    final MultiLanguageString information, final Integer order) {
-	this();
-	if (section == null) {
-	    throw new NullPointerException();
-	}
+    public Item(Section section, MultiLanguageString name) {
+        this();
+        
+        if (section == null) {
+            throw new NullPointerException();
+        }
 
-	setSection(section);
-	edit(name, information, order);
+        setSection(section);
+        setName(name);
+        setItemOrder(getNewOrder(null));
     }
 
-    public void edit(final MultiLanguageString name, final MultiLanguageString information,
-	    final Integer order) {
-	if (name == null) {
-	    throw new NullPointerException();
-	}
-
-	setName(name);
-	setInformation(information);
-
-	int newOrder = getNewOrder(order);
-	if (getItemOrder() == null) {
-	    setItemOrder(Integer.valueOf(Integer.MAX_VALUE));
-	}
-	if (getItemOrder() != null) {
-	    final int oldOrder = getItemOrder().intValue();
-	    final boolean moveUp = newOrder > oldOrder;
-	    if (moveUp && order != null) {
-		newOrder--;
-	    }
-	    if (newOrder != oldOrder) {
-		for (final Item otherItem : getSection().getAssociatedItemsSet()) {
-		    if (this != otherItem) {
-			final int otherOrder = otherItem.getItemOrder().intValue();
-			if (moveUp) {
-			    if (otherOrder > oldOrder && otherOrder <= newOrder) {
-				otherItem.setItemOrder(Integer.valueOf(otherOrder - 1));
-			    }
-			} else {
-			    if (otherOrder >= newOrder && otherOrder < oldOrder) {
-				otherItem.setItemOrder(Integer.valueOf(otherOrder + 1));
-			    }
-			}
-		    }
-		}
-	    }
-	}
-
-	setItemOrder(Integer.valueOf(newOrder));
+    public Item(Section section, MultiLanguageString name, MultiLanguageString information, Integer itemOrder) {
+        this(section, name);
+        
+        setInformation(information);
+        setNewItemOrder(itemOrder);
     }
 
+    public void setName(MultiLanguageString name) {
+        if (name == null) {
+            throw new NullPointerException();
+        }
+
+        super.setName(name);
+    }
+    
     private int getNewOrder(Integer order) {
-	return order == null ? getSection().getAssociatedItemsSet().size() - 1 : order.intValue();
+        return order == null ? getSection().getAssociatedItemsSet().size() - 1 : order.intValue();
     }
 
-    public void delete() {
+    public Integer getNewItemOrder() {
+        return getItemOrder();
+    }
+    
+    /**
+     * Changes the order of this item updating all the siblings items to reflect
+     * this change. All items that have an order greater or equal to the given
+     * order will have they value incremented by one.
+     * 
+     * @param itemOrder
+     *            the new item order inside the the containing section
+     */
+    public void setNewItemOrder(Integer itemOrder) {
+        int newOrder = getNewOrder(itemOrder);
+        
+        if (getItemOrder() == null) {
+            setItemOrder(Integer.valueOf(Integer.MAX_VALUE));
+        }
+        
+        if (getItemOrder() != null) {
+            final int oldOrder = getItemOrder().intValue();
+            final boolean moveUp = newOrder > oldOrder;
+            if (moveUp && itemOrder != null) {
+                newOrder--;
+            }
+            if (newOrder != oldOrder) {
+                for (final Item otherItem : getSection().getAssociatedItemsSet()) {
+                    if (this != otherItem) {
+                        final int otherOrder = otherItem.getItemOrder().intValue();
+                        if (moveUp) {
+                            if (otherOrder > oldOrder && otherOrder <= newOrder) {
+                                otherItem.setItemOrder(Integer.valueOf(otherOrder - 1));
+                            }
+                        } else {
+                            if (otherOrder >= newOrder && otherOrder < oldOrder) {
+                                otherItem.setItemOrder(Integer.valueOf(otherOrder + 1));
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-	if (this.getFileItems().size() != 0) {
-	    throw new DomainException("item.cannotDeleteWhileHasFiles");
-	}
-
-	Section section = this.getSection();
-
-	if (this.getSection() != null && this.getSection().getAssociatedItems() != null) {
-
-	    this.setSection(null);
-	    List<Item> items = section.getAssociatedItems();
-	    int associatedItemOrder;
-
-	    for (Item item : items) {
-		associatedItemOrder = item.getItemOrder().intValue();
-		if (associatedItemOrder > this.getItemOrder().intValue()) {
-		    item.setItemOrder(new Integer(associatedItemOrder - 1));
-		}
-	    }
-	}
-
-	removeRootDomainObject();
-	super.deleteDomainObject();
+        setItemOrder(Integer.valueOf(newOrder));
+    }
+    
+    /**
+     * @return the item immediately after this item in the section or <code>null</code> if the item is the last 
+     */
+    public Item getNextItem() {
+        Integer thisOrder = getItemOrder();
+        if (thisOrder == null) {
+            thisOrder = new Integer(Integer.MAX_VALUE);
+        }
+        
+        for (Item item : getSection().getOrderedItems()) {
+            Integer itemOrder = item.getItemOrder();
+            if (itemOrder == null) {
+                itemOrder = new Integer(Integer.MAX_VALUE);
+            }
+            
+            if (itemOrder > thisOrder) {
+                return item;
+            }
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Changes the order of this item so that the given item is immediately
+     * after this item. If the given item is <code>null</code> then this item
+     * will be the last in the section
+     * 
+     * @param item
+     *            the item that should appear after this item or
+     *            <code>null</code> if this item should be last
+     */
+    public void setNextItem(Item item) {
+        setNewItemOrder(item != null ? item.getItemOrder(): null);
     }
 
-    public static abstract class ItemFactory implements Serializable, FactoryExecutor {
-	private Integer itemOrder;
+    @Override
+    public void disconnect() {
+        Section section = this.getSection();
+        if (section != null && section.getAssociatedItems() != null) {
+            List<Item> items = section.getAssociatedItems();
+            int associatedItemOrder;
 
-	private MultiLanguageString information;
+            for (Item item : items) {
+                associatedItemOrder = item.getItemOrder().intValue();
+                if (associatedItemOrder > this.getItemOrder().intValue()) {
+                    item.setItemOrder(new Integer(associatedItemOrder - 1));
+                }
+            }
+        }
 
-	private MultiLanguageString name;
-
-	public MultiLanguageString getInformation() {
-	    return information;
-	}
-
-	public void setInformation(MultiLanguageString information) {
-	    this.information = information;
-	}
-
-	public Integer getItemOrder() {
-	    return itemOrder;
-	}
-
-	public void setItemOrder(Integer itemOrder) {
-	    this.itemOrder = itemOrder;
-	}
-
-	public MultiLanguageString getName() {
-	    return name;
-	}
-
-	public void setName(MultiLanguageString name) {
-	    this.name = name;
-	}
+        removeRootDomainObject();
+        removeSection();
     }
 
-    public static class ItemFactoryCreator extends ItemFactory {
-	private DomainReference<Section> sectionDomainReference;
-
-	public ItemFactoryCreator(final Section section) {
-	    super();
-	    setSection(section);
-	}
-
-	public Section getSection() {
-	    return sectionDomainReference == null ? null : sectionDomainReference.getObject();
-	}
-
-	public void setSection(Section section) {
-	    this.sectionDomainReference = section == null ? null : new DomainReference<Section>(section);
-	}
-
-	public Item execute() {
-	    return execute(getSection());
-	}
-
-	public Item execute(final Section section) {
-	    return new Item(section, getName(), getInformation(), getItemOrder());
-	}
+    @Override
+    protected void checkDeletion() {
+        if (! isDeletable()) {
+            throw new DomainException("site.section.item.delete.notAllowed", getName().getContent());
+        }
+    }
+    
+    @Override
+    public boolean isDeletable() {
+        return this.getFileItemsCount() == 0;
     }
 
+    public SortedSet<FileItem> getSortedVisibleFileItems() {
+        final SortedSet<FileItem> sortedFileItems = new TreeSet<FileItem>(FileItem.COMPARATOR_BY_ORDER);
+        
+        for (FileItem fileItem : getFileItems()) {
+            if (fileItem.isVisible()) {
+                sortedFileItems.add(fileItem);
+            }
+        }
+        
+        return sortedFileItems;
+    }
+    
     public SortedSet<FileItem> getSortedFileItems() {
-	final SortedSet<FileItem> sortedFileItems = new TreeSet<FileItem>(
-		FileItem.COMPARATOR_BY_DISPLAY_NAME);
-	sortedFileItems.addAll(getFileItems());
+        final SortedSet<FileItem> sortedFileItems = new TreeSet<FileItem>(FileItem.COMPARATOR_BY_ORDER);
+        sortedFileItems.addAll(getFileItems());
 
-	return sortedFileItems;
+        return sortedFileItems;
     }
 
 }

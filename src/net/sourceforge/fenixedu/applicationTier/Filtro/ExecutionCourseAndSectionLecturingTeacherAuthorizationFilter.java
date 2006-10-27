@@ -10,8 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -88,7 +90,8 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
             return false;
         }
 
-        return section.getSite().getExecutionCourse().equals(executionCourse);
+        ExecutionCourseSite site = (ExecutionCourseSite) section.getSite();
+        return site.getExecutionCourse().equals(executionCourse);
     }
 
     private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos) {

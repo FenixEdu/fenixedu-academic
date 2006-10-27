@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.io.InputStream;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,6 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FileItem;
-import net.sourceforge.fenixedu.domain.FileItemPermittedGroupType;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
@@ -33,9 +33,8 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Item.ItemFactoryCreator;
-import net.sourceforge.fenixedu.domain.Section.SectionFactoryCreator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -45,26 +44,21 @@ import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.upload.FormFile;
 
+import pt.ist.utl.fenix.utils.Pair;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        getExecutionCourseFromParameterAndSetItInRequest(request);
-        if (request.getParameter("sectionID") != null) {
-            request.setAttribute("renderSections", "true");
-        }
+        propageContextIds(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -75,9 +69,14 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward createItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Section section = selectSection(request);
-        final ItemFactoryCreator itemFactoryCreator = new ItemFactoryCreator(section);
-        request.setAttribute("itemFactoryCreator", itemFactoryCreator);
+        Section section = getSection(request);
+        if (section == null) {
+            return sections(mapping, form, request, response);
+        }
+        
+        request.setAttribute("creator", new ItemCreator(section));
+        
+        selectSection(request);
         return mapping.findForward("createItem");
     }
 
@@ -91,23 +90,36 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         final Item item = getItem(request);
         final Section section = item.getSection();
-        final Object[] args = { request.getAttribute("executionCourse"), item };
-        executeService(request, "DeleteItem", args);
+        
+        try {
+            final Object[] args = { request.getAttribute("executionCourse"), item };
+            executeService(request, "DeleteItem", args);
+        }
+        catch (DomainException e) {
+            addErrorMessage(request, "items", e.getKey(), (Object[]) e.getArgs());
+        }
+
         selectSection(request, section);
         return mapping.findForward("section");
     }
 
     public ActionForward uploadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        selectItem(request);
+        Item item = selectItem(request);
+        
+        FileItemCreationBean bean = new FileItemCreationBean(item);
+        request.setAttribute("fileItemCreator", bean);
+        
         return mapping.findForward("uploadFile");
     }
 
     private Item selectItem(HttpServletRequest request) {
         final Item item = getItem(request);
+        
         if (item != null) {
             selectSection(request, item.getSection());
         }
+        
         request.setAttribute("item", item);
         return item;
     }
@@ -116,18 +128,23 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     // SECTIONS
 
     public ActionForward sections(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("renderSections", "true");
-	return mapping.findForward("sectionsManagement");
+        return mapping.findForward("sectionsManagement");
     }
     
     public ActionForward createSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        request.setAttribute("renderSections", "true");
-	
-        final Section section = selectSection(request);
-        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        final SectionFactoryCreator sectionFactoryCreator = new SectionFactoryCreator(executionCourse.getSite(), section);
-        request.setAttribute("sectionFactoryCreator", sectionFactoryCreator);
+        selectSection(request);
+
+        Section section = getSection(request);
+        if (section == null) {
+            Site site = getSite(request);
+            
+            request.setAttribute("creator", new SectionCreator(site));
+        }
+        else {
+            request.setAttribute("creator", new SectionCreator(section));
+        }
+        
         return mapping.findForward("createSection");
     }
 
@@ -140,15 +157,41 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward deleteSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final Section section = selectSection(request);
-        final Section superiorSection = section == null ? null : section.getSuperiorSection();
-        final Object[] args = { request.getAttribute("executionCourse"), section };
-        executeService(request, "DeleteSection", args);
-        request.setAttribute("section", superiorSection);
-        return superiorSection == null ? mapping.findForward("sectionsManagement") : mapping.findForward("section");
+
+        if (section.isDeletable()) {
+            return mapping.findForward("confirmSectionDelete");
+        }
+        else {
+            addErrorMessage(request, "section", "site.section.delete.notAllowed");
+            return section == null ? mapping.findForward("sectionsManagement") : mapping.findForward("section");
+        }
     }
 
+    public ActionForward confirmSectionDelete(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Section section = selectSection(request);
+
+        if (section == null) {
+            return sections(mapping, form, request, response);
+        }
+        
+        if (request.getParameter("confirm") != null) {
+            try {
+                Section superiorSection = section.getSuperiorSection();
+                executeService(request, "DeleteSection", new Object[] {request.getAttribute("executionCourse"), section});
+                
+                section = superiorSection;
+            } catch (DomainException e) {
+                addErrorMessage(request, "section", e.getKey(), (Object[]) e.getArgs());
+            }
+        }
+        
+        selectSection(request, section);
+        return section == null ? mapping.findForward("sectionsManagement") : mapping.findForward("section");
+    }
+        
     public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	selectSection(request);
+        selectSection(request);
         return mapping.findForward("section");
     }
 
@@ -159,12 +202,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     private void selectSection(final HttpServletRequest request, final Section section) {
-	request.setAttribute("section", section);
-        final Set<Section> selectedSections = new HashSet<Section>();
-        for (Section currentSection = section ; currentSection != null; currentSection = currentSection.getSuperiorSection()) {
-            selectedSections.add(currentSection);
-        }
-        request.setAttribute("selectedSections", selectedSections);
+        request.setAttribute("section", section);
     }
 
     protected Item getItem(final HttpServletRequest request) {
@@ -187,40 +225,30 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     
     public ActionForward prepareImportSections(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("renderSections", "true");
-	
         request.setAttribute("importContentBean", new ImportContentBean());
         return mapping.findForward("importSections");
     }
     
     public ActionForward prepareImportSectionsPostBack(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {    
-        request.setAttribute("renderSections", "true");
-	
         prepareImportContentPostBack(request);
         return mapping.findForward("importSections");
     }
 
     public ActionForward prepareImportSectionsInvalid(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("renderSections", "true");
-	
         prepareImportContentInvalid(request);        
         return mapping.findForward("importSections");
     }
 
     public ActionForward listExecutionCoursesToImportSections(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("renderSections", "true");
-        
         listExecutionCoursesToImportContent(request);
         return mapping.findForward("importSections");
     }
 
     public ActionForward importSections(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-        request.setAttribute("renderSections", "true");
-     
         importContent(request, "ImportSections");
         return mapping.findForward("sectionsManagement");
     }
@@ -763,8 +791,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return lessonPlannings(mapping, form, request, response);
     }
   
-    public static void getExecutionCourseFromParameterAndSetItInRequest(final HttpServletRequest request) {
+    public static void propageContextIds(final HttpServletRequest request) {
         String executionCourseIDString = request.getParameter("executionCourseID");
+        
         if (executionCourseIDString == null || executionCourseIDString.length() == 0) {
             executionCourseIDString = request.getParameter("objectCode");
         }
@@ -777,6 +806,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final Integer executionCourseID) {
         final IUserView userView = getUserView(request);
+        
         if (userView != null) {
             final Person person = userView.getPerson();
             if (person != null) {
@@ -791,6 +821,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
                 }
             }
         }
+        
         return null;
     }
 
@@ -826,35 +857,35 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
-	final Item item = selectItem(request);
+        final Item item = selectItem(request);
 
-        final DynaActionForm fileUploadForm = (DynaActionForm) form;
-        final FormFile formFile = (FormFile) fileUploadForm.get("theFile");
-        String displayName = fileUploadForm.getString("displayName");
-        final FileItemPermittedGroupType fileItemPermittedGroupType = FileItemPermittedGroupType.valueOf((String) fileUploadForm.get("fileItemPermittedGroupType"));
-
-        final ActionErrors actionErrors = new ActionErrors();
-
+        IViewState viewState = RenderUtils.getViewState("creator");
+        if (viewState == null) {
+            return section(mapping, form, request, response);
+        }
+        
+        FileItemCreationBean bean = (FileItemCreationBean) viewState.getMetaObject().getObject();
+        RenderUtils.invalidateViewState();
+        
+        String displayName = bean.getDisplayName();
         if (displayName == null || displayName.length() == 0 || displayName.trim().length() == 0) {
-            displayName = getFilenameOnly(formFile.getFileName());
+            displayName = getFilenameOnly(bean.getFileName());
         }
 
-        if (formFile.getFileName() == null || formFile.getFileName().length() == 0
-                || formFile.getFileSize() == 0) {
-            actionErrors.add("fileRequired", new ActionError("errors.fileRequired"));
-            saveErrors(request, actionErrors);
-            return mapping.findForward("uploadFile");
+        if (bean.getFileName() == null || bean.getFileName().length() == 0
+                || bean.getFileSize() == 0) {
+            addErrorMessage(request, "fileRequired", "errors.fileRequired");
+            return uploadFile(mapping, form, request, response);
         }
 
         InputStream formFileInputStream = null;
         try {
-            formFileInputStream = formFile.getInputStream();
-            final Object[] args = { item.getIdInternal(), formFileInputStream, formFile.getFileName(), displayName, fileItemPermittedGroupType };
+            formFileInputStream = bean.getFile();
+            final Object[] args = { item, formFileInputStream, bean.getFileName(), displayName, bean.getPermittedGroup() };
             executeService(request, "CreateFileItemForItem", args);
         } catch (FileManagerException e) {
-            actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", formFile.getFileName()));
-            saveErrors(request, actionErrors);
-            return mapping.findForward("uploadFile");
+            addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
+            return uploadFile(mapping, form, request, response);
         } finally {
             if (formFileInputStream != null) {
                 formFileInputStream.close();
@@ -883,69 +914,227 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward deleteFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	final Item item = selectItem(request);
-        Integer fileItemId = getFileItemId(request);
+        selectItem(request);
+        FileItem fileItem = selectFileItem(request);
 
-        IUserView userView = getUserView(request);
-        Object[] args = { item.getIdInternal(), fileItemId };
         try {
-            ServiceUtils.executeService(userView, "DeleteFileItemFromItem", args);
+            ServiceUtils.executeService(getUserView(request), "DeleteFileItemFromItem", fileItem);
         } catch (FileManagerException e1) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("unableToDeleteFile", new ActionError("errors.unableToDeleteFile"));
-            saveErrors(request, actionErrors);
+            addErrorMessage(request, "unableToDeleteFile", "errors.unableToDeleteFile");
         }
 
         return mapping.findForward("section");
     }
 
-    private Integer getFileItemId(HttpServletRequest request) {
-        Integer fileItemId = null;
+    private FileItem selectFileItem(HttpServletRequest request) {
         String fileItemIdString = request.getParameter("fileItemId");
-        if (fileItemIdString != null) {
-            fileItemId = Integer.valueOf(fileItemIdString);
-        } else {
-            fileItemId = (Integer) request.getAttribute("fileItemId");
+        if (fileItemIdString == null) {
+            return null;
         }
-
-        return fileItemId;
+        
+        FileItem fileItem = FileItem.readByOID(Integer.valueOf(fileItemIdString));
+        request.setAttribute("fileItem", fileItem);
+        
+        return fileItem;
     }
 
     public ActionForward prepareEditItemFilePermissions(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final Item item = selectItem(request);
-        final DynaActionForm editItemFilePermissionsForm = (DynaActionForm) form;
-        final Integer fileItemId = getFileItemId(request);
-        FileItem fileItem = (FileItem) rootDomainObject.readFileByOID(fileItemId);
+        selectItem(request);
+        FileItem fileItem = selectFileItem(request);
 
-        editItemFilePermissionsForm.set("fileItemId", fileItem.getIdInternal());
-        editItemFilePermissionsForm.set("itemCode", item.getIdInternal());
-        editItemFilePermissionsForm.set("permittedGroupType", fileItem.getFileItemPermittedGroupType().toString());
-
-        request.setAttribute("fileItem", fileItem);
-
-        return mapping.findForward("editFile");
+        if (fileItem == null) {
+            return section(mapping, form, request, response);
+        }
+        else {
+            FileItemPermissionBean bean = new FileItemPermissionBean(fileItem);
+            request.setAttribute("fileItemBean", bean);
+            
+            return mapping.findForward("editFile");
+        }
     }
 
     public ActionForward editItemFilePermissions(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
-	final Item item = selectItem(request);
-        final DynaActionForm editItemFilePermissionsForm = (DynaActionForm) form;
-        final Integer fileItemId = (Integer) editItemFilePermissionsForm.get("fileItemId");
-        final FileItemPermittedGroupType permittedGroupType = FileItemPermittedGroupType.valueOf(editItemFilePermissionsForm.getString("permittedGroupType"));
+        
+        selectItem(request);
+        final FileItem fileItem = selectFileItem(request);
 
+        IViewState viewState = RenderUtils.getViewState();
+        if (viewState == null) {
+            return mapping.findForward("section");
+        }
+        
         try {
-            executeService(request, "EditItemFilePermissions", new Object[] { item.getIdInternal(), fileItemId, permittedGroupType });
+            FileItemPermissionBean bean = (FileItemPermissionBean) viewState.getMetaObject().getObject();
+            ServiceUtils.executeService(getUserView(request), "EditItemFilePermissions", fileItem, bean.getPermittedGroup());
+            return mapping.findForward("section");
         } catch (FileManagerException ex) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.teacher.siteAdministration.editItemFilePermissions.unableToChangeFilePermissions",
-                            new ActionError("error.teacher.siteAdministration.editItemFilePermissions.unableToChangeFilePermissions"));
-            saveErrors(request, actionErrors);
-            final FileItem fileItem = (FileItem) rootDomainObject.readFileByOID(fileItemId);
-            request.setAttribute("fileItem", fileItem);
+            addErrorMessage(request, "error.teacher.siteAdministration.editItemFilePermissions.unableToChangeFilePermissions");
             return mapping.findForward("editFile");
         }
-
-        return mapping.findForward("section");
     }
 
+    public ActionForward saveSectionsOrder(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String orderString = request.getParameter("sectionsOrder");
+        Site site = getSite(request); 
+
+        Section parentSection = getSection(request);
+        List<Section> initialOrder = flattenSection(site, parentSection);
+        
+        List<Pair<Section, Section>> hierarchy = new ArrayList<Pair<Section, Section>>();
+        
+        String[] nodes = orderString.split(",");
+        for (int i = 0; i < nodes.length; i++) {
+            String[] parts = nodes[i].split("-");
+            
+            Integer childIndex = getId(parts[0]);
+            Integer parentIndex = getId(parts[1]);
+
+            Section parent = initialOrder.get(parentIndex);
+            Section child  = initialOrder.get(childIndex);
+            
+            hierarchy.add(new Pair<Section, Section>(parent, child));
+        }
+
+        ServiceUtils.executeService(getUserView(request), "RearrangeSiteSections", hierarchy);
+        
+        if (parentSection == null) {
+            return sections(mapping, form, request, response);
+        }
+        else {
+            return section(mapping, form, request, response);
+        }
+    }
+    
+    private Integer getId(String id) {
+        if (id == null) {
+            return null;
+        }
+        
+        try {
+            return new Integer(id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private List<Section> flattenSection(Site site, Section parent) {
+        List<Section> result = new ArrayList<Section>();
+        
+        result.add(parent);
+        
+        SortedSet<Section> sections;
+        if (parent == null) {
+            sections = site.getOrderedTopLevelSections();
+        }
+        else {
+            sections = parent.getOrderedSubSections();
+        }
+        
+        for (Section section : sections) {
+            result.addAll(flattenSection(site, section));
+        }
+        
+        return result;
+    }
+
+    private Site getSite(HttpServletRequest request) {
+        ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+        
+        if (executionCourse != null) {
+            return executionCourse.getSite();
+        } else {
+            return null;
+        }
+    }
+    
+    public ActionForward organizeSectionItems(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Section section = getSection(request);
+        if (section == null) {
+            return sections(mapping, form, request, response);
+        }
+        
+        selectSection(request, section);
+        return mapping.findForward("organizeItems");
+    }
+
+    public ActionForward saveItemsOrder(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String orderString = request.getParameter("itemsOrder");
+        Section section = getSection(request);
+
+        if (section == null) {
+            return sections(mapping, form, request, response); 
+        }
+        
+        List<Item> initialItems = new ArrayList<Item>(section.getOrderedItems());
+        List<Item> orderedItems = new ArrayList<Item>();
+        
+        String[] nodes = orderString.split(",");
+        for (int i = 0; i < nodes.length; i++) {
+            String[] parts = nodes[i].split("-");
+            
+            Integer itemIndex = getId(parts[0]);
+            orderedItems.add(initialItems.get(itemIndex - 1));
+        }
+
+        ServiceUtils.executeService(getUserView(request), "RearrangeSectionItems", orderedItems);
+        return section(mapping, form, request, response);
+    }
+    
+    public ActionForward organizeItemFiles(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        selectItem(request);
+        return mapping.findForward("organizeFiles");
+    }
+    
+    public ActionForward saveFilesOrder(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String orderString = request.getParameter("filesOrder");
+        Item item = getItem(request);
+
+        if (item == null) {
+            return sections(mapping, form, request, response); 
+        }
+        
+        List<FileItem> initialFiles = new ArrayList<FileItem>(item.getSortedFileItems());
+        List<FileItem> orderedFiles = new ArrayList<FileItem>();
+        
+        String[] nodes = orderString.split(",");
+        for (int i = 0; i < nodes.length; i++) {
+            String[] parts = nodes[i].split("-");
+            
+            Integer itemIndex = getId(parts[0]);
+            orderedFiles.add(initialFiles.get(itemIndex - 1));
+        }
+
+        ServiceUtils.executeService(getUserView(request), "RearrangeItemFiles", item, orderedFiles);
+        return section(mapping, form, request, response);
+    }
+
+    private void addErrorMessage(HttpServletRequest request, String key) {
+        addErrorMessage(request, ActionMessages.GLOBAL_MESSAGE, key);
+    }
+    
+    private void addErrorMessage(HttpServletRequest request, String property, String key, Object ... args) {
+        ActionMessages messages = getErrors(request);
+        messages.add(property, new ActionMessage(key, args));
+        
+        saveErrors(request, messages);
+    }
+    
+    public ActionForward editSectionPermissions(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        selectSection(request);
+        return mapping.findForward("editSectionPermissions");
+    }
+    
+    public ActionForward editItemPermissions(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        selectItem(request);
+        return mapping.findForward("editItemPermissions");
+    }
 }

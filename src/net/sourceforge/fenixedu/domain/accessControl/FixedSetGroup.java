@@ -51,4 +51,23 @@ public class FixedSetGroup extends LeafGroup {
     public int getElementsCount() {
         return this.persons.size();
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
+        
+        if (! (object instanceof FixedSetGroup)) {
+            return false;
+        }
+        
+        return this.persons.equals(((FixedSetGroup) object).persons);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.persons.hashCode();
+    }
+    
 }

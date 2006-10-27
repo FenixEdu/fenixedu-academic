@@ -8,11 +8,21 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 public class JavaUUID2SqlVarcharFieldConversion implements FieldConversion {
 
     public Object javaToSql(Object source) throws ConversionException {
-        return ((UUID) source).toString();
+        if (source == null) {
+            return null;
+        }
+        else {
+            return ((UUID) source).toString();
+        }
     }
 
     public Object sqlToJava(Object source) throws ConversionException {
-        return UUID.fromString((String) source);
+        if (source == null) {
+            return null;
+        }
+        else {
+            return UUID.fromString((String) source);
+        }
     }
 
 }

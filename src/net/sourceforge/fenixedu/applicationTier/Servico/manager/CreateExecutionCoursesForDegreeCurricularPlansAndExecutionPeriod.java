@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -43,8 +43,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
 		    ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(),
 			    sigla, executionPeriod);
 
-		    executionCourse.setSite(new Site());
-
+		    executionCourse.createSite();
 		    curricularCourse.addAssociatedExecutionCourses(executionCourse);
 		}
             }

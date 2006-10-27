@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Section;
 
 /**
@@ -15,8 +16,9 @@ public class InfoSectionWithAll extends InfoSection {
     public void copyFromDomain(Section section) {
         super.copyFromDomain(section);
         if (section != null) {
-            final InfoSite infoSite = InfoSite.newInfoFromDomain(section.getSite());
-            infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(section.getSite().getExecutionCourse()));
+            ExecutionCourseSite site = (ExecutionCourseSite) section.getSite();
+            final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
+            infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(site.getExecutionCourse()));
             setInfoSite(infoSite);
             if (section.getSuperiorSection() != null) {
                 setSuperiorInfoSection(InfoSectionWithAll

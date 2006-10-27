@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -79,7 +80,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		.readExecutionCourseByOID(executionCourseCode);
 	InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 
-	final Site site = executionCourse.getSite();
+	final ExecutionCourseSite site = executionCourse.getSite();
 	List attends = executionCourse.getAttends();
 
 	List allDegreeCurricularPlans = getDegreeCurricularPlansFromAttends(attends);
@@ -317,7 +318,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
     }
 
     private TeacherAdministrationSiteView createSiteView(
-	    InfoForReadStudentsWithAttendsByExecutionCourse infoSiteStudents, Site site)
+	    InfoForReadStudentsWithAttendsByExecutionCourse infoSiteStudents, ExecutionCourseSite site)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 
 	TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();

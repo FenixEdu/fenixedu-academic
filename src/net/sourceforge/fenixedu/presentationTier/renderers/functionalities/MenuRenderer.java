@@ -156,7 +156,7 @@ public class MenuRenderer extends OutputRenderer {
                     if (! functionality.isVisible(context)) {
                         continue;
                     }
-                    
+                
                     HtmlListItem item = menu.createItem();
 
                     HtmlComponent component = getFunctionalityNameComponent(context, functionality, true);

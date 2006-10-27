@@ -59,9 +59,7 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-        	The Java type of the object.
-        	If the attribute 'name' is not specified this attribute together with the attribute 'oid'
-        	specify the identification of the persistent object that will be rendered.
+        The java type of the object to be created.
       </description>
     </attribute>
     

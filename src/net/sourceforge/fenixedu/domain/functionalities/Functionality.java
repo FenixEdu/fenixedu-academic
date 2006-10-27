@@ -13,8 +13,6 @@ import java.util.UUID;
 import java.util.WeakHashMap;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
 import net.sourceforge.fenixedu.domain.functionalities.exceptions.IllegalOrderInModuleException;
 import net.sourceforge.fenixedu.domain.functionalities.exceptions.MatchPathConflictException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -66,12 +64,8 @@ public abstract class Functionality extends Functionality_Base {
     protected Functionality() {
         super();
 
-        setOjbConcreteClass(this.getClass().getName());
-
         setRootDomainObject(RootDomainObject.getInstance());
         setRelative(true);
-        setEnabled(true);
-        setVisible(true);
         setPrincipal(true);
 
         // TODO: check if we can make a CommitListener to do this
@@ -98,37 +92,12 @@ public abstract class Functionality extends Functionality_Base {
         this();
     }
 
-    /**
-     * Changes the visible internationalizable name of the functionality. The
-     * name must exist, that is, it may not be <code>null</code> or an empty
-     * multilanguage string.
-     * 
-     * @see MultiLanguageString#isEmpty()
-     */
-    @Override
-    public void setName(MultiLanguageString name) {
-        if (name == null || name.isEmpty()) {
-            throw new FieldIsRequiredException("name", "functionalities.functionality.required.name");
-        }
-
-        super.setName(name);
-    }
-
     @Override
     public void setDescription(MultiLanguageString description) {
         if (description == null || description.isEmpty()) {
             super.setDescription(null);
         } else {
             super.setDescription(description);
-        }
-    }
-
-    @Override
-    public void setTitle(MultiLanguageString title) {
-        if (title == null || title.isEmpty()) {
-            super.setTitle(null);
-        } else {
-            super.setTitle(title);
         }
     }
 
@@ -186,6 +155,13 @@ public abstract class Functionality extends Functionality_Base {
         Functionality.checkMatchPath();
     }
 
+    @Override
+    public void setModule(Module module) {
+        super.setModule(module);
+        
+        Functionality.checkMatchPath();
+    }
+
     /**
      * Checks that the public of this functionality does not conflict with the
      * public path of other functionalities.
@@ -222,7 +198,8 @@ public abstract class Functionality extends Functionality_Base {
     }
 
     public Boolean isPrincipal() {
-        return getPrincipal() == null ? true : getPrincipal();
+        Boolean principal = getPrincipal();
+        return principal == null ? true : principal;
     }
 
     public void setPathAndPrincipal(String path, Boolean principal) {
@@ -243,7 +220,8 @@ public abstract class Functionality extends Functionality_Base {
      * @see #isRelative()
      */
     public String getPublicPath() {
-        if (getPath() == null || getPath().trim().length() == 0) {
+        String path = getPath();
+        if (path == null || path.trim().length() == 0) {
             return null;
         }
 
@@ -421,40 +399,6 @@ public abstract class Functionality extends Functionality_Base {
     }
 
     /**
-     * Changes the availability policy. The previous policy is deleted.
-     */
-    @Override
-    public void setAvailabilityPolicy(AvailabilityPolicy availabilityPolicy) {
-        if (getAvailabilityPolicy() != null && getAvailabilityPolicy() != availabilityPolicy) {
-            getAvailabilityPolicy().delete();
-        }
-
-        super.setAvailabilityPolicy(availabilityPolicy);
-    }
-
-    /**
-     * @see #isEnabled()
-     */
-    @Override
-    @Deprecated
-    public Boolean getEnabled() {
-        return super.getEnabled();
-    }
-
-    /**
-     * Indicates if a functionality is generally available for use. A disabled
-     * functionality is never available despite what the current availability
-     * policy is. When a functionality is enabled then it is availability is
-     * defined by the current availability policy.
-     * 
-     * @return <code>true</code> if this functionality is available for
-     *         general use
-     */
-    public Boolean isEnabled() {
-        return super.getEnabled();
-    }
-
-    /**
      * Moves this position up one place inside the holding module.
      */
     public void moveUp() {
@@ -610,11 +554,7 @@ public abstract class Functionality extends Functionality_Base {
         if (context == null) {
             return true;
         }
-
-        if (!isEnabled()) {
-            return false;
-        }
-
+        
         if (!hasRequiredParameters(context)) {
             return false;
         }
@@ -623,37 +563,7 @@ public abstract class Functionality extends Functionality_Base {
             return false;
         }
 
-        if (getAvailabilityPolicy() == null) {
-            return true;
-        }
-
-        return getAvailabilityPolicy().isAvailable(context);
-    }
-
-    /**
-     * Checks if this functionality is visible for the given person and context.
-     * This method may be used to decide if a certain functionality is displayed
-     * in the interface or not.
-     * 
-     * @param context
-     *            the current context
-     * @param person
-     *            the accessing the functionality or <code>null</code> if it's
-     *            the public requester
-     * 
-     * @return <code>true</code> if the functionality should be displayed to
-     *         the user
-     */
-    public boolean isVisible(FunctionalityContext context) {
-        return isVisible() && isAvailable(context);
-    }
-
-    /**
-     * @return <code>true</code> if this functionality was marked as visible
-     *         to the user
-     */
-    public Boolean isVisible() {
-        return getVisible() == null ? true : getVisible();
+        return super.isAvailable(context);
     }
 
     /**
@@ -685,52 +595,21 @@ public abstract class Functionality extends Functionality_Base {
         return true;
     }
 
-    /**
-     * Deletes this functionality from persistent storage.
-     * 
-     * <p>
-     * This delete method is a template method for all functionalities. First
-     * {@link #checkDeletion()} is called. If the object is not deletable then a
-     * subclass must throw a {@link DomainException} explaining why. If no
-     * exception is thrown then {@link #disconnect()} is called to allow the
-     * object to remove any specific relations.
-     * 
-     * <p>
-     * After all this the standard relations of a functionality are removed and
-     * the object is marked for deletion in the database.
-     */
-    public void delete() {
-        checkDeletion(); // throws exception if cannot delete
+    @Override
+    protected void disconnect() {
+        super.disconnect();
+        
+        removeRootDomainObject();
+    }
+
+    @Override
+    protected void deleteSelf() {
+        super.deleteSelf();
 
         // remove from cached table
         Functionality.UUID_TABLE.remove(getUuid());
-
-        disconnect();
-        deleteDomainObject();
     }
-
-    /**
-     * Checks if the object can be deleted.
-     * 
-     * @exception DomainException
-     *                if the object cannot be deleted
-     */
-    protected abstract void checkDeletion();
-
-    /**
-     * Removes any specific relations the funtionality has. Subclasses that
-     * override this method <strong>must</strong> call super to remove all
-     * relations.
-     * 
-     * <p>
-     * If other objects should be deleted because of this object beeing deleted,
-     * this is the place to do it.
-     */
-    protected void disconnect() {
-        removeRootDomainObject();
-        removeAvailabilityPolicy();
-    }
-
+    
     //
     //
     //

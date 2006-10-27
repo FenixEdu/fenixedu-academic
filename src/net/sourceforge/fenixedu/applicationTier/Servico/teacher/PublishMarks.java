@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.FenixUtilException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -33,7 +33,7 @@ public class PublishMarks extends Service {
 
         final ExecutionCourse executionCourse = rootDomainObject
                 .readExecutionCourseByOID(executionCourseCode);
-        final Site site = executionCourse.getSite();
+        final ExecutionCourseSite site = executionCourse.getSite();
         final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
 
         if (publishmentMessage == null || publishmentMessage.length() == 0) {

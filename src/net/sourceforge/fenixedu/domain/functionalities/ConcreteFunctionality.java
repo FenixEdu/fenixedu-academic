@@ -36,11 +36,6 @@ public class ConcreteFunctionality extends ConcreteFunctionality_Base {
     }
     
     @Override
-    protected void checkDeletion() {
-        // can be deleted
-    }
-
-    @Override
     protected void disconnect() {
         super.disconnect();
         

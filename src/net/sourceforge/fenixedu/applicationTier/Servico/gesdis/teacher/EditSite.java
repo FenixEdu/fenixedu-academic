@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -19,7 +19,7 @@ public class EditSite extends Service {
             final String initialStatement, final String introduction) throws FenixServiceException,
             ExcepcaoPersistencia {
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoSiteOld.getInfoExecutionCourse().getIdInternal());
-        final Site site = executionCourse.getSite();
+        final ExecutionCourseSite site = executionCourse.getSite();
 
         site.edit(initialStatement, introduction, mail, alternativeSite);
 

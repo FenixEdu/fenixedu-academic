@@ -587,6 +587,7 @@
 	</definition>
 
 	<definition name="manage-execution-course-sectionsManagement" extends="execution-course-administration">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
 		<put name="body" value="/teacher/executionCourse/sectionsManagement.jsp" />
 	</definition>
 
@@ -595,6 +596,7 @@
 	</definition>
 	
 	<definition name="manage-execution-course-section" extends="execution-course-administration">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
 		<put name="body" value="/teacher/executionCourse/section.jsp" />
 	</definition>
 
@@ -617,6 +619,28 @@
 	<definition name="manage-execution-course-editFile" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/editFile.jsp" />
 	</definition>
+
+    <definition name="manage-execution-course-organizeItems" extends="execution-course-administration">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/teacher/executionCourse/organizeItems.jsp" />
+    </definition>
+
+    <definition name="manage-execution-course-organizeFiles" extends="execution-course-administration">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/teacher/executionCourse/organizeFiles.jsp" />
+    </definition>
+
+    <definition name="manage-execution-course-confirmSectionDelete" extends="execution-course-administration">
+        <put name="body" value="/teacher/executionCourse/confirmSectionDelete.jsp" />
+    </definition>
+
+    <definition name="manage-execution-course-editSectionPermissions" extends="execution-course-administration">
+        <put name="body" value="/teacher/executionCourse/editSectionPermissions.jsp" />
+    </definition>
+
+    <definition name="manage-execution-course-editItemPermissions" extends="execution-course-administration">
+        <put name="body" value="/teacher/executionCourse/editItemPermissions.jsp" />
+    </definition>
 
 	<!-- =================== MarkSheetManagement ============== -->
 	<definition name="show.evaluationIndex" extends="df.teacher.evaluation-management">

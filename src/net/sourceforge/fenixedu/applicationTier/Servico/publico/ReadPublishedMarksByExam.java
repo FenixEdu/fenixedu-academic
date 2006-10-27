@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -37,12 +37,12 @@ public class ReadPublishedMarksByExam extends Service {
         List marksList = null;
         List infoMarksList = null;
 
-        Site site = null;
+        ExecutionCourseSite site = null;
         Evaluation evaluation = null;
         InfoEvaluation infoEvaluation = null;
 
         //Site
-        site = rootDomainObject.readSiteByOID(siteCode);
+        site = rootDomainObject.readExecutionCourseSiteByOID(siteCode);
 
         //Execution Course
         ExecutionCourse executionCourse = site.getExecutionCourse();

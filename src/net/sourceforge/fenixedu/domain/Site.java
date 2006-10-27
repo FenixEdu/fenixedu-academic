@@ -9,31 +9,25 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.accessControl.IGroup;
+import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
+import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * @author Ivo Brand�o
  */
-public class Site extends Site_Base {
+public abstract class Site extends Site_Base {
 
     public Site() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setDynamicMailDistribution(false);
-        setLessonPlanningAvailable(false);
+        
+        setOjbConcreteClass(this.getClass().getName());
     }
 
-    public void edit(final String initialStatement, final String introduction, final String mail,
-            final String alternativeSite) {
-
-        setInitialStatement(initialStatement);
-        setIntroduction(introduction);
-        setMail(mail);
-        setAlternativeSite(alternativeSite);
-    }
-
-    public Section createSection(MultiLanguageString sectionName, Section parentSection, Integer sectionOrder) {
+    public Section createSection(MultiLanguageString sectionName, Section parentSection,
+            Integer sectionOrder) {
         return new Section(this, sectionName, sectionOrder, parentSection);
     }
 
@@ -43,12 +37,15 @@ public class Site extends Site_Base {
 
     public void delete() {
         if (canBeDeleted()) {
-            removeExecutionCourse();
-            removeRootDomainObject();
+            deleteRelations();
+
             super.deleteDomainObject();
         } else {
             throw new DomainException("site.cannot.be.deleted");
         }
+    }
+
+    protected void deleteRelations() {
     }
 
     public List<Section> getAssociatedSections(final Section parentSection) {
@@ -90,17 +87,25 @@ public class Site extends Site_Base {
     public void copySectionsAndItemsFrom(Site siteFrom) {
         for (Section sectionFrom : siteFrom.getAssociatedSections()) {
             if (sectionFrom.getSuperiorSection() == null) {
-                Section sectionTo = this.createSection(sectionFrom.getName(), null, sectionFrom.getSectionOrder());
+                Section sectionTo = this.createSection(sectionFrom.getName(), null, sectionFrom
+                        .getSectionOrder());
                 sectionTo.copyItemsFrom(sectionFrom);
                 sectionTo.copySubSectionsAndItemsFrom(sectionFrom);
             }
         }
     }
 
-    public void copyCustomizationOptionsFrom(Site siteFrom) {
-	setMail(siteFrom.getMail());	
-	setAlternativeSite(siteFrom.getAlternativeSite());
-	setInitialStatement(siteFrom.getInitialStatement());
-	setIntroduction(siteFrom.getIntroduction());
-    }    
+    /**
+     * Obtains a list of all the groups available in the context of this site.
+     * 
+     * @return
+     */
+    public List<IGroup> getContextualPermissionGroups() {
+        List<IGroup> groups = new ArrayList<IGroup>();
+        
+        groups.add(new EveryoneGroup());
+        groups.add(new InternalPersonGroup());
+        
+        return groups;
+    }
 }

@@ -5,30 +5,25 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Site -->
 <!-- ******************************************************************************************************************************* -->
+
 <class-descriptor class="net.sourceforge.fenixedu.domain.Site"
                   table="SITE">
-    
-    
-         
-    
-    	 
-   	
-    
-    
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.ExecutionCourseSite"/>
+</class-descriptor>
 
-    	 
-    
-    	 
-    		 	 
-      
-	
-    
+<class-descriptor class="net.sourceforge.fenixedu.domain.ExecutionCourseSite" table="SITE">
+</class-descriptor>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.AccessibleItem"
+                  table="ACCESSIBLE_ITEM">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.SiteElement"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.functionalities.Functionality"/>
+</class-descriptor>
 
-	
-
-	
-
+<class-descriptor class="net.sourceforge.fenixedu.domain.SiteElement"
+                  table="ACCESSIBLE_ITEM">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.Section"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.Item"/>
 </class-descriptor>
 
 <!-- ******************************** -->
@@ -37,45 +32,18 @@
    
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.Section -->
-   <class-descriptor class="net.sourceforge.fenixedu.domain.Section"
-   	  table="SECTION"
-   >
-    
-      
-      
-      
-      
-    
-    
-      
-      
-      
-      
-      	
-	  	
-    </class-descriptor>
-
-
+<class-descriptor class="net.sourceforge.fenixedu.domain.Section"
+  table="ACCESSIBLE_ITEM">
+</class-descriptor>
 
 <!-- ****************************** -->
 <!-- **********   ITEM   ********** -->
 <!-- ****************************** --> 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Item -->
-   <class-descriptor class="net.sourceforge.fenixedu.domain.Item"
-   	  table="ITEM"
-   >
-      
-      
-      
-      
-      
-      
-      
-      
-   </class-descriptor>
-
-
+<class-descriptor class="net.sourceforge.fenixedu.domain.Item"
+  table="ACCESSIBLE_ITEM">
+</class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.BibliographicReference -->
@@ -83,45 +51,12 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.BibliographicReference"
                   table="BIBLIOGRAPHIC_REFERENCE">
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-	
-		   
-    
-      
-	
-    
-    
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.SupportLesson -->
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.SupportLesson"  table="SUPPORT_LESSON">
-	
-	
-						        
-    
-    
-    
-    						    
-    
-        
-    
-    
-	
-      
-
-	
-
 </class-descriptor>
     
 <!-- ******************************************************************************************************************************* -->
@@ -129,35 +64,12 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.EvaluationMethod"
                   table="EVALUATION_METHOD">
-    
-    
-         
-    
-    	 
-    
-      
-        
-    
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Professorship -->
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Professorship" table="PROFESSORSHIPS">
-	
-      
-	
-	
-	 
-	   
-	
-	
-	
-	
-	 
-	       
-		
-    
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
@@ -165,28 +77,6 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Summary"
                   table="SUMMARY">
-    
-    
-    
-	  
-    
-    
-    	
-		
-	
-		
-		
-			
-		
-			
-	    
-	
-    
-    
-    
-    
-    
-    
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
@@ -194,21 +84,6 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.StudentGroup"
                   table="STUDENT_GROUP">
-    
-    
-         
-    
-    
-		 
-
-	 
-	    
-    
-
-	
-
-	
-
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
@@ -216,78 +91,24 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Grouping"
                   table="GROUPING">
-    
-	
-         
-    
-    	 
-    
-        
-    
-
-    
-    
-    
-
-	
-	
-	
-    
-    
-
-     
-    		
-               
-             
-	
-	
-	
-	
-
-	
-		
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.gesdis.CourseReport -->
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.gesdis.CourseReport" table="COURSE_REPORT">
-    
-    
-	
-      					  
-      
-	 
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport -->
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport" table="STUDENT_COURSE_REPORT">
-    
-    
-	
-	
-	
-      					  
-      
-	 
 </class-descriptor>
   
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.gesdis.CourseHistoric -->
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.gesdis.CourseHistoric" table="COURSE_HISTORIC">
-    
-    
-    
-    
-    
-	
-      					  
-    
-
-	 
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
@@ -295,24 +116,6 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.ExportGrouping"
                   table="GROUPING_EXECUTION_COURSE">
-     
-    
-    
-    
-    
-    
-	
-    
-        
-    
-	
-	
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->

@@ -27,3 +27,8 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Merge Section, Item, and Functionality" MergeSiteElementsAndFunctionalities.sql
+execute "Add 'visible' and 'orderInItem' columns to FileItem, change relation with Item" AlterFileItemAndRelation.sql
+execute "Refactor GroupAvailability" RefactorGroupAvailability.sql
+execute "Add functionalities to execution course site location" AddExecutionCourseSiteFunctionalities.sql
+execute "Separate ExecutionCourseSite from Site" CreateExecutionCourseSite.sql

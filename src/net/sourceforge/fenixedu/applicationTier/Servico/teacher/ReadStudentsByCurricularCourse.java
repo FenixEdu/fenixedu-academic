@@ -12,12 +12,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudents;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -40,7 +40,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         CurricularCourse curricularCourse = null;
 
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseCode);
-        final Site site = executionCourse.getSite();
+        final ExecutionCourseSite site = executionCourse.getSite();
 
         if (courseCode == null) {
             infoStudentList = getAllAttendingStudents(site);
@@ -73,7 +73,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         return infoStudentList;
     }
 
-    private List getAllAttendingStudents(final Site site) throws ExcepcaoPersistencia {
+    private List getAllAttendingStudents(final ExecutionCourseSite site) throws ExcepcaoPersistencia {
         final List<Attends> attendList = site.getExecutionCourse().getAttends();
         final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (final Attends attends : attendList) {
@@ -83,7 +83,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         return infoStudentList;
     }
 
-    private TeacherAdministrationSiteView createSiteView(List infoStudentList, Site site,
+    private TeacherAdministrationSiteView createSiteView(List infoStudentList, ExecutionCourseSite site,
             CurricularCourse curricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
         InfoSiteStudents infoSiteStudents = new InfoSiteStudents();
         infoSiteStudents.setStudents(infoStudentList);

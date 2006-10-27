@@ -1,34 +1,28 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.Section.SectionFactoryCreator;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.SectionOrderConverter;
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
-public class SectionOrderProvider implements DataProvider {
+public class SectionOrderProvider extends SectionProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	final Site site;
-	final Section superiorSection;
-	if (source instanceof SectionFactoryCreator) { 
-	    final SectionFactoryCreator sectionFactoryCreator = (SectionFactoryCreator) source;
-	    site = sectionFactoryCreator.getSite();
-	    superiorSection = sectionFactoryCreator.getSuperiorSection();
-	} else if (source instanceof Section) {
-	    final Section section = (Section) source;
-	    site = section.getSite();
-	    superiorSection = section.getSuperiorSection();
-	} else {
-	    throw new Error("Unknown section type: " + source);
-	}
+    @Override
+    public Object provideForContext(Site site, Section superiorSection, Section self) {
+        Collection<Section> siblings;
+        
+        if (superiorSection != null) {
+            siblings = superiorSection.getOrderedSubSections();
+        }
+        else {
+            siblings = site.getOrderedTopLevelSections();
+        }
+        
+        siblings = new ArrayList<Section>(siblings);
+        siblings.remove(self);
 
-	return superiorSection == null ? site.getOrderedTopLevelSections() : superiorSection.getOrderedSubSections();
-    }
-
-    public Converter getConverter() {
-        return new SectionOrderConverter();
+        return siblings;
     }
 
 }

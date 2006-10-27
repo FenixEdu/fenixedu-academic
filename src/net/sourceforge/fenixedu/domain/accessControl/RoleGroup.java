@@ -22,100 +22,100 @@ public class RoleGroup extends DomainBackedGroup<Role> {
     private static final long serialVersionUID = 1L;
 
     public RoleGroup(Role role) {
-	super(role);
+        super(role);
     }
 
     public Role getRole() {
-	return getObject();
+        return getObject();
     }
 
     @Override
     public int getElementsCount() {
-	return this.getRole().getAssociatedPersonsCount();
+        return this.getRole().getAssociatedPersonsCount();
     }
 
     @Override
     public Set<Person> getElements() {
-	Set<Person> elements = new HashSet<Person>();
-	elements.addAll(this.getRole().getAssociatedPersons());
+        Set<Person> elements = new HashSet<Person>();
+        elements.addAll(this.getRole().getAssociatedPersons());
 
-	return elements;
+        return elements;
     }
 
     /**
-         * The host may have restriction on the roles available so checking if a
-         * <tt>UserView</tt> is allowed or checking directly is a person is
-         * member of this groups has different behaviours. The <tt>UserView</tt>
-         * as all the person roles that are allowed in the current host while
-         * the person has all the roles assigned to it.
-         * 
-         * <p>
-         * This method checks if the <tt>UserView</tt> contains the same role
-         * as this group.
-         */
+     * The host may have restriction on the roles available so checking if a
+     * <tt>UserView</tt> is allowed or checking directly is a person is member
+     * of this groups has different behaviours. The <tt>UserView</tt> as all
+     * the person roles that are allowed in the current host while the person
+     * has all the roles assigned to it.
+     * 
+     * <p>
+     * This method checks if the <tt>UserView</tt> contains the same role as
+     * this group.
+     */
     @Override
     public boolean allows(IUserView userView) {
-	Collection<RoleType> roleTypes = userView.getRoleTypes();
+        Collection<RoleType> roleTypes = userView.getRoleTypes();
 
-	if (roleTypes == null) {
-	    return false;
-	}
+        if (roleTypes == null) {
+            return false;
+        }
 
-	if (roleTypes.contains(getRole().getRoleType())) {
-	    return true;
-	} else {
-	    return false;
-	}
+        if (roleTypes.contains(getRole().getRoleType())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean isMember(Person person) {
-	if (person != null && getRole() != null) {
-	    return person.hasRole(getRole().getRoleType());
-	}
+        if (person != null && getRole() != null) {
+            return person.hasRole(getRole().getRoleType());
+        }
 
-	return false;
+        return false;
     }
 
     /**
-         * Builder used to create a RoleGroup from a group expression.
-         * 
-         * @author cfgi
-         */
+     * Builder used to create a RoleGroup from a group expression.
+     * 
+     * @author cfgi
+     */
     public static class Builder implements GroupBuilder {
 
-	public Group build(Object[] arguments) {
-	    if (arguments.length != 1) {
-		throw new WrongNumberOfArgumentsException(arguments.length, getMinArguments(),
-			getMaxArguments());
-	    }
+        public Group build(Object[] arguments) {
+            if (arguments.length != 1) {
+                throw new WrongNumberOfArgumentsException(arguments.length, getMinArguments(),
+                        getMaxArguments());
+            }
 
-	    try {
-		String roleName = (String) arguments[0];
-		Role role = Role.getRoleByRoleType(RoleType.valueOf(roleName));
+            try {
+                String roleName = (String) arguments[0];
+                Role role = Role.getRoleByRoleType(RoleType.valueOf(roleName));
 
-		if (role == null) {
-		    throw new GroupDynamicExpressionException(
-			    "accessControl.group.builder.role.type.notAvailable", roleName);
-		}
+                if (role == null) {
+                    throw new GroupDynamicExpressionException(
+                            "accessControl.group.builder.role.type.notAvailable", roleName);
+                }
 
-		return new RoleGroup(role);
-	    } catch (ClassCastException e) {
-		throw new WrongTypeOfArgumentException(1, String.class, arguments[0].getClass());
-	    } catch (IllegalArgumentException e) {
-		throw new GroupDynamicExpressionException(
-			"accessControl.group.builder.role.type.doesNotExist", String
-				.valueOf(arguments[0]));
-	    }
-	}
+                return new RoleGroup(role);
+            } catch (ClassCastException e) {
+                throw new WrongTypeOfArgumentException(1, String.class, arguments[0].getClass());
+            } catch (IllegalArgumentException e) {
+                throw new GroupDynamicExpressionException(
+                        "accessControl.group.builder.role.type.doesNotExist", String
+                                .valueOf(arguments[0]));
+            }
+        }
 
-	public int getMinArguments() {
-	    return 1;
-	}
+        public int getMinArguments() {
+            return 1;
+        }
 
-	public int getMaxArguments() {
-	    return 1;
-	}
+        public int getMaxArguments() {
+            return 1;
+        }
 
     }
 

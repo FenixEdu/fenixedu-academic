@@ -42,6 +42,7 @@ function switchGlobal() {
 	var blockElements = getElementsByClass('switchBlock');
 	var inlineElements = getElementsByClass('switchInline');
 	var noneElements = getElementsByClass('switchNone');
+	var noneElements2 = getElementsByClass('switchNoneStyle'); // fix bug: in konqueror/safari
 	
 	for (i = 0; i < blockElements.length; i++) {
 		blockElements[i].className = 'dblock';
@@ -53,6 +54,10 @@ function switchGlobal() {
 	
 	for (i = 0; i < noneElements.length; i++) {
 		noneElements[i].className = 'dnone';
+	}
+
+	for (i = 0; i < noneElements2.length; i++) {
+		noneElements2[i].style.display = 'none';
 	}
 }
 

@@ -19,6 +19,8 @@ public class InfoSiteSection extends DataTranferObject implements ISiteComponent
 
     private List items;
 
+    public InfoSiteSection() {}
+    
     /**
      * @see java.lang.Object#toString()
      */

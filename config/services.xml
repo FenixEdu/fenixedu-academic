@@ -2670,20 +2670,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadItems</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadItems</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadSites</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadSites</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>ReadSite</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadSite</implementationClass>
 		<description />
@@ -2709,6 +2695,36 @@
 			<chain name="TeacherAuthorization" />
 		</filterChains>
 	</service>
+    <service>
+        <name>RearrangeSiteSections</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.RearrangeSiteSections</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherFromSiteContainingSectionsAuthorization" />
+        </filterChains>
+    </service>
+    <service>
+        <name>RearrangeItemFiles</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.RearrangeItemFiles</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherFromSiteContainingFilesAuthorization" />
+        </filterChains>
+    </service>
+    <service>
+        <name>RearrangeSectionItems</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.RearrangeSectionItems</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherFromSiteContainingItemsAuthorization" />
+        </filterChains>
+    </service>
 	<service>
 		<name>ReadTeacherByUsername</name>
 		<implementationClass> 

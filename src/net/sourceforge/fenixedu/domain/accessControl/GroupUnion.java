@@ -20,6 +20,17 @@ public final class GroupUnion extends NodeGroup {
     }
 
     @Override
+    public int getElementsCount() {
+        int count = 0;
+        
+        for (IGroup child : getChildren()) {
+            count += child.getElementsCount();
+        }
+        
+        return count;
+    }
+
+    @Override
     public Set<Person> getElements() {
         Set<Person> elements = new HashSet<Person>();
 

@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -34,7 +34,7 @@ public class ReadTeacherExecutionCoursesSitesService extends Service {
         final List<Professorship> professorships = teacher.getProfessorships();
         for (final Professorship professorship : professorships) {
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            final Site site = executionCourse.getSite();
+            final ExecutionCourseSite site = executionCourse.getSite();
             final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
             infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             infoSites.add(infoSite);

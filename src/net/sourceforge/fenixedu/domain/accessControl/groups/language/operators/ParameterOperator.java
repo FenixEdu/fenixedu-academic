@@ -66,7 +66,7 @@ public class ParameterOperator extends OperatorArgument {
     protected String execute() {
         String value = getContext().getParameter(getParameterName());
         
-        if (value == null || isRequired()) {
+        if (value == null && isRequired()) {
             throw new GroupDynamicExpressionException("accessControl.group.expression.operator.parameter.required", getParameterName());
         }
         else {

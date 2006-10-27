@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadSectionsBySiteAndSuperiorSection extends Service {
 
 	public List<InfoSection> run(InfoSite infoSite, InfoSection infoSuperiorSection) throws FenixServiceException, ExcepcaoPersistencia {
-		final Site site = rootDomainObject.readSiteByOID(infoSite.getIdInternal());
+		final Site site = rootDomainObject.readExecutionCourseSiteByOID(infoSite.getIdInternal());
 		if (site == null) {
             		throw new FenixServiceException("error.noSite");     
         	}

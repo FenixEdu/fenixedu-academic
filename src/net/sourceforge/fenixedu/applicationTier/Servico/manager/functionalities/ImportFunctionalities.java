@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.exceptions.InvalidStructureException;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality;
+import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
-import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -138,7 +138,7 @@ public class ImportFunctionalities extends Service {
                 functionality.setVisible(visible);
                 
                 if (expression != null) {
-                    new GroupAvailability(functionality, expression);
+                    new ExpressionGroupAvailability(functionality, expression);
                 }
                 
                 functionality.setModule(module);

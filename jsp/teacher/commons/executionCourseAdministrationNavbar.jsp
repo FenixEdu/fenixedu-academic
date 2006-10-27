@@ -46,12 +46,6 @@
 				<bean:message key="label.executionCourseManagement.menu.sections"/>
 			</html:link>
 		</li>	
-		<logic:notEmpty name="executionCourse" property="site.associatedSections">
-			<logic:present name="renderSections">
-				<bean:define id="sections" toScope="request" name="executionCourse" property="site.orderedTopLevelSections"/>
-				<jsp:include page="/teacher/executionCourse/sections.jsp"/>
-			</logic:present>
-		</logic:notEmpty>
 
 	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.management"/></li>
 		<li>

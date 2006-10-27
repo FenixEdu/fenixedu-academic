@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -39,7 +40,7 @@ public class InsertEvaluationMarks extends Service {
     public Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
-        Site site = null;
+        ExecutionCourseSite site = null;
         Evaluation evaluation = null;
         List<InfoMarkEditor> marksErrorsInvalidMark = null;
         List attendList = null;
@@ -101,7 +102,7 @@ public class InsertEvaluationMarks extends Service {
                 hashMarks);
     }
 
-    private Object createSiteView(Site site, Evaluation evaluation, HashMap hashMarks,
+    private Object createSiteView(ExecutionCourseSite site, Evaluation evaluation, HashMap hashMarks,
             List marksErrorsInvalidMark, List attendList, HashMap nonExistingStudents)
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoSiteMarks infoSiteMarks = new InfoSiteMarks();

@@ -82,7 +82,7 @@
 	</definition>
 	<definition name="execution-course-administration" extends="definition.teacher.testsPage">
 		<put name="executionCourseName" value="/teacher/commons/manageExecutionCourseHeader.jsp"/>
-    	<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
+        	<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
 	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
 	</definition>

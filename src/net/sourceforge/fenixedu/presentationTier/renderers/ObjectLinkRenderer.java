@@ -32,6 +32,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
     private String linkFormat;
 
     private boolean contextRelative;
+    private boolean moduleRelative;
 
     private String destination;
 
@@ -69,7 +70,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
     }
 
     /**
-     * Indicates that th link specified should be relative to the context of the
+     * Indicates that the link specified should be relative to the context of the
      * application and not to the current module. This also overrides the module
      * if a destination is specified.
      * 
@@ -77,6 +78,20 @@ public class ObjectLinkRenderer extends OutputRenderer {
      */
     public void setContextRelative(boolean contextRelative) {
         this.contextRelative = contextRelative;
+    }
+
+    public boolean isModuleRelative() {
+        return this.moduleRelative;
+    }
+
+    /**
+     * Allows you to choose if the generated link is relative to the current module. Note that
+     * if the link is not context relative then it also isn't module relative.
+     * 
+     * @property
+     */
+    public void setModuleRelative(boolean moduleRelative) {
+        this.moduleRelative = moduleRelative;
     }
 
     public boolean isUseParent() {
@@ -253,11 +268,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
 
                 link.setUrl(RenderUtils.getFormattedProperties(url, usedObject));
 
-                if (isContextRelative()) {
-                    link.setModule(null);
-                    link.setModuleRelative(false);
-                }
-
+                link.setModuleRelative(isModuleRelative());
+                link.setContextRelative(isContextRelative());
+                
                 return link;
             }
 

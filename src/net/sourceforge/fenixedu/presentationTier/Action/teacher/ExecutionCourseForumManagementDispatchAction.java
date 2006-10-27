@@ -26,7 +26,7 @@ public class ExecutionCourseForumManagementDispatchAction extends ForunsManageme
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ManageExecutionCourseDA.getExecutionCourseFromParameterAndSetItInRequest(request);
+        ManageExecutionCourseDA.propageContextIds(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
