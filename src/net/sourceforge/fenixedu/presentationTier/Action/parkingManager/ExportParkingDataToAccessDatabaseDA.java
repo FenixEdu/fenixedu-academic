@@ -206,12 +206,12 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
                     response
                             .setHeader("Content-disposition", "attachment; filename=parkingDB_merge.xls");
 
-                    Database database = Database.open(FileUtils.copyToTemporaryFile(openFileBean.getInputStream()));
+                    Database database = Database.open(FileUtils.copyToTemporaryFile(openFileBean
+                            .getInputStream()));
                     Table table = database.getTable("XML");
 
                     List<ParkingParty> parkingParties = new ArrayList<ParkingParty>(ParkingParty
                             .getAll());
-                    System.out.println("A tabela tem " + table.getRowCount() + " linhas!!!!!");
 
                     final HSSFWorkbook workbook = new HSSFWorkbook();
                     final ExcelStyle excelStyle = new ExcelStyle(workbook);
@@ -219,26 +219,13 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
                     final Spreadsheet parkingBDSpreadsheet = new Spreadsheet("BD Fénix Parque");
                     setHeaders(parkingBDSpreadsheet);
 
-                    int contador = 0;
-                    int totalCounter = 0;
-
                     for (Map<String, Object> row = table.getNextRow(); row != null; row = table
                             .getNextRow()) {
                         Long cardNumber = new Long((String) row.get("Card"));
-                        //                String name = (String) row.get("Name");
-                        //                System.out.println(cardNumber + " - " + name);
-
                         ParkingParty parkingParty = getParkingPartyCardNumber(cardNumber, parkingParties);
-                        if (parkingParty != null) {
-                            addRow(parkingBDSpreadsheet, parkingParty, row);
-                            contador++;
-                        }
-                        totalCounter++;
+                        addRow(parkingBDSpreadsheet, parkingParty, row);
                     }
-                    System.out.println("O total é de: " + totalCounter);
-                    System.out.println("As linhas adicionadas foram: " + contador);
                     database.close();
-
                     parkingBDSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(),
                             excelStyle.getStringStyle());
                     workbook.write(writer);
@@ -263,7 +250,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
             if (parkingParty.getCardNumber() != null && parkingParty.getCardNumber().equals(cardNumber)) {
                 parkingParties.remove(parkingParty);
                 return parkingParty;
-            }
+            }  
         }
         return null;
     }
@@ -274,14 +261,22 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         DateTime dateTime = new DateTime(thisInstant);
         final Row row = parkingBDSpreadsheet.addRow();
         Person person = null;
-        if (parkingParty.getParty().isPerson()) {
+        if (parkingParty != null && parkingParty.getParty().isPerson()) {
             person = (Person) parkingParty.getParty();
         }
         row.setCell(((Short) accessTableRow.get("Garage")).toString());
-        row.setCell(parkingParty.getCardNumber().toString()); // cardNumber
+        if (parkingParty != null) {
+            row.setCell(parkingParty.getCardNumber().toString()); // cardNumber
+        } else {
+            row.setCell((String)accessTableRow.get("Card"));
+        }
         row.setCell(((Short) accessTableRow.get("Type")).toString());
         row.setCell(getBooleanString(accessTableRow.get("Access"))); // if the card is active or not
-        row.setCell(convertParkingGroupToAccessDB(parkingParty.getParkingGroup())); // accessGroup
+        if (parkingParty != null) {
+            row.setCell(convertParkingGroupToAccessDB(parkingParty.getParkingGroup())); // accessGroup
+        } else {
+            row.setCell(((Short)accessTableRow.get("AccessGroup")).toString());
+        }
         row.setCell(((Short) accessTableRow.get("Fee")).toString());
         row.setCell(((Short) accessTableRow.get("SAC")).toString());
         row
@@ -290,13 +285,25 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell(DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", (Date) accessTableRow
                 .get("CreatedDate")));
         row.setCell(dateTime.toString("dd/MM/yyyy HH:mm:ss")); // editedDate
-        row.setCell(person != null ? getName(person.getNickname()) : getName(parkingParty.getParty()
-                .getName())); // name
+        if (parkingParty != null) {
+            row.setCell(person != null ? getName(person.getNickname()) : getName(parkingParty.getParty()
+                    .getName())); // name
+        } else {
+            row.setCell((String)accessTableRow.get("Name"));
+        }
         row.setCell((String) accessTableRow.get("Address"));
-        row.setCell(parkingParty.getFirstCarPlateNumber() != null ? parkingParty
-                .getFirstCarPlateNumber() : ""); // license
-        row.setCell(parkingParty.getSecondCarPlateNumber() != null ? parkingParty
-                .getSecondCarPlateNumber() : ""); // licenseAlt
+        if (parkingParty != null) {
+            row.setCell(parkingParty.getFirstCarPlateNumber() != null ? parkingParty
+                    .getFirstCarPlateNumber() : ""); // license
+        } else {
+            row.setCell((String)accessTableRow.get("License"));
+        }
+        if (parkingParty != null) {
+            row.setCell(parkingParty.getSecondCarPlateNumber() != null ? parkingParty
+                    .getSecondCarPlateNumber() : ""); // licenseAlt
+        } else {
+            row.setCell((String)accessTableRow.get("LicenseAlt"));
+        }
         row.setCell(person != null && person.getWorkPhone() != null ? person.getWorkPhone() : ""); // registration
         row.setCell(person != null && person.getMobile() != null ? person.getMobile() : ""); // registrationAlt
         row.setCell((String) accessTableRow.get("ClientRef"));
@@ -318,7 +325,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         Date startDate = (Date) accessTableRow.get("StartValidityDate");
         row.setCell(startDate != null ? DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", startDate) : ""); // startValidityDate
     }
-    
+
     private String getBooleanString(Object object) {
         Boolean booleanNumber = (Boolean) object;
         if (booleanNumber) {
