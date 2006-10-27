@@ -139,6 +139,9 @@
 						<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>
 					</th>
 					<th>
+						<bean:message bundle="SPACE_RESOURCES" key="label.blueprintNumber"/>
+					</th>
+					<th>
 						<bean:message bundle="SPACE_RESOURCES" key="title.space.number.subspaces"/>
 					</th>
 					<th>
@@ -164,6 +167,14 @@
 							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
 								<bean:write name="space" property="spaceInformation.presentationName"/>
 							</html:link>
+						</td>
+						<td class="acenter">							
+							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+								<bean:write name="space" property="spaceInformation.blueprintNumber"/>							
+							</logic:equal>
+							<logic:notEqual name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+							
+							</logic:notEqual>
 						</td>
 						<td class="acenter">
 							<bean:write name="space" property="containedSpacesCount"/>

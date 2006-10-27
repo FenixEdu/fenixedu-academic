@@ -11,6 +11,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.space.RoomClassification.RoomClassificationFactoryEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -20,9 +23,10 @@ public class RoomClassificationDA extends FenixDispatchAction {
 
     public ActionForward viewRoomClassifications(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	final SortedSet<RoomClassification> sortedRoomClassifications = RoomClassification
-		.sortByRoomClassificationAndCode(rootDomainObject.getRoomClassificationSet());
+	
+	final SortedSet<RoomClassification> sortedRoomClassifications = RoomClassification.sortByRoomClassificationAndCode(rootDomainObject.getRoomClassificationSet());	
 	request.setAttribute("roomClassifications", sortedRoomClassifications);
+	request.setAttribute("roomClassificationCreator", new RoomClassification.RoomClassificationFactoryCreator());
 	return mapping.findForward("ViewRoomClassifications");
     }
 
@@ -32,7 +36,7 @@ public class RoomClassificationDA extends FenixDispatchAction {
 	    executeFactoryMethod(request);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
-	}	
+	}				
 	return viewRoomClassifications(mapping, form, request, response);
     }
 

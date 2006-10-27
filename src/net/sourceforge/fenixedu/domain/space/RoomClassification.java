@@ -80,9 +80,13 @@ public class RoomClassification extends RoomClassification_Base {
 	public Integer getChildCode() {
 	    if (getCode() == null || StringUtils.isEmpty(getCode().trim())) {
 		return null;
-	    } else if(!StringUtils.isNumeric(getCode())){
+	    } else if ((!getCode().contains(".") && !StringUtils.isNumeric(getCode()))
+		    || (getCode().contains(".") && (!StringUtils.isNumeric(getCode().substring(0,
+			    getCode().indexOf("."))) || !StringUtils.isNumeric(getCode().substring(
+			    getCode().indexOf(".") + 1, getCode().length()))))) {
 		throw new DomainException("error.roomClassification.code.isn't.a.number");
 	    }
+
 	    final int index = getCode().lastIndexOf('.', getCode().length());
 	    if (index > 0) {
 		return Integer.valueOf(getCode().substring(index + 1, getCode().length()));
@@ -101,15 +105,14 @@ public class RoomClassification extends RoomClassification_Base {
     public static class RoomClassificationFactoryEditor extends RoomClassificationFactory {
 	private DomainReference<RoomClassification> roomClassificationReference;
 
-	public RoomClassificationFactoryEditor() {
+	public RoomClassificationFactoryEditor(String code, MultiLanguageString name) {
 	    super();
 	}
 
 	public RoomClassificationFactoryEditor(final RoomClassification roomClassification) {
-	    this();
-	    setRoomClassification(roomClassification);
 	    setCode(roomClassification.getPresentationCode());
 	    setName(roomClassification.getName());
+	    setRoomClassification(roomClassification);
 	}
 
 	public RoomClassification getRoomClassification() {
@@ -137,18 +140,21 @@ public class RoomClassification extends RoomClassification_Base {
 
     public void edit(final RoomClassification parentRoomClassification, final Integer code,
 	    final MultiLanguageString name) {
-	
-	final Set<RoomClassification> childRoomClassifications = parentRoomClassification == null ? getRootDomainObject().getRoomClassificationSet()
+
+	final Set<RoomClassification> childRoomClassifications = parentRoomClassification == null ? getRootDomainObject()
+		.getRoomClassificationSet()
 		: parentRoomClassification.getChildRoomClassificationsSet();
-	
-	final RoomClassification existingRoomClassification = findRoomClassificationByCode(childRoomClassifications, parentRoomClassification, code);
-	
+
+	final RoomClassification existingRoomClassification = findRoomClassificationByCode(
+		childRoomClassifications, parentRoomClassification, code);
+
 	if (existingRoomClassification != null && existingRoomClassification != this) {
-	    throw new DomainException("error.room.classification.with.same.code.exists", new String[] {code.toString()});
+	    throw new DomainException("error.room.classification.with.same.code.exists",
+		    new String[] { code.toString() });
 	}
 	if (code == null) {
 	    throw new DomainException("error.room.classification.cannot.have.null.code");
-	}
+	}	
 	if (name == null || name.getAllContents().isEmpty()) {
 	    throw new DomainException("error.room.classification.cannot.have.null.name");
 	}

@@ -18,9 +18,7 @@
 </logic:messagesPresent>
 
 <logic:notPresent name="roomClassificationEditor">
-	<h4>
-		<bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.create"/>
-	</h4>
+	<h4><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.create"/></h4>
 	<fr:hasMessages for="create" type="conversion">
 		<p>
 			<span class="error0">			
@@ -28,7 +26,8 @@
 			</span>
 		</p>
 	</fr:hasMessages>
-	<fr:create id="create" type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactoryCreator"
+	<fr:edit id="create" name="roomClassificationCreator"
+			type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactoryCreator"
 			schema="RoomClassificationFactory"
 			action="/roomClassification.do?method=executeFactoryMethod"	>
 		<fr:destination name="exception" path="/roomClassification.do?method=viewRoomClassifications"/>	
@@ -37,15 +36,13 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="style1,style1,"/>
 	        <fr:property name="columnClasses" value="listClasses,listClasses,"/>
-    	    <fr:property name="style" value="align: left"/>
+        	<fr:property name="style" value="align: left"/>
 		</fr:layout>
-	</fr:create>
+	</fr:edit>
 </logic:notPresent>
 
 <logic:present name="roomClassificationEditor">
-	<h4>
-		<bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.edit"/>
-	</h4>
+	<h4><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.edit"/></h4>
 	<fr:hasMessages for="edit" type="conversion">
 		<p>
 			<span class="error0">			
@@ -70,10 +67,7 @@
 
 <br/>
 
-<h4>
-	<bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.list"/>
-</h4>
-
+<h4><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.list"/></h4>
 <fr:view name="roomClassifications"	schema="RoomClassificationInList">
 	<fr:layout name="tabular" >
 		<fr:property name="classes" value="style1"/>

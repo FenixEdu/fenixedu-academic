@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.domain.Language;
 
 public class MultiLanguageString implements Serializable, Comparable<MultiLanguageString> {
@@ -83,11 +85,11 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
     public String removeContent(Language language) {
 	return contentsMap.remove(language);
     }
-    
+
     public boolean hasContent() {
 	return getContent() != null;
     }
-    
+
     public boolean hasContent(Language language) {
 	return getContent(language) != null;
     }
@@ -109,8 +111,8 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
     }
 
     /**
-     * @return true if this multi language string contains no languages
-     */
+         * @return true if this multi language string contains no languages
+         */
     public boolean isEmpty() {
 	return this.getAllLanguages().isEmpty();
     }
@@ -121,17 +123,30 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
 	}
 
 	MultiLanguageString mls = new MultiLanguageString();
+	String nullContent = StringUtils.EMPTY;
 
 	for (int i = 0; i < string.length();) {
-	    String language = string.substring(i, i + 2);
 
-	    int pos = string.indexOf(':', i + 2);
-	    int length = Integer.parseInt(string.substring(i + 2, pos));
+	    int length = 0;
+	    int collonPosition = string.indexOf(':', i + 2);
 
-	    String content = string.substring(pos + 1, pos + 1 + length);
-	    mls.setContent(Language.valueOf(language), content);
+	    if (!StringUtils.isNumeric(string.substring(i + 2, collonPosition))) {
+		length = Integer.parseInt(string.substring(i + 4, collonPosition));
+		nullContent = string.substring(collonPosition + 1, collonPosition + 1 + length);
 
-	    i = pos + 1 + length;
+	    } else {
+		length = Integer.parseInt(string.substring(i + 2, collonPosition));
+		String language = string.substring(i, i + 2);
+		String content = string.substring(collonPosition + 1, collonPosition + 1 + length);
+		mls.setContent(Language.valueOf(language), content);
+	    }
+
+	    i = collonPosition + 1 + length;
+	}
+
+	// HACK: MultiLanguageString should not allow null values as language
+	if (mls.getAllContents().isEmpty()) {
+	    mls.setContent(Language.getApplicationLanguage(), nullContent);
 	}
 
 	return mls;
