@@ -133,12 +133,7 @@
 							</logic:notEmpty>
 						</logic:iterate>
 	
-						<html:form action="/finalDegreeWorkAttribution">
-							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="attributeFinalDegreeWork"/>
-							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
-							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>
-							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree"/>
-			
+						
 							<tr>
 								<td bgcolor="#a2aebc" align="center" rowspan="<%= total %>">
 									<bean:message key="finalDegreeWorkProposalHeader.candidates"/>
@@ -188,14 +183,19 @@
 										<% emails += "," + email; %>
 									</logic:iterate>
 									<tr>
-										<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
-											<bean:define id="onChange">
-												this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';this.form.submit();
-											</bean:define>
-											<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedGroupProposals" property="selectedGroupProposals" onchange='<%= onChange.toString() %>'><bean:write name="groupProposal" property="idInternal"/></html:multibox>
-											<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-												<bean:message key="button.submit"/>
-											</html:submit>
+										<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">			
+								<html:form action="/finalDegreeWorkAttribution">
+								<bean:define id="proposalId" name="groupProposal" property="idInternal"/>
+								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="attributeFinalDegreeWork"/>
+								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal" value="<%= String.valueOf(proposalId) %>"/>
+								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>
+								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree"/>
+								<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedGroupProposals" property="selectedGroupProposals" onclick="this.form.submit();"><bean:write name="groupProposal" property="idInternal"/></html:multibox>
+								<html:submit styleClass="switchNone" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+								<bean:message key="button.submit"/>
+								</html:submit>															
+									</html:form>									
+
 										</td>
 										<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
 											<a href="mailto:<%= emails %>"><bean:write name="groupProposal" property="orderOfPreference"/></a>
@@ -265,7 +265,7 @@
 									</logic:iterate>					
 								</logic:notEmpty>
 							</logic:iterate>
-						</html:form>
+
 					</logic:equal>
 				</logic:equal>
 			</logic:iterate>
@@ -279,3 +279,7 @@
 <logic:notPresent name="finalDegreeWorkProposalHeaders">
 	<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
 </logic:notPresent>
+
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>
