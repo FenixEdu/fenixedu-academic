@@ -76,7 +76,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final DocumentRequest documentRequest = getDocumentRequest(request);
-	documentRequest.conclude(null);
+	documentRequest.conclude();
 	
 	request.setAttribute("registration", documentRequest.getRegistration());
 	return mapping.findForward("student.viewRegistrationDetails");
@@ -161,7 +161,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	request.setAttribute("documentRequestsResult", getAdministrativeOffice().searchDocumentsBy(
 		documentRequestType, requestSituationType, isUrgent, registration));
 
-	request.setAttribute("url", buildUrlFrom(form));
+	request.setAttribute("url", buildUrl(form, request).toString());
 
 	return mapping.findForward("showDocumentRequests");
     }
@@ -170,14 +170,19 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	request.setAttribute("documentRequest", getDocumentRequest(request));
-	request.setAttribute("url", buildUrlFrom((DynaActionForm) form));
-
+	request.setAttribute("url", buildUrl(form, request).toString());
+	
 	return mapping.findForward("viewDocumentRequest");
     }
 
-    private String buildUrlFrom(DynaActionForm form) {
-
+    private StringBuilder buildUrl(ActionForm actionForm, HttpServletRequest request) {
+	final DynaActionForm form = (DynaActionForm) actionForm;
+	
 	final StringBuilder result = new StringBuilder();
+
+	if (!StringUtils.isEmpty(request.getParameter("back"))) {
+	    result.append("method=").append(request.getParameter("back"));
+	}
 
 	if (!StringUtils.isEmpty(form.getString("documentRequestType"))) {
 	    result.append("&documentRequestType=").append(form.get("documentRequestType"));
@@ -195,7 +200,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    result.append("&studentNumber=").append(form.get("studentNumber"));
 	}
 
-	return result.toString();
+	return result;
     }
 
     private Registration getStudent(String studentNumberString) {
@@ -223,7 +228,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	final DocumentRequestEditBean documentRequestEditBean = new DocumentRequestEditBean(
 		documentRequest, getUserView(request).getPerson().getEmployee());
 	request.setAttribute("documentRequestEditBean", documentRequestEditBean);
-	request.setAttribute("url", buildUrlFrom((DynaActionForm) form));
+	request.setAttribute("url", buildUrl(form, request).toString());
 
 	return mapping.findForward("editDocumentRequest");
     }
@@ -244,13 +249,13 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
 		    .getLabelFormatterArgs()));
 	    request.setAttribute("documentRequestEditBean", documentRequestEditBean);
-	    request.setAttribute("url", buildUrlFrom((DynaActionForm) form));
+	    request.setAttribute("url", buildUrl(form, request).toString());
 
 	    return mapping.findForward("editDocumentRequest");
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 	    request.setAttribute("documentRequestEditBean", documentRequestEditBean);
-	    request.setAttribute("url", buildUrlFrom((DynaActionForm) form));
+	    request.setAttribute("url", buildUrl(form, request).toString());
 
 	    return mapping.findForward("editDocumentRequest");
 	}
