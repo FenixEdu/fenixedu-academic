@@ -1503,7 +1503,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
 	    if (academicServiceRequest instanceof DocumentRequest) {
-		if (!academicServiceRequest.isNewRequest() && !academicServiceRequest.isProcessing()) {
+		if (academicServiceRequest.isHistorical()) {
 		    result.add((DocumentRequest) academicServiceRequest);    
 		}
 	    }

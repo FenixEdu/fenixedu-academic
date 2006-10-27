@@ -244,6 +244,18 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.DELIVERED);
     }
 
+    public boolean isRejected() {
+	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.REJECTED);
+    }
+
+    public boolean isCancelled() {
+	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CANCELLED);
+    }
+
+    public boolean isHistorical() {
+	return (isDelivered() || isRejected() || isCancelled());
+    }
+
     public boolean isEditable() {
 	return (isNewRequest() || isProcessing() || isConcluded());
     }
