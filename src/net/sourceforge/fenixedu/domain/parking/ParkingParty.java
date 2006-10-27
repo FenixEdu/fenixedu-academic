@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.parking;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,6 +14,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -23,6 +26,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.ContractType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
@@ -466,7 +470,24 @@ public class ParkingParty extends ParkingParty_Base {
             GrantOwner grantOwner = person.getGrantOwner();
             if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null
                     && grantOwner.hasCurrentContract()) {
+                List<GrantContractRegime> contractRegimeList = new ArrayList<GrantContractRegime>();
                 occupations.add("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
+                for(GrantContract contract: grantOwner.getGrantContracts()){
+                    contractRegimeList.addAll(contract.getContractRegimes());
+                }
+                Collections.sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
+                for(GrantContractRegime contractRegime : contractRegimeList){
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append("<strong>Início:</strong> " + contractRegime.getDateBeginContractYearMonthDay().toString("dd/MM/yyyy"));
+                    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> " + contractRegime.getDateEndContractYearMonthDay().toString("dd/MM/yyyy"));
+                    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Activo:</strong> ");
+                    if(contractRegime.isActive()){
+                        stringBuilder.append("Sim");
+                    } else {
+                        stringBuilder.append("Não");
+                    }
+                    occupations.add(stringBuilder.toString());
+                }
             }
         }
         return occupations;
