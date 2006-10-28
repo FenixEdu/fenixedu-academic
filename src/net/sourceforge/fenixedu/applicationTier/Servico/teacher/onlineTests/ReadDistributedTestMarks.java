@@ -5,15 +5,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarks;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionMark;
@@ -30,8 +32,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDistributedTestMarks extends Service {
 
-    public InfoSiteStudentsTestMarks run(Integer executionCourseId, Integer distributedTestId, String path)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoSiteStudentsTestMarks run(Integer executionCourseId, Integer distributedTestId,
+            String path) throws FenixServiceException, ExcepcaoPersistencia {
 
         InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
 
@@ -73,22 +75,11 @@ public class ReadDistributedTestMarks extends Service {
                         InfoStudentTestQuestionMark.newInfoFromDomain(studentTestQuestion));
             }
         }
-        // List<InfoStudentTestQuestionMark> infoStudentTestQuestionList =
-        // (List<InfoStudentTestQuestionMark>) CollectionUtils
-        // .collect(studentTestQuestionList, new Transformer() {
-        //
-        // public Object transform(Object arg0) {
-        // StudentTestQuestion studentTestQuestion = (StudentTestQuestion) arg0;
-        // return
-        // InfoStudentTestQuestionMark.newInfoFromDomain(studentTestQuestion);
-        // }
-        //
-        // });
 
-        // infoSiteStudentsTestMarks.setMaximumMark(distributedTest.calculateMaximumDistributedTestMark());
-        infoSiteStudentsTestMarks
-                .setInfoStudentTestQuestionList(new ArrayList<InfoStudentTestQuestionMark>(
-                        infoStudentTestQuestionMarkList.values()));
+        List infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestionMark>(
+                infoStudentTestQuestionMarkList.values());
+        Collections.sort(infoStudentTestQuestionList, new BeanComparator("studentNumber"));
+        infoSiteStudentsTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
         infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse
                 .newInfoFromDomain((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));
         infoSiteStudentsTestMarks.setInfoDistributedTest(InfoDistributedTest

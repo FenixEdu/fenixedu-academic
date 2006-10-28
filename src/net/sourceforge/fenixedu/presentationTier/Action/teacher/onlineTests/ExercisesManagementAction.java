@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidMetadataException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.comparators.MetadataComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -536,11 +538,10 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         final String order = request.getParameter("order");
         final String asc = request.getParameter("asc");
 
-        // if (order != null) {
-        // MetadataComparator metadataComparator = new MetadataComparator(order,
-        // asc);
-        // Collections.sort(infoMetadataList, metadataComparator);
-        // }
+        if (order != null) {
+            MetadataComparator metadataComparator = new MetadataComparator(order, asc);
+            Collections.sort(metadataList, metadataComparator);
+        }
 
         request.setAttribute("badXmls", (List) request.getAttribute("badXmls"));
         request.setAttribute("metadataList", metadataList);
