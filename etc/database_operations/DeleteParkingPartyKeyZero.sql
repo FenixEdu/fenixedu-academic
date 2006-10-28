@@ -1,1 +1,0 @@
-delete from PARKING_PARTY where KEY_PARTY = 0;
