@@ -151,139 +151,136 @@ table.executionCoursesWithoutWrittenEvaluations td {
 				<h:outputText value="<i>#{bundleSOP['label.no.defined.written.evaluations']}</i><br/>" escape="false" />
 			</h:panelGroup>
 
-			<h:panelGroup rendered="#{!empty SOPEvaluationManagementBackingBean.executionCoursesWithWrittenEvaluations}">
-				<f:verbatim>
-					<table class="style2u">
-					<tr>			
-						<th><c:out value="${bundle['label.coordinator.identification']}" escapeXml="false"/></th>
-						<th><c:out value="${bundle['label.coordinator.evaluationDate']}" escapeXml="false"/></th>
-						<th><c:out value="${bundle['label.coordinator.enroledStudents']}"escapeXml="false"/></th>
-						<th><c:out value="${bundle['label.coordinator.missingPlaces']}" escapeXml="false"/></th>
-						<th><c:out value="${bundle['label.coordinator.enrolmentPeriod']}" escapeXml="false"/></th>
-						<th><c:out value="${bundle['label.coordinator.rooms']}"/></th>
-						<th style="width: 9em;"></th>				
-					</tr>			
-						<c:forEach items="${SOPEvaluationManagementBackingBean.executionCoursesWithWrittenEvaluations}" var="executionCourse">
-						<tr class="space"><td></td></tr>
+		<h:panelGroup rendered="#{!empty SOPEvaluationManagementBackingBean.executionCoursesWithWrittenEvaluations}">
+			<f:verbatim>
+				<table class="style2u">
+				<tr>			
+					<th><c:out value="${bundle['label.coordinator.identification']}" escapeXml="false"/></th>
+					<th><c:out value="${bundle['label.coordinator.evaluationDate']}" escapeXml="false"/></th>
+					<th><c:out value="${bundle['label.coordinator.enroledStudents']}"escapeXml="false"/></th>
+					<th><c:out value="${bundle['label.coordinator.missingPlaces']}" escapeXml="false"/></th>
+					<th><c:out value="${bundle['label.coordinator.enrolmentPeriod']}" escapeXml="false"/></th>
+					<th><c:out value="${bundle['label.coordinator.rooms']}"/></th>
+					<th style="width: 9em;"></th>				
+				</tr>			
+				<c:forEach items="${SOPEvaluationManagementBackingBean.executionCourseWrittenEvaluationAgregationBeans}" var="executionCourseWrittenEvaluationAgregationBean">
+					<tr class="space"><td></td></tr>
+					<tr>
+						<td colspan="2" class="header" style="font-weight: bold">
+							<c:out value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.sigla} - ${executionCourseWrittenEvaluationAgregationBean.executionCourse.nome}"/>
+							<c:out value=": ${executionCourseWrittenEvaluationAgregationBean.curricularYear} ${bundleSOP['label.year.simple']}"/>
+						</td>
+						<td colspan="2" class="header" style="font-weight: bold">
+							<c:url var="creationURL" value="showExecutionCourses.faces">
+								<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
+								<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
+								<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
+								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
+								<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
+							</c:url>
+							<a href='<c:out value="${creationURL}"/>' style="text-decoration:none">
+								<c:out value="${bundleSOP['link.create.evaluation']}"/>
+							</a>
+						</td>
+						<td colspan="3" class="header">
+							<c:url var="commentURL" value="commentExecutionCourse.faces">
+								<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
+								<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
+								<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
+								<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
+								<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
+							</c:url>
+							<a href='<c:out value="${commentURL}"/>' style="text-decoration:none">
+								<c:if test="${executionCourseWrittenEvaluationAgregationBean.executionCourse.comment != null && executionCourseWrittenEvaluationAgregationBean.executionCourse.comment != ''}">
+									<c:out value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.comment}"/>
+								</c:if>
+								<c:if test="${executionCourseWrittenEvaluationAgregationBean.executionCourse.comment == null || executionCourseWrittenEvaluationAgregationBean.executionCourse.comment == ''}">
+									<c:out value="(${bundleSOP['link.define.comment']})"/>
+								</c:if>
+							</a>
+						</td>
+					</tr>						
+					<c:forEach items="${executionCourseWrittenEvaluationAgregationBean.writtenEvaluations}" var="evaluation">
 						<tr>
-							<td colspan="2" class="header" style="font-weight: bold">
-								<c:out value="${executionCourse.sigla} - ${executionCourse.nome}"/>
+							<td class="description">
+								<c:if test="${evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}">
+									<c:out value="${evaluation.description}"/>
+								</c:if>
+								<c:if test="${evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}">
+									<c:out value="${evaluation.season}"/>
+								</c:if>
 							</td>
-							<td colspan="2" class="header" style="font-weight: bold">
-								<c:url var="creationURL" value="showExecutionCourses.faces">
-									<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
+							<td>
+								<fmt:formatDate pattern="dd/MM/yyyy" value="${evaluation.dayDate}"/><br/>
+								<fmt:formatDate pattern="HH:mm" value="${evaluation.beginningDate}"/>
+								<c:out value=" ${bundle['label.coordinator.to']} "/>
+								<fmt:formatDate pattern="HH:mm" value="${evaluation.endDate}"/>
+							</td>
+							<td><c:out value="${SOPEvaluationManagementBackingBean.executionCoursesEnroledStudents[executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal]}"/></td>
+							<td>
+								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal] != 0}">
+									<c:out value="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal]}"/>
+								</c:if>
+								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal] == 0}">
+									<c:out value="-"/>
+								</c:if>
+							</td>
+							<c:if test="${evaluation.enrollmentBeginDayDate != null && evaluation.enrollmentEndDayDate != null}">
+								<td>
+									<c:out value=" ${bundle['label.coordinator.enrolmentBegin']}: "/>
+									<fmt:formatDate pattern="dd/MM/yyyy" value="${evaluation.enrollmentBeginDayDate}"/>
+									<c:out value=" - "/>
+									<fmt:formatDate pattern="HH:mm" value="${evaluation.enrollmentBeginTimeDate}"/><br/>
+									<c:out value=" ${bundle['label.coordinator.enrolmentEnd']}: "/>
+									<fmt:formatDate pattern="dd/MM/yyyy" value="${evaluation.enrollmentEndDayDate}"/>
+									<c:out value=" - "/>
+								</td>
+							</c:if>
+							<c:if test="${evaluation.enrollmentBeginDayDate == null && evaluation.enrollmentEndDayDate == null}">
+								<td>
+									<c:out value=" - "/>
+								</td>
+							</c:if>
+							<td>
+								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.idInternal] != ''}">
+									<c:out value="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.idInternal]}"/>
+								</c:if>
+								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.idInternal] == ''}">
+									<c:out value="-"/>
+								</c:if>
+							</td>
+							<td>
+								<c:url var="editEvaluationURL" value="editWrittenTest.faces">
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
+									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
+									<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
+									<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
 									<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
-									<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
 									<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 								</c:url>
-								<a href='<c:out value="${creationURL}"/>' style="text-decoration:none">
-									<c:out value="${bundleSOP['link.create.evaluation']}"/>
+								<a href='<c:out value="${editEvaluationURL}"/>'>
+									<c:out value="${bundle['label.edit']}"/>
 								</a>
-							</td>
-							<td colspan="3" class="header">
-								<c:url var="commentURL" value="commentExecutionCourse.faces">
+								<c:out value=" | "/>
+								<c:url var="deleteEvaluationURL" value="deleteWrittenEvaluation.faces">
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
+									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
+									<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
 									<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
-									<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
+									<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
 									<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 									<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 								</c:url>
-								<a href='<c:out value="${commentURL}"/>' style="text-decoration:none">
-									<c:if test="${executionCourse.comment != null && executionCourse.comment != ''}">
-										<c:out value="${executionCourse.comment}"/>
-									</c:if>
-									<c:if test="${executionCourse.comment == null || executionCourse.comment == ''}">
-										<c:out value="(${bundleSOP['link.define.comment']})"/>
-									</c:if>
+								<a href='<c:out value="${deleteEvaluationURL}"/>' onclick="return confirm('#{bundle['message.confirm.written.test']}')">
+									<c:out value="${bundle['label.remove']}"/>
 								</a>
 							</td>
-						</tr>						
-						<c:forEach items="${SOPEvaluationManagementBackingBean.writtenEvaluations[executionCourse.idInternal]}" var="evaluation">
-							<tr>
-								<td class="description">
-									<c:if test="${evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}">
-										<c:out value="${evaluation.description}"/>
-									</c:if>
-									<c:if test="${evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}">
-										<c:out value="${evaluation.season}"/>
-									</c:if>
-
-								</td>
-								<td>
-									<fmt:formatDate pattern="dd/MM/yyyy" value="${evaluation.dayDate}"/><br/>
-									<fmt:formatDate pattern="HH:mm" value="${evaluation.beginningDate}"/>
-									<c:out value=" ${bundle['label.coordinator.to']} "/>
-									<fmt:formatDate pattern="HH:mm" value="${evaluation.endDate}"/>
-								</td>
-								<td><c:out value="${SOPEvaluationManagementBackingBean.executionCoursesEnroledStudents[executionCourse.idInternal]}"/></td>
-								<td>
-									<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal] != 0}">
-										<c:out value="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal]}"/>
-									</c:if>
-									<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal] == 0}">
-										<c:out value="-"/>
-									</c:if>
-								</td>
-								<c:if test="${evaluation.enrollmentBeginDayDate != null && evaluation.enrollmentEndDayDate != null}">
-									<td>
-										<c:out value=" ${bundle['label.coordinator.enrolmentBegin']}: "/>
-										<fmt:formatDate pattern="dd/MM/yyyy" value="${evaluation.enrollmentBeginDayDate}"/>
-										<c:out value=" - "/>
-										<fmt:formatDate pattern="HH:mm" value="${evaluation.enrollmentBeginTimeDate}"/><br/>
-
-										<c:out value=" ${bundle['label.coordinator.enrolmentEnd']}: "/>
-										<fmt:formatDate pattern="dd/MM/yyyy" value="${evaluation.enrollmentEndDayDate}"/>
-										<c:out value=" - "/>
-										<fmt:formatDate pattern="HH:mm" value="${evaluation.enrollmentEndTimeDate}"/><br/>
-									</td>
-								</c:if>
-								<c:if test="${evaluation.enrollmentBeginDayDate == null && evaluation.enrollmentEndDayDate == null}">
-									<td>
-										<c:out value=" - "/>
-									</td>
-								</c:if>
-								<td>
-									<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.idInternal] != ''}">
-										<c:out value="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.idInternal]}"/>
-									</c:if>
-									<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.idInternal] == ''}">
-										<c:out value="-"/>
-									</c:if>
-								</td>
-								<td>
-									<c:url var="editEvaluationURL" value="editWrittenTest.faces">
-										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
-										<c:param name="evaluationID" value="${evaluation.idInternal}"/>
-										<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
-										<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
-										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
-										<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
-										<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
-									</c:url>
-									<a href='<c:out value="${editEvaluationURL}"/>'>
-										<c:out value="${bundle['label.edit']}"/>
-									</a>
-									<c:out value=" | "/>
-									<c:url var="deleteEvaluationURL" value="deleteWrittenEvaluation.faces">
-										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
-										<c:param name="evaluationID" value="${evaluation.idInternal}"/>
-										<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
-										<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
-										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
-										<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
-										<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
-									</c:url>
-									<a href='<c:out value="${deleteEvaluationURL}"/>' onclick="return confirm('#{bundle['message.confirm.written.test']}')">
-										<c:out value="${bundle['label.remove']}"/>
-									</a>
-								</td>
-							</tr>
-						</c:forEach>
-					</c:forEach>			
-
-					</table>		
-				</f:verbatim>
+						</tr>
+					</c:forEach>
+				</c:forEach>			
+				</table>		
+			</f:verbatim>
 			</h:panelGroup>
 
 			<h:outputText value="<br/><br/><i>#{bundleSOP['label.execution.courses.without.written.evaluations']}:</i><br/>" escape="false" styleClass="boldFontClass"/>

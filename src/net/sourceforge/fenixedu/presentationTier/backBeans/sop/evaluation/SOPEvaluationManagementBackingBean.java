@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
@@ -29,6 +30,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -740,6 +742,42 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }        
         Collections.sort(executionCourses, new BeanComparator("sigla"));
         return executionCourses;        
+    }
+
+    public List<ExecutionCourseWrittenEvaluationAgregationBean> getExecutionCourseWrittenEvaluationAgregationBeans()
+    		throws FenixFilterException, FenixServiceException {
+	final List<ExecutionCourseWrittenEvaluationAgregationBean> executionCourseWrittenEvaluationAgregationBean
+		= new ArrayList<ExecutionCourseWrittenEvaluationAgregationBean>();
+        final Integer[] curricularYears = getCurricularYearIDs();
+        if(curricularYears != null) {
+            final DegreeCurricularPlan degreeCurricularPlan = this.getExecutionDegree().getDegreeCurricularPlan();
+            for (final Integer curricularYearID : curricularYears) {
+                final Object args[] = { degreeCurricularPlan.getIdInternal(), 
+                        this.getExecutionPeriodID(), curricularYearID };
+                final Collection<ExecutionCourse> executionCourses = (Collection<ExecutionCourse>) ServiceManagerServiceFactory
+                        .executeService(getUserView(), "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args);
+                for (final ExecutionCourse executionCourse : executionCourses) {
+                    final Set<WrittenEvaluation> writtenEvaluations = new TreeSet<WrittenEvaluation>(WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);
+                    for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
+                	if (evaluation instanceof WrittenEvaluation) {
+                	    final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
+                	    for (final CurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScopeSet()) {
+                		if (curricularCourseScope.getCurricularSemester().getCurricularYear().getIdInternal().equals(curricularYearID)
+                			&& degreeCurricularPlan == curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan()) {
+                		    writtenEvaluations.add(writtenEvaluation);
+                		}
+                	    }
+                	}
+                    }
+                    if (!writtenEvaluations.isEmpty()) {
+                	executionCourseWrittenEvaluationAgregationBean.add(new ExecutionCourseWrittenEvaluationAgregationBean(
+                		curricularYearID, executionCourse, writtenEvaluations));
+                    }
+                }
+            }
+        }
+        Collections.sort(executionCourseWrittenEvaluationAgregationBean, ExecutionCourseWrittenEvaluationAgregationBean.COMPARATOR_BY_EXECUTION_COURSE_CODE_AND_CURRICULAR_YEAR);
+	return executionCourseWrittenEvaluationAgregationBean;
     }
 
     public List<ExecutionCourse> getExecutionCoursesWithWrittenEvaluations() throws FenixFilterException, FenixServiceException {

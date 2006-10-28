@@ -154,7 +154,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                         .toString());
             } else {
                 String executionCourseIDString = this.getRequestParameter("executionCourseID");
-                if (executionCourseIDString != null) {
+                if (executionCourseIDString != null && executionCourseIDString.length() > 0) {
                     this.executionCourseID = Integer.valueOf(executionCourseIDString);
                 }
             }
