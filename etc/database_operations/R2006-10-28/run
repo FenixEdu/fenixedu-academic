@@ -33,3 +33,4 @@ execute "Refactor GroupAvailability" RefactorGroupAvailability.sql
 execute "Add functionalities to execution course site location" AddExecutionCourseSiteFunctionalities.sql
 execute "Separate ExecutionCourseSite from Site" CreateExecutionCourseSite.sql
 execute "Alter Space Table" alterSpaceTable.sql
+execute "Alter table studentTestQuestion" alterTableStudentTestQuestion.sql
