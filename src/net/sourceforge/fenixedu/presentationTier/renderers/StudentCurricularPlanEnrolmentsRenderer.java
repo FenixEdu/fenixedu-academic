@@ -44,9 +44,109 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
     
-    private static Integer initialWidth = 70;
+    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
+    
+    private final ResourceBundle academicAdminOfficeResources = ResourceBundle.getBundle("resources.AcademicAdminOffice");
 
-    private static Integer widthDecreasePerLevel = 3;
+    
+    private Integer initialWidth = 70;
+
+    private Integer widthDecreasePerLevel = 3;
+
+    private String tablesClasses = "showinfo3 mvert0";
+
+    private String groupRowClasses = "bgcolor2";
+    
+    private String enrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
+    
+    private String curricularCoursesToEnrol = "smalltxt, smalltxt aright, smalltxt aright, aright";
+    
+    public Integer getInitialWidth() {
+	return initialWidth;
+    }
+
+    public void setInitialWidth(Integer initialWidth) {
+	this.initialWidth = initialWidth;
+    }
+
+    public Integer getWidthDecreasePerLevel() {
+	return widthDecreasePerLevel;
+    }
+
+    public void setWidthDecreasePerLevel(Integer widthDecreasePerLevel) {
+	this.widthDecreasePerLevel = widthDecreasePerLevel;
+    }
+
+    public String getTablesClasses() {
+	return tablesClasses;
+    }
+
+    public void setTablesClasses(String tablesClasses) {
+	this.tablesClasses = tablesClasses;
+    }
+
+    public String getGroupRowClasses() {
+	return groupRowClasses;
+    }
+
+    public void setGroupRowClasses(String groupRowClasses) {
+	this.groupRowClasses = groupRowClasses;
+    }
+
+    private String[] getEnrolmentClasses() {
+	return enrolmentClasses.split(",");
+    }
+
+    public void setEnrolmentClasses(String enrolmentClasses) {
+	this.enrolmentClasses = enrolmentClasses;
+    }
+
+    private String getEnrolmentNameClasses() {
+        return getEnrolmentClasses()[0];
+    }
+
+    private String getEnrolmentYearClasses() {
+        return getEnrolmentClasses()[1];
+    }
+
+    private String getEnrolmentSemesterClasses() {
+        return getEnrolmentClasses()[2];
+    }
+    
+    private String getEnrolmentEctsClasses() {
+        return getEnrolmentClasses()[3];
+    }
+
+    private String getEnrolmentCheckBoxClasses() {
+        return getEnrolmentClasses()[4];
+    }
+    
+    private String[] getCurricularCourseClasses() {
+	return curricularCoursesToEnrol.split(",");
+    }
+
+    public void setCurricularCourseClasses(String curricularCoursesToEnrol) {
+	this.curricularCoursesToEnrol = curricularCoursesToEnrol;
+    }
+
+    
+    private String getCurricularCourseNameClasses() {
+        return getCurricularCourseClasses()[0];
+    }
+
+    private String getCurricularCourseYearClasses() {
+        return getCurricularCourseClasses()[1];
+    }
+    
+    private String getCurricularCourseEctsClasses() {
+        return getCurricularCourseClasses()[2];
+    }
+
+    private String getCurricularCourseCheckBoxClasses() {
+        return getCurricularCourseClasses()[3];
+    }
+
+
 
 
     public StudentCurricularPlanEnrolmentsRenderer() {
@@ -65,12 +165,6 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	private final CopyCheckBoxValuesController degreeModulesToEnrolController = new CopyCheckBoxValuesController(); 
 	
 	private final List<CurriculumModule> initialCurriculumModules = new ArrayList<CurriculumModule>();
-	
-	private final ResourceBundle enumerationResources = ResourceBundle.getBundle(
-	    	"resources.EnumerationResources", LanguageUtils.getLocale());
-
-	private final ResourceBundle academicAdminOfficeResources = ResourceBundle.getBundle(
-	    	"resources.AcademicAdminOffice", LanguageUtils.getLocale());
 
 	
 	@Override
@@ -104,29 +198,33 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	private void generateModules(HtmlBlockContainer blockContainer, StudentCurricularPlan studentCurricularPlan, CurriculumGroup group, ExecutionPeriod executionPeriod, int depth) {
 	    final HtmlTable groupTable = new HtmlTable();
 	    blockContainer.addChild(groupTable);
-	    groupTable.setClasses("showinfo3 mvert0");
-	    groupTable.setStyle("width: " + (initialWidth - depth) + "em; margin-left: " + depth + "em;");
+	    groupTable.setClasses(getTablesClasses());
+	    groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth + "em;");
 	    
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
-	    htmlTableRow.setClasses("bgcolor2");
+	    htmlTableRow.setClasses(getGroupRowClasses());
 	    htmlTableRow.createCell().setBody(new HtmlText(group.getDegreeModule().getName()));
-	    if(!group.hasAnyCurriculumModules()) {
-		HtmlTableCell checkBoxCell = htmlTableRow.createCell();
-		checkBoxCell.setClasses("aright");
-		
-		HtmlCheckBox checkBox = new HtmlCheckBox(true);
-		MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(group, new Schema(CurriculumGroup.class));
-		checkBox.setName("enrolmentCheckBox" + group.getIdInternal());
-		checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
+	    
+	    HtmlTableCell checkBoxCell = htmlTableRow.createCell();
+	    checkBoxCell.setClasses("aright");
+
+	    HtmlCheckBox checkBox = new HtmlCheckBox(true);
+	    MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(group, new Schema(CurriculumGroup.class));
+	    checkBox.setName("enrolmentCheckBox" + group.getIdInternal());
+	    checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
+	    checkBoxCell.setBody(checkBox);
+	    
+	    if(group.hasAnyCurriculumModules()) {
+		checkBox.setDisabled(true);
+	    } else {
 		enrollmentsController.addCheckBox(checkBox);
-		checkBoxCell.setBody(checkBox);
-		initialCurriculumModules.add(group);
+		initialCurriculumModules.add(group);		
 	    }
 	    
 	    final HtmlTable coursesTable = new HtmlTable();
 	    blockContainer.addChild(coursesTable);
-	    coursesTable.setClasses("showinfo3 mvert0");
-	    coursesTable.setStyle("width: " + (initialWidth - depth - widthDecreasePerLevel) + "em; margin-left: " + (depth + widthDecreasePerLevel) + "em;");
+	    coursesTable.setClasses(getTablesClasses());
+	    coursesTable.setStyle("width: " + (getInitialWidth() - depth - getWidthDecreasePerLevel()) + "em; margin-left: " + (depth + getWidthDecreasePerLevel()) + "em;");
 	    
 	    generateEnrolments(group, executionPeriod, coursesTable);
 	    generateCurricularCoursesToEnrol(coursesTable, group, executionPeriod);
@@ -142,16 +240,16 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    
 	    while(!courseGroupsToEnrol.isEmpty() || !curriculumGroups.isEmpty()) {
 		if(!curriculumGroups.isEmpty() && courseGroupsToEnrol.isEmpty()) {
-		    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionPeriod, depth + widthDecreasePerLevel);
+		    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionPeriod, depth + getWidthDecreasePerLevel());
 		    curriculumGroups.remove(0);
 		} else if(curriculumGroups.isEmpty() && !courseGroupsToEnrol.isEmpty()) {
-		    generateCourseGroupToEnroll(blockContainer, group, courseGroupsToEnrol.get(0), depth + widthDecreasePerLevel);
+		    generateCourseGroupToEnroll(blockContainer, group, courseGroupsToEnrol.get(0), depth + getWidthDecreasePerLevel());
 		    courseGroupsToEnrol.remove(0);
 		} else if(curriculumGroups.get(0).getChildOrder(executionPeriod) <= courseGroupsToEnrol.get(0).getChildOrder()) {
-		    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionPeriod, depth + widthDecreasePerLevel);
+		    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionPeriod, depth + getWidthDecreasePerLevel());
 		    curriculumGroups.remove(0);
 		} else {
-		    generateCourseGroupToEnroll(blockContainer, group, courseGroupsToEnrol.get(0), depth + widthDecreasePerLevel);
+		    generateCourseGroupToEnroll(blockContainer, group, courseGroupsToEnrol.get(0), depth + getWidthDecreasePerLevel());
 		    courseGroupsToEnrol.remove(0);
 		}
 	    }
@@ -160,10 +258,10 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	private void generateCourseGroupToEnroll(HtmlBlockContainer blockContainer, CurriculumGroup group, Context context, int depth) {
 	    final HtmlTable groupTable = new HtmlTable();
 	    blockContainer.addChild(groupTable);
-	    groupTable.setClasses("showinfo3 mvert0");
-	    groupTable.setStyle("width: " + (initialWidth - depth) + "em; margin-left: " + depth + "em;");	    
+	    groupTable.setClasses(getTablesClasses());
+	    groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth + "em;");	    
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
-	    htmlTableRow.setClasses("bgcolor2");
+	    htmlTableRow.setClasses(getGroupRowClasses());
 	    htmlTableRow.createCell().setBody(new HtmlText(context.getChildDegreeModule().getName()));
 	    HtmlTableCell checkBoxCell = htmlTableRow.createCell();
 	    checkBoxCell.setClasses("aright");
@@ -187,12 +285,13 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 		CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
 
 		HtmlTableRow htmlTableRow = groupTable.createRow();
-		htmlTableRow.createCell().setBody(new HtmlText(curricularCourse.getName()));
+		HtmlTableCell cellName = htmlTableRow.createCell();
+		cellName.setClasses(getCurricularCourseNameClasses());
+		cellName.setBody(new HtmlText(curricularCourse.getName()));
 
 		//Year
 		final HtmlTableCell yearCell = htmlTableRow.createCell();
-		yearCell.setClasses("smalltxt");
-		yearCell.setAlign("rigth");
+		yearCell.setClasses(getCurricularCourseYearClasses());
 		yearCell.setColspan(2);
 
 		final StringBuilder year = new StringBuilder();
@@ -201,8 +300,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 
 		//Ects
 		final HtmlTableCell ectsCell = htmlTableRow.createCell();
-		ectsCell.setClasses("smalltxt");
-		ectsCell.setAlign("rigth");
+		ectsCell.setClasses(getCurricularCourseEctsClasses());
 
 		final StringBuilder ects = new StringBuilder();
 		ects.append(curricularCourse.getEctsCredits()).append(" ").append(academicAdminOfficeResources.getString("credits.abbreviation"));
@@ -210,7 +308,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 
 
 		HtmlTableCell checkBoxCell = htmlTableRow.createCell();
-		checkBoxCell.setClasses("aright");
+		checkBoxCell.setClasses(getCurricularCourseCheckBoxClasses());
 
 		DegreeModuleToEnrol degreeModuleToEnrol = new DegreeModuleToEnrol(group, context);
 		HtmlCheckBox checkBox = new HtmlCheckBox(false);
@@ -236,12 +334,12 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	private void generateEnrolment(final HtmlTable groupTable, Enrolment enrolment) {
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
 	    HtmlTableCell cellName = htmlTableRow.createCell();
+	    cellName.setClasses(getEnrolmentNameClasses());
 	    cellName.setBody(new HtmlText(enrolment.getCurricularCourse().getName()));
 	    
 	    // Year
 	    final HtmlTableCell yearCell = htmlTableRow.createCell();
-	    yearCell.setClasses("smalltxt");
-	    yearCell.setAlign("rigth");
+	    yearCell.setClasses(getEnrolmentYearClasses());
 
 	    final StringBuilder year = new StringBuilder();
 	    year.append(enrolment.getExecutionPeriod().getExecutionYear().getYear());
@@ -249,8 +347,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 
 	    // Semester
 	    final HtmlTableCell semesterCell = htmlTableRow.createCell();
-	    semesterCell.setClasses("smalltxt");
-	    semesterCell.setAlign("rigth");
+	    semesterCell.setClasses(getEnrolmentSemesterClasses());
 
 	    final StringBuilder semester = new StringBuilder();
 	    semester.append(enrolment.getExecutionPeriod().getSemester().toString());
@@ -260,8 +357,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 
 	    //Ects
 	    final HtmlTableCell ectsCell = htmlTableRow.createCell();
-	    ectsCell.setClasses("smalltxt");
-	    ectsCell.setAlign("rigth");
+	    ectsCell.setClasses(getEnrolmentEctsClasses());
 
 	    final StringBuilder ects = new StringBuilder();
 	    ects.append(enrolment.getCurricularCourse().getEctsCredits()).append(" ").append(academicAdminOfficeResources.getString("credits.abbreviation"));
@@ -276,13 +372,11 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    enrollmentsController.addCheckBox(checkBox);
 
 	    HtmlTableCell cellCheckBox = htmlTableRow.createCell();
-	    cellCheckBox.setClasses("aright");
+	    cellCheckBox.setClasses(getEnrolmentCheckBoxClasses());
 	    cellCheckBox.setBody(checkBox);
 
 	    initialCurriculumModules.add(enrolment);
 	}
-	
-
     }
     
     private static class CopyCheckBoxValuesController extends HtmlController {
