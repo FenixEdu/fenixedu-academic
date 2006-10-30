@@ -39,33 +39,51 @@
 		<bean:define id="slotName" type="java.lang.String"><%= SpaceAccessGroupType.valueOf(accessGroupType.getValue()).getSpaceAccessGroupSlotName() %></bean:define>				
 		<bean:define id="space" name="selectedSpaceInformation" property="space"/>
 		
-		<logic:notEmpty name="space" property="<%= slotName %>">
-			<bean:define id="accessGroup" name="space" property="<%= slotName %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>
-			<logic:notEmpty name="accessGroup">	
-				<logic:notEmpty name="accessGroup" property="elements">	
-					<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/></strong></p>
-					<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
-						<fr:layout name="tabular">     										  
-				   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
-				            
-				            <fr:property name="link(delete)" value="<%= "/manageSpaces.do?method=removePersonFromAccessGroup&spaceInformationID=" + selectedSpaceInformationId + "&spaceAccessGroupType=" + accessGroupType.getValue() %>"/>
-				            <fr:property name="param(delete)" value="idInternal/personID"/>
-					        <fr:property name="key(delete)" value="label.remove"/>
-				            <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
-		                	<fr:property name="order(delete)" value="0"/>                                           
-		      			</fr:layout>    	
-					</fr:view>		
-				</logic:notEmpty>		
-			</logic:notEmpty>	
+		<logic:notEmpty name="space" property="<%= slotName %>">			
+			<bean:define id="accessGroup" name="space" property="<%= slotName %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>			
+			<logic:notEmpty name="accessGroup" property="elements">	
+				<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/></strong></p>
+				<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
+					<fr:layout name="tabular">     										  
+			   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
+			            
+			            <fr:property name="link(delete)" value="<%= "/manageSpaces.do?method=removePersonFromAccessGroup&spaceInformationID=" + selectedSpaceInformationId + "&spaceAccessGroupType=" + accessGroupType.getValue() %>"/>
+			            <fr:property name="param(delete)" value="idInternal/personID"/>
+				        <fr:property name="key(delete)" value="label.remove"/>
+			            <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
+	                	<fr:property name="order(delete)" value="0"/>                                           
+	      			</fr:layout>    	
+				</fr:view>		
+			</logic:notEmpty>		
 		</logic:notEmpty>
 		
-		<logic:empty name="space" property="<%= slotName %>">
+		<logic:notEmpty name="space" property="<%= slotName %>">				
+			<bean:define id="accessGroup" name="space" property="<%= slotName %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>			
+			<logic:empty name="accessGroup" property="elements">		
+				<bean:define id="slotNameWithChain" type="java.lang.String"> <%= slotName %>WithChainOfResponsibility </bean:define>
+				<logic:notEmpty name="space" property="<%= slotNameWithChain %>">
+					<bean:define id="accessGroup" name="space" property="<%= slotNameWithChain %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>
+					<logic:notEmpty name="accessGroup">	
+						<logic:notEmpty name="accessGroup" property="elements">	
+							<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/> (<bean:message key="label.defined.elements.in.parent.space"/>)</strong></p>																		
+							<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
+								<fr:layout name="tabular">     										  
+						   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>				  
+				      			</fr:layout>    	
+							</fr:view>		
+						</logic:notEmpty>		
+					</logic:notEmpty>	
+				</logic:notEmpty>						
+			</logic:empty>							
+		</logic:notEmpty>
+						
+		<logic:empty name="space" property="<%= slotName %>">		
 			<bean:define id="slotNameWithChain" type="java.lang.String"> <%= slotName %>WithChainOfResponsibility </bean:define>
 			<logic:notEmpty name="space" property="<%= slotNameWithChain %>">
 				<bean:define id="accessGroup" name="space" property="<%= slotNameWithChain %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>
 				<logic:notEmpty name="accessGroup">	
 					<logic:notEmpty name="accessGroup" property="elements">	
-						<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/></strong></p>																		
+						<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/> (<bean:message key="label.defined.elements.in.parent.space"/>)</strong></p>																		
 						<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
 							<fr:layout name="tabular">     										  
 					   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>				  
@@ -73,9 +91,9 @@
 						</fr:view>		
 					</logic:notEmpty>		
 				</logic:notEmpty>	
-			</logic:notEmpty>		
-		</logic:empty>
-			
+			</logic:notEmpty>						
+		</logic:empty>			
+
 	</logic:iterate>	
 		
 	<%-- Add New Person --%>
