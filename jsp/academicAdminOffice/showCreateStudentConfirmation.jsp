@@ -5,16 +5,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="label.student.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+<h2><bean:message key="label.register.confirmation" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p class="mtop15">
 		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 	</p>
 </html:messages>
-
-
-<h3 class="mtop15"><bean:message key="label.student.registerStudent" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
 <fr:view name="personBean" schema="student.show.personInformation">
 	<fr:layout name="tabular" >
