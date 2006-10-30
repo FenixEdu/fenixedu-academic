@@ -10,7 +10,16 @@ public class AccessGroupPersonBean implements Serializable {
 
     private SpaceAccessGroupType accessGroupType;
     private DomainReference<Person> personReference;
+    private Boolean maintainElements; 
     
+    public Boolean getMaintainElements() {
+        return maintainElements;
+    }
+
+    public void setMaintainElements(Boolean maintainElements) {
+        this.maintainElements = maintainElements;
+    }
+
     public Person getPerson() {
         return (this.personReference != null) ? this.personReference.getObject() : null;
     }

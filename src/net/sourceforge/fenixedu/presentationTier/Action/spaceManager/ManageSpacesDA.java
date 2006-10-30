@@ -194,7 +194,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 
 	final Object[] args = { space, (bean != null) ? bean.getAccessGroupType() : null,
-		(bean != null) ? bean.getPerson() : null, true };
+		(bean != null) ? bean.getPerson() : null, true,
+		(bean != null) ? bean.getMaintainElements() : false };
 	try {
 	    executeService(request, "SpaceAccessGroupsManagement", args);
 	} catch (FenixServiceException e) {
@@ -213,7 +214,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 		.getParameter("spaceAccessGroupType"));
 	final Person person = getPersonFromParameter(request);
 
-	final Object[] args = { space, groupType, person, false };
+	final Object[] args = { space, groupType, person, false, false };
 	try {
 	    executeService(request, "SpaceAccessGroupsManagement", args);
 	} catch (FenixServiceException e) {

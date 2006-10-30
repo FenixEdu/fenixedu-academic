@@ -65,7 +65,7 @@
 				<bean:define id="accessGroup" name="space" property="<%= slotNameWithChain %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>
 				<logic:notEmpty name="accessGroup">	
 					<logic:notEmpty name="accessGroup" property="elements">	
-						<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/></strong></p>
+						<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/></strong></p>																		
 						<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
 							<fr:layout name="tabular">     										  
 					   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>				  
@@ -79,7 +79,7 @@
 	</logic:iterate>	
 		
 	<%-- Add New Person --%>
-	<p class="mbottom05"><strong><bean:message key="label.add.person" bundle="SPACE_RESOURCES"/></strong></p>
+	<p class="mbottom05"><strong><bean:message key="label.add.person" bundle="SPACE_RESOURCES"/></strong></p>	
 	<bean:define id="addPersonToAccessGroupUrl">/manageSpaces.do?method=addPersonToAccessGroup&spaceInformationID=<bean:write name="selectedSpaceInformationId"/></bean:define>
 	<fr:form action="<%= addPersonToAccessGroupUrl %>">
 		<fr:create nested="true" id="addPersonToPersonOccupationAccessGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" schema="AddPersonToAccessGroup">

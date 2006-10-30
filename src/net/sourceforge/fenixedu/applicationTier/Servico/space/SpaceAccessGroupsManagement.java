@@ -7,25 +7,28 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 
 public class SpaceAccessGroupsManagement extends Service {
 
-    public void run(Space space, SpaceAccessGroupType accessGroupType, Person person, boolean toAdd)
-	    throws FenixServiceException {
+    public void run(Space space, SpaceAccessGroupType accessGroupType, Person person, boolean toAdd,
+	    boolean isToMaintainElements) throws FenixServiceException {
 
 	if (person != null) {
-	    if (space.personHasPermissionsToManageSpace(person) && toAdd) {
-		throw new FenixServiceException(
-			"error.space.access.groups.management.person.already.have.permission");
-	    }
+	    Set<Person> elements = null;
 	    if (accessGroupType.equals(SpaceAccessGroupType.PERSON_OCCUPATION_ACCESS_GROUP)) {
 		if (space.getPersonOccupationsAccessGroup() == null) {
 		    space.setPersonOccupationsAccessGroup(new FixedSetGroup());
 		}
-		Set<Person> elements = space.getPersonOccupationsAccessGroup().getElements();
+		elements = space.getPersonOccupationsAccessGroup().getElements();
+		if (isToMaintainElements) {
+		    Group accessGroup = space.getPersonOccupationsAccessGroupWithChainOfResponsibility();
+		    elements = (accessGroup != null) ? accessGroup.getElements() : elements;
+		}
+
 		Set<Person> newElements = manageAccessGroup(person, toAdd, elements);
 		space.setPersonOccupationsAccessGroup(new FixedSetGroup(newElements));
 		spaceManagerRoleManagement(person, toAdd);
@@ -34,8 +37,14 @@ public class SpaceAccessGroupsManagement extends Service {
 		if (space.getExtensionOccupationsAccessGroup() == null) {
 		    space.setExtensionOccupationsAccessGroup(new FixedSetGroup());
 		}
-		Set<Person> elements = space.getExtensionOccupationsAccessGroup().getElements();
-		Set<Person> newElements = manageAccessGroup(person, toAdd, elements);		
+		elements = space.getExtensionOccupationsAccessGroup().getElements();
+		if (isToMaintainElements) {
+		    Group accessGroup = space
+			    .getExtensionOccupationsAccessGroupWithChainOfResponsibility();
+		    elements = (accessGroup != null) ? accessGroup.getElements() : elements;
+		}
+
+		Set<Person> newElements = manageAccessGroup(person, toAdd, elements);
 		space.setExtensionOccupationsAccessGroup(new FixedSetGroup(newElements));
 		spaceManagerRoleManagement(person, toAdd);
 
@@ -43,7 +52,11 @@ public class SpaceAccessGroupsManagement extends Service {
 		if (space.getSpaceManagementAccessGroup() == null) {
 		    space.setSpaceManagementAccessGroup(new FixedSetGroup());
 		}
-		Set<Person> elements = space.getSpaceManagementAccessGroup().getElements();
+		elements = space.getSpaceManagementAccessGroup().getElements();
+		if (isToMaintainElements) {
+		    Group accessGroup = space.getSpaceManagementAccessGroupWithChainOfResponsibility();
+		    elements = (accessGroup != null) ? accessGroup.getElements() : elements;
+		}
 		Set<Person> newElements = manageAccessGroup(person, toAdd, elements);
 		space.setSpaceManagementAccessGroup(new FixedSetGroup(newElements));
 		spaceManagerRoleManagement(person, toAdd);

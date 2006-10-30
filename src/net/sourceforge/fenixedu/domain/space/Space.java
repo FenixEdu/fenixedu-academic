@@ -269,7 +269,7 @@ public abstract class Space extends Space_Base {
 
     public Group getPersonOccupationsAccessGroupWithChainOfResponsibility() {
 	final Group thisGroup = getPersonOccupationsAccessGroup();
-	if (thisGroup != null) {
+	if (thisGroup != null && !thisGroup.getElements().isEmpty()) {
 	    return thisGroup;
 	}
 	final Space surroundingSpace = getSuroundingSpace();
@@ -281,7 +281,7 @@ public abstract class Space extends Space_Base {
 
     public Group getExtensionOccupationsAccessGroupWithChainOfResponsibility() {
 	final Group thisGroup = getExtensionOccupationsAccessGroup();
-	if (thisGroup != null) {
+	if (thisGroup != null && !thisGroup.getElements().isEmpty()) {
 	    return thisGroup;
 	}
 	final Space surroundingSpace = getSuroundingSpace();
@@ -293,7 +293,7 @@ public abstract class Space extends Space_Base {
 
     public Group getSpaceManagementAccessGroupWithChainOfResponsibility() {
 	final Group thisGroup = getSpaceManagementAccessGroup();
-	if (thisGroup != null) {
+	if (thisGroup != null && !thisGroup.getElements().isEmpty()) {
 	    return thisGroup;
 	}
 	final Space surroundingSpace = getSuroundingSpace();
