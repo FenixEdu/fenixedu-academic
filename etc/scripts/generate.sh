@@ -18,7 +18,7 @@ function set_fields() {
   eval unset $name[*]
 
   local fields_section=`echo $line | sed -e 's/[^)]\+ (\([^)]\+\)) .*/\1/'`
-  local fields_list=`echo $fields_section | sed -e "s/\('[^']\+'\|\"[^\"]\+\"\|[^'\",]\+\),\?/\1\n/g"`
+  local fields_list=`echo $fields_section | sed -e "s/\('[^']*'\|\"[^\"]*\"\|[^'\",]\+\),\?/\1\n/g"`
 
   NUM_FIELDS=`echo "$fields_list" | wc -l`
   for (( index=1; index <= $NUM_FIELDS; index++)) ; do
@@ -36,7 +36,7 @@ function set_values() {
   eval unset $name[*]
 
   local values_section=`echo $line | sed -e 's/[^)]\+ ([^)]\+) VALUES (\(.*\));[ \t]*/\1/'`
-  local values_list=`echo $values_section | sed -e "s/\('[^']\+'\|\"[^\"]\+\"\|[^'\",]\+\),\?/\1\n/g"`
+  local values_list=`echo $values_section | sed -e "s/\('[^']*'\|\"[^\"]*\"\|[^'\",]\+\),\?/\1\n/g"`
 
   for (( index=1; index <= $NUM_FIELDS; index++)) ; do
     local value=`echo "$values_list" | cut -d '
