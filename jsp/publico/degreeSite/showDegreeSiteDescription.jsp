@@ -49,76 +49,25 @@
 	<p><strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.coordinators"/> <bean:write name="executionYear" property="year"/></strong></p>
 	<logic:iterate id="responsibleCoordinatorTeacher" name="responsibleCoordinatorsTeachers">
 		<p>
-			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.title.coordinator"/>&nbsp; 
-			<%-- <bean:write name="responsibleCoordinatorTeacher" property="category.name.content"/>&nbsp; --%>
-
-			<%-- F�NIX HOMEPAGE --%>	
-			<logic:notEmpty name="responsibleCoordinatorTeacher" property="person.homepage">
-				<logic:equal name="responsibleCoordinatorTeacher" property="person.homepage.activated" value="true">
-					<bean:define id="userUId" name="responsibleCoordinatorTeacher" property="person.user.userUId" type="java.lang.String"/>
-					<bean:define id="homepage" value="<%="../homepage/" + userUId%>" type="java.lang.String"/>
-					<a target="_blank" href="<%= homepage %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>										
-				</logic:equal>
-
-				<logic:equal name="responsibleCoordinatorTeacher" property="person.homepage.activated" value="false">
-					<%-- PERSONAL HOMEPAGE --%>	
-					<logic:notEmpty name="responsibleCoordinatorTeacher" property="person.enderecoWeb">
-						<logic:equal name="responsibleCoordinatorTeacher" property="person.availableWebSite" value="true">
-							<bean:define id="homepage" name="responsibleCoordinatorTeacher" property="person.enderecoWeb" type="java.lang.String"/>
-							<a target="_blank" href="<%= homepage %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>					
-						</logic:equal>
-
-						<logic:equal name="responsibleCoordinatorTeacher" property="person.availableWebSite" value="false">
-							<%-- EMAIL OR JUST NAME --%>	
-							<logic:notEmpty name="responsibleCoordinatorTeacher" property="person.email">
-								<bean:define id="email" name="responsibleCoordinatorTeacher" property="person.email"/>	
-								<a href="mailto: <%= email %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>											
-							</logic:notEmpty>						
-
-							<%-- NAME --%>	
-							<logic:empty name="responsibleCoordinatorTeacher" property="person.email">
-								<bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/>											
-							</logic:empty>
-						</logic:equal>
-					</logic:notEmpty>
-				</logic:equal>
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.title.coordinator"/>&nbsp;
+			<logic:notEmpty name="responsibleCoordinatorTeacher" property="person.homepageWebAddress">
+				<bean:define id="homepageWebAddres" name="responsibleCoordinatorTeacher" property="person.homepageWebAddress" type="java.lang.String"/>
+				<%
+					if (homepageWebAddres.startsWith("http")) {
+				%>
+					<a target="_blank" href="<%= homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
+				<%
+					} else {
+				%>
+					<a target="_blank" href="<%= "../" + homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
+				<%
+					}
+				%>
 			</logic:notEmpty>
-
-			<logic:empty name="responsibleCoordinatorTeacher" property="person.homepage">
-				<%-- PERSONAL HOMEPAGE --%>	
-				<logic:notEmpty name="responsibleCoordinatorTeacher" property="person.enderecoWeb">
-					<logic:equal name="responsibleCoordinatorTeacher" property="person.availableWebSite" value="true">
-						<bean:define id="homepage" name="responsibleCoordinatorTeacher" property="person.enderecoWeb" type="java.lang.String"/>
-						<a target="_blank" href="<%= homepage %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>					
-					</logic:equal>
-
-					<logic:equal name="responsibleCoordinatorTeacher" property="person.availableWebSite" value="false">
-						<%-- EMAIL OR JUST NAME --%>	
-						<logic:notEmpty name="responsibleCoordinatorTeacher" property="person.email">
-							<bean:define id="email" name="responsibleCoordinatorTeacher" property="person.email"/>	
-							<a href="mailto: <%= email %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>											
-						</logic:notEmpty>						
-
-						<%-- NAME --%>	
-						<logic:empty name="responsibleCoordinatorTeacher" property="person.email">
-							<bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/>											
-						</logic:empty>
-					</logic:equal>
-				</logic:notEmpty>
-				
-				<logic:empty name="responsibleCoordinatorTeacher" property="person.enderecoWeb">
-					<%-- EMAIL OR JUST NAME --%>	
-					<logic:notEmpty name="responsibleCoordinatorTeacher" property="person.email">
-						<bean:define id="email" name="responsibleCoordinatorTeacher" property="person.email"/>	
-						<a href="mailto: <%= email %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>											
-					</logic:notEmpty>						
-
-					<%-- NAME --%>	
-					<logic:empty name="responsibleCoordinatorTeacher" property="person.email">
-						<bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/>											
-					</logic:empty>
-				</logic:empty>				
+			<logic:empty name="responsibleCoordinatorTeacher" property="person.homepageWebAddress">
+				<bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/>
 			</logic:empty>
+			<br/>
 		</p>
 	</logic:iterate>
 </logic:notEmpty>

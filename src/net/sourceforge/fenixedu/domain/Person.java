@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
@@ -2072,6 +2073,21 @@ public class Person extends Person_Base {
 	}
 
 	return result;
+    }
 
+    public String getHomepageWebAddress() {
+        final Homepage homepage = getHomepage();
+        if (homepage == null) {
+            if (getAvailableWebSite() != null && getAvailableWebSite().booleanValue() && getWebAddress() != null && getWebAddress().length() > 0) {
+                return getWebAddress();
+            }
+        } else {
+            if (homepage.getActivated() != null && homepage.getActivated().booleanValue()) {
+                return "/homepage/" + getUsername();
+            } else if (getAvailableWebSite() != null && getAvailableWebSite().booleanValue() && getWebAddress() != null && getWebAddress().length() > 0) {
+                return getWebAddress();
+            }
+        }
+        return null;
     }
 }
