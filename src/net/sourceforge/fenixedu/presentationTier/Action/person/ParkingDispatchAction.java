@@ -2,13 +2,12 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.parking.ParkingDocumentState;
 import net.sourceforge.fenixedu.domain.parking.ParkingFile;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactory;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryEditor;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -30,6 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -86,6 +87,16 @@ public class ParkingDispatchAction extends FenixDispatchAction {
                         .getParkingRequestFactoryEditor();
                 request.setAttribute("parkingRequestFactoryEditor", parkingRequestFactoryEditor);
                 prepareRadioButtonsDocuments((DynaActionForm) actionForm, parkingRequestFactoryEditor);
+            }
+            ParkingRequest parkingRequest = parkingParty.getFirstRequest();
+            List<RoleType> roles = parkingParty.getSubmitAsRoles();
+            if (roles.contains(RoleType.STUDENT) || roles.contains(RoleType.GRANT_OWNER)) {
+                if (!parkingRequest.getLimitlessAccessCard()) {
+                    DateTime startDatePeriod = new DateTime(2006, 10, 14, 0, 0, 0, 0); //start period for students and grant owners
+                    if (parkingRequest.getCreationDate().isBefore(startDatePeriod)) {
+                        request.setAttribute("allowToChoose","true");
+                    }
+                }
             }
         }
 
@@ -400,7 +411,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
     private boolean validateFileName(String fileName) {
         final String filenameT = fileName.trim().toLowerCase();
-        return filenameT.endsWith(".pdf") || filenameT.endsWith(".gif") || filenameT.endsWith(".jpg") || filenameT.endsWith(".jpeg");
+        return filenameT.endsWith(".pdf") || filenameT.endsWith(".gif") || filenameT.endsWith(".jpg")
+                || filenameT.endsWith(".jpeg");
     }
 
     public ActionForward downloadAuthorizationDocument(ActionMapping mapping, ActionForm actionForm,

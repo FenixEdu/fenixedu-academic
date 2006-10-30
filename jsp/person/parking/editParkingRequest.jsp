@@ -951,12 +951,15 @@ margin: 0.5em 0;
 		<logic:notEqual name="person" property="partyClassification" value="TEACHER">
 		<logic:notEqual name="person" property="partyClassification" value="EMPLOYEE">		
 		<p class="mtop2">
+			<logic:notPresent name="allowToChoose">
 			<span class="infoop2">
 				<bean:message key="message.requestQuotasFinishedPeriod" bundle="PARKING_RESOURCES"/>
 			</span>
-		<%--
+			</logic:notPresent>
+			
+			<logic:present name="allowToChoose">		
 			<span class="infoop2">
-				<bean:define id="link"><html:link page="/parking.do?method=downloadParkingRegulamentation">Regulamento</html:link></bean:define>
+				<bean:define id="link"><html:link page="/parking.do?method=downloadParkingRegulamentation"><bean:message key="link.regulation" bundle="PARKING_RESOURCES"/></html:link></bean:define>
 				<bean:message key="message.requestQuotas" bundle="PARKING_RESOURCES" arg0="<%= link %>"/>
 			</span>
 			<div class="separator1"></div>		
@@ -967,7 +970,7 @@ margin: 0.5em 0;
 					</fr:layout>	
 				</fr:edit>			
 			<div class="separator1"></div>
-			--%>
+			</logic:present>
 		</p>
 		</logic:notEqual>
 		</logic:notEqual>
