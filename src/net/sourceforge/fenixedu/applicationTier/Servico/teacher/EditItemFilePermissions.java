@@ -20,7 +20,7 @@ public class EditItemFilePermissions extends FileItemService {
 
         fileItem.setPermittedGroup(group);
         FileManagerFactory.getFileManager().changeFilePermissions(
-                fileItem.getExternalStorageIdentification(), isPublic(group));
+                fileItem.getExternalStorageIdentification(), !isPublic(group));
 
     }
 

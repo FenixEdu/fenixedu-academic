@@ -36,7 +36,7 @@ public class CreateFileItemForItem extends FileItemService {
                 .getExecutionCourse().getNome());
         final IFileManager fileManager = FileManagerFactory.getFileManager();
         final FileDescriptor fileDescriptor = fileManager.saveFile(filePath, originalFilename,
-                isPublic(permittedGroup), fileMetadata, inputStream);
+                !isPublic(permittedGroup), fileMetadata, inputStream);
         
         new FileItem(item, fileDescriptor.getFilename(), displayName, fileDescriptor.getMimeType(),
                 fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor
