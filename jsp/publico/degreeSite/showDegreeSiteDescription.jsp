@@ -66,6 +66,12 @@
 			</logic:notEmpty>
 			<logic:empty name="responsibleCoordinatorTeacher" property="person.homepageWebAddress">
 				<bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/>
+				<%--
+				<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+				<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
+				<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&amp;personID=<bean:write name="responsibleCoordinatorTeacher" property="person.idInternal"/></bean:define>
+				<html:img align="middle" src="<%= emailURL %>" altKey="email" bundle="IMAGE_RESOURCES"/>
+				--%>
 			</logic:empty>
 			<br/>
 		</p>
