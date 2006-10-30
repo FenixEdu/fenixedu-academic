@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FileItem;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -46,33 +45,33 @@ public class CreateFileItemForItem extends FileItemService {
 
     // TODO: avoid depending on ExecutionCourseSite, use Site only
     private FilePath getFilePath(Item item) {
-        final FilePath filePath = new FilePath();
-        filePath.addNode(new Node("I" + item.getIdInternal(), item.getName().getContent(Language.pt)));
+	final FilePath filePath = new FilePath();
+	filePath.addNode(new Node("I" + item.getIdInternal(), item.getName().getContent()));
 
-        final Section section = item.getSection();
-        filePath.addNode(0, new Node("S" + section.getIdInternal(), section.getName().getContent(Language.pt)));
+	final Section section = item.getSection();
+	filePath.addNode(0, new Node("S" + section.getIdInternal(), section.getName().getContent()));
 
-        if (section.getSuperiorSection() != null) {
-            Section superiorSection = section.getSuperiorSection();
-            while (superiorSection != null) {
-                filePath.addNode(0, new Node("S" + superiorSection.getIdInternal(), superiorSection
-                        .getName().getContent(Language.pt)));
+	if (section.getSuperiorSection() != null) {
+	    Section superiorSection = section.getSuperiorSection();
+	    while (superiorSection != null) {
+		filePath.addNode(0, new Node("S" + superiorSection.getIdInternal(), superiorSection
+			.getName().getContent()));
 
-                superiorSection = superiorSection.getSuperiorSection();
-            }
-        }
+		superiorSection = superiorSection.getSuperiorSection();
+	    }
+	}
 
-        ExecutionCourseSite site = (ExecutionCourseSite) section.getSite();
-        final ExecutionCourse executionCourse = site.getExecutionCourse();
-        filePath.addNode(0, new Node("EC" + executionCourse.getIdInternal(), executionCourse.getNome()));
+	ExecutionCourseSite site = (ExecutionCourseSite) section.getSite();
+	final ExecutionCourse executionCourse = site.getExecutionCourse();
+	filePath.addNode(0, new Node("EC" + executionCourse.getIdInternal(), executionCourse.getNome()));
 
-        final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-        filePath.addNode(0, new Node("EP" + executionPeriod.getIdInternal(), executionPeriod.getName()));
+	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+	filePath.addNode(0, new Node("EP" + executionPeriod.getIdInternal(), executionPeriod.getName()));
 
-        final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-        filePath.addNode(0, new Node("EY" + executionYear.getIdInternal(), executionYear.getYear()));
+	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	filePath.addNode(0, new Node("EY" + executionYear.getIdInternal(), executionYear.getYear()));
 
-        return filePath;
+	return filePath;
     }
 
 }
