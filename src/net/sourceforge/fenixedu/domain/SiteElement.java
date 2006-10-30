@@ -29,7 +29,8 @@ public abstract class SiteElement extends SiteElement_Base {
         if (group == null) {
             setAvailabilityPolicy(null);
         }
-        
-        new GroupAvailability(this, group);
+        else {
+            new GroupAvailability(this, group);
+        }
     }
 }

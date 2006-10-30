@@ -11,7 +11,8 @@ public class FileItem extends FileItem_Base {
 
     public static Comparator<FileItem> COMPARATOR_BY_ORDER = new Comparator<FileItem>() {
         public int compare(FileItem one, FileItem other) {
-            int comparison = one.getOrderInItem().compareTo(other.getOrderInItem());
+            int comparison = String.valueOf(one.getOrderInItem()).compareTo(
+                    String.valueOf(other.getOrderInItem()));
 
             // keep old behaviour
             if (comparison != 0) {
@@ -23,18 +24,20 @@ public class FileItem extends FileItem_Base {
         }
     };
 
-    public FileItem() {
+    public FileItem(Item item) {
         super();
+
+        setVisible(true);
+        setItem(item);
+        setOrderInItem(getNextOrderInItem());
     }
 
-    public FileItem(String filename, String displayName, String mimeType, String checksum,
+    public FileItem(Item item, String filename, String displayName, String mimeType, String checksum,
             String checksumAlgorithm, Integer size, String externalStorageIdentification,
             Group permittedGroup) {
-        this();
+        this(item);
         init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
                 externalStorageIdentification, permittedGroup);
-        
-        setOrderInItem(getNextOrderInItem());
     }
 
     private Integer getNextOrderInItem() {

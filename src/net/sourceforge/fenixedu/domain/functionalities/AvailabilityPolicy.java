@@ -51,7 +51,9 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
             super.afterRemove(availabilityPolicy, accessibleItem);
 
             if (accessibleItem != null) {
-                availabilityPolicy.delete();
+                if (availabilityPolicy != null) {
+                    availabilityPolicy.delete();
+                }
             }
         }
         

@@ -47,7 +47,7 @@ public class TeacherFromSiteContainingItemsAuthorization extends AuthorizationBy
         }
         
         ExecutionCourseSite site = (ExecutionCourseSite) item.getSection().getSite();
-        if (teacher.isResponsibleFor(site.getExecutionCourse()) == null) {
+        if (! teacher.hasProfessorshipForExecutionCourse(site.getExecutionCourse())) {
             throw new NotAuthorizedFilterException();
         }
     }

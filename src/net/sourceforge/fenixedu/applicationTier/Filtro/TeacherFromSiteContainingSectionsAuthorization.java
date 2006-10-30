@@ -49,7 +49,7 @@ public class TeacherFromSiteContainingSectionsAuthorization extends Authorizatio
         }
         
         ExecutionCourseSite site = (ExecutionCourseSite) section.getSite();
-        if (teacher.isResponsibleFor(site.getExecutionCourse()) == null) {
+        if (! teacher.hasProfessorshipForExecutionCourse(site.getExecutionCourse())) {
             throw new NotAuthorizedFilterException();
         }
     }

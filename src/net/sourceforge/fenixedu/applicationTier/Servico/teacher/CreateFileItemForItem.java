@@ -38,12 +38,10 @@ public class CreateFileItemForItem extends FileItemService {
         final IFileManager fileManager = FileManagerFactory.getFileManager();
         final FileDescriptor fileDescriptor = fileManager.saveFile(filePath, originalFilename,
                 isPublic(permittedGroup), fileMetadata, inputStream);
-        final FileItem fileItem = new FileItem(fileDescriptor.getFilename(), displayName, fileDescriptor
-                .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
-                fileDescriptor.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
-
-        item.addFileItems(fileItem);
-
+        
+        new FileItem(item, fileDescriptor.getFilename(), displayName, fileDescriptor.getMimeType(),
+                fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor
+                        .getSize(), fileDescriptor.getUniqueId(), permittedGroup);
     }
 
     // TODO: avoid depending on ExecutionCourseSite, use Site only
