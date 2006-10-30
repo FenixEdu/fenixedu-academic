@@ -207,11 +207,9 @@
 	<!-- ========== EXECUTION COURSE MERGE ========== -->
 	<definition name="df.page.chooseDegreesForExecutionCourseMerge" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/chooseDegreesForExecutionCourseMerge.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.chooseExecutionCoursesForExecutionCourseMerge" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/chooseExecutionCoursesForExecutionCourseMerge.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
 
 	<!-- ========== Manage Coordinators ============= -->
@@ -268,7 +266,6 @@
 	</definition>
 	<definition name="df.executionCourseManagement.chooseDegreeType" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/chooseDegreeType.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.executionCourseManagement.chooseDegreeCurricularPlans" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/chooseDegreeCurricularPlans.jsp" />
