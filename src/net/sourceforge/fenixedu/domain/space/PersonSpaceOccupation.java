@@ -26,8 +26,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 		.addComparator(new BeanComparator("idInternal"));
     }
 
-    public PersonSpaceOccupation(final Space space, final Person person, final YearMonthDay begin,
-	    final YearMonthDay end) {
+    public PersonSpaceOccupation(final Space space, final Person person, final YearMonthDay begin, final YearMonthDay end) {
 	super();
 	checkParameters(space, person, begin, end);
 	setPerson(person);
@@ -90,7 +89,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 
     @Override
     public Group getAccessGroup() {
-	return getSpace().getPersonOccupationsAccessGroup();
+	return getSpace().getPersonOccupationsAccessGroupWithChainOfResponsibility();
     }
 
     private boolean occupationsIntersection(YearMonthDay begin, YearMonthDay end) {

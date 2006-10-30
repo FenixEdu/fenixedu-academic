@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.space;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
@@ -103,7 +104,7 @@ public class Floor extends Floor_Base {
 	    throw new NullPointerException("error.surrounding.space");
 	}
 	setSuroundingSpace(suroundingSpace);
-
+	checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson(), suroundingSpace);
 	new FloorInformation(this, floorFactoryCreator);
     }
 

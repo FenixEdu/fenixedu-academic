@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Building.BuildingFactory;
 import net.sourceforge.fenixedu.domain.space.Building.BuildingFactoryEditor;
@@ -8,6 +9,7 @@ public class BuildingInformation extends BuildingInformation_Base {
 
     protected BuildingInformation(final Building building, final BuildingFactory buildingFactory) {
 	super();	
+	Space.checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson(), building);
 	super.setSpace(building);
 	setName(buildingFactory.getName());
 	setTimeInterval(buildingFactory.getBegin(), buildingFactory.getEnd());

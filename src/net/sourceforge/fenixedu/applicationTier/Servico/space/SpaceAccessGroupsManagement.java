@@ -17,8 +17,7 @@ public class SpaceAccessGroupsManagement extends Service {
 	    throws FenixServiceException {
 
 	if (person != null) {
-	    if (Space.personBelongsToWorkmanshipsNucleus(person)
-		    || space.personHasSpecialPermissionToManageSpace(person)) {
+	    if (space.personHasPermissionsToManageSpace(person) && toAdd) {
 		throw new FenixServiceException(
 			"error.space.access.groups.management.person.already.have.permission");
 	    }
@@ -29,14 +28,25 @@ public class SpaceAccessGroupsManagement extends Service {
 		Set<Person> elements = space.getPersonOccupationsAccessGroup().getElements();
 		Set<Person> newElements = manageAccessGroup(person, toAdd, elements);
 		space.setPersonOccupationsAccessGroup(new FixedSetGroup(newElements));
+		spaceManagerRoleManagement(person, toAdd);
 
 	    } else if (accessGroupType.equals(SpaceAccessGroupType.EXTENSION_OCCUPATION_ACCESS_GROUP)) {
 		if (space.getExtensionOccupationsAccessGroup() == null) {
 		    space.setExtensionOccupationsAccessGroup(new FixedSetGroup());
 		}
 		Set<Person> elements = space.getExtensionOccupationsAccessGroup().getElements();
-		Set<Person> newElements = manageAccessGroup(person, toAdd, elements);
+		Set<Person> newElements = manageAccessGroup(person, toAdd, elements);		
 		space.setExtensionOccupationsAccessGroup(new FixedSetGroup(newElements));
+		spaceManagerRoleManagement(person, toAdd);
+
+	    } else if (accessGroupType.equals(SpaceAccessGroupType.SPACE_MANAGEMENT_ACCESS_GROUP)) {
+		if (space.getSpaceManagementAccessGroup() == null) {
+		    space.setSpaceManagementAccessGroup(new FixedSetGroup());
+		}
+		Set<Person> elements = space.getSpaceManagementAccessGroup().getElements();
+		Set<Person> newElements = manageAccessGroup(person, toAdd, elements);
+		space.setSpaceManagementAccessGroup(new FixedSetGroup(newElements));
+		spaceManagerRoleManagement(person, toAdd);
 	    }
 	} else {
 	    throw new FenixServiceException("error.space.access.groups.management.no.person");
@@ -57,7 +67,6 @@ public class SpaceAccessGroupsManagement extends Service {
 	Set<Person> newList = new TreeSet<Person>(Person.COMPARATOR_BY_NAME);
 	newList.addAll(elements);
 	newList.add(person);
-	addSpaceManagerRole(person);
 	return newList;
     }
 
@@ -65,25 +74,24 @@ public class SpaceAccessGroupsManagement extends Service {
 	Set<Person> newList = new TreeSet<Person>(Person.COMPARATOR_BY_NAME);
 	newList.addAll(elements);
 	newList.remove(person);
-	removeSpaceManagerRoleIfPossible(person);
 	return newList;
     }
 
-    private void addSpaceManagerRole(Person person) {
-	if (!person.hasRole(RoleType.SPACE_MANAGER)) {
-	    person.addPersonRoleByRoleType(RoleType.SPACE_MANAGER);
-	}
-    }
-
-    private void removeSpaceManagerRoleIfPossible(Person person) {
-	Set<Space> spacesSet = rootDomainObject.getSpacesSet();
-	for (Space space : spacesSet) {
-	    if (space.personHasPermissionToManageExtensionOccupations(person)
-		    || space.personHasPermissionToManagePersonOccupations(person)
-		    || space.personHasSpecialPermissionToManageSpace(person)) {
-		return;
+    private void spaceManagerRoleManagement(Person person, boolean toAdd) {
+	if (toAdd) {
+	    if (!person.hasRole(RoleType.SPACE_MANAGER)) {
+		person.addPersonRoleByRoleType(RoleType.SPACE_MANAGER);
 	    }
+	} else {
+	    Set<Space> spacesSet = rootDomainObject.getSpacesSet();
+	    for (Space space : spacesSet) {
+		if (space.personHasPermissionToManageExtensionOccupations(person)
+			|| space.personHasPermissionToManagePersonOccupations(person)
+			|| space.personHasSpecialPermissionToManageSpace(person)) {
+		    return;
+		}
+	    }
+	    person.removeRoleByType(RoleType.SPACE_MANAGER);
 	}
-	person.removeRoleByType(RoleType.SPACE_MANAGER);
     }
 }

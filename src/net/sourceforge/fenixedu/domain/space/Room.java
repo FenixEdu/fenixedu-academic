@@ -5,8 +5,11 @@ import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -203,15 +206,17 @@ public class Room extends Room_Base {
     }
 
     public Room(RoomFactoryCreator roomFactoryCreator) {
-	this();
+	this();	
+	
 	final Space suroundingSpace = roomFactoryCreator.getSurroundingSpace();
 	if (suroundingSpace == null) {
-	    throw new NullPointerException("error.surrounding.space");
+	    throw new DomainException("error.surrounding.space");
 	}
+	checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson(), suroundingSpace);	
 	setSuroundingSpace(suroundingSpace);
 	new RoomInformation(this, roomFactoryCreator);
     }
-
+    
     @Override
     public RoomInformation getSpaceInformation() {
 	return (RoomInformation) super.getSpaceInformation();

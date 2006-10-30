@@ -22,11 +22,7 @@
 			<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.person.nome}" escape="false"/>									
 				
 			<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>	
-			<h:panelGroup>
-				<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.unit.parentUnitsPresentationNameWithBreakLine}" escape="false"/>				
-				<h:outputText value="<br/>" escape="false"/>
-				<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.unit.presentationName}"/>	
-			</h:panelGroup>					
+			<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.unit.presentationNameWithParentsAndBreakLine}" escape="false"/>	
 		</h:panelGrid>	
 						
 		<h:outputText styleClass="error" rendered="#{!empty facultyAdmOfficeFunctionsManagementBackingBean.errorMessage}"

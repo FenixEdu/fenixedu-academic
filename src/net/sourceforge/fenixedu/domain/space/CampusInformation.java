@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus.CampusFactory;
 import net.sourceforge.fenixedu.domain.space.Campus.CampusFactoryEditor;
@@ -7,12 +8,13 @@ import net.sourceforge.fenixedu.domain.space.Campus.CampusFactoryEditor;
 public class CampusInformation extends CampusInformation_Base {
 
     protected CampusInformation(final Campus campus, final CampusFactory campusFactory) {
-	super();	
+	super();
+	Space.checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson(), campus);
 	super.setSpace(campus);
 	setName(campusFactory.getName());
 	setTimeInterval(campusFactory.getBegin(), campusFactory.getEnd());
     }
-
+    
     @Override
     public void setName(final String name) {
 	if (name == null) {

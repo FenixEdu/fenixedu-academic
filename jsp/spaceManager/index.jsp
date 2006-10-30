@@ -16,9 +16,16 @@
 	</p>
 </logic:messagesPresent>
 
+<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+<%
+	if(net.sourceforge.fenixedu.domain.space.Space.personBelongsToWorkmanshipsNucleus(person)){
+%>
 <ul>
 	<li><html:link page="/showCreateSpaceForm.do"><bean:message bundle="SPACE_RESOURCES" key="link.create.space"/></html:link></li>
 </ul>
+<%
+	}
+%>
 
 <logic:present name="selectedSpace">
 	<bean:write name="selectedSpace" property="idInternal"/>
@@ -38,8 +45,7 @@
 			</th>
 			<th>
 			</th>
-		</tr>
-		<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+		</tr>		
 		<logic:iterate id="space" name="spaces">
 			<logic:notPresent name="space" property="suroundingSpace">
 				<tr>
@@ -67,9 +73,9 @@
 					<td>
 						<bean:define id="thisSpace" name="space" type="net.sourceforge.fenixedu.domain.space.Space"/>
 						<%
-							if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+							if(thisSpace.personHasPermissionsToManageSpace(person)){
 						%>
-						<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="space" paramProperty="idInternal">
+						<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="space" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
 							<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 						</html:link>
 						<%

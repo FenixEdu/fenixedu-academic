@@ -67,7 +67,7 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 
     @Override
     public Group getAccessGroup() {
-	return getSpace().getExtensionOccupationsAccessGroup();
+	return getSpace().getExtensionOccupationsAccessGroupWithChainOfResponsibility();
     }
 
     private void checkExtensionSpaceOccupationIntersection(YearMonthDay begin, YearMonthDay end,

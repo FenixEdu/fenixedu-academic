@@ -24,8 +24,7 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
 
     public void checkPermissionsToManageSpaceOccupations() {
 	Person loggedPerson = AccessControl.getUserView().getPerson();
-	if (Space.personBelongsToWorkmanshipsNucleus(loggedPerson)
-		|| getSpace().personHasSpecialPermissionToManageSpace(loggedPerson)) {
+	if (getSpace().personHasPermissionsToManageSpace(loggedPerson)) {
 	    return;
 	}
 

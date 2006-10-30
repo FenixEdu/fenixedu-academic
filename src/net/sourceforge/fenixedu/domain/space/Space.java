@@ -149,14 +149,17 @@ public abstract class Space extends Space_Base {
 
     private SortedSet<MaterialSpaceOccupation> getMaterialSpaceOccupationsToLoggedPersonByState(
 	    boolean state) {
+
 	SortedSet<MaterialSpaceOccupation> materialOccupations = new TreeSet<MaterialSpaceOccupation>(
 		MaterialSpaceOccupation.COMPARATOR_BY_CLASS_NAME);
 	YearMonthDay current = new YearMonthDay();
+	Person loggedPerson = AccessControl.getUserView().getPerson();
+
 	for (MaterialSpaceOccupation materialSpaceOccupation : getMaterialSpaceOccupations()) {
 	    if (materialSpaceOccupation.isActive(current) == state
-		    && materialSpaceOccupation.getAccessGroup() != null
-		    && materialSpaceOccupation.getAccessGroup().isMember(
-			    AccessControl.getUserView().getPerson())) {
+		    && (materialSpaceOccupation.getSpace().personHasPermissionsToManageSpace(
+			    loggedPerson) || (materialSpaceOccupation.getAccessGroup() != null && materialSpaceOccupation
+			    .getAccessGroup().isMember(loggedPerson)))) {
 		materialOccupations.add(materialSpaceOccupation);
 	    }
 	}
@@ -215,6 +218,18 @@ public abstract class Space extends Space_Base {
 	return campus;
     }
 
+    public static void checkIfLoggedPersonHasPermissionsToManageSpace(Person person, Space space) {
+	if ((space != null && !space.personHasPermissionsToManageSpace(person))
+		|| (space == null && !personBelongsToWorkmanshipsNucleus(person))) {
+	    throw new DomainException("error.logged.person.not.authorized.to.make.operation");
+	}
+    }
+
+    public boolean personHasPermissionsToManageSpace(Person person) {
+	return personBelongsToWorkmanshipsNucleus(person)
+		|| personHasSpecialPermissionToManageSpace(person);
+    }
+
     public static boolean personBelongsToWorkmanshipsNucleus(Person person) {
 	if (person.getEmployee() != null) {
 	    String workmanshipsNucleusCostCenterCode = PropertiesManager
@@ -229,68 +244,65 @@ public abstract class Space extends Space_Base {
     }
 
     public boolean personHasSpecialPermissionToManageSpace(Person person) {
-	Group spaceManagementAccessGroup = getSpaceManagementAccessGroup();
+	Group spaceManagementAccessGroup = getSpaceManagementAccessGroupWithChainOfResponsibility();
 	if (spaceManagementAccessGroup != null && spaceManagementAccessGroup.isMember(person)) {
 	    return true;
 	}
 	return false;
     }
-    
+
     public boolean personHasPermissionToManagePersonOccupations(Person person) {
-	Group spaceManagementAccessGroup = getPersonOccupationsAccessGroup();
+	Group spaceManagementAccessGroup = getPersonOccupationsAccessGroupWithChainOfResponsibility();
 	if (spaceManagementAccessGroup != null && spaceManagementAccessGroup.isMember(person)) {
 	    return true;
 	}
 	return false;
     }
-    
+
     public boolean personHasPermissionToManageExtensionOccupations(Person person) {
-	Group spaceManagementAccessGroup = getExtensionOccupationsAccessGroup();
+	Group spaceManagementAccessGroup = getExtensionOccupationsAccessGroupWithChainOfResponsibility();
 	if (spaceManagementAccessGroup != null && spaceManagementAccessGroup.isMember(person)) {
 	    return true;
 	}
 	return false;
     }
 
-    @Override
-    public Group getPersonOccupationsAccessGroup() {
-	final Group thisGroup = super.getPersonOccupationsAccessGroup();
+    public Group getPersonOccupationsAccessGroupWithChainOfResponsibility() {
+	final Group thisGroup = getPersonOccupationsAccessGroup();
 	if (thisGroup != null) {
 	    return thisGroup;
 	}
 	final Space surroundingSpace = getSuroundingSpace();
 	if (surroundingSpace != null) {
-	    return surroundingSpace.getPersonOccupationsAccessGroup();
+	    return surroundingSpace.getPersonOccupationsAccessGroupWithChainOfResponsibility();
 	}
 	return null;
     }
 
-    @Override
-    public Group getExtensionOccupationsAccessGroup() {
-	final Group thisGroup = super.getExtensionOccupationsAccessGroup();
+    public Group getExtensionOccupationsAccessGroupWithChainOfResponsibility() {
+	final Group thisGroup = getExtensionOccupationsAccessGroup();
 	if (thisGroup != null) {
 	    return thisGroup;
 	}
 	final Space surroundingSpace = getSuroundingSpace();
 	if (surroundingSpace != null) {
-	    return surroundingSpace.getExtensionOccupationsAccessGroup();
+	    return surroundingSpace.getExtensionOccupationsAccessGroupWithChainOfResponsibility();
 	}
 	return null;
     }
 
-    @Override
-    public Group getSpaceManagementAccessGroup() {
-	final Group thisGroup = super.getSpaceManagementAccessGroup();
+    public Group getSpaceManagementAccessGroupWithChainOfResponsibility() {
+	final Group thisGroup = getSpaceManagementAccessGroup();
 	if (thisGroup != null) {
 	    return thisGroup;
 	}
 	final Space surroundingSpace = getSuroundingSpace();
 	if (surroundingSpace != null) {
-	    return surroundingSpace.getSpaceManagementAccessGroup();
+	    return surroundingSpace.getSpaceManagementAccessGroupWithChainOfResponsibility();
 	}
 	return null;
     }
-   
+
     public static enum SpaceAccessGroupType {
 
 	PERSON_OCCUPATION_ACCESS_GROUP("personOccupationsAccessGroup"),

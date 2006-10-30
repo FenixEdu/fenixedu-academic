@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
-import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -24,7 +24,10 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	if (loggedPersonHasPermissionToManagementPersonOccupations(spaceInformation.getSpace())) {
+	Person loggedPerson = AccessControl.getUserView().getPerson();
+	if (spaceInformation.getSpace().personHasPermissionsToManageSpace(loggedPerson)
+		|| spaceInformation.getSpace()
+			.personHasPermissionToManagePersonOccupations(loggedPerson)) {
 	    return super.execute(mapping, actionForm, request, response);
 	} else {
 	    final ActionMessages actionMessages = new ActionMessages();
@@ -34,25 +37,6 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
 	}
 	request.setAttribute("spaceInformationID", spaceInformation.getIdInternal());
 	return mapping.findForward("ManageSpace");
-    }
-
-    private boolean loggedPersonHasPermissionToManagementPersonOccupations(Space parentSpace) {
-	while (parentSpace != null) {
-	    if (isMemberOfAccessGroup(parentSpace)) {
-		return true;
-	    }
-	    parentSpace = parentSpace.getSuroundingSpace();
-	}
-	return false;
-    }
-
-    private boolean isMemberOfAccessGroup(Space parentSpace) {
-	if (parentSpace.getPersonOccupationsAccessGroup() != null
-		&& parentSpace.getPersonOccupationsAccessGroup().isMember(
-			AccessControl.getUserView().getPerson())) {
-	    return true;
-	}
-	return false;
     }
 
     public ActionForward showSpaceOccupations(ActionMapping mapping, ActionForm form,

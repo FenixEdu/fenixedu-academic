@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.Collator;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
@@ -83,6 +84,7 @@ public class Campus extends Campus_Base {
 
     public Campus(CampusFactory campusFactory) {
 	this();
+	checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson(), null);
 	new CampusInformation(this, campusFactory);
     }
 

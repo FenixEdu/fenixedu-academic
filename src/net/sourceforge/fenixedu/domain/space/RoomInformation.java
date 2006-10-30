@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Room.RoomFactory;
 import net.sourceforge.fenixedu.domain.space.Room.RoomFactoryEditor;
@@ -8,6 +9,7 @@ public class RoomInformation extends RoomInformation_Base {
 
     protected RoomInformation(final Room room, final RoomFactory roomFactory) {
 	super();
+	Space.checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson(), room);
 	super.setSpace(room);
 	setBlueprintNumber(roomFactory.getBlueprintNumber());
 	setIdentification(roomFactory.getIdentification());
@@ -48,7 +50,7 @@ public class RoomInformation extends RoomInformation_Base {
 		.setDistanceFromSanitaryInstalationsQuality(getDistanceFromSanitaryInstalationsQuality());
 	roomFactoryEditor.setSecurityQuality(getSecurityQuality());
 	roomFactoryEditor.setAgeQuality(getAgeQuality());
-	roomFactoryEditor.setObservations(getObservations());	
+	roomFactoryEditor.setObservations(getObservations());
 	roomFactoryEditor.setBegin(getNextPossibleValidFromDate());
 	return roomFactoryEditor;
     }

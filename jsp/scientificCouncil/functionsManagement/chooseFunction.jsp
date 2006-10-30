@@ -24,11 +24,7 @@
 			<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.person.nome}" escape="false"/>									
 				
 			<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>	
-			<h:panelGroup>
-				<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.unit.parentUnitsPresentationNameWithBreakLine}" escape="false"/>
-				<h:outputText value="<br/>" escape="false"/>
-				<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.unit.presentationName}"/>					
-			</h:panelGroup>					
+			<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.unit.presentationNameWithParentsAndBreakLine}" escape="false"/>				
 		</h:panelGrid>	
 						
 		<h:outputText styleClass="error" rendered="#{!empty scientificCouncilFunctionsManagementBackingBean.errorMessage}"

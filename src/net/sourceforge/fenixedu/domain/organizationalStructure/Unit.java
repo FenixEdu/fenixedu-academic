@@ -311,8 +311,8 @@ public class Unit extends Unit_Base {
 	}
 	return new ArrayList<Unit>(allInactiveSubUnits);
     }
-    
-    public Collection<Unit> getAllSubUnits(){
+
+    public Collection<Unit> getAllSubUnits() {
 	Set<Unit> allSubUnits = new HashSet<Unit>();
 	Collection<Unit> subUnits = getSubUnits();
 	allSubUnits.addAll(subUnits);
@@ -321,8 +321,8 @@ public class Unit extends Unit_Base {
 	}
 	return allSubUnits;
     }
-       
-    public Collection<Unit> getAllParentUnits(){
+
+    public Collection<Unit> getAllParentUnits() {
 	Set<Unit> allParentUnits = new HashSet<Unit>();
 	Collection<Unit> parentUnits = getSubUnits();
 	allParentUnits.addAll(parentUnits);
@@ -639,7 +639,7 @@ public class Unit extends Unit_Base {
 	}
 	return result;
     }
-   
+
     public static Unit readByCostCenterCode(Integer costCenterCode) {
 	if (costCenterCode != null) {
 	    for (Party party : RootDomainObject.getInstance().getPartys()) {
@@ -836,9 +836,18 @@ public class Unit extends Unit_Base {
 	}
 	return builder.toString();
     }
-    
+
     public String getPresentationNameWithParents() {
-	return getParentUnitsPresentationName() + " - " + getName();
+	String parentUnits = getParentUnitsPresentationName();
+	return (!StringUtils.isEmpty(parentUnits.trim())) ? getParentUnitsPresentationName() + " - "
+		+ getPresentationName() : getPresentationName();
+    }
+
+    public String getPresentationNameWithParentsAndBreakLine() {
+	String parentUnits = getParentUnitsPresentationNameWithBreakLine();
+	return (!StringUtils.isEmpty(parentUnits.trim())) ? getParentUnitsPresentationNameWithBreakLine()
+		+ " <br/> " + getPresentationName()
+		: getPresentationName();
     }
 
     public String getParentUnitsPresentationNameWithBreakLine() {

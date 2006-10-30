@@ -38,12 +38,8 @@
 		<h:outputText value="<b>#{bundle['label.new.function']}</b>" escape="false"/>	
 		<h:outputText value="#{managerFunctionsManagementBackingBean.function.name}"/>
 				
-		<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>
-		<h:panelGroup>			
-			<h:outputText value="#{managerFunctionsManagementBackingBean.unit.parentUnitsPresentationNameWithBreakLine}" escape="false"/>
-			<h:outputText value="<br/>" escape="false"/>	
-			<h:outputText value="#{managerFunctionsManagementBackingBean.unit.presentationName}"/>
-		</h:panelGroup>	
+		<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>						
+		<h:outputText value="#{managerFunctionsManagementBackingBean.unit.presentationNameWithParentsAndBreakLine}" escape="false"/>		
 	
 		<h:outputText value="<b>#{bundle['label.credits']}</b>" escape="false"/>	
 		<h:outputText value="#{managerFunctionsManagementBackingBean.credits}"/>

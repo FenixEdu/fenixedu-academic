@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.Collator;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -100,6 +101,7 @@ public class Building extends Building_Base {
     public Building(final BuildingFactoryCreator buildingFactoryCreator) {
 	this();
 	setSuroundingSpace(buildingFactoryCreator.getSurroundingSpace());
+	checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson(), buildingFactoryCreator.getSurroundingSpace());
 	new BuildingInformation(this, buildingFactoryCreator);
     }
 

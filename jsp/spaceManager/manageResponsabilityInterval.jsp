@@ -35,10 +35,13 @@
 	</logic:messagesPresent>
 	
 	<logic:empty name="spaceResponsibility">
-		<div class="infoop2 mtop15">
-			<p><bean:message key="label.unit.name" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="unit" property="name"/></strong></p>
-			<p><bean:message key="label.unit.costCenterCode" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="unit" property="costCenterCode"/></strong></p>
-		</div>
+	  	<table class="infoop2 mvert1">
+			<tr class="valigntop">
+				<td><bean:message key="label.unit" bundle="SPACE_RESOURCES"/>:</td>
+				<td><bean:write filter="false" name="unit" property="presentationNameWithParentsAndBreakLine"/></td>	
+			</tr>											
+		</table>
+		
 		<bean:define id="exceptionLink">/manageSpaceResponsibility.do?method=manageResponsabilityInterval&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&unitID=<bean:write name="unit" property="idInternal"/></bean:define>	
 		<fr:hasMessages for="create" type="conversion">
 			<p>
@@ -61,10 +64,13 @@
 
 
 	<logic:notEmpty name="spaceResponsibility">
-		<div class="infoop2 mvert1">
-			<p><bean:message key="label.unit.name" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="spaceResponsibility" property="unit.name"/></strong></p>
-			<p><bean:message key="label.unit.costCenterCode" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="spaceResponsibility" property="unit.costCenterCode"/></strong></p>
-		</div>
+		<table class="infoop2 mvert1">
+			<tr class="valigntop">
+				<td><bean:message key="label.unit" bundle="SPACE_RESOURCES"/>:</td>
+				<td><bean:write filter="false" name="spaceResponsibility" property="unit.presentationNameWithParentsAndBreakLine"/></td>	
+			</tr>											
+		</table>
+				
 		<bean:define id="exceptionLink2">/manageSpaceResponsibility.do?method=prepareEditSpaceResponsibility&page=0&spaceResponsibilityID=<bean:write name="spaceResponsibility" property="idInternal"/></bean:define>	
 		<fr:hasMessages for="edit" type="conversion">
 			<p>

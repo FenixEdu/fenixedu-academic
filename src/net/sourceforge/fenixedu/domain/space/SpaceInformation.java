@@ -16,7 +16,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
     protected SpaceInformation() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(this.getClass().getName());
+	setOjbConcreteClass(this.getClass().getName());	
     }
 
     public void delete() {

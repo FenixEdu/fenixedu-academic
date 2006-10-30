@@ -31,13 +31,9 @@
 			<h:outputText value="<b>#{bundle['label.function']}</b>" escape="false"/>	
 			<h:outputText value="#{functionsManagementBackingBean.personFunction.function.name}"/>
 					
-			<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>
-			<h:panelGroup>			
-				<h:outputText value="#{functionsManagementBackingBean.personFunction.unit.parentUnitsPresentationNameWithBreakLine}" escape="false"/>
-				<h:outputText value="<br/>" escape="false"/>	
-				<h:outputText value="#{functionsManagementBackingBean.personFunction.unit.presentationName}"/>
-			</h:panelGroup>	
-		
+			<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>										
+			<h:outputText value="#{functionsManagementBackingBean.personFunction.unit.presentationNameWithParentsAndBreakLine}" escape="false"/>
+			
 			<h:outputText value="<b>#{bundle['label.credits']}</b>" escape="false"/>	
 			<h:outputText value="#{functionsManagementBackingBean.personFunction.credits}"/>
 		

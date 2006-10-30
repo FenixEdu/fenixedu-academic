@@ -18,7 +18,6 @@
 		<jsp:include page="spaceCrumbs.jsp"/>
 	</div>
 	
-	<bean:define id="space" name="selectedSpaceInformation" property="space"/>	
 	<bean:define id="thisSpace" name="selectedSpaceInformation" property="space" type="net.sourceforge.fenixedu.domain.space.Space"/>
 				
 	<logic:messagesPresent message="true">
@@ -95,7 +94,7 @@
 	</table>
 	
 	<%
-		if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+		if(thisSpace.personHasPermissionsToManageSpace(person)){
 	%>
 	<p class="mtop0 mbottom2">
 		<html:link page="/manageSpaces.do?method=prepareEditSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
@@ -117,7 +116,7 @@
 
 	<%-- BluePrints --%>
 	<%
-		if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+		if(thisSpace.personHasPermissionsToManageSpace(person)){
 	%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>			
 	<logic:notEmpty name="selectedSpaceInformation" property="space.mostRecentBlueprint">		
@@ -137,7 +136,7 @@
 	%>
 	
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-		<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
+		<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
 		<fr:view name="selectedSpaceInformation" schema="RoomInformation" layout="tabular"/>
 	</logic:equal>		    
 
@@ -199,8 +198,9 @@
 							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="subSpace" paramProperty="spaceInformation.idInternal">
 								<bean:message bundle="SPACE_RESOURCES" key="label.view"/>
 							</html:link>
+							<bean:define id="subSpaceToCheck" name="subSpace" type="net.sourceforge.fenixedu.domain.space.Space"/>
 							<%
-								if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+								if(subSpaceToCheck.personHasPermissionsToManageSpace(person)){
 							%>	
 							,&nbsp; 
 							<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="subSpace" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
@@ -216,7 +216,7 @@
 		</logic:greaterEqual>
 	</logic:present>
 	<%
-		if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+		if(thisSpace.personHasPermissionsToManageSpace(person)){
 	%>	
 	<p class="mtop05">
 		<html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
@@ -229,7 +229,7 @@
 
 	<%-- Responsability --%>
 	<%
-		if(thisSpace.personBelongsToWorkmanshipsNucleus(person) || thisSpace.personHasSpecialPermissionToManageSpace(person)){
+		if(thisSpace.personHasPermissionsToManageSpace(person)){
 	%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></h3>
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
@@ -250,7 +250,7 @@
 	
 	<%-- Person Occupations --%>
 	<%
-		if(thisSpace.personHasPermissionToManagePersonOccupations(person)){
+		if(thisSpace.personHasPermissionToManagePersonOccupations(person) || thisSpace.personHasPermissionsToManageSpace(person)){
 	%>
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.person.occupations"/></h3>
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
@@ -269,7 +269,7 @@
 
 	<%-- Material --%>
 	<%
-		if(thisSpace.personHasPermissionToManagePersonOccupations(person) || thisSpace.personHasPermissionToManageExtensionOccupations(person)){
+		if(thisSpace.personHasPermissionToManageExtensionOccupations(person) || thisSpace.personHasPermissionsToManageSpace(person)){
 	%>
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></h3>
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
@@ -287,7 +287,7 @@
 	%>	
 		
 	<%
-		if(net.sourceforge.fenixedu.domain.space.Space.personBelongsToWorkmanshipsNucleus(person)){
+		if(thisSpace.personBelongsToWorkmanshipsNucleus(person)){
 	%>
 	<%-- Access Groups --%>
 	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.access.groups"/></h3>
