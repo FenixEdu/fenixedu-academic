@@ -295,6 +295,7 @@
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.parking.ParkingGroup"/>
 		<property name="format" value="${groupName}"/>
 	</slot>
+	<slot name="phdNumber" key="label.phdNumber"/>
 </schema>
 
 <schema name="edit.parkingParty.firstCar" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">

@@ -3752,6 +3752,7 @@ class net.sourceforge.fenixedu.domain.parking.ParkingDocument extends net.source
 class net.sourceforge.fenixedu.domain.parking.ParkingParty extends net.sourceforge.fenixedu.domain.DomainObject {
 	Long cardNumber;
 	Integer keyParkingGroup;
+	Integer phdNumber;	
 	String firstCarPlateNumber;
 	String firstCarMake;
 	String secondCarPlateNumber;

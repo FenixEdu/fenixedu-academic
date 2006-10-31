@@ -443,13 +443,16 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     }
 
     private String getMostSignificantNumber(Person p) {
+        if(p.getParkingParty().getPhdNumber()!=null){
+            return "Nº: " + p.getParkingParty().getPhdNumber();
+        }
         if (p.getTeacher() != null) {
             return "Nº Mec: " + p.getTeacher().getTeacherNumber();
         }
         if (p.getEmployee() != null && p.getEmployee().getCurrentWorkingContract() != null) {
             return "Nº Mec: " + p.getEmployee().getEmployeeNumber();
         }
-        if (p.getStudent() != null) {
+        if (p.getStudent() != null) {         
             DegreeType degreeType = p.getStudent().getMostSignificantDegreeType();
             Collection<Registration> registrations = p.getStudent().getRegistrationsByDegreeType(
                     degreeType);
@@ -462,8 +465,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         }
         if (p.getGrantOwner() != null && p.getGrantOwner().hasCurrentContract()) {
             return "Nº: " + p.getGrantOwner().getNumber();
-        }
-
+        }       
         return "";
     }
 
