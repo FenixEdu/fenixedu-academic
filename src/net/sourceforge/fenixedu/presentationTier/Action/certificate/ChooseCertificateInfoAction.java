@@ -125,6 +125,9 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
             final Registration registration = Registration.readStudentByNumberAndDegreeType(requesterNumber, DegreeType.MASTER_DEGREE);
             // inputs
             InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
+            if (infoStudent == null) {
+                throw new NonExistingActionException("O aluno");
+            }
             session.setAttribute(SessionConstants.DEGREE_TYPE, infoStudent.getDegreeType());
 
             // output

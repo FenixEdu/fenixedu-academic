@@ -378,7 +378,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
 	Object[] args = { registerCandidacyBean };
 	try {
-	    ServiceUtils.executeService(getUserView(request), "RegisterCandidate", args);
+	    ServiceUtils.executeService(getUserView(request), "RegisterCandidateNew", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), null);
 	    request.setAttribute("candidacy", candidacy);
