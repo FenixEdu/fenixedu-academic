@@ -70,7 +70,10 @@
 			<th>
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>:
 			</th>
-			<td style="background: #fafaca;">
+			<td style="background: #fafaca;">				
+				<logic:empty name="selectedSpaceInformation" property="presentationName">
+				-
+				</logic:empty>
 				<bean:write name="selectedSpaceInformation" property="presentationName"/>
 			</td>
 		</tr>
@@ -148,6 +151,9 @@
 	<logic:present name="spaces">
 		<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="title.subspaces"/></h3>
 		<bean:size id="spacesSize" name="spaces"/>
+		<logic:equal name="spacesSize" value="0">
+			<p class="mtop05"><em><bean:message key="label.empty.space" bundle="SPACE_RESOURCES"/>.</em></p>		
+		</logic:equal>
 		<logic:greaterEqual name="spacesSize" value="1">
 			<table class="tstyle4 thlight mtop05 mbottom05">				
 				<tr>
@@ -182,17 +188,21 @@
 								<bean:message bundle="SPACE_RESOURCES" key="select.item.room"/>
 							</logic:equal>
 						</td>
-						<td class="acenter">
+						<td class="acenter">							
+							<logic:empty name="subSpace" property="spaceInformation.presentationName">
+							-
+							</logic:empty>
 							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="subSpace" paramProperty="spaceInformation.idInternal">
 								<bean:write name="subSpace" property="spaceInformation.presentationName"/>
 							</html:link>
 						</td>
 						<td class="acenter">							
+						
 							<logic:equal name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-								<bean:write name="subSpace" property="spaceInformation.blueprintNumber"/>							
+								<bean:write name="subSpace" property="spaceInformation.blueprintNumber"/>															
 							</logic:equal>
 							<logic:notEqual name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-							
+								-							
 							</logic:notEqual>
 						</td>
 						<td class="acenter">

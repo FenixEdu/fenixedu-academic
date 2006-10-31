@@ -58,8 +58,9 @@ public class RoomInformation extends RoomInformation_Base {
 
     @Override
     public String getPresentationName() {
-	return (getIdentification() != null) ? getIdentification()
+	String name = (getIdentification() != null) ? getIdentification()
 		+ ((getDescription() != null) ? " " + getDescription() : "")
 		: ((getDescription() != null) ? getDescription() : "");
+	return name.trim();
     }
 }
