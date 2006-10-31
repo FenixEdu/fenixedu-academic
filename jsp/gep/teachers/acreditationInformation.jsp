@@ -17,8 +17,13 @@
 			<tr>
 				<td width="70%"><bean:message key="label.acred.teacherInformation.name" bundle="GEP_RESOURCES"/>
 					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nome" /> </td> 
-				<td width="30%"><bean:message key="label.acred.teacherInformation.birthDate" bundle="GEP_RESOURCES"/>
-					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nascimento" /> </td>	
+				<td width="30%">
+					<bean:message key="label.acred.teacherInformation.birthDate" bundle="GEP_RESOURCES"/>
+					&nbsp;
+					<dt:format pattern="dd-MM-yyyy">
+						<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nascimento.time" />
+					</dt:format>
+				</td>	
 			</tr>
 			<tr>
 				<td><bean:message key="message.teacherInformation.category" bundle="GEP_RESOURCES"/>
