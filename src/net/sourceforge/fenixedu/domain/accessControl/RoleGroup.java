@@ -55,6 +55,10 @@ public class RoleGroup extends DomainBackedGroup<Role> {
      */
     @Override
     public boolean allows(IUserView userView) {
+        if (userView == null || userView.isPublicRequester()) {
+            return false;
+        }
+        
         Collection<RoleType> roleTypes = userView.getRoleTypes();
 
         if (roleTypes == null) {
