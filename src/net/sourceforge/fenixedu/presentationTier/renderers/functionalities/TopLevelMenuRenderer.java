@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.functionalities;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
@@ -65,7 +64,7 @@ public class TopLevelMenuRenderer extends OutputRenderer {
                 FunctionalityContext context = (FunctionalityContext) object;
                 
                 if (context == null) {
-                    context = new FilterFunctionalityContext(RenderersRequestProcessor.getCurrentRequest(), AccessControl.getUserView(), null);
+                    context = new FilterFunctionalityContext(RenderersRequestProcessor.getCurrentRequest(), null);
                 }
                 
                 HtmlList menu = new HtmlList();

@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 public class FileItemCreationBean implements Serializable {
@@ -25,6 +26,7 @@ public class FileItemCreationBean implements Serializable {
         super();
         
         this.item = new DomainReference<Item>(item);
+        this.permittedGroup = new EveryoneGroup();
     }
 
     public Item getItem() {

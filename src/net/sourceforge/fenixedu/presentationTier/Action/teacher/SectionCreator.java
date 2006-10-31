@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -13,6 +14,7 @@ public class SectionCreator implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private MultiLanguageString name;
+    private boolean visible;
     private DomainReference<Section> nextSection;
 
     private DomainReference<Site> site;
@@ -26,6 +28,8 @@ public class SectionCreator implements Serializable {
         this.site = new DomainReference<Site>(site);
         this.superiorSection = new DomainReference<Section>(null);
         this.nextSection = new DomainReference<Section>(null);
+        this.visible = true;
+        this.permittedGroup = new EveryoneGroup();
     }
 
     public SectionCreator(Section section) {
@@ -40,6 +44,14 @@ public class SectionCreator implements Serializable {
 
     public void setName(MultiLanguageString name) {
         this.name = name;
+    }
+
+    public boolean getVisible() {
+        return this.visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public Section getNextSection() {
@@ -76,5 +88,6 @@ public class SectionCreator implements Serializable {
         section.setSuperiorSection(getSuperiorSection());
         section.setNextSection(getNextSection());
         section.setPermittedGroup(getPermittedGroup());
+        section.setVisible(getVisible());
     }
 }

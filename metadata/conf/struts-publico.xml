@@ -352,7 +352,9 @@
 		<forward name="execution-course-student-group" path="execution-course-student-group"/>
 		<forward name="execution-course-student-groups-by-shift" path="execution-course-student-groups-by-shift"/>
 		<forward name="execution-course-section" path="execution-course-section"/>
-		<forward name="execution-course-rss" path="execution-course-rss"/>
+        <forward name="execution-course-section-deny" path="execution-course-section-deny"/>
+        <forward name="execution-course-section-adviseLogin" path="execution-course-section-adviseLogin"/>
+    		<forward name="execution-course-rss" path="execution-course-rss"/>
 		<forward name="execution-course-lesson-plannings" path="execution-course-lesson-plannings"/>
 		<forward name="execution-course-not-found" path="execution-course-not-found"/>
    	</action>
@@ -814,6 +816,7 @@
     <message-resources parameter="resources.PublicDepartmentResources" key="PUBLIC_DEPARTMENT_RESOURCES" null="false"/>    
     <message-resources parameter="resources.HomepageResources" key="HOMEPAGE_RESOURCES" null="false"/>
     <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
+    <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

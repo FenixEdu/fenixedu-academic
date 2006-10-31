@@ -14,6 +14,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -345,6 +346,16 @@ public class Section extends Section_Base {
         final SortedSet<Item> items = new TreeSet<Item>(Item.COMPARATOR_BY_ORDER);
         items.addAll(getAssociatedItemsSet());
         return items;
+    }
+
+    /**
+     * A section is always visible to the user as an entry in the menu. The
+     * content of the section may not be available and that will be checked when
+     * the user tries to access the section.
+     */
+    @Override
+    public boolean isVisible(FunctionalityContext context) {
+        return isVisible();
     }
 
 }

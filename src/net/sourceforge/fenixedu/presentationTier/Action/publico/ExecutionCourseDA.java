@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,10 +14,12 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Section;
@@ -24,8 +27,10 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -174,15 +179,98 @@ public class ExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("execution-course-student-groups-by-shift");
     }
 
-    public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        final Section section = getSection(request);
-        request.setAttribute("section", section);
-        final Set<Section> selectedSections = new HashSet<Section>();
-        for (Section currentSection = section ; currentSection != null; currentSection = currentSection.getSuperiorSection()) {
-            selectedSections.add(currentSection);
+    public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Section section = selectSection(request);
+
+        IUserView userView = prepareUserView(request);
+        FunctionalityContext context = prepareSectionContext(request);
+
+        if (section.isAvailable(context)) {
+            prepareProtectedItems(request, userView, section, context);
+            return mapping.findForward("execution-course-section");
         }
-        request.setAttribute("selectedSections", selectedSections);
-        return mapping.findForward("execution-course-section");
+        else {
+            if (isAuthenticated(userView)) {
+                return mapping.findForward("execution-course-section-deny");
+            }
+            else {
+                return mapping.findForward("execution-course-section-adviseLogin");
+            }
+        }
+    }
+
+    public ActionForward sectionWithLogin(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        IUserView userView = getUserView(request);
+        
+        if (! isAuthenticated(userView)) {
+            RequestUtils.sendLoginRedirect(request, response);
+            return null;
+        }
+        else {
+            return section(mapping, form, request, response);
+        }
+    }
+    
+    private void prepareProtectedItems(HttpServletRequest request, IUserView userView, Section section, FunctionalityContext context) {
+        List<ProtectedItem> protectedItems = setupItems(request, context, section);
+        
+        if (!isAuthenticated(userView) && hasRestrictedItems(protectedItems)) {
+            request.setAttribute("hasRestrictedItems", true);
+        }
+    }
+
+    private boolean hasRestrictedItems(List<ProtectedItem> protectedItems) {
+        for (ProtectedItem item : protectedItems) {
+            if (! item.isAvailable()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    private List<ProtectedItem> setupItems(HttpServletRequest request, FunctionalityContext context, Section section) {
+        List<ProtectedItem> items = new ArrayList<ProtectedItem>();
+        for (Item item : section.getOrderedItems()) {
+            items.add(new ProtectedItem(context, item));
+        }
+        
+        request.setAttribute("protectedItems", items);
+        return items;
+    }
+
+    private IUserView prepareUserView(HttpServletRequest request) {
+        IUserView userView = getUserView(request);
+        request.setAttribute("logged", isAuthenticated(userView));
+        
+        return userView;
+    }
+
+    private FunctionalityContext prepareSectionContext(HttpServletRequest request) {
+        FunctionalityContext context = new SiteSectionContext(request);
+        request.setAttribute("context", context);
+        return context;
+    }
+
+    private boolean isAuthenticated(IUserView userView) {
+        return userView != null && !userView.isPublicRequester();
+    }
+
+    private Section selectSection(HttpServletRequest request) {
+        Section section = getSection(request);
+        
+        if (section != null) {
+            request.setAttribute("section", section);
+            
+            final Set<Section> selectedSections = new HashSet<Section>();
+            for (Section currentSection = section ; currentSection != null; currentSection = currentSection.getSuperiorSection()) {
+                selectedSections.add(currentSection);
+            }
+            
+            request.setAttribute("selectedSections", selectedSections);
+        }
+
+        return section;
     }
 
     public ActionForward rss(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

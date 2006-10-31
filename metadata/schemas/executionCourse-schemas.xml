@@ -189,7 +189,8 @@
         <property name="bundle" value="SITE_RESOURCES"/>
         <property name="key" value="true"/>
     </slot>
-    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+    <slot name="visible" bundle="SITE_RESOURCES"/>
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
         <property name="eachLayout" value="values"/>
@@ -209,7 +210,8 @@
         <property name="bundle" value="SITE_RESOURCES"/>
         <property name="key" value="true"/>
 	</slot>
-    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+    <slot name="visible" bundle="SITE_RESOURCES"/>
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
         <property name="eachLayout" value="values"/>
@@ -221,7 +223,7 @@
         type="net.sourceforge.fenixedu.domain.Section"
         bundle="DEFAULT"
         >
-    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
         <property name="eachLayout" value="values"/>
@@ -246,7 +248,8 @@
    		<property name="rows" value="15"/>
    		<property name="config" value="advanced" />
 	</slot>
-    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+    <slot name="visible" bundle="SITE_RESOURCES"/>
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
         <property name="eachLayout" value="values"/>
@@ -272,7 +275,8 @@
    		<property name="rows" value="15"/>
    		<property name="config" value="advanced" />
 	</slot>
-    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+    <slot name="visible" bundle="SITE_RESOURCES"/>
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
         <property name="eachLayout" value="values"/>
@@ -283,7 +287,7 @@
         type="net.sourceforge.fenixedu.domain.Item"
         bundle="DEFAULT"
         >
-    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
         <property name="eachLayout" value="values"/>
@@ -458,7 +462,7 @@
 </schema>
 
 <schema name="section.group.edit" type="net.sourceforge.fenixedu.domain.Section">
-    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
         <property name="eachLayout" value="values"/>
@@ -467,7 +471,7 @@
 </schema>
 
 <schema name="item.group.edit" type="net.sourceforge.fenixedu.domain.Item">
-    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES">
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
         <property name="eachLayout" value="values"/>
@@ -487,7 +491,7 @@
 </schema>
 
 <schema name="item.file.permittedGroup" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemPermissionBean" bundle="SITE_RESOURCES">
-    <slot name="permittedGroup" layout="radio-select">
+    <slot name="permittedGroup" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.FileItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
         <property name="eachLayout" value="values"/>
@@ -496,7 +500,7 @@
 </schema>
 
 <schema name="item.file.create" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemCreationBean" bundle="SITE_RESOURCES">
-    <slot name="permittedGroup" layout="radio-select">
+    <slot name="permittedGroup" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.FileItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
         <property name="eachLayout" value="values"/>

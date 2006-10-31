@@ -2,10 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.servlets.filters.functionaliti
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 
 /**
@@ -16,37 +14,17 @@ import net.sourceforge.fenixedu.domain.functionalities.Module;
  * 
  * @author cfgi
  */
-public class FilterFunctionalityContext implements FunctionalityContext {
+public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 
-    private HttpServletRequest request;
-    private IUserView userView;
     private Functionality functionality;
 
-    public FilterFunctionalityContext(HttpServletRequest request, IUserView userView, Functionality functionality) {
-        super();
+    public FilterFunctionalityContext(HttpServletRequest request, Functionality functionality) {
+        super(request);
         
-        this.request = request;
-        this.userView = userView;
         this.functionality = functionality;
     }
 
-    public HttpServletRequest getRequest() {
-        return this.request;
-    }
-
-    public IUserView getUserView() {
-        return this.userView;
-    }
-
-    public User getLoggedUser() {
-        if (getUserView().isPublicRequester()) {
-            return null;
-        }
-        else {
-            return getUserView().getPerson().getUser();
-        }
-    }
-
+    @Override
     public Module getSelectedModule() {
         if (this.functionality == null) {
             return null;
@@ -60,6 +38,7 @@ public class FilterFunctionalityContext implements FunctionalityContext {
         }
     }
 
+    @Override
     public Functionality getSelectedFunctionality() {
         return this.functionality;
     }

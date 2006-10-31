@@ -237,7 +237,7 @@ public class CheckAvailabilityFilter implements Filter {
      */
     private FunctionalityContext getContext(HttpServletRequest request, IUserView userView,
             Functionality functionality) {
-        return new FilterFunctionalityContext(request, userView, functionality);
+        return new FilterFunctionalityContext(request, functionality);
     }
 
     private void setupRequest(HttpServletRequest servletRequest, FunctionalityContext context) {
