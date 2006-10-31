@@ -56,7 +56,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public abstract Set<AdministrativeOfficeType> getPossibleAdministrativeOffices();
-
+    
     /**
      * Each AcademicServiceRequest must verify the conditions necessary for it to be concluded and
      * throw DomainExceptions if otherwise
@@ -77,6 +77,11 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	
 	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.CONCLUDED, employee, null);
+    }
+    
+    final public void reject(final String justification) throws DomainException {
+	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	edit(AcademicServiceRequestSituationType.REJECTED, employee, justification);
     }
     
     @Override
@@ -200,6 +205,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	if (situationType == null) {
 	    return Collections.unmodifiableList(Arrays.asList(new AcademicServiceRequestSituationType[] {
 		    AcademicServiceRequestSituationType.CANCELLED,
+		    AcademicServiceRequestSituationType.REJECTED,
 		    AcademicServiceRequestSituationType.PROCESSING }));
 	} else {
 	    switch (situationType) {
