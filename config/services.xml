@@ -10972,7 +10972,7 @@
         </filterChains>   
     </service> 
 	<service>
-    	<name>RegisterCandidate</name>
+    	<name>RegisterCandidateNew</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.RegisterCandidate</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
