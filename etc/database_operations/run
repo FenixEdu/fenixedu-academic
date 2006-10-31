@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Alter Teacher Past Credits" alterTeacherPastCredits.sql
 execute "Add phd number to Parking Party" alterTableParkingParty.sql
+execute "Change type of Item information to LONGTEXT" ChangeItemInformationLength.sql
