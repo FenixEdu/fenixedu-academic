@@ -22,6 +22,15 @@
 	</p>
 </logic:messagesPresent>	
 
+<bean:define id="backLink">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>		
+<ul class="mvert15 list5">
+	<li>
+		<html:link page="<%= backLink %>">
+			<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
+		</html:link>
+	</li>
+</ul>
+
 <p class="mvert15"><span class="warning0"><bean:message key="label.space.createIn" bundle="SPACE_RESOURCES"/>: <strong><bean:write name="selectedSpace" property="spaceInformation.presentationName"/></strong></span></p>
 
 <p class="mtop15 mbottom05"><strong><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/></strong></p>

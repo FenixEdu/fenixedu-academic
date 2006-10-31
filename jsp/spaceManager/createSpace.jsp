@@ -18,6 +18,14 @@
 	</p>
 </logic:messagesPresent>	
 
+<ul class="mvert15 list5">
+	<li>
+		<html:link page="/index.do">
+			<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
+		</html:link>
+	</li>
+</ul>
+
 <p class="mbottom05"><strong><bean:message key="title.space.type" bundle="SPACE_RESOURCES"/></strong></p>
 
 <html:form action="/showCreateSpaceForm">
