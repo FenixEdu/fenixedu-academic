@@ -9819,6 +9819,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>RejectAcademicServiceRequest</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.RejectAcademicServiceRequest</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
+		</filterChains>
+	</service>
+	<service>
 		<name>MarkSheetsToConfirmSendMail</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.MarkSheetsToConfirmSendMail</implementationClass>
 		<description />
