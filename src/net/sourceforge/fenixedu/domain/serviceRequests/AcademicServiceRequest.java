@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
@@ -15,6 +16,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -53,6 +55,21 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	    throw new DomainException(
 		    "error.serviceRequests.AcademicServiceRequest.administrativeOffice.cannot.be.null");
 	}
+    }
+
+    public abstract String getDescription();
+    
+    protected String getDescription(final String academicServiceRequestType, final String specificServiceType) {
+	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	
+	final StringBuilder result = new StringBuilder();
+	result.append(enumerationResources.getString(academicServiceRequestType));
+	if (specificServiceType != null) {
+	    result.append(": ");
+	    result.append(enumerationResources.getString(specificServiceType));
+	}
+	
+	return result.toString();
     }
 
     public abstract Set<AdministrativeOfficeType> getPossibleAdministrativeOffices();
