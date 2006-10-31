@@ -36,9 +36,9 @@
 	</logic:messagesPresent>
 	
 	<logic:empty name="spaceResponsibility">
-	  	<table class="infoop2 mvert1">
-			<tr class="valigntop">
-				<td><bean:message key="label.unit" bundle="SPACE_RESOURCES"/>:</td>
+	  	<table class="infoop2 thlight thtop mvert1">
+			<tr>
+				<th><bean:message key="label.unit" bundle="SPACE_RESOURCES"/>:</th>
 				<td><bean:write filter="false" name="unit" property="presentationNameWithParentsAndBreakLine"/></td>	
 			</tr>											
 		</table>

@@ -91,7 +91,7 @@
 		<fr:destination name="cancel" path="<%= cancelPath %>"/>
 		<fr:destination name="invalid" path="<%= invalidLink %>"/>		
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thmiddle mtop0 mbottom1"/>
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0 mbottom1"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>	
 	</fr:create>

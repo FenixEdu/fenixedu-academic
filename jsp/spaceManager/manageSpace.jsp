@@ -137,8 +137,12 @@
 	
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 		<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
-		<fr:view name="selectedSpaceInformation" schema="ViewRoomInformation" layout="tabular"/>
-	</logic:equal>		    
+		<fr:view name="selectedSpaceInformation" schema="ViewRoomInformation" layout="tabular">
+			<fr:layout name="tabular">      			
+	   			<fr:property name="classes" value="tstyle4 thlight thright mvert0"/>
+	   		</fr:layout>
+		</fr:view>
+	</logic:equal>
 
 	<%-- Subspaces --%>
 	<logic:present name="spaces">
@@ -178,7 +182,7 @@
 								<bean:message bundle="SPACE_RESOURCES" key="select.item.room"/>
 							</logic:equal>
 						</td>
-						<td>
+						<td class="acenter">
 							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="subSpace" paramProperty="spaceInformation.idInternal">
 								<bean:write name="subSpace" property="spaceInformation.presentationName"/>
 							</html:link>
@@ -202,7 +206,7 @@
 							<%
 								if(subSpaceToCheck.personHasPermissionsToManageSpace(person)){
 							%>	
-							,&nbsp; 
+							,
 							<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="subSpace" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
 								<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 							</html:link>
