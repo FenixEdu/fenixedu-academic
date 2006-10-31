@@ -26,12 +26,19 @@ public class RoomClassification extends RoomClassification_Base {
 
     public static final Comparator<RoomClassification> COMPARATORY_BY_CODE = new BeanComparator("code");
 
+    public static final Comparator<RoomClassification> COMPARATORY_BY_PRESENTATION_CODE = new BeanComparator("presentationCode");
+    
     public static final Comparator<RoomClassification> COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE = new BeanComparator(
 	    "absoluteCode");
 
     public static SortedSet<RoomClassification> sortByCode(
 	    final Collection<RoomClassification> roomClassifications) {
 	return CollectionUtils.constructSortedSet(roomClassifications, COMPARATORY_BY_CODE);
+    }
+    
+    public static SortedSet<RoomClassification> sortByPresentationCode(
+	    final Collection<RoomClassification> roomClassifications) {
+	return CollectionUtils.constructSortedSet(roomClassifications, COMPARATORY_BY_PRESENTATION_CODE);
     }
 
     public static SortedSet<RoomClassification> sortByRoomClassificationAndCode(
@@ -154,7 +161,7 @@ public class RoomClassification extends RoomClassification_Base {
 	}
 	if (code == null) {
 	    throw new DomainException("error.room.classification.cannot.have.null.code");
-	}	
+	}
 	if (name == null || name.getAllContents().isEmpty()) {
 	    throw new DomainException("error.room.classification.cannot.have.null.name");
 	}
@@ -227,6 +234,7 @@ public class RoomClassification extends RoomClassification_Base {
     public static RoomClassification findRoomClassificationByCode(
 	    final Collection<RoomClassification> roomClassifications,
 	    final RoomClassification parentRoomClassification, final Integer code) {
+
 	if (code != null) {
 	    for (final RoomClassification roomClassification : roomClassifications) {
 		if (roomClassification.getParentRoomClassification() == parentRoomClassification
@@ -248,5 +256,4 @@ public class RoomClassification extends RoomClassification_Base {
 	}
 	return null;
     }
-
 }

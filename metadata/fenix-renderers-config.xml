@@ -655,5 +655,10 @@ Documentation:
               class="net.sourceforge.fenixedu.renderers.FormatRenderer"
               layout="computed-grade">
 		<property name="format" value="${percentage} x ${atomicQuestion.grade.value} = ${calculatedGrade.value}/${calculatedGrade.scale}" />
-	</renderer>
+	</renderer>	
+
+    <renderer type="net.sourceforge.fenixedu.domain.space.RoomClassification" layout="roomClassification-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+        <property name="format" value="${presentationCode} - ${name}"/>
+    </renderer>
+    
 </renderers-config>

@@ -9,7 +9,8 @@ public class RoomInformation extends RoomInformation_Base {
 
     protected RoomInformation(final Room room, final RoomFactory roomFactory) {
 	super();
-	Space.checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson(), room);
+	Space.checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson(),
+		room);
 	super.setSpace(room);
 	setBlueprintNumber(roomFactory.getBlueprintNumber());
 	setIdentification(roomFactory.getIdentification());
@@ -41,8 +42,8 @@ public class RoomInformation extends RoomInformation_Base {
 	roomFactoryEditor.setBlueprintNumber(getBlueprintNumber());
 	roomFactoryEditor.setIdentification(getIdentification());
 	roomFactoryEditor.setDescription(getDescription());
-	roomFactoryEditor.setClassification(getRoomClassification() != null ? getRoomClassification()
-		.getPresentationCode() : null);
+	roomFactoryEditor
+		.setRoomClassification(getRoomClassification() != null ? getRoomClassification() : null);
 	roomFactoryEditor.setArea(getArea());
 	roomFactoryEditor.setHeightQuality(getHeightQuality());
 	roomFactoryEditor.setIlluminationQuality(getIlluminationQuality());
@@ -61,5 +62,4 @@ public class RoomInformation extends RoomInformation_Base {
 		+ ((getDescription() != null) ? " " + getDescription() : "")
 		: ((getDescription() != null) ? getDescription() : "");
     }
-
 }

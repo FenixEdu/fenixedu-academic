@@ -15,6 +15,7 @@
 		<jsp:include page="spaceCrumbs.jsp"/>
 	</div>
 	
+	<bean:define id="space" name="selectedSpaceInformation" property="space"/>
 	<ul class="mvert15 list5">
 		<li>	
 			<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformationId">

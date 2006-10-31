@@ -87,7 +87,7 @@
 		</p>	
 	</fr:hasMessages>				
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-		<fr:edit id="editRoom" name="selectedSpaceInformation" schema="RoomInformation" action="<%= url %>">
+		<fr:edit id="editRoom" name="selectedSpaceInformation" schema="EditRoomInformation" action="<%= url %>">
 			<fr:destination name="invalid" path="<%= invalidLink %>"/>
 			<fr:destination name="exception" path="<%= invalidLink %>"/>
 			<fr:layout>

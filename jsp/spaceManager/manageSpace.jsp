@@ -137,7 +137,7 @@
 	
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 		<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
-		<fr:view name="selectedSpaceInformation" schema="RoomInformation" layout="tabular"/>
+		<fr:view name="selectedSpaceInformation" schema="ViewRoomInformation" layout="tabular"/>
 	</logic:equal>		    
 
 	<%-- Subspaces --%>

@@ -7,7 +7,6 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -33,8 +32,6 @@ public class Room extends Room_Base {
 
 	private String description;
 
-	private String classification;
-
 	private BigDecimal area;
 
 	private Boolean heightQuality;
@@ -52,6 +49,8 @@ public class Room extends Room_Base {
 	private YearMonthDay begin;
 
 	private YearMonthDay end;
+	
+	private DomainReference<RoomClassification> roomClassificationReference;
 
 	public YearMonthDay getBegin() {
 	    return begin;
@@ -91,14 +90,6 @@ public class Room extends Room_Base {
 
 	public void setBlueprintNumber(String blueprintNumber) {
 	    this.blueprintNumber = blueprintNumber;
-	}
-
-	public String getClassification() {
-	    return classification;
-	}
-
-	public void setClassification(String classification) {
-	    this.classification = classification;
 	}
 
 	public String getDescription() {
@@ -159,7 +150,12 @@ public class Room extends Room_Base {
 	}
 
 	public RoomClassification getRoomClassification() {
-	    return RoomClassification.findRoomClassificationByPresentationCode(getClassification());
+	    return (this.roomClassificationReference != null) ? this.roomClassificationReference.getObject() : null;
+	}
+	
+	public void setRoomClassification(RoomClassification roomClassification) {
+	    this.roomClassificationReference = (roomClassification != null) ? new DomainReference<RoomClassification>(
+		    roomClassification) : null;
 	}
     }
 
@@ -226,5 +222,4 @@ public class Room extends Room_Base {
     public RoomInformation getSpaceInformation(final YearMonthDay when) {
 	return (RoomInformation) super.getSpaceInformation(when);
     }
-
 }

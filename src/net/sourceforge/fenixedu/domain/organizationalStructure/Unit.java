@@ -839,15 +839,14 @@ public class Unit extends Unit_Base {
 
     public String getPresentationNameWithParents() {
 	String parentUnits = getParentUnitsPresentationName();
-	return (!StringUtils.isEmpty(parentUnits.trim())) ? getParentUnitsPresentationName() + " - "
-		+ getPresentationName() : getPresentationName();
+	return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + " - " + getPresentationName()
+		: getPresentationName();
     }
 
     public String getPresentationNameWithParentsAndBreakLine() {
 	String parentUnits = getParentUnitsPresentationNameWithBreakLine();
-	return (!StringUtils.isEmpty(parentUnits.trim())) ? getParentUnitsPresentationNameWithBreakLine()
-		+ " <br/> " + getPresentationName()
-		: getPresentationName();
+	return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + " <br/> "
+		+ getPresentationName() : getPresentationName();
     }
 
     public String getParentUnitsPresentationNameWithBreakLine() {

@@ -10,12 +10,12 @@
 
 	<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 	<h2><bean:message bundle="SPACE_RESOURCES" key="title.edit.space"/></h2>
-	
-	
+		
 	<jsp:include page="spaceCrumbs.jsp"/>
 	
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/></strong></p>  
 
+	<bean:define id="space" name="SpaceFactoryEditor" property="space"/>
 	<bean:define id="cancelLink">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="space" property="spaceInformation.idInternal"/></bean:define>
 	<bean:define id="submitLink">/manageSpaces.do?method=executeFactoryMethod&page=0&spaceInformationID=<bean:write name="space" property="spaceInformation.idInternal"/></bean:define>
 	<bean:define id="invalidLink">/manageSpaces.do?method=prepareCreateSpaceInformation&page=0&spaceInformationID=<bean:write name="space" property="spaceInformation.idInternal"/></bean:define>		

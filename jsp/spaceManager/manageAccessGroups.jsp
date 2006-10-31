@@ -14,6 +14,7 @@
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
 	<jsp:include page="spaceCrumbs.jsp"/>
+	<bean:define id="space" name="selectedSpaceInformation" property="space"/>
 
 	<ul class="mvert15 list5">
 		<li>
@@ -37,8 +38,7 @@
 	<e:labelValues id="accessGroupTypes" enumeration="net.sourceforge.fenixedu.domain.space.Space$SpaceAccessGroupType" bundle="ENUMERATION_RESOURCES" />
 	<logic:iterate id="accessGroupType" name="accessGroupTypes" type="org.apache.struts.util.LabelValueBean">				
 		<bean:define id="slotName" type="java.lang.String"><%= SpaceAccessGroupType.valueOf(accessGroupType.getValue()).getSpaceAccessGroupSlotName() %></bean:define>				
-		<bean:define id="space" name="selectedSpaceInformation" property="space"/>
-		
+				
 		<logic:notEmpty name="space" property="<%= slotName %>">			
 			<bean:define id="accessGroup" name="space" property="<%= slotName %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>			
 			<logic:notEmpty name="accessGroup" property="elements">	
@@ -65,7 +65,7 @@
 					<bean:define id="accessGroup" name="space" property="<%= slotNameWithChain %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>
 					<logic:notEmpty name="accessGroup">	
 						<logic:notEmpty name="accessGroup" property="elements">	
-							<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/> (<bean:message key="label.defined.elements.in.parent.space"/>)</strong></p>																		
+							<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/> (<bean:message key="label.defined.elements.in.parent.space" bundle="SPACE_RESOURCES"/>)</strong></p>																		
 							<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
 								<fr:layout name="tabular">     										  
 						   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>				  

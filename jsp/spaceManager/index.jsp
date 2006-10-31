@@ -71,10 +71,19 @@
 						<bean:write name="space" property="containedSpacesCount"/>
 					</td>
 					<td>
+						<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
+							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
+								<bean:message bundle="SPACE_RESOURCES" key="label.view"/>
+							</logic:equal>
+							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
+								<bean:message bundle="SPACE_RESOURCES" key="label.view"/>
+							</logic:equal>
+						</html:link>
 						<bean:define id="thisSpace" name="space" type="net.sourceforge.fenixedu.domain.space.Space"/>
 						<%
 							if(thisSpace.personHasPermissionsToManageSpace(person)){
 						%>
+						,&nbsp; 
 						<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="space" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
 							<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 						</html:link>

@@ -382,9 +382,7 @@
 				<td><bean:write name="personFunction" property="function.name"/></td>
 				<td>
 					<bean:define id="unit" name="personFunction" property="function.unit"/>
-					<bean:write name="unit" property="parentUnitsPresentationName"/>					
-					-
-					<bean:write name="unit" property="presentationName"/> 															
+					<bean:write name="unit" property="presentationNameWithParents"/>																								
 				</td>
 				<td style="text-align: center;">
 					De 

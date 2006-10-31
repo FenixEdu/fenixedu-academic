@@ -61,9 +61,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 		    .getSuroundingSpace().getSpaceInformation() : ((Space) serviceResult)
 		    .getSpaceInformation();
 	} else if (serviceResult instanceof SpaceInformation) {
-	    return ((SpaceInformation) serviceResult).getSpace().getSuroundingSpace() != null ? ((SpaceInformation) serviceResult)
-		    .getSpace().getSuroundingSpace().getSpaceInformation()
-		    : ((SpaceInformation) serviceResult);
+	    return ((SpaceInformation) serviceResult);
 	} else {
 	    return null;
 	}

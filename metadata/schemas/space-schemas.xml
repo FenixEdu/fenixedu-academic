@@ -47,7 +47,10 @@
 	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="identification" />
 	<slot name="description" />
-	<slot name="classification" />
+	<slot name="roomClassification"  key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} - ${name}" />
+	</slot>						
 	<slot name="area" />
 	<slot name="heightQuality" />
 	<slot name="illuminationQuality" />
@@ -62,7 +65,10 @@
 	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="identification"/>
 	<slot name="description"/>
-	<slot name="classification"/>
+	<slot name="roomClassification" key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} - ${name}" />
+	</slot>						
 	<slot name="area"/>
 	<slot name="heightQuality"/>
 	<slot name="illuminationQuality"/>
@@ -73,14 +79,13 @@
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>
 </schema>
-<schema name="RoomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
+<schema name="ViewRoomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="identification"/>
 	<slot name="description"/>
 	<slot name="roomClassification" layout="null-as-label">
 		<property name="label" value=""/>
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="roomClassification.presentationName"/>
+		<property name="subLayout" value="roomClassification-label" />
 	</slot>
 	<slot name="area"/>
 	<slot name="heightQuality"/>
@@ -92,8 +97,23 @@
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>		
 </schema>
-<schema name="roomClassification.presentationName" type="net.sourceforge.fenixedu.domain.space.RoomClassification">
-	<slot name="presentationCode" />
+<schema name="EditRoomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="identification"/>
+	<slot name="description"/>
+	<slot name="roomClassification" key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} - ${name}" />
+	</slot>						
+	<slot name="area"/>
+	<slot name="heightQuality"/>
+	<slot name="illuminationQuality"/>
+	<slot name="distanceFromSanitaryInstalationsQuality"/>
+	<slot name="securityQuality"/>
+	<slot name="ageQuality"/>
+	<slot name="observations"/>
+	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>		
 </schema>
 <schema name="RoomClassificationFactory" type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactory" bundle="SPACE_RESOURCES">
 	<slot name="code" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -159,7 +179,7 @@
 	</slot>
 </schema>
 <schema name="ViewSpaceResponsibleUnitsWithInterval" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES">
-	<slot name="unit.nameWithAcronym" key="label.unit.name"/>	
+	<slot name="unit.nameWithAcronym" key="label.unit.name"/>				
 	<slot name="unit.costCenterCode"/>	
 	<slot name="unit.parentUnitsPresentationName" key="label.responsibilityUnit.parent"/>
 	<slot name="begin" key="label.begin.date" />

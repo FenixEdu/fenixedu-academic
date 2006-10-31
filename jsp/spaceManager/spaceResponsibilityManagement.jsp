@@ -31,7 +31,8 @@
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
 	<jsp:include page="spaceCrumbs.jsp"/>
-	
+	<bean:define id="space" name="selectedSpaceInformation" property="space"/>
+		
 	<bean:define id="backLink">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/></bean:define>		
 	<ul class="mvert15 list5">
 		<li>
