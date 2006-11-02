@@ -1170,6 +1170,10 @@ padding: 0;
 margin-top: 0.5em;
 margin-bottom: 0.5em;
 }
+.coutput br {
+margin: -4px 0;
+padding: 0;
+}
 
 /* separator */
 div.separator1 {

@@ -251,13 +251,13 @@
 
 	<!-- =================== Announcements ============== -->
 	<definition name="public-list-announcements" extends="definition.public.executionCourse">
-		<put name="body" value="/messaging/announcements/listAnnouncements.jsp" />
-	</definition>		
+		<put name="body" value="/publico/executionCourse/announcements/listAnnouncements.jsp" />
+	</definition>
 	<definition name="public-view-announcement" extends="definition.public.mainPage">
 		<put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
 	</definition>			
 	<definition name="executionCoruse-view-announcement" extends="definition.public.executionCourse">
-		<put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+		<put name="body" value="/publico/executionCourse/announcements/viewAnnouncement.jsp" />
 	</definition>			
 	<definition name="execution-course-not-found" extends="definition.public.executionCourse">
 		<put name="body" value="/executionCourse/resourceDoesNotExist.jsp" />
