@@ -213,7 +213,7 @@ public class FlowCollectionRenderer extends OutputRenderer {
             protected HtmlComponent getNextComponent() {
                 if (this.insertSeparator) {
                     this.insertSeparator = false;
-                    return new HtmlText(getHtmlSeparator());
+                    return new HtmlText(getHtmlSeparator(),false);
                 } else if (hasMoreComponents() && getHtmlSeparator() != null) {
                     this.insertSeparator = true;
                 }
