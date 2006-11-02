@@ -80,7 +80,7 @@ public class MarkSheet extends MarkSheet_Base {
     private void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
             ExecutionPeriod executionPeriod, Teacher responsibleTeacher) throws DomainException {
 
-        if (! responsibleTeacher.isResponsibleOrCoordinatorFor(curricularCourse, executionPeriod)) {
+        if (! responsibleTeacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse, executionPeriod)) {
             throw new DomainException("error.teacherNotResponsibleOrNotCoordinator");
         }
     }

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
@@ -22,13 +21,10 @@ public class ReadCourseInformationCoordinatorAuthorizationFilter extends DomainO
 
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         final Person person = id.getPerson();
-        final Teacher teacher = person == null ? null : person.getTeacher();
-        if (teacher != null) {
-            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(objectId);
-            for (final Coordinator coordinator : teacher.getCoordinatorsSet()) {
-                if (coordinator.isCoordinatorOfExecutionDegreeContaining(executionCourse)) {
-                    return true;
-                }
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(objectId);
+        for (final Coordinator coordinator : person.getCoordinatorsSet()) {
+            if (coordinator.isCoordinatorOfExecutionDegreeContaining(executionCourse)) {
+                return true;
             }
         }
         return false;

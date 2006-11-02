@@ -73,7 +73,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 
                 for (Iterator it = coordinators.iterator(); it.hasNext();) {
                     Coordinator coordinator = (Coordinator) it.next();
-                    if (coordinator.getTeacher().getPerson() == id.getPerson()) {
+                    if (coordinator.getPerson() == id.getPerson()) {
                         // The student is a candidate for a final degree
                         // work of
                         // the degree of the
@@ -131,7 +131,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 
                     Coordinator coordinator = null;
                     for (final Coordinator otherCoordinator : coordinatorsList) {
-                        if (id.getPerson() == otherCoordinator.getTeacher().getPerson()) {
+                        if (id.getPerson() == otherCoordinator.getPerson()) {
                             coordinator = otherCoordinator;
                             break;
                         }

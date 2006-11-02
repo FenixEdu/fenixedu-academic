@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.io.Serializable;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -1038,11 +1039,11 @@ public class Person extends Person_Base {
 
 	private static Boolean verifiesDependencies(Person person, Role role) {
 	    switch (role.getRoleType()) {
-	    case COORDINATOR:
 	    case DIRECTIVE_COUNCIL:
 	    case SEMINARIES_COORDINATOR:
 	    case RESEARCHER:
 		return person.hasRole(RoleType.TEACHER);
+	    case COORDINATOR:
 	    case DEGREE_ADMINISTRATIVE_OFFICE:
 	    case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
 	    case DEPARTMENT_CREDITS_MANAGER:
@@ -2090,4 +2091,57 @@ public class Person extends Person_Base {
         }
         return null;
     }
+
+    public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(DegreeCurricularPlan degreeCurricularPlan) {
+        Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(new BeanComparator("executionYear"));
+        for (Coordinator coordinator : getCoordinators()) {
+            if (coordinator.getExecutionDegree().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+                result.add(coordinator.getExecutionDegree());
+            }
+        }
+        return result;
+    }
+
+    public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear) {
+        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+            if (executionDegree.getExecutionYear() == executionYear) {
+                return executionDegree.getCoordinatorByTeacher(this) != null;
+            }
+        }
+        return false;
+    }
+
+    public boolean isResponsibleOrCoordinatorFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+        final Teacher teacher = getTeacher();
+        return (teacher != null && teacher.isResponsibleFor(curricularCourse, executionPeriod))
+                || isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod
+                        .getExecutionYear());
+    }
+
+    public boolean isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear executionYear) {
+        return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] {
+                DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE }));
+
+    }
+
+    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
+            ExecutionYear executionYear) {
+        return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
+                DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE }));
+
+    }
+
+    public boolean isCoordinatorFor(ExecutionYear executionYear, List<DegreeType> degreeTypes) {
+        for (final Coordinator coordinator : getCoordinatorsSet()) {
+            if (coordinator.hasExecutionDegree()
+                    && coordinator.getExecutionDegree().getExecutionYear() == executionYear
+                    && degreeTypes.contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
 }

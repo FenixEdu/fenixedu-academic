@@ -36,16 +36,14 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
         final Person person = id.getPerson();
         final Teacher teacher = person == null ? null : person.getTeacher();
 
-        if (teacher != null) {
-            if (teacher == proposal.getOrientator() || teacher == proposal.getCoorientator()) {
-                return true;
-            }
+        if (teacher == proposal.getOrientator() || teacher == proposal.getCoorientator()) {
+            return true;
+        }
 
-            for (final ExecutionDegree executionDegree : proposal.getScheduleing().getExecutionDegreesSet()) { 
-                for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-                    if (coordinator != null && teacher == coordinator.getTeacher()) {
-                        return true;
-                    }
+        for (final ExecutionDegree executionDegree : proposal.getScheduleing().getExecutionDegreesSet()) { 
+            for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+                if (coordinator != null && person == coordinator.getPerson()) {
+                    return true;
                 }
             }
         }

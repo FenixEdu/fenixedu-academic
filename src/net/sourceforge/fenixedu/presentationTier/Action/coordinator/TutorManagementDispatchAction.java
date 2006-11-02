@@ -49,7 +49,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
         HttpSession session = request.getSession();
         IUserView userView = getUserView(request);
 
-        Object[] args = { Integer.valueOf(executionDegreeId), userView.getUtilizador(), "LEEC" };
+        Object[] args = { Integer.valueOf(executionDegreeId), userView.getPerson(), "LEEC" };
         Boolean authorized = Boolean.FALSE;
         try {
             authorized = (Boolean) ServiceManagerServiceFactory.executeService(userView,

@@ -30,7 +30,11 @@ public class InfoCoordinator extends InfoObject {
     }
 
     public InfoTeacher getInfoTeacher() {
-        return InfoTeacher.newInfoFromDomain(getCoordinator().getTeacher());
+        return InfoTeacher.newInfoFromDomain(getCoordinator().getPerson().getTeacher());
+    }
+
+    public InfoPerson getInfoPerson() {
+        return InfoPerson.newInfoFromDomain(getCoordinator().getPerson());
     }
 
     public Boolean getResponsible() {

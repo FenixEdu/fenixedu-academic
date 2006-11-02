@@ -569,7 +569,7 @@ class net.sourceforge.fenixedu.domain.Contributor extends net.sourceforge.fenixe
 
 class net.sourceforge.fenixedu.domain.Coordinator extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionDegree;
-	Integer keyTeacher;
+	Integer keyPerson;
 	Boolean responsible;
 }
 
@@ -4475,7 +4475,7 @@ relation CoordinatorTeacher {
 	net.sourceforge.fenixedu.domain.Coordinator playsRole coordinators {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
 relation CourseEquivalencyTheme {

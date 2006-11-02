@@ -620,7 +620,11 @@ public class Degree extends Degree_Base {
 		    .getExecutionDegreeByYear(executionYear);
 	    if (executionDegree != null) {
 		for (final Coordinator coordinator : executionDegree.getResponsibleCoordinators()) {
-		    result.add(coordinator.getTeacher());
+                    final Person person = coordinator.getPerson();
+                    final Teacher teacher = person.getTeacher();
+                    if (teacher != null) { 
+                        result.add(teacher);
+                    }
 		}
 	    }
 	}

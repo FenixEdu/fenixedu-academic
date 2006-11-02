@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -62,13 +62,13 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
         if (argumentos[0] == null) {
             return result;
         }
-        try {            
-            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+        try {
+            final Person person = id.getPerson();
             
             ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
             ExecutionYear executionYear = executionDegree.getExecutionYear();
 
-            Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+            Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
             result = (coordinator != null) && executionYear.getState().equals(PeriodState.CURRENT);
 

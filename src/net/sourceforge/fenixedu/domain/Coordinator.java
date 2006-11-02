@@ -2,24 +2,24 @@ package net.sourceforge.fenixedu.domain;
 
 public class Coordinator extends Coordinator_Base {
 
-	public Coordinator() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
-    
-    public Coordinator(ExecutionDegree executionDegree, Teacher teacher, Boolean responsible) {
+    public Coordinator() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public Coordinator(ExecutionDegree executionDegree, Person person, Boolean responsible) {
         this();
         setExecutionDegree(executionDegree);
-        setTeacher(teacher);
+        setPerson(person);
         setResponsible(responsible);
     }
-	
-	public void delete() {
+
+    public void delete() {
         removeExecutionDegree();
-        removeTeacher();
-		removeRootDomainObject();
+        removePerson();
+        removeRootDomainObject();
         super.deleteDomainObject();
-	}
+    }
 
     public boolean isResponsible() {
         return getResponsible().booleanValue();

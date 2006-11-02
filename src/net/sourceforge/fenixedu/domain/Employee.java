@@ -205,8 +205,7 @@ public class Employee extends Employee_Base {
 
     public static Employee readByNumber(final Integer employeeNumber) {
 	for (final Employee employee : RootDomainObject.getInstance().getEmployees()) {
-	    if (employee.getEmployeeNumber() != null
-		    && employee.getEmployeeNumber().equals(employeeNumber)) {
+	    if (employee.getEmployeeNumber().equals(employeeNumber)) {
 		return employee;
 	    }
 	}

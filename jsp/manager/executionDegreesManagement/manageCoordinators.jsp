@@ -39,8 +39,8 @@
 			</tr>
 			<logic:iterate id="coordinator" name="executionDegree" property="coordinatorsList">
 				<tr>
-					<td class='listClasses'><bean:write name="coordinator" property="teacher.teacherNumber" /></td>
-					<td class='listClasses'><bean:write name="coordinator" property="teacher.person.name" /></td>
+					<td class='listClasses'><bean:write name="coordinator" property="person.username" /></td>
+					<td class='listClasses'><bean:write name="coordinator" property="person.name" /></td>
 					<td class='listClasses'>
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.responsibleCoordinatorsIDs" property="responsibleCoordinatorsIDs">
 									<bean:write name="coordinator" property="idInternal"/>

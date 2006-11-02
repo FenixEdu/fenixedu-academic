@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -70,11 +71,10 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
-            Teacher teacher = null;
             // Read The ExecutionDegree
             Integer executionCourseID = (Integer) arguments[0];
 
-            teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+            final Person person = id.getPerson();
 
             ExecutionCourse executionCourse = rootDomainObject
                     .readExecutionCourseByOID(executionCourseID);
@@ -96,7 +96,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                     ExecutionDegree executionDegree = (ExecutionDegree) executionDegreesIterator.next();
 
                     // modified by Tânia Pousão
-                    Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+                    Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
                     if (coordinator != null) {
                         return true;

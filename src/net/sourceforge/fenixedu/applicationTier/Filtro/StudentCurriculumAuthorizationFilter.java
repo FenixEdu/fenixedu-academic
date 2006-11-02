@@ -51,7 +51,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 	return roles;
     }
 
-    private String hasProvilege(IUserView id, Object[] arguments) {
+    private String hasProvilege(final IUserView id, Object[] arguments) {
 	Integer studentCurricularPlanID = (Integer) arguments[1];
 
 	StudentCurricularPlan studentCurricularPlan = null;
@@ -69,7 +69,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 	    ExecutionDegree executionDegree = group.getExecutionDegree();
 	    for (int i = 0; i < executionDegree.getCoordinatorsList().size(); i++) {
 		Coordinator coordinator = executionDegree.getCoordinatorsList().get(i);
-		if (coordinator.getTeacher().getPerson().getUsername().equals(id.getUtilizador())) {
+		if (coordinator.getPerson() == id.getPerson()) {
 		    // The student is a candidate for a final degree work of
 		    // the degree of the
 		    // coordinator making the request. Allow access.
@@ -126,13 +126,12 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 		    return "noAuthorization";
 		}
 
-		final String username = id.getUtilizador();
 		Coordinator coordinator = (Coordinator) CollectionUtils.find(coordinatorsList,
 			new Predicate() {
 
 			    public boolean evaluate(Object input) {
 				Coordinator coordinatorTemp = (Coordinator) input;
-				if (coordinatorTemp.getTeacher().getPerson().getUsername().equals(username)) {
+				if (coordinatorTemp.getPerson() == id.getPerson()) {
 				    return true;
 				}
 				return false;

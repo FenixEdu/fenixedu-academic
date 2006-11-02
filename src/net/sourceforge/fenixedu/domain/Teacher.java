@@ -437,51 +437,6 @@ public class Teacher extends Teacher_Base {
 	});
     }
 
-    public List<DegreeCurricularPlan> getCoordinatedDegreeCurricularPlans() {
-	Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
-	for (Coordinator coordinator : getCoordinators()) {
-	    result.add(coordinator.getExecutionDegree().getDegreeCurricularPlan());
-	}
-	return new ArrayList<DegreeCurricularPlan>(result);
-    }
-
-    public List<DegreeCurricularPlan> getCoordinatedActiveDegreeCurricularPlans() {
-	final Set<DegreeCurricularPlan> temp = new HashSet<DegreeCurricularPlan>();
-	for (Coordinator coordinator : getCoordinators()) {
-	    DegreeCurricularPlan degreeCurricularPlan = coordinator.getExecutionDegree()
-		    .getDegreeCurricularPlan();
-	    if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
-		temp.add(degreeCurricularPlan);
-	    }
-	}
-
-	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>(temp);
-	Collections
-		.sort(
-			result,
-			DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
-	return result;
-    }
-
-    public List<ExecutionDegree> getCoordinatedExecutionDegrees() {
-	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-	for (Coordinator coordinator : getCoordinators()) {
-	    result.add(coordinator.getExecutionDegree());
-	}
-	return result;
-    }
-
-    public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(
-	    DegreeCurricularPlan degreeCurricularPlan) {
-	Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(new BeanComparator("executionYear"));
-	for (Coordinator coordinator : getCoordinators()) {
-	    if (coordinator.getExecutionDegree().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
-		result.add(coordinator.getExecutionDegree());
-	    }
-	}
-	return result;
-    }
-
     /***********************************************************************
          * OTHER METHODS *
          **********************************************************************/
@@ -1083,23 +1038,6 @@ public class Teacher extends Teacher_Base {
 	return false;
     }
 
-    public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan,
-	    ExecutionYear executionYear) {
-	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-	    if (executionDegree.getExecutionYear() == executionYear) {
-		return executionDegree.getCoordinatorByTeacher(this) != null;
-	    }
-	}
-	return false;
-    }
-
-    public boolean isResponsibleOrCoordinatorFor(CurricularCourse curricularCourse,
-	    ExecutionPeriod executionPeriod) {
-	return isResponsibleFor(curricularCourse, executionPeriod)
-		|| isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod
-			.getExecutionYear());
-    }
-
     public Double getHoursLecturedOnExecutionCourseByShiftType(ExecutionCourse executionCourse,
 	    ShiftType shiftType) {
 	double returnValue = 0;
@@ -1129,29 +1067,4 @@ public class Teacher extends Teacher_Base {
 	return false;
     }
 
-    public boolean isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear executionYear) {
-	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] {
-		DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE }));
-
-    }
-
-    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
-	    ExecutionYear executionYear) {
-	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
-		DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE }));
-
-    }
-
-    public boolean isCoordinatorFor(ExecutionYear executionYear, List<DegreeType> degreeTypes) {
-	for (final Coordinator coordinator : getCoordinatorsSet()) {
-	    if (coordinator.hasExecutionDegree()
-		    && coordinator.getExecutionDegree().getExecutionYear() == executionYear
-		    && degreeTypes.contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
-		return true;
-	    }
-	}
-
-	return false;
-
-    }
 }

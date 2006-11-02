@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -48,11 +48,10 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
-            Teacher teacher = null;
             // Read The ExecutionDegree
             Integer candidateID = (Integer) arguments[0];
 
-            teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+            final Person person = id.getPerson();
 
             MasterDegreeCandidate masterDegreeCandidate = rootDomainObject
                     .readMasterDegreeCandidateByOID(candidateID);
@@ -62,7 +61,7 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
 
             // modified by Tânia Pousão
             Coordinator coordinator = masterDegreeCandidate.getExecutionDegree()
-                    .getCoordinatorByTeacher(teacher);
+                    .getCoordinatorByTeacher(person);
             if (coordinator == null) {
                 return false;
             }

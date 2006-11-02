@@ -94,7 +94,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
             while (listIterator.hasNext()) {
                 Coordinator coordinator = (Coordinator) listIterator.next();
 
-                if (coordinator.getTeacher().getPerson().getUsername().equals(id.getUtilizador())) {
+                if (coordinator.getPerson() == id.getPerson()) {
                     return true;
                 }
             }

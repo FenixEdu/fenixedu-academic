@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -65,10 +65,10 @@ public class ResponsibleDegreeCoordinatorAuthorizationFilter extends Authorizati
             return result;
         }
         try {            
-            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+            final Person person = id.getPerson();
 
             ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
-            Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+            Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
             result = (coordinator != null) && coordinator.getResponsible().booleanValue();
 

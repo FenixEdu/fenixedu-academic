@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -12,13 +12,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class UserCoordinatorByExecutionDegree extends Service {
 
-    public Boolean run(Integer executionDegreeCode, String teacherUserName, String degree2Compare)
+    public Boolean run(Integer executionDegreeCode, final Person person, String degree2Compare)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final Teacher teacher = Teacher.readTeacherByUsername(
-                teacherUserName);
-
         final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
-        final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+        final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
         
         if (coordinator == null) {
             throw new FenixServiceException("error.exception.notAuthorized");

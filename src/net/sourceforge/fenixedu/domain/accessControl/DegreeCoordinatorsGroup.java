@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -31,8 +30,7 @@ public class DegreeCoordinatorsGroup extends Group {
                     final Degree degree = degreeCurricularPlan.getDegree();
                     if (degree.getTipoCurso() == DegreeType.DEGREE) {
                         for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
-                            final Teacher teacher = coordinator.getTeacher();
-                            final Person person = teacher.getPerson();
+                            final Person person = coordinator.getPerson();
                             elements.add(person);
                         }
                     }
@@ -47,8 +45,7 @@ public class DegreeCoordinatorsGroup extends Group {
     public boolean isMember(Person person) {
 	return person != null
 		&& person.hasTeacher()
-		&& person.getTeacher()
-			.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
+		&& person.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
 				ExecutionYear.readCurrentExecutionYear());
     }
 }

@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -54,14 +53,14 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
         final Person person = id.getPerson();
         if (person != null) {
             final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(objectId);
-            if (person.getTeacher() != null && person.hasRole(RoleType.COORDINATOR)) {
-                final Teacher teacher = person.getTeacher();
-                for (final Coordinator coordinator : teacher.getCoordinators()) {
+            if (person.hasRole(RoleType.COORDINATOR)) {
+                for (final Coordinator coordinator : person.getCoordinators()) {
                     if (executionDegree.getCoordinatorsListSet().contains(coordinator)) {
                         return true;
                     }
                 }
-            } else if (person.getEmployee() != null && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
+            }
+            if (person.getEmployee() != null && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
                 final Employee employee = person.getEmployee();
                 final Department department = employee.getCurrentDepartmentWorkingPlace();
                 for (final CompetenceCourse competenceCourse : department.getCompetenceCoursesSet()) {

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -47,10 +46,9 @@ public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFi
             final Degree degree = degreeCurricularPlan.getDegree();
             if (degree.getSigla().startsWith("LEEC") || degree.getSigla().equalsIgnoreCase("LEEC-pB")) {
                 final Person person = id.getPerson();
-                final Teacher teacher = person != null ? person.getTeacher() : null;
 
                 for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-                    if (coordinator.getTeacher() == teacher) {
+                    if (coordinator.getPerson() == person) {
                         return true;
                     }
                 }

@@ -153,8 +153,7 @@ public class SendMailBackingBean extends FenixBackingBean {
                     final Degree degree = degreeCurricularPlan.getDegree();
                     if (degree.getTipoCurso() == degreeType) {
                         for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
-                            final Teacher teacher = coordinator.getTeacher();
-                            final Person person = teacher.getPerson();
+                            final Person person = coordinator.getPerson();
                             emails.add(person.getEmail());
                         }
                     }

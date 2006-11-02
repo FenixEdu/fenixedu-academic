@@ -25,7 +25,7 @@ public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthori
         final Person person = id.getPerson();
         final Teacher teacher = person == null ? null : person.getTeacher();
 
-        for (final Coordinator coordinator : teacher.getCoordinators()) {
+        for (final Coordinator coordinator : person.getCoordinators()) {
             if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getIdInternal().equals(
                     degreeCurricularPlanID)) {
                 return true;

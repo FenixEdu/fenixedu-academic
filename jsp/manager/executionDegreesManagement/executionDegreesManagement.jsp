@@ -197,7 +197,7 @@
 					<td class='listClasses'>
 						<logic:notEmpty name="executionDegree"  property="coordinatorsList">
 							<logic:iterate id="coordinator" name="executionDegree"  property="coordinatorsList">
-								<bean:write name="coordinator" property="teacher.person.name" />
+								<bean:write name="coordinator" property="person.name" />
 								<br/>
 							</logic:iterate>
 						</logic:notEmpty>

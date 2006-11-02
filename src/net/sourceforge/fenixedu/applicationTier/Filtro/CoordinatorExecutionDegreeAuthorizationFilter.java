@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -58,13 +57,12 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
                 return false;
             }
             final Person person = id.getPerson();
-            final Teacher teacher = person != null ? person.getTeacher() : null;
             ExecutionDegree executionDegree = rootDomainObject
                     .readExecutionDegreeByOID(executionDegreeID);
             if (executionDegree == null) {
                 return false;
             }
-            Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+            Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
             if (coordinator != null) {
                 return true;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -15,10 +15,10 @@ public class RemoveCoordinators extends Service {
         for (final Integer coordinatorToRemoveID : coordinatorsToRemoveIDs) {
             final Coordinator coordinator = rootDomainObject.readCoordinatorByOID(coordinatorToRemoveID);
             if (coordinator != null) {
-                final Teacher teacher = coordinator.getTeacher();
+                final Person person = coordinator.getPerson();
                 coordinator.delete();
-                if (! teacher.hasAnyCoordinators()) {
-                    teacher.getPerson().removeRoleByType(RoleType.COORDINATOR);
+                if (!person.hasAnyCoordinators()) {
+                    person.removeRoleByType(RoleType.COORDINATOR);
                 }
             }
         }

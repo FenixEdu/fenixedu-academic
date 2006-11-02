@@ -20,7 +20,7 @@
 </tr>
 <logic:iterate name="coordinators" id="coordinator">
 <tr>
-	<td class="listClasses"><bean:write name="coordinator" property="infoTeacher.infoPerson.nome" /> 
+	<td class="listClasses"><bean:write name="coordinator" property="infoPerson.nome" /> 
 	
 	</td>
    

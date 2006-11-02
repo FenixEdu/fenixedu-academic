@@ -103,9 +103,8 @@ public class WrittenTest extends WrittenTest_Base {
     private boolean hasCoordinatorPrivledges(final IUserView requestor) {
         if (requestor.hasRoleType(RoleType.COORDINATOR)) {
             final Person person = requestor.getPerson();
-            final Teacher teacher = person.getTeacher();
-            if (teacher != null) {
-                for (final Coordinator coordinator : teacher.getCoordinators()) {
+            if (person != null) {
+                for (final Coordinator coordinator : person.getCoordinators()) {
                     final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
                     for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
                         if (executionCourse.getExecutionPeriod().getExecutionYear() == executionDegree.getExecutionYear()) {

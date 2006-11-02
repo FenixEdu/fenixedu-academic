@@ -60,9 +60,9 @@
 				<logic:iterate id="infoCoordinator" name="infoExecutionDegree" property="coordinatorsList">
 					<tr>
 						<bean:define id="coordinatorId" name="infoCoordinator" property="idInternal"/>	 			
-						<td class="listClasses"><bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome"/>
+						<td class="listClasses"><bean:write name="infoCoordinator" property="infoPerson.nome"/>
 						</td>
-						<td class="listClasses"><bean:write name="infoCoordinator" property="infoTeacher.teacherNumber"/>
+						<td class="listClasses"><bean:write name="infoCoordinator" property="infoPerson.username"/>
 						</td>
 						<td class="listClasses">
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.responsibleCoordinatorsIds" property="responsibleCoordinatorsIds">

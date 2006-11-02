@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -40,12 +41,7 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
      */
     protected String hasPrevilege(IUserView id, Object[] arguments) {
         if (id.hasRoleType(RoleType.COORDINATOR) && arguments[0] != null) {
-            Teacher teacher = readTeacher(id);
-            if (teacher == null) {
-                return "noAuthorization";
-            }
-
-            if (!verifyCoordinator(teacher, arguments)) {
+            if (!verifyCoordinator(id.getPerson(), arguments)) {
                 return "noAuthorization";
             }
         } else {
@@ -87,11 +83,11 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
         return id.getPerson().getTeacher();
     }
 
-    protected boolean verifyCoordinator(Teacher teacher, Object[] arguments) {
+    protected boolean verifyCoordinator(Person person, Object[] arguments) {
 
         ExecutionDegree executionDegree = rootDomainObject
                 .readExecutionDegreeByOID((Integer) arguments[0]);
-        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
         if (coordinator == null) {
             return false;

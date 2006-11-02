@@ -343,9 +343,9 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	return result;
     }
 
-    public Coordinator getCoordinatorByTeacher(Teacher teacher) {
+    public Coordinator getCoordinatorByTeacher(Person person) {
 	for (Coordinator coordinator : getCoordinatorsList()) {
-	    if (coordinator.getTeacher().equals(teacher)) {
+	    if (coordinator.getPerson() == person) {
 		return coordinator;
 	    }
 	}
@@ -421,7 +421,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
     }
 
     public static List<ExecutionDegree> getAllByExecutionCourseAndTeacher(
-	    ExecutionCourse executionCourse, Teacher teacher) {
+	    ExecutionCourse executionCourse, Person person) {
 	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 
 	for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
@@ -439,7 +439,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	    }
 
 	    // if teacher is not a coordinator of the executionDegree
-	    if (executionDegree.getCoordinatorByTeacher(teacher) == null) {
+	    if (executionDegree.getCoordinatorByTeacher(person) == null) {
 		continue;
 	    }
 
@@ -449,14 +449,14 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	return result;
     }
 
-    public static List<ExecutionDegree> getAllCoordinatedByTeacher(Teacher teacher) {
+    public static List<ExecutionDegree> getAllCoordinatedByTeacher(Person person) {
 	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 
-	if (teacher == null) {
+	if (person == null) {
 	    return result;
 	}
 
-	for (Coordinator coordinator : teacher.getCoordinators()) {
+	for (Coordinator coordinator : person.getCoordinators()) {
 	    result.add(coordinator.getExecutionDegree());
 	}
 

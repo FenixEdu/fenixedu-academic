@@ -43,8 +43,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         if (currentDegreeInfo == null) {
             final IUserView userView = SessionUtils.getUserView(request);
             
-            if (!userView.getPerson().getTeacher().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear)
-                    && !userView.getPerson().getTeacher().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear.getNextExecutionYear())) {
+            if (!userView.getPerson().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear)
+                    && !userView.getPerson().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear.getNextExecutionYear())) {
                 final ActionErrors errors = new ActionErrors();
                 errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
                 saveErrors(request, errors);
@@ -92,7 +92,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         
         if (degreeCurricularPlan.hasAnyExecutionDegrees()) {
-            request.setAttribute("executionDegrees", SessionUtils.getUserView(request).getPerson().getTeacher().getCoordinatedExecutionDegrees(degreeCurricularPlan));    
+            request.setAttribute("executionDegrees", SessionUtils.getUserView(request).getPerson().getCoordinatedExecutionDegrees(degreeCurricularPlan));    
         }
 
         return mapping.findForward("viewHistoric");

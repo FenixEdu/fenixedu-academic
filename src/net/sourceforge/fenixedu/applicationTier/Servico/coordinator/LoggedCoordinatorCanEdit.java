@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -27,8 +27,7 @@ public class LoggedCoordinatorCanEdit extends Service {
             throw new FenixServiceException("nullUsername");
         }
 
-        Teacher teacher = Teacher.readTeacherByUsername(username);
-
+        final Person person = Person.readPersonByUsername(username);
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
         ExecutionYear executionYear = executionDegree.getExecutionYear();
 
@@ -40,7 +39,7 @@ public class LoggedCoordinatorCanEdit extends Service {
         // if user is coordinator and is the current coordinator and
         // curricular course is not basic
         // coordinator can edit
-        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
         result = Boolean.valueOf((coordinator != null)
                 && executionYear.getState().equals(PeriodState.CURRENT)
                 && curricularCourse.getBasic().equals(Boolean.FALSE));

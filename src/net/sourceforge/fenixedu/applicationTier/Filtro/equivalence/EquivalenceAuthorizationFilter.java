@@ -7,6 +7,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -101,20 +103,15 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return true/false
      */
     private boolean isThisACoordinatorOfThisStudentsDegree(IUserView userView, Registration registration) {
-        List executionDegreesOfThisCoordinator = getExecutionDegreesOfThisCoordinator(userView);
-
-        List degreeCurricularPlansOfThisCoordinator = (List) CollectionUtils.collect(
-                executionDegreesOfThisCoordinator, new Transformer() {
-                    public Object transform(Object obj) {
-                        ExecutionDegree executionDegree = (ExecutionDegree) obj;
-                        return executionDegree.getDegreeCurricularPlan();
-                    }
-                });
-
-        StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-
-        return degreeCurricularPlansOfThisCoordinator.contains(studentCurricularPlan
-                .getDegreeCurricularPlan());
+        final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+        final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+        for (final Coordinator coordinator : userView.getPerson().getCoordinatorsSet()) {
+            final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
+            if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -125,17 +122,6 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      */
     private Registration getStudent(Integer studentNumber, DegreeType degreeType) {
         return Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-    }
-
-    /**
-     * @param username
-     * @return List
-     * @throws ExcepcaoPersistencia
-     */
-    private List getExecutionDegreesOfThisCoordinator(IUserView userView) {
-        final Person person = userView.getPerson();
-        final Teacher teacher = person != null ? person.getTeacher() : null;
-        return teacher.getCoordinatedExecutionDegrees();
     }
 
     /**

@@ -3,15 +3,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import java.util.Iterator;
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -70,21 +68,16 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
                 executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argumentos[0]);
             }
 
-            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+            final Person person = id.getPerson();
 
-            if (teacher != null && executionCourse != null) {
-                List<ExecutionDegree> executionDegrees = teacher.getCoordinatedExecutionDegrees();
-                if (executionDegrees != null && !executionDegrees.isEmpty()) {
-                    Iterator iter = executionDegrees.iterator();
-                    while (iter.hasNext() && !result) {
-                        ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
-                        if (executionDegree.getExecutionYear().equals(
-                                executionCourse.getExecutionPeriod().getExecutionYear())) {
-                            if (CollectionUtils.containsAny(executionDegree.getDegreeCurricularPlan()
-                                    .getCurricularCourses(), executionCourse
-                                    .getAssociatedCurricularCourses())) {
-                                result = true;
-                            }
+            if (person != null && executionCourse != null) {
+                for (final Coordinator coordinator : person.getCoordinatorsSet()) {
+                    final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
+                    if (executionDegree.getExecutionYear().equals(executionCourse.getExecutionPeriod().getExecutionYear())) {
+                        if (CollectionUtils.containsAny(executionDegree.getDegreeCurricularPlan()
+                                .getCurricularCourses(), executionCourse
+                                .getAssociatedCurricularCourses())) {
+                            result = true;
                         }
                     }
                 }

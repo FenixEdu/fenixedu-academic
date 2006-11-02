@@ -44,10 +44,9 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
 
     protected boolean verifyCondition(IUserView id, String user) {
         final Person person = id.getPerson();
-        final Teacher coordinator = person != null ? person.getTeacher() : null;
         final Teacher teacher = Teacher.readTeacherByUsername(user);
 
-        List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllCoordinatedByTeacher(coordinator);
+        List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllCoordinatedByTeacher(person);
 
         List<DegreeCurricularPlan> degreeCurricularPlans = getDegreeCurricularPlans(executionDegrees);
         ExecutionYear executionDegressExecutionYearID = (!degreeCurricularPlans.isEmpty()) ? executionDegrees
