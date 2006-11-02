@@ -18,6 +18,10 @@
 		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/viewDepartmentTeachersExpectations.jsp" />
 	</definition>
 	
+	<definition name="df.page.viewDepartmentTeacherExpectations.print" extends="df.layout.print"> 
+		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/printDepartmentTeachersExpectations.jsp" />
+	</definition>
+	
     <!-- DegreeTeachingService -->
     <definition name="show-teaching-service-percentages" extends="departmentMember.masterPage">
         <put name="body" value="/credits/degreeTeachingService/showTeachingServicePercentages.jsp"/>

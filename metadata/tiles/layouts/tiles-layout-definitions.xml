@@ -61,5 +61,9 @@
 		<put name="navLocal" value="/commons/blank.jsp" />
 		<put name="body-context" value="/commons/blank.jsp"/>			 
 	</definition>
+	
+	<definition name="df.layout.print" page="/layout/fenixPrint.jsp" >
+		 <put name="body" value="/commons/blank.jsp"/>		 
+	</definition>
 		    
 </tiles-definitions>

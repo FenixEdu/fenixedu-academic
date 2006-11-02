@@ -42,3 +42,7 @@ padding: 2px;
 margin: 4px 0;
 }
 */
+
+.break-before {
+	page-break-before:always;
+}		

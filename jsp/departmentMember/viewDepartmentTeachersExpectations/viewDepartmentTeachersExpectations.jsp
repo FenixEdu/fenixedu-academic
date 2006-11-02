@@ -47,14 +47,26 @@
 					<html:option value="-1" key="label.common.allTeachers" />
 					<html:options collection="departmentTeachers" property="value"
 						labelProperty="label" />
-				</html:select></td>
+					</html:select>
+				</td>
 			</tr>
+			<logic:notEmpty name="teacherPersonalExpectations">
+			<tr>
+				<td colspan="2">
+					<bean:define id="executionYearID" name="viewDepartmentTeachersPersonalExpectationsForm" property="executionYearID" />
+					<bean:define id="teacherID" name="viewDepartmentTeachersPersonalExpectationsForm" property="teacherID" />
+					<html:link action="<%="/viewDepartmentTeachersExpectations.do?method=print&executionYearID=" + executionYearID + "&teacherID=" + teacherID%>" target="_blank">
+						<bean:message  key="label.print"/>
+					</html:link>
+				</td>
+			</tr>
+			</logic:notEmpty>
 		</table>
 		<br/>
 		<logic:notEmpty name="teacherPersonalExpectations" scope="request">
 			<fr:view name="teacherPersonalExpectations" scope="request">
 	  			<fr:layout name="flowLayout">
-					<fr:property name="eachLayout" value="nestedTemplateLayout" />
+					<fr:property name="eachLayout" value="viewDepartmentTeachersExpectationsNestedTemplateLayout" />
 					<fr:property name="htmlSeparator" value="<br/><br/><hr/><br/>"/>
 				</fr:layout>
 			</fr:view>

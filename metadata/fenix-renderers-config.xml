@@ -179,9 +179,14 @@ Documentation:
         <property name="minChars" value="3"/>
     </renderer>
     
-    <renderer layout="nestedTemplateLayout" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+    <renderer layout="viewDepartmentTeachersExpectationsNestedTemplateLayout" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
         <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/showPersonalExpectationTemplate.jsp"/>
     </renderer>
+    
+    <renderer layout="printDepartmentTeachersExpectationsNestedTemplateLayout" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+        <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/printPersonalExpectationTemplate.jsp"/>
+    </renderer>
+    
  
     <!--@ The default layout for a collection. -->
     <renderer type="java.util.Collection" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>

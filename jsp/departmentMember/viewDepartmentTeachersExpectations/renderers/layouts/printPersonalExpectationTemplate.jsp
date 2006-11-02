@@ -7,7 +7,7 @@
 
 <!-- Personal Data -->
 
-<p class="header"><strong><bean:message key="label.viewDepartmentTeachersExpectations.teacherPersonalData" /></strong></p>
+<h2><bean:message key="label.viewDepartmentTeachersExpectations.teacherPersonalData" /></h2>
 <ul style="list-style: none;">
 	<li>
 		<strong><ft:label property="teacher.person.nome" />:</strong>&nbsp;&nbsp;&nbsp;<ft:view property="teacher.person.nome"  />
@@ -18,10 +18,10 @@
 </ul>
 
 <!-- Education Expectations -->
-<p class="header"><strong><bean:message key="label.viewDepartmentTeachersExpectations.education" /></strong></p>
+<h2><bean:message key="label.viewDepartmentTeachersExpectations.education" /></h2>
 
 <!-- Graduations -->
-<p style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.graduations" />:</p>
+<p style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.graduations" />:</p>
 <ul>
 	<li>
 		<i><ft:label property="graduations" /></i>:&nbsp;&nbsp;&nbsp;<ft:view property="graduations"  />
@@ -32,7 +32,7 @@
 </ul>
 
 <!-- Cientific Pos-Graduations -->
-<p style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.cientificPosGraduations" />:</p>
+<p style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.cientificPosGraduations" />:</p>
 <ul>
 	<li>
 		<i><ft:label property="cientificPosGraduations" /></i>:&nbsp;&nbsp;&nbsp;<ft:view property="cientificPosGraduations" />
@@ -43,7 +43,7 @@
 </ul>
 
 <!-- Professional Pos-Graduations -->
-<p style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.professionalPosGraduations" />:</p>
+<p style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.professionalPosGraduations" />:</p>
 <ul>
 	<li>
 		<i><ft:label property="professionalPosGraduations" /></i>:&nbsp;&nbsp;&nbsp;<ft:view property="professionalPosGraduations" />
@@ -55,7 +55,7 @@
 
 
 <!-- Seminaries -->
-<p style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.seminaries" />:</p>
+<p style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.seminaries" />:</p>
 <ul>
 	<li>
 		<i><ft:label property="seminaries" /></i>:&nbsp;&nbsp;&nbsp;<ft:view property="seminaries" />
@@ -66,13 +66,13 @@
 </ul>
 
 <!-- Education Main Focus -->
-<p style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.mainFocus"/>:</p>
+<p style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.mainFocus"/>:</p>
 <div style="padding: 6px 0; padding-left: 40px;"><ft:view property="educationMainFocus" layout="html"/></div>
 
 
 
 <!-- Investigation Expectations -->
-<p class="header"><strong><bean:message	key="label.viewDepartmentTeachersExpectations.investigation" /></strong></p>
+<h2><bean:message	key="label.viewDepartmentTeachersExpectations.investigation" /></h2>
 <!-- Investigation -->
 <ul>
 	<li>
@@ -102,11 +102,11 @@
 </ul>
 
 <!-- Research and Dev Main Focus -->
-<p style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.mainFocus"/>:</p>
+<p style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.mainFocus"/>:</p>
 <div style="padding: 6px 0; padding-left: 40px;"><ft:view property="researchAndDevMainFocus" layout="html"/></div>
 
 <!-- Orientation -->
-<p style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.orientation" />:</p>
+<p style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.orientation" />:</p>
 <ul>
 	<li>
 		<i><ft:label property="phdOrientations" /></i>:&nbsp;&nbsp;&nbsp;<ft:view property="phdOrientations" />
@@ -120,12 +120,12 @@
 </ul>
 
 <!-- Orientation Main Focus -->
-<p style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.mainFocus"/>: </p>
+<p style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.mainFocus"/>: </p>
 <div style="padding: 6px 0; padding-left: 40px;"><ft:view property="orientationsMainFocus" layout="html"/></div>
 
 
 <!-- University Service Expectations -->
-<p class="header"><strong><bean:message	key="label.viewDepartmentTeachersExpectations.universityService" /></strong></p>
+<h2><bean:message	key="label.viewDepartmentTeachersExpectations.universityService" /></h2>
 
 <ul class="limbottom">
 	<li>
@@ -140,11 +140,11 @@
 </ul>
 
 <!-- University Service Main Focus -->
-<p style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.mainFocus"/>:</p>
+<p style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.mainFocus"/>:</p>
 <div style="padding: 6px 0; padding-left: 40px;"><ft:view property="universityServiceMainFocus" layout="html"/></div>
 
 <!-- Professional Activity Expectations -->
-<p class="header"><strong><bean:message	key="label.viewDepartmentTeachersExpectations.professionalActivity" /></strong></p>
+<h2><bean:message	key="label.viewDepartmentTeachersExpectations.professionalActivity" /></h2>
 
 <ul class="limbottom">
 	<li>
@@ -165,7 +165,7 @@
 </ul>
 
 <!-- Professional Activity Main Focus -->
-<p style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.mainFocus"/>:</p>
+<p style="font: bold 13px Verdana, Arial, Helvetica, sans-serif;"><bean:message key="label.viewDepartmentTeachersExpectations.mainFocus"/>:</p>
 <div style="padding: 6px 0; padding-left: 40px;"><ft:view property="professionalActivityMainFocus" layout="html" /></div>
 
 

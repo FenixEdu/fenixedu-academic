@@ -307,6 +307,7 @@
    	        scope="request"
             type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ViewDepartmentTeachersExpectationsAction">            
             <forward name="showTeacherExpectations" path="df.page.viewDepartmentTeacherExpectations.viewDepartmentTeacherExpectations"/>
+            <forward name="print" path="df.page.viewDepartmentTeacherExpectations.print"/>
         </action>
         
         <!-- ============================================================ -->
