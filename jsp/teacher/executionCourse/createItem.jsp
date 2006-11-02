@@ -12,6 +12,7 @@
 <bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=section&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;sectionID=<bean:write name="section" property="idInternal"/></bean:define>
 <fr:edit name="creator" schema="net.sourceforge.fenixedu.domain.ItemCreator" action="<%= url %>">
 	<fr:layout name="tabular">
-	    <fr:property name="classes" value="thtop thlight thright mbottom1"/>
-    </fr:layout>
+		<fr:property name="classes" value="tstyle5 thlight thright"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	</fr:layout>
 </fr:edit>

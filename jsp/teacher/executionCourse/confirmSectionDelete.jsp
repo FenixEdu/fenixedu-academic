@@ -16,30 +16,36 @@
 </h2>
 
 <logic:notEmpty name="section" property="associatedSections">
-    <div class="warning0">
-        <bean:message key="message.section.subSection.count" bundle="SITE_RESOURCES" 
-                      arg0="<%= String.valueOf(section.getAssociatedSectionsCount()) %>"/>
-    </div>
+	<p class="mtop15">
+	    <span class="warning0">
+	        <bean:message key="message.section.subSection.count" bundle="SITE_RESOURCES" 
+	                      arg0="<%= String.valueOf(section.getAssociatedSectionsCount()) %>"/>
+	    </span>
+    </p>
 </logic:notEmpty>
 
 <logic:notEmpty name="section" property="associatedItems">
-    <div class="warning0">
-        <bean:message key="message.section.items.count" bundle="SITE_RESOURCES"
-                      arg0="<%= String.valueOf(section.getAssociatedItemsCount()) %>"/>
-    </div>
+	<p class="mtop15">
+	    <span class="warning0">
+	        <bean:message key="message.section.items.count" bundle="SITE_RESOURCES"
+	                      arg0="<%= String.valueOf(section.getAssociatedItemsCount()) %>"/>
+	    </span>
+    </p>
 </logic:notEmpty>
 
 <fr:form action="<%= String.format("/manageExecutionCourse.do?method=confirmSectionDelete&executionCourseID=%s&sectionID=%s", executionCourseId, section.getIdInternal()) %>">
-    <p>
+    <p class="mtop15">
         <bean:message key="message.section.delete.confirm" bundle="SITE_RESOURCES"/>
     </p>
     
-    <html:submit property="confirm">
-        <bean:message key="button.confirm" bundle="SITE_RESOURCES"/>
-    </html:submit>
-    
-    <html:cancel property="cancel">
-        <bean:message key="button.cancel" bundle="SITE_RESOURCES"/>
-    </html:cancel>
+    <p class="mtop1">
+	    <html:submit property="confirm">
+	        <bean:message key="button.confirm" bundle="SITE_RESOURCES"/>
+	    </html:submit>
+	    
+	    <html:cancel property="cancel">
+	        <bean:message key="button.cancel" bundle="SITE_RESOURCES"/>
+	    </html:cancel>
+    </p>
 </fr:form>
 

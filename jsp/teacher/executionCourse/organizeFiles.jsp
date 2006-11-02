@@ -31,14 +31,17 @@
                 <fr:property name="schemaFor(FileItem)" value="site.item.file.basic"/>
             </fr:layout>
         </fr:view>
+
+		<p class="mtop15">
+		    <fr:form action="<%= "/manageExecutionCourse.do?method=section&executionCourseID=" + executionCourseId + "&sectionID=" + section.getIdInternal() %>">
+		        <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('filesOrder');" %>">
+		            <bean:message key="button.item.files.order.save" bundle="SITE_RESOURCES"/>
+		        </html:button>
+		        <html:submit>
+		            <bean:message key="button.item.files.order.reset" bundle="SITE_RESOURCES"/>
+		        </html:submit>
+		    </fr:form>
+	    </p>
     </div>
     
-    <fr:form action="<%= "/manageExecutionCourse.do?method=section&executionCourseID=" + executionCourseId + "&sectionID=" + section.getIdInternal() %>">
-        <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('filesOrder');" %>">
-            <bean:message key="button.item.files.order.save" bundle="SITE_RESOURCES"/>
-        </html:button>
-        <html:submit>
-            <bean:message key="button.item.files.order.reset" bundle="SITE_RESOURCES"/>
-        </html:submit>
-    </fr:form>
 </logic:notEmpty>

@@ -20,9 +20,9 @@
 		<fr:edit id="importContentBean" name="importContentBean" schema="ChooseDegreePeriodAndCurricularYearToImportLessonPlannings"
 			 action="<%= submitUrl %>">
 			<fr:destination name="postBack" path="<%= postBackLink %>"/>			
-			<fr:layout name="tabular" >
-					<fr:property name="classes" value="tstyle4"/>
-			        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thright"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
 		<html:cancel><bean:message key="button.cancel"/></html:cancel>
@@ -38,9 +38,9 @@
 					action="<%= importSectionsUrl %>" >
 					<fr:destination name="cancel" path="<%= showSections %>"/>
 					<fr:destination name="invalid" path="<%= invalidLink %>"/>
-					<fr:layout name="tabular" >
-							<fr:property name="classes" value="tstyle4"/>
-					        <fr:property name="columnClasses" value="listClasses,,"/>
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 thlight thright"/>
+						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
 				</fr:edit>						
 			</logic:notEmpty>
@@ -53,9 +53,9 @@
 		<html:form action="/manageExecutionCourse">
 			<html:hidden property="method" value="importLessonPlanningsBySummaries"/>
 			<html:hidden property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
-			<table class="tstyle4" border="0">	
+			<table class="tstyle5">	
 				<tr>
-					<th class="listClasses"><bean:message key="label.shift"/>:</th>		
+					<th><bean:message key="label.shift"/>:</th>		
 					<td>
 						<html:select bundle="HTMLALT_RESOURCES" altKey="select.shift" property="shiftID" >
 							<html:options collection="shifts" property="value" labelProperty="label"/>

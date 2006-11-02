@@ -14,9 +14,10 @@
 
 <fr:form action="<%= String.format("/manageExecutionCourse.do?method=section&executionCourseID=%s&sectionID=%s", executionCourseId, sectionId) %>">
     <fr:edit name="item" type="net.sourceforge.fenixedu.domain.Item" schema="net.sourceforge.fenixedu.domain.ItemEditor">
-        <fr:layout name="tabular">
-            <fr:property name="classes" value="thtop thlight thright mbottom1"/>
-        </fr:layout>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
     </fr:edit>
     
     <logic:notEmpty name="item" property="fileItems">

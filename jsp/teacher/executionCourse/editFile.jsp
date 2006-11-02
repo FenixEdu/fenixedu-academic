@@ -14,9 +14,11 @@
     <fr:view name="item" property="name" />
 </h2>
 
-<h3>
-    <bean:message key="label.teacher.siteAdministration.editItemFilePermissions.editPermissions"/>
-</h3>
+<p class="mbottom05">
+	<strong>
+		<bean:message key="label.teacher.siteAdministration.editItemFilePermissions.editPermissions"/>
+	</strong>
+</p>
 
 <span class="error">
     <html:errors />
@@ -24,16 +26,16 @@
 
 <fr:view name="fileItem" schema="item.file.basic">
     <fr:layout name="tabular">
-        <fr:property name="classes" value="thtop tstyle1 mtop05"/>
+        <fr:property name="classes" value="thleft thlight thtop tstyle1 mtop05"/>
     </fr:layout>
 </fr:view>
 
 <fr:edit name="fileItemBean" schema="item.file.permittedGroup" 
          action="<%= String.format("/manageExecutionCourse.do?method=editItemFilePermissions&executionCourseID=%s&itemID=%s&fileItemId=%s", executionCourse.getIdInternal(), item.getIdInternal(), fileItem.getIdInternal()) %>">
-        <fr:layout name="tabular">
-        <fr:property name="classes" value="thtop tstyle1 mtop05"/>
-        <fr:property name="columnClasses" value=",,tdclear"/>
-    </fr:layout>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
     
     <fr:destination name="cancel" path="<%= String.format("/manageExecutionCourse.do?method=section&executionCourseID=%s&sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>"/>
 </fr:edit>

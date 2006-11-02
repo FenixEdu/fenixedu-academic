@@ -18,8 +18,8 @@
 
 <fr:edit name="item" schema="item.group.edit" layout="tabular"
          action="<%= String.format("/manageExecutionCourse.do?method=section&executionCourseID=%s&sectionID=%s", executionCourseId, sectionId) %>">
-    <fr:layout name="tabular">
-        <fr:property name="classes" value="thtop tstyle1 mtop05"/>
-        <fr:property name="columnClasses" value=",,tdclear"/>
-    </fr:layout>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	</fr:layout>
 </fr:edit>

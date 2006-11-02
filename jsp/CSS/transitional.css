@@ -1,3 +1,5 @@
+
+
 /* transitional.css - 01.2006 by João Alfaiate @ Fenix */
 
 /* ----------------------
@@ -398,6 +400,7 @@ padding-right: 0.5em;
  ---- Classes ----------
 ----------------------- */
 
+.clearmargins { margin: 0; padding: 0; }
 .smalltxt { font-size: 0.85em; }
 .smalltxt2 { font-size: 0.80em; }
 .p_mvert015 p { margin: 0.15em 0; }
@@ -426,6 +429,9 @@ padding-right: 0.5em;
 .cboth { clear: both; }
 
 /* paddings */
+.ptop0 { padding-top: 0; }
+.pbottom0 { padding-bottom: 0em; }
+.pbottom05 { padding-bottom: 0.5em; }
 .pbottom05 { padding-bottom: 0.5em; }
 .pbottom075 { padding-bottom: 0.75em; }
 .pbottom1 { padding-bottom: 1em; }
@@ -499,6 +505,8 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width100px { width: 100px; }
 .width150px { width: 150px; }
 .width250px { width: 250px; }
+.width500px { width: 550px; }
+.width550px { width: 550px; }
 .width600px { width: 600px; }
 
 
@@ -1144,8 +1152,27 @@ padding: 0;
 
 div.announcement h3 a { text-decoration: none; }
 .greytxt2 { color: #999; }
-.ann_body 
+.ann_body { }
 
+.section1 {
+background: #fafaff;
+border: 1px solid #eee;
+margin: 1em 0;
+padding: 1em;
+}
 
+/* content output margin reset */
+.coutput div, .coutput p {
+margin: 0.5em 0;
+padding: 0;
+}
+.coutput blockquote {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}
 
-
+/* separator */
+div.separator1 {
+padding-top: 0.5em;
+background: url(../images/ann_sep.gif) top left repeat-x;
+}

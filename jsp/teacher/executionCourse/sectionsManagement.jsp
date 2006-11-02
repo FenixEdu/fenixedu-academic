@@ -12,17 +12,21 @@
 
 <bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
 
-<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-<html:link page="/manageExecutionCourse.do?method=createSection" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-	<bean:message key="link.createSection"/>
-</html:link>
-
-&nbsp;&nbsp;
-
-<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-<html:link page="/manageExecutionCourse.do?method=prepareImportSections" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-	<bean:message key="label.import.sections"/>
-</html:link>
+<p>
+	<span>
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+		<html:link page="/manageExecutionCourse.do?method=createSection" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message key="link.createSection"/>
+		</html:link>
+	</span>
+	
+	<span class="pleft1">
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+		<html:link page="/manageExecutionCourse.do?method=prepareImportSections" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message key="label.import.sections"/>
+		</html:link>
+	</span>
+</p>
 
 <logic:empty name="executionCourse" property="site.orderedTopLevelSections">
     <p>
@@ -39,7 +43,7 @@
     
     <% String treeId = "sectionsTree" + executionCourseId; %>
     
-    <div style="background: #FAFAFF; border: 1px solid #EEE; margin: 10px 0px 10px 0px; padding: 10px 10px 10px 10px;">
+    <div class="section1">
         <fr:view name="executionCourse" property="site.orderedTopLevelSections">
             <fr:layout name="tree">
                 <fr:property name="treeId" value="<%= treeId %>"/>
@@ -51,15 +55,22 @@
             </fr:layout>
             <fr:destination name="section.view" path="<%= "/manageExecutionCourse.do?method=section&sectionID=${idInternal}&executionCourseID=" + executionCourseId %>"/>
         </fr:view>
+	
+		<p class="mtop15">
+	    <fr:form action="<%= "/manageExecutionCourse.do?method=sections&executionCourseID=" + executionCourseId %>">
+	        <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('" + treeId + "');" %>">
+	            <bean:message key="button.sections.order.save" bundle="SITE_RESOURCES"/>
+	        </html:button>
+	        <html:submit>
+	            <bean:message key="button.sections.order.reset" bundle="SITE_RESOURCES"/>
+	        </html:submit>
+	    </fr:form>
+	    </p>
     </div>
     
-    <fr:form action="<%= "/manageExecutionCourse.do?method=sections&executionCourseID=" + executionCourseId %>">
-        <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('" + treeId + "');" %>">
-            <bean:message key="button.sections.order.save" bundle="SITE_RESOURCES"/>
-        </html:button>
-        <html:submit>
-            <bean:message key="button.sections.order.reset" bundle="SITE_RESOURCES"/>
-        </html:submit>
-    </fr:form>
+<p style="color: #888;">
+	<em><bean:message key="message.section.reorder.tip" bundle="SITE_RESOURCES"/></em>
+</p>
+
 </logic:notEmpty>
 

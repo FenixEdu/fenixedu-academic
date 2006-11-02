@@ -15,6 +15,8 @@
 	<fr:view name="section" property="name" />
 </h2>
 
+<p><strong><bean:message key="link.section.items.organize" bundle="SITE_RESOURCES"/></strong></p>
+
 <logic:notEmpty name="section" property="orderedItems">
     <fr:form action="<%= "/manageExecutionCourse.do?method=saveItemsOrder&executionCourseID=" + executionCourseId + "&sectionID=" + section.getIdInternal() %>">
         <input id="items-order" type="hidden" name="itemsOrder" value=""/>
@@ -30,14 +32,19 @@
                 <fr:property name="schemaFor(Item)" value="site.item.name"/>
             </fr:layout>
         </fr:view>
+        
+		<p class="mtop15">
+			<fr:form action="<%= "/manageExecutionCourse.do?method=section&executionCourseID=" + executionCourseId + "&sectionID=" + section.getIdInternal() %>">
+		       <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('itemsTree');" %>">
+		           <bean:message key="button.items.order.save" bundle="SITE_RESOURCES"/>
+		       </html:button>
+		       <html:submit>
+		           <bean:message key="button.items.order.reset" bundle="SITE_RESOURCES"/>
+		       </html:submit>
+			</fr:form>
+		</p>
     </div>
-    
-    <fr:form action="<%= "/manageExecutionCourse.do?method=section&executionCourseID=" + executionCourseId + "&sectionID=" + section.getIdInternal() %>">
-        <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('itemsTree');" %>">
-            <bean:message key="button.items.order.save" bundle="SITE_RESOURCES"/>
-        </html:button>
-        <html:submit>
-            <bean:message key="button.items.order.reset" bundle="SITE_RESOURCES"/>
-        </html:submit>
-    </fr:form>
+
+	<p style="color: #888;"><em><bean:message key="message.item.reorder.tip" bundle="SITE_RESOURCES"/></em></p>
+
 </logic:notEmpty>

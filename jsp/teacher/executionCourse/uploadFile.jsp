@@ -29,6 +29,7 @@
     <p class="mtop15">
         <strong><bean:message key="label.teacher.siteAdministration.uploadFile.fileDisplayName"/>:</strong>
     </p>
+    
     <p>
         <fr:edit name="fileItemCreator" slot="displayName">
             <fr:layout>
@@ -37,17 +38,18 @@
         </fr:edit>
     </p>
         
-    <p>
+    <p class="mtop15">
         <strong><bean:message key="label.teacher.siteAdministration.uploadFile.file"/>:</strong>
     </p>
+    
     <p>
-    <fr:edit name="fileItemCreator" slot="file">
-        <fr:layout>
-            <fr:property name="size" value="40"/>
-            <fr:property name="fileNameSlot" value="fileName"/>
-            <fr:property name="fileSizeSlot" value="fileSize"/>
-        </fr:layout>
-    </fr:edit>
+	    <fr:edit name="fileItemCreator" slot="file">
+	        <fr:layout>
+	            <fr:property name="size" value="40"/>
+	            <fr:property name="fileNameSlot" value="fileName"/>
+	            <fr:property name="fileSizeSlot" value="fileSize"/>
+	        </fr:layout>
+	    </fr:edit>
     </p>
     
     <p class="mtop15">

@@ -15,13 +15,13 @@
 </h2>
 
 <p class="mbottom05">
-    <bean:message key="message.section.group.edit" bundle="SITE_RESOURCES"/>
+	<bean:message key="message.section.group.edit" bundle="SITE_RESOURCES"/>
 </p>
 
 <fr:edit name="section" schema="section.group.edit" action="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourseId, section.getIdInternal()) %>">
-    <fr:layout name="tabular">
-        <fr:property name="classes" value="thtop tstyle1 mtop05"/>
-        <fr:property name="columnClasses" value=",,tdclear"/>
-    </fr:layout>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	</fr:layout>
 </fr:edit>
 
