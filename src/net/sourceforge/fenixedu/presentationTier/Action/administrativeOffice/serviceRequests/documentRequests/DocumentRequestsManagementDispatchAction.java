@@ -1,10 +1,17 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -17,8 +24,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -26,7 +31,9 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentsSearchBean;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.RegistrationDeclaration;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.ReportsUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -51,9 +58,33 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) throws JRException, IOException {
 
-	return null;
+	final DocumentRequest documentRequest = getDocumentRequest(request);
+	final RegistrationDeclaration registrationDeclaration = new RegistrationDeclaration(documentRequest.getRegistration(), getLoggedPerson(request));
+	
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat("/images/Logo_IST_color.tiff"));
+        parameters.put("RegistrationDeclaration", registrationDeclaration);
+
+        final List dataSource = new ArrayList();
+        dataSource.add(registrationDeclaration);
+        dataSource.add(documentRequest);
+        
+        byte[] data = ReportsUtils.exportToPdf(documentRequest.getDocumentTemplateKey(), parameters, RegistrationDeclaration.resourceBundle, dataSource);
+        
+        response.setContentLength(data.length);
+	response.setContentType("application/pdf");
+	response.addHeader("Content-Disposition", "attachment; filename="+ documentRequest.getDocumentFileName() + ".pdf");
+        
+        final ServletOutputStream writer = response.getOutputStream();
+        writer.write(data);
+        writer.flush();
+        writer.close();
+        
+        response.flushBuffer();
+
+        return mapping.findForward("");
     }
     
     public ActionForward prepareConcludeDocumentRequest(ActionMapping mapping, ActionForm actionForm,
