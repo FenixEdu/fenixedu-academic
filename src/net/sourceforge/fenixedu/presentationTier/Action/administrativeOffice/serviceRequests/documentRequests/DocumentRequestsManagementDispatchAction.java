@@ -67,23 +67,6 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	return mapping.findForward("printDocument");
     }
 
-    public void concludeDocumentRequest(ActionForm actionForm, HttpServletRequest request) {
-	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
-	final DocumentRequest documentRequest = (DocumentRequest) academicServiceRequest;
-	
-	if (documentRequest.isCertificate()) {
-	    final CertificateRequest certificateRequest = (CertificateRequest) documentRequest;
-
-	    final Integer numberOfPages = (Integer) ((DynaActionForm) actionForm).get("numberOfPages");
-	    certificateRequest.setNumberOfPages(numberOfPages);
-	} else if (documentRequest.isDeclaration()) {
-	    final DeclarationRequest declarationRequest = (DeclarationRequest) documentRequest;
-
-	    final Integer numberOfPages = (Integer) ((DynaActionForm) actionForm).get("numberOfPages");
-	    declarationRequest.setNumberOfPages(numberOfPages);
-	}
-    }
-
     public ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 

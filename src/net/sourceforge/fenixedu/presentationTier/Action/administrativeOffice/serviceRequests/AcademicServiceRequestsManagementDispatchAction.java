@@ -174,11 +174,6 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
 	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
-	if (academicServiceRequest.isDocumentRequest()) {
-	    final DocumentRequestsManagementDispatchAction documentRequestsManagementDispatchAction = new DocumentRequestsManagementDispatchAction();
-	    documentRequestsManagementDispatchAction.concludeDocumentRequest(actionForm, request);
-	}
-	
 	try {
 	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
 		    "ConcludeAcademicServiceRequest", new Object[] { academicServiceRequest });

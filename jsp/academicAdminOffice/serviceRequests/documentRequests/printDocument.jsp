@@ -48,26 +48,32 @@
 
 <p>
 	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="documentRequest.confirmDocumentSuccessfulPrinting"/></strong>
-	<table>
-		<tr>
-			<th class="listClasses">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="number.of.pages.printed"/>:
-			</th>
-			<td>
-				<html:form action="<%="/academicServiceRequestsManagement.do?method=concludeAcademicServiceRequest&academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>">
-				<html:text property="numberOfPages" size="3"/>
-			</td>
-		</tr>
-		<tr>
-			<td style="text-align: center;">
-				<html:submit styleClass="inputbutton"><bean:message key="conclude" bundle="APPLICATION_RESOURCES"/></html:submit>
-				</html:form>		
-			</td>
-			<td>
-				<html:form action="<%="/student.do?method=visualizeRegistration&registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>">
-					<html:submit styleClass="inputbutton"><bean:message key="cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
-				</html:form>
-			</td>
-		</tr>
-	</table>
+	<bean:define id="documentRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
+	<logic:equal name="documentRequest" property="pagedDocument" value="true">
+		<fr:edit id="documentRequestConclude" name="documentRequest" 
+				schema="DocumentRequest.conclude-info"
+				action="<%="/academicServiceRequestsManagement.do?method=concludeAcademicServiceRequest&academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4" />
+				<fr:property name="columnClasses" value="listClasses,," />
+			</fr:layout>
+			<fr:destination name="cancel" path="<%="/student.do?method=visualizeRegistration&registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>"/>
+		</fr:edit>
+	</logic:equal>
+	<logic:equal name="documentRequest" property="pagedDocument" value="false">
+		<table>
+			<tr>
+				<td>
+					<html:form action="<%="/academicServiceRequestsManagement.do?method=concludeAcademicServiceRequest&academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>">
+						<html:submit styleClass="inputbutton"><bean:message key="conclude" bundle="APPLICATION_RESOURCES"/></html:submit>
+					</html:form>		
+				</td>
+				<td>
+					<html:form action="<%="/student.do?method=visualizeRegistration&registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>">
+						<html:submit styleClass="inputbutton"><bean:message key="cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
+					</html:form>
+				</td>
+			</tr>
+		</table>
+	</logic:equal>
 </p>

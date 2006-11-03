@@ -34,5 +34,9 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     public boolean isDegreeDiploma() {
 	return this instanceof DegreeDiploma;
     }
+    
+    public boolean isPagedDocument() {
+	return isCertificate() || isDeclaration();
+    }
 
 }
