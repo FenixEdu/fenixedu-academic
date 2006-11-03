@@ -3,6 +3,9 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+
 public abstract class DocumentRequest extends DocumentRequest_Base {
 
     protected DocumentRequest() {
@@ -20,6 +23,19 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     }
 
     public abstract DocumentRequestType getDocumentRequestType();    
+    
+    public String getDocumentFileName() {
+	final StringBuilder result = new StringBuilder();
+	
+	
+	result.append(getRegistration().getPerson().getIstUsername());
+	result.append("-");
+	result.append(new DateTime().toString(DateTimeFormat.forPattern("yyyyMMdd")));
+	result.append("-");
+	result.append(getDescription().replace(":","").replace(" ",""));
+	
+	return result.toString();
+    }
     
     public abstract String getDocumentTemplateKey();
     
