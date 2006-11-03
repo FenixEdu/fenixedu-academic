@@ -103,7 +103,7 @@
 	<b><bean:message key="new.requests" bundle="ACADEMIC_OFFICE_RESOURCES"/></b>
 	<bean:define id="newAcademicServiceRequests" name="registration" property="newAcademicServiceRequests"/>
 	<logic:notEmpty name="newAcademicServiceRequests">
-		<fr:view name="newAcademicServiceRequests" schema="AcademicServiceRequest.view-for-given-registration">
+		<fr:view name="newAcademicServiceRequests" schema="AcademicServiceRequest.stateless-view-for-given-registration">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thright" />
 				
@@ -135,7 +135,7 @@
 	<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests"/></b>
 	<bean:define id="processingAcademicServiceRequests" name="registration" property="processingAcademicServiceRequests"/>
 	<logic:notEmpty name="processingAcademicServiceRequests">
-		<fr:view name="processingAcademicServiceRequests" schema="AcademicServiceRequest.view-for-given-registration">
+		<fr:view name="processingAcademicServiceRequests" schema="AcademicServiceRequest.stateless-view-for-given-registration">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thright" />
 				
@@ -167,17 +167,11 @@
 	<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests"/></b>
 	<bean:define id="concludedAcademicServiceRequests" name="registration" property="concludedAcademicServiceRequests"/>
 	<logic:notEmpty name="concludedAcademicServiceRequests">
-		<fr:view name="concludedAcademicServiceRequests" schema="AcademicServiceRequest.view-for-given-registration">
+		<fr:view name="concludedAcademicServiceRequests" schema="AcademicServiceRequest.stateless-view-for-given-registration">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thright" />
 				
-				<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
-				<fr:property name="key(cancel)" value="cancel"/>
-		
-				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
-				<fr:property name="key(reject)" value="reject"/>
-		
-				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliverAcademicServiceRequest&academicServiceRequestId=${idInternal}"/>
+				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(deliver)" value="deliver"/>
 		
 				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${idInternal}&backAction=student&backMethod=visualizeRegistration"/>
