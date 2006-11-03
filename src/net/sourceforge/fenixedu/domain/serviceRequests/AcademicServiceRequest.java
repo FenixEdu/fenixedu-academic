@@ -115,6 +115,11 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	edit(AcademicServiceRequestSituationType.CONCLUDED, employee, null);
     }
     
+    final public void delivered() {
+	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	edit(AcademicServiceRequestSituationType.DELIVERED, employee, null);
+    }
+    
     @Override
     public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	throw new DomainException(
