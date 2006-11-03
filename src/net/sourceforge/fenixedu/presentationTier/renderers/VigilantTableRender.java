@@ -310,9 +310,9 @@ public class VigilantTableRender extends OutputRenderer {
 				return null;
 			} else {
 				String convokeHeadPrefix = getConvokeTitle();
-//				int numberOfColumns = (this.getNumberOfColumns() - this.getNumberOfVigilantsSlots())
-//						 this.getNumberOfConvokeSlots();
-				int index = getConvokeIndex(one, columnIndex) + 1;
+				int numberOfColumns = (this.getNumberOfColumns() - this.getNumberOfVigilantsSlots())
+						/ this.getNumberOfConvokeSlots();
+				int index = numberOfColumns - getConvokeIndex(one, columnIndex);
 
 				return convokeHeadPrefix + " " + index;
 			}
@@ -341,19 +341,24 @@ public class VigilantTableRender extends OutputRenderer {
 		}
 
 		private List<VigilancyWithCredits> getConvokes(Vigilant vigilant) {
-			if (getConvokesToShow().equals("past")) {
-				return (showNotActiveConvokes) ? vigilant.getConvokesBeforeCurrentDate() : vigilant
-						.getActiveConvokesBeforeCurrentDate();
-			}
-			if (getConvokesToShow().equals("future")) {
-				return (showNotActiveConvokes) ? vigilant.getConvokesAfterCurrentDate() : vigilant
-						.getActiveConvokesAfterCurrentDate();
-			}
+			List<VigilancyWithCredits> vigilancies;
 
-			else {
-				return (showNotActiveConvokes) ? vigilant.getVigilancyWithCredits() : vigilant
-						.getActiveVigilancyWithCredits();
+			if (getConvokesToShow().equals("past")) {
+				vigilancies = (showNotActiveConvokes) ? vigilant.getConvokesBeforeCurrentDate() : vigilant
+						.getActiveConvokesBeforeCurrentDate();
+			} else {
+				if (getConvokesToShow().equals("future")) {
+					vigilancies = (showNotActiveConvokes) ? vigilant.getConvokesAfterCurrentDate() : vigilant
+							.getActiveConvokesAfterCurrentDate();
+				}
+
+				else {
+					vigilancies = (showNotActiveConvokes) ? vigilant.getVigilancyWithCredits() : vigilant
+							.getActiveVigilancyWithCredits();
+				}
 			}
+			//Collections.reverse(vigilancies);
+			return vigilancies;
 		}
 
 		private MetaObject getConvokeMetaObjectToPutInTable(MetaObject vigilantMetaObject, int index) {
@@ -472,7 +477,7 @@ public class VigilantTableRender extends OutputRenderer {
 					return this.vigilants.size();
 			}
 			return this.vigilants.size(); // no vigilants have convokes for
-											// the given period we
+			// the given period we
 			// will not display anyone.
 		}
 

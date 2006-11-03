@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 public class Vigilancy extends Vigilancy_Base {
 	
 	public static final Comparator<Vigilancy> COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING = new BeanComparator(
-    "writtenEvaluation.beginning");
+    "writtenEvaluation.dayDateYearMonthDay");
 	
     public Vigilancy() {
     	  super();
