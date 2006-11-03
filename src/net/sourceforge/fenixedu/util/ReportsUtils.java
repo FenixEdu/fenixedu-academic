@@ -164,4 +164,16 @@ public class ReportsUtils extends PropertiesManager {
         return null;
     }
 
+    public static void exportToHtmlFile(String destFileName, String key, Map parameters, ResourceBundle bundle,
+            Collection dataSource) throws JRException {
+        try {
+            JasperPrint jasperPrint = getReport(key, parameters, bundle, dataSource);
+            if (jasperPrint != null) {
+                JasperExportManager.exportReportToHtmlFile(jasperPrint, destFileName);
+            }
+        } catch (JRException e) {
+            throw e;
+        }
+    }
+    
 }
