@@ -1,0 +1,1 @@
+ alter table GUIDE change column KEY_CONTRIBUTOR_PARTY KEY_CONTRIBUTOR_PARTY int(11);
