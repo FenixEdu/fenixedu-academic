@@ -1161,19 +1161,32 @@ margin: 1em 0;
 padding: 1em;
 }
 
-/* content output margin reset */
-.coutput div, .coutput p {
-margin: 0.5em 0;
+/* content output - margin reset 1 */
+.coutput1 div, .coutput1 p {
+margin: 0;
 padding: 0;
 }
-.coutput blockquote {
-margin-top: 0.5em;
-margin-bottom: 0.5em;
+.coutput1 blockquote {
+margin-top: 0.25em;
+margin-bottom: 0.25em;
 }
-.coutput br {
+.coutput1 br {
 margin: -4px 0;
 padding: 0;
 }
+
+
+/* content output - margin reset 2 */
+.coutput2 div, .coutput2 p {
+margin: 0.5em 0;
+padding: 0.5em 0;
+}
+.coutput2 blockquote {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}
+
+
 
 /* separator */
 div.separator1 {

@@ -16,7 +16,7 @@
 </logic:empty>
 
 <logic:notEmpty name="executionCourse" property="evaluationMethod">
-	<div class="mtop1" style="line-height: 1.5em;">
+	<div class="mtop1 coutput2" style="line-height: 1.5em;">
 		<fr:view name="executionCourse" property="evaluationMethod.evaluationElements" type="net.sourceforge.fenixedu.util.MultiLanguageString">
 			<fr:layout>
 				<fr:property name="escaped" value="false" />

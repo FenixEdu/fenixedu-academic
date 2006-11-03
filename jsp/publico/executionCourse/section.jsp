@@ -29,47 +29,49 @@
             <bean:define id="item" name="protectedItem" property="item"/>
             <bean:define id="available" name="protectedItem" property="available"/>
             
-        	<h3 class="mtop2"><fr:view name="item" property="name"/></h3>
-
-            <logic:equal name="available" value="true">
-                <logic:notEmpty name="item" property="information">
-            			<fr:view name="item" property="information">
-            				<fr:layout>
-            					<fr:property name="classes" value="coutput" />
-            					<fr:property name="escaped" value="false" />
-            					<fr:property name="newlineAware" value="false" />
-            				</fr:layout>
-            			</fr:view>
-            		</logic:notEmpty>
-                    
-            		<logic:notEmpty name="item" property="sortedVisibleFileItems">
-                        <fr:view name="item" property="sortedVisibleFileItems">
-                            <fr:layout name="list">
-            					<fr:property name="classes" value="coutput" />
-                                <fr:property name="eachSchema" value="site.item.file.basic"/>
-                                <fr:property name="eachLayout" value="values"/>
-                                <fr:property name="style" value="<%= "list-style-image: url(" + request.getContextPath() + "/images/icon_file.gif);" %>"/>
-                            </fr:layout>
-                        </fr:view>
-            		</logic:notEmpty>
-            </logic:equal>
-            
-            <logic:equal name="logged" value="true">
-                <logic:equal name="available" value="false">
-                    <p>
-                        <em><bean:message key="message.item.view.notAllowed" bundle="SITE_RESOURCES"/></em>
-                    </p>
-                </logic:equal>
-            </logic:equal>
-
-            <logic:equal name="logged" value="false">
-                <logic:equal name="available" value="false">
-                    <p>
-                        <em><bean:message key="message.item.view.mustLogin" bundle="SITE_RESOURCES"/></em>
-                    </p>
-                </logic:equal>
-            </logic:equal>
-
+            <div>
+	        	<h3 class="mtop2"><fr:view name="item" property="name"/></h3>
+	
+	            <logic:equal name="available" value="true">
+	                <logic:notEmpty name="item" property="information">
+	            			<fr:view name="item" property="information">
+	            				<fr:layout>
+	            					<fr:property name="classes" value="coutput1" />
+	            					<fr:property name="escaped" value="false" />
+	            					<fr:property name="newlineAware" value="false" />
+	            				</fr:layout>
+	            			</fr:view>
+	            		</logic:notEmpty>
+	                    
+	            		<logic:notEmpty name="item" property="sortedVisibleFileItems">
+	                        <fr:view name="item" property="sortedVisibleFileItems">
+	                            <fr:layout name="list">
+	            					<fr:property name="classes" value="coutput1 mvert0" />
+	                                <fr:property name="eachSchema" value="site.item.file.basic"/>
+	                                <fr:property name="eachLayout" value="values"/>
+	                                <fr:property name="style" value="<%= "list-style-image: url(" + request.getContextPath() + "/images/icon_file.gif);" %>"/>
+	                            </fr:layout>
+	                        </fr:view>
+	            		</logic:notEmpty>
+	            </logic:equal>
+	            
+	            <logic:equal name="logged" value="true">
+	                <logic:equal name="available" value="false">
+	                    <p>
+	                        <em><bean:message key="message.item.view.notAllowed" bundle="SITE_RESOURCES"/></em>
+	                    </p>
+	                </logic:equal>
+	            </logic:equal>
+	
+	            <logic:equal name="logged" value="false">
+	                <logic:equal name="available" value="false">
+	                    <p>
+	                        <em><bean:message key="message.item.view.mustLogin" bundle="SITE_RESOURCES"/></em>
+	                    </p>
+	                </logic:equal>
+	            </logic:equal>
+			</div>
+			
         	</logic:iterate>
     </logic:notEmpty>
 </logic:present>

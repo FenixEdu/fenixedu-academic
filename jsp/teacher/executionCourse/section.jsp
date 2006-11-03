@@ -229,7 +229,7 @@
             <div class="width550px">
                	<fr:view name="item" property="information" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html">
 	               	<fr:layout>
-						<fr:property name="classes" value="coutput mbottom0"/>
+						<fr:property name="classes" value="coutput1 mbottom0"/>
 					</fr:layout>
                	</fr:view>
             </div>

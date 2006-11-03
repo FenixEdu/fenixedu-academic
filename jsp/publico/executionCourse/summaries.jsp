@@ -13,7 +13,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="summaries"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
 
-	<table cellspacing="2" cellpadding="0">
+	<table class="mtop1" cellspacing="2" cellpadding="0">
 		<tr>
 			<td><bean:message key="label.summary.shift.type" />:</td>
 			<td>

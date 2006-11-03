@@ -11,100 +11,139 @@
 
 <h2><bean:message key="label.schedule" /></h2>
 
+<h3><bean:message key="label.hoursPerWeek"/></h3>
+
+<%--
+<ul>
+	<li>Teórica: 2.0 horas</li>
+	<li>Laboratorial: 3.0 horas</li>
+</ul>
+--%>
+
+<ul>
+	<logic:notEqual name="executionCourse" property="theoreticalHours" value="0">	
+		<li><bean:message key="property.executionCourse.theoreticalHours"/>: <bean:write name="executionCourse" property="theoreticalHours" /> <bean:message key="label.hours"/></li>
+	</logic:notEqual>
+	<logic:notEqual name="executionCourse" property="praticalHours" value="0">
+		<li><bean:message key="property.executionCourse.practicalHours"/>: <bean:write name="executionCourse" property="praticalHours" /> <bean:message key="label.hours"/></li>
+	</logic:notEqual>
+	<logic:notEqual name="executionCourse" property="theoPratHours" value="0">
+		<li><bean:message key="property.executionCourse.theoreticalPracticalHours"/>: <bean:write name="executionCourse" property="theoPratHours" /> <bean:message key="label.hours"/></li>
+	</logic:notEqual>
+	<logic:notEqual name="executionCourse" property="labHours" value="0">	
+		<li><bean:message key="property.executionCourse.labHours"/>: <bean:write name="executionCourse" property="labHours" /> <bean:message key="label.hours"/></li>
+	</logic:notEqual>
+	<logic:notEqual name="executionCourse" property="seminaryHours" value="0">
+		<li><bean:message key="property.executionCourse.seminaryHours"/>: <bean:write name="executionCourse" property="seminaryHours" /> <bean:message key="label.hours"/></li>
+	</logic:notEqual>
+	<logic:notEqual name="executionCourse" property="problemsHours" value="0">
+		<li><bean:message key="property.executionCourse.problemsHours"/>: <bean:write name="executionCourse" property="problemsHours" /> <bean:message key="label.hours"/></li>
+	</logic:notEqual>
+	<logic:notEqual name="executionCourse" property="fieldWorkHours" value="0">
+		<li><bean:message key="property.executionCourse.fieldWorkHours"/>: <bean:write name="executionCourse" property="fieldWorkHours" /> <bean:message key="label.hours"/></li>
+	</logic:notEqual>
+	<logic:notEqual name="executionCourse" property="trainingPeriodHours" value="0">
+		<li><bean:message key="property.executionCourse.trainingPeriodHours"/>: <bean:write name="executionCourse" property="trainingPeriodHours" /> <bean:message key="label.hours"/></li>
+	</logic:notEqual>
+	<logic:notEqual name="executionCourse" property="tutorialOrientationHours" value="0">
+		<li><bean:message key="property.executionCourse.tutorialOrientationHours"/>: <bean:write name="executionCourse" property="tutorialOrientationHours" /> <bean:message key="label.hours"/></li>
+	</logic:notEqual>
+</ul>
+
+
+
+<%--
 <table class="tab_simple" cellspacing="0" cellpadding="2">
 	<tr>
 		<th colspan="9"><bean:message key="label.hoursPerWeek"/></th>
 	</tr>
 	<tr>
-		<td class="subheader" width="100"><bean:message key="property.executionCourse.theoreticalHours"/></td>
-		<td class="subheader" width="100"><bean:message key="property.executionCourse.practicalHours"/></td>
-		<td class="subheader" width="100"><bean:message key="property.executionCourse.theoreticalPracticalHours"/></td>
-		<td class="subheader" width="100"><bean:message key="property.executionCourse.labHours"/></td>
-		<td class="subheader" width="100"><bean:message key="property.executionCourse.seminaryHours"/></td>
-		<td class="subheader" width="100"><bean:message key="property.executionCourse.problemsHours"/></td>
-		<td class="subheader" width="100"><bean:message key="property.executionCourse.fieldWorkHours"/></td>
-		<td class="subheader" width="100"><bean:message key="property.executionCourse.trainingPeriodHours"/></td>
-		<td class="subheader" width="100"><bean:message key="property.executionCourse.tutorialOrientationHours"/></td>
+		<logic:notEqual name="executionCourse" property="theoreticalHours" value="0">	
+			<li><bean:message key="property.executionCourse.theoreticalHours"/></li>
+		</logic:notEqual>
+		<logic:notEqual name="executionCourse" property="praticalHours" value="0">
+			<li><bean:message key="property.executionCourse.practicalHours"/></li>
+		</logic:notEqual>
+		<logic:notEqual name="executionCourse" property="theoPratHours" value="0">
+			<li><bean:message key="property.executionCourse.theoreticalPracticalHours"/></li>
+		</logic:notEqual>
+		<logic:notEqual name="executionCourse" property="labHours" value="0">	
+			<li><bean:message key="property.executionCourse.labHours"/></li>
+		</logic:notEqual>
+		<logic:notEqual name="executionCourse" property="seminaryHours" value="0">
+			<li><bean:message key="property.executionCourse.seminaryHours"/></li>
+		</logic:notEqual>
+		<logic:notEqual name="executionCourse" property="problemsHours" value="0">
+			<li><bean:message key="property.executionCourse.problemsHours"/></li>
+		</logic:notEqual>
+		<logic:notEqual name="executionCourse" property="fieldWorkHours" value="0">
+			<li><bean:message key="property.executionCourse.fieldWorkHours"/></li>
+		</logic:notEqual>
+		<logic:notEqual name="executionCourse" property="trainingPeriodHours" value="0">
+			<li><bean:message key="property.executionCourse.trainingPeriodHours"/></li>
+		</logic:notEqual>
+		<logic:notEqual name="executionCourse" property="tutorialOrientationHours" value="0">
+			<li><bean:message key="property.executionCourse.tutorialOrientationHours"/></li>
+		</logic:notEqual>
 	</tr>
 	<tr>
-		<td>
-			<logic:notEqual name="executionCourse" property="theoreticalHours" value="0">
+		<logic:notEqual name="executionCourse" property="theoreticalHours" value="0">
+			<td>
 				<bean:write name="executionCourse" property="theoreticalHours" />
-			</logic:notEqual>
-			<logic:equal name="executionCourse" property="theoreticalHours" value="0">
-				<bean:message key="label.number0.0" />
-			</logic:equal>
-		</td>	
+			</li>
+		</logic:notEqual>
 			
-		<td>
-			<logic:notEqual name="executionCourse" property="praticalHours" value="0">
+		<logic:notEqual name="executionCourse" property="praticalHours" value="0">
+			<td>
 				<bean:write name="executionCourse" property="praticalHours" />
-			</logic:notEqual>
-			<logic:equal name="executionCourse" property="praticalHours" value="0">
-				<bean:message key="label.number0.0" />
-			</logic:equal>
-		</td>
+			</li>
+		</logic:notEqual>
 
-		<td>
-			<logic:notEqual name="executionCourse" property="theoPratHours" value="0">
+		<logic:notEqual name="executionCourse" property="theoPratHours" value="0">
+			<td>
 				<bean:write name="executionCourse" property="theoPratHours" />
-			</logic:notEqual>
-			<logic:equal name="executionCourse" property="theoPratHours" value="0">
-				<bean:message key="label.number0.0" />
-			</logic:equal>
-		</td>
+			</li>
+		</logic:notEqual>
 
-		<td>
-			<logic:notEqual name="executionCourse" property="labHours" value="0">
+		<logic:notEqual name="executionCourse" property="labHours" value="0">
+			<td>
 				<bean:write name="executionCourse" property="labHours" />
-			</logic:notEqual>
-			<logic:equal name="executionCourse" property="labHours" value="0">
-				<bean:message key="label.number0.0" />
-			</logic:equal>
-		</td>
+			</li>
+		</logic:notEqual>
 
-		<td>
-			<logic:notEqual name="executionCourse" property="seminaryHours" value="0">
+		<logic:notEqual name="executionCourse" property="seminaryHours" value="0">
+			<td>
 				<bean:write name="executionCourse" property="seminaryHours" />
-			</logic:notEqual>
-			<logic:equal name="executionCourse" property="seminaryHours" value="0">
-				<bean:message key="label.number0.0" />
-			</logic:equal>
-		</td>
-		<td>
-			<logic:notEqual name="executionCourse" property="problemsHours" value="0">
+			</li>
+		</logic:notEqual>
+
+		<logic:notEqual name="executionCourse" property="problemsHours" value="0">
+			<td>
 				<bean:write name="executionCourse" property="problemsHours" />
-			</logic:notEqual>
-			<logic:equal name="executionCourse" property="problemsHours" value="0">
-				<bean:message key="label.number0.0" />
-			</logic:equal>
-		</td>
-		<td>
-			<logic:notEqual name="executionCourse" property="fieldWorkHours" value="0">
+			</li>
+		</logic:notEqual>
+
+		<logic:notEqual name="executionCourse" property="fieldWorkHours" value="0">
+			<td>
 				<bean:write name="executionCourse" property="fieldWorkHours" />
-			</logic:notEqual>
-			<logic:equal name="executionCourse" property="fieldWorkHours" value="0">
-				<bean:message key="label.number0.0" />
-			</logic:equal>
-		</td>
-		<td>
-			<logic:notEqual name="executionCourse" property="trainingPeriodHours" value="0">
+			</li>
+		</logic:notEqual>
+
+		<logic:notEqual name="executionCourse" property="trainingPeriodHours" value="0">
+			<td>
 				<bean:write name="executionCourse" property="trainingPeriodHours" />
-			</logic:notEqual>
-			<logic:equal name="executionCourse" property="trainingPeriodHours" value="0">
-				<bean:message key="label.number0.0" />
-			</logic:equal>
-		</td>
-		<td>
-			<logic:notEqual name="executionCourse" property="tutorialOrientationHours" value="0">
+			</li>
+		</logic:notEqual>
+
+		<logic:notEqual name="executionCourse" property="tutorialOrientationHours" value="0">
+			<td>
 				<bean:write name="executionCourse" property="tutorialOrientationHours" />
-			</logic:notEqual>
-			<logic:equal name="executionCourse" property="tutorialOrientationHours" value="0">
-				<bean:message key="label.number0.0" />
-			</logic:equal>
-		</td>
+			</li>
+		</logic:notEqual>
 
 	</tr>
 </table>
+--%>
+
 
 <app:gerarHorario name="infoLessons" type="<%= TimeTableType.EXECUTION_COURSE_TIMETABLE %>"/>

@@ -36,7 +36,7 @@
 			<h4 class="mbottom05 greytxt">
 				<bean:message key="title.program"/>
 			</h4>
-			<div class="mtop05" style="line-height: 1.5em;">
+			<div class="mtop05 coutput2" style="line-height: 1.5em;">
 				<fr:view name="competenceCourse" property="programI18N" layout="html"/>
 			</div>
 	</logic:equal>
@@ -61,7 +61,7 @@
 						<h4 class="mbottom05 greytxt">
 							<bean:message key="title.program"/>
 						</h4>
-						<div class="mtop05" style="line-height: 1.5em;">
+						<div class="mtop05 coutput2" style="line-height: 1.5em;">
 						<fr:view name="curriculum" property="programI18N">
 							<fr:layout>
 								<fr:property name="escaped" value="false" />

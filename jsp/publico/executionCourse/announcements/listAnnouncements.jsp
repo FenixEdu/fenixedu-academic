@@ -7,6 +7,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/messaging.tld" prefix="messaging" %>
 
+<h2>Anúncios</h2>
+
 <%
 net.sourceforge.fenixedu.domain.Person person = (net.sourceforge.fenixedu.domain.Person) request.getAttribute("person");
 String contextPrefix = (String) request.getAttribute("contextPrefix");
@@ -28,26 +30,6 @@ if (month != null && year!=null)
 }
 %>
 
-<style>
-div.announcement {
-width: 500px;
-/*border-top: 1px dotted #ccc;*/
-padding-top: 0.5em;
-background: url(../images/ann_sep.gif) top left repeat-x;
-}
-div.announcement div.ann_body div, div.announcement div.ann_body p {
-margin: 0;
-padding: 0;
-}
-div.announcement div.ann_body br {
-margin: -4px 0;
-padding: 0;
-}
-
-div.announcement h3 a { text-decoration: none; }
-.greytxt2 { color: #999; }
-.ann_body { }
-</style>
 
 <logic:present name="announcements">
 

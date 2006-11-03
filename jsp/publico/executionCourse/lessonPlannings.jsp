@@ -17,11 +17,12 @@
 		</logic:notEmpty>
 
 		<logic:iterate id="lessonPlanning" name="lessonPlannings" property="value" indexId="index">
-			<p class="mbottom0"><em><bean:message key="label.lesson"/> <bean:write name="lessonPlanning" property="orderOfPlanning"/></em></p>
+			<p class="mtop15 mbottom0"><em><bean:message key="label.lesson"/> <bean:write name="lessonPlanning" property="orderOfPlanning"/></em></p>
 			
 			<div style="line-height: 1.5em;">
 			<fr:view name="lessonPlanning" schema="ViewLessonPlanning">
 				<fr:layout name="flow">
+					<fr:property name="classes" value="coutput2"/>
 					<fr:property name="labelTerminator" value=""/>
 					<fr:property name="labelExcluded" value="true"/>
 					<fr:property name="eachClasses" value="bold," />

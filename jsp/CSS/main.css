@@ -24,7 +24,7 @@ h3.arrow_bullet { padding-left: 1.4em; background: url(../images/icon_arrow.gif)
 ***********************************************************/
 
 div.announcement {
-width: 500px;
+/*width: 500px;*/
 padding-top: 0.5em;
 background: url(../images/ann_sep.gif) top left repeat-x;
 }
@@ -39,19 +39,6 @@ padding: 0;
 
 div.announcement h3 a { text-decoration: none; }
 .greytxt2 { color: #999; }
-
-/***********************************************************
-	Execution Course - Sections
-***********************************************************/
-
-.coutput div, .coutput p {
-margin: 0.5em 0;
-padding: 0;
-}
-.coutput blockquote {
-margin-top: 0.5em;
-margin-bottom: 0.5em;
-}
 
 /***********************************************************
 	General
@@ -89,3 +76,35 @@ table.thright th { text-align: right; }
 table.thleft th { text-align: left; }
 
 .bold { font-weight: bold; }
+
+/* content output margin reset 1 */
+.coutput1 div, .coutput1 p {
+margin: 0;
+padding: 0;
+}
+.coutput1 blockquote {
+margin-top: 0.25em;
+margin-bottom: 0.25em;
+}
+
+/* content output margin reset 2 */
+.coutput2 div, .coutput2 p {
+margin: 0.25em 0;
+padding: 0.25em 0;
+}
+.coutput2 blockquote {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}
+
+
+.coutput2 ul {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}
+.coutput2 ul li {
+margin-top: 0;
+margin-bottom: 0;
+padding-top: 0.15em;
+padding-bottom: 0.15em;
+}
