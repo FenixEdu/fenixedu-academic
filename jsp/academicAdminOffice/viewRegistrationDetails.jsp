@@ -86,70 +86,111 @@
 
 <%-- 
 <br/>
-<h2><strong><bean:message key="documentRequests" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<h2><strong><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 <p>
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.createDocumentRequest"/>:
 	<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.createDocumentRequest"/>
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.document"/>
 	</html:link>	
 </p>
 <p>
-	<html:link action="/documentRequestsManagement.do?method=viewRegistrationDocumentRequestsHistoric" paramId="registrationID" paramName="registration" paramProperty="idInternal">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="view.historic"/>
+	<html:link action="/academicServiceRequestsManagement.do?method=viewRegistrationAcademicServiceRequestsHistoric" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="requests.historic"/>
 	</html:link>	
 </p>
-
 <p>
-	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.document.requests"/>
-	<bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
-	<bean:define id="newDocumentRequests" name="registration" property="newDocumentRequests"/>
-	<logic:notEmpty name="newDocumentRequests">
-
-		<html:form action="<%= "/documentRequestsManagement.do?registrationID=" + registration.getIdInternal()%>">
-			<html:hidden property="method"/>
-			
-			<fr:view name="newDocumentRequests" schema="DocumentRequest.for-given-registration">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thlight thcenter" />
-					<fr:property name="checkable" value="true" />
-					<fr:property name="checkboxName" value="documentIdsToProcess" />
-					<fr:property name="checkboxValue" value="idInternal" />		
-					<fr:property name="sortBy" value="urgentRequest=desc,creationDate=desc"/>
-				</fr:layout>
-			</fr:view>
-			<html:submit onclick="this.form.method.value='processNewDocuments';" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.process" /></html:submit>
-		</html:form>
+	<b><bean:message key="new.requests" bundle="ACADEMIC_OFFICE_RESOURCES"/></b>
+	<bean:define id="newAcademicServiceRequests" name="registration" property="newAcademicServiceRequests"/>
+	<logic:notEmpty name="newAcademicServiceRequests">
+		<fr:view name="newAcademicServiceRequests" schema="AcademicServiceRequest.view-for-given-registration">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thlight thright" />
+				
+				<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
+				<fr:property name="key(cancel)" value="cancel"/>
+		
+				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
+				<fr:property name="key(reject)" value="reject"/>
+		
+				<fr:property name="linkFormat(processing)" value="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&academicServiceRequestId=${idInternal}"/>
+				<fr:property name="key(processing)" value="processing"/>
+		
+				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${idInternal}&backAction=student&backMethod=visualizeRegistration"/>
+				<fr:property name="key(view)" value="view"/>
+		
+				<fr:property name="sortBy" value="creationDate=desc, urgentRequest=desc, description=asc"/>
+			</fr:layout>
+		</fr:view>
 	</logic:notEmpty>
-	<logic:empty name="newDocumentRequests">
+	<logic:empty name="newAcademicServiceRequests">
 		<p>
 			<span class="warning0">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.noNewDocumentRequest"/>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="no.new.academic.service.requests"/>
 			</span>
 		</p>
 	</logic:empty>
 </p>
-
 <p>
-	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.document.requests"/>
-	<bean:define id="processingDocumentRequests" name="registration" property="processingDocumentRequests"/>
-	<logic:notEmpty name="processingDocumentRequests">
-		<fr:view name="processingDocumentRequests" schema="DocumentRequest.summary-view-by-student">
+	<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests"/></b>
+	<bean:define id="processingAcademicServiceRequests" name="registration" property="processingAcademicServiceRequests"/>
+	<logic:notEmpty name="processingAcademicServiceRequests">
+		<fr:view name="processingAcademicServiceRequests" schema="AcademicServiceRequest.view-for-given-registration">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thright" />
 				
-				<fr:property name="linkFormat(edit)" value="/documentRequestsManagement.do?method=prepareEditDocumentRequest&documentRequestId=${idInternal}"/>
-				<fr:property name="key(edit)" value="edit"/>
+				<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
+				<fr:property name="key(cancel)" value="cancel"/>
 		
-				<fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=printDocument&documentRequestId=${idInternal}"/>
-				<fr:property name="key(print)" value="print"/>
+				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
+				<fr:property name="key(reject)" value="reject"/>
 		
-				<fr:property name="sortBy" value="creationDate=desc, documentRequestType=asc, urgentRequest=desc"/>
+				<fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&academicServiceRequestId=${idInternal}"/>
+				<fr:property name="key(conclude)" value="conclude"/>
+		
+				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${idInternal}&backAction=student&backMethod=visualizeRegistration"/>
+				<fr:property name="key(view)" value="view"/>
+		
+				<fr:property name="sortBy" value="creationDate=desc, urgentRequest=desc, description=asc"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
-	<logic:empty name="processingDocumentRequests">
+	<logic:empty name="processingAcademicServiceRequests">
 		<p>
 			<span class="warning0">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.noProcessingDocumentRequest"/>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="no.processing.academic.service.requests"/>
+			</span>
+		</p>
+	</logic:empty>
+</p>
+<p>
+	<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests"/></b>
+	<bean:define id="concludedAcademicServiceRequests" name="registration" property="concludedAcademicServiceRequests"/>
+	<logic:notEmpty name="concludedAcademicServiceRequests">
+		<fr:view name="concludedAcademicServiceRequests" schema="AcademicServiceRequest.view-for-given-registration">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thlight thright" />
+				
+				<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
+				<fr:property name="key(cancel)" value="cancel"/>
+		
+				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
+				<fr:property name="key(reject)" value="reject"/>
+		
+				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliverAcademicServiceRequest&academicServiceRequestId=${idInternal}"/>
+				<fr:property name="key(deliver)" value="deliver"/>
+		
+				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${idInternal}&backAction=student&backMethod=visualizeRegistration"/>
+				<fr:property name="key(view)" value="view"/>
+		
+				<fr:property name="sortBy" value="creationDate=desc, urgentRequest=desc, description=asc"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+	<logic:empty name="concludedAcademicServiceRequests">
+		<p>
+			<span class="warning0">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="no.concluded.academic.service.requests"/>
 			</span>
 		</p>
 	</logic:empty>
