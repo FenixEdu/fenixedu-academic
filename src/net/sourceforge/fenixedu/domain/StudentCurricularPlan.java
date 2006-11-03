@@ -1462,56 +1462,80 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return hasAnyEnrolmentForExecutionYear(executionYear);
     }
 
-    public Collection<DocumentRequest> getDocumentRequests() {
-	Set<DocumentRequest> result = new HashSet<DocumentRequest>();
+    // begin ACADEMIC SERVICE REQUESTS
+    
+    public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
+	    final Class<AcademicServiceRequest> clazz,
+	    final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 
 	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if (academicServiceRequest instanceof DocumentRequest) {
+	    if ((clazz != null && academicServiceRequest.getClass().equals(clazz))
+		    && ((academicServiceRequestSituationType == null && academicServiceRequest
+			    .isNewRequest()) || academicServiceRequest
+			    .getAcademicServiceRequestSituationType() == academicServiceRequestSituationType)) {
+		result.add(academicServiceRequest);
+	    }
+	}
+
+	return result;
+    }
+
+    public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
+	    final Class<? extends AcademicServiceRequest> clazz) {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if (clazz != null && academicServiceRequest.getClass().equals(clazz)) {
+		result.add(academicServiceRequest);
+	    }
+	}
+
+	return result;
+    }
+
+    public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
+	    final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if ((academicServiceRequestSituationType == null && academicServiceRequest.isNewRequest())
+		    || academicServiceRequest.getAcademicServiceRequestSituationType() == academicServiceRequestSituationType) {
 		result.add((DocumentRequest) academicServiceRequest);
 	    }
 	}
 
 	return result;
     }
-    
-    public Collection<DocumentRequest> getDocumentRequests(final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-	Set<DocumentRequest> result = new HashSet<DocumentRequest>();
+
+    public Collection<AcademicServiceRequest> getNewAcademicServiceRequests() {
+	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests((AcademicServiceRequestSituationType) null);
+    }
+
+    public Collection<AcademicServiceRequest> getProcessingAcademicServiceRequests() {
+	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests(AcademicServiceRequestSituationType.PROCESSING);
+    }
+
+    public Collection<AcademicServiceRequest> getConcludedAcademicServiceRequests() {
+	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests(AcademicServiceRequestSituationType.CONCLUDED);
+    }
+
+    public Collection<AcademicServiceRequest> getHistoricalAcademicServiceRequests() {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 
 	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if (academicServiceRequest instanceof DocumentRequest) {
-		if (academicServiceRequestSituationType == null && academicServiceRequest.isNewRequest()) {
-		    result.add((DocumentRequest) academicServiceRequest);    
-		} else if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING && academicServiceRequest.isProcessing()) {
-		    result.add((DocumentRequest) academicServiceRequest);
-		}
+	    if (academicServiceRequest.isHistorical()) {
+		result.add(academicServiceRequest);
 	    }
 	}
 
 	return result;
     }
-    
-    public Collection<? extends DocumentRequest> getNewDocumentRequests() {
-	return getDocumentRequests(null);
-    }
-    
-    public Collection<? extends DocumentRequest> getProcessingDocumentRequests() {
-	return getDocumentRequests(AcademicServiceRequestSituationType.PROCESSING);
-    }
-    
-    public Collection<DocumentRequest> getHistoricalDocumentRequests() {
-	Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
-	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if (academicServiceRequest instanceof DocumentRequest) {
-		if (academicServiceRequest.isHistorical()) {
-		    result.add((DocumentRequest) academicServiceRequest);    
-		}
-	    }
-	}
-
-	return result;
+    public Collection<DocumentRequest> getDocumentRequests() {
+	return (Collection<DocumentRequest>) getAcademicServiceRequests(DocumentRequest.class);
     }
-    
+
     public boolean hasDegreeDiplomaRequest() {
 	for (final DocumentRequest documentRequest : this.getDocumentRequests()) {
 	    if (documentRequest.isDegreeDiploma()) {
@@ -1521,7 +1545,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	
 	return false;
     }
-
+    
     public Set<DocumentRequest> getSucessfullyFinishedDocumentRequestsBy(ExecutionYear executionYear,
 	    DocumentRequestType documentRequestType) {
 
@@ -1541,6 +1565,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
+    // end ACADEMIC SERVICE REQUESTS
+    
     public Collection<Enrolment> getSpecialSeasonToEnrol(ExecutionYear executionYear) {
 	Map<CurricularCourse, Enrolment> result = new HashMap<CurricularCourse, Enrolment>();
 

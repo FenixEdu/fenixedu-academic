@@ -61,6 +61,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -704,41 +705,63 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    // begin ACADEMIC SERVICE REQUESTS 
+    
+    public Collection<AcademicServiceRequest> getAcademicServiceRequests() {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.addAll(studentCurricularPlan.getAcademicServiceRequests());
+	}
+
+	return result;
+    }
+
+    public Collection<AcademicServiceRequest> getNewAcademicServiceRequests() {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.addAll(studentCurricularPlan.getNewAcademicServiceRequests());
+	}
+
+	return result;
+    }
+
+    public Collection<AcademicServiceRequest> getProcessingAcademicServiceRequests() {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.addAll(studentCurricularPlan.getProcessingAcademicServiceRequests());
+	}
+
+	return result;
+    }
+
+    public Collection<AcademicServiceRequest> getConcludedAcademicServiceRequests() {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.addAll(studentCurricularPlan.getConcludedAcademicServiceRequests());
+	}
+
+	return result;
+    }
+
+    public Collection<AcademicServiceRequest> getHistoricalAcademicServiceRequests() {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.addAll(studentCurricularPlan.getHistoricalAcademicServiceRequests());
+	}
+
+	return result;
+    }
+
     public Collection<DocumentRequest> getDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    result.addAll(studentCurricularPlan.getDocumentRequests());
-	}
-
-	return result;
-    }
-
-    public Collection<DocumentRequest> getNewDocumentRequests() {
-	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
-
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    result.addAll(studentCurricularPlan.getNewDocumentRequests());
-	}
-
-	return result;
-    }
-
-    public Collection<DocumentRequest> getProcessingDocumentRequests() {
-	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
-
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    result.addAll(studentCurricularPlan.getProcessingDocumentRequests());
-	}
-
-	return result;
-    }
-
-    public Collection<DocumentRequest> getHistoricalDocumentRequests() {
-	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
-
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    result.addAll(studentCurricularPlan.getHistoricalDocumentRequests());
 	}
 
 	return result;
@@ -754,6 +777,8 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    // end ACADEMIC SERVICE REQUESTS
+    
     // Special Season
 
     public SpecialSeasonCode getSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {

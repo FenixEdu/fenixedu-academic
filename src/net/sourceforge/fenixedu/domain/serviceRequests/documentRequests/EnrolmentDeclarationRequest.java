@@ -22,7 +22,7 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
     }
 
     @Override
-    public void checkConditions() throws DomainException {
+    protected void assertProcessingStatePreConditions() throws DomainException {
 	// TODO Auto-generated method stub
 	
     }

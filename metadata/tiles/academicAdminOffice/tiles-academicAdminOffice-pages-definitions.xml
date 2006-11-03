@@ -44,11 +44,24 @@
         <put name="body" value="/academicAdminOffice/manageEnrolmentModel.jsp"></put>
     </definition>      
     
-	<!-- ************* Document Requests Management ************* -->
-	<definition name="documentRequests.management.viewRegistrationDocumentRequestsHistoric" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewRegistrationDocumentRequestsHistoric.jsp"/>
+	<!-- ************* Academic Service Requests Management ************* -->
+	<definition name="academicServiceRequests.management.viewRegistrationAcademicServiceRequestsHistoric" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/viewRegistrationAcademicServiceRequestsHistoric.jsp"/>
 	</definition>
 
+	<definition name="academicServiceRequests.management.viewAcademicServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/viewAcademicServiceRequest.jsp"/>
+	</definition>
+	
+	<definition name="academicServiceRequests.management.prepareRejectAcademicServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/prepareRejectAcademicServiceRequest.jsp"/>
+	</definition>
+
+	<definition name="academicServiceRequests.management.prepareCancelAcademicServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/prepareCancelAcademicServiceRequest.jsp"/>
+	</definition>
+
+	<!-- ************* Document Requests Management ************* -->
 	<definition name="documentRequests.management.printDocument" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"/>
 	</definition>
@@ -65,10 +78,6 @@
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/showDocumentRequests.jsp"/>
 	</definition>
 
-	<definition name="documentRequests.management.viewDocumentRequest" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequest.jsp"/>
-	</definition>
-	
 	<definition name="documentRequests.management.editDocumentRequest" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/editDocumentRequest.jsp"/>
 	</definition>	

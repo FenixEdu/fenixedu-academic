@@ -66,7 +66,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     @Override
-    public void checkConditions() throws DomainException {
+    protected void assertProcessingStatePreConditions() throws DomainException {
 	if (!getRegistration().hasDegreeDiplomaDocumentRequest()) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutDegreeDiplomaDocumentRequest");
 	}

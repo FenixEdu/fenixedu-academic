@@ -67,7 +67,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     }
 
     @Override
-    public void checkConditions() throws DomainException {
+    protected void assertProcessingStatePreConditions() throws DomainException {
 	// TODO Auto-generated method stub
 	
     }

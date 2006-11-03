@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
@@ -75,30 +76,43 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     public abstract Set<AdministrativeOfficeType> getPossibleAdministrativeOffices();
     
     /**
-     * Each AcademicServiceRequest must verify the conditions necessary for it to be concluded and
+     * Each AcademicServiceRequest must verify the conditions necessary for it to begin processing and
      * throw DomainExceptions if otherwise
      * 
      * @throws DomainException
      */
-    public abstract void checkConditions() throws DomainException;
+    protected abstract void assertProcessingStatePreConditions() throws DomainException;
     
     final public void process() throws DomainException {
-	checkConditions();
+	assertProcessingStatePreConditions();
 	
 	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.PROCESSING, employee, null);
     }
     
-    final public void conclude() throws DomainException {
-	checkConditions();
+    final public void reject(final String justification) {
+	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	edit(AcademicServiceRequestSituationType.REJECTED, employee, justification);
+    }
+    
+    final public void cancel(final String justification) {
+	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	edit(AcademicServiceRequestSituationType.CANCELLED, employee, justification);
+    }
+    
+    /**
+     * Each AcademicServiceRequest must verify the conditions necessary for it to begin processing and
+     * throw DomainExceptions if otherwise
+     * 
+     * @throws DomainException
+     */
+    protected abstract void assertConcludedStatePreConditions() throws DomainException;
+    
+    final public void conclude() {
+	assertConcludedStatePreConditions();
 	
 	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.CONCLUDED, employee, null);
-    }
-    
-    final public void reject(final String justification) throws DomainException {
-	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
-	edit(AcademicServiceRequestSituationType.REJECTED, employee, justification);
     }
     
     @Override
@@ -292,6 +306,10 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     public boolean finishedSuccessfully() {
 	return (isConcluded() || isDelivered());
+    }
+    
+    public boolean isDocumentRequest() {
+	return this instanceof DocumentRequest;
     }
     
 }

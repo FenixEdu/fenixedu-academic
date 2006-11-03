@@ -20,6 +20,18 @@
 			<form-property name="organizedByGroups" type="java.lang.Boolean" initial="false"/>			
 		</form-bean>	
 
+		<!-- Student Management -->	    
+   		<form-bean name="studentManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="registrationID" type="java.lang.Integer" />
+	    </form-bean>
+
+		<!-- Academic Service Requests Management -->	    
+   		<form-bean name="academicServiceRequestsManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="justification" type="java.lang.String" />
+			<form-property name="numberOfPages" type="java.lang.Integer" />
+	    </form-bean>
+
 		<!-- Document Requests Management -->	    
    		<form-bean name="documentRequestsManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String" />
@@ -78,6 +90,7 @@
 		</action>       
 
 		<action path="/student"
+				name="studentManagementForm"
 				scope="request"		
 		        parameter="method"
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA">
@@ -118,24 +131,35 @@
 			<forward name="viewCurriculum" path="/viewCurriculum.do?method=getCurriculum"/>
 		</action>        
 		
+		<!-- Academic Service Requests Management -->
+		<action path="/academicServiceRequestsManagement"
+				name="academicServiceRequestsManagementForm"
+		     	parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.AcademicServiceRequestsManagementDispatchAction"
+				scope="request">
+				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>				
+				<forward name="viewRegistrationAcademicServiceRequestsHistoric" path="academicServiceRequests.management.viewRegistrationAcademicServiceRequestsHistoric"/>
+				<forward name="viewAcademicServiceRequest" path="academicServiceRequests.management.viewAcademicServiceRequest"/>
+				<forward name="prepareRejectAcademicServiceRequest" path="academicServiceRequests.management.prepareRejectAcademicServiceRequest"/>
+				<forward name="prepareCancelAcademicServiceRequest" path="academicServiceRequests.management.prepareCancelAcademicServiceRequest"/>
+				<forward name="prepareConcludeDocumentRequest" path="/documentRequestsManagement.do?method=prepareConcludeDocumentRequest"/>
+		</action>
+
 		<!-- Document Requests Management -->
 		<action path="/documentRequestsManagement"
 				name="documentRequestsManagementForm"
 		     	parameter="method"
 		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests.DocumentRequestsManagementDispatchAction"
 				scope="request">
-				<forward name="viewRegistrationDocumentRequestsHistoric" path="documentRequests.management.viewRegistrationDocumentRequestsHistoric"/>
-				<forward name="printDocument" path="documentRequests.management.printDocument"/>
 				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
-				<forward name="viewNewDocumentRequests" path="documentRequests.management.viewNewDocumentRequests"/>
+				<forward name="prepareCreateDocumentRequest" path="documentRequests.management.prepareCreateDocumentRequest"/>
+				<forward name="chooseStudentToCreateDocumentRequest" path="documentRequests.management.chooseStudentToCreateDocumentRequest"/>
+				<forward name="createDocumentRequests" path="documentRequests.management.createDocumentRequests"/>				
+				<forward name="confirmCreateDocumentRequest" path="documentRequests.management.confirmCreateDocumentRequest"/>
+				<forward name="printDocument" path="documentRequests.management.printDocument"/>
 				<forward name="prepareSearch" path="documentRequests.management.prepareSearch"/>
 				<forward name="showDocumentRequests" path="documentRequests.management.showDocumentRequests"/>
-				<forward name="viewDocumentRequest" path="documentRequests.management.viewDocumentRequest"/>
 				<forward name="editDocumentRequest" path="documentRequests.management.editDocumentRequest"/>
-				<forward name="prepareCreateDocumentRequest" path="documentRequests.management.prepareCreateDocumentRequest"/>
-				<forward name="createDocumentRequests" path="documentRequests.management.createDocumentRequests"/>				
-				<forward name="chooseStudentToCreateDocumentRequest" path="documentRequests.management.chooseStudentToCreateDocumentRequest"/>				
-				<forward name="confirmCreateDocumentRequest" path="documentRequests.management.confirmCreateDocumentRequest"/>				
 		</action>
 	
     </action-mappings>

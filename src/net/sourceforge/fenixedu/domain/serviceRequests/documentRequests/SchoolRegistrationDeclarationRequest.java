@@ -22,7 +22,7 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
     }
 
     @Override
-    public void checkConditions() throws DomainException {
+    protected void assertProcessingStatePreConditions() throws DomainException {
 	// TODO Auto-generated method stub
 	
     }

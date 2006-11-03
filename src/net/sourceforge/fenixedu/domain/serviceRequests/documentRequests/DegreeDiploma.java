@@ -27,7 +27,11 @@ public class DegreeDiploma extends DegreeDiploma_Base {
     }
 
     @Override
-    public void checkConditions() throws DomainException {
+    protected void assertProcessingStatePreConditions() throws DomainException {
+    }
+
+    @Override
+    public void assertConcludedStatePreConditions() throws DomainException {
     }
 
     @Override

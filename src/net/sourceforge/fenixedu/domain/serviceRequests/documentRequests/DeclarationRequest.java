@@ -83,16 +83,18 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
                 "error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.otherDocumentTypeDescription");
     }
 
-    @Override
-    public void setNumberOfPages(Integer numberOfPages) {
-        throw new DomainException(
-                "error.serviceRequests.documentRequests.enclosing_type.cannot.modify.numberOfPages");
-    }
-
     public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
             Employee employee, String justification, Integer numberOfPages) {
         super.edit(academicServiceRequestSituationType, employee, justification);
         super.setNumberOfPages(numberOfPages);
+    }
+
+    @Override
+    public void assertConcludedStatePreConditions() throws DomainException {
+	if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
+	    throw new DomainException(
+            	"error.serviceRequests.documentRequests.numberOfPages.must.be.set");
+	}
     }
 
 }

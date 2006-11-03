@@ -1,13 +1,21 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<html:xhtml/>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="document.print" /></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="cancel.request" /></h2>
 
 <hr style="margin-bottom: 2em;"/>
+
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<p>
+		<span class="error0"><!-- Error messages go here -->
+			<bean:write name="message" />
+		</span>
+	</p>
+</html:messages>
 
 <strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="request.information"/></strong>
 <bean:define id="academicServiceRequest" name="academicServiceRequest" scope="request" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest"/>
@@ -31,37 +39,31 @@
 	</fr:view>
 </logic:present>
 
-<logic:messagesNotPresent message="true">
-	<p>
-		<html:link page="/documentRequestsManagement.do?method=printDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="idInternal">
-			<bean:message key="print" bundle="APPLICATION_RESOURCES"/>
-		</html:link>
-	</p>
-</logic:messagesNotPresent>
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<p>
-		<span class="warning0">
-			<bean:write name="message" />
-		</span>
-	</p>
-</html:messages>
-
 <p>
-	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="documentRequest.confirmDocumentSuccessfulPrinting"/></strong>
+	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="confirm.cancel"/></strong>
 	<table>
 		<tr>
 			<th class="listClasses">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="number.of.pages.printed"/>:
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="justification"/>:
 			</th>
 			<td>
-				<html:form action="<%="/academicServiceRequestsManagement.do?method=concludeAcademicServiceRequest&academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>">
-				<html:text property="numberOfPages" size="3"/>
+				<html:form action="<%="/academicServiceRequestsManagement.do?method=cancelAcademicServiceRequest&academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>">
+				<logic:present name="failingCondition" scope="request">
+					<bean:define id="failingCondition" name="failingCondition" scope="request"/>
+					<bean:define id="justification">
+						<bean:message key="<%=failingCondition.toString()%>" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+					</bean:define>
+					<html:textarea property="justification" value="<%=justification%>" cols="65" rows="5"/>
+				</logic:present>
+				<logic:notPresent name="failingCondition" scope="request">
+					<html:textarea property="justification" cols="65" rows="5"/>
+				</logic:notPresent>
 			</td>
 		</tr>
 		<tr>
-			<td style="text-align: center;">
-				<html:submit styleClass="inputbutton"><bean:message key="conclude" bundle="APPLICATION_RESOURCES"/></html:submit>
-				</html:form>		
+			<td>
+				<html:submit styleClass="inputbutton"><bean:message key="button.confirm" bundle="APPLICATION_RESOURCES"/></html:submit>		
+				</html:form>
 			</td>
 			<td>
 				<html:form action="<%="/student.do?method=visualizeRegistration&registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>">

@@ -103,12 +103,6 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     }
 
     @Override
-    public void setNumberOfPages(Integer numberOfPages) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.enclosing_type.cannot.modify.numberOfPages");
-    }
-
-    @Override
     public void setUrgentRequest(Boolean urgentRequest) {
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.urgentRequest");
@@ -155,6 +149,14 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     protected boolean isFirstRequestFromExecutionYear() {
 	return getStudentCurricularPlan().getSucessfullyFinishedDocumentRequestsBy(
 		ExecutionYear.readCurrentExecutionYear(), getDocumentRequestType()).isEmpty();
+    }
+
+    @Override
+    public void assertConcludedStatePreConditions() throws DomainException {
+	if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
+	    throw new DomainException(
+            	"error.serviceRequests.documentRequests.numberOfPages.must.be.set");
+	}
     }
 
 }

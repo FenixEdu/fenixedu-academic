@@ -1,7 +1,14 @@
 <schema name="AcademicServiceRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
 	<slot name="creationDate" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.creationDate"/>
+	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
 	<slot name="registration.number" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.studentNumber" />
 	<slot name="registration.person.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.person.name"/>
+	<slot name="urgentRequest" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>
+</schema>
+
+<schema name="AcademicServiceRequest.view-for-given-registration" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
+	<remove name="registration.number" />
+	<remove name="registration.person.name" />
 </schema>
 
 <schema name="AcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation"  bundle="APPLICATION_RESOURCES">
@@ -13,21 +20,12 @@
 
 
 <schema name="DocumentRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="AcademicServiceRequest.view">
-	<slot name="documentRequestType" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.documentRequestType" />
 	<slot name="documentPurposeType" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.documentPurposeType" />
 	<slot name="otherDocumentPurposeTypeDescription" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.otherDocumentPurposeTypeDescription" />
 	<slot name="numberOfPages" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.numberOfPages" />
-	<slot name="urgentRequest" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>
 </schema>
 
 <schema name="DocumentRequest.view-without-numberOfPages" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
-	<remove name="numberOfPages" />
-</schema>
-
-<schema name="DocumentRequest.for-given-registration" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
-	<remove name="registration.number" />
-	<remove name="registration.person.name" />
-	<remove name="otherDocumentPurposeTypeDescription"/>
 	<remove name="numberOfPages" />
 </schema>
 

@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +15,10 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -25,7 +26,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentsSearchBean;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.lang.StringUtils;
@@ -42,52 +42,46 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 			"documentRequestId"));
     }
 
-    private Registration getRegistration(final HttpServletRequest request) {
-	final String registrationID = request.getParameter("registrationID");
-	final Registration registration = rootDomainObject.readRegistrationByOID(Integer
-		.valueOf(registrationID));
-	request.setAttribute("registration", registration);
-	return registration;
-    }
-
-    public ActionForward viewRegistrationDocumentRequestsHistoric(ActionMapping mapping,
-	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
-	request.setAttribute("registration", getRegistration(request));
-	return mapping.findForward("viewRegistrationDocumentRequestsHistoric");
+    private AcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
+	final AcademicServiceRequest academicServiceRequest = rootDomainObject
+		.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
+			"academicServiceRequestId"));
+	request.setAttribute("academicServiceRequest", academicServiceRequest);
+	return academicServiceRequest;
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final DocumentRequest documentRequest = getDocumentRequest(request);
-	
-	try {
-	    documentRequest.checkConditions();    
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey());
-	}
-	
-	request.setAttribute("documentRequest", documentRequest);
-	return mapping.findForward("printDocument");
+	return null;
     }
     
-    public ActionForward concludeDocumentRequest(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward prepareConcludeDocumentRequest(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final DocumentRequest documentRequest = getDocumentRequest(request);
-	documentRequest.conclude();
-	
-	request.setAttribute("registration", documentRequest.getRegistration());
-	return mapping.findForward("student.viewRegistrationDetails");
+	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+	if (!academicServiceRequest.getStudentCurricularPlan().isBolonha()) {
+	    addActionMessage(request, "print.preBolonha.documentRequest.in.aplica");
+	}
+
+	return mapping.findForward("printDocument");
     }
 
-    public ActionForward viewNewDocumentRequests(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void concludeDocumentRequest(ActionForm actionForm, HttpServletRequest request) {
+	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+	final DocumentRequest documentRequest = (DocumentRequest) academicServiceRequest;
+	
+	if (documentRequest.isCertificate()) {
+	    final CertificateRequest certificateRequest = (CertificateRequest) documentRequest;
 
-	request.setAttribute("academicServiceRequestList", getAdministrativeOffice()
-		.getNewAcademicServiceRequests());
-	return mapping.findForward("viewNewDocumentRequests");
+	    final Integer numberOfPages = (Integer) ((DynaActionForm) actionForm).get("numberOfPages");
+	    certificateRequest.setNumberOfPages(numberOfPages);
+	} else if (documentRequest.isDeclaration()) {
+	    final DeclarationRequest declarationRequest = (DeclarationRequest) documentRequest;
+
+	    final Integer numberOfPages = (Integer) ((DynaActionForm) actionForm).get("numberOfPages");
+	    declarationRequest.setNumberOfPages(numberOfPages);
+	}
     }
 
     public ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form,
@@ -113,27 +107,6 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
 	request.setAttribute("studentsSearchBean", studentsSearchBean);
 	return mapping.findForward("chooseStudentToCreateDocumentRequest");
-    }
-
-    public ActionForward processNewDocuments(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
-
-	final List<Integer> documentIdsToProcess = Arrays
-		.asList((Integer[]) ((DynaActionForm) actionForm).get("documentIdsToProcess"));
-	try {
-	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
-		    "ProcessNewAcademicServiceRequests", new Object[] {
-			    SessionUtils.getUserView(request).getPerson().getEmployee(),
-			    documentIdsToProcess });
-	    
-	    request.setAttribute("registration", getRegistration(request));
-	    return mapping.findForward("viewRegistrationDetails");
-	} catch (DomainException ex) {
-	    addActionMessage(request, ex.getKey(), ex.getArgs());
-	    return mapping.findForward("viewRegistrationDetails");
-	}
-
     }
 
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
@@ -164,15 +137,6 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	request.setAttribute("url", buildUrl(form, request).toString());
 
 	return mapping.findForward("showDocumentRequests");
-    }
-
-    public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	request.setAttribute("documentRequest", getDocumentRequest(request));
-	request.setAttribute("url", buildUrl(form, request).toString());
-	
-	return mapping.findForward("viewDocumentRequest");
     }
 
     private StringBuilder buildUrl(ActionForm actionForm, HttpServletRequest request) {
