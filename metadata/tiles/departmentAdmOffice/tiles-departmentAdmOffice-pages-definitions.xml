@@ -341,4 +341,9 @@
     <definition name="edit-examCoordinator" extends="departmentAdmOffice.masterPage" >
 		<put name="body" value="/departmentAdmOffice/vigilancy/editExamCoordinator.jsp" />
     </definition>		            
+
+	<definition name="search-students" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/searchStudents.jsp"/>
+	</definition>
+
 </tiles-definitions>

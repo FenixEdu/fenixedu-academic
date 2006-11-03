@@ -1,0 +1,14 @@
+<schema name="net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment"
+		type="net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="degrees" layout="option-select" key="label.degrees">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeSelectManySearchStudentsWithEnrolmentsByDepartment"/>
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="net.sourceforge.fenixedu.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"/>
+		<property name="classes" value="list2"/>
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"
+		type="net.sourceforge.fenixedu.domain.Degree">
+	<slot name="name"/>
+</schema>

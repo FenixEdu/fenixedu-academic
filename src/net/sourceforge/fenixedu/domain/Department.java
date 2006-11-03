@@ -11,8 +11,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -230,6 +233,18 @@ public class Department extends Department_Base {
 	    }
 	}
 	return null;
+    }
+
+    public Collection<Degree> getLecturedDegrees() {
+        final Set<Degree> degrees = new HashSet<Degree>();
+        for (final CompetenceCourse competenceCourse : getCompetenceCoursesSet()) {
+            for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
+                final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+                final Degree degree = degreeCurricularPlan.getDegree();
+                degrees.add(degree);
+            }
+        }
+        return degrees;
     }
 
 }

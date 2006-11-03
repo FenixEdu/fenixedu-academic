@@ -971,6 +971,14 @@
 			<forward name="editExamCoordinator" path="edit-examCoordinator"/>
 			
 		</action>
+
+		<action path="/searchStudents" 
+				type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.SearchStudentsDA"
+				parameter="method"
+				scope="request">
+			<forward name="searchStudents" path="search-students"/>
+		</action>
+
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

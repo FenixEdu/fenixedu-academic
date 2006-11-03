@@ -26,6 +26,7 @@
 	<!ENTITY teacherServiceDistribution SYSTEM "teacherServiceDistribution-schemas.xml">
 	<!ENTITY tests SYSTEM "tests-schemas.xml">
     <!ENTITY site SYSTEM "site-schemas.xml">
+    <!ENTITY student SYSTEM "student-schemas.xml">
 ]>
 
 <schemas>
@@ -674,4 +675,5 @@
 	&teacherServiceDistribution;
 	&tests;
     &site;
+    &student;
 </schemas>
