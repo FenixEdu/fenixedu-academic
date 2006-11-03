@@ -9828,6 +9828,24 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>CancelAcademicServiceRequest</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.CancelAcademicServiceRequest</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
+		</filterChains>
+	</service>
+	<service>
+		<name>ConcludeAcademicServiceRequest</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ConcludeAcademicServiceRequest</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
+		</filterChains>
+	</service>
+	<service>
 		<name>MarkSheetsToConfirmSendMail</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.MarkSheetsToConfirmSendMail</implementationClass>
 		<description />
