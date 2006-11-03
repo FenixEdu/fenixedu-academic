@@ -6,9 +6,15 @@
 	<slot name="urgentRequest" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>
 </schema>
 
+<schema name="AcademicServiceRequest.stateless-view-for-given-registration" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
+	<remove name="registration.number" />
+	<remove name="registration.person.name" />
+</schema>
+
 <schema name="AcademicServiceRequest.view-for-given-registration" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
 	<remove name="registration.number" />
 	<remove name="registration.person.name" />
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
 </schema>
 
 <schema name="AcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation"  bundle="APPLICATION_RESOURCES">
