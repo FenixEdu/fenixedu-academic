@@ -2696,6 +2696,32 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	Integer keyDfaRegistrationEvent;
 }
 
+class net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+	DateTime stateDate;
+	Integer keyResponsiblePerson;
+	Integer keyRegistration;
+	String remarks;	
+}
+
+	class net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+	}
+
+	class net.sourceforge.fenixedu.domain.student.registrationStates.FlunkedState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+	}
+
+	class net.sourceforge.fenixedu.domain.student.registrationStates.InterruptedState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+	}
+
+	class net.sourceforge.fenixedu.domain.student.registrationStates.SchoolPartConcludedState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+	}
+
+	class net.sourceforge.fenixedu.domain.student.registrationStates.ConcludedState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+	}
+
+	class net.sourceforge.fenixedu.domain.student.registrationStates.CanceledState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+	}
+
 class net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
 	Integer keyRegistration;
@@ -3809,7 +3835,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 
 class net.sourceforge.fenixedu.domain.AccessibleItem extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
-		
+	
 	Integer keyAvailabilityPolicy;
 
 	MultiLanguageString name;
@@ -3838,40 +3864,41 @@ class net.sourceforge.fenixedu.domain.AccessibleItem extends net.sourceforge.fen
 	class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.sourceforge.fenixedu.domain.AccessibleItem {
 		UUID uuid;
 	
-		MultiLanguageString description;
-		String path;
-		Boolean relative;
-		Boolean principal;
-		String parameters;
-	
-		Integer orderInModule; /* used to allows ordering of functionalities in modules, see relation ModuleAggregatesFunctionalities */
-		Integer keyModule;
-	}
+	MultiLanguageString description;
+	String path;
+	Boolean relative;
+	Boolean principal;
+	String parameters;
 
-		class net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
-		}
+	Integer orderInModule; /* used to allows ordering of functionalities in modules, see relation ModuleAggregatesFunctionalities */
+	
+	Integer keyModule;
+}
+
+	class net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
+	}
+	
+	class net.sourceforge.fenixedu.domain.functionalities.Module extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
+		Integer keyParent;
 		
-		class net.sourceforge.fenixedu.domain.functionalities.Module extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
-			Integer keyParent;
-			
-			String prefix;
-			Boolean maximized;
-		}
+		String prefix;
+		Boolean maximized;
+	}
 
 class net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyAccessibleItem;
 
 	String ojbConcreteClass;
 }
-
+	
 	class net.sourceforge.fenixedu.domain.functionalities.GroupAvailability extends net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy {
 		Group targetGroup;
-	}
+}
 
 		class net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability extends net.sourceforge.fenixedu.domain.functionalities.GroupAvailability {
-			String expression;
-		}
-	
+		String expression;
+	}
+
 class net.sourceforge.fenixedu.domain.SpecialSeasonCode extends net.sourceforge.fenixedu.domain.DomainObject {
 	
 	Integer code;
@@ -5164,6 +5191,7 @@ relation ExecutionCourseSiteSite {
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
+
 
 relation ExecutionCourseSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
@@ -6512,6 +6540,7 @@ relation SectionSuperiorSection {
 	net.sourceforge.fenixedu.domain.Section playsRole superiorSection;
 }
 
+
 relation ServiceProviderRegimeTeacher {
     net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime playsRole serviceProviderRegime;
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
@@ -6766,6 +6795,20 @@ relation RegistrationStudent {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.student.Student playsRole student;
+}
+
+relation RegistrationStateRegistration {
+    net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState playsRole registrationStates {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+}
+
+relation RegistrationStateResponsiblePerson {
+    net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState playsRole registrationStates {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Person playsRole responsiblePerson;
 }
 
 relation RegistrationStudentCandidacy {
@@ -10677,6 +10720,13 @@ relation RootDomainObjectShiftEnrolment {
 relation RootDomainObjectLoginAlias {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.LoginAlias playsRole loginAlias {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectRegistrationState {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState playsRole registrationStates {
 		multiplicity *;
 	}
 }

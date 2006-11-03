@@ -8915,8 +8915,8 @@
         </filterChains>     
     </service>
 	<service>
-   	 	<name>DeletePersonByOID</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeletePersonByOID</implementationClass>
+   	 	<name>DeleteObjectByOID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>

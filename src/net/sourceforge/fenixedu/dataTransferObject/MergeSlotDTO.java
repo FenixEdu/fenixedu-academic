@@ -20,6 +20,10 @@ public class MergeSlotDTO extends DataTranferObject {
     private String value1;
 
     private String value2;
+    
+    private String value1Link = "";
+
+    private String value2Link = "";
 
     public MergeSlotDTO(String name, String type, String value1, String value2) {
         super();
@@ -72,6 +76,30 @@ public class MergeSlotDTO extends DataTranferObject {
         } else if (property.equals(VALUE2)) {
             setValue2(value);
         }
+    }
+    
+    public void setValueLinkProperty(String property, String link) {
+        if (property.equals(VALUE1)) {
+            setValue1Link(link);
+        } else if (property.equals(VALUE2)) {
+            setValue2Link(link);
+        }
+    }
+
+    public String getValue1Link() {
+        return value1Link;
+    }
+
+    public void setValue1Link(String value1Link) {
+        this.value1Link = value1Link;
+    }
+
+    public String getValue2Link() {
+        return value2Link;
+    }
+
+    public void setValue2Link(String value2Link) {
+        this.value2Link = value2Link;
     }
 
 }

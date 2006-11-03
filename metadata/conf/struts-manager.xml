@@ -570,6 +570,29 @@
 			<form-property name="person2Username" type="java.lang.String"/>
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
+
+		<!-- ========== DOMAIN OBJECT MANAGEMENT ========== -->	
+		<form-bean name="stringPropertyFormatterForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="domainObjectClass" type="java.lang.String"/>
+			<form-property name="slotName" type="java.lang.String"/>
+			<form-property name="method" type="java.lang.String"/>
+		</form-bean>	
+				
+		<form-bean name="domainObjectManagerForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="classToManage" type="java.lang.String"/>
+			<form-property name="classToManageId" type="java.lang.Integer"/>
+			<form-property name="idPos1Index" type="java.lang.Integer"/>
+			<form-property name="idPos2Index" type="java.lang.Integer"/>
+			<form-property name="idPos3Index" type="java.lang.Integer"/>
+			<form-property name="idPos1Value" type="java.lang.Character"/>
+			<form-property name="idPos2Value" type="java.lang.Character"/>
+			<form-property name="idPos3Value" type="java.lang.Character"/>
+			<form-property name="method" type="java.lang.String"/>
+		</form-bean>
 		
 		<!-- ========== RULES MANAGEMENT ========== -->	
 		<form-bean name="rulesManagementForm"
@@ -579,15 +602,6 @@
             <form-property name="page" type="java.lang.Integer" initial="0" />
 		</form-bean>
 		
-		<!-- ========== DOMAIN OBJECT MANAGEMENT ========== -->	
-		<form-bean name="stringPropertyFormatterForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-				dynamic="true">
-			<form-property name="domainObjectClass" type="java.lang.String"/>
-			<form-property name="slotName" type="java.lang.String"/>
-			<form-property name="method" type="java.lang.String"/>
-		</form-bean>		
-
 		<!-- Paulo Zenida and Dinis Martins - 2006-02-22 -->
 		<form-bean name="createPersonForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
@@ -1980,6 +1994,15 @@
 			scope="request">
 		<forward name="choosePersons" path="choosePersons"/>
 		<forward name="displayPersons" path="displayPersons"/>
+	</action>
+	
+	<!-- Domain Object Manager -->     
+	<action path="/domainObjectManager"
+			parameter="method"
+			name="domainObjectManagerForm"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.domainObjectsManagement.DomainObjectManagerDispatchAction"
+			scope="request">
+		<forward name="chooseClassToManage" path="domainObjectManager.chooseClassToManage"/>
 	</action>
 
 	<!-- Domain Object String Property Formatter -->

@@ -497,7 +497,10 @@
     <definition name="chooseClassAndSlotToFormat" extends="definition.manager.masterPage" >
     	<put name="body" value="/manager/domainObjectsManagement/chooseClassAndSlotToFormat.jsp" />
     </definition>
-
+    <definition name="domainObjectManager.chooseClassToManage" extends="definition.manager.masterPage" >
+    	<put name="body" value="/manager/domainObjectsManagement/chooseClassToManage.jsp" />
+    </definition>
+    
 	<!-- Paulo Zenida and Dinis Martins - 2006-02-17 -->
     <definition name="createPerson" extends="definition.manager.masterPage" >
     	   <put name="body" value="/manager/personManagement/createPerson.jsp" />

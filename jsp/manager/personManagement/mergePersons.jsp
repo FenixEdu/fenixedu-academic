@@ -31,13 +31,29 @@
 		<tr >
 			<td class="infoop"><strong><bean:write name="slot" property="name" /></strong></td>		
 			<td class="infoop"><bean:write name="slot" property="type" /></td>		
-			<td><bean:write name="slot" property="value1" /></td>		
+			<td> 
+				<logic:notEmpty name="slot" property="value1Link" >
+					<bean:define id="referenceLinkLeft" name="slot" property="value1Link" type="java.lang.String" />
+					<html:link module="" page="<%= referenceLinkLeft %>" target="blank" > <bean:write name="slot" property="value1" /> </html:link>
+				</logic:notEmpty>
+				<logic:empty name="slot" property="value1Link" >
+					<bean:write name="slot" property="value1" />
+				</logic:empty>				
+			</td>		
 			<td class="infoop" >
 				<html:link module="/manager" page="<%= currentLinkLeft %>" > <-- </html:link>
 				 | 
 				<html:link module="/manager" page="<%= currentLinkRight %>" > --> </html:link>
 			</td>		
-			<td><bean:write name="slot" property="value2" /></td>		
+			<td> 
+				<logic:notEmpty name="slot" property="value2Link" >
+					<bean:define id="referenceLinkRight" name="slot" property="value2Link" type="java.lang.String" />
+					<html:link module="" page="<%= referenceLinkRight %>" target="blank" > <bean:write name="slot" property="value2" /> </html:link>				
+				</logic:notEmpty>
+				<logic:empty name="slot" property="value2Link" >
+					<bean:write name="slot" property="value2" />
+				</logic:empty>
+			</td>					
 		</tr>
 	</logic:iterate>
 	
