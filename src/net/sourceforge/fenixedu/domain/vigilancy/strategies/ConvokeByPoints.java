@@ -75,6 +75,7 @@ public class ConvokeByPoints extends Strategy {
 
 		 ComparatorChain comparator = new ComparatorChain();
 		 comparator.addComparator(new PointComparator());
+		 comparator.addComparator(new ConvokeCount());
 		 comparator.addComparator(Vigilant.CATEGORY_COMPARATOR);
 		 comparator.addComparator(Vigilant.USERNAME_COMPARATOR);
 		 
@@ -141,6 +142,21 @@ public class ConvokeByPoints extends Strategy {
 
 	}
 
+	class ConvokeCount implements Comparator {
+
+		public int compare(Object o1, Object o2) {
+			Vigilant v1 = (Vigilant) o1;
+			Vigilant v2 = (Vigilant) o2;
+			
+			Integer c1 = v1.getVigilancyWithCredits().size();
+			Integer c2 = v2.getVigilancyWithCredits().size();
+			
+			return c1.compareTo(c2);
+			
+		}
+		
+	}
+	
 	class PointComparator implements Comparator {
 
 		public int compare(Object o1, Object o2) {
