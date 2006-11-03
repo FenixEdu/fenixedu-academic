@@ -40,6 +40,7 @@
        </tr>
 
 
+	<logic:notEmpty name="infoGuide" property="infoContributor" >
        <!-- Contributor Number -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>:</td>
@@ -81,7 +82,7 @@
 			<td><bean:message key="label.person.addressDistrict" /></td>
 			<td><bean:write name="infoGuide" property="infoContributor.districtOfResidence" /></td>
 		</tr>
-
+	</logic:notEmpty>
 
 		<!-- List of Items in the Guide -->
 	</table>

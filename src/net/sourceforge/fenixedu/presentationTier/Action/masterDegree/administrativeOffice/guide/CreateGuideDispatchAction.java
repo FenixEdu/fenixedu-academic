@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -159,15 +160,12 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 
 	    final CreateReceiptBean chooseContributorBean = (CreateReceiptBean) RenderUtils
 		    .getViewState("chooseContributorBean").getMetaObject().getObject();
-	    if (chooseContributorBean.getContributorParty() == null) {
-		throw new ExistingActionException(
-			"error.masterDegree.administrativeOffice.nonExistingContributor");
-	    }
+	    Party contributorParty = chooseContributorBean.getContributorParty();
 
 	    InfoGuide infoGuide = null;
 	    try {
 		Object args[] = { graduationType, infoExecutionDegree, number, requesterType,
-			chooseContributorBean.getContributorParty() };
+			contributorParty };
 
 		infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
 			"PrepareCreateGuide", args);

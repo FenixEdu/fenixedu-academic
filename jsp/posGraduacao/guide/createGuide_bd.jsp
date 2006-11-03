@@ -64,16 +64,11 @@
        <tr>
        	<td colspan='2'><h2><bean:message key="label.masterDegree.administrativeOffice.dataContributor"/></h2></td>
        </tr>
-       <logic:present name="<%= SessionConstants.UNEXISTING_CONTRIBUTOR %>">     	
-	       <tr>
-	       	<td colspan='2'><strong><bean:message key="error.masterDegree.administrativeOffice.nonExistingContributor"/></strong></td>
-	       </tr>
-		</logic:present >
        <!-- Contributor -->
        <tr>
          <td colspan="2">
      	  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-			<fr:edit id="chooseContributorBean" name="chooseContributorBean" schema="createReceiptBean.create">
+			<fr:edit id="chooseContributorBean" name="chooseContributorBean" schema="createReceiptBean.create.notRequired">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4" />
 				</fr:layout>

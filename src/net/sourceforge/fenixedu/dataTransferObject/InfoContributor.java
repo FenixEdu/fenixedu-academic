@@ -4,7 +4,9 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -26,6 +28,8 @@ public class InfoContributor extends InfoObject {
     private String parishOfResidence;
     private String districtSubdivisionOfResidence;
     private String districtOfResidence;
+    private IDDocumentType documentType;
+    private String documentIdNumber;
 
     public InfoContributor() {
     }
@@ -56,6 +60,11 @@ public class InfoContributor extends InfoObject {
             setParishOfResidence(contributor.getParishOfResidence());
             setDistrictSubdivisionOfResidence(contributor.getDistrictSubdivisionOfResidence());
             setDistrictOfResidence(contributor.getDistrictOfResidence());
+            if (contributor.getSocialSecurityNumber() == null && contributor instanceof Person) {
+		Person contributorPerson = (Person) contributor;
+		setDocumentIdNumber(contributorPerson.getDocumentIdNumber());
+		setDocumentType(contributorPerson.getIdDocumentType());
+	    }
         }
     }
 
@@ -146,6 +155,22 @@ public class InfoContributor extends InfoObject {
 
     public void setParishOfResidence(String parishOfResidence) {
         this.parishOfResidence = parishOfResidence;
+    }
+
+    public String getDocumentIdNumber() {
+        return documentIdNumber;
+    }
+
+    public IDDocumentType getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentIdNumber(String documentIdNumber) {
+        this.documentIdNumber = documentIdNumber;
+    }
+
+    public void setDocumentType(IDDocumentType documentType) {
+        this.documentType = documentType;
     }
 
 }

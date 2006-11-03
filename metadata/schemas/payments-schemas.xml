@@ -71,6 +71,21 @@
 	</slot>
 </schema>
 
+<schema name="createReceiptBean.create.notRequired" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
+	<slot name="contributorParty" layout="autoComplete" >
+		<property name="size" value="70"/>
+		<property name="labelField" value="socialSecurityNumber"/>
+		<property name="format" value="${socialSecurityNumber} - ${name}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
+		<property name="minChars" value="1"/>
+		<property name="maxCount" value="20"/>
+		<property name="rawSlotName" value="contributorNumber" />
+	</slot>
+</schema>
+
 <schema name="paymentsManagementDTO.edit-with-paymentDate" type="net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO" bundle="APPLICATION_RESOURCES">
 	<slot name="differedPayment" />
 	<slot name="paymentDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />

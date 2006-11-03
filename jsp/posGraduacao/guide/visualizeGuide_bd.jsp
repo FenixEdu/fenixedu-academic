@@ -45,10 +45,22 @@
             <td><strong>Entidade Pagadora:</strong></td>
             <td>&nbsp;</td>
           </tr>
-          <tr> 
-            <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>:</td>
-            <td><bean:write name="infoGuide" property="infoContributor.contributorNumber"/></td>
-          </tr>
+          <logic:empty name="guide" property="infoContributor.contributorNumber">
+          	  <tr> 
+	            <td><bean:message key="label.identificationDocumentType"/>:</td>
+	            <td><bean:message name="guide" property="infoContributor.documentType.name" bundle="ENUMERATION_RESOURCES"/></td>
+	          </tr>
+	          <tr> 
+	            <td><bean:message key="label.identificationDocumentNumber"/>:</td>
+	            <td><bean:write name="guide" property="infoContributor.documentIdNumber"/></td>
+	          </tr>	          
+          </logic:empty>
+          <logic:notEmpty name="guide" property="infoContributor.contributorNumber">
+	          <tr> 
+	            <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>:</td>
+	            <td><bean:write name="guide" property="infoContributor.contributorNumber"/></td>
+	          </tr>
+          </logic:notEmpty>
           <tr> 
             <td><bean:message key="label.masterDegree.administrativeOffice.contributorName"/>:</td>
             <td><bean:write name="infoGuide" property="infoContributor.contributorName"/></td>
