@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -24,17 +27,18 @@ public class SearchStudentsWithEnrolmentsByDepartment implements Serializable {
         return departmentDomainReference == null ? null : departmentDomainReference.getObject();
     }
 
-    public Set<Degree> getDegrees() {
-        final Set<Degree> degrees = new HashSet<Degree>();
+    public List<Degree> getDegrees() {
+        final List<Degree> degrees = new ArrayList<Degree>();
         if (degreeDomainReferences != null) {
             for (final DomainReference<Degree> degreeDomainReference : degreeDomainReferences) {
                 degrees.add(degreeDomainReference.getObject());
             }
         }
+        Collections.sort(degrees, Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
         return degrees;
     }
 
-    public void setDegrees(Set<Degree> degrees) {
+    public void setDegrees(List<Degree> degrees) {
         if (degrees != null) {
             degreeDomainReferences = new HashSet<DomainReference<Degree>>();
             for (final Degree degree : degrees) {

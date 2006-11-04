@@ -10,5 +10,6 @@
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"
 		type="net.sourceforge.fenixedu.domain.Degree">
+	<slot name="tipoCurso"/>
 	<slot name="name"/>
 </schema>

@@ -17,7 +17,6 @@ public class DegreeSelectManySearchStudentsWithEnrolmentsByDepartment implements
         final Department department = bean.getDepartment();
         final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
         degrees.addAll(department.getLecturedDegrees());
-        System.out.println("Returning list with: " + degrees.size() + " elements.");
         return degrees;
     }
 
