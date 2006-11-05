@@ -1,0 +1,1 @@
+alter table SERVICE_LOG change column INVOKER_USERNAME INVOKER_USERNAME varchar(15) default NULL;
