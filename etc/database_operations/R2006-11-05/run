@@ -26,3 +26,7 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter Guide Table" alterGuideTable.sql
+execute "Create Department Degree Table" createDepartmentDegreeTable.sql
+execute "Change Service Log Table" changeServiceLogTable.sql
