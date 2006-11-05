@@ -60,6 +60,11 @@
 					</li>
 				</logic:equal>
 			</logic:notEmpty>
+		<li>
+			<html:link page="/searchTeachers.do?method=download">
+				<bean:message key="link.teachers.search"/>
+			</html:link>
+		</li>
 	</logic:present>
 
 	<li class="navheader">

@@ -979,6 +979,12 @@
 			<forward name="searchStudents" path="search-students"/>
 		</action>
 
+		<action path="/searchTeachers" 
+				type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.SearchTeachersDA"
+				parameter="method"
+				scope="request">
+		</action>
+
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->
