@@ -2135,6 +2135,14 @@
        		<forward name="showCreatedPerson" path="df.show.created.external.person"/>
        	</action>
 
+       	<action path="/manageDepartmentDegrees"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.DepartmentDegreesDA"
+       			scope="request"
+				input="/manageDepartmentDegrees.do?method=prepare"
+       			parameter="method">
+       		<forward name="manageDepartmentDegrees" path="manage-department-degrees"/>
+       	</action>
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

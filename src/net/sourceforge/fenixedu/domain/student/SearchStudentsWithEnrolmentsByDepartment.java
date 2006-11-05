@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -44,6 +45,8 @@ public class SearchStudentsWithEnrolmentsByDepartment implements Serializable {
             for (final Degree degree : degrees) {
                 degreeDomainReferences.add(new DomainReference<Degree>(degree));
             }
+        } else {
+            degreeDomainReferences = null;
         }
     }
 
@@ -56,7 +59,25 @@ public class SearchStudentsWithEnrolmentsByDepartment implements Serializable {
     }
 
     public Set<StudentCurricularPlan> search() {
-        return null;
+	final Set<StudentCurricularPlan> studentCurricularPlans = new HashSet<StudentCurricularPlan>();
+	if (degreeDomainReferences != null) {
+	    for (final DomainReference<Degree> degreeDomainReference : degreeDomainReferences) {
+		final Degree degree = degreeDomainReference.getObject();
+		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+		    if (degreeCurricularPlan.isActive()) {
+			for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
+			    if (studentCurricularPlan.isActive()) {
+				studentCurricularPlans.add(studentCurricularPlan);
+			    }
+			}
+		    }
+		}
+	    }
+	}
+        return studentCurricularPlans;
     }
 
+    public Set<StudentCurricularPlan> getSearch() {
+	return search();
+    }
 }

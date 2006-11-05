@@ -10,6 +10,7 @@
 
 package net.sourceforge.fenixedu.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 
 import org.apache.commons.collections.Predicate;
@@ -235,16 +237,35 @@ public class Department extends Department_Base {
 	return null;
     }
 
-    public Collection<Degree> getLecturedDegrees() {
-        final Set<Degree> degrees = new HashSet<Degree>();
-        for (final CompetenceCourse competenceCourse : getCompetenceCoursesSet()) {
-            for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
-                final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-                final Degree degree = degreeCurricularPlan.getDegree();
-                degrees.add(degree);
-            }
-        }
-        return degrees;
+    public static class DepartmentDegreeBean implements FactoryExecutor, Serializable {
+
+	private DomainReference<Department> departmentReference;
+	private DomainReference<Degree> degreeReference;
+
+	public Department getDepartment() {
+	    return departmentReference == null ? null : departmentReference.getObject();
+	}
+
+	public void setDepartment(final Department department) {
+	    departmentReference = department == null ? null : new DomainReference<Department>(department);
+	}
+
+	public Degree getDegree() {
+	    return degreeReference == null ? null : degreeReference.getObject();
+	}
+
+	public void setDegree(final Degree degree) {
+	    degreeReference = degree == null ? null : new DomainReference<Degree>(degree);
+	}
+
+	public Object execute() {
+	    final Department department = getDepartment();
+	    final Degree degree = getDegree();
+	    if (department != null && degree != null) {
+		department.getDegreesSet().add(degree);
+	    }
+	    return null;
+	}	
     }
 
 }

@@ -13,3 +13,11 @@
 	<slot name="tipoCurso"/>
 	<slot name="name"/>
 </schema>
+<schema name="net.sourceforge.fenixedu.domain.StudentCurricularPlan.List"
+		type="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="degreeCurricularPlan.degree.sigla"/>
+	<slot name="registration.student.number"/>
+	<slot name="registration.student.person.name"/>
+	<slot name="registration.student.person.email"/>
+</schema>

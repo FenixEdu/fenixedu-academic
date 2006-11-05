@@ -11007,4 +11007,13 @@
         	<chain name="MasterDegreeAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>    
+	<service>
+    	<name>RemoveDegreeFromDepartment</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.RemoveDegreeFromDepartment</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
 </serviceDefinitions>

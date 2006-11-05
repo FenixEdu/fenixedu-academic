@@ -62,7 +62,6 @@
 			</logic:notEmpty>
 	</logic:present>
 
-<%-- 
 	<li class="navheader">
 		<strong><bean:message key="link.group.students.title"/></strong>
 	</li>
@@ -71,7 +70,6 @@
 			<bean:message key="link.students.search"/>
 		</html:link>
 	</li>
---%>
 	
 		<%-- TeacherServiceDistribution entry point
   		<li>

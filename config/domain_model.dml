@@ -4875,6 +4875,15 @@ relation ConversationThreadPerson {
 	
 	net.sourceforge.fenixedu.domain.Person playsRole creator;
 }
+ 
+relation DepartmentDegree {
+	net.sourceforge.fenixedu.domain.Department playsRole departments {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Degree playsRole degrees {
+		multiplicity *;
+	}
+}
 
 relation DislocatedStudentCountry {
 	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole concluedStudents {

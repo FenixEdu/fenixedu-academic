@@ -27,6 +27,7 @@
 	<!ENTITY tests SYSTEM "tests-schemas.xml">
     <!ENTITY site SYSTEM "site-schemas.xml">
     <!ENTITY student SYSTEM "student-schemas.xml">
+    <!ENTITY department SYSTEM "department-schemas.xml">
 ]>
 
 <schemas>
@@ -676,4 +677,5 @@
 	&tests;
     &site;
     &student;
+    &department;
 </schemas>

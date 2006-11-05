@@ -12,17 +12,29 @@
 	<br />
 
 	<fr:form action="/searchStudents.do">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
-
 		<fr:edit id="searchStudentsWithEnrolmentsByDepartment" name="searchStudentsWithEnrolmentsByDepartment"
-				schema="net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment" >
+				schema="net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment">
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle1"/>
 		        <fr:property name="columnClasses" value=",,noborder"/>
 			</fr:layout>
 		</fr:edit>
 
-		<html:submit><bean:message key="button.submit" bundle="MANAGER_RESOURCES" /></html:submit>
-	</fr:form>
+		<html:submit property="method" value="search"><bean:message key="button.submit"/></html:submit>
 
+		<bean:define id="studentCurricularPlans" name="searchStudentsWithEnrolmentsByDepartment" property="search"/>
+		<logic:notEmpty name="studentCurricularPlans">
+			<html:submit property="method" value="download"><bean:message key="button.download"/></html:submit>
+
+			<fr:view name="studentCurricularPlans"
+					schema="net.sourceforge.fenixedu.domain.StudentCurricularPlan.List">
+				<fr:layout name="tabular" >
+					<fr:property name="classes" value="tstyle1"/>
+			        <fr:property name="columnClasses" value=",,,,"/>
+		    	    <fr:property name="sortBy" value="degreeCurricularPlan.degree.sigla=asc,registration.student.number=asc"/>
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>
+
+	</fr:form>
 </logic:present>

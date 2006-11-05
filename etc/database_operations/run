@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Alter Guide Table" alterGuideTable.sql
+execute "Create Department Degree Table" createDepartmentDegreeTable.sql
