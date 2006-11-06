@@ -14,25 +14,36 @@ public class GenericPair<T, V> {
     private V right;
 
     public GenericPair(T left, V right) {
-        super();
-        this.left = left;
-        this.right = right;
+	super();
+	this.left = left;
+	this.right = right;
     }
 
     public T getLeft() {
-        return left;
+	return left;
     }
 
     public void setLeft(T left) {
-        this.left = left;
+	this.left = left;
     }
 
     public V getRight() {
-        return right;
+	return right;
     }
 
     public void setRight(V right) {
-        this.right = right;
+	this.right = right;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+	return o instanceof GenericPair && getLeft().equals(((GenericPair) o).getLeft()) && getRight().equals(((GenericPair) o).getRight());
+    }
+
+    @Override
+    public int hashCode() {
+	final String hashBase = getLeft().toString() + getRight().toString();
+	return hashBase.hashCode();
     }
 
 }
