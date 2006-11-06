@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
@@ -26,8 +25,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -201,56 +198,68 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         OpenFileBean openFileBean = (OpenFileBean) getRenderedObject();
         if (openFileBean != null) {
             //if (openFileBean.getFileName().equalsIgnoreCase("Cartões_XML.mdb")) {
-                try {
-                    response.setContentType("text/plain");
-                    response
-                            .setHeader("Content-disposition", "attachment; filename=parkingDB_merge.xls");
+            System.out.println("987654" + openFileBean.getFileName());
+            try {
+                response.setContentType("text/plain");
+                response.setHeader("Content-disposition", "attachment; filename=parkingDB_merge.xls");
 
-                    Database database = Database.open(FileUtils.copyToTemporaryFile(openFileBean
-                            .getInputStream()));
-                    Table table = database.getTable("XML");
+                Database database = Database.open(FileUtils.copyToTemporaryFile(openFileBean
+                        .getInputStream()));
+                Table table = database.getTable("XML");
 
-                    List<ParkingParty> parkingParties = new ArrayList<ParkingParty>(ParkingParty
-                            .getAll());
+                List<ParkingParty> parkingParties = getValidParkingParties();
 
-                    final HSSFWorkbook workbook = new HSSFWorkbook();
-                    final ExcelStyle excelStyle = new ExcelStyle(workbook);
-                    final ServletOutputStream writer = response.getOutputStream();
-                    final Spreadsheet parkingBDSpreadsheet = new Spreadsheet("BD Fénix Parque");
-                    setHeaders(parkingBDSpreadsheet);
+                final HSSFWorkbook workbook = new HSSFWorkbook();
+                final ExcelStyle excelStyle = new ExcelStyle(workbook);
+                final ServletOutputStream writer = response.getOutputStream();
+                final Spreadsheet parkingBDSpreadsheet = new Spreadsheet("BD Fénix Parque");
+                setHeaders(parkingBDSpreadsheet);
 
-                    for (Map<String, Object> row = table.getNextRow(); row != null; row = table
-                            .getNextRow()) {
-                        Long cardNumber = new Long((String) row.get("Card"));
-                        ParkingParty parkingParty = getParkingPartyCardNumber(cardNumber, parkingParties);
-                        addRow(parkingBDSpreadsheet, parkingParty, row);
-                    }
-                    database.close();
-                    parkingBDSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(),
-                            excelStyle.getStringStyle());
-                    workbook.write(writer);
-                    writer.flush();
-                    response.flushBuffer();
-                } catch (Exception e) {
-                    throw new FenixServiceException();
+                for (Map<String, Object> row = table.getNextRow(); row != null; row = table.getNextRow()) {
+                    Long cardNumber = new Long((String) row.get("Card"));
+                    ParkingParty parkingParty = getParkingPartyCardNumber(cardNumber, parkingParties);
+                    addRow(parkingBDSpreadsheet, parkingParty, row);
                 }
-//            } else {
-//                ActionMessages actionMessages = getMessages(request);
-//                actionMessages.add("file", new ActionMessage("error.inccorrect.file"));
-//                saveMessages(request, actionMessages);
-//                RenderUtils.invalidateViewState();
-//                return mapping.getInputForward();
-//            }
+
+                for (ParkingParty parkingParty : parkingParties) {
+                    fillInRow(parkingBDSpreadsheet, parkingParty);
+                }
+                database.close();
+                parkingBDSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle
+                        .getStringStyle());
+                workbook.write(writer);
+                writer.flush();
+                response.flushBuffer();
+            } catch (Exception e) {
+                throw new FenixServiceException();
+            }
+            //            } else {
+            //                ActionMessages actionMessages = getMessages(request);
+            //                actionMessages.add("file", new ActionMessage("error.inccorrect.file"));
+            //                saveMessages(request, actionMessages);
+            //                RenderUtils.invalidateViewState();
+            //                return mapping.getInputForward();
+            //            }
         }
         return null;
     }
 
+    private List<ParkingParty> getValidParkingParties() {
+        List<ParkingParty> parkingParties = new ArrayList<ParkingParty>();
+        for (ParkingParty parkingParty : ParkingParty.getAll()) {
+            if(parkingParty.getCardNumber() != null){
+                parkingParties.add(parkingParty);
+            }
+        }
+        return parkingParties;
+    }
+
     private ParkingParty getParkingPartyCardNumber(Long cardNumber, List<ParkingParty> parkingParties) {
         for (ParkingParty parkingParty : parkingParties) {
-            if (parkingParty.getCardNumber() != null && parkingParty.getCardNumber().equals(cardNumber)) {
+            if (parkingParty.getCardNumber().equals(cardNumber)) {
                 parkingParties.remove(parkingParty);
                 return parkingParty;
-            }  
+            }
         }
         return null;
     }
@@ -268,14 +277,14 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         if (parkingParty != null) {
             row.setCell(parkingParty.getCardNumber().toString()); // cardNumber
         } else {
-            row.setCell((String)accessTableRow.get("Card"));
+            row.setCell((String) accessTableRow.get("Card"));
         }
         row.setCell(((Short) accessTableRow.get("Type")).toString());
         row.setCell(getBooleanString(accessTableRow.get("Access"))); // if the card is active or not
         if (parkingParty != null) {
             row.setCell(convertParkingGroupToAccessDB(parkingParty.getParkingGroup())); // accessGroup
         } else {
-            row.setCell(((Short)accessTableRow.get("AccessGroup")).toString());
+            row.setCell(((Short) accessTableRow.get("AccessGroup")).toString());
         }
         row.setCell(((Short) accessTableRow.get("Fee")).toString());
         row.setCell(((Short) accessTableRow.get("SAC")).toString());
@@ -289,20 +298,20 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
             row.setCell(person != null ? getName(person.getNickname()) : getName(parkingParty.getParty()
                     .getName())); // name
         } else {
-            row.setCell((String)accessTableRow.get("Name"));
+            row.setCell((String) accessTableRow.get("Name"));
         }
         row.setCell((String) accessTableRow.get("Address"));
         if (parkingParty != null) {
             row.setCell(parkingParty.getFirstCarPlateNumber() != null ? parkingParty
                     .getFirstCarPlateNumber() : ""); // license
         } else {
-            row.setCell((String)accessTableRow.get("License"));
+            row.setCell((String) accessTableRow.get("License"));
         }
         if (parkingParty != null) {
             row.setCell(parkingParty.getSecondCarPlateNumber() != null ? parkingParty
                     .getSecondCarPlateNumber() : ""); // licenseAlt
         } else {
-            row.setCell((String)accessTableRow.get("LicenseAlt"));
+            row.setCell((String) accessTableRow.get("LicenseAlt"));
         }
         row.setCell(person != null && person.getWorkPhone() != null ? person.getWorkPhone() : ""); // registration
         row.setCell(person != null && person.getMobile() != null ? person.getMobile() : ""); // registrationAlt
