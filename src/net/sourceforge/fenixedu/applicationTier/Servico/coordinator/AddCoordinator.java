@@ -30,10 +30,8 @@ public class AddCoordinator extends Service {
         if (coordinator == null) {
             new Coordinator(executionDegree, person, Boolean.FALSE);
             person.addPersonRoleByRoleType(RoleType.COORDINATOR);
-        } else {
-            throw new FenixServiceException("error.impossibleInsertCoordinator");
         }
-        
+
         return Boolean.TRUE;
     }
 
