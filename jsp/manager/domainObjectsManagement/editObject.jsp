@@ -11,7 +11,7 @@
 </logic:present>
 
 <logic:notEmpty name="objectToEdit">
-	<bean:define id="schemaName">Edit<bean:write name="objectToEdit" property="class.simpleName"/>Object</bean:define>		
+	<bean:define id="schemaName">Edit<bean:write name="objectToEdit" property="class.simpleName"/>DomainObject</bean:define>		
 	<fr:edit name="objectToEdit" schema="<%= schemaName %>" action="/domainObjectManager.do?method=prepare"/>
 </logic:notEmpty>
 <logic:empty name="objectToEdit">

@@ -21,6 +21,7 @@
 	<html:hidden property="idPos2Index" />
 	<html:hidden property="idPos3Index" />
 
+	<bean:message key="documentIdNumber" bundle="MANAGER_RESOURCES"/>:&nbsp;	
 	<bean:write name="domainObjectManagerForm" property="idPos1Index" />º
 	<html:text property="idPos1Value" size="1" /> 
 	<bean:write name="domainObjectManagerForm" property="idPos2Index" />º
@@ -30,11 +31,11 @@
 
 	<br/><br/><br/>	
 	
-	<bean:message key="label.domainObjectManager.class" bundle="MANAGER_RESOURCES"/>
+	<bean:message key="label.domainObjectManager.class" bundle="MANAGER_RESOURCES"/>:&nbsp;
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.domainObjectClass" property="classToManage" >
 		<html:options collection="domainClasses" property="value" labelProperty="label"/>
 	</html:select>
-	<bean:message key="label.domainObjectManager.oid" bundle="MANAGER_RESOURCES"/>
+	<bean:message key="label.domainObjectManager.oid" bundle="MANAGER_RESOURCES"/>:&nbsp;
 	<html:text property="classToManageId" />
 
 	<br/><br/><br/>		

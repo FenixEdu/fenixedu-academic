@@ -46,6 +46,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 	generateIdIndexesToAnswer(form, person);
 
 	request.setAttribute("method", "deleteObject");
+	((DynaActionForm)form).set("method", "prepareEditObject");
 	request.setAttribute("domainClasses", getClasses());
 	return mapping.findForward("chooseClassToManage");
     }
@@ -88,7 +89,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 	}
 
 	request.setAttribute("domainClasses", getClasses());
-	request.setAttribute("method", "deleteObject");
+	((DynaActionForm)form).set("method", "prepareEditObject");
 	return mapping.findForward("chooseClassToManage");
     }
 

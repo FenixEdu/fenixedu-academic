@@ -1,4 +1,4 @@
-<schema name="EditPersonObject" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
+<schema name="EditPersonDomainObject" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
 	<slot name="documentIdNumber" />
 	<slot name="idDocumentType"/>	
 	<setter signature="editPersonalData(documentIdNumber,idDocumentType)"/>
