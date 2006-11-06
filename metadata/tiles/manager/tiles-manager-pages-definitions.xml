@@ -288,11 +288,11 @@
 	<definition name="displayEmployee" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/displayEmployee.jsp" />
 	</definition>
-	<definition name="choosePersons" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/personManagement/choosePersonsToMerge.jsp" />
+	<definition name="chooseObjects" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/chooseObjectsToMerge.jsp" />
 	</definition>
-	<definition name="displayPersons" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/personManagement/mergePersons.jsp" />
+	<definition name="displayObjects" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/mergeObjects.jsp" />
 	</definition>
 		
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->
@@ -504,7 +504,6 @@
     	<put name="body" value="/manager/domainObjectsManagement/editObject.jsp" />
     </definition>
     
-    
 	<!-- Paulo Zenida and Dinis Martins - 2006-02-17 -->
     <definition name="createPerson" extends="definition.manager.masterPage" >
     	   <put name="body" value="/manager/personManagement/createPerson.jsp" />
@@ -668,7 +667,7 @@
 	<definition name="manager-view-announcement" extends="definition.messaging.masterPage" >
 		<put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
 		<put name="navLocal" value="/manager/announcements/menu.jsp" />		
-	</definition>
+	</definition>								
 	<definition name="manager-boards-add-announcement" extends="definition.manager.masterPage" >
 		<put name="navLocal" value="/manager/announcements/menu.jsp" />
 		<put name="body" value="/messaging/announcements/addAnnouncement.jsp" />

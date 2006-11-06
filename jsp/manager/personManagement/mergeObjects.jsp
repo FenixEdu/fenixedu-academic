@@ -7,17 +7,10 @@
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <bean:define id="linkLeft">
-	/mergePersons.do?method=mergeProperty&person2ID=<bean:write name="person2ID" />&person1ID=<bean:write name="person1ID" />&source=2&slotName=
+	/mergeObjects.do?method=mergeProperty&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&source=2&slotName=
 </bean:define>
 <bean:define id="linkRight">
-	/mergePersons.do?method=mergeProperty&person2ID=<bean:write name="person2ID" />&person1ID=<bean:write name="person1ID" />&source=1&slotName=
-</bean:define>
-
-<bean:define id="linkDeleteLeft">
-	/mergePersons.do?method=mergeProperty&person2ID=<bean:write name="person2ID" />&person1ID=<bean:write name="person1ID" />&source=2&slotName=
-</bean:define>
-<bean:define id="linkDeleteRight">
-	/mergePersons.do?method=mergeProperty&person2ID=<bean:write name="person2ID" />&person1ID=<bean:write name="person1ID" />&source=1&slotName=
+	/mergeObjects.do?method=mergeProperty&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&source=1&slotName=
 </bean:define>
 
 <table>
@@ -58,10 +51,10 @@
 	</logic:iterate>
 	
 	<bean:define id="linkDeleteLeft">
-		/mergePersons.do?method=delete&person2ID=<bean:write name="person2ID" />&person1ID=<bean:write name="person1ID" />&personID=<bean:write name="person1ID" />
+		/mergeObjects.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&objectIdInternal=<bean:write name="object1IdInternal" />
 	</bean:define>
 	<bean:define id="linkDeleteRight">
-		/mergePersons.do?method=delete&person2ID=<bean:write name="person2ID" />&person1ID=<bean:write name="person1ID" />&personID=<bean:write name="person2ID" />
+		/mergeObjects.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&objectIdInternal=<bean:write name="object2IdInternal" />
 	</bean:define>		
 	<tr>
 		<td></td>
@@ -71,3 +64,4 @@
 		<td><html:link module="/manager" page="<%= linkDeleteRight %>" ><strong><bean:message bundle="MANAGER_RESOURCES" key="message.manager.delete" /></strong></html:link></td>
 	</tr>
 </table>
+<p><html:link module="/manager" page="/mergeObjects.do?method=prepare" >voltar</html:link></p>

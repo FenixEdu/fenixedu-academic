@@ -563,11 +563,12 @@
 
 		
 		<!-- ========== PERSONS MERGE ========== -->	
-		<form-bean name="personsMergeForm"
+		<form-bean name="objectsMergeForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
-			<form-property name="person1Username" type="java.lang.String"/>
-			<form-property name="person2Username" type="java.lang.String"/>
+			<form-property name="object1IdInternal" type="java.lang.Integer"/>
+			<form-property name="object2IdInternal" type="java.lang.Integer"/>
+			<form-property name="classToMerge" type="java.lang.String"/>
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
 
@@ -1985,15 +1986,15 @@
 			scope="request">
 		<forward name="chooseDegreeCurricularPlan" path="chooseDegreeCurricularPlan"/>
 	</action>
-						
+			
 	<!-- Persons Merge -->     
-	<action path="/mergePersons"
+	<action path="/mergeObjects"
 			parameter="method"
-			name="personsMergeForm"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.MergePersonsDispatchAction"
+			name="objectsMergeForm"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.domainObjectsManagement.MergeObjectsDispatchAction"
 			scope="request">
-		<forward name="choosePersons" path="choosePersons"/>
-		<forward name="displayPersons" path="displayPersons"/>
+		<forward name="chooseObjects" path="chooseObjects"/>
+		<forward name="displayObjects" path="displayObjects"/>
 	</action>
 	
 	<!-- Domain Object Manager -->     
@@ -2001,7 +2002,7 @@
 			parameter="method"
 			name="domainObjectManagerForm"
 			type="net.sourceforge.fenixedu.presentationTier.Action.manager.domainObjectsManagement.DomainObjectManagerDispatchAction"
-			scope="request">			
+			scope="request">
 		<forward name="chooseClassToManage" path="domainObjectManager.chooseClassToManage"/>
 		<forward name="prepareEditObject" path="domainObjectManager.prepareEditObject"/>		
 	</action>
