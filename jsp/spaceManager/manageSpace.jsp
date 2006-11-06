@@ -117,10 +117,7 @@
 		}
 	%>
 
-	<%-- BluePrints --%>
-	<%
-		if(thisSpace.personHasPermissionsToManageSpace(person)){
-	%>	
+	<%-- BluePrints --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>			
 	<logic:notEmpty name="selectedSpaceInformation" property="space.mostRecentBlueprint">		
 		<bean:define id="blueprint" name="selectedSpaceInformation" property="space.mostRecentBlueprint"/>		
@@ -129,6 +126,12 @@
 		<html:img src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
 		</p>
 	</logic:notEmpty>	
+	<logic:empty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
+		<p class="mtop05"><em><bean:message key="label.empty.blueprint" bundle="SPACE_RESOURCES"/>.</em></p>		
+	</logic:empty>
+	<%
+		if(thisSpace.personHasPermissionsToManageSpace(person)){
+	%>	
 	<p class="mtop05">
 		<html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.manage.blueprints"/>
@@ -241,10 +244,7 @@
 		}
 	%>
 
-	<%-- Responsability --%>
-	<%
-		if(thisSpace.personHasPermissionsToManageSpace(person)){
-	%>	
+	<%-- Responsability --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></h3>
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
 		<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
@@ -253,6 +253,12 @@
 	   		</fr:layout>	
 		</fr:view>
 	</logic:notEmpty>
+	<logic:empty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
+		<p class="mtop05"><em><bean:message key="label.empty.responsibility" bundle="SPACE_RESOURCES"/>.</em></p>		
+	</logic:empty>
+	<%
+		if(thisSpace.personHasPermissionsToManageSpace(person)){
+	%>	
 	<p class="mtop05">
 		<html:link page="/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.manage.space.responsibility"/>
@@ -262,10 +268,7 @@
 		}
 	%>
 	
-	<%-- Person Occupations --%>
-	<%
-		if(thisSpace.personHasPermissionToManagePersonOccupations(person) || thisSpace.personHasPermissionsToManageSpace(person)){
-	%>
+	<%-- Person Occupations --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.person.occupations"/></h3>
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 		<fr:view schema="PersonSpaceOccupationsWithUsername" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
@@ -274,6 +277,12 @@
 	   		</fr:layout>	
 		</fr:view>	
 	</logic:notEmpty>
+	<logic:empty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
+		<p class="mtop05"><em><bean:message key="label.empty.person.occupations" bundle="SPACE_RESOURCES"/>.</em></p>		
+	</logic:empty>
+	<%
+		if(thisSpace.personHasPermissionToManagePersonOccupations(person) || thisSpace.personHasPermissionsToManageSpace(person)){
+	%>
 	<p class="mtop05"><html:link page="/managePersonSpaceOccupations.do?method=showSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.person.occupations"/>
 	</html:link></p>
@@ -281,10 +290,7 @@
 		}
 	%>
 
-	<%-- Material --%>
-	<%
-		if(thisSpace.personHasPermissionToManageExtensionOccupations(person) || thisSpace.personHasPermissionsToManageSpace(person)){
-	%>
+	<%-- Material --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></h3>
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
 		<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial">
@@ -293,6 +299,12 @@
 	   		</fr:layout>	
 		</fr:view>			
 	</logic:notEmpty>
+	<logic:empty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
+		<p class="mtop05"><em><bean:message key="label.empty.material.occupations" bundle="SPACE_RESOURCES"/>.</em></p>		
+	</logic:empty>
+	<%
+		if(thisSpace.personHasPermissionToManageExtensionOccupations(person) || thisSpace.personHasPermissionsToManageSpace(person)){
+	%>
 	<p class="mtop05"><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.material.occupations"/>
 	</html:link></p>

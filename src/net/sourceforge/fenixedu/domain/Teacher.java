@@ -2,9 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -20,8 +18,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
@@ -53,7 +49,6 @@ import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.PublicationType;
 import net.sourceforge.fenixedu.util.State;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.Interval;
@@ -873,7 +868,7 @@ public class Teacher extends Teacher_Base {
 		    occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay());
 	    TeacherServiceExemption teacherServiceExemption = chooseOneServiceExemption(exemptions,
 		    occupationPeriod);
-
+	    
 	    if (teacherServiceExemption != null
 		    && teacherServiceExemption.isServiceExemptionToCountZeroInCredits()) {
 		return 0;

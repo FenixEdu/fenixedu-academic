@@ -32,5 +32,14 @@ public class TeacherMasterDegreeService extends TeacherMasterDegreeService_Base 
         removeTeacherService();
         super.delete();
     }
-    
+        
+    @Override
+    public Double getCredits() {
+	Double credits = super.getCredits();	
+	return credits != null ? round(credits) : 0.0;
+    }
+
+    private Double round(double n) {
+        return Math.round((n * 100.0)) / 100.0;
+    }
 }
