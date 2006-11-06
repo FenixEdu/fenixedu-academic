@@ -12,51 +12,44 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 
     public ExtensionSpaceOccupation(Space space, Extension extension, YearMonthDay begin,
 	    YearMonthDay end) {
-	super();
-	checkParameters(extension, begin, end, space);
+	super();	
 	setSpace(space);
-	checkPermissions();
 	setExtension(extension);
 	setOccupationInterval(begin, end);
     }
-
-    private void checkParameters(Extension extension, YearMonthDay begin, YearMonthDay end, Space space) {
+           
+    @Override
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    public void setExtension(Extension extension) {
 	if (extension == null) {
 	    throw new DomainException("error.extensionSpaceOccupation.no.extension");
 	}
-	if (begin == null) {
-	    throw new DomainException("error.extensionSpaceOccupation.no.beginDate");
-	}
-    }
-
-    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
-    private void checkPermissions() {
-    }
-
-    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
-    public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
-	checkExtensionSpaceOccupationIntersection(begin, end, getExtension());
-	super.setBegin(begin);
-	super.setEnd(end);
+	super.setExtension(extension);
     }
 
     @Override
-    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
     public void setBegin(YearMonthDay begin) {
 	checkExtensionSpaceOccupationIntersection(begin, getEnd(), getExtension());
 	super.setBegin(begin);
     }
 
     @Override
-    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
     public void setEnd(YearMonthDay end) {
 	checkExtensionSpaceOccupationIntersection(getBegin(), end, getExtension());
 	super.setEnd(end);
     }
 
-    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
+	checkExtensionSpaceOccupationIntersection(begin, end, getExtension());
+	super.setBegin(begin);
+	super.setEnd(end);
+    }
+       
     public void delete() {
-	removeExtension();
+	super.setExtension(null);
 	super.delete();
     }
 
@@ -72,7 +65,8 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 
     private void checkExtensionSpaceOccupationIntersection(YearMonthDay begin, YearMonthDay end,
 	    Extension extension) {
-	checkEndDate(begin, end);
+	
+	checkBeginDateAndEndDate(begin, end);
 	for (ExtensionSpaceOccupation extensionSpaceOccupation : extension
 		.getExtensionSpaceOccupations()) {
 	    if (!extensionSpaceOccupation.equals(this)
@@ -82,15 +76,18 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 	    }
 	}
     }
-
-    private void checkEndDate(final YearMonthDay begin, final YearMonthDay end) {
-	if (end != null && !end.isAfter(begin)) {
-	    throw new DomainException("error.begin.after.end");
-	}
-    }
-
+    
     private boolean occupationsIntersection(YearMonthDay begin, YearMonthDay end) {
 	return ((end == null || !this.getBegin().isAfter(end)) && (this.getEnd() == null || !this
 		.getEnd().isBefore(begin)));
     }
+    
+    private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {
+	if (begin == null) {
+	    throw new DomainException("error.personSpaceOccupation.no.beginDate");
+	}
+	if (end != null && !end.isAfter(begin)) {
+	    throw new DomainException("error.begin.after.end");
+	}
+    }    
 }

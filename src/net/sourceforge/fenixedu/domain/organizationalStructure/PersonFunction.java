@@ -16,7 +16,7 @@ public class PersonFunction extends PersonFunction_Base {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"));
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
     }
-    
+
     public final static Comparator<PersonFunction> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("person.name"));
@@ -26,23 +26,16 @@ public class PersonFunction extends PersonFunction_Base {
     public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin,
 	    YearMonthDay end, Double credits) {
 	super();
-	checkParameters(parentParty, childParty, function, begin, end);
-	checkPersonFunctionDatesIntersection((Person) childParty, (Unit) parentParty, function, begin,
-		end);
-	super.setBeginDate(begin);
-	super.setEndDate(end);
 	setParentParty(parentParty);
 	setChildParty(childParty);
 	setAccountabilityType(function);
 	setCredits(credits);
+	setOccupationInterval(begin, end);
     }
 
-    public void edit(YearMonthDay begin, YearMonthDay end, Double credits) {
-	checkParameters(getUnit(), getPerson(), getFunction(), begin, end);
-	checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), begin, end);
-	super.setBeginDate(begin);
-	super.setEndDate(end);
+    public void edit(YearMonthDay begin, YearMonthDay end, Double credits) {	
 	setCredits(credits);
+	setOccupationInterval(begin, end);
     }
 
     @Override
@@ -58,32 +51,37 @@ public class PersonFunction extends PersonFunction_Base {
 		endDate);
 	super.setEndDate(endDate);
     }
+    
+    public void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
+	checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), beginDate, endDate);
+	super.setBeginDate(beginDate);
+	super.setEndDate(endDate);
+    }     
 
-    private void checkParameters(Party parentParty, Party childParty, Function function,
-	    YearMonthDay begin, YearMonthDay end) {
-	if (parentParty == null) {
-	    throw new DomainException("error.personFunction.no.unit");
+    @Override
+    public Double getCredits() {
+	if (super.getCredits() == null) {
+	    return 0d;
 	}
-	if (childParty == null) {
-	    throw new DomainException("error.personFunction.no.person");
-	}
-	if (function == null) {
-	    throw new DomainException("error.personFunction.no.function");
-	}
-	if (begin == null) {
-	    throw new DomainException("error.personFunction.no.beginDate");
-	}
-	if (end == null) {
-	    throw new DomainException("error.personFunction.no.endDate");
-	}
-	if (end != null && end.isBefore(begin)) {
-	    throw new DomainException("error.personFunction.endDateBeforeBeginDate");
-	}
+	return super.getCredits();
+    }    
+    
+    public Person getPerson() {
+	return (Person) this.getChildParty();
     }
 
+    public Unit getUnit() {
+	return (Unit) this.getParentParty();
+    }
+
+    public Function getFunction() {
+	return (Function) this.getAccountabilityType();
+    }
+    
     private void checkPersonFunctionDatesIntersection(Person person, Unit unit, Function function,
 	    YearMonthDay begin, YearMonthDay end) {
 
+	checkBeginDateAndEndDate(begin, end);
 	for (PersonFunction personFunction : person.getPersonFunctions(unit)) {
 	    if (!personFunction.equals(this) && personFunction.getFunction().equals(function)
 		    && personFunction.checkDatesIntersections(begin, end)) {
@@ -97,23 +95,15 @@ public class PersonFunction extends PersonFunction_Base {
 		.getEndDate().isBefore(begin)));
     }
 
-    public Person getPerson() {
-	return (Person) this.getChildParty();
-    }
-
-    public Unit getUnit() {
-	return (Unit) this.getParentParty();
-    }
-
-    public Function getFunction() {
-	return (Function) this.getAccountabilityType();
-    }
-
-    @Override
-    public Double getCredits() {
-	if (super.getCredits() == null) {
-	    return 0d;
+    private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {
+	if (begin == null) {
+	    throw new DomainException("error.personFunction.no.beginDate");
 	}
-	return super.getCredits();
+	if (end == null) {
+	    throw new DomainException("error.personFunction.no.endDate");
+	}
+	if (end != null && !end.isAfter(begin)) {
+	    throw new DomainException("error.personFunction.endDateBeforeBeginDate");
+	}
     }
 }

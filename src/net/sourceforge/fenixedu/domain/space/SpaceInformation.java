@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -19,18 +20,55 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
 	setOjbConcreteClass(this.getClass().getName());	
     }
 
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     public void delete() {
 	if (getSpace().getSpaceInformationsCount() == 1) {
 	    throw new DomainException("space.must.have.at.least.one.space.information");
 	}
 	deleteWithoutCheckNumberOfSpaceInformations();
+    }  
+    
+    @Override
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    public void setValidFrom(YearMonthDay begin) {
+	checkSpaceInformationsIntersection(begin, getValidUntil());
+	super.setValidFrom(begin);
     }
 
-    protected void deleteWithoutCheckNumberOfSpaceInformations() {
+    @Override
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    public void setValidUntil(YearMonthDay end) {
+	checkSpaceInformationsIntersection(getValidFrom(), end);
+	super.setValidUntil(end);
+    }
+
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    protected void editTimeInterval(final YearMonthDay begin, final YearMonthDay end) {	
+	checkSpaceInformationsIntersection(begin, end);
+	super.setValidFrom(begin);
+	super.setValidUntil(end);
+    }
+    
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    protected void setFirstTimeInterval(final YearMonthDay begin, final YearMonthDay end) {
+	setNewValidUntilDateIfNecessary(begin.minusDays(1));
+	editTimeInterval(begin, end);
+    }
+    
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    public void deleteWithoutCheckNumberOfSpaceInformations() {
 	super.setSpace(null);
 	removeRootDomainObject();
 	deleteDomainObject();
     }
+    
+    @Override    
+    public void setSpace(Space space) {
+	if (space == null) {
+	    throw new DomainException("error.space.information.no.space");
+	}
+	super.setSpace(space);
+    }   
 
     public int compareTo(SpaceInformation spaceInformation) {
 	if (getValidUntil() == null) {
@@ -43,7 +81,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
     }
 
     protected void checkSpaceInformationsIntersection(final YearMonthDay begin, final YearMonthDay end) {
-	checkEndDate(begin, end);
+	checkBeginDateAndEndDate(begin, end);
 	for (SpaceInformation information : getSpace().getSpaceInformationsSet()) {
 	    if (!information.equals(this) && information.spaceInformationsIntersection(begin, end)) {
 		throw new DomainException("error.space.information.intersection");
@@ -54,40 +92,25 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
     public boolean isActive(YearMonthDay currentDate) {
 	return (!this.getValidFrom().isAfter(currentDate) && (this.getValidUntil() == null || !this
 		.getValidUntil().isBefore(currentDate)));
-    }
+    }    
 
-    @Override
-    public void setSpace(Space space) {
-	if (space == null) {
-	    throw new DomainException("error.space.information.no.space");
+    protected YearMonthDay getNextPossibleValidFromDate() {
+	SpaceInformation mostRecentSpaceInformation = getSpace().getMostRecentSpaceInformation();
+	if (mostRecentSpaceInformation.getValidUntil() != null) {
+	    return mostRecentSpaceInformation.getValidUntil().plusDays(1);
+	} else {
+	    return mostRecentSpaceInformation.getValidFrom().plusDays(2);
 	}
-	super.setSpace(space);
-    }
-
-    @Override
-    public void setValidFrom(YearMonthDay begin) {
-	checkSpaceInformationsIntersection(begin, getValidUntil());
-	super.setValidFrom(begin);
-    }
-
-    @Override
-    public void setValidUntil(YearMonthDay end) {
-	checkSpaceInformationsIntersection(getValidFrom(), end);
-	super.setValidUntil(end);
-    }
-
-    protected void setTimeInterval(final YearMonthDay begin, final YearMonthDay end) {
-	setNewValidUntilDateIfNecessary(begin.minusDays(1));
-	checkSpaceInformationsIntersection(begin, end);
-	super.setValidFrom(begin);
-	super.setValidUntil(end);
-    }
-
-    private void checkEndDate(final YearMonthDay begin, final YearMonthDay end) {
-	if (end != null && !end.isAfter(begin)) {
+    }     
+   
+    private void checkBeginDateAndEndDate(YearMonthDay beginDate, YearMonthDay endDate) {
+	if (beginDate == null) {
+	    throw new DomainException("error.contract.no.beginDate");
+	}
+	if (endDate != null && endDate.isBefore(beginDate)) {
 	    throw new DomainException("error.begin.after.end");
 	}
-    }
+    }  
 
     private boolean spaceInformationsIntersection(YearMonthDay begin, YearMonthDay end) {
 	return ((end == null || !this.getValidFrom().isAfter(end)) && (this.getValidUntil() == null || !this
@@ -107,15 +130,6 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
 		    information.setValidUntilWithoutCheck(day);
 		}
 	    }
-	}
-    }
-
-    protected YearMonthDay getNextPossibleValidFromDate() {
-	SpaceInformation mostRecentSpaceInformation = getSpace().getMostRecentSpaceInformation();
-	if (mostRecentSpaceInformation.getValidUntil() != null) {
-	    return mostRecentSpaceInformation.getValidUntil().plusDays(1);
-	} else {
-	    return mostRecentSpaceInformation.getValidFrom().plusDays(2);
 	}
     }
 }

@@ -6,10 +6,8 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -53,36 +51,46 @@ public class Unit extends Unit_Base {
 	super();
     }
 
-    public void edit(String unitName, Integer unitCostCenter, String acronym, Date beginDate,
-	    Date endDate, PartyTypeEnum type, String webAddress) {
-
-	checkUnitDates(beginDate, endDate);
-	setCostCenterCode(unitCostCenter);
+    public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
+	    YearMonthDay endDate, PartyTypeEnum type, String webAddress) {
+		
 	checkAcronym(acronym, this.getType());
+	setCostCenterCode(unitCostCenter);
 	setName(unitName);
-	setBeginDate(beginDate);
-	setEndDate(endDate);
+	setBeginDateYearMonthDay(beginDate);
+	setEndDateYearMonthDay(endDate);
 	setType(type);
 	setWebAddress(webAddress);
 	setAcronym(acronym);
-    }
+    }     
 
-    private void checkCostCenterCode(Integer costCenterCode) {
+    @Override
+    public void setCostCenterCode(Integer costCenterCode) {
 	Unit unit = readByCostCenterCode(costCenterCode);
 	if (unit != null && !unit.equals(this)) {
 	    throw new DomainException("error.costCenter.alreadyExists");
 	}
+	super.setCostCenterCode(costCenterCode);
     }
 
-    private void checkUnitDates(Date beginDate, Date endDate) {
-	if (beginDate == null) {
+    @Override
+    public void setBeginDateYearMonthDay(YearMonthDay beginDateYearMonthDay) {
+	if (beginDateYearMonthDay == null) {
 	    throw new DomainException("error.unit.no.beginDate");
 	}
-	if (endDate != null && endDate.before(beginDate)) {
-	    throw new DomainException("error.unit.endDateBeforeBeginDate");
-	}
+	super.setBeginDateYearMonthDay(beginDateYearMonthDay);
     }
 
+    @Override
+    public void setEndDateYearMonthDay(YearMonthDay endDateYearMonthDay) {
+	if (getBeginDateYearMonthDay() == null
+		|| (endDateYearMonthDay != null && endDateYearMonthDay
+			.isBefore(getBeginDateYearMonthDay()))) {
+	    throw new DomainException("error.unit.endDateBeforeBeginDate");
+	}
+	super.setEndDateYearMonthDay(endDateYearMonthDay);
+    }       
+   
     private void checkAcronym(String acronym, PartyTypeEnum partyTypeEnum) {
 	Unit unit = readUnitByAcronymAndType(acronym, partyTypeEnum);
 	if (unit != null && !unit.equals(this)) {
@@ -669,32 +677,22 @@ public class Unit extends Unit_Base {
 	return result;
     }
 
-    @Override
-    public void setCostCenterCode(Integer costCenterCode) {
-	checkCostCenterCode(costCenterCode);
-	super.setCostCenterCode(costCenterCode);
-    }
-
     public Collection<Unit> getParentByOrganizationalStructureAccountabilityType() {
 	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
 		getClass());
     }
 
     public static Unit createNewUnit(String unitName, Integer costCenterCode, String acronym,
-	    Date beginDate, Date endDate, PartyTypeEnum type, Unit parentUnit,
+	    YearMonthDay beginDate, YearMonthDay endDate, PartyTypeEnum type, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress) throws FenixFilterException,
 	    FenixServiceException {
-
-	if (unitName == null || StringUtils.isEmpty(unitName.trim())) {
-	    throw new DomainException("error.unit.empty.name");
-	}
+	
 	Unit unit = new Unit();
-	unit.checkUnitDates(beginDate, endDate);
 	unit.checkAcronym(acronym, type);
 	unit.setCostCenterCode(costCenterCode);
 	unit.setName(unitName);
-	unit.setBeginDate(beginDate);
-	unit.setEndDate(endDate);
+	unit.setBeginDateYearMonthDay(beginDate);
+	unit.setEndDateYearMonthDay(endDate);
 	unit.setType(type);
 	unit.setWebAddress(webAddress);
 	unit.setAcronym(acronym);
@@ -706,10 +704,6 @@ public class Unit extends Unit_Base {
 
     public static Unit createNewExternalInstitution(String unitName) {
 
-	if (unitName == null || StringUtils.isEmpty(unitName.trim())) {
-	    throw new DomainException("error.unit.empty.name");
-	}
-
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
 	if (externalInstitutionUnit == null) {
 	    throw new DomainException("error.exception.commons.institution.rootInstitutionNotFound");
@@ -717,7 +711,7 @@ public class Unit extends Unit_Base {
 
 	Unit institutionUnit = new Unit();
 	institutionUnit.setName(unitName);
-	institutionUnit.setBeginDate(Calendar.getInstance().getTime());
+	institutionUnit.setBeginDateYearMonthDay(new YearMonthDay());
 	institutionUnit.setType(PartyTypeEnum.EXTERNAL_INSTITUTION);
 	institutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
 		.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));

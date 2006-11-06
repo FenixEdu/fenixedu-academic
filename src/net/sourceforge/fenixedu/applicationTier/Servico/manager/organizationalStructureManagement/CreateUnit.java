@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 import java.util.Date;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -24,7 +26,9 @@ public class CreateUnit extends Service {
         Unit parentUnit = getParentUnit(parentUnitID);
         Integer costCenterCode = getCostCenterCode(unitCostCenter);
         
-        Unit unit = Unit.createNewUnit(unitName, costCenterCode, acronym, beginDate, endDate, type,
+        YearMonthDay begin = (beginDate != null) ? YearMonthDay.fromDateFields(beginDate) : null;
+	YearMonthDay end = (endDate != null) ? YearMonthDay.fromDateFields(endDate) : null;
+        Unit unit = Unit.createNewUnit(unitName, costCenterCode, acronym, begin, end, type,
                 parentUnit, accountabilityType, webAddress);
        
         setDepartment(departmentID, unit);

@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
-import java.util.Date;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -14,58 +12,58 @@ import org.joda.time.YearMonthDay;
 
 public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
-    public TeacherServiceExemption(Teacher teacher, Date beginDate, Date endDate,
+    public TeacherServiceExemption(Teacher teacher, YearMonthDay beginDate, YearMonthDay endDate,
 	    ServiceExemptionType type, String institution) {
+
 	super();
-	checkParameters(teacher, beginDate, endDate, type);
-	setRootDomainObject(RootDomainObject.getInstance());
-	setEnd(endDate);
-	setStart(beginDate);
+	setRootDomainObject(RootDomainObject.getInstance());	
 	setTeacher(teacher);
 	setType(type);
 	setInstitution(institution);
+	setOccupationInterval(beginDate, endDate);
     }
 
-    private void checkParameters(Teacher teacher, Date beginDate, Date endDate, ServiceExemptionType type) {
+    @Override
+    public void setStartYearMonthDay(YearMonthDay beginDate) {
+	checkTeacherServiceExemptionsDatesIntersection(getTeacher(), beginDate, getEndYearMonthDay(),
+		getType());
+	super.setStartYearMonthDay(beginDate);
+    }
+
+    @Override
+    public void setEndYearMonthDay(YearMonthDay endDate) {
+	checkTeacherServiceExemptionsDatesIntersection(getTeacher(), getStartYearMonthDay(), endDate,
+		getType());
+	super.setEndYearMonthDay(endDate);
+    }
+
+    public void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
+	checkTeacherServiceExemptionsDatesIntersection(getTeacher(), beginDate, endDate, getType());
+	super.setStartYearMonthDay(beginDate);
+	super.setEndYearMonthDay(endDate);
+    }
+
+    @Override
+    public void setTeacher(Teacher teacher) {
 	if (teacher == null) {
 	    throw new DomainException("error.serviceExemption.no.teacher");
 	}
+	super.setTeacher(teacher);
+    }
+
+    @Override
+    public void setType(ServiceExemptionType type) {
 	if (type == null) {
 	    throw new DomainException("error.serviceExemption.no.type");
 	}
-	if (beginDate == null) {
-	    throw new DomainException("error.serviceExemption.no.beginDate");
-	}
-	if (endDate != null && endDate.before(beginDate)) {
-	    throw new DomainException("error.serviceExemption.endDateBeforeBeginDate");
-	}
-	// checkTeacherServiceExemptionsDatesIntersection(teacher, beginDate,
-        // endDate, type);
+	super.setType(type);
     }
 
     public void delete() {
-	removeTeacher();
+	super.setTeacher(null);
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
-
-    // private void checkTeacherServiceExemptionsDatesIntersection(Teacher
-        // teacher, Date begin, Date end, ServiceExemptionType type) {
-    // for (TeacherServiceExemption serviceExemption :
-        // teacher.getServiceExemptionSituations()) {
-    // if (serviceExemption.getType().equals(type) &&
-        // serviceExemption.checkDatesIntersections(begin, end)) {
-    // System.out.println("Teacher Number: " + teacher.getTeacherNumber());
-    // throw new
-        // DomainException("error.teacherLegalRegimen.dates.intersection");
-    // }
-    // }
-    // }
-    //
-    // private boolean checkDatesIntersections(Date begin, Date end) {
-    // return ((end == null || this.getStart().before(end))
-    // && (this.getEnd() == null || this.getEnd().after(begin)));
-    // }
 
     public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
 	return ((endDate == null || !this.getStartYearMonthDay().isAfter(endDate)) && (this
@@ -112,5 +110,34 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		|| this.getType().equals(ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_E_C_D_U) || this
 		.getType().equals(
 			ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_DL24_84_ART51_N6_EST_DISC));
+    }
+
+    private void checkTeacherServiceExemptionsDatesIntersection(Teacher teacher, YearMonthDay begin,
+	    YearMonthDay end, ServiceExemptionType type) {
+
+	checkBeginDateAndEndDate(begin, end);
+	// for (TeacherServiceExemption serviceExemption :
+        // teacher.getServiceExemptionSituations()) {
+	// if (serviceExemption.getType().equals(type)
+	// && serviceExemption.checkDatesIntersections(begin, end)) {
+	// System.out.println("Teacher Number: " + teacher.getTeacherNumber());
+	// throw new
+        // DomainException("error.teacherLegalRegimen.dates.intersection");
+	// }
+	// }
+    }
+
+    private void checkBeginDateAndEndDate(YearMonthDay beginDate, YearMonthDay endDate) {
+	if (beginDate == null) {
+	    throw new DomainException("error.serviceExemption.no.beginDate");
+	}
+	if (endDate != null && endDate.isBefore(beginDate)) {
+	    throw new DomainException("error.serviceExemption.endDateBeforeBeginDate");
+	}
+    }
+
+    private boolean checkDatesIntersections(YearMonthDay begin, YearMonthDay end) {
+	return ((end == null || this.getStartYearMonthDay().isBefore(end)) && (this.getEndYearMonthDay() == null || this
+		.getEndYearMonthDay().isAfter(begin)));
     }
 }

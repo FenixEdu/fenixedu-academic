@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import java.util.Comparator;
-import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -27,49 +26,20 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 		.addComparator(new BeanComparator("idInternal"));
     }
 
-    public TeacherLegalRegimen(Teacher teacher, Category category, Date beginDate, Date endDate,
-	    Double totalHoursNumber, Integer lessonHoursNumber, LegalRegimenType legalRegimenType,
-	    RegimenType regimenType, Integer percentage) {
+    public TeacherLegalRegimen(Teacher teacher, Category category, YearMonthDay beginDate,
+	    YearMonthDay endDate, Double totalHoursNumber, Integer lessonHoursNumber,
+	    LegalRegimenType legalRegimenType, RegimenType regimenType, Integer percentage) {
 
 	super();
-	checkParameters(teacher, beginDate, endDate, legalRegimenType, category, totalHoursNumber,
-		lessonHoursNumber);
 	setRootDomainObject(RootDomainObject.getInstance());
 	setTeacher(teacher);
 	setCategory(category);
 	setLegalRegimenType(legalRegimenType);
-	setBeginDate(beginDate);
-	setEndDate(endDate);
 	setTotalHours(totalHoursNumber);
 	setLessonHours(lessonHoursNumber);
 	setPercentage(percentage);
 	setRegimenType(regimenType);
-    }
-
-    private void checkParameters(Teacher teacher, Date beginDate, Date endDate,
-	    LegalRegimenType legalRegimenType, Category category, Double totalHoursNumber,
-	    Integer lessonHoursNumber) {
-
-	if (teacher == null) {
-	    throw new DomainException("error.teacherLegalRegimen.no.teacher");
-	}
-	if (beginDate == null) {
-	    throw new DomainException("error.teacherLegalRegimen.no.beginDate");
-	}
-	if (endDate != null && endDate.before(beginDate)) {
-	    System.out.println("Teacher Number: " + teacher.getTeacherNumber());
-	    throw new DomainException("error.teacherLegalRegimen.endDateBeforeBeginDate");
-	}
-	if (legalRegimenType == null) {
-	    throw new DomainException("error.teacherLegalRegimen.no.legalRegimenType");
-	}
-	if (category == null) {
-	    throw new DomainException("error.teacherLegalRegimen.no.category");
-	}
-	// if(!isEndLegalRegimenType(legalRegimenType)) {
-	// checkTeacherLegalRegimenDatesIntersection(teacher, beginDate,
-        // endDate);
-	// }
+	setOccupationInterval(beginDate, endDate);
     }
 
     public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
@@ -82,31 +52,95 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
     }
 
     public void delete() {
-	removeCategory();
-	removeTeacher();
+	super.setCategory(null);
+	super.setTeacher(null);
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
 
-    // private void checkTeacherLegalRegimenDatesIntersection(Teacher
-        // teacher, Date begin, Date end) {
-    // for (TeacherLegalRegimen legalRegimen :
-        // teacher.getAllLegalRegimensWithoutEndSituations()) {
-    // if(legalRegimen.checkDatesIntersections(begin, end)) {
-    // System.out.println("Teacher Number: " + teacher.getTeacherNumber());
-    // throw new
-        // DomainException("error.teacherLegalRegimen.dates.intersection");
-    // }
-    // }
-    // }
-    //    
-    // private boolean checkDatesIntersections(Date begin, Date end) {
-    // return ((end == null || this.getBeginDate().before(end))
-    // && (this.getEndDate() == null || this.getEndDate().after(begin)));
-    // }
-
     public boolean isEndSituation() {
 	return isEndLegalRegimenType(getLegalRegimenType());
+    }
+
+    @Override
+    public void setBeginDateYearMonthDay(YearMonthDay beginDate) {
+	if (!isEndLegalRegimenType(getLegalRegimenType())) {
+	    checkTeacherLegalRegimenDatesIntersection(getTeacher(), beginDate, getEndDateYearMonthDay());
+	} else {
+	    checkBeginDateAndEndDate(beginDate, getEndDateYearMonthDay());
+	}
+	super.setBeginDateYearMonthDay(beginDate);
+    }
+
+    @Override
+    public void setEndDateYearMonthDay(YearMonthDay endDate) {
+	if (!isEndLegalRegimenType(getLegalRegimenType())) {
+	    checkTeacherLegalRegimenDatesIntersection(getTeacher(), getBeginDateYearMonthDay(), endDate);
+	} else {
+	    checkBeginDateAndEndDate(getBeginDateYearMonthDay(), endDate);
+	}
+	super.setEndDateYearMonthDay(endDate);
+    }
+
+    public void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
+	if (!isEndLegalRegimenType(getLegalRegimenType())) {
+	    checkTeacherLegalRegimenDatesIntersection(getTeacher(), beginDate, endDate);
+	} else {
+	    checkBeginDateAndEndDate(beginDate, endDate);
+	}
+	super.setBeginDateYearMonthDay(beginDate);
+	super.setEndDateYearMonthDay(endDate);
+    }
+
+    @Override
+    public void setCategory(Category category) {
+	if (category == null) {
+	    throw new DomainException("error.teacherLegalRegimen.no.category");
+	}
+	super.setCategory(category);
+    }
+
+    @Override
+    public void setLegalRegimenType(LegalRegimenType legalRegimenType) {
+	if (legalRegimenType == null) {
+	    throw new DomainException("error.teacherLegalRegimen.no.legalRegimenType");
+	}
+	super.setLegalRegimenType(legalRegimenType);
+    }
+
+    @Override
+    public void setTeacher(Teacher teacher) {
+	if (teacher == null) {
+	    throw new DomainException("error.teacherLegalRegimen.no.teacher");
+	}
+	super.setTeacher(teacher);
+    }
+
+    private void checkTeacherLegalRegimenDatesIntersection(Teacher teacher, YearMonthDay begin,
+	    YearMonthDay end) {
+	checkBeginDateAndEndDate(begin, end);
+	// for (TeacherLegalRegimen legalRegimen :
+	// teacher.getAllLegalRegimensWithoutEndSituations()) {
+	// if (legalRegimen.checkDatesIntersections(begin, end)) {
+	// System.out.println("Teacher Number: " + teacher.getTeacherNumber());
+	// throw new
+	// DomainException("error.teacherLegalRegimen.dates.intersection");
+	// }
+	// }
+    }
+
+    private void checkBeginDateAndEndDate(YearMonthDay beginDate, YearMonthDay endDate) {
+	if (beginDate == null) {
+	    throw new DomainException("error.teacherLegalRegimen.no.beginDate");
+	}
+	if (endDate != null && endDate.isBefore(beginDate)) {
+	    throw new DomainException("error.teacherLegalRegimen.endDateBeforeBeginDate");
+	}
+    }
+
+    private boolean checkDatesIntersections(YearMonthDay begin, YearMonthDay end) {
+	return ((end == null || this.getBeginDateYearMonthDay().isBefore(end)) && (this
+		.getEndDateYearMonthDay() == null || this.getEndDateYearMonthDay().isAfter(begin)));
     }
 
     private boolean isEndLegalRegimenType(LegalRegimenType legalRegimenType) {

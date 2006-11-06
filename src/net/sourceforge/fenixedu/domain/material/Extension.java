@@ -14,14 +14,12 @@ public class Extension extends Extension_Base {
 
     public Extension(Integer number, Integer barCodeNumber, YearMonthDay acquisition,
 	    YearMonthDay cease, Unit owner) {
-	
-	super();
-	checkParameters(number, acquisition, cease);
+
+	super();	
 	setNumber(number);
-	setBarCodeNumber(barCodeNumber);
-	setAcquisition(acquisition);
-	setCease(cease);
+	setBarCodeNumber(barCodeNumber);	
 	setOwner(owner);
+	setOccupationInterval(acquisition, cease);
     }
 
     @Override
@@ -38,30 +36,14 @@ public class Extension extends Extension_Base {
     public String getPresentationDetails() {
 	return getNumber().toString();
     }
-
-    private void checkParameters(Integer number, YearMonthDay acquisition, YearMonthDay cease) {
+    
+    @Override
+    public void setNumber(Integer number) {
 	if (number == null) {
 	    throw new DomainException("error.extension.no.number");
 	}
-	if (acquisition == null) {
-	    throw new DomainException("error.extension.no.acquisitionDate");
-	}
-	if (cease != null && cease.isBefore(acquisition)) {
-	    throw new DomainException("error.extension.endDateBeforeBeginDate");
-	}
-    }
-
-    @Override
-    public void setNumber(Integer number) {
 	checkNumber(number);
 	super.setNumber(number);
-    }
-
-    private void checkNumber(Integer number) {
-	Extension extension = readByNumber(number);
-	if (extension != null && !extension.equals(this)) {
-	    throw new DomainException("error.extension.already.exists.one.extension.with.same.number");
-	}
     }
 
     public static Extension readByNumber(Integer number) {
@@ -83,4 +65,11 @@ public class Extension extends Extension_Base {
 	}
 	return extensions;
     }
+    
+    private void checkNumber(Integer number) {
+	Extension extension = readByNumber(number);
+	if (extension != null && !extension.equals(this)) {
+	    throw new DomainException("error.extension.already.exists.one.extension.with.same.number");
+	}
+    }   
 }

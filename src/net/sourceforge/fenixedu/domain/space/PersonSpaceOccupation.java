@@ -26,54 +26,46 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 		.addComparator(new BeanComparator("idInternal"));
     }
 
-    public PersonSpaceOccupation(final Space space, final Person person, final YearMonthDay begin, final YearMonthDay end) {
-	super();
-	checkParameters(space, person, begin, end);
+    public PersonSpaceOccupation(final Space space, final Person person, final YearMonthDay begin,
+	    final YearMonthDay end) {
+	super();	
 	setPerson(person);
 	setSpace(space);
-	checkPermissions();
 	setOccupationInterval(begin, end);
     }
-
-    private void checkParameters(final Space space, final Person person, YearMonthDay begin,
-	    YearMonthDay end) {
-
+    
+    @Override  
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    public void setPerson(Person person) {
 	if (person == null) {
 	    throw new DomainException("error.inexistente.person");
 	}
-	if (begin == null) {
-	    throw new DomainException("error.personSpaceOccupation.no.beginDate");
-	}
-    }
-
-    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
-    private void checkPermissions() {
+	super.setPerson(person);
     }
 
     @Override
-    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
     public void setBegin(YearMonthDay begin) {
 	checkPersonSpaceOccupationIntersection(begin, getEnd(), getPerson(), getSpace());
 	super.setBegin(begin);
     }
 
     @Override
-    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
     public void setEnd(YearMonthDay end) {
 	checkPersonSpaceOccupationIntersection(getBegin(), end, getPerson(), getSpace());
 	super.setEnd(end);
     }
 
-    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
 	checkPersonSpaceOccupationIntersection(begin, end, getPerson(), getSpace());
 	super.setBegin(begin);
 	super.setEnd(end);
     }
-
-    @Checked("SpaceOccupationsPredicates.permissionsToMakeOperations")
+    
     public void delete() {
-	removePerson();
+	super.setPerson(null);
 	super.delete();
     }
 
@@ -90,29 +82,32 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     @Override
     public Group getAccessGroup() {
 	return getSpace().getPersonOccupationsAccessGroupWithChainOfResponsibility();
-    }
-
-    private boolean occupationsIntersection(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null || !this.getBegin().isAfter(end)) && (this.getEnd() == null || !this
-		.getEnd().isBefore(begin)));
-    }
-
-    private void checkEndDate(final YearMonthDay begin, final YearMonthDay end) {
-	if (end != null && !end.isAfter(begin)) {
-	    throw new DomainException("error.begin.after.end");
-	}
-    }
+    }    
 
     public void checkPersonSpaceOccupationIntersection(final YearMonthDay begin, final YearMonthDay end,
 	    Person person, Space space) {
 
-	checkEndDate(begin, end);
+	checkBeginDateAndEndDate(begin, end);
 	List<PersonSpaceOccupation> personSpaceOccupations = person.getPersonSpaceOccupations();
 	for (PersonSpaceOccupation personSpaceOccupation : personSpaceOccupations) {
 	    if (!personSpaceOccupation.equals(this) && personSpaceOccupation.getSpace().equals(space)
 		    && personSpaceOccupation.occupationsIntersection(begin, end)) {
 		throw new DomainException("error.person.space.occupation.intersection");
 	    }
+	}
+    }
+
+    private boolean occupationsIntersection(YearMonthDay begin, YearMonthDay end) {
+	return ((end == null || !this.getBegin().isAfter(end)) && (this.getEnd() == null || !this
+		.getEnd().isBefore(begin)));
+    }
+    
+    private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {
+	if (begin == null) {
+	    throw new DomainException("error.personSpaceOccupation.no.beginDate");
+	}
+	if (end != null && !end.isAfter(begin)) {
+	    throw new DomainException("error.begin.after.end");
 	}
     }
 }

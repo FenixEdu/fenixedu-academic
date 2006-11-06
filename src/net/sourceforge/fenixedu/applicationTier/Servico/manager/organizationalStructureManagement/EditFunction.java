@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 import java.util.Date;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -19,6 +21,8 @@ public class EditFunction extends Service {
             throw new FenixServiceException("error.noFunction");
         }
 
-        function.edit(functionName, beginDate, endDate, type);
+        YearMonthDay begin = (beginDate != null) ? YearMonthDay.fromDateFields(beginDate) : null;
+	YearMonthDay end = (endDate != null) ? YearMonthDay.fromDateFields(endDate) : null;
+        function.edit(functionName, begin, end, type);
     }
 }

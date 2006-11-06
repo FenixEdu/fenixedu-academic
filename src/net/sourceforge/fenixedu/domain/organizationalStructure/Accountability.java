@@ -17,31 +17,17 @@ public class Accountability extends Accountability_Base {
 
     protected Accountability(Party parentParty, Party childParty, AccountabilityType accountabilityType) {
 	this();
-	checkParameters(parentParty, childParty, accountabilityType);
 	setParentParty(parentParty);
 	setChildParty(childParty);
 	setAccountabilityType(accountabilityType);
     }
 
-    private void checkParameters(Party parentParty, Party childParty,
-	    AccountabilityType accountabilityType) {
-	if (parentParty == null) {
-	    throw new DomainException("error.accountability.inexistent.parentParty");
-	}
-	if (childParty == null) {
-	    throw new DomainException("error.accountability.inexistent.childParty");
-	}
-	if (accountabilityType == null) {
-	    throw new DomainException("error.accountability.inexistent.accountabilityType");
-	}
-    }
-
     public void delete() {
-	removeAccountabilityType();
-	removeChildParty();
-	removeParentParty();
+	super.setAccountabilityType(null);
+	super.setChildParty(null);
+	super.setParentParty(null);
 	removeRootDomainObject();
-	deleteDomainObject();
+	super.deleteDomainObject();
     }
 
     public boolean belongsToPeriod(YearMonthDay begin, YearMonthDay end) {
@@ -65,5 +51,45 @@ public class Accountability extends Accountability_Base {
 
     public Date getEndDateInDateType() {
 	return (this.getEndDate() != null) ? this.getEndDate().toDateTimeAtCurrentTime().toDate() : null;
+    }
+
+    @Override
+    public void setChildParty(Party childParty) {
+	if (childParty == null) {
+	    throw new DomainException("error.accountability.inexistent.childParty");
+	}
+	super.setChildParty(childParty);
+    }
+
+    @Override
+    public void setParentParty(Party parentParty) {
+	if (parentParty == null) {
+	    throw new DomainException("error.accountability.inexistent.parentParty");
+	}
+	super.setParentParty(parentParty);
+    }
+
+    @Override
+    public void setAccountabilityType(AccountabilityType accountabilityType) {
+	if (accountabilityType == null) {
+	    throw new DomainException("error.accountability.inexistent.accountabilityType");
+	}
+	super.setAccountabilityType(accountabilityType);
+    }
+
+    @Override
+    public void setBeginDate(YearMonthDay beginDate) {
+	if (beginDate == null) {
+	    throw new DomainException("error.accountability.inexistent.beginDate");
+	}
+	super.setBeginDate(beginDate);
+    }
+
+    @Override
+    public void setEndDate(YearMonthDay endDate) {
+	if (getBeginDate() == null || (endDate != null && endDate.isBefore(getBeginDate()))) {
+	    throw new DomainException("error.accountability.endDate.before.beginDate");
+	}
+	super.setEndDate(endDate);
     }
 }

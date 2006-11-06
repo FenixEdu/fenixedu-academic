@@ -9,8 +9,6 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.ContractType;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -35,60 +33,46 @@ public class Contract extends Contract_Base {
 		"idInternal"));
     }
 
-    private Contract() {
-	super();
-    }
-
     public Contract(Person person, YearMonthDay beginDate, YearMonthDay endDate, Unit unit,
 	    ContractType type) {
 
-	this();
+	super();
 	AccountabilityType accountabilityType = AccountabilityType
 		.readAccountabilityTypeByType(AccountabilityTypeEnum.EMPLOYEE_CONTRACT);
-	checkParameters(person, beginDate, endDate, unit, accountabilityType);
+
 	setParentParty(unit);
 	setChildParty(person);
-	setContractType(type);
-	setBeginDate(beginDate);
-	setEndDate(endDate);
 	setAccountabilityType(accountabilityType);
+	setContractType(type);
+	setOccupationInterval(beginDate, endDate);
+    }
+    
+    @Override
+    public void setContractType(ContractType contractType) {
+	if(contractType == null) {
+	    throw new DomainException("error.contract.empty.contractType");
+	}
+	super.setContractType(contractType);
+    }
+   
+    @Override
+    public void setBeginDate(YearMonthDay beginDate) {
+	checkContractDatesIntersection(getEmployee(), beginDate, getEndDate());
+	super.setBeginDate(beginDate);
     }
 
-    private void checkParameters(Person person, YearMonthDay beginDate, YearMonthDay endDate, Unit unit,
-	    AccountabilityType accountabilityType) {
-	if (unit == null) {
-	    throw new DomainException("error.contract.no.unit");
-	}
-	if (person == null) {
-	    throw new DomainException("error.contract.no.employee");
-	}
-	if (beginDate == null) {
-	    throw new DomainException("error.contract.no.beginDate");
-	}
-	if (endDate != null && endDate.isBefore(beginDate)) {
-	    throw new DomainException("error.contract.endDateBeforeBeginDate");
-	}
-	if (accountabilityType == null) {
-	    throw new DomainException("error.contract.no.accountabilityType");
-	}
-	// checkContractDatesIntersection(employee, beginDate, endDate);
+    @Override
+    public void setEndDate(YearMonthDay endDate) {
+	checkContractDatesIntersection(getEmployee(), getBeginDate(), endDate);
+	super.setEndDate(endDate);
     }
 
-    // private void checkContractDatesIntersection(Employee employee, Date
-    // begin, Date end) {
-    // for (Contract contract : employee.getContracts()) {
-    // if (contract.checkDatesIntersections(begin, end)) {
-    // throw new
-    // DomainException("error.employee.contract.dates.intersection");
-    // }
-    // }
-    // }
-    //    
-    // private boolean checkDatesIntersections(Date begin, Date end) {
-    // return ((end == null || !this.getBeginDate().after(end))
-    // && (this.getEndDate() == null || !this.getEndDate().before(begin)));
-    // }
-
+    public void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
+	checkContractDatesIntersection(getEmployee(), beginDate, endDate);
+	super.setBeginDate(beginDate);
+	super.setEndDate(endDate);
+    }
+       
     public Person getPerson() {
 	return (Person) getChildParty();
     }
@@ -112,4 +96,28 @@ public class Contract extends Contract_Base {
     public Unit getSalaryUnit() {
 	return getUnit();
     }
+    
+    private void checkContractDatesIntersection(Employee employee, YearMonthDay begin, YearMonthDay end) {
+	checkBeginDateAndEndDate(begin, end);
+	// for (Contract contract : employee.getContracts()) {
+	// if (contract.checkDatesIntersections(begin, end)) {
+	// throw new
+	// DomainException("error.employee.contract.dates.intersection");
+	// }
+	// }
+    }
+
+    private boolean checkDatesIntersections(YearMonthDay begin, YearMonthDay end) {
+	return ((end == null || !this.getBeginDate().isAfter(end)) && (this.getEndDate() == null || !this
+		.getEndDate().isBefore(begin)));
+    }
+
+    private void checkBeginDateAndEndDate(YearMonthDay beginDate, YearMonthDay endDate) {
+	if (beginDate == null) {
+	    throw new DomainException("error.contract.no.beginDate");
+	}
+	if (endDate != null && endDate.isBefore(beginDate)) {
+	    throw new DomainException("error.contract.endDateBeforeBeginDate");
+	}
+    }    
 }

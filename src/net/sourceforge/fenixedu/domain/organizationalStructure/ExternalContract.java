@@ -24,38 +24,30 @@ public class ExternalContract extends ExternalContract_Base {
 	this();
 	AccountabilityType accountabilityType = AccountabilityType
 		.readAccountabilityTypeByType(AccountabilityTypeEnum.EMPLOYEE_CONTRACT);
-	checkParameters(person, beginDate, endDate, institution, accountabilityType);
-	setBeginDate(beginDate);
+
 	setAccountabilityType(accountabilityType);
 	setChildParty(person);
 	setParentParty(institution);
+	setOccupationInterval(beginDate, endDate);
     }
 
-    private void checkParameters(Person person, YearMonthDay beginDate, YearMonthDay endDate, Unit unit,
-	    AccountabilityType accountabilityType) {
-	if (unit == null) {
-	    throw new DomainException("error.contract.no.unit");
-	}
-	if (person == null) {
-	    throw new DomainException("error.contract.no.employee");
-	}
+    private void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
 	if (beginDate == null) {
 	    throw new DomainException("error.contract.no.beginDate");
 	}
 	if (endDate != null && endDate.isBefore(beginDate)) {
 	    throw new DomainException("error.contract.endDateBeforeBeginDate");
 	}
-	if (accountabilityType == null) {
-	    throw new DomainException("error.contract.no.accountabilityType");
-	}
+	setBeginDate(beginDate);
+	setEndDate(endDate);
     }
 
     public void edit(String name, String address, String phone, String mobile, String homepage,
 	    String email, Unit institution) {
 
 	if (!externalPersonsAlreadyExists(name, address, institution)) {
-	    this.getPerson().edit(name, address, phone, mobile, homepage, email);
-	    this.setParentParty(institution);
+	    getPerson().edit(name, address, phone, mobile, homepage, email);
+	    setParentParty(institution);
 	} else {
 	    throw new DomainException("error.exception.externalPerson.existingExternalPerson");
 	}

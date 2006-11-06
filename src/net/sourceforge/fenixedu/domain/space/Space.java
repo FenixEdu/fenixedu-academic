@@ -218,13 +218,13 @@ public abstract class Space extends Space_Base {
 	return campus;
     }
 
-    public static void checkIfLoggedPersonHasPermissionsToManageSpace(Person person, Space space) {
-	if ((space != null && !space.personHasPermissionsToManageSpace(person))
-		|| (space == null && !personBelongsToWorkmanshipsNucleus(person))) {
-	    throw new DomainException("error.logged.person.not.authorized.to.make.operation");
-	}
+    public void checkIfLoggedPersonHasPermissionsToManageSpace(Person person) {
+	if(personHasPermissionsToManageSpace(person)) {
+	    return;
+	}	
+	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
     }
-
+    
     public boolean personHasPermissionsToManageSpace(Person person) {
 	return personBelongsToWorkmanshipsNucleus(person)
 		|| personHasSpecialPermissionToManageSpace(person);

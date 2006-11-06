@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Building.BuildingFactory;
 import net.sourceforge.fenixedu.domain.space.Building.BuildingFactoryEditor;
@@ -8,17 +10,21 @@ import net.sourceforge.fenixedu.domain.space.Building.BuildingFactoryEditor;
 public class BuildingInformation extends BuildingInformation_Base {
 
     protected BuildingInformation(final Building building, final BuildingFactory buildingFactory) {
-	super();	
-	Space.checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson(), building);
+	super();
 	super.setSpace(building);
-	setName(buildingFactory.getName());
-	setTimeInterval(buildingFactory.getBegin(), buildingFactory.getEnd());
+	setFirstTimeInterval(buildingFactory.getBegin(), buildingFactory.getEnd());
+	setName(buildingFactory.getName());	
+    }
+    
+    public void editBuildingCharacteristics(String name, YearMonthDay begin, YearMonthDay end) {
+	editTimeInterval(begin, end);
+	setName(name);
     }
 
     @Override
     public void setName(final String name) {
-	if (name == null) {
-	    throw new NullPointerException("error.building.name.cannot.be.null");
+	if (StringUtils.isEmpty(name)) {
+	    throw new DomainException("error.building.name.cannot.be.null");
 	}
 	super.setName(name);
     }

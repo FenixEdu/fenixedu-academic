@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 
 public abstract class Party extends Party_Base {
 
@@ -29,6 +30,14 @@ public abstract class Party extends Party_Base {
 	setOjbConcreteClass(getClass().getName());
 	createAccount(AccountType.INTERNAL);
 	createAccount(AccountType.EXTERNAL);
+    }
+    
+    @Override
+    public void setName(String name) {
+	if(name == null || StringUtils.isEmpty(name.trim())) {
+	    throw new DomainException("error.unit.empty.name");
+	}
+	super.setName(name);
     }
 
     public Account createAccount(AccountType accountType) {
@@ -192,8 +201,9 @@ public abstract class Party extends Party_Base {
 
 	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
 	    ;
+	
 	removeRootDomainObject();
-	deleteDomainObject();
+	super.deleteDomainObject();
     }
 
     private boolean canBeDeleted() {
@@ -224,7 +234,6 @@ public abstract class Party extends Party_Base {
     }
 
     public static Party readByContributorNumber(String contributorNumber) {
-
 	if (contributorNumber != null) {
 	    for (final Party party : RootDomainObject.getInstance().getPartys()) {
 		if (party.getSocialSecurityNumber() != null
@@ -233,7 +242,6 @@ public abstract class Party extends Party_Base {
 		}
 	    }
 	}
-
 	return null;
     }
 

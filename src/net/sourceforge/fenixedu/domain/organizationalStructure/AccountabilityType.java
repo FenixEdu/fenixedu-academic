@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class AccountabilityType extends AccountabilityType_Base {
     
@@ -25,5 +26,13 @@ public class AccountabilityType extends AccountabilityType_Base {
             }
         }
         return null;
-    }   
-}
+    }
+
+    @Override
+    public void setType(AccountabilityTypeEnum type) {
+	if(type == null) {
+	    throw new DomainException("error.accountabilityType.empty.type");
+	}
+	super.setType(type);
+    }        
+}   

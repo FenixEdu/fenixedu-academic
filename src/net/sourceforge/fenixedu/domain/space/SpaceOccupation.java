@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -14,10 +15,11 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
     public void delete() {
 	super.setSpace(null);
 	removeRootDomainObject();
-	deleteDomainObject();
+	super.deleteDomainObject();
     }
 
     public abstract Group getAccessGroup();

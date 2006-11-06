@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -11,38 +10,52 @@ import org.joda.time.YearMonthDay;
 
 public class Function extends Function_Base {
 
-    public Function(String functionName, Date beginDate, Date endDate, FunctionType type, Unit unit) {
+    public Function(String functionName, YearMonthDay beginDate, YearMonthDay endDate,
+	    FunctionType type, Unit unit) {
 	super();
 	edit(functionName, beginDate, endDate, type);
-	checkFunctionUnit(unit);
 	setUnit(unit);
 	setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
     }
 
-    public void edit(String functionName, Date beginDate, Date endDate, FunctionType type) {
-	checkParameters(functionName, beginDate, endDate);
-	this.setName(functionName);
-	this.setBeginDate(beginDate);
-	this.setEndDate(endDate);
-	this.setFunctionType(type);
+    public void edit(String functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type) {
+	setName(functionName);
+	setFunctionType(type);
+	setBeginDateYearMonthDay(beginDate);
+	setEndDateYearMonthDay(endDate);
     }
 
-    private void checkParameters(String functionName, Date beginDate, Date endDate) {
-	if (functionName == null || StringUtils.isEmpty(functionName.trim())) {
-	    throw new DomainException("error.no.function.name");
-	}
+    @Override
+    public void setBeginDateYearMonthDay(YearMonthDay beginDate) {
 	if (beginDate == null) {
 	    throw new DomainException("error.function.no.beginDate");
 	}
-	if (endDate != null && endDate.before(beginDate)) {
-	    throw new DomainException("error.endDateBeforeBeginDate");
-	}
+	super.setBeginDateYearMonthDay(beginDate);
     }
 
-    private void checkFunctionUnit(Unit unit) {
+    @Override
+    public void setEndDateYearMonthDay(YearMonthDay endDate) {
+	if (getBeginDateYearMonthDay() == null
+		|| (endDate != null && endDate.isBefore(getBeginDateYearMonthDay()))) {
+	    throw new DomainException("error.endDateBeforeBeginDate");
+	}
+	super.setEndDateYearMonthDay(endDate);
+    }
+
+    @Override
+    public void setUnit(Unit unit) {
 	if (unit == null) {
 	    throw new DomainException("error.function.no.unit");
 	}
+	super.setUnit(unit);
+    }
+
+    @Override
+    public void setName(String name) {
+	if (name == null || StringUtils.isEmpty(name.trim())) {
+	    throw new DomainException("error.no.function.name");
+	}
+	super.setName(name);
     }
 
     public boolean isActive(YearMonthDay currentDate) {
@@ -57,9 +70,9 @@ public class Function extends Function_Base {
     public void delete() {
 	if (!hasAnyAccountabilities() && !hasAnyInherentFunctions()) {
 	    removeParentInherentFunction();
-	    removeUnit();
+	    super.setUnit(null);
 	    removeRootDomainObject();
-	    deleteDomainObject();
+	    super.deleteDomainObject();
 	} else {
 	    throw new DomainException("error.delete.function");
 	}

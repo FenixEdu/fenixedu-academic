@@ -8,10 +8,16 @@
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>	
 </schema>
-<schema name="CampusInformation" type="net.sourceforge.fenixedu.domain.space.CampusInformation" bundle="SPACE_RESOURCES">
+<schema name="ViewCampusInformation" type="net.sourceforge.fenixedu.domain.space.CampusInformation" bundle="SPACE_RESOURCES">
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
+</schema>
+<schema name="EditCampusInformation" type="net.sourceforge.fenixedu.domain.space.CampusInformation" bundle="SPACE_RESOURCES">
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+	<setter signature="editCampusCharacteristics(name, validFrom, validUntil)" />
 </schema>
 <schema name="BuildingFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator" bundle="SPACE_RESOURCES">
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -23,7 +29,13 @@
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>
 </schema>
-<schema name="BuildingInformation" type="net.sourceforge.fenixedu.domain.space.BuildingInformation" bundle="SPACE_RESOURCES">
+<schema name="EditBuildingInformation" type="net.sourceforge.fenixedu.domain.space.BuildingInformation" bundle="SPACE_RESOURCES">
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+	<setter signature="editBuildingCharacteristics(name, validFrom, validUntil)"/>
+</schema>
+<schema name="ViewBuildingInformation" type="net.sourceforge.fenixedu.domain.space.BuildingInformation" bundle="SPACE_RESOURCES">
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
@@ -38,7 +50,13 @@
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>	
 </schema>
-<schema name="FloorInformation" type="net.sourceforge.fenixedu.domain.space.FloorInformation" bundle="SPACE_RESOURCES">
+<schema name="EditFloorInformation" type="net.sourceforge.fenixedu.domain.space.FloorInformation" bundle="SPACE_RESOURCES">
+	<slot name="level" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+	<setter signature="editFloorCharacteristics(level, validFrom, validUntil)"/>
+</schema>
+<schema name="ViewFloorInformation" type="net.sourceforge.fenixedu.domain.space.FloorInformation" bundle="SPACE_RESOURCES">
 	<slot name="level" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
@@ -77,7 +95,7 @@
 	<slot name="ageQuality"/>
 	<slot name="observations"/>
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="end"/>
+	<slot name="end"/>	
 </schema>
 <schema name="ViewRoomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -113,7 +131,8 @@
 	<slot name="ageQuality"/>
 	<slot name="observations"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="validUntil"/>		
+	<slot name="validUntil"/>
+    <setter signature="editRoomCharacteristics(blueprintNumber, identification, description, roomClassification, area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality, securityQuality, ageQuality, observations, validFrom, validUntil)" />
 </schema>
 <schema name="RoomClassificationFactory" type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactory" bundle="SPACE_RESOURCES">
 	<slot name="code" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -211,6 +230,8 @@
 		<property name="fileNameSlot" value="filename"/>
 	</slot>
 </schema>
+
+<!-- Material  -->
 <schema name="ViewMaterialDetails" type="net.sourceforge.fenixedu.domain.material.Material" bundle="SPACE_RESOURCES">
 	<slot name="class" layout="label">
 		<property name="labelFormat" value="label.${simpleName}" />
@@ -250,9 +271,6 @@
 </schema>
 
 <!-- Material: Extension  -->
-<schema name="EditExtensionSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" bundle="SPACE_RESOURCES" 
-	extends="AddNewMaterialSpaceOccupation" >
-</schema>	
 <schema name="ChooseExtension" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean" bundle="SPACE_RESOURCES">
 	<slot name="material" layout="extensionNumber-as-extension" key="label.extension" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />		
 </schema>	
@@ -260,6 +278,11 @@
 	extends="AddNewMaterialSpaceOccupation" bundle="SPACE_RESOURCES" constructor="space, extension, begin, end">
 	<slot name="space" hidden="true"/>
 	<slot name="extension" hidden="true"/>
+</schema>
+<schema name="EditExtensionSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" bundle="SPACE_RESOURCES" >
+	<slot name="begin" key="label.begin.date" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="end" key="label.end.date"/>
+	<setter signature="setOccupationInterval(begin, end)" />
 </schema>
 
 <!-- Access Groups -->

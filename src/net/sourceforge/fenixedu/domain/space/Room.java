@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -207,12 +206,11 @@ public class Room extends Room_Base {
 	final Space suroundingSpace = roomFactoryCreator.getSurroundingSpace();
 	if (suroundingSpace == null) {
 	    throw new DomainException("error.surrounding.space");
-	}
-	checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson(), suroundingSpace);	
-	setSuroundingSpace(suroundingSpace);
-	new RoomInformation(this, roomFactoryCreator);
+	}	
+	setSuroundingSpace(suroundingSpace);	
+	new RoomInformation(this, roomFactoryCreator);	
     }
-    
+          
     @Override
     public RoomInformation getSpaceInformation() {
 	return (RoomInformation) super.getSpaceInformation();
