@@ -2,11 +2,11 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<br />
+
 <logic:present name="message">
 	<span class="error"><!-- Error messages go here --><bean:write name="message"/></span>
 </logic:present>
-<br />
+
 <h2>
 	<bean:write name="UserView" property="person.name"/>, tens a certeza que sabes o que estás a fazer?!? 
 </h2>	
@@ -16,7 +16,7 @@
 <br/><br/>
 
 <html:form action="/domainObjectManager" >
-	<html:hidden property="method" value="deleteObject" />
+	
 	<html:hidden property="idPos1Index" />
 	<html:hidden property="idPos2Index" />
 	<html:hidden property="idPos3Index" />
@@ -28,15 +28,24 @@
 	<bean:write name="domainObjectManagerForm" property="idPos3Index" />º
 	<html:text property="idPos3Value" size="1" />
 
-	<br/><br/>
+	<br/><br/><br/>	
 	
+	<bean:message key="label.domainObjectManager.class" bundle="MANAGER_RESOURCES"/>
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.domainObjectClass" property="classToManage" >
 		<html:options collection="domainClasses" property="value" labelProperty="label"/>
 	</html:select>
+	<bean:message key="label.domainObjectManager.oid" bundle="MANAGER_RESOURCES"/>
 	<html:text property="classToManageId" />
 
-	<br/><br/>
+	<br/><br/><br/>		
+	<html:radio property="method" value="prepareEditObject">
+		<bean:message key="label.domainObjectManagement.editObject" bundle="MANAGER_RESOURCES"/>
+	</html:radio>
+	<html:radio property="method" value="deleteObject">
+		<bean:message key="label.domainObjectManagement.deleteObject" bundle="MANAGER_RESOURCES"/>
+	</html:radio>
 		
+	<br/><br/><br/>	
 	<html:submit ><bean:message key="button.submit"/></html:submit>
 		
 </html:form>

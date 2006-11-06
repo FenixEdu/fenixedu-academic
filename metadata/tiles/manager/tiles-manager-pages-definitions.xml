@@ -500,6 +500,10 @@
     <definition name="domainObjectManager.chooseClassToManage" extends="definition.manager.masterPage" >
     	<put name="body" value="/manager/domainObjectsManagement/chooseClassToManage.jsp" />
     </definition>
+    <definition name="domainObjectManager.prepareEditObject" extends="definition.manager.masterPage" >
+    	<put name="body" value="/manager/domainObjectsManagement/editObject.jsp" />
+    </definition>
+    
     
 	<!-- Paulo Zenida and Dinis Martins - 2006-02-17 -->
     <definition name="createPerson" extends="definition.manager.masterPage" >

@@ -72,6 +72,7 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     }
 
     @Override
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits")
     public void setUnit(Unit unit) {
 	if (unit == null) {
 	    throw new DomainException("error.space.responsability.no.unit");

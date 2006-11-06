@@ -12,6 +12,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.MetadataManager;
+import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -19,16 +31,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import dml.DomainClass;
-
-import net.sourceforge.fenixedu._development.MetadataManager;
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -43,6 +45,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 
 	generateIdIndexesToAnswer(form, person);
 
+	request.setAttribute("method", "deleteObject");
 	request.setAttribute("domainClasses", getClasses());
 	return mapping.findForward("chooseClassToManage");
     }
@@ -72,8 +75,8 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 
 	    try {
 		executeService("DeleteObjectByOID", Class.forName(classToDelete), classToDeleteId);
-		request.setAttribute("message", "Object " + classToDelete + " with ID:" + classToDeleteId
-			+ " Deleted. God have mercy of your soul...");
+		request.setAttribute("message", "Object " + classToDelete + " with ID:"
+			+ classToDeleteId + " Deleted. God have mercy of your soul...");
 
 	    } catch (Exception e) {
 		request.setAttribute("message", "Error deleting Object " + classToDelete + " with ID:"
@@ -85,13 +88,50 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 	}
 
 	request.setAttribute("domainClasses", getClasses());
+	request.setAttribute("method", "deleteObject");
 	return mapping.findForward("chooseClassToManage");
+    }
+
+    public ActionForward prepareEditObject(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException, ClassNotFoundException {
+
+	Person person = checkUser();
+
+	String documentIdNumber = person.getDocumentIdNumber();
+	DynaActionForm actionForm = (DynaActionForm) form;
+	Integer idPos1Index = (Integer) actionForm.get("idPos1Index");
+	Integer idPos2Index = (Integer) actionForm.get("idPos2Index");
+	Integer idPos3Index = (Integer) actionForm.get("idPos3Index");
+	Character idPos1Value = (Character) actionForm.get("idPos1Value");
+	Character idPos2Value = (Character) actionForm.get("idPos2Value");
+	Character idPos3Value = (Character) actionForm.get("idPos3Value");
+
+	if (documentIdNumber.charAt(idPos1Index - 1) == idPos1Value.charValue()
+		&& documentIdNumber.charAt(idPos2Index - 1) == idPos2Value.charValue()
+		&& documentIdNumber.charAt(idPos3Index - 1) == idPos3Value.charValue()) {
+
+	    String className = (String) actionForm.get("classToManage");
+	    Integer classToEditId = (Integer) actionForm.get("classToManageId");
+
+	    DomainObject object = rootDomainObject.readDomainObjectByOID(Class.forName(className),
+		    classToEditId);
+
+	    if (object != null) {
+		request.setAttribute("objectToEdit", object);
+	    } 
+	} else {
+	    request.setAttribute("message", "Who the hell are you!?!?!");
+	}
+	return mapping.findForward("prepareEditObject");
     }
 
     private Person checkUser() {
 	Person person = AccessControl.getUserView().getPerson();
-	if (!person.getEmployee().getCurrentWorkingPlace().getIdInternal().equals(61066)
-		|| !person.getEmployee().getCurrentWorkingPlace().getAcronym().equalsIgnoreCase("CIIST")
+	String ciistCostCenterCode = PropertiesManager.getProperty("ciistCostCenterCode");
+	Unit ciistUnit = Unit.readByCostCenterCode(Integer.valueOf(ciistCostCenterCode));
+	Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
+	if ((currentWorkingPlace != null && ciistUnit != null && !currentWorkingPlace.equals(ciistUnit))
 		|| person.getPersonRole(RoleType.MANAGER) == null) {
 	    throw new DomainException("What you want do do hein?!?!");
 	}

@@ -284,6 +284,12 @@ public class Person extends Person_Base {
 	setEmail(email);
     }
 
+    public void editPersonalData(String documentIdNumber, IDDocumentType documentType) {
+	checkConditionsToCreateNewPerson(documentIdNumber, documentType, this);
+	setDocumentIdNumber(documentIdNumber);
+	setIdDocumentType(documentType);
+    }
+
     private void checkConditionsToCreateNewPerson(final String documentIDNumber,
 	    final IDDocumentType documentType, Person thisPerson) {
 
@@ -2044,7 +2050,7 @@ public class Person extends Person_Base {
 	}
 	return false;
     }
-    
+
     public Set<Event> getEventsByEventType(final EventType eventType) {
 	final Set<Event> result = new HashSet<Event>();
 
@@ -2056,7 +2062,7 @@ public class Person extends Person_Base {
 
 	return result;
     }
-    
+
     public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
 	for (final InsuranceEvent insuranceEvent : getInsuranceEvents()) {
 	    if (insuranceEvent.getExecutionYear() == executionYear) {
@@ -2077,70 +2083,76 @@ public class Person extends Person_Base {
     }
 
     public String getHomepageWebAddress() {
-        final Homepage homepage = getHomepage();
-        if (homepage == null) {
-            if (getAvailableWebSite() != null && getAvailableWebSite().booleanValue() && getWebAddress() != null && getWebAddress().length() > 0) {
-                return getWebAddress();
-            }
-        } else {
-            if (homepage.getActivated() != null && homepage.getActivated().booleanValue()) {
-                return "/homepage/" + getUsername();
-            } else if (getAvailableWebSite() != null && getAvailableWebSite().booleanValue() && getWebAddress() != null && getWebAddress().length() > 0) {
-                return getWebAddress();
-            }
-        }
-        return null;
+	final Homepage homepage = getHomepage();
+	if (homepage == null) {
+	    if (getAvailableWebSite() != null && getAvailableWebSite().booleanValue()
+		    && getWebAddress() != null && getWebAddress().length() > 0) {
+		return getWebAddress();
+	    }
+	} else {
+	    if (homepage.getActivated() != null && homepage.getActivated().booleanValue()) {
+		return "/homepage/" + getUsername();
+	    } else if (getAvailableWebSite() != null && getAvailableWebSite().booleanValue()
+		    && getWebAddress() != null && getWebAddress().length() > 0) {
+		return getWebAddress();
+	    }
+	}
+	return null;
     }
 
-    public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(DegreeCurricularPlan degreeCurricularPlan) {
-        Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(new BeanComparator("executionYear"));
-        for (Coordinator coordinator : getCoordinators()) {
-            if (coordinator.getExecutionDegree().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
-                result.add(coordinator.getExecutionDegree());
-            }
-        }
-        return result;
+    public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(
+	    DegreeCurricularPlan degreeCurricularPlan) {
+	Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(new BeanComparator("executionYear"));
+	for (Coordinator coordinator : getCoordinators()) {
+	    if (coordinator.getExecutionDegree().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+		result.add(coordinator.getExecutionDegree());
+	    }
+	}
+	return result;
     }
 
-    public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear) {
-        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-            if (executionDegree.getExecutionYear() == executionYear) {
-                return executionDegree.getCoordinatorByTeacher(this) != null;
-            }
-        }
-        return false;
+    public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan,
+	    ExecutionYear executionYear) {
+	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+	    if (executionDegree.getExecutionYear() == executionYear) {
+		return executionDegree.getCoordinatorByTeacher(this) != null;
+	    }
+	}
+	return false;
     }
 
-    public boolean isResponsibleOrCoordinatorFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
-        final Teacher teacher = getTeacher();
-        return (teacher != null && teacher.isResponsibleFor(curricularCourse, executionPeriod))
-                || isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod
-                        .getExecutionYear());
+    public boolean isResponsibleOrCoordinatorFor(CurricularCourse curricularCourse,
+	    ExecutionPeriod executionPeriod) {
+	final Teacher teacher = getTeacher();
+	return (teacher != null && teacher.isResponsibleFor(curricularCourse, executionPeriod))
+		|| isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod
+			.getExecutionYear());
     }
 
     public boolean isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear executionYear) {
-        return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] {
-                DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE }));
+	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] {
+		DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE }));
 
     }
 
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
-            ExecutionYear executionYear) {
-        return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
-                DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE }));
+	    ExecutionYear executionYear) {
+	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
+		DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE }));
 
     }
 
     public boolean isCoordinatorFor(ExecutionYear executionYear, List<DegreeType> degreeTypes) {
-        for (final Coordinator coordinator : getCoordinatorsSet()) {
-            if (coordinator.hasExecutionDegree()
-                    && coordinator.getExecutionDegree().getExecutionYear() == executionYear
-                    && degreeTypes.contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
-                return true;
-            }
-        }
+	for (final Coordinator coordinator : getCoordinatorsSet()) {
+	    if (coordinator.hasExecutionDegree()
+		    && coordinator.getExecutionDegree().getExecutionYear() == executionYear
+		    && degreeTypes
+			    .contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
+		return true;
+	    }
+	}
 
-        return false;
+	return false;
 
     }
 

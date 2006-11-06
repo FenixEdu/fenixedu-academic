@@ -1985,7 +1985,7 @@
 			scope="request">
 		<forward name="chooseDegreeCurricularPlan" path="chooseDegreeCurricularPlan"/>
 	</action>
-			
+						
 	<!-- Persons Merge -->     
 	<action path="/mergePersons"
 			parameter="method"
@@ -2001,8 +2001,9 @@
 			parameter="method"
 			name="domainObjectManagerForm"
 			type="net.sourceforge.fenixedu.presentationTier.Action.manager.domainObjectsManagement.DomainObjectManagerDispatchAction"
-			scope="request">
+			scope="request">			
 		<forward name="chooseClassToManage" path="domainObjectManager.chooseClassToManage"/>
+		<forward name="prepareEditObject" path="domainObjectManager.prepareEditObject"/>		
 	</action>
 
 	<!-- Domain Object String Property Formatter -->

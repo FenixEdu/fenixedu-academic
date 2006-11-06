@@ -28,6 +28,7 @@
     <!ENTITY site SYSTEM "site-schemas.xml">
     <!ENTITY student SYSTEM "student-schemas.xml">
     <!ENTITY department SYSTEM "department-schemas.xml">
+    <!ENTITY manager SYSTEM "manager-schemas.xml">
 ]>
 
 <schemas>
@@ -678,4 +679,6 @@
     &site;
     &student;
     &department;
+    &manager;
+    
 </schemas>
