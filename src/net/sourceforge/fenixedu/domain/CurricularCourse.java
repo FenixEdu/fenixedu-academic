@@ -1607,4 +1607,19 @@ public class CurricularCourse extends CurricularCourse_Base {
         return ccEctsCredits == null || ccEctsCredits.doubleValue() == 0 ? 6 : ccEctsCredits;
     }
 
+    public List<ExecutionCourse> getMostRecentExecutionCourses() {
+        ExecutionPeriod period = ExecutionPeriod.readActualExecutionPeriod();
+
+        while (period != null) {
+            List<ExecutionCourse> executionCourses = getExecutionCoursesByExecutionPeriod(period);
+            if (executionCourses != null && !executionCourses.isEmpty()) {
+                return executionCourses;
+            }
+            
+            period = period.getPreviousExecutionPeriod();
+        }
+        
+        return new ArrayList<ExecutionCourse>();
+    }
+
 }

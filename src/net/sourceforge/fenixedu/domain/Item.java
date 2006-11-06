@@ -6,6 +6,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DuplicatedNameException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -66,6 +67,10 @@ public class Item extends Item_Base {
             throw new NullPointerException();
         }
 
+        if (! isNameUnique(getSection().getAssociatedItems(), name)) {
+            throw new DuplicatedNameException("site.section.item.name.duplicated");
+        }
+        
         super.setName(name);
     }
     

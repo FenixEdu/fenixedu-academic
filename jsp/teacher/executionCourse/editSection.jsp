@@ -9,6 +9,16 @@
 	<bean:message key="title.section.edit" bundle="SITE_RESOURCES"/>
 </h2>
 
+<logic:messagesPresent message="true">
+    <div class="mvert15">
+        <span class="error0">
+            <html:messages id="error" message="true" bundle="SITE_RESOURCES"> 
+                <bean:write name="error"/>
+            </html:messages>
+        </span>
+    </div>
+</logic:messagesPresent>
+
 <bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=section&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;sectionID=<bean:write name="section" property="idInternal"/></bean:define>
 <fr:edit name="section" type="net.sourceforge.fenixedu.domain.Section" schema="net.sourceforge.fenixedu.domain.SectionEditor"
 		action="<%= url %>">

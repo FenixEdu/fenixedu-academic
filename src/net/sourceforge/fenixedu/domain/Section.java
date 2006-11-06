@@ -7,13 +7,13 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DuplicatedNameException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -78,11 +78,19 @@ public class Section extends Section_Base {
     }
 
     public void setName(MultiLanguageString name) {
-        if (name == null) {
+        if (name == null || name.isEmpty()) {
             throw new NullPointerException();
         }
 
+        if (! isNameUnique(getSiblings(), name)) {
+            throw new DuplicatedNameException("site.section.name.duplicated");
+        }
+        
         super.setName(name);
+    }
+
+    private List<Section> getSiblings() {
+        return getSite().getAssociatedSections(getSuperiorSection());
     }
 
     public Integer getNewSectionOrder() {
@@ -211,23 +219,6 @@ public class Section extends Section_Base {
         }
     }
 
-    private int organizeExistingItemsOrder(int insertItemOrder) {
-
-        Iterator items = this.getAssociatedItemsIterator();
-
-        if (this.getAssociatedItems() != null) {
-            int itemOrder;
-
-            for (; items.hasNext();) {
-                Item item = (Item) items.next();
-                itemOrder = item.getItemOrder().intValue();
-                if (itemOrder >= insertItemOrder)
-                    item.setItemOrder(new Integer(itemOrder + 1));
-            }
-        }
-        return insertItemOrder;
-    }
-
     public void delete() {
         if (! isDeletable()) {
             throw new DomainException("section.cannotDeleteWhileHasItemsWithFiles");
@@ -239,7 +230,7 @@ public class Section extends Section_Base {
 
         // Delete Associated Items
         if (this.getAssociatedItemsCount() != 0) {
-            List<Item> items = new ArrayList();
+            List<Item> items = new ArrayList<Item>();
             items.addAll(this.getAssociatedItems());
             for (Item item : items) {
                 item.delete();
@@ -248,7 +239,7 @@ public class Section extends Section_Base {
 
         // Delete Associated Sections
         if (this.getAssociatedSectionsCount() != 0) {
-            List<Section> sections = new ArrayList();
+            List<Section> sections = new ArrayList<Section>();
             sections.addAll(this.getAssociatedSections());
             for (Section section : sections) {
                 section.delete();

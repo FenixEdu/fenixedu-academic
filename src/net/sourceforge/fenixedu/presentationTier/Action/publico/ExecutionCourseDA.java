@@ -179,6 +179,10 @@ public class ExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("execution-course-student-groups-by-shift");
     }
 
+    public ActionForward item(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        return null;
+    }
+    
     public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Section section = selectSection(request);
 

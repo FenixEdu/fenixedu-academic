@@ -72,6 +72,46 @@
 	    <filter-name>I18NFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.I18NFilter</filter-class>
 	</filter>
+    <filter>
+        <filter-name>GeneralForwardFilter</filter-name>
+        <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.GeneralForwardFilter</filter-class>
+        <init-param>
+            <param-name>notFoundURI</param-name>
+            <param-value>/publico/notFound.do</param-value>
+        </init-param>
+        <init-param>
+            <param-name>siteListURI</param-name>
+            <param-value>/publico/showExecutionCourseSites.do?method=listSites&amp;degreeOID=%s</param-value>
+        </init-param>
+        <init-param>
+            <param-name>siteURI</param-name>
+            <param-value>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=%s</param-value>
+        </init-param>
+        <init-param>            
+            <param-name>scheduleListURI</param-name>
+            <param-value>/publico/showClasses.do?method=listClasses&amp;degreeOID=%s</param-value>
+        </init-param>
+        <init-param>            
+            <param-name>classScheduleURI</param-name>
+            <param-value>/publico/viewClassTimeTableNew.do?classId=%s&amp;className=%s&amp;degreeCurricularPlanID=%s&amp;nameDegreeCurricularPlan=%s&amp;degreeID=%s&amp;degreeInitials=%s</param-value>
+        </init-param>
+        <init-param>      
+            <param-name>examListURI</param-name>
+            <param-value>/publico/chooseExamsMapContextDANew.do?method=choose&amp;degreeID=%s</param-value>
+        </init-param>
+        <init-param>            
+            <param-name>degreeURI</param-name>
+            <param-value>/publico/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=%s&amp;degreeID=%s</param-value>
+        </init-param>
+        <init-param>            
+            <param-name>sectionURI</param-name>
+            <param-value>/publico/executionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s</param-value>
+        </init-param>
+        <init-param>            
+            <param-name>itemURI</param-name>
+            <param-value>/publico/executionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s#item%s</param-value>
+        </init-param>
+    </filter>
 	<filter>
 	    <filter-name>ExecutionCourseForwardFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ExecutionCourseForwardFilter</filter-class>
@@ -137,7 +177,7 @@
 		</init-param>
 		<init-param>			
 			<param-name>forwardDegreeDescription</param-name>
-			<param-value>/publico/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=</param-value>
+			<param-value>/publico/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=%s&amp;degreeID=%s</param-value>
 		</init-param>
 		<init-param>
 			<param-name>invalidURI</param-name>
@@ -234,6 +274,11 @@
 		<filter-name>HomepageFilter</filter-name>
 		<url-pattern>/homepage/*</url-pattern>
 	</filter-mapping>
+    <filter-mapping>
+        <filter-name>GeneralForwardFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- 
 	<filter-mapping>
 		<filter-name>ExecutionCourseForwardFilter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -250,6 +295,7 @@
 		<filter-name>DegreeForwardFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+    -->
 	<filter-mapping>
 		<filter-name>CheckUserViewFilter</filter-name>
 		<url-pattern>*.do</url-pattern>

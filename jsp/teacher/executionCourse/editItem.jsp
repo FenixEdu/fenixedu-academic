@@ -9,6 +9,17 @@
 	<bean:message key="title.item.edit" bundle="SITE_RESOURCES"/>
 </h2>
 
+<logic:messagesPresent message="true">
+    <div class="mvert15">
+        <span class="error0">
+            <html:messages id="error" message="true" bundle="SITE_RESOURCES"> 
+                <bean:write name="error"/>
+            </html:messages>
+        </span>
+    </div>
+</logic:messagesPresent>
+
+
 <bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
 <bean:define id="sectionId" name="item" property="section.idInternal"/>
 
