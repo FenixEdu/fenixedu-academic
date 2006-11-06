@@ -57,7 +57,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    return mapping.getInputForward();
+	    return mapping.findForward("prepareShiftEnrollment");
 
 	} catch (FenixServiceException exception) {
 	    addActionMessage(request, "errors.impossible.operation");
