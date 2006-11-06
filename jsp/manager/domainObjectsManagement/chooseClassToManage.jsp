@@ -22,11 +22,11 @@
 	<html:hidden property="idPos3Index" />
 
 	<bean:message key="documentIdNumber" bundle="MANAGER_RESOURCES"/>:&nbsp;	
-	<bean:write name="domainObjectManagerForm" property="idPos1Index" />º
+	<b><bean:write name="domainObjectManagerForm" property="idPos1Index" />º</b>
 	<html:text property="idPos1Value" size="1" /> 
-	<bean:write name="domainObjectManagerForm" property="idPos2Index" />º
+	<b><bean:write name="domainObjectManagerForm" property="idPos2Index" />º</b>
 	<html:text property="idPos2Value" size="1" /> 
-	<bean:write name="domainObjectManagerForm" property="idPos3Index" />º
+	<b><bean:write name="domainObjectManagerForm" property="idPos3Index" />º</b>
 	<html:text property="idPos3Value" size="1" />
 
 	<br/><br/><br/>	

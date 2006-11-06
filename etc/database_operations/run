@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove ADMINISTRATIVE_DIRECTION Party Type" removePartyTypeEnum.sql
