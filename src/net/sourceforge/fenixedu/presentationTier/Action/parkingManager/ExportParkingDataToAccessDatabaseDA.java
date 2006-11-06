@@ -200,7 +200,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         OpenFileBean openFileBean = (OpenFileBean) getRenderedObject();
         if (openFileBean != null) {
-            if (openFileBean.getFileName().equalsIgnoreCase("Cartões_XML.mdb")) {
+            //if (openFileBean.getFileName().equalsIgnoreCase("Cartões_XML.mdb")) {
                 try {
                     response.setContentType("text/plain");
                     response
@@ -234,13 +234,13 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
                 } catch (Exception e) {
                     throw new FenixServiceException();
                 }
-            } else {
-                ActionMessages actionMessages = getMessages(request);
-                actionMessages.add("file", new ActionMessage("error.inccorrect.file"));
-                saveMessages(request, actionMessages);
-                RenderUtils.invalidateViewState();
-                return mapping.getInputForward();
-            }
+//            } else {
+//                ActionMessages actionMessages = getMessages(request);
+//                actionMessages.add("file", new ActionMessage("error.inccorrect.file"));
+//                saveMessages(request, actionMessages);
+//                RenderUtils.invalidateViewState();
+//                return mapping.getInputForward();
+//            }
         }
         return null;
     }
