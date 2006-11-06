@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.YearMonthDay;
 
@@ -231,6 +232,9 @@ public abstract class Space extends Space_Base {
     }
 
     public static boolean personBelongsToWorkmanshipsNucleus(Person person) {
+	if (person.hasRole(RoleType.MANAGER)) {
+	    return true;
+	}
 	if (person.getEmployee() != null) {
 	    String workmanshipsNucleusCostCenterCode = PropertiesManager
 		    .getProperty("workmanshipsNucleusCostCenterCode");
