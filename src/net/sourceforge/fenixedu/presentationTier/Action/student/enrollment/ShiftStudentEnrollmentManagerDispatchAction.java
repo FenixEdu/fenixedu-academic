@@ -79,6 +79,11 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
 	final List<ExecutionDegree> executionDegrees = executionPeriod.getExecutionYear()
 		.getExecutionDegreesFor(DegreeType.DEGREE);
+	executionDegrees.addAll(executionPeriod.getExecutionYear()
+		.getExecutionDegreesFor(DegreeType.BOLONHA_DEGREE));
+	executionDegrees.addAll(executionPeriod.getExecutionYear()
+		.getExecutionDegreesFor(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+
 	if (executionDegrees.isEmpty()) {
 	    addActionMessage(request, "errors.impossible.operation");
 	    return mapping.getInputForward();
