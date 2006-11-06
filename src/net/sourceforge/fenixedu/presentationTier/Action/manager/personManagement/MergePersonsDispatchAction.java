@@ -90,6 +90,11 @@ public class MergePersonsDispatchAction extends FenixDispatchAction {
 		Slot slot = iter.next();
 
 		String slotName = slot.getName();
+
+		if (slotName.startsWith("key")) {
+		    continue;
+		}
+
 		Object objPropertyPerson1 = PropertyUtils.getSimpleProperty(person1, slotName);
 		Object objPropertyPerson2 = PropertyUtils.getSimpleProperty(person2, slotName);
 
@@ -97,6 +102,10 @@ public class MergePersonsDispatchAction extends FenixDispatchAction {
 			.toString();
 		String propertyPerson2 = (objPropertyPerson2 == null) ? "" : objPropertyPerson2
 			.toString();
+
+		if (propertyPerson1.equals(propertyPerson2)) {
+		    continue;
+		}
 
 		results.add(new MergeSlotDTO(slotName, "Simple Primitive", propertyPerson1,
 			propertyPerson2));
@@ -116,12 +125,25 @@ public class MergePersonsDispatchAction extends FenixDispatchAction {
 		Object propertyPerson2 = PropertyUtils.getSimpleProperty(person2, slotName);
 
 		if (roleSlot.getMultiplicityUpper() == 1) {
+
+		    if ((propertyPerson1 == null && propertyPerson2 == null)
+			    || (propertyPerson1 != null && propertyPerson2 != null && propertyPerson1
+				    .equals(propertyPerson2))) {
+			continue;
+		    }
+
 		    mergeSlot.setType("Reference");
 
 		    fillDtoWithSimpleProperty(roleSlot, mergeSlot, propertyPerson1, MergeSlotDTO.VALUE1);
 		    fillDtoWithSimpleProperty(roleSlot, mergeSlot, propertyPerson2, MergeSlotDTO.VALUE2);
 
 		} else {
+
+		    if (((Collection) propertyPerson1).size() == 0
+			    && ((Collection) propertyPerson2).size() == 0) {
+			continue;
+		    }
+
 		    // collection
 		    mergeSlot.setType("Collection");
 
