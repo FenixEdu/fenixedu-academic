@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Change Teacher Past Credits " alterTeacherPastCredits.sql
