@@ -185,6 +185,8 @@ public class Enrolment extends Enrolment_Base {
 
         removeExecutionPeriod();
         removeStudentCurricularPlan();
+        removeDegreeModule();
+        removeCurriculumGroup();
 
         Iterator<Attends> attendsIter = getAttendsIterator();
         while (attendsIter.hasNext()) {
@@ -427,6 +429,20 @@ public class Enrolment extends Enrolment_Base {
                 addAttends(attendToWrite);
             }
         }
+    }
+    
+    public void createAttends(final Registration registration, final ExecutionCourse executionCourse) {
+	final Attends attendsFor = this.getAttendsFor(executionCourse.getExecutionPeriod());
+	if(attendsFor != null) {
+	    try {
+		attendsFor.delete();
+	    } catch (DomainException e) {
+		throw new DomainException("error.attends.cant.change.attends");
+	    }
+	} 
+	
+	Attends attends = new Attends(registration, executionCourse);
+	this.addAttends(attends);
     }
 
     public void createEnrolmentEvaluationForImprovement(Employee employee,
