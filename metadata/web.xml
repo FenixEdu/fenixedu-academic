@@ -266,10 +266,12 @@
  		 <filter-name>profiling</filter-name>
  		 <url-pattern>*.do</url-pattern>
 	</filter-mapping>
+<!-- 
 	<filter-mapping>
 		<filter-name>CacheFilter</filter-name>
 		<url-pattern>/publico/*</url-pattern>
 	</filter-mapping>
+-->
 	<filter-mapping>
 		<filter-name>HomepageFilter</filter-name>
 		<url-pattern>/homepage/*</url-pattern>
