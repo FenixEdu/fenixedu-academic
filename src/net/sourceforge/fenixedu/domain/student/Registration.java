@@ -896,6 +896,15 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    public List<Attends> getAttendsForExecutionPeriod(final ExecutionPeriod executionPeriod){
+	final List<Attends> result = new ArrayList<Attends>();
+	for (final Attends attends : getAssociatedAttendsSet()) {
+	    if (attends.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+		result.add(attends);
+	    }
+	}
+	return result;
+    }
     public List<Shift> getShiftsForCurrentExecutionPeriod() {
 	final List<Shift> result = new ArrayList<Shift>();
 	for (final Shift shift : getShiftsSet()) {
@@ -994,9 +1003,39 @@ public class Registration extends Registration_Base {
 	checkIfReachedAttendsLimit();
 
 	if (readAttendByExecutionCourse(executionCourse) == null) {
-	    final Attends attends = new Attends(this, executionCourse);
-	    findAndSetEnrollmentForAttend(getActiveStudentCurricularPlan(), executionCourse, attends);
+	    final Enrolment enrolment = findEnrolment(getActiveStudentCurricularPlan(), executionCourse, executionCourse.getExecutionPeriod());
+	    if(enrolment != null) {
+		enrolment.createAttends(this, executionCourse);
+	    } else {
+		Attends attends = getAttendsForExecutionCourse(executionCourse); 
+		if(attends != null) {
+		    attends.delete();
+		}
+		new Attends(this, executionCourse);
+	    }
 	}
+    }
+    
+    private Attends getAttendsForExecutionCourse(ExecutionCourse executionCourse) {
+	List<Attends> attendsInExecutionPeriod = getAttendsForExecutionPeriod(executionCourse.getExecutionPeriod());
+	for (Attends attends : attendsInExecutionPeriod) {
+	    for (CurricularCourse curricularCourse : attends.getExecutionCourse().getAssociatedCurricularCoursesSet()) {
+		if(executionCourse.getAssociatedCurricularCoursesSet().contains(curricularCourse)) {
+		    return attends;
+		}
+	    }
+	}
+	return null;
+    }
+
+    private Enrolment findEnrolment(final StudentCurricularPlan studentCurricularPlan, final ExecutionCourse executionCourse, final ExecutionPeriod executionPeriod) {
+	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+	    final Enrolment enrolment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+	    if(enrolment != null) {
+		return enrolment;
+	    }
+	}
+	return null;
     }
 
     private void findAndSetEnrollmentForAttend(final StudentCurricularPlan studentCurricularPlan,
