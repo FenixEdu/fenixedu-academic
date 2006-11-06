@@ -14,12 +14,15 @@ import javax.xml.parsers.SAXParserFactory;
 
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 
+import org.apache.tools.ant.util.StringUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.DefaultHandler;
+
+import bsh.StringUtil;
 
 import com.sun.faces.el.impl.parser.ParseException;
 
@@ -160,13 +163,15 @@ public class ParseMetadata extends DefaultHandler {
             }
 
             else if ((tag.equals("datetime")) && typicallearningtime == true) {
-                String[] hourTokens = element.getValue().split(":");
-                Calendar result = Calendar.getInstance();
-                result.set(Calendar.HOUR_OF_DAY, (new Integer(hourTokens[0])).intValue());
-                result.set(Calendar.MINUTE, (new Integer(hourTokens[1])).intValue());
-                result.set(Calendar.SECOND, new Integer(0).intValue());
-                metadata.setLearningTime(result);
-                typicallearningtime = false;
+                if (!org.apache.commons.lang.StringUtils.isEmpty(element.getValue())) {
+                    String[] hourTokens = element.getValue().split(":");
+                    Calendar result = Calendar.getInstance();
+                    result.set(Calendar.HOUR_OF_DAY, (new Integer(hourTokens[0])).intValue());
+                    result.set(Calendar.MINUTE, (new Integer(hourTokens[1])).intValue());
+                    result.set(Calendar.SECOND, new Integer(0).intValue());
+                    metadata.setLearningTime(result);
+                    typicallearningtime = false;
+                }
             }
         }
         metadata.setSecondarySubject(secondarySubjectString);

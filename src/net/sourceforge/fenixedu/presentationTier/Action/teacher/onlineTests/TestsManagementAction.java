@@ -1355,8 +1355,9 @@ public class TestsManagementAction extends FenixDispatchAction {
         try {
             List<InfoSiteDistributedTestAdvisory> result = (List<InfoSiteDistributedTestAdvisory>) ServiceUtils
                     .executeService(userView, "ChangeStudentTestQuestionMark", new Object[] {
-                            objectCode, distributedTestCode, new Double(questionValueString),
-                            questionCode, studentCode,
+                            objectCode, distributedTestCode,
+                            new Double(questionValueString.replaceAll(",", ".")), questionCode,
+                            studentCode,
                             new TestQuestionStudentsChangesType(new Integer(studentTypeString)),
                             getServlet().getServletContext().getRealPath("/") });
             request.setAttribute("successfulChanged", result);
