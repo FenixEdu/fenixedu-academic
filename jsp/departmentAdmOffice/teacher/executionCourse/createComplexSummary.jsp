@@ -139,6 +139,6 @@ function check(e,v){
 		</fr:edit>
 		
 		<html:submit titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>		
-		<html:submit titleKey="message.button.cancel" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:submit>
+		<html:cancel onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:cancel>
 	</fr:form>			
 </logic:present>

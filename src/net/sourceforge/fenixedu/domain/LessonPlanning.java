@@ -21,23 +21,54 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     public LessonPlanning(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType,
 	    ExecutionCourse executionCourse) {
-	this();
-	checkParameters(title, planning, lessonType, executionCourse);
+	this();	
 	setLastOrder(executionCourse, lessonType);
 	setTitle(title);
 	setPlanning(planning);
 	setLessonType(lessonType);
 	setExecutionCourse(executionCourse);
     }
+    
+    @Override
+    public void setLessonType(ShiftType lessonType) {
+	if (lessonType == null) {
+	    throw new DomainException("error.LessonPlanning.no.lessonType");
+	}
+	super.setLessonType(lessonType);
+    }
+
+    @Override
+    public void setExecutionCourse(ExecutionCourse executionCourse) {
+	if (executionCourse == null) {
+	    throw new DomainException("error.LessonPlanning.no.executionCourse");
+	}
+	super.setExecutionCourse(executionCourse);
+    }
+
+    @Override
+    public void setPlanning(MultiLanguageString planning) {
+	if (planning == null || planning.getAllContents().isEmpty()) {
+	    throw new DomainException("error.LessonPlanning.no.planning");
+	}
+	super.setPlanning(planning);
+    }
+
+    @Override
+    public void setTitle(MultiLanguageString title) {
+	if (title == null || title.getAllContents().isEmpty()) {
+	    throw new DomainException("error.LessonPlanning.no.title");
+	}
+	super.setTitle(title);
+    }
 
     public void delete() {
 	reOrderLessonPlannings();
-	removeExecutionCourse();
+	super.setExecutionCourse(null);
 	deleteDomainObject();
     }
 
     public void deleteWithoutReOrder() {
-	removeExecutionCourse();
+	super.setExecutionCourse(null);
 	deleteDomainObject();
     }
 
@@ -70,22 +101,6 @@ public class LessonPlanning extends LessonPlanning_Base {
 	Integer order = (!lessonPlannings.isEmpty()) ? (lessonPlannings.get(lessonPlannings.size() - 1)
 		.getOrderOfPlanning() + 1) : 1;
 	setOrderOfPlanning(order);
-    }
-
-    private void checkParameters(MultiLanguageString title, MultiLanguageString planning,
-	    ShiftType lessonType, ExecutionCourse executionCourse) {
-	if (title == null || title.getAllContents().isEmpty()) {
-	    throw new DomainException("error.LessonPlanning.no.title");
-	}
-	if (planning == null || planning.getAllContents().isEmpty()) {
-	    throw new DomainException("error.LessonPlanning.no.planning");
-	}
-	if (lessonType == null) {
-	    throw new DomainException("error.LessonPlanning.no.lessonType");
-	}
-	if (executionCourse == null) {
-	    throw new DomainException("error.LessonPlanning.no.executionCourse");
-	}
     }
 
     public String getLessonPlanningLabel() {

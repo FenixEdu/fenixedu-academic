@@ -39,16 +39,12 @@ public class Summary extends Summary_Base {
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("idInternal"));
     }
 
-    private Summary() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
     public Summary(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
 	    Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher,
 	    Shift shift, Lesson lesson, YearMonthDay date, OldRoom room, Partial hour) {
 
-	this();
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
 	setInfoToSummary(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName,
 		teacher, shift, lesson, date, room, hour);
     }
