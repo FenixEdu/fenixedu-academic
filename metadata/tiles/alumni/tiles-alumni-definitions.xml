@@ -4,7 +4,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="alumni.masterPage" extends="df.layout.two-column">
-	  <put name="title" value="" />
+	  <put name="title" value="Alumni" />
 	  <put name="serviceName" value="" />
 	  <put name="navLocal" value="/alumni/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
