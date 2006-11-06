@@ -126,7 +126,7 @@
 		<html:img src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
 		</p>
 	</logic:notEmpty>	
-	<logic:empty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
+	<logic:empty name="selectedSpaceInformation" property="space.mostRecentBlueprint">
 		<p class="mtop05"><em><bean:message key="label.empty.blueprint" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
 	<%
@@ -253,7 +253,7 @@
 	   		</fr:layout>	
 		</fr:view>
 	</logic:notEmpty>
-	<logic:empty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
+	<logic:empty name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
 		<p class="mtop05"><em><bean:message key="label.empty.responsibility" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
 	<%
@@ -277,7 +277,7 @@
 	   		</fr:layout>	
 		</fr:view>	
 	</logic:notEmpty>
-	<logic:empty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
+	<logic:empty name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 		<p class="mtop05"><em><bean:message key="label.empty.person.occupations" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
 	<%
