@@ -12,6 +12,15 @@
 <div class="center" >
 	<h2><bean:message key="title.student.shift.enrollment" /></h2>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
+	<logic:messagesPresent message="true">
+		<ul>
+			<html:messages id="messages" message="true">
+				<li><span class="error0"><bean:write name="messages" /></span></li>
+			</html:messages>
+		</ul>
+		<br />
+	</logic:messagesPresent>
+	
 
 	<p class="left">Aqui pode, <strong>a título condicional</strong>, escolher disciplinas em que não se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condições:</p>
 	
