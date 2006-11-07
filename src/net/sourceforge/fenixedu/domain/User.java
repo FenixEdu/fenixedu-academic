@@ -61,9 +61,9 @@ public class User extends User_Base {
 
     public void delete() {
 	for (; !getIdentifications().isEmpty(); getIdentifications().get(0).delete()) ;
-	removePerson();
+	super.setPerson(null);
 	removeRootDomainObject();
-	deleteDomainObject();
+	super.deleteDomainObject();
     }
 
     public String getAliass() {
