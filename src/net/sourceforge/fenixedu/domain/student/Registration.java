@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -343,7 +344,7 @@ public class Registration extends Registration_Base {
 	if (this.arithmeticMean == null) {
 	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
 	}
-	return this.arithmeticMean;
+	return Double.valueOf(Math.round(this.arithmeticMean * 100) / 100.0);
     }
 
     public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
@@ -1207,13 +1208,17 @@ public class Registration extends Registration_Base {
     // FIXME: end of methods to remove after migration of this information
     // to Candidacy
 
-    public DegreeType getDegreeType() {
+    public Degree getDegree() {
 	final StudentCurricularPlan scp = (getActiveOrConcludedStudentCurricularPlan() != null) ? getActiveOrConcludedStudentCurricularPlan()
 		: getLastStudentCurricularPlan();
 	if (scp == null) {
 	    return null;
 	}
-	return scp.getDegreeType();
+	return scp.getDegree();
+    }
+
+    public DegreeType getDegreeType() {
+	return getDegree() == null ? null : getDegree().getDegreeType();
     }
 
     public boolean isActiveForOffice(Unit office) {
