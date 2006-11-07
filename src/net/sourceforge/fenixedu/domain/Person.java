@@ -869,15 +869,12 @@ public class Person extends Person_Base {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
-
 	if (hasPersonalPhoto()) {
 	    getPersonalPhoto().delete();
 	}
-
 	if (hasParkingParty()) {
 	    getParkingParty().delete();
 	}
-
 	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
 	getAdvisories().clear();
@@ -985,52 +982,31 @@ public class Person extends Person_Base {
     }
 
     private static class PersonRoleListener extends dml.runtime.RelationAdapter<Role, Person> {
-	/**
-         * This method is called transparently to the programmer when he adds a
-         * role a person. This method's responsabilities are: to verify if the
-         * person allready has the role being added; to verify if the person
-         * meets the prerequisites to add this new role; to update the username;
-         * to actually add the role.
-         */
+
 	@Override
 	public void beforeAdd(Role role, Person person) {
-	    // verify if the person already has the role being inserted
-	    if (!person.hasRole(role.getRoleType())) {
-
-		// verify role dependencies and throw a DomainException in case
-		// they
-		// aren't met.
-		if (!verifiesDependencies(person, role)) {
-		    throw new DomainException("error.person.addingInvalidRole", role.getRoleType()
-			    .toString());
-		}
+	    if (!person.hasRole(role.getRoleType()) && !verifiesDependencies(person, role)) {
+		throw new DomainException("error.person.addingInvalidRole", role.getRoleType()
+			.toString());
 	    }
 	}
 
 	@Override
 	public void afterAdd(Role role, Person person) {
-	    if (role.getRoleType().equals(RoleType.PERSON)) {
-		person.addPersonRoles(Role.getRoleByRoleType(RoleType.MESSAGING));
+	    if (role.getRoleType().equals(RoleType.PERSON) && !person.hasRole(RoleType.MESSAGING)) {
+		person.addPersonRoleByRoleType(RoleType.MESSAGING);
 	    }
-	    if (role.getRoleType().equals(RoleType.TEACHER)) {
-		person.addPersonRoles(Role.getRoleByRoleType(RoleType.RESEARCHER));
+	    if (role.getRoleType().equals(RoleType.TEACHER) && !person.hasRole(RoleType.RESEARCHER)) {
+		person.addPersonRoleByRoleType(RoleType.RESEARCHER);
 	    }
 	    person.addAlias(role);
 	    person.updateIstUsername();
 	}
 
-	/**
-         * This method is called transparently to the programmer when he removes
-         * a role from a person This method's responsabilities are: to actually
-         * remove the role; to remove all dependencies existant from the
-         * recently removed role; to update the username.
-         * 
-         */
 	@Override
 	public void beforeRemove(Role removedRole, Person person) {
 	    if (person != null) {
 		if (removedRole != null && person.hasRole(removedRole.getRoleType())) {
-		    // Remove role dependencies
 		    removeDependencies(person, removedRole);
 		}
 	    }
@@ -1038,7 +1014,6 @@ public class Person extends Person_Base {
 
 	@Override
 	public void afterRemove(Role removedRole, Person person) {
-	    // Update person's username according to the removal of the role
 	    person.removeAlias(removedRole);
 	    person.updateIstUsername();
 	}
@@ -1084,7 +1059,7 @@ public class Person extends Person_Base {
 		removeRoleIfPresent(person, RoleType.OPERATOR);
 		removeRoleIfPresent(person, RoleType.TIME_TABLE_MANAGER);
 		removeRoleIfPresent(person, RoleType.WEBSITE_MANAGER);
-		// removeRoleIfPresent(person, RoleType.MESSAGING);
+		removeRoleIfPresent(person, RoleType.MESSAGING);
 		break;
 
 	    case TEACHER:
@@ -1092,7 +1067,6 @@ public class Person extends Person_Base {
 		removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
 		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
 		removeRoleIfPresent(person, RoleType.RESEARCHER);
-		// removeRoleIfPresent(person, RoleType.EMPLOYEE);
 		break;
 
 	    case EMPLOYEE:
