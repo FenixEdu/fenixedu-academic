@@ -836,6 +836,19 @@ public class Person extends Person_Base {
 	return result;
     }
 
+    public boolean hasActivePersonFunction(FunctionType functionType, Unit unit) {
+	YearMonthDay currentDate = new YearMonthDay();
+	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
+		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
+	    if (personFunction.getUnit().equals(unit)
+		    && (personFunction != null && personFunction.getFunction().getFunctionType().equals(
+			    functionType)) && personFunction.isActive(currentDate)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public boolean hasFunctionType(FunctionType functionType) {
 	for (PersonFunction accountability : getActivePersonFunctions()) {
 	    if (accountability.getFunction().getFunctionType() == functionType) {

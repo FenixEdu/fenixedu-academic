@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -220,26 +221,34 @@ public abstract class Space extends Space_Base {
     }
 
     public void checkIfLoggedPersonHasPermissionsToManageSpace(Person person) {
-	if(personHasPermissionsToManageSpace(person)) {
+	if (personHasPermissionsToManageSpace(person)) {
 	    return;
-	}	
+	}
 	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
     }
-    
+
     public boolean personHasPermissionsToManageSpace(Person person) {
 	return personBelongsToWorkmanshipsNucleus(person)
 		|| personHasSpecialPermissionToManageSpace(person);
     }
 
     public static boolean personBelongsToWorkmanshipsNucleus(Person person) {
+	if(!person.hasRole(RoleType.SPACE_MANAGER)) {
+	    return false;
+	}
+	
 	if (person.hasRole(RoleType.MANAGER)) {
 	    return true;
+	}	
+	
+	String workmanshipsNucleusCostCenterCode = PropertiesManager.getProperty("workmanshipsNucleusCostCenterCode");
+	Unit workmanshipsNucleus = Unit.readByCostCenterCode(Integer.valueOf(workmanshipsNucleusCostCenterCode));	
+	
+	if(person.hasActivePersonFunction(FunctionType.RESPONSIBLE, workmanshipsNucleus)) {
+	    return true;
 	}
+	
 	if (person.getEmployee() != null) {
-	    String workmanshipsNucleusCostCenterCode = PropertiesManager
-		    .getProperty("workmanshipsNucleusCostCenterCode");
-	    Unit workmanshipsNucleus = Unit.readByCostCenterCode(Integer
-		    .valueOf(workmanshipsNucleusCostCenterCode));
 	    Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
 	    return (currentWorkingPlace != null && workmanshipsNucleus != null && currentWorkingPlace
 		    .equals(workmanshipsNucleus));
