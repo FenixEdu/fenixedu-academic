@@ -43,6 +43,10 @@
 	<slot name="socialSecurityNumber" />
 	<slot name="profession" />
 	<slot name="maritalStatus" />  
+	<slot name="email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
+		<property name="size" value="40"/>
+		<property name="maxLength" value="100"/>
+	</slot>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.Person" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES" > 
 	<slot name="name"/>
