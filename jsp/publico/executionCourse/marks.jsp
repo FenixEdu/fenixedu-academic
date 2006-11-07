@@ -20,23 +20,25 @@
 			<bean:message key="label.name"/>
 		</th>
 		<logic:iterate id="evaluation" name="executionCourse" property="orderedAssociatedEvaluations">
-			<th nowrap>
-				<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
-					<bean:write name="evaluation" property="distributedTest.title"/>
-				</logic:equal>
-				<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Project">
-					<bean:write name="evaluation" property="name"/>
-				</logic:equal>
-				<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.WrittenTest">
-					<bean:write name="evaluation" property="description"/>
-				</logic:equal>
-				<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Exam">
-					<bean:write name="evaluation" property="season"/>
-				</logic:equal>
-				<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.FinalEvaluation">
-					<bean:message key="label.final.evaluation"/>
-				</logic:equal>
-			</th>
+			<logic:notEmpty name="evaluation" property="publishmentMessage">
+				<th nowrap>
+					<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
+						<bean:write name="evaluation" property="distributedTest.title"/>
+					</logic:equal>
+					<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Project">
+						<bean:write name="evaluation" property="name"/>
+					</logic:equal>
+					<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.WrittenTest">
+						<bean:write name="evaluation" property="description"/>
+					</logic:equal>
+					<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Exam">
+						<bean:write name="evaluation" property="season"/>
+					</logic:equal>
+					<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.FinalEvaluation">
+						<bean:message key="label.final.evaluation"/>
+					</logic:equal>
+				</th>
+			</logic:notEmpty>
 		</logic:iterate>
 	</tr>
 	<logic:iterate id="attends" name="executionCourse" property="orderedAttends">
@@ -48,11 +50,15 @@
 				<bean:write name="attends" property="aluno.person.nome"/>
 			</td>
 			<logic:iterate id="mark" name="attends" property="associatedMarksOrderedByEvaluationDate">
-				<td nowrap>
-					<logic:present name="mark">
-						<bean:write name="mark" property="publishedMark"/>
-					</logic:present>
-				</td>
+				<logic:present name="mark">
+					<logic:notEmpty name="mark" property="evaluation.publishmentMessage">
+						<td nowrap>
+							<logic:present name="mark">
+								<bean:write name="mark" property="publishedMark"/>
+							</logic:present>
+						</td>
+					</logic:notEmpty>
+				</logic:present>
 			</logic:iterate>
 		</tr>
 	</logic:iterate>
