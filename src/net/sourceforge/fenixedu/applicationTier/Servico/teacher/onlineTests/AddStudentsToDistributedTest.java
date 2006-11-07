@@ -51,7 +51,6 @@ public class AddStudentsToDistributedTest extends Service {
             for (int j = 0; j < infoStudentList.size(); j++) {
                 Registration registration = rootDomainObject.readRegistrationByOID(
                         ((InfoStudent) infoStudentList.get(j)).getIdInternal());
-                if (StudentTestQuestion.findStudentTestQuestions(registration, distributedTest).isEmpty()) {
                     StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
                     studentTestQuestion.setStudent(registration);
                     studentTestQuestion.setDistributedTest(distributedTest);
@@ -69,8 +68,6 @@ public class AddStudentsToDistributedTest extends Service {
                     }
                     studentTestQuestion.setQuestion(question);
                     questionList.remove(question);
-
-                }
             }
         }
         // create advisory for new students
