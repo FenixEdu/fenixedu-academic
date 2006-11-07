@@ -24,22 +24,22 @@ public enum DegreeType {
     MASTER_DEGREE(GradeScale.TYPE5, null, 2, 0, false, false, true,
 	    AdministrativeOfficeType.MASTER_DEGREE),
 
-    BOLONHA_DEGREE(null, CurricularPeriodType.THREE_YEAR, 3, 180, true, true, false,
+    BOLONHA_DEGREE(GradeScale.TYPE20, CurricularPeriodType.THREE_YEAR, 3, 180, true, true, false,
 	    AdministrativeOfficeType.DEGREE),
 
-    BOLONHA_MASTER_DEGREE(null, CurricularPeriodType.TWO_YEAR, 2, 120, true, true, false,
+    BOLONHA_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.TWO_YEAR, 2, 120, true, true, false,
 	    AdministrativeOfficeType.DEGREE),
 
-    BOLONHA_INTEGRATED_MASTER_DEGREE(null, CurricularPeriodType.FIVE_YEAR, 5, 300, true, true, false,
+    BOLONHA_INTEGRATED_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, 5, 300, true, true, false,
 	    AdministrativeOfficeType.DEGREE),
 
-    BOLONHA_PHD_PROGRAM(null, CurricularPeriodType.YEAR, 1, 30, true, true, true,
+    BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, CurricularPeriodType.YEAR, 1, 30, true, true, true,
 	    AdministrativeOfficeType.MASTER_DEGREE),
 
-    BOLONHA_ADVANCED_FORMATION_DIPLOMA(null, CurricularPeriodType.YEAR, 1, 30, true, true, true,
+    BOLONHA_ADVANCED_FORMATION_DIPLOMA(GradeScale.TYPE20, CurricularPeriodType.YEAR, 1, 30, true, true, true,
 	    AdministrativeOfficeType.MASTER_DEGREE),
 
-    BOLONHA_SPECIALIZATION_DEGREE(null, CurricularPeriodType.YEAR, 1, 30, true, true, true,
+    BOLONHA_SPECIALIZATION_DEGREE(GradeScale.TYPE20, CurricularPeriodType.YEAR, 1, 30, true, true, true,
 	    AdministrativeOfficeType.MASTER_DEGREE);
 
     private GradeScale gradeScale;
