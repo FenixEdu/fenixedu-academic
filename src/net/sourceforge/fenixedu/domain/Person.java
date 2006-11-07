@@ -841,8 +841,9 @@ public class Person extends Person_Base {
 	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
 		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
 	    if (personFunction.getUnit().equals(unit)
-		    && (personFunction != null && personFunction.getFunction().getFunctionType().equals(
-			    functionType)) && personFunction.isActive(currentDate)) {
+		    && (personFunction.getFunction().getFunctionType() != null && personFunction
+			    .getFunction().getFunctionType().equals(functionType))
+		    && personFunction.isActive(currentDate)) {
 		return true;
 	    }
 	}
