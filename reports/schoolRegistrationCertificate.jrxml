@@ -69,67 +69,54 @@
 				</image>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="83"
-						y="351"
-						width="462"
-						height="49"
+						x="79"
+						y="324"
+						width="468"
+						height="30"
 						key="textField-4"
 						stretchType="RelativeToBandHeight"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
-						<font fontName="Courier" pdfFontName="Courier-BoldOblique" size="13" isBold="true" isItalic="true" isStrikeThrough="false" />
+						<font fontName="Courier New" pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{student}.getPerson().getName().toUpperCase()]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
-						x="83"
+						x="79"
 						y="230"
-						width="460"
-						height="83"
+						width="468"
+						height="50"
 						key="staticText-11"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Justified" verticalAlignment="Top" isStyledText="true" lineSpacing="Double">
-						<font fontName="Courier 10 Pitch" pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true" isPdfEmbedded ="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" isStyledText="true" lineSpacing="Double">
+						<font fontName="Courier New" pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true" isPdfEmbedded ="false"/>
 					</textElement>
-				<text><![CDATA[     A TÉCNICA SUPERIOR DA SECÇÃO DE GRADUAÇÃO DO INSTITUTO SUPERIOR TÉCNICO DA UNIVERSIDADE TÉCNICA DE LISBOA ]]></text>
+				<text><![CDATA[      A TÉCNICA SUPERIOR DA SECÇÃO DE GRADUAÇÃO DO INSTITUTO SUPERIOR TÉCNICO DA UNIVERSIDADE TÉCNICA DE LISBOA]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="83"
-						y="288"
-						width="461"
-						height="74"
+						x="79"
+						y="277"
+						width="478"
+						height="52"
 						key="staticText-12"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Justified" lineSpacing="Double">
-						<font fontName="Courier" pdfFontName="Courier-Oblique" size="12" isBold="false" isItalic="true"/>
+					<textElement textAlignment="Left" lineSpacing="Double">
+						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isBold="false" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[    CERTIFICA, em cumprimento do despacho exarado em requerimento arquivado nesta Secretaria, que dos livros competentes consta]]></text>
+				<text><![CDATA[     CERTIFICA, em cumprimento do despacho exarado em requerimen-to arquivado nesta Secretaria, que dos livros competentes consta]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="84"
-						y="391"
-						width="460"
-						height="24"
-						key="textField-5"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="Double">
-						<font fontName="Courier" pdfFontName="Courier-Oblique" size="13" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["portador do Bilhete de Identidade " + $P{student}.getPerson().getDocumentIdNumber()]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="84"
-						y="412"
-						width="465"
+						x="79"
+						y="394"
+						width="468"
 						height="30"
 						key="textField-6"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
-						<font fontName="Courier" pdfFontName="Courier-Oblique" size="13" isItalic="true"/>
+						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["natural de " + $P{student}.getPerson().getParishOfBirth().toUpperCase() + ", " + $P{student}.getPerson().getDistrictOfBirth().toUpperCase()]]></textFieldExpression>
 				</textField>
@@ -149,53 +136,53 @@
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="84"
-						y="434"
-						width="460"
-						height="41"
+						x="79"
+						y="418"
+						width="468"
+						height="30"
 						key="textField-7"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
-						<font fontName="Courier" pdfFontName="Courier-Oblique" size="13" isItalic="true"/>
+						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["filho de " + $P{student}.getPerson().getNameOfFather().toUpperCase()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="84"
-						y="468"
-						width="460"
-						height="47"
+						x="79"
+						y="442"
+						width="468"
+						height="30"
 						key="textField-8"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
-						<font fontName="Courier" pdfFontName="Courier-Oblique" size="13" isItalic="true"/>
+						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["e de " + $P{student}.getPerson().getNameOfMother().toUpperCase()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="84"
-						y="516"
-						width="460"
-						height="82"
+						x="79"
+						y="465"
+						width="468"
+						height="74"
 						key="textField-9"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
-						<font fontName="Courier" pdfFontName="Courier-Oblique" size="13" isItalic="true"/>
+						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["no ano lectivo " + ((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest)$P{documentRequest}).getExecutionYear().getYear() + " ESTEVE MATRICULADO no curso " + $P{documentRequest}.getRegistration().getDegreeType().getLocalizedName().toUpperCase() + " em " + $P{documentRequest}.getRegistration().getDegree().getName().toUpperCase() + " deste Instituto."]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="83"
-						y="597"
-						width="460"
-						height="99"
+						x="79"
+						y="536"
+						width="468"
+						height="50"
 						key="textField-10"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
-						<font fontName="Courier" pdfFontName="Courier-Oblique" size="13" isItalic="true"/>
+						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Secretaria dos Serviços Académicos do Instituto Superior Técnico, em Lisboa, " + $P{day}]]></textFieldExpression>
 				</textField>
@@ -224,6 +211,32 @@
 						<font pdfFontName="Helvetica-Oblique" size="8" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Pag. " + $V{PAGE_NUMBER} + " de " + $V{PAGE_COUNT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="79"
+						y="583"
+						width="468"
+						height="50"
+						key="staticText-13"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" isStyledText="true" lineSpacing="Double">
+						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isBold="false" isItalic="true" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[                          A Técnica Superior]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="79"
+						y="370"
+						width="468"
+						height="30"
+						key="textField-12"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="Double">
+						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Portador do "]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
