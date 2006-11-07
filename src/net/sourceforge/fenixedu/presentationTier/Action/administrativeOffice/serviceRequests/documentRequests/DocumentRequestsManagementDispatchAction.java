@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -26,6 +28,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentsSearchBean;
@@ -33,6 +36,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.RegistrationDeclaration;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 
 import org.apache.commons.lang.StringUtils;
@@ -40,6 +44,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.joda.time.YearMonthDay;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
@@ -61,17 +68,28 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    HttpServletRequest request, HttpServletResponse response) throws JRException, IOException {
 
 	final DocumentRequest documentRequest = getDocumentRequest(request);
-	final RegistrationDeclaration registrationDeclaration = new RegistrationDeclaration(documentRequest.getRegistration(), getLoggedPerson(request));
 	
-        final Map<String, Object> parameters = new HashMap<String, Object>();
+	final Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat("/images/Logo_IST_color.tiff"));
-        parameters.put("RegistrationDeclaration", registrationDeclaration);
-
+        parameters.put("student", documentRequest.getRegistration().getStudent());
+        parameters.put("documentRequest", documentRequest);
+        
+        final YearMonthDay yearMonthDay = new YearMonthDay();
+        parameters.put("day", yearMonthDay.toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+        
+        ResourceBundle resourceBundle = null;
+        
         final List dataSource = new ArrayList();
-        dataSource.add(registrationDeclaration);
         dataSource.add(documentRequest);
         
-        byte[] data = ReportsUtils.exportToPdf(documentRequest.getDocumentTemplateKey(), parameters, RegistrationDeclaration.resourceBundle, dataSource);
+	if (documentRequest instanceof SchoolRegistrationDeclarationRequest) {
+	    final RegistrationDeclaration registrationDeclaration = new RegistrationDeclaration(documentRequest.getRegistration(), getLoggedPerson(request));
+	    parameters.put("RegistrationDeclaration", registrationDeclaration);
+	    resourceBundle = RegistrationDeclaration.resourceBundle;
+	    dataSource.add(registrationDeclaration);
+	}
+
+        byte[] data = ReportsUtils.exportToPdf(documentRequest.getDocumentTemplateKey(), parameters, resourceBundle, dataSource);
         
         response.setContentLength(data.length);
 	response.setContentType("application/pdf");
