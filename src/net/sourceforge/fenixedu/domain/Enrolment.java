@@ -582,17 +582,19 @@ public class Enrolment extends Enrolment_Base {
     }
 
     public EnrolmentEvaluation getFinalEnrolmentEvaluation() {
-        EnrolmentEvaluation finalEnrolmentEvaluation = null;
-        for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
+	EnrolmentEvaluation finalEnrolmentEvaluation = null;
+	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
 	    if (enrolmentEvaluation.getEnrolmentEvaluationState().equals(
-		    EnrolmentEvaluationState.FINAL_OBJ)) {
+		    EnrolmentEvaluationState.FINAL_OBJ)
+		    || enrolmentEvaluation.getEnrolmentEvaluationState().equals(
+			    EnrolmentEvaluationState.RECTIFICATION_OBJ)) {
 		if (finalEnrolmentEvaluation == null
 			|| enrolmentEvaluation.compareTo(finalEnrolmentEvaluation) > 0) {
-                    finalEnrolmentEvaluation = enrolmentEvaluation;
-                }
-            }
-        }
-        return finalEnrolmentEvaluation;
+		    finalEnrolmentEvaluation = enrolmentEvaluation;
+		}
+	    }
+	}
+	return finalEnrolmentEvaluation;
     }
 
     public boolean isNotEvaluated() {
