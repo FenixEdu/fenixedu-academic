@@ -141,7 +141,8 @@ public class BibliographicReferences {
             this.type = type;
         }
         public String getUrl() {
-            return url;
+            return url == null || url.length() == 0 || url.equalsIgnoreCase("http://") ?
+                null : url;
         }
         public void setUrl(String url) {
             this.url = url;
