@@ -305,10 +305,6 @@
     </form>
     
     <form name="rolesForm">
-      <field property="roleOIDs" depends="required" page="2" >
-        <arg0 key="errors.missing.roleID" resource="true"/>
-      </field>
-
       <field property="username" depends="required" page="1">
         <arg0 key="errors.missing.username" resource="true" />
       </field>
