@@ -1723,7 +1723,7 @@ public class Person extends Person_Base {
 	Person externalPerson = Person.createExternalPerson(contributorName, Gender.MALE,
 		contributorAddress, areaCode, areaOfAreaCode, area, parishOfResidence,
 		districtSubdivisionOfResidence, districtOfResidence, null, null, null, null, String
-			.valueOf(System.currentTimeMillis()), null);
+			.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
 	externalPerson.setSocialSecurityNumber(contributorNumber);
 	new ExternalContract(externalPerson,
 		RootDomainObject.getInstance().getExternalInstitutionUnit(), new YearMonthDay(), null);
