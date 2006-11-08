@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add valid period dates to Parking Party" AlterTableParkingParty.sql
