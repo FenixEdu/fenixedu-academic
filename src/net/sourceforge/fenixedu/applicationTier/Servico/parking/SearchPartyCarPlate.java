@@ -26,15 +26,16 @@ public class SearchPartyCarPlate extends Service {
         if (!StringUtils.isEmpty(carPlateNumber) || !StringUtils.isEmpty(nameSearch)) {
             List<ParkingParty> parkingParties = rootDomainObject.getParkingParties();
             for (ParkingParty parkingParty : parkingParties) {
-                if (!StringUtils.isEmpty(carPlateNumber)
-                        && parkingParty.hasCarContainingPlateNumber(carPlateNumber.trim())) {
-                    if (StringUtils.isEmpty(nameSearch)) {
-                        result.add(parkingParty.getParty());
-                    } else {
-                        String[] nameValues = StringNormalizer.normalize(nameSearch).toLowerCase()
-                                .split("\\p{Space}+");
-                        if (areNamesPresent(parkingParty.getParty().getName(), nameValues)) {
+                if (!StringUtils.isEmpty(carPlateNumber)) {
+                    if (parkingParty.hasCarContainingPlateNumber(carPlateNumber.trim())) {
+                        if (StringUtils.isEmpty(nameSearch)) {
                             result.add(parkingParty.getParty());
+                        } else {
+                            String[] nameValues = StringNormalizer.normalize(nameSearch).toLowerCase()
+                                    .split("\\p{Space}+");
+                            if (areNamesPresent(parkingParty.getParty().getName(), nameValues)) {
+                                result.add(parkingParty.getParty());
+                            }
                         }
                     }
                 } else { //filled in the name and not the plate number
