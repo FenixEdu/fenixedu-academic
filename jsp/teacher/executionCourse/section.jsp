@@ -10,6 +10,20 @@
 <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 <bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
 
+<div class="mtop15">
+    <html:link page="<%= String.format("/manageExecutionCourse.do?method=sections&executionCourseID=%s", executionCourseId) %>">
+        <bean:message key="link.breadCrumbs.top" bundle="SITE_RESOURCES"/>
+    </html:link> &gt;
+    
+    <logic:iterate id="crumb" name="sectionBreadCrumbs">
+        <html:link page="<%= String.format("/manageExecutionCourse.do?method=section&executionCourseID=%s", executionCourseId) %>" paramId="sectionID" paramName="crumb" paramProperty="idInternal">
+            <fr:view name="crumb" property="name"/>
+        </html:link> &gt;
+    </logic:iterate>
+    
+    <fr:view name="section" property="name"/>
+</div>
+
 <h2>
 	<bean:message key="label.section"/>
 	<fr:view name="section" property="name" />
@@ -55,6 +69,16 @@
 	</span>
 </p>
 
+<bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
+<fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+    <fr:layout>
+        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+        <fr:property name="key" value="true"/>
+        <fr:property name="bundle" value="SITE_RESOURCES"/>
+        <fr:property name="subLayout" value="values"/>
+        <fr:property name="subSchema" value="permittedGroup.class.text"/>
+    </fr:layout>
+</fr:view>
 
 <logic:empty name="section" property="orderedSubSections">
     <p class="mtop2">
@@ -235,66 +259,48 @@
             </div>
     
             <logic:notEmpty name="item" property="sortedFileItems">
-                <div><span style="color: #888;">Ficheiros: </span>
-                	<ul>
-                	<logic:iterate id="fileItem" name="item" property="sortedFileItems" type="net.sourceforge.fenixedu.domain.FileItem">
-                		<bean:define id="downloadUrl">
-                			<bean:write name="fileItem" property="downloadUrl"/>
-                		</bean:define>
-                		
-                		<li>
-	                		<html:link href="<%= downloadUrl %>">
-	                			<fr:view name="fileItem" property="displayName"/>
-	                		</html:link>
-	                		
-	    		            <bean:define id="message">
-	                            <bean:message key="message.item.file.delete.confirm" bundle="SITE_RESOURCES" arg0="<%= fileItem.getDisplayName() %>"/>
-	                        </bean:define>
-							
-							<span class="pleft1">
-		                		(<html:link page="<%= String.format("/manageExecutionCourse.do?method=deleteFile&amp;executionCourseID=%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", executionCourseId, section.getIdInternal(), item.getIdInternal(), fileItem.getIdInternal()) %>"
-		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
-			                        <bean:message key="label.teacher.siteAdministration.viewSection.deleteItemFile"/>
-			                    </html:link>, 
-			                    <html:link page="<%= String.format("/manageExecutionCourse.do?method=prepareEditItemFilePermissions&amp;executionCourseID=%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", executionCourseId, section.getIdInternal(), item.getIdInternal(), fileItem.getIdInternal()) %>">
-			 	                   <bean:message key="label.teacher.siteAdministration.viewSection.editItemFilePermissions"/>
-			    	            </html:link>)
-		    	            </span>
-	    	            </li>
-                	</logic:iterate>
-                	</ul>
-<%-- 
-                    <fr:view name="item" property="sortedFileItems">
-                        <fr:layout name="tabular-list">
-	                        <fr:property name="classes" value="dinline clearmargins"/>
-                            <fr:property name="subSchema" value="site.item.file.basic"/>
-                            <fr:property name="subLayout" value="values"/>
-                            
-                            <fr:property name="customLink(delete)">
-                                <bean:define id="message">
-                                    <bean:message key="message.item.file.delete.confirm" bundle="SITE_RESOURCES" arg0="${displayName}"/>
-                                </bean:define>
-                                <span class="pleft1">
-	                                (<html:link page="<%= String.format("/manageExecutionCourse.do?method=deleteFile&amp;executionCourseID=%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", executionCourseId, section.getIdInternal(), item.getIdInternal(), "${idInternal}") %>"
-	                                           onclick="<%= String.format("return confirm('%s')", message) %>">
-	                                    <bean:message key="label.teacher.siteAdministration.viewSection.deleteItemFile"/>
-	                                </html:link>, 
-                                </span>
-                            </fr:property>
-                            <fr:property name="order(delete)" value="0"/>
-            
-                            <fr:property name="customLink(permissions)">
-                            	<span>
-	                                <html:link page="<%= String.format("/manageExecutionCourse.do?method=prepareEditItemFilePermissions&amp;executionCourseID=%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", executionCourseId, section.getIdInternal(), item.getIdInternal(), "${idInternal}") %>">
-	                                    <bean:message key="label.teacher.siteAdministration.viewSection.editItemFilePermissions"/>
-	                                </html:link>)
-                                </span>
-                            </fr:property>
-                            <fr:property name="order(permissions)" value="1"/>
-                        </fr:layout>
-                    </fr:view>
---%>
+                <div>
+                    <span style="color: #888;">Ficheiros: </span>
+                    	<ul>
+                        	<logic:iterate id="fileItem" name="item" property="sortedFileItems" type="net.sourceforge.fenixedu.domain.FileItem">
+                        		<bean:define id="downloadUrl">
+                        			<bean:write name="fileItem" property="downloadUrl"/>
+                        		</bean:define>
+                        		
+                        		<li>
+            	                		<html:link href="<%= downloadUrl %>">
+            	                			<fr:view name="fileItem" property="displayName"/>
+            	                		</html:link>
+            	                		
+            	    		            <bean:define id="message">
+        	                            <bean:message key="message.item.file.delete.confirm" bundle="SITE_RESOURCES" arg0="<%= fileItem.getDisplayName() %>"/>
+        	                        </bean:define>
+            							
+        							<span class="pleft1">
+            		                		(<html:link page="<%= String.format("/manageExecutionCourse.do?method=deleteFile&amp;executionCourseID=%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", executionCourseId, section.getIdInternal(), item.getIdInternal(), fileItem.getIdInternal()) %>"
+            		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
+            			                        <bean:message key="label.teacher.siteAdministration.viewSection.deleteItemFile"/>
+            			                    </html:link>, 
+            			                    <html:link page="<%= String.format("/manageExecutionCourse.do?method=prepareEditItemFilePermissions&amp;executionCourseID=%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", executionCourseId, section.getIdInternal(), item.getIdInternal(), fileItem.getIdInternal()) %>">
+            			 	                   <bean:message key="label.teacher.siteAdministration.viewSection.editItemFilePermissions"/>
+            			    	            </html:link>)
+            		    	            </span>
 
+                                <span class="pleft1" style="color: #888;">
+                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
+                                    <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+                                        <fr:layout>
+                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+                                            <fr:property name="key" value="true"/>
+                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
+                                            <fr:property name="subLayout" value="values"/>
+                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+                                        </fr:layout>
+                                    </fr:view>
+                                </span>
+        	    	                </li>
+                        	</logic:iterate>
+                    	</ul>
                 </div>
             </logic:notEmpty>
         </div>

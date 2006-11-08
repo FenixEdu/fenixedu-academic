@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 
 public class ExecutionCourseProcessor extends PathProcessor {
 
-    
     public ExecutionCourseProcessor(String forwardURI) {
         super(forwardURI);
     }

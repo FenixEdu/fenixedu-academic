@@ -349,4 +349,13 @@ public class Section extends Section_Base {
         return isVisible();
     }
 
+    @Override
+    public boolean isAvailable(FunctionalityContext context) {
+        if (getSuperiorSection() != null && !getSuperiorSection().isAvailable(context)) {
+            return false;
+        }
+        
+        return super.isAvailable(context);
+    }
+
 }

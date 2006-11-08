@@ -192,6 +192,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         
     public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         selectSection(request);
+        
         return mapping.findForward("section");
     }
 
@@ -202,6 +203,12 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     private void selectSection(final HttpServletRequest request, final Section section) {
+        List<Section> breadCrumbs = new ArrayList<Section>();
+        for (Section superior = section.getSuperiorSection(); superior != null; superior = superior.getSuperiorSection()) {
+            breadCrumbs.add(0, superior);
+        }
+
+        request.setAttribute("sectionBreadCrumbs", breadCrumbs);
         request.setAttribute("section", section);
     }
 
@@ -867,15 +874,15 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         FileItemCreationBean bean = (FileItemCreationBean) viewState.getMetaObject().getObject();
         RenderUtils.invalidateViewState();
         
-        String displayName = bean.getDisplayName();
-        if (displayName == null || displayName.length() == 0 || displayName.trim().length() == 0) {
-            displayName = getFilenameOnly(bean.getFileName());
-        }
-
         if (bean.getFileName() == null || bean.getFileName().length() == 0
                 || bean.getFileSize() == 0) {
             addErrorMessage(request, "fileRequired", "errors.fileRequired");
             return uploadFile(mapping, form, request, response);
+        }
+
+        String displayName = bean.getDisplayName();
+        if (displayName == null || displayName.length() == 0 || displayName.trim().length() == 0) {
+            displayName = getFilenameOnly(bean.getFileName());
         }
 
         InputStream formFileInputStream = null;
@@ -917,6 +924,10 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         selectItem(request);
         FileItem fileItem = selectFileItem(request);
 
+        if (fileItem == null) {
+            return mapping.findForward("section");
+        }
+        
         try {
             ServiceUtils.executeService(getUserView(request), "DeleteFileItemFromItem", fileItem);
         } catch (FileManagerException e1) {

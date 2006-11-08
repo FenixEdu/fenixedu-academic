@@ -38,6 +38,8 @@ public class FileItem extends FileItem_Base {
         this(item);
         init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
                 externalStorageIdentification, permittedGroup);
+        
+        setOrderInItem(getNextOrderInItem());
     }
 
     private Integer getNextOrderInItem() {
@@ -51,7 +53,7 @@ public class FileItem extends FileItem_Base {
             order = Math.max(order, fileItem.getOrderInItem());
         }
         
-        return order++;
+        return order + 1;
     }
 
     @Deprecated

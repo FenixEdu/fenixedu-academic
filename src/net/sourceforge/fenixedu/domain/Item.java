@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DuplicatedNameException;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -209,5 +210,14 @@ public class Item extends Item_Base {
 
         return sortedFileItems;
     }
-
+    
+    @Override
+    public boolean isAvailable(FunctionalityContext context) {
+        if (getSection() != null && !getSection().isAvailable(context)) {
+            return false;
+        }
+        
+        return super.isAvailable(context);
+    }
+    
 }

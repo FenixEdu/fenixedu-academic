@@ -13,13 +13,11 @@
     <bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
     <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 
-
     <h2>
         <fr:view name="section" property="name" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
 		<span class="permalink1">(<a href="<%= request.getContextPath() + SectionProcessor.getSectionAbsolutePath(executionCourse, section) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h2>
 
-    
     <logic:present name="hasRestrictedItems">
         <p>
             <em><bean:message key="message.section.items.hasRestricted" bundle="SITE_RESOURCES"/></em>

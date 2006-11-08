@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.util;
 
+import sun.text.Normalizer;
+
 public class StringUtils {
 
     public static boolean verifyContainsWithEquality(String originalString, String stringToCompare) {
@@ -52,6 +54,10 @@ public class StringUtils {
             normalizeStringArray(strings);
         }
         return strings;
+    }
+
+    public static String normalize(String string) {
+        return StringNormalizer.normalize(string);
     }
 
 }

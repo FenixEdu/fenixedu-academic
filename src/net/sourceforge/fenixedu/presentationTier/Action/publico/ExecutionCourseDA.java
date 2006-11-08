@@ -236,7 +236,9 @@ public class ExecutionCourseDA extends FenixDispatchAction {
     private List<ProtectedItem> setupItems(HttpServletRequest request, FunctionalityContext context, Section section) {
         List<ProtectedItem> items = new ArrayList<ProtectedItem>();
         for (Item item : section.getOrderedItems()) {
-            items.add(new ProtectedItem(context, item));
+            if (item.isVisible()) {
+                items.add(new ProtectedItem(context, item));
+            }
         }
         
         request.setAttribute("protectedItems", items);

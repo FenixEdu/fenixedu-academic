@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
