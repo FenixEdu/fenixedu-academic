@@ -236,7 +236,7 @@
 					<textElement lineSpacing="Double">
 						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Portador do "]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["portador do Bilhete de Identidade " + $P{student}.getPerson().getDocumentIdNumber()]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
