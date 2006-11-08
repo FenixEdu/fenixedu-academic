@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
@@ -472,16 +474,19 @@ public class ParkingParty extends ParkingParty_Base {
                     && grantOwner.hasCurrentContract()) {
                 List<GrantContractRegime> contractRegimeList = new ArrayList<GrantContractRegime>();
                 occupations.add("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
-                for(GrantContract contract: grantOwner.getGrantContracts()){
+                for (GrantContract contract : grantOwner.getGrantContracts()) {
                     contractRegimeList.addAll(contract.getContractRegimes());
                 }
-                Collections.sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
-                for(GrantContractRegime contractRegime : contractRegimeList){
+                Collections
+                        .sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
+                for (GrantContractRegime contractRegime : contractRegimeList) {
                     StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append("<strong>Início:</strong> " + contractRegime.getDateBeginContractYearMonthDay().toString("dd/MM/yyyy"));
-                    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> " + contractRegime.getDateEndContractYearMonthDay().toString("dd/MM/yyyy"));
+                    stringBuilder.append("<strong>Início:</strong> "
+                            + contractRegime.getDateBeginContractYearMonthDay().toString("dd/MM/yyyy"));
+                    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> "
+                            + contractRegime.getDateEndContractYearMonthDay().toString("dd/MM/yyyy"));
                     stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Activo:</strong> ");
-                    if(contractRegime.isActive()){
+                    if (contractRegime.isActive()) {
                         stringBuilder.append("Sim");
                     } else {
                         stringBuilder.append("Não");
@@ -608,5 +613,76 @@ public class ParkingParty extends ParkingParty_Base {
 
     public static List<ParkingParty> getAll() {
         return RootDomainObject.getInstance().getParkingParties();
+    }
+
+    public void edit(ParkingPartyBean parkingPartyBean) {
+        if (parkingPartyBean.getDeleteFirstCar() && parkingPartyBean.getDeleteSecondCar()) {
+            throw new DomainException("error.parkingParty.no.cars");
+        }
+        if (!parkingPartyBean.getParkingParty().getHasSecondCar()
+                && parkingPartyBean.getDeleteFirstCar()) {
+            throw new DomainException("error.parkingParty.no.cars");
+        }
+        if (parkingPartyBean.getDeleteFirstCar()) {
+            moveSecondCarToFirstCar();
+            deleteSecondCar();
+        } else if (parkingPartyBean.getDeleteSecondCar()) {
+            deleteSecondCar();
+        }
+        if(!parkingPartyBean.getCardAlwaysValid() && parkingPartyBean.getCardStartDate().isAfter(parkingPartyBean.getCardEndDate())){
+            throw new DomainException("error.parkingParty.invalidPeriod");
+        }
+        setCardNumber(parkingPartyBean.getCardNumber());
+        setCardStartDate(parkingPartyBean.getCardStartDate());
+        setCardEndDate(parkingPartyBean.getCardEndDate());
+        setPhdNumber(parkingPartyBean.getPhdNumber());
+        setParkingGroup(parkingPartyBean.getParkingGroup());
+        setFirstCarPlateNumber(parkingPartyBean.getFirstCarPlateNumber());
+        setFirstCarMake(parkingPartyBean.getFirstCarPlateNumber());
+        setSecondCarPlateNumber(parkingPartyBean.getSecondCarPlateNumber());
+        setSecondCarMake(parkingPartyBean.getSecondCarMake());
+    }
+
+    private void moveSecondCarToFirstCar() {
+        setFirstCarMake(getSecondCarMake());
+        setFirstCarPlateNumber(getSecondCarPlateNumber());
+        setFirstCarDeclarationDocumentState(getSecondCarDeclarationDocumentState());
+        setFirstCarInsuranceDocumentState(getSecondCarInsuranceDocumentState());
+        setFirstCarOwnerIdDocumentState(getSecondCarOwnerIdDocumentState());
+        setFirstCarPropertyRegistryDocumentState(getSecondCarPropertyRegistryDocumentState());
+
+        deleteFirstCarFile(ParkingDocumentType.FIRST_CAR_INSURANCE);
+        ParkingDocument parkingDocument = getParkingDocument(ParkingDocumentType.SECOND_CAR_INSURANCE);
+        if (parkingDocument != null) {
+            parkingDocument.setParkingDocumentType(ParkingDocumentType.FIRST_CAR_INSURANCE);
+        }
+        deleteFirstCarFile(ParkingDocumentType.FIRST_CAR_OWNER_ID);
+        parkingDocument = getParkingDocument(ParkingDocumentType.SECOND_CAR_OWNER_ID);
+        if (parkingDocument != null) {
+            parkingDocument.setParkingDocumentType(ParkingDocumentType.FIRST_CAR_OWNER_ID);
+        }
+        deleteFirstCarFile(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
+        parkingDocument = getParkingDocument(ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER);
+        if (parkingDocument != null) {
+            parkingDocument.setParkingDocumentType(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
+        }
+        deleteFirstCarFile(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
+        parkingDocument = getParkingDocument(ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION);
+        if (parkingDocument != null) {
+            parkingDocument
+                    .setParkingDocumentType(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
+        }
+    }
+
+    private void deleteFirstCarFile(ParkingDocumentType documentType) {
+        ParkingDocument parkingDocument = getParkingDocument(documentType);
+        if (parkingDocument != null) {
+            String externalIdentifier = parkingDocument.getParkingFile()
+                    .getExternalStorageIdentification();
+            parkingDocument.delete();
+            if (externalIdentifier != null) {
+                FileManagerFactory.getFileManager().deleteFile(externalIdentifier);
+            }
+        }
     }
 }

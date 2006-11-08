@@ -3786,6 +3786,8 @@ class net.sourceforge.fenixedu.domain.parking.ParkingParty extends net.sourcefor
 	Boolean authorized;
 	Integer keyParty;
 	Boolean acceptedRegulation;
+	DateTime cardStartDate;
+	DateTime cardEndDate;
 	ParkingDocumentState driverLicenseDocumentState;
     ParkingDocumentState firstCarPropertyRegistryDocumentState;
     ParkingDocumentState firstCarInsuranceDocumentState;

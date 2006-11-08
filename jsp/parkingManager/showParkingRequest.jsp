@@ -15,6 +15,23 @@ function confirmation(){
 		document.forms[0].submit();
 	}
 }
+
+function displayCardValidPeriod(){
+	if(document.getElementById('cardValidPeriodIdYes').checked){
+		document.getElementById('cardValidPeriodDivId').style.display='none';
+	} else {
+		document.getElementById('cardValidPeriodDivId').style.display='block';
+	}
+}
+
+function hideCardValidPeriod(toShow){
+	if(toShow){
+		document.getElementById('cardValidPeriodDivId').style.display='block';
+	} else {
+		document.getElementById('cardValidPeriodDivId').style.display='none';
+	}
+}
+
 // -->
 </script>
 
@@ -75,8 +92,9 @@ function confirmation(){
 			<html:hidden property="carPlateNumber" value="<%= pageContext.findAttribute("carPlateNumber").toString() %>"/>
 			<html:hidden property="accepted" value=""/>			
 			
+			<span class="error"><!-- Error messages go here --><html:errors /></span>		
 			<p class="mbottom025"><strong><bean:message key="label.cardNumber"/></strong></p>
-			<html:text size="12" property="cardNumber"/><span class="error"><!-- Error messages go here --><html:errors /></span>
+			<html:text size="12" property="cardNumber"/>
 			<span class="error0 mtop0"><html:messages id="message" property="cardNumber" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>
@@ -96,7 +114,21 @@ function confirmation(){
 			</html:select>
 			<span class="error0 mtop0"><html:messages id="message" property="group" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
-			</html:messages></span>			
+			</html:messages></span>	
+			
+			<br/><br/><bean:message key="label.cardValidPeriod" bundle="PARKING_RESOURCES"/>	
+			<html:radio styleId="cardValidPeriodIdYes" name="parkingForm" property="cardAlwaysValid" value="yes" onclick="displayCardValidPeriod(false)">sim</html:radio>
+			<html:radio styleId="cardValidPeriodIdNo" name="parkingForm" property="cardAlwaysValid" value="no" onclick="displayCardValidPeriod(true)">não</html:radio>	
+			<br/><html:messages id="message" property="mustFillInDates" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/><br/></span></html:messages>
+			<html:messages id="message" property="invalidPeriod" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>				
+			<div id="cardValidPeriodDivId" style="display:block">
+			<fr:edit id="cardValidPeriod" name="parkingPartyBean" schema="edit.parkingParty.cardValidPeriod">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle8 thright thlight"/>
+					<fr:property name="columnClasses" value=",,noborder"/>
+				</fr:layout>
+			</fr:edit>
+			</div>		
 			
 			<jsp:include page="viewParkingPartyAndRequest.jsp"/>
 			

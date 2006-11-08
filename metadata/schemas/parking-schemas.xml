@@ -9,7 +9,9 @@
 <schema name="view.parkingParty.personalInfo"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
 	<slot name="cardNumber" key="label.cardNumber" bundle="PARKING_RESOURCES" />
-	<slot name="parkingGroupToDisplay" key="label.parkingGroup" bundle="PARKING_RESOURCES" />		
+	<slot name="parkingGroupToDisplay" key="label.parkingGroup" bundle="PARKING_RESOURCES" />
+	<slot name="cardStartDate" key="label.cardStartDate" bundle="PARKING_RESOURCES"/>	
+	<slot name="cardEndDate" key="label.cardEndDate" bundle="PARKING_RESOURCES"/>	
 	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES" />
 	<slot name="workPhone" key="label.phone" bundle="PARKING_RESOURCES" />
 	<slot name="party.mobile" key="label.mobile" bundle="PARKING_RESOURCES" />
@@ -285,7 +287,7 @@
 	<slot name="limitlessAccessCard" key="label.requestLimitlessAccessCard" bundle="PARKING_RESOURCES" />
 </schema>
 
-<schema name="edit.parkingParty.user" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+<schema name="edit.parkingParty.user" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
 	<slot name="cardNumber" key="label.cardNumber">
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
 			<property name="lowerBound" value="1"/>
@@ -296,14 +298,20 @@
 		<property name="format" value="${groupName}"/>
 	</slot>
 	<slot name="phdNumber" key="label.phdNumber"/>
+	<slot name="parkingParty" hidden="true" />
 </schema>
 
-<schema name="edit.parkingParty.firstCar" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+<schema name="edit.parkingParty.cardValidPeriod" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
+	<slot name="cardStartDate" key="label.cardStartDate" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
+	<slot name="cardEndDate" key="label.cardEndDate" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
+</schema>
+
+<schema name="edit.parkingParty.firstCar" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
 	<slot name="firstCarMake" key="label.firstCarMake" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="firstCarPlateNumber" key="label.firstCarPlateNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
 </schema>
 
-<schema name="edit.parkingParty.secondCar" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+<schema name="edit.parkingParty.secondCar" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
 	<slot name="secondCarMake" key="label.secondCarMake" />
 	<slot name="secondCarPlateNumber" key="label.secondCarPlateNumber" />	
 </schema>	

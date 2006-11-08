@@ -6,17 +6,24 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+
+import org.joda.time.DateTime;
+
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class UpdateParkingParty extends Service {
 
     public void run(ParkingRequest parkingRequest, final ParkingRequestState parkingRequestState,
-            final Long cardCode, final Integer groupId, final String note) {
-        if (parkingRequestState == ParkingRequestState.ACCEPTED) {
+            final Long cardCode, final Integer groupId, final String note, final DateTime cardStartDate,
+            final DateTime cardEndDate) {
+        if (parkingRequestState == ParkingRequestState.ACCEPTED) {            
+            parkingRequest.getParkingParty().setCardStartDate(cardStartDate);
+            parkingRequest.getParkingParty().setCardEndDate(cardEndDate);
             parkingRequest.getParkingParty().setAuthorized(true);
             parkingRequest.getParkingParty().setCardNumber(cardCode);
             parkingRequest.getParkingParty().setDriverLicenseDocumentState(
@@ -48,14 +55,14 @@ public class UpdateParkingParty extends Service {
 
             ParkingGroup parkingGroup = rootDomainObject.readParkingGroupByOID(groupId);
             parkingRequest.getParkingParty().setParkingGroup(parkingGroup);
-            
+
             parkingRequest.deleteFirstCarFiles();
             parkingRequest.deleteSecondCarFiles();
             parkingRequest.deleteDriverLicenseFile();
             //dont copy files to parking party
-//            for (ParkingDocument parkingDocument : parkingRequest.getParkingDocuments()) {
-//                parkingDocument.setParkingParty(parkingRequest.getParkingParty());
-//            }
+            //            for (ParkingDocument parkingDocument : parkingRequest.getParkingDocuments()) {
+            //                parkingDocument.setParkingParty(parkingRequest.getParkingParty());
+            //            }
         }
         parkingRequest.setParkingRequestState(parkingRequestState);
         parkingRequest.setNote(note);

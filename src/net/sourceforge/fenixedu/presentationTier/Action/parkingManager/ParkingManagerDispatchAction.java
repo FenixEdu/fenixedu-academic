@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.FileEntry;
@@ -31,7 +32,6 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -100,11 +100,19 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             request.setAttribute("groups", ParkingGroup.getAll());
         }
         request.setAttribute("parkingRequest", parkingRequest);
-        
-        if(parkingRequest.getParkingParty().getParty().isPerson()){
+        request.setAttribute("parkingPartyBean", new ParkingPartyBean(parkingRequest.getParkingParty()));
+        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) { // in case of error validation
+            dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid"));
+        } else {
+            dynaActionForm.set("cardAlwaysValid", "no");
+        }
+
+        if (parkingRequest.getParkingParty().getParty().isPerson()) {
             Person person = (Person) parkingRequest.getParkingParty().getParty();
-            if(person.getTeacher() != null && person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())){
-                request.setAttribute("monitor","true");
+            if (person.getTeacher() != null
+                    && person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+                request.setAttribute("monitor", "true");
             }
         }
 
@@ -309,7 +317,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(parkingRequestID);
 
         String note = request.getParameter("note");
-        Object args[] = { parkingRequest, null, null, null, note };
+        Object args[] = { parkingRequest, null, null, null, note, null, null };
 
         String parkingRequestState = request.getParameter("parkingRequestState");
         if (parkingRequestState == null) {
@@ -376,9 +384,29 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                 return showRequest(mapping, actionForm, request, response);
             }
 
+            ParkingPartyBean parkingPartyBean = (ParkingPartyBean) getFactoryObject();
+            String cardAlwaysValid = dynaForm.getString("cardAlwaysValid");
+            if (cardAlwaysValid.equalsIgnoreCase("no")
+                    && (parkingPartyBean.getCardStartDate() == null || parkingPartyBean.getCardEndDate() == null)) {
+                saveErrorMessage(request, "mustFillInDates", "error.card.mustFillInDates");
+                request.setAttribute("idInternal", parkingRequestID);
+                return showRequest(mapping, actionForm, request, response);
+            } else if (cardAlwaysValid.equalsIgnoreCase("yes")) {
+                parkingPartyBean.setCardStartDate(null);
+                parkingPartyBean.setCardEndDate(null);
+            }
+
+            if (parkingPartyBean.getCardStartDate() != null
+                    && parkingPartyBean.getCardStartDate().isAfter(parkingPartyBean.getCardEndDate())) {
+                saveErrorMessage(request, "invalidPeriod", "error.parkingParty.invalidPeriod");
+                request.setAttribute("idInternal", parkingRequestID);
+                return showRequest(mapping, actionForm, request, response);
+            }
             args[1] = ParkingRequestState.ACCEPTED;
             args[2] = cardNumber;
             args[3] = group;
+            args[5] = parkingPartyBean.getCardStartDate();
+            args[6] = parkingPartyBean.getCardEndDate();
         } else if (request.getParameter("reject") != null) {
             args[1] = ParkingRequestState.REJECTED;
         } else {
@@ -443,7 +471,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     }
 
     private String getMostSignificantNumber(Person p) {
-        if(p.getParkingParty().getPhdNumber()!=null){
+        if (p.getParkingParty().getPhdNumber() != null) {
             return "Nº: " + p.getParkingParty().getPhdNumber();
         }
         if (p.getTeacher() != null) {
@@ -452,7 +480,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         if (p.getEmployee() != null && p.getEmployee().getCurrentWorkingContract() != null) {
             return "Nº Mec: " + p.getEmployee().getEmployeeNumber();
         }
-        if (p.getStudent() != null) {         
+        if (p.getStudent() != null) {
             DegreeType degreeType = p.getStudent().getMostSignificantDegreeType();
             Collection<Registration> registrations = p.getStudent().getRegistrationsByDegreeType(
                     degreeType);
@@ -465,7 +493,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         }
         if (p.getGrantOwner() != null && p.getGrantOwner().hasCurrentContract()) {
             return "Nº: " + p.getGrantOwner().getNumber();
-        }       
+        }
         return "";
     }
 
@@ -511,8 +539,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         if (searchPartyBean != null) {
             searchPartyBean.setParty(null);
             Object[] args = { searchPartyBean.getPartyName(), searchPartyBean.getCarPlateNumber() };
-            List<Party> partyList = (List<Party>) ServiceManagerServiceFactory.executeService(
-                    SessionUtils.getUserView(request), "SearchPartyCarPlate", args);
+            List<Party> partyList = (List<Party>) ServiceUtils.executeService(SessionUtils
+                    .getUserView(request), "SearchPartyCarPlate", args);
             request.setAttribute("searchPartyBean", searchPartyBean);
             request.setAttribute("partyList", partyList);
 
@@ -556,28 +584,66 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
         Integer parkingPartyID = getPopertyID(request, "parkingPartyID");
         ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(parkingPartyID);
-        request.setAttribute("parkingParty", parkingParty);
+        request.setAttribute("parkingPartyBean", new ParkingPartyBean(parkingParty));
         request.setAttribute("parkingPartyID", parkingParty.getIdInternal());
+
+        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        if (parkingParty.getFirstCarMake() != null) {
+            if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) {
+                dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid")); // in case of error validation
+            } else {
+                if (parkingParty.getCardStartDate() == null) {
+                    dynaActionForm.set("cardAlwaysValid", "yes");
+                } else {
+                    dynaActionForm.set("cardAlwaysValid", "no");
+                }
+            }
+        } else {
+            if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) { // in case of error validation
+                dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid"));
+            } else {
+                dynaActionForm.set("cardAlwaysValid", "no");
+            }
+        }
         return mapping.findForward("editParkingParty");
     }
 
     public ActionForward editParkingParty(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        ParkingParty parkingParty = (ParkingParty) RenderUtils.getViewState().getMetaObject()
-                .getObject();
-        request.setAttribute("parkingPartyID", parkingParty.getIdInternal());
+        ParkingPartyBean parkingPartyBean = (ParkingPartyBean) getFactoryObject();
+        request.setAttribute("parkingPartyID", parkingPartyBean.getParkingParty().getIdInternal());
+        if (!isRepeatedCardNumber(parkingPartyBean.getCardNumber(), parkingPartyBean.getParkingParty())) {
+            saveErrorMessage(request, "cardNumber", "error.alreadyExistsCardNumber");
+            return prepareEditParkingParty(mapping, actionForm, request, response);
+        }
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
-        Boolean deleteFirstCar = (Boolean) dynaForm.get("deleteFirstCar");
-        Boolean deleteSecondCar = (Boolean) dynaForm.get("deleteSecondCar");
-        boolean deleteFirstCarBool = deleteFirstCar != null ? deleteFirstCar.booleanValue() : false;
-        boolean deleteSecondCarBool = deleteSecondCar != null ? deleteSecondCar.booleanValue() : false;
-
-        ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteParkingPartyCar",
-                new Object[] { parkingParty.getIdInternal(), deleteFirstCarBool, deleteSecondCarBool });
-
-        request.setAttribute("partyID", parkingParty.getParty().getIdInternal());
+        String cardAlwaysValid = dynaForm.getString("cardAlwaysValid");
+        parkingPartyBean.setCardAlwaysValid(false);
+        if (cardAlwaysValid.equalsIgnoreCase("no")
+                && (parkingPartyBean.getCardStartDate() == null || parkingPartyBean.getCardEndDate() == null)) {
+            saveErrorMessage(request, "mustFillInDates", "error.card.mustFillInDates");
+            return prepareEditParkingParty(mapping, actionForm, request, response);
+        } else if (cardAlwaysValid.equalsIgnoreCase("yes")) {
+            parkingPartyBean.setCardAlwaysValid(true);
+            parkingPartyBean.setCardStartDate(null);
+            parkingPartyBean.setCardEndDate(null);
+        }
+        ServiceUtils.executeService(SessionUtils.getUserView(request), "ExecuteFactoryMethod",
+                new Object[] { parkingPartyBean });
+        request.setAttribute("partyID", parkingPartyBean.getParkingParty().getParty().getIdInternal());
 
         return showParkingPartyRequests(mapping, actionForm, request, response);
+    }
+
+    private boolean isRepeatedCardNumber(Long cardNumber, ParkingParty parkingParty) {
+        for (ParkingParty tempParkingParty : rootDomainObject.getParkingParties()) {
+            if (tempParkingParty.getCardNumber() != null
+                    && tempParkingParty.getCardNumber().equals(cardNumber)
+                    && tempParkingParty != parkingParty) {
+                return false;
+            }
+        }
+        return true;
     }
 }

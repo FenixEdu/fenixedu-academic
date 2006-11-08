@@ -103,15 +103,19 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell(""); // clientRef
         row.setCell(""); // comment
         row.setCell("0"); // price
-        row.setCell(""); // endValidityDate
+        String endValidityDate = parkingParty.getCardEndDate() == null ? "" : parkingParty
+                .getCardEndDate().toString("dd/MM/yyyy HH:mm:ss");
+        row.setCell(endValidityDate);
         row.setCell("1/1/2000"); // lastUsedDate
         row.setCell("FALSE"); // invoice
-        row.setCell("TRUE"); // unlimited (if true, start and end validity dates are ignored
+	row.setCell(parkingParty.getCardStartDate() != null ? "FALSE" : "TRUE"); // if true, start and end validity dates are ignored
         row.setCell("FALSE"); // present
         row.setCell("FALSE"); // payDirect
         row.setCell("FALSE"); // apbCorrect (if it's already in the park)
         row.setCell("TRUE"); // noFee
-        row.setCell(""); // startValidityDate
+        String startValidityDate = parkingParty.getCardStartDate() == null ? "" : parkingParty
+                .getCardStartDate().toString("dd/MM/yyyy HH:mm:ss");
+        row.setCell(startValidityDate);
     }
 
     private String getName(String name) {
@@ -319,20 +323,23 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell((String) accessTableRow.get("Comment"));
         row.setCell(((Integer) accessTableRow.get("Price")).toString());
 
-        Date endDate = (Date) accessTableRow.get("EndValidityDate");
-        row.setCell(endDate != null ? DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", endDate) : ""); // endValidityDate
+        String endValidityDate = parkingParty.getCardEndDate() == null ? "" : parkingParty
+                .getCardEndDate().toString("dd/MM/yyyy HH:mm:ss");
+        row.setCell(endValidityDate);
+
 
         row.setCell(DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", (Date) accessTableRow
                 .get("LastUsedDate")));
         row.setCell(getBooleanString(accessTableRow.get("Invoice")));
-        row.setCell(getBooleanString(accessTableRow.get("Unlimited"))); // if true, start and end validity dates are ignored
+        row.setCell(parkingParty.getCardStartDate() != null ? "FALSE" : "TRUE"); // if true, start and end validity dates are ignored
         row.setCell(getBooleanString(accessTableRow.get("Present")));
         row.setCell(getBooleanString(accessTableRow.get("PayDirect")));
         row.setCell(getBooleanString(accessTableRow.get("APBCorrect"))); // if it's already in the park
         row.setCell(getBooleanString(accessTableRow.get("NoFee")));
 
-        Date startDate = (Date) accessTableRow.get("StartValidityDate");
-        row.setCell(startDate != null ? DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", startDate) : ""); // startValidityDate
+        String startValidityDate = parkingParty.getCardStartDate() == null ? "" : parkingParty
+                .getCardStartDate().toString("dd/MM/yyyy HH:mm:ss");
+        row.setCell(startValidityDate);
     }
 
     private String getBooleanString(Object object) {
