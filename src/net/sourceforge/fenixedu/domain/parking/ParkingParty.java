@@ -641,6 +641,9 @@ public class ParkingParty extends ParkingParty_Base {
         setFirstCarMake(parkingPartyBean.getFirstCarPlateNumber());
         setSecondCarPlateNumber(parkingPartyBean.getSecondCarPlateNumber());
         setSecondCarMake(parkingPartyBean.getSecondCarMake());
+        if(getParty().isPerson()){
+            ((Person)getParty()).setEmail(parkingPartyBean.getEmail());
+        }
     }
 
     private void moveSecondCarToFirstCar() {

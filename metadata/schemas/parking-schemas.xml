@@ -298,6 +298,10 @@
 		<property name="format" value="${groupName}"/>
 	</slot>
 	<slot name="phdNumber" key="label.phdNumber"/>
+	<slot name="email" key="label.email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
+		<property name="size" value="30"/>
+		<property name="maxLength" value="100"/>
+	</slot>
 	<slot name="parkingParty" hidden="true" />
 </schema>
 

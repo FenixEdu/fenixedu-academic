@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.parking;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -16,6 +17,8 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
     private Long cardNumber;
 
     private Integer phdNumber;
+    
+    private String email;
 
     private String firstCarPlateNumber;
 
@@ -46,6 +49,9 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
         setCardStartDate(parkingParty.getCardStartDate());
         setCardEndDate(parkingParty.getCardEndDate());
         setParkingGroup(parkingParty.getParkingGroup());
+        if(parkingParty.getParty().isPerson()){
+            setEmail(((Person)parkingParty.getParty()).getEmail());
+        }
     }
 
     public Object execute() {
@@ -164,6 +170,14 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
 
     public void setCardAlwaysValid(Boolean cardAlwaysValid) {
         this.cardAlwaysValid = cardAlwaysValid;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }
