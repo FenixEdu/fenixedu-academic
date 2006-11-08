@@ -284,11 +284,12 @@ public class Person extends Person_Base {
 	setEmail(email);
     }
 
-    public void editPersonalData(String documentIdNumber, IDDocumentType documentType, String personName) {
+    public void editPersonalData(String documentIdNumber, IDDocumentType documentType, String personName, String socialSecurityNumber) {
 	checkConditionsToCreateNewPerson(documentIdNumber, documentType, this);
 	setDocumentIdNumber(documentIdNumber);
 	setIdDocumentType(documentType);
 	setName(personName);
+	setSocialSecurityNumber(socialSecurityNumber);
     }
 
     private void checkConditionsToCreateNewPerson(final String documentIDNumber,

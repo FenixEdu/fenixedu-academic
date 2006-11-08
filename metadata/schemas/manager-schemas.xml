@@ -2,5 +2,6 @@
 	<slot name="documentIdNumber" />
 	<slot name="idDocumentType"/>	
 	<slot name="name"/>	
-	<setter signature="editPersonalData(documentIdNumber,idDocumentType, name)"/>
+	<slot name="socialSecurityNumber"/>		
+	<setter signature="editPersonalData(documentIdNumber,idDocumentType, name, socialSecurityNumber)"/>
 </schema>	
