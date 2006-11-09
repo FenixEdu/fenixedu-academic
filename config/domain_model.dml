@@ -9945,6 +9945,20 @@ relation ExecutionYearSchoolRegistrationCertificateRequest {
 	}
 }
 
+relation ExecutionYearSchoolRegistrationDeclarationRequest {
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest playsRole schoolRegistrationDeclarationRequests {
+		multiplicity *;
+	}
+}
+
+relation ExecutionYearEnrolmentDecalrationRequest {
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest playsRole enrolmentDeclarationRequests {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectMaterial {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.material.Material playsRole materials {
