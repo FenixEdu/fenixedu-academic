@@ -204,8 +204,11 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     private void selectSection(final HttpServletRequest request, final Section section) {
         List<Section> breadCrumbs = new ArrayList<Section>();
-        for (Section superior = section.getSuperiorSection(); superior != null; superior = superior.getSuperiorSection()) {
-            breadCrumbs.add(0, superior);
+        
+        if (section != null) {
+            for (Section superior = section.getSuperiorSection(); superior != null; superior = superior.getSuperiorSection()) {
+                breadCrumbs.add(0, superior);
+            }
         }
 
         request.setAttribute("sectionBreadCrumbs", breadCrumbs);
