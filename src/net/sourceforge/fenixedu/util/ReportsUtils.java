@@ -14,6 +14,8 @@ import javax.print.attribute.standard.MediaPrintableArea;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JRParameter;
@@ -144,6 +146,11 @@ public class ReportsUtils extends PropertiesManager {
         }
         if (report != null) {
             parameters.put(JRParameter.REPORT_RESOURCE_BUNDLE, bundle);
+            
+            if (dataSource.isEmpty()) {
+        	// dummy, engine seems to work not very well with empty data sources
+        	dataSource.add(StringUtils.EMPTY);
+            }
             JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters,
                     new JRBeanCollectionDataSource(dataSource));
             return jasperPrint;
