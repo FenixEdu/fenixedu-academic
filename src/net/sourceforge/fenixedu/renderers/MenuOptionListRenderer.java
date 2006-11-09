@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
+import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
@@ -209,7 +210,7 @@ public class MenuOptionListRenderer extends InputRenderer {
     }
     
     protected Collection getPossibleObjects() {
-        Object object = getInputContext().getParentContext().getMetaObject().getObject();
+        Object object = ((MetaSlot) getInputContext().getMetaObject()).getMetaObject().getObject();
         Object value = getInputContext().getMetaObject().getObject();
         
         if (getProviderClass() != null) {
