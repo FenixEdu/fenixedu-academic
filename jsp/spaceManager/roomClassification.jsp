@@ -18,7 +18,7 @@
 </logic:messagesPresent>
 
 <logic:notPresent name="roomClassificationEditor">
-	<h4><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.create"/></h4>
+	<h4 class="mtop15 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.create"/></h4>
 	<fr:hasMessages for="create" type="conversion">
 		<p>
 			<span class="error0">			
@@ -26,6 +26,7 @@
 			</span>
 		</p>
 	</fr:hasMessages>
+
 	<fr:edit id="create" name="roomClassificationCreator"
 			type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactoryCreator"
 			schema="RoomClassificationFactory"
@@ -33,16 +34,15 @@
 		<fr:destination name="exception" path="/roomClassification.do?method=viewRoomClassifications"/>	
 		<fr:destination name="invalid" path="/roomClassification.do?method=viewRoomClassifications"/>	
 		<fr:destination name="cancel" path="/roomClassification.do?method=viewRoomClassifications"/>				
-		<fr:layout name="tabular" >
-			<fr:property name="classes" value="style1,style1,"/>
-	        <fr:property name="columnClasses" value="listClasses,listClasses,"/>
-        	<fr:property name="style" value="align: left"/>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 </logic:notPresent>
 
 <logic:present name="roomClassificationEditor">
-	<h4><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.edit"/></h4>
+	<h4 class="mtop15 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.edit"/></h4>
 	<fr:hasMessages for="edit" type="conversion">
 		<p>
 			<span class="error0">			
@@ -58,20 +58,19 @@
 		<fr:destination name="invalid" path="/roomClassification.do?method=viewRoomClassifications"/>	
 		<fr:destination name="cancel" path="/roomClassification.do?method=viewRoomClassifications"/>				
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="style1,style1,"/>
-	        <fr:property name="columnClasses" value="listClasses,listClasses,"/>
-        	<fr:property name="style" value="align: left"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 </logic:present>
 
-<br/>
 
-<h4><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.list"/></h4>
+<h4 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.list"/></h4>
+
 <fr:view name="roomClassifications"	schema="RoomClassificationInList">
 	<fr:layout name="tabular" >
-		<fr:property name="classes" value="style1"/>
-        <fr:property name="columnClasses" value="listClasses,listClasses,listClasses,listClasses"/>
+		<fr:property name="classes" value="tstyle4 thlight mtop05"/>
+        <fr:property name="columnClasses" value="aleft,aleft,aleft"/>
 		<fr:property name="link(edit)" value="/roomClassification.do?method=prepareRoomClassification"/>
 		<fr:property name="param(edit)" value="idInternal/roomClassificationID"/>
         <fr:property name="key(edit)" value="space.manager.room.link.edit"/>
