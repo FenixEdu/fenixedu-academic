@@ -93,7 +93,7 @@ public class RoomClassification extends RoomClassification_Base {
 		    || (getCode().contains(".") && (!StringUtils.isNumeric(getCode().substring(0,
 			    getCode().indexOf("."))) || !StringUtils.isNumeric(getCode().substring(
 			    getCode().indexOf(".") + 1, getCode().length()))))) {
-		throw new DomainException("error.roomClassification.code.isn't.a.number");
+		throw new DomainException("error.roomClassification.code.isnt.a.number");
 	    }
 
 	    final int index = getCode().lastIndexOf('.', getCode().length());

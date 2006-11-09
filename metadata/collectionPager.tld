@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!--
+ Copyright 2005 FenixEdu, Inc. All rights reserved.
+ IST PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+<!DOCTYPE taglib
+  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+
+<taglib>
+	<!-- ========== Tag Library Description Elements ========================= -->
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>unit</short-name>
+	<uri>http://fenix-ashes.ist.utl.pt</uri>
+	<description>
+		Collection pager renders 
+	</description>
+ 
+	<tag>
+	   <name>collectionPages</name>
+	   <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.commons.CollectionPager</tag-class>
+	   <body-content>empty</body-content>
+	   <description>
+	   	 Collection pager renders 
+	   </description>
+	   <attribute>
+	 	  	<name>url</name>
+	  	 	<required>true</required>
+	  	 	<rtexprvalue>true</rtexprvalue>
+	   </attribute>
+	   <attribute>
+	  	 	<name>numberOfPagesAttributeName</name>
+	  	 	<required>true</required>
+	   		<rtexprvalue>true</rtexprvalue>
+	   </attribute>
+	   <attribute>
+			<name>pageNumberAttributeName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>    	   
+	</tag>
+</taglib>  

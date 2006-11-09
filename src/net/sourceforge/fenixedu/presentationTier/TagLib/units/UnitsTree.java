@@ -32,82 +32,7 @@ public class UnitsTree extends TagSupport {
     private String state;
 
     private String path;
-
-    /**
-         * @return Returns the id.
-         */
-    public String getId() {
-	return id;
-    }
-
-    /**
-         * @param id
-         *                The id to set.
-         */
-    public void setId(String id) {
-	this.id = id;
-    }
-
-    /**
-         * @return Returns the initialUnit.
-         */
-    public String getInitialUnit() {
-	return initialUnit;
-    }
-
-    /**
-         * @param initialUnit
-         *                The initialUnit to set.
-         */
-    public void setInitialUnit(String initialUnit) {
-	this.initialUnit = initialUnit;
-    }
-
-    /**
-         * @return Returns the path.
-         */
-    public String getPath() {
-	return path;
-    }
-
-    /**
-         * @param path
-         *                The path to set.
-         */
-    public void setPath(String path) {
-	this.path = path;
-    }
-
-    /**
-         * @return Returns the unitParamName.
-         */
-    public String getUnitParamName() {
-	return unitParamName;
-    }
-
-    /**
-         * @param unitParamName
-         *                The unitParamName to set.
-         */
-    public void setUnitParamName(String unitParamName) {
-	this.unitParamName = unitParamName;
-    }
-
-    /**
-         * @return Returns the state.
-         */
-    public String getState() {
-	return state;
-    }
-
-    /**
-         * @param state
-         *                The state to set.
-         */
-    public void setState(String state) {
-	this.state = state;
-    }
-
+    
     public int doStartTag() throws JspException {
 	String tree = writeInstitutionTree();
 	try {
@@ -190,4 +115,43 @@ public class UnitsTree extends TagSupport {
 			"'));return false;").append("\"> ");
     }
 
+    public String getId() {
+	return id;
+    }
+
+    public void setId(String id) {
+	this.id = id;
+    }
+
+    public String getInitialUnit() {
+	return initialUnit;
+    }
+
+    public void setInitialUnit(String initialUnit) {
+	this.initialUnit = initialUnit;
+    }
+
+    public String getPath() {
+	return path;
+    }
+
+    public void setPath(String path) {
+	this.path = path;
+    }
+
+    public String getUnitParamName() {
+	return unitParamName;
+    }
+
+    public void setUnitParamName(String unitParamName) {
+	this.unitParamName = unitParamName;
+    }
+
+    public String getState() {
+	return state;
+    }
+
+    public void setState(String state) {
+	this.state = state;
+    }
 }
