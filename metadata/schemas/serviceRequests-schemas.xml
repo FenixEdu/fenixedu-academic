@@ -64,7 +64,9 @@
 <schema name="CertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest"  extends="DocumentRequest.view" bundle="APPLICATION_RESOURCES">
 
 </schema>
+<schema name="DecalrationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest"  extends="DocumentRequest.view" bundle="APPLICATION_RESOURCES">
 
+</schema>
 <schema name="DegreeFinalizationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
 	<slot name="average" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest.average" />
 	<slot name="detailed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest.detailed" />	
@@ -82,6 +84,15 @@
 	<slot name="executionYear.year" key="label.executionYear"/>
 </schema>
 
+<schema name="SchoolRegistrationDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear.year" key="label.executionYear"/>
+</schema>
+<schema name="EnrolmentDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear.year" key="label.executionYear"/>
+</schema>
+<schema name="IRSDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
+	<slot name="year" key="label.executionYear"/>
+</schema>
 
 <schema name="DocumentRequestEditBean" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestEditBean" bundle="APPLICATION_RESOURCES">
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
