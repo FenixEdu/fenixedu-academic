@@ -9810,6 +9810,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>CreateDocumentRequestsByAcademicOffice</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.documentRequests.CreateDocumentRequestsByAcademicOffice</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
+		</filterChains>
+	</service>
+	<service>
 		<name>ProcessNewAcademicServiceRequests</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ProcessNewAcademicServiceRequests</implementationClass>
 		<description />
