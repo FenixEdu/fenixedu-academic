@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create DomainObjectActionLog tables" createDomainObjectActionLogTables.sql
+execute "alter Table MasterDegreeCandidate" alterTableMasterDegreeCandidate.sql
