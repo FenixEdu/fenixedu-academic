@@ -200,7 +200,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         response.setContentType("text/plain");
         response.setHeader("Content-disposition", "attachment; filename=blueprint.jpeg");
         final ServletOutputStream writer = response.getOutputStream();
-        DWGProcessor.generateJPEGImage(inputStream, writer, 1000);
+        DWGProcessor.generateJPEGImage(inputStream, writer, 25);
         return null;
     }
 }
