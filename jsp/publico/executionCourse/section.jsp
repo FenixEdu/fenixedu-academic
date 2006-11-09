@@ -26,6 +26,22 @@
            </html:link>.
         </p>
     </logic:present>
+ 
+    <fr:view name="section" property="orderedSubSections" layout="list">
+        <fr:layout>
+            <fr:property name="eachLayout" value="values"/>
+            <fr:property name="eachSchema" value="site.section.name"/>
+        </fr:layout>
+        <fr:destination name="section.view" path="<%= "/executionCourse.do?method=section&sectionID=${idInternal}&executionCourseID=" + executionCourse.getIdInternal() %>"/>
+    </fr:view>
+    
+    <logic:empty name="protectedItems">
+        <logic:empty name="section" property="associatedSections">
+            <p>
+                <em><bean:message key="message.section.empty" bundle="SITE_RESOURCES"/></em>
+            </p>
+        </logic:empty>
+    </logic:empty>
     
     <logic:notEmpty name="protectedItems">
         	<logic:iterate id="protectedItem" name="protectedItems">
