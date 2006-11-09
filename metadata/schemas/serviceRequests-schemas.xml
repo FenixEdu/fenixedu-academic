@@ -112,3 +112,7 @@
 	<slot name="detailed" read-only="true" key="detailed.view"/>			
 	<slot name="average" read-only="true" key="average.view"/>
 </schema>
+
+<schema name="DocumentRequestCreateBean.viewCreation" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean"  extends="DocumentRequestCreateBean.viewToConfirmCreation" bundle="STUDENT_RESOURCES">	
+	<remove name="toBeCreated" key="submit"/>
+</schema>
