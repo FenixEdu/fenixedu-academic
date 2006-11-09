@@ -257,13 +257,13 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                                 } catch (NonExistingServiceException e) {
                                     throw new NonExistingActionException("Inscrição", e);
                                 }
-                                if (enrolmentList.size() == 0) {
-                                    ActionErrors errors = new ActionErrors();
-                                    errors.add("AlunoNãoExiste", new ActionError(
-                                            "error.enrolment.notExist"));
-                                    saveErrors(request, errors);
-                                    return new ActionForward(mapping.getInput());
-                                }
+//                                if (enrolmentList.size() == 0) {
+//                                    ActionErrors errors = new ActionErrors();
+//                                    errors.add("AlunoNãoExiste", new ActionError(
+//                                            "error.enrolment.notExist"));
+//                                    saveErrors(request, errors);
+//                                    return new ActionForward(mapping.getInput());
+//                                }
 
                                 String conclusionDate = null;
                                 Date endOfScholarshipDate = null;
