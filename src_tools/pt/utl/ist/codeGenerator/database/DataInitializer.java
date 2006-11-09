@@ -94,6 +94,7 @@ public class DataInitializer {
 	new Role(RoleType.PARKING_MANAGER, "/parkingManager", "/index.do", "portal.parkingManager");
 	new Role(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE, "/academicAdminOffice", "/index.do", "portal.academicAdminOffice");
 	new Role(RoleType.MESSAGING, "/messaging", "/index.do", "portal.messaging");
+	new Role(RoleType.SPACE_MANAGER_SUPER_USER, "/spaceManagerSuperUser", "/index.do", "portal.spaceManagerSuperUser");
     }
 
     private static void createCurricularYearsAndSemesters() {
