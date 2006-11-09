@@ -351,22 +351,26 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean canBeDeleted() {
-	if (hasAnyAssociatedSummaries() || !getGroupings().isEmpty()
-		|| hasAnyAssociatedBibliographicReferences() || hasAnyAssociatedEvaluations()
-		|| hasEvaluationMethod() || hasAnyAssociatedShifts() || hasCourseReport()
-		|| hasAnyAttends() || (hasSite() && !getSite().canBeDeleted())
-		|| (hasBoard() && !getBoard().canDelete())) {
-	    return false;
-	}
+        if (hasAnyAssociatedSummaries()) throw new DomainException("error.execution.course.cant.delete");
+        if (!getGroupings().isEmpty()) throw new DomainException("error.execution.course.cant.delete");
+        if (hasAnyAssociatedBibliographicReferences()) throw new DomainException("error.execution.course.cant.delete");
+        if (hasAnyAssociatedEvaluations()) throw new DomainException("error.execution.course.cant.delete");
+        if (hasEvaluationMethod()) throw new DomainException("error.execution.course.cant.delete");
+        if (hasAnyAssociatedShifts()) throw new DomainException("error.execution.course.cant.delete");
+        if (hasCourseReport()) throw new DomainException("error.execution.course.cant.delete");
+        if (hasAnyAttends()) throw new DomainException("error.execution.course.cant.delete");
+        if ((hasSite() && !getSite().canBeDeleted())) throw new DomainException("error.execution.course.cant.delete");
+        if ((hasBoard() && !getBoard().canDelete())) throw new DomainException("error.execution.course.cant.delete");
+        
 	for (final Professorship professorship : getProfessorships()) {
 	    if (!professorship.canBeDeleted()) {
-		return false;
+                throw new DomainException("error.execution.course.cant.delete");
 	    }
 	}
 
 	for (ExecutionCourseForum forum : getForuns()) {
 	    if (forum.getConversationThreads().size() != 0) {
-		return false;
+                throw new DomainException("error.execution.course.cant.delete");
 	    }
 	}
 
