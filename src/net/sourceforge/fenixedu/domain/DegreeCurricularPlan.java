@@ -1110,11 +1110,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public static List<DegreeCurricularPlan> readByDegreeTypeAndState(DegreeType degreeType,
 	    DegreeCurricularPlanState state) {
 	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
-		.getDegreeCurricularPlans()) {
-	    if (!degreeCurricularPlan.isBolonha()
-		    && degreeCurricularPlan.getDegree().getTipoCurso().equals(degreeType)
-		    && degreeCurricularPlan.getState().equals(state)) {
+	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlans()) {
+	    if (degreeCurricularPlan.getDegree().getTipoCurso() == degreeType && degreeCurricularPlan.getState() == state) {
 		result.add(degreeCurricularPlan);
 	    }
 	}
