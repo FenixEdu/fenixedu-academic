@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
 import java.io.IOException;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.CreateBlueprintSubmissionBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class CreateNewBlueprintVersion extends BlueprintVersionManagmentService {
 

@@ -13,7 +13,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.accessControl.IllegalDataAccessException;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 /**

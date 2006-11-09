@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.email;
 
-import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailAddress;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailMessage;
@@ -11,6 +10,7 @@ import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailSender;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.SendMailReport;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailSender.SenderNotAllowed;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.RecipientType;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 ;
 

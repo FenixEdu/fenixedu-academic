@@ -11,12 +11,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.RecipientType;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.SendStatus;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**

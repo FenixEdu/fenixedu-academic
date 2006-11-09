@@ -10,11 +10,11 @@ import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
 import bibtex.dom.BibtexPerson;
 import bibtex.dom.BibtexPersonList;
-import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public abstract class ResultPublication extends ResultPublication_Base {
 

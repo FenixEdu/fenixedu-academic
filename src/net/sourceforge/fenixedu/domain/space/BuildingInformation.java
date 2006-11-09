@@ -1,24 +1,31 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Building.BuildingFactoryEditor;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Building.BuildingFactory;
-import net.sourceforge.fenixedu.domain.space.Building.BuildingFactoryEditor;
-
 public class BuildingInformation extends BuildingInformation_Base {
 
-    protected BuildingInformation(final Building building, final BuildingFactory buildingFactory) {
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created building information", parameters = {
+	    "building", "name", "begin", "end" })
+    public BuildingInformation(Building building, String name, YearMonthDay begin, YearMonthDay end) {
 	super();
 	super.setSpace(building);
-	setFirstTimeInterval(buildingFactory.getBegin(), buildingFactory.getEnd());
-	setName(buildingFactory.getName());	
-    }
-    
-    public void editBuildingCharacteristics(String name, YearMonthDay begin, YearMonthDay end) {
-	editTimeInterval(begin, end);
 	setName(name);
+	setFirstTimeInterval(begin, end);
+    }
+
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited building information", parameters = {
+	    "name", "begin", "end" })
+    public void editBuildingCharacteristics(String name, YearMonthDay begin, YearMonthDay end) {
+	setName(name);
+	editTimeInterval(begin, end);
     }
 
     @Override

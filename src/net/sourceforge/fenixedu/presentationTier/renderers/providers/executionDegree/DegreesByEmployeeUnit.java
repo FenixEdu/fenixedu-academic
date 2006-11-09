@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;

@@ -142,6 +142,19 @@
 	<slot name="presentationCode"/>
 	<slot name="name"/>
 </schema>
+
+<!-- Changes in the spaces -->
+<schema name="ListChangesInTheSpacesSchema" type="net.sourceforge.fenixedu.domain.DomainObjectActionLog" bundle="SPACE_RESOURCES">
+	<slot name="personName" layout="null-as-label" key="label.person.name">
+		<property name="label" value="error.inexistente.person"/>
+	</slot>
+	<slot name="personUsername" key="label.username"/>
+	<slot name="action" key="label.action.in.the.space"/>
+	<slot name="instant" key="label.action.in.the.space.instant"/>	
+	<slot name="changedomainObject" key="label.changedDomainObject"/>	
+	<slot name="presentationEntries" key="label.domainObjectActionLogEntries"/>	
+</schema>
+
 <schema name="PersonSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">
 	<slot name="person.name"/>
 	<slot name="personWorkingPlace" layout="null-as-label" key="label.person.working.place">
@@ -297,4 +310,3 @@
 		<property name="classes" value="list2 liinline" />
 	</slot>
 </schema>	
-

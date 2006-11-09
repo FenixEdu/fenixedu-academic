@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project basedir="." default="inject" name="Fenix Build File">
+<project basedir="." default="" name="Fenix Build File">
   <property environment="env"/>
   <property name="encoding" value="ISO-8859-1"/>	
 
@@ -10,7 +10,7 @@
 	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
 	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
 
-	<taskdef name="injectAccessControl" classname="net.sourceforge.fenixedu.accessControl.injector.antTask.InjectAccessControl">
+	<taskdef name="injectCode" classname="net.sourceforge.fenixedu.injectionCode.injector.antTask.InjectCode">
 		<classpath>
       <pathelement path="${build.home.webinf.classes}"/>
       <fileset dir="lib">
@@ -19,11 +19,11 @@
 		</classpath>
 	</taskdef>
 		
-	<target name="inject">
-		<injectAccessControl verbose="false" 
+	<target name="inject-accessControl-code">
+		<injectCode verbose="false" 
 				targetClassesDir="${build.home.webinf.classes}" 
-				codeProducerClassName="net.sourceforge.fenixedu.accessControl.FenixAccessControlCallsGenerator"
-				accessControlAnnotation="net.sourceforge.fenixedu.accessControl.Checked">
+				codeProducerClassName="net.sourceforge.fenixedu.injectionCode.FenixAccessControlCallsGenerator"
+				annotation="net.sourceforge.fenixedu.injectionCode.Checked">
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
 				<fileset dir="lib">
@@ -35,14 +35,33 @@
 				<exclude name="**/domain/**/*_Base*"/>
 				<exclude name="**/domain/RootDomainObject*"/>
 			</fileset>
-		</injectAccessControl>
+		</injectCode>
 	</target>
-
-	<target name="void-inject">
-		<injectAccessControl verbose="false" 
+	
+	<target name="inject-domainObjectActionLog-code">
+		<injectCode verbose="false" 
 				targetClassesDir="${build.home.webinf.classes}" 
-				codeProducerClassName="net.sourceforge.fenixedu.accessControl.FenixVoidAccessControlCallsGenerator"
-				accessControlAnnotation="net.sourceforge.fenixedu.accessControl.Checked">
+				codeProducerClassName="net.sourceforge.fenixedu.injectionCode.FenixDomainObjectLogCallsGenerator"
+				annotation="net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation">
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="lib">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<fileset dir="${build.home.webinf.classes}">
+				<include name="**/domain/**/*.class"/>
+				<exclude name="**/domain/**/*_Base*"/>
+				<exclude name="**/domain/RootDomainObject*"/>
+			</fileset>
+		</injectCode>
+	</target>	
+	
+	<target name="accessControl-void-inject">
+		<injectCode verbose="false" 
+				targetClassesDir="${build.home.webinf.classes}" 
+				codeProducerClassName="net.sourceforge.fenixedu.injectionCode.FenixVoidAccessControlCallsGenerator"
+				annotation="net.sourceforge.fenixedu.injectionCode.Checked">
 			<classpath>
 	      <pathelement path="${build.home.webinf.classes}"/>
 		      <fileset dir="lib">
@@ -55,7 +74,27 @@
 				<exclude name="**/domain/**/*_Base*"/>
 				<exclude name="**/domain/RootDomainObject*"/>
 			</fileset>
-		</injectAccessControl>
+		</injectCode>
+	</target>
+
+	<target name="domainObjectActionLog-void-inject">
+		<injectCode verbose="false" 
+				targetClassesDir="${build.home.webinf.classes}" 
+				codeProducerClassName="net.sourceforge.fenixedu.injectionCode.FenixVoidAccessControlCallsGenerator"
+				annotation="net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation">
+			<classpath>
+	      <pathelement path="${build.home.webinf.classes}"/>
+		      <fileset dir="lib">
+						<include name="**/*.jar"/>
+          </fileset>
+      </classpath>
+			
+			<fileset dir="${build.home.webinf.classes}">
+				<include name="**/domain/**/*.class"/>
+				<exclude name="**/domain/**/*_Base*"/>
+				<exclude name="**/domain/RootDomainObject*"/>
+			</fileset>
+		</injectCode>
 	</target>
 
 </project>

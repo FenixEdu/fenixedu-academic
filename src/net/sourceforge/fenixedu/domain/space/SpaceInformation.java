@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
 import org.joda.time.YearMonthDay;
 
@@ -21,6 +22,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted space information", parameters = {})
     public void delete() {
 	if (getSpace().getSpaceInformationsCount() == 1) {
 	    throw new DomainException("space.must.have.at.least.one.space.information");
@@ -29,39 +31,34 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
     }  
     
     @Override
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     public void setValidFrom(YearMonthDay begin) {
 	checkSpaceInformationsIntersection(begin, getValidUntil());
 	super.setValidFrom(begin);
     }
 
-    @Override
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @Override    
     public void setValidUntil(YearMonthDay end) {
 	checkSpaceInformationsIntersection(getValidFrom(), end);
 	super.setValidUntil(end);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    protected void setFirstTimeInterval(final YearMonthDay begin, final YearMonthDay end) {
+	setNewValidUntilDateIfNecessary(begin.minusDays(1));
+	editTimeInterval(begin, end);
+    }
+        
     protected void editTimeInterval(final YearMonthDay begin, final YearMonthDay end) {	
 	checkSpaceInformationsIntersection(begin, end);
 	super.setValidFrom(begin);
 	super.setValidUntil(end);
     }
-    
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
-    protected void setFirstTimeInterval(final YearMonthDay begin, final YearMonthDay end) {
-	setNewValidUntilDateIfNecessary(begin.minusDays(1));
-	editTimeInterval(begin, end);
-    }
-    
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+                  
     public void deleteWithoutCheckNumberOfSpaceInformations() {
 	super.setSpace(null);
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
+        
     @Override    
     public void setSpace(Space space) {
 	if (space == null) {
@@ -69,7 +66,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
 	}
 	super.setSpace(space);
     }   
-
+       
     public int compareTo(SpaceInformation spaceInformation) {
 	if (getValidUntil() == null) {
 	    return 1;

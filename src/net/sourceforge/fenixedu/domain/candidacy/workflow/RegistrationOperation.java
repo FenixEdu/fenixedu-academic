@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -25,6 +24,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.StudentState;
 
 import org.joda.time.YearMonthDay;

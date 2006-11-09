@@ -10,12 +10,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.GroupStudentGroup;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 

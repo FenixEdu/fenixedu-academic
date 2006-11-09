@@ -1,25 +1,48 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.Material;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
 import org.joda.time.YearMonthDay;
 
 public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @FenixDomainObjectActionLogAnnotation(
+         actionName="Created extension occupation", 
+	 parameters={"space","extension","begin","end"}
+    )
     public ExtensionSpaceOccupation(Space space, Extension extension, YearMonthDay begin,
 	    YearMonthDay end) {
 	super();	
 	setSpace(space);
 	setExtension(extension);
-	setOccupationInterval(begin, end);
+	checkExtensionSpaceOccupationIntersection(begin, end, extension);
+	super.setBegin(begin);
+	super.setEnd(end);
+    }
+    
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @FenixDomainObjectActionLogAnnotation(
+         actionName="Edited extension occupation time interval", 
+	 parameters={"begin","end"}
+    )
+    public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
+	checkExtensionSpaceOccupationIntersection(begin, end, getExtension());
+	super.setBegin(begin);
+	super.setEnd(end);
+    }
+      
+    public void delete() {
+	super.setExtension(null);
+	super.delete();
     }
            
-    @Override
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Override    
     public void setExtension(Extension extension) {
 	if (extension == null) {
 	    throw new DomainException("error.extensionSpaceOccupation.no.extension");
@@ -27,32 +50,18 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 	super.setExtension(extension);
     }
 
-    @Override
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Override    
     public void setBegin(YearMonthDay begin) {
 	checkExtensionSpaceOccupationIntersection(begin, getEnd(), getExtension());
 	super.setBegin(begin);
     }
 
-    @Override
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Override    
     public void setEnd(YearMonthDay end) {
 	checkExtensionSpaceOccupationIntersection(getBegin(), end, getExtension());
 	super.setEnd(end);
     }
-
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
-    public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
-	checkExtensionSpaceOccupationIntersection(begin, end, getExtension());
-	super.setBegin(begin);
-	super.setEnd(end);
-    }
-       
-    public void delete() {
-	super.setExtension(null);
-	super.delete();
-    }
-
+ 
     @Override
     public Material getMaterial() {
 	return (Material) getExtension();

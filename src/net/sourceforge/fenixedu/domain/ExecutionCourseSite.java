@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     

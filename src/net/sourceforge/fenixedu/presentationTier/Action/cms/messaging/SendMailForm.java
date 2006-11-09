@@ -10,7 +10,7 @@ import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.accessControl.IGroup;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.ValidatorForm;

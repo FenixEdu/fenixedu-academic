@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public final class GroupIntersection extends NodeGroup {
 

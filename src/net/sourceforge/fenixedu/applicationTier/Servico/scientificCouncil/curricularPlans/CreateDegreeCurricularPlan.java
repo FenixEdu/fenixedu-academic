@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateDegreeCurricularPlan extends Service {

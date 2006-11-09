@@ -4,11 +4,12 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -26,38 +27,27 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 		.addComparator(new BeanComparator("idInternal"));
     }
 
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @FenixDomainObjectActionLogAnnotation(
+         actionName="Created person occupation", 
+	 parameters={"space","person","begin","end"}
+    )
     public PersonSpaceOccupation(final Space space, final Person person, final YearMonthDay begin,
 	    final YearMonthDay end) {
-	super();	
-	setPerson(person);
+	
+	super();
 	setSpace(space);
-	setOccupationInterval(begin, end);
-    }
-    
-    @Override  
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
-    public void setPerson(Person person) {
-	if (person == null) {
-	    throw new DomainException("error.inexistente.person");
-	}
-	super.setPerson(person);
-    }
-
-    @Override
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
-    public void setBegin(YearMonthDay begin) {
-	checkPersonSpaceOccupationIntersection(begin, getEnd(), getPerson(), getSpace());
+	setPerson(person);
+	checkPersonSpaceOccupationIntersection(begin, end, person, space);
 	super.setBegin(begin);
-    }
-
-    @Override
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
-    public void setEnd(YearMonthDay end) {
-	checkPersonSpaceOccupationIntersection(getBegin(), end, getPerson(), getSpace());
 	super.setEnd(end);
     }
-
+    
     @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @FenixDomainObjectActionLogAnnotation(
+         actionName="Edited person occupation time interval", 
+	 parameters={"begin","end"}
+    )
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
 	checkPersonSpaceOccupationIntersection(begin, end, getPerson(), getSpace());
 	super.setBegin(begin);
@@ -69,6 +59,26 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	super.delete();
     }
 
+    @Override       
+    public void setPerson(Person person) {
+	if (person == null) {
+	    throw new DomainException("error.inexistente.person");
+	}
+	super.setPerson(person);
+    }
+
+    @Override      
+    public void setBegin(YearMonthDay begin) {
+	checkPersonSpaceOccupationIntersection(begin, getEnd(), getPerson(), getSpace());
+	super.setBegin(begin);
+    }
+
+    @Override     
+    public void setEnd(YearMonthDay end) {
+	checkPersonSpaceOccupationIntersection(getBegin(), end, getPerson(), getSpace());
+	super.setEnd(end);
+    }
+    
     public boolean contains(YearMonthDay currentDate) {
 	return (!this.getBegin().isAfter(currentDate) && (this.getEnd() == null || !this.getEnd()
 		.isBefore(currentDate)));
@@ -82,7 +92,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     @Override
     public Group getAccessGroup() {
 	return getSpace().getPersonOccupationsAccessGroupWithChainOfResponsibility();
-    }    
+    }
 
     public void checkPersonSpaceOccupationIntersection(final YearMonthDay begin, final YearMonthDay end,
 	    Person person, Space space) {
@@ -101,7 +111,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	return ((end == null || !this.getBegin().isAfter(end)) && (this.getEnd() == null || !this
 		.getEnd().isBefore(begin)));
     }
-    
+
     private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {
 	if (begin == null) {
 	    throw new DomainException("error.personSpaceOccupation.no.beginDate");

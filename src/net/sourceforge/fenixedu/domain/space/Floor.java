@@ -67,7 +67,7 @@ public class Floor extends Floor_Base {
 	}
 
 	public Floor execute() {
-	    return new Floor(this);
+	    return new Floor(getSurroundingSpace(), getLevel(), getBegin(), getEnd());
 	}
     }
 
@@ -86,7 +86,7 @@ public class Floor extends Floor_Base {
 	}
 
 	public FloorInformation execute() {
-	    return new FloorInformation(getSpace(), this);
+	    return new FloorInformation(getSpace(), getLevel(), getBegin(), getEnd());
 	}
 
     }
@@ -95,15 +95,14 @@ public class Floor extends Floor_Base {
 	super();
     }
 
-    public Floor(final FloorFactoryCreator floorFactoryCreator) {
+    public Floor(Space suroundingSpace, Integer level, YearMonthDay begin, YearMonthDay end) {
 	this();
 
-	final Space suroundingSpace = floorFactoryCreator.getSurroundingSpace();
 	if (suroundingSpace == null) {
 	    throw new NullPointerException("error.surrounding.space");
 	}
 	setSuroundingSpace(suroundingSpace);	
-	new FloorInformation(this, floorFactoryCreator);
+	new FloorInformation(this, level, begin, end);
     }    
 
     @Override

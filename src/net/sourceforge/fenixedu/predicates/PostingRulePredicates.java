@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.predicates;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.accessControl.AccessControlPredicate;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class PostingRulePredicates {
 

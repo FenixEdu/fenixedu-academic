@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -8,6 +7,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public class Context extends Context_Base implements Comparable<Context> {
 

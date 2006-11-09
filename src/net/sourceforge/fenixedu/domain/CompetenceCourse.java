@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
@@ -27,6 +26,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 

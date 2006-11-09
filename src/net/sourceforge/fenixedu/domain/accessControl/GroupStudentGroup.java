@@ -5,10 +5,10 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>

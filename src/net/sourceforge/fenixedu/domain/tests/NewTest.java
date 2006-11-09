@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.tests;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class NewTest extends NewTest_Base implements Positionable {
 

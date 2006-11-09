@@ -48,7 +48,7 @@ public class Room extends Room_Base {
 	private YearMonthDay begin;
 
 	private YearMonthDay end;
-	
+
 	private DomainReference<RoomClassification> roomClassificationReference;
 
 	public YearMonthDay getBegin() {
@@ -149,12 +149,14 @@ public class Room extends Room_Base {
 	}
 
 	public RoomClassification getRoomClassification() {
-	    return (this.roomClassificationReference != null) ? this.roomClassificationReference.getObject() : null;
+	    return (this.roomClassificationReference != null) ? this.roomClassificationReference
+		    .getObject() : null;
 	}
-	
+
 	public void setRoomClassification(RoomClassification roomClassification) {
 	    this.roomClassificationReference = (roomClassification != null) ? new DomainReference<RoomClassification>(
-		    roomClassification) : null;
+		    roomClassification)
+		    : null;
 	}
     }
 
@@ -172,7 +174,10 @@ public class Room extends Room_Base {
 	}
 
 	public Room execute() {
-	    return new Room(this);
+	    return new Room(getSurroundingSpace(), getBlueprintNumber(), getIdentification(),
+		    getDescription(), getRoomClassification(), getArea(), getHeightQuality(),
+		    getIlluminationQuality(), getDistanceFromSanitaryInstalationsQuality(),
+		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), getEnd());
 	}
     }
 
@@ -190,7 +195,10 @@ public class Room extends Room_Base {
 	}
 
 	public RoomInformation execute() {
-	    return new RoomInformation(getSpace(), this);
+	    return new RoomInformation(getSpace(), getBlueprintNumber(), getIdentification(),
+		    getDescription(), getRoomClassification(), getArea(), getHeightQuality(),
+		    getIlluminationQuality(), getDistanceFromSanitaryInstalationsQuality(),
+		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), getEnd());
 	}
     }
 
@@ -200,17 +208,23 @@ public class Room extends Room_Base {
 	setOjbConcreteClass(this.getClass().getName());
     }
 
-    public Room(RoomFactoryCreator roomFactoryCreator) {
-	this();	
-	
-	final Space suroundingSpace = roomFactoryCreator.getSurroundingSpace();
+    public Room(Space suroundingSpace, String blueprintNumber, String identification,
+	    String description, RoomClassification roomClassification, BigDecimal area,
+	    Boolean heightQuality, Boolean illuminationQuality,
+	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality,
+	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end) {
+
+	this();
+
 	if (suroundingSpace == null) {
 	    throw new DomainException("error.surrounding.space");
-	}	
-	setSuroundingSpace(suroundingSpace);	
-	new RoomInformation(this, roomFactoryCreator);	
+	}
+	setSuroundingSpace(suroundingSpace);
+	new RoomInformation(this, blueprintNumber, identification, description, roomClassification,
+		area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality,
+		securityQuality, ageQuality, observations, begin, end);
     }
-          
+
     @Override
     public RoomInformation getSpaceInformation() {
 	return (RoomInformation) super.getSpaceInformation();

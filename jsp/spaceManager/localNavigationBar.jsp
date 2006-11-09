@@ -14,11 +14,16 @@
 		
 		<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 		<%
-			if(net.sourceforge.fenixedu.domain.space.Space.personBelongsToWorkmanshipsNucleus(person)){
+			if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
 		%>	
 		<li>		
 			<html:link page="/roomClassification.do?method=viewRoomClassifications">
 				<bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.title"/>
+			</html:link>
+		</li>
+		<li>		
+			<html:link page="/listChangesInTheSpaces.do?method=changesList">
+				<bean:message bundle="SPACE_RESOURCES" key="space.list.changes.in.the.spaces.title"/>
 			</html:link>
 		</li>
 		<%

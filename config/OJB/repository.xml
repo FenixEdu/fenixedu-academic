@@ -90,6 +90,7 @@
 <!ENTITY parking SYSTEM "repository_parking.xml">
 <!ENTITY vigilancy SYSTEM "repository_vigilancy.xml">
 <!ENTITY newTests SYSTEM "repository-tests.xml">
+<!ENTITY domainObjectActionLogs SYSTEM "repository-domainObjectActionLogs.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -184,5 +185,6 @@
     &parking;
 	&vigilancy;
     &newTests;
-
+    &domainObjectActionLogs;
+    
 </descriptor-repository>

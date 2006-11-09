@@ -18,7 +18,7 @@
 
 <bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 <%
-	if(net.sourceforge.fenixedu.domain.space.Space.personBelongsToWorkmanshipsNucleus(person)){
+	if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
 %>
 <ul>
 	<li><html:link page="/showCreateSpaceForm.do"><bean:message bundle="SPACE_RESOURCES" key="link.create.space"/></html:link></li>

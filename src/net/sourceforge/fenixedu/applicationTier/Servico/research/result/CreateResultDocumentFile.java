@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -8,6 +7,7 @@ import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileMetadata;

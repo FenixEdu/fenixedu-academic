@@ -1,0 +1,13 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DomainObjectActionLog -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.DomainObjectActionLog" table="DOMAIN_OBJECT_ACTION_LOG">
+
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DomainObjectActionLogEntry -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.DomainObjectActionLogEntry" table="DOMAIN_OBJECT_ACTION_LOG_ENTRY">
+
+</class-descriptor>

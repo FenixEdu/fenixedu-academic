@@ -6,8 +6,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -22,6 +20,8 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
 import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.joda.time.DateTime;
 

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class SubstituteCandidacySituation extends SubstituteCandidacySituation_Base {
 

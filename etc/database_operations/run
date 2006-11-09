@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create DomainObjectActionLog tables" createDomainObjectActionLogTables.sql

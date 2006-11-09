@@ -8,50 +8,55 @@ import pt.utl.ist.fenix.tools.file.IFileManager;
 public class BlueprintFile extends BlueprintFile_Base {
 
     static {
-        BlueprintBlueprintFile.addListener(new BlueprintBlueprintFileListener());
+	BlueprintBlueprintFile.addListener(new BlueprintBlueprintFileListener());
     }
 
     private BlueprintFile() {
-        super();
+	super();
     }
-    
-    public BlueprintFile(Blueprint blueprint, String filename, String displayName, String mimeType, String checksum,
-            String checksumAlgorithm, Integer size, String externalStorageIdentification,
-            Group permittedGroup) {
-        
-        this();
-        if(blueprint == null) {
-            throw new DomainException("error.blueprintFile.no.blueprint");
-        }
-        setBlueprint(blueprint);
-        init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
-                externalStorageIdentification, permittedGroup);
+
+    public BlueprintFile(Blueprint blueprint, String filename, String displayName, String mimeType,
+	    String checksum, String checksumAlgorithm, Integer size,
+	    String externalStorageIdentification, Group permittedGroup) {
+
+	this();
+	setBlueprint(blueprint);
+	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
+		externalStorageIdentification, permittedGroup);
+    }
+
+    @Override
+    public void setBlueprint(Blueprint blueprint) {
+	if (blueprint == null) {
+	    throw new DomainException("error.blueprintFile.no.blueprint");
+	}
+	super.setBlueprint(blueprint);
     }
 
     private void delete() {
-        removeBlueprint();        
-        removeRootDomainObject();
-        deleteDomainObject();
-        deleteFile();
+	super.setBlueprint(null);
+	removeRootDomainObject();
+	deleteDomainObject();
+	deleteFile();
     }
 
     private void deleteFile() {
-        final IFileManager fileManager = FileManagerFactory.getFileManager();
-        fileManager.deleteFile(getExternalStorageIdentification());
+	final IFileManager fileManager = FileManagerFactory.getFileManager();
+	fileManager.deleteFile(getExternalStorageIdentification());
     }
 
     public String getDirectDownloadUrlFormat() {
-        return FileManagerFactory.getFileManager().getDirectDownloadUrlFormat(
-                getExternalStorageIdentification(), getFilename());
+	return FileManagerFactory.getFileManager().getDirectDownloadUrlFormat(
+		getExternalStorageIdentification(), getFilename());
     }
 
     private static class BlueprintBlueprintFileListener extends
-            dml.runtime.RelationAdapter<BlueprintFile, Blueprint> {
-        @Override
-        public void afterRemove(BlueprintFile blueprintFile, Blueprint blueprint) {
-            if (blueprintFile != null && blueprint != null) {
-                blueprintFile.delete();
-            }
-        }
+	    dml.runtime.RelationAdapter<BlueprintFile, Blueprint> {
+	@Override
+	public void afterRemove(BlueprintFile blueprintFile, Blueprint blueprint) {
+	    if (blueprintFile != null && blueprint != null) {
+		blueprintFile.delete();
+	    }
+	}
     }
 }

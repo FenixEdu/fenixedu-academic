@@ -7,12 +7,12 @@ import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class TestFilterContext implements FunctionalityContext {
 

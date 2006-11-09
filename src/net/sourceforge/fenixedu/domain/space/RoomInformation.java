@@ -3,32 +3,47 @@ package net.sourceforge.fenixedu.domain.space;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Room.RoomFactory;
 import net.sourceforge.fenixedu.domain.space.Room.RoomFactoryEditor;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class RoomInformation extends RoomInformation_Base {
 
-    protected RoomInformation(final Room room, final RoomFactory roomFactory) {
-	super();
-	super.setSpace(room);	
-	setFirstTimeInterval(roomFactory.getBegin(), roomFactory.getEnd());
-	setBlueprintNumber(roomFactory.getBlueprintNumber());
-	setIdentification(roomFactory.getIdentification());
-	setDescription(roomFactory.getDescription());
-	setRoomClassification(roomFactory.getRoomClassification());
-	setArea(roomFactory.getArea());
-	setHeightQuality(roomFactory.getHeightQuality());
-	setIlluminationQuality(roomFactory.getIlluminationQuality());
-	setDistanceFromSanitaryInstalationsQuality(roomFactory
-		.getDistanceFromSanitaryInstalationsQuality());
-	setSecurityQuality(roomFactory.getSecurityQuality());
-	setAgeQuality(roomFactory.getAgeQuality());
-	setObservations(roomFactory.getObservations());
-    } 
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created room information", parameters = {
+	    "room", "blueprintNumber", "identification", "description", "roomClassification", "area",
+	    "heightQuality", "illuminationQuality", "distanceFromSanitaryInstalationsQuality",
+	    "securityQuality", "ageQuality", "observations", "begin", "end" })
+    public RoomInformation(Room room, String blueprintNumber, String identification,
+	    String description, RoomClassification roomClassification, BigDecimal area,
+	    Boolean heightQuality, Boolean illuminationQuality,
+	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality,
+	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end) {
 
+	super();
+	super.setSpace(room);
+	setFirstTimeInterval(begin, end);
+	setBlueprintNumber(blueprintNumber);
+	setIdentification(identification);
+	setDescription(description);
+	setRoomClassification(roomClassification);
+	setArea(area);
+	setHeightQuality(heightQuality);
+	setIlluminationQuality(illuminationQuality);
+	setDistanceFromSanitaryInstalationsQuality(distanceFromSanitaryInstalationsQuality);
+	setSecurityQuality(securityQuality);
+	setAgeQuality(ageQuality);
+	setObservations(observations);
+    }
+
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited room information", parameters = {
+	    "blueprintNumber", "identification", "description", "roomClassification", "area",
+	    "heightQuality", "illuminationQuality", "distanceFromSanitaryInstalationsQuality",
+	    "securityQuality", "ageQuality", "observations", "begin", "end" })
     public void editRoomCharacteristics(String blueprintNumber, String identification,
 	    String description, RoomClassification roomClassification, BigDecimal area,
 	    Boolean heightQuality, Boolean illuminationQuality,
@@ -46,12 +61,12 @@ public class RoomInformation extends RoomInformation_Base {
 	setDistanceFromSanitaryInstalationsQuality(distanceFromSanitaryInstalationsQuality);
 	setSecurityQuality(securityQuality);
 	setAgeQuality(ageQuality);
-	setObservations(observations);	
-    }
-      
+	setObservations(observations);
+    }   
+
     @Override
     public void setBlueprintNumber(String blueprintNumber) {
-	if(StringUtils.isEmpty(blueprintNumber)) {
+	if (blueprintNumber == null || StringUtils.isEmpty(blueprintNumber.trim())) {
 	    throw new DomainException("error.roomInformation.empty.blueprintNumber");
 	}
 	super.setBlueprintNumber(blueprintNumber);

@@ -6,9 +6,6 @@ package net.sourceforge.fenixedu.predicates;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.accessControl.AccessControlPredicate;
-import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
@@ -16,6 +13,9 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**

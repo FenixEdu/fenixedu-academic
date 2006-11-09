@@ -46,7 +46,7 @@
 	<property name="compile.debug"       value="on"/>
 	<property name="compile.deprecation" value="off"/>
 	<property name="compile.optimize"    value="on"/>
-
+	
 	<!-- Renderers properties -->
 	<property name="renderers.package.dir" value="net/sourceforge/fenixedu/renderers"/>
 	<property name="renderers.lib.name" value="fenix-renderers.jar"/>
@@ -624,7 +624,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
            optimize="${compile.optimize}"
            deprecation="${compile.deprecation}"
            encoding="${encoding}"
-           nowarn="true">
+           nowarn="true"
+  		   >
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
 			<include name="net/sourceforge/fenixedu/tools/**"/>
@@ -650,7 +651,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			   optimize="${compile.optimize}" 
 			   deprecation="${compile.deprecation}" 
 			   encoding="${encoding}" 
-			   nowarn="true" />
+			   nowarn="true" 
+  			   />
 		
 		<jar destfile="${lib}/${renderers.lib.name}" basedir="${build.home.webinf.classes}" 
 			 includes="${renderers.package.dir}/**" />
@@ -660,7 +662,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 
 	<target name="base-compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-all-properties, generate">
-		<javac destdir="${build.home.webinf.classes}" extdirs="${lib}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
+		<javac destdir="${build.home.webinf.classes}" extdirs="${lib}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true" >
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
 
@@ -690,11 +692,13 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 
 	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain, compile-renderers, write-all-properties, generate, generate-groups-language, base-compile, compile-reports">
-		<ant antfile="build_accessControl.xml"/>
+		<ant antfile="build_accessControl.xml" target="inject-accessControl-code"/>
+		<ant antfile="build_accessControl.xml" target="inject-domainObjectActionLog-code"/>
 	</target>
 
 	<target name="compile-without-access-control" description="Compile application" depends="i18nDefault, write-all-properties, compile-domain,compile-renderers, generate, base-compile">
-		<ant antfile="build_accessControl.xml" target="void-inject"/>
+		<ant antfile="build_accessControl.xml" target="accessControl-void-inject"/>
+		<ant antfile="build_accessControl.xml" target="domainObjectActionLog-void-inject"/>
 	</target>
 
 	<target name="deploy-linux"
@@ -824,7 +828,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
                deprecation="${compile.deprecation}"
 			   classpath="struts.jar"
                encoding="${encoding}"
-			   nowarn="true">
+			   nowarn="true"
+	  		   >			
 			<classpath>
 				<pathelement path="${build.home.webinf.classes};"/>
 				<fileset dir="${lib}">

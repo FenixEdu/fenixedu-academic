@@ -313,7 +313,7 @@
 	%>	
 		
 	<%
-		if(thisSpace.personBelongsToWorkmanshipsNucleus(person)){
+		if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
 	%>
 	<%-- Access Groups --%>
 	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.access.groups"/></h3>

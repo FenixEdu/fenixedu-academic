@@ -15,9 +15,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.collections.set.UnmodifiableSet;
 

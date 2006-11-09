@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
-import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.event.Event;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public class ResultEventAssociation extends ResultEventAssociation_Base {
 

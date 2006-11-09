@@ -73,6 +73,12 @@
        		<forward name="manageResponsabilityInterval" path="manage-responsability-interval"/>        		        	
         </action>
         
+        <action path="/listChangesInTheSpaces"        		
+        		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ListChangesInTheSpacesDA"
+        		parameter="method">                		
+       		<forward name="listChangesInTheSpaces" path="list-changes-in-the-spaces"/>        		        	       	
+        </action>
+                
         <action path="/manageBlueprints"        		
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceBlueprintsDA"
         		parameter="method">                		

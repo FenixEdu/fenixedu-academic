@@ -5,8 +5,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;

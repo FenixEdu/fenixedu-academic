@@ -72,6 +72,8 @@ public enum RoleType {
     CMS_MANAGER("Content Management"),
 
     SPACE_MANAGER("Space Management"),
+    
+    SPACE_MANAGER_SUPER_USER("Space Management (Super User)"),
 
     RESEARCHER("Researcher"),
 

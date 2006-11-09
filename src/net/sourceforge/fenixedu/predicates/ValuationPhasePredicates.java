@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.predicates;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.accessControl.AccessControlPredicate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class ValuationPhasePredicates {
 

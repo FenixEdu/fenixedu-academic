@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public abstract class DeclarationRequest extends DeclarationRequest_Base {
 

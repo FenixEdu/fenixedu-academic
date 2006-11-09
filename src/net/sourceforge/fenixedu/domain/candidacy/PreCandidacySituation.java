@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class PreCandidacySituation extends PreCandidacySituation_Base {
 

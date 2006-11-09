@@ -1,26 +1,33 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus.CampusFactoryEditor;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus.CampusFactory;
-import net.sourceforge.fenixedu.domain.space.Campus.CampusFactoryEditor;
-
 public class CampusInformation extends CampusInformation_Base {
 
-    protected CampusInformation(final Campus campus, final CampusFactory campusFactory) {
-	super();	
-	super.setSpace(campus);	
-	setFirstTimeInterval(campusFactory.getBegin(), campusFactory.getEnd());
-	setName(campusFactory.getName());	
-    }
-    
-    public void editCampusCharacteristics(String name, YearMonthDay begin, YearMonthDay end) {
-	editTimeInterval(begin, end);
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created campus information", parameters = {
+	    "campus", "name", "begin", "end" })
+    public CampusInformation(Campus campus, String name, YearMonthDay begin, YearMonthDay end) {
+	super();
+	super.setSpace(campus);
 	setName(name);
+	setFirstTimeInterval(begin, end);
     }
-    
+
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited campus information", parameters = {
+	    "name", "begin", "end" })
+    public void editCampusCharacteristics(String name, YearMonthDay begin, YearMonthDay end) {
+	setName(name);
+	editTimeInterval(begin, end);
+    }
+
     @Override
     public void setName(final String name) {
 	if (name == null || StringUtils.isEmpty(name.trim())) {

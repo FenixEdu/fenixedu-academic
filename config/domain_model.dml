@@ -2563,6 +2563,20 @@ class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sour
 	Integer keySpace;
 }
 
+class net.sourceforge.fenixedu.domain.DomainObjectActionLog extends net.sourceforge.fenixedu.domain.DomainObject {
+	String personUsername;
+	Integer keyPerson;
+	Integer keyDomainObject;
+	String domainObjectClassName;
+	String action;
+	DateTime instant;
+}
+
+class net.sourceforge.fenixedu.domain.DomainObjectActionLogEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyDomainObjectActionLog;
+	String name;
+	String value;
+}
 
 class net.sourceforge.fenixedu.domain.teacher.TeacherService extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
@@ -10759,6 +10773,34 @@ relation RootDomainObjectRegistrationState {
 relation LoginAliasLogin {
 	net.sourceforge.fenixedu.domain.Login playsRole login;
 	net.sourceforge.fenixedu.domain.LoginAlias playsRole alias {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDomainObjectActionLog {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.DomainObjectActionLog playsRole domainObjectActionLogs {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDomainObjectActionLogEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.DomainObjectActionLogEntry playsRole domainObjectActionLogEntries {
+		multiplicity *;
+	}
+}
+
+relation DomainObjectActionLogDomainObjectActionLogEntry {
+	net.sourceforge.fenixedu.domain.DomainObjectActionLog playsRole domainObjectActionLog;
+	net.sourceforge.fenixedu.domain.DomainObjectActionLogEntry playsRole domainObjectActionLogEntries {
+		multiplicity *;
+	}
+}
+
+relation DomainObjectActionLogPerson {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.DomainObjectActionLog playsRole domainObjectActionLogs {
 		multiplicity *;
 	}
 }

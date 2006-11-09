@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.predicates;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.accessControl.AccessControlPredicate;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.result.Result;
@@ -9,6 +7,8 @@ import net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile;
 import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class ResultPredicates {
 

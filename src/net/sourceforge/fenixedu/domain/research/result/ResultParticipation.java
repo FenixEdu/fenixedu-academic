@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public class ResultParticipation extends ResultParticipation_Base {
 

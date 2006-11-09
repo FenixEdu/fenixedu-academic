@@ -7,16 +7,15 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
 import org.joda.time.YearMonthDay;
 
@@ -178,6 +177,8 @@ public abstract class Space extends Space_Base {
 	return materialOccupations;
     }
 
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted space", parameters = {})
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.space.cannot.be.deleted");
@@ -220,6 +221,12 @@ public abstract class Space extends Space_Base {
 	return campus;
     }
 
+    public static boolean personIsSpacesAdministrator(Person person) {
+	return person.hasRole(RoleType.MANAGER)
+		|| (person.hasRole(RoleType.SPACE_MANAGER_SUPER_USER) && person
+			.hasRole(RoleType.SPACE_MANAGER));
+    }
+    
     public void checkIfLoggedPersonHasPermissionsToManageSpace(Person person) {
 	if (personHasPermissionsToManageSpace(person)) {
 	    return;
@@ -228,34 +235,9 @@ public abstract class Space extends Space_Base {
     }
 
     public boolean personHasPermissionsToManageSpace(Person person) {
-	return personBelongsToWorkmanshipsNucleus(person)
-		|| personHasSpecialPermissionToManageSpace(person);
+	return personIsSpacesAdministrator(person) || personHasSpecialPermissionToManageSpace(person);
     }
-
-    public static boolean personBelongsToWorkmanshipsNucleus(Person person) {
-	if(!person.hasRole(RoleType.SPACE_MANAGER)) {
-	    return false;
-	}
-	
-	if (person.hasRole(RoleType.MANAGER)) {
-	    return true;
-	}	
-	
-	String workmanshipsNucleusCostCenterCode = PropertiesManager.getProperty("workmanshipsNucleusCostCenterCode");
-	Unit workmanshipsNucleus = Unit.readByCostCenterCode(Integer.valueOf(workmanshipsNucleusCostCenterCode));	
-	
-	if(person.hasActivePersonFunction(FunctionType.RESPONSIBLE, workmanshipsNucleus)) {
-	    return true;
-	}
-	
-	if (person.getEmployee() != null) {
-	    Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
-	    return (currentWorkingPlace != null && workmanshipsNucleus != null && currentWorkingPlace
-		    .equals(workmanshipsNucleus));
-	}
-	return false;
-    }
-
+   
     public boolean personHasSpecialPermissionToManageSpace(Person person) {
 	Group spaceManagementAccessGroup = getSpaceManagementAccessGroupWithChainOfResponsibility();
 	if (spaceManagementAccessGroup != null && spaceManagementAccessGroup.isMember(person)) {
@@ -316,7 +298,7 @@ public abstract class Space extends Space_Base {
 	return null;
     }
 
-    public static enum SpaceAccessGroupType {
+    public static enum SpaceAccessGroupType {	
 
 	PERSON_OCCUPATION_ACCESS_GROUP("personOccupationsAccessGroup"),
 

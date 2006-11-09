@@ -2,7 +2,7 @@
  * 
  */
 
-package net.sourceforge.fenixedu.accessControl;
+package net.sourceforge.fenixedu.injectionCode;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;

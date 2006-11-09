@@ -18,14 +18,15 @@ public class Building extends Building_Base {
     static {
 	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
 		"spaceInformation.presentationName", Collator.getInstance()));
-	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
+		"idInternal"));
     }
 
     public static abstract class BuildingFactory implements Serializable, FactoryExecutor {
 	private String name;
-	
+
 	private YearMonthDay begin;
-	
+
 	private YearMonthDay end;
 
 	public YearMonthDay getBegin() {
@@ -43,7 +44,7 @@ public class Building extends Building_Base {
 	public void setEnd(YearMonthDay end) {
 	    this.end = end;
 	}
-	
+
 	public String getName() {
 	    return name;
 	}
@@ -68,14 +69,14 @@ public class Building extends Building_Base {
 	}
 
 	public Building execute() {
-	    return new Building(this);
+	    return new Building(getSurroundingSpace(), getName(), getBegin(), getEnd());
 	}
     }
 
     public static class BuildingFactoryEditor extends BuildingFactory {
 
 	private DomainReference<Building> buildingReference;
-		
+
 	public Building getSpace() {
 	    return buildingReference == null ? null : buildingReference.getObject();
 	}
@@ -85,10 +86,10 @@ public class Building extends Building_Base {
 		this.buildingReference = new DomainReference<Building>(building);
 	    }
 	}
-	
+
 	public BuildingInformation execute() {
-	    return new BuildingInformation(getSpace(), this);
-	}	
+	    return new BuildingInformation(getSpace(), getName(), getBegin(), getEnd());
+	}
     }
 
     protected Building() {
@@ -97,10 +98,10 @@ public class Building extends Building_Base {
 	setOjbConcreteClass(getClass().getName());
     }
 
-    public Building(final BuildingFactoryCreator buildingFactoryCreator) {
+    public Building(Space surroundingSpace, String name, YearMonthDay begin, YearMonthDay end) {
 	this();
-	setSuroundingSpace(buildingFactoryCreator.getSurroundingSpace());	
-	new BuildingInformation(this, buildingFactoryCreator);	
+	setSuroundingSpace(surroundingSpace);
+	new BuildingInformation(this, name, begin, end);
     }
 
     @Override

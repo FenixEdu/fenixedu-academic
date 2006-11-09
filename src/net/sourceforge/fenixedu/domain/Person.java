@@ -94,6 +94,32 @@ public class Person extends Person_Base {
          * BUSINESS SERVICES *
          **********************************************************************/
 
+    @Override
+    public void setDocumentIdNumber(String documentIdNumber) {
+	if (documentIdNumber == null || StringUtils.isEmpty(documentIdNumber.trim())) {
+	    throw new DomainException("error.person.empty.documentIdNumber");
+	}
+	super.setDocumentIdNumber(documentIdNumber);
+    }
+
+    @Override
+    public void setIdDocumentType(IDDocumentType idDocumentType) {
+	if (idDocumentType == null) {
+	    throw new DomainException("error.person.empty.idDocumentType");
+	}
+	super.setIdDocumentType(idDocumentType);
+    }
+
+    public void setIdentification(String documentIdNumber, IDDocumentType idDocumentType) {
+	if (documentIdNumber != null
+		&& idDocumentType != null
+		&& checkIfDocumentNumberIdAndDocumentIdTypeExists(documentIdNumber, idDocumentType, this)) {
+	    throw new DomainException("error.person.existent.docIdAndType");
+	}
+	setDocumentIdNumber(documentIdNumber);
+	setIdDocumentType(idDocumentType);
+    }
+
     public String getNome() {
 	return super.getName();
     }
@@ -117,9 +143,6 @@ public class Person extends Person_Base {
 	    throw new DomainException("error.person.existentPerson");
 	}
 
-	checkConditionsToCreateNewPerson(personToCreate.getNumeroDocumentoIdentificacao(),
-		personToCreate.getTipoDocumentoIdentificacao(), this);
-
 	createUserAndLoginEntity();
 
 	setProperties(personToCreate);
@@ -130,9 +153,6 @@ public class Person extends Person_Base {
     public Person(PersonBean personBean) {
 
 	super();
-
-	checkConditionsToCreateNewPerson(personBean.getDocumentIdNumber(), personBean
-		.getIdDocumentType(), this);
 
 	createUserAndLoginEntity();
 
@@ -148,13 +168,11 @@ public class Person extends Person_Base {
 	    IDDocumentType identificationDocumentType, Gender gender) {
 
 	super();
-	checkConditionsToCreateNewPerson(identificationDocumentNumber, identificationDocumentType, this);
 
 	createUserAndLoginEntity();
 
 	setNome(name);
-	setDocumentIdNumber(identificationDocumentNumber);
-	setIdDocumentType(identificationDocumentType);
+	setIdentification(identificationDocumentNumber, identificationDocumentType);
 	setGender(gender);
 	setAvailableEmail(Boolean.FALSE);
 	setAvailableWebSite(Boolean.FALSE);
@@ -169,7 +187,6 @@ public class Person extends Person_Base {
 	    String documentIDNumber, IDDocumentType documentType) {
 
 	super();
-	checkConditionsToCreateNewPerson(documentIDNumber, documentType, this);
 	setNome(name);
 	setGender(gender);
 	setAddress(address);
@@ -183,8 +200,7 @@ public class Person extends Person_Base {
 	setMobile(mobile);
 	setWebAddress(homepage);
 	setEmail(email);
-	setDocumentIdNumber(documentIDNumber);
-	setIdDocumentType(documentType);
+	setIdentification(documentIDNumber, documentType);
 	setAvailableEmail(Boolean.FALSE);
 	setAvailableWebSite(Boolean.FALSE);
 	setAvailablePhoto(Boolean.FALSE);
@@ -206,7 +222,6 @@ public class Person extends Person_Base {
 	    String homepage, String email, String documentIDNumber, IDDocumentType documentType) {
 
 	super();
-	checkConditionsToCreateNewPerson(documentIDNumber, documentType, this);
 
 	createUserAndLoginEntity();
 
@@ -217,8 +232,7 @@ public class Person extends Person_Base {
 	setMobile(mobile);
 	setWebAddress(homepage);
 	setEmail(email);
-	setDocumentIdNumber(documentIDNumber);
-	setIdDocumentType(documentType);
+	setIdentification(documentIDNumber, documentType);
 	setAvailableEmail(Boolean.FALSE);
 	setAvailableWebSite(Boolean.FALSE);
 	setAvailablePhoto(Boolean.FALSE);
@@ -238,9 +252,6 @@ public class Person extends Person_Base {
     }
 
     public void edit(InfoPersonEditor personToEdit, Country country) {
-	checkConditionsToCreateNewPerson(personToEdit.getNumeroDocumentoIdentificacao(), personToEdit
-		.getTipoDocumentoIdentificacao(), this);
-
 	setProperties(personToEdit);
 	if (country != null) {
 	    setPais(country);
@@ -248,14 +259,10 @@ public class Person extends Person_Base {
     }
 
     public void edit(PersonBean personBean) {
-	checkConditionsToCreateNewPerson(personBean.getDocumentIdNumber(), personBean
-		.getIdDocumentType(), this);
 	setProperties(personBean);
     }
 
     public void update(InfoPersonEditor updatedPersonalData, Country country) {
-	checkConditionsToCreateNewPerson(updatedPersonalData.getNumeroDocumentoIdentificacao(),
-		updatedPersonalData.getTipoDocumentoIdentificacao(), this);
 	updateProperties(updatedPersonalData);
 	if (country != null) {
 	    setPais(country);
@@ -284,24 +291,12 @@ public class Person extends Person_Base {
 	setEmail(email);
     }
 
-    public void editPersonalData(String documentIdNumber, IDDocumentType documentType, String personName, String socialSecurityNumber) {
-	checkConditionsToCreateNewPerson(documentIdNumber, documentType, this);
-	setDocumentIdNumber(documentIdNumber);
-	setIdDocumentType(documentType);
+    public void editPersonalData(String documentIdNumber, IDDocumentType documentType,
+	    String personName, String socialSecurityNumber) {
+
+	setIdentification(documentIdNumber, documentType);
 	setName(personName);
 	setSocialSecurityNumber(socialSecurityNumber);
-    }
-
-    private void checkConditionsToCreateNewPerson(final String documentIDNumber,
-	    final IDDocumentType documentType, Person thisPerson) {
-
-	if (documentIDNumber != null
-		&& documentType != null
-		&& checkIfDocumentNumberIdAndDocumentIdTypeExists(documentIDNumber, documentType,
-			thisPerson)) {
-
-	    throw new DomainException("error.person.existent.docIdAndType");
-	}
     }
 
     public Login getLoginIdentification() {
@@ -579,12 +574,8 @@ public class Person extends Person_Base {
     private void setProperties(InfoPersonEditor infoPerson) {
 
 	setNome(infoPerson.getNome());
-
-	if (infoPerson.getNumeroDocumentoIdentificacao() != null)
-	    setDocumentIdNumber(infoPerson.getNumeroDocumentoIdentificacao());
-	if (infoPerson.getTipoDocumentoIdentificacao() != null)
-	    setIdDocumentType(infoPerson.getTipoDocumentoIdentificacao());
-
+	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson
+		.getTipoDocumentoIdentificacao());
 	setFiscalCode(infoPerson.getCodigoFiscal());
 	setAreaCode(infoPerson.getCodigoPostal());
 	setDistrictSubdivisionOfResidence(infoPerson.getConcelhoMorada());
@@ -628,8 +619,7 @@ public class Person extends Person_Base {
 
 	setName(personBean.getName());
 	setGender(personBean.getGender());
-	setDocumentIdNumber(personBean.getDocumentIdNumber());
-	setIdDocumentType(personBean.getIdDocumentType());
+	setIdentification(personBean.getDocumentIdNumber(), personBean.getIdDocumentType());
 	setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());
 	setEmissionDateOfDocumentIdYearMonthDay(personBean.getDocumentIdEmissionDate());
 	setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
@@ -669,10 +659,9 @@ public class Person extends Person_Base {
     private void updateProperties(InfoPersonEditor infoPerson) {
 
 	setNome(valueToUpdateIfNewNotNull(getNome(), infoPerson.getNome()));
-	setDocumentIdNumber(valueToUpdateIfNewNotNull(getDocumentIdNumber(), infoPerson
-		.getNumeroDocumentoIdentificacao()));
-	setIdDocumentType((IDDocumentType) valueToUpdateIfNewNotNull(getIdDocumentType(), infoPerson
-		.getTipoDocumentoIdentificacao()));
+	setIdentification(valueToUpdateIfNewNotNull(getDocumentIdNumber(), infoPerson
+		.getNumeroDocumentoIdentificacao()), (IDDocumentType) valueToUpdateIfNewNotNull(
+		getIdDocumentType(), infoPerson.getTipoDocumentoIdentificacao()));
 	setFiscalCode(valueToUpdateIfNewNotNull(getFiscalCode(), infoPerson.getCodigoFiscal()));
 	setAreaCode(valueToUpdateIfNewNotNull(getAreaCode(), infoPerson.getCodigoPostal()));
 	setDistrictSubdivisionOfResidence(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfResidence(),
@@ -843,8 +832,7 @@ public class Person extends Person_Base {
 	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
 		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
 	    if (personFunction.getUnit().equals(unit)
-		    && (personFunction.getFunction().getFunctionType() != null && personFunction
-			    .getFunction().getFunctionType().equals(functionType))
+		    && personFunction.getFunction().getFunctionType() == functionType
 		    && personFunction.isActive(currentDate)) {
 		return true;
 	    }
@@ -1005,10 +993,10 @@ public class Person extends Person_Base {
 	@Override
 	public void beforeAdd(Role role, Person person) {
 	    if (!person.hasRole(role.getRoleType()) && !verifiesDependencies(person, role)) {
-		    throw new DomainException("error.person.addingInvalidRole", role.getRoleType()
-			    .toString());
-		}
+		throw new DomainException("error.person.addingInvalidRole", role.getRoleType()
+			.toString());
 	    }
+	}
 
 	@Override
 	public void afterAdd(Role role, Person person) {
@@ -2043,7 +2031,7 @@ public class Person extends Person_Base {
 	}
 	return false;
     }
-    
+
     public Set<Event> getEventsByEventType(final EventType eventType) {
 	final Set<Event> result = new HashSet<Event>();
 
@@ -2055,7 +2043,7 @@ public class Person extends Person_Base {
 
 	return result;
     }
-    
+
     public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
 	for (final InsuranceEvent insuranceEvent : getInsuranceEvents()) {
 	    if (insuranceEvent.getExecutionYear() == executionYear) {
@@ -2076,77 +2064,76 @@ public class Person extends Person_Base {
     }
 
     public String getHomepageWebAddress() {
-        final Homepage homepage = getHomepage();
-        if (homepage == null) {
+	final Homepage homepage = getHomepage();
+	if (homepage == null) {
 	    if (getAvailableWebSite() != null && getAvailableWebSite().booleanValue()
 		    && getWebAddress() != null && getWebAddress().length() > 0) {
-                return getWebAddress();
-            }
-        } else {
-            if (homepage.getActivated() != null && homepage.getActivated().booleanValue()) {
-                return "/homepage/" + getUsername();
+		return getWebAddress();
+	    }
+	} else {
+	    if (homepage.getActivated() != null && homepage.getActivated().booleanValue()) {
+		return "/homepage/" + getUsername();
 	    } else if (getAvailableWebSite() != null && getAvailableWebSite().booleanValue()
 		    && getWebAddress() != null && getWebAddress().length() > 0) {
-                return getWebAddress();
-            }
-        }
-        return null;
+		return getWebAddress();
+	    }
+	}
+	return null;
     }
 
     public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(
 	    DegreeCurricularPlan degreeCurricularPlan) {
-        Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(new BeanComparator("executionYear"));
-        for (Coordinator coordinator : getCoordinators()) {
-            if (coordinator.getExecutionDegree().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
-                result.add(coordinator.getExecutionDegree());
-            }
-        }
-        return result;
+	Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(new BeanComparator("executionYear"));
+	for (Coordinator coordinator : getCoordinators()) {
+	    if (coordinator.getExecutionDegree().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+		result.add(coordinator.getExecutionDegree());
+	    }
+	}
+	return result;
     }
 
     public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan,
 	    ExecutionYear executionYear) {
-        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-            if (executionDegree.getExecutionYear() == executionYear) {
-                return executionDegree.getCoordinatorByTeacher(this) != null;
-            }
-        }
-        return false;
+	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+	    if (executionDegree.getExecutionYear() == executionYear) {
+		return executionDegree.getCoordinatorByTeacher(this) != null;
+	    }
+	}
+	return false;
     }
 
     public boolean isResponsibleOrCoordinatorFor(CurricularCourse curricularCourse,
 	    ExecutionPeriod executionPeriod) {
-        final Teacher teacher = getTeacher();
-        return (teacher != null && teacher.isResponsibleFor(curricularCourse, executionPeriod))
-                || isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod
-                        .getExecutionYear());
+	final Teacher teacher = getTeacher();
+	return (teacher != null && teacher.isResponsibleFor(curricularCourse, executionPeriod))
+		|| isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod
+			.getExecutionYear());
     }
 
     public boolean isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear executionYear) {
-        return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] {
-                DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE }));
+	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] {
+		DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE }));
 
     }
 
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
-            ExecutionYear executionYear) {
-        return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
-                DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE }));
+	    ExecutionYear executionYear) {
+	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
+		DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE }));
 
     }
 
     public boolean isCoordinatorFor(ExecutionYear executionYear, List<DegreeType> degreeTypes) {
-        for (final Coordinator coordinator : getCoordinatorsSet()) {
-            if (coordinator.hasExecutionDegree()
-                    && coordinator.getExecutionDegree().getExecutionYear() == executionYear
+	for (final Coordinator coordinator : getCoordinatorsSet()) {
+	    if (coordinator.hasExecutionDegree()
+		    && coordinator.getExecutionDegree().getExecutionYear() == executionYear
 		    && degreeTypes
 			    .contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
-                return true;
-            }
-        }
+		return true;
+	    }
+	}
 
-        return false;
+	return false;
 
     }
-
 }

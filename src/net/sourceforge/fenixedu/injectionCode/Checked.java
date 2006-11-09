@@ -1,11 +1,12 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.accessControl;
+package net.sourceforge.fenixedu.injectionCode;
 
+import static java.lang.annotation.ElementType.CONSTRUCTOR;
+import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -18,9 +19,9 @@ import java.lang.annotation.Target;
  * Created on 9:11:59,24/Nov/2005
  * @version $Id$
  */
+
 @Retention(RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Checked
-{
-	String value(); 
+@Target({METHOD, CONSTRUCTOR})
+public @interface Checked {
+    String value(); 
 }

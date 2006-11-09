@@ -52,5 +52,7 @@
     <definition name="manage-space-access-groups" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/manageAccessGroups.jsp"></put>
     </definition>              
-    
+    <definition name="list-changes-in-the-spaces" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/listChangesInTheSpaces.jsp"></put>
+    </definition>              	    
 </tiles-definitions>

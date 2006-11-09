@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -26,8 +27,9 @@ public class RoomClassification extends RoomClassification_Base {
 
     public static final Comparator<RoomClassification> COMPARATORY_BY_CODE = new BeanComparator("code");
 
-    public static final Comparator<RoomClassification> COMPARATORY_BY_PRESENTATION_CODE = new BeanComparator("presentationCode");
-    
+    public static final Comparator<RoomClassification> COMPARATORY_BY_PRESENTATION_CODE = new BeanComparator(
+	    "presentationCode");
+
     public static final Comparator<RoomClassification> COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE = new BeanComparator(
 	    "absoluteCode");
 
@@ -35,7 +37,7 @@ public class RoomClassification extends RoomClassification_Base {
 	    final Collection<RoomClassification> roomClassifications) {
 	return CollectionUtils.constructSortedSet(roomClassifications, COMPARATORY_BY_CODE);
     }
-    
+
     public static SortedSet<RoomClassification> sortByPresentationCode(
 	    final Collection<RoomClassification> roomClassifications) {
 	return CollectionUtils.constructSortedSet(roomClassifications, COMPARATORY_BY_PRESENTATION_CODE);
@@ -138,6 +140,8 @@ public class RoomClassification extends RoomClassification_Base {
 	}
     }
 
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created room classification", parameters = {
+	    "parentRoomClassification", "code", "name" })
     public RoomClassification(final RoomClassification parentRoomClassification, final Integer code,
 	    final MultiLanguageString name) {
 	super();
@@ -145,6 +149,8 @@ public class RoomClassification extends RoomClassification_Base {
 	edit(parentRoomClassification, code, name);
     }
 
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited room classification", parameters = {
+	    "parentRoomClassification", "code", "name" })
     public void edit(final RoomClassification parentRoomClassification, final Integer code,
 	    final MultiLanguageString name) {
 

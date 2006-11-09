@@ -55,7 +55,7 @@ public class Campus extends Campus_Base {
 
     public static class CampusFactoryCreator extends CampusFactory {
 	public Campus execute() {
-	    return new Campus(this);
+	    return new Campus(getName(), getBegin(), getEnd());
 	}
     }
 
@@ -73,7 +73,7 @@ public class Campus extends Campus_Base {
 	}
 
 	public CampusInformation execute() {
-	    return new CampusInformation(getSpace(), this);
+	    return new CampusInformation(getSpace(), getName(), getBegin(), getEnd());
 	}
     }
 
@@ -81,9 +81,9 @@ public class Campus extends Campus_Base {
 	super();
     }
 
-    public Campus(CampusFactory campusFactory) {
+    public Campus(String name, YearMonthDay begin, YearMonthDay end) {
 	this();	
-	new CampusInformation(this, campusFactory);
+	new CampusInformation(this, name, begin, end);
     }
     
     @Override

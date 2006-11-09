@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer;
 import net.sourceforge.fenixedu.domain.tests.predicates.PredicateType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class NewMultipleChoiceQuestion extends NewMultipleChoiceQuestion_Base {
 

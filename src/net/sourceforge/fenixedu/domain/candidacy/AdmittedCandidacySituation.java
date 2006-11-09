@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class AdmittedCandidacySituation extends AdmittedCandidacySituation_Base {
 

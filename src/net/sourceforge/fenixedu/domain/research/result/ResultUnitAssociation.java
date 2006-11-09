@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
-import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public class ResultUnitAssociation extends ResultUnitAssociation_Base {
 

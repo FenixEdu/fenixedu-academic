@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public final class GroupDifference extends NodeGroup {
     

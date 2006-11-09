@@ -51,6 +51,7 @@ public class SpaceAccessGroupsManagement extends Service {
 		spaceManagerRoleManagement(person, toAdd);
 
 	    } else if (accessGroupType.equals(SpaceAccessGroupType.SPACE_MANAGEMENT_ACCESS_GROUP)) {
+		checkIfPersonAlreadyHasPermissions(space, person, toAdd);
 		if (space.getSpaceManagementAccessGroup() == null) {
 		    space.setSpaceManagementAccessGroup(new FixedSetGroup());
 		}
@@ -68,9 +69,11 @@ public class SpaceAccessGroupsManagement extends Service {
 	}
     }
 
-    private void checkIfPersonAlreadyHasPermissions(Space space, Person person, boolean toAdd) throws FenixServiceException {
+    private void checkIfPersonAlreadyHasPermissions(Space space, Person person, boolean toAdd)
+	    throws FenixServiceException {
 	if (toAdd && space.personHasPermissionsToManageSpace(person)) {
-	    throw new FenixServiceException("error.space.access.groups.management.person.already.have.permission");
+	    throw new FenixServiceException(
+		    "error.space.access.groups.management.person.already.have.permission");
 	}
     }
 

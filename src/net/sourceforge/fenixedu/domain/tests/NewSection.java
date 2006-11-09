@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class NewSection extends NewSection_Base {
 

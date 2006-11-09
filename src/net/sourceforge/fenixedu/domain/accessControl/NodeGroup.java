@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.accessControl.IGroup;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public abstract class NodeGroup extends Group {
     
