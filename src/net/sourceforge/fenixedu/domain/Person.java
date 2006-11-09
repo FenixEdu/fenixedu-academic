@@ -895,6 +895,9 @@ public class Person extends Person_Base {
     }
 
     private boolean canBeDeleted() {
+	if(getDomainObjectActionLogsCount() > 0) {
+	    return false;
+	}
 	if (getStudentsCount() > 0) {
 	    return false;
 	}

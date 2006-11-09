@@ -1,30 +1,21 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Comparator;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 public class DomainObjectActionLog extends DomainObjectActionLog_Base {
-
-    public final static Comparator<DomainObjectActionLog> COMPARATOR_BY_INSTANT = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("instant"));
-	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("idInternal"));
-    }
-    
+   
     public DomainObjectActionLog(Person person, DomainObject domainObject, String action,
 	    Map<String, Object> parameters) {
 
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setPerson(person);
-	setPersonUsername(person.getUsername());
+	setPersonUsername(person.getUsername());	
 	setKeyDomainObject(domainObject.getIdInternal());
 	setDomainObjectClassName(domainObject.getClass().getName());
 	setAction(action);
