@@ -93,5 +93,11 @@
 	<definition name="documentRequests.management.chooseStudentToCreateDocumentRequest" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/searchStudentToCreateDocumentRequest.jsp"/>
 	</definition>	
+	<definition name="documentRequest.viewDocumentRequestsToCreate" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp"/>
+	</definition>
+	<definition name="documentRequest.viewDocumentRequestsCreateSucess" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsCreateSucess.jsp"/>
+	</definition>
 	
 </tiles-definitions>
