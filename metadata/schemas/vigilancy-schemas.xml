@@ -209,9 +209,10 @@
 
 <schema name="present.convokesForCoordinator" type="net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
-			<property name="linkFormat" value="/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
+			<property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
 			<property name="subLayout" value="values"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
+			<property name="contextRelative" value="true"/>
 		</slot>
 		<slot name="writtenEvaluation.dayDateYearMonthDay" key="label.vigilancy.date"/>		
 		<slot name="active" key="label.vigilancy.active.header"/>
@@ -225,10 +226,11 @@
 
 <schema name="presentSimpleConvokesWithLink" type="net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="conditional-link">
-			<property name="linkFormat" value="/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
+			<property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
 			<property name="subLayout" value="values"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 			<property name="visibleIf" value="isAfterCurrentDate"/>
+			<property name="contextRelative" value="true"/>
 		</slot>
 		<slot name="points" key="label.vigilancy.points.header"/>
 </schema>
@@ -336,9 +338,10 @@
 
 <schema name="present.convokesForFuture" type="net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
-			<property name="linkFormat" value="/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
+			<property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
 			<property name="subLayout" value="values"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
+			<property name="contextRelative" value="true"/>
 		</slot>		
 		<slot name="writtenEvaluation.dayDateYearMonthDay" key="label.vigilancy.date">		
 		</slot>
@@ -411,9 +414,10 @@
 		<slot name="vigilant.person.name" key="label.vigilancy.vigilant"/>
 		<slot name="vigilant.points" key="label.vigilancy.totalPoints.header"/>
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
-			<property name="linkFormat" value="/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
+			<property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=prepareAddMoreVigilants"/>
 			<property name="subLayout" value="values"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
+			<property name="contextRelative" value="true"/>
 		</slot>		
 		<slot name="writtenEvaluation.dayDateYearMonthDay" key="label.vigilancy.date">		
 		</slot>

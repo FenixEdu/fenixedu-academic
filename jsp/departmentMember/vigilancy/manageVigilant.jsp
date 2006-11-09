@@ -124,7 +124,7 @@
 
 	<logic:equal name="vigilant" property="allowedToSpecifyUnavailablePeriod" value="false">		
 
-<fr:view name="vigilant" property="unavailablePeriods">
+<fr:view name="vigilant" property="unavailablePeriods" schema="unavailableShow">
     <fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 mtop05" />
 	</fr:layout>
