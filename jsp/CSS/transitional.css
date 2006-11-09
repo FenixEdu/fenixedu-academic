@@ -399,7 +399,7 @@ padding-right: 0.5em;
 /* ----------------------
  ---- Classes ----------
 ----------------------- */
-
+.italic { font-style: italic; }
 .clearmargins { margin: 0; padding: 0; }
 .smalltxt { font-size: 0.85em; }
 .smalltxt2 { font-size: 0.80em; }

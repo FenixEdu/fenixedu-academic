@@ -10,7 +10,12 @@
 <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 <bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
 
-<div class="mtop15">
+<h2>
+	<bean:message key="label.section"/>
+	<fr:view name="section" property="name" />
+</h2>
+
+<div class="mvert1">
     <html:link page="<%= String.format("/manageExecutionCourse.do?method=sections&executionCourseID=%s", executionCourseId) %>">
         <bean:message key="link.breadCrumbs.top" bundle="SITE_RESOURCES"/>
     </html:link> &gt;
@@ -23,11 +28,6 @@
     
     <fr:view name="section" property="name"/>
 </div>
-
-<h2>
-	<bean:message key="label.section"/>
-	<fr:view name="section" property="name" />
-</h2>
 
 <p class="mvert1">
     <span class="error">
@@ -69,16 +69,7 @@
 	</span>
 </p>
 
-<bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
-<fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
-    <fr:layout>
-        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
-        <fr:property name="key" value="true"/>
-        <fr:property name="bundle" value="SITE_RESOURCES"/>
-        <fr:property name="subLayout" value="values"/>
-        <fr:property name="subSchema" value="permittedGroup.class.text"/>
-    </fr:layout>
-</fr:view>
+
 
 <logic:empty name="section" property="orderedSubSections">
     <p class="mtop2">
@@ -122,11 +113,25 @@
 </logic:notEmpty>
 
 
+<p style="color: #888;">
+	<bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
+	<fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	    <fr:layout>
+	    	<fr:property name="classes" value="italic" />
+	        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	        <fr:property name="key" value="true"/>
+	        <fr:property name="bundle" value="SITE_RESOURCES"/>
+	        <fr:property name="subLayout" value="values"/>
+	        <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	    </fr:layout>
+	</fr:view>
+</p>
+
 <%-------------
      Items
   -------------%>
 
-<h3 class="mtop2" style="background: #f5f5e5; padding: 0.25em; width: 550px;"><bean:message key="title.section.items" bundle="SITE_RESOURCES"/></h3>
+<h3 class="mtop15" style="background: #f5f5e5; padding: 0.25em; width: 550px;"><bean:message key="title.section.items" bundle="SITE_RESOURCES"/></h3>
 
 <span class="error">
     <html:errors property="items" bundle="SITE_RESOURCES"/>
@@ -260,7 +265,7 @@
     
             <logic:notEmpty name="item" property="sortedFileItems">
                 <div>
-                    <span style="color: #888;">Ficheiros: </span>
+                    <span style="color: #888;"><bean:message key="label.files" bundle="SITE_RESOURCES"/>: </span>
                     	<ul>
                         	<logic:iterate id="fileItem" name="item" property="sortedFileItems" type="net.sourceforge.fenixedu.domain.FileItem">
                         		<bean:define id="downloadUrl">
@@ -268,11 +273,11 @@
                         		</bean:define>
                         		
                         		<li>
-            	                		<html:link href="<%= downloadUrl %>">
-            	                			<fr:view name="fileItem" property="displayName"/>
-            	                		</html:link>
+           	                		<html:link href="<%= downloadUrl %>">
+           	                			<fr:view name="fileItem" property="displayName"/>
+           	                		</html:link>
             	                		
-            	    		            <bean:define id="message">
+            	    		        <bean:define id="message">
         	                            <bean:message key="message.item.file.delete.confirm" bundle="SITE_RESOURCES" arg0="<%= fileItem.getDisplayName() %>"/>
         	                        </bean:define>
             							
@@ -286,18 +291,19 @@
             			    	            </html:link>)
             		    	            </span>
 
-                                <span class="pleft1" style="color: #888;">
-                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
-                                    <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
-                                        <fr:layout>
-                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
-                                            <fr:property name="key" value="true"/>
-                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
-                                            <fr:property name="subLayout" value="values"/>
-                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
-                                        </fr:layout>
-                                    </fr:view>
-                                </span>
+	                                <span class="pleft1" style="color: #888;">
+	                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
+	                                    <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                                        <fr:layout>
+	                                            <fr:property name="classes" value="italic"/>
+	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                                            <fr:property name="key" value="true"/>
+	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
+	                                            <fr:property name="subLayout" value="values"/>
+	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                                        </fr:layout>
+	                                    </fr:view>
+	                                </span>
         	    	                </li>
                         	</logic:iterate>
                     	</ul>
