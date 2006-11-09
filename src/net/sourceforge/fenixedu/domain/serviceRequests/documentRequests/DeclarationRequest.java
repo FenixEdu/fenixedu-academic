@@ -17,58 +17,72 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 
     public DeclarationRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
 	    DocumentRequestType documentRequestType, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
+	    String otherDocumentPurposeTypeDescription,Boolean urgentRequest) {
 
 	this();
+    init(studentCurricularPlan, administrativeOffice);
+   
 	init(studentCurricularPlan, administrativeOffice, documentRequestType, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest);
+		otherDocumentPurposeTypeDescription,urgentRequest);
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
             DocumentRequestType documentRequestType,
-            DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-            Boolean urgentRequest) {
+            DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,Boolean urgentRequest) {
 
         init(studentCurricularPlan, administrativeOffice);
         checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
         super.setDocumentPurposeType(documentPurposeType);
         super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
+        super.process();
+        
+       
+        
     }
 
-    private void checkParameters(DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-            Boolean urgentRequest) {
+    private void checkParameters(DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,Boolean urgentRequest) {
 
         if (documentPurposeType == DocumentPurposeType.OTHER
                 && otherDocumentPurposeTypeDescription == null) {
             throw new DomainException(
                     "error.serviceRequests.documentRequests.DeclarationRequest.otherDocumentPurposeTypeDescription.cannot.be.null.for.other.purpose.type");
         }
-
         if (urgentRequest == null) {
             throw new DomainException(
-                    "error.serviceRequests.documentRequests.DeclarationRequest.urgentRequest.cannot.be.null");
+                "error.serviceRequests.documentRequests.CertificateRequest.urgentRequest.cannot.be.null");
         }
+      
     }
+
 
     public static DeclarationRequest create(StudentCurricularPlan studentCurricularPlan,
-	    DocumentRequestType chosenDocumentRequestType,
-	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
-	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear) {
+            DocumentRequestType chosenDocumentRequestType,
+            DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,Boolean urgentRequest,
+            Boolean average, Boolean detailed,  ExecutionYear executionYear) {
 
-	final AdministrativeOffice administrativeOffice = AdministrativeOffice.readByEmployee(AccessControl.getUserView().getPerson().getEmployee());
+           
+            
+        AdministrativeOffice administrativeOffice = AdministrativeOffice.readByEmployee(AccessControl.getUserView().getPerson().getEmployee());
+        if (administrativeOffice == null) {
+            administrativeOffice = AdministrativeOffice
+                .getResponsibleAdministrativeOffice(studentCurricularPlan.getDegree());
+        }
+        
+        switch (chosenDocumentRequestType) {
+        case SCHOOL_REGISTRATION_DECLARATION:
+            return new SchoolRegistrationDeclarationRequest(studentCurricularPlan, administrativeOffice,
+                    chosenDocumentRequestType, chosenDocumentPurposeType, otherPurpose,  urgentRequest,executionYear);
+        case ENROLMENT_DECLARATION:
+            return new EnrolmentDeclarationRequest(studentCurricularPlan, administrativeOffice,
+                    chosenDocumentRequestType, chosenDocumentPurposeType, otherPurpose, urgentRequest, executionYear);
+       
+        case IRS_DECLARATION:
+            return new IRSDeclarationRequest();
+        }
 
-	switch (chosenDocumentRequestType) {
-	case SCHOOL_REGISTRATION_DECLARATION:
-	    return new SchoolRegistrationDeclarationRequest();
-	case ENROLMENT_DECLARATION:
-	    return new EnrolmentDeclarationRequest();
-	case IRS_DECLARATION:
-	    return new IRSDeclarationRequest();
-	}
-
-	return null;
-    }
+        return null;
+        }
     
 
     @Override
