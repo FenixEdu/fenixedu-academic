@@ -183,6 +183,18 @@ public class RoomClassification extends RoomClassification_Base {
 	    childRoomClassification.presentationCode = null;
 	}
     }
+    
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room classification", parameters = {})
+    public void delete() {
+	if (getChildRoomClassificationsSet().isEmpty()) {
+	    setRootDomainObject(null);
+	    super.setParentRoomClassification(null);
+	    super.deleteDomainObject();
+	} else {
+	    throw new DomainException(
+		    "error.cannot.delete.room.classification.with.existing.child.classifications");
+	}
+    }
 
     @Override
     public void setCode(final Integer code) {
@@ -198,18 +210,7 @@ public class RoomClassification extends RoomClassification_Base {
     public void setParentRoomClassification(final RoomClassification parentRoomClassification) {
 	throw new Error("Use edit method to change an instance of: " + getClass().getName());
     }
-
-    public void delete() {
-	if (getChildRoomClassificationsSet().isEmpty()) {
-	    setRootDomainObject(null);
-	    super.setParentRoomClassification(null);
-	    super.deleteDomainObject();
-	} else {
-	    throw new DomainException(
-		    "error.cannot.delete.room.classification.with.existing.child.classifications");
-	}
-    }
-
+    
     public String getAbsoluteCode() {
 	if (absoluteCode == null) {
 	    final String code = getCode().toString();
