@@ -37,10 +37,21 @@
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="documentRequestType" type="java.lang.String" />
 			<form-property name="requestSituationType" type="java.lang.String" />
-			<form-property name="isUrgent" type="java.lang.String" />
+			<form-property name="isUrgent" type="java.lang.String" initial="false"/>
 			<form-property name="studentNumber" type="java.lang.String" />
+			<form-property name="registrationId" type="java.lang.Integer" />
 			<form-property name="documentRequestId" type="java.lang.String" />
 			<form-property name="documentIdsToProcess" type="java.lang.Integer[]" />
+			<form-property name="chosenDocumentRequestType" type="java.lang.String" />
+			<form-property name="chosenDocumentRequestTypes" type="java.lang.String[]" />
+			<form-property name="chosenDocumentPurposeType" type="java.lang.String" />
+			<form-property name="otherPurpose" type="java.lang.String" />
+			<form-property name="notes" type="java.lang.String" />
+			<form-property name="schoolRegistrationExecutionYearId" type="java.lang.Integer" />
+			<form-property name="enrolmentDetailed" type="java.lang.String" initial="false"/>
+			<form-property name="enrolmentExecutionYearId" type="java.lang.Integer" />	
+			<form-property name="degreeFinalizationAverage" type="java.lang.String" initial="false"/>
+			<form-property name="degreeFinalizationDetailed" type="java.lang.String" initial="false"/>			
 	    </form-bean>
 
     </form-beans>
@@ -160,6 +171,12 @@
 				<forward name="prepareSearch" path="documentRequests.management.prepareSearch"/>
 				<forward name="showDocumentRequests" path="documentRequests.management.showDocumentRequests"/>
 				<forward name="editDocumentRequest" path="documentRequests.management.editDocumentRequest"/>
+				<forward name="prepareCreateDocumentRequest" path="documentRequests.management.prepareCreateDocumentRequest"/>
+				<forward name="chooseStudentToCreateDocumentRequest" path="documentRequests.management.chooseStudentToCreateDocumentRequest"/>				
+				<forward name="confirmCreateDocumentRequest" path="documentRequests.management.confirmCreateDocumentRequest"/>		
+				<forward name="viewDocumentRequestsToCreate" path="documentRequest.viewDocumentRequestsToCreate"/>		
+				<forward name="viewDocumentRequestsCreateSucess" path="documentRequest.viewDocumentRequestsCreateSucess"/>
+				
 		</action>
 	
     </action-mappings>
