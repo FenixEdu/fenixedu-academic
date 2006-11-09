@@ -45,7 +45,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     
     @Checked("SpacePredicates.checkPermissionsToManageOccupations")
     @FenixDomainObjectActionLogAnnotation(
-         actionName="Edited person occupation time interval", 
+         actionName="Edited person occupation", 
 	 parameters={"begin","end"}
     )
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
@@ -54,6 +54,11 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	super.setEnd(end);
     }
     
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @FenixDomainObjectActionLogAnnotation(
+	 actionName="Deleted person occupation", 
+         parameters={}
+    )
     public void delete() {
 	super.setPerson(null);
 	super.delete();

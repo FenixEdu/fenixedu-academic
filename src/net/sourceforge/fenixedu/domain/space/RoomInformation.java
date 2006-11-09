@@ -17,11 +17,11 @@ public class RoomInformation extends RoomInformation_Base {
 	    "room", "blueprintNumber", "identification", "description", "roomClassification", "area",
 	    "heightQuality", "illuminationQuality", "distanceFromSanitaryInstalationsQuality",
 	    "securityQuality", "ageQuality", "observations", "begin", "end" })
-    public RoomInformation(Room room, String blueprintNumber, String identification,
-	    String description, RoomClassification roomClassification, BigDecimal area,
-	    Boolean heightQuality, Boolean illuminationQuality,
-	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality,
-	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end) {
+    public RoomInformation(Room room, String blueprintNumber, String identification, String description,
+	    RoomClassification roomClassification, BigDecimal area, Boolean heightQuality,
+	    Boolean illuminationQuality, Boolean distanceFromSanitaryInstalationsQuality,
+	    Boolean securityQuality, Boolean ageQuality, String observations, YearMonthDay begin,
+	    YearMonthDay end) {
 
 	super();
 	super.setSpace(room);
@@ -62,7 +62,13 @@ public class RoomInformation extends RoomInformation_Base {
 	setSecurityQuality(securityQuality);
 	setAgeQuality(ageQuality);
 	setObservations(observations);
-    }   
+    }
+
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room information", parameters = {})
+    public void delete() {
+	super.delete();
+    }
 
     @Override
     public void setBlueprintNumber(String blueprintNumber) {
@@ -71,7 +77,7 @@ public class RoomInformation extends RoomInformation_Base {
 	}
 	super.setBlueprintNumber(blueprintNumber);
     }
-
+    
     @Override
     public void setSpace(final Space space) {
 	throw new DomainException("error.incompatible.space");

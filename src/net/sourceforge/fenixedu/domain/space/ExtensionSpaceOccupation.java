@@ -28,7 +28,7 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
     
     @Checked("SpacePredicates.checkPermissionsToManageOccupations")
     @FenixDomainObjectActionLogAnnotation(
-         actionName="Edited extension occupation time interval", 
+         actionName="Edited extension occupation", 
 	 parameters={"begin","end"}
     )
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
@@ -37,6 +37,11 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 	super.setEnd(end);
     }
       
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @FenixDomainObjectActionLogAnnotation(
+	 actionName="Deleted extension occupation", 
+         parameters={}
+    )
     public void delete() {
 	super.setExtension(null);
 	super.delete();

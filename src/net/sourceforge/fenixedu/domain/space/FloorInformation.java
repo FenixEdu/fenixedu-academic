@@ -27,6 +27,12 @@ public class FloorInformation extends FloorInformation_Base {
 	editTimeInterval(begin, end);
     }
 
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted floor information", parameters = {})
+    public void delete() {
+	super.delete();
+    }
+
     @Override
     public Floor getSpace() {
 	return (Floor) super.getSpace();
@@ -41,7 +47,7 @@ public class FloorInformation extends FloorInformation_Base {
 	throw new DomainException("error.cannot.change.floor");
     }
 
-    @Override   
+    @Override
     public void setLevel(Integer level) {
 	if (level == null) {
 	    throw new DomainException("error.floor.level.cannot.be.null");

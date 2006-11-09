@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.space;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
 import org.joda.time.YearMonthDay;
 
@@ -20,9 +18,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
 	setRootDomainObject(RootDomainObject.getInstance());
 	setOjbConcreteClass(this.getClass().getName());	
     }
-
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted space information", parameters = {})
+    
     public void delete() {
 	if (getSpace().getSpaceInformationsCount() == 1) {
 	    throw new DomainException("space.must.have.at.least.one.space.information");

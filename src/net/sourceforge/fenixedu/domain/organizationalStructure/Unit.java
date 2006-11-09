@@ -53,7 +53,7 @@ public class Unit extends Unit_Base {
 
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
 	    YearMonthDay endDate, PartyTypeEnum type, String webAddress) {
-		
+
 	checkAcronym(acronym, this.getType());
 	setCostCenterCode(unitCostCenter);
 	setName(unitName);
@@ -62,7 +62,7 @@ public class Unit extends Unit_Base {
 	setType(type);
 	setWebAddress(webAddress);
 	setAcronym(acronym);
-    }     
+    }
 
     @Override
     public void setCostCenterCode(Integer costCenterCode) {
@@ -89,8 +89,8 @@ public class Unit extends Unit_Base {
 	    throw new DomainException("error.unit.endDateBeforeBeginDate");
 	}
 	super.setEndDateYearMonthDay(endDateYearMonthDay);
-    }       
-   
+    }
+
     private void checkAcronym(String acronym, PartyTypeEnum partyTypeEnum) {
 	Unit unit = readUnitByAcronymAndType(acronym, partyTypeEnum);
 	if (unit != null && !unit.equals(this)) {
@@ -686,7 +686,7 @@ public class Unit extends Unit_Base {
 	    YearMonthDay beginDate, YearMonthDay endDate, PartyTypeEnum type, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress) throws FenixFilterException,
 	    FenixServiceException {
-	
+
 	Unit unit = new Unit();
 	unit.checkAcronym(acronym, type);
 	unit.setCostCenterCode(costCenterCode);
@@ -707,6 +707,10 @@ public class Unit extends Unit_Base {
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
 	if (externalInstitutionUnit == null) {
 	    throw new DomainException("error.exception.commons.institution.rootInstitutionNotFound");
+	} else if (UnitUtils.readInstitutionUnit() != null
+		&& externalInstitutionUnit.equals(UnitUtils.readInstitutionUnit())) {
+	    throw new DomainException(
+		    "error.exception.commons.institution.rootInstitutionNotFound.equals.rootExternalInstitutionUnit");
 	}
 
 	Unit institutionUnit = new Unit();

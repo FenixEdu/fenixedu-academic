@@ -28,6 +28,12 @@ public class CampusInformation extends CampusInformation_Base {
 	editTimeInterval(begin, end);
     }
 
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted campus information", parameters = {})
+    public void delete() {
+	super.delete();
+    }
+    
     @Override
     public void setName(final String name) {
 	if (name == null || StringUtils.isEmpty(name.trim())) {
