@@ -7,6 +7,8 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -113,5 +115,10 @@ public class Building extends Building_Base {
     public BuildingInformation getSpaceInformation(final YearMonthDay when) {
 	return (BuildingInformation) super.getSpaceInformation(when);
     }
-
+    
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted building", parameters = {})
+    public void delete() {
+	super.delete();
+    }
 }

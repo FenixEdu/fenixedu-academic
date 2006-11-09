@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
 import org.joda.time.YearMonthDay;
 
@@ -176,9 +174,7 @@ public abstract class Space extends Space_Base {
 	}
 	return materialOccupations;
     }
-
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted space", parameters = {})
+   
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.space.cannot.be.deleted");

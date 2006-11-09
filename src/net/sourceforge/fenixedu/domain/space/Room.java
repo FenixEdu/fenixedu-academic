@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -233,5 +235,11 @@ public class Room extends Room_Base {
     @Override
     public RoomInformation getSpaceInformation(final YearMonthDay when) {
 	return (RoomInformation) super.getSpaceInformation(when);
+    }
+    
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room", parameters = {})
+    public void delete() {
+	super.delete();
     }
 }
