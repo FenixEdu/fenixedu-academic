@@ -1,11 +1,20 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -27,6 +36,7 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.util.EnrollmentStateSelectionType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
 public class StudentCurricularPlanRenderer extends OutputRenderer {
@@ -41,7 +51,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
     
     private final HtmlBlockContainer scpDiv = new HtmlBlockContainer();
     
-    private Boolean organizedByGroups;
+    private String organizedBy;
 
     private Double initialWidth = Double.valueOf(70);
 
@@ -61,12 +71,24 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	super();
     }
 
-    public Boolean isOrganizedByGroups() {
-	return organizedByGroups;
+    public String getOrganizedBy() {
+	return organizedBy;
     }
 
-    public void setOrganizedByGroups(Boolean organizedByGroups) {
-	this.organizedByGroups = organizedByGroups;
+    public void setOrganizedBy(String organizedBy) {
+	this.organizedBy = organizedBy;
+    }
+
+    public Boolean isOrganizedByGroups() {
+	return organizedBy.equals("groups");
+    }
+
+    public Boolean isOrganizedByCurricularYears() {
+	return organizedBy.equals("curricularYears");
+    }
+
+    public Boolean isOrganizedByExecutionYears() {
+	return organizedBy.equals("executionYears");
     }
 
     public Double getInitialWidth() {
@@ -157,14 +179,26 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    studentCurricularPlan = (StudentCurricularPlan) object;
 
 	    if (studentCurricularPlan == null) {
-		return new HtmlText(studentResources.getString("message.no.curricularplan"));
-	    } else if (isOrganizedByGroups() == null) {
-		setOrganizedByGroups(studentCurricularPlan.isBolonha() ? Boolean.TRUE : Boolean.FALSE);
-	    } else if (isOrganizedByGroups() && !studentCurricularPlan.isBolonha()) {
-		return new HtmlText(studentResources.getString("not.applicable"));
-	    } else if (studentCurricularPlan.getEnrolmentsSet().isEmpty()) {
-		return new HtmlText(studentResources.getString("message.no.enrolments"));
+		HtmlText text = new HtmlText(studentResources.getString("message.no.curricularplan"));
+		text.setClasses("warning0");
+		return text;
+	    } 
+
+	    if (isOrganizedByGroups() && !studentCurricularPlan.isBolonha()) {
+		HtmlText text = new HtmlText(studentResources.getString("not.applicable"));
+		text.setClasses("warning0");
+		return text;
+	    } 
+
+	    if (studentCurricularPlan.getEnrolmentsSet().isEmpty()) {
+		HtmlText text = new HtmlText(studentResources.getString("message.no.enrolments"));
+		text.setClasses("warning0");
+		return text;
 	    }
+
+	    if (!isOrganizedByGroups() && !isOrganizedByExecutionYears() && !isOrganizedByCurricularYears()) {
+		setOrganizedBy("curricularYears");
+	    } 
 
 	    if (isOrganizedByGroups()) {
 		generateGroup(studentCurricularPlan.getRoot(), 0);
@@ -182,9 +216,13 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		scpNameCell.setClasses(getGroupNameClasses());
 		scpNameCell.setBody(generateDegreeCurricularPlanNameLink(studentCurricularPlan.getDegreeCurricularPlan(), null));
 		
-		generateEnrolmentsExecutionPeriods();
-	    }
-
+		if (isOrganizedByCurricularYears()) {
+		    generateEnrolmentsCurricularPeriods();
+		} else if (isOrganizedByExecutionYears()) {
+		    generateEnrolmentsExecutionPeriods();    
+		}
+	    } 
+	    
 	    return scpDiv;
 	}
 
@@ -229,9 +267,6 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		
 		result.setParameter("method", "prepare");
 		result.setParameter("degreeInitials", degreeCurricularPlan.getDegree().getSigla());
-		result.setParameter("method", "prepare");
-		result.setParameter("method", "prepare");
-		result.setParameter("method", "prepare");
 	    }
 	    
 	    result.setParameter("degreeID", degreeCurricularPlan.getDegree().getIdInternal());
@@ -277,9 +312,9 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 
 		// Name
 		final HtmlTableCell nameCell = lineRow.createCell();
-		nameCell.setBody(generateExecutionCourseLink(enrolment));
+		nameCell.setBody(isOrganizedByExecutionYears() ? generateExecutionCourseLink(enrolment) : generateCurricularCourseLink(enrolment));
 
-		if (isOrganizedByGroups()) {
+		if (isOrganizedByGroups() || isOrganizedByCurricularYears()) {
 		    // Year
 		    final HtmlTableCell yearCell = lineRow.createCell();
 		    yearCell.setClasses(getEnrolmentYearClasses());
@@ -294,8 +329,8 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		    semester.append(" ");
 		    semester.append(enumerationResources.getString("SEMESTER.ABBREVIATION"));
 		    semesterCell.setBody(new HtmlText(semester.toString()));
-		}
-
+		} 
+		
 		// DegreeCurricularPlan
 		final HtmlTableCell degreeCurricularPlanCell = lineRow.createCell();
 		degreeCurricularPlanCell.setClasses(getEnrolmentDegreeCurricularPlanClasses());
@@ -351,6 +386,33 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    }
 	}
 
+	private HtmlComponent generateCurricularCourseLink(Enrolment enrolment) {
+	    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+	    
+	    final HtmlLink curricularCourseLink = new HtmlLink();
+
+	    curricularCourseLink.setText(enrolment.getName());
+	    curricularCourseLink.setModuleRelative(false);
+	    curricularCourseLink.setTarget(HtmlLink.Target.BLANK);
+	    curricularCourseLink.setParameter("degreeID", curricularCourse.getDegreeCurricularPlan().getDegree().getIdInternal());
+	    curricularCourseLink.setParameter("curricularCourseID", curricularCourse.getIdInternal());
+	    curricularCourseLink.setParameter("executionPeriodOID", enrolment.getExecutionPeriod().getIdInternal());
+	    curricularCourseLink.setParameter("degreeCurricularPlanID", curricularCourse.getDegreeCurricularPlan().getIdInternal());
+	    
+	    if (curricularCourse.isBolonha()) {
+		curricularCourseLink.setUrl("/publico/degreeSite/viewCurricularCourse.faces");
+
+		curricularCourseLink.setParameter("executionYearID", enrolment.getExecutionPeriod().getExecutionYear().getIdInternal());
+		curricularCourseLink.setParameter("organizeBy", "groups");
+		curricularCourseLink.setParameter("showRules", "false");
+		curricularCourseLink.setParameter("hideCourses", "false");
+	    } else {
+		curricularCourseLink.setUrl("/publico/showCourseSite.do?method=showCurricularCourseSite");		
+	    }
+
+	    return curricularCourseLink;
+	}
+
 	private void generateGroupChilds(double depth, final CurriculumGroup group) {
 	    final Set<CurriculumGroup> sortedCurriculumGroups = new TreeSet<CurriculumGroup>(new BeanComparator("childOrder"));
 	    sortedCurriculumGroups.addAll(group.getCurriculumGroups());
@@ -360,6 +422,104 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    }
 	}
 
+	private void generateEnrolmentsCurricularPeriods() {
+	    final Map<GenericPair<Integer,Integer>, Set<Enrolment>> enrolmentsCurricularPeriods = new HashMap<GenericPair<Integer,Integer>, Set<Enrolment>>();
+	    final Map<GenericPair<Integer,Integer>, Set<Enrolment>> undefinedEnrolments = new HashMap<GenericPair<Integer,Integer>, Set<Enrolment>>();
+	    final Map<GenericPair<Integer,Integer>, Set<Enrolment>> orphanEnrolments = new HashMap<GenericPair<Integer,Integer>, Set<Enrolment>>();
+	    
+	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+		if (enrolment.getDegreeModule().isLeaf()) {
+		    final CurricularCourse curricularCourse = (CurricularCourse) enrolment.getDegreeModule();
+		    
+		    List<DegreeModuleScope> degreeModuleScopes = curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(enrolment.getExecutionPeriod());
+		    if (degreeModuleScopes.size() == 1) {
+			final DegreeModuleScope degreeModuleScope = degreeModuleScopes.iterator().next();
+			final GenericPair<Integer,Integer> yearSemester = new GenericPair<Integer,Integer>(degreeModuleScope.getCurricularYear(), degreeModuleScope.getCurricularSemester());
+			
+			final Set<Enrolment> enrolmentsCurricularPeriod = enrolmentsCurricularPeriods.get(yearSemester);
+			if (enrolmentsCurricularPeriod == null) {
+			    enrolmentsCurricularPeriods.put(yearSemester, new HashSet<Enrolment>());
+			}
+			enrolmentsCurricularPeriods.get(yearSemester).add(enrolment);
+		    } else if (degreeModuleScopes.isEmpty()) {
+			for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
+			    final GenericPair<Integer,Integer> yearSemester = new GenericPair<Integer,Integer>(degreeModuleScope.getCurricularYear(), degreeModuleScope.getCurricularSemester());
+				
+			    final Set<Enrolment> enrolmentsCurricularPeriod = undefinedEnrolments.get(yearSemester);
+			    if (enrolmentsCurricularPeriod == null) {
+				undefinedEnrolments.put(yearSemester, new HashSet<Enrolment>());
+			    }
+			    undefinedEnrolments.get(yearSemester).add(enrolment);
+			}
+		    } else {
+			for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
+			    final GenericPair<Integer,Integer> yearSemester = new GenericPair<Integer,Integer>(degreeModuleScope.getCurricularYear(), degreeModuleScope.getCurricularSemester());
+				
+			    final Set<Enrolment> enrolmentsCurricularPeriod = orphanEnrolments.get(yearSemester);
+			    if (enrolmentsCurricularPeriod == null) {
+				orphanEnrolments.put(yearSemester, new HashSet<Enrolment>());
+			    }
+			    orphanEnrolments.get(yearSemester).add(enrolment);
+			}
+		    }
+		}
+	    }
+	    
+	    List<GenericPair<Integer, Integer>> curricularPeriods = new ArrayList(enrolmentsCurricularPeriods.keySet());
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(new BeanComparator("left"));
+	    comparatorChain.addComparator(new BeanComparator("right"));
+	    Collections.sort(curricularPeriods, comparatorChain);
+	    for (final GenericPair<Integer, Integer> yearSemester : curricularPeriods) {
+		generateEnrolmentCurricularPeriod(yearSemester, enrolmentsCurricularPeriods.get(yearSemester));
+	    }
+
+	    final HtmlText orphansInfo = new HtmlText("\nSem Scopes:\n");
+	    scpDiv.addChild(orphansInfo);
+	    
+	    List<GenericPair<Integer, Integer>> orphanCurricularPeriods = new ArrayList(orphanEnrolments.keySet());
+	    Collections.sort(orphanCurricularPeriods, comparatorChain);
+	    for (final GenericPair<Integer, Integer> yearSemester : orphanCurricularPeriods) {
+		generateEnrolmentCurricularPeriod(yearSemester, orphanEnrolments.get(yearSemester));
+	    }
+
+	    final HtmlText undefinedInfo = new HtmlText("\nMais do que um:\n");
+	    scpDiv.addChild(undefinedInfo);
+	    
+	    List<GenericPair<Integer, Integer>> undefinedCurricularPeriods = new ArrayList(undefinedEnrolments.keySet());
+	    Collections.sort(undefinedCurricularPeriods, comparatorChain);
+	    for (final GenericPair<Integer, Integer> yearSemester : undefinedCurricularPeriods) {
+		generateEnrolmentCurricularPeriod(yearSemester, undefinedEnrolments.get(yearSemester));
+	    }
+	}
+
+	private void generateEnrolmentCurricularPeriod(GenericPair<Integer, Integer> yearSemester, Set<Enrolment> enrolmentsByCurricularPeriod) {
+	    final HtmlTable executionPeriodTable = new HtmlTable();
+	    scpDiv.addChild(executionPeriodTable);
+	    executionPeriodTable.setClasses(getTablesClasses());
+	    executionPeriodTable.setStyle("width: " + (getInitialWidth() - getWidthDecreasePerLevel()) + "em; margin-left: " + getWidthDecreasePerLevel() + "em;");
+
+	    final HtmlTableRow executionPeriodRow = executionPeriodTable.createRow();
+	    executionPeriodRow.setClasses(getGroupRowClasses());
+
+	    final HtmlTableCell executionPeriodNameCell = executionPeriodRow.createCell();
+	    executionPeriodNameCell.setType(CellType.HEADER);
+	    executionPeriodNameCell.setClasses(getGroupNameClasses());
+	    executionPeriodNameCell.setColspan(6);
+	    executionPeriodNameCell.setBody(new HtmlText(yearSemester.getLeft() + " Ano, " + yearSemester.getRight() + " Semestre"));
+
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(CurriculumLine.COMPARATOR_BY_NAME);
+	    comparatorChain.addComparator(new BeanComparator("idInternal"));
+	    
+	    final Set<CurriculumLine> sortedCurriculumLines = new TreeSet<CurriculumLine>(comparatorChain);
+	    sortedCurriculumLines.addAll(enrolmentsByCurricularPeriod);
+	    
+	    for (final CurriculumLine curriculumLine : sortedCurriculumLines) {
+		generateLine(executionPeriodTable, curriculumLine);
+	    }
+	}
+	
 	private void generateEnrolmentsExecutionPeriods() {
 	    final Set<ExecutionPeriod> enrolmentsExecutionPeriods = new TreeSet<ExecutionPeriod>(ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
 	    enrolmentsExecutionPeriods.addAll(studentCurricularPlan.getEnrolmentsExecutionPeriods());
@@ -384,7 +544,12 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    executionPeriodNameCell.setColspan(5);
 	    executionPeriodNameCell.setBody(new HtmlText(executionPeriod.getYear() + ", " + executionPeriod.getName()));
 
-	    final Set<CurriculumLine> sortedCurriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_NAME);
+	    
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(CurriculumLine.COMPARATOR_BY_NAME);
+	    comparatorChain.addComparator(new BeanComparator("idInternal"));
+
+	    final Set<CurriculumLine> sortedCurriculumLines = new TreeSet<CurriculumLine>(comparatorChain);
 	    sortedCurriculumLines.addAll(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod));
 	    
 	    for (final CurriculumLine curriculumLine : sortedCurriculumLines) {
