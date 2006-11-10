@@ -5,3 +5,11 @@
 	<slot name="socialSecurityNumber"/>		
 	<setter signature="editPersonalData(documentIdNumber,idDocumentType, name, socialSecurityNumber)"/>
 </schema>	
+
+<schema name="EditStudentDomainObject" type="net.sourceforge.fenixedu.domain.student.Student" bundle="MANAGER_RESOURCES">
+	<slot name="number" />
+</schema>	
+
+<schema name="EditRegistrationDomainObject" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="MANAGER_RESOURCES">
+	<slot name="number" />
+</schema>	
