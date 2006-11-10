@@ -10,7 +10,7 @@ import org.joda.time.YearMonthDay;
 public class FloorInformation extends FloorInformation_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Created room information", parameters = {
+    @FenixDomainObjectActionLogAnnotation(actionName = "Created floor information", parameters = {
 	    "floor", "level", "begin", "end" })
     public FloorInformation(Floor floor, Integer level, YearMonthDay begin, YearMonthDay end) {
 	super();
@@ -20,7 +20,7 @@ public class FloorInformation extends FloorInformation_Base {
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Edited room information", parameters = {
+    @FenixDomainObjectActionLogAnnotation(actionName = "Edited floor information", parameters = {
 	    "level", "begin", "end" })
     public void editFloorCharacteristics(Integer level, YearMonthDay begin, YearMonthDay end) {
 	setLevel(level);
