@@ -7039,15 +7039,6 @@
 		<isTransactional>true</isTransactional>
 	</service>
 	<service>
-		<name>ReadStudentCurricularPlansByPersonAndCriteria</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlansByPersonAndCriteria</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ReadStudentCurricularPlansAccess" />
-		</filterChains>
-	</service>
-	<service>
 		<name>FindTeachersServiceForDepartmentOffice</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.FindTeachersService</implementationClass>
