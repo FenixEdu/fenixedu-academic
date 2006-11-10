@@ -445,21 +445,21 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 			for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
 			    final GenericPair<Integer,Integer> yearSemester = new GenericPair<Integer,Integer>(degreeModuleScope.getCurricularYear(), degreeModuleScope.getCurricularSemester());
 				
-			    final Set<Enrolment> enrolmentsCurricularPeriod = undefinedEnrolments.get(yearSemester);
-			    if (enrolmentsCurricularPeriod == null) {
-				undefinedEnrolments.put(yearSemester, new HashSet<Enrolment>());
-			    }
-			    undefinedEnrolments.get(yearSemester).add(enrolment);
-			}
-		    } else {
-			for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
-			    final GenericPair<Integer,Integer> yearSemester = new GenericPair<Integer,Integer>(degreeModuleScope.getCurricularYear(), degreeModuleScope.getCurricularSemester());
-				
 			    final Set<Enrolment> enrolmentsCurricularPeriod = orphanEnrolments.get(yearSemester);
 			    if (enrolmentsCurricularPeriod == null) {
 				orphanEnrolments.put(yearSemester, new HashSet<Enrolment>());
 			    }
 			    orphanEnrolments.get(yearSemester).add(enrolment);
+			}
+		    } else {
+			for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
+			    final GenericPair<Integer,Integer> yearSemester = new GenericPair<Integer,Integer>(degreeModuleScope.getCurricularYear(), degreeModuleScope.getCurricularSemester());
+				
+			    final Set<Enrolment> enrolmentsCurricularPeriod = undefinedEnrolments.get(yearSemester);
+			    if (enrolmentsCurricularPeriod == null) {
+				undefinedEnrolments.put(yearSemester, new HashSet<Enrolment>());
+			    }
+			    undefinedEnrolments.get(yearSemester).add(enrolment);
 			}
 		    }
 		}
