@@ -79,13 +79,13 @@ public class InfoEnrolment extends InfoObject {
     public List<InfoEnrolmentEvaluation> getInfoEvaluations() {
 	final List<InfoEnrolmentEvaluation> result = new ArrayList<InfoEnrolmentEvaluation>(enrolment.getEvaluationsCount());
 	for (final EnrolmentEvaluation enrolmentEvaluation : enrolment.getEvaluationsSet()) {
-	    result.add(InfoEnrolmentEvaluation.newInfoFromDomain(enrolmentEvaluation));
+	    result.add(InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolmentEvaluation));
 	}
         return result;
     }
 
     public InfoEnrolmentEvaluation getInfoEnrolmentEvaluation() {
-        return InfoEnrolmentEvaluation.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluation());
+        return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluation());
     }
 
     public Date getCreationDate() {
@@ -97,19 +97,19 @@ public class InfoEnrolment extends InfoObject {
     }
 
     public InfoEnrolmentEvaluation getInfoNormalEnrolmentEvaluation() {
-	return InfoEnrolmentEvaluation.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.NORMAL));
+	return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.NORMAL));
     }
     
     public InfoEnrolmentEvaluation getInfoImprovmentEnrolmentEvaluation() {
-	return InfoEnrolmentEvaluation.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.IMPROVEMENT));
+	return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.IMPROVEMENT));
     }
 
     public InfoEnrolmentEvaluation getInfoSpecialSeasonEnrolmentEvaluation() {
-	return InfoEnrolmentEvaluation.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.SPECIAL_SEASON));
+	return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.SPECIAL_SEASON));
     }
 
     public InfoEnrolmentEvaluation getInfoEquivalenceEnrolmentEvaluation() {
-	return InfoEnrolmentEvaluation.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.EQUIVALENCE));
+	return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.EQUIVALENCE));
     }
 
     public String getGrade() {
