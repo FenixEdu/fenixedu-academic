@@ -1300,11 +1300,19 @@ public class Registration extends Registration_Base {
     }
 
     private double calculateEctsCredits() {
+	return calculateEctsCredits(null);
+    }
+    
+    private double calculateEctsCredits(final ExecutionYear mostRecentExecutionYearToConsider) {
 	double ectsCredits = 0;
-	final ExecutionYear executionYear = findMostRecenteExecutionYearWithEnrolments();
+	
+	// TODO: this is not sufficient, this does not take into account equivalences!!! must modify the domain model!
+	final ExecutionYear executionYear = mostRecentExecutionYearToConsider == null ? findMostRecenteExecutionYearWithEnrolments()
+		: mostRecentExecutionYearToConsider;
 	if (executionYear == null) {
 	    return 1;
 	}
+	
 	final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
 	final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
 	final Set<CurricularCourse> curricularCoursesToDisplay = new TreeSet<CurricularCourse>(
@@ -1366,6 +1374,10 @@ public class Registration extends Registration_Base {
 
     public int getCurricularYear() {
 	return calculateCurricularYear(calculateEctsCredits());
+    }
+    
+    public Object getCurricularYear(ExecutionYear executionYear) {
+	return calculateCurricularYear(calculateEctsCredits(executionYear));
     }
 
     private int calculateCurricularYear(double ectsCredits) {
