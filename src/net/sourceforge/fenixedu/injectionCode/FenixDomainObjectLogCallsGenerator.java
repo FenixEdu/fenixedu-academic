@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.injectionCode;
 
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.injectionCode.injector.CodeGenerator;
 
 public class FenixDomainObjectLogCallsGenerator implements CodeGenerator {
@@ -16,7 +18,9 @@ public class FenixDomainObjectLogCallsGenerator implements CodeGenerator {
 	buffer.append("java.util.Map __map = new java.util.HashMap();");
 
 	for (int i = 0; i < parameters.length; i++) {
-	    buffer.append("__map.put(\"" + parameters[i].trim() + "\"," + parameters[i].trim() + ");");
+	    if(parameters[i] != null && !StringUtils.isEmpty(parameters[i].trim())) {
+		buffer.append("__map.put(\"" + parameters[i].trim() + "\"," + parameters[i].trim() + ");");
+	    }
 	}
 
 	buffer.append("new net.sourceforge.fenixedu.domain.DomainObjectActionLog(");
