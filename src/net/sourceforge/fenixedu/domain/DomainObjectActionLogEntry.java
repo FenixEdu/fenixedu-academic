@@ -23,14 +23,6 @@ public class DomainObjectActionLogEntry extends DomainObjectActionLogEntry_Base 
     }
 
     @Override
-    public void setValue(String value) {
-	if (value == null || StringUtils.isEmpty(value.trim())) {
-	    throw new DomainException("error.domainObjectActionLogEntry.empty.value");
-	}
-	super.setValue(value);
-    }
-
-    @Override
     public void setDomainObjectActionLog(DomainObjectActionLog domainObjectActionLog) {
 	if(domainObjectActionLog == null) {
 	    throw new DomainException("error.domainObjectActionLogEntry.empty.domainObjectActionLog");
