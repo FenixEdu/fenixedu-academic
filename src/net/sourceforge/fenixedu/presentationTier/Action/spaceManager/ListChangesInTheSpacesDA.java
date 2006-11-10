@@ -23,12 +23,12 @@ public class ListChangesInTheSpacesDA extends FenixDispatchAction {
 
 	final String pageNumberString = request.getParameter("pageNumber");
 	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1); 
-	request.setAttribute("pageNumber", pageNumber);
-
+	
 	final SortedSet<DomainObjectActionLog> treeSet = new TreeSet<DomainObjectActionLog>(DomainObjectActionLog.COMPARATOR_BY_INSTANT);
 	treeSet.addAll(rootDomainObject.getDomainObjectActionLogsSet());
-
-	CollectionPager<DomainObjectActionLog> collectionPager = new CollectionPager<DomainObjectActionLog>(treeSet, 100);
+	CollectionPager<DomainObjectActionLog> collectionPager = new CollectionPager<DomainObjectActionLog>(treeSet, 50);
+	
+	request.setAttribute("pageNumber", pageNumber);
 	request.setAttribute("domainObjectActionLogs", collectionPager.getPage(pageNumber.intValue()));
 	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
 

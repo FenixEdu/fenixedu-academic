@@ -19,8 +19,9 @@
 </logic:messagesPresent>
 
 <logic:notEmpty name="domainObjectActionLogs">			
-	
-	<cp:collectionPages url="/SpaceManager/listChangesInTheSpaces.do?method=changesList" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>	
+
+	<bean:message key="label.page" bundle="SPACE_RESOURCES"/>:
+	<cp:collectionPages url="/SpaceManager/listChangesInTheSpaces.do?method=changesList" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>	
 
 	<fr:view name="domainObjectActionLogs" schema="ListChangesInTheSpacesSchema">
 		<fr:layout name="tabular">
@@ -30,3 +31,7 @@
 		</fr:layout>
 	</fr:view>		
 </logic:notEmpty>
+
+<logic:empty name="domainObjectActionLogs">			
+	<p class="mtop05"><em><bean:message key="label.empty.log" bundle="SPACE_RESOURCES"/></em></p>		
+</logic:empty>

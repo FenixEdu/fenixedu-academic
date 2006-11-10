@@ -33,6 +33,11 @@
 	  	 	<rtexprvalue>true</rtexprvalue>
 	   </attribute>
 	   <attribute>
+	 	  	<name>bundle</name>
+	  	 	<required>false</required>
+	  	 	<rtexprvalue>true</rtexprvalue>
+	   </attribute>
+	   <attribute>
 	  	 	<name>numberOfPagesAttributeName</name>
 	  	 	<required>true</required>
 	   		<rtexprvalue>true</rtexprvalue>
@@ -41,6 +46,11 @@
 			<name>pageNumberAttributeName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-		</attribute>    	   
+	   </attribute> 
+	   <attribute>
+			<name>numberOfVisualizedPages</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+	   </attribute> 			   	   
 	</tag>
 </taglib>  

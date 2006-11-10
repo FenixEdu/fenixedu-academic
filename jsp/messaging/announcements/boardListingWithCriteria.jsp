@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+<%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
 
 <em><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.portal"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board.announcements"/></h2>
@@ -80,34 +81,11 @@
 	
 		%>
 	Página:
- 	  <%  
-   	   int lastPageUnitBoards = ((Integer) request.getAttribute("numberOfPagesUnitBoards")).intValue();
-       int pageNumberUnitBoards = ((Integer) request.getAttribute("pageNumberUnitBoards")).intValue();
-       for (int i = 1; i <= lastPageUnitBoards; i++) {
-	       if (i == 1 && i != pageNumberUnitBoards) {
-       %>
-    	   <bean:define id="url11" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberUnitBoards=<%=Integer.toString(pageNumberUnitBoards - 1) %>&method=handleBoardListing&<%=extraParameters%></bean:define>
-       	   <html:link page="<%= url11 %>"><bean:message bundle="MESSAGING_RESOURCES" key="label.previous"/></html:link>
-       <%
-           }
-           if (i != pageNumberUnitBoards) {
-       %>
-           <bean:define id="url12" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberUnitBoards=<%= Integer.toString(i) %>&method=handleBoardListing&<%=extraParameters%></bean:define>
-	       <html:link page="<%= url12 %>"><%= Integer.toString(i) %></html:link>
-       <%
-              } else {
-       %>
-              	<%= Integer.toString(i) %>
-       <%
-                  }
-              if (i == lastPageUnitBoards && i != pageNumberUnitBoards) {
-       %>
-           	<bean:define id="url13" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberUnitBoards=<%= Integer.toString(pageNumberUnitBoards + 1) %>&method=handleBoardListing&<%=extraParameters%></bean:define>
-                <html:link page="<%= url13 %>"><bean:message bundle="MESSAGING_RESOURCES" key="label.next"/></html:link>
-       <%     }
-      	}
-       %>
-		<table class="tstyle2 tdcenter mtop05">	
+ 	        
+       <bean:define id="urlToUnitBoards" type="java.lang.String">/messaging/announcements/announcementsStartPageHandler.do?page=0&method=handleBoardListing&<%=extraParameters%></bean:define>
+       <cp:collectionPages url="<%= urlToUnitBoards %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberUnitBoards" numberOfPagesAttributeName="numberOfPagesUnitBoards"/>	
+	
+  	   <table class="tstyle2 tdcenter mtop05">	
 			<tr>
 				<th>
 					Nome
@@ -240,34 +218,10 @@
 				</tr>
 			</logic:iterate>
 		</table>
-		Página:		
-		 <%  
-	   	   lastPageUnitBoards = ((Integer) request.getAttribute("numberOfPagesUnitBoards")).intValue();
-	       pageNumberUnitBoards = ((Integer) request.getAttribute("pageNumberUnitBoards")).intValue();
-	       for (int i = 1; i <= lastPageUnitBoards; i++) {
-		       if (i == 1 && i != pageNumberUnitBoards) {
-	       %>
-	    	     <bean:define id="url21" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberUnitBoards=<%=Integer.toString(pageNumberUnitBoards - 1) %>&method=handleBoardListing&<%=extraParameters%></bean:define>
-	        	 <html:link page="<%= url21 %>"><bean:message bundle="MESSAGING_RESOURCES" key="label.previous"/></html:link>
-	       <%
-	           }
-	           if (i != pageNumberUnitBoards) {
-	       %>
-	             <bean:define id="url22" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberUnitBoards=<%= Integer.toString(i) %>&method=handleBoardListing&<%=extraParameters%></bean:define>
-		             <html:link page="<%= url22 %>"><%= Integer.toString(i) %></html:link>
-	       <%
-	              } else {
-	       %>
-	              	<%= Integer.toString(i) %>
-	       <%
-	                  }
-	              if (i == lastPageUnitBoards && i != pageNumberUnitBoards) {
-	       %>
-	             <bean:define id="url23" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberUnitBoards=<%= Integer.toString(pageNumberUnitBoards + 1) %>&method=handleBoardListing&<%=extraParameters%></bean:define>
-	                <html:link page="<%= url23 %>"><bean:message bundle="MESSAGING_RESOURCES" key="label.next"/></html:link>
-	       <%     }
-	      	}
-	       %>		
+		
+		Página:				 	       
+        <cp:collectionPages url="<%= urlToUnitBoards %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberUnitBoards" numberOfPagesAttributeName="numberOfPagesUnitBoards"/>			       	
+        
 	</logic:notEmpty>
 	<logic:empty name="unitAnnouncementBoards">
 			Não existem canais de unidade<br/>
@@ -323,33 +277,10 @@
 		%>
 
 	Página:
- 	  <%  
-   	   int lastPageExecutionCourseBoards = ((Integer) request.getAttribute("numberOfPagesExecutionCourseBoards")).intValue();
-       int pageNumberExecutionCourseBoards = ((Integer) request.getAttribute("pageNumberExecutionCourseBoards")).intValue();
-       for (int i = 1; i <= lastPageExecutionCourseBoards; i++) {
-	       if (i == 1 && i != pageNumberExecutionCourseBoards) {
-       %>
-    	     <bean:define id="url31" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberExecutionCourseBoards=<%=Integer.toString(pageNumberExecutionCourseBoards - 1) %>&method=handleBoardListing<%=extraParameters%></bean:define>
-        	 <html:link page="<%= url31 %>"><bean:message bundle="MESSAGING_RESOURCES" key="label.previous"/></html:link>
-       <%
-           }
-           if (i != pageNumberExecutionCourseBoards) {
-       %>
-             <bean:define id="url32" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberExecutionCourseBoards=<%= Integer.toString(i) %>&method=handleBoardListing&<%=extraParameters%></bean:define>
-	             <html:link page="<%= url32 %>"><%= Integer.toString(i) %></html:link>
-       <%
-              } else {
-       %>
-              	<%= Integer.toString(i) %>
-       <%
-                  }
-              if (i == lastPageExecutionCourseBoards && i != pageNumberExecutionCourseBoards) {
-       %>
-             <bean:define id="url33" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberExecutionCourseBoards=<%= Integer.toString(pageNumberExecutionCourseBoards + 1) %>&method=handleBoardListing&<%=extraParameters%></bean:define>
-                <html:link page="<%= url33 %>"><bean:message bundle="MESSAGING_RESOURCES" key="label.next"/></html:link>
-       <%     }
-      	}
-       %>
+ 	 
+       <bean:define id="urlToExecutionCourses" type="java.lang.String">/messaging/announcements/announcementsStartPageHandler.do?page=0&method=handleBoardListing&<%=extraParameters%></bean:define>
+       <cp:collectionPages url="<%= urlToExecutionCourses %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberExecutionCourseBoards" numberOfPagesAttributeName="numberOfPagesExecutionCourseBoards"/>	
+	
 		<table class="tstyle2 tdcenter mtop05">	
 			<tr>
 				<th>
@@ -485,33 +416,8 @@
 			</logic:iterate>
 		</table>
 		Página:
-			<%  
-   	  	 		lastPageExecutionCourseBoards = ((Integer) request.getAttribute("numberOfPagesExecutionCourseBoards")).intValue();
-      	 		pageNumberExecutionCourseBoards = ((Integer) request.getAttribute("pageNumberExecutionCourseBoards")).intValue();
-	       for (int i = 1; i <= lastPageExecutionCourseBoards; i++) {
-		       if (i == 1 && i != pageNumberExecutionCourseBoards) {
-	       %>
-	    	     <bean:define id="url41" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberExecutionCourseBoards=<%=Integer.toString(pageNumberExecutionCourseBoards - 1) %>&method=handleBoardListing&<%=extraParameters%></bean:define>
-	        	 <html:link page="<%= url41 %>"><bean:message bundle="MESSAGING_RESOURCES" key="label.previous"/></html:link>
-	       <%
-	           }
-	           if (i != pageNumberExecutionCourseBoards) {
-	       %>
-	             <bean:define id="url42" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberExecutionCourseBoards=<%= Integer.toString(i) %>&method=handleBoardListing&<%=extraParameters%>&<%=extraParameters%></bean:define>
-		             <html:link page="<%= url42 %>"><%= Integer.toString(i) %></html:link>
-	       <%
-	              } else {
-	       %>
-	              	<%= Integer.toString(i) %>
-	       <%
-	                  }
-	              if (i == lastPageExecutionCourseBoards && i != pageNumberExecutionCourseBoards) {
-	       %>
-	             <bean:define id="url43" type="java.lang.String">/announcements/announcementsStartPageHandler.do?amp;page=0&pageNumberExecutionCourseBoards=<%= Integer.toString(pageNumberExecutionCourseBoards + 1) %>&method=handleBoardListing&<%=extraParameters%></bean:define>
-	                <html:link page="<%= url43 %>"><bean:message bundle="MESSAGING_RESOURCES" key="label.next"/></html:link>
-	       <%     }
-	      	}
-	       %>
+	    <cp:collectionPages url="<%= urlToExecutionCourses %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberExecutionCourseBoards" numberOfPagesAttributeName="numberOfPagesExecutionCourseBoards"/>	
+	
 	</logic:notEmpty>
 	<logic:empty name="executionCourseAnnouncementBoards">
 		<p><em class="warning0">Não existem canais de disciplinas com o critério escolhido</em></p>

@@ -26,7 +26,7 @@
 	<br/>
 		
 	<bean:define id="path">/manager/cron.do?method=showScript&page=0&cronScriptStateID=<bean:write name="cronScriptState" property="idInternal"/></bean:define>	
-	<cp:collectionPages url="<%= path %>" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>	
+	<cp:collectionPages url="<%= path %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>	
 	
 	<br/>
 	<br/>
