@@ -15,20 +15,25 @@ public class FenixDomainObjectLogCallsGenerator implements CodeGenerator {
 	String[] parameters = (String[]) annotationParameters.get("parameters");
 
 	buffer.append("{");
-	buffer.append("java.util.Map __map = new java.util.HashMap();");
+	
+	buffer.append("java.util.Map ___map = new java.util.HashMap();");
 
-	for (int i = 0; i < parameters.length; i++) {
-	    if(parameters[i] != null && !StringUtils.isEmpty(parameters[i].trim())) {
-		buffer.append("__map.put(\"" + parameters[i].trim() + "\"," + parameters[i].trim() + ");");
+	if (parameters != null) {
+	    for (int i = 0; i < parameters.length; i++) {
+		if (parameters[i] != null && !StringUtils.isEmpty(parameters[i].trim())) {
+		    buffer.append("__map.put(\"" + parameters[i].trim() + "\"," + parameters[i].trim() + ");");
+		}
 	    }
 	}
 
-	buffer.append("new net.sourceforge.fenixedu.domain.DomainObjectActionLog(");
-	buffer.append("net.sourceforge.fenixedu.injectionCode.AccessControl.getUserView().getPerson(),this,");
-	buffer.append("\"" + methodName.trim()).append("\",__map);");
-		
-	buffer.append("}");
+	if(methodName != null) {
+            buffer.append("new net.sourceforge.fenixedu.domain.DomainObjectActionLog(");
+            buffer.append("net.sourceforge.fenixedu.injectionCode.AccessControl.getUserView().getPerson(),this,");
+            buffer.append("\"" + methodName.trim()).append("\",___map);");
+	}
 	
+	buffer.append("}");
+
 	return buffer.toString();
     }
 }
