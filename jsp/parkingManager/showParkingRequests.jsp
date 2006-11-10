@@ -7,7 +7,7 @@
 <h2><bean:message key="label.requestList" /></h2>
 <logic:present name="parkingRequestSearch">
 	<fr:form action="/parking.do?method=showParkingRequests">
-		<fr:edit name="parkingRequestSearch" schema="input.parkingRequestSearch" />
+		<fr:edit id="parkingRequestSearch" name="parkingRequestSearch" schema="input.parkingRequestSearch" />
 		<p><html:submit>
 			<bean:message key="button.submit" />
 		</html:submit></p>

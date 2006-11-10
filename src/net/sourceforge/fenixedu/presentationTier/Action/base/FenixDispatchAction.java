@@ -235,6 +235,17 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return null;
     }
 
+    protected Object getRendererObject(String id) {
+        IViewState viewState = RenderUtils.getViewState(id);
+        if (viewState != null) {
+            MetaObject metaObject = viewState.getMetaObject();
+            if (metaObject != null) {
+                return metaObject.getObject();
+            }
+        }
+        return null;
+    }
+    
     protected ActionMessages getActionMessages(HttpServletRequest request) {
 	return (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
     }
