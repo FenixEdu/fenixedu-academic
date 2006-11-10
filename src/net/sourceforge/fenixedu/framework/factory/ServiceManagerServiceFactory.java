@@ -8,8 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.ServiceManagerDefaultImpl;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixRemoteServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.utl.ist.berserk.logic.serviceManager.exceptions.ServiceManagerException;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ServiceManagerServiceFactory {
@@ -36,6 +38,13 @@ public class ServiceManagerServiceFactory {
             if (e != null && e.getCause() != null && e.getCause() instanceof FenixFilterException) {
                 FenixFilterException fenixFilterException = (FenixFilterException) e.getCause();
                 throw fenixFilterException;
+            }
+            if (e != null && e.getCause() != null && e.getCause() instanceof ServiceManagerException) {
+                ServiceManagerException serviceManagerException = (ServiceManagerException) e.getCause();
+                if (serviceManagerException.getCause() != null && serviceManagerException.getCause() instanceof NotAuthorizedException) {
+                    NotAuthorizedException notAuthorizedException = (NotAuthorizedException) serviceManagerException.getCause();
+                    throw notAuthorizedException;
+                }
             }
             throw new FenixRemoteServiceException(e);
         }

@@ -1617,6 +1617,11 @@
 				key="error.exception.notAuthorized" 
 				handler="net.sourceforge.fenixedu.presentationTier.config.FenixNotAuthorizedExceptionHandler" 
 				/>
+			<exception 
+				type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
+				key="error.exception.notAuthorized" 
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixNotAuthorizedExceptionHandler" 
+				/>
 			<forward name="successfull-read" path="view-teaching-report"/>
 			<forward name="show-form" path="teaching-report-management"/>
 		</action>

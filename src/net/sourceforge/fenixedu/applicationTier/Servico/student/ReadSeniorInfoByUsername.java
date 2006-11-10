@@ -8,10 +8,13 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSenior;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -23,10 +26,25 @@ public class ReadSeniorInfoByUsername extends Service {
 	public InfoSenior run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 	    	final Person person = Person.readPersonByUsername(userView.getUtilizador());
 		final Registration registration = person.getStudentByType(DegreeType.DEGREE);
-		
-		final Senior senior = (registration == null) ? null : registration.getSenior();
+                if (registration == null) {
+                    return null;
+                }
+                final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+                if (studentCurricularPlan == null) {
+                    return null;
+                }
+                final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+                final Degree degree = degreeCurricularPlan.getDegree();
+		Senior senior = registration.getSenior();
 		if (senior == null) {
-		    return null;
+                    final int curricularYear = registration.getCurricularYear();
+                    System.out.println("curricularYear: " + curricularYear);
+                    if (curricularYear == degree.getDegreeType().getYears()) {
+                        senior = new Senior();
+                        senior.setStudent(registration);
+                    } else {
+                        return null;
+                    }
 		}
 
 		final InfoSenior readInfoSenior = new InfoSenior();

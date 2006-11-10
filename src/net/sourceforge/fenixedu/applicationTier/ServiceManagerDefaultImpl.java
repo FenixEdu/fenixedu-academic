@@ -169,7 +169,7 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
         } catch (ServiceManagerException e) {
 //            e.printStackTrace();
             logger.error(e);
-            throw new FenixServiceException(e);
+            throw new ExceptionWrapper(e);
         } catch (Throwable t) {
             t.printStackTrace();
             logger.error(t);
