@@ -21,7 +21,7 @@ public class FenixDomainObjectLogCallsGenerator implements CodeGenerator {
 	if (parameters != null) {
 	    for (int i = 0; i < parameters.length; i++) {
 		if (parameters[i] != null && !StringUtils.isEmpty(parameters[i].trim())) {
-		    buffer.append("__map.put(\"" + parameters[i].trim() + "\"," + parameters[i].trim() + ");");
+		    buffer.append("___map.put(\"" + parameters[i].trim() + "\"," + parameters[i].trim() + ");");
 		}
 	    }
 	}
