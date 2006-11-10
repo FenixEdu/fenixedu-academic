@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,18 +12,19 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonResults;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
  * @author Tânia Pousão
@@ -52,20 +51,24 @@ public class PersonManagementAction extends FenixDispatchAction {
         String name = null;
         if (findPersonForm.get("name") != null) {
             name = (String) findPersonForm.get("name");
+            request.setAttribute("name", name);
         }
 
         String email = null;
         if (findPersonForm.get("email") != null) {
             email = (String) findPersonForm.get("email");
+            request.setAttribute("email", email);
         }
 
         String username = null;
         if (findPersonForm.get("username") != null) {
             username = (String) findPersonForm.get("username");
+            request.setAttribute("username", username);
         }
         String documentIdNumber = null;
         if (findPersonForm.get("documentIdNumber") != null) {
             documentIdNumber = (String) findPersonForm.get("documentIdNumber");
+            request.setAttribute("documentIdNumber", documentIdNumber);
         }
 
         SearchParameters searchParameters = new SearchPerson.SearchParameters(name, email, username,
@@ -75,15 +78,11 @@ public class PersonManagementAction extends FenixDispatchAction {
 
         Object[] args = { searchParameters, predicate };
 
-        SearchPerson.SearchPersonResults result = null;
-        List<InfoPerson> searchPersons = null;
+        CollectionPager result = null;
         try {
-            result = (SearchPersonResults) ServiceManagerServiceFactory.executeService(userView,
+            result = (CollectionPager) ServiceManagerServiceFactory.executeService(userView,
                     "SearchPerson", args);
-
-            searchPersons = SearchParameters.getIntervalPersons(0, result.getValidPersons().size(),
-                    result.getValidPersons());
-
+         
         } catch (FenixServiceException e) {
             e.printStackTrace();
             errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
@@ -95,9 +94,14 @@ public class PersonManagementAction extends FenixDispatchAction {
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
-
-        request.setAttribute("personListFinded", searchPersons);
-
+        
+        final String pageNumberString = request.getParameter("pageNumber");
+        final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);         
+	request.setAttribute("pageNumber", pageNumber);
+	request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));	
+	request.setAttribute("personListFinded", result.getPage(pageNumber.intValue()));  
+	request.setAttribute("totalFindedPersons", result.getCollection().size());
+	
         return mapping.findForward("displayPerson");
     }
 

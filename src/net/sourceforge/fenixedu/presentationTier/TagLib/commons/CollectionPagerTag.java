@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.struts.taglib.TagUtils;
 
-public class CollectionPager extends TagSupport {
+public class CollectionPagerTag extends TagSupport {
 
     private String url;
     
@@ -55,7 +55,7 @@ public class CollectionPager extends TagSupport {
 	int lastVisualizedPage = lastPage;
 	Integer numberOfVisualizedPages = (getNumberOfVisualizedPages() != null) ? Integer.valueOf(getNumberOfVisualizedPages()) : null;
 	
-	if(numberOfVisualizedPages != null && numberOfVisualizedPages > 0 && lastPage > numberOfVisualizedPages.intValue()) {	    	    
+	if(lastPage > 0 && numberOfVisualizedPages != null && numberOfVisualizedPages > 0 && lastPage > numberOfVisualizedPages.intValue()) {	    	    
 	    if(pageNumber == 1) {
 		lastVisualizedPage = numberOfVisualizedPages;		
 	    } else if(pageNumber == lastPage) {
@@ -88,7 +88,7 @@ public class CollectionPager extends TagSupport {
     }
 
     private void addLastSymbols(StringBuilder stringBuilder, HttpServletRequest request, final int lastPage, final int pageNumber) throws JspException {
-	if (pageNumber != lastPage) {           
+	if (lastPage > 1 && pageNumber != lastPage) {           
 	    stringBuilder.append("&nbsp;<a href=\"").append(request.getContextPath()).append(getUrl()).append("&").append(getPageNumberAttributeName()).append("=").append(Integer.toString(pageNumber + 1)).append("\">");            
 	    stringBuilder.append(getMessage("label.collectionPager.next", ">")).append("</a>");            
             stringBuilder.append("&nbsp;<a href=\"").append(request.getContextPath()).append(getUrl()).append("&").append(getPageNumberAttributeName()).append("=").append(Integer.toString(lastPage)).append("\">");         
@@ -102,7 +102,7 @@ public class CollectionPager extends TagSupport {
     }
 
     private void addFirstSymbols(StringBuilder stringBuilder, HttpServletRequest request, final int pageNumber) throws JspException {
-	if (pageNumber != 1) {	    
+	if (pageNumber > 0 && pageNumber != 1) {	    
             stringBuilder.append("<a href=\"").append(request.getContextPath()).append(getUrl()).append("&").append(getPageNumberAttributeName()).append("=").append("1").append("\">");            
             stringBuilder.append(getMessage("label.collectionPager.first", "<<" )).append("</a>&nbsp;");                        
             stringBuilder.append("<a href=\"").append(request.getContextPath()).append(getUrl()).append("&").append(getPageNumberAttributeName()).append("=").append(Integer.toString(pageNumber - 1)).append("\">");                       

@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.findPerson" /></h2>
@@ -9,15 +10,22 @@
 </logic:notPresent>
 
 <logic:present name="personListFinded">
-	<bean:size id="numberFindedPersons" name="personListFinded"/>
-	<logic:notEqual name="numberFindedPersons" value="1">
-		<b><bean:message bundle="MANAGER_RESOURCES" key="label.manager.numberFindedPersons" arg0="<%= String.valueOf(numberFindedPersons) %>" /></b>	
+	
+	<bean:define id="totalFindedPersons" name="totalFindedPersons" />
+	<logic:notEqual name="totalFindedPersons" value="1">
+		<b><bean:message bundle="MANAGER_RESOURCES" key="label.manager.numberFindedPersons" arg0="<%= String.valueOf(totalFindedPersons) %>" /></b>	
 	</logic:notEqual>
 	
-	<logic:equal name="numberFindedPersons" value="1">
-		<b><bean:message bundle="MANAGER_RESOURCES" key="label.manager.findedOnePersons" arg0="<%= String.valueOf(numberFindedPersons) %>" /></b>
+	<logic:equal name="totalFindedPersons" value="1">
+		<b><bean:message bundle="MANAGER_RESOURCES" key="label.manager.findedOnePersons" arg0="<%= String.valueOf(totalFindedPersons) %>" /></b>
 	</logic:equal>
 	<br /><br />
+	
+	<bean:message key="label.collectionPager.page" bundle="MANAGER_RESOURCES"/>:	
+	<bean:define id="url">/manager/findPerson.do?method=findPerson&name=<bean:write name="name"/>&email=<bean:write name="email"/>&username=<bean:write name="username"/>&documentIdNumber=<bean:write name="documentIdNumber"/></bean:define>			
+	<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
+	<br /><br />
+		
 	<logic:iterate id="personalInfo" name="personListFinded" indexId="personIndex">	    
 		<bean:define id="personID" name="personalInfo" property="idInternal"/>
 	  	<table width="100%" cellpadding="0" cellspacing="0">

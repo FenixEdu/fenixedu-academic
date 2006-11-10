@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+<%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 <script language="JavaScript">
@@ -151,31 +152,19 @@ function check(e,v){
 </html:form>
 
 <logic:present name="personListFinded" >
-	<bean:size id="numberFindedPersons" name="personListFinded"/>
-	<logic:notEqual name="numberFindedPersons" value="1">
+	
+	<logic:notEqual name="totalFindedPersons" value="1">
 		<p><b><bean:message key="label.manager.numberFindedPersons" arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" /></b></p>	
 	</logic:notEqual>
-	<logic:equal name="numberFindedPersons" value="1">
+	<logic:equal name="totalFindedPersons" value="1">
 		<p><b><bean:message key="label.manager.findedOnePersons" arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" /></b></p>
 	</logic:equal>
 
-	<logic:present name="pages" >
-		<p>Páginas:
-			<logic:iterate id="pages" name="pages" indexId="pageIndex">	
-				<bean:define id="indexPageId" value="<%= String.valueOf(pageIndex.intValue() + 1) %>" />		
-				<bean:define id="actualPage" value="<%= pageContext.findAttribute("startIndex").toString()%>"/>
-				<logic:equal name="actualPage" value="<%= pageContext.findAttribute("indexPageId").toString()%>" >
-					<bean:write name="indexPageId"/>
-				</logic:equal>
-				<logic:notEqual name="actualPage" value="<%= pageContext.findAttribute("indexPageId").toString()%>" >
-					<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("indexPageId").toString() + "&amp;roleType=" + pageContext.findAttribute("roleType")+ "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId") +"&amp;viewPhoto=" + pageContext.findAttribute("viewPhoto")%>"><%= pageIndex.intValue() + 1 %></html:link>
-				</logic:notEqual>	
-			</logic:iterate>
-		</p>
-	</logic:present>
-
-
-	<bean:size id="numberFindedPersons" name="personListFinded"/>
+	<p>Páginas:			
+		<bean:define id="url">/messaging/findPerson.do?method=findPerson&name=<bean:write name="name"/>&roleType=<bean:write name="roleType"/>&degreeId=<bean:write name="degreeId"/>&degreeType=<bean:write name="degreeType"/>&departmentId=<bean:write name="departmentId"/>&viewPhoto=<bean:write name="viewPhoto"/></bean:define>			
+		<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
+	</p>
+	
 	<logic:iterate id="personalInfo" name="personListFinded" indexId="personIndex">	   
 		<bean:define id="personID" name="personalInfo" property="idInternal"/>
 	

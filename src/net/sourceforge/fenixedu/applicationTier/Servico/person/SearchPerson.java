@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.StringNormalizer;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
+
+import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class SearchPerson extends Service {
 
@@ -116,14 +116,13 @@ public class SearchPerson extends Service {
         }
     }
 
-    public SearchPersonResults run(SearchParameters searchParameters, Predicate predicate)
+    public CollectionPager run(SearchParameters searchParameters, Predicate predicate)
             throws FenixServiceException {
 
         final List<Person> persons;
         List<Person> allValidPersons = new ArrayList<Person>();
         List<Teacher> teachers = new ArrayList<Teacher>();
-        int totalPersons;
-
+       
         Role roleBd = searchParameters.getRole();
         if (roleBd == null) {
             roleBd = Role.getRoleByRoleType(RoleType.PERSON);
@@ -147,20 +146,14 @@ public class SearchPerson extends Service {
         }
 
         allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);
-        totalPersons = allValidPersons.size();
-
-        if (totalPersons > SessionConstants.LIMIT_FINDED_PERSONS_TOTAL) {
-            throw new FenixServiceException("error.search.person");
-        }
-
-        Collections.sort(allValidPersons, new BeanComparator("nome"));
+        Collections.sort(allValidPersons, Person.COMPARATOR_BY_NAME);
         List<InfoPerson> infoPersons = new ArrayList<InfoPerson>();
 
         for (Person person : (List<Person>) allValidPersons) {
             infoPersons.add(InfoPerson.newInfoFromDomain(person));
         }
 
-        return new SearchPersonResults(infoPersons, totalPersons);
+        return new CollectionPager<InfoPerson>(infoPersons, 25);
     }
 
     private static void normalizeName(String[] nameWords) {
@@ -250,26 +243,5 @@ public class SearchPerson extends Service {
             }
             return false;
         }
-    }
-
-    // ------------ SearchPerson Results Class -------------
-    public static class SearchPersonResults {
-
-        List<InfoPerson> validPersons;
-
-        int totalPersons;
-
-        public SearchPersonResults(List<InfoPerson> validPersons, int totalPersons) {
-            this.totalPersons = totalPersons;
-            this.validPersons = validPersons;
-        }
-
-        public int getTotalPersons() {
-            return totalPersons;
-        }
-
-        public List<InfoPerson> getValidPersons() {
-            return validPersons;
-        }
-    }
+    }   
 }

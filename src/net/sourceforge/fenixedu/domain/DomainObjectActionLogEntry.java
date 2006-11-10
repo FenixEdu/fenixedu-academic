@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DomainObjectActionLogEntry extends DomainObjectActionLogEntry_Base {
@@ -11,7 +13,23 @@ public class DomainObjectActionLogEntry extends DomainObjectActionLogEntry_Base 
         setValue(value);
         setDomainObjectActionLog(actionLog);
     }
-        
+          
+    @Override
+    public void setName(String name) {
+	if (name == null || StringUtils.isEmpty(name.trim())) {
+	    throw new DomainException("error.domainObjectActionLogEntry.empty.name");
+	}	
+	super.setName(name);
+    }
+
+    @Override
+    public void setValue(String value) {
+	if (value == null || StringUtils.isEmpty(value.trim())) {
+	    throw new DomainException("error.domainObjectActionLogEntry.empty.value");
+	}
+	super.setValue(value);
+    }
+
     @Override
     public void setDomainObjectActionLog(DomainObjectActionLog domainObjectActionLog) {
 	if(domainObjectActionLog == null) {

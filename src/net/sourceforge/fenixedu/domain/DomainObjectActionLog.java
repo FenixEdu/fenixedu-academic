@@ -32,7 +32,7 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
 	setInstant(new DateTime());
 	fillDomainObjectAtionLogEntries(parameters);
     }
-
+       
     @Override
     public void setDomainObjectClassName(String domainObjectClassName) {
 	if (domainObjectClassName == null || StringUtils.isEmpty(domainObjectClassName.trim())) {

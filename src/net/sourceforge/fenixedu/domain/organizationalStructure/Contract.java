@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
+import java.text.Collator;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -28,7 +29,7 @@ public class Contract extends Contract_Base {
     public static final Comparator<Contract> CONTRACT_COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) CONTRACT_COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator(
-		"person.name"));
+		"person.name", Collator.getInstance()));
 	((ComparatorChain) CONTRACT_COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator(
 		"idInternal"));
     }
@@ -46,15 +47,15 @@ public class Contract extends Contract_Base {
 	setContractType(type);
 	setOccupationInterval(beginDate, endDate);
     }
-    
+
     @Override
     public void setContractType(ContractType contractType) {
-	if(contractType == null) {
+	if (contractType == null) {
 	    throw new DomainException("error.contract.empty.contractType");
 	}
 	super.setContractType(contractType);
     }
-   
+
     @Override
     public void setBeginDate(YearMonthDay beginDate) {
 	checkContractDatesIntersection(getEmployee(), beginDate, getEndDate());
@@ -72,7 +73,7 @@ public class Contract extends Contract_Base {
 	super.setBeginDate(beginDate);
 	super.setEndDate(endDate);
     }
-       
+
     public Person getPerson() {
 	return (Person) getChildParty();
     }
@@ -96,7 +97,7 @@ public class Contract extends Contract_Base {
     public Unit getSalaryUnit() {
 	return getUnit();
     }
-    
+
     private void checkContractDatesIntersection(Employee employee, YearMonthDay begin, YearMonthDay end) {
 	checkBeginDateAndEndDate(begin, end);
 	// for (Contract contract : employee.getContracts()) {
@@ -119,5 +120,5 @@ public class Contract extends Contract_Base {
 	if (endDate != null && endDate.isBefore(beginDate)) {
 	    throw new DomainException("error.contract.endDateBeforeBeginDate");
 	}
-    }    
+    }
 }

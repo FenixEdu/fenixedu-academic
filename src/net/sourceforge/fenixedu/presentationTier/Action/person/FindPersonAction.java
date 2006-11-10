@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonResults;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -24,12 +22,15 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
  * @author Tânia Pousão
@@ -130,15 +131,7 @@ public class FindPersonAction extends FenixDispatchAction {
             name = request.getParameter("name");
         } else if (findPersonForm.get("name") != null) {
             name = (String) findPersonForm.get("name");
-        }
-
-        Integer startIndex = null;
-        if (request.getParameter("startIndex") != null
-                && request.getParameter("startIndex").length() > 0) {
-            startIndex = Integer.valueOf(request.getParameter("startIndex"));
-        } else if (findPersonForm.get("startIndex") != null) {
-            startIndex = Integer.valueOf((String) findPersonForm.get("startIndex"));
-        }
+        }     
 
         String roleType = null;
         Integer departmentId = null;
@@ -201,16 +194,10 @@ public class FindPersonAction extends FenixDispatchAction {
 
         Object[] args = { searchParameters, predicate };
       
-        SearchPerson.SearchPersonResults result = null;
-        List<InfoPerson> searchPersons = null;
+        CollectionPager result = null;        
         try {
-            result = (SearchPersonResults) ServiceManagerServiceFactory.executeService(userView,
-                    "SearchPerson", args);
-
-            Integer start = (startIndex - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
-            Integer end = start + SessionConstants.LIMIT_FINDED_PERSONS;
-
-            searchPersons = SearchParameters.getIntervalPersons(start, end, result.getValidPersons());
+            result = (CollectionPager) ServiceManagerServiceFactory.executeService(userView,
+                    "SearchPerson", args);               
 
         } catch (FenixServiceException e) {
             errors.add("impossibleFindPerson", new ActionError(e.getMessage()));
@@ -218,11 +205,11 @@ public class FindPersonAction extends FenixDispatchAction {
             return preparePerson(mapping, actionForm, request, response);
         }
 
-        if (result == null || result.getValidPersons() == null) {
+        if (result == null) {
             errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
         }
 
-        if (searchPersons.isEmpty()) {
+        if (result.getCollection().isEmpty()) {
             errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
             saveErrors(request, errors);
 
@@ -230,19 +217,20 @@ public class FindPersonAction extends FenixDispatchAction {
         if (!errors.isEmpty()) {
             saveErrors(request, errors);
             return preparePerson(mapping, actionForm, request, response);
-        }
+        }     
 
-        int totalPersons = result.getTotalPersons();
-        List pagesList = getPageList(totalPersons);
-
-        request.setAttribute("totalFindedPersons", totalPersons);
-        request.setAttribute("personListFinded", searchPersons);
+        final String pageNumberString = request.getParameter("pageNumber");
+        final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);         
+	request.setAttribute("pageNumber", pageNumber);
+	request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));
+	
+	request.setAttribute("personListFinded", result.getPage(pageNumber.intValue()));	
+        request.setAttribute("totalFindedPersons", result.getCollection().size());
+                                      
         request.setAttribute("name", name);
         request.setAttribute("roleType", roleType);
         request.setAttribute("degreeId", degreeId);
-        request.setAttribute("departmentId", departmentId);
-        request.setAttribute("pages", pagesList);
-        request.setAttribute("startIndex", startIndex);
+        request.setAttribute("departmentId", departmentId);        
         findPersonForm.set("name", name);
 
         if (isEmployeeOrTeacher(userView)) {

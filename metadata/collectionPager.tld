@@ -22,7 +22,7 @@
  
 	<tag>
 	   <name>collectionPages</name>
-	   <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.commons.CollectionPager</tag-class>
+	   <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.commons.CollectionPagerTag</tag-class>
 	   <body-content>empty</body-content>
 	   <description>
 	   	 Collection pager renders 
