@@ -206,7 +206,8 @@ public class DataInitializer {
     }
 
     private static void createManagerUser() {
-	final Person person = new Person("Fenix System Administrator", null, null, null);
+	final Person person = new Person();
+	person.setName("Fenix System Administrator");
 	person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
 	person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
 	final User user = person.getUser();
