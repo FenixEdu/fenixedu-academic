@@ -30,8 +30,29 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
 	    final Student student) {
 	return PaymentCodeGenerator.canGenerateNewCode(paymentCodeType, student) ? new InstallmentPaymentCode(
 		paymentCodeType, startDate, endDate, event, installment, minAmount, maxAmount, student)
-		: (InstallmentPaymentCode) findAndReuseExistingCode(paymentCodeType, startDate, endDate,
-			event, minAmount, maxAmount, student);
+		: findAndReuseExistingCode(paymentCodeType, startDate, endDate, event, minAmount,
+			maxAmount, student, installment);
+
+    }
+
+    private static InstallmentPaymentCode findAndReuseExistingCode(
+	    final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
+	    final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount,
+	    final Student student, final Installment installment) {
+
+	final InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) student
+		.getAvailablePaymentCodeBy(paymentCodeType);
+
+	installmentPaymentCode.reuse(startDate, endDate, minAmount, maxAmount, event, installment);
+
+	return installmentPaymentCode;
+
+    }
+
+    private void reuse(YearMonthDay startDate, YearMonthDay endDate, Money minAmount, Money maxAmount,
+	    Event event, Installment installment) {
+	super.reuse(startDate, endDate, minAmount, maxAmount, event);
+	super.setInstallment(installment);
 
     }
 
