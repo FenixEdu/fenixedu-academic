@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<html:link page="/viewStudentSchedule.do" paramId="userName" paramName="studentPerson" paramProperty="username" target="_blank">
+<html:link page="/viewStudentSchedule.do" paramId="userName" paramName="registration" paramProperty="person.username" target="_blank">
 	<bean:message key="link.student.schedule"/>
 </html:link> 
 <br/><br/>
