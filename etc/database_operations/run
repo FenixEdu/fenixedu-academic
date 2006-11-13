@@ -27,5 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Creating table PaymentCode" CreateTablePaymentCode.sql
-
