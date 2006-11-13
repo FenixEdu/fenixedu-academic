@@ -69,7 +69,7 @@ public class PaymentCodeGenerator {
     }
 
     private static String getCodePrefix(final PaymentCodeType paymentCodeType, final Student student) {
-	return StringUtils.rightPad(student.getNumber().toString(), STUDENT_NUMBER_LENGTH, CODE_FILLER)
+	return StringUtils.leftPad(student.getNumber().toString(), STUDENT_NUMBER_LENGTH, CODE_FILLER)
 		+ paymentCodeType.getTypeDigit();
     }
 
