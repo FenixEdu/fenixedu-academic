@@ -36,6 +36,12 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">
+					<h:outputText value="#{bundle['message.superiorUnit']}" />
+				</f:facet>				
+				<h:outputText value="#{unit.parentUnitsPresentationName}" escape="false"/>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitAcronym']}" />
 				</f:facet>				
 				<h:outputText value="#{unit.acronym}" escape="false"/>

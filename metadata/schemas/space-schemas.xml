@@ -151,7 +151,7 @@
 	<slot name="personUsername" key="label.username"/>
 	<slot name="action" key="label.action.in.the.space"/>
 	<slot name="instant" key="label.action.in.the.space.instant"/>	
-	<slot name="changedomainObject" key="label.changedDomainObject"/>	
+	<slot name="changedDomainObject" key="label.changedDomainObject"/>	
 	<slot name="presentationEntries" key="label.domainObjectActionLogEntries"/>	
 </schema>
 

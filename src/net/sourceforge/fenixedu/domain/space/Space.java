@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.DomainObjectActionLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -175,6 +176,28 @@ public abstract class Space extends Space_Base {
 	return materialOccupations;
     }
    
+    public static Set<DomainObjectActionLog> getListOfChangesInSpacesOrderedByInstant(){
+	Set<Class> classs = new HashSet<Class>();
+		
+	classs.add(Room.class);
+	classs.add(Floor.class);
+	classs.add(Campus.class);
+	classs.add(Building.class);	
+		
+	classs.add(RoomInformation.class);
+	classs.add(FloorInformation.class);
+	classs.add(CampusInformation.class);
+	classs.add(BuildingInformation.class);
+			
+	classs.add(PersonSpaceOccupation.class);
+	classs.add(ExtensionSpaceOccupation.class);
+	
+	classs.add(SpaceResponsibility.class);
+	classs.add(Blueprint.class);
+	
+	return DomainObjectActionLog.readDomainObjectActionLogsOrderedByInstant(classs);
+    }
+    
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.space.cannot.be.deleted");

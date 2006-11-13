@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -15,24 +18,25 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
 
     public final static Comparator<DomainObjectActionLog> COMPARATOR_BY_INSTANT = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new ReverseComparator(new BeanComparator("instant")));
+	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new ReverseComparator(
+		new BeanComparator("instant")));
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("idInternal"));
     }
-    
+
     public DomainObjectActionLog(Person person, DomainObject domainObject, String action,
 	    Map<String, Object> parameters) {
 
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setPerson(person);
-	setPersonUsername(person.getUsername());	
+	setPersonUsername(person.getUsername());
 	setKeyDomainObject(domainObject.getIdInternal());
 	setDomainObjectClassName(domainObject.getClass().getName());
 	setAction(action);
 	setInstant(new DateTime());
 	fillDomainObjectAtionLogEntries(parameters);
     }
-       
+
     @Override
     public void setDomainObjectClassName(String domainObjectClassName) {
 	if (domainObjectClassName == null || StringUtils.isEmpty(domainObjectClassName.trim())) {
@@ -72,19 +76,36 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
 	return super.getPersonUsername();
     }
 
-    public String getChangedomainObject() {
+    public String getChangedDomainObject() {
 	return getDomainObjectClassName() + "(" + getKeyDomainObject() + ")";
     }
 
     public String getPersonName() {
 	return (getPerson() != null) ? getPerson().getName() : null;
     }
-    
+
     public String getPresentationEntries() {
 	StringBuilder stringBuilder = new StringBuilder();
 	for (DomainObjectActionLogEntry entry : getDomainObjectActionLogEntriesSet()) {
 	    stringBuilder.append(entry.getPresentationNameValue()).append(";");
 	}
 	return stringBuilder.toString();
+    }
+
+    public static Set<DomainObjectActionLog> readDomainObjectActionLogsOrderedByInstant(
+	    Set<Class> domainObjectClasss) {
+	
+	Set<DomainObjectActionLog> resultList = new TreeSet<DomainObjectActionLog>(DomainObjectActionLog.COMPARATOR_BY_INSTANT);
+	for (DomainObjectActionLog log : RootDomainObject.getInstance().getDomainObjectActionLogsSet()) {
+	    try {
+		Class<?> domainObjectClass = Class.forName(log.getDomainObjectClassName());
+		if (domainObjectClasss.contains(domainObjectClass)) {
+		    resultList.add(log);
+		}
+	    } catch (ClassNotFoundException e) {
+		continue;
+	    }
+	}
+	return resultList;
     }
 }

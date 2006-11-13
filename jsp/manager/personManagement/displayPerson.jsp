@@ -9,7 +9,7 @@
 	<span class="errors"><bean:message bundle="MANAGER_RESOURCES" key="error.manager.implossible.findPerson" /></span>
 </logic:notPresent>
 
-<logic:present name="personListFinded">
+<logic:notEmpty name="personListFinded">
 	
 	<bean:define id="totalFindedPersons" name="totalFindedPersons" />
 	<logic:notEqual name="totalFindedPersons" value="1">
@@ -20,9 +20,9 @@
 		<b><bean:message bundle="MANAGER_RESOURCES" key="label.manager.findedOnePersons" arg0="<%= String.valueOf(totalFindedPersons) %>" /></b>
 	</logic:equal>
 	<br /><br />
-	
-	<bean:message key="label.collectionPager.page" bundle="MANAGER_RESOURCES"/>:	
+		
 	<bean:define id="url">/manager/findPerson.do?method=findPerson&name=<bean:write name="name"/>&email=<bean:write name="email"/>&username=<bean:write name="username"/>&documentIdNumber=<bean:write name="documentIdNumber"/></bean:define>			
+	<bean:message key="label.collectionPager.page" bundle="MANAGER_RESOURCES"/>:	
 	<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
 	<br /><br />
 		
@@ -92,4 +92,10 @@
     	</table>
     	<br />
 	</logic:iterate>
-</logic:present>
+	
+	<logic:notEqual name="numberOfPages" value="1">
+		<bean:message key="label.collectionPager.page" bundle="MANAGER_RESOURCES"/>:	
+		<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
+	</logic:notEqual>
+	
+</logic:notEmpty>

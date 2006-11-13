@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DomainObjectActionLog;
+import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -20,13 +21,13 @@ public class ListChangesInTheSpacesDA extends FenixDispatchAction {
 
     public ActionForward changesList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	
+	Set<DomainObjectActionLog> listOfChangesInSpaces = Space.getListOfChangesInSpacesOrderedByInstant();
+	CollectionPager<DomainObjectActionLog> collectionPager = 
+	    new CollectionPager<DomainObjectActionLog>(listOfChangesInSpaces != null ? listOfChangesInSpaces : new ArrayList(), 50);
 
 	final String pageNumberString = request.getParameter("pageNumber");
 	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1); 
-	
-	final SortedSet<DomainObjectActionLog> treeSet = new TreeSet<DomainObjectActionLog>(DomainObjectActionLog.COMPARATOR_BY_INSTANT);
-	treeSet.addAll(rootDomainObject.getDomainObjectActionLogsSet());
-	CollectionPager<DomainObjectActionLog> collectionPager = new CollectionPager<DomainObjectActionLog>(treeSet, 50);
 	
 	request.setAttribute("pageNumber", pageNumber);
 	request.setAttribute("domainObjectActionLogs", collectionPager.getPage(pageNumber.intValue()));

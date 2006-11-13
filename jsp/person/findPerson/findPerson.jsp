@@ -307,9 +307,12 @@ function check(e,v){
 		</div>
 	 </logic:iterate>
 	 
-	 <p>Páginas:			
-		<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
-	</p>
+	 <logic:notEqual name="numberOfPages" value="1">
+	 	<br/>
+		<p>Páginas:			
+			<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
+		</p>
+	</logic:notEqual>	 
 	
 </logic:present>
 

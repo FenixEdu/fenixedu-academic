@@ -30,6 +30,11 @@
 			<fr:property name="rowClasses" value="listClasses"/>					
 		</fr:layout>
 	</fr:view>		
+	
+	<logic:notEqual name="numberOfPages" value="1">
+		<bean:message key="label.page" bundle="SPACE_RESOURCES"/>:
+		<cp:collectionPages url="/SpaceManager/listChangesInTheSpaces.do?method=changesList" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>	
+	</logic:notEqual>	
 </logic:notEmpty>
 
 <logic:empty name="domainObjectActionLogs">			

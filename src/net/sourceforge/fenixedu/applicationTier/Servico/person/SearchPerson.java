@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
@@ -69,7 +70,7 @@ public class SearchPerson extends Service {
 
         private static String[] getNameWords(String name) {
             String[] nameWords = null;
-            if (name != null && !name.trim().equals("")) {
+            if (name != null && !StringUtils.isEmpty(name.trim())) {
                 nameWords = name.trim().split(" ");
                 normalizeName(nameWords);
             }

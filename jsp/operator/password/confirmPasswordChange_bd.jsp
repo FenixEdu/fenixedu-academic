@@ -24,8 +24,8 @@
 	</logic:equal>
 	<br /><br />
 		
-	<bean:message key="label.collectionPager.page" bundle="MANAGER_RESOURCES"/>:	
 	<bean:define id="url">/operator/findPerson.do?method=findPerson&username=<bean:write name="username"/>&documentIdNumber=<bean:write name="documentIdNumber"/></bean:define>				
+	<bean:message key="label.collectionPager.page" bundle="MANAGER_RESOURCES"/>:	
 	<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
 	<br /><br />	
 	
@@ -122,6 +122,13 @@
 		</html:link>
 	</h2>    	
 	</logic:iterate>
+	
+	<logic:notEqual name="numberOfPages" value="1">
+		<br/><br/>
+		<bean:message key="label.collectionPager.page" bundle="MANAGER_RESOURCES"/>:		
+		<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>				
+	</logic:notEqual>
+	
 </logic:present>
 
 
