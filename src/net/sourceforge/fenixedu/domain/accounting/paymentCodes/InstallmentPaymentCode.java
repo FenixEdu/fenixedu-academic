@@ -49,7 +49,7 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
 
     }
 
-    private void reuse(YearMonthDay startDate, YearMonthDay endDate, Money minAmount, Money maxAmount,
+    public void reuse(YearMonthDay startDate, YearMonthDay endDate, Money minAmount, Money maxAmount,
 	    Event event, Installment installment) {
 	super.reuse(startDate, endDate, minAmount, maxAmount, event);
 	super.setInstallment(installment);

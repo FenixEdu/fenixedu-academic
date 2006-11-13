@@ -51,7 +51,7 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 
     }
 
-    protected static AccountingEventPaymentCode findAndReuseExistingCode(
+    private static AccountingEventPaymentCode findAndReuseExistingCode(
 	    final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
 	    final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount,
 	    final Student student) {
@@ -91,17 +91,12 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 	super.setState(PaymentCodeState.CANCELLED);
     }
 
-    public void update(YearMonthDay startDate, YearMonthDay endDate, Money minAmount, Money maxAmount,
-	    Event event) {
-	super.update(startDate, endDate, minAmount, maxAmount);
-	super.setAccountingEvent(event);
-    }
-
     public void reuse(final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount,
 	    final Money maxAmount, final Event event) {
 
 	reuseCode();
-	update(startDate, endDate, minAmount, maxAmount, event);
+	update(startDate, endDate, minAmount, maxAmount);
+	super.setAccountingEvent(event);
     }
 
 }
