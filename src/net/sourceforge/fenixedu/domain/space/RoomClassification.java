@@ -25,24 +25,9 @@ public class RoomClassification extends RoomClassification_Base {
 
     private transient String presentationCode;
 
-    public static final Comparator<RoomClassification> COMPARATORY_BY_CODE = new BeanComparator("code");
-
-    public static final Comparator<RoomClassification> COMPARATORY_BY_PRESENTATION_CODE = new BeanComparator(
-	    "presentationCode");
-
     public static final Comparator<RoomClassification> COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE = new BeanComparator(
 	    "absoluteCode");
-
-    public static SortedSet<RoomClassification> sortByCode(
-	    final Collection<RoomClassification> roomClassifications) {
-	return CollectionUtils.constructSortedSet(roomClassifications, COMPARATORY_BY_CODE);
-    }
-
-    public static SortedSet<RoomClassification> sortByPresentationCode(
-	    final Collection<RoomClassification> roomClassifications) {
-	return CollectionUtils.constructSortedSet(roomClassifications, COMPARATORY_BY_PRESENTATION_CODE);
-    }
-
+  
     public static SortedSet<RoomClassification> sortByRoomClassificationAndCode(
 	    final Collection<RoomClassification> roomClassifications) {
 	return CollectionUtils.constructSortedSet(roomClassifications,

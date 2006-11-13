@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 public class RoomClassificationsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	return RoomClassification.sortByPresentationCode(RootDomainObject.getInstance()
+	return RoomClassification.sortByRoomClassificationAndCode(RootDomainObject.getInstance()
 		.getRoomClassificationSet());
     }
 
