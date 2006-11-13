@@ -16,12 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
+import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -146,6 +149,23 @@ public class ExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward marks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        final ExecutionCourse executionCourse = getExecutionCourse(request);
+        final Map<Attends, Map<Evaluation, Mark>> attendsMap = new TreeMap<Attends, Map<Evaluation, Mark>>(Attends.COMPARATOR_BY_STUDENT_NUMBER);
+        for (final Attends attends : executionCourse.getAttendsSet()) {
+            final Map<Evaluation, Mark> evaluationsMap = new TreeMap<Evaluation, Mark>(ExecutionCourse.EVALUATION_COMPARATOR);
+            attendsMap.put(attends, evaluationsMap);
+            for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
+                if (evaluation.getPublishmentMessage() != null) {
+                    evaluationsMap.put(evaluation, null);
+                }
+            }
+            for (final Mark mark : attends.getAssociatedMarksSet()) {
+                if (mark.getEvaluation().getPublishmentMessage() != null) {
+                    evaluationsMap.put(mark.getEvaluation(), mark);
+                }
+            }
+        }
+        request.setAttribute("attendsMap", attendsMap);
         return mapping.findForward("execution-course-marks");
     }
 

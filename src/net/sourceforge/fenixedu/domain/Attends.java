@@ -35,6 +35,8 @@ import org.joda.time.YearMonthDay;
  */
 public class Attends extends Attends_Base {
 
+    public static final Comparator<Attends> COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator("aluno.number");
+
     public static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>() {
 	public int compare(final Attends attends1, final Attends attends2) {
 	    final ExecutionCourse executionCourse1 = attends1.getDisciplinaExecucao();

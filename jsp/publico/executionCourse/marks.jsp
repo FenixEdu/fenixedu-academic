@@ -10,7 +10,6 @@
 <bean:message key="classification.nonOfficial.information" />
 <br/>
 <br/>
-
 <table class="tab_complex" cellspacing="1" cellpadding="2">
 	<tr>
 		<th nowrap>
@@ -20,7 +19,7 @@
 			<bean:message key="label.name"/>
 		</th>
 		<logic:iterate id="evaluation" name="executionCourse" property="orderedAssociatedEvaluations">
-			<logic:notEmpty name="evaluation" property="publishmentMessage">
+			<logic:present name="evaluation" property="publishmentMessage">
 				<th nowrap>
 					<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
 						<bean:write name="evaluation" property="distributedTest.title"/>
@@ -38,10 +37,11 @@
 						<bean:message key="label.final.evaluation"/>
 					</logic:equal>
 				</th>
-			</logic:notEmpty>
+			</logic:present>
 		</logic:iterate>
 	</tr>
-	<logic:iterate id="attends" name="executionCourse" property="orderedAttends">
+	<logic:iterate id="attendEntry" name="attendsMap">
+		<bean:define id="attends" name="attendEntry" property="key"/>
 		<tr>
 			<td nowrap>
 				<bean:write name="attends" property="aluno.number"/>
@@ -49,16 +49,15 @@
 			<td nowrap>
 				<bean:write name="attends" property="aluno.person.nome"/>
 			</td>
-			<logic:iterate id="mark" name="attends" property="associatedMarksOrderedByEvaluationDate">
-				<logic:present name="mark">
-					<logic:notEmpty name="mark" property="evaluation.publishmentMessage">
-						<td nowrap>
-							<logic:present name="mark">
-								<bean:write name="mark" property="publishedMark"/>
-							</logic:present>
-						</td>
-					</logic:notEmpty>
+			<logic:iterate id="evaluationEntry" name="attendEntry" property="value">
+				<td nowrap>
+				<logic:present name="evaluationEntry" property="value">
+					<bean:define id="mark" name="evaluationEntry" property="value"/>
+						<logic:present name="mark">
+							<bean:write name="mark" property="publishedMark"/>
+						</logic:present>
 				</logic:present>
+				</td>
 			</logic:iterate>
 		</tr>
 	</logic:iterate>

@@ -510,7 +510,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return true;
     }
 
-    private static final Comparator<Evaluation> EVALUATION_COMPARATOR = new Comparator<Evaluation>() {
+    public static final Comparator<Evaluation> EVALUATION_COMPARATOR = new Comparator<Evaluation>() {
 
 	public int compare(Evaluation evaluation1, Evaluation evaluation2) {
 	    final String evaluation1ComparisonString = evaluationComparisonString(evaluation1);
@@ -544,7 +544,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 
 	    return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd",
-		    evaluationComparisonDate);
+		    evaluationComparisonDate) + evaluation.getIdInternal();
 	}
     };
 
