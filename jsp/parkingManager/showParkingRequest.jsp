@@ -31,7 +31,7 @@ function hideCardValidPeriod(toShow){
 		document.getElementById('cardValidPeriodDivId').style.display='none';
 	}
 }
-
+		
 // -->
 </script>
 
@@ -80,9 +80,10 @@ function hideCardValidPeriod(toShow){
 	<logic:notEqual name="parkingRequest" property="parkingRequestState" value="PENDING">		
 		<jsp:include page="viewParkingPartyAndRequest.jsp"/>
 	</logic:notEqual>
-	
+	<bean:define id="parkingPartyIdint" name="parkingRequest" property="parkingParty.idInternal" />
 	<logic:equal name="parkingRequest" property="parkingRequestState" value="PENDING">
-		<bean:define id="parkingRequestID" name="parkingRequest" property="idInternal" />			
+		<bean:define id="parkingRequestID" name="parkingRequest" property="idInternal" />	
+		<bean:define id="groupName" value="" type="java.lang.String"/>		
 		<html:form action="/parking">
 			<html:hidden property="code" value="<%= parkingRequestID.toString()%>"/>
 			<html:hidden property="method" value="editFirstTimeParkingParty"/>
@@ -90,7 +91,8 @@ function hideCardValidPeriod(toShow){
 			<html:hidden property="parkingPartyClassification" value="<%= pageContext.findAttribute("parkingPartyClassification").toString() %>"/>
 			<html:hidden property="personName" value="<%= pageContext.findAttribute("personName").toString() %>"/>
 			<html:hidden property="carPlateNumber" value="<%= pageContext.findAttribute("carPlateNumber").toString() %>"/>
-			<html:hidden property="accepted" value=""/>			
+			<html:hidden property="accepted" value=""/>	
+			<html:hidden property="parkingPartyID" value="<%= parkingPartyIdint.toString() %>" />		
 			
 			<span class="error"><!-- Error messages go here --><html:errors /></span>		
 			<p class="mbottom025"><strong><bean:message key="label.cardNumber"/></strong></p>
@@ -101,12 +103,12 @@ function hideCardValidPeriod(toShow){
 			
 					<p class="mbottom025"><strong><bean:message key="label.group"/></strong></p>
 			
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.variationCode" property="group">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.variationCode" property="groupID">
 				<html:option value="0">
 					<bean:message key="label.choose" />
 				</html:option>
 				<logic:iterate id="groupIt" name="groups" type="net.sourceforge.fenixedu.domain.parking.ParkingGroup">
-					<bean:define id="groupId" name="groupIt" property="idInternal"/>
+					<bean:define id="groupId" name="groupIt" property="idInternal"/>					
 					<html:option value="<%=groupId.toString()%>">
 						<bean:write name="groupIt" property="groupName"/>
 					</html:option>
@@ -141,15 +143,15 @@ function hideCardValidPeriod(toShow){
 			--%>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="notify"><bean:message key="button.notify"/></html:submit>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="reject"><bean:message key="button.reject"/></html:submit>
-			</p>
-		</html:form>
-		<bean:define id="parkingPartyId" name="parkingRequest" property="parkingParty.idInternal" />	
+			</p>	
+						
 		<%--
 		<html:link target="printFrame" page="<%= "/parking.do?method=printParkingCard&amp;parkingPartyID=" + parkingPartyId.toString()%>">
 		<bean:message key="label.printCard" bundle="PARKING_RESOURCES"/></html:link>
 		--%>
-		<html:link target="printFrame" page="<%= "/parking.do?method=exportToPDFParkingCard&amp;parkingPartyID=" + parkingPartyId.toString()%>">
+		<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='exportToPDFParkingCard';document.forms[0].submit();">
 		<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/></html:link>
+		</html:form>
 	</logic:equal>
 	
 </logic:present>

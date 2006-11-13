@@ -425,6 +425,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Integer parkingPartyID = getPopertyID(request, "parkingPartyID");
+        String parkingGroup = request.getParameter("parkingGroup");
         final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(parkingPartyID);
 
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -432,7 +433,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                 "/images/LogoIST.gif"));
 
         Person person = (Person) parkingParty.getParty();
-        parameters.put("number", getMostSignificantNumber(person));
+        //  parameters.put("number", getMostSignificantNumber(person,parkingGroup));
 
         List<Person> persons = new ArrayList<Person>();
         persons.add(person);
@@ -444,15 +445,25 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     public ActionForward exportToPDFParkingCard(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        Integer parkingPartyID = getPopertyID(request, "parkingPartyID");
-        final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(parkingPartyID);
+        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        String parkingPartyID = (String) dynaActionForm.get("parkingPartyID");
+
+        final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(new Integer(
+                parkingPartyID));
+        Integer parkingGroupID = (Integer) dynaActionForm.get("groupID");
+        ParkingGroup parkingGroup = null;
+        if (parkingGroupID != null) {
+            parkingGroup = rootDomainObject.readParkingGroupByOID(parkingGroupID);
+        } else {
+            parkingGroup = parkingParty.getParkingGroup();
+        }
 
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat(
                 "/images/Logo_IST_color.tiff"));
 
         Person person = (Person) parkingParty.getParty();
-        parameters.put("number", getMostSignificantNumber(person));
+        parameters.put("number", getMostSignificantNumber(person, parkingGroup));
 
         List<Person> persons = new ArrayList<Person>();
         persons.add(person);
@@ -470,7 +481,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         return mapping.findForward("");
     }
 
-    private String getMostSignificantNumber(Person p) {
+    private String getMostSignificantNumber(Person p, ParkingGroup parkingGroup) {
         if (p.getParkingParty().getPhdNumber() != null) {
             return "Nº: " + p.getParkingParty().getPhdNumber();
         }
@@ -480,7 +491,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         if (p.getEmployee() != null && p.getEmployee().getCurrentWorkingContract() != null) {
             return "Nº Mec: " + p.getEmployee().getEmployeeNumber();
         }
-        if (p.getStudent() != null) {
+        if (p.getStudent() != null && !parkingGroup.getGroupName().equalsIgnoreCase("Bolseiros")) {
             DegreeType degreeType = p.getStudent().getMostSignificantDegreeType();
             Collection<Registration> registrations = p.getStudent().getRegistrationsByDegreeType(
                     degreeType);
