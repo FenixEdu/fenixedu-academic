@@ -474,7 +474,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         if (p.getParkingParty().getPhdNumber() != null) {
             return "Nº: " + p.getParkingParty().getPhdNumber();
         }
-        if (p.getTeacher() != null) {
+        if (p.getTeacher() != null && p.getTeacher().getCurrentWorkingDepartment() != null) {
             return "Nº Mec: " + p.getTeacher().getTeacherNumber();
         }
         if (p.getEmployee() != null && p.getEmployee().getCurrentWorkingContract() != null) {
