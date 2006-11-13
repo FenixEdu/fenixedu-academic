@@ -26,7 +26,7 @@ public class Student extends Student_Base {
     public Student(Person person, Integer number) {
 	super();
 	setPerson(person);
-	if(number == null){
+	if (number == null) {
 	    number = Student.generateStudentNumber();
 	}
 	setNumber(number);
@@ -35,6 +35,15 @@ public class Student extends Student_Base {
 
     public Student(Person person) {
 	this(person, Student.generateStudentNumber());
+    }
+
+    @Override
+    public void setNumber(Integer number) {
+	Student student = readStudentByNumber(number);
+	if (student != null && student != this) {
+	    throw new DomainException("error.already.exists.a.student.with.the.specified.number");
+	}
+	super.setNumber(number);
     }
 
     public static Student readStudentByNumber(Integer studentNumber) {
@@ -164,61 +173,70 @@ public class Student extends Student_Base {
     }
 
     public DegreeType getMostSignificantDegreeType() {
-        if(isStudentOfDegreeType(DegreeType.MASTER_DEGREE)) return DegreeType.MASTER_DEGREE;
-        if(isStudentOfDegreeType(DegreeType.DEGREE)) return DegreeType.DEGREE;
-        if(isStudentOfDegreeType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) return DegreeType.BOLONHA_SPECIALIZATION_DEGREE;
-        if(isStudentOfDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) return DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
-        if(isStudentOfDegreeType(DegreeType.BOLONHA_PHD_PROGRAM)) return DegreeType.BOLONHA_PHD_PROGRAM;
-        if(isStudentOfDegreeType(DegreeType.BOLONHA_MASTER_DEGREE)) return DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
-        if(isStudentOfDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) return DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
-        if(isStudentOfDegreeType(DegreeType.BOLONHA_DEGREE)) return DegreeType.BOLONHA_DEGREE;
-        return null;
+	if (isStudentOfDegreeType(DegreeType.MASTER_DEGREE))
+	    return DegreeType.MASTER_DEGREE;
+	if (isStudentOfDegreeType(DegreeType.DEGREE))
+	    return DegreeType.DEGREE;
+	if (isStudentOfDegreeType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE))
+	    return DegreeType.BOLONHA_SPECIALIZATION_DEGREE;
+	if (isStudentOfDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA))
+	    return DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
+	if (isStudentOfDegreeType(DegreeType.BOLONHA_PHD_PROGRAM))
+	    return DegreeType.BOLONHA_PHD_PROGRAM;
+	if (isStudentOfDegreeType(DegreeType.BOLONHA_MASTER_DEGREE))
+	    return DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
+	if (isStudentOfDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE))
+	    return DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
+	if (isStudentOfDegreeType(DegreeType.BOLONHA_DEGREE))
+	    return DegreeType.BOLONHA_DEGREE;
+	return null;
     }
-    
+
     private boolean isStudentOfDegreeType(DegreeType degreeType) {
-        for (Registration registration: getRegistrationsByDegreeType(degreeType)) {
-            if(registration.isActive()) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public boolean hasActiveRegistrationForOffice(Unit office){	
-	Set<Registration> registrations = getRegistrationsSet();
-	for (Registration registration : registrations) {
-	    if(registration.isActiveForOffice(office)){
+	for (Registration registration : getRegistrationsByDegreeType(degreeType)) {
+	    if (registration.isActive()) {
 		return true;
-	    }
-	}	
-	return false;
-    }
-    
-    // Convenience method for invocation as bean.
-    public boolean getHasActiveRegistrationForOffice(){
-	Unit workingPlace = AccessControl.getUserView().getPerson().getEmployee().getCurrentWorkingPlace();
-	return hasActiveRegistrationForOffice(workingPlace);
-    }
-    
-    public boolean hasRegistrationForOffice(final AdministrativeOffice administrativeOffice){	
-	Set<Registration> registrations = getRegistrationsSet();
-	for (Registration registration : registrations) {
-	    if(registration.isForOffice(administrativeOffice)){
-		return true;
-	    }
-	}	
-	return false;
-    }
-    
-    public boolean attends(ExecutionCourse executionCourse) {
-	for (final Registration registration : getRegistrationsSet()) {
-	    if (registration.attends(executionCourse)) {
-		return true;		
 	    }
 	}
 	return false;
-    }    
-    
+    }
+
+    public boolean hasActiveRegistrationForOffice(Unit office) {
+	Set<Registration> registrations = getRegistrationsSet();
+	for (Registration registration : registrations) {
+	    if (registration.isActiveForOffice(office)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    // Convenience method for invocation as bean.
+    public boolean getHasActiveRegistrationForOffice() {
+	Unit workingPlace = AccessControl.getUserView().getPerson().getEmployee()
+		.getCurrentWorkingPlace();
+	return hasActiveRegistrationForOffice(workingPlace);
+    }
+
+    public boolean hasRegistrationForOffice(final AdministrativeOffice administrativeOffice) {
+	Set<Registration> registrations = getRegistrationsSet();
+	for (Registration registration : registrations) {
+	    if (registration.isForOffice(administrativeOffice)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean attends(ExecutionCourse executionCourse) {
+	for (final Registration registration : getRegistrationsSet()) {
+	    if (registration.attends(executionCourse)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public boolean hasAnyActiveRegistration() {
 	for (final Registration registration : getRegistrationsSet()) {
 	    if (registration.isActive()) {
@@ -229,19 +247,19 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    public void delete(){
-	
-	if(getRegistrationsCount() > 0){
+    public void delete() {
+
+	if (getRegistrationsCount() > 0) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 
-	if(getStudentDataByExecutionYearCount() > 0){
+	if (getStudentDataByExecutionYearCount() > 0) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 
 	removePerson();
-	
+
 	deleteDomainObject();
     }
-    
+
 }
