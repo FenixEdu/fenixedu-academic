@@ -26,7 +26,7 @@ public abstract class PricesManagementDispatchAction extends FenixDispatchAction
 	final SortedSet<PostingRule> sortedPostingRules = new TreeSet<PostingRule>(
 		PostingRule.COMPARATOR_BY_EVENT_TYPE);
 	sortedPostingRules.addAll(getAdministrativeOffice().getServiceAgreementTemplate()
-		.getActivePostingRules());
+		.getActiveVisiblePostingRules());
 
 	request.setAttribute("postingRules", sortedPostingRules);
 

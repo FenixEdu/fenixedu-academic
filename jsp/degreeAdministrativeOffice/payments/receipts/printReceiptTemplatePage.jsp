@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
+<%@ page import="net.sourceforge.fenixedu.util.Money" %>
+
 <logic:present role="DEGREE_ADMINISTRATIVE_OFFICE">
 
 <html>
@@ -135,7 +137,7 @@
 					</td>
 					<td>.........................................&nbsp;</td>
 					<td><bean:define id="amount" name="entry" property="amountWithAdjustment"
-						type="java.math.BigDecimal" /> <%=amount.setScale(2).toPlainString()%> &nbsp;<bean:message
+						type="Money" /> <%=amount.toPlainString()%> &nbsp;<bean:message
 						key="label.currencySymbol" /></td>
 				</tr>
 			</logic:iterate>
@@ -148,7 +150,7 @@
 				<td><strong><bean:message  key="label.payments.printTemplates.totalAmountToPay"/> </strong></td>
 				<td>_____________________&nbsp;</td>
 				<td><strong><bean:define id="totalAmount" name="receipt"
-					property="totalAmount" type="java.math.BigDecimal" /><%=totalAmount.setScale(2).toPlainString()%>&nbsp;<bean:message
+					property="totalAmount" type="Money" /><%=totalAmount.toPlainString()%>&nbsp;<bean:message
 					key="label.currencySymbol" /></strong></td>
 			</tr>
 		</table>

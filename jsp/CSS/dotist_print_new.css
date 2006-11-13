@@ -34,6 +34,37 @@ border: 1pt solid #aaa;
 height: 1.5em;
 }
 
+
+.tb02 {
+border-collapse: collapse;
+}
+.tb02 th {
+background-color: #eee;
+border: 1pt solid #aaa;
+font-weight: normal;
+padding: 0em 0.5em;
+}
+.tb02 td {
+border: 1pt solid #aaa;
+padding: 0em 1em;
+}
+
+
+.tbcenter { 
+margin-left: auto;
+margin-right: auto;
+}
+
+table td.tdclearlt {
+border-top: none;
+border-left: none;
+}
+table td.tdclearltb {
+border-top: none;
+border-left: none;
+border-bottom: none;
+}
+
 /*
 .emptybox {
 height: 5em;
@@ -45,4 +76,20 @@ margin: 4px 0;
 
 .break-before {
 	page-break-before:always;
-}		
+}
+
+
+/* margins */
+.mtop0 { margin-top: 0;}
+.mtop025 { margin-top: 0.25em;}
+.mtop05 { margin-top: 0.5em;}
+.mtop1 { margin-top: 1em;}
+.mtop2 { margin-top: 2em;}
+.mbottom0 { margin-bottom: 0;}
+.mbottom025 { margin-bottom: 0.25em;}
+.mbottom05 { margin-bottom: 0.5em;}
+.mbottom1 { margin-bottom: 1em;}
+.mvert0 { margin-top: 0; margin-bottom: 0; }
+.mvert025 { margin-top: 0.25em; margin-bottom: 0.25em; }
+.mvert05 { margin-top: 0.5em; margin-bottom: 0.5em; }
+.mvert1 { margin-top: 1em; margin-bottom: 1em; }

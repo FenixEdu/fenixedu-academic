@@ -261,6 +261,9 @@ Documentation:
 	<!--@ Decimal output. -->
     <renderer type="java.math.BigDecimal" class="net.sourceforge.fenixedu.renderers.DecimalRenderer" layout="decimal-format"/>
     <renderer type="java.lang.Double" class="net.sourceforge.fenixedu.renderers.DecimalRenderer" layout="decimal-format"/>
+    
+    <!--@ Money output -->
+    <renderer type="net.sourceforge.fenixedu.util.Money" class="net.sourceforge.fenixedu.presentationTier.renderers.MoneyRenderer"/>
 
     <!-- input -->
 
@@ -323,6 +326,10 @@ Documentation:
     <renderer mode="input" type="float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
     <renderer mode="input" type="java.lang.Float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
     <renderer mode="input" type="java.math.BigDecimal" class="net.sourceforge.fenixedu.renderers.BigDecimalInputRenderer"/>
+    <renderer mode="input" type="net.sourceforge.fenixedu.util.Money" class="net.sourceforge.fenixedu.presentationTier.renderers.MoneyInputRenderer"/>
+    
+    
+    
 
     <!--@ The default input layout for a boolean is a checkbox. Check is <tt>true</tt>, unchecked is <tt>false</tt>.  -->
     <renderer mode="input" type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>

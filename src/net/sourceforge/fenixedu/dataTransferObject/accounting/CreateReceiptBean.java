@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.util.Money;
 
 public class CreateReceiptBean implements Serializable {
 
@@ -74,8 +75,8 @@ public class CreateReceiptBean implements Serializable {
         return result;
     }
 
-    public BigDecimal getTotalAmount() {
-        BigDecimal result = new BigDecimal("0");
+    public Money getTotalAmount() {
+        Money result = Money.ZERO;
         for (final Entry entry : getSelectedEntries()) {
             result = result.add(entry.getAmountWithAdjustment());
         }

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -8,14 +7,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
@@ -153,7 +155,7 @@ public abstract class Event extends Event_Base {
     }
 
     protected boolean canCloseEvent(DateTime whenRegistered) {
-	return calculateAmountToPay(whenRegistered).compareTo(BigDecimal.ZERO) == 0;
+	return calculateAmountToPay(whenRegistered).isZero();
     }
 
     public Set<Entry> getEntries() {
@@ -177,13 +179,13 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
-    protected BigDecimal calculatePayedAmount() {
+    public Money calculatePayedAmount() {
 	if (isCancelled()) {
 	    throw new DomainException(
 		    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
 	}
 
-	BigDecimal payedAmount = BigDecimal.ZERO;
+	Money payedAmount = Money.ZERO;
 	for (final AccountingTransaction transaction : getAccountingTransactions()) {
 	    payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
 	}
@@ -193,15 +195,20 @@ public abstract class Event extends Event_Base {
 
     void recalculateState(DateTime whenRegistered) {
 	if (canCloseEvent(whenRegistered)) {
+	    beforeCloseEvent();
 	    super.setEventState(EventState.CLOSED);
 	}
     }
 
-    public BigDecimal calculateAmountToPay(DateTime whenRegistered) {
-	final BigDecimal totalAmountToPay = getPostingRule(whenRegistered).calculateTotalAmountToPay(
-		this, whenRegistered);
-	return (totalAmountToPay.compareTo(BigDecimal.ZERO) > 0) ? totalAmountToPay
-		.subtract(calculatePayedAmount()) : BigDecimal.ZERO;
+    protected void beforeCloseEvent() {
+	// nothing to be done
+    }
+
+    public Money calculateAmountToPay(DateTime whenRegistered) {
+	final Money totalAmountToPay = getPostingRule(whenRegistered).calculateTotalAmountToPay(this,
+		whenRegistered);
+	return totalAmountToPay.isPositive() ? totalAmountToPay.subtract(calculatePayedAmount())
+		: Money.ZERO;
 
     }
 
@@ -210,15 +217,7 @@ public abstract class Event extends Event_Base {
     }
 
     public List<EntryDTO> calculateEntries(DateTime when) {
-	final List<EntryDTO> result = new ArrayList<EntryDTO>();
-	for (final GenericPair<EntryType, BigDecimal> entry : getPostingRule(when).calculateEntries(
-		this, when)) {
-	    result.add(new EntryDTO(entry.getLeft(), this, entry.getRight(), calculatePayedAmount(),
-		    calculateAmountToPay(when), getDescriptionForEntryType(entry.getLeft()),
-		    calculateAmountToPay(when)));
-	}
-
-	return result;
+	return getPostingRule(when).calculateEntries(this, when);
     }
 
     public final boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice) {
@@ -237,9 +236,9 @@ public abstract class Event extends Event_Base {
 	    throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
 	}
 
-	if (calculatePayedAmount().compareTo(BigDecimal.ZERO) != 0) {
+	if (calculatePayedAmount().isPositive()) {
 	    throw new DomainException(
-		    "error.accounting.Event.cannot.cancel.events.with.payed.amount.greater.or.equal.than.zero");
+		    "error.accounting.Event.cannot.cancel.events.with.payed.amount.greater.than.zero");
 	}
 
     }
@@ -248,6 +247,92 @@ public abstract class Event extends Event_Base {
 	    PaymentMode paymentMode, DateTime whenRegistered) {
 	return getPostingRule(whenRegistered).process(responsibleUser, entryDTOs, paymentMode,
 		whenRegistered, this, getFromAccount(), getToAccount());
+    }
+
+    public boolean hasAccountingTransactionFor(final Installment installment) {
+	return getAccountingTransactionFor(installment) != null;
+    }
+
+    public InstallmentAccountingTransaction getAccountingTransactionFor(final Installment installment) {
+	for (final AccountingTransaction accountingTransaction : getAccountingTransactionsSet()) {
+	    if (accountingTransaction instanceof InstallmentAccountingTransaction
+		    && ((InstallmentAccountingTransaction) accountingTransaction).getInstallment() == installment) {
+		return (InstallmentAccountingTransaction) accountingTransaction;
+	    }
+	}
+
+	return null;
+    }
+
+    public boolean hasInstallments() {
+	return false;
+    }
+
+    public List<AccountingEventPaymentCode> calculatePaymentCodes() {
+	return (getPaymentCodesCount() == 0) ? createPaymentCodes() : updatePaymentCodes();
+    }
+
+    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+	return Collections.EMPTY_LIST;
+    }
+
+    protected List<AccountingEventPaymentCode> createPaymentCodes() {
+	return Collections.EMPTY_LIST;
+    }
+
+    protected List<AccountingEventPaymentCode> getNonProcessedPaymentCodes() {
+	final List<AccountingEventPaymentCode> result = new ArrayList<AccountingEventPaymentCode>();
+	for (final AccountingEventPaymentCode paymentCode : super.getPaymentCodesSet()) {
+	    if (paymentCode.isNew()) {
+		result.add(paymentCode);
+	    }
+	}
+	return result;
+    }
+
+    @Override
+    public void addPaymentCodes(AccountingEventPaymentCode paymentCode) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.add.paymentCode");
+    }
+
+    @Override
+    public List<AccountingEventPaymentCode> getPaymentCodes() {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Event.paymentCodes.cannot.be.accessed.directly");
+    }
+
+    @Override
+    public Set<AccountingEventPaymentCode> getPaymentCodesSet() {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Event.paymentCodes.cannot.be.accessed.directly");
+    }
+
+    @Override
+    public Iterator<AccountingEventPaymentCode> getPaymentCodesIterator() {
+	return getPaymentCodesSet().iterator();
+    }
+
+    @Override
+    public void removePaymentCodes(AccountingEventPaymentCode paymentCode) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.remove.paymentCode");
+    }
+
+    private static List<Event> readBy(final ExecutionYear executionYear, EventState eventState) {
+	final List<Event> result = new ArrayList<Event>();
+	for (final Event event : RootDomainObject.getInstance().getAccountingEventsSet()) {
+	    if (event.getEventState() == eventState
+		    && executionYear.containsDate(event.getWhenOccured())) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+    }
+
+    public static List<Event> readNotPayedBy(final ExecutionYear executionYear) {
+	return readBy(executionYear, EventState.OPEN);
     }
 
     protected abstract Account getFromAccount();

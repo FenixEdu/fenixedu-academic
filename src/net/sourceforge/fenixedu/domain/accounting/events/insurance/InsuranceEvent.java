@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -14,7 +15,25 @@ import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
+import dml.runtime.RelationAdapter;
+
 public class InsuranceEvent extends InsuranceEvent_Base {
+
+    static {
+	PersonAccountingEvent.addListener(new RelationAdapter<Event, Person>() {
+	    @Override
+	    public void beforeAdd(Event event, Person person) {
+		if (event instanceof InsuranceEvent) {
+		    if (person.hasAdministrativeOfficeFeeInsuranceEvent(((InsuranceEvent) event).getExecutionYear())) {
+			throw new DomainException(
+				"error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
+
+		    }
+		}
+	    }
+	});
+
+    }
 
     private InsuranceEvent() {
 	super();
@@ -31,7 +50,7 @@ public class InsuranceEvent extends InsuranceEvent_Base {
     }
 
     private void checkRulesToCreate(final Person person, final ExecutionYear executionYear) {
-	if (person.hasInsuranceEventFor(executionYear)) {
+	if (person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
 	    throw new DomainException(
 		    "error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
 	}
@@ -65,5 +84,5 @@ public class InsuranceEvent extends InsuranceEvent_Base {
     private Unit getInstitutionUnit() {
 	return RootDomainObject.getInstance().getInstitutionUnit();
     }
-
+    
 }

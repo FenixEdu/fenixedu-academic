@@ -2,9 +2,20 @@
 	<slot name="selected"/>
 	<slot name="event.whenOccured" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Event.whenOccured" />
 	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description"/>
-	<slot name="totalAmount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" layout="decimal-format"/>
-	<slot name="payedAmount" read-only="true" layout="decimal-format" />
-	<slot name="debtAmount" read-only="true" layout="decimal-format" />
+	<slot name="totalAmount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
+	<slot name="payedAmount" read-only="true"  />
+	<slot name="debtAmount" read-only="true"  />
+	<slot name="amountToPay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="entryDTO.edit-with-installments" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO" bundle="APPLICATION_RESOURCES">
+	<slot name="selected"/>
+	<slot name="event.whenOccured" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Event.whenOccured" />
+	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description"/>
+	<slot name="totalAmount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
 	<slot name="amountToPay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
@@ -14,19 +25,19 @@
 <schema name="entry.view" type="net.sourceforge.fenixedu.domain.accounting.Entry" bundle="APPLICATION_RESOURCES">
 	<slot name="description" />
 	<slot name="whenRegistered" />
-	<slot name="amountWithAdjustment" layout="decimal-format" />
+	<slot name="amountWithAdjustment"  />
 </schema>
 
 <schema name="entryDTO.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO" bundle="APPLICATION_RESOURCES">
 	<slot name="description" read-only="true" key="label.masterDegree.administrativeOffice.payments.description"/>
-	<slot name="amountToPay" key="label.masterDegree.administrativeOffice.payments.amountToPay" layout="decimal-format"/>
+	<slot name="amountToPay" key="label.masterDegree.administrativeOffice.payments.amountToPay" />
 </schema>
 
 <schema name="receipt.view" type="net.sourceforge.fenixedu.domain.accounting.Receipt" bundle="APPLICATION_RESOURCES">
 	<slot name="number"/>
 	<slot name="year"/>
 	<slot name="whenCreated"/>
-	<slot name="totalAmount" layout="decimal-format"/>
+	<slot name="totalAmount" />
 </schema>
 
 <schema name="receipt.view-with-number-and-year" type="net.sourceforge.fenixedu.domain.accounting.Receipt" bundle="APPLICATION_RESOURCES">
@@ -53,7 +64,7 @@
 	<slot name="selected" key="label.commons.emptySelected" />
 	<slot name="entry.description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description" />
 	<slot name="entry.whenRegistered" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.whenRegistered" />
-	<slot name="entry.amountWithAdjustment" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" layout="decimal-format" />
+	<slot name="entry.amountWithAdjustment" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment"  />
 </schema>
 
 <schema name="createReceiptBean.create" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">

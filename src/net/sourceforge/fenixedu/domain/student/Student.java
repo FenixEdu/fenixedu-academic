@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -72,6 +74,17 @@ public class Student extends Student_Base {
 	    }
 	}
 	return null;
+    }
+
+    public boolean hasActiveRegistrationForDegreeType(final DegreeType degreeType,
+	    final ExecutionYear executionYear) {
+	for (final Registration registration : getRegistrations()) {
+	    if (registration.hasAnyEnrolmentsIn(executionYear)
+		    && registration.getDegreeType() == degreeType) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public static Integer generateStudentNumber() {
@@ -262,4 +275,24 @@ public class Student extends Student_Base {
 	deleteDomainObject();
     }
 
+    public List<PaymentCode> getPaymentCodesBy(final PaymentCodeType paymentCodeType) {
+	final List<PaymentCode> result = new ArrayList<PaymentCode>();
+	for (final PaymentCode paymentCode : getPaymentCodesSet()) {
+	    if (paymentCode.getType() == paymentCodeType) {
+		result.add(paymentCode);
+	    }
+	}
+
+	return result;
+    }
+
+    public PaymentCode getAvailablePaymentCodeBy(final PaymentCodeType paymentCodeType) {
+	for (final PaymentCode paymentCode : getPaymentCodesSet()) {
+	    if (paymentCode.isAvailableForReuse() && paymentCode.getType() == paymentCodeType) {
+		return paymentCode;
+	    }
+	}
+
+	return null;
+    }
 }

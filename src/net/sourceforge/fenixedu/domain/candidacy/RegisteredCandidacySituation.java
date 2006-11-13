@@ -56,7 +56,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	final AdministrativeOffice administrativeOffice = AdministrativeOffice
 		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
 
-	new GratuityEvent(administrativeOffice, person, registration, ExecutionYear
+	new GratuityEvent(administrativeOffice, person, registration.getActiveStudentCurricularPlan(), ExecutionYear
 		.readCurrentExecutionYear());
 
 	new DfaRegistrationEvent(administrativeOffice, person, registration);

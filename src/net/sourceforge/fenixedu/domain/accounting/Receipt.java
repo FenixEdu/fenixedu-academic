@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -13,6 +12,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
@@ -143,8 +143,8 @@ public class Receipt extends Receipt_Base {
         return result;
     }
 
-    public BigDecimal getTotalAmount() {
-        BigDecimal result = new BigDecimal("0");
+    public Money getTotalAmount() {
+        Money result = Money.ZERO;
         for (final Entry entry : getEntriesSet()) {
             result = result.add(entry.getAmountWithAdjustment());
         }

@@ -1,16 +1,15 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
-import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
@@ -87,7 +86,7 @@ public abstract class PostingRule extends PostingRule_Base {
 	    DateTime whenRegistered, Event event, Account fromAccount, Account toAccount) {
 
 	for (final EntryDTO entryDTO : entryDTOs) {
-	    if (entryDTO.getAmountToPay().compareTo(BigDecimal.ZERO) <= 0) {
+	    if (entryDTO.getAmountToPay().lessOrEqualThan(Money.ZERO)) {
 		throw new DomainException(
 			"error.accounting.PostingRule.amount.to.pay.must.be.greater.than.zero");
 	    }
@@ -109,7 +108,7 @@ public abstract class PostingRule extends PostingRule_Base {
 	return result;
     }
 
-    public final List<GenericPair<EntryType, BigDecimal>> calculateEntries(Event event) {
+    public final List<EntryDTO> calculateEntries(Event event) {
 	return calculateEntries(event, new DateTime());
     }
 
@@ -169,20 +168,24 @@ public abstract class PostingRule extends PostingRule_Base {
 		"error.accounting.agreement.postingRule.cannot.modify.serviceAgreementTemplate");
     }
 
-    protected Entry makeEntry(EntryType entryType, BigDecimal amount, Account account) {
+    protected Entry makeEntry(EntryType entryType, Money amount, Account account) {
 	return new Entry(entryType, amount, account);
     }
 
     protected AccountingTransaction makeAccountingTransaction(User responsibleUser, Event event,
-	    Account from, Account to, EntryType entryType, BigDecimal amount, PaymentMode paymentMode,
+	    Account from, Account to, EntryType entryType, Money amount, PaymentMode paymentMode,
 	    DateTime whenRegistered) {
 	return new AccountingTransaction(responsibleUser, event, makeEntry(entryType, amount.negate(),
 		from), makeEntry(entryType, amount, to), paymentMode, whenRegistered);
     }
 
-    public abstract BigDecimal calculateTotalAmountToPay(Event event, DateTime when);
+    public boolean isVisible() {
+	return true;
+    }
 
-    public abstract List<GenericPair<EntryType, BigDecimal>> calculateEntries(Event event, DateTime when);
+    public abstract Money calculateTotalAmountToPay(Event event, DateTime when);
+
+    public abstract List<EntryDTO> calculateEntries(Event event, DateTime when);
 
     protected abstract Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
 	    PaymentMode paymentMode, DateTime whenRegistered, Event event, Account fromAccount,

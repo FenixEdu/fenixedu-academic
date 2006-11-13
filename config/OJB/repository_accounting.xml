@@ -9,8 +9,15 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.accounting.AccountingTransaction -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.AccountingTransaction" table="ACCOUNTING_TRANSACTION">
-
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction" />
 </class-descriptor>
+
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction" table="ACCOUNTING_TRANSACTION">
+	
+	</class-descriptor>
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.accounting.Entry -->
@@ -50,19 +57,36 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent" table="ACCOUNTING_EVENT">
 		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent" />
 		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent" />
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent" />
 	</class-descriptor>	
 	
 		<!-- ************************************************************************************************************ -->
 		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent -->
 		<!-- ************************************************************************************************************ -->
 		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent" table="ACCOUNTING_EVENT">
-		
+			<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan" />
 		</class-descriptor>	
+		
+			<!-- ************************************************************************************************************ -->
+			<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan -->
+			<!-- ************************************************************************************************************ -->
+			<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan" table="ACCOUNTING_EVENT">
+
+			</class-descriptor>	
+		
+		
 	
 		<!-- ************************************************************************************************************ -->
 		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent -->
 		<!-- ************************************************************************************************************ -->
 		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent" table="ACCOUNTING_EVENT">
+		
+		</class-descriptor>	
+		
+		<!-- ************************************************************************************************************ -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent -->
+		<!-- ************************************************************************************************************ -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent" table="ACCOUNTING_EVENT">
 		
 		</class-descriptor>	
 	
@@ -92,6 +116,7 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.PostingRule" table="POSTING_RULE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR" />
 </class-descriptor>
 
 	<!-- ************************************************************************************************************ -->
@@ -101,6 +126,7 @@
 		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR" />
 		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR" />
 		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR" />
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR" />
 	</class-descriptor>
 
 		<!-- ************************************************************************************************************ -->
@@ -116,6 +142,7 @@
 			<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR" table="POSTING_RULE">
 				<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DFACandidacyPR" />
 				<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR" />
+				<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR" />
 			</class-descriptor>
 			
 				<!-- ************************************************************************************************************ -->
@@ -129,6 +156,13 @@
 				<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR -->
 				<!-- ************************************************************************************************************ -->
 				<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR" table="POSTING_RULE">
+				
+				</class-descriptor>		
+				
+				<!-- ************************************************************************************************************ -->
+				<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR-->
+				<!-- ************************************************************************************************************ -->
+				<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR" table="POSTING_RULE">
 				
 				</class-descriptor>		
 	
@@ -158,6 +192,20 @@
 	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.postingRules.DFAGratuityPR -->
 	<!-- ************************************************************************************************************ -->
 	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR" table="POSTING_RULE">
+
+	</class-descriptor>
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR-->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR" table="POSTING_RULE">
+
+	</class-descriptor>
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR-->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR" table="POSTING_RULE">
 
 	</class-descriptor>
 
@@ -205,6 +253,80 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate" table="SERVICE_AGREEMENT_TEMPLATE">
 	
 	</class-descriptor>
+	
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.PaymentPlan -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.PaymentPlan" table="PAYMENT_PLAN">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan" />
+</class-descriptor>
+
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan" table="PAYMENT_PLAN">
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan" />
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester" />
+	</class-descriptor>
+	
+		<!-- ********************************************************************************************************************************* -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan -->
+		<!-- ********************************************************************************************************************************* -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan" table="PAYMENT_PLAN">
+	
+		</class-descriptor>
+
+		<!-- ********************************************************************************************************************************* -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester -->
+		<!-- ********************************************************************************************************************************* -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester" table="PAYMENT_PLAN">
+	
+		</class-descriptor>
+	
 
 
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.Installment -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.Installment" table="INSTALLMENT">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithPenalty" />
+</class-descriptor>
 
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithPenalty -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithPenalty" table="INSTALLMENT">
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty" />
+	</class-descriptor>
+	
+		<!-- ************************************************************************************************************ -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty -->
+		<!-- ************************************************************************************************************ -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty" table="INSTALLMENT">
+			
+		</class-descriptor>
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.PaymentCode -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.PaymentCode" table="PAYMENT_CODE">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode" />
+</class-descriptor>
+
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode" table="PAYMENT_CODE">
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode" />
+	</class-descriptor>
+	
+	
+
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode" table="PAYMENT_CODE">
+	
+	</class-descriptor>

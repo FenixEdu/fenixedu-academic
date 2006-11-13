@@ -1,11 +1,9 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -18,6 +16,7 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
@@ -28,12 +27,12 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     public FixedAmountPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal fixedAmount) {
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
 	this();
 	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount);
     }
 
-    private void checkParameters(BigDecimal fixedAmount) {
+    private void checkParameters(Money fixedAmount) {
 	if (fixedAmount == null) {
 	    throw new DomainException(
 		    "error.accounting.postingRules.FixedAmountPR.fixedAmount.cannot.be.null");
@@ -42,7 +41,7 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal fixedAmount) {
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
 	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
 	checkParameters(fixedAmount);
 	super.setFixedAmount(fixedAmount);
@@ -67,12 +66,12 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     @Override
-    public void setFixedAmount(BigDecimal fixedAmount) {
+    public void setFixedAmount(Money fixedAmount) {
 	throw new DomainException(
 		"error.accounting.postingRules.FixedAmountPR.cannot.modify.fixedAmount");
     }
 
-    private void checkIfCanAddAmount(final BigDecimal amountToPay, final Event event, final DateTime when) {
+    private void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
 	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) != 0) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay",
@@ -81,18 +80,20 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     @Override
-    public List<GenericPair<EntryType, BigDecimal>> calculateEntries(Event event, DateTime when) {
-	return Collections.singletonList(new GenericPair<EntryType, BigDecimal>(getEntryType(),
-		calculateTotalAmountToPay(event, when)));
+    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+	final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
+	return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay,
+		Money.ZERO, totalAmountToPay, event.getDescriptionForEntryType(getEntryType()),
+		totalAmountToPay));
     }
 
     @Override
-    public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
+    public Money calculateTotalAmountToPay(Event event, DateTime when) {
 	return getFixedAmount();
     }
 
     @Checked("PostingRulePredicates.editPredicate")
-    public FixedAmountPR edit(final BigDecimal fixedAmount) {
+    public FixedAmountPR edit(final Money fixedAmount) {
 
 	deactivate();
 	return new FixedAmountPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,

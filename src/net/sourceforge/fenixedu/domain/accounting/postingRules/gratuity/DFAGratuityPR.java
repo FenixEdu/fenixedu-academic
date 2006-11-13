@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
@@ -29,16 +29,16 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
     }
 
     public DFAGratuityPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal dfaTotalAmount,
-	    BigDecimal partialAcceptedPercentage, BigDecimal dfaAmountPerEctsCredit) {
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money dfaTotalAmount,
+	    BigDecimal partialAcceptedPercentage, Money dfaAmountPerEctsCredit) {
 	super();
 	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, dfaTotalAmount,
 		partialAcceptedPercentage, dfaAmountPerEctsCredit);
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal dfaTotalAmount,
-	    BigDecimal dfaPartialAcceptedPercentage, BigDecimal dfaAmountPerEctsCredit) {
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money dfaTotalAmount,
+	    BigDecimal dfaPartialAcceptedPercentage, Money dfaAmountPerEctsCredit) {
 
 	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
 
@@ -50,8 +50,8 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 
     }
 
-    private void checkParameters(BigDecimal dfaTotalAmount, BigDecimal dfaPartialAcceptedPercentage,
-	    BigDecimal dfaAmountPerEctsCredit) {
+    private void checkParameters(Money dfaTotalAmount, BigDecimal dfaPartialAcceptedPercentage,
+	    Money dfaAmountPerEctsCredit) {
 	if (dfaTotalAmount == null) {
 	    throw new DomainException(
 		    "error.accounting.postingRules.gratuity.DFAGratuityPR.dfaTotalAmount.cannot.be.null");
@@ -70,7 +70,7 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
     }
 
     @Override
-    public void setDfaTotalAmount(BigDecimal dfaTotalAmount) {
+    public void setDfaTotalAmount(Money dfaTotalAmount) {
 	throw new DomainException(
 		"error.accounting.postingRules.gratuity.DFAGratuityPR.cannot.modify.dfaTotalAmount");
     }
@@ -82,7 +82,7 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
     }
 
     @Override
-    public void setDfaAmountPerEctsCredit(BigDecimal dfaAmountPerEctsCredit) {
+    public void setDfaAmountPerEctsCredit(Money dfaAmountPerEctsCredit) {
 	throw new DomainException(
 		"error.accounting.postingRules.gratuity.DFAGratuityPR.cannot.modify.dfaAmountPerEctsCredit");
     }
@@ -103,7 +103,7 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 		getEntryType(), entryDTOs.get(0).getAmountToPay(), paymentMode, whenRegistered));
     }
 
-    private void checkIfCanAddAmount(BigDecimal amountToAdd, Event event, DateTime when) {
+    private void checkIfCanAddAmount(Money amountToAdd, Event event, DateTime when) {
 	if (((GratuityEvent) event).isCustomEnrolmentModel()) {
 	    checkIfCanAddAmountForCustomEnrolmentModel(amountToAdd, event, when);
 	} else {
@@ -112,9 +112,8 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 
     }
 
-    private void checkIfCanAddAmountForCustomEnrolmentModel(BigDecimal amountToAdd, Event event,
-	    DateTime when) {
-	final BigDecimal amountToPay = event.calculateAmountToPay(when);
+    private void checkIfCanAddAmountForCustomEnrolmentModel(Money amountToAdd, Event event, DateTime when) {
+	final Money amountToPay = event.calculateAmountToPay(when);
 	if (amountToPay.compareTo(amountToAdd) != 0) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.DFAGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
@@ -123,9 +122,9 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 
     }
 
-    private void checkIfCanAddAmountForCompleteEnrolmentModel(BigDecimal amountToAdd, Event event,
+    private void checkIfCanAddAmountForCompleteEnrolmentModel(Money amountToAdd, Event event,
 	    DateTime when) {
-	final BigDecimal amountToPay = event.calculateAmountToPay(when);
+	final Money amountToPay = event.calculateAmountToPay(when);
 	if (getDfaTotalAmount().compareTo(amountToPay) != 0 && amountToAdd.compareTo(amountToPay) != 0) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.DFAGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
@@ -144,21 +143,22 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	}
     }
 
-    private BigDecimal getPartialPaymentAmount() {
+    private Money getPartialPaymentAmount() {
 	return getDfaTotalAmount().multiply(getDfaPartialAcceptedPercentage());
     }
 
     @Override
-    public List<GenericPair<EntryType, BigDecimal>> calculateEntries(Event event, DateTime when) {
-	return Collections.singletonList(new GenericPair<EntryType, BigDecimal>(getEntryType(),
-		calculateTotalAmountToPay(event, when)));
+    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(
+		event, when), event.calculatePayedAmount(), event.calculateAmountToPay(when), event
+		.getDescriptionForEntryType(getEntryType()), event.calculateAmountToPay(when)));
     }
 
     @Override
-    public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
+    public Money calculateTotalAmountToPay(Event event, DateTime when) {
 	if (((GratuityEvent) event).isCustomEnrolmentModel()) {
-	    return ((GratuityEvent) event).getTotalEctsCreditsForRegistration().multiply(
-		    getDfaAmountPerEctsCredit());
+	    return getDfaAmountPerEctsCredit().multiply(
+		    ((GratuityEvent) event).getTotalEctsCreditsForRegistration());
 	} else {
 	    return getDfaTotalAmount();
 	}

@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.util.Money;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
@@ -27,15 +29,14 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal baseAmount,
-	    BigDecimal amountPerUnit) {
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit) {
 	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
 	checkParameters(baseAmount, amountPerUnit);
 	super.setBaseAmount(baseAmount);
 	super.setAmountPerUnit(amountPerUnit);
     }
 
-    private void checkParameters(BigDecimal baseAmount, BigDecimal amountPerUnit) {
+    private void checkParameters(Money baseAmount, Money amountPerUnit) {
 	if (baseAmount == null) {
 	    throw new DomainException(
 		    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.baseAmount.cannot.be.null");
@@ -48,27 +49,28 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
     }
 
     @Override
-    public void setBaseAmount(BigDecimal baseAmount) {
+    public void setBaseAmount(Money baseAmount) {
 	throw new DomainException(
 		"error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.cannot.modify.baseAmount");
     }
 
     @Override
-    public void setAmountPerUnit(BigDecimal amountPerUnit) {
+    public void setAmountPerUnit(Money amountPerUnit) {
 	throw new DomainException(
 		"error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.cannot.modify.amountPerUnit");
     }
 
     @Override
-    public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
+    public Money calculateTotalAmountToPay(Event event, DateTime when) {
 	return getBaseAmount().add(getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event))));
 
     }
 
     @Override
-    public List<GenericPair<EntryType, BigDecimal>> calculateEntries(Event event, DateTime when) {
-	return Collections.singletonList(new GenericPair<EntryType, BigDecimal>(getEntryType(),
-		calculateTotalAmountToPay(event, when)));
+    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(
+		event, when), event.calculatePayedAmount(), event.calculateAmountToPay(when), event
+		.getDescriptionForEntryType(getEntryType()), event.calculateAmountToPay(when)));
     }
 
     @Override
@@ -87,7 +89,7 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
 		entryDTO.getEntryType(), entryDTO.getAmountToPay(), paymentMode, whenRegistered));
     }
 
-    private void checkIfCanAddAmount(BigDecimal amountToPay, Event event, DateTime when) {
+    private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
 	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) != 0) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.amount.being.payed.must.match.amount.to.pay",

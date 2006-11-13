@@ -220,6 +220,10 @@
 		<put name="body" value="/degreeAdministrativeOffice/payments/showEvents.jsp"/>
 	</definition>
 	
+	<definition name="payments.management.showEventsWithInstallments" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/payments/showEventsWithInstallments.jsp"/>
+	</definition>
+	
 	<definition name="payments.management.showOperations" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/payments/showOperations.jsp"/>
 	</definition>

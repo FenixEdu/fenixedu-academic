@@ -1449,14 +1449,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
+    public boolean hasAnyEnrolmentForExecutionPeriod(final ExecutionPeriod executionPeriod) {
+	for (final Enrolment enrolment : this.getEnrolmentsSet()) {
+	    if (enrolment.getExecutionPeriod() == executionPeriod) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
     public boolean hasAnyEnrolmentForExecutionYear(final ExecutionYear executionYear) {
-	for (Enrolment enrolment : this.getEnrolmentsSet()) {
+	for (final Enrolment enrolment : this.getEnrolmentsSet()) {
 	    if (enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
 		return true;
 	    }
 	}
 	return false;
     }
+    
 
     public boolean hasSchoolRegistration(ExecutionYear executionYear) {
 	return hasAnyEnrolmentForExecutionYear(executionYear);

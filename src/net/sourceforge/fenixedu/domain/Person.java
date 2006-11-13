@@ -26,9 +26,14 @@ import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
+import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
+import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -895,7 +900,7 @@ public class Person extends Person_Base {
     }
 
     private boolean canBeDeleted() {
-	if(getDomainObjectActionLogsCount() > 0) {
+	if (getDomainObjectActionLogsCount() > 0) {
 	    return false;
 	}
 	if (getStudentsCount() > 0) {
@@ -1172,6 +1177,24 @@ public class Person extends Person_Base {
 	    }
 	}
 	return null;
+    }
+
+    public List<DegreeCandidacy> getDegreeCandidaciesFor(final ExecutionYear executionYear,
+	    final CandidacySituationType candidacySituationType) {
+
+	final List<DegreeCandidacy> result = new ArrayList<DegreeCandidacy>();
+	for (final Candidacy candidacy : this.getCandidaciesSet()) {
+	    if (candidacy instanceof DegreeCandidacy) {
+		final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
+		if (degreeCandidacy.getActiveCandidacySituation().getCandidacySituationType() == candidacySituationType
+			&& degreeCandidacy.getExecutionDegree().getExecutionYear() == executionYear) {
+
+		    result.add((DegreeCandidacy) candidacy);
+		}
+	    }
+	}
+
+	return result;
     }
 
     public boolean hasDegreeCandidacyForExecutionDegree(ExecutionDegree executionDegree) {
@@ -1652,14 +1675,22 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public Set<Event> getNotPayedEvents() {
-	return getNotPayedEventsPayableOnAdministrativeOffice(null);
-    }
-
-    public Set<Event> getNotPayedEventsPayableOnAdministrativeOffice(
-	    AdministrativeOffice administrativeOffice) {
+    public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice,
+	    boolean withInstallments) {
 	final Set<Event> result = new HashSet<Event>();
 
+	for (final Event event : getEventsSet()) {
+	    if (event.isOpen() && event.hasInstallments() == withInstallments
+		    && isPayableOnAdministrativeOffice(administrativeOffice, event)) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+    }
+
+    public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice) {
+	final Set<Event> result = new HashSet<Event>();
 	for (final Event event : getEventsSet()) {
 	    if (event.isOpen() && isPayableOnAdministrativeOffice(administrativeOffice, event)) {
 		result.add(event);
@@ -2035,7 +2066,7 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public Set<Event> getEventsByEventType(final EventType eventType) {
+    private Set<Event> getEventsByEventType(final EventType eventType) {
 	final Set<Event> result = new HashSet<Event>();
 
 	for (final Event event : getEventsSet()) {
@@ -2047,9 +2078,15 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
-	for (final InsuranceEvent insuranceEvent : getInsuranceEvents()) {
-	    if (insuranceEvent.getExecutionYear() == executionYear) {
+    public boolean hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(
+	    final ExecutionYear executionYear) {
+	return hasInsuranceEventFor(executionYear)
+		|| hasAdministrativeOfficeFeeInsuranceEvent(executionYear);
+    }
+
+    public boolean hasAdministrativeOfficeFeeInsuranceEvent(final ExecutionYear executionYear) {
+	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
+	    if (((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() == executionYear) {
 		return true;
 	    }
 	}
@@ -2057,13 +2094,14 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public Set<InsuranceEvent> getInsuranceEvents() {
-	final Set<InsuranceEvent> result = new HashSet<InsuranceEvent>();
+    public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
 	for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
-	    result.add((InsuranceEvent) event);
+	    if (((InsuranceEvent) event).getExecutionYear() == executionYear) {
+		return true;
+	    }
 	}
 
-	return result;
+	return false;
     }
 
     public String getHomepageWebAddress() {
@@ -2139,4 +2177,48 @@ public class Person extends Person_Base {
 	return false;
 
     }
+
+    public ServiceAgreement getServiceAgreementFor(
+	    final ServiceAgreementTemplate serviceAgreementTemplate) {
+	for (final ServiceAgreement serviceAgreement : getServiceAgreementsSet()) {
+	    if (serviceAgreement.getServiceAgreementTemplate() == serviceAgreementTemplate) {
+		return serviceAgreement;
+	    }
+	}
+	return null;
+    }
+
+    public boolean hasServiceAgreementFor(final ServiceAgreementTemplate serviceAgreementTemplate) {
+	return getServiceAgreementFor(serviceAgreementTemplate) != null;
+    }
+
+    public GratuityEvent getGratuityEventFor(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear) {
+	for (final Event event : getEventsByEventType(EventType.GRATUITY)) {
+	    final GratuityEvent gratuityEvent = (GratuityEvent) event;
+
+	    if (gratuityEvent.getStudentCurricularPlan() == studentCurricularPlan
+		    && gratuityEvent.getExecutionYear() == executionYear) {
+		return gratuityEvent;
+	    }
+	}
+
+	return null;
+    }
+
+    public boolean hasGratuityEventFor(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear) {
+	return getGratuityEventFor(studentCurricularPlan, executionYear) != null;
+    }
+
+    public boolean hasAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
+	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE)) {
+	    if (((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() == executionYear) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
 }

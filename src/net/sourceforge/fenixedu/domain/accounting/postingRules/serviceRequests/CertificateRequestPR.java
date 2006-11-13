@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
@@ -19,22 +20,22 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
     }
 
     public CertificateRequestPR(EntryType entryType, EventType eventType, DateTime startDate,
-	    DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal baseAmount,
-	    BigDecimal amountPerUnit, BigDecimal amountPerPage) {
+	    DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount,
+	    Money amountPerUnit, Money amountPerPage) {
 	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount,
 		amountPerUnit, amountPerPage);
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal baseAmount,
-	    BigDecimal amountPerUnit, BigDecimal amountPerPage) {
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount,
+	    Money amountPerUnit, Money amountPerPage) {
 	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount,
 		amountPerUnit);
 	checkParameters(amountPerPage);
 	super.setAmountPerPage(amountPerPage);
     }
 
-    private void checkParameters(BigDecimal amountPerPage) {
+    private void checkParameters(Money amountPerPage) {
 	if (amountPerPage == null) {
 	    throw new DomainException(
 		    "error.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage.cannot.be.null");
@@ -43,7 +44,7 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
     }
 
     @Override
-    public void setAmountPerPage(BigDecimal amountPerPage) {
+    public void setAmountPerPage(Money amountPerPage) {
 	throw new DomainException(
 		"error.accounting.postingRules.serviceRequests.CertificateRequestPR.cannot.modify.amountPerPage");
     }
@@ -58,22 +59,22 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
     }
 
     @Override
-    public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
+    public Money calculateTotalAmountToPay(Event event, DateTime when) {
 	final CertificateRequestEvent certificateRequestEvent = (CertificateRequestEvent) event;
-	final BigDecimal totalAmountToPay = isUrgent(certificateRequestEvent) ? super
+	final Money totalAmountToPay = isUrgent(certificateRequestEvent) ? super
 		.calculateTotalAmountToPay(certificateRequestEvent, when)
 		.multiply(BigDecimal.valueOf(2)) : super.calculateTotalAmountToPay(event, when);
 
 	return totalAmountToPay.add(calculateAmountToPayForPages(certificateRequestEvent));
     }
 
-    private BigDecimal calculateAmountToPayForPages(CertificateRequestEvent event) {
+    private Money calculateAmountToPayForPages(CertificateRequestEvent event) {
 	return getAmountPerPage().multiply(BigDecimal.valueOf(event.getNumberOfPages()));
     }
 
     @Checked("PostingRulePredicates.editPredicate")
-    public CertificateRequestPR edit(final BigDecimal baseAmount, final BigDecimal amountPerUnit,
-	    final BigDecimal amountPerPage) {
+    public CertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit,
+	    final Money amountPerPage) {
 
 	deactivate();
 	return new CertificateRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000),

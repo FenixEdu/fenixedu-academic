@@ -27,3 +27,10 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creating Table PaymentPlan" CreateTablePaymentPlan.sql
+execute "Creating Table Installment" CreateTableInstallment.sql
+execute "Creating Table PaymentCode" CreateTablePaymentCode.sql
+execute "Changing Table AccountingEvent" AlterTableAccountingEvent.sql
+execute "Changing Table AccountingTransaction" AlterTableAccountingTransaction.sql
+execute "Chaging Table PostingRule" AlterTablePostingRule.sql
+execute "Delete not closed insurance events" DeleteNotClosedInsuranceEvents.sql

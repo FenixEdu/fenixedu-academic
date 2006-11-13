@@ -586,7 +586,8 @@
 		 		scope="request">
 		        <forward name="searchPerson" path="payments.management.searchPerson"/> 
 		 	         <forward name="showOperations" path="payments.management.showOperations"/> 
-		 	         <forward name="showEvents" path="payments.management.showEvents"/> 
+		 	         <forward name="showEvents" path="payments.management.showEvents"/>
+		 	         <forward name="showEventsWithInstallments" path="payments.management.showEventsWithInstallments"/>
 		 	         <forward name="showGuide" path="payments.management.showGuide"/>
 		 	         <forward name="printGuide" path="/payments/guides/printGuidePage.jsp"/>
 		 	         <forward name="showReceipts" path="payments.management.showReceipts"/>

@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -76,7 +77,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return ServiceUtils.executeService(getUserView(request), serviceName, serviceArgs);
     }
 
-    protected Object executeService(final String serviceName, final Object ... serviceArgs)
+    protected Object executeService(final String serviceName, final Object... serviceArgs)
 	    throws FenixFilterException, FenixServiceException {
 	return ServiceUtils.executeService(AccessControl.getUserView(), serviceName, serviceArgs);
     }
@@ -151,9 +152,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected Integer getRequestParameterAsInteger(HttpServletRequest request, String parameterName) {
-	String requestParameter = request.getParameter(parameterName);
+	final String requestParameter = request.getParameter(parameterName);
 
-	if (requestParameter != null) {
+	if (!StringUtils.isEmpty(requestParameter)) {
 	    return Integer.valueOf(requestParameter);
 	} else {
 	    return null;

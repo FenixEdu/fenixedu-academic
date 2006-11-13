@@ -11016,4 +11016,23 @@
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
     </service>
+    <service>
+    	<name>BuildInformationForDegreeGratuityLetters</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.BuildInformationForDegreeGratuityLetters</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>GenerateDegreeAdministrativeOfficeSibsOutgoingPaymentFile</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.GenerateDegreeAdministrativeOfficeSibsOutgoingPaymentFile</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    
 </serviceDefinitions>

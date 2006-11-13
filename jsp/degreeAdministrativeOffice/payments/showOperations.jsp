@@ -32,6 +32,13 @@
 	</tr>
 	<tr>
 		<td>
+			<html:link action="<%="/payments.do?method=showEventsWithInstallments&personId=" + personId%>">
+				<bean:message key="link.payments.eventsWithInstallments" />
+			</html:link>
+		</td>
+	</tr>	
+	<tr>
+		<td>
 			<html:link action="<%="/payments.do?method=showPaymentsWithoutReceipt&personId=" + personId %>">
 				<bean:message key="link.payments.paymentsWithoutReceipt" />
 			</html:link>

@@ -167,6 +167,10 @@ valueType net.sourceforge.fenixedu.domain.LoginAliasType														as LoginAl
 valueType net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType											as UnitBoardPermittedGroupType;
 valueType net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType								as ExecutionCourseBoardPermittedGroupType;
 valueType net.sourceforge.fenixedu.domain.student.EnrolmentModel												as EnrolmentModel;
+valueType net.sourceforge.fenixedu.util.Money												as Money;
+valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeState												as PaymentCodeState;
+valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeType												as PaymentCodeType;
+
 
 /*
 *
@@ -184,6 +188,16 @@ class net.sourceforge.fenixedu.domain.RootDomainObject extends net.sourceforge.f
 	Integer keyInstitutionUnit;
 }
 
+class net.sourceforge.fenixedu.domain.space.Blueprint extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyBlueprintFile;
+	Integer keySpace;
+	Integer keyCreationPerson;
+	YearMonthDay validFrom;
+	YearMonthDay validUntil;
+}
+
+
+//Start of Accounting
 class net.sourceforge.fenixedu.domain.accounting.Account extends net.sourceforge.fenixedu.domain.DomainObject {
     DateTime creationDate;
     Integer keyParty;
@@ -198,21 +212,18 @@ class net.sourceforge.fenixedu.domain.accounting.AccountingTransaction extends n
     PaymentMode paymentMode;
     Integer keyAdjustedTransaction;
     Integer keyAdjustmentTransaction;
+    String ojbConcreteClass;
 }
 
-class net.sourceforge.fenixedu.domain.space.Blueprint extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyBlueprintFile;
-	Integer keySpace;
-	Integer keyCreationPerson;
-	YearMonthDay validFrom;
-	YearMonthDay validUntil;
-}
+	class net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction extends net.sourceforge.fenixedu.domain.accounting.AccountingTransaction {
+		Integer keyInstallment;
+	}
 
 class net.sourceforge.fenixedu.domain.accounting.Entry extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyAccount;
     Integer keyAccountingTransaction;
     Integer keyReceipt;
-    BigDecimal originalAmount;
+    Money originalAmount;
     EntryType entryType;
 }
 
@@ -245,11 +256,18 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 	}
 	
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
-		Integer keyRegistrationForGratuityEvent;
-	}
+			Integer keyRegistrationForGratuityEvent;
+			Integer keyStudentCurricularPlan;
+		}
+		
+			class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
+			}
 	
 		class net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
-	}
+		}
+		
+		class net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
+		}
 
 class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyPerson;
@@ -304,14 +322,19 @@ class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourcef
 	class net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR extends net.sourceforge.fenixedu.domain.accounting.PostingRule {   
 		EntryType entryType;
 	}
-
+	
 		class net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {   
-			BigDecimal fixedAmount;
+			Money fixedAmount;
 		}
 		
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR {   
-				BigDecimal fixedAmountPenalty;
+				Money fixedAmountPenalty;
 			}
+			
+				class net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR {   
+					YearMonthDay whenToApplyFixedAmountPenalty;
+				}
+				
 				class net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DFACandidacyPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR {   
 				}
 				
@@ -319,23 +342,89 @@ class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourcef
 				}
 		
 		class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
-			BigDecimal baseAmount;
-			BigDecimal amountPerUnit;
+			Money baseAmount;
+			Money amountPerUnit;
 		}
 		
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR {
 			}
 			
 				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR {
-					BigDecimal amountPerPage;
+					Money amountPerPage;
 				}
 		
 		class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
-			BigDecimal dfaTotalAmount;
-			BigDecimal dfaAmountPerEctsCredit;
+			Money dfaTotalAmount;
+			Money dfaAmountPerEctsCredit;
 			BigDecimal dfaPartialAcceptedPercentage;
 		}
+		
+		class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			
+		}
 	
+	class net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR extends net.sourceforge.fenixedu.domain.accounting.PostingRule {   
+	}
+
+class net.sourceforge.fenixedu.domain.accounting.PaymentPlan extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionYear;
+	Integer keyServiceAgreementTemplate;
+	DateTime whenCreated;
+	String ojbConcreteClass;
+}
+
+	class net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.PaymentPlan {
+	}
+	
+		class net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan {
+		}
+		
+		class net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan {
+		}
+
+class net.sourceforge.fenixedu.domain.accounting.Installment extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPaymentPlan;
+	DateTime whenCreated;
+	Money amount;
+	YearMonthDay startDate;
+	YearMonthDay endDate;
+	Integer installmentOrder;
+    String ojbConcreteClass;
+}
+
+	class net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithPenalty extends net.sourceforge.fenixedu.domain.accounting.Installment {
+		BigDecimal penaltyPercentage;
+	}
+	
+		class net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty extends net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithPenalty {
+			YearMonthDay whenStartToApplyPenalty;
+			Integer maxMonthsToApplyPenalty;
+		}
+
+
+class net.sourceforge.fenixedu.domain.accounting.PaymentCode extends net.sourceforge.fenixedu.domain.DomainObject {
+	String code;
+	DateTime whenCreated;
+	YearMonthDay startDate;
+	YearMonthDay endDate;
+	PaymentCodeState state;
+	Money minAmount;
+	Money maxAmount;
+	String ojbConcreteClass;
+	Integer keyStudent;
+	PaymentCodeType type;
+}
+
+	class net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode extends net.sourceforge.fenixedu.domain.accounting.PaymentCode {
+			Integer keyAccountingEvent;
+	}
+
+		class net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode extends net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode {
+			Integer keyInstallment;
+		}
+	
+//End Of Accounting
+
 class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStartExecutionPeriod;
 	Integer keyEndExecutionPeriod;
@@ -3851,7 +3940,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 
 class net.sourceforge.fenixedu.domain.AccessibleItem extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
-	
+		
 	Integer keyAvailabilityPolicy;
 
 	MultiLanguageString name;
@@ -3880,41 +3969,40 @@ class net.sourceforge.fenixedu.domain.AccessibleItem extends net.sourceforge.fen
 	class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.sourceforge.fenixedu.domain.AccessibleItem {
 		UUID uuid;
 	
-	MultiLanguageString description;
-	String path;
-	Boolean relative;
-	Boolean principal;
-	String parameters;
-
-	Integer orderInModule; /* used to allows ordering of functionalities in modules, see relation ModuleAggregatesFunctionalities */
+		MultiLanguageString description;
+		String path;
+		Boolean relative;
+		Boolean principal;
+		String parameters;
 	
-	Integer keyModule;
-}
-
-	class net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
+		Integer orderInModule; /* used to allows ordering of functionalities in modules, see relation ModuleAggregatesFunctionalities */
+		Integer keyModule;
 	}
-	
-	class net.sourceforge.fenixedu.domain.functionalities.Module extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
-		Integer keyParent;
+
+		class net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
+		}
 		
-		String prefix;
-		Boolean maximized;
-	}
+		class net.sourceforge.fenixedu.domain.functionalities.Module extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
+			Integer keyParent;
+			
+			String prefix;
+			Boolean maximized;
+		}
 
 class net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyAccessibleItem;
 
 	String ojbConcreteClass;
 }
-	
+
 	class net.sourceforge.fenixedu.domain.functionalities.GroupAvailability extends net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy {
 		Group targetGroup;
-}
-
-		class net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability extends net.sourceforge.fenixedu.domain.functionalities.GroupAvailability {
-		String expression;
 	}
 
+		class net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability extends net.sourceforge.fenixedu.domain.functionalities.GroupAvailability {
+			String expression;
+		}
+	
 class net.sourceforge.fenixedu.domain.SpecialSeasonCode extends net.sourceforge.fenixedu.domain.DomainObject {
 	
 	Integer code;
@@ -4891,7 +4979,7 @@ relation ConversationThreadPerson {
 	
 	net.sourceforge.fenixedu.domain.Person playsRole creator;
 }
- 
+
 relation DepartmentDegree {
 	net.sourceforge.fenixedu.domain.Department playsRole departments {
 		multiplicity *;
@@ -5216,7 +5304,6 @@ relation ExecutionCourseSiteSite {
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
-
 
 relation ExecutionCourseSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
@@ -6565,7 +6652,6 @@ relation SectionSuperiorSection {
 	net.sourceforge.fenixedu.domain.Section playsRole superiorSection;
 }
 
-
 relation ServiceProviderRegimeTeacher {
     net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime playsRole serviceProviderRegime;
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
@@ -7744,6 +7830,240 @@ relation CronScriptStateCronScriptInvocation {
 	}
 }
 
+
+// Start Of Accounting Relations
+relation RootDomainObjectAccount {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.Account playsRole accounts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAccountTransaction {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransactions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAccountingEvent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole accountingEvents {
+		multiplicity *;
+	}
+}
+
+relation PartyAccount {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+	net.sourceforge.fenixedu.domain.accounting.Account playsRole accounts {
+		multiplicity *;
+	}
+}
+
+relation AccountEntry {
+	net.sourceforge.fenixedu.domain.accounting.Account playsRole account;
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation PersonAccountingEvent {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
+		multiplicity *;
+	}
+}
+
+relation AccountingEventEmployeeResponsibleForCancel {
+	net.sourceforge.fenixedu.domain.Employee playsRole employeeResponsibleForCancel;
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
+		multiplicity *;
+	}
+}
+
+relation AccountTransactionEntry {
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransaction;
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation AccountingTransactionEvent {
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole event;
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransactions {
+		multiplicity *;
+	}
+}
+
+relation AccountTransactionUser {
+	net.sourceforge.fenixedu.domain.User playsRole responsibleUser;
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransactions {
+		multiplicity *;
+	}
+}
+
+relation AccountTransactionAdjustedTransaction {
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole adjustedTransaction;
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole adjustmentTransaction;
+}
+
+relation InstallmentAccountingTransactionInstallment {
+	net.sourceforge.fenixedu.domain.accounting.Installment playsRole installment;
+	net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction playsRole accountingTransactions {
+		multiplicity *;
+	}
+}
+
+relation AdministrativeOfficeEvent {
+	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
+		multiplicity *;
+	}
+}
+
+relation DFACandidacyEventCandidacy {
+	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole candidacy;
+	net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent playsRole candidacyEvents {
+		multiplicity *;
+	}
+}
+
+relation DfaRegistrationEventRegistration {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registrationForDfaRegistrationEvent;
+	net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvent;
+}
+
+relation GratuityEventRegistration {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registrationForGratuityEvent;
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent playsRole gratuityEvents {
+		multiplicity *;
+	}
+}
+
+relation GratuityEventStudentCurricularPlan {
+	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent playsRole gratuityEvents {
+		multiplicity *;
+	}
+}
+
+relation AnnualEventExecutionYear {
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent playsRole annualEvents {
+		multiplicity *;
+	}
+}
+
+relation CertificateRequestEventCertificateRequest {
+	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest playsRole certificateRequest;
+	net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent playsRole certificateRequestEvent;
+}
+
+relation RootDomainObjectReceipt {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
+		multiplicity *;
+	}
+}
+
+relation ReceiptEntry {
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipt;
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation ReceiptPerson {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
+		multiplicity *;
+	}
+}
+
+relation ReceiptContributorParty {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole contributorParty;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole payedReceipts {
+		multiplicity *;
+	}
+}
+
+relation ReceiptEmployee {
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
+		multiplicity *;
+	}
+}
+
+relation ReceiptPrintVersionEmployee {
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptsVersions {
+		multiplicity *;
+	}
+}
+
+relation ReceiptPrintVersionReceipt {
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipt;
+	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptsVersions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectReceiptPrintVersion {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptVersions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPostingRule {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.PostingRule playsRole postingRules {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectServiceAgreement {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.ServiceAgreement playsRole serviceAgreements {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectServiceAgreementTemplate {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate playsRole serviceAgreementTemplates {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPaymentPlan {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.PaymentPlan playsRole paymentPlans {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectInstallment {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.Installment playsRole installments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPaymentCode {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.PaymentCode playsRole paymentCodes {
+		multiplicity *;
+	}
+}
+
 relation ServiceAgreementServiceAgreementTemplate {
 	net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate playsRole serviceAgreementTemplate;
 	net.sourceforge.fenixedu.domain.accounting.ServiceAgreement playsRole serviceAgreements {
@@ -7779,6 +8099,51 @@ relation UnitServiceAgreementTemplate {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 	net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate playsRole unitServiceAgreementTemplate;
 }
+
+
+relation ExecutionYearPaymentPlan {
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.accounting.PaymentPlan playsRole paymentPlans {
+		multiplicity *;
+	}
+}
+
+relation ServiceAgreementTemplatePaymentPlan {
+	net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate playsRole serviceAgreementTemplate;
+	net.sourceforge.fenixedu.domain.accounting.PaymentPlan playsRole paymentPlans {
+		multiplicity *;
+	}
+}
+
+relation InstallmentPaymentPlan {
+	net.sourceforge.fenixedu.domain.accounting.PaymentPlan playsRole paymentPlan;
+	net.sourceforge.fenixedu.domain.accounting.Installment playsRole installments {
+		multiplicity *;
+	}
+}
+
+relation PaymentCodeAccountingEvent {
+		net.sourceforge.fenixedu.domain.accounting.Event playsRole accountingEvent;
+		net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode playsRole paymentCodes {
+		multiplicity *;
+	}
+}
+
+relation InstallmentPaymentCode {
+		net.sourceforge.fenixedu.domain.accounting.Installment playsRole installment;
+		net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode playsRole paymentCodes {
+		multiplicity *;
+	}
+}
+
+relation StudentPaymentCode {
+		net.sourceforge.fenixedu.domain.student.Student playsRole student;
+		net.sourceforge.fenixedu.domain.accounting.PaymentCode playsRole paymentCodes {
+		multiplicity *;
+	}
+}
+
+//End Of Accounting Relations
 
 relation AdministrativeOfficeUnit {
 	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
@@ -8059,26 +8424,6 @@ relation RootDomainObjectPrecedence {
 	}
 }
 
-relation RootDomainObjectPostingRule {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.accounting.PostingRule playsRole postingRules {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectServiceAgreement {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.accounting.ServiceAgreement playsRole serviceAgreements {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectServiceAgreementTemplate {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate playsRole serviceAgreementTemplates {
-		multiplicity *;
-	}
-}
 
 relation RootDomainObjectExecutionCourseSite {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
@@ -9693,182 +10038,6 @@ relation RootDomainObjectCandidacyDocument {
 	}
 }
 
-relation RootDomainObjectAccount {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.accounting.Account playsRole accounts {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectAccountTransaction {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransactions {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectEntry {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectAccountingEvent {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole accountingEvents {
-		multiplicity *;
-	}
-}
-
-relation PartyAccount {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
-	net.sourceforge.fenixedu.domain.accounting.Account playsRole accounts {
-		multiplicity *;
-	}
-}
-
-relation AccountEntry {
-	net.sourceforge.fenixedu.domain.accounting.Account playsRole account;
-	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
-		multiplicity *;
-	}
-}
-
-relation PersonAccountingEvent {
-	net.sourceforge.fenixedu.domain.Person playsRole person;
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
-		multiplicity *;
-	}
-}
-
-relation AccountingEventEmployeeResponsibleForCancel {
-	net.sourceforge.fenixedu.domain.Employee playsRole employeeResponsibleForCancel;
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
-		multiplicity *;
-	}
-}
-
-relation AccountTransactionEntry {
-	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransaction;
-	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
-		multiplicity *;
-	}
-}
-
-relation AccountingTransactionEvent {
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole event;
-	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransactions {
-		multiplicity *;
-	}
-}
-
-relation AccountTransactionUser {
-	net.sourceforge.fenixedu.domain.User playsRole responsibleUser;
-	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransactions {
-		multiplicity *;
-	}
-}
-
-relation AccountTransactionAdjustedTransaction {
-	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole adjustedTransaction;
-	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole adjustmentTransaction;
-}
-
-relation AdministrativeOfficeEvent {
-	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
-		multiplicity *;
-	}
-}
-
-relation DFACandidacyEventCandidacy {
-	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole candidacy;
-	net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent playsRole candidacyEvents {
-		multiplicity *;
-	}
-}
-
-relation DfaRegistrationEventRegistration {
-	net.sourceforge.fenixedu.domain.student.Registration playsRole registrationForDfaRegistrationEvent;
-	net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvent;
-}
-
-relation GratuityEventRegistration {
-	net.sourceforge.fenixedu.domain.student.Registration playsRole registrationForGratuityEvent;
-	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent playsRole gratuityEvents {
-		multiplicity *;
-	}
-}
-
-relation AnnualEventExecutionYear {
-	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
-	net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent playsRole annualEvents {
-		multiplicity *;
-	}
-}
-
-relation CertificateRequestEventCertificateRequest {
-	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest playsRole certificateRequest;
-	net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent playsRole certificateRequestEvent;
-}
-
-relation RootDomainObjectReceipt {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
-		multiplicity *;
-	}
-}
-
-relation ReceiptEntry {
-	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipt;
-	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
-		multiplicity *;
-	}
-}
-
-relation ReceiptPerson {
-	net.sourceforge.fenixedu.domain.Person playsRole person;
-	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
-		multiplicity *;
-	}
-}
-
-relation ReceiptContributorParty {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole contributorParty;
-	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole payedReceipts {
-		multiplicity *;
-	}
-}
-
-relation ReceiptEmployee {
-	net.sourceforge.fenixedu.domain.Employee playsRole employee;
-	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
-		multiplicity *;
-	}
-}
-
-relation ReceiptPrintVersionEmployee {
-	net.sourceforge.fenixedu.domain.Employee playsRole employee;
-	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptsVersions {
-		multiplicity *;
-	}
-}
-
-relation ReceiptPrintVersionReceipt {
-	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipt;
-	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptsVersions {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectReceiptPrintVersion {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptVersions {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectAdministrativeOffice {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffices {
@@ -10776,7 +10945,6 @@ relation LoginAliasLogin {
 		multiplicity *;
 	}
 }
-
 relation RootDomainObjectDomainObjectActionLog {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.DomainObjectActionLog playsRole domainObjectActionLogs {

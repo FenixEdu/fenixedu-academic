@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
+<%@ page import="net.sourceforge.fenixedu.util.Money" %>
+
 <logic:present role="MASTER_DEGREE_ADMINISTRATIVE_OFFICE">
 
 <html>
@@ -93,7 +95,7 @@
         				</app:labelFormatter>
         			</td>
         			<td>...................................&nbsp;</td>
-        			<td> <bean:define id="amountToPay" name="entryDTO" property="amountToPay" type="java.math.BigDecimal" /> <%= amountToPay.setScale(2).toPlainString() %> &nbsp;<bean:message key="label.currencySymbol"/></td>
+        			<td> <bean:define id="amountToPay" name="entryDTO" property="amountToPay" type="Money" /> <%= amountToPay.toPlainString() %> &nbsp;<bean:message key="label.currencySymbol"/></td>
         		</tr>
         	</logic:iterate >
         <tr>
@@ -104,7 +106,7 @@
     	<tr>
     	  	<td><strong><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.totalAmountToPay"/></strong></td>
    			<td>_________________&nbsp;</td>
-   			<td><strong><bean:define id="totalAmountToPay" name="paymentsManagementDTO" property="totalAmountToPay" type="java.math.BigDecimal"/><%= totalAmountToPay.setScale(2).toPlainString() %>&nbsp;<bean:message key="label.currencySymbol"/></strong></td>
+   			<td><strong><bean:define id="totalAmountToPay" name="paymentsManagementDTO" property="totalAmountToPay" type="Money"/><%= totalAmountToPay.toPlainString() %>&nbsp;<bean:message key="label.currencySymbol"/></strong></td>
     	</tr>
 	   </table>
 	 </td>

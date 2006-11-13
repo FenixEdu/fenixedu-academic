@@ -345,6 +345,12 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 						    property="location"/>
 				<replacefilter token="@variant@"
 						    property="variant"/>
+				<replacefilter token="@sibs.entityCode@"
+						    property="sibs.entityCode"/>
+				<replacefilter token="@sibs.sourceInstitutionId@"
+						    property="sibs.sourceInstitutionId"/>
+					<replacefilter token="@sibs.destinationInstitutionId@"
+							    property="sibs.destinationInstitutionId"/>
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"

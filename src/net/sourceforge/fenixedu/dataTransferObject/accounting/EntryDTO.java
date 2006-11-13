@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 public class EntryDTO implements Serializable {
@@ -16,18 +17,18 @@ public class EntryDTO implements Serializable {
 
     private DomainReference<Event> event;
 
-    private BigDecimal totalAmount;
+    private Money totalAmount;
 
-    private BigDecimal payedAmount;
+    private Money payedAmount;
 
-    private BigDecimal amountToPay;
+    private Money amountToPay;
 
     private LabelFormatter description;
 
-    private BigDecimal debtAmount;
+    private Money debtAmount;
 
-    public EntryDTO(EntryType entryType, Event event, BigDecimal totalAmount, BigDecimal payedAmount,
-	    BigDecimal amountToPay, LabelFormatter description, BigDecimal debtAmount) {
+    public EntryDTO(EntryType entryType, Event event, Money totalAmount, Money payedAmount,
+	    Money amountToPay, LabelFormatter description, Money debtAmount) {
 	setEntryType(entryType);
 	setEvent(event);
 	setTotalAmount(totalAmount);
@@ -38,19 +39,19 @@ public class EntryDTO implements Serializable {
 
     }
 
-    public BigDecimal getTotalAmount() {
+    public Money getTotalAmount() {
 	return totalAmount;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
+    public void setTotalAmount(Money totalAmount) {
 	this.totalAmount = totalAmount;
     }
 
-    public BigDecimal getPayedAmount() {
+    public Money getPayedAmount() {
 	return payedAmount;
     }
 
-    public void setPayedAmount(BigDecimal payedAmount) {
+    public void setPayedAmount(Money payedAmount) {
 	this.payedAmount = payedAmount;
     }
 
@@ -70,11 +71,11 @@ public class EntryDTO implements Serializable {
 	this.selected = selected;
     }
 
-    public BigDecimal getAmountToPay() {
+    public Money getAmountToPay() {
 	return amountToPay;
     }
 
-    public void setAmountToPay(BigDecimal amountToPay) {
+    public void setAmountToPay(Money amountToPay) {
 	this.amountToPay = amountToPay;
     }
 
@@ -94,11 +95,11 @@ public class EntryDTO implements Serializable {
 	this.description = description;
     }
 
-    public void setDebtAmount(BigDecimal debtAmount) {
+    public void setDebtAmount(Money debtAmount) {
 	this.debtAmount = debtAmount;
     }
 
-    public BigDecimal getDebtAmount() {
+    public Money getDebtAmount() {
 	return this.debtAmount;
     }
 

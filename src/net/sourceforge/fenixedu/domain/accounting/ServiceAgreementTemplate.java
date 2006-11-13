@@ -51,7 +51,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 	return getActivePostingRules(new DateTime());
     }
 
-    public Set<PostingRule> getActivePostingRules(DateTime when) {
+    private Set<PostingRule> getActivePostingRules(DateTime when) {
 	final Set<PostingRule> activePostingRules = new HashSet<PostingRule>();
 	for (final PostingRule postingRule : getPostingRules()) {
 	    if (postingRule.isActiveForDate(when)) {
@@ -62,15 +62,45 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 	return activePostingRules;
     }
 
+    public Set<PostingRule> getActiveVisiblePostingRules() {
+	return getActiveVisiblePostingRules(new DateTime());
+    }
+
+    public Set<PostingRule> getActiveVisiblePostingRules(DateTime when) {
+	final Set<PostingRule> result = new HashSet<PostingRule>();
+	for (final PostingRule postingRule : getPostingRules()) {
+	    if (postingRule.isActiveForDate(when) && postingRule.isVisible()) {
+		result.add(postingRule);
+	    }
+	}
+
+	return result;
+    }
+
     public PostingRule findPostingRuleByEventTypeAndDate(EventType eventType, DateTime when) {
+	final PostingRule postingRule = getPostingRuleByEventTypeAndDate(eventType, when);
+
+	if (postingRule == null) {
+	    throw new DomainException(
+		    "error.accounting.agreement.ServiceAgreementTemplate.cannot.find.postingRule.for.eventType.and.date");
+	}
+
+	return postingRule;
+
+    }
+
+    private PostingRule getPostingRuleByEventTypeAndDate(EventType eventType, DateTime when) {
 	for (final PostingRule postingRule : getActivePostingRules(when)) {
 	    if (postingRule.getEventType() == eventType) {
 		return postingRule;
 	    }
 	}
 
-	throw new DomainException(
-		"error.accounting.agreement.ServiceAgreementTemplate.cannot.find.postingRule.for.eventType.and.date");
+	return null;
+    }
+
+    public boolean containsPostingRule(final EventType eventType, final DateTime when) {
+	return getPostingRuleByEventTypeAndDate(eventType, when) != null;
     }
 
     public boolean hasServiceAgreementForPerson(Person person) {

@@ -100,13 +100,12 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     }
 
     public RegistrationPeriodInDegreeCurricularPlan getRegistrationPeriodInDegreeCurricularPlan() {
-	return getRegistration().getStudentCandidacy().getExecutionDegree().getDegreeCurricularPlan()
-		.getRegistrationPeriod(getExecutionYear());
+	return getExecutionDegree().getDegreeCurricularPlan().getRegistrationPeriod(getExecutionYear());
     }
-    
+
     public boolean hasRegistrationPeriodInDegreeCurricularPlan() {
-	return getRegistration().getStudentCandidacy().getExecutionDegree().getDegreeCurricularPlan()
-		.hasRegistrationPeriodFor(getExecutionYear());
+	return getExecutionDegree().getDegreeCurricularPlan().hasRegistrationPeriodFor(
+		getExecutionYear());
     }
 
     private ExecutionYear getExecutionYear() {
@@ -114,13 +113,11 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     }
 
     public CandidacyPeriodInDegreeCurricularPlan getCandidacyPeriodInDegreeCurricularPlan() {
-	return getExecutionDegree().getDegreeCurricularPlan().getCandidacyPeriod(
-		getExecutionYear());
+	return getExecutionDegree().getDegreeCurricularPlan().getCandidacyPeriod(getExecutionYear());
     }
-    
+
     public boolean hasCandidacyPeriodInDegreeCurricularPlan() {
-	return getExecutionDegree().getDegreeCurricularPlan().hasCandidacyPeriodFor(
-		getExecutionYear());
+	return getExecutionDegree().getDegreeCurricularPlan().hasCandidacyPeriodFor(getExecutionYear());
     }
 
     private StudentCandidacy getCandidacy() {
