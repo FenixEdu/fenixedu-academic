@@ -35,4 +35,8 @@ public class Response extends FenixUtil {
     public void setResponseProcessingIndex(Integer responseProcessingIndex) {
         this.responseProcessingIndex = responseProcessingIndex;
     }
+
+    public boolean hasResponse(String responseOption) {
+        return false;
+    }
 }

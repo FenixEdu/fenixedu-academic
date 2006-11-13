@@ -402,7 +402,7 @@ public class ParseSubQuestion extends DefaultHandler {
             questionOption.setOptionContent(optionsAuxList);
             optionList.add(questionOption);
         }
-        // subQuestion.setOptionNumber(new Integer(optionNumber));
+        subQuestion.setOptionNumber(new Integer(optionNumber));
         subQuestion.setOptions(optionList);
 
         return subQuestion;

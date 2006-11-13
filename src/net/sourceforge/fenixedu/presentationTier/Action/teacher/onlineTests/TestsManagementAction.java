@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarks;
@@ -1128,17 +1129,17 @@ public class TestsManagementAction extends FenixDispatchAction {
         final IUserView userView = getUserView(request);
         final Integer objectCode = getCodeFromRequest(request, "objectCode");
         final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
-        SiteView siteView = null;
+        List<InfoInquiryStatistics> infoInquiryStatisticsList = null;
         try {
-            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadInquiryStatistics",
-                    new Object[] { objectCode, distributedTestCode,
+            infoInquiryStatisticsList = (List<InfoInquiryStatistics>) ServiceUtils.executeService(
+                    userView, "ReadInquiryStatistics", new Object[] { objectCode, distributedTestCode,
                             getServlet().getServletContext().getRealPath("/") });
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
         request.setAttribute("objectCode", objectCode);
         request.setAttribute("distributedTestCode", distributedTestCode);
-        request.setAttribute("siteView", siteView);
+        request.setAttribute("infoInquiryStatisticsList", infoInquiryStatisticsList);
         return mapping.findForward("showTestStatistics");
     }
 

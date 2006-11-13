@@ -36,4 +36,15 @@ public class ResponseLID extends Response {
     public void setIsCorrect(Boolean[] isCorrect) {
         this.isCorrect = isCorrect;
     }
+
+    public boolean hasResponse(String responseOption) {
+        if (isResponsed()) {
+            for (int i = 0; i < response.length; i++) {
+                if (response[i].equalsIgnoreCase(responseOption)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

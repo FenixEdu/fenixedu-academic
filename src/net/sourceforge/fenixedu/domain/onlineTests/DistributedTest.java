@@ -15,6 +15,8 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.tests.Response;
+import net.sourceforge.fenixedu.util.tests.ResponseLID;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
 /**
@@ -47,7 +49,8 @@ public class DistributedTest extends DistributedTest_Base {
 
     private void deleteQuestions() {
         for (StudentTestQuestion studentTestQuestion : getDistributedTestQuestions()) {
-            if (!studentTestQuestion.getQuestion().getVisibility() && !isInOtherDistributedTest(studentTestQuestion.getQuestion())) {
+            if (!studentTestQuestion.getQuestion().getVisibility()
+                    && !isInOtherDistributedTest(studentTestQuestion.getQuestion())) {
                 studentTestQuestion.getQuestion().delete();
             }
         }
@@ -122,15 +125,14 @@ public class DistributedTest extends DistributedTest_Base {
         setEndHourDate(date);
     }
 
-    
-    public List<StudentTestLog> getStudentTestLogs(final Registration registration){
-    	List<StudentTestLog> result = new ArrayList<StudentTestLog>();
-    	for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
-			if(studentTestLog.getStudent().equals(registration)) {
-				result.add(studentTestLog);
-			}
-		}
-    	return result;
+    public List<StudentTestLog> getStudentTestLogs(final Registration registration) {
+        List<StudentTestLog> result = new ArrayList<StudentTestLog>();
+        for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
+            if (studentTestLog.getStudent().equals(registration)) {
+                result.add(studentTestLog);
+            }
+        }
+        return result;
     }
 
     public void updateDistributedTestAdvisoryDates(final Date newExpiresDate) {
@@ -165,9 +167,12 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     public SortedSet<StudentTestQuestion> findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder() {
-        final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(StudentTestQuestion.COMPARATOR_BY_TEST_QUESTION_ORDER);
-        final Registration registration = getDistributedTestQuestionsSet() != null ? getDistributedTestQuestionsSet().iterator().next().getStudent() : null;
-       for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+        final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(
+                StudentTestQuestion.COMPARATOR_BY_TEST_QUESTION_ORDER);
+        final Registration registration = getDistributedTestQuestionsSet() != null ? getDistributedTestQuestionsSet()
+                .iterator().next().getStudent()
+                : null;
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
             if (registration == studentTestQuestion.getStudent()) {
                 studentTestQuestions.add(studentTestQuestion);
             }
@@ -193,33 +198,36 @@ public class DistributedTest extends DistributedTest_Base {
         return Double.valueOf(result);
     }
 
-    public int countLikeResponses(final Integer order, final String response) {
+    public int countLikeResponses(final Integer order, final Response response) {
         int count = 0;
-        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
-         //   if (studentTestQuestion.getTestQuestionOrder().equals(order) && studentTestQuestion.getResponse().contains(response)) {
-                count++;
-         //   }
-        }
+        // for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+        // if (studentTestQuestion.getTestQuestionOrder().equals(order)
+        // && studentTestQuestion.getResponse().contains(response)) {
+        // count++;
+        // }
+        // }
         return count;
     }
 
     public int countResponses(final Integer order, final String response) {
         int count = 0;
         for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
-            if (studentTestQuestion.getTestQuestionOrder().equals(order) && studentTestQuestion.getResponse().equals(response)) {
+            if (studentTestQuestion.getResponse() != null
+                    && studentTestQuestion.getTestQuestionOrder().equals(order)
+                    && studentTestQuestion.getResponse().hasResponse(response)) {
                 count++;
             }
         }
         return count;
     }
 
-    public Set<String> findResponses() {
-        final Set<String> responses = new HashSet<String>();
-//        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
-//            if (studentTestQuestion.getResponse() != null) {
-//                responses.add(studentTestQuestion.getResponse());
-//            }
-//        }
+    public Set<Response> findResponses() {
+        final Set<Response> responses = new HashSet<Response>();
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+            if (studentTestQuestion.getResponse() != null) {
+                responses.add(studentTestQuestion.getResponse());
+            }
+        }
         return responses;
     }
 
@@ -254,7 +262,8 @@ public class DistributedTest extends DistributedTest_Base {
     public int countPartiallyCorrectAnswers(final Integer order, final double mark) {
         int count = 0;
         for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
-            if (studentTestQuestion.getTestQuestionOrder().equals(order) && studentTestQuestion.getResponse() != null) {
+            if (studentTestQuestion.getTestQuestionOrder().equals(order)
+                    && studentTestQuestion.getResponse() != null) {
                 final double testQuestionMark = studentTestQuestion.getTestQuestionMark().doubleValue();
                 if (testQuestionMark < mark && testQuestionMark > 0) {
                     count++;

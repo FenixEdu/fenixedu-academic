@@ -35,4 +35,13 @@ public class ResponseSTR extends Response {
     public void setIsCorrect(Boolean isCorrect) {
         this.isCorrect = isCorrect;
     }
+
+    public boolean hasResponse(String responseOption) {
+        if (isResponsed()) {
+            if (response.equalsIgnoreCase(responseOption)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

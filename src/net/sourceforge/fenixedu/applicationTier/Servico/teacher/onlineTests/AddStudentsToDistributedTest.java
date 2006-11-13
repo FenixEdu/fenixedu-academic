@@ -34,8 +34,8 @@ import org.apache.commons.lang.time.DateFormatUtils;
 public class AddStudentsToDistributedTest extends Service {
     private String contextPath = new String();
 
-    public Integer run(Integer executionCourseId, Integer distributedTestId, List infoStudentList, String contextPath) throws ExcepcaoPersistencia,
-            InvalidArgumentsServiceException {
+    public Integer run(Integer executionCourseId, Integer distributedTestId, List infoStudentList,
+            String contextPath) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
         if (infoStudentList == null || infoStudentList.size() == 0)
             return null;
         this.contextPath = contextPath.replace('\\', '/');
@@ -43,31 +43,41 @@ public class AddStudentsToDistributedTest extends Service {
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
-        Set<StudentTestQuestion> studentTestQuestions = distributedTest.findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder();
+        Set<StudentTestQuestion> studentTestQuestions = distributedTest
+                .findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder();
         for (StudentTestQuestion studentTestQuestionExample : studentTestQuestions) {
             List<Question> questionList = new ArrayList<Question>();
-            questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
+            questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata()
+                    .getVisibleQuestions());
 
             for (int j = 0; j < infoStudentList.size(); j++) {
-                Registration registration = rootDomainObject.readRegistrationByOID(
-                        ((InfoStudent) infoStudentList.get(j)).getIdInternal());
-                    StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
-                    studentTestQuestion.setStudent(registration);
-                    studentTestQuestion.setDistributedTest(distributedTest);
-                    studentTestQuestion.setTestQuestionOrder(studentTestQuestionExample.getTestQuestionOrder());
-                    studentTestQuestion.setTestQuestionValue(studentTestQuestionExample.getTestQuestionValue());
-                    studentTestQuestion.setCorrectionFormula(studentTestQuestionExample.getCorrectionFormula());
-                    studentTestQuestion.setTestQuestionMark(new Double(0));
-                    studentTestQuestion.setResponse(null);
+                Registration registration = rootDomainObject
+                        .readRegistrationByOID(((InfoStudent) infoStudentList.get(j)).getIdInternal());
+                StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
+                studentTestQuestion.setStudent(registration);
+                studentTestQuestion.setDistributedTest(distributedTest);
+                studentTestQuestion.setTestQuestionOrder(studentTestQuestionExample
+                        .getTestQuestionOrder());
+                studentTestQuestion.setTestQuestionValue(studentTestQuestionExample
+                        .getTestQuestionValue());
+                studentTestQuestion.setCorrectionFormula(studentTestQuestionExample
+                        .getCorrectionFormula());
+                studentTestQuestion.setTestQuestionMark(new Double(0));
+                studentTestQuestion.setResponse(null);
 
-                    if (questionList.size() == 0)
-                        questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
-                    Question question = getStudentQuestion(questionList);
-                    if (question == null) {
-                        throw new InvalidArgumentsServiceException();
-                    }
-                    studentTestQuestion.setQuestion(question);
-                    questionList.remove(question);
+                if (questionList.size() == 0)
+                    questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata()
+                            .getVisibleQuestions());
+                Question question = getStudentQuestion(questionList);
+                if (question == null) {
+                    throw new InvalidArgumentsServiceException();
+                }
+                if (question.getSubQuestions().size() >= 1
+                        && question.getSubQuestions().get(0).getItemId() != null) {
+                    studentTestQuestion.setItemId(question.getSubQuestions().get(0).getItemId());
+                }
+                studentTestQuestion.setQuestion(question);
+                questionList.remove(question);
             }
         }
         // create advisory for new students
@@ -91,24 +101,32 @@ public class AddStudentsToDistributedTest extends Service {
     }
 
     private Advisory createTestAdvisory(DistributedTest distributedTest) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
+                .getLocale());
         Advisory advisory = new Advisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
-        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((ExecutionCourse) distributedTest
-                .getTestScope().getDomainObject()).getNome() }));
-        
-        advisory.setSubject(distributedTest.getTitle());
-        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "HH:mm");
-        final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(), "dd/MM/yyyy");
-        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "HH:mm");
-        final String endDate = DateFormatUtils.format(distributedTest.getEndDate().getTime(), "dd/MM/yyyy");
+        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"),
+                new Object[] { ((ExecutionCourse) distributedTest.getTestScope().getDomainObject())
+                        .getNome() }));
 
-        Object[] args = { this.contextPath, distributedTest.getIdInternal().toString(), beginHour, beginDate, endHour, endDate };
+        advisory.setSubject(distributedTest.getTitle());
+        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(),
+                "HH:mm");
+        final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(),
+                "dd/MM/yyyy");
+        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "HH:mm");
+        final String endDate = DateFormatUtils.format(distributedTest.getEndDate().getTime(),
+                "dd/MM/yyyy");
+
+        Object[] args = { this.contextPath, distributedTest.getIdInternal().toString(), beginHour,
+                beginDate, endHour, endDate };
         if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY))) {
-            advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.distributeInquiryMessage"), args));
+            advisory.setMessage(MessageFormat.format(bundle
+                    .getString("message.distributedTest.distributeInquiryMessage"), args));
         } else {
-            advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.distributeTestMessage"), args));
+            advisory.setMessage(MessageFormat.format(bundle
+                    .getString("message.distributedTest.distributeTestMessage"), args));
         }
         return advisory;
     }

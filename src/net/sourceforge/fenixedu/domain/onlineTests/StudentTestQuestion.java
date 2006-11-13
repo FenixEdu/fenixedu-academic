@@ -117,17 +117,22 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
     }
 
     public void setSubQuestionByItem(SubQuestion newSubQuestion) {
-        int i = 0;
-        for (; i < getStudentSubQuestions().size(); i++) {
-            SubQuestion subQuestion = getStudentSubQuestions().get(i);
-            if (getItemId() != null && subQuestion.getItemId() != null) {
-                if (getItemId().equals(subQuestion.getItemId())) {
+        if (getItemId() == null && !getStudentSubQuestions().isEmpty()
+                && getStudentSubQuestions().size() == 1) {
+            getStudentSubQuestions().set(0, newSubQuestion);
+        } else {
+            int i = 0;
+            for (; i < getStudentSubQuestions().size(); i++) {
+                SubQuestion subQuestion = getStudentSubQuestions().get(i);
+                if (getItemId() != null && subQuestion.getItemId() != null) {
+                    if (getItemId().equals(subQuestion.getItemId())) {
+                        break;
+                    }
+                } else if (getItemId() == null && subQuestion.getItemId() == null) {
                     break;
                 }
-            } else if (getItemId() == null && subQuestion.getItemId() == null) {
-                break;
             }
+            getStudentSubQuestions().set(i, newSubQuestion);
         }
-        getStudentSubQuestions().set(i, newSubQuestion);
     }
 }

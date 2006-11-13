@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 
 /**
  * 
@@ -15,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
  * 
  */
 public class InfoInquiryStatistics extends DataTranferObject implements ISiteComponent {
-    private InfoStudentTestQuestion infoStudentTestQuestion;
+    private StudentTestQuestion infoStudentTestQuestion;
 
     private List optionStatistics;
 
@@ -26,7 +27,7 @@ public class InfoInquiryStatistics extends DataTranferObject implements ISiteCom
         return optionStatistics;
     }
 
-    public InfoStudentTestQuestion getInfoStudentTestQuestion() {
+    public StudentTestQuestion getInfoStudentTestQuestion() {
         return infoStudentTestQuestion;
     }
 
@@ -34,7 +35,7 @@ public class InfoInquiryStatistics extends DataTranferObject implements ISiteCom
         optionStatistics = list;
     }
 
-    public void setInfoStudentTestQuestion(InfoStudentTestQuestion question) {
+    public void setInfoStudentTestQuestion(StudentTestQuestion question) {
         infoStudentTestQuestion = question;
     }
 

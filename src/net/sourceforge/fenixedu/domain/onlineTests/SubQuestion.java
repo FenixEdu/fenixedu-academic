@@ -32,6 +32,8 @@ public class SubQuestion {
 
     private String[] shuffle;
 
+    private Integer optionNumber;
+
     public String getItemId() {
         return itemId;
     }
@@ -110,6 +112,14 @@ public class SubQuestion {
 
     public void setShuffle(String[] shuffle) {
         this.shuffle = shuffle;
+    }
+
+    public Integer getOptionNumber() {
+        return optionNumber;
+    }
+
+    public void setOptionNumber(Integer optionNumber) {
+        this.optionNumber = optionNumber;
     }
 
     public String getShuffleString() {
