@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Section;
 
 /**
  * Rearrange all the given item changing their position to match the one in the
@@ -16,11 +17,8 @@ import net.sourceforge.fenixedu.domain.Item;
  */
 public class RearrangeSectionItems extends Service {
 
-    public void run(List<Item> items) {
-        int index = 0;
-        for (Item item : items) {
-            item.setItemOrder(index++);
-        }
+    public void run(Section section, List<Item> items) {
+        section.setItemsOrder(items);
     }
 
 }

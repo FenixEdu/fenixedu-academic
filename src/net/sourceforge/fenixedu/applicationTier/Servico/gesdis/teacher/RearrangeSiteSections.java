@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import pt.ist.utl.fenix.utils.Pair;
 
 /**
@@ -20,7 +20,7 @@ import pt.ist.utl.fenix.utils.Pair;
  */
 public class RearrangeSiteSections extends Service {
 
-    public void run(List<Pair<Section, Section>> arrangements) {
+    public void run(Site site, List<Pair<Section, Section>> arrangements) {
         Map<Section, List<Section>> newOrderMap = new HashMap<Section, List<Section>>();
         
         for (Pair<Section, Section> pair : arrangements) {
@@ -31,7 +31,7 @@ public class RearrangeSiteSections extends Service {
             addChildSection(newOrderMap, parent, child);
         }
         
-        updateChildrenOrder(newOrderMap);
+        updateChildrenOrder(site, newOrderMap);
     }
 
     private void addChildSection(Map<Section, List<Section>> newOrderMap, Section parent, Section child) {
@@ -43,11 +43,13 @@ public class RearrangeSiteSections extends Service {
         children.add(child);
     }
     
-    private void updateChildrenOrder(Map<Section, List<Section>> newOrderMap) {
-        for (List<Section> childList : newOrderMap.values()) {
-            int order = 0;
-            for (Section section : childList) {
-                section.setSectionOrder(order++);
+    private void updateChildrenOrder(Site site, Map<Section, List<Section>> newOrderMap) {
+        for (Section section : newOrderMap.keySet()) {
+            if (section != null) {
+                section.setSectionsOrder(newOrderMap.get(section));
+            }
+            else {
+                site.setTopLevelSectionsOrder(newOrderMap.get(section));
             }
         }
     }

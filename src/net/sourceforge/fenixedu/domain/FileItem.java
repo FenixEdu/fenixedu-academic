@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.domain.InverseOrderedRelationAdapter;
 
 public class FileItem extends FileItem_Base {
 
@@ -24,12 +25,17 @@ public class FileItem extends FileItem_Base {
         }
     };
 
+    public static InverseOrderedRelationAdapter<FileItem, Item> ORDERED_ADAPTER;
+    static {
+        ORDERED_ADAPTER = new InverseOrderedRelationAdapter<FileItem, Item>("orderInItem", "fileItems");
+        ItemFileItem.addListener(ORDERED_ADAPTER);
+    }
+    
     public FileItem(Item item) {
         super();
 
         setVisible(true);
         setItem(item);
-        setOrderInItem(getNextOrderInItem());
     }
 
     public FileItem(Item item, String filename, String displayName, String mimeType, String checksum,
@@ -38,22 +44,6 @@ public class FileItem extends FileItem_Base {
         this(item);
         init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
                 externalStorageIdentification, permittedGroup);
-        
-        setOrderInItem(getNextOrderInItem());
-    }
-
-    private Integer getNextOrderInItem() {
-        int order = 0;
-        
-        for (FileItem fileItem : getItem().getFileItems()) {
-            if (fileItem == this) {
-                continue;
-            }
-            
-            order = Math.max(order, fileItem.getOrderInItem());
-        }
-        
-        return order + 1;
     }
 
     @Deprecated

@@ -23,7 +23,7 @@ public class TeacherFromSiteContainingItemsAuthorization extends AuthorizationBy
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         super.execute(request, response);
         
-        List<Item> items = (List<Item>) request.getServiceParameters().getParameter(0);
+        List<Item> items = (List<Item>) request.getServiceParameters().getParameter(1);
         for (Item item : items) {
             checkItem(getRemoteUser(request), item);
         }

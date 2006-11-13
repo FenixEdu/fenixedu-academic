@@ -53,14 +53,12 @@ public class Item extends Item_Base {
 
         setSection(section);
         setName(name);
-        setItemOrder(getNewOrder(null));
     }
 
     public Item(Section section, MultiLanguageString name, MultiLanguageString information, Integer itemOrder) {
         this(section, name);
         
         setInformation(information);
-        setNewItemOrder(itemOrder);
     }
 
     public void setName(MultiLanguageString name) {
@@ -75,77 +73,11 @@ public class Item extends Item_Base {
         super.setName(name);
     }
     
-    private int getNewOrder(Integer order) {
-        return order == null ? getSection().getAssociatedItemsSet().size() - 1 : order.intValue();
-    }
-
-    public Integer getNewItemOrder() {
-        return getItemOrder();
-    }
-    
-    /**
-     * Changes the order of this item updating all the siblings items to reflect
-     * this change. All items that have an order greater or equal to the given
-     * order will have they value incremented by one.
-     * 
-     * @param itemOrder
-     *            the new item order inside the the containing section
-     */
-    public void setNewItemOrder(Integer itemOrder) {
-        int newOrder = getNewOrder(itemOrder);
-        
-        if (getItemOrder() == null) {
-            setItemOrder(Integer.valueOf(Integer.MAX_VALUE));
-        }
-        
-        if (getItemOrder() != null) {
-            final int oldOrder = getItemOrder().intValue();
-            final boolean moveUp = newOrder > oldOrder;
-            if (moveUp && itemOrder != null) {
-                newOrder--;
-            }
-            if (newOrder != oldOrder) {
-                for (final Item otherItem : getSection().getAssociatedItemsSet()) {
-                    if (this != otherItem) {
-                        final int otherOrder = otherItem.getItemOrder().intValue();
-                        if (moveUp) {
-                            if (otherOrder > oldOrder && otherOrder <= newOrder) {
-                                otherItem.setItemOrder(Integer.valueOf(otherOrder - 1));
-                            }
-                        } else {
-                            if (otherOrder >= newOrder && otherOrder < oldOrder) {
-                                otherItem.setItemOrder(Integer.valueOf(otherOrder + 1));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        setItemOrder(Integer.valueOf(newOrder));
-    }
-    
     /**
      * @return the item immediately after this item in the section or <code>null</code> if the item is the last 
      */
     public Item getNextItem() {
-        Integer thisOrder = getItemOrder();
-        if (thisOrder == null) {
-            thisOrder = new Integer(Integer.MAX_VALUE);
-        }
-        
-        for (Item item : getSection().getOrderedItems()) {
-            Integer itemOrder = item.getItemOrder();
-            if (itemOrder == null) {
-                itemOrder = new Integer(Integer.MAX_VALUE);
-            }
-            
-            if (itemOrder > thisOrder) {
-                return item;
-            }
-        }
-        
-        return null;
+        return Section.ITEM_ORDER_ADAPTER.getNext(getSection(), this);
     }
     
     /**
@@ -158,24 +90,12 @@ public class Item extends Item_Base {
      *            <code>null</code> if this item should be last
      */
     public void setNextItem(Item item) {
-        setNewItemOrder(item != null ? item.getItemOrder(): null);
+        setItemOrder(item != null ? item.getItemOrder() : null);
+        Section.ITEM_ORDER_ADAPTER.orderChanged(getSection(), this);
     }
 
     @Override
     public void disconnect() {
-        Section section = this.getSection();
-        if (section != null && section.getAssociatedItems() != null) {
-            List<Item> items = section.getAssociatedItems();
-            int associatedItemOrder;
-
-            for (Item item : items) {
-                associatedItemOrder = item.getItemOrder().intValue();
-                if (associatedItemOrder > this.getItemOrder().intValue()) {
-                    item.setItemOrder(new Integer(associatedItemOrder - 1));
-                }
-            }
-        }
-
         removeRootDomainObject();
         removeSection();
     }
@@ -219,5 +139,9 @@ public class Item extends Item_Base {
         
         return super.isAvailable(context);
     }
-    
+
+    public void setFileItemsOrder(List<FileItem> files) {
+        FileItem.ORDERED_ADAPTER.updateOrder(this, files);
+    }
+
 }

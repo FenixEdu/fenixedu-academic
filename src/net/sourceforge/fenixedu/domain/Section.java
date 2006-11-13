@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DuplicatedNameException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -44,6 +44,18 @@ public class Section extends Section_Base {
         
     };
 
+    public static OrderedRelationAdapter<Section, Item> ITEM_ORDER_ADAPTER;
+    static {
+        ITEM_ORDER_ADAPTER = new OrderedRelationAdapter<Section, Item>("associatedItems", "itemOrder");
+        SectionItem.addListener(ITEM_ORDER_ADAPTER);
+    }
+
+    public static OrderedRelationAdapter<Section, Section> SECTION_ORDER_ADAPTER;
+    static {
+        SECTION_ORDER_ADAPTER = new OrderedRelationAdapter<Section, Section>("associatedSections", "sectionOrder");
+        SectionSuperiorSection.addListener(SECTION_ORDER_ADAPTER);
+    }
+    
     protected Section() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
@@ -58,13 +70,12 @@ public class Section extends Section_Base {
 
         setSite(site);
         setName(name);
-        setSectionOrder(getNewOrder(null));
     }
 
     public Section(Site site, MultiLanguageString name, Integer sectionOrder, Section section) {
         this(site, name);
         
-        setNewSectionOrder(sectionOrder);
+        setSectionOrder(sectionOrder);
         setSuperiorSection(section);
     }
 
@@ -93,84 +104,17 @@ public class Section extends Section_Base {
         return getSite().getAssociatedSections(getSuperiorSection());
     }
 
-    public Integer getNewSectionOrder() {
-        return getSectionOrder();
-    }
-    
-    /**
-     * Changes the order of this section updating all the siblings sections to
-     * reflect this change. All section that have an order greater or equal to
-     * the given order will have they value incremented by one.
-     * 
-     * @param sectionOrder
-     *            the new section order inside the the superior section
-     */
-    public void setNewSectionOrder(Integer sectionOrder) {
-        int newOrder = getNewOrder(sectionOrder);
-        if (getSectionOrder() == null) {
-            setSectionOrder(Integer.valueOf(Integer.MAX_VALUE));
-        }
-        if (getSectionOrder() != null) {
-            final int oldOrder = getSectionOrder().intValue();
-            final boolean moveUp = newOrder > oldOrder;
-            if (moveUp && sectionOrder != null) {
-                newOrder--;
-            }
-            if (newOrder != oldOrder) {
-                final Collection<Section> sections = getSuperiorSection() == null ? getSite()
-                        .getAssociatedSectionsSet() : getSuperiorSection().getAssociatedSectionsSet();
-                for (final Section otherSection : sections) {
-                    if (otherSection.getSuperiorSection() == getSuperiorSection()) {
-                        if (this != otherSection) {
-                            final int otherOrder = otherSection.getSectionOrder().intValue();
-                            if (moveUp) {
-                                if (otherOrder > oldOrder && otherOrder <= newOrder) {
-                                    otherSection.setSectionOrder(Integer.valueOf(otherOrder - 1));
-                                }
-                            } else {
-                                if (otherOrder >= newOrder && otherOrder < oldOrder) {
-                                    otherSection.setSectionOrder(Integer.valueOf(otherOrder + 1));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        setSectionOrder(Integer.valueOf(newOrder));
-    }
-    
     /**
      * @return the section immediately after this section in the superior
      *         section or <code>null</code> if the section is the last
      */
     public Section getNextSection() {
-        Integer thisOrder = getSectionOrder();
-        if (thisOrder == null) {
-            thisOrder = new Integer(Integer.MAX_VALUE);
-        }
-        
-        Collection<Section> siblingsAndSelf;
-        if (getSuperiorSection() != null) {
-            siblingsAndSelf = getSuperiorSection().getOrderedSubSections();
+        if (getSuperiorSection() == null) {
+            return Site.SECTION_ORDER_ADAPTER.getNext(getSite(), this);
         }
         else {
-            siblingsAndSelf = getSite().getOrderedTopLevelSections();
+            return SECTION_ORDER_ADAPTER.getNext(getSuperiorSection(), this);
         }
-        
-        for (Section section : siblingsAndSelf) {
-            Integer sectionOrder = section.getSectionOrder();
-            if (sectionOrder == null) {
-                sectionOrder = new Integer(Integer.MAX_VALUE);
-            }
-            
-            if (sectionOrder > thisOrder) {
-                return section;
-            }
-        }
-        
-        return null;
     }
     
     /**
@@ -183,20 +127,15 @@ public class Section extends Section_Base {
      *            <code>null</code> if this section should be last
      */
     public void setNextSection(Section section) {
-        setNewSectionOrder(section != null ? section.getSectionOrder() : null);
+        setSectionOrder(section != null ? section.getSectionOrder() : null);
+        
+        if (getSuperiorSection() == null) {
+            Site.SECTION_ORDER_ADAPTER.orderChanged(getSite(), this);
+        } else {
+            SECTION_ORDER_ADAPTER.orderChanged(getSuperiorSection(), this);
+        }
     }
     
-    private int getNewOrder(Integer order) {
-        if (order == null) {
-            if (getSuperiorSection() == null) {
-                return getSite().getNumberOfTopLevelSections();
-            } else {
-                return getSuperiorSection().getAssociatedSectionsSet().size() - 1;
-            }
-        }
-        return order.intValue();
-    }
-
     public void insertItem(MultiLanguageString itemName, MultiLanguageString itemInformation,
             Integer insertItemOrder) {
         new Item(this, itemName, itemInformation, insertItemOrder);
@@ -225,8 +164,6 @@ public class Section extends Section_Base {
         }
 
         Section superiorSection = this.getSuperiorSection();
-        Site sectionSite = this.getSite();
-        Integer sectionToDeleteOrder = this.getSectionOrder();
 
         // Delete Associated Items
         if (this.getAssociatedItemsCount() != 0) {
@@ -253,15 +190,6 @@ public class Section extends Section_Base {
 
         // Delete Associations with Site
         this.setSite(null);
-
-        // ReOrder Sections
-        List<Section> sectionsReordered = sectionSite.getAssociatedSections(superiorSection);
-        for (Section section : sectionsReordered) {
-            Integer sectionOrder = section.getSectionOrder();
-            if (sectionOrder.intValue() > sectionToDeleteOrder.intValue()) {
-                section.setSectionOrder(new Integer(sectionOrder.intValue() - 1));
-            }
-        }
 
         removeRootDomainObject();
         super.deleteDomainObject();
@@ -309,19 +237,6 @@ public class Section extends Section_Base {
             }
         }
 
-        // ReOrder Sections
-        Site sectionSite = getSite();
-        Integer sectionToDeleteOrder = getSectionOrder();
-
-        List<Section> sectionsReordered = sectionSite.getAssociatedSections(getSuperiorSection());
-        for (Section section : sectionsReordered) {
-            Integer sectionOrder = section.getSectionOrder();
-            
-            if (sectionOrder > sectionToDeleteOrder) {
-                section.setSectionOrder(new Integer(sectionOrder - 1));
-            }
-        }
-        
         removeRootDomainObject();
         removeSuperiorSection();
         removeSite();
@@ -356,6 +271,14 @@ public class Section extends Section_Base {
         }
         
         return super.isAvailable(context);
+    }
+
+    public void setItemsOrder(List<Item> items) {
+        ITEM_ORDER_ADAPTER.updateOrder(this, items);
+    }
+
+    public void setSectionsOrder(List<Section> sections) {
+        SECTION_ORDER_ADAPTER.updateOrder(this, sections);
     }
 
 }

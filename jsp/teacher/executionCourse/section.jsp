@@ -44,14 +44,27 @@
 		</html:link>
 	</span>
 
-	<span class="pleft1">	
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=deleteSection&amp;sectionID=<bean:write name="section" property="idInternal"/></bean:define>
-		<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-			<bean:message key="button.deleteSection"/>
-		</html:link>
-	</span>
-	
+    <span class="switchNoneStyle">
+        	<span class="pleft1">	
+        		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+        		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=deleteSection&amp;sectionID=<bean:write name="section" property="idInternal"/></bean:define>
+        		<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+        			<bean:message key="button.deleteSection"/>
+        		</html:link>
+        	</span>
+    </span>
+
+    <bean:define id="deleteSectionId" value="<%= "deleteSectionForm" + section.getIdInternal() %>"/>
+
+    <span class="switchInline">
+        <span class="pleft1">
+            <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+            <html:link href="<%= String.format("javascript:showElement('%s');", deleteSectionId) %>">
+                <bean:message key="button.deleteSection"/>
+            </html:link>
+        </span>
+    </span>
+
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=createSection&amp;sectionID=<bean:write name="section" property="idInternal"/></bean:define>
@@ -69,7 +82,42 @@
 	</span>
 </p>
 
+<div id="<%= deleteSectionId %>" class="dnone mvert05">
+    <fr:form action="<%= String.format("/manageExecutionCourse.do?method=confirmSectionDelete&amp;executionCourseID=%s&amp;sectionID=%s&amp;confirm=true", executionCourseId, section.getIdInternal()) %>">
+        <p class="width550px">
+        <span class="warning0 mright075">
+            <logic:equal name="section" property="deletable" value="true">
+                <bean:message key="message.section.delete.confirm" bundle="SITE_RESOURCES"/>
+            </logic:equal>
+            <logic:notEqual name="section" property="deletable" value="true">
+                <bean:message key="message.section.delete.notAvailable" bundle="SITE_RESOURCES"/>
+            </logic:notEqual>
+        </span>                
+        
+        <logic:equal name="section" property="deletable" value="true">
+            <html:submit>
+                <bean:message key="button.confirm" bundle="SITE_RESOURCES"/>
+            </html:submit>
+        </logic:equal>
+        <html:button property="hide" onclick="<%= String.format("javascript:hideElement('%s');", deleteSectionId) %>">
+            <bean:message key="button.cancel" bundle="SITE_RESOURCES"/>
+        </html:button>
+        </p>
+    </fr:form>
+</div>
 
+<span style="color: #888;">
+    <bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
+    <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+        <fr:layout>
+            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+            <fr:property name="key" value="true"/>
+            <fr:property name="bundle" value="SITE_RESOURCES"/>
+            <fr:property name="subLayout" value="values"/>
+            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+        </fr:layout>
+    </fr:view>
+</span>
 
 <logic:empty name="section" property="orderedSubSections">
     <p class="mtop2">
@@ -145,11 +193,15 @@
         </html:link>
     </li>
     <logic:notEmpty name="section" property="associatedItems">
-        <li>
-            <html:link page="<%= "/manageExecutionCourse.do?method=organizeSectionItems&amp;executionCourseID=" + executionCourseId + "&amp;sectionID=" + section.getIdInternal() %>">
-                <bean:message key="link.section.items.organize" bundle="SITE_RESOURCES"/>
-            </html:link>
-        </li>
+        <bean:size id="itemsCount" name="section" property="associatedItems"/>
+        
+        <logic:greaterThan name="itemsCount" value="1">
+            <li>
+                <html:link page="<%= "/manageExecutionCourse.do?method=organizeSectionItems&amp;executionCourseID=" + executionCourseId + "&amp;sectionID=" + section.getIdInternal() %>">
+                    <bean:message key="link.section.items.organize" bundle="SITE_RESOURCES"/>
+                </html:link>
+            </li>
+        </logic:greaterThan>
     </logic:notEmpty>
 </ul>
 
@@ -183,7 +235,7 @@
         <bean:define id="deleteId" value="<%= "deleteForm" + item.getIdInternal() %>"/>
 
         <span class="switchNoneStyle">
-        	<span class="pleft1">
+        	   <span class="pleft1">
 	       		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 	       		<html:link page="<%= deleteUrl %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 	       			<bean:message key="button.deleteItem"/>
@@ -217,13 +269,17 @@
 		</span>
 
         <logic:notEmpty name="item" property="fileItems">
-			<span class="pleft1">
-		        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-	            <bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=organizeItemFiles&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
-	            <html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-	                <bean:message key="link.item.files.organize" bundle="SITE_RESOURCES"/>
-	            </html:link>
-            </span>
+            <bean:size id="filesCount" name="item" property="fileItems"/>
+        
+            <logic:greaterThan name="filesCount" value="1">
+        			<span class="pleft1">
+        		        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+        	            <bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=organizeItemFiles&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
+        	            <html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+        	                <bean:message key="link.item.files.organize" bundle="SITE_RESOURCES"/>
+        	            </html:link>
+                </span>
+            </logic:greaterThan>
         </logic:notEmpty>
         
         <div id="<%= deleteId %>" class="dnone mvert05">
@@ -291,19 +347,18 @@
             			    	            </html:link>)
             		    	            </span>
 
-	                                <span class="pleft1" style="color: #888;">
-	                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
-	                                    <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
-	                                        <fr:layout>
-	                                            <fr:property name="classes" value="italic"/>
-	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
-	                                            <fr:property name="key" value="true"/>
-	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
-	                                            <fr:property name="subLayout" value="values"/>
-	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
-	                                        </fr:layout>
-	                                    </fr:view>
-	                                </span>
+                                <span class="pleft1" style="color: #888;">
+                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
+                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+                                        <fr:layout>
+                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+                                            <fr:property name="key" value="true"/>
+                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
+                                            <fr:property name="subLayout" value="values"/>
+                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+                                        </fr:layout>
+                                    </fr:view>
+                                </span>
         	    	                </li>
                         	</logic:iterate>
                     	</ul>

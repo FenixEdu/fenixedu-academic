@@ -24,7 +24,7 @@ public class TeacherFromSiteContainingSectionsAuthorization extends Authorizatio
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         super.execute(request, response);
         
-        List<Pair<Section, Section>> sections = (List<Pair<Section, Section>>) request.getServiceParameters().getParameter(0);
+        List<Pair<Section, Section>> sections = (List<Pair<Section, Section>>) request.getServiceParameters().getParameter(1);
         for (Pair<Section, Section> pair : sections) {
             checkSection(getRemoteUser(request), pair.getKey());
             checkSection(getRemoteUser(request), pair.getValue());

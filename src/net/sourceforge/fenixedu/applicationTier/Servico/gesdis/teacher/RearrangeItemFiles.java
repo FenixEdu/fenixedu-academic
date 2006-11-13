@@ -15,10 +15,7 @@ import net.sourceforge.fenixedu.domain.Item;
 public class RearrangeItemFiles extends Service {
 
     public void run(Item holder, List<FileItem> files) {
-        int index = 0;
-        for (FileItem file : files) {
-            file.setOrderInItem(index++);
-        }
+        holder.setFileItemsOrder(files);
     }
 
 }

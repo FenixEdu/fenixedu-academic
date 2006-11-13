@@ -991,7 +991,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward saveSectionsOrder(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         String orderString = request.getParameter("sectionsOrder");
-        Site site = getSite(request); 
+        Site site = getSite(request);
 
         Section parentSection = getSection(request);
         List<Section> initialOrder = flattenSection(site, parentSection);
@@ -1011,7 +1011,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             hierarchy.add(new Pair<Section, Section>(parent, child));
         }
 
-        ServiceUtils.executeService(getUserView(request), "RearrangeSiteSections", hierarchy);
+        ServiceUtils.executeService(getUserView(request), "RearrangeSiteSections", site, hierarchy);
         
         if (parentSection == null) {
             return sections(mapping, form, request, response);
@@ -1095,7 +1095,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             orderedItems.add(initialItems.get(itemIndex - 1));
         }
 
-        ServiceUtils.executeService(getUserView(request), "RearrangeSectionItems", orderedItems);
+        ServiceUtils.executeService(getUserView(request), "RearrangeSectionItems", section, orderedItems);
         return section(mapping, form, request, response);
     }
     

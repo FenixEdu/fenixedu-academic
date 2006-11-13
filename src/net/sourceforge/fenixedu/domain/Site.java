@@ -9,20 +9,26 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 /**
  * @author Ivo Brand�o
  */
 public abstract class Site extends Site_Base {
 
+    public static OrderedRelationAdapter<Site, Section> SECTION_ORDER_ADAPTER;
+    static {
+        SECTION_ORDER_ADAPTER = new OrderedRelationAdapter<Site, Section>("topLevelSections", "sectionOrder");
+        SiteSection.addListener(SECTION_ORDER_ADAPTER);
+    }
+    
     public Site() {
         super();
-        
         setOjbConcreteClass(this.getClass().getName());
     }
 
@@ -47,7 +53,11 @@ public abstract class Site extends Site_Base {
 
     protected void deleteRelations() {
     }
-
+    
+    public List<Section> getTopLevelSections() {
+        return getAssociatedSections(null);
+    }
+    
     public List<Section> getAssociatedSections(final Section parentSection) {
         final List<Section> result;
         if (parentSection != null) {
@@ -107,5 +117,9 @@ public abstract class Site extends Site_Base {
         groups.add(new InternalPersonGroup());
         
         return groups;
+    }
+
+    public void setTopLevelSectionsOrder(List<Section> sections) {
+        SECTION_ORDER_ADAPTER.updateOrder(this, sections);
     }
 }

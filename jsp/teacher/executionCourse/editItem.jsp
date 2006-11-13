@@ -24,7 +24,7 @@
 <bean:define id="sectionId" name="item" property="section.idInternal"/>
 
 <fr:form action="<%= String.format("/manageExecutionCourse.do?method=section&executionCourseID=%s&sectionID=%s", executionCourseId, sectionId) %>">
-    <fr:edit name="item" type="net.sourceforge.fenixedu.domain.Item" schema="net.sourceforge.fenixedu.domain.ItemEditor">
+    <fr:edit id="edit-item" name="item" type="net.sourceforge.fenixedu.domain.Item" schema="net.sourceforge.fenixedu.domain.ItemEditor">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -36,7 +36,7 @@
             <bean:message key="title.item.files" bundle="SITE_RESOURCES"/>
         </h3>
     
-        <fr:edit name="item" property="sortedFileItems" schema="site.item.files.visible">
+        <fr:edit id="edit-files" name="item" property="sortedFileItems" schema="site.item.files.visible">
             <fr:layout name="tabular-editable">
                 <fr:property name="customLink(add)">
                     <span class="switchInline">
