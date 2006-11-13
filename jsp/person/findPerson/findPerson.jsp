@@ -160,8 +160,8 @@ function check(e,v){
 		<p><b><bean:message key="label.manager.findedOnePersons" arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" /></b></p>
 	</logic:equal>
 
-	<p>Páginas:			
-		<bean:define id="url">/messaging/findPerson.do?method=findPerson&name=<bean:write name="name"/>&roleType=<bean:write name="roleType"/>&degreeId=<bean:write name="degreeId"/>&degreeType=<bean:write name="degreeType"/>&departmentId=<bean:write name="departmentId"/>&viewPhoto=<bean:write name="viewPhoto"/></bean:define>			
+	<bean:define id="url">/messaging/findPerson.do?method=findPerson&name=<bean:write name="name"/>&roleType=<bean:write name="roleType"/>&degreeId=<bean:write name="degreeId"/>&degreeType=<bean:write name="degreeType"/>&departmentId=<bean:write name="departmentId"/>&viewPhoto=<bean:write name="viewPhoto"/></bean:define>			
+	<p>Páginas:					
 		<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
 	</p>
 	
@@ -306,6 +306,11 @@ function check(e,v){
 				</table>			</div>
 		</div>
 	 </logic:iterate>
+	 
+	 <p>Páginas:			
+		<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
+	</p>
+	
 </logic:present>
 
 <script>
