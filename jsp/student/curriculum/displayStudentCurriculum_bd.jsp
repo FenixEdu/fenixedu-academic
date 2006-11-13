@@ -18,8 +18,6 @@
 	<logic:present property="studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="studentNumber"/>
 	</logic:present>
-
-	
 	
 	<table class="tstyle5 thlight thright thmiddle mbottom0">
 		<tr>
@@ -117,6 +115,14 @@
 						- <bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
 					</logic:present>
 				</p>
+				<logic:present name="studentCurricularPlan" property="branch">
+					<p>
+						<strong>
+							Grupo: 
+						</strong> 
+						<bean:write name="studentCurricularPlan" property="branch.name"/>
+					</p>
+				</logic:present>
 				<p>
 					<strong>
 						<bean:message key="label.beginDate" bundle="STUDENT_RESOURCES" />: 
