@@ -11,7 +11,7 @@
           <tr><td colspan="2">
           	<table border="0" width="100%" height="100%" cellspacing="4">
 				<tr>
-        		    <td align="right"><bean:message key="label.person.name" bundle="DEFAULT"/>:</td>
+        		    <td align="right"><bean:message key="label.person.name" bundle="APPLICATION_RESOURCES"/>:</td>
 		        	<td colspan="5"><bean:write name="seniorInfoForm" property="name"/></td>
 					<td rowspan="3" valign="center" height="12px" width="5px" align="center">
 						<logic:equal name="seniorInfoForm" property="availablePhoto" value="true">
@@ -21,21 +21,21 @@
 					</td>
 		        </tr>
           		<tr>
-		            <td align="right"><bean:message key="label.person.address" bundle="DEFAULT" /></td>
+		            <td align="right"><bean:message key="label.person.address" bundle="APPLICATION_RESOURCES" /></td>
 		            <td colspan="5"><bean:write name="seniorInfoForm" property="address"/></td>
 		        </tr>
            		<tr>
-		            <td align="right"><bean:message key="label.person.postCode" bundle="DEFAULT" /></td>
+		            <td align="right"><bean:message key="label.person.postCode" bundle="APPLICATION_RESOURCES" /></td>
 		            <td><bean:write name="seniorInfoForm" property="areaCode" filter="false"/></td>
-		            <td align="right" colspan="2"><bean:message key="label.person.areaOfPostCode" bundle="DEFAULT" /></td>
+		            <td align="right" colspan="2"><bean:message key="label.person.areaOfPostCode" bundle="APPLICATION_RESOURCES" /></td>
 		            <td><bean:write name="seniorInfoForm" property="areaCodeArea" filter="false"/></td>
 		        </tr>
 				<tr>	
-					<td align="right" width="14%"><bean:message key="label.person.telephone" bundle="DEFAULT" /></td>
+					<td align="right" width="14%"><bean:message key="label.person.telephone" bundle="APPLICATION_RESOURCES" /></td>
             		<td width="8%"><bean:write name="seniorInfoForm" property="phone"/></td>
-            		<td align="right"width="16%"><bean:message key="label.person.mobilePhone" bundle="DEFAULT" /></td>
+            		<td align="right"width="16%"><bean:message key="label.person.mobilePhone" bundle="APPLICATION_RESOURCES" /></td>
             		<td width="16%" colspan="2"><bean:write name="seniorInfoForm" property="mobilePhone"/></td>
-            		<td align="right" width="16%"><bean:message key="label.person.email" bundle="DEFAULT" /></td>
+            		<td align="right" width="16%"><bean:message key="label.person.email" bundle="APPLICATION_RESOURCES" /></td>
 	        		<td width="16%"><bean:write name="seniorInfoForm" property="email"/></td>
 				</tr>
 	        </table>				

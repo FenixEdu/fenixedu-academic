@@ -113,11 +113,16 @@ public class CreateClassificationsForStudents extends Service {
         Arrays.sort(approvationRatioLimits);
         Arrays.sort(arithmeticMeanLimits);
 
-        HashMap<Character, List<Registration>> splitedStudentsByEntryGrade = splitStudentsByClassification(
-                entryGradeLimits, firstYearStudents, "entryGrade", getEntryGradeTransformer,
-                setEntryGradeClosure);
-        ByteArrayOutputStream entryGradeStream = studentsRenderer(splitedStudentsByEntryGrade,
-                getEntryGradeTransformer);
+        ByteArrayOutputStream entryGradeStream;
+        if (firstYearStudents.size() > 0) {
+            HashMap<Character, List<Registration>> splitedStudentsByEntryGrade = splitStudentsByClassification(
+                    entryGradeLimits, firstYearStudents, "entryGrade", getEntryGradeTransformer,
+                    setEntryGradeClosure);
+            entryGradeStream = studentsRenderer(splitedStudentsByEntryGrade,
+                    getEntryGradeTransformer);
+        } else {
+            entryGradeStream = new ByteArrayOutputStream();
+        }
 
         HashMap<Character, List<Registration>> splitedStudentsByApprovationRatio = splitStudentsByClassification(
                 approvationRatioLimits, otherYearsStudents, "approvationRatio",

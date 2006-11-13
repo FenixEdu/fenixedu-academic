@@ -61,13 +61,15 @@ public class SeniorInformationAction extends FenixDispatchAction {
         seniorInfoForm.set("availablePhoto", infoSenior.getAvailablePhoto());
         seniorInfoForm.set("personID", infoSenior.getPersonID());
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(infoSenior.getExpectedDegreeTermination());
-        seniorInfoForm.set("expectedDegreeTerminationDay", new Integer(calendar
-                .get(Calendar.DAY_OF_MONTH)));
-        seniorInfoForm.set("expectedDegreeTerminationMonth", new Integer(
-                calendar.get(Calendar.MONTH) + 1));
-        seniorInfoForm.set("expectedDegreeTerminationYear", new Integer(calendar.get(Calendar.YEAR)));
+        if (infoSenior.getExpectedDegreeTermination() != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(infoSenior.getExpectedDegreeTermination());
+            seniorInfoForm.set("expectedDegreeTerminationDay", new Integer(calendar
+                    .get(Calendar.DAY_OF_MONTH)));
+            seniorInfoForm.set("expectedDegreeTerminationMonth", new Integer(
+                    calendar.get(Calendar.MONTH) + 1));
+            seniorInfoForm.set("expectedDegreeTerminationYear", new Integer(calendar.get(Calendar.YEAR)));
+        }
 
         seniorInfoForm.set("expectedDegreeAverageGrade", infoSenior.getExpectedDegreeAverageGrade());
         seniorInfoForm.set("specialtyField", infoSenior.getSpecialtyField());
