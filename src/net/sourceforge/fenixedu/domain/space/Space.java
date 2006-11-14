@@ -60,6 +60,14 @@ public abstract class Space extends Space_Base {
 	return new TreeSet<SpaceInformation>(getSpaceInformations());
     }
 
+    public Blueprint getSuroundingSpaceMostRecentBlueprint() {
+	Space suroundingSpace = getSuroundingSpace();
+	if(suroundingSpace != null) {
+	    return suroundingSpace.getMostRecentBlueprint();
+	}
+	return null;
+    }
+    
     public Blueprint getMostRecentBlueprint() {
 	SortedSet<Blueprint> orderedBlueprints = getOrderedBlueprints();
 	return (!orderedBlueprints.isEmpty()) ? orderedBlueprints.last() : null;

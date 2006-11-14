@@ -28,71 +28,124 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 
     private Boolean viewBlueprintNumbers;
 
-    public SpaceBlueprintsDWGProcessor(Space parentSpace_, Boolean viewBlueprintNumbers_)
-	    throws IOException {
+    private Boolean suroundingSpaceBlueprint;
+
+    private Space thisSpace;
+
+    public SpaceBlueprintsDWGProcessor(Space parentSpace_, Boolean viewBlueprintNumbers_,
+	    Boolean suroundingSpaceBlueprint_) throws IOException {
+
 	super();
+	this.suroundingSpaceBlueprint = suroundingSpaceBlueprint_;
+	this.viewBlueprintNumbers = viewBlueprintNumbers_;
+	this.parentSpace = parentSpace_;
+    }
+
+    public SpaceBlueprintsDWGProcessor(Space parentSpace_, Space thisSpace_,
+	    Boolean viewBlueprintNumbers_, Boolean suroundingSpaceBlueprint_) throws IOException {
+
+	super();
+	this.thisSpace = thisSpace_;
+	this.suroundingSpaceBlueprint = suroundingSpaceBlueprint_;
 	this.viewBlueprintNumbers = viewBlueprintNumbers_;
 	this.parentSpace = parentSpace_;
     }
 
     @Override
-    protected void drawText(ReferenceConverter referenceConverter, Graphics2D graphics2D, DwgText dwgText) {	
-	if (isViewBlueprintNumbers() != null && !isViewBlueprintNumbers()) {	    
-	    final Point2D point2D = dwgText.getInsertionPoint();
-	    String text = dwgText.getText();
-	    if (StringUtils.isNumeric(text)) {
-		Integer blueprintNumber = Integer.valueOf(text);
-		Room room = getParentSpace().readRoomByBlueprintNumber(blueprintNumber);
-		if (room != null) {
-		    String identification = ((RoomInformation) room.getSpaceInformation())
-			    .getIdentification();
-		    if (!StringUtils.isEmpty(identification)) {
-			int x = convXCoord(point2D.getX(), referenceConverter);
-			int y = convYCoord(point2D.getY(), referenceConverter);
-			graphics2D.drawString(identification, x, y);
-		    }
-		}
-	    }
-	} else {
-	    super.drawText(referenceConverter, graphics2D, dwgText);
+    protected void drawText(ReferenceConverter referenceConverter, Graphics2D graphics2D, DwgText dwgText) {
+
+	final Point2D point2D = dwgText.getInsertionPoint();
+	int x = convXCoord(point2D.getX(), referenceConverter);
+	int y = convYCoord(point2D.getY(), referenceConverter);
+
+	Room room = (StringUtils.isNumeric(dwgText.getText())) ? getParentSpace()
+		.readRoomByBlueprintNumber(Integer.valueOf(dwgText.getText())) : null;
+
+	String textToInsert = getTextToInsert(dwgText, room, isToViewBlueprintNumbers());
+	if (textToInsert != null) {
+	    graphics2D.drawString(textToInsert, x, y);
+	}
+
+	if (textToInsert != null && isSuroundingSpaceBlueprint() != null && isSuroundingSpaceBlueprint()
+		&& thisSpace != null && room.equals(thisSpace)) {
+
+	    int characters = textToInsert.length();
+	    double x_offset = characters * fontSize;
+	    double y_offset = fontSize;
+
+	    int x1 = x;
+	    int y1 = (int) (y - y_offset);
+	    int width = (int) (x_offset / 2);
+	    int height = (int) (y_offset);
+	    int startAngle = 0;
+	    int arcAngle = 360;
+
+	    graphics2D.drawArc(x1, y1, width, height, startAngle, arcAngle);
 	}
     }
 
     public static BlueprintTextRectangles getBlueprintTextReactangles(final InputStream inputStream,
-	    Space parentSpace, Boolean viewBlueprintNumbers) throws IOException {
+	    Space parentSpace, Boolean viewBlueprintNumbers, Boolean suroundingSpaceBlueprint)
+	    throws IOException {
 
 	File file = FileUtils.copyToTemporaryFile(inputStream);
 	final SpaceBlueprintsDWGProcessor processor = new SpaceBlueprintsDWGProcessor(parentSpace,
-		viewBlueprintNumbers);
+		viewBlueprintNumbers, suroundingSpaceBlueprint);
 	final DwgFile dwgFile = processor.readDwgFile(file.getAbsolutePath());
 	final Vector<DwgObject> dwgObjects = dwgFile.getDwgObjects();
 	final ReferenceConverter referenceConverter = new ReferenceConverter(dwgObjects,
 		processor.scaleRatio);
-
 	BlueprintTextRectangles map = new BlueprintTextRectangles();
+
 	for (final DwgObject dwgObject : dwgObjects) {
 	    if (dwgObject instanceof DwgText) {
 		DwgText dwgText = ((DwgText) dwgObject);
-		if (StringUtils.isNumeric(dwgText.getText())) {
-		    Integer blueprintNumber = Integer.valueOf(dwgText.getText());
-		    Room room = parentSpace.readRoomByBlueprintNumber(blueprintNumber);
-		    if (room != null) {
-			final Point2D point2D = dwgText.getInsertionPoint();
-			map.put(room, new BlueprintTextRectangle(dwgText.getText(), processor
-				.convXCoord(point2D.getX(), referenceConverter), processor.convYCoord(
-				point2D.getY(), referenceConverter), processor.fontSize));
-		    }
+		final Point2D point2D = dwgText.getInsertionPoint();
+		Room room = (StringUtils.isNumeric(dwgText.getText())) ? parentSpace
+			.readRoomByBlueprintNumber(Integer.valueOf(dwgText.getText())) : null;
+		String textToInsert = getTextToInsert(dwgText, room, viewBlueprintNumbers);
+		if (textToInsert != null) {
+		    map.put(room, new BlueprintTextRectangle(textToInsert, processor.convXCoord(point2D
+			    .getX(), referenceConverter), processor.convYCoord(point2D.getY(),
+			    referenceConverter), processor.fontSize));
 		}
 	    }
 	}
 	return map;
     }
 
+    private static String getTextToInsert(DwgText dwgText, Room room, Boolean isToViewBlueprintNumbers) {
+	if (room != null) {
+	    if (isToViewBlueprintNumbers != null && !isToViewBlueprintNumbers) {
+		String identification = ((RoomInformation) room.getSpaceInformation())
+			.getIdentification();
+		if (!StringUtils.isEmpty(identification)) {
+		    return identification;
+		}
+	    } else {
+		return dwgText.getText();
+	    }
+	}
+	return null;
+    }
+
     public Space getParentSpace() {
 	return parentSpace;
     }
 
-    public Boolean isViewBlueprintNumbers() {
+    public Boolean isToViewBlueprintNumbers() {
 	return viewBlueprintNumbers;
+    }
+
+    public Boolean isSuroundingSpaceBlueprint() {
+	return suroundingSpaceBlueprint;
+    }
+
+    public Boolean getViewBlueprintNumbers() {
+	return viewBlueprintNumbers;
+    }
+
+    public Space getThisSpace() {
+	return thisSpace;
     }
 }

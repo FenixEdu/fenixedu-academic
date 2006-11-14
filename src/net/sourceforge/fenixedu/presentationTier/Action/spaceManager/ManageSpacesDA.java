@@ -91,27 +91,11 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws IOException {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	Boolean viewBlueprintNumbers = isToViewBlueprintNumbers(request);	
-	Blueprint mostRecentBlueprint = spaceInformation.getSpace().getMostRecentBlueprint();
-	setBlueprintTextRectangles(request, mostRecentBlueprint, viewBlueprintNumbers);	
-	request.setAttribute("viewBlueprintNumbers", viewBlueprintNumbers);
+	final Space space = spaceInformation.getSpace();
+	setBlueprintTextRectangles(request, space);
 	return manageSpace(mapping, request, spaceInformation);
     }
-
-    private void setBlueprintTextRectangles(HttpServletRequest request, Blueprint mostRecentBlueprint,
-	    Boolean viewBlueprintNumbers) throws IOException {
-	
-	if (mostRecentBlueprint != null) {
-	    final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
-	    final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
-	    final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
-	    BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor
-		    .getBlueprintTextReactangles(inputStream, mostRecentBlueprint.getSpace(),
-			    viewBlueprintNumbers);
-	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
-	}
-    }
-
+    
     public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -248,6 +232,29 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     // Private Methods
+    private void setBlueprintTextRectangles(HttpServletRequest request, Space space) throws IOException {
+
+	Boolean viewBlueprintNumbers = isToViewBlueprintNumbers(request);
+	Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
+	Boolean suroundingSpaceBlueprint = mostRecentBlueprint == null;
+	mostRecentBlueprint = (mostRecentBlueprint == null) ? space
+		.getSuroundingSpaceMostRecentBlueprint() : mostRecentBlueprint;
+
+	if (mostRecentBlueprint != null) {
+	    final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
+	    final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
+	    final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
+	    BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor
+		    .getBlueprintTextReactangles(inputStream, mostRecentBlueprint.getSpace(),
+			    viewBlueprintNumbers, suroundingSpaceBlueprint);
+
+	    request.setAttribute("mostRecentBlueprint", mostRecentBlueprint);
+	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
+	    request.setAttribute("viewBlueprintNumbers", viewBlueprintNumbers);	    
+	    request.setAttribute("suroundingSpaceBlueprint", suroundingSpaceBlueprint);
+	}
+    }
+
     private void saveMessages(HttpServletRequest request, DomainException e) {
 	ActionMessages actionMessages = new ActionMessages();
 	actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
@@ -273,8 +280,9 @@ public class ManageSpacesDA extends FenixDispatchAction {
     private Boolean isToViewBlueprintNumbers(HttpServletRequest request) {
 	final String viewBlueprintNumbersString = request.getParameterMap().containsKey(
 		"viewBlueprintNumbers") ? request.getParameter("viewBlueprintNumbers")
-		: (String) request.getAttribute("viewBlueprintNumbers");		
-	return viewBlueprintNumbersString != null ? Boolean.valueOf(viewBlueprintNumbersString) : Boolean.FALSE;
+		: (String) request.getAttribute("viewBlueprintNumbers");
+	return viewBlueprintNumbersString != null ? Boolean.valueOf(viewBlueprintNumbersString)
+		: Boolean.FALSE;
     }
 
     private Space getSpaceFromParameter(final HttpServletRequest request) {

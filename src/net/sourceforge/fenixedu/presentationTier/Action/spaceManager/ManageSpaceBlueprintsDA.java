@@ -186,7 +186,16 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 	final String viewBlueprintNumbersString = request.getParameterMap().containsKey(
 		"viewBlueprintNumbers") ? request.getParameter("viewBlueprintNumbers")
 		: (String) request.getAttribute("viewBlueprintNumbers");
-	return viewBlueprintNumbersString != null ? Boolean.valueOf(viewBlueprintNumbersString) : Boolean.FALSE;
+	return viewBlueprintNumbersString != null ? Boolean.valueOf(viewBlueprintNumbersString)
+		: Boolean.FALSE;
+    }
+
+    private Boolean isSuroundingSpaceBlueprint(HttpServletRequest request) {
+	final String suroundingSpaceBlueprintString = request.getParameterMap().containsKey(
+		"suroundingSpaceBlueprint") ? request.getParameter("suroundingSpaceBlueprint")
+		: (String) request.getAttribute("suroundingSpaceBlueprint");
+	return suroundingSpaceBlueprintString != null ? Boolean.valueOf(suroundingSpaceBlueprintString)
+		: null;
     }
 
     private void saveActionMessageOnRequest(HttpServletRequest request, String errorKey, String[] args) {
@@ -199,6 +208,8 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws IOException {
 
 	Boolean viewBlueprintNumbers = isToViewBlueprintNumbers(request);
+	Boolean isSuroundingSpaceBlueprint = isSuroundingSpaceBlueprint(request);
+
 	final String blueprintIdString = request.getParameter("blueprintId");
 	final Integer blueprintId = Integer.valueOf(blueprintIdString);
 	final Blueprint blueprint = rootDomainObject.readBlueprintByOID(blueprintId);
@@ -206,7 +217,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 
 	// If dspace worked properly we could do this...
 	// final byte[] blueprintBytes =
-        // FileManagerFactory.getFileManager().retrieveFile(blueprintFile.getExternalStorageIdentification());
+	// FileManagerFactory.getFileManager().retrieveFile(blueprintFile.getExternalStorageIdentification());
 	// Science it doesn't, we'll do...
 	final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
 	final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
@@ -215,10 +226,17 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 	response.setHeader("Content-disposition", "attachment; filename=blueprint.jpeg");
 	final ServletOutputStream writer = response.getOutputStream();
 
-	SpaceBlueprintsDWGProcessor processor = new SpaceBlueprintsDWGProcessor(blueprint.getSpace(),
-		viewBlueprintNumbers);
+	SpaceBlueprintsDWGProcessor processor;
+	if (isSuroundingSpaceBlueprint != null && isSuroundingSpaceBlueprint) {
+	    SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+	    processor = new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), spaceInformation
+		    .getSpace(), viewBlueprintNumbers, isSuroundingSpaceBlueprint);
+	} else {
+	    processor = new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), viewBlueprintNumbers,
+		    isSuroundingSpaceBlueprint);
+	}
+	
 	processor.generateJPEGImage(inputStream, writer);
-
 	return null;
     }
 }

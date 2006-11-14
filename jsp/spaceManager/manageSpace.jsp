@@ -118,9 +118,9 @@
 	%>
 
 	<%-- BluePrints --%>	
-	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>
+	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>			
 		
-	<logic:notEmpty name="selectedSpaceInformation" property="space.mostRecentBlueprint">		
+	<logic:notEmpty name="mostRecentBlueprint">		
 		
 		<bean:define id="urlToViewBlueprinNumbers">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&viewBlueprintNumbers=true</bean:define>
 		<bean:define id="urlToViewIdentifications">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&viewBlueprintNumbers=false</bean:define>		
@@ -139,10 +139,9 @@
 				<b><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/></b>
 			</logic:equal>	   						   		
 		)
-		
-		<bean:define id="blueprint" name="selectedSpaceInformation" property="space.mostRecentBlueprint"/>		
-		<bean:define id="urlToImage"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="blueprint" property="idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/></bean:define>
+								
 		<p>
+			<bean:define id="urlToImage"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="mostRecentBlueprint" property="idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&suroundingSpaceBlueprint=<bean:write name="suroundingSpaceBlueprint"/>&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>				
 			<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap"/>
 			<map id ="roomLinksMap" name="roomLinksMap">
 				<logic:iterate id="blueprintTextRectanglesEntry" name="blueprintTextRectangles">																	
@@ -157,9 +156,10 @@
 				</logic:iterate>					
 			</map>								
 		</p>
+		
 	</logic:notEmpty>			
-	<logic:empty name="selectedSpaceInformation" property="space.mostRecentBlueprint">
-		<p class="mtop05"><em><bean:message key="label.empty.blueprint" bundle="SPACE_RESOURCES"/>.</em></p>		
+	<logic:empty name="mostRecentBlueprint">																	
+		<p class="mtop05"><em><bean:message key="label.empty.blueprint" bundle="SPACE_RESOURCES"/>.</em></p>										
 	</logic:empty>
 	<%
 		if(thisSpace.personHasPermissionsToManageSpace(person)){
