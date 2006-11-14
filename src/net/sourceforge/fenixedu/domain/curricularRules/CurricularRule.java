@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
 public abstract class CurricularRule extends CurricularRule_Base {
  
@@ -98,6 +99,23 @@ public abstract class CurricularRule extends CurricularRule_Base {
         if (endExecutionPeriod != null && beginExecutionPeriod.isAfter(endExecutionPeriod)) {
             throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
         }
+    }
+    
+
+    public static CurricularRule createCurricularRule(LogicOperators logicOperator, CurricularRule... curricularRules) {
+	switch (logicOperator) {
+	case AND:
+	    return new AndRule(curricularRules);
+	case OR:
+	    return new OrRule(curricularRules);
+	case NOT:
+	    if(curricularRules.length != 1) {
+		throw new DomainException("error.invalid.notRule.parameters");
+	    }
+	    return new NotRule(curricularRules[0]);
+	default:
+	    throw new DomainException("error.unsupported.logic.operator");
+	}
     }
     
     protected abstract void removeOwnParameters();

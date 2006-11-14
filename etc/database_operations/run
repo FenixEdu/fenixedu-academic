@@ -27,3 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Alter CurricularRule Table" alterTableCurricularRule.sql
+execute "Update CurricularRule Table" updateTableCurricularRule.sql

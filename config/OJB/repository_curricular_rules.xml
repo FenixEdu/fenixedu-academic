@@ -4,6 +4,33 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule" table="CURRICULAR_RULE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.CompositeRule" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.Rule" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.NotRule" />
+	
+	
+	
+	    
+    	
+	
+	
+	
+	
+	
+	
+</class-descriptor>
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.NotRule -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.NotRule" table="CURRICULAR_RULE"/>
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.CompositeRule -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.CompositeRule" table="CURRICULAR_RULE">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.AndRule" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.OrRule" />
 	
 	
 	    
@@ -17,20 +44,15 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.CompositeRule -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.OrRule -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.CompositeRule" table="CURRICULAR_RULE">
-	
-	
-	    
-    	
-	
-	
-	
-	
-	
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.OrRule" table="CURRICULAR_RULE"/>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.AndRule -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.AndRule" table="CURRICULAR_RULE"/>
+
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.Rule -->

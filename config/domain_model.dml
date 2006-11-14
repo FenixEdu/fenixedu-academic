@@ -1008,10 +1008,26 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
     Integer keyParentCompositeRule;
     CurricularRuleType curricularRuleType;
     Integer keyContextCourseGroup;
+    Integer keyNotRule;
 }
+
+	class net.sourceforge.fenixedu.domain.curricularRules.NotRule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {
+		Integer keyWrappedRule;
+	}
+	
     class net.sourceforge.fenixedu.domain.curricularRules.CompositeRule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {    
         LogicOperators compositeRuleType;
     }
+    
+    	class net.sourceforge.fenixedu.domain.curricularRules.AndRule extends net.sourceforge.fenixedu.domain.curricularRules.CompositeRule {    
+    	
+    	}
+    	
+    	class net.sourceforge.fenixedu.domain.curricularRules.OrRule extends net.sourceforge.fenixedu.domain.curricularRules.CompositeRule {    
+    	
+    	}
+    	
+    
     class net.sourceforge.fenixedu.domain.curricularRules.Rule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {
     }
 	    class net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
@@ -7559,6 +7575,11 @@ relation CurricularRuleCompositeRule {
 		multiplicity*;
 	}
 	net.sourceforge.fenixedu.domain.curricularRules.CompositeRule playsRole parentCompositeRule;
+}
+
+relation CurricularRuleNotRule {
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole wrappedRule;
+	net.sourceforge.fenixedu.domain.curricularRules.NotRule playsRole notRule;
 }
 
 relation DegreeModulePrecedenceRule {
