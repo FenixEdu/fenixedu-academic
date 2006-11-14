@@ -116,7 +116,9 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         	    dataSource.add(dummy);    
         	}
         	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
-        	
+            } else {
+        	GenericPair<String, String> dummy = new GenericPair<String, String>(StringUtils.EMPTY, null);
+        	dataSource.add(dummy);
             }
 	} else if (documentRequest instanceof SchoolRegistrationDeclarationRequest) {
 	    final RegistrationDeclaration registrationDeclaration = new RegistrationDeclaration(documentRequest.getRegistration(), getLoggedPerson(request));
