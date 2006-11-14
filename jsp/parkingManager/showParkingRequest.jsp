@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.domain.parking.ParkingDocumentType"%>
 
 <script language="Javascript" type="text/javascript">
 <!--
@@ -144,16 +143,11 @@ function hideCardValidPeriod(toShow){
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="notify"><bean:message key="button.notify"/></html:submit>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="reject"><bean:message key="button.reject"/></html:submit>
 			</p>	
-						
-		<%--
-		<html:link target="printFrame" page="<%= "/parking.do?method=printParkingCard&amp;parkingPartyID=" + parkingPartyId.toString()%>">
-		<bean:message key="label.printCard" bundle="PARKING_RESOURCES"/></html:link>
-		--%>
-		<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='exportToPDFParkingCard';document.forms[0].submit();document.forms[0].method.value='editFirstTimeParkingParty';">
+								
+		<html:link target="printFrame" href="" onclick="document.forms[0].method.value='exportToPDFParkingCard';document.forms[0].submit();document.forms[0].method.value='editFirstTimeParkingParty';">
 		<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/></html:link>
 		</html:form>
 	</logic:equal>
-	
 </logic:present>
-<iframe style="display:none;" name="printFrame" src="" height="0" width="0">
+<iframe style="display:none;" name="printFrame" src="" height="0" width="0" >	
 </iframe>
