@@ -271,12 +271,46 @@
 			<forward name="chooseDegreeCurricularPlan" path="chooseDegreeCurricularPlan"/>
 		</action>		
 
+		<action path="/createClassificationsForStudents"
+				parameter="method"
+				name="createClassificationsForm"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.inquiries.CreateClassificationsForStudentsDispatchAction"
+				scope="request">
+			<forward name="chooseDegreeCurricularPlan" path="chooseDegreeCurricularPlan"/>
+		</action>		
+
+		<action path="/executionCourseInquiries"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries.ExecutionCourseInquiriesDA"
+				scope="request">
+			<forward name="showExecutionCoursesForInquiries" path="show-execution-courses-for-inquiries"/>
+		</action>		
+
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
 
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
+	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+	<message-resources parameter="resources.ImageResources" key="IMAGE_RESOURCES" null="false"/>
+	<message-resources parameter="resources.HtmlAltResources" key="HTMLALT_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
+    <message-resources parameter="resources.PortalResources" key="PORTAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES" null="false"/>
+    <message-resources parameter="resources.TeacherCreditsSheetResources" key="TEACHER_CREDITS_SHEET_RESOURCES" null="false"/>
+    <message-resources parameter="resources.GEPResources" key="GEP_RESOURCES" null="false"/>
+    <message-resources parameter="resources.DegreeAdministrativeOfficeResources" key="DEGREE_ADM_OFFICE" null="false"/>
+	<message-resources parameter="resources.CurriculumHistoricResources" key="CURRICULUM_HISTORIC_RESOURCES" null="false"/>
+	<message-resources parameter="resources.InquiriesResources" key="INQUIRIES_RESOURCES" null="false"/>
+    <message-resources parameter="resources.PublicDegreeInformation" key="PUBLIC_DEGREE_INFORMATION" null="false"/>
+   	<message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/> 
+   	<message-resources parameter="resources.DomainExceptionResources" key="DOMAIN_EXCEPTION_RESOURCES" null="false"/> 
+    <message-resources parameter="resources.RendererResources" key="RENDERER_RESOURCES" null="false"/> 
+    <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>  
+   	<message-resources parameter="resources.CandidateResources" key="CANDIDATE_RESOURCES" null="false" />     
+	<message-resources parameter="resources.VigilancyResources" key="VIGILANCY_RESOURCES" null="false"/> 
+   	<message-resources parameter="resources.TestsResources" key="TESTS_RESOURCES" null="false" />
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

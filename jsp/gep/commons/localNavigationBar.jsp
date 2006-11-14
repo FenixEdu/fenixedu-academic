@@ -45,6 +45,11 @@
 		</html:link>				
 	</li>
 	<li>
+		<html:link page="/executionCourseInquiries.do?method=search">
+			<bean:message key="link.inquiries.execution.course.define.available.for.evaluation" bundle="INQUIRIES_RESOURCES"/>
+		</html:link>				
+	</li>
+	<li>
 		<html:link page="/sendEmailReminder.do?method=prepare">		
 			<bean:message key="link.inquiries.email.reminder" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
@@ -53,7 +58,7 @@
 		<html:link page="/teachingStaff.do?method=selectExecutionYear&executionYearID=44">		
 			<bean:message key="link.inquiries.teachingStaff" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
-	</li>	
+	</li>
 	<li>
 		<html:link page="/createClassificationsForStudents.do?method=prepare">
 			<bean:message key="button.createClassifications" bundle="INQUIRIES_RESOURCES" />

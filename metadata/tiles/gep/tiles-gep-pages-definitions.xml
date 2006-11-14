@@ -79,6 +79,8 @@
 	</definition>
 	<definition name="chooseDegreeCurricularPlan" extends="definition.gep.two-column" >
 		<put name="body" value="/gep/inquiries/classifications/chooseDegreeCurricularPlan.jsp" />
-	</definition>	
-
+	</definition>
+	<definition name="show-execution-courses-for-inquiries" extends="definition.gep.two-column" >
+		<put name="body" value="/gep/inquiries/showExecutionCoursesForInquiries.jsp" />
+	</definition>
 </tiles-definitions>

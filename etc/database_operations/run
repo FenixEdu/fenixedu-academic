@@ -31,3 +31,4 @@ function executeWithTempFile() {
 execute "Alter CurricularRule Table" alterTableCurricularRule.sql
 execute "Update CurricularRule Table" updateTableCurricularRule.sql
 execute " Reset Specifique Parking Party" ResetParkingParty.sql
+execute "Alter Execution Course Table" alterExecutionCourse.sql

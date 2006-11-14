@@ -52,8 +52,7 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
 
-    public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new BeanComparator(
-	    "nome", Collator.getInstance());
+    public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new ComparatorChain();
 
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new ComparatorChain();
 
@@ -63,7 +62,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		.addComparator(new BeanComparator("executionPeriod"));
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME)
 		.addComparator(new BeanComparator("nome", Collator.getInstance()));
+        ((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME)
+                .addComparator(new BeanComparator("idInternal"));
 
+        ((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("nome", Collator.getInstance()));
+        ((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("idInternal"));
     }
 
     public ExecutionCourse(final String nome, final String sigla, final ExecutionPeriod executionPeriod) {
