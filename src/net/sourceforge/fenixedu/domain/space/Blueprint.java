@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -121,6 +122,69 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
 	    return -1;
 	} else {
 	    return getValidUntil().compareTo(blueprint.getValidUntil());
+	}
+    }
+
+    public static class BlueprintTextRectangles extends HashMap<Space, BlueprintTextRectangle> {}    
+
+    public static class BlueprintTextRectangle {
+
+	private BlueprintPoint p1;
+	
+	private BlueprintPoint p2;
+	
+	private BlueprintPoint p3;
+		
+	private BlueprintPoint p4;
+	
+		
+	public BlueprintTextRectangle(String text, double centerX, double centerY, int fontSize) {	    
+	    
+	    int characters = text.length();	    	   	   
+	    double x_offset = characters * fontSize;
+	    double y_offset = fontSize;
+	    	    	   
+	    p1 = new BlueprintPoint((int)Math.round(centerX), (int)Math.round(centerY - y_offset)); 
+	    p2 = new BlueprintPoint((int)Math.round(centerX), (int)Math.round(centerY));
+	    p3 = new BlueprintPoint((int)Math.round(centerX + x_offset), (int)Math.round(centerY));
+	    p4 = new BlueprintPoint((int)Math.round(centerX + x_offset), (int)Math.round(centerY - y_offset));
+	    
+	}
+
+	public BlueprintPoint getP1() {
+	    return p1;
+	}
+
+	public BlueprintPoint getP2() {
+	    return p2;
+	}
+
+	public BlueprintPoint getP3() {
+	    return p3;
+	}
+
+	public BlueprintPoint getP4() {
+	    return p4;
+	}	
+    }
+    
+    public static class BlueprintPoint {
+
+	private int x;
+
+	private int y;
+
+	public BlueprintPoint(int x, int y) {
+	    this.x = x;
+	    this.y = y;
+	}
+
+	public int getX() {
+	    return x;
+	}
+
+	public int getY() {
+	    return y;
 	}
     }
 }

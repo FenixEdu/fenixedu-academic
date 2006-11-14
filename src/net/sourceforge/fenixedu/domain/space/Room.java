@@ -226,7 +226,7 @@ public class Room extends Room_Base {
 		area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality,
 		securityQuality, ageQuality, observations, begin, end);
     }
-
+    
     @Override
     public RoomInformation getSpaceInformation() {
 	return (RoomInformation) super.getSpaceInformation();
@@ -236,7 +236,7 @@ public class Room extends Room_Base {
     public RoomInformation getSpaceInformation(final YearMonthDay when) {
 	return (RoomInformation) super.getSpaceInformation(when);
     }
-    
+
     @Checked("SpacePredicates.checkPermissionsToManageSpace")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room", parameters = {})
     public void delete() {

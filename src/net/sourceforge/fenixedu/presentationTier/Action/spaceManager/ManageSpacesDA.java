@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -11,16 +14,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Blueprint;
+import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceComparator;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
+import net.sourceforge.fenixedu.domain.space.Blueprint.BlueprintTextRectangles;
 import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -81,9 +88,28 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward manageSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	    HttpServletResponse response) throws IOException {
+
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+	Boolean viewBlueprintNumbers = isToViewBlueprintNumbers(request);	
+	Blueprint mostRecentBlueprint = spaceInformation.getSpace().getMostRecentBlueprint();
+	setBlueprintTextRectangles(request, mostRecentBlueprint, viewBlueprintNumbers);	
+	request.setAttribute("viewBlueprintNumbers", viewBlueprintNumbers);
 	return manageSpace(mapping, request, spaceInformation);
+    }
+
+    private void setBlueprintTextRectangles(HttpServletRequest request, Blueprint mostRecentBlueprint,
+	    Boolean viewBlueprintNumbers) throws IOException {
+	
+	if (mostRecentBlueprint != null) {
+	    final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
+	    final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
+	    final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
+	    BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor
+		    .getBlueprintTextReactangles(inputStream, mostRecentBlueprint.getSpace(),
+			    viewBlueprintNumbers);
+	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
+	}
     }
 
     public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form,
@@ -242,6 +268,13 @@ public class ManageSpacesDA extends FenixDispatchAction {
 		.getParameter("personID") : (String) request.getAttribute("personID");
 	final Integer personID = personIDString != null ? Integer.valueOf(personIDString) : null;
 	return (Person) rootDomainObject.readPartyByOID(personID);
+    }
+
+    private Boolean isToViewBlueprintNumbers(HttpServletRequest request) {
+	final String viewBlueprintNumbersString = request.getParameterMap().containsKey(
+		"viewBlueprintNumbers") ? request.getParameter("viewBlueprintNumbers")
+		: (String) request.getAttribute("viewBlueprintNumbers");		
+	return viewBlueprintNumbersString != null ? Boolean.valueOf(viewBlueprintNumbersString) : Boolean.FALSE;
     }
 
     private Space getSpaceFromParameter(final HttpServletRequest request) {

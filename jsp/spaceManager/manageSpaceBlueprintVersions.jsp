@@ -58,10 +58,16 @@
 			</logic:iterate>
 		</div>
 		
-		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="selectedSpaceBlueprintId"/></bean:define>
+		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="selectedSpaceBlueprintId"/>&viewBlueprintNumbers=true</bean:define>
 		<p>
 			<html:img src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
 		</p>
+		
+		<bean:define id="downloadLink"><bean:write name="selectedSpaceBlueprint" property="blueprintFile.directDownloadUrlFormat"/> </bean:define>
+		
+		<a href="<%= downloadLink %>"> 		
+			<bean:message key="link.download.blueprint" bundle="SPACE_RESOURCES"/>
+		</a>,
 		
 		<bean:define id="editLink">
 			/manageBlueprints.do?method=prepareEditBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="selectedSpaceBlueprint" property="idInternal"/> 

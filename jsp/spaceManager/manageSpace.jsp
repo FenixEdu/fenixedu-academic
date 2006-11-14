@@ -118,14 +118,46 @@
 	%>
 
 	<%-- BluePrints --%>	
-	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>			
+	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>
+		
 	<logic:notEmpty name="selectedSpaceInformation" property="space.mostRecentBlueprint">		
+		
+		<bean:define id="urlToViewBlueprinNumbers">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&viewBlueprintNumbers=true</bean:define>
+		<bean:define id="urlToViewIdentifications">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&viewBlueprintNumbers=false</bean:define>		
+		(
+			<logic:equal name="viewBlueprintNumbers" value="false">
+				<b><bean:message bundle="SPACE_RESOURCES" key="link.view.identification"/></b> 	
+			</logic:equal>
+			<logic:equal name="viewBlueprintNumbers" value="true">
+				<html:link page="<%= urlToViewIdentifications %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.identification"/></html:link> 	
+			</logic:equal>
+			|
+			<logic:equal name="viewBlueprintNumbers" value="false">
+		   		<html:link page="<%= urlToViewBlueprinNumbers %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/></html:link> 	
+			</logic:equal>
+			<logic:equal name="viewBlueprintNumbers" value="true">
+				<b><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/></b>
+			</logic:equal>	   						   		
+		)
+		
 		<bean:define id="blueprint" name="selectedSpaceInformation" property="space.mostRecentBlueprint"/>		
-		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="blueprint" property="idInternal"/></bean:define>
+		<bean:define id="urlToImage"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="blueprint" property="idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/></bean:define>
 		<p>
-		<html:img src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
+			<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap"/>
+			<map id ="roomLinksMap" name="roomLinksMap">
+				<logic:iterate id="blueprintTextRectanglesEntry" name="blueprintTextRectangles">																	
+					<bean:define id="blueprintSpace" name="blueprintTextRectanglesEntry" property="key" />
+					<bean:define id="p1" name="blueprintTextRectanglesEntry" property="value.p1" />				
+					<bean:define id="p2" name="blueprintTextRectanglesEntry" property="value.p2" />				
+	 				<bean:define id="p3" name="blueprintTextRectanglesEntry" property="value.p3" />				
+	 				<bean:define id="p4" name="blueprintTextRectanglesEntry" property="value.p4" />							
+					<bean:define id="coords"><bean:write name="p1" property="x"/>,<bean:write name="p1" property="y"/>,<bean:write name="p2" property="x"/>,<bean:write name="p2" property="y"/>,<bean:write name="p3" property="x"/>,<bean:write name="p3" property="y"/>,<bean:write name="p4" property="x"/>,<bean:write name="p4" property="y"/></bean:define>				 				
+					<bean:define id="urlToCoords">manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="blueprintSpace" property="spaceInformation.idInternal"/>&viewBlueprintNumbers=false</bean:define>
+					<area shape="poly" coords="<%= coords %>" href ="<%= urlToCoords %>"/>				
+				</logic:iterate>					
+			</map>								
 		</p>
-	</logic:notEmpty>	
+	</logic:notEmpty>			
 	<logic:empty name="selectedSpaceInformation" property="space.mostRecentBlueprint">
 		<p class="mtop05"><em><bean:message key="label.empty.blueprint" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
@@ -141,6 +173,7 @@
 		}
 	%>
 	
+	<%-- Space Details --%>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 		<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
 		<fr:view name="selectedSpaceInformation" schema="ViewRoomInformation" layout="tabular">

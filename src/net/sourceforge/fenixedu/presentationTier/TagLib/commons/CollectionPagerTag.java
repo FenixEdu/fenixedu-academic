@@ -55,11 +55,15 @@ public class CollectionPagerTag extends TagSupport {
 	int lastVisualizedPage = lastPage;
 	Integer numberOfVisualizedPages = (getNumberOfVisualizedPages() != null) ? Integer.valueOf(getNumberOfVisualizedPages()) : null;
 	
-	if(lastPage > 0 && numberOfVisualizedPages != null && numberOfVisualizedPages > 0 && lastPage > numberOfVisualizedPages.intValue()) {	    	    
+	if(lastPage > 0 && numberOfVisualizedPages != null && numberOfVisualizedPages.intValue() > 0
+		&& lastPage > numberOfVisualizedPages.intValue()) {
+	    
 	    if(pageNumber == 1) {
 		lastVisualizedPage = numberOfVisualizedPages;		
+	    
 	    } else if(pageNumber == lastPage) {
 		firstVisualizedPage = lastPage - (numberOfVisualizedPages - 1);			    
+	    
 	    } else {    	   
                 int numberOfLeftAndRightPages = (int)Math.floor((numberOfVisualizedPages - 1) / 2);	    
                 int leftPage = (pageNumber - numberOfLeftAndRightPages) <= 0 ? 1 : pageNumber - numberOfLeftAndRightPages;

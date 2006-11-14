@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public abstract class Space extends Space_Base {
@@ -175,29 +176,46 @@ public abstract class Space extends Space_Base {
 	}
 	return materialOccupations;
     }
-   
-    public static Set<DomainObjectActionLog> getListOfChangesInSpacesOrderedByInstant(){
+
+    public Room readRoomByBlueprintNumber(Integer blueprintNumber) {
+	if (blueprintNumber != null) {
+	    for (Space space : getContainedSpaces()) {
+		if (space instanceof Room && !(space instanceof OldRoom)) {
+		    String spaceBlueprintString = ((Room) space).getSpaceInformation().getBlueprintNumber();		    
+		    if (StringUtils.isNumeric(spaceBlueprintString)) {
+			Integer spaceBlueprint = Integer.valueOf(spaceBlueprintString);
+			if (spaceBlueprint != null && spaceBlueprint.equals(blueprintNumber)) {
+			    return (Room) space;
+			}
+		    }
+		}
+	    }
+	}
+	return null;
+    }
+
+    public static Set<DomainObjectActionLog> getListOfChangesInSpacesOrderedByInstant() {
 	Set<Class> classs = new HashSet<Class>();
-		
+
 	classs.add(Room.class);
 	classs.add(Floor.class);
 	classs.add(Campus.class);
-	classs.add(Building.class);	
-		
+	classs.add(Building.class);
+
 	classs.add(RoomInformation.class);
 	classs.add(FloorInformation.class);
 	classs.add(CampusInformation.class);
 	classs.add(BuildingInformation.class);
-			
+
 	classs.add(PersonSpaceOccupation.class);
 	classs.add(ExtensionSpaceOccupation.class);
-	
+
 	classs.add(SpaceResponsibility.class);
 	classs.add(Blueprint.class);
-	
+
 	return DomainObjectActionLog.readDomainObjectActionLogsOrderedByInstant(classs);
     }
-    
+
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.space.cannot.be.deleted");
@@ -245,7 +263,7 @@ public abstract class Space extends Space_Base {
 		|| (person.hasRole(RoleType.SPACE_MANAGER_SUPER_USER) && person
 			.hasRole(RoleType.SPACE_MANAGER));
     }
-    
+
     public void checkIfLoggedPersonHasPermissionsToManageSpace(Person person) {
 	if (personHasPermissionsToManageSpace(person)) {
 	    return;
@@ -256,7 +274,7 @@ public abstract class Space extends Space_Base {
     public boolean personHasPermissionsToManageSpace(Person person) {
 	return personIsSpacesAdministrator(person) || personHasSpecialPermissionToManageSpace(person);
     }
-   
+
     public boolean personHasSpecialPermissionToManageSpace(Person person) {
 	Group spaceManagementAccessGroup = getSpaceManagementAccessGroupWithChainOfResponsibility();
 	if (spaceManagementAccessGroup != null && spaceManagementAccessGroup.isMember(person)) {
@@ -317,7 +335,7 @@ public abstract class Space extends Space_Base {
 	return null;
     }
 
-    public static enum SpaceAccessGroupType {	
+    public static enum SpaceAccessGroupType {
 
 	PERSON_OCCUPATION_ACCESS_GROUP("personOccupationsAccessGroup"),
 
