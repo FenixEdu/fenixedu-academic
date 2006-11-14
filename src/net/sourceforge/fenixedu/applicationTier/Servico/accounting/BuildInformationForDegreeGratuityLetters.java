@@ -105,8 +105,7 @@ public class BuildInformationForDegreeGratuityLetters extends
 	final AdministrativeOfficeServiceAgreementTemplate serviceAgreementTemplate = administrativeOffice
 		.getServiceAgreementTemplate();
 	final AdministrativeOfficeFeeAndInsurancePR postingRule = (AdministrativeOfficeFeeAndInsurancePR) serviceAgreementTemplate
-		.findPostingRuleByEventTypeAndDate(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE,
-			new DateTime());
+		.findPostingRuleByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE);
 	debtDTO.setInsuranceAmount(postingRule.getInsuranceAmount());
 	debtDTO.setAdministrativeOfficeFeeAmount(postingRule.getAdministrativeOfficeFeeAmount());
 	debtDTO.setAdministrativeOfficeFeePenalty(postingRule.getAdministrativeOfficeFeePenaltyAmount());
