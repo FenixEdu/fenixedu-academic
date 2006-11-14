@@ -2,7 +2,7 @@
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
-		 name="RegistrationDeclaration"
+		 name="EnrolmentCertificate"
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Portrait"
@@ -41,7 +41,7 @@
 			</band>
 		</background>
 		<title>
-			<band height="546"  isSplitAllowed="true" >
+			<band height="474"  isSplitAllowed="true" >
 				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="67"
@@ -72,7 +72,7 @@
 						x="64"
 						y="215"
 						width="468"
-						height="50"
+						height="54"
 						key="staticText-8"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left" verticalAlignment="Top" isStyledText="true" lineSpacing="Double">
@@ -109,10 +109,10 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="65"
-						y="339"
+						x="64"
+						y="338"
 						width="467"
-						height="30"
+						height="26"
 						key="textField-15"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
@@ -123,10 +123,10 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="65"
-						y="365"
+						x="64"
+						y="360"
 						width="468"
-						height="30"
+						height="26"
 						key="textField-16"
 						stretchType="RelativeToBandHeight"
 						positionType="Float"/>
@@ -138,8 +138,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="65"
-						y="387"
+						x="64"
+						y="382"
 						width="468"
 						height="30"
 						key="textField-17"
@@ -153,8 +153,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="65"
-						y="442"
+						x="64"
+						y="412"
 						width="466"
 						height="17"
 						key="textField-22"
@@ -168,8 +168,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="65"
-						y="458"
+						x="64"
+						y="429"
 						width="465"
 						height="45"
 						key="textField-23"
@@ -192,13 +192,14 @@
 		</columnHeader>
 		<detail>
 			<band height="30"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="71"
 						y="0"
 						width="468"
 						height="30"
 						key="textField-13"
+						stretchType="RelativeToBandHeight"
 						positionType="Float">
 							<printWhenExpression><![CDATA[((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest)$P{documentRequest}).getDetailed().equals(Boolean.TRUE)]]></printWhenExpression>
 						</reportElement>

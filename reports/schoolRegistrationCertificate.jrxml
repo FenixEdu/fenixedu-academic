@@ -2,7 +2,7 @@
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
-		 name="RegistrationDeclaration"
+		 name="SchoolRegistrationCertificate"
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Portrait"
@@ -25,8 +25,12 @@
 
 	<parameter name="imageUrl" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="documentRequest" isForPrompting="false" class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
-	<parameter name="student" isForPrompting="false" class="net.sourceforge.fenixedu.domain.student.Student"/>
+	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="birthLocale" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="nameOfFather" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="nameOfMother" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -79,7 +83,7 @@
 					<textElement lineSpacing="Double">
 						<font fontName="Courier New" pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true" isStrikeThrough="false" />
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{student}.getPerson().getName().toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
@@ -107,18 +111,20 @@
 					</textElement>
 				<text><![CDATA[     CERTIFICA, em cumprimento do despacho exarado em requerimen-to arquivado nesta Secretaria, que dos livros competentes consta]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="79"
 						y="394"
 						width="468"
 						height="30"
-						key="textField-6"/>
+						key="textField-6"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
 						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["natural de " + $P{student}.getPerson().getParishOfBirth().toUpperCase() + ", " + $P{student}.getPerson().getDistrictOfBirth().toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{birthLocale}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
@@ -134,31 +140,35 @@
 					</textElement>
 				<text><![CDATA[Secretaria      dos Serviços Académicos]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="79"
 						y="418"
 						width="468"
 						height="30"
-						key="textField-7"/>
+						key="textField-7"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
 						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["filho de " + $P{student}.getPerson().getNameOfFather().toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nameOfFather}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="79"
 						y="442"
 						width="468"
 						height="30"
-						key="textField-8"/>
+						key="textField-8"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
 						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["e de " + $P{student}.getPerson().getNameOfMother().toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nameOfMother}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -166,7 +176,8 @@
 						y="465"
 						width="468"
 						height="74"
-						key="textField-9"/>
+						key="textField-9"
+						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
 						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
@@ -179,7 +190,8 @@
 						y="536"
 						width="468"
 						height="50"
-						key="textField-10"/>
+						key="textField-10"
+						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
 						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
@@ -218,7 +230,8 @@
 						y="583"
 						width="468"
 						height="50"
-						key="staticText-13"/>
+						key="staticText-13"
+						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left" verticalAlignment="Top" isStyledText="true" lineSpacing="Double">
 						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isBold="false" isItalic="true" isPdfEmbedded ="false"/>
@@ -231,12 +244,13 @@
 						y="370"
 						width="468"
 						height="30"
-						key="textField-12"/>
+						key="textField-12"
+						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
 						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["portador do Bilhete de Identidade " + $P{student}.getPerson().getDocumentIdNumber()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{documentIdNumber}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

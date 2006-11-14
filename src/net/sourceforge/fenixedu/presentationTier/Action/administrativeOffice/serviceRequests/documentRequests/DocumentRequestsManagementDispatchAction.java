@@ -15,10 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestEditBean;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -30,6 +33,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -70,27 +74,57 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    HttpServletRequest request, HttpServletResponse response) throws JRException, IOException {
 
 	final DocumentRequest documentRequest = getDocumentRequest(request);
+	final Person person = documentRequest.getRegistration().getPerson();
 	
+	// Parameters
 	final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat("/images/Logo_IST_color.tiff"));
-        parameters.put("student", documentRequest.getRegistration().getStudent());
-        parameters.put("documentRequest", documentRequest);
+	parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat("/images/Logo_IST_color.tiff"));
+	parameters.put("documentRequest", documentRequest);
+        parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	
+	final String name = person.getName().toUpperCase();
+	final String documentIdNumber = person.getDocumentIdNumber();
+	final String birthLocale = person.getParishOfBirth().toUpperCase() + ", " + person.getDistrictOfBirth().toUpperCase();
+	final String nameOfFather = person.getNameOfFather().toUpperCase();
+	final String nameOfMother = person.getNameOfMother().toUpperCase();
+	
+	parameters.put("name", applyPadding(name));
+	parameters.put("documentIdNumber", applyPadding("portador do Bilhete de Identidade " + documentIdNumber));
+	parameters.put("birthLocale", applyPadding("natural de " + birthLocale));
+	parameters.put("nameOfFather", applyPadding("filho de " + nameOfFather));
+	parameters.put("nameOfMother", applyPadding("e de " + nameOfMother));
+
+	// Bundle
+	ResourceBundle resourceBundle = null;
+
+	// Data Source
+	final List dataSource = new ArrayList();
         
-        final YearMonthDay yearMonthDay = new YearMonthDay();
-        parameters.put("day", yearMonthDay.toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
-        
-        ResourceBundle resourceBundle = null;
-        
-        final List dataSource = new ArrayList();
-        dataSource.add(documentRequest);
-        
-	if (documentRequest instanceof SchoolRegistrationDeclarationRequest) {
+        if (documentRequest instanceof EnrolmentCertificateRequest) {
+            final EnrolmentCertificateRequest enrolmentCertificateRequest = (EnrolmentCertificateRequest) documentRequest;
+            final ExecutionYear executionYear = enrolmentCertificateRequest.getExecutionYear();
+            
+            final Integer curricularYear =  Integer.valueOf(enrolmentCertificateRequest.getRegistration().getCurricularYear(executionYear));
+            parameters.put("curricularYear", curricularYear);
+            if (enrolmentCertificateRequest.getDetailed()) {
+        	GenericPair<String, String> dummy = new GenericPair<String, String>("\t\t" + curricularYear + ".ANO", null);
+        	dataSource.add(dummy);
+        	
+        	final List<Enrolment> enrolments = enrolmentCertificateRequest.getStudentCurricularPlan().getEnrolmentsByExecutionYear(executionYear);
+        	for (final Enrolment enrolment : enrolments) {
+        	    dummy = new GenericPair<String, String>(applyPadding(enrolment.getName().toUpperCase()), null);
+        	    dataSource.add(dummy);    
+        	}
+        	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
+        	
+            }
+	} else if (documentRequest instanceof SchoolRegistrationDeclarationRequest) {
 	    final RegistrationDeclaration registrationDeclaration = new RegistrationDeclaration(documentRequest.getRegistration(), getLoggedPerson(request));
 	    parameters.put("RegistrationDeclaration", registrationDeclaration);
 	    resourceBundle = RegistrationDeclaration.resourceBundle;
 	    dataSource.add(registrationDeclaration);
-	}
-
+	} 
+        
         byte[] data = ReportsUtils.exportToPdf(documentRequest.getDocumentTemplateKey(), parameters, resourceBundle, dataSource);
         
         response.setContentLength(data.length);
@@ -101,10 +135,42 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         writer.write(data);
         writer.flush();
         writer.close();
-        
+     
         response.flushBuffer();
 
         return mapping.findForward("");
+    }
+    
+    private String applyPadding(String field) {
+	final int LINE_LENGTH = 64;
+	
+	if (field.length() <= LINE_LENGTH) {
+	    return StringUtils.rightPad(field + " ", LINE_LENGTH, '-');    
+	} else {
+	    final List<String> words = Arrays.asList(field.split(" "));
+	    int currentLineLength = 0;
+	    String result = StringUtils.EMPTY;
+	    
+	    for (final String word : words) {
+		final String toAdd = word + " ";
+		if (words.lastIndexOf(word) != (words.size() - 1) && (currentLineLength + toAdd.length()) > LINE_LENGTH) {
+		    int spacesLength = LINE_LENGTH - currentLineLength;
+		    result = StringUtils.rightPad(result, result.length() + spacesLength, ' ');
+		    
+		    currentLineLength = toAdd.length();
+		} else {
+		    currentLineLength += toAdd.length();
+		}
+		
+		result += toAdd;
+	    }
+	    
+	    if (currentLineLength <= LINE_LENGTH) {
+		return StringUtils.rightPad(result, result.length() + (LINE_LENGTH - currentLineLength), '-');
+	    } 
+	    
+	    return result;
+	}
     }
     
     public ActionForward prepareConcludeDocumentRequest(ActionMapping mapping, ActionForm actionForm,
@@ -119,9 +185,9 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form,
-        HttpServletRequest request, HttpServletResponse response) {
-    
-    final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	    final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
     final AdministrativeOffice administrativeOffice = AdministrativeOffice.readByEmployee(employee);
     Registration registration = getRegistration(request);
 
@@ -131,7 +197,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         request.setAttribute("executionYears", registration.getEnrolmentsExecutionYears());
     } else {
         addActionMessage(request, "message.no.enrolments");
-    }
+	    }
 
     return mapping.findForward("createDocumentRequests");
     
@@ -253,13 +319,12 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	}
 
     }
-    
+
     private Registration getRegistration(final HttpServletRequest request) {
     String registrationID = request.getParameter("registrationId");
     if (registrationID == null) {
         registrationID = (String) request.getAttribute("registrationId");
-    }
-
+}
     final Registration registration = rootDomainObject.readRegistrationByOID(Integer
             .valueOf(registrationID));
     request.setAttribute("registration", registration);
