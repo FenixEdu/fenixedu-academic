@@ -77,6 +77,10 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 	return result;
     }
 
+    public PostingRule findPostingRuleByEventType(EventType eventType) {
+	return findPostingRuleByEventTypeAndDate(eventType, new DateTime());
+    }
+
     public PostingRule findPostingRuleByEventTypeAndDate(EventType eventType, DateTime when) {
 	final PostingRule postingRule = getPostingRuleByEventTypeAndDate(eventType, when);
 
