@@ -15,18 +15,13 @@ public class UnitUtils {
 
     public static List<Unit> readAllExternalInstitutionUnits() {
 	List<Unit> allExternalUnits = new ArrayList<Unit>();
-	for (Unit unit : Unit.readAllUnits()) {
-	    if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
-		allExternalUnits.add(unit);
-	    }
-	}
+	allExternalUnits.addAll(readExternalInstitutionUnit().getAllSubUnits());
 	return allExternalUnits;
-    }
+    }  
 
     public static Unit readExternalInstitutionUnitByName(String name) {
-	for (Unit unit : Unit.readAllUnits()) {
-	    if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)
-		    && unit.getName().equals(name)) {
+	for (Unit unit : readAllExternalInstitutionUnits()) {
+	    if (unit.getName().equals(name)) {
 		return unit;
 	    }
 	}
