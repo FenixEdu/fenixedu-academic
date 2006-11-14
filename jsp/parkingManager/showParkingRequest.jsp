@@ -149,7 +149,7 @@ function hideCardValidPeriod(toShow){
 		<html:link target="printFrame" page="<%= "/parking.do?method=printParkingCard&amp;parkingPartyID=" + parkingPartyId.toString()%>">
 		<bean:message key="label.printCard" bundle="PARKING_RESOURCES"/></html:link>
 		--%>
-		<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='exportToPDFParkingCard';document.forms[0].submit();">
+		<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='exportToPDFParkingCard';document.forms[0].submit();document.forms[0].method.value='editFirstTimeParkingParty';">
 		<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/></html:link>
 		</html:form>
 	</logic:equal>

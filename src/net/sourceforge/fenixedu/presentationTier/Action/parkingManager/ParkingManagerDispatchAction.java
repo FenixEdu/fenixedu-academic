@@ -362,7 +362,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                 return showRequest(mapping, actionForm, request, response);
             }
             try {
-                group = new Integer(request.getParameter("group"));
+                group = new Integer(request.getParameter("groupID"));
             } catch (NullPointerException e) {
                 saveErrorMessage(request, "group", "error.requiredGroup");
                 request.setAttribute("idInternal", parkingRequestID);
