@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices;
 
+import java.util.Set;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EnrolmentRuleServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -12,13 +14,14 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 public class CreateStudentEnrolmentsWithoutRules extends Service {
     
     public void run(StudentEnrolmentBean enrolmentBean) throws FenixServiceException {
+	Set<CurriculumModule> initialCurriculumModules = enrolmentBean.getInitialCurriculumModules();
 	for (DegreeModuleToEnrol degreeModuleToEnrol: enrolmentBean.getDegreeModulesToEnrol()) {
-	    if(enrolmentBean.getInitialCurriculumModules().contains(degreeModuleToEnrol.getCurriculumGroup()) && !enrolmentBean.getCurriculumModules().contains(degreeModuleToEnrol.getCurriculumGroup())) {
+	    if(initialCurriculumModules.contains(degreeModuleToEnrol.getCurriculumGroup()) && !enrolmentBean.getCurriculumModules().contains(degreeModuleToEnrol.getCurriculumGroup())) {
 		throw new EnrolmentRuleServiceException("error.student.enrolments.invalid.choice");
 	    }
 	}
 	
-	for (CurriculumModule curriculumModule : enrolmentBean.getInitialCurriculumModules()) {
+	for (CurriculumModule curriculumModule : initialCurriculumModules) {
 	    if(!enrolmentBean.getCurriculumModules().contains(curriculumModule)) {
 		try {
 		    curriculumModule.delete();

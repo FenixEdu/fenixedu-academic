@@ -30,8 +30,15 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    throw new DomainException(
 		    "error.studentCurriculum.curriculumGroup.courseGroup.cannot.be.null");
 	}
+	checkInitConstraints(curriculumGroup.getStudentCurricularPlan(), courseGroup);
 	setDegreeModule(courseGroup);
 	setCurriculumGroup(curriculumGroup);
+    }
+    
+    private void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup) {
+	if(studentCurricularPlan.getRoot().hasCourseGroup(courseGroup)) {
+	    throw new DomainException("error.duplicate.courseGroup");
+	}
     }
 
     private void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
@@ -70,6 +77,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     private void init(CurriculumGroup curriculumGroup, CourseGroup courseGroup,
 	    ExecutionPeriod executionPeriod) {
+	checkInitConstraints(curriculumGroup.getStudentCurricularPlan(), courseGroup);
 	checkParameters(curriculumGroup, courseGroup, executionPeriod);
 	setDegreeModule(courseGroup);
 	setCurriculumGroup(curriculumGroup);
@@ -251,7 +259,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
 	return result;
     }
-    
+        
     public Integer getChildOrder() {
 	return getChildOrder(ExecutionPeriod.readActualExecutionPeriod());
     }
@@ -266,6 +274,23 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    }
 	}
 	return null;
+    }
+    
+    public boolean hasCourseGroup(final CourseGroup courseGroup) {
+	if(getDegreeModule().equals(courseGroup)) {
+	    return true;
+	} 
+	
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (!curriculumModule.isLeaf()) {
+		CurriculumGroup group = (CurriculumGroup) curriculumModule;
+		if(group.hasCourseGroup(courseGroup)) {
+		    return true;
+		}
+	    }
+	}
+	
+	return false;
     }
 
 }

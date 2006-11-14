@@ -2,14 +2,15 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.student
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class StudentEnrolmentBean implements Serializable{
@@ -17,8 +18,8 @@ public class StudentEnrolmentBean implements Serializable{
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
     private DomainReference<ExecutionPeriod> executionPeriod;
     private List<DomainReference<CurriculumModule>> curriculumModules;
-    private List<DomainReference<CurriculumModule>> initialCurriculumModules;
     private List<DegreeModuleToEnrol> degreeModulesToEnrol;
+    private CurriculumModuleBean curriculumModuleBean;
     
     public StudentCurricularPlan getStudentCurricularPlan() {
         return (this.studentCurricularPlan == null) ? null : this.studentCurricularPlan.getObject();
@@ -68,31 +69,33 @@ public class StudentEnrolmentBean implements Serializable{
     public void setDegreeModulesToEnrol(List<DegreeModuleToEnrol> degreeModulesToEnrol) {
         this.degreeModulesToEnrol = degreeModulesToEnrol;
     }
-    
-    public List<CurriculumModule> getInitialCurriculumModules() {
-	if (this.initialCurriculumModules == null) {
-	    return new ArrayList<CurriculumModule>();
-	}
-	
-	List<CurriculumModule> result = new ArrayList<CurriculumModule>();
-	for (DomainReference<CurriculumModule> curriculumModule : this.initialCurriculumModules) {
-	    result.add(curriculumModule.getObject());
-	}
-	
-        return result;
+
+    public CurriculumModuleBean getCurriculumModuleBean() {
+        return curriculumModuleBean;
     }
 
-    public void setInitialCurriculumModules(List<CurriculumModule> initialCurriculumModules) {
-	if (initialCurriculumModules == null) {
-	    this.initialCurriculumModules = null;
-	}
-	else {
-	    this.initialCurriculumModules = new ArrayList<DomainReference<CurriculumModule>>();
-	    for (CurriculumModule curriculumModule : initialCurriculumModules) {
-		this.initialCurriculumModules.add(new DomainReference<CurriculumModule>(curriculumModule));
-	    }
-	}
+    public void setCurriculumModuleBean(CurriculumModuleBean curriculumModuleBean) {
+        this.curriculumModuleBean = curriculumModuleBean;
+    }
+    
+    public Set<CurriculumModule> getInitialCurriculumModules() {
+	return getInitialCurriculumModules(getCurriculumModuleBean());
     }
 
-    
+    private Set<CurriculumModule> getInitialCurriculumModules(CurriculumModuleBean curriculumModuleBean) {
+	Set<CurriculumModule> result = new HashSet<CurriculumModule>();
+	if(curriculumModuleBean.getCurricularCoursesEnroled().isEmpty() && curriculumModuleBean.getGroupsEnroled().isEmpty()) {
+	    result.add(curriculumModuleBean.getCurriculumModule());
+	}
+		
+	for (CurriculumModuleBean moduleBean : curriculumModuleBean.getCurricularCoursesEnroled()) {
+	    result.add(moduleBean.getCurriculumModule());
+	}
+	
+	for (CurriculumModuleBean moduleBean : curriculumModuleBean.getGroupsEnroled()) {
+	    result.addAll(getInitialCurriculumModules(moduleBean));
+	}
+	
+	return result;
+    }
 }

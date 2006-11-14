@@ -99,10 +99,17 @@ public class Enrolment extends Enrolment_Base {
 		|| executionPeriod == null || enrolmentCondition == null || createdBy == null) {
     		throw new DomainException("invalid arguments");
     	}
+	checkInitConstraints(studentCurricularPlan, curricularCourse, executionPeriod);
 	//TODO: check this
 	//validateDegreeModuleLink(curriculumGroup, curricularCourse);
 	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionPeriod,
 		enrolmentCondition, createdBy);
+    }
+    
+    private void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+	if(studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod) != null) {
+	    throw new DomainException("error.duplicate.enrolment");
+	}
     }
     
     protected void initializeAsNew(StudentCurricularPlan studentCurricularPlan,
