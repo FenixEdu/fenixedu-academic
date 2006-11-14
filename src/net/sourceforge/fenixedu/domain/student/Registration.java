@@ -1373,7 +1373,7 @@ public class Registration extends Registration_Base {
 	return calculateCurricularYear(calculateEctsCredits());
     }
     
-    public Object getCurricularYear(ExecutionYear executionYear) {
+    public int getCurricularYear(ExecutionYear executionYear) {
 	return calculateCurricularYear(calculateEctsCredits(executionYear));
     }
 
