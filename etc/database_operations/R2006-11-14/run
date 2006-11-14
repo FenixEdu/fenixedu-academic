@@ -26,3 +26,8 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+
+execute "Alter CurricularRule Table" alterTableCurricularRule.sql
+execute "Update CurricularRule Table" updateTableCurricularRule.sql
+execute "Alter Execution Course Table" alterExecutionCourse.sql
