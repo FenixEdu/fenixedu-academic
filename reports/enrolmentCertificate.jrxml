@@ -201,7 +201,7 @@
 						key="textField-13"
 						stretchType="RelativeToBandHeight"
 						positionType="Float">
-							<printWhenExpression><![CDATA[((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest)$P{documentRequest}).getDetailed().equals(Boolean.TRUE)]]></printWhenExpression>
+							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest)$P{documentRequest}).getDetailed())]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Double">
