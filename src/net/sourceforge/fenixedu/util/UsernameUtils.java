@@ -57,8 +57,12 @@ public class UsernameUtils extends FenixUtil {
 
 	    } else if (mostImportantRole.getRoleType() == RoleType.STUDENT
 		    && person.getStudentByType(DegreeType.MASTER_DEGREE) != null) {
-		istUsername = ist
-			+ sumNumber(person.getStudentByType(DegreeType.MASTER_DEGREE).getNumber(), 40000);
+		final Integer number = person.getStudentByType(DegreeType.MASTER_DEGREE).getNumber();
+		if (number < 10000) {// old master degree students
+		    istUsername = ist + sumNumber(number, 40000);
+		} else {// new master degree students
+		    istUsername = ist + sumNumber(number, 100000);
+		}
 
 	    } else if (mostImportantRole.getRoleType() == RoleType.STUDENT
 		    && person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) != null) {
