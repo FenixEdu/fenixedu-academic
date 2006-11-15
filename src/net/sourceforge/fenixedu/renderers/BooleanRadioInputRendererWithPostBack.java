@@ -44,11 +44,17 @@ public class BooleanRadioInputRendererWithPostBack extends BooleanRadioInputRend
                  HtmlHiddenField hidden = new HtmlHiddenField(prefix + HIDDEN_NAME, "");
                  hidden.setController(new PostBackController(hidden, getDestination()));
                  
+                 
                  HtmlRadioButtonList radioButtonList = (HtmlRadioButtonList) layout.createComponent(object, type);
+                 
                  for (HtmlRadioButton button : radioButtonList.getRadioButtons()) {
                  	button.setOnClick("this.form." + prefix + HIDDEN_NAME + ".value='true';this.form.submit();");
                  	button.setOnDblClick("this.form." + prefix + HIDDEN_NAME + ".value='true';this.form.submit();");
                  	
+                 }
+                 
+                 if(getClasses()!=null) {
+                	 applyStyle(radioButtonList);
                  }
                  
                  container.addChild(hidden);
