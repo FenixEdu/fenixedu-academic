@@ -279,4 +279,8 @@ public class InfoExecutionCourse extends InfoObject {
 	this.filteredInfoGroupings = filteredInfoGroupings;
     }
 
+    public Boolean getAvailableForInquiries() {
+	return getExecutionCourse().getAvailableForInquiries();
+    }
+
 }

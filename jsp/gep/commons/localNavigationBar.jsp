@@ -55,7 +55,7 @@
 		</html:link>				
 	</li>
 	<li>
-		<html:link page="/teachingStaff.do?method=selectExecutionYear&executionYearID=44">		
+		<html:link page="/teachingStaff.do?method=selectExecutionYear">
 			<bean:message key="link.inquiries.teachingStaff" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
 	</li>

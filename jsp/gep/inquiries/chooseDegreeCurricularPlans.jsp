@@ -79,6 +79,8 @@
 		<table>
 			<tr>
 				<th class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="table.header.curricular.plan" bundle="INQUIRIES_RESOURCES"/>
 				</th>
 				<th class="listClasses-header">
@@ -93,8 +95,10 @@
 				<bean:define id="degreeType">
 					<bean:write name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" />	
 				</bean:define>
-				<c:if test="${degreeType == 'DEGREE'}">
 					<tr>
+						<td class="listClasses">
+							<bean:message name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+						</td>
 						<td class="listClasses">
 							<bean:write name="degreeCurricularPlan" property="infoDegree.nome" /> - <bean:write name="degreeCurricularPlan" property="name" />
 						</td>
@@ -107,8 +111,6 @@
 							</html:multibox>
 						</td>
 					</tr>
-
-				</c:if>
 			</logic:iterate>
 		</table>		
 

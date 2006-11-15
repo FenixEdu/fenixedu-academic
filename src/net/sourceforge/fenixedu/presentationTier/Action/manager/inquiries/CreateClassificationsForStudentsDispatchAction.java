@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -43,6 +46,10 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
         Object[] argsDCPs = { executionYear.getIdInternal() };
         List degreeCurricularPlans = (List) ServiceUtils.executeService(userView,
                 "ReadActiveDegreeCurricularPlansByExecutionYear", argsDCPs);
+        final ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
+        comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
+        Collections.sort(degreeCurricularPlans, comparatorChain);
 
         request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
 

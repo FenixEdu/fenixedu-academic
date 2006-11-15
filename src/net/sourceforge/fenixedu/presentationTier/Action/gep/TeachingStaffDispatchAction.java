@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -28,6 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -57,13 +59,16 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
+        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        Integer executionYearID = executionYear.getIdInternal();
         Object[] args = { executionYearID };
 
         List degreeCurricularPlans = (List) ServiceUtils.executeService(userView,
                 "ReadActiveDegreeCurricularPlansByExecutionYear", args);
-        Collections.sort(degreeCurricularPlans, new BeanComparator("infoDegree.nome"));
-        Collections.sort(degreeCurricularPlans, new BeanComparator("infoDegree.tipoCurso"));
+        final ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
+        comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
+        Collections.sort(degreeCurricularPlans, comparatorChain);
 
         request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
         request.setAttribute("executionYears", getExecutionYears(userView));

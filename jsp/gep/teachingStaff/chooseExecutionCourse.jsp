@@ -13,26 +13,13 @@
 	</tr>
 	
 	<logic:iterate id="curricularCourseScope" name="curricularCourseScopes">	
-		<tr><td>&nbsp;</td></tr>	
-		<tr class="listClasses">
-			<td>
-				<strong><bean:write name="curricularCourseScope" property="curricularSemester.curricularYear.year" /></strong>
-			</td>
-			<td>
-				<strong><bean:write name="curricularCourseScope" property="curricularSemester.semester" /></strong>
-			</td>
-			<td>			
-				<strong><bean:write name="curricularCourseScope" property="curricularCourse.name" /></strong>
-			</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>			
-		</tr>			
 		<logic:iterate id="executionCourse" name="curricularCourseScope" property="curricularCourse.associatedExecutionCourses" >
 			<bean:define id="executionYear" name="executionYear" type="java.lang.String" />
-			<logic:equal name="executionCourse" property="executionPeriod.executionYear.year" value='<%= executionYear %>' >	
+			<logic:equal name="executionCourse" property="executionPeriod.state" value="CURRENT">
+			<logic:equal name="executionCourse" property="availableForInquiries" value="true">
 				<tr class="listClasses">
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
+					<td><strong><bean:write name="curricularCourseScope" property="curricularSemester.curricularYear.year" /></strong></td>
+					<td><strong><bean:write name="executionCourse" property="executionPeriod.semester" /></strong></td>
 					<td>									
 						<bean:write name="executionCourse" property="nome" />
 					</td>
@@ -48,7 +35,8 @@
 						</html:link>					
 					</td>
 				</tr>
-			</logic:equal>					
+			</logic:equal>
+			</logic:equal>
 		</logic:iterate>		
 	</logic:iterate>
 	

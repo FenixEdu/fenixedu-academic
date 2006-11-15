@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.text.Collator;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -8,21 +9,18 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateCompa
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
 
 
 public class CurricularCourseScope extends CurricularCourseScope_Base {
 
-    public static Comparator<CurricularCourseScope> CURRICULAR_COURSE_NAME_COMPARATOR = new Comparator<CurricularCourseScope>() {
-        public int compare(CurricularCourseScope c1, CurricularCourseScope c2) {
-	    int nameComparation = c1.getCurricularCourse().getName().compareTo(
-		    c2.getCurricularCourse().getName());
-            if(nameComparation != 0){
-                return nameComparation;                
-            }            
-	    return c1.getCurricularCourse().getIdInternal().compareTo(
-		    c2.getCurricularCourse().getIdInternal());
-        }  
-    };
+    public static Comparator<CurricularCourseScope> CURRICULAR_COURSE_NAME_COMPARATOR = new ComparatorChain();
+    static {
+	((ComparatorChain) CURRICULAR_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
+	((ComparatorChain) CURRICULAR_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("curricularCourse.idInternal"));
+    }
     
 	public CurricularCourseScope() {
 		super();
