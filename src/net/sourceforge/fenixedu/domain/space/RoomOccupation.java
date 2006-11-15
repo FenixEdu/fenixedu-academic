@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 /**
  * @author Ana e Ricardo
@@ -358,6 +359,22 @@ public class RoomOccupation extends RoomOccupation_Base {
 
         removeRootDomainObject();
         super.deleteDomainObject();
+    }
+
+    @Override
+    public void setStartTimeDateHourMinuteSecond(HourMinuteSecond startTimeDateHourMinuteSecond) {
+        final HourMinuteSecond hourMinuteSecond = eliminateSeconds(startTimeDateHourMinuteSecond);
+        super.setStartTimeDateHourMinuteSecond(hourMinuteSecond);
+    }
+
+    @Override
+    public void setEndTimeDateHourMinuteSecond(HourMinuteSecond endTimeDateHourMinuteSecond) {
+        final HourMinuteSecond hourMinuteSecond = eliminateSeconds(endTimeDateHourMinuteSecond);
+        super.setEndTimeDateHourMinuteSecond(hourMinuteSecond);
+    }
+
+    private HourMinuteSecond eliminateSeconds(final HourMinuteSecond hourMinuteSecond) {
+        return hourMinuteSecond == null ? null : new HourMinuteSecond(hourMinuteSecond.getHour(), hourMinuteSecond.getMinuteOfHour(), 0);
     }
 
 }
