@@ -124,24 +124,38 @@
 		
 		<bean:define id="urlToViewBlueprinNumbers">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&viewBlueprintNumbers=true</bean:define>
 		<bean:define id="urlToViewIdentifications">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&viewBlueprintNumbers=false</bean:define>		
-		(
-			<logic:equal name="viewBlueprintNumbers" value="false">
-				<b><bean:message bundle="SPACE_RESOURCES" key="link.view.identification"/></b> 	
-			</logic:equal>
+		<bean:define id="urlToViewOriginalSpaceBlueprint">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&viewOriginalSpaceBlueprint=true</bean:define>		
+	
+		(	
+		   <logic:equal name="viewBlueprintNumbers" value="false">
+				<logic:equal name="viewOriginalSpaceBlueprint" value="true">
+					<html:link page="<%= urlToViewIdentifications %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.identification"/></html:link> 	
+				</logic:equal>
+				<logic:equal name="viewOriginalSpaceBlueprint" value="false">				
+					<b><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.identification"/></b> 	
+				</logic:equal>
+			</logic:equal>		
 			<logic:equal name="viewBlueprintNumbers" value="true">
-				<html:link page="<%= urlToViewIdentifications %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.identification"/></html:link> 	
-			</logic:equal>
+				<html:link page="<%= urlToViewIdentifications %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.identification"/></html:link> 	
+			</logic:equal>			
 			|
 			<logic:equal name="viewBlueprintNumbers" value="false">
 		   		<html:link page="<%= urlToViewBlueprinNumbers %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/></html:link> 	
 			</logic:equal>
 			<logic:equal name="viewBlueprintNumbers" value="true">
-				<b><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/></b>
+					<b><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/></b>
+			</logic:equal>											
+			|
+			<logic:equal name="viewOriginalSpaceBlueprint" value="false">
+		   		<html:link page="<%= urlToViewOriginalSpaceBlueprint %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.original.blueprint"/></html:link> 	
+			</logic:equal>
+			<logic:equal name="viewOriginalSpaceBlueprint" value="true">
+				<b><bean:message bundle="SPACE_RESOURCES" key="link.view.original.blueprint"/></b>
 			</logic:equal>	   						   		
 		)
 								
 		<p>
-			<bean:define id="urlToImage"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="mostRecentBlueprint" property="idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&suroundingSpaceBlueprint=<bean:write name="suroundingSpaceBlueprint"/>&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>				
+			<bean:define id="urlToImage"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="mostRecentBlueprint" property="idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&suroundingSpaceBlueprint=<bean:write name="suroundingSpaceBlueprint"/>&viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/>&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>				
 			<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap"/>
 			<map id ="roomLinksMap" name="roomLinksMap">
 				<logic:iterate id="blueprintTextRectanglesEntry" name="blueprintTextRectangles">																	
@@ -151,7 +165,7 @@
 	 				<bean:define id="p3" name="blueprintTextRectanglesEntry" property="value.p3" />				
 	 				<bean:define id="p4" name="blueprintTextRectanglesEntry" property="value.p4" />							
 					<bean:define id="coords"><bean:write name="p1" property="x"/>,<bean:write name="p1" property="y"/>,<bean:write name="p2" property="x"/>,<bean:write name="p2" property="y"/>,<bean:write name="p3" property="x"/>,<bean:write name="p3" property="y"/>,<bean:write name="p4" property="x"/>,<bean:write name="p4" property="y"/></bean:define>				 				
-					<bean:define id="urlToCoords">manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="blueprintSpace" property="spaceInformation.idInternal"/>&viewBlueprintNumbers=false</bean:define>
+					<bean:define id="urlToCoords">manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="blueprintSpace" property="spaceInformation.idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/></bean:define>
 					<area shape="poly" coords="<%= coords %>" href ="<%= urlToCoords %>"/>				
 				</logic:iterate>					
 			</map>								
@@ -233,13 +247,13 @@
 							</html:link>
 						</td>
 						<td class="acenter">							
-						
-							<logic:equal name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+							<logic:empty name="subSpace" property="spaceInformation.blueprintNumber">
+								-
+							</logic:empty>							
+							<logic:notEmpty name="subSpace" property="spaceInformation.blueprintNumber">
 								<bean:write name="subSpace" property="spaceInformation.blueprintNumber"/>															
-							</logic:equal>
-							<logic:notEqual name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-								-							
-							</logic:notEqual>
+							</logic:notEmpty>
+							
 						</td>
 						<td class="acenter">
 							<bean:write name="subSpace" property="containedSpacesCount"/>

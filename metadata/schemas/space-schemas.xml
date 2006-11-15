@@ -1,62 +1,74 @@
 <schema name="CampusFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Campus$CampusFactoryCreator" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>
 </schema>
 <schema name="CampusFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Campus$CampusFactoryEditor" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>	
 </schema>
 <schema name="ViewCampusInformation" type="net.sourceforge.fenixedu.domain.space.CampusInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
 </schema>
 <schema name="EditCampusInformation" type="net.sourceforge.fenixedu.domain.space.CampusInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
 	<setter signature="editCampusCharacteristics(name, validFrom, validUntil)" />
 </schema>
 <schema name="BuildingFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>
 </schema>
 <schema name="BuildingFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryEditor" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>
 </schema>
 <schema name="EditBuildingInformation" type="net.sourceforge.fenixedu.domain.space.BuildingInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
 	<setter signature="editBuildingCharacteristics(name, validFrom, validUntil)"/>
 </schema>
 <schema name="ViewBuildingInformation" type="net.sourceforge.fenixedu.domain.space.BuildingInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
 </schema>
 <schema name="FloorFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Floor$FloorFactoryCreator" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
 	<slot name="level" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>	
 </schema>
 <schema name="FloorFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Floor$FloorFactoryEditor" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
 	<slot name="level" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>	
 </schema>
 <schema name="EditFloorInformation" type="net.sourceforge.fenixedu.domain.space.FloorInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
 	<slot name="level" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
 	<setter signature="editFloorCharacteristics(level, validFrom, validUntil)"/>
 </schema>
 <schema name="ViewFloorInformation" type="net.sourceforge.fenixedu.domain.space.FloorInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>	
 	<slot name="level" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>

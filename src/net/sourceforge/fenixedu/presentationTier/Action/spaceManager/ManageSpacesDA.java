@@ -235,6 +235,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
     private void setBlueprintTextRectangles(HttpServletRequest request, Space space) throws IOException {
 
 	Boolean viewBlueprintNumbers = isToViewBlueprintNumbers(request);
+	Boolean viewOriginalSpaceBlueprint = isToViewOriginalSpaceBlueprint(request);
+	
 	Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
 	Boolean suroundingSpaceBlueprint = mostRecentBlueprint == null;
 	mostRecentBlueprint = (mostRecentBlueprint == null) ? space
@@ -245,13 +247,15 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
 	    final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
 	    BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor
-		    .getBlueprintTextReactangles(inputStream, mostRecentBlueprint.getSpace(),
-			    viewBlueprintNumbers, suroundingSpaceBlueprint);
+		    .getBlueprintTextRectangles(inputStream, mostRecentBlueprint.getSpace(),
+			    viewBlueprintNumbers, viewOriginalSpaceBlueprint);
 
 	    request.setAttribute("mostRecentBlueprint", mostRecentBlueprint);
 	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
+	    
 	    request.setAttribute("viewBlueprintNumbers", viewBlueprintNumbers);	    
-	    request.setAttribute("suroundingSpaceBlueprint", suroundingSpaceBlueprint);
+	    request.setAttribute("viewOriginalSpaceBlueprint", viewOriginalSpaceBlueprint);
+	    request.setAttribute("suroundingSpaceBlueprint", suroundingSpaceBlueprint);	    
 	}
     }
 
@@ -285,6 +289,14 @@ public class ManageSpacesDA extends FenixDispatchAction {
 		: Boolean.FALSE;
     }
 
+    private Boolean isToViewOriginalSpaceBlueprint(HttpServletRequest request) {
+	final String viewOriginalSpaceBlueprintString = request.getParameterMap().containsKey(
+		"viewOriginalSpaceBlueprint") ? request.getParameter("viewOriginalSpaceBlueprint")
+		: (String) request.getAttribute("viewOriginalSpaceBlueprint");
+	return viewOriginalSpaceBlueprintString != null ? Boolean
+		.valueOf(viewOriginalSpaceBlueprintString) : Boolean.FALSE;
+    }
+    
     private Space getSpaceFromParameter(final HttpServletRequest request) {
 	final String spaceIDString = request.getParameter("spaceID");
 	final Integer spaceID = Integer.valueOf(spaceIDString);

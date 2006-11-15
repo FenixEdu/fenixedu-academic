@@ -62,12 +62,12 @@ public abstract class Space extends Space_Base {
 
     public Blueprint getSuroundingSpaceMostRecentBlueprint() {
 	Space suroundingSpace = getSuroundingSpace();
-	if(suroundingSpace != null) {
+	if (suroundingSpace != null) {
 	    return suroundingSpace.getMostRecentBlueprint();
 	}
 	return null;
     }
-    
+
     public Blueprint getMostRecentBlueprint() {
 	SortedSet<Blueprint> orderedBlueprints = getOrderedBlueprints();
 	return (!orderedBlueprints.isEmpty()) ? orderedBlueprints.last() : null;
@@ -185,43 +185,40 @@ public abstract class Space extends Space_Base {
 	return materialOccupations;
     }
 
-    public Room readRoomByBlueprintNumber(Integer blueprintNumber) {
-	if (blueprintNumber != null) {
+    public static Set<DomainObjectActionLog> getListOfChangesInSpacesOrderedByInstant() {
+	Set<Class> classs = new HashSet<Class>();
+	Person loggedPerson = AccessControl.getUserView().getPerson();
+	if (personIsSpacesAdministrator(loggedPerson)) {
+	    classs.add(Room.class);
+	    classs.add(Floor.class);
+	    classs.add(Campus.class);
+	    classs.add(Building.class);
+	    classs.add(RoomInformation.class);
+	    classs.add(FloorInformation.class);
+	    classs.add(CampusInformation.class);
+	    classs.add(BuildingInformation.class);
+	    classs.add(PersonSpaceOccupation.class);
+	    classs.add(ExtensionSpaceOccupation.class);
+	    classs.add(SpaceResponsibility.class);
+	    classs.add(Blueprint.class);
+	    return DomainObjectActionLog.readDomainObjectActionLogsOrderedByInstant(classs);
+	}
+	return new HashSet<DomainObjectActionLog>();
+    }
+
+    public Space readSubSpaceByBlueprintNumber(String blueprintNumber) {
+	if (blueprintNumber != null && !StringUtils.isEmpty(blueprintNumber)) {
 	    for (Space space : getContainedSpaces()) {
-		if (space instanceof Room && !(space instanceof OldRoom)) {
-		    String spaceBlueprintString = ((Room) space).getSpaceInformation().getBlueprintNumber();		    
-		    if (StringUtils.isNumeric(spaceBlueprintString)) {
-			Integer spaceBlueprint = Integer.valueOf(spaceBlueprintString);
-			if (spaceBlueprint != null && spaceBlueprint.equals(blueprintNumber)) {
-			    return (Room) space;
-			}
+		if (space.getSpaceInformation() != null) {
+		    String spaceBlueprint = space.getSpaceInformation().getBlueprintNumber();
+		    if (spaceBlueprint != null && !StringUtils.isEmpty(spaceBlueprint)
+			    && spaceBlueprint.equals(blueprintNumber)) {
+			return space;
 		    }
 		}
 	    }
 	}
 	return null;
-    }
-
-    public static Set<DomainObjectActionLog> getListOfChangesInSpacesOrderedByInstant() {
-	Set<Class> classs = new HashSet<Class>();
-
-	classs.add(Room.class);
-	classs.add(Floor.class);
-	classs.add(Campus.class);
-	classs.add(Building.class);
-
-	classs.add(RoomInformation.class);
-	classs.add(FloorInformation.class);
-	classs.add(CampusInformation.class);
-	classs.add(BuildingInformation.class);
-
-	classs.add(PersonSpaceOccupation.class);
-	classs.add(ExtensionSpaceOccupation.class);
-
-	classs.add(SpaceResponsibility.class);
-	classs.add(Blueprint.class);
-
-	return DomainObjectActionLog.readDomainObjectActionLogsOrderedByInstant(classs);
     }
 
     public void delete() {

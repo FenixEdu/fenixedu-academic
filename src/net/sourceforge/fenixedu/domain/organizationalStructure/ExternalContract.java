@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -22,6 +24,8 @@ public class ExternalContract extends ExternalContract_Base {
 
     public ExternalContract(Person person, Unit institution, YearMonthDay beginDate, YearMonthDay endDate) {
 	this();
+	
+	checkIfPersonAlreadyIsExternalPerson(person);
 	AccountabilityType accountabilityType = AccountabilityType
 		.readAccountabilityTypeByType(AccountabilityTypeEnum.EMPLOYEE_CONTRACT);
 
@@ -29,7 +33,7 @@ public class ExternalContract extends ExternalContract_Base {
 	setChildParty(person);
 	setParentParty(institution);
 	setOccupationInterval(beginDate, endDate);
-    }
+    }  
 
     private void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
 	if (beginDate == null) {
@@ -78,7 +82,12 @@ public class ExternalContract extends ExternalContract_Base {
     /***********************************************************************
          * PRIVATE METHODS *
          **********************************************************************/
-
+    private void checkIfPersonAlreadyIsExternalPerson(Person person) {
+	if(person.hasExternalPerson()) {
+	    throw new DomainException("error.externalContract.person.already.is.externalPerson");
+	}	
+    }
+    
     private boolean externalPersonsAlreadyExists(String name, String address, Unit institution) {
 	for (ExternalContract externalPerson : readAllExternalContracts()) {
 	    if (externalPerson.hasPerson()) {
@@ -100,9 +109,9 @@ public class ExternalContract extends ExternalContract_Base {
     /***********************************************************************
          * OTHER METHODS *
          **********************************************************************/
-
-    public static List<ExternalContract> readAllExternalContracts() {
-	List<ExternalContract> accountabilities = new ArrayList<ExternalContract>();
+      
+    public static Set<ExternalContract> readAllExternalContracts() {
+	Set<ExternalContract> accountabilities = new HashSet<ExternalContract>();
 	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
 	    if (accountability instanceof ExternalContract) {
 		accountabilities.add((ExternalContract) accountability);

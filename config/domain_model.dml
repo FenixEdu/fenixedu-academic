@@ -2601,6 +2601,7 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 
 class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
+	String blueprintNumber;
 	YearMonthDay validUntil;
 	YearMonthDay validFrom;
 	Integer keySpace;
@@ -2619,7 +2620,6 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 	}
 
 	class net.sourceforge.fenixedu.domain.space.RoomInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
-		String blueprintNumber;
 		String identification;
 		String description;
 		BigDecimal area;

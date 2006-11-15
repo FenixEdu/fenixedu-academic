@@ -58,7 +58,7 @@
 			</logic:iterate>
 		</div>
 		
-		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="selectedSpaceBlueprintId"/>&viewBlueprintNumbers=true</bean:define>
+		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="selectedSpaceBlueprintId"/>&viewOriginalSpaceBlueprint=true</bean:define>
 		<p>
 			<html:img src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
 		</p>
