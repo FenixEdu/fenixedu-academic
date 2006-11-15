@@ -1,16 +1,20 @@
 package net.sourceforge.fenixedu.renderers;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
+import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButton;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButtonList;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 
 public class BooleanRadioInputRendererWithPostBack extends BooleanRadioInputRenderer {
     private String destination;
-
+    private final String HIDDEN_NAME = "postback";
+    
     public String getDestination() {
         return destination;
     }
@@ -33,14 +37,25 @@ public class BooleanRadioInputRendererWithPostBack extends BooleanRadioInputRend
             
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                HtmlRadioButtonList radioButtonList = (HtmlRadioButtonList) layout.createComponent(object, type);
-                
-                radioButtonList.setController(new PostBackController(getDestination()));
-                for (HtmlRadioButton button : radioButtonList.getRadioButtons()) {
-                    button.setOnClick("this.form.submit();");
-                }
-                
-                return radioButtonList;
+            	 HtmlInlineContainer container = new HtmlInlineContainer();
+
+                 String prefix = ((MetaSlot) getInputContext().getMetaObject()).getName();
+
+                 HtmlHiddenField hidden = new HtmlHiddenField(prefix + HIDDEN_NAME, "");
+                 hidden.setController(new PostBackController(hidden, getDestination()));
+                 
+                 HtmlRadioButtonList radioButtonList = (HtmlRadioButtonList) layout.createComponent(object, type);
+                 for (HtmlRadioButton button : radioButtonList.getRadioButtons()) {
+                 	button.setOnClick("this.form." + prefix + HIDDEN_NAME + ".value='true';this.form.submit();");
+                 	button.setOnDblClick("this.form." + prefix + HIDDEN_NAME + ".value='true';this.form.submit();");
+                 	
+                 }
+                 
+                 container.addChild(hidden);
+                 container.addChild(radioButtonList);
+
+                 return container;
+
             }
 
         };
@@ -48,25 +63,32 @@ public class BooleanRadioInputRendererWithPostBack extends BooleanRadioInputRend
 
     private static class PostBackController extends HtmlController {
 
+        private HtmlHiddenField hidden;
+
         private String destination;
 
-        public PostBackController(String destination) {
+        public PostBackController(HtmlHiddenField hidden, String destination) {
+            this.hidden = hidden;
             this.destination = destination;
         }
 
         @Override
         public void execute(IViewState viewState) {
+            if (hidden.getValue() != null && hidden.getValue().length() != 0) {
+                String destinationName = this.destination == null ? "postBack" : this.destination;
+                ViewDestination destination = viewState.getDestination(destinationName);
 
-            ViewDestination destination = viewState.getDestination(this.destination);
+                if (destination != null) {
+                    viewState.setCurrentDestination(destination);
+                } else {
+                    viewState.setCurrentDestination("postBack");
+                }
 
-            if (destination != null) {
-                viewState.setCurrentDestination(destination);
-            } else {
-                viewState.setCurrentDestination("postBack");
+                viewState.setSkipValidation(true);
             }
 
-            viewState.setSkipValidation(true);
         }
+
 
     }
 }

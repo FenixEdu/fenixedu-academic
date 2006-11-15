@@ -2,14 +2,18 @@ package net.sourceforge.fenixedu.renderers;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
+import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 
 public class BooleanInputRenderWithPostBack extends BooleanInputRenderer {
     private String destination;
-
+    private final String HIDDEN_NAME = "postback";
+    
     public String getDestination() {
         return destination;
     }
@@ -31,14 +35,24 @@ public class BooleanInputRenderWithPostBack extends BooleanInputRenderer {
         return new Layout() {
 
             @Override
+        
             public HtmlComponent createComponent(Object object, Class type) {
-                HtmlCheckBox checkBox = (HtmlCheckBox) layout.createComponent(object, type);
+            	 HtmlInlineContainer container = new HtmlInlineContainer();
 
-                checkBox.setController(new PostBackController(getDestination()));
-                checkBox.setOnClick("this.form.submit();");
-                checkBox.setOnDblClick("this.form.submit();");
+                 String prefix = ((MetaSlot) getInputContext().getMetaObject()).getName();
 
-                return checkBox;
+                 HtmlHiddenField hidden = new HtmlHiddenField(prefix + HIDDEN_NAME, "");
+                 HtmlCheckBox checkBox = (HtmlCheckBox) layout.createComponent(object, type);
+                
+                 checkBox.setOnClick("this.form." + prefix + HIDDEN_NAME + ".value='true';this.form.submit();");
+                 checkBox.setOnDblClick("this.form." + prefix + HIDDEN_NAME + ".value='true';this.form.submit();");
+                 checkBox.setController(new PostBackController(hidden, getDestination()));
+                 
+                 container.addChild(hidden);
+                 container.addChild(checkBox);
+
+                 return container;
+            
             }
 
         };
@@ -46,25 +60,31 @@ public class BooleanInputRenderWithPostBack extends BooleanInputRenderer {
 
     private static class PostBackController extends HtmlController {
 
-        private String destination;
+    	 private HtmlHiddenField hidden;
 
-        public PostBackController(String destination) {
-            this.destination = destination;
-        }
+         private String destination;
 
-        @Override
-        public void execute(IViewState viewState) {
-            String destinationName = this.destination == null ? "postback" : this.destination;
-            ViewDestination destination = viewState.getDestination(destinationName);
+         public PostBackController(HtmlHiddenField hidden, String destination) {
+             this.hidden = hidden;
+             this.destination = destination;
+         }
 
-            if (destination != null) {
-                viewState.setCurrentDestination(destination);
-            } else {
-                viewState.setCurrentDestination("postBack");
-            }
+         @Override
+         public void execute(IViewState viewState) {
+             if (hidden.getValue() != null && hidden.getValue().length() != 0) {
+                 String destinationName = this.destination == null ? "postBack" : this.destination;
+                 ViewDestination destination = viewState.getDestination(destinationName);
 
-            viewState.setSkipValidation(true);
-        }
+                 if (destination != null) {
+                     viewState.setCurrentDestination(destination);
+                 } else {
+                     viewState.setCurrentDestination("postBack");
+                 }
+
+                 viewState.setSkipValidation(true);
+             }
+
+         }
 
     }
 }
