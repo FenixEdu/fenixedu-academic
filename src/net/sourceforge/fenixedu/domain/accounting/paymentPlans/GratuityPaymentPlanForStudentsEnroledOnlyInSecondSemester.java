@@ -13,8 +13,13 @@ public class GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends
 
     public GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(final ExecutionYear executionYear,
 	    final ServiceAgreementTemplate serviceAgreementTemplate) {
+	this(executionYear, serviceAgreementTemplate, false);
+    }
+
+    public GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(final ExecutionYear executionYear,
+	    final ServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
 	this();
-	super.init(executionYear, serviceAgreementTemplate);
+	super.init(executionYear, serviceAgreementTemplate, defaultPlan);
     }
 
     @Override

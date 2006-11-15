@@ -81,7 +81,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     private YearMonthDay calculateFullPaymentCodeEndDate() {
 	final YearMonthDay today = new YearMonthDay();
-	final YearMonthDay totalEndDate = getLastInstallment().getEndDate();
+	final YearMonthDay totalEndDate = getFirstInstallment().getEndDate();
 	return today.isBefore(totalEndDate) ? totalEndDate : today.plusMonths(1);
     }
 
@@ -130,7 +130,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO,
 	    final Student student) {
 	return AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
-		getLastInstallment().getEndDate(), this, entryDTO.getAmountToPay(), entryDTO
+		getFirstInstallment().getEndDate(), this, entryDTO.getAmountToPay(), entryDTO
 			.getAmountToPay(), student);
     }
 
@@ -153,13 +153,17 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     }
 
-    private Installment getLastInstallment() {
-	return getGratuityPaymentPlan().getLastInstallment();
+    private Installment getFirstInstallment() {
+	return getGratuityPaymentPlan().getFirstInstallment();
     }
 
     public GratuityPaymentPlan getGratuityPaymentPlan() {
-	return getServiceAgreementTemplate().getGratuityPaymentPlanFor(getStudentCurricularPlan(),
-		getExecutionYear());
+	final GratuityPaymentPlan gratuityPaymentPlanFor = getServiceAgreementTemplate()
+		.getGratuityPaymentPlanFor(getStudentCurricularPlan(), getExecutionYear());
+
+	return (gratuityPaymentPlanFor != null ? gratuityPaymentPlanFor
+		: (GratuityPaymentPlan) getServiceAgreementTemplate().getDefaultPaymentPlan(
+			getExecutionYear()));
     }
 
     private DegreeCurricularPlanServiceAgreementTemplate getServiceAgreementTemplate() {

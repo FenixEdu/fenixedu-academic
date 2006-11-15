@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.student;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -82,6 +83,9 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.YearMonthDay;
 
 public class Registration extends Registration_Base {
+
+    private static List<StudentType> studentTypesNotPayingGratuityOrInsurance = Arrays
+	    .asList(new StudentType[] { StudentType.EXTERNAL_STUDENT, StudentType.FOREIGN_STUDENT });
 
     private transient Double approvationRatio;
 
@@ -706,8 +710,8 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
-    // begin ACADEMIC SERVICE REQUESTS 
-    
+    // begin ACADEMIC SERVICE REQUESTS
+
     public Collection<AcademicServiceRequest> getAcademicServiceRequests() {
 	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 
@@ -779,7 +783,7 @@ public class Registration extends Registration_Base {
     }
 
     // end ACADEMIC SERVICE REQUESTS
-    
+
     // Special Season
 
     public SpecialSeasonCode getSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {
@@ -897,7 +901,7 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    public List<Attends> getAttendsForExecutionPeriod(final ExecutionPeriod executionPeriod){
+    public List<Attends> getAttendsForExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	final List<Attends> result = new ArrayList<Attends>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
 	    if (attends.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
@@ -906,6 +910,7 @@ public class Registration extends Registration_Base {
 	}
 	return result;
     }
+
     public List<Shift> getShiftsForCurrentExecutionPeriod() {
 	final List<Shift> result = new ArrayList<Shift>();
 	for (final Shift shift : getShiftsSet()) {
@@ -1004,24 +1009,27 @@ public class Registration extends Registration_Base {
 	checkIfReachedAttendsLimit();
 
 	if (readAttendByExecutionCourse(executionCourse) == null) {
-	    final Enrolment enrolment = findEnrolment(getActiveStudentCurricularPlan(), executionCourse, executionCourse.getExecutionPeriod());
-	    if(enrolment != null) {
+	    final Enrolment enrolment = findEnrolment(getActiveStudentCurricularPlan(), executionCourse,
+		    executionCourse.getExecutionPeriod());
+	    if (enrolment != null) {
 		enrolment.createAttends(this, executionCourse);
 	    } else {
-		Attends attends = getAttendsForExecutionCourse(executionCourse); 
-		if(attends != null) {
+		Attends attends = getAttendsForExecutionCourse(executionCourse);
+		if (attends != null) {
 		    attends.delete();
 		}
 		new Attends(this, executionCourse);
 	    }
 	}
     }
-    
+
     private Attends getAttendsForExecutionCourse(ExecutionCourse executionCourse) {
-	List<Attends> attendsInExecutionPeriod = getAttendsForExecutionPeriod(executionCourse.getExecutionPeriod());
+	List<Attends> attendsInExecutionPeriod = getAttendsForExecutionPeriod(executionCourse
+		.getExecutionPeriod());
 	for (Attends attends : attendsInExecutionPeriod) {
-	    for (CurricularCourse curricularCourse : attends.getExecutionCourse().getAssociatedCurricularCoursesSet()) {
-		if(executionCourse.getAssociatedCurricularCoursesSet().contains(curricularCourse)) {
+	    for (CurricularCourse curricularCourse : attends.getExecutionCourse()
+		    .getAssociatedCurricularCoursesSet()) {
+		if (executionCourse.getAssociatedCurricularCoursesSet().contains(curricularCourse)) {
 		    return attends;
 		}
 	    }
@@ -1029,10 +1037,13 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    private Enrolment findEnrolment(final StudentCurricularPlan studentCurricularPlan, final ExecutionCourse executionCourse, final ExecutionPeriod executionPeriod) {
-	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-	    final Enrolment enrolment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
-	    if(enrolment != null) {
+    private Enrolment findEnrolment(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionCourse executionCourse, final ExecutionPeriod executionPeriod) {
+	for (final CurricularCourse curricularCourse : executionCourse
+		.getAssociatedCurricularCoursesSet()) {
+	    final Enrolment enrolment = studentCurricularPlan
+		    .getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+	    if (enrolment != null) {
 		return enrolment;
 	    }
 	}
@@ -1072,14 +1083,14 @@ public class Registration extends Registration_Base {
     public boolean isActive() {
 	return (getActiveStudentCurricularPlan() != null);
     }
-    
+
     public boolean hasAnyEnrolmentsIn(final ExecutionYear executionYear) {
 	final StudentCurricularPlan studentCurricularPlan = getActiveStudentCurricularPlan();
 	if (studentCurricularPlan != null) {
 	    return studentCurricularPlan.hasAnyEnrolmentForExecutionYear(executionYear);
 	}
 	return false;
-	
+
     }
 
     public Tutor getAssociatedTutor() {
@@ -1296,17 +1307,18 @@ public class Registration extends Registration_Base {
     private double calculateEctsCredits() {
 	return calculateEctsCredits(null);
     }
-    
+
     private double calculateEctsCredits(final ExecutionYear mostRecentExecutionYearToConsider) {
 	double ectsCredits = 0;
-	
-	// TODO: this is not sufficient, this does not take into account equivalences!!! must modify the domain model!
+
+	// TODO: this is not sufficient, this does not take into account
+	// equivalences!!! must modify the domain model!
 	final ExecutionYear executionYear = mostRecentExecutionYearToConsider == null ? findMostRecenteExecutionYearWithEnrolments()
 		: mostRecentExecutionYearToConsider;
 	if (executionYear == null) {
 	    return 1;
 	}
-	
+
 	final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
 	final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
 	final Set<CurricularCourse> curricularCoursesToDisplay = new TreeSet<CurricularCourse>(
@@ -1372,7 +1384,7 @@ public class Registration extends Registration_Base {
     public int getCurricularYear() {
 	return calculateCurricularYear(calculateEctsCredits());
     }
-    
+
     public int getCurricularYear(ExecutionYear executionYear) {
 	return calculateCurricularYear(calculateEctsCredits(executionYear));
     }
@@ -1539,4 +1551,12 @@ public class Registration extends Registration_Base {
 	return getActiveStudentCurricularPlan().getDegreeCurricularPlan();
     }
 
+    public boolean hasToPayGratuityOrInsurance() {
+	if (getInterruptedStudies().booleanValue()) {
+	    return false;
+	}
+
+	return !studentTypesNotPayingGratuityOrInsurance.contains(getStudentKind().getStudentType());
+
+    }
 }

@@ -243,7 +243,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 		}
 		
 	class net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-		Integer keyRegistrationForDfaRegistrationEvent;
+		Integer keyRegistration;
 	}
 
 	class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
@@ -256,7 +256,6 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 	}
 	
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
-			Integer keyRegistrationForGratuityEvent;
 			Integer keyStudentCurricularPlan;
 		}
 		
@@ -371,6 +370,7 @@ class net.sourceforge.fenixedu.domain.accounting.PaymentPlan extends net.sourcef
 	Integer keyServiceAgreementTemplate;
 	DateTime whenCreated;
 	String ojbConcreteClass;
+	Boolean defaultPlan;
 }
 
 	class net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.PaymentPlan {
@@ -7958,15 +7958,8 @@ relation DFACandidacyEventCandidacy {
 }
 
 relation DfaRegistrationEventRegistration {
-	net.sourceforge.fenixedu.domain.student.Registration playsRole registrationForDfaRegistrationEvent;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
 	net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvent;
-}
-
-relation GratuityEventRegistration {
-	net.sourceforge.fenixedu.domain.student.Registration playsRole registrationForGratuityEvent;
-	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent playsRole gratuityEvents {
-		multiplicity *;
-	}
 }
 
 relation GratuityEventStudentCurricularPlan {

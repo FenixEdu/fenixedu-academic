@@ -114,20 +114,20 @@ public class GratuityEvent extends GratuityEvent_Base {
 		.findPostingRuleByEventTypeAndDate(getEventType(), whenRegistered);
     }
 
-    @Override
-    public void setRegistrationForGratuityEvent(Registration registration) {
-	throw new DomainException(
-		"error.accounting.events.gratuity.GratuityEvent.cannot.modify.registration");
-    }
-
     public Registration getRegistration() {
-	return getRegistrationForGratuityEvent();
+	return getStudentCurricularPlan().getRegistration();
     }
 
     @Override
     public void setExecutionYear(ExecutionYear executionYear) {
 	throw new DomainException(
 		"error.accounting.events.gratuity.GratuityEvent.cannot.modify.executionYear");
+    }
+
+    @Override
+    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+	throw new DomainException(
+		"error.accounting.events.gratuity.GratuityEvent.cannot.modify.studentCurricularPlan");
     }
 
     public boolean isCompleteEnrolmentModel() {

@@ -24,6 +24,13 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 			    ServiceAgreementTemplate serviceAgreementTemplate) {
 
 			if (paymentPlanToAdd != null) {
+			    if (paymentPlanToAdd.isDefault()
+				    && serviceAgreementTemplate.hasDefaultPaymentPlan(paymentPlanToAdd
+					    .getExecutionYear())) {
+				throw new DomainException(
+					"error.domain.accounting.ServiceAgreementTemplate.already.has.a.default.payment.plan.for.execution.year");
+			    }
+
 			    for (final PaymentPlan paymentPlan : serviceAgreementTemplate
 				    .getPaymentPlansSet()) {
 				if (paymentPlan.getClass().equals(paymentPlanToAdd.getClass())
@@ -47,24 +54,29 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
     }
 
     protected void init(final ExecutionYear executionYear,
-	    final ServiceAgreementTemplate serviceAgreementTemplate) {
+	    final ServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
 
-	checkParameters(executionYear, serviceAgreementTemplate);
+	checkParameters(executionYear, serviceAgreementTemplate, defaultPlan);
 
 	super.setExecutionYear(executionYear);
 	super.setServiceAgreementTemplate(serviceAgreementTemplate);
+	super.setDefaultPlan(defaultPlan);
 
     }
 
     private void checkParameters(final ExecutionYear executionYear,
-	    final ServiceAgreementTemplate serviceAgreementTemplate) {
+	    final ServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
 	if (executionYear == null) {
-	    throw new DomainException("error.accounting.PaymentCondition.executionYear.cannot.be.null");
+	    throw new DomainException("error.accounting.PaymentPlan.executionYear.cannot.be.null");
 	}
 
 	if (serviceAgreementTemplate == null) {
 	    throw new DomainException(
-		    "error.accounting.PaymentCondition.serviceAgreementTemplate.cannot.be.null");
+		    "error.accounting.PaymentPlan.serviceAgreementTemplate.cannot.be.null");
+	}
+
+	if (defaultPlan == null) {
+	    throw new DomainException("error.accounting.PaymentPlan.defaultPlan.cannot.be.null");
 	}
 
     }
@@ -80,6 +92,11 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 		"error.accounting.PaymentCondition.cannot.modify.serviceAgreementTemplate");
     }
 
+    @Override
+    public void setDefaultPlan(Boolean defaultPlan) {
+	throw new DomainException("error.domain.accounting.PaymentPlan.cannot.modify.defaultPlan");
+    }
+
     public List<Installment> getInstallmentsSortedByEndDate() {
 	final List<Installment> result = new ArrayList<Installment>(getInstallmentsSet());
 	Collections.sort(result, Installment.COMPARATOR_BY_END_DATE);
@@ -91,10 +108,15 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	return (getInstallmentsCount() == 0) ? null : Collections.max(getInstallmentsSet(),
 		Installment.COMPARATOR_BY_ORDER);
     }
-    
+
+    public Installment getFirstInstallment() {
+	return (getInstallmentsCount() == 0) ? null : Collections.min(getInstallmentsSet(),
+		Installment.COMPARATOR_BY_ORDER);
+    }
+
     public int getLastInstallmentOrder() {
 	final Installment installment = getLastInstallment();
-	return installment == null ? 0 : installment.getOrder(); 
+	return installment == null ? 0 : installment.getOrder();
     }
 
     @Override
@@ -120,6 +142,10 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
     @Override
     public void removeInstallments(Installment installment) {
 	throw new DomainException("error.accounting.PaymentPlan.cannot.remove.installment");
+    }
+
+    public boolean isDefault() {
+	return getDefaultPlan().booleanValue();
     }
 
 }

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -125,6 +126,20 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 	throw new DomainException(
 		"error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
 
+    }
+
+    public PaymentPlan getDefaultPaymentPlan(final ExecutionYear executionYear) {
+	for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
+	    if (paymentPlan.getExecutionYear() == executionYear && paymentPlan.isDefault()) {
+		return paymentPlan;
+	    }
+	}
+
+	return null;
+    }
+
+    public boolean hasDefaultPaymentPlan(final ExecutionYear executionYear) {
+	return getDefaultPaymentPlan(executionYear) != null;
     }
 
 }

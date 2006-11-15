@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
@@ -61,6 +60,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
     }
 
     @Override
+    // TODO: correct method to use discount percentage
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
 
 	final List<EntryDTO> result = new ArrayList<EntryDTO>();
@@ -161,9 +161,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
     }
 
     private PaymentPlan getPaymentPlan(Event event) {
-	GratuityEvent gratuityEvent = (GratuityEvent) event;
-	return getServiceAgreementTemplate().getGratuityPaymentPlanFor(
-		gratuityEvent.getStudentCurricularPlan(), gratuityEvent.getExecutionYear());
+	return ((GratuityEventWithPaymentPlan) event).getGratuityPaymentPlan();
     }
 
     @Override

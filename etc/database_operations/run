@@ -26,3 +26,8 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Changing Table AccountingEvent" AlterTableAccountingEvent.sql
+execute "Remove Insurance And Gratuity Events" RemoveInsuranceAndGratuityEvents.sql
+execute "Changing Table PaymentPlan" AlterTablePaymentPlan.sql
+execute "Update Existing Payment Plans (set default)" UpdateExistingPaymentPlans.sql

@@ -35,7 +35,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     private void init(AdministrativeOffice administrativeOffice, Person person, Registration registration) {
 	super.init(administrativeOffice, EventType.DFA_REGISTRATION, person);
 	checkParameters(registration);
-	super.setRegistrationForDfaRegistrationEvent(registration);
+	super.setRegistration(registration);
 
     }
 
@@ -85,12 +85,8 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 	return getPerson().getAccountBy(AccountType.EXTERNAL);
     }
 
-    public Registration getRegistration() {
-	return getRegistrationForDfaRegistrationEvent();
-    }
-
     @Override
-    public void setRegistrationForDfaRegistrationEvent(Registration registration) {
+    public void setRegistration(Registration registration) {
 	throw new DomainException(
 		"error.accounting.events.dfa.DfaRegistrationEvent.cannot.modify.registration");
     }

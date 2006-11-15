@@ -11,13 +11,19 @@ public class FullGratuityPaymentPlan extends FullGratuityPaymentPlan_Base {
     }
 
     public FullGratuityPaymentPlan(final ExecutionYear executionYear,
-	    final ServiceAgreementTemplate serviceAgreementTemplate) {
+	    final ServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
 	this();
-	super.init(executionYear, serviceAgreementTemplate);
+	super.init(executionYear, serviceAgreementTemplate, defaultPlan);
+    }
+
+    public FullGratuityPaymentPlan(final ExecutionYear executionYear,
+	    final ServiceAgreementTemplate serviceAgreementTemplate) {
+	this(executionYear, serviceAgreementTemplate, false);
     }
 
     @Override
-    public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+    public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan,
+	    ExecutionYear executionYear) {
 	return getExecutionYear() == executionYear
 		&& studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear
 			.getFirstExecutionPeriod());
