@@ -35,9 +35,12 @@
 		</strong></p>
 		<ul>
 			<logic:iterate id="evaluatedAttends" name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
-				<li>
-					<bean:write name="evaluatedAttends" property="disciplinaExecucao.nome" />
-				</li>
+				<bean:define id="executionCourse" name="evaluatedAttends" property="disciplinaExecucao.nome"/>
+				<logic:equal name="executionCourse" property="availableForInquiries" value="true">
+					<li>
+						<bean:write name="executionCourse" property="nome" />
+					</li>
+				</logic:equal>
 			</logic:iterate>
 		</ul>
 	</logic:notEmpty>
