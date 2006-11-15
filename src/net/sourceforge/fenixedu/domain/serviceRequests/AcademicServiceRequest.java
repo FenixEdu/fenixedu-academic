@@ -10,6 +10,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -58,6 +59,12 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	}
     }
 
+    public final boolean isPayable() {
+	return getEventType() != null;
+    }
+    
+    public abstract EventType getEventType();
+    
     public abstract String getDescription();
     
     protected String getDescription(final String academicServiceRequestType, final String specificServiceType) {

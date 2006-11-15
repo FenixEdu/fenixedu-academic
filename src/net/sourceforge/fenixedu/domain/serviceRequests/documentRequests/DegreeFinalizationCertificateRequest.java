@@ -102,9 +102,13 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
 	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST, getRegistration().getPerson(), this);
+		    getEventType(), getRegistration().getPerson(), this);
 	}
-
+    }
+    
+    @Override
+    public EventType getEventType() {
+	return EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST;
     }
 
 }

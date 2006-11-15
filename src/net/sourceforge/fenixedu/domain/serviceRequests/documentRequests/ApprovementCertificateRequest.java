@@ -78,8 +78,13 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
 
 	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    EventType.APPROVEMENT_CERTIFICATE_REQUEST, getRegistration().getPerson(), this);
+		    getEventType(), getRegistration().getPerson(), this);
 	}
+    }
+
+    @Override
+    public EventType getEventType() {
+	return EventType.APPROVEMENT_CERTIFICATE_REQUEST;
     }
 
 }

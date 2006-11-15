@@ -92,8 +92,13 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
 		&& !isFirstRequestFromExecutionYear()) {
 	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST, getRegistration().getPerson(), this);
+		    getEventType(), getRegistration().getPerson(), this);
 	}
+    }
+
+    @Override
+    public EventType getEventType() {
+	return EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST;
     }
 
 }

@@ -103,8 +103,13 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
 		&& !isFirstRequestFromExecutionYear()) {
 	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    EventType.ENROLMENT_CERTIFICATE_REQUEST, getRegistration().getPerson(), this);
+		    getEventType(), getRegistration().getPerson(), this);
 	}
+    }
+
+    @Override
+    public EventType getEventType() {
+	return EventType.ENROLMENT_CERTIFICATE_REQUEST;
     }
 
 }
