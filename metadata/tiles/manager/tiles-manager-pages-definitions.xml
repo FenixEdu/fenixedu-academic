@@ -692,8 +692,10 @@
 	<definition name="manager.payments.prepareGenerateSibsOutgoingFile" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/payments/prepareGenerateSibsOutgoingFile.jsp" />
 	</definition>
-	
 
+	<definition name="df.page.manage.edit.execution-period" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/editExecutionPeriod.jsp" />
+	</definition>	
 	
 	<!-- ##########################################-->
 
