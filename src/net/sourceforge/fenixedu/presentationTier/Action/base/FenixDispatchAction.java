@@ -77,7 +77,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return ServiceUtils.executeService(getUserView(request), serviceName, serviceArgs);
     }
 
-    protected Object executeService(final String serviceName, final Object... serviceArgs)
+    protected Object executeService(final String serviceName, final Object ... serviceArgs)
 	    throws FenixFilterException, FenixServiceException {
 	return ServiceUtils.executeService(AccessControl.getUserView(), serviceName, serviceArgs);
     }
@@ -222,18 +222,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected FactoryExecutor getFactoryObject() {
-	return (FactoryExecutor) getRendererObject();
-    }
-
-    protected Object getRendererObject() {
-	IViewState viewState = RenderUtils.getViewState();
-	if (viewState != null) {
-	    MetaObject metaObject = viewState.getMetaObject();
-	    if (metaObject != null) {
-		return metaObject.getObject();
-	    }
-	}
-	return null;
+	return (FactoryExecutor) getRenderedObject();
     }
 
     protected Object getRendererObject(String id) {
