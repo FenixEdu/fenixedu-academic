@@ -100,10 +100,9 @@
 	<slot name="numberOfPages" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.numberOfPages" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 
-<schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="STUDENT_RESOURCES">
-	<slot name="toBeCreated" key="submit"></slot>
+<schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="studentCurricularPlan.degreeCurricularPlan.name" read-only="true" key="label.curricularplan"/>
-	<slot name="chosenDocumentRequestType" read-only="true" key="document.to.request"/>
+	<slot name="chosenDocumentRequestType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType"/>
 	<slot name="chosenDocumentPurposeType" read-only="true" key="document.purpose"/>
 	<slot name="otherPurpose" read-only="true" key="otherPurpose"/>	
 	<slot name="notes" read-only="true" key="notes"/>
@@ -115,4 +114,54 @@
 
 <schema name="DocumentRequestCreateBean.viewCreation" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean"  extends="DocumentRequestCreateBean.viewToConfirmCreation" bundle="STUDENT_RESOURCES">	
 	<remove name="toBeCreated" key="submit"/>
+</schema>
+
+<schema name="DocumentRequestCreateBean.chooseDocumentRequestType"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="chosenDocumentRequestType" key="document.to.request" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType" />
+		<property name="destination" value="documentRequestTypeChoosedPostBack"/>
+	</slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.SCHOOL_REGISTRATION_CERTIFICATE.AdditionalInformation" 
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForRegistrationProvider" />
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="urgentRequest"></slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.ENROLMENT_CERTIFICATE.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForRegistrationProvider" />
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="detailed"></slot>
+	<slot name="urgentRequest"></slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="urgentRequest"></slot>
+</schema>
+
+
+<schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="detailed"></slot>
+	<slot name="average"></slot>
+	<slot name="urgentRequest"></slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="STUDENT_RESOURCES">
+	<slot name="chosenDocumentPurposeType" key="document.purpose"/>
+	<slot name="otherPurpose" key="otherPurpose"/>	
+	<setter signature="setPurpose(chosenDocumentPurposeType,otherPurpose)"/>
+</schema>
+
+<schema name="DocumentRequestCreateBean.notes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="STUDENT_RESOURCES">
+	<slot name="notes" key="document.notes"/>
 </schema>
