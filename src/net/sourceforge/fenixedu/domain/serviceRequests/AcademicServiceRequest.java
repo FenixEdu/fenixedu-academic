@@ -9,7 +9,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -22,7 +21,6 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.joda.time.DateTime;
 
 public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base {
 
@@ -30,28 +28,32 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setOjbConcreteClass(this.getClass().getName());
-	
-	final DateTime now = new DateTime();
-	super.setCreationDate(now);
-	super.setServiceRequestNumber(now.year().getAsShortText() + "/" + getIdInternal().toString());
+	super.setServiceRequestNumber(RootDomainObject.getInstance().getAcademicServiceRequestsCount());
     }
 
-    protected AcademicServiceRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice ) {
-	this();
-	init(studentCurricularPlan, administrativeOffice);
-    }
+    protected void init(Registration registration) {
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice) {
-	checkParameters(studentCurricularPlan, administrativeOffice);
+	AdministrativeOffice administrativeOffice = null;
+	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	if (employee != null) {
+	    administrativeOffice = AdministrativeOffice.readByEmployee(employee);
+	}
+	if (administrativeOffice == null) {
+	    administrativeOffice = AdministrativeOffice.getResponsibleAdministrativeOffice(registration
+		    .getDegree());
+	}
+
+	checkParameters(registration, administrativeOffice);
 	super.setAdministrativeOffice(administrativeOffice);
-	super.setStudentCurricularPlan(studentCurricularPlan);
+	super.setRegistration(registration);
+	new AcademicServiceRequestSituation(this, AcademicServiceRequestSituationType.NEW, employee,
+		null);
     }
 
-    private void checkParameters(StudentCurricularPlan studentCurricularPlan,
-	    AdministrativeOffice administrativeOffice) {
-	if (studentCurricularPlan == null) {
+    private void checkParameters(Registration registration, AdministrativeOffice administrativeOffice) {
+	if (registration == null) {
 	    throw new DomainException(
-		    "error.serviceRequests.AcademicServiceRequest.studentCurricularPlan.cannot.be.null");
+		    "error.serviceRequests.AcademicServiceRequest.registration.cannot.be.null");
 	}
 	if (administrativeOffice == null) {
 	    throw new DomainException(
@@ -62,91 +64,86 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     public final boolean isPayable() {
 	return getEventType() != null;
     }
-    
+
     public abstract EventType getEventType();
-    
+
     public abstract String getDescription();
-    
-    protected String getDescription(final String academicServiceRequestType, final String specificServiceType) {
-	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
-	
+
+    protected String getDescription(final String academicServiceRequestType,
+	    final String specificServiceType) {
+	final ResourceBundle enumerationResources = ResourceBundle.getBundle(
+		"resources.EnumerationResources", LanguageUtils.getLocale());
+
 	final StringBuilder result = new StringBuilder();
 	result.append(enumerationResources.getString(academicServiceRequestType));
 	if (specificServiceType != null) {
 	    result.append(": ");
 	    result.append(enumerationResources.getString(specificServiceType));
 	}
-	
+
 	return result.toString();
     }
 
     public abstract Set<AdministrativeOfficeType> getPossibleAdministrativeOffices();
-    
+
     /**
-     * Each AcademicServiceRequest must verify the conditions necessary for it to begin processing and
-     * throw DomainExceptions if otherwise
-     * 
-     * @throws DomainException
-     */
+         * Each AcademicServiceRequest must verify the conditions necessary for
+         * it to begin processing and throw DomainExceptions if otherwise
+         * 
+         * @throws DomainException
+         */
     protected abstract void assertProcessingStatePreConditions() throws DomainException;
-    
+
     final public void process() throws DomainException {
 	assertProcessingStatePreConditions();
-	
+
 	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.PROCESSING, employee, null);
     }
-    
+
     final public void reject(final String justification) {
 	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.REJECTED, employee, justification);
     }
-    
+
     final public void cancel(final String justification) {
 	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.CANCELLED, employee, justification);
     }
-    
+
     /**
-     * Each AcademicServiceRequest must verify the conditions necessary for it to begin processing and
-     * throw DomainExceptions if otherwise
-     * 
-     * @throws DomainException
-     */
+         * Each AcademicServiceRequest must verify the conditions necessary for
+         * it to begin processing and throw DomainExceptions if otherwise
+         * 
+         * @throws DomainException
+         */
     protected abstract void assertConcludedStatePreConditions() throws DomainException;
-    
+
     final public void conclude() {
 	assertConcludedStatePreConditions();
-	
+
 	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.CONCLUDED, employee, null);
     }
-    
+
     final public void delivered() {
 	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.DELIVERED, employee, null);
     }
-    
+
     @Override
     public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	throw new DomainException(
 		"error.serviceRequests.AcademicServiceRequest.cannot.modify.administrativeOffice");
     }
 
-    @Override
-    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+    public void setRegistration(Registration registration) {
 	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequest.cannot.modify.studentCurricularPlan");
+		"error.serviceRequests.AcademicServiceRequest.cannot.modify.registration");
     }
 
     @Override
-    public void setCreationDate(DateTime creationDate) {
-	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequest.cannot.modify.creationDate");
-    }
-
-    @Override
-    public void setServiceRequestNumber(String serviceRequestNumber) {
+    public void setServiceRequestNumber(Integer serviceRequestNumber) {
 	throw new DomainException(
 		"error.serviceRequests.AcademicServiceRequest.cannot.modify.serviceRequestNumber");
     }
@@ -187,8 +184,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
-	return (getActiveSituation() != null) ? getActiveSituation()
-		.getAcademicServiceRequestSituationType() : null;
+	return getActiveSituation().getAcademicServiceRequestSituationType();
     }
 
     public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
@@ -275,17 +271,8 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	// nothing to be done
     }
 
-    @Deprecated
-    public Registration getStudent() {
-	return this.getRegistration();
-    }
-
-    public Registration getRegistration() {
-	return getStudentCurricularPlan().getRegistration();
-    }
-
     public boolean isNewRequest() {
-	return !hasAnyAcademicServiceRequestSituations();
+	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.NEW);
     }
 
     public boolean isProcessing() {
@@ -319,9 +306,9 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     public boolean finishedSuccessfully() {
 	return (isConcluded() || isDelivered());
     }
-    
+
     public boolean isDocumentRequest() {
 	return this instanceof DocumentRequest;
     }
-    
+
 }
