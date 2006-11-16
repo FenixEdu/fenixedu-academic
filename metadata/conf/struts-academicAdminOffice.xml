@@ -175,7 +175,7 @@
 				<forward name="chooseStudentToCreateDocumentRequest" path="documentRequests.management.chooseStudentToCreateDocumentRequest"/>				
 				<forward name="confirmCreateDocumentRequest" path="documentRequests.management.confirmCreateDocumentRequest"/>		
 				<forward name="viewDocumentRequestsToCreate" path="documentRequest.viewDocumentRequestsToCreate"/>		
-				<forward name="viewDocumentRequestsCreateSucess" path="documentRequest.viewDocumentRequestsCreateSucess"/>
+				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
 				
 		</action>
 	
