@@ -77,7 +77,9 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
     }
 
     private Degree getDegree() {
-	return getCertificateRequest().getStudentCurricularPlan().getDegreeCurricularPlan().getDegree();
+	return getCertificateRequest().getRegistration().getStudentCurricularPlan(
+		getCertificateRequest().getCreationDate().toYearMonthDay()).getDegreeCurricularPlan()
+		.getDegree();
     }
 
     public Integer getNumberOfUnits() {
