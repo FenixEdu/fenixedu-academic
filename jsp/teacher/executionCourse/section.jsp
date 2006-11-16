@@ -160,21 +160,6 @@
     </div>
 </logic:notEmpty>
 
-
-<p style="color: #888;">
-	<bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
-	<fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
-	    <fr:layout>
-	    	<fr:property name="classes" value="italic" />
-	        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
-	        <fr:property name="key" value="true"/>
-	        <fr:property name="bundle" value="SITE_RESOURCES"/>
-	        <fr:property name="subLayout" value="values"/>
-	        <fr:property name="subSchema" value="permittedGroup.class.text"/>
-	    </fr:layout>
-	</fr:view>
-</p>
-
 <%-------------
      Items
   -------------%>
