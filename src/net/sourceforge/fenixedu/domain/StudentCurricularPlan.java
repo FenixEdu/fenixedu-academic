@@ -35,10 +35,6 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
@@ -81,6 +77,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME)
 		.addComparator(new BeanComparator("student.person.name"));
     }
+
+    public static final Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE = new BeanComparator(
+	    "startDateYearMonthDay");
 
     protected Map acumulatedEnrollments; // For enrollment purposes only
 
@@ -437,7 +436,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
 
-	//calculateStudentAcumulatedEnrollments(executionPeriod);
+	// calculateStudentAcumulatedEnrollments(executionPeriod);
 	List<Enrolment> enrolments = (List) CollectionUtils.select(
 		getStudentEnrollmentsWithEnrolledState(), new Predicate() {
 
@@ -448,7 +447,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		});
 
 	initEctsCredits(enrolments);
-	//return initAcumulatedEnrollments(enrolments);
+	// return initAcumulatedEnrollments(enrolments);
 	return enrolments;
     }
 
@@ -607,7 +606,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	});
     }
-    
+
     public boolean hasAnyApprovedEnrolment() {
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    if (enrolment.isApproved()) {
@@ -1290,7 +1289,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return results;
     }
-    
+
     public List<Enrolment> getEnrolmentsByExecutionYear(final ExecutionYear executionYear) {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
@@ -1466,117 +1465,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return false;
     }
-    
+
+    public boolean hasAnyEnrolmentForCurrentExecutionYear() {
+	return hasAnyEnrolmentForExecutionYear(ExecutionYear.readCurrentExecutionYear());
+    }
 
     public boolean hasSchoolRegistration(ExecutionYear executionYear) {
 	return hasAnyEnrolmentForExecutionYear(executionYear);
     }
 
-    // begin ACADEMIC SERVICE REQUESTS
-    
-    public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
-	    final Class<AcademicServiceRequest> clazz,
-	    final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
-
-	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if ((clazz != null && academicServiceRequest.getClass().equals(clazz))
-		    && ((academicServiceRequestSituationType == null && academicServiceRequest
-			    .isNewRequest()) || academicServiceRequest
-			    .getAcademicServiceRequestSituationType() == academicServiceRequestSituationType)) {
-		result.add(academicServiceRequest);
-	    }
-	}
-
-	return result;
-    }
-
-    public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
-	    final Class<? extends AcademicServiceRequest> clazz) {
-	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
-
-	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if (clazz != null && academicServiceRequest.getClass().equals(clazz)) {
-		result.add(academicServiceRequest);
-	    }
-	}
-
-	return result;
-    }
-
-    public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
-	    final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
-
-	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if ((academicServiceRequestSituationType == null && academicServiceRequest.isNewRequest())
-		    || academicServiceRequest.getAcademicServiceRequestSituationType() == academicServiceRequestSituationType) {
-		result.add((DocumentRequest) academicServiceRequest);
-	    }
-	}
-
-	return result;
-    }
-
-    public Collection<AcademicServiceRequest> getNewAcademicServiceRequests() {
-	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests((AcademicServiceRequestSituationType) null);
-    }
-
-    public Collection<AcademicServiceRequest> getProcessingAcademicServiceRequests() {
-	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests(AcademicServiceRequestSituationType.PROCESSING);
-    }
-
-    public Collection<AcademicServiceRequest> getConcludedAcademicServiceRequests() {
-	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests(AcademicServiceRequestSituationType.CONCLUDED);
-    }
-
-    public Collection<AcademicServiceRequest> getHistoricalAcademicServiceRequests() {
-	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
-
-	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if (academicServiceRequest.isHistorical()) {
-		result.add(academicServiceRequest);
-	    }
-	}
-
-	return result;
-    }
-
-    public Collection<DocumentRequest> getDocumentRequests() {
-	return (Collection<DocumentRequest>) getAcademicServiceRequests(DocumentRequest.class);
-    }
-
-    public boolean hasDegreeDiplomaRequest() {
-	for (final DocumentRequest documentRequest : this.getDocumentRequests()) {
-	    if (documentRequest.isDegreeDiploma()) {
-		return true;
-	    }
-	}
-	
-	return false;
-    }
-    
-    public Set<DocumentRequest> getSucessfullyFinishedDocumentRequestsBy(ExecutionYear executionYear,
-	    DocumentRequestType documentRequestType) {
-
-	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
-
-	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if (academicServiceRequest instanceof DocumentRequest) {
-		final DocumentRequest documentRequest = (DocumentRequest) academicServiceRequest;
-		if (documentRequest.getDocumentRequestType() == documentRequestType
-			&& documentRequest.finishedSuccessfully()
-			&& executionYear.containsDate(documentRequest.getCreationDate())) {
-
-		    result.add((DocumentRequest) academicServiceRequest);
-		}
-	    }
-	}
-	return result;
-    }
-
-    // end ACADEMIC SERVICE REQUESTS
-    
     public Collection<Enrolment> getSpecialSeasonToEnrol(ExecutionYear executionYear) {
 	Map<CurricularCourse, Enrolment> result = new HashMap<CurricularCourse, Enrolment>();
 
@@ -1780,45 +1677,57 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	}
     }
-   
+
     @Override
     public List<Enrolment> getEnrolments() {
-	return getDegreeCurricularPlan().isBolonha() ? getRoot().getEnrolments() : super.getEnrolments(); 
+	return getDegreeCurricularPlan().isBolonha() ? getRoot().getEnrolments() : super.getEnrolments();
     }
-    
+
     @Override
     public Set<Enrolment> getEnrolmentsSet() {
-	return getDegreeCurricularPlan().isBolonha() ? getRoot().getEnrolmentsSet() : super.getEnrolmentsSet(); 
+	return getDegreeCurricularPlan().isBolonha() ? getRoot().getEnrolmentsSet() : super
+		.getEnrolmentsSet();
     }
-    
+
     public boolean isBolonha() {
 	return getDegreeCurricularPlan().isBolonha();
     }
-    
-    public void evaluate(final ExecutionPeriod executionPeriod, final Set<DegreeModuleToEnrol> degreeModulesToEnrol) {
-	final Set<CurricularRule> rulesToEvaluate = getRulesToEvaluate(degreeModulesToEnrol, executionPeriod);
+
+    public void evaluate(final ExecutionPeriod executionPeriod,
+	    final Set<DegreeModuleToEnrol> degreeModulesToEnrol) {
+	final Set<CurricularRule> rulesToEvaluate = getRulesToEvaluate(degreeModulesToEnrol,
+		executionPeriod);
 	final List<RuleResult> results = new ArrayList<RuleResult>();
 	for (final CurricularRule rule : rulesToEvaluate) {
-	    final RuleResult ruleResult = rule.evaluate(new EnrolmentContext(this, executionPeriod, degreeModulesToEnrol));
+	    final RuleResult ruleResult = rule.evaluate(new EnrolmentContext(this, executionPeriod,
+		    degreeModulesToEnrol));
 	    results.add(ruleResult);
 	}
     }
 
-    private Set<CurricularRule> getRulesToEvaluate(final Set<DegreeModuleToEnrol> degreeModulesToEnrol, final ExecutionPeriod executionPeriod) {
+    private Set<CurricularRule> getRulesToEvaluate(final Set<DegreeModuleToEnrol> degreeModulesToEnrol,
+	    final ExecutionPeriod executionPeriod) {
 	final Set<CurricularRule> result = new HashSet<CurricularRule>();
 	for (final DegreeModuleToEnrol degreeModuleToEnrol : degreeModulesToEnrol) {
-	    result.addAll(degreeModuleToEnrol.getContext().getChildDegreeModule().getCurricularRules(executionPeriod));
+	    result.addAll(degreeModuleToEnrol.getContext().getChildDegreeModule().getCurricularRules(
+		    executionPeriod));
 	    result.addAll(degreeModuleToEnrol.getCurriculumGroup().getCurricularRules(executionPeriod));
 	}
 	return result;
     }
-    
-    public void createModules(Collection<DegreeModuleToEnrol> degreeModulesToEnrol, ExecutionPeriod executionPeriod, EnrollmentCondition enrollmentCondition) {
+
+    public void createModules(Collection<DegreeModuleToEnrol> degreeModulesToEnrol,
+	    ExecutionPeriod executionPeriod, EnrollmentCondition enrollmentCondition) {
 	for (DegreeModuleToEnrol degreeModuleToEnrol : degreeModulesToEnrol) {
-	    if(degreeModuleToEnrol.getContext().getChildDegreeModule().isLeaf()) {
-		new Enrolment(this, degreeModuleToEnrol.getCurriculumGroup(), (CurricularCourse) degreeModuleToEnrol.getContext().getChildDegreeModule(), executionPeriod, enrollmentCondition, AccessControl.getUserView().getUtilizador());
+	    if (degreeModuleToEnrol.getContext().getChildDegreeModule().isLeaf()) {
+		new Enrolment(this, degreeModuleToEnrol.getCurriculumGroup(),
+			(CurricularCourse) degreeModuleToEnrol.getContext().getChildDegreeModule(),
+			executionPeriod, enrollmentCondition, AccessControl.getUserView()
+				.getUtilizador());
 	    } else {
-		new CurriculumGroup(degreeModuleToEnrol.getCurriculumGroup(), (CourseGroup) degreeModuleToEnrol.getContext().getChildDegreeModule(), executionPeriod);
+		new CurriculumGroup(degreeModuleToEnrol.getCurriculumGroup(),
+			(CourseGroup) degreeModuleToEnrol.getContext().getChildDegreeModule(),
+			executionPeriod);
 	    }
 	}
     }
@@ -1828,28 +1737,28 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public int countCurrentEnrolments() {
-        int result = 0;
-        for (final Enrolment enrolment : getEnrolmentsSet()) {
-            final ExecutionYear executionYear = enrolment.getExecutionPeriod().getExecutionYear();
-            if (executionYear.getState().equals(PeriodState.CURRENT) && enrolment.isEnroled()) {
-                result++;
-            }
-        }
-        return result;
+	int result = 0;
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    final ExecutionYear executionYear = enrolment.getExecutionPeriod().getExecutionYear();
+	    if (executionYear.getState().equals(PeriodState.CURRENT) && enrolment.isEnroled()) {
+		result++;
+	    }
+	}
+	return result;
     }
 
     public int getCountCurrentEnrolments() {
-        return countCurrentEnrolments();
+	return countCurrentEnrolments();
     }
 
     public Campus getCurrentCampus() {
-        for (final ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegreesSet()) {
-            final ExecutionYear executionYear = executionDegree.getExecutionYear();
-            if (executionYear.getState().equals(PeriodState.CURRENT)) {
-                return executionDegree.getCampus();
-            }
-        }
-        return null;
+	for (final ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegreesSet()) {
+	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
+	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
+		return executionDegree.getCampus();
+	    }
+	}
+	return null;
     }
 
     @Override
@@ -1857,17 +1766,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Registration getStudent() {
 	return this.getRegistration();
     }
-    
+
     @Override
     @Deprecated
     public void setStudent(final Registration registration) {
 	this.setRegistration(registration);
     }
-    
+
     public Registration getRegistration() {
 	return super.getStudent();
     }
-    
+
     public void setRegistration(final Registration registration) {
 	super.setStudent(registration);
     }
