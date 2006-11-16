@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectKey;
+import net.sourceforge.fenixedu.applicationTier.Servico.renderers.UpdateObjects;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.renderers.model.CompositeSlotSetter;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.SimpleMetaObject;
+import net.sourceforge.fenixedu.stm.ServiceInfo;
 
 public class DomainMetaObject extends SimpleMetaObject {
 
@@ -128,7 +129,12 @@ public class DomainMetaObject extends SimpleMetaObject {
 
     protected Object callService(List<ObjectChange> changes) {
         try {
-            return ServiceUtils.executeService(getUserView(), getService(), getServiceArguments(changes));
+            if (ServiceInfo.getCurrentServiceInfo() == null) {
+                return ServiceUtils.executeService(getUserView(), getService(), getServiceArguments(changes));
+            }
+            else {
+                return classServiceInstance(changes);
+            }
         } 
         catch (RuntimeException e) {
             throw e;
@@ -144,6 +150,10 @@ public class DomainMetaObject extends SimpleMetaObject {
         catch (Exception e) {
             throw new DomainException("domain.metaobject.service.failed", e);
         }
+    }
+
+    protected Object classServiceInstance(List<ObjectChange> changes) throws Exception {
+        return new UpdateObjects().run(changes);
     }
 
     protected Object[] getServiceArguments(List<ObjectChange> changes) {

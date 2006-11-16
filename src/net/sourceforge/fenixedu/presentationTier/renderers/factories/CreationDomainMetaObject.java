@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.renderers.CreateObjects;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectKey;
 import net.sourceforge.fenixedu.renderers.model.InstanceCreator;
@@ -52,4 +53,9 @@ public class CreationDomainMetaObject extends DomainMetaObject {
         return created;
     }
 
+    @Override
+    protected Object classServiceInstance(List<ObjectChange> changes) throws Exception {
+        return new CreateObjects().run(changes);
+    }
+    
 }
