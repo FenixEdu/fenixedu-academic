@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -37,8 +38,12 @@ public class VigilantManagement extends FenixDispatchAction {
     public ActionForward displayMap(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        VigilantBean bean = (VigilantBean) RenderUtils.getViewState("selectGroup").getMetaObject()
-                .getObject();
+    	IViewState viewState = RenderUtils.getViewState("selectGroup");
+        if(viewState==null) {
+        	return prepareMap(mapping, form, request, response);
+        }
+        
+    	VigilantBean bean = (VigilantBean) viewState.getMetaObject().getObject();
 
         prepareBean(bean, request, bean.getExecutionYear());
 
