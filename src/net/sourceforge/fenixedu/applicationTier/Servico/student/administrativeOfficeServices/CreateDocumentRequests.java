@@ -17,32 +17,32 @@ public class CreateDocumentRequests extends Service {
         
         for (final DocumentRequestCreateBean documentRequestCreateBean : documentRequestCreateBeans) {
             
-            try {
-        	final DocumentRequestType documentRequestType = documentRequestCreateBean.getChosenDocumentRequestType();
-        	if (documentRequestType.isCertificate()) {
-                    CertificateRequest.create(documentRequestCreateBean.getStudentCurricularPlan(),
-                            documentRequestCreateBean.getChosenDocumentRequestType(), 
-                            documentRequestCreateBean.getChosenDocumentPurposeType(),
-                            documentRequestCreateBean.getOtherPurpose(), 
-                            documentRequestCreateBean.getNotes(),
-                            documentRequestCreateBean.getUrgentRequest(),
-                            documentRequestCreateBean.getAverage(), 
-                            documentRequestCreateBean.getDetailed(),
-                            documentRequestCreateBean.getExecutionYear());
-        	} else if (documentRequestType.isDeclaration()) {
-                    DeclarationRequest.create(documentRequestCreateBean.getStudentCurricularPlan(),
-                            documentRequestCreateBean.getChosenDocumentRequestType(), 
-                            documentRequestCreateBean.getChosenDocumentPurposeType(),
-                            documentRequestCreateBean.getOtherPurpose(), 
-                            documentRequestCreateBean.getNotes(),
-                            documentRequestCreateBean.getUrgentRequest(),
-                            documentRequestCreateBean.getAverage(), 
-                            documentRequestCreateBean.getDetailed(),
-                            documentRequestCreateBean.getExecutionYear());
-        	}
-            } catch (DomainException e) {
-                messages.add(e.getMessage());
-            }
+//            try {
+//        	final DocumentRequestType documentRequestType = documentRequestCreateBean.getChosenDocumentRequestType();
+//        	if (documentRequestType.isCertificate()) {
+//                    CertificateRequest.create(documentRequestCreateBean.getStudentCurricularPlan(),
+//                            documentRequestCreateBean.getChosenDocumentRequestType(), 
+//                            documentRequestCreateBean.getChosenDocumentPurposeType(),
+//                            documentRequestCreateBean.getOtherPurpose(), 
+//                            documentRequestCreateBean.getNotes(),
+//                            documentRequestCreateBean.getUrgentRequest(),
+//                            documentRequestCreateBean.getAverage(), 
+//                            documentRequestCreateBean.getDetailed(),
+//                            documentRequestCreateBean.getExecutionYear());
+//        	} else if (documentRequestType.isDeclaration()) {
+//                    DeclarationRequest.create(documentRequestCreateBean.getStudentCurricularPlan(),
+//                            documentRequestCreateBean.getChosenDocumentRequestType(), 
+//                            documentRequestCreateBean.getChosenDocumentPurposeType(),
+//                            documentRequestCreateBean.getOtherPurpose(), 
+//                            documentRequestCreateBean.getNotes(),
+//                            documentRequestCreateBean.getUrgentRequest(),
+//                            documentRequestCreateBean.getAverage(), 
+//                            documentRequestCreateBean.getDetailed(),
+//                            documentRequestCreateBean.getExecutionYear());
+//        	}
+//            } catch (DomainException e) {
+//                messages.add(e.getMessage());
+//            }
         }
         
         return messages;
