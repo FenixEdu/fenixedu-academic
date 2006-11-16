@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 
 public enum AcademicServiceRequestSituationType {
 
-    PROCESSING, CONCLUDED, DELIVERED, REJECTED, CANCELLED;
+    NEW, PROCESSING, CONCLUDED, DELIVERED, REJECTED, CANCELLED;
 
     public String getName() {
         return name();
