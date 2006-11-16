@@ -4,6 +4,7 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
@@ -15,11 +16,14 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public abstract class DegreeModuleScope {
 
     public static final Comparator<DegreeModuleScope> COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME = new ComparatorChain();
+    public static final Comparator<DegreeModuleScope> COMPARATOR_BY_NAME = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("curricularYear"));
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("curricularSemester"));
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("idInternal"));
+        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
+        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
     }
 
     public abstract Integer getIdInternal();

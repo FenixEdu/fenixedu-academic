@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
@@ -72,6 +72,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
         request.setAttribute("executionYears", getExecutionYears(userView));
+        request.setAttribute("executionYear", executionYear);
 
         return mapping.findForward("chooseExecutionYearAndDegreeCurricularPlan");
     }
@@ -87,19 +88,17 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
         Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
 
         Object[] argsScopes = { degreeCurricularPlanID, executionYearID };
-        Set<CurricularCourseScope> scopes = (Set<CurricularCourseScope>) ServiceUtils
-                .executeService(userView,
-                        "ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID",
-                        argsScopes);
+        Set<DegreeModuleScope> degreeModuleScopes = (Set<DegreeModuleScope>) ServiceUtils.executeService(userView,
+                        "ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID", argsScopes);
         
-        SortedSet<CurricularCourseScope> sortedScopes = new TreeSet<CurricularCourseScope>(CurricularCourseScope.CURRICULAR_COURSE_NAME_COMPARATOR);
-        sortedScopes.addAll(scopes);
+        SortedSet<DegreeModuleScope> sortedScopes = new TreeSet<DegreeModuleScope>(DegreeModuleScope.COMPARATOR_BY_NAME);
+        sortedScopes.addAll(degreeModuleScopes);
 
         Object[] argsExecutionYear = { executionYearID };
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
                 "ReadExecutionYearByID", argsExecutionYear);
 
-        request.setAttribute("curricularCourseScopes", sortedScopes);
+        request.setAttribute("sortedScopes", sortedScopes);
         request.setAttribute("executionYear", infoExecutionYear.getYear());
 
         return mapping.findForward("chooseExecutionCourse");
