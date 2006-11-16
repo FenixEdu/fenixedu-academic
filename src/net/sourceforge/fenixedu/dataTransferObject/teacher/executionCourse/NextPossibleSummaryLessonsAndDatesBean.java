@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -12,7 +13,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 
-    public final static Comparator COMPARATOR_BY_DATE = new BeanComparator("date");
+    public final static Comparator COMPARATOR_BY_DATE = new ReverseComparator (new BeanComparator("date"));
     
     private DomainReference<Lesson> lessonReference;    
 

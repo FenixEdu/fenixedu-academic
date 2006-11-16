@@ -31,6 +31,8 @@ public class Building extends Building_Base {
 
 	private YearMonthDay end;
 
+	private String blueprintNumber;
+
 	public YearMonthDay getBegin() {
 	    return begin;
 	}
@@ -54,6 +56,14 @@ public class Building extends Building_Base {
 	public void setName(String name) {
 	    this.name = name;
 	}
+
+	public String getBlueprintNumber() {
+	    return blueprintNumber;
+	}
+
+	public void setBlueprintNumber(String blueprintNumber) {
+	    this.blueprintNumber = blueprintNumber;
+	}
     }
 
     public static class BuildingFactoryCreator extends BuildingFactory {
@@ -71,7 +81,8 @@ public class Building extends Building_Base {
 	}
 
 	public Building execute() {
-	    return new Building(getSurroundingSpace(), getName(), getBegin(), getEnd());
+	    return new Building(getSurroundingSpace(), getName(), getBegin(), getEnd(),
+		    getBlueprintNumber());
 	}
     }
 
@@ -90,7 +101,8 @@ public class Building extends Building_Base {
 	}
 
 	public BuildingInformation execute() {
-	    return new BuildingInformation(getSpace(), getName(), getBegin(), getEnd());
+	    return new BuildingInformation(getSpace(), getName(), getBegin(), getEnd(),
+		    getBlueprintNumber());
 	}
     }
 
@@ -100,10 +112,11 @@ public class Building extends Building_Base {
 	setOjbConcreteClass(getClass().getName());
     }
 
-    public Building(Space surroundingSpace, String name, YearMonthDay begin, YearMonthDay end) {
+    public Building(Space surroundingSpace, String name, YearMonthDay begin, YearMonthDay end,
+	    String blueprintNumber) {
 	this();
 	setSuroundingSpace(surroundingSpace);
-	new BuildingInformation(this, name, begin, end);
+	new BuildingInformation(this, name, begin, end, blueprintNumber);
     }
 
     @Override
@@ -115,7 +128,7 @@ public class Building extends Building_Base {
     public BuildingInformation getSpaceInformation(final YearMonthDay when) {
 	return (BuildingInformation) super.getSpaceInformation(when);
     }
-    
+
     @Checked("SpacePredicates.checkPermissionsToManageSpace")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted building", parameters = {})
     public void delete() {

@@ -21,7 +21,7 @@
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
-	<setter signature="editCampusCharacteristics(name, validFrom, validUntil)" />
+	<setter signature="editCampusCharacteristics(name, validFrom, validUntil, blueprintNumber" />
 </schema>
 <schema name="BuildingFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber"/>
@@ -40,7 +40,7 @@
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
-	<setter signature="editBuildingCharacteristics(name, validFrom, validUntil)"/>
+	<setter signature="editBuildingCharacteristics(name, validFrom, validUntil, blueprintNumber)"/>
 </schema>
 <schema name="ViewBuildingInformation" type="net.sourceforge.fenixedu.domain.space.BuildingInformation" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber"/>
@@ -65,7 +65,7 @@
 	<slot name="level" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
-	<setter signature="editFloorCharacteristics(level, validFrom, validUntil)"/>
+	<setter signature="editFloorCharacteristics(level, validFrom, validUntil, blueprintNumber)"/>
 </schema>
 <schema name="ViewFloorInformation" type="net.sourceforge.fenixedu.domain.space.FloorInformation" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber"/>	
@@ -177,8 +177,12 @@
 	<slot name="begin"/>
 	<slot name="end"/>
 </schema>
-<schema name="PersonSpaceOccupationsWithUsername" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">
-	<slot name="person.name"/>	
+<schema name="PersonSpaceOccupationsWithUsername" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">			
+	<slot name="person.name" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="contextRelative" value="true"/>
+        <property name="linkFormat" value="${person.homepageWebAddress}"/>
+    </slot>	
 	<slot name="person.username"/>	
 	<slot name="personWorkingPlace" layout="null-as-label" key="label.person.working.place">
 		<property name="label" value=""/>

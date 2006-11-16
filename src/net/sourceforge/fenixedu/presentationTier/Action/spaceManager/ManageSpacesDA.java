@@ -75,12 +75,13 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     protected ActionForward manageSpace(final ActionMapping mapping, final HttpServletRequest request,
-	    final SpaceInformation spaceInformation) {
+	    final SpaceInformation spaceInformation) throws IOException {
 
 	final Space space = spaceInformation.getSpace();
 	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
 	spaces.addAll(space.getContainedSpaces());
-
+	setBlueprintTextRectangles(request, space);
+	
 	request.setAttribute("selectedSpace", space);
 	request.setAttribute("spaces", spaces);
 	request.setAttribute("selectedSpaceInformation", spaceInformation);
@@ -90,12 +91,10 @@ public class ManageSpacesDA extends FenixDispatchAction {
     public ActionForward manageSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 
-	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	final Space space = spaceInformation.getSpace();
-	setBlueprintTextRectangles(request, space);
+	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);	
 	return manageSpace(mapping, request, spaceInformation);
     }
-    
+
     public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -114,6 +113,10 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	final Space space = getSpaceFromParameter(request);
+	if (space == null) {
+	    throw new DomainException("error.spaces.cannot.delete.inexistent.space");
+	}
+	
 	final Space surroundingSpace = space.getSuroundingSpace();
 
 	final Object[] args = { space };
@@ -164,7 +167,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     public ActionForward deleteSpaceInformation(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+	    FenixServiceException, IOException {
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	final Space space = spaceInformation.getSpace();
 
@@ -236,7 +239,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	Boolean viewBlueprintNumbers = isToViewBlueprintNumbers(request);
 	Boolean viewOriginalSpaceBlueprint = isToViewOriginalSpaceBlueprint(request);
-	
+
 	Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
 	Boolean suroundingSpaceBlueprint = mostRecentBlueprint == null;
 	mostRecentBlueprint = (mostRecentBlueprint == null) ? space
@@ -252,10 +255,10 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	    request.setAttribute("mostRecentBlueprint", mostRecentBlueprint);
 	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
-	    
-	    request.setAttribute("viewBlueprintNumbers", viewBlueprintNumbers);	    
+
+	    request.setAttribute("viewBlueprintNumbers", viewBlueprintNumbers);
 	    request.setAttribute("viewOriginalSpaceBlueprint", viewOriginalSpaceBlueprint);
-	    request.setAttribute("suroundingSpaceBlueprint", suroundingSpaceBlueprint);	    
+	    request.setAttribute("suroundingSpaceBlueprint", suroundingSpaceBlueprint);
 	}
     }
 
@@ -296,7 +299,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	return viewOriginalSpaceBlueprintString != null ? Boolean
 		.valueOf(viewOriginalSpaceBlueprintString) : Boolean.FALSE;
     }
-    
+
     private Space getSpaceFromParameter(final HttpServletRequest request) {
 	final String spaceIDString = request.getParameter("spaceID");
 	final Integer spaceID = Integer.valueOf(spaceIDString);

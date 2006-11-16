@@ -12,19 +12,23 @@ public class CampusInformation extends CampusInformation_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created campus information", parameters = {
-	    "campus", "name", "begin", "end" })
-    public CampusInformation(Campus campus, String name, YearMonthDay begin, YearMonthDay end) {
+	    "campus", "name", "begin", "end", "blueprintNumber" })
+    public CampusInformation(Campus campus, String name, YearMonthDay begin, YearMonthDay end,
+	    String blueprintNumber) {
 	super();
 	super.setSpace(campus);
 	setName(name);
+	setBlueprintNumber(blueprintNumber);
 	setFirstTimeInterval(begin, end);
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited campus information", parameters = {
-	    "name", "begin", "end" })
-    public void editCampusCharacteristics(String name, YearMonthDay begin, YearMonthDay end) {
+	    "name", "begin", "end", "blueprintNumber" })
+    public void editCampusCharacteristics(String name, YearMonthDay begin, YearMonthDay end,
+	    String blueprintNumber) {
 	setName(name);
+	setBlueprintNumber(blueprintNumber);
 	editTimeInterval(begin, end);
     }
 
@@ -33,7 +37,7 @@ public class CampusInformation extends CampusInformation_Base {
     public void delete() {
 	super.delete();
     }
-    
+
     @Override
     public void setName(final String name) {
 	if (name == null || StringUtils.isEmpty(name.trim())) {

@@ -29,6 +29,8 @@ public class Floor extends Floor_Base {
 
 	private YearMonthDay end;
 
+	private String blueprintNumber;
+
 	public YearMonthDay getBegin() {
 	    return begin;
 	}
@@ -52,6 +54,14 @@ public class Floor extends Floor_Base {
 	public void setLevel(Integer level) {
 	    this.level = level;
 	}
+
+	public String getBlueprintNumber() {
+	    return blueprintNumber;
+	}
+
+	public void setBlueprintNumber(String blueprintNumber) {
+	    this.blueprintNumber = blueprintNumber;
+	}
     }
 
     public static class FloorFactoryCreator extends FloorFactory {
@@ -69,7 +79,8 @@ public class Floor extends Floor_Base {
 	}
 
 	public Floor execute() {
-	    return new Floor(getSurroundingSpace(), getLevel(), getBegin(), getEnd());
+	    return new Floor(getSurroundingSpace(), getLevel(), getBegin(), getEnd(),
+		    getBlueprintNumber());
 	}
     }
 
@@ -88,7 +99,8 @@ public class Floor extends Floor_Base {
 	}
 
 	public FloorInformation execute() {
-	    return new FloorInformation(getSpace(), getLevel(), getBegin(), getEnd());
+	    return new FloorInformation(getSpace(), getLevel(), getBegin(), getEnd(),
+		    getBlueprintNumber());
 	}
 
     }
@@ -97,15 +109,16 @@ public class Floor extends Floor_Base {
 	super();
     }
 
-    public Floor(Space suroundingSpace, Integer level, YearMonthDay begin, YearMonthDay end) {
+    public Floor(Space suroundingSpace, Integer level, YearMonthDay begin, YearMonthDay end,
+	    String blueprintNumber) {
 	this();
 
 	if (suroundingSpace == null) {
 	    throw new NullPointerException("error.surrounding.space");
 	}
-	setSuroundingSpace(suroundingSpace);	
-	new FloorInformation(this, level, begin, end);
-    }    
+	setSuroundingSpace(suroundingSpace);
+	new FloorInformation(this, level, begin, end, blueprintNumber);
+    }
 
     @Override
     public FloorInformation getSpaceInformation() {
@@ -116,7 +129,7 @@ public class Floor extends Floor_Base {
     public FloorInformation getSpaceInformation(final YearMonthDay when) {
 	return (FloorInformation) super.getSpaceInformation(when);
     }
-    
+
     @Checked("SpacePredicates.checkPermissionsToManageSpace")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted floor", parameters = {})
     public void delete() {

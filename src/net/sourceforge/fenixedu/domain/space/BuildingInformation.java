@@ -12,19 +12,23 @@ public class BuildingInformation extends BuildingInformation_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created building information", parameters = {
-	    "building", "name", "begin", "end" })
-    public BuildingInformation(Building building, String name, YearMonthDay begin, YearMonthDay end) {
+	    "building", "name", "begin", "end", "blueprintNumber" })
+    public BuildingInformation(Building building, String name, YearMonthDay begin, YearMonthDay end,
+	    String blueprintNumber) {
 	super();
 	super.setSpace(building);
 	setName(name);
-	setFirstTimeInterval(begin, end);
+	setBlueprintNumber(blueprintNumber);
+	setFirstTimeInterval(begin, end);	
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited building information", parameters = {
-	    "name", "begin", "end" })
-    public void editBuildingCharacteristics(String name, YearMonthDay begin, YearMonthDay end) {
+	    "name", "begin", "end", "blueprintNumber" })
+    public void editBuildingCharacteristics(String name, YearMonthDay begin, YearMonthDay end,
+	    String blueprintNumber) {
 	setName(name);
+	setBlueprintNumber(blueprintNumber);
 	editTimeInterval(begin, end);
     }
 

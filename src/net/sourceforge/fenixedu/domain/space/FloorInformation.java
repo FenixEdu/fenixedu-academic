@@ -11,19 +11,21 @@ public class FloorInformation extends FloorInformation_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created floor information", parameters = {
-	    "floor", "level", "begin", "end" })
-    public FloorInformation(Floor floor, Integer level, YearMonthDay begin, YearMonthDay end) {
+	    "floor", "level", "begin", "end", "blueprintNumber" })
+    public FloorInformation(Floor floor, Integer level, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
 	super();
 	super.setSpace(floor);
 	setLevel(level);
+	setBlueprintNumber(blueprintNumber);
 	setFirstTimeInterval(begin, end);
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited floor information", parameters = {
-	    "level", "begin", "end" })
-    public void editFloorCharacteristics(Integer level, YearMonthDay begin, YearMonthDay end) {
+	    "level", "begin", "end", "blueprintNumber" })
+    public void editFloorCharacteristics(Integer level, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
 	setLevel(level);
+	setBlueprintNumber(blueprintNumber);
 	editTimeInterval(begin, end);
     }
 

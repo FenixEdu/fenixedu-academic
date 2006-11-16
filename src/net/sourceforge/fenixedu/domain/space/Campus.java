@@ -29,6 +29,8 @@ public class Campus extends Campus_Base {
 	private YearMonthDay begin;
 
 	private YearMonthDay end;
+	
+	private String blueprintNumber;
 
 	public YearMonthDay getBegin() {
 	    return begin;
@@ -53,11 +55,19 @@ public class Campus extends Campus_Base {
 	public void setName(String name) {
 	    this.name = name;
 	}
+
+	public String getBlueprintNumber() {
+	    return blueprintNumber;
+	}
+
+	public void setBlueprintNumber(String blueprintNumber) {
+	    this.blueprintNumber = blueprintNumber;
+	}
     }
 
     public static class CampusFactoryCreator extends CampusFactory {
 	public Campus execute() {
-	    return new Campus(getName(), getBegin(), getEnd());
+	    return new Campus(getName(), getBegin(), getEnd(), getBlueprintNumber());
 	}
     }
 
@@ -75,7 +85,7 @@ public class Campus extends Campus_Base {
 	}
 
 	public CampusInformation execute() {
-	    return new CampusInformation(getSpace(), getName(), getBegin(), getEnd());
+	    return new CampusInformation(getSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber());
 	}
     }
 
@@ -83,9 +93,9 @@ public class Campus extends Campus_Base {
 	super();
     }
 
-    public Campus(String name, YearMonthDay begin, YearMonthDay end) {
+    public Campus(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
 	this();	
-	new CampusInformation(this, name, begin, end);
+	new CampusInformation(this, name, begin, end, blueprintNumber);
     }
     
     @Override
