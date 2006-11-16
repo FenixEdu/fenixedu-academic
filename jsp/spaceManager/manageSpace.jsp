@@ -188,14 +188,13 @@
 	%>
 	
 	<%-- Space Details --%>
-	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-		<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
-		<fr:view name="selectedSpaceInformation" schema="ViewRoomInformation" layout="tabular">
-			<fr:layout name="tabular">      			
-	   			<fr:property name="classes" value="tstyle4 thlight thright mvert0"/>
-	   		</fr:layout>
-		</fr:view>
-	</logic:equal>
+	<bean:define id="SpaceInformationDetailsSchema">View<bean:write name="selectedSpaceInformation" property="space.class.simpleName"/>Information</bean:define>
+	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
+	<fr:view name="selectedSpaceInformation" schema="<%= SpaceInformationDetailsSchema %>" layout="tabular">
+		<fr:layout name="tabular">      			
+   			<fr:property name="classes" value="tstyle4 thlight thright mvert0"/>
+   		</fr:layout>
+	</fr:view>
 
 	<%-- Subspaces --%>
 	<logic:present name="spaces">

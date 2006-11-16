@@ -8,21 +8,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Vector;
 
-import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.BuildingInformation;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.CampusInformation;
-import net.sourceforge.fenixedu.domain.space.Floor;
 import net.sourceforge.fenixedu.domain.space.FloorInformation;
-import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomInformation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.domain.space.Blueprint.BlueprintTextRectangle;
 import net.sourceforge.fenixedu.domain.space.Blueprint.BlueprintTextRectangles;
-
-import org.apache.commons.lang.StringUtils;
-
 import pt.utl.ist.fenix.tools.image.DWGProcessor;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
