@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Base {
     
@@ -15,26 +16,23 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
         super();
     }
 
-    public EnrolmentDeclarationRequest(StudentCurricularPlan studentCurricularPlan,
-            AdministrativeOffice administrativeOffice, DocumentRequestType chosenDocumentRequestType,DocumentPurposeType documentPurposeType,
-            String otherDocumentPurposeTypeDescription, Boolean urgentRequest, 
+    public EnrolmentDeclarationRequest(Registration registration ,DocumentPurposeType documentPurposeType,
+            String otherDocumentPurposeTypeDescription,  
             ExecutionYear executionYear) {
 
         this();
 
-        init(studentCurricularPlan, administrativeOffice, chosenDocumentRequestType,documentPurposeType,
-            otherDocumentPurposeTypeDescription, urgentRequest,  executionYear);
+        init(registration ,documentPurposeType,
+            otherDocumentPurposeTypeDescription, executionYear);
         }
 
-        protected void init(StudentCurricularPlan studentCurricularPlan,
-            AdministrativeOffice administrativeOffice, DocumentRequestType chosenDocumentRequestType,DocumentPurposeType documentPurposeType,
-            String otherDocumentPurposeTypeDescription, Boolean urgentRequest, 
+        protected void init(Registration registration,DocumentPurposeType documentPurposeType,
+            String otherDocumentPurposeTypeDescription, 
             ExecutionYear executionYear) {
 
-        init(studentCurricularPlan, administrativeOffice, chosenDocumentRequestType,documentPurposeType,
-            otherDocumentPurposeTypeDescription, urgentRequest);
+        super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription);
 
-        checkParameters( executionYear);
+        checkParameters(executionYear);
         
         super.setExecutionYear(executionYear);
         }
@@ -44,7 +42,7 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
         if (executionYear == null) {
             throw new DomainException(
                 "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
-        } else if (!getStudentCurricularPlan().hasAnyEnrolmentForExecutionYear(executionYear)) {
+        } else if (!getRegistration().hasSchoolRegistration(executionYear)) {
             throw new DomainException(
                 "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
         }

@@ -12,6 +12,7 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
         super();
     }
 
+    
     @Override
     public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
 	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();

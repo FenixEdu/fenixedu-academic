@@ -4,13 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
 
@@ -18,27 +17,24 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super();
     }
 
-    public DegreeFinalizationCertificateRequest(StudentCurricularPlan studentCurricularPlan,
-	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean average,
-	    Boolean detailed) {
+    public DegreeFinalizationCertificateRequest(Registration registration,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
+	    Boolean urgentRequest, Boolean average, Boolean detailed) {
 	this();
 
-	if (!studentCurricularPlan.hasDegreeDiplomaRequest()) {
+	if (!registration.hasDegreeDiplomaRequest()) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.has.no.degree.diploma.request");
 	}
 
-	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest, average, detailed);
+	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
+		average, detailed);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan,
-	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean average,
 	    Boolean detailed) {
-	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest);
+	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
 	checkParameters(average, detailed);
 	super.setAverage(average);
@@ -68,7 +64,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     protected void assertProcessingStatePreConditions() throws DomainException {
 	if (!getRegistration().hasDegreeDiplomaDocumentRequest()) {
-	    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutDegreeDiplomaDocumentRequest");
+	    throw new DomainException(
+		    "DegreeFinalizationCertificateRequest.registration.withoutDegreeDiplomaDocumentRequest");
 	}
     }
 

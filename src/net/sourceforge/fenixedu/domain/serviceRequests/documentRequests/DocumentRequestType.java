@@ -2,7 +2,15 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 public enum DocumentRequestType {
 
-    SCHOOL_REGISTRATION_CERTIFICATE, ENROLMENT_CERTIFICATE, APPROVEMENT_CERTIFICATE, DEGREE_FINALIZATION_CERTIFICATE, SCHOOL_REGISTRATION_DECLARATION, ENROLMENT_DECLARATION, IRS_DECLARATION, DEGREE_DIPLOMA;
+    SCHOOL_REGISTRATION_CERTIFICATE(true), ENROLMENT_CERTIFICATE(true), APPROVEMENT_CERTIFICATE(true), DEGREE_FINALIZATION_CERTIFICATE(
+	    true), SCHOOL_REGISTRATION_DECLARATION(false), ENROLMENT_DECLARATION(false), IRS_DECLARATION(
+	    false), DEGREE_DIPLOMA(false);
+
+    private boolean hasAdditionalInformation;
+
+    private DocumentRequestType(boolean hasAdditionalInformation) {
+	this.hasAdditionalInformation = hasAdditionalInformation;
+    }
 
     public String getName() {
 	return name();
@@ -24,6 +32,10 @@ public enum DocumentRequestType {
     public boolean isDeclaration() {
 	return this == SCHOOL_REGISTRATION_DECLARATION || this == ENROLMENT_DECLARATION
 		|| this == IRS_DECLARATION;
+    }
+
+    public boolean getHasAdditionalInformation() {
+	return hasAdditionalInformation;
     }
 
 }

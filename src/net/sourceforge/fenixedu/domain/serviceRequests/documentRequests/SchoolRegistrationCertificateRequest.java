@@ -5,13 +5,13 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCertificateRequest_Base {
 
@@ -19,24 +19,23 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	super();
     }
 
-    public SchoolRegistrationCertificateRequest(StudentCurricularPlan studentCurricularPlan,
-	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
-	    ExecutionYear executionYear) {
+    public SchoolRegistrationCertificateRequest(Registration registration,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
+	    Boolean urgentRequest, ExecutionYear executionYear) {
 
 	this();
 
-	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest, executionYear);
+	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
+		executionYear);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan,
-	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
 	    ExecutionYear executionYear) {
 
-	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest);
+	super
+		.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription,
+			urgentRequest);
 
 	checkParameters(executionYear);
 	super.setExecutionYear(executionYear);
@@ -46,7 +45,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	if (executionYear == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.cannot.be.null");
-	} else if (!getStudentCurricularPlan().hasSchoolRegistration(executionYear)) {
+	} else if (!getRegistration().hasSchoolRegistration(executionYear)) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.before.studentCurricularPlan.start");
 	}
@@ -64,7 +63,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
     @Override
     protected void assertProcessingStatePreConditions() throws DomainException {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override

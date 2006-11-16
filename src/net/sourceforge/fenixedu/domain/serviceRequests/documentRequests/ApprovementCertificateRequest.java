@@ -4,13 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ApprovementCertificateRequest extends ApprovementCertificateRequest_Base {
 
@@ -18,14 +17,13 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	super();
     }
 
-    public ApprovementCertificateRequest(StudentCurricularPlan studentCurricularPlan,
-	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
+    public ApprovementCertificateRequest(Registration registration,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
+	    Boolean urgentRequest) {
 
 	this();
 
-	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest);
+	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
     }
 
     @Override
@@ -46,15 +44,17 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	if (getRegistration().isConcluded()) {
 	    throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
 	}
-	
-	// FIXME For now, the following conditions are only valid for 5 year degrees
+
+	// FIXME For now, the following conditions are only valid for 5 year
+	// degrees
 	if (getRegistration().getDegreeType().getYears() == 5
 		&& getDocumentPurposeType() == DocumentPurposeType.PROFESSIONAL) {
-	    
+
 	    int curricularYear = getRegistration().getCurricularYear();
-	    
+
 	    if (curricularYear <= 3) {
-		throw new DomainException("ApprovementCertificateRequest.registration.hasnt.finished.third.year");
+		throw new DomainException(
+			"ApprovementCertificateRequest.registration.hasnt.finished.third.year");
 	    }
 	}
     }

@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.Certifi
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public abstract class CertificateRequest extends CertificateRequest_Base {
@@ -16,21 +17,10 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super.setNumberOfPages(0);
     }
 
-    public CertificateRequest(StudentCurricularPlan studentCurricularPlan,
-	    AdministrativeOffice administrativeOffice, DocumentRequestType documentRequestType,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest) {
-
-	this();
-	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest);
-    }
-
-    protected void init(StudentCurricularPlan studentCurricularPlan,
-	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
 
-	init(studentCurricularPlan, administrativeOffice);
+	init(registration);
 	checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
 	super.setDocumentPurposeType(documentPurposeType);
@@ -57,34 +47,24 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	return getUrgentRequest().booleanValue();
     }
 
-    public static CertificateRequest create(StudentCurricularPlan studentCurricularPlan,
+    public static CertificateRequest create(Registration registration,
 	    DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
 	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear) {
 
-	AdministrativeOffice administrativeOffice = null;
-	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
-	if (employee != null) {
-	    administrativeOffice = AdministrativeOffice.readByEmployee(employee);
-	}
-	if (administrativeOffice == null) {
-	    administrativeOffice = AdministrativeOffice
-		    .getResponsibleAdministrativeOffice(studentCurricularPlan.getDegree());
-	}
-
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
-	    return new SchoolRegistrationCertificateRequest(studentCurricularPlan, administrativeOffice,
-		    chosenDocumentPurposeType, otherPurpose, urgentRequest, executionYear);
+	    return new SchoolRegistrationCertificateRequest(registration, chosenDocumentPurposeType,
+		    otherPurpose, urgentRequest, executionYear);
 	case ENROLMENT_CERTIFICATE:
-	    return new EnrolmentCertificateRequest(studentCurricularPlan, administrativeOffice,
-		    chosenDocumentPurposeType, otherPurpose, urgentRequest, detailed, executionYear);
+	    return new EnrolmentCertificateRequest(registration, chosenDocumentPurposeType,
+		    otherPurpose, urgentRequest, detailed, executionYear);
 	case APPROVEMENT_CERTIFICATE:
-	    return new ApprovementCertificateRequest(studentCurricularPlan, administrativeOffice,
-		    chosenDocumentPurposeType, otherPurpose, urgentRequest);
+	    return new ApprovementCertificateRequest(registration, chosenDocumentPurposeType,
+		    otherPurpose, urgentRequest);
 	case DEGREE_FINALIZATION_CERTIFICATE:
-	    return new DegreeFinalizationCertificateRequest(studentCurricularPlan, administrativeOffice,
-		    chosenDocumentPurposeType, otherPurpose, urgentRequest, average, detailed);
+	    return new DegreeFinalizationCertificateRequest(registration, chosenDocumentPurposeType,
+		    otherPurpose, urgentRequest, average, detailed);
 	}
 
 	return null;
@@ -147,15 +127,14 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     }
 
     protected boolean isFirstRequestFromExecutionYear() {
-	return getStudentCurricularPlan().getSucessfullyFinishedDocumentRequestsBy(
+	return getRegistration().getSucessfullyFinishedDocumentRequestsBy(
 		ExecutionYear.readCurrentExecutionYear(), getDocumentRequestType()).isEmpty();
     }
 
     @Override
     public void assertConcludedStatePreConditions() throws DomainException {
 	if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
-	    throw new DomainException(
-            	"error.serviceRequests.documentRequests.numberOfPages.must.be.set");
+	    throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
 	}
     }
 

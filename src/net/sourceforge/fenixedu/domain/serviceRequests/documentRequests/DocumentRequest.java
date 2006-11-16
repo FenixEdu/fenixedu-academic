@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -12,33 +15,28 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	super();
     }
 
-    protected DocumentRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice) {
-	this();
-	init(studentCurricularPlan, administrativeOffice);
-    }
-
     @Override
     public String getDescription() {
-	return getDescription("AcademicServiceRequestType.DOCUMENT", getDocumentRequestType().getQualifiedName());
+	return getDescription("AcademicServiceRequestType.DOCUMENT", getDocumentRequestType()
+		.getQualifiedName());
     }
 
-    public abstract DocumentRequestType getDocumentRequestType();    
-    
+    public abstract DocumentRequestType getDocumentRequestType();
+
     public String getDocumentFileName() {
 	final StringBuilder result = new StringBuilder();
-	
-	
+
 	result.append(getRegistration().getPerson().getIstUsername());
 	result.append("-");
 	result.append(new DateTime().toString(DateTimeFormat.forPattern("yyyyMMdd")));
 	result.append("-");
-	result.append(getDescription().replace(":","").replace(" ",""));
-	
+	result.append(getDescription().replace(":", "").replace(" ", ""));
+
 	return result.toString();
     }
-    
+
     public abstract String getDocumentTemplateKey();
-    
+
     public boolean isCertificate() {
 	return this instanceof CertificateRequest;
     }
@@ -50,9 +48,50 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     public boolean isDegreeDiploma() {
 	return this instanceof DegreeDiploma;
     }
-    
+
     public boolean isPagedDocument() {
 	return isCertificate() || isDeclaration();
+    }
+
+    public static class DocumentRequestCreator extends DocumentRequestCreateBean implements
+	    FactoryExecutor {
+
+	public DocumentRequestCreator(Registration registration) {
+	    super(registration);
+	}
+
+	public Object execute() {
+
+	    if (getChosenDocumentRequestType().isCertificate()) {
+		return CertificateRequest.create(getRegistration(), getChosenDocumentRequestType(),
+			getChosenDocumentPurposeType(), getOtherPurpose(), getNotes(),
+			getUrgentRequest(), getAverage(), getDetailed(), getExecutionYear());
+
+	    } else if (getChosenDocumentRequestType().isDeclaration()) {
+		return DeclarationRequest.create(getRegistration(), getChosenDocumentRequestType(),
+			getChosenDocumentPurposeType(), getOtherPurpose(),
+
+			getNotes(), getAverage(), getDetailed(), getExecutionYear());
+
+	    }
+	    return null;
+
+	}
+
+    }
+
+    public DateTime getCreationDate() {
+	AcademicServiceRequestSituation situation = getSituationByType(AcademicServiceRequestSituationType.NEW);
+	return situation != null ? situation.getCreationDate() : null;
+    }
+
+    public AcademicServiceRequestSituation getSituationByType(AcademicServiceRequestSituationType type) {
+	for (AcademicServiceRequestSituation situation : getAcademicServiceRequestSituationsSet()) {
+	    if (situation.getAcademicServiceRequestSituationType().equals(type)) {
+		return situation;
+	    }
+	}
+	return null;
     }
 
 }

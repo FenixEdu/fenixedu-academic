@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public abstract class DeclarationRequest extends DeclarationRequest_Base {
 
@@ -16,100 +16,76 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	super.setNumberOfPages(0);
     }
 
-    public DeclarationRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
-	    DocumentRequestType documentRequestType, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription,Boolean urgentRequest) {
+    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription) {
 
-	this();
-    init(studentCurricularPlan, administrativeOffice);
-   
-	init(studentCurricularPlan, administrativeOffice, documentRequestType, documentPurposeType,
-		otherDocumentPurposeTypeDescription,urgentRequest);
+	init(registration);
+	checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
+
+	super.setDocumentPurposeType(documentPurposeType);
+	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
+	super.process();
+
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice,
-            DocumentRequestType documentRequestType,
-            DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,Boolean urgentRequest) {
+    private void checkParameters(DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription) {
 
-        init(studentCurricularPlan, administrativeOffice);
-        checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	if (documentPurposeType == DocumentPurposeType.OTHER
+		&& otherDocumentPurposeTypeDescription == null) {
+	    throw new DomainException(
+		    "error.serviceRequests.documentRequests.DeclarationRequest.otherDocumentPurposeTypeDescription.cannot.be.null.for.other.purpose.type");
+	}
 
-        super.setDocumentPurposeType(documentPurposeType);
-        super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
-        super.process();
-    }
-
-    private void checkParameters(DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,Boolean urgentRequest) {
-
-        if (documentPurposeType == DocumentPurposeType.OTHER
-                && otherDocumentPurposeTypeDescription == null) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.DeclarationRequest.otherDocumentPurposeTypeDescription.cannot.be.null.for.other.purpose.type");
-        }
-        if (urgentRequest == null) {
-            throw new DomainException(
-                "error.serviceRequests.documentRequests.CertificateRequest.urgentRequest.cannot.be.null");
-        }
-      
     }
 
     @Override
     public EventType getEventType() {
 	return null;
     }
-    
-    public static DeclarationRequest create(StudentCurricularPlan studentCurricularPlan,
-            DocumentRequestType chosenDocumentRequestType,
-            DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,Boolean urgentRequest,
-            Boolean average, Boolean detailed,  ExecutionYear executionYear) {
 
-           
-            
-        AdministrativeOffice administrativeOffice = AdministrativeOffice.readByEmployee(AccessControl.getUserView().getPerson().getEmployee());
-        if (administrativeOffice == null) {
-            administrativeOffice = AdministrativeOffice
-                .getResponsibleAdministrativeOffice(studentCurricularPlan.getDegree());
-        }
-        
-        switch (chosenDocumentRequestType) {
-        case SCHOOL_REGISTRATION_DECLARATION:
-            return new SchoolRegistrationDeclarationRequest(studentCurricularPlan, administrativeOffice,
-                    chosenDocumentRequestType, chosenDocumentPurposeType, otherPurpose,  urgentRequest,executionYear);
-        case ENROLMENT_DECLARATION:
-            return new EnrolmentDeclarationRequest(studentCurricularPlan, administrativeOffice,
-                    chosenDocumentRequestType, chosenDocumentPurposeType, otherPurpose, urgentRequest, executionYear);
-       
-        case IRS_DECLARATION:
-            return new IRSDeclarationRequest();
-        }
+    public static DeclarationRequest create(Registration registration,
+	    DocumentRequestType chosenDocumentRequestType,
+	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
+	    Boolean average, Boolean detailed, ExecutionYear executionYear) {
 
-        return null;
-        }
-    
+	switch (chosenDocumentRequestType) {
+	case SCHOOL_REGISTRATION_DECLARATION:
+	    return new SchoolRegistrationDeclarationRequest(registration, chosenDocumentPurposeType,
+		    otherPurpose, executionYear);
+	case ENROLMENT_DECLARATION:
+	    return new EnrolmentDeclarationRequest(registration, chosenDocumentPurposeType,
+		    otherPurpose, executionYear);
+
+	case IRS_DECLARATION:
+	    return new IRSDeclarationRequest();
+	}
+
+	return null;
+    }
 
     @Override
     public void setDocumentPurposeType(DocumentPurposeType documentPurposeType) {
-        throw new DomainException(
-                "error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.documentPurposeType");
+	throw new DomainException(
+		"error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.documentPurposeType");
     }
 
     @Override
     public void setOtherDocumentPurposeTypeDescription(String otherDocumentTypeDescription) {
-        throw new DomainException(
-                "error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.otherDocumentTypeDescription");
+	throw new DomainException(
+		"error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.otherDocumentTypeDescription");
     }
 
     public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
-            Employee employee, String justification, Integer numberOfPages) {
-        super.edit(academicServiceRequestSituationType, employee, justification);
-        super.setNumberOfPages(numberOfPages);
+	    Employee employee, String justification, Integer numberOfPages) {
+	super.edit(academicServiceRequestSituationType, employee, justification);
+	super.setNumberOfPages(numberOfPages);
     }
 
     @Override
     public void assertConcludedStatePreConditions() throws DomainException {
 	if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
-	    throw new DomainException(
-            	"error.serviceRequests.documentRequests.numberOfPages.must.be.set");
+	    throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
 	}
     }
 

@@ -5,13 +5,12 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Base {
 
@@ -19,24 +18,25 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	super();
     }
 
-    public EnrolmentCertificateRequest(StudentCurricularPlan studentCurricularPlan,
-	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean detailed,
-	    ExecutionYear executionYear) {
+    public EnrolmentCertificateRequest(Registration registration,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
+	    Boolean urgentRequest, Boolean detailed, ExecutionYear executionYear) {
 
 	this();
 
-	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest, detailed, executionYear);
+	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
+		detailed, executionYear);
+
+	new CertificateRequestEvent(getAdministrativeOffice(), EventType.ENROLMENT_CERTIFICATE_REQUEST,
+		registration.getPerson(), this);
+
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan,
-	    AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean detailed,
 	    ExecutionYear executionYear) {
 
-	init(studentCurricularPlan, administrativeOffice, documentPurposeType,
-		otherDocumentPurposeTypeDescription, urgentRequest);
+	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
 	checkParameters(detailed, executionYear);
 	super.setDetailed(detailed);
@@ -51,7 +51,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	if (executionYear == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
-	} else if (!getStudentCurricularPlan().hasAnyEnrolmentForExecutionYear(executionYear)) {
+	} else if (!getRegistration().hasSchoolRegistration(executionYear)) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
 	}
@@ -69,7 +69,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     @Override
     protected void assertProcessingStatePreConditions() throws DomainException {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
