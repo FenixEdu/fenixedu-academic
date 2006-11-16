@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -63,7 +64,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
@@ -79,7 +82,7 @@ import net.sourceforge.fenixedu.util.StudentState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ReverseComparator;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class Registration extends Registration_Base {
@@ -605,25 +608,6 @@ public class Registration extends Registration_Base {
 	return students;
     }
 
-    public static Integer generateStudentNumber(DegreeType degreeType) {
-	Integer number = Integer.valueOf(0);
-	List<Registration> students = readStudentsByDegreeType(degreeType);
-	Collections.sort(students, new ReverseComparator(NUMBER_COMPARATOR));
-
-	if (!students.isEmpty()) {
-	    number = students.get(0).getNumber();
-	}
-
-	// FIXME: ISTO E UMA SOLUCAO TEMPORARIA DEVIDO A EXISTIREM ALUNOS
-	// NA SECRETARIA QUE
-	// POR UM MOTIVO OU OUTRO NAO SE ENCONTRAM NA BASE DE DADOS
-	if (degreeType.equals(DegreeType.MASTER_DEGREE) && (number.intValue() < 5411)) {
-	    number = Integer.valueOf(5411);
-	}
-
-	return Integer.valueOf(number.intValue() + 1);
-    }
-
     public GratuitySituation readGratuitySituationByExecutionDegree(ExecutionDegree executionDegree) {
 	GratuityValues gratuityValues = executionDegree.getGratuityValues();
 	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
@@ -710,65 +694,13 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
-    // begin ACADEMIC SERVICE REQUESTS
-
-    public Collection<AcademicServiceRequest> getAcademicServiceRequests() {
-	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
-
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    result.addAll(studentCurricularPlan.getAcademicServiceRequests());
-	}
-
-	return result;
-    }
-
-    public Collection<AcademicServiceRequest> getNewAcademicServiceRequests() {
-	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
-
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    result.addAll(studentCurricularPlan.getNewAcademicServiceRequests());
-	}
-
-	return result;
-    }
-
-    public Collection<AcademicServiceRequest> getProcessingAcademicServiceRequests() {
-	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
-
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    result.addAll(studentCurricularPlan.getProcessingAcademicServiceRequests());
-	}
-
-	return result;
-    }
-
-    public Collection<AcademicServiceRequest> getConcludedAcademicServiceRequests() {
-	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
-
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    result.addAll(studentCurricularPlan.getConcludedAcademicServiceRequests());
-	}
-
-	return result;
-    }
-
-    public Collection<AcademicServiceRequest> getHistoricalAcademicServiceRequests() {
-	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
-
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    result.addAll(studentCurricularPlan.getHistoricalAcademicServiceRequests());
-	}
-
-	return result;
-    }
-
     public Collection<DocumentRequest> getDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
-
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    result.addAll(studentCurricularPlan.getDocumentRequests());
+	for (AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if (academicServiceRequest.isDocumentRequest()) {
+		result.add((DocumentRequest) academicServiceRequest);
+	    }
 	}
-
 	return result;
     }
 
@@ -781,8 +713,6 @@ public class Registration extends Registration_Base {
 
 	return false;
     }
-
-    // end ACADEMIC SERVICE REQUESTS
 
     // Special Season
 
@@ -1476,17 +1406,12 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    private transient Map<ExecutionYear, StudentCurricularPlan> studentCurricularPlansByExecutionYear = null;
-
     private Map<ExecutionYear, StudentCurricularPlan> initializeStudentCurricularPlansByExecutionYear() {
-	if (studentCurricularPlansByExecutionYear == null) {
-	    studentCurricularPlansByExecutionYear = new HashMap<ExecutionYear, StudentCurricularPlan>();
+	Map<ExecutionYear, StudentCurricularPlan> studentCurricularPlansByExecutionYear = new HashMap<ExecutionYear, StudentCurricularPlan>();
 
-	    for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-		for (final ExecutionYear executionYear : studentCurricularPlan
-			.getEnrolmentsExecutionYears()) {
-		    studentCurricularPlansByExecutionYear.put(executionYear, studentCurricularPlan);
-		}
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    for (final ExecutionYear executionYear : studentCurricularPlan.getEnrolmentsExecutionYears()) {
+		studentCurricularPlansByExecutionYear.put(executionYear, studentCurricularPlan);
 	    }
 	}
 
@@ -1494,12 +1419,33 @@ public class Registration extends Registration_Base {
     }
 
     public Set<ExecutionYear> getEnrolmentsExecutionYears() {
-	return initializeStudentCurricularPlansByExecutionYear().keySet();
+	Set<ExecutionYear> sortedExecutionYears = new TreeSet<ExecutionYear>(
+		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
+	sortedExecutionYears.addAll(initializeStudentCurricularPlansByExecutionYear().keySet());
+	return sortedExecutionYears;
     }
 
     public StudentCurricularPlan getStudentCurricularPlan(ExecutionYear executionYear) {
 	return executionYear == null ? null : initializeStudentCurricularPlansByExecutionYear().get(
 		executionYear);
+    }
+
+    public StudentCurricularPlan getStudentCurricularPlan(YearMonthDay date) {
+
+	List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>(
+		getStudentCurricularPlans());
+	Collections.sort(studentCurricularPlans,
+		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
+
+	ListIterator<StudentCurricularPlan> iterator = studentCurricularPlans.listIterator();
+	while (iterator.hasPrevious()) {
+	    StudentCurricularPlan studentCurricularPlan = iterator.previous();
+	    if (studentCurricularPlan.getStartDateYearMonthDay().isBefore(date)) {
+		return studentCurricularPlan;
+	    }
+	}
+
+	return null;
     }
 
     public boolean hasAnyApprovedEnrolment() {
@@ -1558,5 +1504,84 @@ public class Registration extends Registration_Base {
 
 	return !studentTypesNotPayingGratuityOrInsurance.contains(getStudentKind().getStudentType());
 
+    }
+    
+    public boolean hasDegreeDiplomaRequest() {
+	for (final DocumentRequest documentRequest : this.getDocumentRequests()) {
+	    if (documentRequest.isDegreeDiploma()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public Set<DocumentRequest> getSucessfullyFinishedDocumentRequestsBy(ExecutionYear executionYear,
+	    DocumentRequestType documentRequestType) {
+
+	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
+
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if (academicServiceRequest instanceof DocumentRequest) {
+		final DocumentRequest documentRequest = (DocumentRequest) academicServiceRequest;
+		if (documentRequest.getDocumentRequestType() == documentRequestType
+			&& documentRequest.finishedSuccessfully()
+			&& executionYear.containsDate(documentRequest.getCreationDate())) {
+
+		    result.add((DocumentRequest) academicServiceRequest);
+		}
+	    }
+	}
+	return result;
+    }
+
+    public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
+	    final Class<? extends AcademicServiceRequest> clazz) {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if (clazz != null && academicServiceRequest.getClass().equals(clazz)) {
+		result.add(academicServiceRequest);
+	    }
+	}
+
+	return result;
+    }
+
+    public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
+	    final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if ((academicServiceRequestSituationType == null && academicServiceRequest.isNewRequest())
+		    || academicServiceRequest.getAcademicServiceRequestSituationType() == academicServiceRequestSituationType) {
+		result.add((DocumentRequest) academicServiceRequest);
+	    }
+	}
+
+	return result;
+    }
+
+    public Collection<AcademicServiceRequest> getNewAcademicServiceRequests() {
+	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests((AcademicServiceRequestSituationType) null);
+    }
+
+    public Collection<AcademicServiceRequest> getProcessingAcademicServiceRequests() {
+	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests(AcademicServiceRequestSituationType.PROCESSING);
+    }
+
+    public Collection<AcademicServiceRequest> getConcludedAcademicServiceRequests() {
+	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests(AcademicServiceRequestSituationType.CONCLUDED);
+    }
+
+    public Collection<AcademicServiceRequest> getHistoricalAcademicServiceRequests() {
+	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if (academicServiceRequest.isHistorical()) {
+		result.add(academicServiceRequest);
+	    }
+	}
+
+	return result;
     }
 }
