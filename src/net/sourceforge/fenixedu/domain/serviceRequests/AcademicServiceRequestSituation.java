@@ -53,10 +53,6 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 			throw new DomainException(
 					"error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType.cannot.be.null");
 		}
-		if (employee == null) {
-			throw new DomainException(
-					"error.serviceRequests.AcademicServiceRequestSituation.employee.cannot.be.null");
-		}
 
 		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CANCELLED
 				|| academicServiceRequestSituationType == AcademicServiceRequestSituationType.REJECTED) {
