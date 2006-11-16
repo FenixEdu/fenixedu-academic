@@ -158,10 +158,10 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
             final String notes, final Boolean urgentRequest,
             final DocumentRequestType documentRequestType) {
 
-        final DocumentRequestCreateBean documentRequestCreateBean = new DocumentRequestCreateBean();
+        final DocumentRequestCreateBean documentRequestCreateBean = new DocumentRequestCreateBean(null);
 
         documentRequestCreateBean.setToBeCreated(Boolean.TRUE);
-        documentRequestCreateBean.setStudentCurricularPlan(studentCurricularPlan);
+        //documentRequestCreateBean.setStudentCurricularPlan(studentCurricularPlan);
         documentRequestCreateBean.setChosenDocumentRequestType(documentRequestType);
         documentRequestCreateBean.setChosenDocumentPurposeType(chosenDocumentPurposeType);
         documentRequestCreateBean.setOtherPurpose(otherPurpose);
