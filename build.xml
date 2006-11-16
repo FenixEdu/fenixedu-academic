@@ -47,9 +47,9 @@
 		<ant antfile="build_compile.xml" target="jar"/>
     </target>
 
-    <target name="jar-without-access-control"
+    <target name="jar-without-injectionCode"
     		description="Generates a java archive applications 'core' (services and domain), without code injection for access control">
-		<ant antfile="build_compile.xml" target="jar-without-access-control"/>
+		<ant antfile="build_compile.xml" target="jar-without-injectionCode"/>
     </target>
 
     <target name="docs"

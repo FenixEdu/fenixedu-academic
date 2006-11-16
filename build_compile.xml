@@ -698,13 +698,13 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 
 	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain, compile-renderers, write-all-properties, generate, generate-groups-language, base-compile, compile-reports">
-		<ant antfile="build_accessControl.xml" target="inject-accessControl-code"/>
-		<ant antfile="build_accessControl.xml" target="inject-domainObjectActionLog-code"/>
+		<ant antfile="build_injectionCode.xml" target="inject-accessControl-code"/>
+		<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code"/>
 	</target>
 
-	<target name="compile-without-access-control" description="Compile application" depends="i18nDefault, write-all-properties, compile-domain,compile-renderers, generate, base-compile">
-		<ant antfile="build_accessControl.xml" target="accessControl-void-inject"/>
-		<ant antfile="build_accessControl.xml" target="domainObjectActionLog-void-inject"/>
+	<target name="compile-without-injectionCode" description="Compile application" depends="i18nDefault, write-all-properties, compile-domain,compile-renderers, generate, base-compile">
+		<ant antfile="build_injectionCode.xml" target="accessControl-void-inject"/>
+		<ant antfile="build_injectionCode.xml" target="domainObjectActionLog-void-inject"/>
 	</target>
 
 	<target name="deploy-linux"
@@ -783,9 +783,9 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
     		depends="compile, base-jar"
             description="Generates a java archive applications 'core' (services and domain)."/>
 
-	<target name="jar-without-access-control"
-    		depends="compile-without-access-control, base-jar"
-            description="Generates a java archive applications 'core' (services and domain), without code injection for access control"/>
+	<target name="jar-without-injectionCode"
+    		depends="compile-without-injectionCode, base-jar"
+            description="Generates a java archive applications 'core' (services and domain), without code injection"/>
 
 	<target name="war"
 	    	depends="compile"
