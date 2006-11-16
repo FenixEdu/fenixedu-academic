@@ -76,6 +76,9 @@ public class UsernameUtils extends FenixUtil {
 		    registration = person.getStudentByType(DegreeType.BOLONHA_DEGREE);
 		}
 		if (registration == null) {
+		    registration = person.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
+		}
+		if (registration == null) {
 		    registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 		}
 		if (registration != null) {
