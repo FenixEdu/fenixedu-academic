@@ -47,7 +47,11 @@ public class FixedSetGroup extends LeafGroup {
         Set<Person> elements = super.buildSet();
         
         for (DomainReference<Person> reference : this.persons) {
-            elements.add(reference.getObject());
+            Person person = reference.getObject();
+            
+            if (person != null) {
+                elements.add(person);
+            }
         }
         
         return super.freezeSet(elements);
