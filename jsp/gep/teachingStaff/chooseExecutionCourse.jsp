@@ -11,14 +11,15 @@
 		<th><bean:message key="table.header.inquiries.degrees" bundle="INQUIRIES_RESOURCES"/></th>	
 		<th/>					
 	</tr>
-	
-	<logic:iterate id="curricularCourseScope" name="curricularCourseScopes">	
-		<logic:iterate id="executionCourse" name="curricularCourseScope" property="curricularCourse.associatedExecutionCourses" >
+
+	<logic:iterate id="degreeModuleScope" name="sortedScopes">
+		<bean:define id="curricularCourse" name="degreeModuleScope" property="curricularCourse"/>
+		<logic:iterate id="executionCourse" name="curricularCourse" property="associatedExecutionCourses" >
 			<bean:define id="executionYear" name="executionYear" type="java.lang.String" />
 			<logic:equal name="executionCourse" property="executionPeriod.state" value="CURRENT">
 			<logic:equal name="executionCourse" property="availableForInquiries" value="true">
 				<tr class="listClasses">
-					<td><strong><bean:write name="curricularCourseScope" property="curricularSemester.curricularYear.year" /></strong></td>
+					<td><strong><bean:write name="degreeModuleScope" property="curricularYear" /></strong></td>
 					<td><strong><bean:write name="executionCourse" property="executionPeriod.semester" /></strong></td>
 					<td>									
 						<bean:write name="executionCourse" property="nome" />

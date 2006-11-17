@@ -11,7 +11,8 @@
 
 <html:form action="/teachingStaff">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionDegree"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearID" property="executionYearID" value="44"/>
+	<bean:define id="executionYearID" type="java.lang.Integer" name="executionYear" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearID" property="executionYearID" value="<%= executionYearID.toString() %>"/>
 
 	<logic:present name="degreeCurricularPlans">
 		<table>
