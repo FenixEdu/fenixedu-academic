@@ -74,7 +74,7 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	    	  
 	    Space discoveredSpace = getParentSpace().readSubSpaceByBlueprintNumber(dwgText.getText().trim());
 	    String textToInsert = getTextToInsert(dwgText, discoveredSpace, isToViewBlueprintNumbers());	    
-	    drawTextAndArcAroundText(graphics2D, x, y, discoveredSpace, textToInsert);
+	    drawTextAndArc(graphics2D, x, y, discoveredSpace, textToInsert);
 	}
     }
 
@@ -118,13 +118,13 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 
     private void drawArcAroundText(Graphics2D graphics2D, int x, int y, String textToInsert) {
 	int characters = textToInsert.length();
-	double x_offset = characters * fontSize;
-	double y_offset = fontSize;
+	double textSize = characters * fontSize;
+	double characterSize = fontSize;
 
-	int x1 = (int) (x - (y_offset));
-	int y1 = (int) (y - y_offset);
-	int width = (int) (x_offset + y_offset);
-	int height = (int) (2 * y_offset);
+	int x1 = (int) (x - characterSize);
+	int y1 = (int) (y - (2 * characterSize));
+	int width = (int) (textSize + characterSize);
+	int height = (int) (4 * characterSize);
 	int startAngle = 0;
 	int arcAngle = 360;
 
@@ -133,7 +133,7 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	graphics2D.setColor(Color.BLACK);
     }
     
-    private void drawTextAndArcAroundText(Graphics2D graphics2D, int x, int y, Space discoveredSpace,
+    private void drawTextAndArc(Graphics2D graphics2D, int x, int y, Space discoveredSpace,
 	    String textToInsert) {
 	
 	if (textToInsert != null) {

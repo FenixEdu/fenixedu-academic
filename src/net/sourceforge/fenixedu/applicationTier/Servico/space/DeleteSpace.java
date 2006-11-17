@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.domain.space.Space;
 public class DeleteSpace extends Service {
 
     public void run(final Space space) {
-        space.delete();
+	if(space != null) {
+	    space.delete();
+	}
     }
 }

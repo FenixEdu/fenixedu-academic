@@ -178,11 +178,7 @@
 	<slot name="end"/>
 </schema>
 <schema name="PersonSpaceOccupationsWithUsername" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">			
-	<slot name="person.name" layout="link">
-        <property name="useParent" value="true"/>
-        <property name="contextRelative" value="true"/>
-        <property name="linkFormat" value="${person.homepageWebAddress}"/>
-    </slot>	
+	<slot name="person.name"/>
 	<slot name="person.username"/>	
 	<slot name="personWorkingPlace" layout="null-as-label" key="label.person.working.place">
 		<property name="label" value=""/>

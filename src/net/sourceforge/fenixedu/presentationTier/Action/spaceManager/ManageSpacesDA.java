@@ -168,7 +168,12 @@ public class ManageSpacesDA extends FenixDispatchAction {
     public ActionForward deleteSpaceInformation(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException, IOException {
+	
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+	if (spaceInformation == null) {
+	    throw new DomainException("error.spaces.cannot.delete.inexistent.spaceInformation");
+	}
+	
 	final Space space = spaceInformation.getSpace();
 
 	final Object[] args = { spaceInformation };

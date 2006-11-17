@@ -6,7 +6,9 @@ import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 public class DeleteSpaceInformation extends Service {
 
     public void run(final SpaceInformation spaceInformation) {
-        spaceInformation.delete();
+	if(spaceInformation != null) {
+	    spaceInformation.delete();
+	}
     }
 
 }
