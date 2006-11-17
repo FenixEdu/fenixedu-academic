@@ -184,9 +184,10 @@ public class Registration extends Registration_Base {
 
     public StudentCurricularPlan getActiveStudentCurricularPlan() {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-	    if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
-		return studentCurricularPlan;
-	    }
+            if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE
+                    || studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.SCHOOLPARTCONCLUDED) {
+                return studentCurricularPlan;
+            }
 	}
 	return null;
     }
