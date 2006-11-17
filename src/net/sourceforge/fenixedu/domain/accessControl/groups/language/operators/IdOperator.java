@@ -5,15 +5,17 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContextProvider;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArgument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 
 /**
  * The <code>$I</code> operator obtains a domain object by it's id and type.
  * The id is obtained from a context parameter and the type is specified as an
- * argument.
+ * argument. Optionally you can give the id explicitly as a number.
  * 
  * <p>
  * <code>$I(executionCourseId, '{@link net.sourceforge.fenixedu.domain.ExecutionCourse}')</code>
+ * <code>$I(1234, '{@link net.sourceforge.fenixedu.domain.ExecutionCourse}')</code>
  * 
  * @author cfgi
  */
@@ -34,6 +36,11 @@ public class IdOperator extends OperatorArgument {
         addArgument(type);
     }
 
+    public IdOperator(DomainObject object) {
+        this(new StaticArgument(object.getIdInternal()), new StaticArgument(ClassOperator
+                .simplify(object.getClass().getName())));
+    }
+    
     @Override
     protected void checkOperatorArguments() {
         int size = getArguments().size();
@@ -45,11 +52,23 @@ public class IdOperator extends OperatorArgument {
 
     @Override
     protected DomainObject execute() {
-        NumberOperator number = getNumberOperator();
-        ClassOperator type = getClassOperator();
+        Integer number = getNumber();
+        Class type = getClassType();
 
-        return RootDomainObject.readDomainObjectByOID((Class) type.getValue(), (Integer) number
-                .getValue());
+        return RootDomainObject.readDomainObjectByOID(type, number);
+    }
+
+    protected Integer getNumber() {
+        Argument argument = argument(PARAMETER);
+        if (! argument.isDynamic()) {
+            StaticArgument staticArgument = (StaticArgument) argument;
+            
+            if (staticArgument.isNumber()) {
+                return staticArgument.getNumber();
+            }
+        }
+        
+        return (Integer) getNumberOperator().getValue();
     }
 
     /**
@@ -57,21 +76,26 @@ public class IdOperator extends OperatorArgument {
      */
     protected NumberOperator getNumberOperator() {
         if (this.number == null) {
-            this.number = new NumberOperator((GroupContextProvider) this, getArguments().get(PARAMETER));
+            this.number = new NumberOperator((GroupContextProvider) this, argument(PARAMETER));
         }
 
         return this.number;
     }
 
     /**
-     * @return the ClassOperator that will obtain the type
+     * @return the target domain class type
      */
-    protected ClassOperator getClassOperator() {
+    protected Class getClassType() {
         if (this.type == null) {
-            this.type = new ClassOperator((GroupContextProvider) this, getArguments().get(TYPE));
+            this.type = new ClassOperator((GroupContextProvider) this, argument(TYPE));
         }
 
-        return this.type;
+        return (Class) this.type.getValue();
+    }
+
+    @Override
+    public String getMainValueString() {
+        return String.format("$I(%s, %s)", argument(PARAMETER), argument(TYPE));
     }
 
 }

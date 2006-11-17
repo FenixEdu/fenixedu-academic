@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class RoleTypeGroup extends Group {
@@ -34,6 +35,15 @@ public class RoleTypeGroup extends Group {
     @Override
     public boolean allows(IUserView userView) {
 	return (userView == null) ? false : isMember(userView.getPerson());
+    }
+
+    public String getExpression() {
+        return new RoleGroup(Role.getRoleByRoleType(getRoleType())).getExpression();
+    }
+
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return null;
     }
     
 }

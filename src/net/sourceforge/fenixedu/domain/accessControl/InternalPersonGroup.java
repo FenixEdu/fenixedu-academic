@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
@@ -18,6 +19,11 @@ public class InternalPersonGroup extends RoleGroup {
 
     public InternalPersonGroup() {
         super(Role.getRoleByRoleType(RoleType.PERSON));
+    }
+
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[0];
     }
     
 }

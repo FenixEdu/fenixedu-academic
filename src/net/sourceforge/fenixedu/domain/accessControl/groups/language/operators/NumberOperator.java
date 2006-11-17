@@ -3,12 +3,13 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.operators;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContextProvider;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArgument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NumberTypeNotSupported;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 
 /**
- * The <code>$N</code> operator converts a parameter value into a number.
+ * The <code>$N</code> operator converts value into a number.
  * Optionally the operator can receive a second argument indicating the type of
  * the number. Supported types are:
  * 
@@ -25,8 +26,9 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  * <p>
  * If the request contains <code>section=1&grade=16.5</code> then
  * 
- * <code>$N(section) = 1</code> and
- * <code>$N(grade, float) = 16.5</code>
+ * <code>$N(1) = 1</code> and
+ * <code>$N($P(section)) = 1</code> and
+ * <code>$N($P(grade), float) = 16.5</code>
  * 
  * @author cfgi
  */
@@ -34,14 +36,12 @@ public class NumberOperator extends OperatorArgument {
 
     private static final long serialVersionUID = 1L;
 
-    private static final int PARAMETER = 0;
+    private static final int NUMBER = 0;
     private static final int TYPE = 1;
 
     protected static enum SupportedType {
         _short, _int, _long, _float, _double
     }
-
-    private ParameterOperator parameter;
 
     public NumberOperator(Argument number) {
         super();
@@ -56,6 +56,10 @@ public class NumberOperator extends OperatorArgument {
         addArgument(type);
     }
 
+    public NumberOperator(Integer number) {
+        this(new StaticArgument(number));
+    }
+    
     NumberOperator(GroupContextProvider provider, Argument argument) {
         this(argument);
         
@@ -74,20 +78,15 @@ public class NumberOperator extends OperatorArgument {
 
     @Override
     protected Number execute() {
-        ParameterOperator parameter = getParameterOperator();
-        return convertNumber(parameter.getValue().toString());
+        String numberValue = getNumberValue();
+        return convertNumber(numberValue.toString());
     }
 
     /**
-     * @return the ParameterOperator that will obtain the parameter's value
+     * @return the value of the first argument
      */
-    protected ParameterOperator getParameterOperator() {
-        if (this.parameter == null) {
-            this.parameter = new ParameterOperator((GroupContextProvider) this, getArguments().get(PARAMETER));
-            this.parameter.setRequired(true);
-        }
-
-        return this.parameter;
+    protected String getNumberValue() {
+        return String.valueOf(argument(NUMBER).getValue());
     }
 
     /**
@@ -137,7 +136,7 @@ public class NumberOperator extends OperatorArgument {
             return null;
         }
 
-        String type = String.valueOf(getArguments().get(TYPE).getValue());
+        String type = String.valueOf(argument(TYPE).getValue());
         
         try {
             return SupportedType.valueOf("_" + type);
@@ -145,5 +144,16 @@ public class NumberOperator extends OperatorArgument {
             throw new NumberTypeNotSupported(type);
         }
     }
-
+    
+    @Override
+    public String getMainValueString() {
+        SupportedType type = getGivenType();
+        
+        if (type == null || type.equals(SupportedType._int)) {
+            return String.format("$N(%s)", argument(NUMBER));
+        }
+        else {
+            return String.format("$N(%s, '%s')", argument(NUMBER), type.name().substring(1));
+        }
+    }
 }

@@ -7,6 +7,8 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.ExpressionGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.Predicate;
@@ -215,4 +217,36 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
     abstract public String getQualifiedName();
 
+    @Override
+    public void setReaders(Group group) {
+        super.setReaders(group);
+
+        if (group == null) {
+            setReadersExpression(null);
+        } else {
+            setReadersExpression(group.getExpression());
+        }
+    }
+    
+    @Override
+    public void setWriters(Group group) {
+        super.setWriters(group);
+
+        if (group == null) {
+            setWritersExpression(null);
+        } else {
+            setWritersExpression(group.getExpression());
+        }
+    }
+    
+    @Override
+    public void setManagers(Group group) {
+        super.setManagers(group);
+
+        if (group == null) {
+            setManagersExpression(null);
+        } else {
+            setManagersExpression(group.getExpression());
+        }
+    }
 }

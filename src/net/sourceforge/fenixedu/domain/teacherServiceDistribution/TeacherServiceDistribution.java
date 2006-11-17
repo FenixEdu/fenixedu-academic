@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,28 +8,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.Predicate;
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupDifference;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.apache.commons.collections.Predicate;
 
 public class TeacherServiceDistribution extends TeacherServiceDistribution_Base {
 
@@ -444,4 +437,48 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 
 		return false;
 	}
+    
+    @Override
+    public void setPhasesManagementGroup(Group group) {
+        super.setPhasesManagementGroup(group);
+
+        if (group == null) {
+            setPhasesManagementGroupExpression(null);
+        } else {
+            setPhasesManagementGroupExpression(group.getExpression());
+        }
+    }
+    
+    @Override
+    public void setAutomaticValuationGroup(Group group) {
+        super.setAutomaticValuationGroup(group);
+
+        if (group == null) {
+            setAutomaticValuationGroupExpression(null);
+        } else {
+            setAutomaticValuationGroupExpression(group.getExpression());
+        }
+    }
+    
+    @Override
+    public void setOmissionConfigurationGroup(Group group) {
+        super.setOmissionConfigurationGroup(group);
+
+        if (group == null) {
+            setOmissionConfigurationGroupExpression(null);
+        } else {
+            setOmissionConfigurationGroupExpression(group.getExpression());
+        }
+    }
+    
+    @Override
+    public void setValuationCompetenceCoursesAndTeachersManagementGroup(Group group) {
+        super.setValuationCompetenceCoursesAndTeachersManagementGroup(group);
+
+        if (group == null) {
+            setValuationCompetenceCoursesAndTeachersManagementGroupExpr(null);
+        } else {
+            setValuationCompetenceCoursesAndTeachersManagementGroupExpr(group.getExpression());
+        }
+    }
 }

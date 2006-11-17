@@ -9,6 +9,10 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -81,4 +85,31 @@ public class DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup extend
 	    	return super.freezeSet(elements);
 	    }
 
+        @Override
+        protected Argument[] getExpressionArguments() {
+            return new Argument[] {
+                    new IdOperator(getDegreeCurricularPlan())
+            };
+        }
+
+        public static class Builder implements GroupBuilder {
+
+            public Group build(Object[] arguments) {
+                try {
+                    return new DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup((DegreeCurricularPlan) arguments[0]);
+                }
+                catch (ClassCastException e) {
+                    throw new GroupDynamicExpressionException("accessControl.group.builder.degreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup.notDegreeCurricularPlan", arguments[0].toString());
+                }
+            }
+
+            public int getMinArguments() {
+                return 0;
+            }
+
+            public int getMaxArguments() {
+                return 1;
+            }
+            
+        }
 }

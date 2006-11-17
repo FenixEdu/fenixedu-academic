@@ -37,6 +37,17 @@ public class GroupAvailability extends GroupAvailability_Base {
     }
 
     @Override
+    public void setTargetGroup(Group group) {
+        super.setTargetGroup(group);
+
+        if (group == null) {
+            setTargetGroupExpression(null);
+        } else {
+            setTargetGroupExpression(group.getExpression());
+        }
+    }
+    
+    @Override
     public void setAccessibleItem(AccessibleItem item) {
         // The field is required but since the deletion sets this to null and we
         // want to delete this objects the verification is not done.

@@ -105,4 +105,19 @@ public class DynamicGroup extends Group implements GroupContextProvider {
         return GroupBuilderRegistry.getGroupBuilder(getName());
     }
 
+    public String getExpression() {
+        return toString();
+    }
+
+    @Override
+    public String toString() {
+        return getName() + getArgumentList();
+    }
+
+    @Override
+    protected Argument[] getExpressionArguments() {
+        // not used since getExpression is overriden
+        return null;
+    }
+
 }

@@ -21,4 +21,6 @@ public interface IGroup {
     public boolean allows(IUserView userView);
 
     public Set<Person> getElements();
+    
+    public String getExpression();
 }

@@ -48,4 +48,9 @@ public class VariableArgument extends DynamicArgument {
         return true;
     }
 
+    @Override
+    protected String getMainValueString() {
+        return "$" + getVariable();
+    }
+    
 }

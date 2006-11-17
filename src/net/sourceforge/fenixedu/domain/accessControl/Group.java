@@ -17,6 +17,10 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.ArgumentList;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilderRegistry;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.collections.set.UnmodifiableSet;
@@ -93,4 +97,49 @@ public abstract class Group implements Serializable, IGroup {
         // todo externalize this
         return new HashSet<Person>();
     }
+    
+    /**
+     * Generates an group expression in the group expression language that
+     * represents this group. If the group no longer can be represented as an
+     * expression then this method returns <code>null</code>. This may happen 
+     * when a group depend on elements that are no longer available. 
+     * 
+     * @return the string representation of this groups in a form understandable
+     *         by the groups language parse or <code>null</code> when this
+     *         group instance can no longer be represented as an expression
+     * 
+     * TODO: move this default implementation to LeafGroup
+     */
+    public String getExpression() {
+        return getGroupExpressionName() + getExpressionArgumentsList();
+    }
+
+    protected String getGroupExpressionName() {
+        String name = GroupBuilderRegistry.getNameOfBuilder(this.getClass());
+        
+        if (name == null) {
+            throw new DomainException("accessControl.group.expression.noName");
+        }
+        
+        return name;
+    }
+
+    protected ArgumentList getExpressionArgumentsList() {
+        ArgumentList argumentList = new ArgumentList();
+        
+        Argument[] expressionArguments = getExpressionArguments();
+        if (expressionArguments != null) {
+            for (Argument argument : expressionArguments) {
+                argumentList.add(argument);
+            }
+        }
+        
+        return argumentList;
+    }
+
+    /**
+     * @return the arguments required to define this group in the group
+     *         expression
+     */
+    protected abstract Argument[] getExpressionArguments();
 }

@@ -1,20 +1,22 @@
 package net.sourceforge.fenixedu.domain.accessControl.groups.language.operators;
 
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContextProvider;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArgument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.InvalidEnumSpecified;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 
 /**
  * The <code>$E</code> operator converts a parameter value into a enum. You
- * must also specify the type of the enum.
+ * must also specify the type of the enum. You can also type the enum name
+ * directly when the value is known in advance.
  * 
  * <p>
  * If the request contains <code>role=MANAGER&gender=FEMALE</code> then
  * 
- * <code>$E(role, 'person.RoleType') = MANAGER</code> and
- * <code>$E(gender, 'person.Gender') = FEMALE</code>
+ * <code>$E(MANAGER, 'person.RoleType') = MANAGER</code> and
+ * <code>$E($P(role), 'person.RoleType') = MANAGER</code> and
+ * <code>$E($P(gender), 'person.Gender') = FEMALE</code>
  * 
  * @author cfgi
  */
@@ -22,23 +24,21 @@ public class EnumOperator extends OperatorArgument {
 
     private static final long serialVersionUID = 1L;
 
-    private static final int PARAMETER = 0;
+    private static final int VALUE = 0;
     private static final int TYPE = 1;
 
-    private ParameterOperator parameter;
     private ClassOperator type;
-
-    public EnumOperator(Argument name) {
-        super();
-        
-        addArgument(name);
-    }
 
     public EnumOperator(Argument name, Argument type) {
         super();
         
         addArgument(name);
         addArgument(type);
+    }
+
+    public EnumOperator(Enum value) {
+        this(new StaticArgument(value.name()), new StaticArgument(ClassOperator.simplify(value
+                .getDeclaringClass().getName())));
     }
 
     @Override
@@ -53,11 +53,8 @@ public class EnumOperator extends OperatorArgument {
     @SuppressWarnings("unchecked")
     @Override
     protected Enum execute() {
-        ParameterOperator parameter = getParameterOperator();
-        ClassOperator type = getClassOperator();
-        
-        Class typeName = (Class) type.getValue();
-        String enumName = String.valueOf(parameter.getValue());
+        String enumName = getEnumName();
+        Class typeName = getEnumType();
 
         try {
             return Enum.valueOf(typeName, enumName);
@@ -67,25 +64,26 @@ public class EnumOperator extends OperatorArgument {
     }
 
     /**
-     * @return the ParameterOperator that will obtain the parameter's value
+     * @return the name of the enum value
      */
-    protected ParameterOperator getParameterOperator() {
-        if (this.parameter == null) {
-            this.parameter = new ParameterOperator((GroupContextProvider) this, getArguments().get(PARAMETER));
-            this.parameter.setRequired(true);
-        }
-
-        return this.parameter;
+    protected String getEnumName() {
+        return String.valueOf(argument(VALUE).getValue());
     }
 
     /**
-     * @return the ClassOperator that will obtain the type
+     * @return the name of the enum type
      */
-    protected ClassOperator getClassOperator() {
+    protected Class getEnumType() {
         if (this.type == null) {
-            this.type = new ClassOperator(this, getArguments().get(TYPE));
+            this.type = new ClassOperator(this, argument(TYPE));
         }
 
-        return this.type;
+        return (Class) this.type.getValue();
     }
+
+    @Override
+    public String getMainValueString() {
+        return String.format("$E(%s, %s)", argument(VALUE), argument(TYPE));
+    }
+    
 }

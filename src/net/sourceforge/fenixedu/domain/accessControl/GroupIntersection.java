@@ -53,4 +53,9 @@ public final class GroupIntersection extends NodeGroup {
 
         return true;
     }
+    
+    @Override
+    protected String getExpressionOperator() {
+        return "&&";
+    }
 }

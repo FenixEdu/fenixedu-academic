@@ -43,6 +43,8 @@ E_OP : "$E" ;
 N_OP : "$N" ;
 C_OP : "$C" ;
 
+NUMBER : ('0'..'9')+;
+
 NAME : LETTER ( DOLLAR | LETTER | DIGIT )* ;
 
 protected LETTER : ( 'A'..'Z' | 'a'..'z' | '_' ) ;
@@ -67,6 +69,7 @@ protected ESCAPE
 			| 'r' { $setText("\r"); }
 			| 't' { $setText("\t"); }
 			| '"' { $setText("\""); }
+			| '\\' { $setText("\\"); }
            )
     ;
 
@@ -162,13 +165,14 @@ argument
 	;
 	
 variableArgument
-	: d:DOLLAR^ n:NAME (DOT! variableName) {
+	: d:DOLLAR^ n:NAME (DOT! variableName)? {
 		expand(#variableArgument, #d);
 	}
 	;
 	
 freeArgument
 	: NAME
+	| NUMBER
 	| STRING
 	;
 	
@@ -207,7 +211,7 @@ operator
 	| I_OP^ LPAREN! argument COMMA! argument irp:RPAREN! {
 		expand(#operator, #irp);
 	}
-	| E_OP^ LPAREN! argument (COMMA! argument)? erp:RPAREN! {
+	| E_OP^ LPAREN! argument COMMA! argument erp:RPAREN! {
 		expand(#operator, #erp);
 	}
 	| N_OP^ LPAREN! argument (COMMA! argument)? nrp:RPAREN! {
@@ -246,7 +250,7 @@ options {
 		return new GroupExpressionParserException(((CustomAST) node).marker, e);
 	}
 	
-	private Argument ensureDynamic(AST node, Argument argument) {
+	private Argument collapseStatic(AST node, Argument argument) {
 		if (! argument.isDynamic()) {
 			try {
 				return new StaticArgument(argument.getValue());
@@ -327,23 +331,24 @@ argument returns [Argument argument]
 {
 	Object value;
 }
-	: value=simpleArgument { 
-		argument = new StaticArgument(value);
-	}
+	: argument=simpleArgument
 	| argument=so:specificOperator {
-		argument = ensureDynamic(#so, argument);
+		argument = collapseStatic(#so, argument);
 	}
 	| argument=ca:composedArgument { 
-		argument = ensureDynamic(#ca, argument);
+		argument = collapseStatic(#ca, argument);
 	}
 	;
 
-simpleArgument returns [Object value]
+simpleArgument returns [StaticArgument value]
 	: n:NAME {
-		value = #n.getText();
+		value = new StaticArgument(#n.getText());
+	}
+	| i:NUMBER {
+		value = new StaticArgument(new Integer(#i.getText()));
 	}
 	| s:STRING {
-		value = #s.getText();
+		value = new StaticArgument(#s.getText());
 	}
 	;
 
@@ -421,12 +426,7 @@ enumOperator returns [EnumOperator operator]
 	Argument b;
 }
 	: #(E_OP a=argument b=argument) {
-		if (b == null) {
-			operator = new EnumOperator(a, b);
-		}
-		else {
-			operator = new EnumOperator(a);
-		}
+		operator = new EnumOperator(a, b);
 	}
 	;
 

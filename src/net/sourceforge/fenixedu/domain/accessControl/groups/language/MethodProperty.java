@@ -88,4 +88,8 @@ public class MethodProperty extends NestedProperty {
         return "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
+    @Override
+    public String toString() {
+        return getName() + getArgumentList();
+    }
 }

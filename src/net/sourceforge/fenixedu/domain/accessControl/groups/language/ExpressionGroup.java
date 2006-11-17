@@ -58,6 +58,11 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
         return this.expression;
     }
 
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return null;
+    }
+
     /**
      * Makes the given context the current context.
      * 
@@ -194,48 +199,4 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
         }
     }
 
-//    //
-//    // testing
-//    //
-//    
-//    private static class TestingGroupBuilder implements GroupBuilder {
-//
-//        private String name;
-//        
-//        public TestingGroupBuilder(String name) {
-//            this.name = name;
-//        }
-//        
-//        public Group build(final Object[] arguments) {
-//            return new Group() {
-//
-//                @Override
-//                public Set<Person> getElements() {
-//                    return super.buildSet();
-//                }
-//                
-//                @Override
-//                public String toString() {
-//                    return "TestingGroup[" + TestingGroupBuilder.this.name + ", " + Arrays.asList(arguments) + "]";
-//                }
-//            };
-//        }
-//        
-//    }
-//    
-//    public static void main(String[] args) {
-//        try {
-//            String expression = 
-//                "(role(MANAGER) || (role(PERSON) && (role(TEACHER) - role(TUTOR)))) && student($I('executionCourseId', ExecutionCourse))";
-//
-//            GroupBuilderRegistry.registerBuilder("role", new TestingGroupBuilder("role"));
-//            GroupBuilderRegistry.registerBuilder("student", new TestingGroupBuilder("student"));
-//
-//            ExpressionGroup expressionGroup = new ExpressionGroup(expression);
-//            System.out.println(expressionGroup);
-//        } catch(Throwable e) {
-//            System.out.println("exception: " + e.getClass());
-//            e.printStackTrace();
-//        }
-//    }
 }

@@ -40,6 +40,19 @@ public class DomainReference<T extends DomainObject> implements Serializable {
         }
     }
 
+    /**
+     * Allows you to check if a certain {@link DomainReference} is a refenrece
+     * to <code>null</code>. Note that, when a domain reference is a null
+     * renference, you can still get a <code>null</code> value from
+     * {@link #getObject()} when the referenced object no longer exists.
+     * 
+     * @return <code>true</code> if the domain reference is an explicit
+     *         reference to <code>null</code>
+     */
+    public boolean isNullReference() {
+        return this.className == null;
+    }
+    
     public Integer getOid() {
         return this.oid;
     }
@@ -120,4 +133,14 @@ public class DomainReference<T extends DomainObject> implements Serializable {
         return oidHash + typeHash;
     }
 
+    @Override
+    public String toString() {
+        if (this.className == null) {
+            return "<null>";
+        }
+        else {
+            return String.format("%s:%s", this.className, this.oid);
+        }
+    }
+    
 }

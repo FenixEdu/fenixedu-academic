@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupStudentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -44,7 +44,7 @@ public class SendMailToWorkGroupStudents extends ExecutionCourseSendMail {
 
 			StudentGroup group = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
-			IGroup groupToSend = new GroupStudentGroup(group);
+			IGroup groupToSend = new StudentGroupStudentsGroup(group);
 
 			return new IGroup[] { groupToSend };
 		}

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.operators;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContextProvider;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArgument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 
@@ -31,6 +32,10 @@ public class ParameterOperator extends OperatorArgument {
         setRequired(false);
     }
 
+    public ParameterOperator(String name) {
+        this(new StaticArgument(name));
+    }
+    
     ParameterOperator(GroupContextProvider provider, Argument argument) {
         this(argument);
         
@@ -75,7 +80,12 @@ public class ParameterOperator extends OperatorArgument {
     }
 
     protected String getParameterName() {
-        return String.valueOf(getArguments().get(NAME).getValue());
+        return String.valueOf(argument(NAME).getValue());
+    }
+
+    @Override
+    protected String getMainValueString() {
+        return String.format("$P(%s)", argument(NAME));
     }
 
 }

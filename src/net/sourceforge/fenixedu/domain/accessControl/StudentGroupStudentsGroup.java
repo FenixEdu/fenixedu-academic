@@ -5,6 +5,10 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 
 public class StudentGroupStudentsGroup extends DomainBackedGroup<StudentGroup> {
 
@@ -40,5 +44,33 @@ public class StudentGroupStudentsGroup extends DomainBackedGroup<StudentGroup> {
 	}
 
 	return false;
+    }
+
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] {
+                new IdOperator(getObject())
+        };
+    }
+    
+    public static class Builder implements GroupBuilder {
+
+        public Group build(Object[] arguments) {
+            try {
+                return new StudentGroupStudentsGroup((StudentGroup) arguments[0]);
+            }
+            catch (ClassCastException e) {
+                throw new GroupDynamicExpressionException("accessControl.group.builder.studentGroupStudents.notStudentGroup", arguments[0].toString());
+            }
+        }
+
+        public int getMinArguments() {
+            return 0;
+        }
+
+        public int getMaxArguments() {
+            return 1;
+        }
+        
     }
 }

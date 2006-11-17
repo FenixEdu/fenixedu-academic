@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -47,5 +48,10 @@ public class DegreeCoordinatorsGroup extends Group {
 		&& person.hasTeacher()
 		&& person.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
 				ExecutionYear.readCurrentExecutionYear());
+    }
+
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[0];
     }
 }

@@ -57,4 +57,13 @@ public class DepartmentStudentsByExecutionYearGroup extends DepartmentByExecutio
 
 	return false;
     }
+    
+    public static class Builder extends DepartmentByExecutionYearGroup.Builder {
+
+        @Override
+        protected DepartmentByExecutionYearGroup buildConcreteGroup(ExecutionYear year, Department department) {
+            return new DepartmentStudentsByExecutionYearGroup(year, department);
+        }
+        
+    }
 }

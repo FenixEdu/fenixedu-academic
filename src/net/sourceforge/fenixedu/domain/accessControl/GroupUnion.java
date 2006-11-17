@@ -52,4 +52,10 @@ public final class GroupUnion extends NodeGroup {
 
         return false;
     }
+
+    @Override
+    protected String getExpressionOperator() {
+        return "||";
+    }
+    
 }

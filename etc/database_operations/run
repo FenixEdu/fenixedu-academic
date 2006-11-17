@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creating extra columns to hold groups expressions" CreateExtraGroupExpressionColumns.sql

@@ -12,13 +12,11 @@ package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
@@ -268,4 +266,14 @@ public class Department extends Department_Base {
 	}	
     }
 
+    @Override
+    public void setCompetenceCourseMembersGroup(Group group) {
+        super.setCompetenceCourseMembersGroup(group);
+
+        if (group == null) {
+            setCompetenceCourseMembersGroupExpression(null);
+        } else {
+            setCompetenceCourseMembersGroupExpression(group.getExpression());
+        }
+    }
 }

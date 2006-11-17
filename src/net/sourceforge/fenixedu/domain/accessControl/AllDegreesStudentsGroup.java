@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -45,5 +46,10 @@ public class AllDegreesStudentsGroup extends Group {
 	    }
 	}
 	return false;
+    }
+
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[0];
     }
 }

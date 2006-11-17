@@ -4,7 +4,9 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
@@ -30,6 +32,13 @@ public class PersonGroup extends DomainBackedGroup<Person> {
         return getObject();
     }
 
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] {
+                new StaticArgument(getPerson().getIdInternal())
+        };
+    }
+    
     /**
      * Builder used to create a person group expression. This builder
      * accepts one argument but the builder behaves differently accordingly with

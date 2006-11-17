@@ -7,6 +7,10 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 
 import org.apache.commons.collections.Transformer;
 
@@ -48,4 +52,31 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup {
         return false;
     }
 
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] {
+                new IdOperator(getObject())
+        };
+    }
+
+    public static class Builder implements GroupBuilder {
+
+        public Group build(Object[] arguments) {
+            try {
+                return new ExecutionCourseStudentsGroup((ExecutionCourse) arguments[0]);
+            }
+            catch (ClassCastException e) {
+                throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse", arguments[0].toString());
+            }
+        }
+
+        public int getMinArguments() {
+            return 0;
+        }
+
+        public int getMaxArguments() {
+            return 1;
+        }
+        
+    }
 }

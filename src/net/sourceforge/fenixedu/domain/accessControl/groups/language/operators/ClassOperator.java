@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.operators;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContextProvider;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArgument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.InvalidClassNameSpecified;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 
@@ -33,6 +34,18 @@ public class ClassOperator extends OperatorArgument {
         addArgument(argument);
     }
 
+    /**
+     * Creates a new <code>ClassOperator</code> representing the given class.
+     * This constructor is usefull when you need an external representation of
+     * the operator.
+     * 
+     * @param type
+     *            the type this operator will be representing
+     */
+    public ClassOperator(Class type) {
+        this(new StaticArgument(simplify(type.getName())));
+    }
+
     ClassOperator(GroupContextProvider provider, Argument argument) {
         super();
 
@@ -54,20 +67,41 @@ public class ClassOperator extends OperatorArgument {
         String className = getClassName();
 
         try {
-            return Class.forName(DOMAIN_PREFIX + className);
-        } catch (ClassNotFoundException e) {
-            try {
+            if (className.startsWith(DOMAIN_PREFIX)) {
                 return Class.forName(className);
-            } catch (ClassNotFoundException e1) {
-                throw new InvalidClassNameSpecified(DOMAIN_PREFIX, className);
             }
+            else {
+                try {
+                    return Class.forName(DOMAIN_PREFIX + className);
+                } catch (ClassNotFoundException e) {
+                    
+                        return Class.forName(className);
+                }
+            }
+        } catch (ClassNotFoundException e1) {
+            throw new InvalidClassNameSpecified(DOMAIN_PREFIX, className);
         }
     }
 
     protected String getClassName() {
-        return String.valueOf(getArguments().get(CLASS_NAME).getValue());
+        return String.valueOf(argument(CLASS_NAME).getValue());
     }
 
+    /**
+     * Simplifies the name of the type based on the prefix {@value #DOMAIN_PREFIX}.
+     * 
+     * @param typeName the type name to simplify
+     * @return the symplified name of the type
+     */
+    public static String simplify(String typeName) {
+        if (typeName.startsWith(DOMAIN_PREFIX)) {
+            return typeName.substring(DOMAIN_PREFIX.length());
+        }
+        else {
+            return typeName;
+        }
+    }
+    
     /**
      * Since the class operator only translates the value of it's firts argument
      * into a class the dynamic nature of this operator depends on the dynamic
@@ -84,7 +118,12 @@ public class ClassOperator extends OperatorArgument {
     public boolean isDynamic() {
         checkOperatorArguments();
 
-        return getArguments().get(0).isDynamic();
+        return argument(CLASS_NAME).isDynamic();
+    }
+
+    @Override
+    protected String getMainValueString() {
+        return String.format("$C(%s)", argument(CLASS_NAME));
     }
 
 }

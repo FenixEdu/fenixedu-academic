@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl.groups.language;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ArgumentList extends ArrayList<Argument> {
 
@@ -42,5 +43,25 @@ public class ArgumentList extends ArrayList<Argument> {
         }
         
         return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        
+        builder.append("(");
+        
+        Iterator<Argument> iterator = iterator();
+        while (iterator.hasNext()) {
+            builder.append(iterator.next().toString());
+            
+            if (iterator.hasNext()) {
+                builder.append(", ");
+            }
+        }
+        
+        builder.append(")");
+        
+        return builder.toString();
     }
 }

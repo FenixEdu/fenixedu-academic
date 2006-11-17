@@ -16,15 +16,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.utl.fenix.utils.Pair;
+
 public class GroupLanguageAction extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Map<String, GroupBuilder> registeredBuilders = GroupBuilderRegistry.getRegisteredBuilders();
+        Map<String, Pair<Class, GroupBuilder>> registeredBuilders = GroupBuilderRegistry.getRegisteredBuilders();
         
         List<GroupBuilderBean> result = new ArrayList<GroupBuilderBean>();
         for (String name : registeredBuilders.keySet()) {
-            result.add(new GroupBuilderBean(name, registeredBuilders.get(name)));
+            result.add(new GroupBuilderBean(name, registeredBuilders.get(name).getValue()));
         }
         
         Collections.sort(result);

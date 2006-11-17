@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl.groups.language;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -74,4 +75,24 @@ public abstract class DynamicArgument extends Argument {
     public boolean isDynamic() {
         return true;
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        
+        builder.append(getMainValueString());
+        
+        Iterator<NestedProperty> iterator = getProperties().iterator();
+        while (iterator.hasNext()) {
+            builder.append("." + iterator.next().toString());
+        }
+        
+        return builder.toString();
+    }
+
+    /**
+     * @return the string representation of the main value part to compose the
+     *         final toString() representation
+     */
+    protected abstract String getMainValueString();
 }

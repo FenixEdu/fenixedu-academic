@@ -38,4 +38,9 @@ public class SimpleProperty extends NestedProperty {
         }
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
+    
 }

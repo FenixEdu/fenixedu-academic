@@ -7,7 +7,10 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.DynamicGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
@@ -81,6 +84,13 @@ public class RoleGroup extends DomainBackedGroup<Role> {
         return false;
     }
 
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] {
+                new StaticArgument(getRole().getRoleType().getName())
+        };
+    }
+    
     /**
      * Builder used to create a RoleGroup from a group expression.
      * 

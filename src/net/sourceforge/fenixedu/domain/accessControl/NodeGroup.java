@@ -3,8 +3,10 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public abstract class NodeGroup extends Group {
@@ -55,4 +57,36 @@ public abstract class NodeGroup extends Group {
     public int hashCode() {
         return this.children.hashCode();
     }
+    
+    public String getExpression() {
+        StringBuilder builder = new StringBuilder();
+        
+        Iterator<IGroup> iterator = getChildren().iterator();
+        while (iterator.hasNext()) {
+            builder.append(getChildrenExpression(iterator.next()));
+            
+            if (iterator.hasNext()) {
+                builder.append(" " + getExpressionOperator() + " ");
+            }
+        }
+        
+        return builder.toString();
+    }
+
+    private String getChildrenExpression(IGroup group) {
+        if (group instanceof NodeGroup) {
+            return "(" + group.getExpression() + ")";
+        }
+        else {
+            return group.getExpression();
+        }
+    }
+
+    protected abstract String getExpressionOperator();
+
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[0];
+    }
+
 }

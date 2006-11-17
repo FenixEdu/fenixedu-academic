@@ -5,6 +5,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 /**
  * This groups represents the group of everyone. All person belong to this group
@@ -42,6 +43,11 @@ public class EveryoneGroup extends Group {
     @Override
     public int hashCode() {
         return this.getClass().hashCode();
+    }
+
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[0];
     }
 
 }

@@ -72,4 +72,14 @@ public abstract class OperatorArgument extends DynamicArgument {
      */
     protected abstract Object execute();
 
+    /**
+     * Auxiliary method to make getting a specific argument more readable.
+     * 
+     * @param index
+     *            the number of the argument
+     * @return the requested argument
+     */
+    protected Argument argument(int index) {
+        return getArgumentList().get(index);
+    }
 }
