@@ -477,14 +477,7 @@
 							<bean:write name="personFunction" property="function.name"/>
 						</td>
 						<td class="listClasses" style="text-align:left">
-							<bean:define id="unit" name="personFunction" property="function.unit"/>
-							<bean:write name="unit" property="name"/>
-							<logic:notEmpty name="unit" property="topUnits">
-								-
-								<logic:iterate id="topUnit" name="unit" property="topUnits">
-									<bean:write name="topUnit" property="name"/>,							
-								</logic:iterate>								
-							</logic:notEmpty>
+							<bean:write name="personFunction" property="function.unit.presentationNameWithParents"/>							
 						</td>				
 						<td class="listClasses">
 							<bean:define id="beginDate" type="org.joda.time.YearMonthDay" name="personFunction" property="beginDate"/>
