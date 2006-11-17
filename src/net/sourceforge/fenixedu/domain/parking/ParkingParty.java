@@ -587,10 +587,12 @@ public class ParkingParty extends ParkingParty_Base {
     public Integer getMostSignificantNumber() {
         if (getParty().isPerson()) {
             Person person = (Person) getParty();
-            if (person.getTeacher() != null) {
+            if (person.getTeacher() != null
+                    && !person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
                 return person.getTeacher().getTeacherNumber();
             }
-            if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null) {
+            if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null
+                    && person.getTeacher() == null) {
                 return person.getEmployee().getEmployeeNumber();
             }
             if (person.getStudent() != null) {
