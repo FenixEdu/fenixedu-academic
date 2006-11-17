@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.util;
 
-import sun.text.Normalizer;
+import java.util.Arrays;
+import java.util.List;
 
 public class StringUtils {
 
@@ -60,4 +61,35 @@ public class StringUtils {
         return StringNormalizer.normalize(string);
     }
 
+    public static String multipleLineRightPad(int LINE_LENGTH, String field, char fillPaddingWith) {
+	if (field.length() <= LINE_LENGTH) {
+	    return org.apache.commons.lang.StringUtils.rightPad(field + " ", LINE_LENGTH, fillPaddingWith);    
+	} else {
+	    final List<String> words = Arrays.asList(field.split(" "));
+	    int currentLineLength = 0;
+	    String result = org.apache.commons.lang.StringUtils.EMPTY;
+	    
+	    for (final String word : words) {
+		final String toAdd = word + " ";
+		if (words.lastIndexOf(word) != (words.size() - 1)
+			&& (currentLineLength + toAdd.length()) > LINE_LENGTH) {
+		    int spacesLength = LINE_LENGTH - currentLineLength;
+		    result = org.apache.commons.lang.StringUtils.rightPad(result, result.length() + spacesLength, ' ');
+		    
+		    currentLineLength = toAdd.length();
+		} else {
+		    currentLineLength += toAdd.length();
+		}
+		
+		result += toAdd;
+	    }
+	    
+	    if (currentLineLength <= LINE_LENGTH) {
+		return org.apache.commons.lang.StringUtils.rightPad(result, result.length() + (LINE_LENGTH - currentLineLength), fillPaddingWith);
+	    } 
+	    
+	    return result;
+	}
+    }
+    
 }
