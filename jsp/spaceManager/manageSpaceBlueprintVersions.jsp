@@ -59,29 +59,20 @@
 		</div>
 		
 		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="selectedSpaceBlueprintId"/>&viewOriginalSpaceBlueprint=true</bean:define>
-		<p>
-			<html:img src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
-		</p>
+		<p><html:img src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" /></p>
 		
-		<bean:define id="downloadLink"><bean:write name="selectedSpaceBlueprint" property="blueprintFile.directDownloadUrlFormat"/> </bean:define>
+		<bean:define id="downloadLink"><bean:write name="selectedSpaceBlueprint" property="blueprintFile.directDownloadUrlFormat"/> </bean:define>		
+		<a href="<%= downloadLink %>"><bean:message key="link.download.blueprint" bundle="SPACE_RESOURCES"/></a>,
 		
-		<a href="<%= downloadLink %>"> 		
-			<bean:message key="link.download.blueprint" bundle="SPACE_RESOURCES"/>
-		</a>,
-		
-		<bean:define id="editLink">
-			/manageBlueprints.do?method=prepareEditBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="selectedSpaceBlueprint" property="idInternal"/> 
-		</bean:define>
+		<bean:define id="editLink">/manageBlueprints.do?method=prepareEditBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="selectedSpaceBlueprint" property="idInternal"/></bean:define>
 		<html:link page="<%= editLink %>">
 			<bean:message key="link.edit.space.information" bundle="SPACE_RESOURCES"/>
 		</html:link>, 
 		
-		<bean:define id="deleteLink">
-			/manageBlueprints.do?method=deleteBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="selectedSpaceBlueprint" property="idInternal"/> 
-		</bean:define>
+		<bean:define id="deleteLink">/manageBlueprints.do?method=deleteBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="selectedSpaceBlueprint" property="idInternal"/></bean:define>
 		<html:link page="<%= deleteLink %>">
 			<bean:message key="link.delete.space.information" bundle="SPACE_RESOURCES"/>
-		</html:link>, 											
+		</html:link> 											
 				
 	</logic:notEmpty>
 	
