@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +15,6 @@ import javax.print.attribute.standard.MediaPrintableArea;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JRParameter;
@@ -28,6 +27,9 @@ import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.PrintMarkSheet;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.utl.ist.fenix.tools.util.PropertiesManager;
 
 public class ReportsUtils extends PropertiesManager {
@@ -147,8 +149,9 @@ public class ReportsUtils extends PropertiesManager {
         if (report != null) {
             parameters.put(JRParameter.REPORT_RESOURCE_BUNDLE, bundle);
             
-            if (dataSource.isEmpty()) {
+            if (dataSource == null || dataSource.isEmpty()) {
         	// dummy, engine seems to work not very well with empty data sources
+        	dataSource = new ArrayList();
         	dataSource.add(StringUtils.EMPTY);
             }
             JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters,
