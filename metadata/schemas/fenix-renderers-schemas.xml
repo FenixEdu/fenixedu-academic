@@ -252,8 +252,6 @@
 			</validator>
 			<property name="size" value="50" />
 		</slot>
-		<slot name="istUsername" default="iscteXXXXX"
-			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 		<slot name="gender"
 			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 		<slot name="numeroDocumentoIdentificacao"
