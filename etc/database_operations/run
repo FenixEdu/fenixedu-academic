@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter inquiries course table." alterInquirieCourseTable.sql

@@ -39,6 +39,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularYear" property="curricularYear" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.attendingCourseSchoolClassId" property="attendingCourseSchoolClassId" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.firstEnrollment" property="firstEnrollment" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseQuestion21" property="executionCourseQuestion21" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseQuestion22" property="executionCourseQuestion22" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseQuestion23" property="executionCourseQuestion23" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseQuestion24" property="executionCourseQuestion24" />
@@ -142,7 +143,7 @@
 				<table>
 					<tr>
 						<td class="left">
-							2.1 <bean:message key="table.rowname.inquiries.course.form.course" bundle="INQUIRIES_RESOURCES"/>
+							2.0 <bean:message key="table.rowname.inquiries.course.form.course" bundle="INQUIRIES_RESOURCES"/>
 						</td>
 						<td class="right">
 							<bean:write name='<%= InquiriesUtil.ATTENDING_EXECUTION_COURSE %>' property="nome" />
@@ -159,7 +160,39 @@
 							<bean:message key="message.inquiries.how.evaluated" bundle="INQUIRIES_RESOURCES"/>
 						</td>
 					</tr>				
-				
+
+					<tr>
+						<td class="left">
+							2.1 <bean:message key="table.rowname.inquiries.course.form.question21" bundle="INQUIRIES_RESOURCES"/>
+						</td>
+						<td class="right">
+							<table class="radio">
+								<tr>
+									<c:forTokens items="1, ,2, ,3, ,4, ,5" delims="," var="int">
+										<td>
+											<c:out value="${int}"/>
+										</td>
+									</c:forTokens>
+								</tr>
+								<tr>
+									<c:forTokens items="1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0" delims="," var="int">
+											<bean:define id="i">
+												<c:out value="${int}"/>
+											</bean:define>
+										<td>
+											<c:if test="${i == infoAttendingCourseInquiry.question21}">
+												<input alt="input.executionCourseQuestion21" type="radio" name="executionCourseQuestion21" value='<%= i %>' checked="checked"/>
+											</c:if>
+											<c:if test="${i != infoAttendingCourseInquiry.question21}">
+												<input alt="input.executionCourseQuestion21" type="radio" name="executionCourseQuestion21" value='<%= i %>' disabled="disabled"/>
+											</c:if>
+										</td>
+									</c:forTokens>
+								</tr>
+							</table>
+						</td>
+					</tr>
+
 					<tr>
 						<td class="left">
 							2.2 <bean:message key="table.rowname.inquiries.course.form.class.coordination" bundle="INQUIRIES_RESOURCES"/>
@@ -477,6 +510,7 @@
 						<tr>
 							<td class="left">
 								3.3 <bean:message key="table.rowname.inquiries.teacher.form.student.assiduity" bundle="INQUIRIES_RESOURCES"/>
+								<br/><bean:message key="table.rowname.inquiries.teacher.form.student.assiduity.less.50.message" bundle="INQUIRIES_RESOURCES"/>
 							</td>
 							<td class="right">
 								<table class="radio2">

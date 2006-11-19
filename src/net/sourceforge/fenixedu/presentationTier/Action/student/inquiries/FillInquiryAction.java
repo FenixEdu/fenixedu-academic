@@ -1204,7 +1204,7 @@ public class FillInquiryAction extends FenixDispatchAction {
     }
 
     private boolean validateCourseForm(DynaActionForm inquiryForm) {
-
+	Double executionCourseQuestion21 = (Double) inquiryForm.get("executionCourseQuestion21");
 	Double executionCourseQuestion22 = (Double) inquiryForm.get("executionCourseQuestion22");
 	Double executionCourseQuestion23 = (Double) inquiryForm.get("executionCourseQuestion23");
 	Double executionCourseQuestion24 = (Double) inquiryForm.get("executionCourseQuestion24");
@@ -1213,9 +1213,10 @@ public class FillInquiryAction extends FenixDispatchAction {
 	Integer executionCourseQuestion27 = (Integer) inquiryForm.get("executionCourseQuestion27");
 	Double executionCourseQuestion28 = (Double) inquiryForm.get("executionCourseQuestion28");
 
-	return ((executionCourseQuestion22 != null) || (executionCourseQuestion23 != null)
-		|| (executionCourseQuestion24 != null) || (executionCourseQuestion25 != null)
-		|| (executionCourseQuestion26 != null) || (executionCourseQuestion27 != null) || (executionCourseQuestion28 != null));
+	return (executionCourseQuestion21 != null || executionCourseQuestion22 != null
+		|| executionCourseQuestion23 != null || executionCourseQuestion24 != null
+		|| executionCourseQuestion25 != null || executionCourseQuestion26 != null
+		|| executionCourseQuestion27 != null || executionCourseQuestion28 != null);
     }
 
     private boolean validateCurrentTeacherForm(DynaActionForm inquiryForm) {
@@ -1482,6 +1483,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	Integer attendingCourseExecutionDegreeId = (Integer) inquiryForm
 		.get("attendingCourseExecutionDegreeId");
 
+	Double executionCourseQuestion21 = (Double) inquiryForm.get("executionCourseQuestion21");
 	Double executionCourseQuestion22 = (Double) inquiryForm.get("executionCourseQuestion22");
 	Double executionCourseQuestion23 = (Double) inquiryForm.get("executionCourseQuestion23");
 	Double executionCourseQuestion24 = (Double) inquiryForm.get("executionCourseQuestion24");
@@ -1496,6 +1498,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	infoInquiriesCourse.setStudentFirstEnrollment(firstEnrollment ? 1 : 0);
 	infoInquiriesCourse.setExecutionDegreeCourse((InfoExecutionDegree) CollectionUtils
 		.getByInternalId(attendingCourseExecutionDegrees, attendingCourseExecutionDegreeId));
+	infoInquiriesCourse.setQuestion21(executionCourseQuestion21);
 	infoInquiriesCourse.setClassCoordination(executionCourseQuestion22);
 	infoInquiriesCourse.setStudyElementsContribution(executionCourseQuestion23);
 	infoInquiriesCourse.setPreviousKnowledgeArticulation(executionCourseQuestion24);

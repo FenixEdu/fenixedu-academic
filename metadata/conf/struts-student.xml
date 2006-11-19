@@ -176,6 +176,7 @@
 			<form-property type="java.lang.Boolean" name="firstEnrollment" />
         	<form-property type="java.lang.Integer" name="attendingCourseSchoolClassId" />
 			
+			<form-property type="java.lang.Double" name="executionCourseQuestion21" />
 			<form-property type="java.lang.Double" name="executionCourseQuestion22" />
 			<form-property type="java.lang.Double" name="executionCourseQuestion23" />
 			<form-property type="java.lang.Double" name="executionCourseQuestion24" />

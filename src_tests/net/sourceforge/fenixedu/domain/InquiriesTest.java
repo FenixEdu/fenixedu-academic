@@ -47,7 +47,7 @@ public class InquiriesTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		executionCourse = new ExecutionCourse();
+		executionCourse = new ExecutionCourse(null, null, null);
 //		executionDegreeStudent = new ExecutionDegree();
 //		executionDegreeCourse = new ExecutionDegree();
 //		executionPeriod = new ExecutionPeriod();
@@ -161,8 +161,10 @@ public class InquiriesTest extends DomainTestBase {
 		assertTrue("Failed to reference executionPeriod!", newInquiriesCourse.hasExecutionPeriod());
 		assertTrue("Failed to reference schoolClass!", newInquiriesCourse.hasStudentSchoolClass());
 		
+		assertEquals("Unexpected value for question21!",
+				infoInquiriesCourse.getQuestion21(), newInquiriesCourse.getQuestion21());
 		assertEquals("Unexpected value for classCoordination!",
-				infoInquiriesCourse.getClassCoordination(), newInquiriesCourse.getClassCoordination());
+			infoInquiriesCourse.getClassCoordination(), newInquiriesCourse.getClassCoordination());
 		assertEquals("Unexpected value for contributionForGraduation!",
 				infoInquiriesCourse.getContributionForGraduation(), newInquiriesCourse.getContributionForGraduation());
 		assertEquals("Unexpected value for evaluationMethodAdequation!",

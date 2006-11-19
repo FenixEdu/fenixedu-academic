@@ -202,7 +202,7 @@
 					</logic:present>
 					<tr>
 						<td class="left">
-							2.1 <bean:message key="table.rowname.inquiries.course.form.course" bundle="INQUIRIES_RESOURCES"/>
+							2.0 <bean:message key="table.rowname.inquiries.course.form.course" bundle="INQUIRIES_RESOURCES"/>
 						</td>
 						<td class="right">
 							<bean:write name='<%= InquiriesUtil.ATTENDING_EXECUTION_COURSE %>' property="nome" />
@@ -228,6 +228,33 @@
 							<bean:message key="message.inquiries.how.evaluate" bundle="INQUIRIES_RESOURCES"/>
 						</td>
 					</tr>				
+
+					<tr>
+						<td class="left">
+							2.1 <bean:message key="table.rowname.inquiries.course.form.question21" bundle="INQUIRIES_RESOURCES"/>
+						</td>
+						<td class="right">
+							<table class="radio">
+								<tr>
+									<c:forTokens items="1, ,2, ,3, ,4, ,5" delims="," var="int">
+										<td>
+											<c:out value="${int}"/>
+										</td>
+									</c:forTokens>
+								</tr>
+								<tr>
+									<c:forTokens items="1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0" delims="," var="int">
+											<bean:define id="i">
+												<c:out value="${int}"/>
+											</bean:define>
+										<td>
+											<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseQuestion21" property="executionCourseQuestion21" value='<%= i %>'/>
+										</td>
+									</c:forTokens>
+								</tr>
+							</table>
+						</td>
+					</tr>
 
 					<tr>
 						<td class="left">
@@ -868,6 +895,7 @@
 							<tr>
 								<td class="left">
 									3.3 <bean:message key="table.rowname.inquiries.teacher.form.student.assiduity" bundle="INQUIRIES_RESOURCES"/>
+									<br/><bean:message key="table.rowname.inquiries.teacher.form.student.assiduity.less.50.message" bundle="INQUIRIES_RESOURCES"/>
 								</td>
 								<td class="right">
 									<table class="radio2">
