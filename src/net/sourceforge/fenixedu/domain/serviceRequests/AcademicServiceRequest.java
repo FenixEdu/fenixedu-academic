@@ -213,56 +213,41 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 
 	final List<AcademicServiceRequestSituationType> acceptedTypes = getAcceptAcademicServiceRequestSituationTypeFor(getAcademicServiceRequestSituationType());
 
-	if (getActiveSituation() != null) {
-	    if (!acceptedTypes.contains(academicServiceRequestSituationType)) {
-		final LabelFormatter sourceLabelFormatter = new LabelFormatter()
-			.appendLabel(getActiveSituation().getAcademicServiceRequestSituationType()
-				.getQualifiedName(), "enum");
-		final LabelFormatter targetLabelFormatter = new LabelFormatter().appendLabel(
-			academicServiceRequestSituationType.getQualifiedName(), "enum");
+	if (!acceptedTypes.contains(academicServiceRequestSituationType)) {
+	    final LabelFormatter sourceLabelFormatter = new LabelFormatter().appendLabel(
+		    getActiveSituation().getAcademicServiceRequestSituationType().getQualifiedName(),
+		    "enum");
+	    final LabelFormatter targetLabelFormatter = new LabelFormatter().appendLabel(
+		    academicServiceRequestSituationType.getQualifiedName(), "enum");
 
-		throw new DomainExceptionWithLabelFormatter(
-			"error.serviceRequests.AcademicServiceRequest.cannot.change.from.source.state.to.target.state",
-			sourceLabelFormatter, targetLabelFormatter);
-	    }
-	} else {
-	    if (!acceptedTypes.contains(academicServiceRequestSituationType)) {
-		final LabelFormatter labelFormatter = new LabelFormatter().appendLabel(
-			academicServiceRequestSituationType.name(), "enum");
-
-		throw new DomainExceptionWithLabelFormatter(
-			"error.serviceRequests.AcademicServiceRequest.cannot.change.state.",
-			labelFormatter);
-
-	    }
+	    throw new DomainExceptionWithLabelFormatter(
+		    "error.serviceRequests.AcademicServiceRequest.cannot.change.from.source.state.to.target.state",
+		    sourceLabelFormatter, targetLabelFormatter);
 	}
     }
 
     private List<AcademicServiceRequestSituationType> getAcceptAcademicServiceRequestSituationTypeFor(
 	    AcademicServiceRequestSituationType situationType) {
 
-	if (situationType == null) {
+	switch (situationType) {
+
+	case NEW:
 	    return Collections.unmodifiableList(Arrays.asList(new AcademicServiceRequestSituationType[] {
 		    AcademicServiceRequestSituationType.CANCELLED,
 		    AcademicServiceRequestSituationType.REJECTED,
 		    AcademicServiceRequestSituationType.PROCESSING }));
-	} else {
-	    switch (situationType) {
 
-	    case PROCESSING:
-		return Collections.unmodifiableList(Arrays
-			.asList(new AcademicServiceRequestSituationType[] {
-				AcademicServiceRequestSituationType.CANCELLED,
-				AcademicServiceRequestSituationType.REJECTED,
-				AcademicServiceRequestSituationType.CONCLUDED }));
+	case PROCESSING:
+	    return Collections.unmodifiableList(Arrays.asList(new AcademicServiceRequestSituationType[] {
+		    AcademicServiceRequestSituationType.CANCELLED,
+		    AcademicServiceRequestSituationType.REJECTED,
+		    AcademicServiceRequestSituationType.CONCLUDED }));
 
-	    case CONCLUDED:
-		return Collections.singletonList(AcademicServiceRequestSituationType.DELIVERED);
+	case CONCLUDED:
+	    return Collections.singletonList(AcademicServiceRequestSituationType.DELIVERED);
 
-	    default:
-		return Collections.EMPTY_LIST;
-	    }
-
+	default:
+	    return Collections.EMPTY_LIST;
 	}
     }
 
