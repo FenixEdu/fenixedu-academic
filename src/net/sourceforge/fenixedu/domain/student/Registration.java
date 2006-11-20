@@ -8,10 +8,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Attends;
@@ -1433,14 +1435,13 @@ public class Registration extends Registration_Base {
 
     public StudentCurricularPlan getStudentCurricularPlan(YearMonthDay date) {
 
-	List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>(
-		getStudentCurricularPlans());
-	Collections.sort(studentCurricularPlans,
+	SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
+	studentCurricularPlans.addAll(getStudentCurricularPlans());
 
-	ListIterator<StudentCurricularPlan> iterator = studentCurricularPlans.listIterator();
-	while (iterator.hasPrevious()) {
-	    StudentCurricularPlan studentCurricularPlan = iterator.previous();
+	Iterator<StudentCurricularPlan> iterator = studentCurricularPlans.tailSet(studentCurricularPlans.last()).iterator();
+	while (iterator.hasNext()) {
+	    StudentCurricularPlan studentCurricularPlan = iterator.next();
 	    if (studentCurricularPlan.getStartDateYearMonthDay().isBefore(date)) {
 		return studentCurricularPlan;
 	    }
