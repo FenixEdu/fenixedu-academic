@@ -9,9 +9,19 @@
 
 <hr style="margin-bottom: 2em;"/>
 
-<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="request.information"/></strong>
+
+<strong><bean:message key="label.studentDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong>
 <bean:define id="academicServiceRequest" name="academicServiceRequest" scope="request" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest"/>
+<fr:view name="academicServiceRequest" property="registration" schema="AcademicServiceRequest.registration">
+<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4" />
+		<fr:property name="columnClasses" value="listClasses,," />
+	</fr:layout>
+</fr:view>
+<br/>
+<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="request.information"/></strong>
 <bean:define id="simpleClassName" name="academicServiceRequest" property="class.simpleName" />
+
 <fr:view name="academicServiceRequest" schema="<%= simpleClassName  + ".view"%>">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4" />
