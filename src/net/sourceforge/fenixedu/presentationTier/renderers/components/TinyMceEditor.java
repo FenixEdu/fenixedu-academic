@@ -105,6 +105,7 @@ public class TinyMceEditor extends HtmlTextArea {
         properties.setProperty("relative_urls", "false");
         properties.setProperty("remove_script_host", "false");
         properties.setProperty("convert_fonts_to_spans", "true");
+        properties.setProperty("fix_list_elements", "true");
         
         Language language = LanguageUtils.getLanguage();
         properties.setProperty("language", language.toString());
