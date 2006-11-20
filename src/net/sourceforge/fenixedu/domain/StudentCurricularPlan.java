@@ -16,6 +16,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -1223,6 +1224,50 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    return gratuitySituation;
 	}
 	return null;
+    }
+
+    public Set<GratuityEvent> getGratuityEvents(final ExecutionYear executionYear) {
+	final Set<GratuityEvent> result = new HashSet<GratuityEvent>();
+	
+	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+	    if (gratuityEvent.getExecutionYear() == executionYear) {
+		result.add(gratuityEvent);
+	    }
+	}
+
+	return result;
+    }
+
+    public boolean hasAnyGratuityEvents(final ExecutionYear executionYear) {
+	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+	    if (gratuityEvent.getExecutionYear() == executionYear) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public Set<GratuityEvent> getNotPayedGratuityEvents() {
+	final Set<GratuityEvent> result = new HashSet<GratuityEvent>();
+	
+	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+	    if (gratuityEvent.isOpen()) {
+		result.add(gratuityEvent);
+	    }
+	}
+
+	return result;
+    }
+
+    public boolean hasAnyNotPayedGratuityEvents() {
+	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+	    if (gratuityEvent.isOpen()) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
     public boolean isEnroledInSpecialSeason(ExecutionPeriod executionPeriod) {

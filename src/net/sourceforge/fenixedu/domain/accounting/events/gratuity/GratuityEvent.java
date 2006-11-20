@@ -32,8 +32,7 @@ public class GratuityEvent extends GratuityEvent_Base {
 	    public void beforeAdd(Event event, Person person) {
 		if (event instanceof GratuityEvent) {
 		    final GratuityEvent gratuityEvent = (GratuityEvent) event;
-		    if (person.hasGratuityEventFor(gratuityEvent.getStudentCurricularPlan(),
-			    gratuityEvent.getExecutionYear())) {
+		    if (gratuityEvent.getStudentCurricularPlan().hasAnyGratuityEvents(gratuityEvent.getExecutionYear())) {
 			throw new DomainException(
 				"error.accounting.events.gratuity..GratuityEvent.person.already.has.gratuity.event.for.student.curricular.plan.and.year");
 		    }

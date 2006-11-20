@@ -2206,25 +2206,6 @@ public class Person extends Person_Base {
 	return getServiceAgreementFor(serviceAgreementTemplate) != null;
     }
 
-    public GratuityEvent getGratuityEventFor(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionYear executionYear) {
-	for (final Event event : getEventsByEventType(EventType.GRATUITY)) {
-	    final GratuityEvent gratuityEvent = (GratuityEvent) event;
-
-	    if (gratuityEvent.getStudentCurricularPlan() == studentCurricularPlan
-		    && gratuityEvent.getExecutionYear() == executionYear) {
-		return gratuityEvent;
-	    }
-	}
-
-	return null;
-    }
-
-    public boolean hasGratuityEventFor(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionYear executionYear) {
-	return getGratuityEventFor(studentCurricularPlan, executionYear) != null;
-    }
-
     public boolean hasAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
 	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE)) {
 	    if (((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() == executionYear) {
