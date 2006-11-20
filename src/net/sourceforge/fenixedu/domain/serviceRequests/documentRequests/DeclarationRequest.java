@@ -24,7 +24,6 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 
 	super.setDocumentPurposeType(documentPurposeType);
 	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
-	super.process();
 
     }
 
