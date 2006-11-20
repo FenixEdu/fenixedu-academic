@@ -68,8 +68,9 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 
     @Override
     protected void assertProcessingStatePreConditions() throws DomainException {
-	// TODO Auto-generated method stub
-
+	if (getRegistration().getLastStudentCurricularPlan().hasAnyNotPayedGratuityEvents()) {
+	    throw new DomainException("CertificateRequest.registration.has.not.payed.gratuities.for.last.student.curricular.plan");
+	}
     }
 
     @Override

@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -62,8 +61,9 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 
     @Override
     protected void assertProcessingStatePreConditions() throws DomainException {
-	// TODO Auto-generated method stub
-
+	if (getRegistration().getLastStudentCurricularPlan().hasAnyNotPayedGratuityEvents()) {
+	    throw new DomainException("SchoolRegistrationCertificate.registration.has.not.payed.gratuities.for.last.student.curricular.plan");
+	}
     }
 
     @Override
