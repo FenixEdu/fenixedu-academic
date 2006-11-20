@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.renderers;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButton;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButtonList;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
@@ -48,8 +49,11 @@ public class EnumRadioInputRenderer extends EnumInputRenderer {
                     newContext.setRenderMode(RenderMode.getMode("output"));
                     
                     HtmlComponent component = RenderKit.getInstance().render(newContext, oneEnum);
-                    HtmlRadioButton radioButton = radioList.addOption(component, oneEnum.toString());
-                                       
+                    HtmlLabel label = new HtmlLabel();
+                    label.setBody(component);
+                    HtmlRadioButton radioButton = radioList.addOption(label, oneEnum.toString());
+                    label.setFor(radioButton);
+                    
                     if (oneEnum.equals(enumerate)) {
                         radioButton.setChecked(true);
                     }

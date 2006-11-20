@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.renderers;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
@@ -145,6 +146,15 @@ public class StandardObjectRenderer extends OutputRenderer {
             }
             else {
                 return renderSlot(this.object.getSlots().get(rowIndex));
+            }
+        }
+
+        @Override
+        protected void costumizeCell(HtmlTableCell cell, int rowIndex, int columnIndex) {
+            super.costumizeCell(cell, rowIndex, columnIndex);
+            
+            if (columnIndex == 0) {
+                cell.setScope("row");
             }
         }
 

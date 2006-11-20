@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.renderers;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
 import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButton;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButtonList;
@@ -76,16 +77,24 @@ public class BooleanRadioInputRenderer extends InputRenderer {
                 MetaObject booleanMetaObject = MetaObjectFactory.createObject(booleanTrue, null);
                 PresentationContext newContext = getContext().createSubContext(booleanMetaObject);
                 newContext.setRenderMode(RenderMode.getMode("output"));
-                HtmlComponent component = RenderKit.getInstance().render(newContext, booleanTrue);                
-                HtmlRadioButton buttonTrue = radioList.addOption(component, booleanTrue.toString());
-                                            
+                HtmlComponent component = RenderKit.getInstance().render(newContext, booleanTrue);
+                
+                HtmlLabel trueLabel = new HtmlLabel();
+                trueLabel.setBody(component);
+                HtmlRadioButton buttonTrue = radioList.addOption(trueLabel, booleanTrue.toString());
+                trueLabel.setFor(buttonTrue);
+                
                 Boolean booleanFalse = Boolean.FALSE;                                                            
                 booleanMetaObject = MetaObjectFactory.createObject(booleanFalse, null);
                 newContext = getContext().createSubContext(booleanMetaObject);
                 newContext.setRenderMode(RenderMode.getMode("output"));
-                component = RenderKit.getInstance().render(newContext, booleanFalse);                                                   
-                HtmlRadioButton buttonFalse = radioList.addOption(component, booleanFalse.toString());
-
+                component = RenderKit.getInstance().render(newContext, booleanFalse);
+                
+                HtmlLabel falseLabel = new HtmlLabel();
+                falseLabel.setBody(component);
+                HtmlRadioButton buttonFalse = radioList.addOption(falseLabel, booleanFalse.toString());
+                falseLabel.setFor(buttonFalse);
+                
                 buttonTrue.setChecked(booleanObject == null ? false : booleanObject);                
                 buttonFalse.setChecked(booleanObject == null ? false : !booleanObject);
                 

@@ -6,6 +6,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
+import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
@@ -261,6 +262,15 @@ public class StandardInputRenderer extends InputRenderer {
             return component;
         }
         
+        @Override
+        protected void costumizeCell(HtmlTableCell cell, int rowIndex, int columnIndex) {
+            super.costumizeCell(cell, rowIndex, columnIndex);
+            
+            if (columnIndex == 0) {
+                cell.setScope("row");
+            }
+        }
+
         // duplicated code id=standard-renderer.label.addTerminator
         protected String addLabelTerminator(String label) {
             if (getLabelTerminator() == null) {
