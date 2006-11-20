@@ -27,9 +27,6 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
 		detailed, executionYear);
 
-	new CertificateRequestEvent(getAdministrativeOffice(), EventType.ENROLMENT_CERTIFICATE_REQUEST,
-		registration.getPerson(), this);
-
     }
 
     protected void init(Registration registration, DocumentPurposeType documentPurposeType,
