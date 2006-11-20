@@ -9,10 +9,11 @@ import net.sourceforge.fenixedu.renderers.model.MetaObjectCollection;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 
 /**
- * {@inheritDoc}
- * 
- * This renderer can be used to edit a single object using the same layout. The
- * object is wrapped in a list and then is edited as described above.
+ * This renderer can be used to edit a single object in a tabular view as if
+ * you were editing a collection with only the given object.
+ * <p>
+ * If you edit a collection with this renderer then it will behave exactly 
+ * as the {@link net.sourceforge.fenixedu.renderers.TabularInputRenderer}.
  * 
  * @author cfgi
  */
