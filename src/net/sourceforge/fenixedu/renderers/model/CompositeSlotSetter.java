@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.renderers.model;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,19 @@ public class CompositeSlotSetter implements Serializable {
             Object[] values = getArgumentValues();
             
             method.invoke(object, values);
-        } catch (Exception e) {
+        } 
+        catch (RuntimeException e) {
+            throw e;
+        }
+        catch (InvocationTargetException e) {
+            if (e.getCause() instanceof RuntimeException) {
+                throw (RuntimeException) e.getCause();
+            }
+            else {
+                throw new RuntimeException(e);
+            }
+        }
+        catch (Exception e) {
             throw new RuntimeException(e);
         } 
     }
