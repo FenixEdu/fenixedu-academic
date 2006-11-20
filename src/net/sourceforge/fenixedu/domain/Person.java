@@ -1008,12 +1008,7 @@ public class Person extends Person_Base {
 
 	@Override
 	public void afterAdd(Role role, Person person) {
-	    if (role.getRoleType().equals(RoleType.PERSON) && !person.hasRole(RoleType.MESSAGING)) {
-		person.addPersonRoleByRoleType(RoleType.MESSAGING);
-	    }
-	    if (role.getRoleType().equals(RoleType.TEACHER) && !person.hasRole(RoleType.RESEARCHER)) {
-		person.addPersonRoleByRoleType(RoleType.RESEARCHER);
-	    }
+	    addDependencies(role, person);
 	    person.addAlias(role);
 	    person.updateIstUsername();
 	}
@@ -1033,10 +1028,25 @@ public class Person extends Person_Base {
 	    person.updateIstUsername();
 	}
 
+	private void addDependencies(Role role, Person person) {
+	    if (role.getRoleType().equals(RoleType.PERSON) && !person.hasRole(RoleType.MESSAGING)) {
+		person.addPersonRoleByRoleType(RoleType.MESSAGING);
+	    }
+	    if (role.getRoleType().equals(RoleType.TEACHER) && !person.hasRole(RoleType.RESEARCHER)) {
+		person.addPersonRoleByRoleType(RoleType.RESEARCHER);
+	    }
+	    if (role.getRoleType().equals(RoleType.TEACHER)
+		    && !person.hasRole(RoleType.DEPARTMENT_MEMBER)) {
+		person.addPersonRoleByRoleType(RoleType.DEPARTMENT_MEMBER);
+	    }
+	}
+
 	private static Boolean verifiesDependencies(Person person, Role role) {
 	    switch (role.getRoleType()) {
 	    case DIRECTIVE_COUNCIL:
 	    case SEMINARIES_COORDINATOR:
+	    case DEPARTMENT_MEMBER:
+		return person.hasRole(RoleType.TEACHER);
 	    case RESEARCHER:
 		return person.hasRole(RoleType.TEACHER);
 	    case COORDINATOR:
@@ -1052,6 +1062,8 @@ public class Person extends Person_Base {
 	    case DELEGATE:
 		return person.hasRole(RoleType.STUDENT);
 	    case GRANT_OWNER:
+		return person.hasRole(RoleType.PERSON);
+	    case MESSAGING:
 		return person.hasRole(RoleType.PERSON);
 	    case MASTER_DEGREE_CANDIDATE:
 	    case CANDIDATE:
@@ -1082,6 +1094,7 @@ public class Person extends Person_Base {
 		removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
 		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
 		removeRoleIfPresent(person, RoleType.RESEARCHER);
+		removeRoleIfPresent(person, RoleType.DEPARTMENT_MEMBER);
 		break;
 
 	    case EMPLOYEE:
@@ -1092,7 +1105,6 @@ public class Person extends Person_Base {
 		removeRoleIfPresent(person, RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
 		removeRoleIfPresent(person, RoleType.TREASURY);
 		removeRoleIfPresent(person, RoleType.CREDITS_MANAGER);
-		removeRoleIfPresent(person, RoleType.DEPARTMENT_MEMBER);
 		break;
 
 	    case STUDENT:

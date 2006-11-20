@@ -125,30 +125,30 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
 	}
     }
 
-    public static class BlueprintTextRectangles extends HashMap<Space, BlueprintTextRectangle> {}    
+    public static class BlueprintTextRectangles extends HashMap<Space, BlueprintTextRectangle> {
+    }
 
     public static class BlueprintTextRectangle {
 
 	private BlueprintPoint p1;
-	
+
 	private BlueprintPoint p2;
-	
+
 	private BlueprintPoint p3;
-		
+
 	private BlueprintPoint p4;
-	
-		
-	public BlueprintTextRectangle(String text, double centerX, double centerY, int fontSize) {	    
-	    
-	    int characters = text.length();	    	   	   
-	    double x_offset = characters * fontSize;
-	    double y_offset = fontSize;
-	    	    	   
-	    p1 = new BlueprintPoint((int)Math.round(centerX), (int)Math.round(centerY - y_offset)); 
-	    p2 = new BlueprintPoint((int)Math.round(centerX), (int)Math.round(centerY));
-	    p3 = new BlueprintPoint((int)Math.round(centerX + x_offset), (int)Math.round(centerY));
-	    p4 = new BlueprintPoint((int)Math.round(centerX + x_offset), (int)Math.round(centerY - y_offset));
-	    
+
+	public BlueprintTextRectangle(String text, double x, double y, int fontSize) {
+
+	    double numberOfCharacters = text.length();
+	    double characterWidth = (fontSize / 1.6);
+	    double textSize = numberOfCharacters * characterWidth;
+
+	    p1 = new BlueprintPoint((int) x, (int) Math.round(y - fontSize));
+	    p2 = new BlueprintPoint((int) x, (int) y);
+	    p3 = new BlueprintPoint((int) Math.round(x + textSize), (int) y);
+	    p4 = new BlueprintPoint((int) Math.round(x + textSize), (int) Math.round(y - fontSize));
+
 	}
 
 	public BlueprintPoint getP1() {
@@ -165,9 +165,9 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
 
 	public BlueprintPoint getP4() {
 	    return p4;
-	}	
+	}
     }
-    
+
     public static class BlueprintPoint {
 
 	private int x;
