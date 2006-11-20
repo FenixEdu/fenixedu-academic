@@ -1226,19 +1226,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return null;
     }
 
-    public Set<GratuityEvent> getGratuityEvents(final ExecutionYear executionYear) {
-	final Set<GratuityEvent> result = new HashSet<GratuityEvent>();
-	
+    public GratuityEvent getGratuityEvent(final ExecutionYear executionYear) {
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
 	    if (gratuityEvent.getExecutionYear() == executionYear) {
-		result.add(gratuityEvent);
+		return gratuityEvent;
 	    }
 	}
-
-	return result;
+	
+	return null;
     }
 
-    public boolean hasAnyGratuityEvents(final ExecutionYear executionYear) {
+    public boolean hasGratuityEvent(final ExecutionYear executionYear) {
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
 	    if (gratuityEvent.getExecutionYear() == executionYear) {
 		return true;
