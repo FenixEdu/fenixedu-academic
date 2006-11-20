@@ -29,6 +29,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setOjbConcreteClass(this.getClass().getName());
 	super.setServiceRequestNumber(RootDomainObject.getInstance().getAcademicServiceRequestsCount());
+    super.setUrgentRequest(false);
     }
 
     protected void init(Registration registration) {
@@ -232,7 +233,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	switch (situationType) {
 
 	case NEW:
-	    return Collections.unmodifiableList(Arrays.asList(new AcademicServiceRequestSituationType[] {
+ 		return Collections.unmodifiableList(Arrays.asList(new AcademicServiceRequestSituationType[] {
 		    AcademicServiceRequestSituationType.CANCELLED,
 		    AcademicServiceRequestSituationType.REJECTED,
 		    AcademicServiceRequestSituationType.PROCESSING }));
