@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -12,7 +13,6 @@ import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -89,18 +89,19 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 
     @Override
     protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
-	    PaymentMode paymentMode, DateTime whenRegistered, Event event, Account fromAccount,
-	    Account toAccount) {
+	    Event event, Account fromAccount, Account toAccount,
+	    AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException(
 		    "error.accounting.postingRules.gratuity.DFAGratuityPR.invalid.number.of.entryDTOs");
 	}
 
-	checkIfCanAddAmount(entryDTOs.get(0).getAmountToPay(), event, whenRegistered);
+	checkIfCanAddAmount(entryDTOs.get(0).getAmountToPay(), event, transactionDetail
+		.getWhenRegistered());
 
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
-		getEntryType(), entryDTOs.get(0).getAmountToPay(), paymentMode, whenRegistered));
+		getEntryType(), entryDTOs.get(0).getAmountToPay(), transactionDetail));
     }
 
     private void checkIfCanAddAmount(Money amountToAdd, Event event, DateTime when) {

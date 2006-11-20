@@ -7,13 +7,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -66,28 +69,61 @@ public abstract class Event extends Event_Base {
 	return (getEventState() == EventState.CANCELLED);
     }
 
-    public final Set<Entry> process(User responsibleUser, List<EntryDTO> entryDTOs,
-	    PaymentMode paymentMode) {
-	return process(responsibleUser, entryDTOs, paymentMode, new DateTime());
-    }
-
-    public final Set<Entry> process(User responsibleUser, List<EntryDTO> entryDTOs,
-	    PaymentMode paymentMode, DateTime whenRegistered) {
+    public final Set<Entry> process(final User responsibleUser, final List<EntryDTO> entryDTOs,
+	    final AccountingTransactionDetailDTO transactionDetail) {
 	if (entryDTOs.isEmpty()) {
 	    throw new DomainException("error.accounting.Event.process.requires.entries.to.be.processed");
 	}
-	if (!isClosed()) {
-	    final Set<Entry> result = internalProcess(responsibleUser, entryDTOs, paymentMode,
-		    whenRegistered);
 
-	    if (canCloseEvent(whenRegistered)) {
-		closeEvent();
-	    }
+	checkConditionsToProcessEvent();
 
-	    return result;
-	} else {
+	final Set<Entry> result = internalProcess(responsibleUser, entryDTOs, transactionDetail);
+
+	recalculateState(transactionDetail.getWhenRegistered(), transactionDetail.getPaymentMode());
+
+	return result;
+
+    }
+
+    public final Set<Entry> process(final User responsibleUser,
+	    final AccountingEventPaymentCode paymentCode, final Money amountToPay,
+	    final SibsTransactionDetailDTO transactionDetailDTO) {
+
+	if (!canProcessPaymentCode(paymentCode)) {
+	    return Collections.EMPTY_SET;
+	}
+
+	checkConditionsToProcessEvent();
+
+	final Set<Entry> result = internalProcess(responsibleUser, paymentCode, amountToPay,
+		transactionDetailDTO);
+
+	recalculateState(transactionDetailDTO.getWhenRegistered(), transactionDetailDTO.getPaymentMode());
+
+	return result;
+
+    }
+
+    private boolean canProcessPaymentCode(AccountingEventPaymentCode paymentCode) {
+	if (paymentCode.isCancelled()) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.Event.paymentCode.is.cancelled");
+	}
+
+	return paymentCode.isNew();
+    }
+
+    private void checkConditionsToProcessEvent() {
+	if (isClosed()) {
 	    throw new DomainException("error.accounting.Event.is.already.closed");
 	}
+    }
+
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
+	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
+
+	throw new UnsupportedOperationException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Event.operation.not.supported");
     }
 
     protected void closeEvent() {
@@ -193,15 +229,17 @@ public abstract class Event extends Event_Base {
 	return payedAmount;
     }
 
-    void recalculateState(DateTime whenRegistered) {
+    void recalculateState(final DateTime whenRegistered, final PaymentMode paymentMode) {
 	if (canCloseEvent(whenRegistered)) {
-	    beforeCloseEvent();
+	    beforeCloseEvent(whenRegistered, paymentMode);
 	    super.setEventState(EventState.CLOSED);
 	}
     }
 
-    protected void beforeCloseEvent() {
-	// nothing to be done
+    protected void beforeCloseEvent(DateTime whenRegistered, PaymentMode paymentMode) {
+	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
+	    paymentCode.setState(PaymentCodeState.CANCELLED);
+	}
     }
 
     public Money calculateAmountToPay(DateTime whenRegistered) {
@@ -244,9 +282,9 @@ public abstract class Event extends Event_Base {
     }
 
     protected Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
-	    PaymentMode paymentMode, DateTime whenRegistered) {
-	return getPostingRule(whenRegistered).process(responsibleUser, entryDTOs, paymentMode,
-		whenRegistered, this, getFromAccount(), getToAccount());
+	    AccountingTransactionDetailDTO transactionDetail) {
+	return getPostingRule(transactionDetail.getWhenRegistered()).process(responsibleUser, entryDTOs,
+		this, getFromAccount(), getToAccount(), transactionDetail);
     }
 
     public boolean hasAccountingTransactionFor(final Installment installment) {
@@ -333,6 +371,11 @@ public abstract class Event extends Event_Base {
 
     public static List<Event> readNotPayedBy(final ExecutionYear executionYear) {
 	return readBy(executionYear, EventState.OPEN);
+    }
+
+    public PaymentCodeState getPaymentCodeStateFor(final PaymentMode paymentMode) {
+	return (paymentMode == PaymentMode.ATM) ? PaymentCodeState.PROCESSED
+		: PaymentCodeState.CANCELLED;
     }
 
     protected abstract Account getFromAccount();

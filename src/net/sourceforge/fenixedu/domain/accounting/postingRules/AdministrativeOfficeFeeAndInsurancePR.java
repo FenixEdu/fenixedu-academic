@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
@@ -15,7 +16,6 @@ import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
@@ -50,10 +50,10 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 	final List<EntryDTO> result = new ArrayList<EntryDTO>();
 	final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
 
-	if (!administrativeOfficeFeeAndInsuranceEvent.hasPayedAdministrativeOfficeFee()) {
+	if (administrativeOfficeFeeAndInsuranceEvent.hasToPayAdministrativeOfficeFee()) {
 	    result.addAll(getPostingRuleForAdministrativeOfficeFee(when).calculateEntries(event, when));
 	}
-	if (administrativeOfficeFeeAndInsuranceEvent.needsToPayInsurance()) {
+	if (administrativeOfficeFeeAndInsuranceEvent.hasToPayInsurance()) {
 	    result.addAll(getPostingRuleForInsurance(when).calculateEntries(event, when));
 	}
 
@@ -62,20 +62,23 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 
     @Override
     protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
-	    PaymentMode paymentMode, DateTime whenRegistered, Event event, Account fromAccount,
-	    Account toAccount) {
+	    Event event, Account fromAccount, Account toAccount,
+	    AccountingTransactionDetailDTO transactionDetail) {
 
 	final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
 	final Set<Entry> createdEntries = new HashSet<Entry>();
 	for (final EntryDTO entryDTO : entryDTOs) {
+	    
 	    if (entryDTO.getEntryType() == EntryType.INSURANCE_FEE) {
-		createdEntries.addAll(getPostingRuleForInsurance(whenRegistered).process(user,
-			Collections.singletonList(entryDTO), paymentMode, whenRegistered, event,
-			fromAccount, toAccount));
+		createdEntries.addAll(getPostingRuleForInsurance(transactionDetail.getWhenRegistered())
+			.process(user, Collections.singletonList(entryDTO), event, fromAccount,
+				toAccount, transactionDetail));
+		
 	    } else if (entryDTO.getEntryType() == EntryType.ADMINISTRATIVE_OFFICE_FEE) {
-		createdEntries.addAll(getPostingRuleForAdministrativeOfficeFee(whenRegistered).process(
-			user, Collections.singletonList(entryDTO), paymentMode, whenRegistered, event,
-			fromAccount, toAccount));
+		createdEntries.addAll(getPostingRuleForAdministrativeOfficeFee(
+			transactionDetail.getWhenRegistered()).process(user,
+			Collections.singletonList(entryDTO), event, fromAccount, toAccount,
+			transactionDetail));
 	    } else {
 		throw new DomainException(
 			"error.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR.invalid.entry.type");

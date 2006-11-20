@@ -692,11 +692,21 @@
 	<definition name="manager.payments.prepareGenerateSibsOutgoingFile" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/payments/prepareGenerateSibsOutgoingFile.jsp" />
 	</definition>
-
+	
+	<definition name="manager.payments.prepareUploadSibsPaymentsFile" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/payments/prepareUploadSibsPaymentsFile.jsp" />
+	</definition>
+	
+	<definition name="manager.payments.uploadSibsPaymentsFileSuccess" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/payments/uploadSibsPaymentsFileSuccess.jsp" />
+	</definition>
+	
+	
+	
+	<!-- ##########################################-->
+	
 	<definition name="df.page.manage.edit.execution-period" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/editExecutionPeriod.jsp" />
 	</definition>	
 	
-	<!-- ##########################################-->
-
 </tiles-definitions>

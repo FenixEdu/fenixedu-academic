@@ -2159,6 +2159,8 @@
        		<forward name="preparePrintGratuityLetters" path="manager.payments.preparePrintDegreeGratuityLetters"/>
        		<forward name="printGratuityLetters"   path="manager.payments.printDegreeGratuityLetters"/>
        		<forward name="prepareGenerateSibsOutgoingFile"   path="manager.payments.prepareGenerateSibsOutgoingFile"/>
+       		<forward name="prepareUploadSibsPaymentsFile"   path="manager.payments.prepareUploadSibsPaymentsFile"/>
+       		<forward name="uploadSibsPaymentsFileSuccess"   path="manager.payments.uploadSibsPaymentsFileSuccess"/>
        	</action>
 
 	</action-mappings>

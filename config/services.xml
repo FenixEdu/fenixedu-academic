@@ -11025,5 +11025,14 @@
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
     </service>
+    <service>
+    	<name>UploadSibsPaymentsFile</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.UploadSibsPaymentsFile</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>    
     
 </serviceDefinitions>

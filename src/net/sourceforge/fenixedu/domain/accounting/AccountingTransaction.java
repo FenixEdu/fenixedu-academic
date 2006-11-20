@@ -28,38 +28,38 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     public AccountingTransaction(User responsibleUser, Event event, Entry debit, Entry credit,
-	    PaymentMode paymentMode, DateTime whenRegistered) {
+	    AccountingTransactionDetail transactionDetail) {
 	this();
-	init(responsibleUser, event, debit, credit, paymentMode, whenRegistered);
+	init(responsibleUser, event, debit, credit, transactionDetail);
     }
 
     private AccountingTransaction(User responsibleUser, Entry debit, Entry credit,
-	    PaymentMode paymentMode, DateTime whenRegistered, AccountingTransaction transactionToAdjust) {
+	    AccountingTransactionDetail transactionDetail, AccountingTransaction transactionToAdjust) {
 	this();
-	init(responsibleUser, transactionToAdjust.getEvent(), debit, credit, paymentMode,
-		whenRegistered, transactionToAdjust);
+	init(responsibleUser, transactionToAdjust.getEvent(), debit, credit, transactionDetail,
+		transactionToAdjust);
     }
 
     protected void init(User responsibleUser, Event event, Entry debit, Entry credit,
-	    PaymentMode paymentMode, DateTime whenRegistered) {
-	init(responsibleUser, event, debit, credit, paymentMode, whenRegistered, null);
+	    AccountingTransactionDetail transactionDetail) {
+	init(responsibleUser, event, debit, credit, transactionDetail, null);
     }
 
     protected void init(User responsibleUser, Event event, Entry debit, Entry credit,
-	    PaymentMode paymentMode, DateTime whenRegistered, AccountingTransaction transactionToAdjust) {
-	checkParameters(responsibleUser, event, debit, credit, paymentMode);
-	super.setWhenRegistered(whenRegistered);
-	super.setWhenProcessed(new DateTime());
+	    AccountingTransactionDetail transactionDetail, AccountingTransaction transactionToAdjust) {
+
+	checkParameters(responsibleUser, event, debit, credit);
+
 	super.setEvent(event);
 	super.setResponsibleUser(responsibleUser);
 	super.addEntries(debit);
 	super.addEntries(credit);
-	super.setPaymentMode(paymentMode);
 	super.setAdjustedTransaction(transactionToAdjust);
+
+	super.setTransactionDetail(transactionDetail);
     }
 
-    private void checkParameters(User responsibleUser, Event event, Entry debit, Entry credit,
-	    PaymentMode paymentMode) {
+    private void checkParameters(User responsibleUser, Event event, Entry debit, Entry credit) {
 	if (event == null) {
 	    throw new DomainException("error.accounting.accountingTransaction.event.cannot.be.null");
 	}
@@ -72,10 +72,6 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	}
 	if (credit == null) {
 	    throw new DomainException("error.accounting.accountingTransaction.credit.cannot.be.null");
-	}
-	if (paymentMode == null) {
-	    throw new DomainException(
-		    "error.accounting.accountingTransaction.paymentMode.cannot.be.null");
 	}
     }
 
@@ -105,16 +101,6 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     @Override
-    public void setWhenRegistered(DateTime whenRegistered) {
-	throw new DomainException("error.accounting.accountingTransaction.cannot.modify.whenRegistered");
-    }
-
-    @Override
-    public void setWhenProcessed(DateTime whenProcessed) {
-	throw new DomainException("error.accounting.accountingTransaction.cannot.modify.whenProcessed");
-    }
-
-    @Override
     public void setEvent(Event event) {
 	throw new DomainException("error.accounting.accountingTransaction.cannot.modify.event");
     }
@@ -134,6 +120,12 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public void setAdjustmentTransaction(AccountingTransaction adjustementTransaction) {
 	throw new DomainException(
 		"error.accounting.accountingTransaction.cannot.modify.adjustmentTransaction");
+    }
+
+    @Override
+    public void setTransactionDetail(AccountingTransactionDetail transactionDetail) {
+	throw new DomainException(
+		"error.accounting.AccountingTransaction.cannot.modify.transactionDetail");
     }
 
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
@@ -172,12 +164,21 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	    Money amountToReimburse) {
 	final AccountingTransaction transaction = new AccountingTransaction(responsibleUser, new Entry(
 		EntryType.ADJUSTMENT, amountToReimburse.negate(), getToAccount()), new Entry(
-		EntryType.ADJUSTMENT, amountToReimburse, getFromAccount()), paymentMode, new DateTime(),
-		this);
+		EntryType.ADJUSTMENT, amountToReimburse, getFromAccount()),
+		new AccountingTransactionDetail(new DateTime(), paymentMode), this);
 
-	getEvent().recalculateState(getWhenRegistered());
+	getEvent().recalculateState(getWhenRegistered(), paymentMode);
 
 	return transaction;
+    }
+
+    public DateTime getWhenRegistered() {
+	return getTransactionDetail().getWhenRegistered();
+
+    }
+
+    public DateTime getWhenProcessed() {
+	return getTransactionDetail().getWhenProcessed();
     }
 
 }

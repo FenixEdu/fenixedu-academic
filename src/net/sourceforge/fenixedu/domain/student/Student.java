@@ -295,4 +295,14 @@ public class Student extends Student_Base {
 
 	return null;
     }
+
+    public PaymentCode getPaymentCodeBy(final String code) {
+	for (final PaymentCode paymentCode : getPaymentCodesSet()) {
+	    if (paymentCode.getCode().equals(code)) {
+		return paymentCode;
+	    }
+	}
+
+	return null;
+    }
 }

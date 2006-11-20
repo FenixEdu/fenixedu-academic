@@ -72,5 +72,9 @@ public class PaymentCodeGenerator {
 	return StringUtils.leftPad(student.getNumber().toString(), STUDENT_NUMBER_LENGTH, CODE_FILLER)
 		+ paymentCodeType.getTypeDigit();
     }
+    
+    public static Integer getStudentNumberFrom(final String code) {
+	return Integer.valueOf(code.substring(0, STUDENT_NUMBER_LENGTH));
+    }
 
 }

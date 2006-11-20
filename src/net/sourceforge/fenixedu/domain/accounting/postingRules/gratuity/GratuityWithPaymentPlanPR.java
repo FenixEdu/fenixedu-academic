@@ -6,16 +6,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryWithInstallmentDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
-import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction;
@@ -92,8 +93,8 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 
     @Override
     protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
-	    PaymentMode paymentMode, DateTime whenRegistered, Event event, Account fromAccount,
-	    Account toAccount) {
+	    Event event, Account fromAccount, Account toAccount,
+	    AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
 	    throw new DomainExceptionWithLabelFormatter(
@@ -103,42 +104,46 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 
 	final EntryDTO entryDTO = entryDTOs.get(0);
 	final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan = (GratuityEventWithPaymentPlan) event;
+
 	final AccountingTransaction accountingTransaction;
 	if (entryDTO instanceof EntryWithInstallmentDTO) {
-	    accountingTransaction = internalProcessInstallment(user, paymentMode, whenRegistered,
-		    fromAccount, toAccount, entryDTO, gratuityEventWithPaymentPlan);
+	    accountingTransaction = internalProcessInstallment(user, fromAccount, toAccount, entryDTO,
+		    gratuityEventWithPaymentPlan, transactionDetail);
 	} else {
-	    accountingTransaction = internalProcessTotal(user, paymentMode, whenRegistered, fromAccount,
-		    toAccount, entryDTO, gratuityEventWithPaymentPlan);
+	    accountingTransaction = internalProcessTotal(user, fromAccount, toAccount, entryDTO,
+		    gratuityEventWithPaymentPlan, transactionDetail);
 	}
 
 	return Collections.singleton(accountingTransaction);
 
     }
 
-    private AccountingTransaction internalProcessTotal(User user, PaymentMode paymentMode,
-	    DateTime whenRegistered, Account fromAccount, Account toAccount, final EntryDTO entryDTO,
-	    final GratuityEventWithPaymentPlan event) {
+    private AccountingTransaction internalProcessTotal(User user, Account fromAccount,
+	    Account toAccount, EntryDTO entryDTO, GratuityEventWithPaymentPlan event,
+	    AccountingTransactionDetailDTO transactionDetail) {
 
-	event.cancelGratuityTotalPaymentCode();
-	checkIfCanAddAmount(entryDTO, whenRegistered, event);
+	event.changeGratuityTotalPaymentCodeState(event.getPaymentCodeStateFor(transactionDetail
+		.getPaymentMode()));
+	checkIfCanAddAmount(entryDTO, transactionDetail.getWhenRegistered(), event);
 
 	return super.makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(),
-		entryDTO.getAmountToPay(), paymentMode, whenRegistered);
+		entryDTO.getAmountToPay(), transactionDetail);
 
     }
 
-    private AccountingTransaction internalProcessInstallment(User user, PaymentMode paymentMode,
-	    DateTime whenRegistered, Account fromAccount, Account toAccount, final EntryDTO entryDTO,
-	    final GratuityEventWithPaymentPlan event) {
+    private AccountingTransaction internalProcessInstallment(User user, Account fromAccount,
+	    Account toAccount, EntryDTO entryDTO, GratuityEventWithPaymentPlan event,
+	    AccountingTransactionDetailDTO transactionDetail) {
 
 	final EntryWithInstallmentDTO entryWithInstallmentDTO = (EntryWithInstallmentDTO) entryDTO;
-	checkIfCanAddAmountForInstallment(entryWithInstallmentDTO, whenRegistered, event);
-	event.cancelInstallmentPaymentCode(entryWithInstallmentDTO.getInstallment());
+	checkIfCanAddAmountForInstallment(entryWithInstallmentDTO,
+		transactionDetail.getWhenRegistered(), event);
+	event.changeInstallmentPaymentCodeState(entryWithInstallmentDTO.getInstallment(), event
+		.getPaymentCodeStateFor(transactionDetail.getPaymentMode()));
 
 	return makeAccountingTransactionForInstallment(user, event, fromAccount, toAccount,
-		getEntryType(), entryDTO.getAmountToPay(), paymentMode, whenRegistered,
-		(entryWithInstallmentDTO).getInstallment());
+		getEntryType(), entryDTO.getAmountToPay(), (entryWithInstallmentDTO).getInstallment(),
+		transactionDetail);
 
     }
 
@@ -171,10 +176,10 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 
     protected AccountingTransaction makeAccountingTransactionForInstallment(User responsibleUser,
 	    Event event, Account from, Account to, EntryType entryType, Money amount,
-	    PaymentMode paymentMode, DateTime whenRegistered, Installment installment) {
+	    Installment installment, AccountingTransactionDetailDTO transactionDetail) {
 	return new InstallmentAccountingTransaction(responsibleUser, event, makeEntry(entryType, amount
-		.negate(), from), makeEntry(entryType, amount, to), paymentMode, whenRegistered,
-		installment);
+		.negate(), from), makeEntry(entryType, amount, to), installment,
+		makeAccountingTransactionDetail(transactionDetail));
     }
 
 }

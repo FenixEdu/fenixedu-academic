@@ -2,14 +2,11 @@ package net.sourceforge.fenixedu.domain.accounting.accountingTransactions;
 
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
-import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
-import org.joda.time.DateTime;
-
 import dml.runtime.RelationAdapter;
 
 public class InstallmentAccountingTransaction extends InstallmentAccountingTransaction_Base {
@@ -37,14 +34,14 @@ public class InstallmentAccountingTransaction extends InstallmentAccountingTrans
     }
 
     public InstallmentAccountingTransaction(User responsibleUser, Event event, Entry debit,
-	    Entry credit, PaymentMode paymentMode, DateTime whenRegistered, Installment installment) {
+	    Entry credit, Installment installment, AccountingTransactionDetail transactionDetail) {
 	this();
-	init(responsibleUser, event, debit, credit, paymentMode, whenRegistered, installment);
+	init(responsibleUser, event, debit, credit, installment, transactionDetail);
     }
 
     private void init(User responsibleUser, Event event, Entry debit, Entry credit,
-	    PaymentMode paymentMode, DateTime whenRegistered, Installment installment) {
-	super.init(responsibleUser, event, debit, credit, paymentMode, whenRegistered);
+	    Installment installment, AccountingTransactionDetail transactionDetail) {
+	super.init(responsibleUser, event, debit, credit, transactionDetail);
 	checkParameters(installment);
 	super.setInstallment(installment);
     }

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.sibs.SibsOutgoingPaymentFile;
 
 import org.apache.struts.action.ActionForm;
@@ -59,7 +60,36 @@ public class DegreePaymentsManagementDA extends FenixDispatchAction {
 	writer.write(sibsOutgoingPaymentFile.render().getBytes());
 	writer.flush();
 
-	return null;
+	return prepareGenerateSibsOutgoingFile(mapping, form, request, response);
+    }
+
+    public ActionForward prepareUploadSibsPaymentsFile(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("paymentsFileBean", new PaymentsFileBean());
+
+	return mapping.findForward("prepareUploadSibsPaymentsFile");
+    }
+
+    public ActionForward uploadSibsPaymentsFile(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+
+	final PaymentsFileBean paymentsFileBean = (PaymentsFileBean) RenderUtils.getViewState(
+		"paymentsFileBean-create").getMetaObject().getObject();
+
+	if (paymentsFileBean.getFile() == null) {
+	    addActionMessage(request, "error.payments.uploadPaymentsFile.file.is.required");
+	    return prepareUploadSibsPaymentsFile(mapping, form, request, response);
+	}
+
+	ServiceUtils.executeService(getUserView(request), "UploadSibsPaymentsFile", new Object[] {
+		getUserView(request).getPerson(), paymentsFileBean });
+
+	RenderUtils.invalidateViewState("paymentsFileBean-create");
+
+	return mapping.findForward("uploadSibsPaymentsFileSuccess");
+
     }
 
 }

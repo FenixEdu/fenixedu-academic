@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -37,6 +36,12 @@ public class EntryDTO implements Serializable {
 	setDescription(description);
 	setDebtAmount(debtAmount);
 
+    }
+    
+    public EntryDTO(EntryType entryType, Event event, Money amountToPay) {
+	setEntryType(entryType);
+	setEvent(event);
+	setAmountToPay(amountToPay);
     }
 
     public Money getTotalAmount() {

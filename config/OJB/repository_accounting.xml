@@ -18,6 +18,22 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction" table="ACCOUNTING_TRANSACTION">
 	
 	</class-descriptor>
+	
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail" table="ACCOUNTING_TRANSACTION_DETAIL">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail" />
+</class-descriptor>
+
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail" table="ACCOUNTING_TRANSACTION_DETAIL">
+	
+	</class-descriptor>
+	
+
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.accounting.Entry -->

@@ -1,17 +1,17 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 public enum PaymentMode {
-    CASH;
+    CASH, ATM;
 
     public String getName() {
-        return name();
+	return name();
     }
 
     public String getQualifiedName() {
-        return PaymentMode.class.getSimpleName() + "." + name();
+	return PaymentMode.class.getSimpleName() + "." + name();
     }
 
     public String getFullyQualifiedName() {
-        return PaymentMode.class.getName() + "." + name();
+	return PaymentMode.class.getName() + "." + name();
     }
 }

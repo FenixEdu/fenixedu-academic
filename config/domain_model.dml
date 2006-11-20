@@ -204,19 +204,30 @@ class net.sourceforge.fenixedu.domain.accounting.Account extends net.sourceforge
 }
 
 class net.sourceforge.fenixedu.domain.accounting.AccountingTransaction extends net.sourceforge.fenixedu.domain.DomainObject {
-    DateTime whenRegistered;
-    DateTime whenProcessed;
     Integer keyEvent;
     Integer keyResponsibleUser;
-    PaymentMode paymentMode;
     Integer keyAdjustedTransaction;
     Integer keyAdjustmentTransaction;
     String ojbConcreteClass;
+    Integer keyTransactionDetail;
 }
 
 	class net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction extends net.sourceforge.fenixedu.domain.accounting.AccountingTransaction {
 		Integer keyInstallment;
+	}
+
+class net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail extends net.sourceforge.fenixedu.domain.DomainObject {
+    DateTime whenRegistered;
+    DateTime whenProcessed;
+    PaymentMode paymentMode;
+    Integer keyTransaction;
+    String comments;
+    String ojbConcreteClass;
 }
+	class net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail extends net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail {
+		String sibsTransactionId;
+		String sibsCode;
+	}
 
 class net.sourceforge.fenixedu.domain.accounting.Entry extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyAccount;
@@ -593,9 +604,9 @@ class net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard extends net.so
 	String name;
 	Group readers;
 	String readersExpression;
-	Group writers;
+	Group writers;	
 	String writersExpression;
-	Group managers;
+	Group managers;	
 	String managersExpression;
 	Boolean mandatory;
 }
@@ -2577,9 +2588,9 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 	YearMonthDay createdOn;
 	Group personOccupationsAccessGroup;
 	String personOccupationsAccessGroupExpression;
-	Group extensionOccupationsAccessGroup;
+	Group extensionOccupationsAccessGroup;	
 	String extensionOccupationsAccessGroupExpression;
-	Group spaceManagementAccessGroup;
+	Group spaceManagementAccessGroup;	
 	String spaceManagementAccessGroupExpression;
 }
 	class net.sourceforge.fenixedu.domain.space.Campus extends net.sourceforge.fenixedu.domain.space.Space {
@@ -4025,11 +4036,11 @@ class net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy extends
 	class net.sourceforge.fenixedu.domain.functionalities.GroupAvailability extends net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy {
 		Group targetGroup;
 		String targetGroupExpression;
-	}
+}
 
 		class net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability extends net.sourceforge.fenixedu.domain.functionalities.GroupAvailability {
-			String expression;
-		}
+		String expression;
+	}
 
 class net.sourceforge.fenixedu.domain.SpecialSeasonCode extends net.sourceforge.fenixedu.domain.DomainObject {
 	
@@ -4061,7 +4072,7 @@ class net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceD
 	String automaticValuationGroupExpression;
 	Group omissionConfigurationGroup;
 	String omissionConfigurationGroupExpression;
-	Group valuationCompetenceCoursesAndTeachersManagementGroup;
+	Group valuationCompetenceCoursesAndTeachersManagementGroup;	
 	String valuationCompetenceCoursesAndTeachersManagementGroupExpr;
 	
 }
@@ -8173,6 +8184,18 @@ relation InstallmentPaymentCode {
 relation StudentPaymentCode {
 		net.sourceforge.fenixedu.domain.student.Student playsRole student;
 		net.sourceforge.fenixedu.domain.accounting.PaymentCode playsRole paymentCodes {
+		multiplicity *;
+	}
+}
+
+relation AccountingTransactionAccountingTransactionDetail {
+		net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole transaction;
+		net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail playsRole transactionDetail;
+}
+
+relation RootDomainObjectAccountingTransactionDetail {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail playsRole accountingTransactionDetails {
 		multiplicity *;
 	}
 }

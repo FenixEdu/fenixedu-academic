@@ -8,7 +8,7 @@ public enum PaymentCodeType {
     ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE(3);
 
     private int typeDigit;
-
+   
     private PaymentCodeType(int typeDigit) {
 	this.typeDigit = typeDigit;
     }

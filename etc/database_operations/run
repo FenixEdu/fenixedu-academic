@@ -27,3 +27,11 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Creating Table AccountingTransactionDetail" CreateTableAccountingTransactionDetail.sql
+execute "Migration AccountingTransaction columns to AccountingTransactionDetail" MigrateAccountingTransactionDetails.sql
+executeWithTempFile "Update AccountingTransaction with AccountingTransactionDetails" UpdateAccountingTransactionWithDetails.sql
+execute "Creating Module Payments on Manager" AddPaymentsModuleToManager.sql
+execute "Changing Table AccountingTransaction (add not null restriction to keyTransactionDetails)" AlterTableAccountingTransactionAfterMigration.sql
+execute "Changing Table Student" AlterTableStudent.sql
+

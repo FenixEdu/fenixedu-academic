@@ -87,10 +87,6 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 	return getAccountingEvent().calculateAmountToPay(when);
     }
 
-    public void cancel() {
-	super.setState(PaymentCodeState.CANCELLED);
-    }
-
     public void reuse(final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount,
 	    final Money maxAmount, final Event event) {
 

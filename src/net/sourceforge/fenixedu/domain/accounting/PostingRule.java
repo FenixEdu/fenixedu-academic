@@ -5,9 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -82,8 +85,8 @@ public abstract class PostingRule extends PostingRule_Base {
 	}
     }
 
-    public final Set<Entry> process(User user, List<EntryDTO> entryDTOs, PaymentMode paymentMode,
-	    DateTime whenRegistered, Event event, Account fromAccount, Account toAccount) {
+    public final Set<Entry> process(User user, List<EntryDTO> entryDTOs, Event event,
+	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
 	for (final EntryDTO entryDTO : entryDTOs) {
 	    if (entryDTO.getAmountToPay().lessOrEqualThan(Money.ZERO)) {
@@ -92,8 +95,8 @@ public abstract class PostingRule extends PostingRule_Base {
 	    }
 	}
 
-	final Set<AccountingTransaction> resultingTransactions = internalProcess(user, entryDTOs,
-		paymentMode, whenRegistered, event, fromAccount, toAccount);
+	final Set<AccountingTransaction> resultingTransactions = internalProcess(user, entryDTOs, event,
+		fromAccount, toAccount, transactionDetail);
 
 	return getResultingEntries(resultingTransactions);
     }
@@ -173,10 +176,24 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     protected AccountingTransaction makeAccountingTransaction(User responsibleUser, Event event,
-	    Account from, Account to, EntryType entryType, Money amount, PaymentMode paymentMode,
-	    DateTime whenRegistered) {
+	    Account from, Account to, EntryType entryType, Money amount,
+	    AccountingTransactionDetailDTO transactionDetail) {
 	return new AccountingTransaction(responsibleUser, event, makeEntry(entryType, amount.negate(),
-		from), makeEntry(entryType, amount, to), paymentMode, whenRegistered);
+		from), makeEntry(entryType, amount, to),
+		makeAccountingTransactionDetail(transactionDetail));
+    }
+
+    protected AccountingTransactionDetail makeAccountingTransactionDetail(
+	    AccountingTransactionDetailDTO transactionDetailDTO) {
+	if (transactionDetailDTO instanceof SibsTransactionDetailDTO) {
+	    final SibsTransactionDetailDTO sibsTransactionDetailDTO = (SibsTransactionDetailDTO) transactionDetailDTO;
+	    return new SibsTransactionDetail(sibsTransactionDetailDTO.getWhenRegistered(),
+		    sibsTransactionDetailDTO.getSibsTransactionId(), sibsTransactionDetailDTO
+			    .getSibsCode());
+	} else {
+	    return new AccountingTransactionDetail(transactionDetailDTO.getWhenRegistered(),
+		    transactionDetailDTO.getPaymentMode());
+	}
     }
 
     public boolean isVisible() {
@@ -188,7 +205,7 @@ public abstract class PostingRule extends PostingRule_Base {
     public abstract List<EntryDTO> calculateEntries(Event event, DateTime when);
 
     protected abstract Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
-	    PaymentMode paymentMode, DateTime whenRegistered, Event event, Account fromAccount,
-	    Account toAccount);
+	    Event event, Account fromAccount, Account toAccount,
+	    AccountingTransactionDetailDTO transactionDetail);
 
 }

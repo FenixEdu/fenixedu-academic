@@ -1,14 +1,21 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryWithInstallmentDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.Entry;
+import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
@@ -17,6 +24,7 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.Degr
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.YearMonthDay;
 
@@ -106,25 +114,26 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     }
 
-    public void cancelGratuityTotalPaymentCode() {
+    public void changeGratuityTotalPaymentCodeState(final PaymentCodeState paymentCodeState) {
 	for (final AccountingEventPaymentCode accountingEventPaymentCode : getNonProcessedPaymentCodes()) {
 	    if (!(accountingEventPaymentCode instanceof InstallmentPaymentCode)) {
-		accountingEventPaymentCode.cancel();
+		accountingEventPaymentCode.setState(paymentCodeState);
 	    }
 	}
     }
 
-    public void cancelInstallmentPaymentCode(final Installment installment) {
+    public void changeInstallmentPaymentCodeState(final Installment installment,
+	    final PaymentCodeState paymentCodeState) {
 	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
 	    if (paymentCode instanceof InstallmentPaymentCode
 		    && ((InstallmentPaymentCode) paymentCode).getInstallment() == installment) {
-		paymentCode.cancel();
+		paymentCode.setState(paymentCodeState);
 	    }
 	}
 
 	// If at least one installment is payed, we assume that the payment
 	// will be based on installments
-	cancelGratuityTotalPaymentCode();
+	changeGratuityTotalPaymentCodeState(PaymentCodeState.CANCELLED);
     }
 
     private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO,
@@ -194,6 +203,23 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	}
 
 	return null;
+    }
+
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
+	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
+	return internalProcess(responsibleUser, Collections.singletonList(buildEntryDTOFrom(paymentCode,
+		amountToPay)), transactionDetail);
+    }
+
+    private EntryDTO buildEntryDTOFrom(final AccountingEventPaymentCode paymentCode,
+	    final Money amountToPay) {
+	if (paymentCode instanceof InstallmentPaymentCode) {
+	    return new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, this, amountToPay,
+		    ((InstallmentPaymentCode) paymentCode).getInstallment());
+	} else {
+	    return new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay);
+	}
     }
 
 }
