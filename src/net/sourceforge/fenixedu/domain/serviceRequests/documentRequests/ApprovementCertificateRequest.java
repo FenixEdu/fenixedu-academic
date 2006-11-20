@@ -37,6 +37,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     protected void assertProcessingStatePreConditions() throws DomainException {
+	super.assertProcessingStatePreConditions();
+	
 	if (!getRegistration().hasAnyApprovedEnrolment()) {
 	    throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
 	}

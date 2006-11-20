@@ -61,9 +61,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 
     @Override
     protected void assertProcessingStatePreConditions() throws DomainException {
-	if (getRegistration().getLastStudentCurricularPlan().hasAnyNotPayedGratuityEvents()) {
-	    throw new DomainException("CertificateRequest.registration.has.not.payed.gratuities.for.last.student.curricular.plan");
-	}
+	super.assertProcessingStatePreConditions();
     }
 
     @Override

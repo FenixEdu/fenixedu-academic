@@ -2,13 +2,10 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public abstract class CertificateRequest extends CertificateRequest_Base {
 
@@ -132,7 +129,14 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     }
 
     @Override
-    public void assertConcludedStatePreConditions() throws DomainException {
+    protected void assertProcessingStatePreConditions() throws DomainException {
+	if (getRegistration().getLastStudentCurricularPlan().hasAnyNotPayedGratuityEvents()) {
+	    throw new DomainException("CertificateRequest.registration.has.not.payed.gratuities.for.last.student.curricular.plan");
+	}
+    }
+
+    @Override
+    protected void assertConcludedStatePreConditions() throws DomainException {
 	if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
 	    throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
 	}
