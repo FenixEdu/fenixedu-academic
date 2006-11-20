@@ -29,11 +29,18 @@
     <fr:view name="section" property="name"/>
 </div>
 
-<p class="mvert1">
-    <span class="error">
-        <html:errors property="section" bundle="SITE_RESOURCES"/>
-    </span>
-</p>
+<span style="color: #888;">
+    <bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
+    <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+        <fr:layout>
+            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+            <fr:property name="key" value="true"/>
+            <fr:property name="bundle" value="SITE_RESOURCES"/>
+            <fr:property name="subLayout" value="values"/>
+            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+        </fr:layout>
+    </fr:view>
+</span>
 
 <p>
 	<span>
@@ -82,6 +89,12 @@
 	</span>
 </p>
 
+<p class="mvert1">
+    <span class="error">
+        <html:errors property="section" bundle="SITE_RESOURCES"/>
+    </span>
+</p>
+
 <div id="<%= deleteSectionId %>" class="dnone mvert05">
     <fr:form action="<%= String.format("/manageExecutionCourse.do?method=confirmSectionDelete&amp;executionCourseID=%s&amp;sectionID=%s&amp;confirm=true", executionCourseId, section.getIdInternal()) %>">
         <p class="width550px">
@@ -105,19 +118,6 @@
         </p>
     </fr:form>
 </div>
-
-<span style="color: #888;">
-    <bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
-    <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
-        <fr:layout>
-            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
-            <fr:property name="key" value="true"/>
-            <fr:property name="bundle" value="SITE_RESOURCES"/>
-            <fr:property name="subLayout" value="values"/>
-            <fr:property name="subSchema" value="permittedGroup.class.text"/>
-        </fr:layout>
-    </fr:view>
-</span>
 
 <logic:empty name="section" property="orderedSubSections">
     <p class="mtop2">
@@ -203,12 +203,39 @@
 
 		<div class="separator1 width550px mtop15 mbottom0"></div>
 		
-		<p class="mtop0">
+		<p class="mtop0 mbottom05">
 			<%--<span style="color: #888;"><bean:message key="label.item"/></span><br/>--%>
 			<strong><fr:view name="item" property="name"/></strong>
-		</p>
+            <span style="color: #888;padding-left: 1em;">
+                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
+                <fr:view name="item" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+                    <fr:layout>
+                        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+                        <fr:property name="key" value="true"/>
+                        <fr:property name="bundle" value="SITE_RESOURCES"/>
+                        <fr:property name="subLayout" value="values"/>
+                        <fr:property name="subSchema" value="permittedGroup.class.text"/>
+                    </fr:layout>
+                </fr:view>
+            </span>
+		</p><!--
 		
-		<span>
+        <p class="mvert05">
+            <span style="color: #888;">
+                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
+                <fr:view name="item" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+                    <fr:layout>
+                        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+                        <fr:property name="key" value="true"/>
+                        <fr:property name="bundle" value="SITE_RESOURCES"/>
+                        <fr:property name="subLayout" value="values"/>
+                        <fr:property name="subSchema" value="permittedGroup.class.text"/>
+                    </fr:layout>
+                </fr:view>
+            </span>
+        </p>
+        
+		--><span>
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 			<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=editItem&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
 			<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
