@@ -163,7 +163,7 @@
 
 					<tr>
 						<td class="left">
-							2.1 <bean:message key="table.rowname.inquiries.course.form.question21" bundle="INQUIRIES_RESOURCES"/>
+							2.1 <bean:message key="table.rowname.inquiries.course.form.onlineInfo" bundle="INQUIRIES_RESOURCES"/>
 						</td>
 						<td class="right">
 							<table class="radio">
@@ -180,10 +180,10 @@
 												<c:out value="${int}"/>
 											</bean:define>
 										<td>
-											<c:if test="${i == infoAttendingCourseInquiry.question21}">
+											<c:if test="${i == infoAttendingCourseInquiry.onlineInfo}">
 												<input alt="input.executionCourseQuestion21" type="radio" name="executionCourseQuestion21" value='<%= i %>' checked="checked"/>
 											</c:if>
-											<c:if test="${i != infoAttendingCourseInquiry.question21}">
+											<c:if test="${i != infoAttendingCourseInquiry.onlineInfo}">
 												<input alt="input.executionCourseQuestion21" type="radio" name="executionCourseQuestion21" value='<%= i %>' disabled="disabled"/>
 											</c:if>
 										</td>

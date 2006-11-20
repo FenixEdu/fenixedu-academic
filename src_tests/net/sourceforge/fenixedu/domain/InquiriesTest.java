@@ -161,8 +161,8 @@ public class InquiriesTest extends DomainTestBase {
 		assertTrue("Failed to reference executionPeriod!", newInquiriesCourse.hasExecutionPeriod());
 		assertTrue("Failed to reference schoolClass!", newInquiriesCourse.hasStudentSchoolClass());
 		
-		assertEquals("Unexpected value for question21!",
-				infoInquiriesCourse.getQuestion21(), newInquiriesCourse.getQuestion21());
+		assertEquals("Unexpected value for onlineInfo!",
+				infoInquiriesCourse.getOnlineInfo(), newInquiriesCourse.getOnlineInfo());
 		assertEquals("Unexpected value for classCoordination!",
 			infoInquiriesCourse.getClassCoordination(), newInquiriesCourse.getClassCoordination());
 		assertEquals("Unexpected value for contributionForGraduation!",

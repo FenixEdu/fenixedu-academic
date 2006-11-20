@@ -101,7 +101,13 @@ public class CreateClassificationsForStudents extends Service {
             if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
                 Registration registration = studentCurricularPlan.getRegistration();
                 if (registration.getRegistrationYear() == currentExecutionYear) {
-                    firstYearStudents.add(registration);
+                    try {
+                        if (registration.getEntryGrade() != null) {
+                            firstYearStudents.add(registration);
+                        }
+                    } catch (ClassCastException ex) {
+                        // hack due to bad implementation of StudentCandidacy and subclasses that are wrongly cast to DegreeCandidacy
+                    }
                 } else {
                     registration.calculateApprovationRatioAndArithmeticMeanIfActive(true);
                     otherYearsStudents.add(registration);
@@ -124,17 +130,24 @@ public class CreateClassificationsForStudents extends Service {
             entryGradeStream = new ByteArrayOutputStream();
         }
 
-        HashMap<Character, List<Registration>> splitedStudentsByApprovationRatio = splitStudentsByClassification(
-                approvationRatioLimits, otherYearsStudents, "approvationRatio",
-                getApprovationRatioTransformer, setApprovationRatioClosure);
-        ByteArrayOutputStream approvationRatioStream = studentsRenderer(
-                splitedStudentsByApprovationRatio, getApprovationRatioTransformer);
+        ByteArrayOutputStream approvationRatioStream;
+        ByteArrayOutputStream arithmeticMeanStream;
+        if (otherYearsStudents.size() > 0) {
+            HashMap<Character, List<Registration>> splitedStudentsByApprovationRatio = splitStudentsByClassification(
+                    approvationRatioLimits, otherYearsStudents, "approvationRatio",
+                    getApprovationRatioTransformer, setApprovationRatioClosure);
+            approvationRatioStream = studentsRenderer(
+                    splitedStudentsByApprovationRatio, getApprovationRatioTransformer);
 
-        HashMap<Character, List<Registration>> splitedStudentsByArithmeticMean = splitStudentsByClassification(
-                arithmeticMeanLimits, otherYearsStudents, "arithmeticMean",
-                getArithmeticMeanTransformer, setArithmeticMeanClosure);
-        ByteArrayOutputStream arithmeticMeanStream = studentsRenderer(splitedStudentsByArithmeticMean,
-                getArithmeticMeanTransformer);
+            HashMap<Character, List<Registration>> splitedStudentsByArithmeticMean = splitStudentsByClassification(
+                    arithmeticMeanLimits, otherYearsStudents, "arithmeticMean",
+                    getArithmeticMeanTransformer, setArithmeticMeanClosure);
+            arithmeticMeanStream = studentsRenderer(splitedStudentsByArithmeticMean,
+                    getArithmeticMeanTransformer);
+        } else {
+            approvationRatioStream = new ByteArrayOutputStream();
+            arithmeticMeanStream = new ByteArrayOutputStream();
+        }
 
         return zipResults(entryGradeStream, approvationRatioStream, arithmeticMeanStream);
 
@@ -162,7 +175,7 @@ public class CreateClassificationsForStudents extends Service {
         ListIterator<Registration> studentsIter = otherStudents.listIterator(otherStudents.size());
         for (int i = limits.length - 1; i > 0; i--) {
 
-            int groundLimitIndex = (int) Math.ceil(otherStudents.size() * (limits[i - 1] / 100.0));
+            int groundLimitIndex = Math.min(otherStudents.size() - 1, (int) Math.ceil(otherStudents.size() * (limits[i - 1] / 100.0)));
             Double groundLimitValue = (Double) fieldGetter.transform(otherStudents.get(groundLimitIndex));            
             Double  maxValue = (Double) fieldGetter.transform(otherStudents.get(otherStudents.size() - 1));
             if(maxValue.equals(groundLimitValue)){

@@ -231,7 +231,7 @@
 
 					<tr>
 						<td class="left">
-							2.1 <bean:message key="table.rowname.inquiries.course.form.question21" bundle="INQUIRIES_RESOURCES"/>
+							2.1 <bean:message key="table.rowname.inquiries.course.form.onlineInfo" bundle="INQUIRIES_RESOURCES"/>
 						</td>
 						<td class="right">
 							<table class="radio">

@@ -87,7 +87,7 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 	private void setBasicProperties(InfoInquiriesCourse infoInquiriesCourse) {
 		this.setStudentCurricularYear(infoInquiriesCourse.getStudentCurricularYear());
 		this.setStudentFirstEnrollment(infoInquiriesCourse.getStudentFirstEnrollment());
-		this.setQuestion21(infoInquiriesCourse.getQuestion21());
+		this.setOnlineInfo(infoInquiriesCourse.getOnlineInfo());
 		this.setClassCoordination(infoInquiriesCourse.getClassCoordination());
 		this.setStudyElementsContribution(infoInquiriesCourse.getStudyElementsContribution());
 		this.setPreviousKnowledgeArticulation(infoInquiriesCourse.getPreviousKnowledgeArticulation());

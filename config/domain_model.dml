@@ -1938,7 +1938,7 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sour
     Integer keyStudentSchoolClass;
     Integer studentCurricularYear;
     Integer studentFirstEnrollment;
-    Double question21;
+    Double onlineInfo;
     Double classCoordination;
     Double studyElementsContribution;
     Double previousKnowledgeArticulation;

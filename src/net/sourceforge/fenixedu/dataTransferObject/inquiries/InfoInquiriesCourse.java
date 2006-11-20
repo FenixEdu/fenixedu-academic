@@ -44,7 +44,7 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
 
     private Integer studentFirstEnrollment;
 
-    private Double question21;
+    private Double onlineInfo;
 
     private Double classCoordination;
 
@@ -60,15 +60,15 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
 
     private Double globalAppreciation;
 
-    public Double getQuestion21() {
-	return question21;
+    public Double getOnlineInfo() {
+	return onlineInfo;
     }
 
-    public void setQuestion21(Double question21) {
-	if (InquiriesUtil.isValidAnswer(question21))
-	    this.question21 = question21;
+    public void setOnlineInfo(Double onlineInfo) {
+	if (InquiriesUtil.isValidAnswer(onlineInfo))
+	    this.onlineInfo = onlineInfo;
 	else
-	    this.question21 = null;
+	    this.onlineInfo = null;
     }
 
     /**
@@ -395,7 +395,7 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
 	    InvocationTargetException, NoSuchMethodException {
 	if (inquiriesCourse != null) {
 	    super.copyFromDomain(inquiriesCourse);
-	    this.setQuestion21(inquiriesCourse.getQuestion21());
+	    this.setOnlineInfo(inquiriesCourse.getOnlineInfo());
 	    this.setClassCoordination(inquiriesCourse.getClassCoordination());
 	    this.setContributionForGraduation(inquiriesCourse.getContributionForGraduation());
 	    this.setEvaluationMethodAdequation(inquiriesCourse.getEvaluationMethodAdequation());
@@ -434,7 +434,7 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
 	    result += ", studentSchoolClass=" + studentSchoolClass.toString();
 	result += ", studentCurricularYear=" + studentCurricularYear;
 	result += ", studentFirstEnrollment=" + studentFirstEnrollment;
-	result += ", question21=" + question21;
+	result += ", onlineInfo=" + onlineInfo;
 	result += ", classCoordination=" + classCoordination;
 	result += ", studyElementsContribution=" + studyElementsContribution;
 	result += ", previousKnowledgeArticulation=" + previousKnowledgeArticulation;

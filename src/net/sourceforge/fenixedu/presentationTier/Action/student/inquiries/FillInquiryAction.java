@@ -108,7 +108,9 @@ public class FillInquiryAction extends FenixDispatchAction {
 	    throw new InvalidSessionActionException();
 	}
 
-	if (registration.getDegreeType() != DegreeType.DEGREE) {
+	if (registration.getDegreeType() != DegreeType.DEGREE
+                && registration.getDegreeType() != DegreeType.BOLONHA_DEGREE
+                && registration.getDegreeType() != DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
 	    request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY,
 		    "message.inquiries.not.open.for.non.degrees");
 	    return actionMapping.findForward("inquiryIntroduction");
@@ -1498,7 +1500,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	infoInquiriesCourse.setStudentFirstEnrollment(firstEnrollment ? 1 : 0);
 	infoInquiriesCourse.setExecutionDegreeCourse((InfoExecutionDegree) CollectionUtils
 		.getByInternalId(attendingCourseExecutionDegrees, attendingCourseExecutionDegreeId));
-	infoInquiriesCourse.setQuestion21(executionCourseQuestion21);
+	infoInquiriesCourse.setOnlineInfo(executionCourseQuestion21);
 	infoInquiriesCourse.setClassCoordination(executionCourseQuestion22);
 	infoInquiriesCourse.setStudyElementsContribution(executionCourseQuestion23);
 	infoInquiriesCourse.setPreviousKnowledgeArticulation(executionCourseQuestion24);
