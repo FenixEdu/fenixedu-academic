@@ -351,9 +351,9 @@
             </logic:notEmpty>
         </div>
 	</logic:iterate>
-
-    <!-- Change item delete operation if possible -->
-    <script type="text/javascript">
-        switchGlobal();
-    </script>
 </logic:notEmpty>
+
+<!-- Change item delete operation if possible -->
+<script type="text/javascript">
+    switchGlobal();
+</script>

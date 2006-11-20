@@ -9,6 +9,16 @@
 	<bean:message key="link.createSection"/>
 </h2>
 
+<logic:messagesPresent message="true">
+    <div class="mvert15">
+        <span class="error0">
+            <html:messages id="error" message="true" bundle="SITE_RESOURCES"> 
+                <bean:write name="error"/>
+            </html:messages>
+        </span>
+    </div>
+</logic:messagesPresent>
+
 <logic:notPresent name="section">
 	<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=sections&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 	<fr:edit name="creator" schema="net.sourceforge.fenixedu.domain.SectionCreator" action="<%= url %>">
