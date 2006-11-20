@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -125,7 +126,7 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
 	}
     }
 
-    public static class BlueprintTextRectangles extends HashMap<Space, BlueprintTextRectangle> {
+    public static class BlueprintTextRectangles extends HashMap<Space, List<BlueprintTextRectangle>> {
     }
 
     public static class BlueprintTextRectangle {

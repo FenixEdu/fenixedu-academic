@@ -159,14 +159,16 @@
 			<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap"/>
 			<map id ="roomLinksMap" name="roomLinksMap">
 				<logic:iterate id="blueprintTextRectanglesEntry" name="blueprintTextRectangles">																	
-					<bean:define id="blueprintSpace" name="blueprintTextRectanglesEntry" property="key" />
-					<bean:define id="p1" name="blueprintTextRectanglesEntry" property="value.p1" />				
-					<bean:define id="p2" name="blueprintTextRectanglesEntry" property="value.p2" />				
-	 				<bean:define id="p3" name="blueprintTextRectanglesEntry" property="value.p3" />				
-	 				<bean:define id="p4" name="blueprintTextRectanglesEntry" property="value.p4" />							
-					<bean:define id="coords"><bean:write name="p1" property="x"/>,<bean:write name="p1" property="y"/>,<bean:write name="p2" property="x"/>,<bean:write name="p2" property="y"/>,<bean:write name="p3" property="x"/>,<bean:write name="p3" property="y"/>,<bean:write name="p4" property="x"/>,<bean:write name="p4" property="y"/></bean:define>				 				
-					<bean:define id="urlToCoords">manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="blueprintSpace" property="spaceInformation.idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/></bean:define>
-					<area shape="poly" coords="<%= coords %>" href ="<%= urlToCoords %>"/>				
+					<bean:define id="blueprintSpace" name="blueprintTextRectanglesEntry" property="key" />					
+					<logic:iterate id="blueprintTextRectangle" name="blueprintTextRectanglesEntry" property="value">
+						<bean:define id="p1" name="blueprintTextRectangle" property="p1" />				
+						<bean:define id="p2" name="blueprintTextRectangle" property="p2" />				
+	 					<bean:define id="p3" name="blueprintTextRectangle" property="p3" />				
+	 					<bean:define id="p4" name="blueprintTextRectangle" property="p4" />							
+						<bean:define id="coords"><bean:write name="p1" property="x"/>,<bean:write name="p1" property="y"/>,<bean:write name="p2" property="x"/>,<bean:write name="p2" property="y"/>,<bean:write name="p3" property="x"/>,<bean:write name="p3" property="y"/>,<bean:write name="p4" property="x"/>,<bean:write name="p4" property="y"/></bean:define>				 				
+						<bean:define id="urlToCoords">manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="blueprintSpace" property="spaceInformation.idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/></bean:define>
+						<area shape="poly" coords="<%= coords %>" href ="<%= urlToCoords %>"/>									
+					</logic:iterate>										
 				</logic:iterate>					
 			</map>								
 		</p>

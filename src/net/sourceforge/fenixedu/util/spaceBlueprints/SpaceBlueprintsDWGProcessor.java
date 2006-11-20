@@ -6,6 +6,8 @@ import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import net.sourceforge.fenixedu.domain.space.BuildingInformation;
@@ -114,9 +116,16 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	    final Point2D point2D, String textToInsert, Space space) {
 
 	if (textToInsert != null) {
-	    map.put(space, new BlueprintTextRectangle(textToInsert, processor.convXCoord(point2D.getX(),
-		    referenceConverter), processor.convYCoord(point2D.getY(), referenceConverter),
-		    processor.fontSize));
+	    
+	    List<BlueprintTextRectangle> blueprintTextRectangules = map.get(space);
+	    if (blueprintTextRectangules == null) {
+		blueprintTextRectangules = new ArrayList<BlueprintTextRectangle>();
+	    }
+	    
+	    blueprintTextRectangules.add(new BlueprintTextRectangle(textToInsert, processor.convXCoord(
+		    point2D.getX(), referenceConverter), processor.convYCoord(point2D.getY(),
+		    referenceConverter), processor.fontSize));
+	    map.put(space, blueprintTextRectangules);
 	}
     }
 
@@ -125,8 +134,8 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	double numberOfCharacters = textToInsert.length();
 	double characterWidth = (fontSize / 1.6);
 	double textSize = numberOfCharacters * characterWidth;
-	
-	int x1 = (int)(x - characterWidth);
+
+	int x1 = (int) (x - characterWidth);
 	int y1 = (int) (y - (2 * fontSize));
 	int width = (int) (Math.round(textSize) + (2 * characterWidth));
 	int height = (int) (4 * fontSize);
@@ -136,7 +145,7 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	graphics2D.setColor(Color.YELLOW);
 	graphics2D.fillArc(x1, y1, width, height, startAngle, arcAngle);
 	graphics2D.setColor(Color.BLACK);
-    }  
+    }
 
     private void drawTextAndArc(Graphics2D graphics2D, int x, int y, Space discoveredSpace,
 	    String textToInsert) {
