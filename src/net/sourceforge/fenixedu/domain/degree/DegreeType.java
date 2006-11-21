@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
  */
 public enum DegreeType {
 
-    DEGREE(GradeScale.TYPE20, null, 5, 0, false, false, false, AdministrativeOfficeType.DEGREE),
+    DEGREE(GradeScale.TYPE20, null, 5, 0, false, true, false, AdministrativeOfficeType.DEGREE),
 
     MASTER_DEGREE(GradeScale.TYPE5, null, 2, 0, false, false, true,
 	    AdministrativeOfficeType.MASTER_DEGREE),
