@@ -222,4 +222,10 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	}
     }
 
+    @Override
+    public boolean isInDebt() {
+	return !isClosed()
+		&& getGratuityPaymentPlan().getLastInstallment().getEndDate().isBefore(
+			new YearMonthDay());
+    }
 }
