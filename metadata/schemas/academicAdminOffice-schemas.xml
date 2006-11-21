@@ -202,8 +202,8 @@
 <schema name="student.show.personAndStudentInformation"
 		type="net.sourceforge.fenixedu.domain.student.Student" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="person.name" key="label.name"/>
-	<slot name="person.documentIdNumber" key="label.identificationNumber"/>		
-	<slot name="person.idDocumentType" key="label.idDocumentType"/>	
+	<slot name="person.documentIdNumber" key="label.identificationNumber.descriptive"/>		
+	<slot name="person.idDocumentType" key="label.idDocumentType.descriptive"/>	
 	<slot name="person.istUsername" key="label.username"/>
 	<slot name="number" key="label.studentNumber"/>
 </schema>
@@ -240,11 +240,12 @@
 	<slot name="activeOrConcludedOrLastStudentCurricularPlan.degreeCurricularPlan" layout="format" key="label.degree" >
 		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name}" />
 	</slot>	
+	<slot name="activeStateType" key="label.currentState" />
 </schema>
 
 <schema name="student.registrationDetail" extends="student.registrationsWithStartData" 
 		type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="ingressionEnum" layout="format"  >
+	<slot name="ingressionEnum" layout="format" key="label.ingression" >
 		<property name="format" value="${name} - ${fullDescription}" />
 	</slot>
 	<slot name="entryPhase" layout="format"  >
@@ -315,4 +316,25 @@
 	type="net.sourceforge.fenixedu.dataTransferObject.student.ManageEnrolmentModelBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="executionYear.year" key="label.executionYear" read-only="true" />
 	<slot name="enrolmentModel" key="label.enrolmentModel" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="student.manageRegistrationState" 
+	type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="stateDate" key="label.editDate" >
+		<validator class="net.sourceforge.fenixedu.renderers.validators.AdvancedDateValidator">
+			<property name="validationPeriod" value="pastOrToday" />
+		</validator>
+	</slot>		
+	<slot name="stateType" key="label.newState" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="remarks" layout="longText">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="10" />
+    </slot>	
+</schema>
+
+<schema name="student.viewRegistrationStatesHistoric" 
+	type="net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="stateDate" key="label.editDate" />
+	<slot name="stateType" key="label.state" />
+	<slot name="remarks" />
 </schema>

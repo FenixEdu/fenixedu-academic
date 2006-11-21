@@ -43,7 +43,11 @@
     <definition name="student.showManageEnrolmentModel" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageEnrolmentModel.jsp"></put>
     </definition>      
-    
+
+    <definition name="student.showRegistrationStates" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/manageRegistrationState.jsp"></put>
+    </definition>      
+
 	<!-- ************* Academic Service Requests Management ************* -->
 	<definition name="academicServiceRequests.management.viewRegistrationAcademicServiceRequestsHistoric" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/viewRegistrationAcademicServiceRequestsHistoric.jsp"/>

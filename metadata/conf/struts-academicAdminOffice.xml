@@ -131,7 +131,16 @@
 			validate="true"
 			input="/manageEnrolmentModel.do?method=prepare">
 	        	<forward name="showManageEnrolmentModel" path="student.showManageEnrolmentModel"/>
-	    </action>			
+	    </action>	
+
+		<action path="/manageRegistrationState"
+		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ManageRegistrationStateDA"
+	        parameter="method"
+			scope="request"
+			validate="true"
+			input="//manageRegistrationState.do?method=prepare">
+	        	<forward name="showRegistrationStates" path="student.showRegistrationStates"/>
+	    </action>		    		
 	    
 		<action path="/studentEnrolments"
 				scope="request"		

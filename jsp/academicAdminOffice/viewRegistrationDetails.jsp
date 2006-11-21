@@ -52,6 +52,10 @@
 	<bean:message key="link.student.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 </html:link>
 
+<html:link page="/manageRegistrationState.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+	<bean:message key="link.student.manageRegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+</html:link>
+
 <logic:equal name="registration" property="degreeType.name" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA">
 	<br/>
 	<html:link page="/manageEnrolmentModel.do?method=prepare" paramId="registrationID" paramName="registration" paramProperty="idInternal">
@@ -68,7 +72,7 @@
 		<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&scpID=${idInternal}" />
 		<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
 		<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
-		<fr:property name="visibleIf(enrol)" value="active"/>
+		<fr:property name="visibleIf(enrol)" value="enrolable"/>
 		<fr:property name="contextRelative(enrol)" value="true"/>      	
 	</fr:layout>
 </fr:view>
