@@ -44,6 +44,15 @@
 	</table>
 	<br/>
 
+	<bean:message key="property.evaluationType"/>::<br/>
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.evaluationType" property="evaluationType" size="1">
+		<html:option key="label.all" value=""/>
+		<html:option key="label.exams" value="net.sourceforge.fenixedu.domain.Exam"/>
+		<html:option key="label.tests" value="net.sourceforge.fenixedu.domain.WrittenTest"/>
+    </html:select>
+
+	<br/>
+
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="lable.choose"/>
 	</html:submit>

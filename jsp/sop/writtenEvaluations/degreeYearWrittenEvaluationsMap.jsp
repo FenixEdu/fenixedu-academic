@@ -43,9 +43,13 @@
 						<bean:message key="lable.rooms"/>
 					</td>
 				</tr>
+				<bean:define id="formBean" name="searchWrittenEvaluationsByDegreeAndYearForm"/>
+				<bean:define id="evaluationType" type="java.lang.String" name="formBean" property="evaluationType"/>
 				<logic:iterate id="executionCourse" name="executionCoursesByCurricularYearEntry" property="value">
-					<logic:iterate id="evaluation" name="executionCourse" property="associatedEvaluations">
-						<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.WrittenTest">
+					<logic:iterate id="evaluation" name="executionCourse" property="orderedAssociatedEvaluations">
+						<bean:define id="className" name="evaluation" property="class.name"/>
+						<% if (evaluationType == null || evaluationType.length() == 0 || evaluationType.equals(className)) { %>
+						<logic:equal name="className" value="net.sourceforge.fenixedu.domain.WrittenTest">
 							<tr>
 								<td>
 									<bean:write name="executionCourse" property="nome"/>
@@ -75,7 +79,7 @@
 								</td>
 							</tr>
 						</logic:equal>
-						<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Exam">
+						<logic:equal name="className" value="net.sourceforge.fenixedu.domain.Exam">
 							<tr>
 								<td>
 									<bean:write name="executionCourse" property="nome"/>
@@ -105,6 +109,7 @@
 								</td>
 							</tr>
 						</logic:equal>
+						<% } %>
 					</logic:iterate>
 				</logic:iterate>
 			</table>
