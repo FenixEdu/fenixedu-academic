@@ -130,7 +130,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
     @Override
     protected void assertProcessingStatePreConditions() throws DomainException {
-	if (getRegistration().getLastStudentCurricularPlan().hasAnyNotPayedGratuityEvents()) {
+	if (getRegistration().getLastStudentCurricularPlanExceptPast().hasAnyNotPayedGratuityEvents()) {
 	    throw new DomainException("CertificateRequest.registration.has.not.payed.gratuities.for.last.student.curricular.plan");
 	}
     }
