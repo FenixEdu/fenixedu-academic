@@ -41,12 +41,13 @@ public class ChangeDegree extends Service {
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         final StudentCurricularPlan newActiveStudentCurricularPlan = degreeCurricularPlan.getNewStudentCurricularPlan();
+        newActiveStudentCurricularPlan.setRegistration(currentActiveStudentCurricularPlan.getRegistration());
         newActiveStudentCurricularPlan.setBranch(null);
         newActiveStudentCurricularPlan.setClassification(Double.valueOf(0));
         newActiveStudentCurricularPlan.setCompletedCourses(0);
         newActiveStudentCurricularPlan.setCreditsInSecundaryArea(0);
         newActiveStudentCurricularPlan.setCreditsInSpecializationArea(0);
-        newActiveStudentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE);
+        newActiveStudentCurricularPlan.setActive();
         newActiveStudentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
         newActiveStudentCurricularPlan.setEmployee(employee);
         newActiveStudentCurricularPlan.setGivenCredits(Double.valueOf(0));
@@ -55,7 +56,6 @@ public class ChangeDegree extends Service {
         newActiveStudentCurricularPlan.setSecundaryBranch(null);
         newActiveStudentCurricularPlan.setSpecialization(null);
         newActiveStudentCurricularPlan.setStartDate(newStudentCurricularPlanStartDate);
-        newActiveStudentCurricularPlan.setRegistration(currentActiveStudentCurricularPlan.getRegistration());
         newActiveStudentCurricularPlan.setWhen(Calendar.getInstance().getTime());
 
         final List<Enrolment> enrolments = new ArrayList<Enrolment>(currentActiveStudentCurricularPlan.getEnrolments());

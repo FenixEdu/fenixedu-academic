@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -1499,7 +1500,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return false;
     }
-    
+
     public boolean hasAnyEnrolmentForExecutionYear(final ExecutionYear executionYear) {
 	for (final Enrolment enrolment : this.getEnrolmentsSet()) {
 	    if (enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
@@ -1822,6 +1823,25 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public void setRegistration(final Registration registration) {
 	super.setStudent(registration);
+    }
+
+    public void setActive() {
+	getRegistration().getActiveStudentCurricularPlan().setCurrentState(
+		StudentCurricularPlanState.INACTIVE);
+	this.setCurrentState(StudentCurricularPlanState.ACTIVE);
+    }
+
+    public boolean isPast() {
+	return getDegreeCurricularPlan().isPast();
+    }
+
+    public ExecutionYear getStartExecutionYear() {
+	return ExecutionYear.getExecutionYearByDate(getStartDateYearMonthDay());
+    }
+
+    public boolean isEnrolable() {
+	return getRegistration().getActiveStateType().equals(RegistrationStateType.REGISTERED)
+		&& getRegistration().getLastStudentCurricularPlanExceptPast().equals(this);
     }
 
 }

@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
@@ -961,14 +962,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     @Override
     @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
-    public void setCurricularPlanMembersGroup(Group curricularPlanMembersGroup) {       
-        super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
+    public void setCurricularPlanMembersGroup(Group curricularPlanMembersGroup) {
+	super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
 
         if (curricularPlanMembersGroup == null) {
             setCurricularPlanMembersGroupExpression(null);
         } else {
             setCurricularPlanMembersGroupExpression(curricularPlanMembersGroup.getExpression());
-        }
+    }
     }
 
     @Override
@@ -1353,4 +1354,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return false;
     }
 
+    public Set<Registration> getRegistrations(){
+	Set<Registration> registrations = new HashSet<Registration>();
+	for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if(studentCurricularPlan.isActive()){
+		registrations.add(studentCurricularPlan.getRegistration());
+	    }
+	}
+	return registrations;
+    }
+
+    public boolean isPast(){
+	return getState().equals(DegreeCurricularPlanState.PAST);
+    }
 }

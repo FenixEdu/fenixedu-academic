@@ -10,14 +10,14 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.util.workflow.IState;
+import net.sourceforge.fenixedu.domain.util.workflow.IStateWithOperations;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.joda.time.DateTime;
 
 // FIXME: Rename to CandidacyState
-public abstract class CandidacySituation extends CandidacySituation_Base implements IState {
+public abstract class CandidacySituation extends CandidacySituation_Base implements IStateWithOperations {
 
     public static Comparator<CandidacySituation> DATE_COMPARATOR = new Comparator<CandidacySituation>() {
 	public int compare(CandidacySituation leftCandidacySituation,

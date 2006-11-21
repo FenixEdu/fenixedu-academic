@@ -70,6 +70,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
@@ -151,6 +153,10 @@ public class Registration extends Registration_Base {
 		studentCandidacy);
     }
 
+    public Registration(Person person, Integer studentNumber, StudentKind studentKind) {
+	this(person, studentNumber, studentKind, StudentState.INSCRITO_OBJ, true, false, false, null);
+    }
+
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,
 	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden,
 	    final Boolean interruptedStudies, StudentCandidacy studentCandidacy) {
@@ -188,8 +194,15 @@ public class Registration extends Registration_Base {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
             if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE
                     || studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.SCHOOLPARTCONCLUDED) {
-                return studentCurricularPlan;
-            }
+		return studentCurricularPlan;
+	    }
+	}
+	return null;
+    }
+
+    public StudentCurricularPlan getConcludedStudentCurricularPlan() {
+	if (isConcluded()) {
+	    return getLastStudentCurricularPlanExceptPast();
 	}
 	return null;
     }
@@ -203,9 +216,32 @@ public class Registration extends Registration_Base {
 		"startDateYearMonthDay"));
     }
 
+    public StudentCurricularPlan getLastStudentCurricularPlanExceptPast() {
+
+	if (getStudentCurricularPlansExceptPast().size() == 0) {
+	    return null;
+	}
+	return (StudentCurricularPlan) Collections.max(getStudentCurricularPlansExceptPast(),
+		new BeanComparator("startDateYearMonthDay"));
+    }
+
+    public StudentCurricularPlan getCurrentStudentCurricularPlan() {
+	return getLastStudentCurricularPlanExceptPast();
+    }
+
     public StudentCurricularPlan getFirstStudentCurricularPlan() {
 	return (StudentCurricularPlan) Collections.min(getStudentCurricularPlans(), new BeanComparator(
 		"startDateYearMonthDay"));
+    }
+
+    public List<StudentCurricularPlan> getStudentCurricularPlansExceptPast() {
+	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+	for (StudentCurricularPlan studentCurricularPlan : super.getStudentCurricularPlans()) {
+	    if (!studentCurricularPlan.isPast()) {
+		result.add(studentCurricularPlan);
+	    }
+	}
+	return result;
     }
 
     public StudentCurricularPlan getActiveOrConcludedStudentCurricularPlan() {
@@ -601,7 +637,12 @@ public class Registration extends Registration_Base {
 	return students;
     }
 
+    @Deprecated
     public static List<Registration> readStudentsByDegreeType(DegreeType degreeType) {
+	return readRegistrationsByDegreeType(degreeType);
+    }
+
+    public static List<Registration> readRegistrationsByDegreeType(DegreeType degreeType) {
 	final List<Registration> students = new ArrayList();
 	for (final Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
 	    if (registration.getDegreeType().equals(degreeType)) {
@@ -1066,7 +1107,7 @@ public class Registration extends Registration_Base {
     @Override
     public Double getEntryGrade() {
 	if (isBolonhaDegreeOrIntegratedMaster()) {
-	    return getDegreeCandidacy().getEntryGrade();
+	    return getStudentCandidacy().getEntryGrade();
 	}
 	return super.getEntryGrade();
     }
@@ -1074,7 +1115,7 @@ public class Registration extends Registration_Base {
     @Override
     public void setEntryGrade(Double entryGrade) {
 	if (isBolonhaDegreeOrIntegratedMaster()) {
-	    getDegreeCandidacy().setEntryGrade(entryGrade);
+	    getStudentCandidacy().setEntryGrade(entryGrade);
 	}
 	super.setEntryGrade(entryGrade);
     }
@@ -1225,6 +1266,11 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isConcluded() {
+
+	if (getActiveStateType().equals(RegistrationStateType.CONCLUDED)) {
+	    return true;
+	}
+
 	final double ectsCredits = calculateEctsCredits();
 	final int curricularYear = calculateCurricularYear(ectsCredits);
 	final DegreeType degreeType = getDegreeType();
@@ -1251,7 +1297,6 @@ public class Registration extends Registration_Base {
 	if (executionYear == null) {
 	    return 1;
 	}
-
 	final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
 	final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
 	final Set<CurricularCourse> curricularCoursesToDisplay = new TreeSet<CurricularCourse>(
@@ -1507,7 +1552,21 @@ public class Registration extends Registration_Base {
 	return !studentTypesNotPayingGratuityOrInsurance.contains(getStudentKind().getStudentType());
 
     }
-    
+
+    public RegistrationState getActiveState() {
+	return hasAnyRegistrationStates() ? Collections.max(getRegistrationStates(),
+		RegistrationState.DATE_COMPARATOR) : null;
+    }
+
+    public RegistrationStateType getActiveStateType() {
+	final RegistrationState activeState = getActiveState();
+	return activeState != null ? activeState.getStateType() : RegistrationStateType.REGISTERED;
+    }
+
+    public boolean isInRegisteredState() {
+	return getActiveStateType().equals(RegistrationStateType.REGISTERED);
+    }
+
     public boolean hasDegreeDiplomaRequest() {
 	for (final DocumentRequest documentRequest : this.getDocumentRequests()) {
 	    if (documentRequest.isDegreeDiploma()) {
@@ -1586,4 +1645,5 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
+
 }

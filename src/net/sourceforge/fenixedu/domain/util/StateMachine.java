@@ -14,7 +14,7 @@ public class StateMachine {
             state.checkConditionsToForward(nextState);
             state.nextState(nextState);
         } else {
-            throw new DomainException("invalid next state");
+            throw new DomainException("error.invalid.next.state");
         }
     }
 }

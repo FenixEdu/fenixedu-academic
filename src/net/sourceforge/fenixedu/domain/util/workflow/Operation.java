@@ -74,6 +74,6 @@ public abstract class Operation implements Serializable,Comparable<Operation> {
 
     public abstract boolean isInput();
 
-    public abstract IState getState();
+    public abstract IStateWithOperations getState();
 
 }

@@ -1583,11 +1583,8 @@ public class Person extends Person_Base {
 	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
 	for (final Registration registration : getStudentsSet()) {
-	    for (final StudentCurricularPlan studentCurricularPlan : registration
-		    .getStudentCurricularPlansSet()) {
-		if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.CONCLUDED) {
-		    studentCurricularPlans.add(studentCurricularPlan);
-		}
+	    if (registration.isConcluded()) {
+		studentCurricularPlans.add(registration.getLastStudentCurricularPlanExceptPast());
 	    }
 	}
 	return studentCurricularPlans;
@@ -1841,30 +1838,30 @@ public class Person extends Person_Base {
 
     @Override
     public ParkingPartyClassification getPartyClassification() {
-        final Teacher teacher = getTeacher();
-        if (teacher != null) {
+	final Teacher teacher = getTeacher();
+	if (teacher != null) {
             if (teacher.getCurrentWorkingDepartment() != null
                     && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
-                return ParkingPartyClassification.TEACHER;
-            }
-        }
-        final Employee employee = getEmployee();
+		return ParkingPartyClassification.TEACHER;
+	    }
+	}
+	final Employee employee = getEmployee();
         if (employee != null && employee.getCurrentWorkingContract() != null
                 && (teacher == null || teacher.getCurrentWorkingDepartment() == null)) {
-            return ParkingPartyClassification.EMPLOYEE;
-        }
-        final GrantOwner grantOwner = getGrantOwner();
-        if (grantOwner != null && grantOwner.hasCurrentContract()) {
-            return ParkingPartyClassification.GRANT_OWNER;
-        }
-        final Student student = getStudent();
-        if (student != null) {
-            final DegreeType degree = student.getMostSignificantDegreeType();
-            if (degree != null) {
-                return ParkingPartyClassification.getClassificationByDegreeType(degree);
-            }
-        }
-        return ParkingPartyClassification.PERSON;
+	    return ParkingPartyClassification.EMPLOYEE;
+	}
+	final GrantOwner grantOwner = getGrantOwner();
+	if (grantOwner != null && grantOwner.hasCurrentContract()) {
+	    return ParkingPartyClassification.GRANT_OWNER;
+	}
+	final Student student = getStudent();
+	if (student != null) {
+	    final DegreeType degree = student.getMostSignificantDegreeType();
+	    if (degree != null) {
+		return ParkingPartyClassification.getClassificationByDegreeType(degree);
+	    }
+	}
+	return ParkingPartyClassification.PERSON;
     }
 
     public static class PersonBeanFactoryEditor extends PersonBean implements FactoryExecutor {
