@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.util.EntryPhase;
 
 public abstract class StudentCandidacy extends StudentCandidacy_Base {
@@ -29,7 +30,13 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	    throw new DomainException("person cannot be null");
 	}
 	if (person.hasStudentCandidacyForExecutionDegree(executionDegree)) {
-	    throw new DomainException("error.candidacy.already.created");
+	    StudentCandidacy existentCandidacy = person
+		    .getStudentCandidacyForExecutionDegree(executionDegree);
+	    if (!existentCandidacy.hasRegistration()
+		    || !(existentCandidacy.getRegistration().getActiveStateType().equals(
+			    RegistrationStateType.CANCELED) || existentCandidacy.getRegistration()
+			    .getActiveStateType().equals(RegistrationStateType.ABANDONED)))
+		throw new DomainException("error.candidacy.already.created");
 	}
 	setExecutionDegree(executionDegree);
 	setPerson(person);

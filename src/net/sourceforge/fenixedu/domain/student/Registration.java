@@ -70,6 +70,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -110,6 +111,7 @@ public class Registration extends Registration_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setStartDate(new YearMonthDay());
+	new RegisteredState(this, AccessControl.getUserView().getPerson(), new DateTime());
     }
 
     @Deprecated
