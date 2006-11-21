@@ -848,8 +848,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 buffer.delete(buffer.length() - 2, buffer.length() - 1);
             }
             writtenEvaluationsRooms.put(writtenTest.getIdInternal(), buffer.toString());
-            int numberOfEnroledStudents = calculateEnroledStudents(associatedWrittenEvaluations, getExecutionPeriod());
-            executionCoursesEnroledStudents.put(executionCourse.getIdInternal(), numberOfEnroledStudents);
+            int numberOfEnroledStudents = writtenTest.getCountStudentsEnroledAttendingExecutionCourses();
+//            int numberOfEnroledStudents = calculateEnroledStudents(associatedWrittenEvaluations, getExecutionPeriod());
+            System.out.println("Execution course: " + executionCourse.getIdInternal() + " " + executionCourse.getNome() + " written evaluation: " + writtenTest.getIdInternal()  + " " + numberOfEnroledStudents);
+//            executionCoursesEnroledStudents.put(executionCourse.getIdInternal(), numberOfEnroledStudents);
+            executionCoursesEnroledStudents.put(writtenTest.getIdInternal(), numberOfEnroledStudents);
             writtenEvaluationsMissingPlaces.put(writtenTest.getIdInternal(), Integer.valueOf(numberOfEnroledStudents - totalCapacity));
         }
     }

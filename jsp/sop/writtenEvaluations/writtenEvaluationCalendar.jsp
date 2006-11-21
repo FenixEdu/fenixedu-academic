@@ -216,7 +216,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 								<c:out value=" ${bundle['label.coordinator.to']} "/>
 								<fmt:formatDate pattern="HH:mm" value="${evaluation.endDate}"/>
 							</td>
-							<td><c:out value="${SOPEvaluationManagementBackingBean.executionCoursesEnroledStudents[executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal]}"/></td>
+							<td><c:out value="${SOPEvaluationManagementBackingBean.executionCoursesEnroledStudents[evaluation.idInternal]}"/></td>
 							<td>
 								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal] != 0}">
 									<c:out value="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal]}"/>
