@@ -15,11 +15,10 @@
 		</html:messages>
 	</span>
 </logic:messagesPresent>
-
-<logic:present name="student">
+<logic:present name="registration">
 	<html:form action="/documentRequest">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewDocumentRequestsToCreate" />
-		
+		<html:hidden name="documentRequestCreateBean" property="registration"/>
 		<p class="mbottom05">Identificação:</p>
 		<table class="tstyle4 thlight thright mtop05">
 			<tr>
@@ -27,7 +26,7 @@
 					<bean:message key="student.male.capitalized"/>:
 				</th>
 				<td colspan="3">
-					<bean:write name="student" property="person.name"/>
+					<bean:write name="registration" property="person.name"/>
 				</td>
 			</tr>
 			<tr>
@@ -35,7 +34,7 @@
 					<bean:message key="label.number"/>:
 				</th>
 				<td>
-					<bean:write name="student" property="number"/>
+					<bean:write name="registration" property="number"/>
 				</td>
 			</tr>
 			<tr>
@@ -44,13 +43,13 @@
 				</th>
 				<td>
 					<logic:present name="studentCurricularPlans">
-						<bean:define id="studentCurricularPlans" name="student" property="studentCurricularPlans"/>
+						<bean:define id="studentCurricularPlans" name="registration" property="studentCurricularPlans"/>
 						<html:select property="scpId" onchange="this.form.method.value='onSCPChange';this.form.submit()">
 							<html:options collection="studentCurricularPlans" property="idInternal" labelProperty="degreeCurricularPlan.name"/>
 						</html:select>
 					</logic:present>
 					<logic:notPresent name="studentCurricularPlans">
-						<bean:write name="student" property="activeStudentCurricularPlan.degreeCurricularPlan.name"/>
+						<bean:write name="registration" property="activeStudentCurricularPlan.degreeCurricularPlan.name"/>
 					</logic:notPresent>
 				</td>
 			</tr>
@@ -59,7 +58,7 @@
 					<bean:message key="address"/>:
 				</th>
 				<td>
-					<bean:write name="student" property="person.address"/>
+					<bean:write name="registration" property="person.address"/>
 				</td>
 			</tr>
 			<tr>
@@ -67,7 +66,7 @@
 					<bean:message key="areaCode"/>:
 				</th>
 				<td>
-					<bean:write name="student" property="person.areaCode"/>
+					<bean:write name="registration" property="person.areaCode"/>
 				</td>
 			</tr>
 			<tr>
@@ -75,7 +74,7 @@
 					<bean:message key="areaOfAreaCode"/>:
 				</th>
 				<td>
-					<bean:write name="student" property="person.areaOfAreaCode"/>
+					<bean:write name="registration" property="person.areaOfAreaCode"/>
 				</td>
 			</tr>
 			<tr>
@@ -83,7 +82,7 @@
 					<bean:message key="mobile"/>:
 				</th>
 				<td>
-					<bean:write name="student" property="person.mobile"/>
+					<bean:write name="registration" property="person.mobile"/>
 				</td>
 			</tr>
 			<tr>
@@ -91,7 +90,7 @@
 					<bean:message key="phone"/>:
 				</th>
 				<td>
-					<bean:write name="student" property="person.phone"/>
+					<bean:write name="registration" property="person.phone"/>
 				</td>
 			</tr>
 			<tr>
@@ -99,7 +98,7 @@
 					<bean:message key="email"/>:
 				</th>
 				<td>
-					<bean:write name="student" property="person.email"/>
+					<bean:write name="registration" property="person.email"/>
 				</td>
 			</tr>
 		</table>
@@ -127,7 +126,7 @@
 					id="documentRequestTypes" 
 					enumeration="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType" 
 					bundle="ENUMERATION_RESOURCES"
-					excludedFields="SCHOOL_REGISTRATION_DECLARATION,ENROLMENT_DECLARATION,IRS_DECLARATION,DEGREE_DIPLOMA"/>
+					excludedFields="SCHOOL_REGISTRATION_DECLARATION,ENROLMENT_DECLARATION,IRS_DECLARATION,DEGREE_DIPLOMA,DEGREE_FINALIZATION_CERTIFICATE,APPROVEMENT_CERTIFICATE"/>
 				<logic:iterate id="documentRequestType" name="documentRequestTypes">
 					<tr>
 						<td>
@@ -168,7 +167,7 @@
 						<td></td>
 						</logic:equal>
 						
-						<logic:equal name="documentRequestType" property="value" value="DEGREE_FINALIZATION_CERTIFICATE">
+				<!--		<logic:equal name="documentRequestType" property="value" value="DEGREE_FINALIZATION_CERTIFICATE">
 						<td>
 							<bean:message key="average"/>
 							<html:radio property="degreeFinalizationAverage" value="true"/><bean:message key="label.yes"/>
@@ -183,7 +182,7 @@
 	
 						<logic:equal name="documentRequestType" property="value" value="DEGREE_FINALIZATION_CERTIFICATE">
 						<td></td>					
-						</logic:equal>	
+						</logic:equal>	-->
 					
 					</tr>
 				</logic:iterate>
