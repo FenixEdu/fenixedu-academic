@@ -53,6 +53,8 @@ import org.apache.struts.action.DynaActionForm;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 public class ParkingManagerDispatchAction extends FenixDispatchAction {
+    private static final int MAX_NOTE_LENGTH = 250;
+
     public ActionForward showParkingRequests(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         // verificar autorização
@@ -383,7 +385,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                 request.setAttribute("idInternal", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             }
-
+            
             ParkingPartyBean parkingPartyBean = (ParkingPartyBean) getFactoryObject();
             String cardAlwaysValid = dynaForm.getString("cardAlwaysValid");
             if (cardAlwaysValid.equalsIgnoreCase("no")
@@ -394,6 +396,14 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             } else if (cardAlwaysValid.equalsIgnoreCase("yes")) {
                 parkingPartyBean.setCardStartDate(null);
                 parkingPartyBean.setCardEndDate(null);
+            }
+            
+            if(!StringUtils.isEmpty(note) && note.length() > MAX_NOTE_LENGTH){
+                ActionMessages actionMessages = getMessages(request);
+                actionMessages.add("note", new ActionMessage("error.maxLengthExceeded",MAX_NOTE_LENGTH));
+                saveMessages(request, actionMessages);
+                request.setAttribute("idInternal", parkingRequestID);
+                return showRequest(mapping, actionForm, request, response);
             }
 
             if (parkingPartyBean.getCardStartDate() != null

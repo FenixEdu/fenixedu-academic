@@ -133,6 +133,9 @@ function hideCardValidPeriod(toShow){
 			
 			<jsp:include page="viewParkingPartyAndRequest.jsp"/>
 			
+			<span class="error0 mtop0"><html:messages id="message" property="note" message="true" bundle="PARKING_RESOURCES">
+				<bean:write name="message"/><br/>
+			</html:messages></span>
 			<p class="mbottom025"><strong><bean:message key="label.note"/></strong></p>
 			<html:textarea rows="7" cols="45" property="note"/>
 			<p class="mtop2">
