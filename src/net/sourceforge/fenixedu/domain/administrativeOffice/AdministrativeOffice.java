@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.administrativeOffice;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -174,8 +175,8 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	return result;
     }
 
-    public Set<Degree> getAdministratedDegreesForStudentCreationWithoutCandidacy() {
-	final Set<Degree> result = new TreeSet<Degree>(new BeanComparator("name"));
+    public List<Degree> getAdministratedDegreesForStudentCreationWithoutCandidacy() {
+	final List<Degree> result = new ArrayList<Degree>();
 	for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
 	    final DegreeType degreeType = degree.getDegreeType();
 	    if (degreeType.getAdministrativeOfficeType().equals(this.getAdministrativeOfficeType())
@@ -184,6 +185,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    }
 	}
 
+	Collections.sort(result, Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
 	return result;
     }
 
