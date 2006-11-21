@@ -3824,6 +3824,7 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 	Integer keyAdministrativeOffice;
 	String ojbConcreteClass;
 	Integer serviceRequestNumber;
+	Boolean urgentRequest;
 }
 
 		class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
@@ -3833,7 +3834,6 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 				Integer keyCertificateRequestEvent;
 				DocumentPurposeType documentPurposeType;
 				String otherDocumentPurposeTypeDescription;
-				Boolean urgentRequest;
 				Integer numberOfPages;
 			}
 		
