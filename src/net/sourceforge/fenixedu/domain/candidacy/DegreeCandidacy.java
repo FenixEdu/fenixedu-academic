@@ -36,7 +36,7 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	    final String ingression, final String istUniversity, EntryPhase entryPhase) {
 	super();
 	init(person, executionDegree, creator, entryGrade, contigent, ingression, istUniversity,
-		entryPhase);	
+		entryPhase);
     }
 
     private void checkParameters(final Person person, final ExecutionDegree executionDegree,
@@ -58,26 +58,6 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	    throw new DomainException("error.candidacy.DegreeCandidacy.creator.cannot.be.null");
 	}
 
-	// if (entryGrade == null) {
-	// throw new
-	// DomainException("error.candidacy.DegreeCandidacy.entryGrade.cannot.be.null");
-	// }
-	//
-	// if (contigent == null) {
-	// throw new
-	// DomainException("error.candidacy.DegreeCandidacy.contigent.cannot.be.null");
-	// }
-	//
-	// if (ingression == null) {
-	// throw new
-	// DomainException("error.candidacy.DegreeCandidacy.ingression.cannot.be.null");
-	// }
-	//
-	// if (istUniversity == null) {
-	// throw new
-	// DomainException("error.candidacy.DegreeCandidacy.istUniversity.cannot.be.null");
-	// }
-
 	if (entryPhase == null) {
 	    throw new DomainException("error.candidacy.DegreeCandidacy.entryPhase.cannot.be.null");
 	}
@@ -98,25 +78,6 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	super.setIstUniversity(istUniversity);
 	super.setEntryPhase(entryPhase);
     }
-
-    // @Override
-    // public void setExecutionDegree(ExecutionDegree executionDegree) {
-    // //throw new
-        // DomainException("error.candidacy.DegreeCandidacy.cannot.modify.executionDegree");
-    // }
-
-    // @Override
-    // public void setPerson(Person person) {
-    // throw new
-        // DomainException("error.candidacy.DegreeCandidacy.cannot.modify.person");
-    // }
-    //
-    // @Override
-    // public void setPrecedentDegreeInformation(PrecedentDegreeInformation
-        // precedentDegreeInformation) {
-    // throw new DomainException(
-    // "error.candidacy.DegreeCandidacy.cannot.modify.precedentDegreeInformation");
-    // }
 
     public String getDescription() {
 	return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale())
