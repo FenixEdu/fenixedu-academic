@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.DocumentRequestCreator;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -30,30 +31,36 @@ import org.apache.struts.action.DynaActionForm;
 public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
     private static Registration registration;
-    
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        registration = SessionUtils.getUserView(request).getPerson().getStudentByUsername();
 
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        registration = SessionUtils.getUserView(request).getPerson().getStudentByUsername();
+        final DocumentRequestCreateBean documentRequestCreateBean = new DocumentRequestCreateBean(registration);
+        
         if (!registration.getPayedTuition()) {
             addActionMessage(request, "error.message.tuitionNotPayed");
         } else {
             if (!registration.hasAnyStudentCurricularPlans()) {
                 addActionMessage(request, "error.student.curricularPlan.nonExistent");
             } else {
-                request.setAttribute("student", registration);
+                request.setAttribute("registration", registration);
 
                 if (registration.getStudentCurricularPlansCount() > 1) {
-                    request.setAttribute("studentCurricularPlans", registration.getStudentCurricularPlans());
+                    request.setAttribute("studentCurricularPlans", registration
+                            .getStudentCurricularPlans());
                 }
 
-                getAndSetExecutionYears(request, registration.getActiveStudentCurricularPlan());
+                //getAndSetExecutionYears(request, registration.getActiveStudentCurricularPlan());
+                request.setAttribute("executionYears", registration.getEnrolmentsExecutionYears());
             }
         }
-
+        request.setAttribute("documentRequestCreateBean", new DocumentRequestCreator(
+                registration));
         return mapping.findForward("createDocumentRequests");
     }
 
-    private void getAndSetExecutionYears(HttpServletRequest request, StudentCurricularPlan studentCurricularPlan) {
+    private void getAndSetExecutionYears(HttpServletRequest request,
+            StudentCurricularPlan studentCurricularPlan) {
         if (studentCurricularPlan.getEnrolmentsExecutionYears().isEmpty()) {
             addActionMessage(request, "message.no.enrolments");
         } else {
@@ -61,9 +68,11 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         }
     }
 
-    public ActionForward onSCPChange(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward onSCPChange(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
         getAndSetStudent(request);
-        getAndSetExecutionYears(request, getAndSetStudentCurricularPlans(request, (DynaActionForm) actionForm));
+        getAndSetExecutionYears(request, getAndSetStudentCurricularPlans(request,
+                (DynaActionForm) actionForm));
 
         return mapping.findForward("createDocumentRequests");
     }
@@ -73,40 +82,51 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         request.setAttribute("student", registration);
     }
 
-    private StudentCurricularPlan getAndSetStudentCurricularPlans(HttpServletRequest request, final DynaActionForm dynaActionForm) {
+    private StudentCurricularPlan getAndSetStudentCurricularPlans(HttpServletRequest request,
+            final DynaActionForm dynaActionForm) {
         final StudentCurricularPlan studentCurricularPlan;
         if (registration.getStudentCurricularPlansCount() > 1) {
             request.setAttribute("studentCurricularPlans", registration.getStudentCurricularPlans());
-
-            studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) dynaActionForm.get("scpId"));
+            
+            studentCurricularPlan = rootDomainObject
+                    .readStudentCurricularPlanByOID((Integer) dynaActionForm.get("scpId"));
         } else {
             studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         }
         return studentCurricularPlan;
     }
 
-    public ActionForward viewDocumentRequestsToCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewDocumentRequestsToCreate(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
         getAndSetStudent(request);
 
         final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        
+
         getAndSetExecutionYears(request, getAndSetStudentCurricularPlans(request, dynaActionForm));
 
-        final List<String> chosenDocumentRequestTypes = getAndSetChosenDocumentRequestTypes(request, dynaActionForm);
-        final DocumentPurposeType chosenDocumentPurposeType = getAndSetChoseDocumentPurposeType(request, dynaActionForm);
-        final String otherPurpose = getAndSetOtherPurpose(request, dynaActionForm, chosenDocumentPurposeType);
+        final List<String> chosenDocumentRequestTypes = getAndSetChosenDocumentRequestTypes(request,
+                dynaActionForm);
+        final DocumentPurposeType chosenDocumentPurposeType = getAndSetChoseDocumentPurposeType(request,
+                dynaActionForm);
+        final String otherPurpose = getAndSetOtherPurpose(request, dynaActionForm,
+                chosenDocumentPurposeType);
         if (hasActionMessage(request)) {
             return mapping.findForward("createDocumentRequests");
         }
 
         warningsToReport.clear();
-        getAndSetDocumentRequestCreateBeans(request, dynaActionForm, getAndSetStudentCurricularPlans(request, dynaActionForm), chosenDocumentRequestTypes, chosenDocumentPurposeType, otherPurpose, dynaActionForm.getString("notes"), Boolean.valueOf(dynaActionForm.getString("urgentRequest")));
+        getAndSetDocumentRequestCreateBeans(request, dynaActionForm, getAndSetStudentCurricularPlans(
+                request, dynaActionForm), chosenDocumentRequestTypes, chosenDocumentPurposeType,
+                otherPurpose, dynaActionForm.getString("notes"), Boolean.valueOf(dynaActionForm
+                        .getString("urgentRequest")));
 
         return mapping.findForward("viewDocumentRequestsToCreate");
     }
 
-    private List<String> getAndSetChosenDocumentRequestTypes(HttpServletRequest request, final DynaActionForm dynaActionForm) {
-        final List<String> chosenDocumentRequestTypes = Arrays.asList((String[]) dynaActionForm.get("chosenDocumentRequestTypes"));
+    private List<String> getAndSetChosenDocumentRequestTypes(HttpServletRequest request,
+            final DynaActionForm dynaActionForm) {
+        final List<String> chosenDocumentRequestTypes = Arrays.asList((String[]) dynaActionForm
+                .get("chosenDocumentRequestTypes"));
         if (chosenDocumentRequestTypes.isEmpty()) {
             addActionMessage(request, "error.choose.one.type.of.document");
         }
@@ -114,13 +134,17 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         return chosenDocumentRequestTypes;
     }
 
-    private DocumentPurposeType getAndSetChoseDocumentPurposeType(HttpServletRequest request, final DynaActionForm dynaActionForm) {
-        final DocumentPurposeType chosenDocumentPurposeType = (!StringUtils.isEmpty(dynaActionForm.getString("chosenDocumentPurposeType"))) ? DocumentPurposeType.valueOf(dynaActionForm.getString("chosenDocumentPurposeType")) : null;
+    private DocumentPurposeType getAndSetChoseDocumentPurposeType(HttpServletRequest request,
+            final DynaActionForm dynaActionForm) {
+        final DocumentPurposeType chosenDocumentPurposeType = (!StringUtils.isEmpty(dynaActionForm
+                .getString("chosenDocumentPurposeType"))) ? DocumentPurposeType.valueOf(dynaActionForm
+                .getString("chosenDocumentPurposeType")) : null;
         request.setAttribute("chosenDocumentPurposeType", chosenDocumentPurposeType);
         return chosenDocumentPurposeType;
     }
 
-    private String getAndSetOtherPurpose(HttpServletRequest request, final DynaActionForm dynaActionForm, final DocumentPurposeType chosenDocumentPurposeType) {
+    private String getAndSetOtherPurpose(HttpServletRequest request,
+            final DynaActionForm dynaActionForm, final DocumentPurposeType chosenDocumentPurposeType) {
         final String otherPurpose = dynaActionForm.getString("otherPurpose");
         if (chosenDocumentPurposeType == DocumentPurposeType.OTHER) {
             if (otherPurpose == null) {
@@ -136,14 +160,21 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     }
 
     private static final List<String> warningsToReport = new ArrayList<String>();
-    
-    private void getAndSetDocumentRequestCreateBeans(HttpServletRequest request, final DynaActionForm dynaActionForm, StudentCurricularPlan studentCurricularPlan, final List<String> chosenDocumentRequestTypes, final DocumentPurposeType chosenDocumentPurposeType, final String otherPurpose, final String notes, final Boolean urgentRequest) {
-        final List<DocumentRequestCreateBean> documentRequestCreateBeans = new ArrayList<DocumentRequestCreateBean>();
-        
-        for (final String chosenDocumentRequestType : chosenDocumentRequestTypes) {
-            final DocumentRequestType documentRequestType = DocumentRequestType.valueOf(chosenDocumentRequestType);
 
-            final DocumentRequestCreateBean documentRequestCreateBean = buildDocumentRequestCreateBean(dynaActionForm, studentCurricularPlan, chosenDocumentPurposeType, otherPurpose, notes, urgentRequest, documentRequestType);
+    private void getAndSetDocumentRequestCreateBeans(HttpServletRequest request,
+            final DynaActionForm dynaActionForm, StudentCurricularPlan studentCurricularPlan,
+            final List<String> chosenDocumentRequestTypes,
+            final DocumentPurposeType chosenDocumentPurposeType, final String otherPurpose,
+            final String notes, final Boolean urgentRequest) {
+        final List<DocumentRequestCreateBean> documentRequestCreateBeans = new ArrayList<DocumentRequestCreateBean>();
+
+        for (final String chosenDocumentRequestType : chosenDocumentRequestTypes) {
+            final DocumentRequestType documentRequestType = DocumentRequestType
+                    .valueOf(chosenDocumentRequestType);
+
+            final DocumentRequestCreateBean documentRequestCreateBean = buildDocumentRequestCreateBean(
+                    dynaActionForm, studentCurricularPlan, chosenDocumentPurposeType, otherPurpose,
+                    notes, urgentRequest, documentRequestType);
 
             documentRequestCreateBeans.add(documentRequestCreateBean);
         }
@@ -158,10 +189,10 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
             final String notes, final Boolean urgentRequest,
             final DocumentRequestType documentRequestType) {
 
-        final DocumentRequestCreateBean documentRequestCreateBean = new DocumentRequestCreateBean(null);
+        final DocumentRequestCreateBean documentRequestCreateBean = new DocumentRequestCreateBean(registration);
 
         documentRequestCreateBean.setToBeCreated(Boolean.TRUE);
-        //documentRequestCreateBean.setStudentCurricularPlan(studentCurricularPlan);
+        documentRequestCreateBean.getRegistration();
         documentRequestCreateBean.setChosenDocumentRequestType(documentRequestType);
         documentRequestCreateBean.setChosenDocumentPurposeType(chosenDocumentPurposeType);
         documentRequestCreateBean.setOtherPurpose(otherPurpose);
@@ -195,7 +226,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         documentRequestCreateBean.setAverage(average);
         documentRequestCreateBean.setDetailed(detailed);
         documentRequestCreateBean.setExecutionYear(executionYear);
-        
+
         if (documentRequestCreateBean.hasWarningsToReport()) {
             warningsToReport.addAll(documentRequestCreateBean.getWarningsToReport());
         }
@@ -203,10 +234,12 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         return documentRequestCreateBean;
     }
 
-    public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward create(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
         final Object[] args = { getConfirmedDocumentRequestCreateBeans() };
-        final List<String> messages = (List<String>) executeService(request, "CreateDocumentRequests", args);
-
+        final List<String> messages = (List<String>) executeService(request, "CreateDocumentRequests",
+                args);
         for (final String message : messages) {
             final ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(message, new ActionMessage(message));
@@ -218,24 +251,31 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
     private List<DocumentRequestCreateBean> getConfirmedDocumentRequestCreateBeans() {
         final List<DocumentRequestCreateBean> result = new ArrayList<DocumentRequestCreateBean>();
-
-        for (final DocumentRequestCreateBean documentRequestCreateBean : (List<DocumentRequestCreateBean>) RenderUtils.getViewState().getMetaObject().getObject()) {
+        
+        for (final DocumentRequestCreateBean documentRequestCreateBean : (List<DocumentRequestCreateBean>) RenderUtils
+                .getViewState().getMetaObject().getObject()) {
+           
             if (documentRequestCreateBean.getToBeCreated()) {
+                
                 result.add(documentRequestCreateBean);
             }
         }
         return result;
     }
 
-    public ActionForward viewDocumentRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewDocumentRequests(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
         getAndSetStudent(request);
         request.setAttribute("documentRequests", registration.getDocumentRequests());
 
         return mapping.findForward("viewDocumentRequests");
     }
 
-    public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("documentRequest", rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request, "documentRequestId")));
+    public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("documentRequest", rootDomainObject
+                .readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
+                        "documentRequestId")));
 
         return mapping.findForward("viewDocumentRequest");
     }
