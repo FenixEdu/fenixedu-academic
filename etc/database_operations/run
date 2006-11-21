@@ -34,4 +34,4 @@ executeWithTempFile "Update AccountingTransaction with AccountingTransactionDeta
 execute "Creating Module Payments on Manager" AddPaymentsModuleToManager.sql
 execute "Changing Table AccountingTransaction (add not null restriction to keyTransactionDetails)" AlterTableAccountingTransactionAfterMigration.sql
 execute "Changing Table Student" AlterTableStudent.sql
-
+execute "Changing Table AcademicServiceRequestSituation" AlterTableAcademicServiceRequestSituation.sql
