@@ -85,7 +85,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
-	if (!academicServiceRequest.getRegistration().getActiveStudentCurricularPlan().isBolonha()) {
+	if (!academicServiceRequest.getRegistration().getLastStudentCurricularPlanExceptPast().isBolonha()) {
 	    addActionMessage(request, "print.preBolonha.documentRequest.in.aplica");
 	}
 
