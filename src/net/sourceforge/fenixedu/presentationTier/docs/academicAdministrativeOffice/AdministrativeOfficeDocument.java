@@ -5,10 +5,13 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
@@ -91,11 +94,24 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	final String andOf = resourceBundle.getString("label.candidacy.registration.declaration.section5");
 	parameters.put("nameOfMother", StringUtils.multipleLineRightPad(LINE_LENGTH, andOf + " " + nameOfMother, '-'));
 	
-        if (getDocumentRequest().isPayable()) {
-            final AdministrativeOfficeServiceAgreementTemplate serviceAgreementTemplate = getDocumentRequest().getAdministrativeOffice().getServiceAgreementTemplate();
-            final PostingRule postingRule = serviceAgreementTemplate.findPostingRuleByEventType(getDocumentRequest().getEventType());
-            parameters.put("postingRule", postingRule);
+        if (getDocumentRequest().isCertificate()) {
+            final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
+            
+            final Money amountPerPage = certificateRequestPR.getAmountPerPage();
+            final Money baseAmount = certificateRequestPR.getBaseAmount();
+            final Money urgencyAmount = ((CertificateRequest)getDocumentRequest()).getUrgentRequest() ? certificateRequestPR.getBaseAmount() : Money.ZERO;
+            final Money totalAmount = amountPerPage.add(baseAmount).add(urgencyAmount);
+            
+            parameters.put("amountPerPage", amountPerPage);
+            parameters.put("baseAmount", baseAmount);
+            parameters.put("urgencyAmount", urgencyAmount);
+            parameters.put("totalAmount", totalAmount);
         }
+    }
+    
+    protected final PostingRule getPostingRule() {
+	final AdministrativeOfficeServiceAgreementTemplate serviceAgreementTemplate = getDocumentRequest().getAdministrativeOffice().getServiceAgreementTemplate();
+	return serviceAgreementTemplate.findPostingRuleByEventType(getDocumentRequest().getEventType());
     }
     
 }
