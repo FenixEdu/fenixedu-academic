@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.domain.InverseOrderedRelationAdapter;
@@ -11,18 +14,21 @@ import net.sourceforge.fenixedu.util.domain.InverseOrderedRelationAdapter;
 public class FileItem extends FileItem_Base {
 
     public static Comparator<FileItem> COMPARATOR_BY_ORDER = new Comparator<FileItem>() {
+        
+        private ComparatorChain chain = null;
+        
         public int compare(FileItem one, FileItem other) {
-            int comparison = String.valueOf(one.getOrderInItem()).compareTo(
-                    String.valueOf(other.getOrderInItem()));
-
-            // keep old behaviour
-            if (comparison != 0) {
-                return comparison;
-            } else {
-                return String.valueOf(one.getDisplayName()).compareTo(
-                        String.valueOf(other.getDisplayName()));
+            if (this.chain == null) {
+                chain = new ComparatorChain();
+                
+                chain.addComparator(new BeanComparator("orderInItem"));
+                chain.addComparator(new BeanComparator("displayName"));
+                chain.addComparator(new BeanComparator("idInternal"));
             }
+            
+            return chain.compare(one, other);
         }
+        
     };
 
     public static InverseOrderedRelationAdapter<FileItem, Item> ORDERED_ADAPTER;
