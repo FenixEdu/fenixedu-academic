@@ -173,3 +173,13 @@
 <schema name="DocumentRequestCreateBean.notes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="notes" key="label.documentRequestsManagement.searchDocumentRequests.notes"/>
 </schema>
+<schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="STUDENT_RESOURCES">
+	<slot name="chosenDocumentRequestType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType"/>
+	<slot name="chosenDocumentPurposeType" read-only="true" key="document.purpose"/>
+	<slot name="otherPurpose" read-only="true" key="otherPurpose"/>	
+	<slot name="notes" read-only="true" key="notes"/>
+	<slot name="urgentRequest" read-only="true" key="urgency.charge.view"/>
+	<slot name="average" read-only="true" key="average.view"/>			
+	<slot name="detailed" read-only="true" key="detailed.view"/>			
+	<slot name="average" read-only="true" key="average.view"/>
+</schema>
