@@ -38,6 +38,7 @@ public class MobilityState extends MobilityState_Base {
     public Set<String> getValidNextStates() {
 	Set<String> states = new HashSet<String>();
 	states.add(RegistrationStateType.CONCLUDED.name());
+	states.add(RegistrationStateType.REGISTERED.name());
 	states.add(RegistrationStateType.SCHOOLPARTCONCLUDED.name());
 	states.add(RegistrationStateType.CANCELED.name());
 	states.add(RegistrationStateType.INTERRUPTED.name());
