@@ -1564,7 +1564,7 @@ public class Registration extends Registration_Base {
     }
 
     public Collection<AcademicServiceRequest> getNewAcademicServiceRequests() {
-	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests((AcademicServiceRequestSituationType) null);
+	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests(AcademicServiceRequestSituationType.NEW);
     }
 
     public Collection<AcademicServiceRequest> getProcessingAcademicServiceRequests() {
