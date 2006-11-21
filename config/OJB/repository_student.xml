@@ -18,16 +18,20 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState" table="REGISTRATION_STATE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.MobilityState" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.FlunkedState" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.InterruptedState" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.SchoolPartConcludedState" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.ConcludedState" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.CanceledState" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.AbandonedState" />
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState" table="REGISTRATION_STATE" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.MobilityState" table="REGISTRATION_STATE" />
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.FlunkedState" table="REGISTRATION_STATE" />
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.InterruptedState" table="REGISTRATION_STATE" />
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.SchoolPartConcludedState" table="REGISTRATION_STATE" />
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.ConcludedState" table="REGISTRATION_STATE" />
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.CanceledState" table="REGISTRATION_STATE" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.AbandonedState" table="REGISTRATION_STATE" />

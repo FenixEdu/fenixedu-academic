@@ -214,7 +214,7 @@ class net.sourceforge.fenixedu.domain.accounting.AccountingTransaction extends n
 
 	class net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction extends net.sourceforge.fenixedu.domain.accounting.AccountingTransaction {
 		Integer keyInstallment;
-	}
+}
 
 class net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail extends net.sourceforge.fenixedu.domain.DomainObject {
     DateTime whenRegistered;
@@ -2848,6 +2848,9 @@ class net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSta
 	class net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
 	}
 
+	class net.sourceforge.fenixedu.domain.student.registrationStates.MobilityState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+	}
+
 	class net.sourceforge.fenixedu.domain.student.registrationStates.FlunkedState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
 	}
 
@@ -2861,6 +2864,9 @@ class net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSta
 	}
 
 	class net.sourceforge.fenixedu.domain.student.registrationStates.CanceledState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+	}
+
+	class net.sourceforge.fenixedu.domain.student.registrationStates.AbandonedState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
 	}
 
 class net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3737,6 +3743,7 @@ class net.sourceforge.fenixedu.domain.candidacy.Candidacy extends net.sourceforg
 		Integer keyRegistration;
 		String ingression;
 		EntryPhase entryPhase;		
+		Double entryGrade;
 	}
 
 	class net.sourceforge.fenixedu.domain.candidacy.DFACandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
@@ -3756,7 +3763,6 @@ class net.sourceforge.fenixedu.domain.candidacy.Candidacy extends net.sourceforg
 
 	class net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
 		StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
-		Double entryGrade;
 		Boolean applyForResidence;
 		String notesAboutResidenceAppliance;
 		String contigent;
