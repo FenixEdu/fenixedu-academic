@@ -30,15 +30,15 @@ public class CreateDocumentRequests extends Service {
                             documentRequestCreateBean.getDetailed(),
                             documentRequestCreateBean.getExecutionYear());
         	} else if (documentRequestType.isDeclaration()) {
-                    DeclarationRequest.create(documentRequestCreateBean.getRegistration(),
-                            documentRequestCreateBean.getChosenDocumentRequestType(), 
-                            documentRequestCreateBean.getChosenDocumentPurposeType(),
-                            documentRequestCreateBean.getOtherPurpose(), 
-                            documentRequestCreateBean.getNotes(),
-                            documentRequestCreateBean.getAverage(), 
-                            documentRequestCreateBean.getDetailed(),
-                            documentRequestCreateBean.getExecutionYear(),
-                            documentRequestCreateBean.getYear());
+//                    DeclarationRequest.create(documentRequestCreateBean.getRegistration(),
+//                            documentRequestCreateBean.getChosenDocumentRequestType(), 
+//                            documentRequestCreateBean.getChosenDocumentPurposeType(),
+//                            documentRequestCreateBean.getOtherPurpose(), 
+//                            documentRequestCreateBean.getNotes(),
+//                            documentRequestCreateBean.getAverage(), 
+//                            documentRequestCreateBean.getDetailed(),
+//                            documentRequestCreateBean.getExecutionYear(),
+//                            documentRequestCreateBean.getYear());
         	}
             } catch (DomainException e) {
                 messages.add(e.getMessage());
