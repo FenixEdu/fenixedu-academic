@@ -1251,7 +1251,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	final Set<GratuityEvent> result = new HashSet<GratuityEvent>();
 	
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
-	    if (gratuityEvent.isOpen()) {
+	    if (gratuityEvent.isInDebt()) {
 		result.add(gratuityEvent);
 	    }
 	}
@@ -1261,7 +1261,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public boolean hasAnyNotPayedGratuityEvents() {
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
-	    if (gratuityEvent.isOpen()) {
+	    if (gratuityEvent.isInDebt()) {
 		return true;
 	    }
 	}

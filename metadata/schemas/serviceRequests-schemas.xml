@@ -47,7 +47,11 @@
 </schema>
 
 <schema name="DocumentRequest.conclude-info" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="numberOfPages" key="number.of.pages.printed" />
+	<slot name="numberOfPages" key="number.of.pages.printed" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="1" />
+		</validator>
+	</slot>
 </schema>
 
 <schema name="DocumentRequest.view-without-numberOfPages-documentPurposeTypeInformation" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
