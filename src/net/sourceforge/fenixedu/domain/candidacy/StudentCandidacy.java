@@ -40,13 +40,14 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	return Collections.min(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR)
 		.getSituationDate();
     }
-    
+
     public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree,
 	    Person studentPerson) {
 
 	switch (executionDegree.getDegree().getTipoCurso()) {
 
 	case BOLONHA_DEGREE:
+	case DEGREE:
 	    return new DegreeCandidacy(studentPerson, executionDegree);
 
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
