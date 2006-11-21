@@ -411,6 +411,7 @@
         <form-property name="selectedCurricularYears" type="java.lang.String[]" size="0"/>
         <form-property name="executionDegreeID" type="java.lang.String"/>
         <form-property name="executionPeriodOID" type="java.lang.String"/>
+        <form-property name="evaluationType" type="java.lang.String"/>
       </form-bean>
 
       <form-bean name="examSearchByDateForm"
