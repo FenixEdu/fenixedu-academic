@@ -77,7 +77,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return ServiceUtils.executeService(getUserView(request), serviceName, serviceArgs);
     }
 
-    protected Object executeService(final String serviceName, final Object ... serviceArgs)
+    protected Object executeService(final String serviceName, final Object... serviceArgs)
 	    throws FenixFilterException, FenixServiceException {
 	return ServiceUtils.executeService(AccessControl.getUserView(), serviceName, serviceArgs);
     }
@@ -173,6 +173,12 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return (requestParameter != null) ? requestParameter : request.getAttribute(name);
     }
 
+    protected Integer getIntegerFromRequest(HttpServletRequest request, String name) {
+	final String requestParameter = request.getParameter(name);
+	return (requestParameter != null ? Integer.valueOf(requestParameter) : (Integer) request
+		.getAttribute(name));
+    }
+
     public ActionForward processException(HttpServletRequest request, ActionMapping mapping,
 	    ActionForward input, Exception e) {
 	if (!(e instanceof DomainException)) {
@@ -212,6 +218,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return executeService(request, "ExecuteFactoryMethod", args);
     }
 
+    protected Object executeFactoryMethod() throws FenixFilterException, FenixServiceException {
+	final Object[] args = { getFactoryObject() };
+	return executeService("ExecuteFactoryMethod", args);
+    }
+
     protected Object getRenderedObject() {
 	final IViewState viewState = RenderUtils.getViewState();
 	if (viewState != null) {
@@ -226,16 +237,16 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected Object getRendererObject(String id) {
-        IViewState viewState = RenderUtils.getViewState(id);
-        if (viewState != null) {
-            MetaObject metaObject = viewState.getMetaObject();
-            if (metaObject != null) {
-                return metaObject.getObject();
-            }
-        }
-        return null;
+	IViewState viewState = RenderUtils.getViewState(id);
+	if (viewState != null) {
+	    MetaObject metaObject = viewState.getMetaObject();
+	    if (metaObject != null) {
+		return metaObject.getObject();
+	    }
+	}
+	return null;
     }
-    
+
     protected ActionMessages getActionMessages(HttpServletRequest request) {
 	return (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
     }
