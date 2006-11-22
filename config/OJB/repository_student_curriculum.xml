@@ -13,13 +13,15 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup" table="CURRICULUM_MODULE">
-	
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup" />	
 		
     	
     				
     			
 
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup" table="CURRICULUM_MODULE"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine" table="CURRICULUM_MODULE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence" />
