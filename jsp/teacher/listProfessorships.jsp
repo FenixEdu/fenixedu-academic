@@ -1,9 +1,11 @@
 <%@ page language="java" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCourseProcessor" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
+<html:xhtml/>
 
 <% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
 <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
@@ -37,11 +39,8 @@
 <br />
 <br />
 
-<table width="90%"cellpadding="5" border="0">
+<table width="70%"cellpadding="5" border="0">
 	<tr>
-		<th class="listClasses-header" style="text-align:left">
-			<bean:message key="label.professorships.acronym"/>
-		</th>
 		<th class="listClasses-header" style="text-align:left">
 			<bean:message key="label.professorships.name"/>
 		</th>
@@ -51,17 +50,16 @@
 		<th class="listClasses-header" style="text-align:left">
 			<bean:message key="label.semestre"/>
 		</th>
+        <th class="listClasses-header" style="text-align:left">
+            &nbsp;
+        </th>
 	</tr>
-	<logic:iterate id="executionCourse" name="executionCourses">
+	<logic:iterate id="executionCourse" name="executionCourses" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
 		<tr>
 			<td class="listClasses" style="text-align:left">
 				<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-					<bean:write name="executionCourse" property="sigla"/>
-				</html:link>
-			</td>
-			<td class="listClasses" style="text-align:left">
-				<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 					<bean:write name="executionCourse" property="nome"/>
+                    (<bean:write name="executionCourse" property="sigla"/>)
 				</html:link>
 			</td>
 			<td class="listClasses" style="text-align:left">
@@ -76,6 +74,11 @@
 			<td class="listClasses" style="text-align:left">
 				<bean:write name="executionCourse" property="executionPeriod.qualifiedName"/>
 			</td>
+            <td class="listClasses">
+                <html:link href="<%= request.getContextPath() + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) %>">
+                    <bean:message key="label.public.site"/>
+                </html:link>
+            </td>
 		</tr>		
 	</logic:iterate>
 </table>

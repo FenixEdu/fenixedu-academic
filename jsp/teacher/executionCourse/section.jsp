@@ -1,5 +1,9 @@
 <%@ page language="java" %>
+<%@ page import="org.apache.struts.util.RequestUtils"%>
 <%@ page import="net.sourceforge.fenixedu.domain.Language"%>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SectionProcessor"%>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ItemProcessor"%>
+
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -8,6 +12,7 @@
 <html:xhtml/>
 
 <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
+<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
 <bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
 
 <h2>
@@ -29,18 +34,33 @@
     <fr:view name="section" property="name"/>
 </div>
 
-<span style="color: #888;">
-    <bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
-    <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
-        <fr:layout>
-            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
-            <fr:property name="key" value="true"/>
-            <fr:property name="bundle" value="SITE_RESOURCES"/>
-            <fr:property name="subLayout" value="values"/>
-            <fr:property name="subSchema" value="permittedGroup.class.text"/>
-        </fr:layout>
-    </fr:view>
-</span>
+<p>
+    <span style="color: #888;">
+        <bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
+        <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+            <fr:layout>
+                <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+                <fr:property name="key" value="true"/>
+                <fr:property name="bundle" value="SITE_RESOURCES"/>
+                <fr:property name="subLayout" value="values"/>
+                <fr:property name="subSchema" value="permittedGroup.class.text"/>
+            </fr:layout>
+        </fr:view>    
+    </span>
+</p>
+
+<p>
+    <span style="color: #888;">
+        <bean:message key="label.section.directLink" bundle="SITE_RESOURCES"/>:
+        
+        <bean:define id="sectionDirectLink" type="java.lang.String">
+            <%= request.getContextPath() + SectionProcessor.getSectionAbsolutePath(executionCourse, section) %>
+        </bean:define>
+        <html:link href="<%= sectionDirectLink %>">
+            <%= RequestUtils.requestToServerStringBuffer(request).toString() + sectionDirectLink %>
+        </html:link>
+    </span>
+</p>
 
 <p>
 	<span>
@@ -206,7 +226,9 @@
 		<p class="mtop0 mbottom05">
 			<%--<span style="color: #888;"><bean:message key="label.item"/></span><br/>--%>
 			<strong><fr:view name="item" property="name"/></strong>
-            <span style="color: #888;padding-left: 1em;">
+            (<a href="<%= request.getContextPath() + ItemProcessor.getItemAbsolutePath(executionCourse, item) %>"><bean:message key="label.item.directLink" bundle="SITE_RESOURCES"/></a>)
+            
+            <span style="color: #888; padding-left: 1em;">
                 <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
                 <fr:view name="item" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
                     <fr:layout>
@@ -218,24 +240,9 @@
                     </fr:layout>
                 </fr:view>
             </span>
-		</p><!--
-		
-        <p class="mvert05">
-            <span style="color: #888;">
-                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
-                <fr:view name="item" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
-                    <fr:layout>
-                        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
-                        <fr:property name="key" value="true"/>
-                        <fr:property name="bundle" value="SITE_RESOURCES"/>
-                        <fr:property name="subLayout" value="values"/>
-                        <fr:property name="subSchema" value="permittedGroup.class.text"/>
-                    </fr:layout>
-                </fr:view>
-            </span>
-        </p>
+		</p>
         
-		--><span>
+        <span>
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 			<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=editItem&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
 			<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
@@ -331,7 +338,7 @@
                	</fr:view>
             </div>
     
-            <logic:notEmpty name="item" property="sortedFileItems">
+            <logic:notEmpty name="item" property="fileItems">
                 <div>
                     <span style="color: #888;"><bean:message key="label.files" bundle="SITE_RESOURCES"/>: </span>
                     	<ul>
