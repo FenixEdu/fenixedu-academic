@@ -33,7 +33,7 @@
 	</table>
 	<br/>
 
-	<bean:message key="property.context.curricular.year"/>::<br/>
+	<bean:message key="property.context.curricular.year"/>:<br/>
 	<table>
 		<tr><td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedCurricularYears" property="selectedCurricularYears">1</html:multibox></td><td>1</td></tr>
 		<tr><td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedCurricularYears" property="selectedCurricularYears">2</html:multibox></td><td>2</td></tr>
@@ -54,7 +54,11 @@
 	<br/>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="lable.choose"/>
+		<bean:message key="label.choose"/>
 	</html:submit>
-
+	
+	<html:submit styleClass="inputbutton"  onclick="this.form.method.value='print';">
+		<bean:message key="label.print"/>
+	</html:submit>
+	
 </html:form>

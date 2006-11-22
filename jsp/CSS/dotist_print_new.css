@@ -75,7 +75,10 @@ margin: 4px 0;
 */
 
 .break-before {
-	page-break-before:always;
+page-break-before: always;
+}
+.break-after {
+page-break-after: always;
 }
 
 
