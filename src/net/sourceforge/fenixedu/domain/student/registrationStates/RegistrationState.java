@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 
 /**
  * 
@@ -54,7 +53,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	case ABANDONED:
 	    return new AbandonedState(registration, person, dateTime);
 	case MOBILITY:
-	    return new MobilityState(registration, person, dateTime);	    
+	    return new MobilityState(registration, person, dateTime);
 	}
 
 	return null;
@@ -62,8 +61,9 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     protected void init(Registration registration, Person responsiblePerson, DateTime stateDate) {
 	setRegistration(registration != null ? registration : null);
-	setResponsiblePerson(responsiblePerson != null ? responsiblePerson : AccessControl.getUserView()
-		.getPerson());
+	final Person person = responsiblePerson != null ? responsiblePerson : (AccessControl
+		.getUserView() != null ? AccessControl.getUserView().getPerson() : null);
+	setResponsiblePerson(person);
 	setStateDate(stateDate != null ? stateDate : new DateTime());
     }
 

@@ -111,7 +111,8 @@ public class Registration extends Registration_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setStartDate(new YearMonthDay());
-	new RegisteredState(this, AccessControl.getUserView().getPerson(), new DateTime());
+	new RegisteredState(this, AccessControl.getUserView() != null ? AccessControl.getUserView()
+		.getPerson() : null, new DateTime());
     }
 
     @Deprecated
@@ -194,8 +195,8 @@ public class Registration extends Registration_Base {
 
     public StudentCurricularPlan getActiveStudentCurricularPlan() {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-            if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE
-                    || studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.SCHOOLPARTCONCLUDED) {
+	    if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE
+		    || studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.SCHOOLPARTCONCLUDED) {
 		return studentCurricularPlan;
 	    }
 	}
@@ -1486,7 +1487,8 @@ public class Registration extends Registration_Base {
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
 	studentCurricularPlans.addAll(getStudentCurricularPlans());
 
-	Iterator<StudentCurricularPlan> iterator = studentCurricularPlans.tailSet(studentCurricularPlans.last()).iterator();
+	Iterator<StudentCurricularPlan> iterator = studentCurricularPlans.tailSet(
+		studentCurricularPlans.last()).iterator();
 	while (iterator.hasNext()) {
 	    StudentCurricularPlan studentCurricularPlan = iterator.next();
 	    if (studentCurricularPlan.getStartDateYearMonthDay().isBefore(date)) {
