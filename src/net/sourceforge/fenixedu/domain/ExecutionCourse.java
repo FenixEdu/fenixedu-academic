@@ -76,6 +76,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setNome(nome);
 	setSigla(sigla);
 	setExecutionPeriod(executionPeriod);
+        setComment("");
 
 	createForum(nome, nome);
 	createExecutionCourseAnnouncementBoard(nome);
@@ -156,8 +157,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	if (name == null || acronym == null || theoreticalHours < 0 || theoreticalPraticalHours < 0
 		|| praticalHours < 0 || laboratoryHours < 0 || seminaryHours < 0 || problemsHours < 0
-		|| fieldWorkHours < 0 || trainingPeriodHours < 0 || tutorialOrientationHours < 0
-		|| comment == null)
+		|| fieldWorkHours < 0 || trainingPeriodHours < 0 || tutorialOrientationHours < 0)
 	    throw new NullPointerException();
 
 	setNome(name);
