@@ -20,9 +20,10 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 public abstract class DegreeModule extends DegreeModule_Base {
 
     public DegreeModule() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setOjbConcreteClass(this.getClass().getName());
+    }
 
     /**
      * We need a method to return a full name of a course group - from it's parent course group to
