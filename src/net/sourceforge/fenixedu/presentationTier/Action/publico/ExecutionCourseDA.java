@@ -206,6 +206,10 @@ public class ExecutionCourseDA extends FenixDispatchAction {
     public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Section section = selectSection(request);
 
+        if (section == null) {
+            return mapping.findForward("execution-course-first-page");
+        }
+        
         IUserView userView = prepareUserView(request);
         FunctionalityContext context = prepareSectionContext(request);
 
