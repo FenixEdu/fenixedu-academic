@@ -31,20 +31,34 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException,
 	    FenixServiceException {
 
-	request.setAttribute("registrations", getUserView(request).getPerson().getStudent().getRegistrations());
-	return mapping.findForward("chooseRegistration");
+        List<Registration> registrations = getUserView(request).getPerson().getStudent().getRegistrations();
+        if (registrations.size() == 1) {
+            return forwardToShowTimeTable(registrations.get(0), mapping, request);
+        } else {
+            request.setAttribute("registrations", registrations);
+            return mapping.findForward("chooseRegistration");
+        }
     }
 
     public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException, FenixServiceException {
 
-	final List<InfoLesson> infoLessons = (List) ServiceUtils.executeService(getUserView(request),
-		"ReadStudentTimeTable", new Object[] { getRegistration(actionForm, request) });
+        return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request);
+    }
+    
+    private ActionForward forwardToShowTimeTable(Registration registration, 
+                                                 ActionMapping mapping, 
+                                                 HttpServletRequest request) 
+            throws FenixActionException, FenixFilterException, FenixServiceException {
+
+	List<InfoLesson> infoLessons = 
+            (List) ServiceUtils.executeService(getUserView(request),
+                                               "ReadStudentTimeTable", 
+                                               new Object[] { registration });
 	
 	request.setAttribute("infoLessons", infoLessons);
 	return mapping.findForward("showTimeTable");
-
     }
 
     private Registration getRegistration(final ActionForm form, final HttpServletRequest request) {
