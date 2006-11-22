@@ -48,3 +48,38 @@
 	</fr:layout>
 </fr:view>
 
+
+<br/><br/>
+<bean:define id="personId" name="student" property="person.idInternal" />
+<h2><strong><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<table>
+	<tr>
+		<td>
+			<html:link action="<%="/payments.do?method=showEvents&personId=" + personId %>">
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.currentEvents" />
+			</html:link>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<html:link action="<%="/payments.do?method=showEventsWithInstallments&personId=" + personId%>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.eventsWithInstallments" />
+			</html:link>
+		</td>
+	</tr>	
+	<tr>
+		<td>
+			<html:link action="<%="/payments.do?method=showPaymentsWithoutReceipt&personId=" + personId %>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentsWithoutReceipt" />
+			</html:link>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<html:link action="<%="/payments.do?method=showReceipts&personId=" + personId%>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipts" />
+			</html:link>
+		</td>
+	</tr>
+</table>
+

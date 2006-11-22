@@ -101,4 +101,51 @@
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp"/>
 	</definition>
 	
+	
+	<!-- ************* Payments ************* -->
+	<definition name="payments.management.searchPerson" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/searchPerson.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showEvents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/showEvents.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showEventsWithInstallments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/showEventsWithInstallments.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showOperations" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/showOperations.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showPaymentsWithoutReceipt" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/showPaymentsWithoutReceipt.jsp"/>
+	</definition>
+
+	<definition name="payments.management.showGuide" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/guides/showGuide.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showReceipts" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/receipts/showReceipts.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showReceipt" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/receipts/showReceipt.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.confirmCreateReceipt" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/receipts/confirmCreateReceipt.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.preparePayment" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/preparePayment.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.paymentConfirmed" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/paymentConfirmed.jsp"/>
+	</definition>
+	<!-- ************************************* -->
+	
 </tiles-definitions>

@@ -53,6 +53,11 @@
 			<form-property name="degreeFinalizationAverage" type="java.lang.String" initial="false"/>
 			<form-property name="degreeFinalizationDetailed" type="java.lang.String" initial="false"/>			
 	    </form-bean>
+	    
+    	<!-- Payments -->
+		<form-bean name="paymentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+	    </form-bean>
 
     </form-beans>
 
@@ -187,6 +192,30 @@
 				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
 				
 		</action>
+		
+		<!-- Begin Payments -->
+		
+		<action path="/payments"
+				parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.AcademicAdminOfficePaymentsManagementDispatchAction"
+		 		name="paymentsForm"
+		 		scope="request">
+		 		
+		 		<forward name="viewStudentDetails" path="students.viewStudentDetails"/> 
+		 	    <forward name="showEvents" path="payments.management.showEvents"/>
+		 	    <forward name="showEventsWithInstallments" path="payments.management.showEventsWithInstallments"/>
+		 	    <forward name="showGuide" path="payments.management.showGuide"/>
+		 	    <forward name="printGuide" path="/payments/guides/printGuidePage.jsp"/>
+		 	    <forward name="showReceipts" path="payments.management.showReceipts"/>
+		 	    <forward name="showReceipt" path="payments.management.showReceipt"/>
+		 	    <forward name="printReceipt" path="/payments/receipts/printReceiptPage.jsp"/>
+		 	    <forward name="preparePayment" path="payments.management.preparePayment"/> 
+	 	        <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
+		 	    <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
+		 	    <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
+		</action>
+		
+		<!-- End Payments -->
 	
     </action-mappings>
 

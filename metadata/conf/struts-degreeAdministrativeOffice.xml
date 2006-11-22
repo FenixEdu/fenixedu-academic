@@ -584,19 +584,20 @@
 		        type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.payments.DegreePaymentsManagementDispatchAction"
 		 		name="paymentsForm"
 		 		scope="request">
-		        <forward name="searchPerson" path="payments.management.searchPerson"/> 
-		 	         <forward name="showOperations" path="payments.management.showOperations"/> 
-		 	         <forward name="showEvents" path="payments.management.showEvents"/>
-		 	         <forward name="showEventsWithInstallments" path="payments.management.showEventsWithInstallments"/>
-		 	         <forward name="showGuide" path="payments.management.showGuide"/>
-		 	         <forward name="printGuide" path="/payments/guides/printGuidePage.jsp"/>
-		 	         <forward name="showReceipts" path="payments.management.showReceipts"/>
-		 	         <forward name="showReceipt" path="payments.management.showReceipt"/>
-		 	         <forward name="printReceipt" path="/payments/receipts/printReceiptPage.jsp"/>
-		 	         <forward name="preparePayment" path="payments.management.preparePayment"/> 
-		 	         <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
-		 	         <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
-		 	         <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
+		 		
+		         <forward name="searchPerson" path="payments.management.searchPerson"/> 
+	 	         <forward name="showOperations" path="payments.management.showOperations"/> 
+	 	         <forward name="showEvents" path="payments.management.showEvents"/>
+	 	         <forward name="showEventsWithInstallments" path="payments.management.showEventsWithInstallments"/>
+	 	         <forward name="showGuide" path="payments.management.showGuide"/>
+	 	         <forward name="printGuide" path="/payments/guides/printGuidePage.jsp"/>
+	 	         <forward name="showReceipts" path="payments.management.showReceipts"/>
+	 	         <forward name="showReceipt" path="payments.management.showReceipt"/>
+	 	         <forward name="printReceipt" path="/payments/receipts/printReceiptPage.jsp"/>
+	 	         <forward name="preparePayment" path="payments.management.preparePayment"/> 
+	 	         <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
+	 	         <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
+	 	         <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
 		</action>
 		
 		<!-- Price Management -->

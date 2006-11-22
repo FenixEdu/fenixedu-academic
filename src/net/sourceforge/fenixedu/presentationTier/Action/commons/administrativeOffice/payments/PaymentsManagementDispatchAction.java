@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
@@ -72,7 +71,8 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	}
 
 	request.setAttribute("person", candidacy.getPerson());
-	return mapping.findForward("showOperations");
+	
+	return findMainForward(mapping);
     }
 
     public ActionForward searchPersonByUsername(ActionMapping mapping, ActionForm actionForm,
@@ -88,7 +88,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	}
 
 	request.setAttribute("person", person);
-	return mapping.findForward("showOperations");
+	return findMainForward(mapping);
     }
 
     public ActionForward searchPersonByDocumentIDandDocumentType(ActionMapping mapping,
@@ -106,7 +106,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	}
 
 	request.setAttribute("person", person);
-	return mapping.findForward("showOperations");
+	return findMainForward(mapping);
     }
 
     protected Integer getCandidacyNumber(final DynaActionForm form) {
@@ -137,7 +137,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	    Person person, boolean withInstallments) {
 
 	final PaymentsManagementDTO paymentsManagementDTO = new PaymentsManagementDTO(person);
-	for (final Event event : person.getNotPayedEventsPayableOn(getAdministrativeOffice(),
+	for (final Event event : person.getNotPayedEventsPayableOn(getAdministrativeOffice(request),
 		withInstallments)) {
 	    paymentsManagementDTO.addEntryDTOs(event.calculateEntries());
 	}
@@ -174,7 +174,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
 	receiptBean.setPerson(person);
 	receiptBean.setEntries(getSelectableEntryBeans(person
-		.getPaymentsWithoutReceiptByAdministrativeOffice(getAdministrativeOffice()),
+		.getPaymentsWithoutReceiptByAdministrativeOffice(getAdministrativeOffice(request)),
 		(entriesToSelect != null) ? entriesToSelect : new HashSet<Entry>()));
 
 	request.setAttribute("createReceiptBean", receiptBean);
@@ -256,7 +256,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
 	request.setAttribute("person", getPerson(request));
 	request.setAttribute("receiptsForAdministrativeOffice", getPerson(request)
-		.getReceiptsByAdministrativeOffice(getAdministrativeOffice()));
+		.getReceiptsByAdministrativeOffice(getAdministrativeOffice(request)));
 
 	return mapping.findForward("showReceipts");
     }
@@ -305,6 +305,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	    addActionMessage(request,
 		    "error.administrativeOffice.payments.payment.entries.selection.is.required");
 	    request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+	    
 	    return mapping.findForward("showEvents");
 	}
 
@@ -335,7 +336,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
     }
 
-    private Person getPerson(HttpServletRequest request) {
+    protected Person getPerson(HttpServletRequest request) {
 	return (Person) rootDomainObject.readPartyByOID(Integer.valueOf(getFromRequest(request,
 		"personId").toString()));
     }
@@ -442,6 +443,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
 	request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState("paymentsManagementDTO")
 		.getMetaObject().getObject());
+	
 	return mapping.findForward("showEvents");
     }
 
@@ -450,20 +452,24 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
 	request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState("paymentsManagementDTO")
 		.getMetaObject().getObject());
+	
 	return mapping.findForward("showEventsWithInstallments");
     }
 
     public ActionForward backToShowOperations(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+	setContextInformation(request);
+	return findMainForward(mapping);
+    }
 
+    protected void setContextInformation(HttpServletRequest request) {
 	request.setAttribute("person", getPerson(request));
+    }
+    
+    protected ActionForward findMainForward(final ActionMapping mapping) {
 	return mapping.findForward("showOperations");
     }
-
-    private AdministrativeOffice getAdministrativeOffice() {
-	return AdministrativeOffice.readByAdministrativeOfficeType(getAdministrativeOfficeType());
-    }
-
-    protected abstract AdministrativeOfficeType getAdministrativeOfficeType();
+    
+    abstract protected AdministrativeOffice getAdministrativeOffice(final HttpServletRequest request);
 
 }

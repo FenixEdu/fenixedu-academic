@@ -783,7 +783,6 @@
 	-->
 	
 	<!-- Payments -->
-	
 	<form-bean name="paymentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 		<form-property name="method" type="java.lang.String" />
 		<form-property name="candidacyNumber" type="java.lang.String" />
