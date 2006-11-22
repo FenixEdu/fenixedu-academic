@@ -600,13 +600,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	});
     }
 
-    public List getAprovedEnrolments() {
-	return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
-	    public boolean evaluate(Object obj) {
-		Enrolment enrollment = (Enrolment) obj;
-		return enrollment.getEnrollmentState().equals(EnrollmentState.APROVED);
+    public List<Enrolment> getAprovedEnrolments() {
+	final List<Enrolment> result = new ArrayList<Enrolment>();
+	
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
+		result.add(enrolment);
 	    }
-	});
+	}
+	
+	return result;
     }
 
     public boolean hasAnyApprovedEnrolment() {
