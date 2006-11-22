@@ -1,6 +1,13 @@
 package net.sourceforge.fenixedu.renderers;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenu;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenuOption;
@@ -38,6 +45,8 @@ public class EnumInputRenderer extends InputRenderer {
     private String defaultText;
     private String bundle;
     private boolean key;
+    private String excludedValues;
+    private String includedValues;
     
     public String getBundle() {
         return this.bundle;
@@ -63,6 +72,33 @@ public class EnumInputRenderer extends InputRenderer {
      */
     public void setDefaultText(String defaultText) {
         this.defaultText = defaultText;
+    }
+
+    public String getExcludedValues() {
+        return excludedValues;
+    }
+
+
+    /**
+     * Excluded Values.
+     * 
+     * @property
+     */
+    public void setExcludedValues(String excludedValues) {
+        this.excludedValues = excludedValues;
+    }
+
+    public String getIncludedValues() {
+        return includedValues;
+    }
+
+    /**
+     * Excluded Values.
+     * 
+     * @property
+     */
+    public void setIncludedValues(String includedValues) {
+        this.includedValues = includedValues;
     }
 
     public boolean isKey() {
@@ -91,20 +127,23 @@ public class EnumInputRenderer extends InputRenderer {
                 String defaultOptionTitle = getDefaultTitle();
                 menu.createDefaultOption(defaultOptionTitle).setSelected(enumerate == null);
                 
-                Object[] constants = type.getEnumConstants();
-                if (constants == null) {
-                    constants = type.getDeclaringClass().getEnumConstants();
-                }
+                Collection<Object> constants = getIncludedEnumValues(type);
+                Collection<Object> excludedValues = getExcludedEnumValues(type);
                 
                 for (Object object : constants) {
                     Enum oneEnum = (Enum) object;
+
+                    if (excludedValues.contains(object)) {
+                	continue;
+                    }
+
                     String description = RenderUtils.getEnumString(oneEnum, getBundle());
-                    
+
                     HtmlMenuOption option = menu.createOption(description);
                     option.setValue(oneEnum.toString());
-                    
+
                     if (enumerate != null && oneEnum.equals(enumerate)) {
-                        option.setSelected(true);
+                	option.setSelected(true);
                     }
                 }
                 
@@ -130,5 +169,41 @@ public class EnumInputRenderer extends InputRenderer {
             }
             
         };
+    }
+    
+    private Collection<Object> getIncludedEnumValues(Class type) {
+	final String valuesString = getIncludedValues();
+	
+	if (valuesString == null || valuesString.length() == 0) {
+	    Object[] constants = type.getEnumConstants();
+	    if (constants == null) {
+                constants = type.getDeclaringClass().getEnumConstants();
+            }
+	    
+	    return Arrays.asList(constants);
+	}
+	else {
+	    return getEnumValues(type, valuesString);
+	}
+    }
+    
+    private Collection<Object> getExcludedEnumValues(Class type) {
+	final String valuesString = getExcludedValues();
+	
+	if (valuesString == null || valuesString.length() == 0) {
+	    return Collections.emptyList();
+	}
+	else {
+	    return getEnumValues(type, valuesString);
+	}
+    }
+    
+    private Collection<Object> getEnumValues(Class type, String valuesString) {
+	ArrayList<Object> result = new ArrayList<Object>();
+	for (String part : valuesString.split(",")) {
+	    result.add(Enum.valueOf(type, part.trim()));
+	}
+
+	return result;
     }
 }
