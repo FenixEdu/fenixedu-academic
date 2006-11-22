@@ -36,15 +36,18 @@ public class CourseGroup extends CourseGroup_Base {
 
     protected CourseGroup() {
 	super();
-	setOjbConcreteClass(CourseGroup.class.getName());
     }
 
     public CourseGroup(String name, String nameEn) {
 	this();
+	init(name, nameEn);
+    }
+    
+    protected void init(String name, String nameEn) {
 	super.setName(StringFormatter.prettyPrint(name));
 	super.setNameEn(StringFormatter.prettyPrint(nameEn));
     }
-
+    
     public boolean isLeaf() {
 	return false;
     }
@@ -122,7 +125,7 @@ public class CourseGroup extends CourseGroup_Base {
 	    ExecutionYear executionYear) {
 	List<Context> result = new ArrayList<Context>();
 	for (Context context : this.getChildContexts()) {
-	    if ((clazz == null || context.getChildDegreeModule().getClass().equals(clazz))
+	    if ((clazz == null || clazz.isAssignableFrom(context.getChildDegreeModule().getClass()))
 		    && ((executionYear == null || context.isValid(executionYear)))) {
 		result.add(context);
 	    }
@@ -139,7 +142,7 @@ public class CourseGroup extends CourseGroup_Base {
 	    ExecutionPeriod executionPeriod) {
 	List<Context> result = new ArrayList<Context>();
 	for (Context context : this.getChildContexts()) {
-	    if ((clazz == null || context.getChildDegreeModule().getClass().equals(clazz))
+	    if ((clazz == null || clazz.isAssignableFrom(context.getChildDegreeModule().getClass()))
 		    && ((executionPeriod == null || context.isValid(executionPeriod)))) {
 		result.add(context);
 	    }
@@ -282,7 +285,7 @@ public class CourseGroup extends CourseGroup_Base {
     public void collectChildDegreeModules(Class<? extends DegreeModule> clazz,
 	    final Set<DegreeModule> result, ExecutionYear executionYear) {
 	for (final Context context : this.getChildContexts(executionYear)) {
-	    if (context.getChildDegreeModule().getClass().equals(clazz)) {
+	    if (clazz.isAssignableFrom(context.getChildDegreeModule().getClass())) {
 		result.add(context.getChildDegreeModule());
 	    }
 	    if (!context.getChildDegreeModule().isLeaf()) {
@@ -298,7 +301,7 @@ public class CourseGroup extends CourseGroup_Base {
 	final List<DegreeModule> currentDegreeModulesPath = previousDegreeModulesPath;
 	for (final Context context : this.getChildContexts(executionYear)) {
 	    List<DegreeModule> newDegreeModulesPath = null;
-	    if (context.getChildDegreeModule().getClass().equals(clazz)) {
+	    if (clazz.isAssignableFrom(context.getChildDegreeModule().getClass())) {
 		newDegreeModulesPath = initNewDegreeModulesPath(newDegreeModulesPath,
 			currentDegreeModulesPath, context.getChildDegreeModule());
 		result.add(newDegreeModulesPath);
