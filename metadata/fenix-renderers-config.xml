@@ -172,6 +172,8 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanRenderer"/>
     
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean" layout="student-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanEnrolmentsRenderer"/>
+	
+	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean" layout="student-optional-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.DegreeCurricularPlanOptionalEnrolmentsRenderer"/>
     
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="autoComplete" class="net.sourceforge.fenixedu.presentationTier.renderers.AutoCompleteInputRenderer">
         <property name="autoCompleteItemsStyleClass" value="autoCompleteItems"/>
@@ -351,6 +353,9 @@ Documentation:
     <!--@ The default input layout for an enumeration presents an html menu with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->
     <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/> 
+    <!--@ The input layout (with postback) for an enumeration presents an html menu with all the values of the enumeration
+          as options. The option labels are fetched from the resources using the enum name as key. -->     
+    <renderer mode="input" type="java.lang.Enum" layout="menu-postback" class="net.sourceforge.fenixedu.renderers.EnumInputRendererWithPostBack"/>    
     <!--@ The input layout for an enumeration presents radio buttons with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->     
     <renderer mode="input" type="java.lang.Enum" layout="radio" class="net.sourceforge.fenixedu.renderers.EnumRadioInputRenderer">
