@@ -14,6 +14,10 @@
 	<slot name="number" />
 </schema>	
 
+<schema name="EditStudentCandidacyDomainObject" type="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy" bundle="MANAGER_RESOURCES">
+	<slot name="ingression" />
+</schema>
+
 <schema name="InsertMandatoryInvitedPersonDetails" type="net.sourceforge.fenixedu.domain.Person$AnyPersonSearchBean" bundle="MANAGER_RESOURCES">
 	<slot name="name"/>	
 	<slot name="documentIdNumber" />
