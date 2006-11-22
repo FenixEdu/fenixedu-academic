@@ -31,11 +31,11 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors
 public class GeneralForwardFilter implements Filter {
 
     private List<PathProcessor> processors = new ArrayList<PathProcessor>();
-    private String notFoundURI;
+    //private String notFoundURI;
    
     public void init(FilterConfig config) throws ServletException {
         
-        this.notFoundURI = config.getInitParameter("notFoundURI");
+        //this.notFoundURI = config.getInitParameter("notFoundURI");
         
         String siteListURI = config.getInitParameter("siteListURI");
         String siteURI = config.getInitParameter("siteURI");
@@ -112,7 +112,8 @@ public class GeneralForwardFilter implements Filter {
             chain.doFilter(request, response);
         }
         else {
-            httpResponse.sendRedirect(contextPath + this.notFoundURI);
+            //httpResponse.sendRedirect(contextPath + this.notFoundURI);
+            httpResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
