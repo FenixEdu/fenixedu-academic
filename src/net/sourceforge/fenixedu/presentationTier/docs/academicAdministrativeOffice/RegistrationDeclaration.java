@@ -29,6 +29,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
     }
 
     public RegistrationDeclaration(final Registration registration, final Person loggedPerson) {
+	this.dataSource = new ArrayList();
 	this.registrationDomainReference = new DomainReference<Registration>(registration);
 	this.employeeDomainReference = new DomainReference<Person>(loggedPerson);
 	
@@ -41,7 +42,6 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils
 		.getLocale());
 	
-	dataSource = new ArrayList();
 	dataSource.add(this);
     }
 

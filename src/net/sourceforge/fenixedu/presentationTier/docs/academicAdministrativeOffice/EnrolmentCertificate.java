@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
@@ -10,9 +10,12 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
 public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
-    public EnrolmentCertificate(final DocumentRequest documentRequest) {
+    protected EnrolmentCertificate(final DocumentRequest documentRequest) {
 	super(documentRequest);
     }
 
@@ -27,24 +30,24 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 		.getCurricularYear(executionYear));
 	parameters.put("curricularYear", curricularYear);
 
-	dataSource = new ArrayList();
+	final List<Enrolment> enrolments = enrolmentCertificateRequest.getRegistration().getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
+	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
+	
 	if (enrolmentCertificateRequest.getDetailed()) {
-	    GenericPair<String, String> dummy = new GenericPair<String, String>("\t\t" + curricularYear
-		    + ".ANO", null);
+	    GenericPair<String, String> dummy = new GenericPair<String, String>("\t\t" + curricularYear + ".ANO", null);
 	    dataSource.add(dummy);
 
-	    final List<Enrolment> enrolments = enrolmentCertificateRequest.getRegistration()
-		    .getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(new BeanComparator("executionPeriod.executionYear"));
+	    comparatorChain.addComparator(new BeanComparator("name"));
+	    Collections.sort(enrolments, comparatorChain);
+	    
 	    for (final Enrolment enrolment : enrolments) {
-		dummy = new GenericPair<String, String>(StringUtils.multipleLineRightPad(64, enrolment
-			.getName().toUpperCase(), '-'), null);
+		dummy = new GenericPair<String, String>(StringUtils.multipleLineRightPad(LINE_LENGTH, enrolment.getName().toUpperCase(), '-'), null);
 		dataSource.add(dummy);
 	    }
-	    
-	    parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
 	} else {
-	    GenericPair<String, String> dummy = new GenericPair<String, String>(
-		    org.apache.commons.lang.StringUtils.EMPTY, null);
+	    GenericPair<String, String> dummy = new GenericPair<String, String>(org.apache.commons.lang.StringUtils.EMPTY, null);
 	    dataSource.add(dummy);
 	}
     }

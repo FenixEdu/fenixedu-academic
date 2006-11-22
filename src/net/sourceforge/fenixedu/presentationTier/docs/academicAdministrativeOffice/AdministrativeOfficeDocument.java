@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -20,7 +21,7 @@ import org.joda.time.format.DateTimeFormat;
 
 public class AdministrativeOfficeDocument extends FenixReport {
     
-    private int LINE_LENGTH = 64;
+    protected int LINE_LENGTH = 64;
     
     protected DomainReference<DocumentRequest> documentRequestDomainReference;
 
@@ -43,6 +44,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
     
     protected AdministrativeOfficeDocument(final DocumentRequest documentRequest) {
+	this.dataSource = new ArrayList();
 	this.resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
 	this.documentRequestDomainReference = new DomainReference<DocumentRequest>(documentRequest);
 	
