@@ -15,9 +15,14 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CurriculumGroup extends CurriculumGroup_Base {
+    
+    protected CurriculumGroup() {
+	super();
+    }
 
     public CurriculumGroup(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
 	    ExecutionPeriod executionPeriod) {
@@ -292,5 +297,5 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	
 	return false;
     }
-
+    
 }
