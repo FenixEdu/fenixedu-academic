@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class ApprovementCertificate extends AdministrativeOfficeDocument {
@@ -35,7 +36,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	GenericPair<String,String> dummy;
 	for (final Enrolment approvedEnrolment : approvedEnrolments) {
 	    dummy = new GenericPair<String, String>(StringUtils.multipleLineRightPad(LINE_LENGTH, approvedEnrolment
-		    .getName().toUpperCase(), '-'), null);
+		    .getName().getContent(LanguageUtils.getLanguage()).toUpperCase(), '-'), null);
 	    dataSource.add(dummy);
 	}
     }

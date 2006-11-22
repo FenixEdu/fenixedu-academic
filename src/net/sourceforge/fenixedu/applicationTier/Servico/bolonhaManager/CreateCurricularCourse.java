@@ -58,7 +58,7 @@ public class CreateCurricularCourse extends Service {
 
 	readDomainObjects(curricularCourseArgs);
 
-	degreeCurricularPlan.createCurricularCourse(parentCourseGroup, curricularCourseArgs.getName(),
+	degreeCurricularPlan.createOptionalCurricularCourse(parentCourseGroup, curricularCourseArgs.getName(),
 		curricularCourseArgs.getNameEn(), CurricularStage.DRAFT, curricularPeriod,
 		beginExecutionPeriod, endExecutionPeriod);
     }
