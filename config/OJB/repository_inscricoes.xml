@@ -33,8 +33,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.CurricularCourse -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourse" table="DEGREE_MODULE">
-	
-	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse" />		
 		
 	 
 	

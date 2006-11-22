@@ -44,12 +44,18 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	return mapping.findForward("prepareChooseExecutionPeriod");
     }
     
-    public ActionForward showDegreeModulesToEnrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixActionException{
+    public ActionForward showDegreeModulesToEnrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 	StudentEnrolmentBean studentEnrolmentBean = (StudentEnrolmentBean) getRenderedObject();
 	request.setAttribute("studentEnrolmentBean", studentEnrolmentBean);
 	setCurriculumModuleBean(studentEnrolmentBean);
 	return mapping.findForward("showDegreeModulesToEnrol");
     }    
+    
+    public ActionForward showDegreeModulesToEnrolOptional(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	StudentEnrolmentBean studentEnrolmentBean = (StudentEnrolmentBean) request.getAttribute("studentEnrolmentBean");
+	setCurriculumModuleBean(studentEnrolmentBean);
+	return mapping.findForward("showDegreeModulesToEnrol");
+    }
     
     public ActionForward enrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException{
 	StudentEnrolmentBean studentEnrolmentBean = (StudentEnrolmentBean) getRenderedObject();

@@ -71,7 +71,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     protected CurricularCourse() {
 	super();
-	this.setOjbConcreteClass(CurricularCourse.class.getName());
     }
 
     protected CurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
@@ -99,21 +98,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 	new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
-    /**
-         * - This constructor is used to create a 'special' curricular course
-         * that will represent any curricular course accordding to a rule
-         */
-    public CurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn,
-	    CurricularStage curricularStage, CurricularPeriod curricularPeriod,
-	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
-
-	this();
-	setName(name);
-	setNameEn(nameEn);
-	setCurricularStage(curricularStage);
-	setType(CurricularCourseType.OPTIONAL_COURSE);
-	new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
-    }
 
     public GradeScale getGradeScaleChain() {
 	return super.getGradeScale() != null ? super.getGradeScale() : getDegreeCurricularPlan()
@@ -1620,6 +1604,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         
         return new ArrayList<ExecutionCourse>();
+    }
+    
+    public boolean isOptionalCurricularCourse() {
+	return false;
     }
 
 }

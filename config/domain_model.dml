@@ -1,5 +1,4 @@
 /* DOMAIN_MODEL.DML
- *
  * The Fenix Project Domain Model
  * 
  */
@@ -1010,10 +1009,16 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 	    
 	    Integer keyValuationCurricularCourse;
 	}
-
+	
+		class net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse extends net.sourceforge.fenixedu.domain.CurricularCourse {
+				
+		}
+		
 	class net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
 		Integer keyParentDegreeCurricularPlan;
 	}
+	
+	
 
 class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
@@ -1213,6 +1218,10 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 	class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule {
 		Integer keyParentStudentCurricularPlan;
 	}
+	
+		class net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup {
+		}
+	
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule {
 	}
@@ -1234,6 +1243,11 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
             EnrolmentEvaluationType enrolmentEvaluationType;
        		Double weigth;
         }
+        
+            class net.sourceforge.fenixedu.domain.OptionalEnrolment extends net.sourceforge.fenixedu.domain.Enrolment {
+            	Integer keyOptionalCurricularCourse;
+		    }
+        
 
 	// Isto � da estrutura antiga, faz sentido ainda?
     class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
@@ -7814,6 +7828,13 @@ relation CurriculumGroupStudentCurricularPlan {
 relation DegreeModuleCurriculumModule {
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModule;
 	net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule playsRole curriculumModules {
+	   multiplicity *;
+	}	 
+}
+
+relation OptionalCurricularCourseOptionalEnrolment {
+	net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse playsRole optionalCurricularCourse;
+	net.sourceforge.fenixedu.domain.OptionalEnrolment playsRole optionalEnrolments {
 	   multiplicity *;
 	}	 
 }

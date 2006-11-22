@@ -40,6 +40,9 @@
     <definition name="student.enrolment.showDegreeModulesToEnrol" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/showDegreeModulesToEnrol.jsp"></put>
     </definition>     
+    <definition name="student.enrolment.chooseOptionalEnrolments" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/chooseOptionalEnrolment.jsp"></put>
+    </definition>
     <definition name="student.showManageEnrolmentModel" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageEnrolmentModel.jsp"></put>
     </definition>      
@@ -100,8 +103,7 @@
 	<definition name="documentRequest.viewDocumentRequestsToCreate" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp"/>
 	</definition>
-	
-	
+
 	<!-- ************* Payments ************* -->
 	<definition name="payments.management.searchPerson" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/searchPerson.jsp"/>

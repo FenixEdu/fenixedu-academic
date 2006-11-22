@@ -17,8 +17,12 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup -->
 <!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse" table="DEGREE_MODULE"/>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup -->
+<!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup" table="DEGREE_MODULE">
-	
 	
 	
 	
@@ -26,6 +30,8 @@
 			
 			
 </class-descriptor>
+
+
 
 
 <!-- ************************************************************************************************************ -->

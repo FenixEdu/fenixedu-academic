@@ -156,6 +156,15 @@
 			<forward name="viewCurriculum" path="/viewCurriculum.do?method=getCurriculum"/>
 		</action>        
 		
+		<action path="/studentOptionalEnrolments"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentsDA">
+			<forward name="chooseOptionalEnrolments" path="student.enrolment.chooseOptionalEnrolments"/>
+			<forward name="showDegreeModulesToEnrol" path="/studentEnrolments.do?method=showDegreeModulesToEnrolOptional"/>
+		</action>        
+		
+		
 		<!-- Academic Service Requests Management -->
 		<action path="/academicServiceRequestsManagement"
 				name="academicServiceRequestsManagementForm"

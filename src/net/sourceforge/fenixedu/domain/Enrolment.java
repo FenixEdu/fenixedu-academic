@@ -106,7 +106,7 @@ public class Enrolment extends Enrolment_Base {
 		enrolmentCondition, createdBy);
     }
     
-    private void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+    protected void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 	if(studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod) != null) {
 	    throw new DomainException("error.duplicate.enrolment");
 	}
@@ -124,17 +124,8 @@ public class Enrolment extends Enrolment_Base {
 	    StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
             CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             EnrollmentCondition enrolmentCondition, String createdBy) {
-        setCurricularCourse(curricularCourse);
-        setEnrollmentState(EnrollmentState.ENROLLED);
-        setExecutionPeriod(executionPeriod);
-        setCurricularCourse(curricularCourse);
-        setCurriculumGroup(curriculumGroup);
-        setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
-        setCreationDateDateTime(new DateTime());
-        setEnrolmentCondition(enrolmentCondition);
-        setCreatedBy(createdBy);
-
-        createAttend(studentCurricularPlan.getRegistration(), curricularCourse, executionPeriod);
+	initializeCommon(studentCurricularPlan, curricularCourse, executionPeriod, enrolmentCondition, createdBy);
+	setCurriculumGroup(curriculumGroup);
     }
     //end
     
@@ -146,6 +137,7 @@ public class Enrolment extends Enrolment_Base {
     public void setAccumulatedWeight(Integer accumulatedWeight) {
         this.accumulatedWeight = accumulatedWeight;
     }
+    
 
     protected void initializeAsNew(StudentCurricularPlan studentCurricularPlan,
             CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
@@ -154,20 +146,25 @@ public class Enrolment extends Enrolment_Base {
                 executionPeriod, enrolmentCondition, createdBy);
         createEnrolmentEvaluationWithoutGrade();
     }
+    
+    private void initializeCommon(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
+	    ExecutionPeriod executionPeriod, EnrollmentCondition enrolmentCondition, String createdBy) {
+	setCurricularCourse(curricularCourse);
+	setWeigth(curricularCourse.getWeigth());
+        setEnrollmentState(EnrollmentState.ENROLLED);
+        setExecutionPeriod(executionPeriod);
+        setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+        setCreatedBy(createdBy);
+        setCreationDateDateTime(new DateTime());
+        setEnrolmentCondition(enrolmentCondition);
+        createAttend(studentCurricularPlan.getRegistration(), curricularCourse, executionPeriod);
+    }
 
     protected void initializeAsNewWithoutEnrolmentEvaluation(
 	    StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
 	    ExecutionPeriod executionPeriod, EnrollmentCondition enrolmentCondition, String createdBy) {
-        setCurricularCourse(curricularCourse);
-        setEnrollmentState(EnrollmentState.ENROLLED);
-        setExecutionPeriod(executionPeriod);
-        setStudentCurricularPlan(studentCurricularPlan);
-        setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
-        setCreationDate(new Date());
-        setCondition(enrolmentCondition);
-        setCreatedBy(createdBy);
-
-        createAttend(studentCurricularPlan.getRegistration(), curricularCourse, executionPeriod);
+	initializeCommon(studentCurricularPlan, curricularCourse, executionPeriod, enrolmentCondition, createdBy);
+        setStudentCurricularPlan(studentCurricularPlan);    
     }
 
     public void unEnroll() throws DomainException {
@@ -886,7 +883,7 @@ public class Enrolment extends Enrolment_Base {
     @Override
     public boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
         if(executionPeriod == null || this.getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
-            return this.getCurricularCourse().isEquivalent(curricularCourse);
+            return this.isApproved() && this.getCurricularCourse().isEquivalent(curricularCourse);
         } else {
             return false;
         }
@@ -912,6 +909,10 @@ public class Enrolment extends Enrolment_Base {
 	    }
 	}
 	return null;
+    }
+    
+    public boolean isOptional() {
+	return false;
     }
 	
 }

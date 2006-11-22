@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurric
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -98,6 +99,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public void delete() throws DomainException {
+	if(getRoot() != null) {
+	    getRoot().delete();
+	}
+	
 	removeDegreeCurricularPlan();
 	removeStudent();
 	removeBranch();
@@ -1827,6 +1832,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public void setRegistration(final Registration registration) {
 	super.setStudent(registration);
     }
+    
+    public void createOptionalEnrolment(final CurriculumGroup curriculumGroup, final ExecutionPeriod executionPeriod, 
+	    final OptionalCurricularCourse optionalCurricularCourse, final CurricularCourse curricularCourse, final EnrollmentCondition enrollmentCondition) {
+	if(getRoot().isAproved(curricularCourse, executionPeriod)) {
+	    throw new DomainException("error.already.aproved", new String[] {curricularCourse.getName()});
+	}
+	if(getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod)) {
+	    throw new DomainException("error.already.enroled.in.executioPerdiod", new String[] {curricularCourse.getName(), executionPeriod.getQualifiedName()});
+	}
+	
+	new OptionalEnrolment(this, curriculumGroup, curricularCourse, executionPeriod, enrollmentCondition, AccessControl.getUserView().getUtilizador(), optionalCurricularCourse);	
+    }
 
     public void setActive() {
 	getRegistration().getActiveStudentCurricularPlan().setCurrentState(
@@ -1846,5 +1863,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getRegistration().getActiveStateType().equals(RegistrationStateType.REGISTERED)
 		&& getRegistration().getLastStudentCurricularPlanExceptPast().equals(this);
     }
+
 
 }

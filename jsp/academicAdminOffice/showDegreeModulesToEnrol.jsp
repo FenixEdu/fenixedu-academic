@@ -16,8 +16,11 @@
 <fr:form action="/studentEnrolments.do">
 	<html:hidden property="method" value="enrol"/>
 	<fr:edit id="showDegreeModulesToEnrol"
-			 name="studentEnrolmentBean"
-			 layout="student-enrolments"/>
+			 name="studentEnrolmentBean">
+		<fr:layout name="student-enrolments">	 
+			<fr:property name="linkURL" value="/studentOptionalEnrolments.do?method=prepare"/>
+		</fr:layout>
+	</fr:edit>
 	<br />
 	<br />	
 	<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.submit"/></html:submit>

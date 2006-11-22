@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.renderers.InputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlMultipleHiddenField;
 import net.sourceforge.fenixedu.renderers.components.HtmlMultipleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlTable;
@@ -36,6 +38,7 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -57,6 +60,8 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
     private String enrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
     
     private String curricularCoursesToEnrol = "smalltxt, smalltxt aright, smalltxt aright, aright";
+    
+    private String linkURL; 
     
     public Integer getInitialWidth() {
 	return initialWidth;
@@ -143,8 +148,13 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
         return getCurricularCourseClasses()[3];
     }
 
+    public String getLinkURL() {
+        return linkURL;
+    }
 
-
+    public void setLinkURL(String linkURL) {
+        this.linkURL = linkURL;
+    }
 
     public StudentCurricularPlanEnrolmentsRenderer() {
 	super();
@@ -160,11 +170,14 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	private final CopyCheckBoxValuesController enrollmentsController = new CopyCheckBoxValuesController();
 	
 	private final CopyCheckBoxValuesController degreeModulesToEnrolController = new CopyCheckBoxValuesController(); 
+	
+	private StudentEnrolmentBean studentEnrolmentBean = null;
 
 	
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
-	    StudentEnrolmentBean studentEnrolmentBean = (StudentEnrolmentBean) object;
+	    studentEnrolmentBean = (StudentEnrolmentBean) object;
+	    
 
 	    HtmlBlockContainer container = new HtmlBlockContainer();
 	    
@@ -295,23 +308,41 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 		year.append(degreeModuleToEnrol.getContext().getCurricularPeriod().getFullLabel());
 		yearCell.setBody(new HtmlText(year.toString()));
 
-		//Ects
-		final HtmlTableCell ectsCell = htmlTableRow.createCell();
-		ectsCell.setClasses(getCurricularCourseEctsClasses());
+		if(!curricularCourse.isOptionalCurricularCourse()) {
+		    //Ects
+		    final HtmlTableCell ectsCell = htmlTableRow.createCell();
+		    ectsCell.setClasses(getCurricularCourseEctsClasses());
 
-		final StringBuilder ects = new StringBuilder();
-		ects.append(curricularCourse.getEctsCredits()).append(" ").append(academicAdminOfficeResources.getString("credits.abbreviation"));
-		ectsCell.setBody(new HtmlText(ects.toString()));
+		    final StringBuilder ects = new StringBuilder();
+		    ects.append(curricularCourse.getEctsCredits()).append(" ").append(academicAdminOfficeResources.getString("credits.abbreviation"));
+		    ectsCell.setBody(new HtmlText(ects.toString()));
 
 
-		HtmlTableCell checkBoxCell = htmlTableRow.createCell();
-		checkBoxCell.setClasses(getCurricularCourseCheckBoxClasses());
+		    HtmlTableCell checkBoxCell = htmlTableRow.createCell();
+		    checkBoxCell.setClasses(getCurricularCourseCheckBoxClasses());
 
-		HtmlCheckBox checkBox = new HtmlCheckBox(false);
-		checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getIdInternal() + ":" + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
-		checkBox.setUserValue(degreeModuleToEnrol.getKey());
-		degreeModulesToEnrolController.addCheckBox(checkBox);
-		checkBoxCell.setBody(checkBox);
+		    HtmlCheckBox checkBox = new HtmlCheckBox(false);
+		    checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getIdInternal() + ":" + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
+		    checkBox.setUserValue(degreeModuleToEnrol.getKey());
+		    degreeModulesToEnrolController.addCheckBox(checkBox);
+		    checkBoxCell.setBody(checkBox);
+		} else {
+		    final HtmlTableCell cell = htmlTableRow.createCell();
+		    cell.setClasses(getCurricularCourseEctsClasses());
+		    cell.setBody(new HtmlText(""));
+		    
+		    HtmlTableCell linkTableCell = htmlTableRow.createCell();
+		    linkTableCell.setClasses(getCurricularCourseCheckBoxClasses());
+		    
+		    final HtmlLink htmlLink = new HtmlLink();
+		    htmlLink.setText(academicAdminOfficeResources.getString("link.option.choose.curricular.course"));
+		    htmlLink.setUrl(getLinkURL());
+		    htmlLink.setParameter("scpID", studentEnrolmentBean.getStudentCurricularPlan().getIdInternal());
+		    htmlLink.setParameter("executionPeriodID", studentEnrolmentBean.getExecutionPeriod().getIdInternal());
+		    htmlLink.setParameter("curriculumGroupID", degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
+		    htmlLink.setParameter("contextID", degreeModuleToEnrol.getContext().getIdInternal());
+		    linkTableCell.setBody(htmlLink);
+		}
 	    }
 	}
 
@@ -330,8 +361,8 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	private void generateEnrolment(final HtmlTable groupTable, Enrolment enrolment) {
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
 	    HtmlTableCell cellName = htmlTableRow.createCell();
-	    cellName.setClasses(getEnrolmentNameClasses());
-	    cellName.setBody(new HtmlText(enrolment.getCurricularCourse().getName()));
+	    cellName.setClasses(getEnrolmentNameClasses());	    
+	    cellName.setBody(new HtmlText(enrolment.getName().getContent(LanguageUtils.getLanguage())));
 	    
 	    // Year
 	    final HtmlTableCell yearCell = htmlTableRow.createCell();

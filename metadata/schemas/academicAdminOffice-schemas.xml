@@ -338,3 +338,29 @@
 	<slot name="stateType" key="label.state" />
 	<slot name="remarks" />
 </schema>
+
+<schema name="studentOptionalEnrolment.base" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean">
+	<slot name="degreeType" key="label.degreeType"
+		layout="menu-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="destination" value="postBack"/>
+	</slot>
+	<slot name="degree" key="label.degree"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.studentEnrolment.DegreesByDegreeType" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="postBack"/>
+	</slot>
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.studentEnrolment.DegreeCurricularPlansForDegree" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="postBack"/>
+	</slot>
+</schema>
+

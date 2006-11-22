@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -879,11 +880,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		endExecutionPeriod);
     }
 
-    public CurricularCourse createCurricularCourse(CourseGroup parentCourseGroup, String name,
+    public CurricularCourse createOptionalCurricularCourse(CourseGroup parentCourseGroup, String name,
 	    String nameEn, CurricularStage curricularStage, CurricularPeriod curricularPeriod,
 	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
 
-	return new CurricularCourse(parentCourseGroup, name, nameEn, curricularStage, curricularPeriod,
+	return new OptionalCurricularCourse(parentCourseGroup, name, nameEn, curricularStage, curricularPeriod,
 		beginExecutionPeriod, endExecutionPeriod);
     }
 
@@ -925,7 +926,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	final List<List<DegreeModule>> result = new ArrayList<List<DegreeModule>>();
 	final List<DegreeModule> path = new ArrayList<DegreeModule>();
 
-	if (clazz.equals(CourseGroup.class)) {
+	if (clazz.isAssignableFrom(CourseGroup.class)) {
 	    path.add(this.getRoot());
 
 	    result.add(path);

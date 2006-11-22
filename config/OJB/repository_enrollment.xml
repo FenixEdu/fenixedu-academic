@@ -16,7 +16,14 @@
 	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.OptionalEnrolment"/>	
 </class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.OptionalEnrolment -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.OptionalEnrolment" table="CURRICULUM_MODULE"/>
+
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse -->

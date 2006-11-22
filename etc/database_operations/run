@@ -27,5 +27,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter CURRICULUM_MODULE table" alterCurriculumModuleTable.sql
+execute "Change OptionalCourses" changeOptionalCurricularCourses.sql
 execute "Changing Table AcademicServiceRequestSituation" AlterTableAcademicServiceRequestSituation.sql
 execute "Changing Card Dates type" AlterTableParkingParty.sql
