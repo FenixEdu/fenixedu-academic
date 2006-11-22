@@ -218,7 +218,7 @@
 					<reportElement
 						x="68"
 						y="97"
-						width="483"
+						width="516"
 						height="22"
 						key="textField-1"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
