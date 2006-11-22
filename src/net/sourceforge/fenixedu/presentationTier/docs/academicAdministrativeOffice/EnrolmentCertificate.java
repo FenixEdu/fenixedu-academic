@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -43,7 +44,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	    Collections.sort(enrolments, comparatorChain);
 	    
 	    for (final Enrolment enrolment : enrolments) {
-		dummy = new GenericPair<String, String>(StringUtils.multipleLineRightPad(LINE_LENGTH, enrolment.getName().toUpperCase(), '-'), null);
+		dummy = new GenericPair<String, String>(StringUtils.multipleLineRightPad(LINE_LENGTH, enrolment.getName().getContent(LanguageUtils.getLanguage()).toUpperCase(), '-'), null);
 		dataSource.add(dummy);
 	    }
 	} else {

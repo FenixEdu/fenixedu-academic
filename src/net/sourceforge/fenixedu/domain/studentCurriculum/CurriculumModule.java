@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -23,7 +24,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public static final ComparatorChain COMPARATOR_BY_NAME = new ComparatorChain();
 
     static {
-	COMPARATOR_BY_NAME.addComparator(new BeanComparator("name", Collator.getInstance()));
+	COMPARATOR_BY_NAME.addComparator(new BeanComparator("name"));
     }
 
     public CurriculumModule() {
@@ -55,9 +56,15 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     
     public abstract StudentCurricularPlan getStudentCurricularPlan();
     
-    public String getName() {
-	final DegreeModule degreeModule = getDegreeModule();
-	return LanguageUtils.getUserLanguage() == Language.en ? degreeModule.getNameEn() : degreeModule.getName(); 
+    public MultiLanguageString getName() {
+	final MultiLanguageString multiLanguageString = new MultiLanguageString();
+	if (this.getDegreeModule().getName() != null && this.getDegreeModule().getName().length() > 0) {
+	    multiLanguageString.setContent(Language.pt, this.getDegreeModule().getName());
+	}
+	if (this.getDegreeModule().getNameEn() != null && this.getDegreeModule().getNameEn().length() > 0) {
+	    multiLanguageString.setContent(Language.en, this.getDegreeModule().getNameEn());
+	}
+	return multiLanguageString;
     }
     
     public abstract boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod);

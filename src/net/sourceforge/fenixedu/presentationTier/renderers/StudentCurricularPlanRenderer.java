@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell.CellType;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.util.EnrollmentStateSelectionType;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -239,7 +240,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    groupNameCell.setType(CellType.HEADER);
 	    groupNameCell.setClasses(getGroupNameClasses());
 	    groupNameCell.setColspan(5);
-	    groupNameCell.setBody((group.isRoot()) ? generateDegreeCurricularPlanNameLink(studentCurricularPlan.getDegreeCurricularPlan(), null) : new HtmlText(group.getName()));
+	    groupNameCell.setBody((group.isRoot()) ? generateDegreeCurricularPlanNameLink(studentCurricularPlan.getDegreeCurricularPlan(), null) : new HtmlText(group.getName().getContent(LanguageUtils.getLanguage())));
 
 	    generateGroupLines(depth, group);
 	    generateGroupChilds(depth, group);
@@ -369,11 +370,11 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
 	    
 	    if (executionCourse == null) {
-		return new HtmlText(enrolment.getName());
+		return new HtmlText(enrolment.getName().getContent(LanguageUtils.getLanguage()));
 	    } else {
 		final HtmlLink executionCourseLink = new HtmlLink();
 
-		executionCourseLink.setText(enrolment.getName());
+		executionCourseLink.setText(enrolment.getName().getContent(LanguageUtils.getLanguage()));
 
 		executionCourseLink.setUrl("/publico/executionCourse.do?method=firstPage");
 		executionCourseLink.setModuleRelative(false);
@@ -391,7 +392,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    
 	    final HtmlLink curricularCourseLink = new HtmlLink();
 
-	    curricularCourseLink.setText(enrolment.getName());
+	    curricularCourseLink.setText(enrolment.getName().getContent(LanguageUtils.getLanguage()));
 	    curricularCourseLink.setModuleRelative(false);
 	    curricularCourseLink.setTarget(HtmlLink.Target.BLANK);
 	    curricularCourseLink.setParameter("degreeID", curricularCourse.getDegreeCurricularPlan().getDegree().getIdInternal());
