@@ -144,8 +144,16 @@
             <param-value>/manager/functionalities/test</param-value>
         </init-param>
         <init-param>
-            <param-name>error.page</param-name>
+            <param-name>public.prefix</param-name>
+            <param-value>/publico</param-value>
+        </init-param>
+        <init-param>
+            <param-name>error.page.logged</param-name>
             <param-value>/manager/functionalities/error/notAvailable.do</param-value>
+        </init-param>
+        <init-param>
+            <param-name>error.page</param-name>
+            <param-value>/publico/notFound.do</param-value>
         </init-param>
     </filter>
     	

@@ -55,14 +55,24 @@ public class CheckAvailabilityFilter implements Filter {
     private static final Logger logger = Logger.getLogger(CheckAvailabilityFilter.class);
     
     private String errorPage;
+    private String errorPageLogged;
     private String testingPrefix;
+    private String publicPrefix;
 
     public String getErrorPage() {
         return this.errorPage;
     }
 
+    public String getErrorPageLogged() {
+        return this.errorPageLogged;
+    }
+
     public String getTestingPrefix() {
         return this.testingPrefix;
+    }
+    
+    public String getPublicPrefix() {
+        return this.publicPrefix;
     }
 
     /**
@@ -79,7 +89,9 @@ public class CheckAvailabilityFilter implements Filter {
      */
     public void init(FilterConfig config) throws ServletException {
         this.errorPage = config.getInitParameter("error.page");
+        this.errorPageLogged = config.getInitParameter("error.page.logged");
         this.testingPrefix = config.getInitParameter("testing.prefix");
+        this.publicPrefix = config.getInitParameter("public.prefix");
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -113,7 +125,7 @@ public class CheckAvailabilityFilter implements Filter {
                 chain.doFilter(request, response);
             }
         } else {
-            showUnavailablePage(servletRequest, servletResponse);
+            showUnavailablePage(userView, servletRequest, servletResponse);
         }
     }
 
@@ -291,8 +303,15 @@ public class CheckAvailabilityFilter implements Filter {
      * Redirects the client to the page showing that the functionality is not
      * available.
      */
-    private void showUnavailablePage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        dispatch(request, response, getErrorPage());
+    private void showUnavailablePage(IUserView userView, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String servletPath = request.getServletPath().substring(request.getContextPath().length());
+        
+        if (servletPath.startsWith(getPublicPrefix()) || userView == null
+                || userView.isPublicRequester()) {
+            dispatch(request, response, getErrorPage());
+        } else {
+            dispatch(request, response, getErrorPageLogged());
+        }
     }
 
     protected void dispatch(HttpServletRequest request, HttpServletResponse response, String path) throws IOException, ServletException {
