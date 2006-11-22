@@ -31,3 +31,6 @@ execute "Alter CURRICULUM_MODULE table" alterCurriculumModuleTable.sql
 execute "Change OptionalCourses" changeOptionalCurricularCourses.sql
 execute "Changing Table AcademicServiceRequestSituation" AlterTableAcademicServiceRequestSituation.sql
 execute "Changing Card Dates type" AlterTableParkingParty.sql
+
+execute "Add new accountabilityType" alterAccountabilityType.sql
+execute "Changes in functionalities" changes-20061122160416.sql

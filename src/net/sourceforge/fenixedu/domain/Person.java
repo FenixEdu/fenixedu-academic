@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
@@ -48,6 +47,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -65,7 +65,6 @@ import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -78,6 +77,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class Person extends Person_Base {
@@ -116,13 +116,24 @@ public class Person extends Person_Base {
     }
 
     public void setIdentification(String documentIdNumber, IDDocumentType idDocumentType) {
-	if (documentIdNumber != null
-		&& idDocumentType != null
-		&& checkIfDocumentNumberIdAndDocumentIdTypeExists(documentIdNumber, idDocumentType, this)) {
+	if (documentIdNumber != null && idDocumentType != null
+		&& checkIfDocumentNumberIdAndDocumentIdTypeExists(documentIdNumber, idDocumentType)) {
 	    throw new DomainException("error.person.existent.docIdAndType");
 	}
 	setDocumentIdNumber(documentIdNumber);
 	setIdDocumentType(idDocumentType);
+    }
+
+    private boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
+	    final IDDocumentType documentType) {
+
+	for (final Person person : Person.readAllPersons()) {
+	    if (!person.equals(this) && person.getDocumentIdNumber().equals(documentIDNumber)
+		    && person.getIdDocumentType().equals(documentType)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public String getNome() {
@@ -900,6 +911,9 @@ public class Person extends Person_Base {
     }
 
     private boolean canBeDeleted() {
+	if (getInvitationAccountabilitiesCount() > 0) {
+	    return false;
+	}
 	if (getDomainObjectActionLogsCount() > 0) {
 	    return false;
 	}
@@ -1026,6 +1040,14 @@ public class Person extends Person_Base {
 	public void afterRemove(Role removedRole, Person person) {
 	    person.removeAlias(removedRole);
 	    person.updateIstUsername();
+	    closePersonLogin(person);
+	}
+
+	private void closePersonLogin(Person person) {
+	    if (person.getPersonRolesCount() == 2 && person.hasRole(RoleType.PERSON)
+		    && person.hasRole(RoleType.MESSAGING) && !person.isInvited()) {
+		person.getLoginIdentification().closeLogin();
+	    }
 	}
 
 	private void addDependencies(Role role, Person person) {
@@ -1480,22 +1502,25 @@ public class Person extends Person_Base {
 	}
     }
 
-    // -------------------------------------------------------------
-    // static methods
-    // -------------------------------------------------------------
-
-    public static boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
-	    final IDDocumentType documentType, Person thisPerson) {
-
-	for (final Person person : Person.readAllPersons()) {
-	    if (!person.equals(thisPerson) && person.getDocumentIdNumber().equals(documentIDNumber)
-		    && person.getIdDocumentType().equals(documentType)) {
+    public boolean isInvited() {
+	YearMonthDay currentDate = new YearMonthDay();
+	for (Invitation invitation : (Collection<Invitation>) getParentAccountabilities(
+		AccountabilityTypeEnum.INVITATION, Invitation.class)) {
+	    if (invitation.isActive(currentDate)) {
 		return true;
 	    }
 	}
 	return false;
     }
+    
+    public boolean canLogin() {
+	return getLoginIdentification().isActive(new DateTime());
+    }
 
+    // -------------------------------------------------------------
+    // static methods
+    // -------------------------------------------------------------
+       
     public static Person readPersonByUsername(final String username) {
 	final Login login = Login.readLoginByUsername(username);
 	final User user = login == null ? null : login.getUser();
@@ -1840,14 +1865,14 @@ public class Person extends Person_Base {
     public ParkingPartyClassification getPartyClassification() {
 	final Teacher teacher = getTeacher();
 	if (teacher != null) {
-            if (teacher.getCurrentWorkingDepartment() != null
-                    && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+	    if (teacher.getCurrentWorkingDepartment() != null
+		    && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
 		return ParkingPartyClassification.TEACHER;
 	    }
 	}
 	final Employee employee = getEmployee();
-        if (employee != null && employee.getCurrentWorkingContract() != null
-                && (teacher == null || teacher.getCurrentWorkingDepartment() == null)) {
+	if (employee != null && employee.getCurrentWorkingContract() != null
+		&& (teacher == null || teacher.getCurrentWorkingDepartment() == null)) {
 	    return ParkingPartyClassification.EMPLOYEE;
 	}
 	final GrantOwner grantOwner = getGrantOwner();

@@ -3094,12 +3094,12 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	Integer keyQuestionBank;
 }
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
-		Integer costCenterCode;
-		Integer keyDepartment;	
-		Integer keyDegree;
+		Integer costCenterCode;		
 		String acronym;
 		YearMonthDay beginDateYearMonthDay;
 		YearMonthDay endDateYearMonthDay;
+		Integer keyDepartment;	
+		Integer keyDegree;
 		Integer keyAdministrativeOffice;
 		Integer keyRootDomainObjectForInstitutionUnit;
 		Integer keyRootDomainObjectForExternalInstitutionUnit;
@@ -3192,8 +3192,12 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability ext
 	}  
 	
 	class net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
-
 	}
+	
+	class net.sourceforge.fenixedu.domain.organizationalStructure.Invitation extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
+		Integer keyResponsible;		
+	}
+	
 	  	  
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
@@ -11054,6 +11058,13 @@ relation DomainObjectActionLogDomainObjectActionLogEntry {
 relation DomainObjectActionLogPerson {
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 	net.sourceforge.fenixedu.domain.DomainObjectActionLog playsRole domainObjectActionLogs {
+		multiplicity *;
+	}
+}
+
+relation InvitationParty {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole responsible;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Invitation playsRole invitationAccountabilities {
 		multiplicity *;
 	}
 }

@@ -669,6 +669,10 @@
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
 		
+		<form-bean name="createInvitedPersonForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+		</form-bean>		
+				
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1734,31 +1738,38 @@
 	
 	<!-- ========== PERSON MANAGEMENT ========== -->
 	<action path="/personManagement"
-	type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
-	parameter="method"
-	scope="request"
-	input="findPerson"
-	>
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+		parameter="method"
+		scope="request"
+		input="findPerson">
 		<forward name="firstPage" path="firstPage"/>
 	</action>
 	
 	<action path="/findPerson"
-	type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
-	parameter="method"
-	scope="request"
-	name="findPersonForm"
-	input="findPerson"
-	>
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+		parameter="method"
+		scope="request"
+		name="findPersonForm"
+		input="findPerson">
 		<forward name="findPerson" path="findPerson"/>
 		<forward name="displayPerson" path="displayPerson"/>
 	</action>
 	
+	<action path="/createInvitedPerson"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+		parameter="method"
+		scope="request"
+		name="createInvitedPersonForm"
+		input="personManagement">
+		<forward name="showExistentPersonsBeforeCreateInvitedPerson" path="show-existent-persons-before-create-invited-person"/>
+		<forward name="prepareCreateInvitedPerson" path="prepare-create-invited-person"/>				
+	</action>
+		
 	<action path="/displayEmployee"	
-	type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
-	parameter="method"
-	scope="request"
-	name="findEmployeeForm"
-	>
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+		parameter="method"
+		scope="request"
+		name="findEmployeeForm">
 		<forward name="displayEmployee" path="displayEmployee"/>
 	</action>
 	

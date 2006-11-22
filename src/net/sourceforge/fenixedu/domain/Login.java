@@ -47,7 +47,7 @@ public class Login extends Login_Base {
     public boolean hasUsername(String username) {
 	return getLoginAlias(username) != null;
     }
-
+    
     public boolean isClosed() {
 	return getEndDateDateTime() != null && getEndDateDateTime().isBefore(new DateTime());
     }
@@ -198,6 +198,6 @@ public class Login extends Login_Base {
 		    loginAlias.delete();
 		}
 	    }
-	}
+	}	
     }
 }

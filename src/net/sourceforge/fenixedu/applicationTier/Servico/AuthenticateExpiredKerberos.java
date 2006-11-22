@@ -17,11 +17,7 @@ public class AuthenticateExpiredKerberos extends Authenticate {
 
         Person person = Person.readPersonByUsername(username);
 
-        if (person == null) {
-            person = Person.readPersonByIstUsername(username);
-        }
-
-        if (person == null) {
+        if (person == null || !person.canLogin()) {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }
 

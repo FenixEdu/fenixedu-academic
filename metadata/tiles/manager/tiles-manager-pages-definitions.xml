@@ -294,7 +294,13 @@
 	<definition name="displayObjects" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/mergeObjects.jsp" />
 	</definition>
-		
+	<definition name="show-existent-persons-before-create-invited-person" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/showExistentPersonsBeforeCreateInvitedPerson.jsp" />
+	</definition>
+	<definition name="prepare-create-invited-person" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/createInvitedPerson.jsp" />
+	</definition>	
+	
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->
 	<definition name="firstPageGenerateFiles" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/generateFiles/welcomeScreen.jsp" />

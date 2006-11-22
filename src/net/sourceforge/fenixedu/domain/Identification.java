@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 /**
  * @author mrsp
  */
@@ -23,6 +25,15 @@ public abstract class Identification extends Identification_Base {
 
     public boolean isLogin() {
         return false;
+    }
+    
+    public boolean belongsToPeriod(DateTime begin, DateTime end) {
+	return ((end == null || !this.getBeginDateDateTime().isAfter(end)) && (this.getEndDateDateTime() == null || !this
+		.getEndDateDateTime().isBefore(begin)));
+    }
+    
+    public boolean isActive(DateTime currentDate) {
+	return belongsToPeriod(currentDate, currentDate);
     }
     
     public static List<Login> readAllLogins() {
