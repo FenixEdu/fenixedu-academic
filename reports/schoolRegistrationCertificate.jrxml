@@ -218,7 +218,7 @@
 					<reportElement
 						x="68"
 						y="97"
-						width="468"
+						width="483"
 						height="22"
 						key="textField-1"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
@@ -328,7 +328,7 @@
 				<rectangle radius="0" >
 					<reportElement
 						mode="Transparent"
-						x="60"
+						x="57"
 						y="3"
 						width="489"
 						height="393"
@@ -367,14 +367,14 @@
 					<reportElement
 						x="68"
 						y="51"
-						width="468"
+						width="483"
 						height="22"
 						key="staticText-14"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[     CERTIFICA, em cumprimento do despacho exarado em requerimen-to arquivado]]></text>
+				<text><![CDATA[     CERTIFICA, em cumprimento do despacho exarado em requerimen-]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -387,7 +387,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[nesta Secretaria, que dos livros competentes consta]]></text>
+				<text><![CDATA[to arquivado nesta Secretaria, que dos livros competentes consta]]></text>
 				</staticText>
 			</band>
 		</detail>
