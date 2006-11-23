@@ -26,3 +26,8 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add new columns to PaymentCode table" AlterTablePaymentCode.sql
+execute "Change Table GratuitySituation" AlterTableGratuitySituation.sql
+execute "Remove OLD Sibs file management functionalities" RemoveOldSibsFileManagementFunctionalities.sql
+execute "Update ParkingParty Card dates defaults" AlterParkingPartyTable.sql
