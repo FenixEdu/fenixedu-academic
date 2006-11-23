@@ -30,12 +30,15 @@
 <br />
 <br />
 <logic:present name="optionalBean" property="degreeCurricularPlan">
-	<fr:form>
+	<fr:form action="/studentOptionalEnrolments.do?method=back">
 		<fr:edit id="degreeCurricularPlan"
 				 name="optionalBean">
 			<fr:layout name="student-optional-enrolments">
 				<fr:property name="linkURL" value="/studentOptionalEnrolments.do?method=enrol"/>
 			</fr:layout>
 		</fr:edit>
+		<br/>
+		<br/>		
+		<html:submit><bean:message key="back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	</fr:form>
 </logic:present>

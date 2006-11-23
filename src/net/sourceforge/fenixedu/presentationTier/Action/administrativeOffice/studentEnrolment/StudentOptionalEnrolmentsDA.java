@@ -86,6 +86,18 @@ public class StudentOptionalEnrolmentsDA extends FenixDispatchAction {
 	
 	request.setAttribute("studentEnrolmentBean", enrolmentBean);
 	    
+	return mapping.findForward("showDegreeModulesToEnrol");	
+    }
+    
+    public ActionForward back(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	StudentOptionalEnrolmentBean optionalEnrolmentBean = (StudentOptionalEnrolmentBean) RenderUtils.getViewState().getMetaObject().getObject();
+	
+	final StudentEnrolmentBean enrolmentBean = new StudentEnrolmentBean();
+	enrolmentBean.setStudentCurricularPlan(optionalEnrolmentBean.getStudentCurricularPlan());
+	enrolmentBean.setExecutionPeriod(optionalEnrolmentBean.getExecutionPeriod());
+	
+	request.setAttribute("studentEnrolmentBean", enrolmentBean);
+	    
 	return mapping.findForward("showDegreeModulesToEnrol");
 	
     }
