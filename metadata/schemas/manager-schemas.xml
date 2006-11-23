@@ -39,7 +39,7 @@
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
 	<slot name="documentIdNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
 	<slot name="idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>			
-    <slot name="gender"/>
+    <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="documentIdEmissionLocation" />
 	<slot name="documentIdEmissionDate" />
     <slot name="documentIdExpirationDate" />
