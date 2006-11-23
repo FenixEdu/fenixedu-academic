@@ -89,4 +89,14 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
             }
         }
     }
+
+    @Override
+    public void setPlace(String place) {
+        final int maxPlaceChars = 50;
+        if (place != null && place.length() > maxPlaceChars) {
+            throw new DomainException("error.place.cannot.have.more.than.characters", Integer.toString(maxPlaceChars));
+        }
+        super.setPlace(place);
+    }
+
 }
