@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -35,8 +34,9 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
 	
 	if (enrolmentCertificateRequest.getDetailed()) {
-	    GenericPair<String, String> dummy = new GenericPair<String, String>("\t\t" + curricularYear + ".ANO", null);
-	    dataSource.add(dummy);
+	    StringBuilder dummy = new StringBuilder();
+	    
+	    dummy.append("\t\t").append(curricularYear).append(".ANO\n");
 
 	    final ComparatorChain comparatorChain = new ComparatorChain();
 	    comparatorChain.addComparator(new BeanComparator("executionPeriod.executionYear"));
@@ -44,12 +44,12 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	    Collections.sort(enrolments, comparatorChain);
 	    
 	    for (final Enrolment enrolment : enrolments) {
-		dummy = new GenericPair<String, String>(StringUtils.multipleLineRightPad(LINE_LENGTH, enrolment.getName().getContent(LanguageUtils.getLanguage()).toUpperCase(), '-'), null);
-		dataSource.add(dummy);
+		dummy.append(StringUtils.multipleLineRightPad(LINE_LENGTH, enrolment.getName().getContent(LanguageUtils.getLanguage()).toUpperCase(), '-')).append("\n");
 	    }
+	    
+	    parameters.put("dummy", dummy.toString());
 	} else {
-	    GenericPair<String, String> dummy = new GenericPair<String, String>(org.apache.commons.lang.StringUtils.EMPTY, null);
-	    dataSource.add(dummy);
+	    parameters.put("dummy", "");
 	}
     }
 

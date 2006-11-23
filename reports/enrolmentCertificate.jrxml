@@ -37,15 +37,14 @@
 	<parameter name="amountPerPage" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="baseAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="urgencyAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
-
-	<field name="left" class="java.lang.String"/>
+	<parameter name="dummy" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</background>
 		<title>
-			<band height="511"  isSplitAllowed="true" >
+			<band height="224"  isSplitAllowed="true" >
 				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
@@ -71,142 +70,6 @@
 					</textElement>
 				<text><![CDATA[Secretaria      dos Serviços Académicos]]></text>
 				</staticText>
-				<staticText>
-					<reportElement
-						x="68"
-						y="237"
-						width="468"
-						height="22"
-						key="staticText-12"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font fontName="Courier New" pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
-					</textElement>
-				<text><![CDATA[      A TÉCNICA SUPERIOR DA SECÇÃO DE GRADUAÇÃO DO INSTITUTO SUPERIOR]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="68"
-						y="260"
-						width="468"
-						height="22"
-						key="staticText-13"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font fontName="Courier New" pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
-					</textElement>
-				<text><![CDATA[TÉCNICO DA UNIVERSIDADE TÉCNICA DE LISBOA]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="68"
-						y="283"
-						width="483"
-						height="22"
-						key="staticText-14"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<text><![CDATA[     CERTIFICA, em cumprimento do despacho exarado em requerimen-]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="68"
-						y="306"
-						width="468"
-						height="22"
-						key="staticText-15"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font fontName="Courier New" pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<text><![CDATA[to arquivado nesta Secretaria, que dos livros competentes consta]]></text>
-				</staticText>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="68"
-						y="329"
-						width="516"
-						height="22"
-						key="textField-1"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="68"
-						y="352"
-						width="468"
-						height="22"
-						key="textField-2"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{documentIdNumber}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="68"
-						y="375"
-						width="468"
-						height="22"
-						key="textField-3"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{birthLocale}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="68"
-						y="398"
-						width="468"
-						height="22"
-						key="textField-4"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nameOfFather}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="68"
-						y="421"
-						width="468"
-						height="22"
-						key="textField-5"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nameOfMother}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="68"
-						y="445"
-						width="482"
-						height="64"
-						key="textField-6"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["no ano lectivo " + ((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest)$P{documentRequest}).getExecutionYear().getYear() + " ESTEVE INSCRITO em " + $P{numberEnrolments} + " disciplinas no " + $P{curricularYear} + ".ANO do curso " + $P{documentRequest}.getRegistration().getDegreeType().getLocalizedName().toUpperCase() + " em " + $P{documentRequest}.getRegistration().getDegree().getName().toUpperCase() + " deste Instituto."]]></textFieldExpression>
-				</textField>
 			</band>
 		</title>
 		<pageHeader>
@@ -218,14 +81,14 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="24"  isSplitAllowed="true" >
+			<band height="234"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="68"
-						y="1"
+						x="69"
+						y="43"
 						width="468"
-						height="22"
-						key="textField-13"
+						height="183"
+						key="textField-18"
 						stretchType="RelativeToBandHeight"
 						positionType="Float">
 							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest)$P{documentRequest}).getDetailed())]]></printWhenExpression>
@@ -234,7 +97,7 @@
 					<textElement lineSpacing="Double">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{left}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{dummy}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
@@ -317,7 +180,7 @@
 			</band>
 		</pageFooter>
 		<summary>
-			<band height="113"  isSplitAllowed="true" >
+			<band height="65"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="68"
