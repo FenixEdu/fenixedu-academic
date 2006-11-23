@@ -1280,17 +1280,8 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isConcluded() {
-
-	if (getActiveStateType().equals(RegistrationStateType.CONCLUDED)) {
-	    return true;
-	}
-
-	final double ectsCredits = calculateEctsCredits();
-	final int curricularYear = calculateCurricularYear(ectsCredits);
-	final DegreeType degreeType = getDegreeType();
-
-	return ectsCredits == degreeType.getDefaultEctsCredits()
-		&& curricularYear == degreeType.getYears();
+        return getActiveStateType() == RegistrationStateType.CONCLUDED
+                || calculateEctsCredits() >= getDegreeType().getDefaultEctsCredits();
     }
 
     public double getEctsCredits() {
