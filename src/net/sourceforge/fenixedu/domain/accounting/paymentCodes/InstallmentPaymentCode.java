@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
@@ -77,11 +76,6 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
     public void setInstallment(Installment installment) {
 	throw new DomainException(
 		"error.accounting.paymentCodes.InstallmentPaymentCode.cannot.modify.installment");
-    }
-
-    @Override
-    public Money getAmount(DateTime when) {
-	return getInstallment().calculateAmount(when);
     }
 
 }

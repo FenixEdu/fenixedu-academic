@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain.transactions;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
+
+import org.joda.time.DateTime;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GuideEntry;
@@ -18,27 +21,16 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class InsuranceTransaction extends InsuranceTransaction_Base {
 
     public InsuranceTransaction() {
+	super();
+	setOjbConcreteClass(getClass().getName());
 
     }
 
-    /**
-         * @param value
-         * @param transactionDate
-         * @param remarks
-         * @param paymentType
-         * @param transactionType
-         * @param wasInternalBalance
-         * @param responsiblePerson
-         * @param personAccount
-         * @param guideEntry
-         * @param executionYear
-         * @param registration
-         */
     public InsuranceTransaction(Double value, Timestamp transactionDate, String remarks,
 	    PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
 	    Person responsiblePerson, PersonAccount personAccount, GuideEntry guideEntry,
 	    ExecutionYear executionYear, Registration registration) {
-	setOjbConcreteClass(getClass().getName());
+	this();
 	setValue(value);
 	setTransactionDate(transactionDate);
 	setRemarks(remarks);
@@ -49,6 +41,22 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 	setPersonAccount(personAccount);
 	setExecutionYear(executionYear);
 	setGuideEntry(guideEntry);
+	setStudent(registration);
+    }
+
+    public InsuranceTransaction(final BigDecimal value, final DateTime whenRegistered,
+	    final PaymentType paymentType, final Person responsiblePerson,
+	    final PersonAccount personAccount, final ExecutionYear executionYear,
+	    final Registration registration) {
+	this();
+	setValueBigDecimal(value);
+	setTransactionDateDateTime(whenRegistered);
+	setPaymentType(paymentType);
+	setTransactionType(TransactionType.INSURANCE_PAYMENT);
+	setWasInternalBalance(false);
+	setResponsiblePerson(responsiblePerson);
+	setPersonAccount(personAccount);
+	setExecutionYear(executionYear);
 	setStudent(registration);
     }
 

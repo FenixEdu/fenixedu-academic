@@ -24,6 +24,10 @@ public class Money implements Comparable<Money>, Serializable {
 	this.amount = round(new BigDecimal(amount));
     }
 
+    public Money(Double amount) {
+	this.amount = round(new BigDecimal(amount));
+    }
+
     private BigDecimal round(BigDecimal amountToRound) {
 	return amountToRound.setScale(EURO_SCALE, RoundingMode.HALF_EVEN);
     }

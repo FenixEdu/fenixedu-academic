@@ -25,7 +25,6 @@ public class PaymentCodeGenerator {
 	final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType, student);
 	return (lastPaymentCode == null) ? true
 		: (getSignificantNumberForCodeGeneration(lastPaymentCode) + 1 <= 99);
-
     }
 
     public static String generateNewCodeFor(final PaymentCodeType paymentCodeType, final Student student) {
@@ -39,7 +38,6 @@ public class PaymentCodeGenerator {
 	final List<PaymentCode> paymentCodes = student.getPaymentCodesBy(paymentCodeType);
 	return paymentCodes.isEmpty() ? null : Collections.max(paymentCodes,
 		PaymentCode.COMPARATOR_BY_CODE);
-
     }
 
     private static String generateFirstCodeForType(final PaymentCodeType paymentCodeType,

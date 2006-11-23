@@ -12,14 +12,17 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.YearMonthDay;
 
 public class Student extends Student_Base {
 
@@ -305,4 +308,78 @@ public class Student extends Student_Base {
 
 	return null;
     }
+
+    // TODO: This should be removed when master degree payments start using
+    // Events and Posting Rules for payments
+    public MasterDegreeInsurancePaymentCode calculateMasterDegreeInsurancePaymentCode(
+	    final ExecutionYear executionYear) {
+	if (!hasMasterDegreeInsurancePaymentCodeFor(executionYear)) {
+	    return createMasterDegreeInsurancePaymentCode(executionYear);
+	} else {
+	    final MasterDegreeInsurancePaymentCode masterDegreeInsurancePaymentCode = getMasterDegreeInsurancePaymentCodeFor(executionYear);
+	    final Money insuranceAmount = new Money(executionYear.getInsuranceValue()
+		    .getAnnualValueBigDecimal());
+	    masterDegreeInsurancePaymentCode.update(new YearMonthDay(),
+		    calculateMasterDegreeInsurancePaymentCodeEndDate(executionYear), insuranceAmount,
+		    insuranceAmount);
+
+	    return masterDegreeInsurancePaymentCode;
+	}
+    }
+
+    private MasterDegreeInsurancePaymentCode createMasterDegreeInsurancePaymentCode(
+	    final ExecutionYear executionYear) {
+	final Money insuranceAmount = new Money(executionYear.getInsuranceValue()
+		.getAnnualValueBigDecimal());
+	return MasterDegreeInsurancePaymentCode.create(new YearMonthDay(),
+		calculateMasterDegreeInsurancePaymentCodeEndDate(executionYear), insuranceAmount,
+		insuranceAmount, this, executionYear);
+    }
+
+    private YearMonthDay calculateMasterDegreeInsurancePaymentCodeEndDate(
+	    final ExecutionYear executionYear) {
+	final YearMonthDay insuranceEndDate = executionYear.getInsuranceValue().getEndDateYearMonthDay();
+	final YearMonthDay now = new YearMonthDay();
+
+	if (now.isAfter(insuranceEndDate)) {
+	    return now.plusMonths(1);
+	} else {
+	    return insuranceEndDate;
+	}
+    }
+
+    private MasterDegreeInsurancePaymentCode getMasterDegreeInsurancePaymentCodeFor(
+	    final ExecutionYear executionYear) {
+	for (final PaymentCode paymentCode : getPaymentCodesSet()) {
+	    if (paymentCode instanceof MasterDegreeInsurancePaymentCode) {
+		final MasterDegreeInsurancePaymentCode masterDegreeInsurancePaymentCode = ((MasterDegreeInsurancePaymentCode) paymentCode);
+		if (masterDegreeInsurancePaymentCode.getExecutionYear() == executionYear) {
+		    return masterDegreeInsurancePaymentCode;
+		}
+	    }
+	}
+
+	return null;
+    }
+
+    private boolean hasMasterDegreeInsurancePaymentCodeFor(final ExecutionYear executionYear) {
+	return getMasterDegreeInsurancePaymentCodeFor(executionYear) != null;
+    }
+
+    // TODO: this method should be refactored as soon as possible
+    public boolean hasToPayMasterDegreeInsuranceFor(final ExecutionYear executionYear) {
+	for (final Registration registration : getRegistrationsByDegreeType(DegreeType.MASTER_DEGREE)) {
+	    if (!registration.isActive()) {
+		continue;
+	    }
+
+	    if (!registration.hasToPayMasterDegreeInsurance(executionYear)) {
+		return false;
+	    }
+
+	}
+
+	return true;
+    }
+
 }

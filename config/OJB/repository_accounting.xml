@@ -329,6 +329,8 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.PaymentCode" table="PAYMENT_CODE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.paymentCodes.GratuitySituationPaymentCode" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode" />
 </class-descriptor>
 
 	<!-- ************************************************************************************************************ -->
@@ -338,11 +340,24 @@
 		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode" />
 	</class-descriptor>
 	
-	
+
+		<!-- ************************************************************************************************************ -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode -->
+		<!-- ************************************************************************************************************ -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode" table="PAYMENT_CODE">
+		
+		</class-descriptor>
 
 	<!-- ************************************************************************************************************ -->
-	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.paymentCodes.GratuitySituationPaymentCode -->
 	<!-- ************************************************************************************************************ -->
-	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode" table="PAYMENT_CODE">
-	
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.paymentCodes.GratuitySituationPaymentCode" table="PAYMENT_CODE">
 	</class-descriptor>
+	
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode" table="PAYMENT_CODE">
+	</class-descriptor>
+	

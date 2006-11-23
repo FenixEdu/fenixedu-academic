@@ -6,8 +6,8 @@
 # Customization
 #
 
-USER=ciapl
-PASSWORD=ciapl
+USER=root
+PASSWORD=
 DB=ciapl
 
 #

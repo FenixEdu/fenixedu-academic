@@ -213,7 +213,7 @@ class net.sourceforge.fenixedu.domain.accounting.AccountingTransaction extends n
 
 	class net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction extends net.sourceforge.fenixedu.domain.accounting.AccountingTransaction {
 		Integer keyInstallment;
-}
+	}
 
 class net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail extends net.sourceforge.fenixedu.domain.DomainObject {
     DateTime whenRegistered;
@@ -414,6 +414,7 @@ class net.sourceforge.fenixedu.domain.accounting.Installment extends net.sourcef
 class net.sourceforge.fenixedu.domain.accounting.PaymentCode extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	DateTime whenCreated;
+	DateTime whenUpdated;
 	YearMonthDay startDate;
 	YearMonthDay endDate;
 	PaymentCodeState state;
@@ -431,6 +432,16 @@ class net.sourceforge.fenixedu.domain.accounting.PaymentCode extends net.sourcef
 		class net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode extends net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode {
 			Integer keyInstallment;
 		}
+	
+	// start: For Pre-Bolonha MasterDegree Insurance and Gratuity
+	class net.sourceforge.fenixedu.domain.accounting.paymentCodes.GratuitySituationPaymentCode extends net.sourceforge.fenixedu.domain.accounting.PaymentCode {
+		Integer keyGratuitySituation;
+	}
+	
+	class net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode extends net.sourceforge.fenixedu.domain.accounting.PaymentCode {
+		Integer keyExecutionYear;
+	}
+	// end: For Pre-Bolonha MasterDegree Insurance and Gratuity
 	
 //End Of Accounting
 
@@ -1009,7 +1020,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 	    
 	    Integer keyValuationCurricularCourse;
 	}
-	
+
 		class net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse extends net.sourceforge.fenixedu.domain.CurricularCourse {
 				
 		}
@@ -1017,8 +1028,6 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 	class net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
 		Integer keyParentDegreeCurricularPlan;
 	}
-	
-	
 
 class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
@@ -1218,7 +1227,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 	class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule {
 		Integer keyParentStudentCurricularPlan;
 	}
-	
+
 		class net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup {
 		}
 	
@@ -1243,7 +1252,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
             EnrolmentEvaluationType enrolmentEvaluationType;
        		Double weigth;
         }
-        
+
             class net.sourceforge.fenixedu.domain.OptionalEnrolment extends net.sourceforge.fenixedu.domain.Enrolment {
             	Integer keyOptionalCurricularCourse;
 		    }
@@ -1759,6 +1768,7 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 	Integer keyGratuityValues;
 	Double remainingValue;
     ExemptionGratuityType exemptionType;
+    Integer keyPaymentCode;
 }
 
 
@@ -3094,7 +3104,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	Integer keyQuestionBank;
 }
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
-		Integer costCenterCode;		
+		Integer costCenterCode;
 		String acronym;
 		YearMonthDay beginDateYearMonthDay;
 		YearMonthDay endDateYearMonthDay;
@@ -3193,11 +3203,10 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability ext
 	
 	class net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 	}
-	
+
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Invitation extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 		Integer keyResponsible;		
 	}
-	
 	  	  
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
@@ -8212,6 +8221,18 @@ relation InstallmentPaymentCode {
 	}
 }
 
+relation PaymentCodeGratuitySituation {
+		net.sourceforge.fenixedu.domain.GratuitySituation playsRole gratuitySituation;
+		net.sourceforge.fenixedu.domain.accounting.paymentCodes.GratuitySituationPaymentCode playsRole paymentCode;
+}
+
+relation ExecutionYearMasterDegreeInsurancePaymentCode {
+		net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+		net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode playsRole masterDegreeInsurancePaymentCodes {
+		multiplicity *;
+	}
+}
+
 relation StudentPaymentCode {
 		net.sourceforge.fenixedu.domain.student.Student playsRole student;
 		net.sourceforge.fenixedu.domain.accounting.PaymentCode playsRole paymentCodes {
@@ -11061,7 +11082,6 @@ relation DomainObjectActionLogPerson {
 		multiplicity *;
 	}
 }
-
 relation InvitationParty {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole responsible;
 	net.sourceforge.fenixedu.domain.organizationalStructure.Invitation playsRole invitationAccountabilities {

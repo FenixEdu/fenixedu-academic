@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -718,6 +717,18 @@ public class Registration extends Registration_Base {
 	return nonReimbursedInsuranceTransactions;
     }
 
+    // TODO: to remove as soon as possible
+    public boolean hasToPayMasterDegreeInsurance(final ExecutionYear executionYear) {
+	final boolean isSpecialization = (getActiveStudentCurricularPlan().getSpecialization() == Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION);
+	final ExecutionDegree executionDegreeByYear = getActiveDegreeCurricularPlan()
+		.getExecutionDegreeByYear(executionYear);
+	if (isSpecialization && (executionDegreeByYear == null || !executionDegreeByYear.isFirstYear())) {
+	    return false;
+	}
+
+	return readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear).isEmpty();
+    }
+
     public Enrolment findEnrolmentByEnrolmentID(final Integer enrolmentID) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    final Enrolment enrolment = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);
@@ -1300,6 +1311,7 @@ public class Registration extends Registration_Base {
 	if (executionYear == null) {
 	    return 1;
 	}
+
 	final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
 	final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
 	final Set<CurricularCourse> curricularCoursesToDisplay = new TreeSet<CurricularCourse>(

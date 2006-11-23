@@ -88,10 +88,6 @@ public abstract class Event extends Event_Base {
 	    final AccountingEventPaymentCode paymentCode, final Money amountToPay,
 	    final SibsTransactionDetailDTO transactionDetailDTO) {
 
-	if (!canProcessPaymentCode(paymentCode)) {
-	    return Collections.EMPTY_SET;
-	}
-
 	checkConditionsToProcessEvent();
 
 	final Set<Entry> result = internalProcess(responsibleUser, paymentCode, amountToPay,
@@ -101,15 +97,6 @@ public abstract class Event extends Event_Base {
 
 	return result;
 
-    }
-
-    private boolean canProcessPaymentCode(AccountingEventPaymentCode paymentCode) {
-	if (paymentCode.isCancelled()) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.Event.paymentCode.is.cancelled");
-	}
-
-	return paymentCode.isNew();
     }
 
     private void checkConditionsToProcessEvent() {
@@ -306,7 +293,7 @@ public abstract class Event extends Event_Base {
     }
 
     public List<AccountingEventPaymentCode> calculatePaymentCodes() {
-	return (getPaymentCodesCount() == 0) ? createPaymentCodes() : updatePaymentCodes();
+	return !hasAnyPaymentCodes() ? createPaymentCodes() : updatePaymentCodes();
     }
 
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {

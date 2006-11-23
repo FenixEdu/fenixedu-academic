@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentCodes;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
@@ -82,17 +83,19 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 		"error.accounting.paymentCodes.AccountingEventPaymentCode.cannot.modify.accountingEvent");
     }
 
-    @Override
-    public Money getAmount(DateTime when) {
-	return getAccountingEvent().calculateAmountToPay(when);
-    }
-
     public void reuse(final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount,
 	    final Money maxAmount, final Event event) {
 
 	reuseCode();
 	update(startDate, endDate, minAmount, maxAmount);
 	super.setAccountingEvent(event);
+    }
+
+    @Override
+    protected void internalProcess(Person person, Money amount, DateTime whenRegistered,
+	    String sibsTransactionId) {
+	getAccountingEvent().process(person.getUser(), this, amount,
+		new SibsTransactionDetailDTO(whenRegistered, sibsTransactionId, getCode()));
     }
 
 }

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -38,6 +39,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	super.setOjbConcreteClass(getClass().getName());
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setWhenCreated(new DateTime());
+	super.setWhenUpdated(new DateTime());
 	super.setState(PaymentCodeState.NEW);
 
     }
@@ -142,12 +144,23 @@ public abstract class PaymentCode extends PaymentCode_Base {
 		"error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.maxAmount");
     }
 
+    @Override
+    public void setWhenUpdated(DateTime whenUpdated) {
+	throw new DomainException("error.accounting.PaymentCode.cannot.modify.whenUpdated");
+    }
+
+    @Override
+    public void setState(PaymentCodeState state) {
+	super.setWhenUpdated(new DateTime());
+	super.setState(state);
+    }
+
     public boolean isNew() {
 	return getState() == PaymentCodeState.NEW;
     }
 
     protected void reuseCode() {
-	super.setState(PaymentCodeState.NEW);
+	setState(PaymentCodeState.NEW);
     }
 
     public boolean isProcessed() {
@@ -169,8 +182,23 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	super.setEndDate(endDate);
 	super.setMinAmount(minAmount);
 	super.setMaxAmount(maxAmount);
+	super.setWhenUpdated(new DateTime());
     }
 
-    abstract public Money getAmount(DateTime when);
+    public void process(Person responsiblePerson, Money amount, DateTime whenRegistered,
+	    String sibsTransactionId) {
+
+	if (isCancelled()) {
+	    throw new DomainException("error.accounting.paymentCodes.PaymentCode.code.is.cancelled");
+	}
+
+	if (isNew()) {
+	    internalProcess(responsiblePerson, amount, whenRegistered, sibsTransactionId);
+	    setState(PaymentCodeState.PROCESSED);
+	}
+    }
+
+    abstract protected void internalProcess(final Person person, final Money amount,
+	    final DateTime whenRegistered, final String sibsTransactionId);
 
 }

@@ -102,6 +102,3 @@
 	<slot name="paymentDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 
-
-
-
