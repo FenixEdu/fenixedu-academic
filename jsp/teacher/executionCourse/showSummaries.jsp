@@ -27,18 +27,15 @@
 		<p><bean:message key="label.summaries.management.instructions.part1"/></p>
 		<p><bean:message key="label.summaries.management.instructions.part2"/>:</p>
 		<p>
+			<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>
 			<span class="gen-button" style="margin-left: 2em;">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<a href=""><bean:message key="label.insertSummary"/></a>
+				<html:link page="<%= insertSummaryLink %>"><bean:message key="label.insertSummary"/></html:link>
 				<bean:message key="link.summary.insert.info"/>
 			</span>	
 		</p>
 		</div>
 		
-		<%--
-		<p>Escolha, na tabela abaixo, uma ou mais aulas, às quais pretende escrever um sumário igual. Se a aula a que pretende escrever sumário não se encontrar na lista ou se pretender escrever um sumário para uma aula extra utilize o link "Inserir novo sumário".</p>
-		--%>
-
 		<p class="mbottom025"><bean:message key="label.last.lessons.without.summaries"/></p>
 		<fr:form action="/summariesManagement.do?method=prepareCreateComplexSummary">			
 			<fr:edit id="showSummariesBeanWithChoicesHidden" name="showSummariesBean" nested="true" visible="false" />
@@ -57,38 +54,11 @@
 				<tr><td><html:submit><bean:message key="label.fill.summaries"/></html:submit></td></tr>
 			</table>
 			
-			<%--
-			<p class="mtop025 mbottom1"><html:submit><bean:message key="label.fill"/></html:submit></p>
-			--%>
 		</fr:form>
 
 	</logic:notEmpty>
-
-
-<%--
-
-	<div>
-		<p style="margin-bottom: 0.15em;">Se a aula a que pretende escrever sumário não se encontrar na lista ou se pretender escrever um sumário para uma aula extraordinária utilize abaixo:</p>
-		<span class="gen-button" style="margin-left: 2em;">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<a href=""><b>Inserir novo sumário</b></a>
-			<bean:message key="link.summary.insert.info"/>
-		</span>	
-	</div>
-		
-	<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>
-	<div class="gen-button mtop1 mbottom2">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link page="<%= insertSummaryLink %>">
-			<bean:message key="label.insertSummary" />
-		</html:link>	
-		<bean:message key="link.summary.insert.info"/>
-	</div>	
---%>
 	
-
-	
-	<h3 class="mtop2 mbottom05">Visualizar sumários</h3>
+	<h3 class="mtop2 mbottom05"><bean:message key="label.show.summaries"/></h3>
 	<fr:form>
 		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToExecutionCourseManagement" nested="true">
 			<fr:destination name="postBack" path="/summariesManagement.do?method=showSummariesPostBack"/>		
