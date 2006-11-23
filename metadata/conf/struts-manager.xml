@@ -2042,6 +2042,8 @@
 	</action>
 
     <action path="/reloadStruts" type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReloadStrutsAction"/>
+    
+    <action path="/reloadJasperReports" type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReloadJasperReportsConfigurationAction"/>
 
     <!-- ========= Renderers ================ -->
     <action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">

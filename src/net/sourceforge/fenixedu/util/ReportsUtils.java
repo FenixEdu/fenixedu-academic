@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,7 +27,6 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.PrintMarkSheet;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -37,15 +37,29 @@ public class ReportsUtils extends PropertiesManager {
     private static final Map<String, JasperReport> reportsMap = new HashMap<String, JasperReport>();
 
     private static final Properties properties = new Properties();
+    
+    private static final String reportsPropertiesFile = "/reports.properties";
 
     static {
         try {
-            loadProperties(properties, "/reports.properties");
+            loadProperties(properties, reportsPropertiesFile);
         } catch (IOException e) {
             throw new RuntimeException("Unable to load properties files.", e);
         }
     }
 
+    public static Map<String, JasperReport> getReportsMap() {
+	return reportsMap;
+    }
+    
+    public static Properties getProperties() {
+	return properties;
+    }
+    
+    public static String getReportsPropertiesFile() {
+	return reportsPropertiesFile;
+    }
+    
     public static boolean printReport(String key, Map parameters, ResourceBundle bundle,
             Collection dataSource, String printerName) {
         try {
@@ -139,11 +153,15 @@ public class ReportsUtils extends PropertiesManager {
             Collection dataSource) throws JRException {
         JasperReport report = reportsMap.get(key);
         if (report == null) {
-            String reportFile = properties.getProperty(key);
-            if (reportFile != null) {
-                report = (JasperReport) JRLoader.loadObject(PrintMarkSheet.class
-                        .getResourceAsStream(reportFile));
-                reportsMap.put(key, report);
+            String reportFileName = properties.getProperty(key);
+            if (reportFileName != null) {
+        	// Miracle solution for reloading jasper reports on the fly while developing...
+        	//File reportFile = new File("/home/lmre/workspace/fenix-head/build/WEB-INF/classes/" + reportFileName);
+        	//report = (JasperReport) JRLoader.loadObject(reportFile);
+        	
+        	report = (JasperReport) JRLoader.loadObject(ReportsUtils.class.getResourceAsStream(reportFileName));
+        	
+        	reportsMap.put(key, report);
             }
         }
         if (report != null) {
