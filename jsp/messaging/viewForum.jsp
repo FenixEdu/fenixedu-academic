@@ -24,23 +24,31 @@
 	</fr:view>
 
 	<logic:equal name="receivingMessagesByEmail" value="true">
-		<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.receivingMessagesByEmail"/>
-		<html:link action="<%= contextPrefix + "method=emailUnsubscribe"%>" paramId="forumId" paramName="forumId"><bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.quitSubscription"/></html:link>
+		<span style="color: #888;">
+			<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.receivingMessagesByEmail"/>
+			<html:link action="<%= contextPrefix + "method=emailUnsubscribe"%>" paramId="forumId" paramName="forumId"><bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.quitSubscription"/></html:link>
+		</span>
 	</logic:equal>
 	<logic:equal name="receivingMessagesByEmail" value="false">
-		<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.notReceivingMessagesByEmail"/>
-		<html:link action="<%= contextPrefix + "method=emailSubscribe"%>" paramId="forumId" paramName="forumId"><bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.subscribe"/></html:link>
+		<span style="color: #888;">
+			<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.notReceivingMessagesByEmail"/>
+			<html:link action="<%= contextPrefix + "method=emailSubscribe"%>" paramId="forumId" paramName="forumId"><bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.subscribe"/></html:link>
+		</span>
 	</logic:equal>
 
 
-	<h3><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.threads"/></h3>
+	<h3 class="mtop2"><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.threads"/></h3>
 	
 	<!-- Conversation Threads -->
 	<logic:equal name="loggedPersonCanWrite" value="true">
-		<html:link action="<%= contextPrefix + "method=prepareCreateThreadAndMessage"%>" paramId="forumId" paramName="forum" paramProperty="idInternal">
-			<bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.createThread"/>
-		</html:link>
-		<br/><br/>
+		<p>
+			<span class="gen-button">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+			<html:link action="<%= contextPrefix + "method=prepareCreateThreadAndMessage"%>" paramId="forumId" paramName="forum" paramProperty="idInternal" styleClass="gen-button">
+				<bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.createThread"/>
+			</html:link>
+			</span>
+		</p>
 	</logic:equal>
 
 	<logic:empty name="conversationThreads">

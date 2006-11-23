@@ -12,7 +12,7 @@
 	<bean:define id="lastLoginDateTime" type="java.util.Date" name="userView" property="person.user.lastLoginDateTime"/>
 	<bean:define id="timestamp" ><%= lastLoginDateTime.getTime() %></bean:define>
 	<bean:define id="lastLoginHost" name="userView" property="person.user.lastLoginHost"/>
-    <p class="mtop0 mbottom2"><span style="background-color: #eee; padding: 0.25em;"><bean:message key="last.login.dateTime"/>&nbsp;<b><date:format pattern="dd-MM-yyyy HH:mm"><bean:write name="timestamp"/></date:format></b> (<bean:write name="lastLoginHost"/>)</span></p>	
+    <p class="mtop0 mbottom2" style="float: right;"><span style="background-color: #eee; padding: 0.25em;"><bean:message key="last.login.dateTime"/>&nbsp;<b><date:format pattern="dd-MM-yyyy HH:mm"><bean:write name="timestamp"/></date:format></b> (<bean:write name="lastLoginHost"/>)</span></p>	
 </logic:notEmpty>
 
 <em><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.portal"/></em>
@@ -34,8 +34,18 @@
 	   	        <html:option value="12">12 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
 		        <html:option value="24">24 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
 		    </html:select>
+		    
+				<html:radio property="boardType" value="BOOKMARKED" onchange="this.form.submit();">
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.bookmarked" />
+				</html:radio>
+
+				<html:radio property="boardType" value="INSTITUTIONAL" onchange="this.form.submit();">
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.institutional" />
+				</html:radio>
+		    
 			</td>
 		</tr>
+<%--
 		<tr>
 			<td>
 				<html:radio property="boardType" value="BOOKMARKED" onchange="this.form.submit();">
@@ -47,6 +57,7 @@
 				</html:radio>
 			</td>
 		</tr>
+--%>
 	</table>
 </html:form>
 

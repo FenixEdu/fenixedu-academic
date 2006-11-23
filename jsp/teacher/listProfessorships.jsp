@@ -15,7 +15,8 @@
 
 <h2><bean:message key="label.professorships"/></h2>
 
-<table border="0" cellspacing="0" cellpadding="0">
+
+<table border="0" cellspacing="0" cellpadding="0" class="mtop1 mbottom15">
 	<tr>
 		<td nowrap="nowrap">
 			<bean:message key="property.executionPeriod"/>:
@@ -36,13 +37,11 @@
     </tr>
 </table>
 
-<br />
-<br />
 
-<table width="70%"cellpadding="5" border="0">
+<table cellpadding="5" border="0">
 	<tr>
 		<th class="listClasses-header" style="text-align:left">
-			<bean:message key="label.professorships.name"/>
+			<bean:message key="label.professorship.course"/>
 		</th>
 		<th class="listClasses-header" style="text-align:left">
 			<bean:message key="label.professorships.degrees"/>
