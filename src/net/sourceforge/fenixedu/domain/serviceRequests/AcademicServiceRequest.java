@@ -35,7 +35,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected void init(Registration registration) {
 
 	AdministrativeOffice administrativeOffice = null;
-	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	final Employee employee = AccessControl.getUserView() == null ? null : AccessControl.getUserView().getPerson().getEmployee();
 	if (employee != null) {
 	    administrativeOffice = AdministrativeOffice.readByEmployee(employee);
 	}
