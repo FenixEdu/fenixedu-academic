@@ -7,35 +7,30 @@
 <bean:define id="academicServiceRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest"/>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:write name="academicServiceRequest" property="description"/></h2>
-
-<hr style="margin-bottom: 2em;"/>
+<h2 class="mbottom1"><bean:write name="academicServiceRequest" property="description"/></h2>
 
 <html:messages id="messages" message="true">
 	<p><span class="error0"><bean:write name="messages" bundle="ACADEMIC_OFFICE_RESOURCES"/></span></p>
 </html:messages>
 
-<p>
-	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="request.information"/></strong>
-	<bean:define id="simpleClassName" name="academicServiceRequest" property="class.simpleName" />
-	<fr:view name="academicServiceRequest" schema="<%= simpleClassName  + ".view"%>">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
-			<fr:property name="columnClasses" value="listClasses,," />
-		</fr:layout>
-	</fr:view>
-</p>
+<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="request.information"/></strong></p>
+<bean:define id="simpleClassName" name="academicServiceRequest" property="class.simpleName" />
+<fr:view name="academicServiceRequest" schema="<%= simpleClassName + ".view"%>">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="rowClasses" value=",tdhl1,,,,,,"/>
+	</fr:layout>
+</fr:view>
+
 
 <logic:present name="academicServiceRequest" property="activeSituation">
-	<p>
-		<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="request.situation"/></strong>
-		<fr:view name="academicServiceRequest" property="activeSituation" schema="AcademicServiceRequestSituation.view">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4" />
-				<fr:property name="columnClasses" value="listClasses,," />
-			</fr:layout>
-		</fr:view>
-	</p>
+	<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="request.situation"/></strong></p>
+	<fr:view name="academicServiceRequest" property="activeSituation" schema="AcademicServiceRequestSituation.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="rowClasses" value=",,tdhl1,"/>
+		</fr:layout>
+	</fr:view>
 </logic:present>
 
 <bean:define id="url" name="url" type="java.lang.String"/>
@@ -43,5 +38,5 @@
 	<html:hidden property="academicServiceRequestId" value="<%= academicServiceRequest.getIdInternal().toString() %>"/>
 	<html:hidden property="registrationID" value="<%= academicServiceRequest.getRegistration().getIdInternal().toString() %>"/>
 	
-	<html:submit styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="back" /></html:submit>
+	<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="back" /></html:submit>
 </html:form>

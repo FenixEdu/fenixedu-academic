@@ -1203,3 +1203,20 @@ white-space: nowrap;
 word-wrap: break-word;
 width: 100px;
 }
+
+
+
+
+tr td.tdhl1 { background-color: #fdfbdd; } /* amarelo */
+tr.tdhl1 td { background-color: #fdfbdd; } /* amarelo */
+
+table.asdasd tr td a { font-weight: bold; padding: 0.25em; margin: 0.25em; }
+/* section header*/
+.sheader1 {
+background: #f5f5e5;
+padding: 0.25em;
+border-bottom: 1px solid #ddc;
+}
+/*
+background: #ddd; padding: 0.25em; margin: 0.25em; border: 1px solid #aaa;
+*/

@@ -4,16 +4,15 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><strong><bean:message key="link.studentOperations.viewStudents" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
 <fr:edit name="studentsSearchBean" schema="student.StudentsSearchBeanByNumber" >
 	<fr:layout name="tabular" >
-		<fr:property name="classes" value="tstyle4"/>
-        <fr:property name="columnClasses" value="listClasses,,"/>
+		<fr:property name="classes" value="tstyle4 thright thlight"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 </fr:edit>
-
-<br/>
 
 <logic:present name="students">
 	<bean:size id="numberStudents" name="students"/>

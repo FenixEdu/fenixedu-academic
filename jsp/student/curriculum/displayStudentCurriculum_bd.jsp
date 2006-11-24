@@ -9,8 +9,6 @@
 
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 
-<hr style="margin-bottom: 2em;"/>
-
 <p><span class="error0"><!-- Error messages go here --><html:errors /></span></p>
 
 <html:form action="/viewCurriculum.do?method=getStudentCP">

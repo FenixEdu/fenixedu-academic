@@ -202,8 +202,8 @@
 <schema name="student.show.personAndStudentInformation"
 		type="net.sourceforge.fenixedu.domain.student.Student" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="person.name" key="label.name"/>
-	<slot name="person.documentIdNumber" key="label.identificationNumber.descriptive"/>		
 	<slot name="person.idDocumentType" key="label.idDocumentType.descriptive"/>	
+	<slot name="person.documentIdNumber" key="label.identificationNumber.descriptive"/>		
 	<slot name="person.istUsername" key="label.username"/>
 	<slot name="number" key="label.studentNumber"/>
 </schema>
