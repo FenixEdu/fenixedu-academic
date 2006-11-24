@@ -1,0 +1,2 @@
+alter table ACCOUNTABILITY add column `KEY_RESPONSIBLE` int(11) default NULL;
+alter table ACCOUNTABILITY add key `KEY_RESPONSIBLE` (`KEY_RESPONSIBLE`);
