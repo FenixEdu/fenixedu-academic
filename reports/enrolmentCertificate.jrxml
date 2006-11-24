@@ -37,7 +37,7 @@
 	<parameter name="amountPerPage" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="baseAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="urgencyAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
-	<parameter name="dummy" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="enrolmentsInfo" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -231,7 +231,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{dummy}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{enrolmentsInfo}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement

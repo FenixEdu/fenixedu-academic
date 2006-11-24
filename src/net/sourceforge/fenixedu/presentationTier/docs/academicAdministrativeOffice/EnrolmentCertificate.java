@@ -34,9 +34,9 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
 	
 	if (enrolmentCertificateRequest.getDetailed()) {
-	    StringBuilder dummy = new StringBuilder();
+	    StringBuilder enrolmentsInfo = new StringBuilder();
 	    
-	    dummy.append("\t\t").append(curricularYear).append(".ANO\n");
+	    enrolmentsInfo.append("\t\t").append(curricularYear).append(".ANO\n");
 
 	    final ComparatorChain comparatorChain = new ComparatorChain();
 	    comparatorChain.addComparator(new BeanComparator("executionPeriod.executionYear"));
@@ -44,12 +44,12 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	    Collections.sort(enrolments, comparatorChain);
 	    
 	    for (final Enrolment enrolment : enrolments) {
-		dummy.append(StringUtils.multipleLineRightPad(LINE_LENGTH, enrolment.getName().getContent(LanguageUtils.getLanguage()).toUpperCase(), '-')).append("\n");
+		enrolmentsInfo.append(StringUtils.multipleLineRightPad(LINE_LENGTH, enrolment.getName().getContent(LanguageUtils.getLanguage()).toUpperCase(), '-')).append("\n");
 	    }
 	    
-	    parameters.put("dummy", dummy.toString());
+	    parameters.put("enrolmentsInfo", enrolmentsInfo.toString());
 	} else {
-	    parameters.put("dummy", "");
+	    parameters.put("enrolmentsInfo", "");
 	}
     }
 
