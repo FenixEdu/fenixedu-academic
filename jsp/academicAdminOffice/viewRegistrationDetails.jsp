@@ -88,7 +88,6 @@
 	</fr:view>
 </logic:present>
 
-<%-- 
 <br/>
 <h2><strong><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 <bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
@@ -193,8 +192,6 @@
 		</p>
 	</logic:empty>
 </p>
-
---%>
 
 <p style="margin-top: 4em;">
 	<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="registration" paramProperty="student.idInternal">
