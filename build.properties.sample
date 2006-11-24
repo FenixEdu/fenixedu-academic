@@ -479,6 +479,13 @@ sibs.entityCode=1111
 sibs.sourceInstitutionId=11111111
 sibs.destinationInstitutionId=11111111
 
+#----------------------------------------------------------------
+# WebServices - External Services Urls
+#----------------------------------------------------------------
+# webServices.external.urls: comma seperated values of wsdl valid urls.
+#							 Example: http://localhost:8080/ciapl/services/InstitutionalEmailManagement?wsdl
+
+webServices.external.urls=
 
 
 #
