@@ -1350,7 +1350,6 @@
             >
     	<forward name="showForm" path="df.page.selectDegreeAndYearForWrittenEvaluationsSearch"/>
     	<forward name="showMap" path="df.page.degreeYearWrittenEvaluationsMap"/>
-    	<forward name="printMap" path="df.page.print.degreeYearWrittenEvaluationsMap"/>
    	</action>  
    	  
 	<action path="/ExamSearchByDate"

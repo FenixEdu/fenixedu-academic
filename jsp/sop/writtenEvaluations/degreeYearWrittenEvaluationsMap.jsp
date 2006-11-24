@@ -10,7 +10,8 @@
 <logic:present name="executionCoursesByCurricularYearByExecutionDegree">
 
 	<logic:iterate id="executionCoursesByCurricularYearByExecutionDegreeEntry" name="executionCoursesByCurricularYearByExecutionDegree">
-		<logic:iterate id="executionCoursesByCurricularYearEntry" name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="value">
+		<bean:size id="length" name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="value"/>
+		<logic:iterate id="executionCoursesByCurricularYearEntry" indexId="i" name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="value">
 			<h2><bean:message key="title.written.evaluations.by.degree.and.curricular.year"/></h2>
 			<strong>
 				<bean:write name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="key.degreeCurricularPlan.degree.nome"/>
@@ -22,7 +23,14 @@
 				<bean:write name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="key.executionYear.year"/>
 			</strong>
 			<br/>
-			<table border='1' cellspacing='0' cellpadding='3' width='95%'>
+			<bean:define id="iS"><%= i + 1 %></bean:define>
+			<bean:define id="lS"><%= length %></bean:define>
+			<logic:equal name="iS" value="<%= lS %>">
+				<table border='1' cellspacing='0' cellpadding='3' width='95%'>
+			</logic:equal>
+			<logic:notEqual name="iS" value="<%= lS %>">
+				<table border='1' cellspacing='0' cellpadding='3' width='95%' class="break-after">
+			</logic:notEqual>
 				<tr>
 					<td>
 						<bean:message key="label.Degree"/>

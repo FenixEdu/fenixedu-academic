@@ -57,8 +57,4 @@
 		<bean:message key="label.choose"/>
 	</html:submit>
 	
-	<html:submit styleClass="inputbutton"  onclick="this.form.method.value='print';">
-		<bean:message key="label.print"/>
-	</html:submit>
-	
 </html:form>

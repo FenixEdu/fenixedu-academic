@@ -70,13 +70,6 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
         return mapping.findForward("showMap");
     }
     
-    public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-    	
-    	prepareInformationToList(form, request);
-        return mapping.findForward("printMap");
-    }
-    
     private void prepareInformationToList(final ActionForm form, final HttpServletRequest request) {
     	
         DynaActionForm dynaActionForm = (DynaActionForm) form;
