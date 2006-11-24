@@ -8,17 +8,19 @@
 
 	<!-- Source code directories -->
 	<property name="src" location="src"/>
-	<property name="src_gen" location="src_gen"/>
+	<property name="src_gen" location="src_gen"/>	
 	<property name="config" location="config"/>
 	<property name="reports" location="reports"/>	
 	<property name="institution.config" location="${institution.project}/config"/>
 	<property name="institution.metadata.tiles" location="${institution.project}/metadata/tiles"/>
 	<property name="config.web" location="metadata"/>
+	
 
 	<!-- Directories for compiled code -->
 	<property name="build.home" location="build"/>
 	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
 	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
+	<property name="build.home.webinf.classes.meta.inf" value="${build.home.webinf.classes}/META-INF"/>
 	<property name="build.home.webinf.conf" value="${build.home.webinf}/conf"/>
 	<property name="build.home.webinf.libs" value="${build.home.webinf}/lib"/>
 	<property name="build.home.jsp_gen_code" value="${build.home}/Jsp-Code"/>
@@ -42,6 +44,12 @@
 	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
 	<property name="dml.definition.file.completed" value="${build.home.webinf.classes}/domain_model.dml"/>
 
+	<!-- WebServices(xfire) Directories -->
+	<property name="xfire" location="${config}/xfire" />
+	<property name="build.home.xfire" value="${build.home.webinf.classes.meta.inf}/xfire" />
+	<property name="xfire.stubsTempDir" value="${basedir}/stubsTempDir"/>
+	<property name="xfire.stubsTempDir.classes" value="${basedir}/stubsTempDir/classes"/>
+	
 	<!-- Compilation options -->
 	<property name="compile.debug"       value="on"/>
 	<property name="compile.deprecation" value="off"/>
@@ -65,9 +73,11 @@
 	<target name="prepare"
 			depends="check-dml-file"
 			description="Copy configuration files to compile dir">
+	
 		<mkdir dir="${build.home}"/>
 		<mkdir dir="${build.home.webinf}"/>
 		<mkdir dir="${build.home.webinf.classes}"/>
+		<mkdir dir="${build.home.xfire}"/>
 		<mkdir dir="${build.home.webinf.libs}"/>
 		<mkdir dir="${build.home}/images/logs"/>
 
@@ -95,6 +105,10 @@
 					<include name="*.jar"/>
 				</fileset>
 			</copy>
+			
+			<copy encoding="${encoding}" todir="${build.home.xfire}">
+				<fileset dir="${xfire}"/>
+			</copy>
 
 			<antcall target="prepare-institution"/>
 
@@ -103,8 +117,8 @@
 		</sequential>
 
 		<echo file="${build.home.webinf.classes}/checkIsAlive.properties" append="false">
-script.isAlive.check.db=${script.isAlive.check.db}
-script.isAlive.check.slide=${script.isAlive.check.slide}
+			script.isAlive.check.db=${script.isAlive.check.db}
+			script.isAlive.check.slide=${script.isAlive.check.slide}
 		</echo>
 	</target>
 
@@ -324,33 +338,35 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				    token="@app.context@"
 				    property="app.context"/>
 				<replacefilter token="@login.page@"
-							   value="${login.page}"/>
+						   value="${login.page}"/>
 				<replacefilter token="@roleback.filename@"
 		    			   property="roleback.filename"/>
 				<replacefilter token="@default.persistenceSupport@"
 		    			   property="default.persistenceSupport"/>
 				<replacefilter token="@cas.enabled@"
-			  				   property="cas.enabled"/>
+			  			   property="cas.enabled"/>
 				<replacefilter token="@cas.loginUrl@"
-			  				   property="cas.loginUrl"/>
+			  			   property="cas.loginUrl"/>
 				<replacefilter token="@cas.validateUrl@"
-			  				   property="cas.validateUrl"/>
+			  			   property="cas.validateUrl"/>
 				<replacefilter token="@cas.logoutUrl@"
-			  				   property="cas.logoutUrl"/>
+			  			   property="cas.logoutUrl"/>
 				<replacefilter token="@password.generator@"
 		    			   property="password.generator"/>	
 				<replacefilter token="@language@"
-						    property="language"/>	
+						   property="language"/>	
 				<replacefilter token="@location@"
-						    property="location"/>
+						   property="location"/>
 				<replacefilter token="@variant@"
-						    property="variant"/>
+						   property="variant"/>
 				<replacefilter token="@sibs.entityCode@"
-						    property="sibs.entityCode"/>
+						   property="sibs.entityCode"/>
 				<replacefilter token="@sibs.sourceInstitutionId@"
-						    property="sibs.sourceInstitutionId"/>
-					<replacefilter token="@sibs.destinationInstitutionId@"
-							    property="sibs.destinationInstitutionId"/>
+						   property="sibs.sourceInstitutionId"/>
+				<replacefilter token="@sibs.destinationInstitutionId@"
+						   property="sibs.destinationInstitutionId"/>
+				<replacefilter token="@webServices.external.urls@"
+						   property="webServices.external.urls"/>
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
@@ -697,6 +713,37 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		</copy>
 	</target>
 
+	<target name="generateStubs">		
+		<mkdir dir="${xfire.stubsTempDir}"/>		
+		<mkdir dir="${xfire.stubsTempDir.classes}"/>		
+		<path id="fenix.lib.path">
+			<fileset dir="${lib}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</path>		
+		<taskdef name="wsgen" classname="org.codehaus.xfire.gen.WsGenTask" classpathref="fenix.lib.path"/>
+		<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="fenix.lib.path"/>			
+		<for param="url" list="${webServices.external.urls}">
+			<sequential>
+				<wsgen outputDirectory="${xfire.stubsTempDir}" wsdl="@{url}" package="net.sourceforge.fenixedu.webServices.generatedStubs" overwrite="true"/>					
+			</sequential>			
+		</for>								
+		<javac srcdir="${xfire.stubsTempDir}" destdir="${xfire.stubsTempDir.classes}" 
+			   extdirs="${lib}" 
+			   debug="${compile.debug}" 
+			   optimize="${compile.optimize}" 
+			   deprecation="${compile.deprecation}" 
+			   encoding="${encoding}" 
+			   nowarn="true">		
+			<exclude name="${xfire.stubsTempDir}/*.xml"/>
+		</javac>
+		<delete file="${lib}/fenix-stubs.jar" />
+		<jar destfile="${lib}/fenix-stubs.jar">
+			<fileset dir="${xfire.stubsTempDir.classes}" />
+		</jar>
+		<delete dir="${xfire.stubsTempDir}"/>
+	</target>
+	
 	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain, compile-renderers, write-all-properties, generate, generate-groups-language, base-compile, compile-reports">
 		<ant antfile="build_injectionCode.xml" target="inject-accessControl-code"/>
 		<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code"/>

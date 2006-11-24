@@ -1,0 +1,10 @@
+<beans xmlns="http://xfire.codehaus.org/config/1.0">
+  
+  <service>
+    <name>InstitutionalEmailManagement</name>
+    <namespace>InstitutionalEmailManagement</namespace>
+    <serviceClass>net.sourceforge.fenixedu.webServices.IInstitutionalEmailManagement</serviceClass>    
+    <implementationClass>net.sourceforge.fenixedu.webServices.InstitutionalEmailManagement</implementationClass>    
+  </service>  
+  
+</beans>

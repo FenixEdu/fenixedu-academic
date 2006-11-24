@@ -57,9 +57,13 @@
 		<ant antfile="build_compile.xml" target="jar-without-injectionCode"/>
     </target>
 
-
     <target name="docs"
     		description="Generates fenix documentation">
 		<ant antfile="build_renderers.xml" target="doc"/>
     </target>
+	
+	<target name="generateStubs" description="Generates stubs">
+		<ant antfile="build_compile.xml" target="generateStubs"/>
+    </target>
+	
 </project>

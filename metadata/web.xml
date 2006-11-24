@@ -464,8 +464,21 @@
         <servlet-name>MathMlServlet</servlet-name>
         <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.MathMlServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>XFireServlet</servlet-name>
+        <display-name>XFire Servlet</display-name>
+        <servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
+    </servlet>
     
     <!-- Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>XFireServlet</servlet-name>
+        <url-pattern>/servlet/XFireServlet/*</url-pattern>
+    </servlet-mapping>    
+    <servlet-mapping>
+        <servlet-name>XFireServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
    	<servlet-mapping>
 		<servlet-name>MathMlServlet</servlet-name>
 		<url-pattern>/mathml/MathMlServlet</url-pattern>
