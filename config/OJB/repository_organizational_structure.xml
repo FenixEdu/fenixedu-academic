@@ -13,7 +13,8 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability" table="ACCOUNTABILITY">	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction"/>	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Contract"/>	     
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract"/>	     
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract"/>	  
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation"/>	     
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function -->
@@ -26,10 +27,15 @@
 
 </class-descriptor>
 
-<!-- Definitions for class net.sourceforge.fenixedu.domain.ExternalPerson -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract" table="ACCOUNTABILITY">
                
 </class-descriptor>  
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Invitation -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation" table="ACCOUNTABILITY">
+               
+</class-descriptor> 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule" table="CONNECTION_RULE">
