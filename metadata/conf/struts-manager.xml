@@ -669,10 +669,6 @@
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
 		
-		<form-bean name="createInvitedPersonForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="method" type="java.lang.String"/>
-		</form-bean>		
-				
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1759,7 +1755,6 @@
 		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
 		parameter="method"
 		scope="request"
-		name="createInvitedPersonForm"
 		input="personManagement">
 		<forward name="showExistentPersonsBeforeCreateInvitedPerson" path="show-existent-persons-before-create-invited-person"/>
 		<forward name="prepareCreateInvitedPerson" path="prepare-create-invited-person"/>				

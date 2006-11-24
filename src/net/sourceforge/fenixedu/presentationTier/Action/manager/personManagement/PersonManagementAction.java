@@ -177,7 +177,6 @@ public class PersonManagementAction extends FenixDispatchAction {
 	    return mapping.findForward("prepareCreateInvitedPerson");
 	}
 
-	RenderUtils.invalidateViewState();
 	request.setAttribute("createdPerson", invitation != null ? invitation.getInvitedPerson() : null);
 	return prepareSearchExistentPersonBeforeCreateNewInvitedPerson(mapping, actionForm, request, response);
     }

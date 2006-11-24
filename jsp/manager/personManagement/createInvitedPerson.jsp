@@ -29,7 +29,7 @@
 	<logic:messagesPresent message="true">
 		<p>
 		<span class="error0"><!-- Error messages go here -->
-			<html:messages id="message" message="true">
+			<html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
 				<bean:write name="message"/>
 			</html:messages>
 		</span>
@@ -86,11 +86,10 @@
 				</logic:empty>
 			</p>
 						
-			<fr:form action="/createInvitedPerson.do?">		
-				<html:hidden property="method" name="createInvitedPerson" value="createNewInvitedPerson"/>					
+			<fr:form action="/createInvitedPerson.do?method=createNewInvitedPerson">		
 							
 				<p><b>a) <bean:message key="label.invitedPerson.personal.info" bundle="MANAGER_RESOURCES"/></b></p>			
-				<fr:edit name="invitedPersonBean" id="invitedPersonBeanWithPersonalInfo" schema="NewInvitedPersonPersonalInfo">
+				<fr:edit nested="true" name="invitedPersonBean" id="invitedPersonBeanWithPersonalInfo" schema="NewInvitedPersonPersonalInfo">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
 				        <fr:property name="columnClasses" value=",,noborder"/>
@@ -98,7 +97,7 @@
 				</fr:edit>
 								
 				<p><b>b) <bean:message key="label.invitedPerson.filiation.info" bundle="MANAGER_RESOURCES"/></b></p>			
-				<fr:edit name="invitedPersonBean" id="invitedPersonBeanWithFiliationInfo" schema="NewInvitedPersonFiliationInfo">
+				<fr:edit nested="true" name="invitedPersonBean" id="invitedPersonBeanWithFiliationInfo" schema="NewInvitedPersonFiliationInfo">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
 				        <fr:property name="columnClasses" value=",,noborder"/>
@@ -106,7 +105,7 @@
 				</fr:edit>		
 				
 				<p><b>c) <bean:message key="label.invitedPerson.residence.info" bundle="MANAGER_RESOURCES"/></b></p>			
-				<fr:edit name="invitedPersonBean" id="invitedPersonBeanWithResidenceInfo" schema="NewInvitedPersonResidenceInfo">
+				<fr:edit nested="true" name="invitedPersonBean" id="invitedPersonBeanWithResidenceInfo" schema="NewInvitedPersonResidenceInfo">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
 				        <fr:property name="columnClasses" value=",,noborder"/>
@@ -114,7 +113,7 @@
 				</fr:edit>		
 				
 				<p><b>d) <bean:message key="label.invitedPerson.contacts.info" bundle="MANAGER_RESOURCES"/></b></p>			
-				<fr:edit name="invitedPersonBean" id="invitedPersonBeanWithContactsInfo" schema="NewInvitedPersonContactsInfo">
+				<fr:edit nested="true" name="invitedPersonBean" id="invitedPersonBeanWithContactsInfo" schema="NewInvitedPersonContactsInfo">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
 				        <fr:property name="columnClasses" value=",,noborder"/>
@@ -122,7 +121,7 @@
 				</fr:edit>
 				
 				<p><b>e) <bean:message key="label.invitedPerson.login.info" bundle="MANAGER_RESOURCES"/></b></p>			
-				<fr:edit name="invitedPersonBean" id="invitedPersonBeanWithLoginInfo" schema="NewInvitedPersonLoginInfo">
+				<fr:edit nested="true" name="invitedPersonBean" id="invitedPersonBeanWithLoginInfo" schema="NewInvitedPersonLoginInfo">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
 				        <fr:property name="columnClasses" value=",,noborder"/>

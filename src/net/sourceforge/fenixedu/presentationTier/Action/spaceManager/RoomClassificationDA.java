@@ -49,9 +49,14 @@ public class RoomClassificationDA extends FenixDispatchAction {
     public ActionForward deleteRoomClassification(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
+	
 	final RoomClassification roomClassification = retrieveRoomClassification(request);
 	final Object[] args = { roomClassification };
-	executeService(request, "DeleteRoomClassification", args);
+	try {
+	    executeService(request, "DeleteRoomClassification", args);  
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());	   
+	} 
 	return viewRoomClassifications(mapping, form, request, response);
     }
 
