@@ -68,6 +68,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	String teacherNumber = request.getParameter("teacherNumber_");
 	Teacher loggedTeacher = (StringUtils.isEmpty(teacherNumber) ? getLoggedPerson(request).getTeacher() : Teacher.readByNumber(Integer.valueOf(teacherNumber)));
+        System.out.println("logged teacher: " + loggedTeacher.getIdInternal() + " execution course: " + executionCourse.getIdInternal());
 	Professorship loggedProfessorship = loggedTeacher.getProfessorshipByExecutionCourse(executionCourse);
 
 	request.setAttribute("loggedTeacherProfessorship", loggedProfessorship);

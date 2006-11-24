@@ -70,12 +70,9 @@
 		<put name="body" value="/sop/exams/degreeYearExamsMap.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
-	<definition name="df.page.degreeYearWrittenEvaluationsMap" extends="definition.sop.examsPage" >
+	<definition name="df.page.degreeYearWrittenEvaluationsMap" extends="df.layout.print" >
 		<put name="body" value="/sop/writtenEvaluations/degreeYearWrittenEvaluationsMap.jsp" />
 		<put name="context" value="/commons/context.jsp" />
-	</definition>
-	<definition name="df.page.print.degreeYearWrittenEvaluationsMap" extends="df.layout.print" >
-		<put name="body" value="/sop/writtenEvaluations/degreeYearWrittenEvaluationsMapPrint.jsp" />
 	</definition>
 	<definition name="df.page.showExamsByDate" extends="definition.sop.examsPage" >
 		<put name="body" value="/sop/exams/showExamsByDate.jsp" />
