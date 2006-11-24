@@ -7,6 +7,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
+<div style="font-family: Verdana, sans-serif; font-size: 80%;">
 <logic:present name="executionCoursesByCurricularYearByExecutionDegree">
 
 	<logic:iterate id="executionCoursesByCurricularYearByExecutionDegreeEntry" name="executionCoursesByCurricularYearByExecutionDegree">
@@ -26,10 +27,10 @@
 			<bean:define id="iS"><%= i + 1 %></bean:define>
 			<bean:define id="lS"><%= length %></bean:define>
 			<logic:equal name="iS" value="<%= lS %>">
-				<table border='1' cellspacing='0' cellpadding='3' width='95%'>
+				<table border='1' cellspacing='0' cellpadding='3' width='95%' class="td01">
 			</logic:equal>
 			<logic:notEqual name="iS" value="<%= lS %>">
-				<table border='1' cellspacing='0' cellpadding='3' width='95%' class="break-after">
+				<table border='1' cellspacing='0' cellpadding='3' width='95%' class="td01 break-after">
 			</logic:notEqual>
 				<tr>
 					<td>
@@ -127,3 +128,4 @@
 	</logic:iterate>
 
 </logic:present>
+</div>
