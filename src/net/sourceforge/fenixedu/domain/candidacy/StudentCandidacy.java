@@ -5,16 +5,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.util.EntryPhase;
+
+import org.joda.time.DateTime;
 
 public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
@@ -33,9 +32,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	    StudentCandidacy existentCandidacy = person
 		    .getStudentCandidacyForExecutionDegree(executionDegree);
 	    if (!existentCandidacy.hasRegistration()
-		    || !(existentCandidacy.getRegistration().getActiveStateType().equals(
-			    RegistrationStateType.CANCELED) || existentCandidacy.getRegistration()
-			    .getActiveStateType().equals(RegistrationStateType.ABANDONED)))
+		    || existentCandidacy.getRegistration().getActiveStateType().isActive())
 		throw new DomainException("error.candidacy.already.created");
 	}
 	setExecutionDegree(executionDegree);

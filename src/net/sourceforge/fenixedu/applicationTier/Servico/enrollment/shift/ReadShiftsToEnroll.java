@@ -13,92 +13,93 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadShiftsToEnroll extends Service {
 
-	public List run(Registration registration) throws FenixServiceException {
+    public List run(Registration registration) throws FenixServiceException {
 
-		checkStudentRestrictionsForShiftsEnrolments(registration);
+	checkStudentRestrictionsForShiftsEnrolments(registration);
 
-		final List<ShiftToEnrol> result = new ArrayList<ShiftToEnrol>();
-		for (final Attends attends : registration.readAttendsInCurrentExecutionPeriod()) {
-			result.add(buildShiftToEnrol(attends));
-		}
-		return result;
+	final List<ShiftToEnrol> result = new ArrayList<ShiftToEnrol>();
+	for (final Attends attends : registration.readAttendsInCurrentExecutionPeriod()) {
+	    result.add(buildShiftToEnrol(attends));
+	}
+	return result;
+    }
+
+    private void checkStudentRestrictionsForShiftsEnrolments(Registration registration)
+	    throws FenixServiceException {
+	if (registration == null) {
+	    throw new FenixServiceException("errors.impossible.operation");
 	}
 
-	private void checkStudentRestrictionsForShiftsEnrolments(Registration registration)
-			throws FenixServiceException {
-		if (registration == null) {
-			throw new FenixServiceException("errors.impossible.operation");
-		}
-
-		if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
-			if (registration.getInterruptedStudies().equals(Boolean.FALSE))
-				throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
-		}
-
-		if (registration.getFlunked() == null || registration.getFlunked().equals(Boolean.TRUE)) {
-			throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
-		}
+	if (registration.getPayedTuition() == null
+		|| registration.getPayedTuition().equals(Boolean.FALSE)) {
+	    if (!registration.getInterruptedStudies())
+		throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
 	}
 
-	private ShiftToEnrol buildShiftToEnrol(Attends attends) {
-
-		final ShiftToEnrol result = new ShiftToEnrol();
-
-		findShiftTypesFromExecutionCourse(attends, result);
-		findShiftsForExecutionCourseShiftTypesFromStudentEnroledShifts(attends, result);
-
-		result.setExecutionCourse(attends.getDisciplinaExecucao());
-		result.setEnrolled(attends.hasEnrolment());
-
-		return result;
+	if (registration.getFlunked()) {
+	    throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
 	}
+    }
 
-	private void findShiftsForExecutionCourseShiftTypesFromStudentEnroledShifts(Attends attend,
-			ShiftToEnrol result) {
-		for (final Shift shift : attend.getAluno().getShiftsSet()) {
-			setShiftInformation(attend, result, shift);
-		}
+    private ShiftToEnrol buildShiftToEnrol(Attends attends) {
+
+	final ShiftToEnrol result = new ShiftToEnrol();
+
+	findShiftTypesFromExecutionCourse(attends, result);
+	findShiftsForExecutionCourseShiftTypesFromStudentEnroledShifts(attends, result);
+
+	result.setExecutionCourse(attends.getDisciplinaExecucao());
+	result.setEnrolled(attends.hasEnrolment());
+
+	return result;
+    }
+
+    private void findShiftsForExecutionCourseShiftTypesFromStudentEnroledShifts(Attends attend,
+	    ShiftToEnrol result) {
+	for (final Shift shift : attend.getAluno().getShiftsSet()) {
+	    setShiftInformation(attend, result, shift);
 	}
+    }
 
-	private void findShiftTypesFromExecutionCourse(Attends attend, ShiftToEnrol result) {
-		for (final Shift shift : attend.getDisciplinaExecucao().getAssociatedShiftsSet()) {
-			setShiftTypeInformation(result, shift);
-		}
+    private void findShiftTypesFromExecutionCourse(Attends attend, ShiftToEnrol result) {
+	for (final Shift shift : attend.getDisciplinaExecucao().getAssociatedShiftsSet()) {
+	    setShiftTypeInformation(result, shift);
 	}
+    }
 
-	private void setShiftTypeInformation(ShiftToEnrol result, final Shift shift) {
-		if (shift.getTipo() == ShiftType.TEORICA) {
-			result.setTheoricType(ShiftType.TEORICA);
+    private void setShiftTypeInformation(ShiftToEnrol result, final Shift shift) {
+	if (shift.getTipo() == ShiftType.TEORICA) {
+	    result.setTheoricType(ShiftType.TEORICA);
 
-		} else if (shift.getTipo() == ShiftType.PRATICA) {
-			result.setPraticType(ShiftType.PRATICA);
+	} else if (shift.getTipo() == ShiftType.PRATICA) {
+	    result.setPraticType(ShiftType.PRATICA);
 
-		} else if (shift.getTipo() == ShiftType.LABORATORIAL) {
-			result.setLaboratoryType(ShiftType.LABORATORIAL);
+	} else if (shift.getTipo() == ShiftType.LABORATORIAL) {
+	    result.setLaboratoryType(ShiftType.LABORATORIAL);
 
-		} else if (shift.getTipo() == ShiftType.TEORICO_PRATICA) {
-			result.setTheoricoPraticType(ShiftType.TEORICO_PRATICA);
+	} else if (shift.getTipo() == ShiftType.TEORICO_PRATICA) {
+	    result.setTheoricoPraticType(ShiftType.TEORICO_PRATICA);
 
-		}
 	}
+    }
 
-	private void setShiftInformation(Attends attend, ShiftToEnrol result, final Shift shift) {
-		if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
-				&& shift.getTipo() == ShiftType.TEORICA) {
-			result.setTheoricShift(shift);
+    private void setShiftInformation(Attends attend, ShiftToEnrol result, final Shift shift) {
+	if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+		&& shift.getTipo() == ShiftType.TEORICA) {
+	    result.setTheoricShift(shift);
 
-		} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
-				&& shift.getTipo() == ShiftType.PRATICA) {
-			result.setPraticShift(shift);
+	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+		&& shift.getTipo() == ShiftType.PRATICA) {
+	    result.setPraticShift(shift);
 
-		} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
-				&& shift.getTipo() == ShiftType.LABORATORIAL) {
-			result.setLaboratoryShift(shift);
+	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+		&& shift.getTipo() == ShiftType.LABORATORIAL) {
+	    result.setLaboratoryShift(shift);
 
-		} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
-				&& shift.getTipo() == ShiftType.TEORICO_PRATICA) {
-			result.setTheoricoPraticShift(shift);
-		}
+	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+		&& shift.getTipo() == ShiftType.TEORICO_PRATICA) {
+	    result.setTheoricoPraticShift(shift);
 	}
+    }
 
 }

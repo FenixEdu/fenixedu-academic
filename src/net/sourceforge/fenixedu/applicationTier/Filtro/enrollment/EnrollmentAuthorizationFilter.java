@@ -16,10 +16,6 @@ import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 
 public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
@@ -96,7 +92,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
     }
 
     private String checkCoordinatorInformation(IUserView userView, Object[] arguments) {
-        if (!verifyCoordinator(userView.getPerson(), arguments)) {
+	if (!verifyCoordinator(userView.getPerson(), arguments)) {
 	    return "noAuthorization";
 	}
 
@@ -111,11 +107,11 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	}
 	if (registration.getPayedTuition() == null
 		|| registration.getPayedTuition().equals(Boolean.FALSE)) {
-	    if (registration.getInterruptedStudies().equals(Boolean.FALSE)) {
+	    if (!registration.getInterruptedStudies()) {
 		return "error.message.tuitionNotPayed";
 	    }
 	}
-	if (registration.getFlunked() == null || registration.getFlunked().equals(Boolean.TRUE)) {
+	if (registration.getFlunked()) {
 	    return "error.message.flunked";
 	}
 	if (registration.getRequestedChangeDegree() == null
@@ -143,7 +139,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	if (registration.isInRegisteredState()
 		&& registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan()
 			.getIdInternal() == LEIC_OLD_DCP) {
-	    
+
 	    return "error.message.oldLeicStudent";
 	}
 
@@ -178,7 +174,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	    return false;
 	}
 
-        final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
+	final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 	if (coordinator == null) {
 	    return false;
 	}
