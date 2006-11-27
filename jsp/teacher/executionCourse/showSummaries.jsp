@@ -20,10 +20,7 @@
 		<p>
 	</logic:messagesPresent>
 
-
-	<logic:notEmpty name="nextPossibleLessonsDates">
-
-		<div class="infoop2">
+	<div class="infoop2">
 		<p><bean:message key="label.summaries.management.instructions.part1"/></p>
 		<p><bean:message key="label.summaries.management.instructions.part2"/>:</p>
 		<p>
@@ -34,8 +31,10 @@
 				<bean:message key="link.summary.insert.info"/>
 			</span>	
 		</p>
-		</div>
-		
+	</div>
+
+	<logic:notEmpty name="nextPossibleLessonsDates">
+			
 		<p class="mbottom025"><bean:message key="label.last.lessons.without.summaries"/></p>
 		<fr:form action="/summariesManagement.do?method=prepareCreateComplexSummary">			
 			<fr:edit id="showSummariesBeanWithChoicesHidden" name="showSummariesBean" nested="true" visible="false" />
