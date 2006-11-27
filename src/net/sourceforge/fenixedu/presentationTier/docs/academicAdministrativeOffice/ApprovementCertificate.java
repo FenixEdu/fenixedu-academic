@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
@@ -13,6 +14,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ApprovementCertificate extends AdministrativeOfficeDocument {
+    
+    private static final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
 
     protected ApprovementCertificate(final DocumentRequest documentRequest) {
 	super(documentRequest);
@@ -36,11 +39,21 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	StringBuilder approvementsInfo = new StringBuilder();
 	for (final Enrolment approvedEnrolment : approvedEnrolments) {
 	    StringBuilder gradeInfo = new StringBuilder();
-	    gradeInfo.append(" ").append(approvedEnrolment.getLatestEnrolmentEvaluation().getGrade()).append(" em ").append(approvedEnrolment.getExecutionPeriod().getExecutionYear().getYear());
+	    gradeInfo.append(" ");
+	    gradeInfo.append(approvedEnrolment.getLatestEnrolmentEvaluation().getGrade());
+	    gradeInfo.append(
+		    StringUtils.rightPad(
+			    "(" + enumerationBundle.getString(approvedEnrolment.getLatestEnrolmentEvaluation().getGrade()) + ")",
+			    11,
+			    ' '));
+	    gradeInfo.append(" em ").append(approvedEnrolment.getExecutionPeriod().getExecutionYear().getYear());
 	    
 	    approvementsInfo.append(
-		    StringUtils.multipleLineRightPad(LINE_LENGTH - gradeInfo.length(), approvedEnrolment.getName()
-			    .getContent(LanguageUtils.getLanguage()).toUpperCase(), '-')).append("\n");
+		    StringUtils.multipleLineRightPadWithSuffix(
+			    approvedEnrolment.getName().getContent(LanguageUtils.getLanguage()).toUpperCase(),
+			    LINE_LENGTH, 
+			    '-',
+			    gradeInfo.toString())).append("\n");
 	}
 
 	parameters.put("approvementsInfo", approvementsInfo.toString());

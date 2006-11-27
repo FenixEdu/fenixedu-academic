@@ -82,21 +82,21 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
 	final Person person = getDocumentRequest().getRegistration().getPerson();
 	final String name = person.getName().toUpperCase();
-	parameters.put("name", StringUtils.multipleLineRightPad(LINE_LENGTH, name, '-'));
+	parameters.put("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, '-'));
 	
 	final String documentIdNumber = person.getDocumentIdNumber();
-	parameters.put("documentIdNumber", StringUtils.multipleLineRightPad(LINE_LENGTH, "portador do Bilhete de Identidade " + documentIdNumber, '-'));
+	parameters.put("documentIdNumber", StringUtils.multipleLineRightPad("portador do Bilhete de Identidade " + documentIdNumber, LINE_LENGTH, '-'));
 	
 	final String birthLocale = person.getParishOfBirth().toUpperCase() + ", " + person.getDistrictOfBirth().toUpperCase();
-	parameters.put("birthLocale", StringUtils.multipleLineRightPad(LINE_LENGTH, "natural de " + birthLocale, '-'));
+	parameters.put("birthLocale", StringUtils.multipleLineRightPad("natural de " + birthLocale, LINE_LENGTH, '-'));
 	
 	final String nameOfFather = person.getNameOfFather().toUpperCase();
 	final String sonOf = resourceBundle.getString("label.candidacy.registration.declaration.section4");
-	parameters.put("nameOfFather", StringUtils.multipleLineRightPad(LINE_LENGTH, sonOf + " " + nameOfFather, '-'));
+	parameters.put("nameOfFather", StringUtils.multipleLineRightPad(sonOf + " " + nameOfFather, LINE_LENGTH, '-'));
 	
 	final String nameOfMother = person.getNameOfMother().toUpperCase();
 	final String andOf = resourceBundle.getString("label.candidacy.registration.declaration.section5");
-	parameters.put("nameOfMother", StringUtils.multipleLineRightPad(LINE_LENGTH, andOf + " " + nameOfMother, '-'));
+	parameters.put("nameOfMother", StringUtils.multipleLineRightPad(andOf + " " + nameOfMother, LINE_LENGTH, '-'));
 	
         if (getDocumentRequest().isCertificate()) {
             final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();

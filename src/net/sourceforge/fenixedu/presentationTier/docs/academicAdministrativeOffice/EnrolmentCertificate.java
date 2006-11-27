@@ -44,7 +44,10 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	    Collections.sort(enrolments, comparatorChain);
 	    
 	    for (final Enrolment enrolment : enrolments) {
-		enrolmentsInfo.append(StringUtils.multipleLineRightPad(LINE_LENGTH, enrolment.getName().getContent(LanguageUtils.getLanguage()).toUpperCase(), '-')).append("\n");
+		enrolmentsInfo.append(StringUtils.multipleLineRightPad(
+			enrolment.getName().getContent(LanguageUtils.getLanguage()).toUpperCase(),
+			LINE_LENGTH, 
+			'-')).append("\n");
 	    }
 	    
 	    parameters.put("enrolmentsInfo", enrolmentsInfo.toString());
