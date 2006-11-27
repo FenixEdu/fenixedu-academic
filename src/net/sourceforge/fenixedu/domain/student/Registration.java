@@ -1146,20 +1146,17 @@ public class Registration extends Registration_Base {
 
     }
 
-    // FIXME: end of methods to remove after migration of this information
-    // to Candidacy
-
+    @Override
     public Degree getDegree() {
-	final StudentCurricularPlan scp = (getActiveOrConcludedStudentCurricularPlan() != null) ? getActiveOrConcludedStudentCurricularPlan()
-		: getLastStudentCurricularPlan();
-	if (scp == null) {
-	    return null;
+	if (super.hasDegree()) {
+	    return super.getDegree();
 	}
-	return scp.getDegree();
+	final StudentCurricularPlan scp = getLastStudentCurricularPlanExceptPast();
+	return scp == null ? null : scp.getDegree();
     }
 
     public DegreeType getDegreeType() {
-	return getDegree() == null ? null : getDegree().getDegreeType();
+	return getDegree().getDegreeType();
     }
 
     public boolean isActiveForOffice(Unit office) {
@@ -1228,9 +1225,9 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isConcluded() {
-        return getActiveStateType() == RegistrationStateType.CONCLUDED
-                || calculateEctsCredits() >= getDegreeType().getDefaultEctsCredits();
-	}
+	return getActiveStateType() == RegistrationStateType.CONCLUDED
+		|| calculateEctsCredits() >= getDegreeType().getDefaultEctsCredits();
+    }
 
     public double getEctsCredits() {
 	return calculateEctsCredits();

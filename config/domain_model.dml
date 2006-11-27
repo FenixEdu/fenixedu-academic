@@ -2850,6 +2850,7 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	Integer keyStudentCandidacy;
 	Integer keyStudentKind;
 	Integer keyDfaRegistrationEvent;
+	Integer keyDegree;
 }
 
 class net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -6980,6 +6981,13 @@ relation RegistrationStudent {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.student.Student playsRole student;
+}
+
+relation RegistrationDegree {
+    net.sourceforge.fenixedu.domain.Degree playsRole degree;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole registrations {
+        multiplicity *;
+    }
 }
 
 relation RegistrationStateRegistration {
