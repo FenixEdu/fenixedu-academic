@@ -81,7 +81,6 @@ import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.StudentState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -114,72 +113,47 @@ public class Registration extends Registration_Base {
 		.getPerson() : null, new DateTime());
     }
 
-    @Deprecated
-    // NOTE: use this for legacy code only
-    public Registration(Person person, Integer studentNumber, StudentKind studentKind,
-	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase) {
-	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, false, null);
-	setEntryPhase(entryPhase);
+    public Registration(Person person, StudentCandidacy studentCandidacy) {
+	this(person, null, StudentKind.readByStudentType(StudentType.NORMAL), studentCandidacy);
     }
 
-    @Deprecated
-    // NOTE: use this for legacy code only
-    public Registration(Person person, Integer studentNumber, StudentKind studentKind,
-	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
-	    DegreeCurricularPlan degreeCurricularPlan) {
-	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, false, null);
-
-	// create scp
-	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
-		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
-			.readActualExecutionPeriod());
-
-	setEntryPhase(entryPhase);
+    public Registration(Person person, Integer studentNumber) {
+	this(person, studentNumber, StudentKind.readByStudentType(StudentType.NORMAL), null);
     }
 
-    public Registration(Person person, StudentKind studentKind,
-	    DegreeCurricularPlan degreeCurricularPlan, StudentCandidacy studentCandidacy) {
-
-	this(person, null, studentKind, StudentState.INSCRITO_OBJ, true, false, false, studentCandidacy);
-
-	// create scp
-	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
-		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
-			.readActualExecutionPeriod());
-    }
-
-    public Registration(Person person, Integer studentNumber, StudentKind studentKind,
-	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden,
+    public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan,
 	    StudentCandidacy studentCandidacy) {
-	this(person, studentNumber, studentKind, state, payedTuition, enrolmentForbidden, false,
-		studentCandidacy);
+	this(person, null, StudentKind.readByStudentType(StudentType.NORMAL), studentCandidacy);
+
+	// create scp
+	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
+		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
+			.readActualExecutionPeriod());
     }
 
-    public Registration(Person person, Integer studentNumber, StudentKind studentKind) {
-	this(person, studentNumber, studentKind, StudentState.INSCRITO_OBJ, true, false, false, null);
+    public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan) {
+	this(person, null, StudentKind.readByStudentType(StudentType.NORMAL), null);
+
+	// create scp
+	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
+		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
+			.readActualExecutionPeriod());
     }
 
-    public Registration(Person person, Integer studentNumber, StudentKind studentKind,
-	    StudentState state, Boolean payedTuition, Boolean enrolmentForbidden,
-	    final Boolean interruptedStudies, StudentCandidacy studentCandidacy) {
+    private Registration(Person person, Integer studentNumber, StudentKind studentKind,
+	    StudentCandidacy studentCandidacy) {
 	this();
-	setPayedTuition(payedTuition);
-	setEnrollmentForbidden(enrolmentForbidden);
 	if (person.hasStudent()) {
 	    setStudent(person.getStudent());
 	} else {
 	    setStudent(new Student(person, studentNumber));
 	}
-	setState(state);
-	// setNumber(studentNumber);
+	setPayedTuition(true);
 	setStudentKind(studentKind);
-	setInterruptedStudies(interruptedStudies);
-
-	setFlunked(Boolean.FALSE);
-	setRequestedChangeDegree(Boolean.FALSE);
-	setRequestedChangeBranch(Boolean.FALSE);
 	setStudentCandidacy(studentCandidacy);
 	setRegistrationYear(ExecutionYear.readCurrentExecutionYear());
+	setRequestedChangeDegree(false);
+	setRequestedChangeBranch(false);
     }
 
     public void delete() {
@@ -1101,91 +1075,65 @@ public class Registration extends Registration_Base {
 	return getStudent().getPerson();
     }
 
-    // FIXME: remove this methods after migration to Candidacy
-    @Override
     public EntryPhase getEntryPhase() {
-	if (isBolonhaDegreeOrIntegratedMaster()) {
-	    return getDegreeCandidacy().getEntryPhase();
+	if (hasStudentCandidacy()) {
+	    return getStudentCandidacy().getEntryPhase();
 	}
-	return super.getEntryPhase();
+	return null;
     }
 
-    @Override
     public void setEntryPhase(EntryPhase entryPhase) {
-	if (isBolonhaDegreeOrIntegratedMaster()) {
-	    getDegreeCandidacy().setEntryPhase(entryPhase);
+	if (hasStudentCandidacy()) {
+	    getStudentCandidacy().setEntryPhase(entryPhase);
+	} else {
+	    throw new DomainException("error.registration.withou.student.candidacy");
 	}
-	super.setEntryPhase(entryPhase);
     }
 
-    @Override
     public Double getEntryGrade() {
-	if (isBolonhaDegreeOrIntegratedMaster()) {
-	    return getStudentCandidacy().getEntryGrade();
-	}
-	return super.getEntryGrade();
+	return hasStudentCandidacy() ? getStudentCandidacy().getEntryGrade() : null;
     }
 
-    @Override
     public void setEntryGrade(Double entryGrade) {
-	if (isBolonhaDegreeOrIntegratedMaster()) {
+	if (hasStudentCandidacy()) {
 	    getStudentCandidacy().setEntryGrade(entryGrade);
+	} else {
+	    throw new DomainException("error.registration.withou.student.candidacy");
 	}
-	super.setEntryGrade(entryGrade);
     }
 
-    @Override
     public String getIngression() {
-	if (isBolonhaDegreeOrIntegratedMaster()) {
-	    return getDegreeCandidacy().getIngression();
-	}
-	return super.getIngression();
+	return hasStudentCandidacy() ? getStudentCandidacy().getIngression() : null;
     }
 
     public Ingression getIngressionEnum() {
 	return Ingression.valueOf(getIngression());
     }
 
-    @Override
     public void setIngression(String ingression) {
-	if (isBolonhaDegreeOrIntegratedMaster()) {
-	    getDegreeCandidacy().setIngression(ingression);
+	if (hasStudentCandidacy()) {
+	    getStudentCandidacy().setIngression(ingression);
+	} else {
+	    throw new DomainException("error.registration.withou.student.candidacy");
 	}
-	super.setIngression(ingression);
+
     }
 
-    @Override
     public String getContigent() {
-	if (isBolonhaDegreeOrIntegratedMaster()) {
-	    return getDegreeCandidacy().getContigent();
-	}
-	return super.getContigent();
+	return hasStudentCandidacy() ? getStudentCandidacy().getContigent() : null;
     }
 
-    @Override
     public void setContigent(String contigent) {
-	if (isBolonhaDegreeOrIntegratedMaster()) {
-	    getDegreeCandidacy().setContigent(contigent);
+	if (hasStudentCandidacy()) {
+	    getStudentCandidacy().setContigent(contigent);
+	} else {
+	    throw new DomainException("error.registration.withou.student.candidacy");
 	}
-	super.setContigent(contigent);
+
     }
 
-    // FIXME: this should be deducted from Degree/DegreeCurricularPlan
-    @Override
     public String getIstUniversity() {
-	if (isBolonhaDegreeOrIntegratedMaster()) {
-	    return getDegreeCandidacy().getIstUniversity();
-	}
-
-	return super.getIstUniversity();
-    }
-
-    @Override
-    public void setIstUniversity(String istUniversity) {
-	if (isBolonhaDegreeOrIntegratedMaster()) {
-	    getDegreeCandidacy().setIstUniversity(istUniversity);
-	}
-	super.setIstUniversity(istUniversity);
+	return getLastStudentCurricularPlanExceptPast().getLastCampus().getName();
     }
 
     private DegreeCandidacy getDegreeCandidacy() {
@@ -1282,7 +1230,7 @@ public class Registration extends Registration_Base {
     public boolean isConcluded() {
         return getActiveStateType() == RegistrationStateType.CONCLUDED
                 || calculateEctsCredits() >= getDegreeType().getDefaultEctsCredits();
-    }
+	}
 
     public double getEctsCredits() {
 	return calculateEctsCredits();
@@ -1302,7 +1250,6 @@ public class Registration extends Registration_Base {
 	if (executionYear == null) {
 	    return 1;
 	}
-
 	final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
 	final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
 	final Set<CurricularCourse> curricularCoursesToDisplay = new TreeSet<CurricularCourse>(
@@ -1552,12 +1499,16 @@ public class Registration extends Registration_Base {
     }
 
     public boolean hasToPayGratuityOrInsurance() {
-	if (getInterruptedStudies().booleanValue()) {
+	if (getInterruptedStudies()) {
 	    return false;
 	}
 
 	return !studentTypesNotPayingGratuityOrInsurance.contains(getStudentKind().getStudentType());
 
+    }
+
+    public boolean getInterruptedStudies() {
+	return getActiveStateType().equals(RegistrationStateType.INTERRUPTED);
     }
 
     public RegistrationState getActiveState() {
@@ -1651,6 +1602,14 @@ public class Registration extends Registration_Base {
 	}
 
 	return result;
+    }
+
+    public boolean getFlunked() {
+	return getActiveStateType().equals(RegistrationStateType.FLUNKED);
+    }
+
+    public boolean isInactive() {
+	return getActiveStateType().isInactive();
     }
 
 }
