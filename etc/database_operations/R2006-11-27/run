@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table Registration" alterTableRegistration.sql
+execute "Alter table PersonDepartment" alterTablePersonDepartment.sql
