@@ -43,7 +43,8 @@ public class MobilityState extends MobilityState_Base {
 	states.add(RegistrationStateType.CANCELED.name());
 	states.add(RegistrationStateType.INTERRUPTED.name());
 	states.add(RegistrationStateType.FLUNKED.name());
-	states.add(RegistrationStateType.ABANDONED.name());
+	states.add(RegistrationStateType.INTERNAL_ABANDON.name());
+	states.add(RegistrationStateType.EXTERNAL_ABANDON.name());
 	return states;
     }
 

@@ -12,11 +12,11 @@ import org.joda.time.DateTime;
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
-public class AbandonedState extends AbandonedState_Base {
-    
-    public AbandonedState(Registration registration, Person person, DateTime dateTime) {
+public class ExternalAbandonState extends ExternalAbandonState_Base {
+
+    public ExternalAbandonState(Registration registration, Person person, DateTime dateTime) {
 	super();
 	init(registration, person, dateTime);
     }
@@ -43,8 +43,7 @@ public class AbandonedState extends AbandonedState_Base {
 
     @Override
     public RegistrationStateType getStateType() {
-	return RegistrationStateType.ABANDONED;
+	return RegistrationStateType.EXTERNAL_ABANDON;
     }
 
-    
 }

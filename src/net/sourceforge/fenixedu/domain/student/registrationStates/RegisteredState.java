@@ -42,7 +42,8 @@ public class RegisteredState extends RegisteredState_Base {
 	states.add(RegistrationStateType.CANCELED.name());
 	states.add(RegistrationStateType.INTERRUPTED.name());
 	states.add(RegistrationStateType.FLUNKED.name());
-	states.add(RegistrationStateType.ABANDONED.name());
+	states.add(RegistrationStateType.INTERNAL_ABANDON.name());
+	states.add(RegistrationStateType.EXTERNAL_ABANDON.name());
 	states.add(RegistrationStateType.MOBILITY.name());
 	return states;
     }
