@@ -213,7 +213,7 @@ class net.sourceforge.fenixedu.domain.accounting.AccountingTransaction extends n
 
 	class net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction extends net.sourceforge.fenixedu.domain.accounting.AccountingTransaction {
 		Integer keyInstallment;
-	}
+}
 
 class net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail extends net.sourceforge.fenixedu.domain.DomainObject {
     DateTime whenRegistered;
@@ -2833,21 +2833,12 @@ class net.sourceforge.fenixedu.domain.StatusAssiduidade extends net.sourceforge.
 
 
 class net.sourceforge.fenixedu.domain.student.Registration extends net.sourceforge.fenixedu.domain.DomainObject {
-	Double entryGrade;
-	String istUniversity;
-	Boolean enrollmentForbidden;
-	String ingression;
-	String contigent;
 	Boolean payedTuition;
 	Integer keyRegistrationYear;
 	Integer number;
-    StudentState state;
-    EntryPhase entryPhase;
-    Boolean flunked;
     Boolean requestedChangeDegree;
     Boolean requestedChangeBranch;
     Integer keyDislocatedStudent;
-    Boolean interruptedStudies;
     Character entryGradeClassification;
     Character approvationRatioClassification;
     Character arithmeticMeanClassification;  
@@ -2890,7 +2881,10 @@ class net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSta
 	class net.sourceforge.fenixedu.domain.student.registrationStates.CanceledState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
 	}
 
-	class net.sourceforge.fenixedu.domain.student.registrationStates.AbandonedState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+	class net.sourceforge.fenixedu.domain.student.registrationStates.InternalAbandonState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+	}
+
+	class net.sourceforge.fenixedu.domain.student.registrationStates.ExternalAbandonState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
 	}
 
 class net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3769,6 +3763,7 @@ class net.sourceforge.fenixedu.domain.candidacy.Candidacy extends net.sourceforg
 		Integer keyPrecedentDegreeInformation;
 		Integer keyRegistration;
 		String ingression;
+		String contigent;
 		EntryPhase entryPhase;		
 		Double entryGrade;
 	}
@@ -3792,7 +3787,6 @@ class net.sourceforge.fenixedu.domain.candidacy.Candidacy extends net.sourceforg
 		StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
 		Boolean applyForResidence;
 		String notesAboutResidenceAppliance;
-		String contigent;
 		String istUniversity;
 	}
 	
