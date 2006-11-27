@@ -28,17 +28,13 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.StudentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.util.StudentState;
 
 import org.joda.time.YearMonthDay;
 
@@ -167,9 +163,7 @@ public class RegisterCandidate extends Service {
 
     private Registration createNewRegistration(Person person, Integer studentNumber)
 	    throws ExcepcaoPersistencia {
-	return new Registration(person, studentNumber,
-		StudentKind.readByStudentType(StudentType.NORMAL), new StudentState(
-			StudentState.INSCRITO), false, false, EntryPhase.FIRST_PHASE_OBJ);
+	return new Registration(person, studentNumber);
     }
 
     private void checkOldStudentNumber(Integer studentNumber, Person person)

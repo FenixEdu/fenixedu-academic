@@ -99,10 +99,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public void delete() throws DomainException {
-	if(getRoot() != null) {
+	if (getRoot() != null) {
 	    getRoot().delete();
 	}
-	
+
 	removeDegreeCurricularPlan();
 	removeStudent();
 	removeBranch();
@@ -607,13 +607,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List<Enrolment> getAprovedEnrolments() {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
-	
+
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
 		result.add(enrolment);
 	    }
 	}
-	
+
 	return result;
     }
 
@@ -1241,7 +1241,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		return gratuityEvent;
 	    }
 	}
-	
+
 	return null;
     }
 
@@ -1257,7 +1257,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public Set<GratuityEvent> getNotPayedGratuityEvents() {
 	final Set<GratuityEvent> result = new HashSet<GratuityEvent>();
-	
+
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
 	    if (gratuityEvent.isInDebt()) {
 		result.add(gratuityEvent);
@@ -1498,6 +1498,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	return result;
+    }
+
+    public ExecutionYear getLastExecutionYear() {
+	TreeSet<ExecutionYear> result = new TreeSet<ExecutionYear>(
+		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
+
+	for (final Enrolment enrolment : this.getEnrolmentsSet()) {
+	    result.add(enrolment.getExecutionPeriod().getExecutionYear());
+	}
+
+	return result.last();
+    }
+
+    public Campus getLastCampus() {
+	return getDegreeCurricularPlan().getExecutionDegreeByYear(getLastExecutionYear()).getCampus();
     }
 
     public boolean hasAnyEnrolmentForExecutionPeriod(final ExecutionPeriod executionPeriod) {
@@ -1832,17 +1847,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public void setRegistration(final Registration registration) {
 	super.setStudent(registration);
     }
-    
-    public void createOptionalEnrolment(final CurriculumGroup curriculumGroup, final ExecutionPeriod executionPeriod, 
-	    final OptionalCurricularCourse optionalCurricularCourse, final CurricularCourse curricularCourse, final EnrollmentCondition enrollmentCondition) {
-	if(getRoot().isAproved(curricularCourse, executionPeriod)) {
-	    throw new DomainException("error.already.aproved", new String[] {curricularCourse.getName()});
+
+    public void createOptionalEnrolment(final CurriculumGroup curriculumGroup,
+	    final ExecutionPeriod executionPeriod,
+	    final OptionalCurricularCourse optionalCurricularCourse,
+	    final CurricularCourse curricularCourse, final EnrollmentCondition enrollmentCondition) {
+	if (getRoot().isAproved(curricularCourse, executionPeriod)) {
+	    throw new DomainException("error.already.aproved",
+		    new String[] { curricularCourse.getName() });
 	}
-	if(getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod)) {
-	    throw new DomainException("error.already.enroled.in.executioPerdiod", new String[] {curricularCourse.getName(), executionPeriod.getQualifiedName()});
+	if (getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod)) {
+	    throw new DomainException("error.already.enroled.in.executioPerdiod", new String[] {
+		    curricularCourse.getName(), executionPeriod.getQualifiedName() });
 	}
-	
-	new OptionalEnrolment(this, curriculumGroup, curricularCourse, executionPeriod, enrollmentCondition, AccessControl.getUserView().getUtilizador(), optionalCurricularCourse);	
+
+	new OptionalEnrolment(this, curriculumGroup, curricularCourse, executionPeriod,
+		enrollmentCondition, AccessControl.getUserView().getUtilizador(),
+		optionalCurricularCourse);
     }
 
     public void setActive() {
@@ -1863,6 +1884,5 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getRegistration().getActiveStateType().equals(RegistrationStateType.REGISTERED)
 		&& getRegistration().getLastStudentCurricularPlanExceptPast().equals(this);
     }
-
 
 }

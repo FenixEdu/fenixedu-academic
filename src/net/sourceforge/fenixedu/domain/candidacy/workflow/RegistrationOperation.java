@@ -14,18 +14,14 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.StudentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.StudentState;
 
 import org.joda.time.YearMonthDay;
 
@@ -53,11 +49,13 @@ public class RegistrationOperation extends CandidacyOperation {
 
 	if (getExecutionYear().hasShiftDistribution()) {
 
-	    final List<Registration> registrations = getExecutionDegree().getRegistrationsForDegreeCandidacies();
+	    final List<Registration> registrations = getExecutionDegree()
+		    .getRegistrationsForDegreeCandidacies();
 	    Collections.sort(registrations, Registration.NUMBER_COMPARATOR);
 
 	    for (final ShiftDistributionEntry shiftEntry : getExecutionDegree()
-		    .getNotDistributedShiftsFromShiftDistributionBasedOn(registrations.indexOf(registration))) {
+		    .getNotDistributedShiftsFromShiftDistributionBasedOn(
+			    registrations.indexOf(registration))) {
 		shiftEntry.setDistributed(Boolean.TRUE);
 		shiftEntry.getShift().addStudents(registration);
 		correctExecutionCourseIfNecessary(registration, shiftEntry.getShift());
@@ -66,18 +64,23 @@ public class RegistrationOperation extends CandidacyOperation {
     }
 
     private void correctExecutionCourseIfNecessary(Registration registration, Shift shift) {
-	
-	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+
+	final StudentCurricularPlan studentCurricularPlan = registration
+		.getActiveStudentCurricularPlan();
 	final ExecutionCourse finalExecutionCourse = shift.getDisciplinaExecucao();
-	
-	for (final CurricularCourse curricularCourse : finalExecutionCourse.getAssociatedCurricularCoursesSet()) {
-	    
-	    final Enrolment enrolment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, ExecutionPeriod.readActualExecutionPeriod());
+
+	for (final CurricularCourse curricularCourse : finalExecutionCourse
+		.getAssociatedCurricularCoursesSet()) {
+
+	    final Enrolment enrolment = studentCurricularPlan
+		    .getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, ExecutionPeriod
+			    .readActualExecutionPeriod());
 	    if (enrolment != null) {
-		
-		final Attends attends = enrolment.getAttendsFor(ExecutionPeriod.readActualExecutionPeriod());
-		if (! attends.isFor(finalExecutionCourse)) {
-                    attends.setDisciplinaExecucao(finalExecutionCourse);
+
+		final Attends attends = enrolment.getAttendsFor(ExecutionPeriod
+			.readActualExecutionPeriod());
+		if (!attends.isFor(finalExecutionCourse)) {
+		    attends.setDisciplinaExecucao(finalExecutionCourse);
 		}
 		break;
 	    }
@@ -115,11 +118,8 @@ public class RegistrationOperation extends CandidacyOperation {
     }
 
     protected Registration createRegistration() {
-	final DegreeCandidacy degreeCandidacy = getDegreeCandidacy();
-	final Registration registration = new Registration(getDegreeCandidacy().getPerson(), Student
-		.generateStudentNumber(), StudentKind.readByStudentType(StudentType.NORMAL),
-		new StudentState(StudentState.INSCRITO), Boolean.valueOf(true), Boolean.valueOf(false),
-		degreeCandidacy);
+	final Registration registration = new Registration(getDegreeCandidacy().getPerson(),
+		getDegreeCandidacy());
 
 	registration.getStudent().setPersonalDataAuthorizationForCurrentExecutionYear(
 		getDegreeCandidacy().getStudentPersonalDataAuthorizationChoice());

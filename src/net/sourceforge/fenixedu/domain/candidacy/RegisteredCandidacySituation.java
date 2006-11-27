@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EntryPhase;
-import net.sourceforge.fenixedu.util.StudentState;
 
 import org.joda.time.YearMonthDay;
 
@@ -56,8 +55,8 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	final AdministrativeOffice administrativeOffice = AdministrativeOffice
 		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
 
-	new GratuityEvent(administrativeOffice, person, registration.getActiveStudentCurricularPlan(), ExecutionYear
-		.readCurrentExecutionYear());
+	new GratuityEvent(administrativeOffice, person, registration.getActiveStudentCurricularPlan(),
+		ExecutionYear.readCurrentExecutionYear());
 
 	new DfaRegistrationEvent(administrativeOffice, person, registration);
 
@@ -65,17 +64,10 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 
     private Registration createNewRegistration(DFACandidacy candidacy) {
 
-	StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
-	StudentState state = new StudentState(StudentState.INSCRITO);
 	Person person = getCandidacy().getPerson();
 
-	Registration registration = new Registration(person, null, studentKind, state, false, false,
-		EntryPhase.FIRST_PHASE_OBJ, ((DFACandidacy) candidacy).getExecutionDegree()
-			.getDegreeCurricularPlan());
-
-	registration.setInterruptedStudies(false);
-
-	person.getStudent().addRegistrations(registration);
+	Registration registration = new Registration(person, ((DFACandidacy) candidacy)
+		.getExecutionDegree().getDegreeCurricularPlan());
 
 	person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
 

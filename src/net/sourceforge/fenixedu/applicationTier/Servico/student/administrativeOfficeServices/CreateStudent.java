@@ -28,23 +28,23 @@ public class CreateStudent extends Service {
 	    PrecedentDegreeInformationBean precedentDegreeInformationBean,
 	    IngressionInformationBean ingressionInformationBean) {
 
-	// get or update person 
+	// get or update person
 	Person person = getPerson(personBean);
-	
+
 	// create candidacy
 	StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(executionDegreeBean
 		.getExecutionDegree(), person);
 	new RegisteredCandidacySituation(studentCandidacy);
 
-	//set ingression information
+	// set ingression information
 	studentCandidacy.setIngression(ingressionInformationBean.getIngression().getName());
 	studentCandidacy.setEntryPhase(ingressionInformationBean.getEntryPhase());
-	
+
 	// edit precedent degree information
 	studentCandidacy.getPrecedentDegreeInformation().edit(precedentDegreeInformationBean);
 
 	// create registration
-	Registration registration = new Registration(person, StudentKind.readByStudentType(StudentType.NORMAL), executionDegreeBean
+	Registration registration = new Registration(person, executionDegreeBean
 		.getDegreeCurricularPlan(), studentCandidacy);
 
 	// create qualification
@@ -59,12 +59,12 @@ public class CreateStudent extends Service {
 
     private Person getPerson(PersonBean personBean) {
 	Person person = null;
-	if(personBean.getPerson() != null){
+	if (personBean.getPerson() != null) {
 	    person = personBean.getPerson();
 	    person.setProperties(personBean);
-	}else{
+	} else {
 	    // create person
-	    person = new Person(personBean);	    
+	    person = new Person(personBean);
 	}
 	return person;
     }
