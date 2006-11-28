@@ -19,38 +19,33 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
  */
 public enum DegreeType {
 
-    DEGREE(GradeScale.TYPE20, null, 5, 0, false, true, false, AdministrativeOfficeType.DEGREE),
-
-    MASTER_DEGREE(GradeScale.TYPE5, null, 2, 0, false, false, true,
-	    AdministrativeOfficeType.MASTER_DEGREE),
-
-    BOLONHA_DEGREE(GradeScale.TYPE20, CurricularPeriodType.THREE_YEAR, 3, 180, true, true, false,
+    DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, true, false,
 	    AdministrativeOfficeType.DEGREE),
 
-    BOLONHA_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.TWO_YEAR, 2, 120, true, true, false,
-	    AdministrativeOfficeType.DEGREE),
-
-    BOLONHA_INTEGRATED_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, 5, 300, true, true, false,
-	    AdministrativeOfficeType.DEGREE),
-
-    BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, CurricularPeriodType.YEAR, 1, 30, true, true, true,
+    MASTER_DEGREE(GradeScale.TYPE5, CurricularPeriodType.TWO_YEAR, false, true,
 	    AdministrativeOfficeType.MASTER_DEGREE),
 
-    BOLONHA_ADVANCED_FORMATION_DIPLOMA(GradeScale.TYPE20, CurricularPeriodType.YEAR, 1, 30, true, true, true,
+    BOLONHA_DEGREE(GradeScale.TYPE20, CurricularPeriodType.THREE_YEAR, true, false,
+	    AdministrativeOfficeType.DEGREE),
+
+    BOLONHA_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.TWO_YEAR, true, false,
+	    AdministrativeOfficeType.DEGREE),
+
+    BOLONHA_INTEGRATED_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, true, false,
+	    AdministrativeOfficeType.DEGREE),
+
+    BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
 	    AdministrativeOfficeType.MASTER_DEGREE),
 
-    BOLONHA_SPECIALIZATION_DEGREE(GradeScale.TYPE20, CurricularPeriodType.YEAR, 1, 30, true, true, true,
+    BOLONHA_ADVANCED_FORMATION_DIPLOMA(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
+	    AdministrativeOfficeType.MASTER_DEGREE),
+
+    BOLONHA_SPECIALIZATION_DEGREE(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
 	    AdministrativeOfficeType.MASTER_DEGREE);
 
     private GradeScale gradeScale;
 
     private CurricularPeriodType curricularPeriodType;
-
-    private int years;
-
-    private double defaultEctsCredits;
-
-    private boolean bolonhaType;
 
     private boolean canCreateStudent;
 
@@ -58,14 +53,11 @@ public enum DegreeType {
 
     private AdministrativeOfficeType administrativeOfficeType;
 
-    private DegreeType(GradeScale gradeScale, CurricularPeriodType curricularPeriodType, int years,
-	    double defaultEctsCredits, boolean bolonhaType, boolean canCreateStudent,
-	    boolean canCreateStudentOnlyWithCandidacy, AdministrativeOfficeType administrativeOfficeType) {
+    private DegreeType(GradeScale gradeScale, CurricularPeriodType curricularPeriodType,
+	    boolean canCreateStudent, boolean canCreateStudentOnlyWithCandidacy,
+	    AdministrativeOfficeType administrativeOfficeType) {
 	this.gradeScale = gradeScale;
 	this.curricularPeriodType = curricularPeriodType;
-	this.years = years;
-	this.defaultEctsCredits = defaultEctsCredits;
-	this.bolonhaType = bolonhaType;
 	this.canCreateStudent = canCreateStudent;
 	this.canCreateStudentOnlyWithCandidacy = canCreateStudentOnlyWithCandidacy;
 	this.administrativeOfficeType = administrativeOfficeType;
@@ -84,15 +76,26 @@ public enum DegreeType {
     }
 
     public int getYears() {
-	return this.years;
+	return (int) this.curricularPeriodType.getWeight();
     }
 
     public double getDefaultEctsCredits() {
-	return defaultEctsCredits;
+	switch (getCurricularPeriodType()) {
+	case YEAR:
+	    return 30;
+	case TWO_YEAR:
+	    return 120;
+	case THREE_YEAR:
+	    return 180;
+	case FIVE_YEAR:
+	    return 300;
+	default:
+	    return 0;
+	}
     }
 
     public boolean isBolonhaType() {
-	return bolonhaType;
+	return this != DegreeType.DEGREE && this != DegreeType.MASTER_DEGREE;
     }
 
     public boolean canCreateStudent() {
