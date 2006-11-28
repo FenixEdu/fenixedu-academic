@@ -448,6 +448,50 @@ public class Registration extends Registration_Base {
 	this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
     }
 
+    public Collection<Enrolment> getApprovedEnrolments() {
+	final Collection<Enrolment> result = new HashSet<Enrolment>();
+	
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.addAll(studentCurricularPlan.getAprovedEnrolments());
+	}
+	
+	return result;
+    }
+    
+    public boolean hasAnyApprovedEnrolment() {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.hasAnyApprovedEnrolment()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public DateTime getLastApprovedEnrolmentEvaluationDate() {
+	final StudentCurricularPlan studentCurricularPlan = getLastStudentCurricularPlanExceptPast();
+	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
+	enrolments.addAll(studentCurricularPlan.getAprovedEnrolments());
+	
+	final Iterator<Enrolment> iterator = enrolments.tailSet(enrolments.last()).iterator();
+	final Enrolment oneEnrolment = iterator.next();
+	final ExecutionPeriod lastExecutionPeriod = oneEnrolment.getExecutionPeriod();
+	DateTime result = oneEnrolment.getLatestEnrolmentEvaluation().getWhenDateTime();
+	while (iterator.hasNext()) {
+	    final Enrolment anotherEnrolment = iterator.next();
+	    if (anotherEnrolment.getExecutionPeriod() != lastExecutionPeriod) {
+		break;
+	    }
+	    
+	    final EnrolmentEvaluation enrolmentEvaluation = anotherEnrolment.getLatestEnrolmentEvaluation();
+	    if (enrolmentEvaluation.getWhenDateTime().isAfter(result)) {
+		result = enrolmentEvaluation.getWhenDateTime(); 
+	    }
+	}
+
+	return result;
+    }
+    
     public List<Advise> getAdvisesByTeacher(final Teacher teacher) {
 	return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate() {
 
@@ -1246,40 +1290,6 @@ public class Registration extends Registration_Base {
 		.toYearMonthDay() : getLastApprovedEnrolmentEvaluationDate().toYearMonthDay();
     }
     
-    public DateTime getLastApprovedEnrolmentEvaluationDate() {
-	final StudentCurricularPlan studentCurricularPlan = getLastStudentCurricularPlanExceptPast();
-	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
-	enrolments.addAll(studentCurricularPlan.getAprovedEnrolments());
-	
-	final Iterator<Enrolment> iterator = enrolments.tailSet(enrolments.last()).iterator();
-	final Enrolment oneEnrolment = iterator.next();
-	final ExecutionPeriod lastExecutionPeriod = oneEnrolment.getExecutionPeriod();
-	DateTime result = oneEnrolment.getLatestEnrolmentEvaluation().getWhenDateTime();
-	while (iterator.hasNext()) {
-	    final Enrolment anotherEnrolment = iterator.next();
-	    if (anotherEnrolment.getExecutionPeriod() != lastExecutionPeriod) {
-		break;
-	    }
-	    
-	    final EnrolmentEvaluation enrolmentEvaluation = anotherEnrolment.getLatestEnrolmentEvaluation();
-	    if (enrolmentEvaluation.getWhenDateTime().isAfter(result)) {
-		result = enrolmentEvaluation.getWhenDateTime(); 
-	    }
-	}
-
-	return result;
-    }
-    
-    public Set<Enrolment> getApprovedEnrolments() {
-	final Set<Enrolment> result = new HashSet<Enrolment>();
-	
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    result.addAll(studentCurricularPlan.getAprovedEnrolments());
-	}
-	
-	return result;
-    }
-    
     public double getEctsCredits() {
 	return calculateEctsCredits();
     }
@@ -1495,16 +1505,6 @@ public class Registration extends Registration_Base {
 	}
 
 	return null;
-    }
-
-    public boolean hasAnyApprovedEnrolment() {
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    if (studentCurricularPlan.hasAnyApprovedEnrolment()) {
-		return true;
-	    }
-	}
-
-	return false;
     }
 
     @Override
