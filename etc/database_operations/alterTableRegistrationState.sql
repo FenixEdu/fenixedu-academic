@@ -1,1 +1,1 @@
-alter table REGISTRATION_STATE change column KEY_REGISTRATION KEY_REGISTRATION int(11) unsigned default NULL;
+alter table REGISTRATION_STATE change column KEY_RESPONSIBLE_PERSON KEY_RESPONSIBLE_PERSON int(11) unsigned default NULL;
