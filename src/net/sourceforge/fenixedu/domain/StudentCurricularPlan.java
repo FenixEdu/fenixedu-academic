@@ -192,7 +192,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         for (final Enrolment enrolment : getEnrolmentsSet()) {
             final EnrollmentCondition enrollmentCondition = enrolment.getEnrolmentCondition();
             if (enrollmentCondition != EnrollmentCondition.INVISIBLE && enrolment.isApproved()) {
-                // TODO : complete this code.
+                enrolments.add(enrolment);
             }
         }
     }
