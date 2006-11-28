@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -1225,10 +1226,39 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isConcluded() {
-	return getActiveStateType() == RegistrationStateType.CONCLUDED
-		|| calculateEctsCredits() >= getDegreeType().getDefaultEctsCredits();
+        return getActiveStateType() == RegistrationStateType.CONCLUDED
+                || calculateEctsCredits() >= getDegreeType().getDefaultEctsCredits();
     }
 
+    public YearMonthDay getConclusionDate() {
+	return getActiveStateType() == RegistrationStateType.CONCLUDED ? getActiveState().getStateDate()
+		.toYearMonthDay() : getLastApprovedEnrolmentEvaluationDate().toYearMonthDay();
+    }
+    
+    public DateTime getLastApprovedEnrolmentEvaluationDate() {
+	final StudentCurricularPlan studentCurricularPlan = getLastStudentCurricularPlanExceptPast();
+	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
+	enrolments.addAll(studentCurricularPlan.getAprovedEnrolments());
+	
+	final Iterator<Enrolment> iterator = enrolments.tailSet(enrolments.last()).iterator();
+	final Enrolment oneEnrolment = iterator.next();
+	final ExecutionPeriod lastExecutionPeriod = oneEnrolment.getExecutionPeriod();
+	DateTime result = oneEnrolment.getLatestEnrolmentEvaluation().getWhenDateTime();
+	while (iterator.hasNext()) {
+	    final Enrolment anotherEnrolment = iterator.next();
+	    if (anotherEnrolment.getExecutionPeriod() != lastExecutionPeriod) {
+		break;
+	    }
+	    
+	    final EnrolmentEvaluation enrolmentEvaluation = anotherEnrolment.getLatestEnrolmentEvaluation();
+	    if (enrolmentEvaluation.getWhenDateTime().isAfter(result)) {
+		result = enrolmentEvaluation.getWhenDateTime(); 
+	    }
+	}
+
+	return result;
+    }
+    
     public double getEctsCredits() {
 	return calculateEctsCredits();
     }
