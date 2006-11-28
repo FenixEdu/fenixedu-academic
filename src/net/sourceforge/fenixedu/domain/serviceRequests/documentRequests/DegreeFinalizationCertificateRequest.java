@@ -22,11 +22,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	    Boolean urgentRequest, Boolean average, Boolean detailed) {
 	this();
 
-	if (!registration.hasDegreeDiplomaRequest()) {
-	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.has.no.degree.diploma.request");
-	}
-
 	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
 		average, detailed);
     }
@@ -68,7 +63,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	if (!getRegistration().hasDegreeDiplomaDocumentRequest()) {
 	    throw new DomainException(
 		    "DegreeFinalizationCertificateRequest.registration.withoutDegreeDiplomaDocumentRequest");
-	}
+    	}
     }
 
     @Override
