@@ -21,6 +21,11 @@ public class AccessControl {
 	return AccessControl.userView.get();
     }
 
+    public static Person getPerson() {
+	final IUserView userView = getUserView();
+	return userView == null ? null : userView.getPerson();
+    }
+
     public static void setUserView(IUserView userView) {
 	AccessControl.userView.set(userView);
     }

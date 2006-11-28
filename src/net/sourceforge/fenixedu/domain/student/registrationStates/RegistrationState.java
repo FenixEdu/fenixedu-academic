@@ -74,8 +74,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     public void nextState(String nextState) {
-	createState(getRegistration(), AccessControl.getUserView().getPerson(), null,
-		RegistrationStateType.valueOf(nextState));
+	createState(getRegistration(), AccessControl.getPerson(), null, RegistrationStateType.valueOf(nextState));
     }
 
     public abstract RegistrationStateType getStateType();
