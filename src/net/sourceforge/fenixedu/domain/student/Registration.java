@@ -1148,7 +1148,7 @@ public class Registration extends Registration_Base {
 
     @Override
     public Degree getDegree() {
-	if (super.hasDegree()) {
+	if (super.getDegree() != null) {
 	    return super.getDegree();
 	}
 	final StudentCurricularPlan scp = getLastStudentCurricularPlanExceptPast();
