@@ -7,7 +7,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class InvitedPersonBean extends ExternalPersonBean {
-       
+   
+    private DomainReference<Person> invitedPersonReference;
+    
     private DomainReference<Party> responsibleReference;
     
     private DomainReference<Person> responsiblePersonReference;
@@ -18,6 +20,14 @@ public class InvitedPersonBean extends ExternalPersonBean {
       
     public InvitedPersonBean() {
 	super();
+    }
+    
+    public Person getInvitedPerson() {
+	return invitedPersonReference == null ? null : invitedPersonReference.getObject();
+    }
+
+    public void setInvitedPerson(Person person) {
+	this.invitedPersonReference = person == null ? null : new DomainReference<Person>(person);
     }
     
     public Party getResponsible() {

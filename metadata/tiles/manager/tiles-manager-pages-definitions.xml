@@ -300,7 +300,29 @@
 	<definition name="prepare-create-invited-person" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/createInvitedPerson.jsp" />
 	</definition>	
-	
+	<definition name="search-person-to-edit" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/prepareEditPerson.jsp" />
+	</definition>	
+	<definition name="prepare-edit-person" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/editPerson.jsp" />
+	</definition>	
+	<definition name="searh-person-before-invitations-management" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/choosePersonForManageInvitations.jsp" />
+	</definition>	
+	<definition name="manage-person-invitations" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/managePersonInvitations.jsp" />
+	</definition>		
+	<definition name="prepare-edit-invitation" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/editInvitation.jsp" />
+	</definition>
+	<definition name="prepare-change-invitation-details" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/changeInvitationDetails.jsp" />
+	</definition>	
+	<definition name="prepare-create-new-person-invitation" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/createNewPersonInvitation.jsp" />
+	</definition>	
+		
+		
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->
 	<definition name="firstPageGenerateFiles" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/generateFiles/welcomeScreen.jsp" />

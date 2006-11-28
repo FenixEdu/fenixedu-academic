@@ -28,143 +28,147 @@ public class SearchPerson extends Service {
 
     public static class SearchParameters {
 
-        private String email, username, documentIdNumber;
+	private String email, username, documentIdNumber;
 
-        private String[] nameWords;
+	private String[] nameWords;
 
-        private Role role;
+	private Role role;
 
-        private Degree degree;
+	private Degree degree;
 
-        private Department department;
+	private Department department;
 
-        private DegreeType degreeType;
+	private DegreeType degreeType;
 
-        public SearchParameters(String name, String email, String username, String documentIdNumber,
-                String roleType, String degreeTypeString, Integer degreeId, Integer departmentId) {
+	public SearchParameters(String name, String email, String username, String documentIdNumber,
+		String roleType, String degreeTypeString, Integer degreeId, Integer departmentId) {
 
-            this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
-            this.email = (email != null && !email.equals("")) ? normalize(email.trim()) : null;
-            this.username = (username != null && !username.equals("")) ? normalize(username.trim())
-                    : null;
-            this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? normalize(documentIdNumber
-                    .trim())
-                    : null;
+	    this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
+	    this.email = (email != null && !email.equals("")) ? normalize(email.trim()) : null;
+	    this.username = (username != null && !username.equals("")) ? normalize(username.trim())
+		    : null;
+	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? normalize(documentIdNumber
+		    .trim())
+		    : null;
 
-            if (roleType != null && roleType.length() > 0) {
-                role = (Role) Role.getRoleByRoleType(RoleType.valueOf(roleType));
-            }
+	    if (roleType != null && roleType.length() > 0) {
+		role = (Role) Role.getRoleByRoleType(RoleType.valueOf(roleType));
+	    }
 
-            if (degreeId != null) {
-                degree = rootDomainObject.readDegreeByOID(degreeId);
-            }
+	    if (degreeId != null) {
+		degree = rootDomainObject.readDegreeByOID(degreeId);
+	    }
 
-            if (degreeTypeString != null && degreeTypeString.length() > 0) {
-                degreeType = DegreeType.valueOf(degreeTypeString);
-            }
+	    if (degreeTypeString != null && degreeTypeString.length() > 0) {
+		degreeType = DegreeType.valueOf(degreeTypeString);
+	    }
 
-            if (departmentId != null) {
-                department = rootDomainObject.readDepartmentByOID(departmentId);
-            }
-        }
+	    if (departmentId != null) {
+		department = rootDomainObject.readDepartmentByOID(departmentId);
+	    }
+	}
 
-        private static String[] getNameWords(String name) {
-            String[] nameWords = null;
-            if (name != null && !StringUtils.isEmpty(name.trim())) {
-                nameWords = name.trim().split(" ");
-                normalizeName(nameWords);
-            }
-            return nameWords;
-        }
+	private boolean emptyParameters() {
+	    return StringUtils.isEmpty(this.email) && StringUtils.isEmpty(this.username)
+		    && StringUtils.isEmpty(this.documentIdNumber) && this.role == null
+		    && this.degree == null && this.department == null && this.degreeType == null
+		    && this.nameWords == null;
+	}
 
-        public static List<InfoPerson> getIntervalPersons(Integer start, Integer end,
-                List<InfoPerson> allPersons) {
+	private static String[] getNameWords(String name) {
+	    String[] nameWords = null;
+	    if (name != null && !StringUtils.isEmpty(name.trim())) {
+		nameWords = name.trim().split(" ");
+		normalizeName(nameWords);
+	    }
+	    return nameWords;
+	}
 
-            return (end >= allPersons.size()) ? allPersons.subList(start, allPersons.size())
-                    : allPersons.subList(start, end);
-        }
+	public Degree getDegree() {
+	    return degree;
+	}
 
-        public Degree getDegree() {
-            return degree;
-        }
+	public DegreeType getDegreeType() {
+	    return degreeType;
+	}
 
-        public DegreeType getDegreeType() {
-            return degreeType;
-        }
+	public Department getDepartment() {
+	    return department;
+	}
 
-        public Department getDepartment() {
-            return department;
-        }
+	public String getDocumentIdNumber() {
+	    return documentIdNumber;
+	}
 
-        public String getDocumentIdNumber() {
-            return documentIdNumber;
-        }
+	public String getEmail() {
+	    return email;
+	}
 
-        public String getEmail() {
-            return email;
-        }
+	public String[] getNameWords() {
+	    return nameWords;
+	}
 
-        public String[] getNameWords() {
-            return nameWords;
-        }
+	public Role getRole() {
+	    return role;
+	}
 
-        public Role getRole() {
-            return role;
-        }
-
-        public String getUsername() {
-            return username;
-        }
+	public String getUsername() {
+	    return username;
+	}
     }
 
     public CollectionPager run(SearchParameters searchParameters, Predicate predicate)
-            throws FenixServiceException {
+	    throws FenixServiceException {
 
-        final List<Person> persons;
-        List<Person> allValidPersons = new ArrayList<Person>();
-        List<Teacher> teachers = new ArrayList<Teacher>();
-       
-        Role roleBd = searchParameters.getRole();
-        if (roleBd == null) {
-            roleBd = Role.getRoleByRoleType(RoleType.PERSON);
-        }
+	if (searchParameters.emptyParameters()) {
+	    return new CollectionPager<Person>(new ArrayList<Person>(), 25);
+	}
 
-        if ((roleBd.getRoleType() == RoleType.TEACHER) && (searchParameters.getDepartment() != null)) {
-            persons = new ArrayList<Person>();
-            teachers = searchParameters.getDepartment().getAllCurrentTeachers();
-            for (Teacher teacher : teachers) {
-                persons.add(teacher.getPerson());
-            }
-        } else if (roleBd.getRoleType() == RoleType.EMPLOYEE) {
-            persons = new ArrayList<Person>();
-            for (Person person : roleBd.getAssociatedPersons()) {
-                if (person.getTeacher() == null) {
-                    persons.add(person);
-                }
-            }
-        } else {
-            persons = roleBd.getAssociatedPersons();
-        }
+	final List<Person> persons;
+	List<Person> allValidPersons = new ArrayList<Person>();
+	List<Teacher> teachers = new ArrayList<Teacher>();
 
-        allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);
-        Collections.sort(allValidPersons, Person.COMPARATOR_BY_NAME);
-        List<InfoPerson> infoPersons = new ArrayList<InfoPerson>();
+	Role roleBd = searchParameters.getRole();
+	if (roleBd == null) {
+	    roleBd = Role.getRoleByRoleType(RoleType.PERSON);
+	}
 
-        for (Person person : (List<Person>) allValidPersons) {
-            infoPersons.add(InfoPerson.newInfoFromDomain(person));
-        }
+	if ((roleBd.getRoleType() == RoleType.TEACHER) && (searchParameters.getDepartment() != null)) {
+	    persons = new ArrayList<Person>();
+	    teachers = searchParameters.getDepartment().getAllCurrentTeachers();
+	    for (Teacher teacher : teachers) {
+		persons.add(teacher.getPerson());
+	    }
+	} else if (roleBd.getRoleType() == RoleType.EMPLOYEE) {
+	    persons = new ArrayList<Person>();
+	    for (Person person : roleBd.getAssociatedPersons()) {
+		if (person.getTeacher() == null) {
+		    persons.add(person);
+		}
+	    }
+	} else {
+	    persons = roleBd.getAssociatedPersons();
+	}
 
-        return new CollectionPager<InfoPerson>(infoPersons, 25);
+	allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);
+	Collections.sort(allValidPersons, Person.COMPARATOR_BY_NAME);
+	List<InfoPerson> infoPersons = new ArrayList<InfoPerson>();
+
+	for (Person person : (List<Person>) allValidPersons) {
+	    infoPersons.add(InfoPerson.newInfoFromDomain(person));
+	}
+
+	return new CollectionPager<InfoPerson>(infoPersons, 25);
     }
 
     private static void normalizeName(String[] nameWords) {
-        for (int i = 0; i < nameWords.length; i++) {
-            nameWords[i] = normalize(nameWords[i]);
-        }
+	for (int i = 0; i < nameWords.length; i++) {
+	    nameWords[i] = normalize(nameWords[i]);
+	}
     }
 
     private static String normalize(String string) {
-        return StringNormalizer.normalize(string).toLowerCase();
+	return StringNormalizer.normalize(string).toLowerCase();
     }
 
     // --------------- Search Person Predicate
@@ -172,77 +176,95 @@ public class SearchPerson extends Service {
 
     public static class SearchPersonPredicate implements Predicate {
 
-        SearchParameters searchParameters;
+	private SearchParameters searchParameters;
 
-        public SearchPersonPredicate(SearchParameters searchParameters) {
-            this.searchParameters = searchParameters;
-        }
+	public SearchPersonPredicate(SearchParameters searchParameters) {
+	    this.searchParameters = searchParameters;
+	}
 
-        public boolean evaluate(Object arg0) {
-            Person person = (Person) arg0;
+	public boolean evaluate(Object arg0) {
+	    Person person = (Person) arg0;
 
-            return verifyParameter(person.getEmail(), searchParameters.getEmail())
-                    && (searchParameters.getUsername() == null || person.hasUsername(searchParameters.getUsername()))
-                    && verifyParameter(person.getDocumentIdNumber(), searchParameters
-                            .getDocumentIdNumber())
-                    && verifyNameEquality(searchParameters.getNameWords(), person)
-                    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(),
-                            person);
-        }
+	    return verifyParameter(person.getEmail(), searchParameters.getEmail())
+		    && verifyUsernameEquality(searchParameters.getUsername(), person)
+		    && verifyParameter(person.getDocumentIdNumber(), searchParameters
+			    .getDocumentIdNumber())
+		    && verifyNameEquality(searchParameters.getNameWords(), person)
+		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(),
+			    person);
+	}
 
-        private boolean verifyDegreeType(final Degree degree, final DegreeType degreeType,
-                final Person person) {
-            return degreeType == null || verifyDegreeType(degree, person.getStudentByType(degreeType));
-        }
+	private boolean verifyUsernameEquality(String usernameToSearch, Person person) {
+	    return usernameToSearch == null || person.hasUsername(usernameToSearch);
+	}
 
-        private boolean verifyDegreeType(final Degree degree, final Registration registrationByType) {
-            return registrationByType != null && (degree == null || verifyDegree(degree, registrationByType));
-        }
+	private boolean verifyDegreeType(final Degree degree, final DegreeType degreeType,
+		final Person person) {
+	    return degreeType == null || verifyDegreeType(degree, person.getStudentByType(degreeType));
+	}
 
-        private boolean verifyDegree(final Degree degree, final Registration registrationByType) {
-            final StudentCurricularPlan studentCurricularPlan = registrationByType
-                    .getActiveStudentCurricularPlan();
-            return (studentCurricularPlan != null && degree == studentCurricularPlan
-                    .getDegreeCurricularPlan().getDegree());
-        }
+	private boolean verifyDegreeType(final Degree degree, final Registration registrationByType) {
+	    return registrationByType != null
+		    && (degree == null || verifyDegree(degree, registrationByType));
+	}
 
-        private boolean verifyParameter(String parameter, String searchParameter) {
-            return (searchParameter == null)
-                    || (parameter != null && normalizeAndCompare(parameter, searchParameter));
-        }
+	private boolean verifyDegree(final Degree degree, final Registration registrationByType) {
+	    final StudentCurricularPlan studentCurricularPlan = registrationByType
+		    .getActiveStudentCurricularPlan();
+	    return (studentCurricularPlan != null && degree == studentCurricularPlan
+		    .getDegreeCurricularPlan().getDegree());
+	}
 
-        private boolean normalizeAndCompare(String parameter, String searchParameter) {
-            String personParameter = normalize(parameter.trim());
-            return (personParameter.indexOf(searchParameter) == -1) ? false : true;
-        }
+	private boolean verifyParameter(String parameter, String searchParameter) {
+	    return (searchParameter == null)
+		    || (parameter != null && normalizeAndCompare(parameter, searchParameter));
+	}
 
-        private static boolean verifyNameEquality(String[] nameWords, Person person) {
+	private boolean normalizeAndCompare(String parameter, String searchParameter) {
+	    String personParameter = normalize(parameter.trim());
+	    return (personParameter.indexOf(searchParameter) == -1) ? false : true;
+	}
 
-            if (nameWords == null) {
-                return true;
-            }
+	private static boolean verifyNameEquality(String[] nameWords, Person person) {
 
-            if (person.getNome() != null) {
-                String[] personNameWords = person.getNome().trim().split(" ");
-                normalizeName(personNameWords);
-                int j, i;
-                for (i = 0; i < nameWords.length; i++) {
-                    if (!nameWords[i].equals("")) {
-                        for (j = 0; j < personNameWords.length; j++) {
-                            if (personNameWords[j].equals(nameWords[i])) {
-                                break;
-                            }
-                        }
-                        if (j == personNameWords.length) {
-                            return false;
-                        }
-                    }
-                }
-                if (i == nameWords.length) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }   
+	    if (nameWords == null) {
+		return true;
+	    }
+
+	    if (person.getNome() != null) {
+		String[] personNameWords = person.getNome().trim().split(" ");
+		normalizeName(personNameWords);
+		int j, i;
+		for (i = 0; i < nameWords.length; i++) {
+		    if (!nameWords[i].equals("")) {
+			for (j = 0; j < personNameWords.length; j++) {
+			    if (personNameWords[j].equals(nameWords[i])) {
+				break;
+			    }
+			}
+			if (j == personNameWords.length) {
+			    return false;
+			}
+		    }
+		}
+		if (i == nameWords.length) {
+		    return true;
+		}
+	    }
+	    return false;
+	}
+
+	public SearchParameters getSearchParameters() {
+	    return searchParameters;
+	}
+    }
+
+    public static List<Person> searchPersonInAllPersons(SearchPersonPredicate predicate) {
+	if (predicate.getSearchParameters() != null && predicate.getSearchParameters().emptyParameters()) {
+	    return new ArrayList<Person>();
+	}
+	List<Person> persons = (List<Person>) CollectionUtils.select(Person.readAllPersons(), predicate);
+	Collections.sort(persons, Person.COMPARATOR_BY_NAME);
+	return persons;
+    }
 }

@@ -27,7 +27,7 @@
 			        <fr:property name="columnClasses" value=",,noborder"/>
 				</fr:layout>	
 			</fr:edit>			
-			<html:submit><bean:message key="button.submit" bundle="MANAGER_RESOURCES" /></html:submit>	
+			<html:submit><bean:message key="label.search" bundle="MANAGER_RESOURCES" /></html:submit>	
 		</fr:form>
 		
 		<p>

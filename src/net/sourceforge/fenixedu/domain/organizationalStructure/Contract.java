@@ -45,7 +45,7 @@ public class Contract extends Contract_Base {
 	setChildParty(person);
 	setAccountabilityType(accountabilityType);
 	setContractType(type);
-	setOccupationInterval(beginDate, endDate);
+	setOccupationInterval(beginDate, endDate);	
     }
 
     @Override
@@ -120,5 +120,5 @@ public class Contract extends Contract_Base {
 	if (endDate != null && endDate.isBefore(beginDate)) {
 	    throw new DomainException("error.contract.endDateBeforeBeginDate");
 	}
-    }
+    }       
 }

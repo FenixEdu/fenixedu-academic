@@ -77,7 +77,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class Person extends Person_Base {
@@ -1045,7 +1044,7 @@ public class Person extends Person_Base {
 
 	private void closePersonLogin(Person person) {
 	    if (person.getPersonRolesCount() == 2 && person.hasRole(RoleType.PERSON)
-		    && person.hasRole(RoleType.MESSAGING) && !person.isInvited()) {
+		    && person.hasRole(RoleType.MESSAGING) && !person.isInvited(new YearMonthDay())) {
 		person.getLoginIdentification().closeLogin();
 	    }
 	}
@@ -1502,25 +1501,31 @@ public class Person extends Person_Base {
 	}
     }
 
-    public boolean isInvited() {
-	YearMonthDay currentDate = new YearMonthDay();
+    public Collection<Invitation> getInvitationsOrderByDate() {
+	Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.COMPARATOR_BY_BEGIN_DATE);
+	invitations.addAll((Collection<Invitation>) getParentAccountabilities(
+		AccountabilityTypeEnum.INVITATION, Invitation.class));
+	return invitations;
+    }
+
+    public boolean isInvited(YearMonthDay date) {
 	for (Invitation invitation : (Collection<Invitation>) getParentAccountabilities(
 		AccountabilityTypeEnum.INVITATION, Invitation.class)) {
-	    if (invitation.isActive(currentDate)) {
+	    if (invitation.isActive(date)) {
 		return true;
 	    }
 	}
 	return false;
     }
-    
+
     public boolean canLogin() {
-	return getLoginIdentification().isActive(new DateTime());
+	return (isInvited(new YearMonthDay()) || hasRole(RoleType.TEACHER) || hasRole(RoleType.EMPLOYEE) || hasRole(RoleType.STUDENT));
     }
 
     // -------------------------------------------------------------
     // static methods
     // -------------------------------------------------------------
-       
+
     public static Person readPersonByUsername(final String username) {
 	final Login login = Login.readLoginByUsername(username);
 	final User user = login == null ? null : login.getUser();

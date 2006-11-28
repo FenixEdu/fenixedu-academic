@@ -11042,8 +11042,7 @@
         <filterChains>
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
-    </service>    
-    
+    </service>      
     <service>
     	<name>CreateNewInvitedPerson</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateNewInvitedPerson</implementationClass>
@@ -11053,13 +11052,47 @@
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
     </service>
-    
-     <service>
+    <service>
+    	<name>EditInvitationHostUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.EditInvitationHostUnit</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>EditInvitationResponsible</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.EditInvitationResponsible</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>    
+    <service>
+    	<name>CreateNewPersonInvitation</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateNewPersonInvitation</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>                
+    <service>
+    	<name>DeleteInvitation</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteInvitation</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>          
+    <service>    
     	<name>SetInstitutionalEmail</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetInstitutionalEmail</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains />    
-    </service>
-    
+    </service>       
 </serviceDefinitions>

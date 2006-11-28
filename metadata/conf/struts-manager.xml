@@ -1759,7 +1759,28 @@
 		<forward name="showExistentPersonsBeforeCreateInvitedPerson" path="show-existent-persons-before-create-invited-person"/>
 		<forward name="prepareCreateInvitedPerson" path="prepare-create-invited-person"/>				
 	</action>
-		
+	
+	<action path="/invitationsManagement"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+		parameter="method"
+		scope="request"
+		input="personManagement">
+		<forward name="searhPersonBeforeInvitationsManagement" path="searh-person-before-invitations-management"/>		
+		<forward name="managePersonInvitations" path="manage-person-invitations"/>	
+		<forward name="prepareEditInvitation" path="prepare-edit-invitation"/>		
+		<forward name="prepareEditInvitationDetails" path="prepare-change-invitation-details"/>										
+		<forward name="prepareCreateNewPersonInvitation" path="prepare-create-new-person-invitation"/>										
+	</action>
+	
+	<action path="/editPerson"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+		parameter="method"
+		scope="request"
+		input="personManagement">
+		<forward name="searchPersonToEdit" path="search-person-to-edit"/>
+		<forward name="prepareEditPerson" path="prepare-edit-person"/>
+	</action>			 		
+     
 	<action path="/displayEmployee"	
 		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
 		parameter="method"

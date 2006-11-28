@@ -19,9 +19,19 @@
 </schema>
 
 <schema name="InsertMandatoryInvitedPersonDetails" type="net.sourceforge.fenixedu.domain.Person$AnyPersonSearchBean" bundle="MANAGER_RESOURCES">
-	<slot name="name"/>	
+	<slot name="name">
+		<property name="size" value="50"/>
+	</slot>	
 	<slot name="documentIdNumber" />
 	<slot name="idDocumentType"/>	
+</schema>	
+
+<schema name="SearchPersonAttributes" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="MANAGER_RESOURCES">	
+	<slot name="username"/>	
+	<slot name="name">
+		<property name="size" value="50"/>
+	</slot>	
+	<slot name="documentIdNumber" />
 </schema>	
 
 <schema name="ShowExistentPersonsDetailsBeforeCreateInvitedPersons" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
@@ -35,14 +45,19 @@
 	<slot name="responsiblePerson" layout="username-as-person" key="label.responsibility.person.username" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>				
 </schema>	
 
-<schema name="NewInvitedPersonPersonalInfo" type="net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean" bundle="MANAGER_RESOURCES">
-	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
+<schema name="NewInvitedPersonIdentificationInfo" type="net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean" bundle="MANAGER_RESOURCES">
 	<slot name="documentIdNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
 	<slot name="idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>			
-    <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="documentIdEmissionLocation" />
 	<slot name="documentIdEmissionDate" />
     <slot name="documentIdExpirationDate" />
+</schema>
+
+<schema name="NewInvitedPersonPersonalInfo" type="net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean" bundle="MANAGER_RESOURCES">
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>		
+    <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="socialSecurityNumber"/>
     <slot name="profession"/>
     <slot name="maritalStatus"/>	
@@ -145,3 +160,132 @@
 	<slot name="begin" key="label.login.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
 	<slot name="end" key="label.login.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
 </schema>	
+
+<schema name="PersonIdentificationInfo" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
+	<slot name="documentIdNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="emissionLocationOfDocumentId" />
+	<slot name="emissionDateOfDocumentIdYearMonthDay" />
+    <slot name="expirationDateOfDocumentIdYearMonthDay" />
+	<setter signature="setIdentification(documentIdNumber, idDocumentType)" />
+</schema>	
+
+<schema name="PersonPersonalInfo" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>		
+    <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="socialSecurityNumber"/>
+    <slot name="profession"/>
+    <slot name="maritalStatus"/>	
+</schema>	
+
+<schema name="PersonFiliationInfo" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
+    <slot name="countryOfBirth" layout="menu-select"> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>
+   	<slot name="nationality" layout="menu-select"> 
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/> 
+		<property name="format" value="${nationality}"/>
+		<property name="sortBy" value="nationality=asc" />
+	</slot>
+    <slot name="dateOfBirth" />
+    <slot name="parishOfBirth">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="districtSubdivisionOfBirth">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="districtOfBirth">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="nameOfFather">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+	</slot>
+    <slot name="nameOfMother">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>          
+</schema>
+
+<schema name="PersonResidenceInfo" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
+	<slot name="countryOfResidence" layout="menu-select" > 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>
+    <slot name="address" >
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="areaCode"/>
+    <slot name="areaOfAreaCode" />
+    <slot name="area"/>
+    <slot name="parishOfResidence" >
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="districtSubdivisionOfResidence">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="districtOfResidence" >
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+</schema>
+
+<schema name="PersonContactsInfo" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
+	<slot name="phone">
+    	<property name="size" value="9"/>
+		<property name="maxLength" value="9"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{9})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+    </slot>
+    <slot name="mobile">
+    	<property name="size" value="9"/>
+		<property name="maxLength" value="9"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{9})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+    <slot name="email"  validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredEmailValidator">
+    	<property name="size" value="30"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="webAddress">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="200"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+			<property name="required" value="false" />
+		</validator>
+    </slot>    
+</schema>	
+
+<schema name="ViewPersonInvitations" type="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation" bundle="MANAGER_RESOURCES">
+	<slot name="beginDate" />
+	<slot name="endDate" />
+	<slot name="hostUnit.presentationNameWithParents" key="label.host.unit"/>
+	<slot name="responsible.name" key="label.responsible.party"/>
+</schema>
+
+<schema name="EditInviteTimeInterval" type="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation" bundle="MANAGER_RESOURCES">
+	<slot name="beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<setter signature="setInvitationInterval(beginDate, endDate)"/>
+</schema>
+
+<schema name="EditInvitationResponsible" type="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation" bundle="MANAGER_RESOURCES">
+	<slot name="responsiblePerson" layout="username-as-person" key="label.responsibility.person.username" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>				
+</schema>

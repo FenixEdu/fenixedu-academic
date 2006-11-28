@@ -50,7 +50,8 @@
 			<p class="infoop2">
 				<b><bean:message key="label.host.unit" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="invitedPersonBean" property="unit.presentationNameWithParents"/>
 			</p>
-						
+			
+			<br/>				
 			&nbsp;&nbsp;<em><bean:message key="label.choose.responsibility.unit" bundle="MANAGER_RESOURCES"/></em>
 			<bean:define id="goToPrepareCreateInvitedPersonURL2" type="java.lang.String">/manager/createInvitedPerson.do?method=prepareCreateInvitedPerson&name=<bean:write name="invitedPersonBean" property="name"/>&idDocumentType=<bean:write name="invitedPersonBean" property="idDocumentType"/>&documentIdNumber=<bean:write name="invitedPersonBean" property="documentIdNumber"/>&unitID=<bean:write name="invitedPersonBean" property="unit.idInternal"/></bean:define>
 			<un:tree initialUnit="initialUnit" unitParamName="responsibilityUnitID" path="<%= goToPrepareCreateInvitedPersonURL2 %>" state="true"/>								
@@ -85,10 +86,19 @@
 					<bean:write name="invitedPersonBean" property="responsible.presentationNameWithParents"/>
 				</logic:empty>
 			</p>
-						
+			
+			<br/>			
 			<fr:form action="/createInvitedPerson.do?method=createNewInvitedPerson">		
 							
-				<p><b>a) <bean:message key="label.invitedPerson.personal.info" bundle="MANAGER_RESOURCES"/></b></p>			
+				<p><b>a) <bean:message key="label.person.identification.info" bundle="MANAGER_RESOURCES"/></b></p>			
+				<fr:edit nested="true" name="invitedPersonBean" id="invitedPersonBeanWithIdentificationInfo" schema="NewInvitedPersonIdentificationInfo">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle1"/>
+				        <fr:property name="columnClasses" value=",,noborder"/>
+					</fr:layout>	
+				</fr:edit>			
+							
+				<p><b>b) <bean:message key="label.invitedPerson.personal.info" bundle="MANAGER_RESOURCES"/></b></p>			
 				<fr:edit nested="true" name="invitedPersonBean" id="invitedPersonBeanWithPersonalInfo" schema="NewInvitedPersonPersonalInfo">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
@@ -96,7 +106,7 @@
 					</fr:layout>	
 				</fr:edit>
 								
-				<p><b>b) <bean:message key="label.invitedPerson.filiation.info" bundle="MANAGER_RESOURCES"/></b></p>			
+				<p><b>c) <bean:message key="label.invitedPerson.filiation.info" bundle="MANAGER_RESOURCES"/></b></p>			
 				<fr:edit nested="true" name="invitedPersonBean" id="invitedPersonBeanWithFiliationInfo" schema="NewInvitedPersonFiliationInfo">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
@@ -104,7 +114,7 @@
 					</fr:layout>	
 				</fr:edit>		
 				
-				<p><b>c) <bean:message key="label.invitedPerson.residence.info" bundle="MANAGER_RESOURCES"/></b></p>			
+				<p><b>d) <bean:message key="label.invitedPerson.residence.info" bundle="MANAGER_RESOURCES"/></b></p>			
 				<fr:edit nested="true" name="invitedPersonBean" id="invitedPersonBeanWithResidenceInfo" schema="NewInvitedPersonResidenceInfo">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
@@ -112,7 +122,7 @@
 					</fr:layout>	
 				</fr:edit>		
 				
-				<p><b>d) <bean:message key="label.invitedPerson.contacts.info" bundle="MANAGER_RESOURCES"/></b></p>			
+				<p><b>e) <bean:message key="label.invitedPerson.contacts.info" bundle="MANAGER_RESOURCES"/></b></p>			
 				<fr:edit nested="true" name="invitedPersonBean" id="invitedPersonBeanWithContactsInfo" schema="NewInvitedPersonContactsInfo">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
@@ -120,7 +130,7 @@
 					</fr:layout>	
 				</fr:edit>
 				
-				<p><b>e) <bean:message key="label.invitedPerson.login.info" bundle="MANAGER_RESOURCES"/></b></p>			
+				<p><b>f) <bean:message key="label.invitedPerson.login.info" bundle="MANAGER_RESOURCES"/></b></p>			
 				<fr:edit nested="true" name="invitedPersonBean" id="invitedPersonBeanWithLoginInfo" schema="NewInvitedPersonLoginInfo">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
