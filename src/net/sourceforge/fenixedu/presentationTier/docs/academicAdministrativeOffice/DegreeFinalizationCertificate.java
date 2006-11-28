@@ -52,7 +52,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	    final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(registration.getApprovedEnrolments());
 
 	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(new BeanComparator("executionPeriod.executionYear"));
+	    comparatorChain.addComparator(new BeanComparator("executionPeriod"));
 	    comparatorChain.addComparator(new BeanComparator("name"));
 	    Collections.sort(approvedEnrolments, comparatorChain);
 

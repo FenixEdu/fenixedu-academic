@@ -34,14 +34,20 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	parameters.put("numberApprovements", Integer.valueOf(approvedEnrolments.size()));
 
 	final ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("executionPeriod.executionYear"));
+	comparatorChain.addComparator(new BeanComparator("executionPeriod"));
 	comparatorChain.addComparator(new BeanComparator("name"));
 	Collections.sort(approvedEnrolments, comparatorChain);
 
 	final StringBuilder approvementsInfo = new StringBuilder();
 	ExecutionYear lastReportedExecutionYear = approvedEnrolments.iterator().next().getExecutionPeriod().getExecutionYear(); 
 	for (final Enrolment approvedEnrolment : approvedEnrolments) {
+	    final ExecutionYear executionYear = approvedEnrolment.getExecutionPeriod().getExecutionYear();
 	    final EnrolmentEvaluation latestEnrolmentEvaluation = approvedEnrolment.getLatestEnrolmentEvaluation();
+	    
+	    if (executionYear != lastReportedExecutionYear) {
+		lastReportedExecutionYear = executionYear;
+		approvementsInfo.append("\n");
+	    }
 	    
 	    final StringBuilder gradeInfo = new StringBuilder();
 	    gradeInfo.append(" ").append(latestEnrolmentEvaluation.getGrade());
@@ -54,8 +60,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 			    ' '));
 	    gradeInfo.append(" ").append(resourceBundle.getString("label.in"));
 	    
-	    final ExecutionYear executionYear = approvedEnrolment.getExecutionPeriod().getExecutionYear();
-	    gradeInfo.append(executionYear.getYear());
+	    gradeInfo.append(" ").append(executionYear.getYear());
 	    
 	    approvementsInfo.append(
 		    StringUtils.multipleLineRightPadWithSuffix(
@@ -63,11 +68,6 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 			    LINE_LENGTH, 
 			    '-',
 			    gradeInfo.toString())).append("\n");
-	    
-	    if (executionYear != lastReportedExecutionYear) {
-		lastReportedExecutionYear = executionYear;
-		approvementsInfo.append("\n");
-	    }
 	}
 	parameters.put("approvementsInfo", approvementsInfo.toString());
     }
