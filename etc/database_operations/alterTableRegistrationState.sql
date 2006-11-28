@@ -1,0 +1,1 @@
+alter table REGISTRATION_STATE change column KEY_REGISTRATION KEY_REGISTRATION int(11) unsigned default NULL;
