@@ -370,6 +370,17 @@ public class Registration extends Registration_Base {
 	return Double.valueOf(Math.round(this.arithmeticMean * 100) / 100.0);
     }
 
+    public int getFinalArithmeticMean() {
+	if (!isConcluded()) {
+	    throw new DomainException("Registration.getting.final.arithmetic.mean.from.non.concluded.registration");
+	}
+	
+	if (this.arithmeticMean == null) {
+	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
+	}
+	return Double.valueOf(Math.round(this.arithmeticMean)).intValue();
+    }
+
     public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
 
 	int enrollmentsNumber = 0;
@@ -1256,6 +1267,16 @@ public class Registration extends Registration_Base {
 	    }
 	}
 
+	return result;
+    }
+    
+    public Set<Enrolment> getApprovedEnrolments() {
+	final Set<Enrolment> result = new HashSet<Enrolment>();
+	
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.addAll(studentCurricularPlan.getAprovedEnrolments());
+	}
+	
 	return result;
     }
     
