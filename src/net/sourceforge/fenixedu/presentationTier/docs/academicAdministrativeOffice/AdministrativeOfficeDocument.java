@@ -35,6 +35,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return new EnrolmentCertificate(documentRequest);
 	    case APPROVEMENT_CERTIFICATE:
 		return new ApprovementCertificate(documentRequest);
+	    case DEGREE_FINALIZATION_CERTIFICATE:
+		return new DegreeFinalizationCertificate(documentRequest);
 	    default:
 		return new AdministrativeOfficeDocument(documentRequest);
 	    }
