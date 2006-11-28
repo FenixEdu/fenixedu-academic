@@ -1484,27 +1484,19 @@ public class Registration extends Registration_Base {
 	return sortedExecutionYears;
     }
 
-    public StudentCurricularPlan getStudentCurricularPlan(ExecutionYear executionYear) {
-	return executionYear == null ? null : initializeStudentCurricularPlansByExecutionYear().get(
-		executionYear);
+    public StudentCurricularPlan getStudentCurricularPlan(final ExecutionYear executionYear) {
+        return executionYear == null ? null : getStudentCurricularPlan(executionYear.getEndDateYearMonthDay());
     }
 
-    public StudentCurricularPlan getStudentCurricularPlan(YearMonthDay date) {
-
-	SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
-		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
-	studentCurricularPlans.addAll(getStudentCurricularPlans());
-
-	Iterator<StudentCurricularPlan> iterator = studentCurricularPlans.tailSet(
-		studentCurricularPlans.last()).iterator();
-	while (iterator.hasNext()) {
-	    StudentCurricularPlan studentCurricularPlan = iterator.next();
-	    if (studentCurricularPlan.getStartDateYearMonthDay().isBefore(date)) {
-		return studentCurricularPlan;
-	    }
-	}
-
-	return null;
+    public StudentCurricularPlan getStudentCurricularPlan(final YearMonthDay date) {
+        StudentCurricularPlan result = null;
+        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+            final YearMonthDay startDate = studentCurricularPlan.getStartDateYearMonthDay();
+            if (!startDate.isAfter(date) && (result == null || startDate.isAfter(result.getStartDateYearMonthDay()))) {
+                result = studentCurricularPlan;
+            }
+        }
+        return result;
     }
 
     @Override
@@ -1658,6 +1650,12 @@ public class Registration extends Registration_Base {
 
     public boolean isInactive() {
 	return getActiveStateType().isInactive();
+    }
+
+    public void addApprovedEnrolments(final Set<Enrolment> enrolments) {
+        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+            studentCurricularPlan.addApprovedEnrolments(enrolments);
+        }
     }
 
 }

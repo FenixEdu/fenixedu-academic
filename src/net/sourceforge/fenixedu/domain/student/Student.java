@@ -3,13 +3,16 @@ package net.sourceforge.fenixedu.domain.student;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
@@ -380,6 +383,14 @@ public class Student extends Student_Base {
 	}
 
 	return true;
+    }
+
+    public Set<Enrolment> getApprovedEnrolments() {
+        final Set<Enrolment> enrolments = new HashSet<Enrolment>();
+        for (final Registration registration : getRegistrationsSet()) {
+            registration.addApprovedEnrolments(enrolments);
+        }
+        return enrolments;
     }
 
 }
