@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -195,7 +196,17 @@ public class SearchPerson extends Service {
 	}
 
 	private boolean verifyUsernameEquality(String usernameToSearch, Person person) {
-	    return usernameToSearch == null || person.hasUsername(usernameToSearch);
+	    if(usernameToSearch == null) {
+		return true;
+	    }
+	    String normalizedUsername = normalize(usernameToSearch.trim());	    
+	    for (LoginAlias alias : person.getLoginAlias()) {
+		String normalizedAlias = normalize(alias.getAlias());
+		if(normalizedAlias.indexOf(normalizedUsername) != -1) {
+		    return true;
+		}
+	    }
+	    return false;
 	}
 
 	private boolean verifyDegreeType(final Degree degree, final DegreeType degreeType,

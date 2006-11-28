@@ -323,7 +323,12 @@ public class Person extends Person_Base {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.getLoginAliasOrderByImportance() : new HashSet<LoginAlias>();
     }
-
+    
+    public Set<LoginAlias> getLoginAlias() {
+	Login login = getLoginIdentification();
+	return (login != null) ? login.getAliasSet() : new HashSet<LoginAlias>();
+    }    
+    
     public boolean hasUsername(String username) {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.hasUsername(username) : false;

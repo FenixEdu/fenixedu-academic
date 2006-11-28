@@ -45,7 +45,8 @@ UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt16:Cargos de Gestão', own.`O
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt16:Cargos de Gestão', own.`ORDER_IN_MODULE` = 11 WHERE own.`UUID` = '69f1121b-9917-47ae-ad00-d36f701c101f';
 
 --  ID: 18953 UUID: '40bcc4e0-1d8e-4a02-8fca-5e6ef6e923f7'
-UPDATE `ACCESSIBLE_ITEM` AS own, `ACCESSIBLE_ITEM` AS parent SET own.`KEY_MODULE` = parent.`ID_INTERNAL`, own.`NAME` = 'pt30:Criar Pessoa Externa/Convidada', own.`ORDER_IN_MODULE` = 0 WHERE own.`UUID` = '40bcc4e0-1d8e-4a02-8fca-5e6ef6e923f7' AND parent.`UUID` = ;
+UPDATE `ACCESSIBLE_ITEM` AS own, `ACCESSIBLE_ITEM` AS parent SET own.`KEY_MODULE` = parent.`ID_INTERNAL`, own.`NAME` = 'pt30:Criar Pessoa Externa/Convidada', own.`ORDER_IN_MODULE` = 0 WHERE own.`UUID` = '40bcc4e0-1d8e-4a02-8fca-5e6ef6e923f7' AND parent.`UUID` = '9c631a37-f53d-486a-abff-298bbac2373c';
+
 
 -- 
 --  Inserting new functionalities
