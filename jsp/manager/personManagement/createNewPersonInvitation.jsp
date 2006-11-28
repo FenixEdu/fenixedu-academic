@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/units.tld" prefix="un" %>
 
-<h2><bean:message key="invitation.edit.title" bundle="MANAGER_RESOURCES"/></h2>
+<h2><bean:message key="person.invitation.create.title" bundle="MANAGER_RESOURCES"/></h2>
 
 <logic:present role="MANAGER">
 

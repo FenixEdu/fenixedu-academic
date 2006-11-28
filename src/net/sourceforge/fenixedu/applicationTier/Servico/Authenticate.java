@@ -161,7 +161,7 @@ public class Authenticate extends Service implements Serializable {
 
 	Person person = Person.readPersonByUsername(username);
 
-	if (person == null) {
+	if (person == null || !person.canLogin()) {
 	    throw new ExcepcaoAutenticacao("error.Exception");
 	}
 

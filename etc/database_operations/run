@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Functionalities Changes" changes-20061128174648.sql
