@@ -9,6 +9,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 
+import org.joda.time.DateTime;
+
 
 public class CurricularCourseTest extends DomainTestBase {
 
@@ -145,7 +147,7 @@ public class CurricularCourseTest extends DomainTestBase {
 
     public void testInsertCurriculum() {
         
-        curriculum = curricularCourse.insertCurriculum("program", "programEn", "opObjectives", "opObjectivesEn", "genObjectives", "genObjectivesEn");
+        curriculum = curricularCourse.insertCurriculum("program", "programEn", "opObjectives", "opObjectivesEn", "genObjectives", "genObjectivesEn", new DateTime());
                 
         testProgram("program", "programEn");
         testGeneralObjectives("genObjectives", "genObjectivesEn");
