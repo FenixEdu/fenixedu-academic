@@ -188,7 +188,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	// set a value
     }
 
-    public void addApprovedEnrolments(final Set<Enrolment> enrolments) {
+    public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
         for (final Enrolment enrolment : getEnrolmentsSet()) {
             final EnrollmentCondition enrollmentCondition = enrolment.getEnrolmentCondition();
             if (enrollmentCondition != EnrollmentCondition.INVISIBLE && enrolment.isApproved()) {

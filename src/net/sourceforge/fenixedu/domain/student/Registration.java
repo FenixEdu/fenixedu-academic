@@ -1386,14 +1386,7 @@ public class Registration extends Registration_Base {
     }
 
     private boolean isActive(final CurricularCourse curricularCourse, final ExecutionYear executionYear) {
-	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
-	    if (curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod).size() > 0
-		    || curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod)
-			    .size() > 0) {
-		return true;
-	    }
-	}
-	return false;
+        return curricularCourse.isActive(executionYear);
     }
 
     private ExecutionYear findMostRecenteExecutionYearWithEnrolments() {
@@ -1661,7 +1654,7 @@ public class Registration extends Registration_Base {
 	return getActiveStateType().isInactive();
     }
 
-    public void addApprovedEnrolments(final Set<Enrolment> enrolments) {
+    public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
             studentCurricularPlan.addApprovedEnrolments(enrolments);
 	}

@@ -1610,4 +1610,16 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return false;
     }
 
+    public boolean isActive(final ExecutionYear executionYear) {
+        final ExecutionYear executionYearToCheck = executionYear == null ?
+                ExecutionYear.readCurrentExecutionYear() : executionYear;
+        for (final ExecutionPeriod executionPeriod : executionYearToCheck.getExecutionPeriodsSet()) {
+            if (getActiveScopesInExecutionPeriod(executionPeriod).size() > 0
+                    || getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod).size() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
