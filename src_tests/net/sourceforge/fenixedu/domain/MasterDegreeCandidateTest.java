@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 
 
@@ -37,22 +38,22 @@ public class MasterDegreeCandidateTest extends DomainTestBase {
         masterDegreeCandidate.setCandidateNumber(1);
         
         person1 = new Person();
-        person1.setUsername("1MASabc");
+        person1.setUsername(RoleType.MASTER_DEGREE_CANDIDATE);
         
         person2 = new Person();
-        person2.setUsername("1MASabc1");
+        person2.setUsername(RoleType.MASTER_DEGREE_CANDIDATE);
         
         person3 = new Person();
-        person3.setUsername("1MASabc2");
+        person3.setUsername(RoleType.MASTER_DEGREE_CANDIDATE);
         
-        onePerson = new ArrayList();
+        onePerson = new ArrayList<Person>();
         onePerson.add(person1);
         
-        twoPersons = new ArrayList();
+        twoPersons = new ArrayList<Person>();
         twoPersons.add(person1);
         twoPersons.add(person2);
         
-        allPersons = new ArrayList();
+        allPersons = new ArrayList<Person>();
         allPersons.add(person1);
         allPersons.add(person2);
         allPersons.add(person3);
