@@ -4,19 +4,20 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class SectionTest extends DomainTestBase {
 
     Section section, section2, section3, section4, section5, section6;
-    Site site;
+    ExecutionCourseSite site;
     Item item, item2;
        
     protected void setUp() throws Exception {
         super.setUp();
                      
-        site = new Site();
+        site = new ExecutionCourseSite();
         site.setIdInternal(0);        
         
         //Secção Superior
@@ -145,7 +146,7 @@ public class SectionTest extends DomainTestBase {
     
     public void testEdit(){
         try{
-            section.edit((MultiLanguageString) null, Integer.valueOf(0));
+            section.edit((MultiLanguageString) null, (Section) null, (Group) null);
             fail("Expected NullPointerException");
         }
         catch(NullPointerException e){
@@ -153,7 +154,7 @@ public class SectionTest extends DomainTestBase {
             assertEquals("Order Unexpected", 0, section.getSectionOrder().intValue());
         }
               
-        section.edit(new MultiLanguageString("NewSectionName"), 1);
+        section.edit(new MultiLanguageString("NewSectionName"), (Section) null, (Group) null);
         
         assertEquals("Name Unexpected", "NewSectionName", section.getName());
         assertEquals("Order Unexpected", 1, section.getSectionOrder().intValue());        
@@ -165,7 +166,7 @@ public class SectionTest extends DomainTestBase {
         
         
         // Test: Organize SubSections Order
-        section2.edit(new MultiLanguageString("NewSectionName2"), 1);                             
+        section2.edit(new MultiLanguageString("NewSectionName2"), (Section) null, (Group) null);                             
         
         assertEquals("Name Unexpected", "NewSectionName2", section2.getName());
         assertEquals("Order Unexpected", 1, section2.getSectionOrder().intValue());
@@ -184,7 +185,7 @@ public class SectionTest extends DomainTestBase {
         assertNull("Section Unexpected", item.getSection());
         assertNull("Section Unexpected", item2.getSection());
         
-        assertNull("Site Unexpected", section3.getSite());
+        assertNull("ExecutionCourseSite Unexpected", section3.getSite());
         assertNull("Superior Section Unexpected", section3.getSuperiorSection());
                 
         assertEquals("Size Unexpected", 2, section.getAssociatedSectionsCount());
@@ -211,9 +212,9 @@ public class SectionTest extends DomainTestBase {
         assertNull("Superior Section Unexpected", section2.getSuperiorSection());
         assertNull("Superior Section Unexpected", section4.getSuperiorSection());
         
-        assertNull("Site Unexpected", section.getSite());
-        assertNull("Site Unexpected", section2.getSite());
-        assertNull("Site Unexpected", section4.getSite());        
+        assertNull("ExecutionCourseSite Unexpected", section.getSite());
+        assertNull("ExecutionCourseSite Unexpected", section2.getSite());
+        assertNull("ExecutionCourseSite Unexpected", section4.getSite());        
     }
     
     private void testInsertItemInformation(int size, String name, String information, int order, int index){
