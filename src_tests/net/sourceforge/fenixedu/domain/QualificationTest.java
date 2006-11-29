@@ -9,6 +9,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -58,13 +59,13 @@ public class QualificationTest extends DomainTestBase {
 		country1 = new Country("country1Name", "country1Nacionality", "country1Code");
 		person1 = new Person();
 		person1.setNome("person1Name");
-		person1.setUsername("person1Username");
+		person1.setUsername(RoleType.PERSON);
 		
 		
 		country2 = new Country("nameCountry2", "nacionalityCountry2", "codeCountry2");
 		person2 = new Person();
 		person2.setNome("namePerson2");
-		person2.setUsername("usernamePerson2");
+		person2.setUsername(RoleType.PERSON);
 		
 		infoQualificationToCreate = new InfoQualification();
 		infoQualificationToCreate.setDegree(degree1);

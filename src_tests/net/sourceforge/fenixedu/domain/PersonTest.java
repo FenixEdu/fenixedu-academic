@@ -296,26 +296,19 @@ public class PersonTest extends DomainTestBase {
 
 	public void testChangeUsername() {
 		Person person = new Person(infoPerson1, country);
-		person.setUsername("user1");
+		person.setUsername(RoleType.PERSON);
+		String personOriginalUsername = person.getUsername();
 		Person person2 = new Person(infoPerson2, country);
-		person2.setUsername("user2");
+		person2.setUsername(RoleType.PERSON);
 		Person person3 = new Person(infoPerson3, country);
-		person3.setUsername("user3");
+		person3.setUsername(RoleType.PERSON);
 
-		person.changeUsername("newUsername");
-		assertEquals(person.getUsername(), "newUsername");
-
-		try {
-			person.changeUsername("user2");
-			fail("Username already exists - should have thrown a DomainException");
-		} catch (DomainException domainException) {
-			// caught expected exception
-		}
-		assertEquals(person.getUsername(), "newUsername");
+		person.changeUsername(RoleType.PERSON);
+		assertTrue(!personOriginalUsername.equals(person.getUsername()));
 
 		try {
-			person.changeUsername("");
-			fail("Empty username - should have thrown a DomainException");
+			person.changeUsername(null);
+			fail("Empty role type - should have thrown a DomainException");
 		} catch (DomainException domainException) {
 			// caught expected exception
 		}
@@ -639,7 +632,7 @@ public class PersonTest extends DomainTestBase {
 		Person person = new Person();
 		person.setEmployee(employee);
 		person.setTeacher(teacher);
-		person.setUsername("Abc");
+		person.setUsername(RoleType.PERSON);
 		person.indicatePrivledges(roles);
 
 		assertTrue(person.getPersonRoles().containsAll(roles));
