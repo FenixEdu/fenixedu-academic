@@ -27,5 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Table Student Statutes" CreateTableStudentStatutes.sql
 execute "Functionalities Changes" changes-20061128174648.sql
 execute "Alter table Registration State" alterTableRegistrationState.sql
