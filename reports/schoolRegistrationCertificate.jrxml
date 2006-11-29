@@ -55,22 +55,8 @@
 				</image>
 				<staticText>
 					<reportElement
-						x="64"
-						y="189"
-						width="58"
-						height="34"
-						key="staticText-6"
-						stretchType="RelativeToTallestObject"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="Single">
-						<font size="9"/>
-					</textElement>
-				<text><![CDATA[Secretaria      dos Serviços Académicos]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="150"
-						y="116"
+						x="168"
+						y="113"
 						width="58"
 						height="11"
 						key="staticText-7"
@@ -83,8 +69,8 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="150"
-						y="127"
+						x="168"
+						y="124"
 						width="62"
 						height="11"
 						key="staticText-8"
@@ -97,8 +83,8 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="150"
-						y="138"
+						x="168"
+						y="135"
 						width="58"
 						height="11"
 						key="staticText-9"
@@ -111,8 +97,8 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="180"
-						y="149"
+						x="198"
+						y="146"
 						width="25"
 						height="11"
 						key="staticText-10"
@@ -125,8 +111,8 @@
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="217"
-						y="116"
+						x="235"
+						y="113"
 						width="50"
 						height="11"
 						key="textField-11"/>
@@ -138,8 +124,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="217"
-						y="127"
+						x="235"
+						y="124"
 						width="50"
 						height="11"
 						key="textField-12"/>
@@ -151,8 +137,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="217"
-						y="138"
+						x="235"
+						y="135"
 						width="50"
 						height="11"
 						key="textField-13"/>
@@ -164,8 +150,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="150"
-						y="172"
+						x="168"
+						y="169"
 						width="121"
 						height="10"
 						key="textField-14"/>
@@ -177,8 +163,8 @@
 				</textField>
 				<staticText>
 					<reportElement
-						x="150"
-						y="216"
+						x="168"
+						y="203"
 						width="271"
 						height="11"
 						key="staticText-11"
@@ -191,8 +177,8 @@
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="217"
-						y="149"
+						x="235"
+						y="146"
 						width="50"
 						height="11"
 						key="textField-15"/>
