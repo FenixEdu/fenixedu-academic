@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class SiteTest extends DomainTestBase {
 
-    private Site site;
+    private ExecutionCourseSite site;
 
     private Section parentSection;
 
@@ -21,7 +21,7 @@ public class SiteTest extends DomainTestBase {
         ExecutionCourse executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse.setIdInternal(0);
 
-        site = new Site();
+        site = new ExecutionCourseSite();
         site.setIdInternal(0);
         site.setExecutionCourse(executionCourse);
         site.setInitialStatement("initialStatement");
@@ -70,7 +70,7 @@ public class SiteTest extends DomainTestBase {
             assertEquals("Size unexpected!", 1, site.getAssociatedSectionsCount());
         }
 
-        // Create Section to a Site at last position
+        // Create Section to a ExecutionCourseSite at last position
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
         site.createSection(new MultiLanguageString("SectionNameLast"), null, -1);
@@ -86,11 +86,11 @@ public class SiteTest extends DomainTestBase {
                 .getLastModifiedDate().after(dateBeforeCreation));
         assertTrue("Expected LastModificationDate Before an end timestamp!", section
                 .getLastModifiedDate().before(dateAfterCreation));
-        assertEquals("Different Section Site", site, section.getSite());
+        assertEquals("Different Section ExecutionCourseSite", site, section.getSite());
         assertNotNull("Expected Not Null Section items!", section.getAssociatedItems());
         assertNotNull("Expected Not Null Section SubSections!", section.getAssociatedSections());
 
-        // Create Section to a Site between "ParentSection" and
+        // Create Section to a ExecutionCourseSite between "ParentSection" and
         // "SectionNameLast"
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
@@ -109,11 +109,11 @@ public class SiteTest extends DomainTestBase {
                 .getLastModifiedDate().after(dateBeforeCreation));
         assertTrue("Expected LastModificationDate Before an end timestamp!", section
                 .getLastModifiedDate().before(dateAfterCreation));
-        assertEquals("Different Section Site", site, section.getSite());
+        assertEquals("Different Section ExecutionCourseSite", site, section.getSite());
         assertNotNull("Expected Not Null Section items!", section.getAssociatedItems());
         assertNotNull("Expected Not Null Section SubSections!", section.getAssociatedSections());
 
-        // Create Section to a Site at start position
+        // Create Section to a ExecutionCourseSite at start position
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
         site.createSection(new MultiLanguageString("SectionNameStart"), null, 0);
@@ -133,11 +133,11 @@ public class SiteTest extends DomainTestBase {
                 .getLastModifiedDate().after(dateBeforeCreation));
         assertTrue("Expected LastModificationDate Before an end timestamp!", section
                 .getLastModifiedDate().before(dateAfterCreation));
-        assertEquals("Different Section Site", site, section.getSite());
+        assertEquals("Different Section ExecutionCourseSite", site, section.getSite());
         assertNotNull("Expected Not Null Section items!", section.getAssociatedItems());
         assertNotNull("Expected Not Null Section SubSections!", section.getAssociatedSections());
 
-        // Create SubSection to a Site and ParentSection
+        // Create SubSection to a ExecutionCourseSite and ParentSection
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
         site.createSection(new MultiLanguageString("SubSectionNameStart"), parentSection, -1);
@@ -154,11 +154,11 @@ public class SiteTest extends DomainTestBase {
                 .getLastModifiedDate().after(dateBeforeCreation));
         assertTrue("Expected LastModificationDate Before an end timestamp!", section
                 .getLastModifiedDate().before(dateAfterCreation));
-        assertEquals("Different Section Site", site, section.getSite());
+        assertEquals("Different Section ExecutionCourseSite", site, section.getSite());
         assertNotNull("Expected Not Null Section items!", section.getAssociatedItems());
         assertNotNull("Expected Not Null Section SubSections!", section.getAssociatedSections());
 
-        // Create SubSection to a Site and ParentSection at last postion
+        // Create SubSection to a ExecutionCourseSite and ParentSection at last postion
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
         site.createSection(new MultiLanguageString("SubSectionNameLast"), parentSection, -1);
@@ -177,11 +177,11 @@ public class SiteTest extends DomainTestBase {
                 .getLastModifiedDate().after(dateBeforeCreation));
         assertTrue("Expected LastModificationDate Before an end timestamp!", section
                 .getLastModifiedDate().before(dateAfterCreation));
-        assertEquals("Different Section Site", site, section.getSite());
+        assertEquals("Different Section ExecutionCourseSite", site, section.getSite());
         assertNotNull("Expected Not Null Section items!", section.getAssociatedItems());
         assertNotNull("Expected Not Null Section SubSections!", section.getAssociatedSections());
 
-        // Create SubSection to a Site and ParentSection between
+        // Create SubSection to a ExecutionCourseSite and ParentSection between
         // "SubSectionNameStart" and "SubSectionNameLast"
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
@@ -203,11 +203,11 @@ public class SiteTest extends DomainTestBase {
                 .getLastModifiedDate().after(dateBeforeCreation));
         assertTrue("Expected LastModificationDate Before an end timestamp!", section
                 .getLastModifiedDate().before(dateAfterCreation));
-        assertEquals("Different Section Site", site, section.getSite());
+        assertEquals("Different Section ExecutionCourseSite", site, section.getSite());
         assertNotNull("Expected Not Null Section items!", section.getAssociatedItems());
         assertNotNull("Expected Not Null Section SubSections!", section.getAssociatedSections());
 
-        // Create SubSection to a Site and ParentSection at start position
+        // Create SubSection to a ExecutionCourseSite and ParentSection at start position
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
         site.createSection(new MultiLanguageString("SubSectionNameFirst"), parentSection, 0);
@@ -230,7 +230,7 @@ public class SiteTest extends DomainTestBase {
                 .getLastModifiedDate().after(dateBeforeCreation));
         assertTrue("Expected LastModificationDate Before an end timestamp!", section
                 .getLastModifiedDate().before(dateAfterCreation));
-        assertEquals("Different Section Site", site, section.getSite());
+        assertEquals("Different Section ExecutionCourseSite", site, section.getSite());
         assertNotNull("Expected Not Null Section items!", section.getAssociatedItems());
         assertNotNull("Expected Not Null Section SubSections!", section.getAssociatedSections());
     }
@@ -239,10 +239,10 @@ public class SiteTest extends DomainTestBase {
             final String introduction, final String mail, String alternativeSite,
             final int announcementsSize, final int sectionsSize) {
 
-        assertEquals("Different Site InitialStatement!", initialStatement, site.getInitialStatement());
-        assertEquals("Different Site Introduction!", introduction, site.getIntroduction());
-        assertEquals("Different Site Mail!", mail, site.getMail());
-        assertEquals("Different Site AlternativeSite!", alternativeSite, site.getAlternativeSite());
+        assertEquals("Different ExecutionCourseSite InitialStatement!", initialStatement, site.getInitialStatement());
+        assertEquals("Different ExecutionCourseSite Introduction!", introduction, site.getIntroduction());
+        assertEquals("Different ExecutionCourseSite Mail!", mail, site.getMail());
+        assertEquals("Different ExecutionCourseSite AlternativeSite!", alternativeSite, site.getAlternativeSite());
         assertEquals("Size unexpected!", sectionsSize, site.getAssociatedSectionsCount());
     }
 
