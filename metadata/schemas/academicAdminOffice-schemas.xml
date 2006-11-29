@@ -364,3 +364,32 @@
 	</slot>
 </schema>
 
+<schema name="student.statutes.current" bundle="ACADEMIC_OFFICE_RESOURCES" 
+	type="net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean">
+	<slot name="executionPeriod" key="label.executionPeriod" >
+		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+	</slot>
+	<slot name="statuteType" key="label.statuteType" />
+</schema>
+
+<schema name="student.statutes" bundle="ACADEMIC_OFFICE_RESOURCES" 
+	type="net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean">
+	<slot name="statuteType" key="label.statuteType" />
+	<slot name="beginPeriodFormatted" key="label.beginExecutionPeriod" />
+	<slot name="endPeriodFormatted" key="label.endExecutionPeriod" />	
+</schema>
+
+<schema name="student.createStatutes" bundle="ACADEMIC_OFFICE_RESOURCES" 
+		type="net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean">
+	<slot name="statuteType" key="label.statuteType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="HANDICAPPED" />	
+	</slot>
+	<slot name="beginExecutionPeriod" layout="menu-select" key="label.beginExecutionPeriod" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.StudentExecutionPeriodsProvider" />
+		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+	</slot>
+	<slot name="endExecutionPeriod" layout="menu-select"  key="label.endExecutionPeriod" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.StudentExecutionPeriodsProvider" />
+		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+	</slot>
+</schema>

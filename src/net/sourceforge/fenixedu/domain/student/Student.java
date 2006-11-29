@@ -6,9 +6,12 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -17,6 +20,7 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -385,12 +389,71 @@ public class Student extends Student_Base {
 	return true;
     }
 
+    public Set<ExecutionPeriod> getEnroledExecutionPeriods() {
+	Set<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(
+		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	for (Registration registration : getRegistrations()) {
+	    result.addAll(registration.getEnrolmentsExecutionPeriods());
+	}
+	return result;
+    }
+
+    public Collection<StudentStatuteBean> getCurrentStatutes() {
+	return getStatutes(ExecutionPeriod.readActualExecutionPeriod());
+    }
+
+    private Collection<StudentStatuteBean> getStatutes(ExecutionPeriod executionPeriod) {
+	List<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
+	for (final StudentStatute statute : getStudentStatutesSet()) {
+	    if (statute.isValidInExecutionPeriod(executionPeriod)) {
+		result.add(new StudentStatuteBean(statute, executionPeriod));
+	    }
+	}
+
+	if (isHandicapped()) {
+	    result.add(new StudentStatuteBean(StudentStatuteType.HANDICAPPED, executionPeriod));
+	}
+
+	return result;
+    }
+
+    public Collection<StudentStatuteBean> getAllStatutes() {
+	List<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
+	for (StudentStatute statute : getStudentStatutes()) {
+	    result.add(new StudentStatuteBean(statute));
+	}
+
+	if (isHandicapped()) {
+	    result.add(new StudentStatuteBean(StudentStatuteType.HANDICAPPED));
+	}
+
+	return result;
+    }
+
+    public Collection<StudentStatuteBean> getAllStatutesSplittedByExecutionPeriod() {
+	List<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
+	for (ExecutionPeriod executionPeriod : getEnroledExecutionPeriods()) {
+	    result.addAll(getStatutes(executionPeriod));
+	}
+	return result;
+    }
+
     public Set<Enrolment> getApprovedEnrolments() {
-        final Set<Enrolment> enrolments = new HashSet<Enrolment>();
-        for (final Registration registration : getRegistrationsSet()) {
-            registration.addApprovedEnrolments(enrolments);
-        }
-        return enrolments;
+	final Set<Enrolment> enrolments = new HashSet<Enrolment>();
+	for (final Registration registration : getRegistrationsSet()) {
+	    registration.addApprovedEnrolments(enrolments);
+	}
+	return enrolments;
+    }
+
+    public boolean isHandicapped() {
+	for (Registration registration : getRegistrationsSet()) {
+	    if (registration.getIngression() != null
+		    && registration.getIngressionEnum().equals(Ingression.CNA07)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

@@ -169,6 +169,7 @@ valueType net.sourceforge.fenixedu.domain.student.EnrolmentModel												as E
 valueType net.sourceforge.fenixedu.util.Money												as Money;
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeState												as PaymentCodeState;
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeType												as PaymentCodeType;
+valueType net.sourceforge.fenixedu.domain.student.StudentStatuteType												as StudentStatuteType;
 
 /*
 *
@@ -2897,6 +2898,13 @@ class net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear ex
 class net.sourceforge.fenixedu.domain.student.Student extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Integer number;
+}
+
+class net.sourceforge.fenixedu.domain.student.StudentStatute extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyStudent;
+	StudentStatuteType statuteType;
+	Integer keyBeginExecutionPeriod;
+	Integer keyEndExecutionPeriod;
 }
 
 class net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -6974,6 +6982,34 @@ relation StudentCurricularPlanNotNeedToEnrollInCurricularCourse {
 relation StudentPerson {
     net.sourceforge.fenixedu.domain.student.Student playsRole student;
     net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation StudentStatuteStudent {
+    net.sourceforge.fenixedu.domain.student.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.StudentStatute playsRole studentStatutes {
+        multiplicity *;
+    }
+}
+
+relation StudentStatuteBeginPeriod {
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole beginExecutionPeriod;
+    net.sourceforge.fenixedu.domain.student.StudentStatute playsRole beginningStudentStatutes {
+        multiplicity *;
+    }
+}
+
+relation StudentStatuteEndPeriod {
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole endExecutionPeriod;
+    net.sourceforge.fenixedu.domain.student.StudentStatute playsRole endingStudentStatutes {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectStudentStatute {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.student.StudentStatute playsRole studentStatutes {
+		multiplicity *;
+	}
 }
 
 relation RegistrationStudent {

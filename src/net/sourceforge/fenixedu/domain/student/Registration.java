@@ -1281,8 +1281,8 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isConcluded() {
-        return getActiveStateType() == RegistrationStateType.CONCLUDED
-                || calculateEctsCredits() >= getDegreeType().getDefaultEctsCredits();
+	return getActiveStateType() == RegistrationStateType.CONCLUDED
+		|| calculateEctsCredits() >= getDegreeType().getDefaultEctsCredits();
     }
 
     public YearMonthDay getConclusionDate() {
@@ -1484,18 +1484,27 @@ public class Registration extends Registration_Base {
 	return sortedExecutionYears;
     }
 
+    public Set<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
+	Set<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(
+		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	for (ExecutionYear executionYear : getEnrolmentsExecutionYears()) {
+	    result.addAll(executionYear.getExecutionPeriods());
+	}
+	return result;
+    }
+
     public StudentCurricularPlan getStudentCurricularPlan(final ExecutionYear executionYear) {
         return executionYear == null ? null : getStudentCurricularPlan(executionYear.getEndDateYearMonthDay());
     }
 
     public StudentCurricularPlan getStudentCurricularPlan(final YearMonthDay date) {
         StudentCurricularPlan result = null;
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
             final YearMonthDay startDate = studentCurricularPlan.getStartDateYearMonthDay();
             if (!startDate.isAfter(date) && (result == null || startDate.isAfter(result.getStartDateYearMonthDay()))) {
                 result = studentCurricularPlan;
-            }
-        }
+	    }
+	}
         return result;
     }
 
@@ -1655,7 +1664,7 @@ public class Registration extends Registration_Base {
     public void addApprovedEnrolments(final Set<Enrolment> enrolments) {
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
             studentCurricularPlan.addApprovedEnrolments(enrolments);
-        }
+	}
     }
-
+    
 }

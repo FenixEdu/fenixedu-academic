@@ -22,6 +22,9 @@
     <definition name="students.search" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/searchStudents.jsp"></put>
     </definition> 
+    <definition name="students.manageStatutes" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/manageStatutes.jsp"></put>
+    </definition> 
     <definition name="students.viewStudentDetails" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/viewStudentDetails.jsp"></put>
     </definition>

@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2>Página do Aluno</h2>
+<h2><bean:message key="label.studentPage" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
@@ -79,11 +79,20 @@
 	</li>
 </ul>
 
-
-
-
-
-
-
+<br/>
+<h3 class="mbottom025"><bean:message key="label.statutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<fr:view name="student" property="currentStatutes" schema="student.statutes.current" >
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thlight mtop025 asdasd"/>
+		<fr:property name="columnClasses" value=",tdhl1"/>
+	</fr:layout>
+</fr:view>
+<ul>
+	<li>
+		<html:link action="/studentStatutes.do?method=prepare" paramName="student" paramProperty="idInternal" paramId="studentId">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentStatutes.manage" />
+		</html:link>
+	</li>
+</ul>
 
 

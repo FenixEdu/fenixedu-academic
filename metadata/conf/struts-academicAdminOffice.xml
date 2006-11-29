@@ -104,6 +104,13 @@
 			<forward name="search" path="students.search"/>
 			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
 		</action>       
+		
+		<action path="/studentStatutes"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentStatutesDA">
+			<forward name="manageStatutes" path="students.manageStatutes"/>
+		</action>  		
 
 		<action path="/student"
 				name="studentManagementForm"
