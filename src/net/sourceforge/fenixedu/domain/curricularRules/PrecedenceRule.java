@@ -18,7 +18,7 @@ public abstract class PrecedenceRule extends PrecedenceRule_Base {
     private boolean appliesToPeriod(Context context) {
         return (hasNoCurricularPeriodOrder()
                 || (this.getCurricularPeriodType().equals(context.getCurricularPeriod().getPeriodType()) 
-                        && this.getCurricularPeriodOrder().equals(context.getCurricularPeriod().getOrder())));
+                        && this.getCurricularPeriodOrder().equals(context.getCurricularPeriod().getChildOrder())));
     }
     
     private boolean hasNoCurricularPeriodOrder() {

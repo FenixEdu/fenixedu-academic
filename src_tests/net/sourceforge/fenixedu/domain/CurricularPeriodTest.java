@@ -43,9 +43,9 @@ public class CurricularPeriodTest extends DomainTestBase {
         curricularPeriodYear1.addChilds(curricularPeriodSemester1);
         curricularPeriodYear1.addChilds(curricularPeriodSemester2);
 
-        curricularPeriodSemester4.setOrder(2);
+        curricularPeriodSemester4.setChildOrder(2);
         curricularPeriodYear2.addChilds(curricularPeriodSemester4);
-        curricularPeriodSemester3.setOrder(1);
+        curricularPeriodSemester3.setChildOrder(1);
         curricularPeriodYear2.addChilds(curricularPeriodSemester3);
 
     }
@@ -79,14 +79,14 @@ public class CurricularPeriodTest extends DomainTestBase {
         assertFalse(curricularPeriodSemester1.hasAnyChilds());
 
         // test non-ordered addings
-        assertEquals(curricularPeriodYear1.getOrder(), Integer.valueOf(1));
-        assertEquals(curricularPeriodYear2.getOrder(), Integer.valueOf(2));
-        assertEquals(curricularPeriodSemester1.getOrder(), Integer.valueOf(1));
-        assertEquals(curricularPeriodSemester2.getOrder(), Integer.valueOf(2));
+        assertEquals(curricularPeriodYear1.getChildOrder(), Integer.valueOf(1));
+        assertEquals(curricularPeriodYear2.getChildOrder(), Integer.valueOf(2));
+        assertEquals(curricularPeriodSemester1.getChildOrder(), Integer.valueOf(1));
+        assertEquals(curricularPeriodSemester2.getChildOrder(), Integer.valueOf(2));
 
         // test ordered addings
-        assertEquals(curricularPeriodSemester3.getOrder(), Integer.valueOf(1));
-        assertEquals(curricularPeriodSemester4.getOrder(), Integer.valueOf(2));
+        assertEquals(curricularPeriodSemester3.getChildOrder(), Integer.valueOf(1));
+        assertEquals(curricularPeriodSemester4.getChildOrder(), Integer.valueOf(2));
 
         // test overwrite child
         try {

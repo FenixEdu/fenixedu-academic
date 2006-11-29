@@ -905,7 +905,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    final CurricularPeriod curricularPeriod) {
 
 	if (competenceCourse.getRegime().equals(RegimeType.ANUAL)
-		&& (curricularPeriod.getOrder() == null || curricularPeriod.getOrder() != 1)) {
+		&& (curricularPeriod.getChildOrder() == null || curricularPeriod.getChildOrder() != 1)) {
 	    throw new DomainException(
 		    "competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
 	}

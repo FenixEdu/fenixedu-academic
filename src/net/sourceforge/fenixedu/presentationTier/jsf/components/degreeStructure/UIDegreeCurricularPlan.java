@@ -172,9 +172,9 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
         if (!this.showRules) {
-            encodeLink("createCurricularCourse.faces", "&curricularYearID=" + curricularPeriod.getParent().getOrder() + "&curricularSemesterID=" + curricularPeriod.getOrder(), false, "create.curricular.course");
+            encodeLink("createCurricularCourse.faces", "&curricularYearID=" + curricularPeriod.getParent().getChildOrder() + "&curricularSemesterID=" + curricularPeriod.getChildOrder(), false, "create.curricular.course");
             writer.append(" , ");
-            encodeLink("associateCurricularCourse.faces", "&curricularYearID=" + curricularPeriod.getParent().getOrder() + "&curricularSemesterID=" + curricularPeriod.getOrder(), false, "associate.curricular.course");
+            encodeLink("associateCurricularCourse.faces", "&curricularYearID=" + curricularPeriod.getParent().getChildOrder() + "&curricularSemesterID=" + curricularPeriod.getChildOrder(), false, "associate.curricular.course");
         }
         writer.endElement("th");
     }
