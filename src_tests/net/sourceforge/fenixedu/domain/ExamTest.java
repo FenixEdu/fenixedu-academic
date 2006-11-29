@@ -144,9 +144,9 @@ public class ExamTest extends DomainTestBase {
 
     private void setupTestData() {
 
-        ExecutionCourse executionCourse1 = new ExecutionCourse();
+        ExecutionCourse executionCourse1 = new ExecutionCourse("name1", "acronym2", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse1.setIdInternal(1);
-        ExecutionCourse executionCourse2 = new ExecutionCourse();
+        ExecutionCourse executionCourse2 = new ExecutionCourse("name2", "acronym2", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse2.setIdInternal(2);
 
         curricularCourse = new CurricularCourse();
@@ -208,7 +208,7 @@ public class ExamTest extends DomainTestBase {
         // Domain entities used by Create and Edit
         executionCoursesToAssociate = new ArrayList<ExecutionCourse>(1);
 
-        final ExecutionCourse executionCourseToAssociate = new ExecutionCourse();
+        final ExecutionCourse executionCourseToAssociate = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         executionCourseToAssociate.setIdInternal(3);
         executionCourseToAssociate.addAssociatedCurricularCourses(curricularCourse);
 

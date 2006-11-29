@@ -13,7 +13,7 @@ public class ExportGroupingTest extends DomainTestBase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        executionCourse = new ExecutionCourse();
+        executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse.setIdInternal(1);
 
         grouping = new Grouping();

@@ -160,8 +160,8 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		
 		CurricularCourse curricularCourse = new CurricularCourse();
 		
-		ExecutionCourse currentExecutionCourse = new ExecutionCourse();
-		ExecutionCourse notCurrentExecutionCourse = new ExecutionCourse();
+		ExecutionCourse currentExecutionCourse = new ExecutionCourse("currentName", "currentAcronym", ExecutionPeriod.readActualExecutionPeriod());
+		ExecutionCourse notCurrentExecutionCourse = new ExecutionCourse("notCurrentName", "notCurrentAcronym", ExecutionPeriod.readActualExecutionPeriod());
 		
 		StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
 		Registration registration = new Registration();

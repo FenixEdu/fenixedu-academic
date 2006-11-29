@@ -18,7 +18,7 @@ public class SiteTest extends DomainTestBase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        ExecutionCourse executionCourse = new ExecutionCourse();
+        ExecutionCourse executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse.setIdInternal(0);
 
         site = new Site();

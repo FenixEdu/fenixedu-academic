@@ -10,7 +10,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.publication.Authorship;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.teacher.Category;
@@ -374,15 +373,15 @@ public class TeacherTest extends DomainTestBase {
 //        teacher3 = new Teacher();
         teacher3.setIdInternal(0);
         
-        executionCourse = new ExecutionCourse();
+        executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse.setIdInternal(0);
         executionCourse.setExecutionPeriod(executionPeriod);
         
-        executionCourse2 = new ExecutionCourse();
+        executionCourse2 = new ExecutionCourse("name2", "acronym2", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse2.setIdInternal(1);
         executionCourse2.setExecutionPeriod(executionPeriod);
         
-        executionCourse3 = new ExecutionCourse();
+        executionCourse3 = new ExecutionCourse("name3", "acronym3", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse3.setIdInternal(2);
         executionCourse3.setExecutionPeriod(executionPeriod);
         

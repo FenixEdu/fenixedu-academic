@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.domain;
 import java.text.ParseException;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class ProjectTest extends DomainTestBase {
@@ -19,7 +18,7 @@ public class ProjectTest extends DomainTestBase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        executionCourse = new ExecutionCourse();
+        executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse.setIdInternal(1);
 
         begin = DateFormatUtil.parse("dd/MM/yyyy HH:mm", "11/10/2005 10:0");
