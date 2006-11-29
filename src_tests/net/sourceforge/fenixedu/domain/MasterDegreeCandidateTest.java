@@ -30,7 +30,7 @@ public class MasterDegreeCandidateTest extends DomainTestBase {
         degreeCurricularPlan = new DegreeCurricularPlan();
         degreeCurricularPlan.setDegree(degree);
         executionDegree = degreeCurricularPlan.createExecutionDegree(null, null, false);
-        specialization = Specialization.MASTER_DEGREE;
+        specialization = Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE;
         masterDegreeCandidate = new MasterDegreeCandidate();
         masterDegreeCandidate.setExecutionDegree(executionDegree);
         masterDegreeCandidate.setSpecialization(specialization);
