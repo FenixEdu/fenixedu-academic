@@ -7,10 +7,12 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.Partial;
+import org.joda.time.YearMonthDay;
 
 public class SummaryTest extends DomainTestBase {
 
@@ -32,7 +34,7 @@ public class SummaryTest extends DomainTestBase {
         executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
         executionCourse.setIdInternal(1);
 
-//        teacher = new Teacher();
+        //teacher = new Teacher();
         teacher.setIdInternal(1);
 
         professorship = new Professorship();
@@ -40,27 +42,28 @@ public class SummaryTest extends DomainTestBase {
         professorship.setExecutionCourse(executionCourse);
         professorship.setTeacher(teacher);
 
-//        shift = new Shift();
+//        shift = new Shift(executionCourse, );
         shift.setIdInternal(1);
 
         room = new OldRoom();
         room.setIdInternal(1);
 
-        summary = new Summary();
+        summary = new Summary(
+        	new MultiLanguageString("title"), 
+        	new MultiLanguageString("summaryText"),
+        	20,
+        	true,
+        	professorship, 
+        	(String) null,
+        	(Teacher) null,
+        	shift,
+        	(Lesson) null,
+        	new YearMonthDay(),
+        	room,
+        	(Partial) null);
         summary.setIdInternal(1);
-        summary.setTitle(new MultiLanguageString("title"));
-        summary.setSummaryText(new MultiLanguageString("summaryText"));
-        summary.setStudentsNumber(20);
-        summary.setIsExtraLesson(true);
-        summary.setLastModifiedDate(Calendar.getInstance().getTime());
-        summary.setTeacherName(null);
-
-        summary.setSummaryDate(SummaryUtils.createSummaryDate(2005, 5, 5));
-        summary.setSummaryHour(SummaryUtils.createSummaryHour(10, 0));
 
         summary.setExecutionCourse(executionCourse);
-        summary.setProfessorship(professorship);
-        summary.setTeacher(null);
         summary.setRoom(room);
         summary.setShift(shift);
 
@@ -121,8 +124,8 @@ public class SummaryTest extends DomainTestBase {
         // Edit Summary using Professorship
         Date dateBeforeEdition = Calendar.getInstance().getTime();
         sleep(1000);
-        summaryDate = SummaryUtils.createSummaryDate(2005, 5, 6);
-        summaryHour = SummaryUtils.createSummaryHour(11, 0);
+//        summaryDate = SummaryUtils.createSummaryDate(2005, 5, 6);
+//        summaryHour = SummaryUtils.createSummaryHour(11, 0);
 //        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
 //        summary.edit("newTitle", "newSummaryText", 40, false, this.professorship);
         sleep(1000);
@@ -135,8 +138,8 @@ public class SummaryTest extends DomainTestBase {
         // Edit Summary using Teacher
         dateBeforeEdition = Calendar.getInstance().getTime();
         sleep(1000);
-        summaryDate = SummaryUtils.createSummaryDate(2005, 5, 7);
-        summaryHour = SummaryUtils.createSummaryHour(11, 0);
+//        summaryDate = SummaryUtils.createSummaryDate(2005, 5, 7);
+//        summaryHour = SummaryUtils.createSummaryHour(11, 0);
 //        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
 //        summary.edit("newTitle2", "newSummaryText2", 30, false, this.teacher);
         sleep(1000);
@@ -149,8 +152,8 @@ public class SummaryTest extends DomainTestBase {
         // Edit Summary using TeacherNumber
         dateBeforeEdition = Calendar.getInstance().getTime();
         sleep(1000);
-        summaryDate = SummaryUtils.createSummaryDate(2005, 5, 8);
-        summaryHour = SummaryUtils.createSummaryHour(11, 0);
+//        summaryDate = SummaryUtils.createSummaryDate(2005, 5, 8);
+//        summaryHour = SummaryUtils.createSummaryHour(11, 0);
 //        shift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
 //        summary.edit("newTitle3", "newSummaryText3", 40, true, "JPNF");
         sleep(1000);
@@ -166,8 +169,8 @@ public class SummaryTest extends DomainTestBase {
 
         dateBeforeEdition = Calendar.getInstance().getTime();
         sleep(1000);
-        summaryDate = SummaryUtils.createSummaryDate(2005, 5, 10);
-        summaryHour = SummaryUtils.createSummaryHour(11, 0);
+//        summaryDate = SummaryUtils.createSummaryDate(2005, 5, 10);
+//        summaryHour = SummaryUtils.createSummaryHour(11, 0);
 //        alternativeShift.transferSummary(summary, summaryDate, summaryHour, this.room, false);
 //        summary.edit("newTitle3", "newSummaryText3", 40, true, "JPNF");
         sleep(1000);
