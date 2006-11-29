@@ -338,10 +338,10 @@ public class Publication extends Publication_Base {
         @Override
         public void afterRemove(Publication publication, Authorship removedAuthorship) {
             if ((removedAuthorship != null) && (publication != null)) {
-                int removedOrder = removedAuthorship.getOrder();
+                int removedOrder = removedAuthorship.getAuthorOrder();
                 for(Authorship authorship : publication.getPublicationAuthorships()) {
-                    if (authorship.getOrder() > removedOrder) {
-                        authorship.setOrder(authorship.getOrder()-1);
+                    if (authorship.getAuthorOrder() > removedOrder) {
+                        authorship.setAuthorOrder(authorship.getAuthorOrder()-1);
                     }
                 }
             }

@@ -19,12 +19,12 @@ public class Authorship extends Authorship_Base {
     public Authorship(Publication publication, Person person, Integer order) throws DomainException {
     	//Check to see if the publication allready has an authorship with that order
     	for (Authorship authorship : publication.getPublicationAuthorships()) {
-    		if (authorship.getOrder() == order) 
+    		if (authorship.getAuthorOrder() == order) 
     			throw new DomainException("errors.publications.authorshipWithIncorrectOrder", publication.getTitle(), order.toString());
 		}
         setPublication(publication);
         setAuthor(person);
-        setOrder(order);
+        setAuthorOrder(order);
     }
 
     public void delete() {

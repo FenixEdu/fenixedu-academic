@@ -196,7 +196,7 @@ public class PublicationTest extends DomainTestBase {
         
         Authorship authorship = new Authorship();
         authorship.setAuthor(person1);
-        authorship.setOrder(1);
+        authorship.setAuthorOrder(1);
         authorship.setPublication(existentPublication);
         //existentPublication.getPublicationAuthorships().add(authorship);
 

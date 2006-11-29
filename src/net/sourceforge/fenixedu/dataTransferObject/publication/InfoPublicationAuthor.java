@@ -30,7 +30,7 @@ public class InfoPublicationAuthor extends InfoObject {
         if (publicationAuthor != null){
 	        this.setKeyAuthor(publicationAuthor.getKeyAuthor());
 	        this.setKeyPublication(publicationAuthor.getKeyPublication());
-	        this.setOrder(publicationAuthor.getOrder());
+	        this.setOrder(publicationAuthor.getAuthorOrder());
 	        InfoAuthor infoAuthor = new InfoAuthor();
 	        infoAuthor.copyFromDomain(publicationAuthor.getAuthor());
 	        this.setInfoAuthor(infoAuthor);
@@ -46,7 +46,7 @@ public class InfoPublicationAuthor extends InfoObject {
             super.copyToDomain(infoPublicationAuthor, publicationAuthor);
             publicationAuthor.setKeyAuthor(infoPublicationAuthor.getKeyAuthor());
             publicationAuthor.setKeyPublication(infoPublicationAuthor.getKeyPublication());
-            publicationAuthor.setOrder(infoPublicationAuthor.getOrder());
+            publicationAuthor.setAuthorOrder(infoPublicationAuthor.getOrder());
         }
     }
        
