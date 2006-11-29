@@ -481,11 +481,9 @@ public class PersonTest extends DomainTestBase {
 		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
-//        Teacher teacher = new Teacher();
-        teacher.setTeacherNumber(Integer.valueOf(1));
-        teacher.setPerson(person);
+        Teacher teacher = new Teacher(Integer.valueOf(1), person);
         Coordinator coordinator = new Coordinator();
-        coordinator.setTeacher(teacher);
+        coordinator.setPerson(person);
 		person.getPersonRoles().add(personRole);
 		person.getPersonRoles().add(teacherRole);
 		person.getPersonRoles().add(coordinatorRole);
