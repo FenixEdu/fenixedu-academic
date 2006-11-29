@@ -133,10 +133,8 @@ public class Authenticate extends Service implements Serializable {
 	    final String remoteHost) throws ExcepcaoAutenticacao, ExcepcaoPersistencia,
 	    FenixServiceException {
 
-	Person person = Person.readPersonByUsername(username);
-
-	if (person == null || !person.canLogin()
-		|| !PasswordEncryptor.areEquals(person.getPassword(), password)) {
+	Person person = Person.readPersonByUsernameWithOpenedLogin(username);
+	if (person == null || !PasswordEncryptor.areEquals(person.getPassword(), password)) {
 	    throw new ExcepcaoAutenticacao("bad.authentication");
 	}
 
@@ -159,9 +157,8 @@ public class Authenticate extends Service implements Serializable {
 
 	final String username = receipt.getUserName();
 
-	Person person = Person.readPersonByUsername(username);
-
-	if (person == null || !person.canLogin()) {
+	Person person = Person.readPersonByUsernameWithOpenedLogin(username);
+	if (person == null) {
 	    throw new ExcepcaoAutenticacao("error.Exception");
 	}
 

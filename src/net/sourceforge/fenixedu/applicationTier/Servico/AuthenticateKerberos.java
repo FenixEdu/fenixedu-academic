@@ -15,11 +15,11 @@ public class AuthenticateKerberos extends Authenticate {
     public IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
             throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
 
-        Person person = Person.readPersonByUsername(username);
-
-        if (person == null || !person.canLogin()) {
+        Person person = Person.readPersonByUsernameWithOpenedLogin(username);
+        if (person == null) {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }
+        
         if (person.hasIstUsername()) {
             if (person.getIsPassInKerberos()) {
                 try {

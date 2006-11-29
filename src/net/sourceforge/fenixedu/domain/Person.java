@@ -323,12 +323,12 @@ public class Person extends Person_Base {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.getLoginAliasOrderByImportance() : new HashSet<LoginAlias>();
     }
-    
+
     public Set<LoginAlias> getLoginAlias() {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.getAliasSet() : new HashSet<LoginAlias>();
-    }    
-    
+    }
+
     public boolean hasUsername(String username) {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.hasUsername(username) : false;
@@ -430,12 +430,16 @@ public class Person extends Person_Base {
 	setUsername(role.getRoleType());
     }
 
+    public void removeAlias(Role removedRole) {
+	Login loginIdentification = getLoginIdentification();
+	loginIdentification.removeAlias(removedRole.getRoleType());
+    }
+
     public void updateIstUsername() {
 	setIstUsername();
     }
 
     public Role getPersonRole(RoleType roleType) {
-
 	for (Role role : this.getPersonRoles()) {
 	    if (role.getRoleType().equals(roleType)) {
 		return role;
@@ -1001,69 +1005,48 @@ public class Person extends Person_Base {
 	Collection<ExternalContract> externalContracts = (Collection<ExternalContract>) getParentAccountabilities(
 		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class);
 
-	if (externalContracts.size() > 1) {
-	    throw new DomainException("error.person.has.two.or.more.externalPersons");
-	}
-
 	Iterator<ExternalContract> iter = externalContracts.iterator();
-	return !iter.hasNext() ? null : externalContracts.iterator().next();
+	return iter.hasNext() ? externalContracts.iterator().next() : null;
     }
 
     public boolean hasExternalPerson() {
-	return !getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT,
-		ExternalContract.class).isEmpty();
+	return getExternalPerson() != null;
     }
 
     private static class PersonRoleListener extends dml.runtime.RelationAdapter<Role, Person> {
 
 	@Override
-	public void beforeAdd(Role role, Person person) {
-	    if (!person.hasRole(role.getRoleType()) && !verifiesDependencies(person, role)) {
-		throw new DomainException("error.person.addingInvalidRole", role.getRoleType()
+	public void beforeAdd(Role newRole, Person person) {
+	    if (person != null && newRole != null && !person.hasRole(newRole.getRoleType())
+		    && !verifiesDependencies(person, newRole)) {
+		throw new DomainException("error.person.addingInvalidRole", newRole.getRoleType()
 			.toString());
+
 	    }
 	}
 
 	@Override
-	public void afterAdd(Role role, Person person) {
-	    addDependencies(role, person);
-	    person.addAlias(role);
-	    person.updateIstUsername();
+	public void afterAdd(Role insertedRole, Person person) {
+	    if (person != null && insertedRole != null) {
+		addDependencies(insertedRole, person);
+		person.addAlias(insertedRole);
+		person.updateIstUsername();
+	    }
 	}
 
 	@Override
-	public void beforeRemove(Role removedRole, Person person) {
-	    if (person != null) {
-		if (removedRole != null && person.hasRole(removedRole.getRoleType())) {
-		    removeDependencies(person, removedRole);
-		}
+	public void beforeRemove(Role roleToBeRemoved, Person person) {
+	    if (person != null && roleToBeRemoved != null
+		    && person.hasRole(roleToBeRemoved.getRoleType())) {
+		removeDependencies(person, roleToBeRemoved);
 	    }
 	}
 
 	@Override
 	public void afterRemove(Role removedRole, Person person) {
-	    person.removeAlias(removedRole);
-	    person.updateIstUsername();
-	    closePersonLogin(person);
-	}
-
-	private void closePersonLogin(Person person) {
-	    if (person.getPersonRolesCount() == 2 && person.hasRole(RoleType.PERSON)
-		    && person.hasRole(RoleType.MESSAGING) && !person.isInvited(new YearMonthDay())) {
-		person.getLoginIdentification().closeLogin();
-	    }
-	}
-
-	private void addDependencies(Role role, Person person) {
-	    if (role.getRoleType().equals(RoleType.PERSON) && !person.hasRole(RoleType.MESSAGING)) {
-		person.addPersonRoleByRoleType(RoleType.MESSAGING);
-	    }
-	    if (role.getRoleType().equals(RoleType.TEACHER) && !person.hasRole(RoleType.RESEARCHER)) {
-		person.addPersonRoleByRoleType(RoleType.RESEARCHER);
-	    }
-	    if (role.getRoleType().equals(RoleType.TEACHER)
-		    && !person.hasRole(RoleType.DEPARTMENT_MEMBER)) {
-		person.addPersonRoleByRoleType(RoleType.DEPARTMENT_MEMBER);
+	    if (person != null && removedRole != null) {
+		person.removeAlias(removedRole);
+		person.updateIstUsername();
 	    }
 	}
 
@@ -1072,9 +1055,9 @@ public class Person extends Person_Base {
 	    case DIRECTIVE_COUNCIL:
 	    case SEMINARIES_COORDINATOR:
 	    case DEPARTMENT_MEMBER:
-		return person.hasRole(RoleType.TEACHER);
 	    case RESEARCHER:
 		return person.hasRole(RoleType.TEACHER);
+
 	    case COORDINATOR:
 	    case DEGREE_ADMINISTRATIVE_OFFICE:
 	    case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
@@ -1085,18 +1068,33 @@ public class Person extends Person_Base {
 	    case CREDITS_MANAGER:
 	    case DEPARTMENT_ADMINISTRATIVE_OFFICE:
 		return person.hasRole(RoleType.EMPLOYEE);
+
 	    case DELEGATE:
 		return person.hasRole(RoleType.STUDENT);
+
 	    case GRANT_OWNER:
-		return person.hasRole(RoleType.PERSON);
 	    case MESSAGING:
+	    case ALUMNI:
 		return person.hasRole(RoleType.PERSON);
-	    case MASTER_DEGREE_CANDIDATE:
-	    case CANDIDATE:
-	    case STUDENT:
-	    case PERSON:
+
 	    default:
 		return true;
+	    }
+	}
+
+	private void addDependencies(Role role, Person person) {
+	    switch (role.getRoleType()) {
+	    case PERSON:
+		addRoleIfNotPresent(person, RoleType.MESSAGING);
+		break;
+
+	    case TEACHER:
+		addRoleIfNotPresent(person, RoleType.RESEARCHER);
+		addRoleIfNotPresent(person, RoleType.DEPARTMENT_MEMBER);
+		break;
+		
+	    default:
+		break;
 	    }
 	}
 
@@ -1113,10 +1111,10 @@ public class Person extends Person_Base {
 		removeRoleIfPresent(person, RoleType.TIME_TABLE_MANAGER);
 		removeRoleIfPresent(person, RoleType.WEBSITE_MANAGER);
 		removeRoleIfPresent(person, RoleType.MESSAGING);
+		removeRoleIfPresent(person, RoleType.ALUMNI);
 		break;
 
 	    case TEACHER:
-		removeRoleIfPresent(person, RoleType.COORDINATOR);
 		removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
 		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
 		removeRoleIfPresent(person, RoleType.RESEARCHER);
@@ -1124,13 +1122,15 @@ public class Person extends Person_Base {
 		break;
 
 	    case EMPLOYEE:
+		removeRoleIfPresent(person, RoleType.COORDINATOR);
+		removeRoleIfPresent(person, RoleType.CREDITS_MANAGER);
 		removeRoleIfPresent(person, RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
 		removeRoleIfPresent(person, RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-		removeRoleIfPresent(person, RoleType.DEPARTMENT_CREDITS_MANAGER);
 		removeRoleIfPresent(person, RoleType.GRANT_OWNER_MANAGER);
 		removeRoleIfPresent(person, RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
 		removeRoleIfPresent(person, RoleType.TREASURY);
-		removeRoleIfPresent(person, RoleType.CREDITS_MANAGER);
+		removeRoleIfPresent(person, RoleType.DEPARTMENT_CREDITS_MANAGER);
+		removeRoleIfPresent(person, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
 		break;
 
 	    case STUDENT:
@@ -1140,9 +1140,14 @@ public class Person extends Person_Base {
 	}
 
 	private static void removeRoleIfPresent(Person person, RoleType roleType) {
-	    final Role tmpRole = person.getPersonRole(roleType);
-	    if (tmpRole != null) {
-		person.getPersonRoles().remove(tmpRole);
+	    if (person.hasRole(roleType)) {
+		person.removeRoleByType(roleType);
+	    }
+	}
+
+	private static void addRoleIfNotPresent(Person person, RoleType roleType) {
+	    if (!person.hasRole(roleType)) {
+		person.addPersonRoleByRoleType(roleType);
 	    }
 	}
     }
@@ -1152,13 +1157,6 @@ public class Person extends Person_Base {
 		PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE));
 	sentSmsSortedBySendDate.addAll(this.getSentSmsSet());
 	return sentSmsSortedBySendDate;
-    }
-
-    public void removeAlias(Role removedRole) {
-	Login loginIdentification = getLoginIdentification();
-	if (loginIdentification != null) {
-	    loginIdentification.removeAlias(removedRole.getRoleType());
-	}
     }
 
     public int countSentSmsBetween(final Date startDate, final Date endDate) {
@@ -1523,13 +1521,15 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public boolean canLogin() {
-	return (isInvited(new YearMonthDay()) || hasRole(RoleType.TEACHER) || hasRole(RoleType.EMPLOYEE) || hasRole(RoleType.STUDENT));
-    }
-
     // -------------------------------------------------------------
     // static methods
     // -------------------------------------------------------------
+
+    public static Person readPersonByUsernameWithOpenedLogin(final String username) {
+	final Login login = Login.readOpenedLoginByUsername(username);
+	final User user = login == null ? null : login.getUser();
+	return user == null ? null : user.getPerson();
+    }
 
     public static Person readPersonByUsername(final String username) {
 	final Login login = Login.readLoginByUsername(username);

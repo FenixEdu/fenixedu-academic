@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 import org.joda.time.DateTime;
 
 /**
@@ -11,22 +13,30 @@ import org.joda.time.DateTime;
 
 public abstract class Identification extends Identification_Base {
 
-    public Identification() {
+    protected Identification() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(getClass().getName());
     }
 
     public void delete() {	
-        removeUser();
+        super.setUser(null);       
         removeRootDomainObject();
-        deleteDomainObject();
+        super.deleteDomainObject();
     }
 
     public boolean isLogin() {
         return false;
     }
     
+    @Override
+    public void setUser(User user) {
+	if(user == null) {
+	    throw new DomainException("error.identification.empty.user");
+	}
+	super.setUser(user);
+    }
+
     public boolean belongsToPeriod(DateTime begin, DateTime end) {
 	return ((end == null || !this.getBeginDateDateTime().isAfter(end)) && (this.getEndDateDateTime() == null || !this
 		.getEndDateDateTime().isBefore(begin)));

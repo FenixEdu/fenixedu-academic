@@ -1,0 +1,14 @@
+CREATE TABLE `LOGIN_PERIOD` (
+  `ID_INTERNAL` int(11) NOT NULL auto_increment,  
+  `BEGIN_DATE` varchar(10) default NULL,
+  `END_DATE` varchar(10) default NULL,    
+  `KEY_LOGIN` int(11) unsigned NOT NULL,
+  `KEY_ROOT_DOMAIN_OBJECT` int(11) unsigned default '1',
+  PRIMARY KEY  (`ID_INTERNAL`),
+  KEY `KEY_LOGIN` (`KEY_LOGIN`),
+  KEY `KEY_ROOT_DOMAIN_OBJECT` (`KEY_ROOT_DOMAIN_OBJECT`)
+) ENGINE=InnoDB;
+
+insert into LOGIN_PERIOD (BEGIN_DATE, KEY_LOGIN) select IDENTIFICATION.BEGIN_DATE_DATE_TIME, IDENTIFICATION.ID_INTERNAL from IDENTIFICATION where IDENTIFICATION.OJB_CONCRETE_CLASS like 'net.sourceforge.fenixedu.domain.Login';
+
+

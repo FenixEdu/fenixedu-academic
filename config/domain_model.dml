@@ -1959,6 +1959,12 @@ class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fen
 		Integer keyModifiedBy;
 	}
 
+class net.sourceforge.fenixedu.domain.LoginPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyLogin;
+	YearMonthDay beginDate;
+	YearMonthDay endDate;
+}
+
 class net.sourceforge.fenixedu.domain.LoginAlias extends net.sourceforge.fenixedu.domain.DomainObject {
 	String alias;
 	Integer keyLogin;	
@@ -11120,9 +11126,24 @@ relation DomainObjectActionLogPerson {
 		multiplicity *;
 	}
 }
+
 relation InvitationParty {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole responsible;
 	net.sourceforge.fenixedu.domain.organizationalStructure.Invitation playsRole invitationAccountabilities {
+		multiplicity *;
+	}
+}
+
+relation LoginLoginPeriod {
+	net.sourceforge.fenixedu.domain.Login playsRole login;
+	net.sourceforge.fenixedu.domain.LoginPeriod playsRole loginPeriods {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectLoginPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.LoginPeriod playsRole loginPeriods {
 		multiplicity *;
 	}
 }

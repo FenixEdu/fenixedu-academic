@@ -35,8 +35,15 @@
 </class-descriptor> 
 
 <!-- ***********************************
-     Definitions for net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard
+     Definitions for net.sourceforge.fenixedu.domain.LoginAlias
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.LoginAlias" table="LOGIN_ALIAS">
+	 	
+</class-descriptor> 
+
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.LoginPeriod
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.LoginPeriod" table="LOGIN_PERIOD">
 	 	
 </class-descriptor> 
