@@ -7,6 +7,9 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.joda.time.Partial;
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -294,13 +297,27 @@ public class ExecutionCourseTest extends DomainTestBase {
 
     public void testCreateSummary() {
         Summary summary;
-        Date summaryDate;
+        YearMonthDay summaryDate = new YearMonthDay();
         Date summaryHour;
         Date dateBeforeCreation;
         Date dateAfterCreation;
         try {
             Professorship professorshipTest = null;
-            executionCourse.createSummary("title", "summaryText", 20, true, professorshipTest);
+            
+            new Summary(
+        	    new MultiLanguageString("title"), 
+                	new MultiLanguageString("summaryText"),
+                	(Integer) 20,
+                	true,
+                	professorshipTest, 
+                	(String) null,
+                	(Teacher) null,
+                	shift,
+                	(Lesson) null,
+                	new YearMonthDay(),
+                	room,
+                	(Partial) null);
+            
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             assertEquals("Unexpected size in associated summaries!", 0, executionCourse
@@ -309,7 +326,21 @@ public class ExecutionCourseTest extends DomainTestBase {
 
         try {
             Teacher teacherTest = null;
-            executionCourse.createSummary("title", "summaryText", 20, true, teacherTest);
+
+            new Summary(
+        	    new MultiLanguageString("title"), 
+                	new MultiLanguageString("summaryText"),
+                	(Integer) 20,
+                	true,
+                	professorship, 
+                	(String) null,
+                	teacherTest,
+                	shift,
+                	(Lesson) null,
+                	new YearMonthDay(),
+                	room,
+                	(Partial) null);
+            
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             assertEquals("Unexpected size in associated summaries!", 0, executionCourse
@@ -318,7 +349,21 @@ public class ExecutionCourseTest extends DomainTestBase {
 
         try {
             String teacherNameTest = null;
-            executionCourse.createSummary("title", "summaryText", 20, true, teacherNameTest);
+            
+            new Summary(
+        	    new MultiLanguageString("title"), 
+        	    new MultiLanguageString("summaryText"),
+        	    (Integer) 20,
+        	    true,
+        	    professorship, 
+        	    teacherNameTest,
+        	    (Teacher) null,
+        	    shift,
+        	    (Lesson) null,
+        	    new YearMonthDay(),
+        	    room,
+        	    (Partial) null);
+
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             assertEquals("Unexpected size in associated summaries!", 0, executionCourse
@@ -326,7 +371,20 @@ public class ExecutionCourseTest extends DomainTestBase {
         }
 
         try {
-            executionCourse.createSummary(null, "summaryText", null, true, this.professorship);
+            new Summary(
+            	(MultiLanguageString) null, 
+            	new MultiLanguageString("summaryText"),
+            	(Integer) null,
+            	true,
+            	professorship, 
+            	(String) null,
+            	(Teacher) null,
+            	shift,
+            	(Lesson) null,
+            	new YearMonthDay(),
+            	room,
+            	(Partial) null);
+            
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             assertEquals("Unexpected size in associated summaries!", 0, executionCourse
@@ -334,7 +392,20 @@ public class ExecutionCourseTest extends DomainTestBase {
         }
 
         try {
-            executionCourse.createSummary("title", null, 20, null, this.professorship);
+            new Summary(
+        	    new MultiLanguageString("title"), 
+        	    (MultiLanguageString) null,
+        	    (Integer) 20,
+        	    (Boolean) null,
+        	    professorship, 
+        	    (String) null,
+        	    (Teacher) null,
+        	    shift,
+        	    (Lesson) null,
+        	    new YearMonthDay(),
+        	    room,
+        	    (Partial) null);
+            
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             assertEquals("Unexpected size in associated summaries!", 0, executionCourse
@@ -342,11 +413,24 @@ public class ExecutionCourseTest extends DomainTestBase {
         }
 
         // Create Summary using Professorship
-        summaryDate = SummaryUtils.createSummaryDate(2005, 5, 5);
-        summaryHour = SummaryUtils.createSummaryHour(11, 0);
+//        summaryDate = SummaryUtils.createSummaryDate(2005, 5, 5);
+//        summaryHour = SummaryUtils.createSummaryHour(11, 0);
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
-        summary = executionCourse.createSummary("title", "summaryText", 20, true, this.professorship);
+        summary = new Summary(
+        	new MultiLanguageString("title"), 
+        	new MultiLanguageString("summaryText"),
+        	(Integer) 20,
+        	(Boolean) true,
+        	professorship, 
+        	(String) null,
+        	(Teacher) null,
+        	shift,
+        	(Lesson) null,
+        	new YearMonthDay(),
+        	room,
+        	(Partial) null);
+
 //        shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
@@ -369,11 +453,24 @@ public class ExecutionCourseTest extends DomainTestBase {
         }
 
         // Create Summary using Teacher
-        summaryDate = SummaryUtils.createSummaryDate(2005, 6, 5);
-        summaryHour = SummaryUtils.createSummaryHour(11, 0);
+//        summaryDate = SummaryUtils.createSummaryDate(2005, 6, 5);
+//        summaryHour = SummaryUtils.createSummaryHour(11, 0);
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
-        summary = executionCourse.createSummary("title", "summaryText", 20, true, this.teacher);
+        summary = new Summary(
+        	new MultiLanguageString("title"), 
+        	new MultiLanguageString("summaryText"),
+        	(Integer) 20,
+        	(Boolean) true,
+        	professorship, 
+        	(String) null,
+        	teacher,
+        	shift,
+        	(Lesson) null,
+        	new YearMonthDay(),
+        	room,
+        	(Partial) null);
+
 //        shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
@@ -385,11 +482,24 @@ public class ExecutionCourseTest extends DomainTestBase {
         assertEquals("Unexpected size in associated summaries!", 2, shift.getAssociatedSummariesCount());
 
         // Create Summary using TeacherName
-        summaryDate = SummaryUtils.createSummaryDate(2005, 8, 5);
-        summaryHour = SummaryUtils.createSummaryHour(11, 0);
+//        summaryDate = SummaryUtils.createSummaryDate(2005, 8, 5);
+//        summaryHour = SummaryUtils.createSummaryHour(11, 0);
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
-        summary = executionCourse.createSummary("title", "summaryText", 20, true, "JPNF");
+        summary = new Summary(
+        	new MultiLanguageString("title"), 
+        	new MultiLanguageString("summaryText"),
+        	(Integer) 20,
+        	(Boolean) true,
+        	professorship, 
+        	"JPNF",
+        	teacher,
+        	shift,
+        	(Lesson) null,
+        	new YearMonthDay(),
+        	room,
+        	(Partial) null);
+
 //        shift.transferSummary(summary, summaryDate, summaryHour, this.room, true);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
@@ -426,7 +536,7 @@ public class ExecutionCourseTest extends DomainTestBase {
 
     private void checkIfSummaryAttributesAreCorrect(final Summary summary, final String title,
             final String summaryText, final Integer studentsNumber, final Boolean isExtraLesson,
-            final Date summaryDate, final Date summaryHour, final ExecutionCourse executionCourse,
+            YearMonthDay summaryDate, final Date summaryHour, final ExecutionCourse executionCourse,
             final Professorship professorship, final Teacher teacher, final String teacherName,
             final Shift shift, final OldRoom room) {
 
