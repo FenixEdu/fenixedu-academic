@@ -223,6 +223,12 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return executeService("ExecuteFactoryMethod", args);
     }
 
+    protected Object executeFactoryMethod(FactoryExecutor executor) throws FenixFilterException,
+	    FenixServiceException {
+	final Object[] args = { executor };
+	return executeService("ExecuteFactoryMethod", args);
+    }
+
     protected Object getRenderedObject() {
 	final IViewState viewState = RenderUtils.getViewState();
 	if (viewState != null) {
