@@ -7,6 +7,11 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.Partial;
+import org.joda.time.YearMonthDay;
 
 
 public class ProfessorshipTest extends DomainTestBase {
@@ -31,7 +36,19 @@ public class ProfessorshipTest extends DomainTestBase {
 //        teacher2 = new Teacher();
         teacher2.setIdInternal(1);
         
-        summary = new Summary();
+        summary = new Summary(
+        	new MultiLanguageString("title"), 
+        	new MultiLanguageString("summaryText"),
+        	(Integer) null,
+        	true,
+        	professorship, 
+        	(String) null,
+        	(Teacher) null,
+        	(Shift) null,
+        	(Lesson) null,
+        	new YearMonthDay(),
+        	(OldRoom) null,
+        	(Partial) null);
         summary.setIdInternal(0);
         
         shiftProfessorship = new ShiftProfessorship();
