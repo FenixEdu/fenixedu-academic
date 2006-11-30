@@ -146,7 +146,7 @@ public class SubQuestion {
     public String getImage(int imageId) {
         int imageIdAux = 1;
         for (LabelValueBean lvb : getPrePresentation()) {
-            if (lvb.getLabel().startsWith("image")) {
+            if (lvb.getLabel().startsWith("image/")) {
                 if (imageIdAux == imageId) {
                     return lvb.getValue();
                 }
@@ -154,7 +154,7 @@ public class SubQuestion {
             }
         }
         for (LabelValueBean lvb : getPresentation()) {
-            if (lvb.getLabel().startsWith("image")) {
+            if (lvb.getLabel().startsWith("image/")) {
                 if (imageIdAux == imageId) {
                     return lvb.getValue();
                 }
@@ -163,7 +163,7 @@ public class SubQuestion {
         }
         for (QuestionOption qo : getOptions()) {
             for (LabelValueBean lvb : qo.getOptionContent()) {
-                if (lvb.getLabel().startsWith("image")) {
+                if (lvb.getLabel().startsWith("image/")) {
                     if (imageIdAux == imageId) {
                         return lvb.getValue();
                     }
@@ -173,7 +173,7 @@ public class SubQuestion {
         }
         for (ResponseProcessing responseProcessing : getResponseProcessingInstructions()) {
             for (LabelValueBean lvb : responseProcessing.getFeedback()) {
-                if (lvb.getLabel().startsWith("image")) {
+                if (lvb.getLabel().startsWith("image/")) {
                     if (imageIdAux == imageId) {
                         return lvb.getValue();
                     }
