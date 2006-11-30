@@ -289,3 +289,11 @@
 <schema name="EditInvitationResponsible" type="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation" bundle="MANAGER_RESOURCES">
 	<slot name="responsiblePerson" layout="username-as-person" key="label.responsibility.person.username" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>				
 </schema>
+
+<schema name="ViewLoginAlias" type="net.sourceforge.fenixedu.domain.LoginAlias" bundle="MANAGER_RESOURCES">
+	<slot name="alias"/>
+	<slot name="type"/>
+	<slot name="roleType"/>			
+</schema>
+
+

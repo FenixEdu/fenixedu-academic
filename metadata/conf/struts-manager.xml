@@ -2191,7 +2191,19 @@
        		<forward name="prepareUploadSibsPaymentsFile"   path="manager.payments.prepareUploadSibsPaymentsFile"/>
        		<forward name="uploadSibsPaymentsFileSuccess"   path="manager.payments.uploadSibsPaymentsFileSuccess"/>
        	</action>
-
+       	
+       	
+   		<!-- =================== Logins Management =================== -->
+        <action path="/loginsManagement"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.LoginsManagementDA"
+       			scope="request"       			
+				input="/index.do"
+       			parameter="method">       			       			
+       			<forward name="prepareSearchPerson" path="prepare-search-person-to-logins-management"/>
+       			<forward name="prepareManageLoginAlias" path="prepare-manage-login-alias"/> 
+       			<forward name="prepareManageLoginTimeIntervals" path="prepare-manage-login-time-intervals"/>       			
+       	</action>
+       	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

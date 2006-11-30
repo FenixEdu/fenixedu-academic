@@ -75,6 +75,7 @@
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
             <fr:property name="order(delete)" value="0"/>                                           
+            
     	</fr:layout>
 	</fr:view>
 	

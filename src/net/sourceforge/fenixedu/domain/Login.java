@@ -101,9 +101,11 @@ public class Login extends Login_Base {
     }
 
     public LoginAlias readLoginAliasByAlias(String alias) {
-	for (LoginAlias loginAlias : getAlias()) {
-	    if (loginAlias.getAlias().equalsIgnoreCase(alias)) {
-		return loginAlias;
+	if (alias != null) {
+	    for (LoginAlias loginAlias : getAlias()) {
+		if (loginAlias.getAlias().equalsIgnoreCase(alias)) {
+		    return loginAlias;
+		}
 	    }
 	}
 	return null;
@@ -120,10 +122,12 @@ public class Login extends Login_Base {
 
     public List<LoginAlias> getRoleLoginAlias(RoleType roleType) {
 	List<LoginAlias> result = new ArrayList<LoginAlias>();
-	for (LoginAlias loginAlias : getAlias()) {
-	    if (loginAlias.getType().equals(LoginAliasType.ROLE_TYPE_ALIAS)
-		    && loginAlias.getRoleType().equals(roleType)) {
-		result.add(loginAlias);
+	if (roleType != null) {
+	    for (LoginAlias loginAlias : getAlias()) {
+		if (loginAlias.getType().equals(LoginAliasType.ROLE_TYPE_ALIAS)
+			&& loginAlias.getRoleType().equals(roleType)) {
+		    result.add(loginAlias);
+		}
 	    }
 	}
 	return result;

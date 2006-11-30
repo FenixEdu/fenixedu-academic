@@ -53,5 +53,5 @@ public class LoginPeriod extends LoginPeriod_Base {
 	super.setLogin(null);
 	removeRootDomainObject();
 	super.deleteDomainObject();	
-    }
+    }    
 }

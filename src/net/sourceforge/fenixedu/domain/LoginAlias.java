@@ -38,31 +38,6 @@ public class LoginAlias extends LoginAlias_Base {
 	});
 	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator(
 		"alias", Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator(
-		"idInternal"));
-    }
-    
-    private LoginAlias() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    private LoginAlias(Login login, String alias, LoginAliasType loginAliasType) {
-	this();
-	checkParameters(login, alias, loginAliasType, null);
-	setLogin(login);
-	super.setAlias(alias);
-	super.setType(loginAliasType);
-    }
-
-    private LoginAlias(Login login, String alias, RoleType roleType) {
-	this();
-	LoginAliasType loginAliasType = LoginAliasType.ROLE_TYPE_ALIAS;
-	checkParameters(login, alias, loginAliasType, roleType);
-	setLogin(login);
-	super.setAlias(alias);
-	super.setType(loginAliasType);
-	super.setRoleType(roleType);
     }
 
     public static void createNewCustomLoginAlias(Login login, String alias) {
@@ -74,63 +49,93 @@ public class LoginAlias extends LoginAlias_Base {
     }
 
     public static void createNewRoleLoginAlias(Login login, String alias, RoleType roleType) {
-	new LoginAlias(login, alias, roleType);
+	new LoginAlias(login, alias, roleType, LoginAliasType.ROLE_TYPE_ALIAS);
+    }
+
+    private LoginAlias(Login login, String alias, LoginAliasType loginAliasType) {
+	super();
+	checkIfAliasAlreadyExists(alias, login);
+	checkInstitutionalAliasType(login);
+
+	setLogin(login);
+	setAlias(alias);
+	setType(loginAliasType);
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    private LoginAlias(Login login, String alias, RoleType roleType, LoginAliasType loginAliasType) {
+	super();
+	checkIfAliasAlreadyExists(alias, login);
+	checkRoleTypeAlias(login, roleType);
+	
+	setLogin(login);
+	setAlias(alias);
+	setType(loginAliasType);
+	setRoleType(roleType);
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public void delete() {
-	removeLogin();		
+	if (this.getType().equals(LoginAliasType.INSTITUTION_ALIAS)) {
+	    throw new DomainException("error.cannot.delete.institutional.loginAlias");
+	}
+	super.setLogin(null);
 	removeRootDomainObject();
-	deleteDomainObject();
+	super.deleteDomainObject();
     }
 
-    private void checkParameters(Login login, String alias, LoginAliasType aliasType, RoleType roleType) {
-	if (StringUtils.isEmpty(alias)) {
-	    throw new DomainException("error.loginAlias.no.alias");
-	}
+    @Override
+    public void setLogin(Login login) {
 	if (login == null) {
 	    throw new DomainException("error.loginAlias.no.login");
 	}
-	if (aliasType == null) {
-	    throw new DomainException("error.alias.no.alias.type");
-	}
-	if (checkIfAliasExists(alias, login)) {
-	    throw new DomainException("error.alias.already.exists");
-	}
-	if (aliasType.equals(LoginAliasType.INSTITUTION_ALIAS)
-		&& login.getInstitutionalLoginAlias() != null) {
-	    throw new DomainException("error.INSTITUTION_ALIAS.already.exists");
-	}
-	if (aliasType.equals(LoginAliasType.ROLE_TYPE_ALIAS) && roleType == null) {
-	    throw new DomainException("error.alias.no.role.type");
-	}
-	if (aliasType.equals(LoginAliasType.ROLE_TYPE_ALIAS)
-		&& !login.getRoleLoginAlias(roleType).isEmpty()) {
-	    throw new DomainException("error.ROLE_TYPE_ALIAS.already.exists");
-	}
-    }
-
-    private boolean checkIfAliasExists(String username, Login login) {
-	for (LoginAlias loginAlias : RootDomainObject.getInstance().getLoginAlias()) {
-	    if (username.equalsIgnoreCase(loginAlias.getAlias()) && loginAlias != this
-		    && !loginAlias.getLogin().equals(login)) {
-		return true;
-	    }
-	}
-	return false;
+	super.setLogin(login);
     }
 
     @Override
     public void setAlias(String alias) {
-	throw new DomainException("error.impossible.to.edit.alias");
-    }
-
-    @Override
-    public void setRoleType(RoleType roleType) {
-	throw new DomainException("error.impossible.to.edit.roleType");
+	if (alias == null || StringUtils.isEmpty(alias.trim())) {
+	    throw new DomainException("error.loginAlias.no.alias");
+	}
+	super.setAlias(alias);
     }
 
     @Override
     public void setType(LoginAliasType loginAliasType) {
-	throw new DomainException("error.impossible.to.edit.loginAliasType");
+	if (loginAliasType == null) {
+	    throw new DomainException("error.alias.no.alias.type");
+	}
+	super.setType(loginAliasType);
+    }
+
+    @Override
+    public void setRoleType(RoleType roleType) {
+	if (roleType == null) {
+	    throw new DomainException("error.alias.empty.roleType");
+	}
+	super.setRoleType(roleType);
+    }
+
+    private void checkRoleTypeAlias(Login login, RoleType roleType) {
+	if (login != null && roleType != null && !login.getRoleLoginAlias(roleType).isEmpty()) {
+	    throw new DomainException("error.ROLE_TYPE_ALIAS.already.exists");
+	}
+    }
+
+    private void checkInstitutionalAliasType(Login login) {
+	if (login != null && login.getInstitutionalLoginAlias() != null) {
+	    throw new DomainException("error.INSTITUTION_ALIAS.already.exists");
+	}
+    }
+
+    private void checkIfAliasAlreadyExists(String username, Login login) {
+	if (login != null && username != null) {
+	    for (LoginAlias loginAlias : RootDomainObject.getInstance().getLoginAlias()) {
+		if (!loginAlias.getLogin().equals(login)
+			&& username.equalsIgnoreCase(loginAlias.getAlias())) {
+		    throw new DomainException("error.alias.already.exists");
+		}
+	    }
+	}
     }
 }
