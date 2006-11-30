@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -79,6 +80,13 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	    }
 	}
 	return null;
+    }
+
+    @Override
+    protected void assertProcessingStatePreConditions() throws DomainException {
+	if (getRegistration().hasAnyNotPayedGratuityEvents()) {
+	    throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+	}
     }
 
 }

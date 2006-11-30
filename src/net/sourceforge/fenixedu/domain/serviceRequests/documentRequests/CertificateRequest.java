@@ -129,13 +129,6 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     }
 
     @Override
-    protected void assertProcessingStatePreConditions() throws DomainException {
-	if (getRegistration().getLastStudentCurricularPlanExceptPast().hasAnyNotPayedGratuityEvents()) {
-	    throw new DomainException("CertificateRequest.registration.has.not.payed.gratuities.for.last.student.curricular.plan");
-	}
-    }
-
-    @Override
     protected void assertConcludedStatePreConditions() throws DomainException {
 	if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
 	    throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
