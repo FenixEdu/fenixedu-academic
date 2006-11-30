@@ -17,7 +17,7 @@ public class CheckIfUserCanAccessFile extends Service {
 
     public Boolean run(String uniqueUsername, String externalStorageIdentification)
             throws FenixServiceException {
-        Person person = Person.readPersonByIstUsername(uniqueUsername);
+        Person person = Person.readPersonByUsername(uniqueUsername);
         File file = File.readByExternalStorageIdentification(externalStorageIdentification);
 
         if (person != null && file != null) {
