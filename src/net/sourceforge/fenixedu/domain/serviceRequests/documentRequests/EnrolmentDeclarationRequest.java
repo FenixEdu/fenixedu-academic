@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -26,28 +24,25 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
             otherDocumentPurposeTypeDescription, executionYear);
         }
 
-        protected void init(Registration registration,DocumentPurposeType documentPurposeType,
+    protected void init(Registration registration,DocumentPurposeType documentPurposeType,
             String otherDocumentPurposeTypeDescription, 
             ExecutionYear executionYear) {
 
-        super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription);
+        init(registration, documentPurposeType, otherDocumentPurposeTypeDescription);
 
         checkParameters(executionYear);
-        
         super.setExecutionYear(executionYear);
-        }
+    }
 
-        private void checkParameters(ExecutionYear executionYear) {
-        
-        if (executionYear == null) {
-            throw new DomainException(
-                "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
-        } else if (!getRegistration().hasSchoolRegistration(executionYear)) {
-            throw new DomainException(
-                "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
-        }
-        }
-    
+    private void checkParameters(ExecutionYear executionYear) {
+	if (executionYear == null) {
+	    throw new DomainException(
+		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
+	} else if (!getRegistration().hasSchoolRegistration(executionYear)) {
+	    throw new DomainException(
+		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
+	}
+    }
     
     @Override
     public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
@@ -66,6 +61,12 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
     @Override
     public String getDocumentTemplateKey() {
 	return getClass().getName();
+    }
+
+    @Override
+    public void setExecutionYear(ExecutionYear executionYear) {
+	throw new DomainException(
+		"error.serviceRequests.documentRequests.EnrolmentCertificateRequest.cannot.modify.executionYear");
     }
 
 }
