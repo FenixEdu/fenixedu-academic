@@ -11098,7 +11098,25 @@
         <filterChains>
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
-    </service>           
+    </service>  
+    <service>
+    	<name>CreateNewLoginAlias</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.CreateNewLoginAlias</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>          
+    <service>
+    	<name>DeleteLoginPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.DeleteLoginPeriod</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>            
     <service>    
     	<name>SetInstitutionalEmail</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetInstitutionalEmail</implementationClass>

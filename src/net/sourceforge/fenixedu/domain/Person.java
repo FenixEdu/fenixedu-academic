@@ -324,12 +324,12 @@ public class Person extends Person_Base {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.getLoginAliasOrderByImportance() : new HashSet<LoginAlias>();
     }
-    
+
     public Set<LoginAlias> getLoginAlias() {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.getAliasSet() : new HashSet<LoginAlias>();
-    }    
-    
+    }
+
     public boolean hasUsername(String username) {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.hasUsername(username) : false;
@@ -1031,8 +1031,8 @@ public class Person extends Person_Base {
 	    if (person != null && insertedRole != null) {
 		addDependencies(insertedRole, person);
 		person.addAlias(insertedRole);
-	    person.updateIstUsername();
-	}
+		person.updateIstUsername();
+	    }
 	}
 
 	@Override
@@ -1040,16 +1040,16 @@ public class Person extends Person_Base {
 	    if (person != null && roleToBeRemoved != null
 		    && person.hasRole(roleToBeRemoved.getRoleType())) {
 		removeDependencies(person, roleToBeRemoved);
-		}
 	    }
+	}
 
 	@Override
 	public void afterRemove(Role removedRole, Person person) {
 	    if (person != null && removedRole != null) {
-	    person.removeAlias(removedRole);
-	    person.updateIstUsername();
-	}
+		person.removeAlias(removedRole);
+		person.updateIstUsername();
 	    }
+	}
 
 	private static Boolean verifiesDependencies(Person person, Role role) {
 	    switch (role.getRoleType()) {
@@ -1090,7 +1090,7 @@ public class Person extends Person_Base {
 		addRoleIfNotPresent(person, RoleType.RESEARCHER);
 		addRoleIfNotPresent(person, RoleType.DEPARTMENT_MEMBER);
 		break;
-		
+
 	    default:
 		break;
 	    }
@@ -1146,7 +1146,7 @@ public class Person extends Person_Base {
 	private static void addRoleIfNotPresent(Person person, RoleType roleType) {
 	    if (!person.hasRole(roleType)) {
 		person.addPersonRoleByRoleType(roleType);
-    }
+	    }
 	}
     }
 
@@ -1524,8 +1524,8 @@ public class Person extends Person_Base {
     // -------------------------------------------------------------
 
     public static Person readPersonByUsernameWithOpenedLogin(final String username) {
-	final Login login = Login.readOpenedLoginByUsername(username);
-	final User user = login == null ? null : login.getUser();
+	final Login login = Login.readLoginByUsername(username);
+	final User user = login == null ? null : (login.isOpened()) ? login.getUser() : null;
 	return user == null ? null : user.getPerson();
     }
 

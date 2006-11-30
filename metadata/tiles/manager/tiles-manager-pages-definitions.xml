@@ -745,6 +745,16 @@
 	<definition name="prepare-manage-login-time-intervals" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/loginsManagement/manageLoginTimeIntervals.jsp" />
 	</definition>	
-
-	
+	<definition name="prepare-create-new-login-alias" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/loginsManagement/createNewLoginAlias.jsp" />
+	</definition>
+	<definition name="prepare-edit-login-alias" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/loginsManagement/editLoginAlias.jsp" />
+	</definition>	
+	<definition name="prepare-edit-login-time-interval" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/loginsManagement/editLoginPeriod.jsp" />
+	</definition>
+	<definition name="prepare-create-new-login-time-interval" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/loginsManagement/createNewLoginPeriod.jsp" />
+	</definition>		
 </tiles-definitions>

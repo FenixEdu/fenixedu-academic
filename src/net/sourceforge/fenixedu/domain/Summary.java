@@ -134,9 +134,9 @@ public class Summary extends Summary_Base {
 	    throw new DomainException("error.summary.no.teacher");
 	}
 	if (isExtraLesson) {
-	    if (room == null) {
-		throw new DomainException("error.summary.no.room");
-	    }
+//	    if (room == null) {
+//		throw new DomainException("error.summary.no.room");
+//	    }
 	    if (hour == null) {
 		throw new DomainException("error.summary.no.hour");
 	    }

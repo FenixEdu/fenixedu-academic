@@ -27,6 +27,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table LoginPeriod" alterTableLoginPeriod.sql
 execute "Creating Table GratuityExemption" CreateTableGratuityExemption.sql
 execute "Changing Table AccountingEvent" AlterTableAccountingEvent.sql
 execute "Migrate GratuityEvents to DfaGratuityEvents" MigrateGratuityEventsToDfaGratuityEvents.sql

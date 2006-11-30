@@ -1,22 +1,34 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class LoginPeriod extends LoginPeriod_Base {
 
+    public static final Comparator<LoginPeriod> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
+    static {
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"), true);
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
+    }
+    
     public LoginPeriod(YearMonthDay begin, YearMonthDay end, Login login) {
 	super();
 	setBeginDate(begin);
 	setEndDate(end);
 	setLogin(login);
+	setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public LoginPeriod(YearMonthDay begin, Login login) {
 	super();
 	setBeginDate(begin);
 	setLogin(login);
+	setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public void edit(YearMonthDay begin, YearMonthDay end) {

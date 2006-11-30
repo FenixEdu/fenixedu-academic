@@ -39,6 +39,13 @@ public class LoginAlias extends LoginAlias_Base {
 	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator(
 		"alias", Collator.getInstance()));
     }
+    
+    public void editCustomAlias(String alias) {
+	if(this.getType().equals(LoginAliasType.CUSTOM_ALIAS)) {
+	   checkIfAliasAlreadyExists(alias, this.getLogin());
+	   setAlias(alias);
+	}
+    }
 
     public static void createNewCustomLoginAlias(Login login, String alias) {
 	new LoginAlias(login, alias, LoginAliasType.CUSTOM_ALIAS);
@@ -55,7 +62,9 @@ public class LoginAlias extends LoginAlias_Base {
     private LoginAlias(Login login, String alias, LoginAliasType loginAliasType) {
 	super();
 	checkIfAliasAlreadyExists(alias, login);
-	checkInstitutionalAliasType(login);
+	if (loginAliasType != null && loginAliasType.equals(LoginAliasType.INSTITUTION_ALIAS)) {
+	    checkInstitutionalAliasType(login);
+	}
 
 	setLogin(login);
 	setAlias(alias);
@@ -67,7 +76,7 @@ public class LoginAlias extends LoginAlias_Base {
 	super();
 	checkIfAliasAlreadyExists(alias, login);
 	checkRoleTypeAlias(login, roleType);
-	
+
 	setLogin(login);
 	setAlias(alias);
 	setType(loginAliasType);

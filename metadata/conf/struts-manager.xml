@@ -2202,6 +2202,10 @@
        			<forward name="prepareSearchPerson" path="prepare-search-person-to-logins-management"/>
        			<forward name="prepareManageLoginAlias" path="prepare-manage-login-alias"/> 
        			<forward name="prepareManageLoginTimeIntervals" path="prepare-manage-login-time-intervals"/>       			
+       			<forward name="prepareCreateNewLoginAlias" path="prepare-create-new-login-alias"/>       			       			
+       			<forward name="prepareEditLoginAlias" path="prepare-edit-login-alias"/>     
+       			<forward name="prepareEditLoginTimeInterval" path="prepare-edit-login-time-interval"/>   
+       			<forward name="prepareCreateNewLoginTimeInterval" path="prepare-create-new-login-time-interval"/>          			         			  			       			       			
        	</action>
        	
 	</action-mappings>
