@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EnrolmentRule
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.CurriculumModuleBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentExtraEnrolmentBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -37,18 +38,45 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	if(studentCurricularPlan != null) {
 	    studentEnrolmentBean.setStudentCurricularPlan(studentCurricularPlan);
 	    studentEnrolmentBean.setExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
-	    request.setAttribute("studentEnrolmentBean", studentEnrolmentBean);
+	    return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, actionForm, request, response);
 	} else {
 	    throw new FenixActionException();
 	}
+    }
+    
+    public ActionForward prepareFromExtraEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	StudentEnrolmentBean studentEnrolmentBean = (StudentEnrolmentBean) request.getAttribute("studentEnrolmentBean");
+	return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, actionForm, request, response);
+    }
+
+    
+    private ActionForward showExecutionPeriodEnrolments(StudentEnrolmentBean studentEnrolmentBean, ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("studentEnrolmentBean", studentEnrolmentBean);
+	
+	if(studentEnrolmentBean.getExecutionPeriod() != null) {
+	    request.setAttribute("studentEnrolments", studentEnrolmentBean.getStudentCurricularPlan().getEnrolmentsByExecutionPeriod(studentEnrolmentBean.getExecutionPeriod()));
+	}
+	
 	return mapping.findForward("prepareChooseExecutionPeriod");
     }
     
-    public ActionForward showDegreeModulesToEnrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-	StudentEnrolmentBean studentEnrolmentBean = (StudentEnrolmentBean) getRenderedObject();
-	request.setAttribute("studentEnrolmentBean", studentEnrolmentBean);
-	setCurriculumModuleBean(studentEnrolmentBean);
-	return mapping.findForward("showDegreeModulesToEnrol");
+    public ActionForward showDegreeModulesToEnrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+	Integer scpID = Integer.valueOf(request.getParameter("scpID"));
+	Integer epID = Integer.valueOf(request.getParameter("executionPeriodID"));
+	
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+	ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(epID);
+	
+	if(studentCurricularPlan != null && executionPeriod != null) {
+	    StudentEnrolmentBean enrolmentBean = new StudentEnrolmentBean();
+	    enrolmentBean.setStudentCurricularPlan(studentCurricularPlan);
+	    enrolmentBean.setExecutionPeriod(executionPeriod);
+	    request.setAttribute("studentEnrolmentBean", enrolmentBean);
+	    setCurriculumModuleBean(enrolmentBean);
+	    return mapping.findForward("showDegreeModulesToEnrol");
+	} else {
+	    throw new FenixActionException();
+	}
     }    
     
     public ActionForward showDegreeModulesToEnrolOptional(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
@@ -56,6 +84,16 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	setCurriculumModuleBean(studentEnrolmentBean);
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
+    
+    public ActionForward postBack(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        
+	StudentEnrolmentBean enrolmentBean = (StudentEnrolmentBean) getRenderedObject();
+        RenderUtils.invalidateViewState();
+        
+        return showExecutionPeriodEnrolments(enrolmentBean, mapping, actionForm, request, response);
+    }
+
     
     public ActionForward enrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException{
 	StudentEnrolmentBean studentEnrolmentBean = (StudentEnrolmentBean) getRenderedObject();

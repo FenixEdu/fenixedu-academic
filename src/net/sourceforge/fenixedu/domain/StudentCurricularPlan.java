@@ -43,6 +43,8 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -1877,6 +1879,25 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		enrollmentCondition, AccessControl.getUserView().getUtilizador(),
 		optionalCurricularCourse);
     }
+    
+    public void createNoCourseGroupCurriculumGroupEnrolment(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod, final NoCourseGroupCurriculumGroupType groupType) {
+	if(getRoot().isAproved(curricularCourse, executionPeriod)) {
+	    throw new DomainException("error.already.aproved", new String[] {curricularCourse.getName()});
+	}
+	if(getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod)) {
+	    throw new DomainException("error.already.enroled.in.executioPerdiod", new String[] {curricularCourse.getName(), executionPeriod.getQualifiedName()});
+	}
+
+	getRoot().createNoCourseGroupCurriculumGroupEnrolment(this, curricularCourse, executionPeriod, groupType);	
+    }
+    
+    public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType groupType) {
+	if(getRoot() != null) {
+	    return getRoot().getNoCourseGroupCurriculumGroup(groupType);
+	}
+	return null;
+    }
+    
 
     public void setActive() {
 	getRegistration().getActiveStudentCurricularPlan().setCurrentState(

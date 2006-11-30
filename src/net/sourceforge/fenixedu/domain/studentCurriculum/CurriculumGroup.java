@@ -7,18 +7,36 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import dml.runtime.RelationAdapter;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class CurriculumGroup extends CurriculumGroup_Base {
+    
+    static {
+	CurriculumModule.CurriculumModuleCurriculumGroup.addListener(new RelationAdapter<CurriculumModule, CurriculumGroup> (){
+	    @Override
+	    public void afterRemove(CurriculumModule curriculumModule, CurriculumGroup curriculumGroup) {
+		super.afterRemove(curriculumModule, curriculumGroup);
+	        if(curriculumGroup != null && curriculumGroup.isNoCourseGroupCurriculumGroup()) {
+	            if(!curriculumGroup.hasAnyCurriculumModules()) {
+	        	curriculumGroup.delete();
+	            }
+	        }
+	    }
+	});
+    }
     
     protected CurriculumGroup() {
 	super();
@@ -128,7 +146,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     public StringBuilder print(String tabs) {
 	final StringBuilder builder = new StringBuilder();
 	builder.append(tabs);
-	builder.append("[CG ").append(getDegreeModule().getName()).append(" ]\n");
+	builder.append("[CG ").append(getName().getContent()).append(" ]\n");
 	final String tab = tabs + "\t";
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    builder.append(curriculumModule.print(tab));
@@ -297,5 +315,38 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	
 	return false;
     }
+
     
+    public void createNoCourseGroupCurriculumGroupEnrolment(final StudentCurricularPlan studentCurricularPlan,
+	    final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod,
+	    final NoCourseGroupCurriculumGroupType groupType) {
+	if (!isRoot()) {
+	    throw new DomainException("error.no.root.curriculum.group");
+	}
+
+	CurriculumGroup extraCurricularGroup = getNoCourseGroupCurriculumGroup(groupType);
+	if(extraCurricularGroup == null) {
+	    extraCurricularGroup = NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(groupType, this); 
+	}
+
+	new Enrolment(studentCurricularPlan, extraCurricularGroup, curricularCourse, executionPeriod,
+		EnrollmentCondition.VALIDATED, AccessControl.getUserView().getUtilizador());
+    }
+
+    public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType groupType) {
+	for (final CurriculumGroup curriculumGroup : getCurriculumGroups()) {
+	    if(curriculumGroup.isNoCourseGroupCurriculumGroup()) {
+		NoCourseGroupCurriculumGroup noCourseGroupCurriculumGroup = (NoCourseGroupCurriculumGroup) curriculumGroup;
+		if(noCourseGroupCurriculumGroup.getNoCourseGroupCurriculumGroupType().equals(groupType)) {
+		    return noCourseGroupCurriculumGroup;
+		}
+	    }
+	}
+	
+	return null; 
+    }
+    
+    public boolean isNoCourseGroupCurriculumGroup() {
+	return false;
+    }
 }

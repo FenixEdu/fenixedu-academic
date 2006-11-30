@@ -50,7 +50,9 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
     
     private String curricularCoursesToEnrol = "smalltxt, smalltxt aright, smalltxt aright, aright";
     
-    private String linkURL;
+    private String linkFormat;
+    
+    private String linkFormatted;
     
     public Integer getInitialWidth() {
 	return initialWidth;
@@ -109,12 +111,12 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
         return getCurricularCourseClasses()[3];
     }
 
-    public String getLinkURL() {
-        return linkURL;
+    public String getLinkFormat() {
+        return linkFormat;
     }
 
-    public void setLinkURL(String linkURL) {
-        this.linkURL = linkURL;
+    public void setLinkFormat(String linkFormat) {
+        this.linkFormat = linkFormat;
     }
 
 
@@ -126,16 +128,22 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-	return new StudentCurricularPlanEnrolmentLayout();
+	return new DegreeCurricularPlanOptionalEnrolmentsLayout();
+    }
+    
+    private String getLinkFormatted(Object object) {
+	return RenderUtils.getFormattedProperties(getLinkFormat(), object);
     }
 
-    private class StudentCurricularPlanEnrolmentLayout extends Layout {
+    private class DegreeCurricularPlanOptionalEnrolmentsLayout extends Layout {
 
 	private StudentOptionalEnrolmentBean studentOptionalEnrolmentBean = null;
 
 	
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
+	    linkFormatted = getLinkFormatted(object);
+	    
 	    studentOptionalEnrolmentBean = (StudentOptionalEnrolmentBean) object;
 	    
 
@@ -144,6 +152,8 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 	    if (studentOptionalEnrolmentBean == null) {
 		return new HtmlText();
 	    } 
+	    
+	    linkFormatted = RenderUtils.getFormattedProperties(getLinkFormat(), studentOptionalEnrolmentBean);
 
 	    if(studentOptionalEnrolmentBean.getDegreeCurricularPlan().isBolonha()) {
 		generateCourseGroup(container, studentOptionalEnrolmentBean.getDegreeCurricularPlan().getRoot(), 0);
@@ -211,15 +221,8 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 		    final HtmlLink htmlLink = new HtmlLink();
 		    linkTableCell.setBody(htmlLink);
 		    htmlLink.setText(academicAdminOfficeResources.getString("link.option.enrol.curricular.course"));
-		    htmlLink.setUrl(getLinkURL());
-		    htmlLink.setParameter("scpID", studentOptionalEnrolmentBean.getStudentCurricularPlan().getIdInternal());
-		    htmlLink.setParameter("executionPeriodID", studentOptionalEnrolmentBean.getExecutionPeriod().getIdInternal());
-		    htmlLink.setParameter("curriculumGroupID", studentOptionalEnrolmentBean.getCurriculumGroup().getIdInternal());
-		    htmlLink.setParameter("contextID", studentOptionalEnrolmentBean.getContex().getIdInternal());
+		    htmlLink.setUrl(linkFormatted);
 		    htmlLink.setParameter("optionalCCID", context.getChildDegreeModule().getIdInternal());
-		    htmlLink.setParameter("degreeType", studentOptionalEnrolmentBean.getDegreeType().toString());
-		    htmlLink.setParameter("degreeID", studentOptionalEnrolmentBean.getDegree().getIdInternal().toString());
-		    htmlLink.setParameter("dcpID", studentOptionalEnrolmentBean.getDegreeCurricularPlan().getIdInternal().toString());
 		}		
 	    }	    
 	}
@@ -278,16 +281,8 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 		final HtmlLink htmlLink = new HtmlLink();
 		linkTableCell.setBody(htmlLink);
 		htmlLink.setText(academicAdminOfficeResources.getString("link.option.enrol.curricular.course"));
-		htmlLink.setUrl(getLinkURL());
-		htmlLink.setParameter("scpID", studentOptionalEnrolmentBean.getStudentCurricularPlan().getIdInternal());
-		htmlLink.setParameter("executionPeriodID", studentOptionalEnrolmentBean.getExecutionPeriod().getIdInternal());
-		htmlLink.setParameter("curriculumGroupID", studentOptionalEnrolmentBean.getCurriculumGroup().getIdInternal());
-		htmlLink.setParameter("contextID", studentOptionalEnrolmentBean.getContex().getIdInternal());
+		htmlLink.setUrl(linkFormatted);
 		htmlLink.setParameter("optionalCCID", scope.getCurricularCourse().getIdInternal());
-		htmlLink.setParameter("degreeType", studentOptionalEnrolmentBean.getDegreeType().toString());
-		htmlLink.setParameter("degreeID", studentOptionalEnrolmentBean.getDegree().getIdInternal().toString());
-		htmlLink.setParameter("dcpID", studentOptionalEnrolmentBean.getDegreeCurricularPlan().getIdInternal().toString());
-
 	    }
 
 	}

@@ -5,14 +5,14 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><strong><bean:message key="label.student.optional.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<bean:define id="type" name="extraEnrolmentBean" property="groupType"/>
+<h2><strong><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="<%= type.toString() %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 <br/>
-<fr:form action="/studentOptionalEnrolments.do?method=enrolOptionalCourse">
-	<fr:edit id="optionalEnrolmentBean"
-			 name="optionalBean"
-			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean"
+<fr:form >
+	<fr:edit id="extraEnrolmentBean"
+			 name="extraEnrolmentBean"
 			 schema="studentOptionalEnrolment.base">
-		<fr:destination name="postBack" path="/studentOptionalEnrolments.do?method=postBack"/>
+		<fr:destination name="postBack" path="/studentExtraEnrolments.do?method=postBack"/>
 		<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle4"/>
 		        <fr:property name="columnClasses" value="listClasses,,"/>
@@ -30,12 +30,12 @@
 <br />
 <br />
 <br />
-<logic:present name="optionalBean" property="degreeCurricularPlan">
-	<fr:form action="/studentOptionalEnrolments.do?method=back">
+<logic:present name="extraEnrolmentBean" property="degreeCurricularPlan">
+	<fr:form action="/studentExtraEnrolments.do?method=back2">
 		<fr:edit id="degreeCurricularPlan"
-				 name="optionalBean">
+				 name="extraEnrolmentBean">
 			<fr:layout name="student-optional-enrolments">
-				<fr:property name="linkFormat" value="/studentOptionalEnrolments.do?method=enrol&scpID=${studentCurricularPlan.idInternal}&executionPeriodID=${executionPeriod.idInternal}&curriculumGroupID=${curriculumGroup.idInternal}&contextID=${contex.idInternal}&degreeType=${degreeType}&degreeID=${degree.idInternal}&dcpID=${degreeCurricularPlan.idInternal}"/>
+				<fr:property name="linkFormat" value="/studentExtraEnrolments.do?method=enrol&scpID=${studentCurricularPlan.idInternal}&executionPeriodID=${executionPeriod.idInternal}&degreeType=${degreeType}&degreeID=${degree.idInternal}&dcpID=${degreeCurricularPlan.idInternal}&type=${groupType}"/>
 			</fr:layout>
 		</fr:edit>
 		<br/>

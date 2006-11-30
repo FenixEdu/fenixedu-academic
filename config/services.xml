@@ -11035,6 +11035,15 @@
         </filterChains>             
     </service>
     <service>
+    	<name>CreateExtraEnrolment</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateExtraEnrolment</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"/>
+        </filterChains>             
+    </service>    
+    <service>
     	<name>UploadSibsPaymentsFile</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.UploadSibsPaymentsFile</implementationClass>
         <description></description>

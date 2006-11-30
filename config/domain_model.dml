@@ -1250,21 +1250,20 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 	class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule {
 		Integer keyParentStudentCurricularPlan;
 	}
-
-		class net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup {
-		}
 	
+		class net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup {
+		}
+		
+			class net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup {
+			}
+		
+			class net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup {
+			}
+
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule {
 	}
-	
-		class net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
-		}
 		
-		class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
-			Double givenCredits;
-		}
-	
 		class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
             String createdBy;
         	DateTime creationDateDateTime;
@@ -7923,24 +7922,6 @@ relation CurriculumModuleCurriculumGroup {
 	net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule playsRole curriculumModules {
 	   multiplicity *;
 	}	 
-}
-
-relation EquivalenceEnrolment {
-    net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments{
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence playsRole equivalences{
-		multiplicity *;
-	}
-}
-
-relation CreditsEnrolment {
-    net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments{
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits{
-		multiplicity *;
-	}
 }
 
 relation EquivalenceCurricularCourseCurricularCourse {

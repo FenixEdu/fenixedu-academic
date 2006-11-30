@@ -210,7 +210,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
 	    htmlTableRow.setClasses(getGroupRowClasses());
-	    htmlTableRow.createCell().setBody(new HtmlText(curriculumModuleBean.getCurriculumModule().getDegreeModule().getName()));
+	    htmlTableRow.createCell().setBody(new HtmlText(curriculumModuleBean.getCurriculumModule().getName().getContent()));
 	    
 	    HtmlTableCell checkBoxCell = htmlTableRow.createCell();
 	    checkBoxCell.setClasses("aright");

@@ -4,7 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h2><strong><bean:message key="label.student.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<h2><strong><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<br/>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<br/>

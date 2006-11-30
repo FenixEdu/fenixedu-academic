@@ -276,10 +276,11 @@
 	<slot name="studentCurricularPlan.student.student.person.name" key="label.name" read-only="true"/>
 	<slot name="studentCurricularPlan.student.student.number" key="label.studentNumber" read-only="true"/>
 	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan" read-only="true"/>
-	<slot name="executionPeriod" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+	<slot name="executionPeriod" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsFrom1Sem0607" />
 		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+		<property name="destination" value="postBack"/>
 	</slot>
 </schema>
 
@@ -364,6 +365,25 @@
 	</slot>
 </schema>
 
+<schema name="student.studentExtraEnrolments" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="name" key="label.name" />
+	<slot name="degreeModule.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />	
+	<slot name="executionPeriod" layout="format" key="label.semester" >
+		<property name="format" value="${semester}º Sem ${executionYear.year}"/>
+	</slot>
+	<slot name="weigth" key="label.ects.credits"/>
+</schema>
+
+<schema name="student.show.enrolments" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="name" key="label.name" />
+	<slot name="degreeModule.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />	
+	<slot name="executionPeriod" layout="format" key="label.semester" >
+		<property name="format" value="${semester}º Sem ${executionYear.year}"/>
+	</slot>
+	<slot name="curriculumGroup.fullPath" key="label.group"/>
+	<slot name="weigth" key="label.ects.credits"/>
+</schema>
+
 <schema name="student.statutes.current" bundle="ACADEMIC_OFFICE_RESOURCES" 
 	type="net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean">
 	<slot name="executionPeriod" key="label.executionPeriod" >
@@ -393,3 +413,4 @@
 		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
 	</slot>
 </schema>
+

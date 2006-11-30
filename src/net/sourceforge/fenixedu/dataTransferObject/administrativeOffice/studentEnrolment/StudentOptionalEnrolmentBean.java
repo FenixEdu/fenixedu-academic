@@ -21,6 +21,10 @@ public class StudentOptionalEnrolmentBean implements Serializable{
     private DomainReference<Degree> degree;
     private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
     
+    public StudentOptionalEnrolmentBean() {
+	
+    }
+    
     public StudentOptionalEnrolmentBean(StudentCurricularPlan studentCurricularPlan, 
 	    ExecutionPeriod executionPeriod, CurriculumGroup curriculumGroup, Context context) {
 	setStudentCurricularPlan(studentCurricularPlan);

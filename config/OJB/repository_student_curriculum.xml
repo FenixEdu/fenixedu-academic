@@ -13,7 +13,7 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup" table="CURRICULUM_MODULE">
-    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup" />	
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup" />	
 		
     	
     				
@@ -21,11 +21,21 @@
 
 </class-descriptor>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup" table="CURRICULUM_MODULE">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup" />	
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculumGroup" />	    
+		
+    	
+    				
+    			
+
+</class-descriptor>
+
+
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup" table="CURRICULUM_MODULE"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculumGroup" table="CURRICULUM_MODULE"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine" table="CURRICULUM_MODULE">
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence" />
-    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.Credits" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.Enrolment" />    
 
 	
@@ -33,24 +43,4 @@
     	
     
     				
-</class-descriptor>
-
-<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.Credits" table="CURRICULUM_MODULE">
-
-	
-	
-    	
-    					
-    	
-	
-</class-descriptor>
-
-<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence" table="CURRICULUM_MODULE">
-
-	
-			
-    	
-    			
-
-	
 </class-descriptor>

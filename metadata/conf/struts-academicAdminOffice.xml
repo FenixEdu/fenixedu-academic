@@ -171,6 +171,16 @@
 			<forward name="showDegreeModulesToEnrol" path="/studentEnrolments.do?method=showDegreeModulesToEnrolOptional"/>
 		</action>        
 		
+		<action path="/studentExtraEnrolments"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.StudentExtraEnrolmentsDA">
+			<forward name="showExtraEnrolments" path="student.enrolment.showExtraEnrolments"/>
+			<forward name="chooseExtraEnrolment" path="student.enrolment.chooseExtraEnrolment"/>
+			<forward name="showDegreeModulesToEnrol" path="/studentEnrolments.do?method=prepareFromExtraEnrolment"/>						
+		</action>        
+		
+		
 		
 		<!-- Academic Service Requests Management -->
 		<action path="/academicServiceRequestsManagement"

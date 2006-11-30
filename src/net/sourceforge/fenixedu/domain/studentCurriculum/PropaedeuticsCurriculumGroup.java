@@ -1,20 +1,20 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 
-public class ExtraCurriculumGroup extends ExtraCurriculumGroup_Base {
+public class PropaedeuticsCurriculumGroup extends PropaedeuticsCurriculumGroup_Base {
     
-    public ExtraCurriculumGroup(final CurriculumGroup curriculumGroup) {
+    public  PropaedeuticsCurriculumGroup(final CurriculumGroup curriculumGroup) {
 	super();
 	init(curriculumGroup);
     }
     
     @Override
     public Integer getChildOrder() {
-        return super.getChildOrder() - 2;
+        return super.getChildOrder() - 1;
     }
     
     @Override
     public NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType() {
-        return NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR;
+        return NoCourseGroupCurriculumGroupType.PROPAEDEUTICS;
     }
 }

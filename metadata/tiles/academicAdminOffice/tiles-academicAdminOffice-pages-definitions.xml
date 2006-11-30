@@ -46,6 +46,12 @@
     <definition name="student.enrolment.chooseOptionalEnrolments" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/chooseOptionalEnrolment.jsp"></put>
     </definition>
+    <definition name="student.enrolment.showExtraEnrolments" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/showExtraEnrolments.jsp"></put>
+    </definition>
+    <definition name="student.enrolment.chooseExtraEnrolment" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/chooseExtraEnrolment.jsp"></put>
+    </definition>    
     <definition name="student.showManageEnrolmentModel" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageEnrolmentModel.jsp"></put>
     </definition>      

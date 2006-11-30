@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -913,6 +914,23 @@ public class Enrolment extends Enrolment_Base {
     
     public boolean isOptional() {
 	return false;
+    }
+    
+    
+    public static class DeleteEnrolmentExecutor implements FactoryExecutor {
+	
+	private DomainReference<Enrolment> enrolment;
+
+	public DeleteEnrolmentExecutor(Enrolment enrolment) {
+	    super();
+	    this.enrolment = new DomainReference<Enrolment>(enrolment);
+	}
+
+	public Object execute() {
+	    enrolment.getObject().delete();
+	    return null;
+	}
+	
     }
 	
 }

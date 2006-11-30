@@ -21,6 +21,11 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     	return true;
     }
     
+    @Override
+    public boolean isRoot() {
+        return false;
+    }
+    
     protected void validateDegreeModuleLink(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
     	if(!curriculumGroup.getDegreeModule().validate(curricularCourse)) {
     	    throw new DomainException("error.studentCurriculum.curriculumLine.invalid.curriculum.group");
