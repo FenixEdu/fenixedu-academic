@@ -49,6 +49,8 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     }
 
     public abstract boolean isLeaf();
+    
+    public abstract boolean isRoot();
 
     public abstract StringBuilder print(String tabs);
     
@@ -84,5 +86,13 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	}
 	result.addAll(this.getDegreeModule().getCurricularRules(executionPeriod));
 	return result;
+    }
+    
+    public String getFullPath() {
+	if(isRoot()) {
+	    return getName().getContent();
+	} else {
+	    return getCurriculumGroup().getFullPath() + " > " + getName().getContent();
+	}
     }
 }
