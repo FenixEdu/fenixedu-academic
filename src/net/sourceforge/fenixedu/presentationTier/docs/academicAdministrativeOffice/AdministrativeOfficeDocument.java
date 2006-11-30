@@ -29,14 +29,14 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	
 	public static AdministrativeOfficeDocument create(final DocumentRequest documentRequest) {
 	    switch (documentRequest.getDocumentRequestType()) {
-	    case SCHOOL_REGISTRATION_DECLARATION:
-		return new RegistrationDeclaration(documentRequest);
 	    case ENROLMENT_CERTIFICATE:
 		return new EnrolmentCertificate(documentRequest);
 	    case APPROVEMENT_CERTIFICATE:
 		return new ApprovementCertificate(documentRequest);
 	    case DEGREE_FINALIZATION_CERTIFICATE:
 		return new DegreeFinalizationCertificate(documentRequest);
+	    case SCHOOL_REGISTRATION_DECLARATION:
+		return new RegistrationDeclaration(documentRequest);
 	    default:
 		return new AdministrativeOfficeDocument(documentRequest);
 	    }
