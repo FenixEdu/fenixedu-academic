@@ -24,25 +24,27 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
     private DomainReference<Person> employeeDomainReference;
 
-    public RegistrationDeclaration(final DocumentRequest documentRequest) {
-	this(documentRequest.getRegistration(), AccessControl.getUserView().getPerson());
+    protected RegistrationDeclaration(final DocumentRequest documentRequest) {
+	super(documentRequest);
     }
 
     public RegistrationDeclaration(final Registration registration, final Person loggedPerson) {
-	this.dataSource = new ArrayList();
+	init(registration, loggedPerson);
+    }
+
+    private void init(Registration registration, Person loggedPerson) {
 	this.registrationDomainReference = new DomainReference<Registration>(registration);
 	this.employeeDomainReference = new DomainReference<Person>(loggedPerson);
-	
-	fillReport();
+
+	parameters.put("RegistrationDeclaration", this);
+	resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
+	dataSource = new ArrayList();
+	dataSource.add(this);
     }
 
     @Override
     protected void fillReport() {
-	parameters.put("RegistrationDeclaration", this);
-	resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils
-		.getLocale());
-	
-	dataSource.add(this);
+	init(getDocumentRequest().getRegistration(), AccessControl.getPerson());
     }
 
     public Person getEmployee() {
