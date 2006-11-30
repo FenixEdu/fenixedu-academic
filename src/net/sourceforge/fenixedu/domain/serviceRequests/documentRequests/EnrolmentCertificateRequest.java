@@ -64,11 +64,6 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     }
 
     @Override
-    protected void assertProcessingStatePreConditions() throws DomainException {
-	super.assertProcessingStatePreConditions();
-    }
-
-    @Override
     public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.ENROLMENT_CERTIFICATE;
     }

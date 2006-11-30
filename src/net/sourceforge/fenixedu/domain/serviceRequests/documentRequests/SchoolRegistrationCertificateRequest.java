@@ -46,7 +46,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 		    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.cannot.be.null");
 	} else if (!getRegistration().hasSchoolRegistration(executionYear)) {
 	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.before.studentCurricularPlan.start");
+		    "error.serviceRequests.documentRequests.no.school.registration.for.given.executionYear");
 	}
     }
 
@@ -57,11 +57,6 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	result.add(AdministrativeOfficeType.DEGREE);
 
 	return result;
-    }
-
-    @Override
-    protected void assertProcessingStatePreConditions() throws DomainException {
-	super.assertProcessingStatePreConditions();
     }
 
     @Override
