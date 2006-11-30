@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
@@ -2109,7 +2110,7 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    private Set<Event> getEventsByEventType(final EventType eventType) {
+    private Set<? extends Event> getEventsByEventType(final EventType eventType) {
 	final Set<Event> result = new HashSet<Event>();
 
 	for (final Event event : getEventsSet()) {
@@ -2243,6 +2244,10 @@ public class Person extends Person_Base {
 	}
 
 	return false;
+    }
+
+    public Set<GratuityEvent> getGratuityEvents() {
+	return (Set<GratuityEvent>) getEventsByEventType(EventType.GRATUITY);
     }
 
 }

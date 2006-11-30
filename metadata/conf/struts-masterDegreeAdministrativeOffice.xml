@@ -2694,6 +2694,8 @@
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>    
     <message-resources parameter="resources.CandidateResources" key="CANDIDATE_RESOURCES" null="false" />
+    <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
+    
 
    
     <!-- ========== Plug Ins Configuration ================================= -->

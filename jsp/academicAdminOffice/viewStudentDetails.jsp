@@ -9,7 +9,7 @@
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
-		<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
+	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
 	</p>
 </html:messages>
 
@@ -53,33 +53,7 @@
 </fr:view>
 
 
-<bean:define id="personId" name="student" property="person.idInternal" />
-<h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-
-<ul>
-	<li>
-		<html:link action="<%="/payments.do?method=showEvents&personId=" + personId %>">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.currentEvents" />
-		</html:link>
-	</li>
-	<li>
-		<html:link action="<%="/payments.do?method=showEventsWithInstallments&personId=" + personId%>">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.eventsWithInstallments" />
-		</html:link>
-	</li>
-	<li>
-		<html:link action="<%="/payments.do?method=showPaymentsWithoutReceipt&personId=" + personId %>">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentsWithoutReceipt" />
-		</html:link>
-	</li>
-	<li>
-		<html:link action="<%="/payments.do?method=showReceipts&personId=" + personId%>">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipts" />
-		</html:link>
-	</li>
-</ul>
-
-<br/>
+<!-- Student Statues -->
 <h3 class="mbottom025"><bean:message key="label.statutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="student" property="currentStatutes" schema="student.statutes.current" >
 	<fr:layout name="tabular">
@@ -95,4 +69,42 @@
 	</li>
 </ul>
 
+<br/>
+
+<!-- Payments -->
+<bean:define id="personId" name="student" property="person.idInternal" />
+<h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<ul>
+	<li>
+			<html:link action="<%="/payments.do?method=showEvents&personId=" + personId %>">
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.currentEvents" />
+			</html:link>
+	</li>
+	<li>
+			<html:link action="<%="/payments.do?method=showEventsWithInstallments&personId=" + personId%>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.eventsWithInstallments" />
+			</html:link>
+	</li>
+	<li>
+			<html:link action="<%="/payments.do?method=showPaymentsWithoutReceipt&personId=" + personId %>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentsWithoutReceipt" />
+			</html:link>
+	</li>
+	<li>
+		<html:link action="<%="/payments.do?method=showReceipts&personId=" + personId%>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipts" />
+		</html:link>
+	</li>
+	
+
+	<%--
+	<li>
+		<html:link action="<%="/payments.do?method=showGratuityEvents&personId=" + personId%>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions" />
+		</html:link>
+	</li>
+	
+	 --%>
+
+</ul>
 

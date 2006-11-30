@@ -7,18 +7,15 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.StudentType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.joda.time.YearMonthDay;
 
@@ -55,7 +52,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	final AdministrativeOffice administrativeOffice = AdministrativeOffice
 		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
 
-	new GratuityEvent(administrativeOffice, person, registration.getActiveStudentCurricularPlan(),
+	new DfaGratuityEvent(administrativeOffice, person, registration.getActiveStudentCurricularPlan(),
 		ExecutionYear.readCurrentExecutionYear());
 
 	new DfaRegistrationEvent(administrativeOffice, person, registration);

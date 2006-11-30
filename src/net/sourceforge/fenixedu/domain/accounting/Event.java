@@ -78,7 +78,7 @@ public abstract class Event extends Event_Base {
 
 	final Set<Entry> result = internalProcess(responsibleUser, entryDTOs, transactionDetail);
 
-	recalculateState(transactionDetail.getWhenRegistered(), transactionDetail.getPaymentMode());
+	recalculateState(transactionDetail.getWhenRegistered());
 
 	return result;
 
@@ -93,7 +93,7 @@ public abstract class Event extends Event_Base {
 	final Set<Entry> result = internalProcess(responsibleUser, paymentCode, amountToPay,
 		transactionDetailDTO);
 
-	recalculateState(transactionDetailDTO.getWhenRegistered(), transactionDetailDTO.getPaymentMode());
+	recalculateState(transactionDetailDTO.getWhenRegistered());
 
 	return result;
 
@@ -177,7 +177,7 @@ public abstract class Event extends Event_Base {
     }
 
     protected boolean canCloseEvent(DateTime whenRegistered) {
-	return calculateAmountToPay(whenRegistered).isZero();
+	return calculateAmountToPay(whenRegistered).lessOrEqualThan(Money.ZERO);
     }
 
     public Set<Entry> getEntries() {
@@ -215,16 +215,9 @@ public abstract class Event extends Event_Base {
 	return payedAmount;
     }
 
-    void recalculateState(final DateTime whenRegistered, final PaymentMode paymentMode) {
+    public void recalculateState(final DateTime whenRegistered) {
 	if (canCloseEvent(whenRegistered)) {
-	    beforeCloseEvent(whenRegistered, paymentMode);
 	    super.setEventState(EventState.CLOSED);
-	}
-    }
-
-    protected void beforeCloseEvent(DateTime whenRegistered, PaymentMode paymentMode) {
-	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
-	    paymentCode.setState(PaymentCodeState.CANCELLED);
 	}
     }
 
@@ -372,8 +365,8 @@ public abstract class Event extends Event_Base {
 
     protected abstract PostingRule getPostingRule(DateTime whenRegistered);
 
-    public boolean isInDebt(){
+    public boolean isInDebt() {
 	return isOpen();
     }
-    
+
 }

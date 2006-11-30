@@ -200,7 +200,11 @@ public abstract class PostingRule extends PostingRule_Base {
 	return true;
     }
 
-    public abstract Money calculateTotalAmountToPay(Event event, DateTime when);
+    public Money calculateTotalAmountToPay(Event event, DateTime when) {
+	return calculateTotalAmountToPay(event, when, true);
+    }
+
+    public abstract Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount);
 
     public abstract List<EntryDTO> calculateEntries(Event event, DateTime when);
 

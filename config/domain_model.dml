@@ -170,6 +170,7 @@ valueType net.sourceforge.fenixedu.util.Money												as Money;
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeState												as PaymentCodeState;
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeType												as PaymentCodeType;
 valueType net.sourceforge.fenixedu.domain.student.StudentStatuteType												as StudentStatuteType;
+valueType net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionType							as GratuityExemptionType;
 
 /*
 *
@@ -214,7 +215,7 @@ class net.sourceforge.fenixedu.domain.accounting.AccountingTransaction extends n
 
 	class net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction extends net.sourceforge.fenixedu.domain.accounting.AccountingTransaction {
 		Integer keyInstallment;
-}
+	}
 
 class net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail extends net.sourceforge.fenixedu.domain.DomainObject {
     DateTime whenRegistered;
@@ -267,7 +268,11 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 	
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
 			Integer keyStudentCurricularPlan;
-	}
+			Integer keyGratuityExemption;
+		}
+		
+			class net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
+			}
 	
 			class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
 			}
@@ -277,6 +282,23 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 
 		class net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
 		}
+		
+
+class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption extends net.sourceforge.fenixedu.domain.DomainObject {
+	GratuityExemptionType exemptionType;
+	Integer keyGratuityEvent;
+	Integer keyEmployee;
+	String ojbConcreteClass;
+}
+
+	class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption {
+		BigDecimal percentage;
+	}
+	class net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption {
+		Money value;
+	}
+
+
 
 class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyPerson;
@@ -8296,6 +8318,26 @@ relation RootDomainObjectAccountingTransactionDetail {
 	}
 }
 
+relation RootDomainObjectGratuityExemption {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption playsRole gratuityExemptions {
+		multiplicity *;
+	}
+}
+
+relation GratuityExemptionGratuityEvent {
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent playsRole gratuityEvent;
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption playsRole gratuityExemption;
+}
+
+relation GratuityExemptionEmployee {
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption playsRole gratuityExemptions {
+		multiplicity *;
+	}
+}
+
+
 //End Of Accounting Relations
 
 relation AdministrativeOfficeUnit {
@@ -11126,14 +11168,12 @@ relation DomainObjectActionLogPerson {
 		multiplicity *;
 	}
 }
-
 relation InvitationParty {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole responsible;
 	net.sourceforge.fenixedu.domain.organizationalStructure.Invitation playsRole invitationAccountabilities {
 		multiplicity *;
 	}
 }
-
 relation LoginLoginPeriod {
 	net.sourceforge.fenixedu.domain.Login playsRole login;
 	net.sourceforge.fenixedu.domain.LoginPeriod playsRole loginPeriods {

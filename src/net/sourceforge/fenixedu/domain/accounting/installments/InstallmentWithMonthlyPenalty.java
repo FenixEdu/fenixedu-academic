@@ -58,15 +58,17 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
     @Override
     protected Money calculatePenaltyAmount(DateTime when, BigDecimal discountPercentage) {
 	if (when.toDateMidnight().compareTo(getWhenStartToApplyPenalty().toDateMidnight()) >= 0) {
-	    return calculateMonthPenalty(discountPercentage).multiply(
-		    new BigDecimal(getNumberOfMonthsToChargePenalty(when)));
+	    return new Money(calculateMonthPenalty(discountPercentage).multiply(
+		    new BigDecimal(getNumberOfMonthsToChargePenalty(when))));
 	} else {
 	    return Money.ZERO;
 	}
     }
 
-    private Money calculateMonthPenalty(BigDecimal discountPercentage) {
-	return calculateAmountWithDiscount(discountPercentage).multiply(getPenaltyPercentage());
+    private BigDecimal calculateMonthPenalty(BigDecimal discountPercentage) {
+	final BigDecimal amount = calculateAmountWithDiscount(discountPercentage).getAmount();
+	amount.setScale(10);
+	return amount.multiply(getPenaltyPercentage());
     }
 
     private int getNumberOfMonthsToChargePenalty(DateTime when) {

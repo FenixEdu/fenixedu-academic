@@ -29,5 +29,13 @@ public enum RegistrationStateType {
     public boolean isInactive() {
 	return !active;
     }
+    
+    public String getQualifiedName() {
+	return RegistrationStateType.class.getSimpleName() + "." + name();
+    }
+
+    public String getFullyQualifiedName() {
+	return RegistrationStateType.class.getName() + "." + name();
+    }
 
 }

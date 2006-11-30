@@ -228,7 +228,11 @@
 		 	    <forward name="preparePayment" path="payments.management.preparePayment"/> 
 	 	        <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
 		 	    <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
-		 	    <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
+		 	    <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/>
+		 	    
+		 	    <forward name="gratuityExemptions.showGratuityEvents" path="payments.management.gratuityExemptions.showGratuityEvents"/> 
+		 	    <forward name="gratuityExemptions.view" path="payments.management.gratuityExemptions.view"/>
+		 	    <forward name="gratuityExemptions.create" path="payments.management.gratuityExemptions.create"/>
 		</action>
 		
 		<!-- End Payments -->

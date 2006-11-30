@@ -22,7 +22,8 @@ public class MoneyInputRenderer extends NumberInputRenderer {
 
     @Override
     public HtmlComponent render(Object targetObject, Class type) {
-	return super.render(((Money) targetObject).getAmount(), type);
+	final Money money = ((Money) targetObject);
+	return super.render(money != null ? money.getAmount() : null, type);
     }
 
     private class MoneyConverter extends Converter {

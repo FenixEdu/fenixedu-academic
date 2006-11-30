@@ -102,3 +102,53 @@
 	<slot name="paymentDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 
+
+<schema name="AccountingEvent.view" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES">
+	<slot name="eventType" key="label.net.sourceforge.fenixedu.domain.accounting.Event.eventType" />
+</schema>
+
+<schema name="GratuityEvent.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent" bundle="APPLICATION_RESOURCES" extends="AccountingEvent.view">
+	<slot name="degree" layout="format">
+		<property name="format" value="${degreeType.localizedName} - ${name}" />
+	</slot>
+	<slot name="executionYear.year" />
+</schema>
+
+<schema name="CreateGratuityExemptionBean" type="net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean" bundle="APPLICATION_RESOURCES">
+	<slot name="exemptionType" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.GratuityExemptionTypeByDegreeTypeProvider" />
+        <property name="saveOptions" value="true"/>
+    </slot>
+    
+    <slot name="percentage" layout="menu-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.GratuityExemptionDefaultPercentagesProvider" />
+        <property name="saveOptions" value="true"/>
+    </slot>
+
+</schema>
+
+<schema name="CreateGratuityExemptionBean.edit-user-defined-percentage-or-amount" type="net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean" bundle="APPLICATION_RESOURCES">
+    <slot name="otherPercentage">
+       	<property name="size" value="5"/>
+		<property name="maxLength" value="5"/>
+    </slot>
+    <slot name="amount">
+       	<property name="size" value="8"/>
+		<property name="maxLength" value="8"/>
+    </slot>
+</schema>
+
+<schema name="GratuityExemption.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption" bundle="APPLICATION_RESOURCES">
+	<slot name="exemptionType" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption.exemptionType" />
+</schema>
+
+<schema name="PercentageGratuityExemption.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption"  extends="GratuityExemption.view" bundle="APPLICATION_RESOURCES">
+	<slot name="formattedPercentage" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption.percentage" />
+</schema>
+
+<schema name="ValueGratuityExemption.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption"  extends="GratuityExemption.view" bundle="APPLICATION_RESOURCES">
+	<slot name="value" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption.value"/>
+</schema>
+
+
+

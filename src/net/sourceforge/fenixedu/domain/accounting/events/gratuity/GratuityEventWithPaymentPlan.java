@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
@@ -228,4 +229,5 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 		&& getGratuityPaymentPlan().getLastInstallment().getEndDate().isBefore(
 			new YearMonthDay());
     }
+
 }

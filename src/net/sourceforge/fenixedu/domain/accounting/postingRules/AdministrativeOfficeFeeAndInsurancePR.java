@@ -39,7 +39,7 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when) {
+    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	return getPostingRuleForAdministrativeOfficeFee(when).calculateTotalAmountToPay(event, when)
 		.add(getPostingRuleForInsurance(when).calculateTotalAmountToPay(event, when));
     }
@@ -68,12 +68,12 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 	final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
 	final Set<Entry> createdEntries = new HashSet<Entry>();
 	for (final EntryDTO entryDTO : entryDTOs) {
-	    
+
 	    if (entryDTO.getEntryType() == EntryType.INSURANCE_FEE) {
 		createdEntries.addAll(getPostingRuleForInsurance(transactionDetail.getWhenRegistered())
 			.process(user, Collections.singletonList(entryDTO), event, fromAccount,
 				toAccount, transactionDetail));
-		
+
 	    } else if (entryDTO.getEntryType() == EntryType.ADMINISTRATIVE_OFFICE_FEE) {
 		createdEntries.addAll(getPostingRuleForAdministrativeOfficeFee(
 			transactionDetail.getWhenRegistered()).process(user,
@@ -84,6 +84,9 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 			"error.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR.invalid.entry.type");
 	    }
 	}
+
+	((AdministrativeOfficeFeeAndInsuranceEvent) event).changePaymentCodeState(transactionDetail
+		.getWhenRegistered(), transactionDetail.getPaymentMode());
 
 	for (final Entry entry : createdEntries) {
 	    result.add(entry.getAccountingTransaction());

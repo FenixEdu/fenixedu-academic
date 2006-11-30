@@ -59,7 +59,7 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when) {
+    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	return getBaseAmount().add(getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event))));
 
     }

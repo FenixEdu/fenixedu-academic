@@ -106,16 +106,15 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 
     private void checkIfCanAddAmount(Money amountToAdd, Event event, DateTime when) {
 	if (((GratuityEvent) event).isCustomEnrolmentModel()) {
-	    checkIfCanAddAmountForCustomEnrolmentModel(amountToAdd, event, when);
+	    checkIfCanAddAmountForCustomEnrolmentModel(event, when, amountToAdd);
 	} else {
 	    checkIfCanAddAmountForCompleteEnrolmentModel(amountToAdd, event, when);
 	}
 
     }
 
-    private void checkIfCanAddAmountForCustomEnrolmentModel(Money amountToAdd, Event event, DateTime when) {
-	final Money amountToPay = event.calculateAmountToPay(when);
-	if (amountToPay.compareTo(amountToAdd) != 0) {
+    private void checkIfCanAddAmountForCustomEnrolmentModel(Event event, DateTime when, Money amountToAdd) {
+	if (!event.calculateAmountToPay(when).equals(amountToAdd)) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.DFAGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
 		    event.getDescriptionForEntryType(getEntryType()));
@@ -123,17 +122,18 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 
     }
 
-    private void checkIfCanAddAmountForCompleteEnrolmentModel(Money amountToAdd, Event event,
-	    DateTime when) {
-	final Money amountToPay = event.calculateAmountToPay(when);
-	if (getDfaTotalAmount().compareTo(amountToPay) != 0 && amountToAdd.compareTo(amountToPay) != 0) {
+    private void checkIfCanAddAmountForCompleteEnrolmentModel(final Money amountToAdd,
+	    final Event event, final DateTime when) {
+
+	if (hasAlreadyPayedAnyAmount(event, when) && !isPayingRemaingAmount(event, when, amountToAdd)) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.DFAGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
 		    event.getDescriptionForEntryType(getEntryType()));
+
 	}
 
-	if (amountToPay.compareTo(amountToAdd) != 0
-		&& amountToAdd.compareTo(getPartialPaymentAmount()) != 0) {
+	if (!isPayingTotalAmount(event, when, amountToAdd)
+		&& !isPayingPartialAmount(event, when, amountToAdd)) {
 	    final LabelFormatter percentageLabelFormatter = new LabelFormatter();
 	    percentageLabelFormatter.appendLabel(getDfaPartialAcceptedPercentage().multiply(
 		    BigDecimal.valueOf(100)).toString());
@@ -144,8 +144,24 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	}
     }
 
-    private Money getPartialPaymentAmount() {
-	return getDfaTotalAmount().multiply(getDfaPartialAcceptedPercentage());
+    private boolean isPayingTotalAmount(final Event event, final DateTime when, Money amountToAdd) {
+	return event.calculateAmountToPay(when).equals(amountToAdd);
+    }
+
+    private boolean isPayingPartialAmount(final Event event, final DateTime when, final Money amountToAdd) {
+	return amountToAdd.equals(getPartialPaymentAmount(event, when));
+    }
+
+    private boolean isPayingRemaingAmount(final Event event, final DateTime when, final Money amountToAdd) {
+	return amountToAdd.equals(event.calculateAmountToPay(when));
+    }
+
+    private boolean hasAlreadyPayedAnyAmount(final Event event, final DateTime when) {
+	return !calculateTotalAmountToPay(event, when).equals(event.calculateAmountToPay(when));
+    }
+
+    private Money getPartialPaymentAmount(final Event event, final DateTime when) {
+	return calculateTotalAmountToPay(event, when).multiply(getDfaPartialAcceptedPercentage());
     }
 
     @Override
@@ -156,12 +172,21 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when) {
+    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	if (((GratuityEvent) event).isCustomEnrolmentModel()) {
 	    return getDfaAmountPerEctsCredit().multiply(
 		    ((GratuityEvent) event).getTotalEctsCreditsForRegistration());
 	} else {
-	    return getDfaTotalAmount();
+	    final BigDecimal discountPercentage = applyDiscount ? getDiscountPercentage(event,
+		    getDfaTotalAmount()) : BigDecimal.ZERO;
+
+	    return getDfaTotalAmount().multiply(BigDecimal.ONE.subtract(discountPercentage));
 	}
+    }
+
+    private BigDecimal getDiscountPercentage(final Event event, final Money amount) {
+	final GratuityEvent gratuityEvent = (GratuityEvent) event;
+	return gratuityEvent.hasGratuityExemption() ? gratuityEvent.getGratuityExemption()
+		.calculateDiscountPercentage(amount) : BigDecimal.ZERO;
     }
 }

@@ -11042,7 +11042,8 @@
         <filterChains>
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
-    </service>      
+    </service>    
+    
     <service>
     	<name>CreateNewInvitedPerson</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateNewInvitedPerson</implementationClass>
@@ -11051,8 +11052,9 @@
         <filterChains>
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
-    </service>
-    <service>
+    </service>    
+
+	<service>
     	<name>EditInvitationHostUnit</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.EditInvitationHostUnit</implementationClass>
         <description></description>
@@ -11103,5 +11105,26 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains />    
-    </service>       
+    </service>
+    
+    <service>
+    	<name>CreateGratuityExemption</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.CreateGratuityExemption</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>  
+    
+    <service>
+    	<name>DeleteGratuityExemption</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.DeleteGratuityExemption</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>  
+  
 </serviceDefinitions>

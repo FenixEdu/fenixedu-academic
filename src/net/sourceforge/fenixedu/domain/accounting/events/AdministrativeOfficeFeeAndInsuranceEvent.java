@@ -174,9 +174,9 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	return result;
     }
 
-    @Override
-    protected void beforeCloseEvent(DateTime whenRegistered, PaymentMode paymentMode) {
-	getNonProcessedPaymentCode().setState(getPaymentCodeStateFor(paymentMode));
+    public void changePaymentCodeState(DateTime whenRegistered, PaymentMode paymentMode) {
+	if (canCloseEvent(whenRegistered)) {
+	    getNonProcessedPaymentCode().setState(getPaymentCodeStateFor(paymentMode));
+	}
     }
-
 }

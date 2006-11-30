@@ -80,8 +80,16 @@
 		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent -->
 		<!-- ************************************************************************************************************ -->
 		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent" table="ACCOUNTING_EVENT">
+			<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent" />
 			<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan" />
 		</class-descriptor>	
+		
+			<!-- ************************************************************************************************************ -->
+			<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent -->
+			<!-- ************************************************************************************************************ -->
+			<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent" table="ACCOUNTING_EVENT">
+
+			</class-descriptor>	
 		
 			<!-- ************************************************************************************************************ -->
 			<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan -->
@@ -89,8 +97,6 @@
 			<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan" table="ACCOUNTING_EVENT">
 
 			</class-descriptor>	
-		
-		
 	
 		<!-- ************************************************************************************************************ -->
 		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent -->
@@ -361,3 +367,24 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode" table="PAYMENT_CODE">
 	</class-descriptor>
 	
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption" table="GRATUITY_EXEMPTION">
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption" />
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption" />
+</class-descriptor>	
+
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption" table="GRATUITY_EXEMPTION">
+	
+	</class-descriptor>	
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption" table="GRATUITY_EXEMPTION">
+	
+	</class-descriptor>	

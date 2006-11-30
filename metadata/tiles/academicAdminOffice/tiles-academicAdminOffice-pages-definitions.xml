@@ -151,6 +151,19 @@
 	<definition name="payments.management.paymentConfirmed" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/paymentConfirmed.jsp"/>
 	</definition>
+	
+	<definition name="payments.management.gratuityExemptions.showGratuityEvents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/gratuityExemptions/showGratuityEvents.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.gratuityExemptions.create" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/gratuityExemptions/create.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.gratuityExemptions.view" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/gratuityExemptions/view.jsp"/>
+	</definition>
+	
 	<!-- ************************************* -->
 	
 </tiles-definitions>

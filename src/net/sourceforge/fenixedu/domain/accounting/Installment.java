@@ -110,7 +110,7 @@ public abstract class Installment extends Installment_Base {
     }
 
     protected Money calculateAmountWithDiscount(BigDecimal discountPercentage) {
-	return getAmount().multiply(BigDecimal.valueOf(1).subtract(discountPercentage));
+	return getAmount().multiply(BigDecimal.ONE.subtract(discountPercentage));
     }
 
     public int getOrder() {

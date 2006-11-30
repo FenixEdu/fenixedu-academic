@@ -23,7 +23,7 @@
 <logic:iterate id="postingRule" name="postingRules">
 	<tr>
 		<td colspan="2" align="left">
-		<h3><bean:message name="postingRule" property="eventType.name"
+		<h3><bean:message name="postingRule" property="eventType.qualifiedName"
 			bundle="ENUMERATION_RESOURCES" /></h3>
 		<hr />
 		</td>

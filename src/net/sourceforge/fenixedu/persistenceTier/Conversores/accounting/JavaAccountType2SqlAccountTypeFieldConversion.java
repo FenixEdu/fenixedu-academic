@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.persistenceTier.Conversores;
+package net.sourceforge.fenixedu.persistenceTier.Conversores.accounting;
 
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 

@@ -16,7 +16,7 @@
 	
 	<logic:messagesPresent message="true">
 		<ul>
-			<html:messages id="messages" message="true">
+			<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>

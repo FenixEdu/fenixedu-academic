@@ -17,13 +17,14 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
 import dml.runtime.RelationAdapter;
 
-public class GratuityEvent extends GratuityEvent_Base {
+public abstract class GratuityEvent extends GratuityEvent_Base {
 
     static {
 
@@ -32,7 +33,8 @@ public class GratuityEvent extends GratuityEvent_Base {
 	    public void beforeAdd(Event event, Person person) {
 		if (event instanceof GratuityEvent) {
 		    final GratuityEvent gratuityEvent = (GratuityEvent) event;
-		    if (gratuityEvent.getStudentCurricularPlan().hasGratuityEvent(gratuityEvent.getExecutionYear())) {
+		    if (gratuityEvent.getStudentCurricularPlan().hasGratuityEvent(
+			    gratuityEvent.getExecutionYear())) {
 			throw new DomainException(
 				"error.accounting.events.gratuity..GratuityEvent.person.already.has.gratuity.event.for.student.curricular.plan.and.year");
 		    }
@@ -44,12 +46,6 @@ public class GratuityEvent extends GratuityEvent_Base {
 
     protected GratuityEvent() {
 	super();
-    }
-
-    public GratuityEvent(AdministrativeOffice administrativeOffice, Person person,
-	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	this();
-	init(administrativeOffice, person, studentCurricularPlan, executionYear);
     }
 
     protected void init(AdministrativeOffice administrativeOffice, Person person,
@@ -87,12 +83,12 @@ public class GratuityEvent extends GratuityEvent_Base {
 	return getExecutionDegree().getDegreeCurricularPlan().getDegree().getUnit();
     }
 
-    private ExecutionDegree getExecutionDegree() {
+    public ExecutionDegree getExecutionDegree() {
 	return getStudentCurricularPlan().getDegreeCurricularPlan().getExecutionDegreeByYear(
 		getExecutionYear());
     }
 
-    private Degree getDegree() {
+    public Degree getDegree() {
 	return getExecutionDegree().getDegree();
     }
 
@@ -139,6 +135,31 @@ public class GratuityEvent extends GratuityEvent_Base {
 
     public BigDecimal getTotalEctsCreditsForRegistration() {
 	return getRegistration().getTotalEctsCredits(getExecutionYear());
+    }
+
+    public boolean canRemoveExemption(final DateTime when) {
+	if (hasGratuityExemption()) {
+	    if (isClosed()) {
+	    return calculatePayedAmount().greaterOrEqualThan(calculateTotalAmountToPayWithoutDiscount(when));
+	    }
+	}
+	return true;
+    }
+
+    private Money calculateTotalAmountToPayWithoutDiscount(final DateTime when) {
+	return getPostingRule(when).calculateTotalAmountToPay(this, when, false);
+    }
+
+    public boolean isGratuityExemptionAvailable() {
+	return hasGratuityExemption();
+    }
+
+    public boolean isGratuityExemptionNotAvailable() {
+	return !hasGratuityExemption();
+    }
+    
+    public boolean canApplyExemption() {
+	return true;
     }
 
 }

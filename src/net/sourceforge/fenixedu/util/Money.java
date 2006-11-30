@@ -35,7 +35,7 @@ public class Money implements Comparable<Money>, Serializable {
     public BigDecimal getAmount() {
 	return amount;
     }
-    
+
     public String getAmountAsString() {
 	return toPlainString();
     }
@@ -46,7 +46,7 @@ public class Money implements Comparable<Money>, Serializable {
 
     @Override
     public boolean equals(Object obj) {
-	return this.amount.equals(obj);
+	return (obj instanceof Money) ? compareTo((Money) obj) == 0 : false;
     }
 
     @Override
