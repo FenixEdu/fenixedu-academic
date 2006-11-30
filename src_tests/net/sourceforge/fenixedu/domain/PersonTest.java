@@ -237,7 +237,7 @@ public class PersonTest extends DomainTestBase {
 				documentType, sexo, username);
 
 		assertEquals(person.getNome(), nome);
-		assertEquals(person.getNumeroDocumentoIdentificacao(),
+		assertEquals(person.getDocumentIdNumber(),
 				numDocumentoIdentificacao);
 		assertEquals(person.getIdDocumentType(), documentType);
 		assertEquals(person.getGender(), sexo);
@@ -252,12 +252,12 @@ public class PersonTest extends DomainTestBase {
 		assertEquals(person.getUsername(), username);
 		assertEquals(person.getNome(), nome);
 		assertEquals(person.getGender(), Gender.MALE);
-		assertEquals(person.getMorada(), address);
-		assertEquals(person.getTelefone(), telefone);
-		assertEquals(person.getTelemovel(), telemovel);
-		assertEquals(person.getEnderecoWeb(), enderecoWeb);
+		assertEquals(person.getAddress(), address);
+		assertEquals(person.getPhone(), telefone);
+		assertEquals(person.getMobile(), telemovel);
+		assertEquals(person.getWebAddress(), enderecoWeb);
 		assertEquals(person.getEmail(), email);
-		assertEquals(person.getNumeroDocumentoIdentificacao(),
+		assertEquals(person.getDocumentIdNumber(),
 				numDocumentoIdentificacao);
 		assertEquals(person.getIdDocumentType(), IDDocumentType.EXTERNAL);
 		assertEquals(person.getAvailableEmail(), Boolean.FALSE);
@@ -287,9 +287,9 @@ public class PersonTest extends DomainTestBase {
 				+ telemovel, "new" + enderecoWeb, "new" + email);
 
 		assertEquals(person.getNome(), "new" + nome);
-		assertEquals(person.getMorada(), "new" + address);
-		assertEquals(person.getTelefone(), "new" + telefone);
-		assertEquals(person.getEnderecoWeb(), "new" + enderecoWeb);
+		assertEquals(person.getAddress(), "new" + address);
+		assertEquals(person.getPhone(), "new" + telefone);
+		assertEquals(person.getWebAddress(), "new" + enderecoWeb);
 		assertEquals(person.getEmail(), "new" + email);
 
 	}
@@ -579,44 +579,44 @@ public class PersonTest extends DomainTestBase {
 		assertEquals(person.getAvailableEmail(), availableEmail);
 		assertEquals(person.getAvailablePhoto(), availablePhoto);
 		assertEquals(person.getAvailableWebSite(), availableWebSite);
-		assertEquals(person.getCodigoFiscal(), codigoFiscal);
-		assertEquals(person.getCodigoPostal(), codigoPostal);
-		assertEquals(person.getConcelhoMorada(), concelhoMorada);
-		assertEquals(person.getConcelhoNaturalidade(), concelhoNaturalidade);
-		assertEquals(person.getDataEmissaoDocumentoIdentificacao(), dataEmissao);
-		assertEquals(person.getDataValidadeDocumentoIdentificacao(),
+		assertEquals(person.getFiscalCode(), codigoFiscal);
+		assertEquals(person.getAreaCode(), codigoPostal);
+		assertEquals(person.getDistrictSubdivisionOfResidence(), concelhoMorada);
+		assertEquals(person.getDistrictSubdivisionOfBirth(), concelhoNaturalidade);
+		assertEquals(person.getEmissionDateOfDocumentId(), dataEmissao);
+		assertEquals(person.getExpirationDateOfDocumentId(),
 				dataValidade);
-		assertEquals(person.getDistritoMorada(), distritoMorada);
+		assertEquals(person.getDistrictOfResidence(), distritoMorada);
 		assertEquals(person.getEmail(), email);
-		assertEquals(person.getEnderecoWeb(), enderecoWeb);
-		assertEquals(person.getFreguesiaMorada(), freguesiaMorada);
-		assertEquals(person.getFreguesiaNaturalidade(), freguesiaNaturalidade);
+		assertEquals(person.getWebAddress(), enderecoWeb);
+		assertEquals(person.getParishOfResidence(), freguesiaMorada);
+		assertEquals(person.getParishOfBirth(), freguesiaNaturalidade);
 		assertEquals(person.getPais().getName(), "Portugal");
 		assertEquals(person.getPais().getCode(), "PT");
 		assertEquals(person.getPais().getNationality(), "Portuguese");
-		assertEquals(person.getLocalEmissaoDocumentoIdentificacao(),
+		assertEquals(person.getEmissionLocationOfDocumentId(),
 				localEmissaoDocumentoIdentificacao);
-		assertEquals(person.getLocalidade(), localidade);
-		assertEquals(person.getLocalidadeCodigoPostal(), localidadeCodigoPostal);
+		assertEquals(person.getArea(), localidade);
+		assertEquals(person.getAreaOfAreaCode(), localidadeCodigoPostal);
 		assertEquals(person.getMaritalStatus(), maritalStatus);
-		assertEquals(person.getMorada(), address);
+		assertEquals(person.getAddress(), address);
 		if (country == null) {
 			assertEquals(person.getNacionalidade(), nacionalidade);
 		} else {
 			assertEquals(person.getNacionalidade(), person.getPais()
 					.getNationality());
 		}
-		assertEquals(person.getNascimento(), dataNascimento);
+		assertEquals(person.getDateOfBirth(), dataNascimento);
 		assertEquals(person.getNome(), nome);
-		assertEquals(person.getNomeMae(), nomeMae);
-		assertEquals(person.getNomePai(), nomePai);
-		assertEquals(person.getNumContribuinte(), numContribuinte);
-		assertEquals(person.getNumeroDocumentoIdentificacao(),
+		assertEquals(person.getNameOfMother(), nomeMae);
+		assertEquals(person.getNameOfFather(), nomePai);
+		assertEquals(person.getSocialSecurityNumber(), numContribuinte);
+		assertEquals(person.getDocumentIdNumber(),
 				numDocumentoIdentificacao);
-		assertEquals(person.getProfissao(), profissao);
+		assertEquals(person.getProfession(), profissao);
 		assertEquals(person.getGender(), sexo);
-		assertEquals(person.getTelefone(), telefone);
-		assertEquals(person.getTelemovel(), telemovel);
+		assertEquals(person.getPhone(), telefone);
+		assertEquals(person.getMobile(), telemovel);
 		assertEquals(person.getIdDocumentType(), documentType);
 		assertEquals(person.getWorkPhone(), workPhone);
 

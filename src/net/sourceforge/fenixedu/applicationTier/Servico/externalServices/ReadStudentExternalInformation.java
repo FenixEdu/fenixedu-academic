@@ -243,15 +243,15 @@ public class ReadStudentExternalInformation extends Service
 	{
 		InfoExternalPersonInfo info = new InfoExternalPersonInfo();
 		info.setAddress(this.buildInfoExternalAdressInfo(person));
-		info.setBirthday(DateFormatUtil.format("yyyy-MM-dd", person.getNascimento()));
-		info.setCelularPhone(person.getTelemovel());
+		info.setBirthday(DateFormatUtil.format("yyyy-MM-dd", person.getDateOfBirth()));
+		info.setCelularPhone(person.getMobile());
 		info.setCitizenship(this.builsExternalCitizenshipInfo(person));
 		info.setEmail(person.getEmail());
-		info.setFiscalNumber(person.getNumContribuinte());
+		info.setFiscalNumber(person.getSocialSecurityNumber());
 		info.setIdentification(this.buildExternalIdentificationInfo(person));
 		info.setName(person.getNome());
 		info.setNationality(person.getNacionalidade());
-		info.setPhone(person.getTelefone());
+		info.setPhone(person.getPhone());
 		info.setSex(person.getGender().toString());
 
 		return info;
@@ -265,18 +265,18 @@ public class ReadStudentExternalInformation extends Service
 	{
 		InfoExternalIdentificationInfo info = new InfoExternalIdentificationInfo();
 		info.setDocumentType(person.getIdDocumentType().toString());
-		info.setNumber(person.getNumeroDocumentoIdentificacao());
-		if (person.getDataEmissaoDocumentoIdentificacao() != null)
+		info.setNumber(person.getDocumentIdNumber());
+		if (person.getEmissionDateOfDocumentId() != null)
 		{
-			info.setEmitionDate(DateFormatUtil.format("yyyy-MM-dd", person.getDataEmissaoDocumentoIdentificacao()));
+			info.setEmitionDate(DateFormatUtil.format("yyyy-MM-dd", person.getEmissionDateOfDocumentId()));
 		}
-		if (person.getDataValidadeDocumentoIdentificacao() != null)
+		if (person.getExpirationDateOfDocumentId() != null)
 		{
-			info.setExpiryDate(DateFormatUtil.format("yyyy-MM-dd", person.getDataValidadeDocumentoIdentificacao()));
+			info.setExpiryDate(DateFormatUtil.format("yyyy-MM-dd", person.getExpirationDateOfDocumentId()));
 		}
-		if (person.getLocalEmissaoDocumentoIdentificacao() != null)
+		if (person.getEmissionLocationOfDocumentId() != null)
 		{
-			info.setEmitionLocal(person.getLocalEmissaoDocumentoIdentificacao());
+			info.setEmitionLocal(person.getEmissionLocationOfDocumentId());
 		}
 
 		return info;
@@ -289,8 +289,8 @@ public class ReadStudentExternalInformation extends Service
 	private InfoExternalCitizenshipInfo builsExternalCitizenshipInfo(Person person)
 	{
 		InfoExternalCitizenshipInfo info = new InfoExternalCitizenshipInfo();
-		info.setArea(person.getFreguesiaNaturalidade());
-		info.setCounty(person.getConcelhoNaturalidade());
+		info.setArea(person.getParishOfBirth());
+		info.setCounty(person.getDistrictSubdivisionOfBirth());
 
 		return info;
 	}
@@ -302,9 +302,9 @@ public class ReadStudentExternalInformation extends Service
 	private InfoExternalAdressInfo buildInfoExternalAdressInfo(Person person)
 	{
 		InfoExternalAdressInfo info = new InfoExternalAdressInfo();
-		info.setPostalCode(person.getCodigoPostal());
-		info.setStreet(person.getMorada());
-		info.setTown(person.getLocalidade());
+		info.setPostalCode(person.getAreaCode());
+		info.setStreet(person.getAddress());
+		info.setTown(person.getArea());
 
 		return info;
 	}

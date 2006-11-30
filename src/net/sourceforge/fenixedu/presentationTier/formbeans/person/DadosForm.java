@@ -489,12 +489,12 @@ public final class DadosForm extends ActionForm {
 
     public void setForm(Person pessoa) {
         setCodigoInterno(pessoa.getIdInternal().intValue());
-        setNumeroDocumentoIdentificacao(pessoa.getNumeroDocumentoIdentificacao());
+        setNumeroDocumentoIdentificacao(pessoa.getDocumentIdNumber());
         setTipoDocumentoIdentificacao(String.valueOf(pessoa.getIdDocumentType().toString()));
-        setLocalEmissaoDocumentoIdentificacao(pessoa.getLocalEmissaoDocumentoIdentificacao());
+        setLocalEmissaoDocumentoIdentificacao(pessoa.getEmissionLocationOfDocumentId());
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(pessoa.getDataValidadeDocumentoIdentificacao());
+        calendar.setTime(pessoa.getExpirationDateOfDocumentId());
         setDiaValidadeDocumentoIdentificacao(calendar.get(Calendar.DAY_OF_MONTH));
         setMesValidadeDocumentoIdentificacao(calendar.get(Calendar.MONTH));
         setAnoValidadeDocumentoIdentificacao(calendar.get(Calendar.YEAR));
@@ -505,27 +505,27 @@ public final class DadosForm extends ActionForm {
          * setMaritalStatus(pessoa.getMaritalStatus());
          */
         Calendar calendar2 = Calendar.getInstance();
-        calendar2.setTime(pessoa.getNascimento());
+        calendar2.setTime(pessoa.getDateOfBirth());
         setDiaNascimento(calendar.get(Calendar.DAY_OF_MONTH));
         setMesNascimento(calendar.get(Calendar.MONTH));
         setAnoNascimento(calendar.get(Calendar.YEAR));
-        setNomePai(pessoa.getNomePai());
-        setNomeMae(pessoa.getNomeMae());
-        setFreguesiaNaturalidade(pessoa.getFreguesiaNaturalidade());
-        setConcelhoNaturalidade(pessoa.getConcelhoNaturalidade());
-        setDistritoNaturalidade(pessoa.getDistritoNaturalidade());
-        setMorada(pessoa.getMorada());
-        setLocalidade(pessoa.getLocalidade());
-        setCodigoPostal(pessoa.getCodigoPostal());
-        setFreguesiaMorada(pessoa.getFreguesiaMorada());
-        setConcelhoMorada(pessoa.getConcelhoMorada());
-        setDistritoMorada(pessoa.getDistritoMorada());
-        setTelefone(pessoa.getTelefone());
-        setTelemovel(pessoa.getTelemovel());
+        setNomePai(pessoa.getNameOfFather());
+        setNomeMae(pessoa.getNameOfMother());
+        setFreguesiaNaturalidade(pessoa.getParishOfBirth());
+        setConcelhoNaturalidade(pessoa.getDistrictSubdivisionOfBirth());
+        setDistritoNaturalidade(pessoa.getDistrictOfBirth());
+        setMorada(pessoa.getAddress());
+        setLocalidade(pessoa.getArea());
+        setCodigoPostal(pessoa.getAreaCode());
+        setFreguesiaMorada(pessoa.getParishOfResidence());
+        setConcelhoMorada(pessoa.getDistrictSubdivisionOfResidence());
+        setDistritoMorada(pessoa.getDistrictOfResidence());
+        setTelefone(pessoa.getPhone());
+        setTelemovel(pessoa.getMobile());
         setEmail(pessoa.getEmail());
-        setNumContribuinte(pessoa.getNumContribuinte());
-        setCodigoFiscal(pessoa.getCodigoFiscal());
-        setEnderecoInternet(pessoa.getEnderecoWeb());
+        setNumContribuinte(pessoa.getSocialSecurityNumber());
+        setCodigoFiscal(pessoa.getFiscalCode());
+        setEnderecoInternet(pessoa.getWebAddress());
         setUsername(pessoa.getUsername());
         setPassword(pessoa.getPassword());
     }

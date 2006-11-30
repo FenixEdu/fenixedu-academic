@@ -323,12 +323,12 @@ public class Person extends Person_Base {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.getLoginAliasOrderByImportance() : new HashSet<LoginAlias>();
     }
-
+    
     public Set<LoginAlias> getLoginAlias() {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.getAliasSet() : new HashSet<LoginAlias>();
-    }
-
+    }    
+    
     public boolean hasUsername(String username) {
 	Login login = getLoginIdentification();
 	return (login != null) ? login.hasUsername(username) : false;
@@ -415,11 +415,11 @@ public class Person extends Person_Base {
 	    throw new DomainException("error.person.invalidIDPassword");
 	}
 
-	if (getFiscalCode() != null && getCodigoFiscal().equalsIgnoreCase(newPassword)) {
+	if (getFiscalCode() != null && getFiscalCode().equalsIgnoreCase(newPassword)) {
 	    throw new DomainException("error.person.invalidFiscalCodePassword");
 	}
 
-	if (getSocialSecurityNumber() != null && getNumContribuinte().equalsIgnoreCase(newPassword)) {
+	if (getSocialSecurityNumber() != null && getSocialSecurityNumber().equalsIgnoreCase(newPassword)) {
 	    throw new DomainException("error.person.invalidTaxPayerPassword");
 	}
 
@@ -440,6 +440,7 @@ public class Person extends Person_Base {
     }
 
     public Role getPersonRole(RoleType roleType) {
+
 	for (Role role : this.getPersonRoles()) {
 	    if (role.getRoleType().equals(roleType)) {
 		return role;
@@ -1021,7 +1022,6 @@ public class Person extends Person_Base {
 		    && !verifiesDependencies(person, newRole)) {
 		throw new DomainException("error.person.addingInvalidRole", newRole.getRoleType()
 			.toString());
-
 	    }
 	}
 
@@ -1030,8 +1030,8 @@ public class Person extends Person_Base {
 	    if (person != null && insertedRole != null) {
 		addDependencies(insertedRole, person);
 		person.addAlias(insertedRole);
-		person.updateIstUsername();
-	    }
+	    person.updateIstUsername();
+	}
 	}
 
 	@Override
@@ -1039,16 +1039,16 @@ public class Person extends Person_Base {
 	    if (person != null && roleToBeRemoved != null
 		    && person.hasRole(roleToBeRemoved.getRoleType())) {
 		removeDependencies(person, roleToBeRemoved);
+		}
 	    }
-	}
 
 	@Override
 	public void afterRemove(Role removedRole, Person person) {
 	    if (person != null && removedRole != null) {
-		person.removeAlias(removedRole);
-		person.updateIstUsername();
-	    }
+	    person.removeAlias(removedRole);
+	    person.updateIstUsername();
 	}
+	    }
 
 	private static Boolean verifiesDependencies(Person person, Role role) {
 	    switch (role.getRoleType()) {
@@ -1057,7 +1057,6 @@ public class Person extends Person_Base {
 	    case DEPARTMENT_MEMBER:
 	    case RESEARCHER:
 		return person.hasRole(RoleType.TEACHER);
-
 	    case COORDINATOR:
 	    case DEGREE_ADMINISTRATIVE_OFFICE:
 	    case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
@@ -1068,10 +1067,8 @@ public class Person extends Person_Base {
 	    case CREDITS_MANAGER:
 	    case DEPARTMENT_ADMINISTRATIVE_OFFICE:
 		return person.hasRole(RoleType.EMPLOYEE);
-
 	    case DELEGATE:
 		return person.hasRole(RoleType.STUDENT);
-
 	    case GRANT_OWNER:
 	    case MESSAGING:
 	    case ALUMNI:
@@ -1148,7 +1145,7 @@ public class Person extends Person_Base {
 	private static void addRoleIfNotPresent(Person person, RoleType roleType) {
 	    if (!person.hasRole(roleType)) {
 		person.addPersonRoleByRoleType(roleType);
-	    }
+    }
 	}
     }
 
