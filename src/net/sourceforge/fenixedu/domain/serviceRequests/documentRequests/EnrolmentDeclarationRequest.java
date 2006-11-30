@@ -59,12 +59,6 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
     }
 
     @Override
-    protected void assertProcessingStatePreConditions() throws DomainException {
-	// TODO Auto-generated method stub
-	
-    }
-
-    @Override
     public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.ENROLMENT_DECLARATION;
     }
