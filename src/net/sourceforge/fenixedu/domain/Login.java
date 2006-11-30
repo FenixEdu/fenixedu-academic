@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
@@ -128,6 +129,24 @@ public class Login extends Login_Base {
 	return result;
     }
 
+    public List<LoginAlias> getAllRoleLoginAlias() {
+	return readAllLoginAliasByType(LoginAliasType.ROLE_TYPE_ALIAS);
+    }
+
+    public List<LoginAlias> getAllCustomLoginAlias() {
+	return readAllLoginAliasByType(LoginAliasType.CUSTOM_ALIAS);
+    }
+
+    public List<LoginAlias> readAllLoginAliasByType(LoginAliasType aliasType) {
+	List<LoginAlias> result = new ArrayList<LoginAlias>();
+	for (LoginAlias loginAlias : getAlias()) {
+	    if (loginAlias.getType().equals(aliasType)) {
+		result.add(loginAlias);
+	    }
+	}
+	return result;
+    }
+
     public Set<LoginAlias> getLoginAliasOrderByImportance() {
 	Set<LoginAlias> result = new TreeSet<LoginAlias>(
 		LoginAlias.COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS);
@@ -155,6 +174,20 @@ public class Login extends Login_Base {
 	return null;
     }
 
+    public List<LoginPeriod> getLoginPeriodsWithoutInvitationPeriods() {
+	Person person = getUser().getPerson();
+	Login login = person.getLoginIdentification();
+	List<LoginPeriod> loginPeriods = login.getLoginPeriods();
+	for (Invitation invitation : person.getInvitationsOrderByDate()) {
+	    LoginPeriod period = login.readLoginPeriodByTimeInterval(invitation.getBeginDate(),
+		    invitation.getEndDate());
+	    if (period != null) {
+		loginPeriods.remove(period);
+	    }
+	}
+	return loginPeriods;
+    }
+
     /**
          * This map is a temporary solution until DML provides indexed
          * relations.
@@ -167,7 +200,7 @@ public class Login extends Login_Base {
 	// Temporary solution until DML provides indexed relations.
 	final String lowerCaseUsername = username.toLowerCase();
 	final SoftReference<Login> loginReference = loginMap.get(lowerCaseUsername);
-	
+
 	if (loginReference != null) {
 	    final Login login = loginReference.get();
 	    if (login != null && login.getRootDomainObject() == RootDomainObject.getInstance()
@@ -180,12 +213,13 @@ public class Login extends Login_Base {
 	// *** end of hack
 
 	for (final LoginAlias loginAlias : RootDomainObject.getInstance().getLoginAlias()) {
-	    
-	    // Temporary solution until DML provides indexed relations.	    
-	    if (loginAlias.getLogin().isOpened()) {		
+
+	    // Temporary solution until DML provides indexed relations.
+	    if (loginAlias.getLogin().isOpened()) {
 		final String lowerCaseLoginUsername = loginAlias.getAlias().toLowerCase();
 		if (!loginMap.containsKey(lowerCaseLoginUsername)) {
-		    loginMap.put(lowerCaseLoginUsername, new SoftReference<Login>(loginAlias.getLogin()));
+		    loginMap
+			    .put(lowerCaseLoginUsername, new SoftReference<Login>(loginAlias.getLogin()));
 		}
 		// *** end of hack
 
@@ -203,8 +237,7 @@ public class Login extends Login_Base {
 		&& !person.hasRole(RoleType.STUDENT) && !person.hasRole(RoleType.ALUMNI)
 		&& !person.hasRole(RoleType.CANDIDATE)
 		&& !person.hasRole(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)
-		&& !person.hasRole(RoleType.PROJECTS_MANAGER)
-		&& !person.hasRole(RoleType.MANAGER)) {
+		&& !person.hasRole(RoleType.PROJECTS_MANAGER) && !person.hasRole(RoleType.MANAGER)) {
 
 	    // minusDays(1) -> This is for person dont make login today
 	    YearMonthDay currentDate = new YearMonthDay().minusDays(1);
@@ -217,7 +250,7 @@ public class Login extends Login_Base {
     }
 
     public void openLoginIfNecessary(RoleType roleType) {
-	switch (roleType) {	
+	switch (roleType) {
 	case MANAGER:
 	case TEACHER:
 	case EMPLOYEE:
@@ -225,16 +258,17 @@ public class Login extends Login_Base {
 	case ALUMNI:
 	case CANDIDATE:
 	case INSTITUCIONAL_PROJECTS_MANAGER:
-	case PROJECTS_MANAGER:	
+	case PROJECTS_MANAGER:
 	    for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
 		if (loginPeriod.getEndDate() == null) {
 		    return;
 		}
 	    }
-	    // minusDays(2) -> This is for prevent errors in closeLoginIfNecessary (setEndDate line).
+	    // minusDays(2) -> This is for prevent errors in
+	    // closeLoginIfNecessary (setEndDate line).
 	    addLoginPeriods(new LoginPeriod(new YearMonthDay().minusDays(2), this));
 	    break;
-	    
+
 	default:
 	    break;
 	}
@@ -244,18 +278,18 @@ public class Login extends Login_Base {
 	if (roleType != null) {
 	    for (final Iterator<LoginAlias> iter = getAlias().iterator(); iter.hasNext();) {
 		final LoginAlias loginAlias = iter.next();
-		if (loginAlias.getRoleType() == roleType) {
+		if (loginAlias.getRoleType() != null && loginAlias.getRoleType().equals(roleType)) {
 		    iter.remove();
 		    loginAlias.delete();
 		}
 	    }
 	}
     }
-    
+
     private void checkIfUserAlreadyHaveLogin(User user) {
 	if (user != null) {
 	    Login login = user.readUserLoginIdentification();
-	    if(login != null && !login.equals(this)) {
+	    if (login != null && !login.equals(this)) {
 		throw new DomainException("error.user.login.already.exists");
 	    }
 	}
