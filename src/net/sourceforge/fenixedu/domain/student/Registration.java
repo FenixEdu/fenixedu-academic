@@ -1540,6 +1540,16 @@ public class Registration extends Registration_Base {
 	return getActiveStudentCurricularPlan().getDegreeCurricularPlan();
     }
 
+    public boolean hasAnyNotPayedGratuityEvents() {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.hasAnyNotPayedGratuityEvents()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     public boolean hasToPayGratuityOrInsurance() {
 	if (getInterruptedStudies()) {
 	    return false;
