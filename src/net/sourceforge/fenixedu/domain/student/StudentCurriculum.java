@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 
 public class StudentCurriculum implements Serializable {
 
@@ -50,63 +50,120 @@ public class StudentCurriculum implements Serializable {
         }
     }
 
-    public static class Entry implements Serializable {
-	public boolean isExtraCurricularEnrolment() {
+    public static abstract class Entry implements Serializable {
+	public boolean isEnrolmentEntry() {
 	    return false;
 	}
-
-	public boolean getExtraCurricularEnrolment() {
-	    return isExtraCurricularEnrolment();
+	public boolean getIsEnrolmentEntry() {
+	    return isEnrolmentEntry();
+	}
+	public boolean isNotNeedToEnrolEntry() {
+	    return false;
+	}
+	public boolean getIsNotNeedToEnrolEntry() {
+	    return isNotNeedToEnrolEntry();
+	}
+	public boolean isEquivalentEnrolmentEntry() {
+	    return false;
+	}
+	public boolean getIsEquivalentEnrolmentEntry() {
+	    return isEquivalentEnrolmentEntry();
+	}
+	public boolean isExtraCurricularEnrolmentEntry() {
+	    return false;
+	}
+	public boolean getIsExtraCurricularEnrolmentEntry() {
+	    return isExtraCurricularEnrolmentEntry();
 	}
     }
 
-    public static class EnrolmentEntry extends Entry {
+    public static class SimpleEntry extends Entry {
+	private final DomainReference<CurricularCourse> curricularCourseDomainReference;
+
+        public SimpleEntry(final CurricularCourse curricularCourse) {
+            super();
+            this.curricularCourseDomainReference = new DomainReference<CurricularCourse>(curricularCourse);
+        }
+
+        public CurricularCourse getCurricularCourse() {
+            return curricularCourseDomainReference.getObject();
+        }
+    }
+
+    public static class EnrolmentEntry extends SimpleEntry {
         private final DomainReference<Enrolment> enrolmentDomainReference;
 
-        public EnrolmentEntry(final Enrolment enrolment) {
-            super();
+        public EnrolmentEntry(final CurricularCourse curricularCourse, final Enrolment enrolment) {
+            super(curricularCourse);
             this.enrolmentDomainReference = new DomainReference<Enrolment>(enrolment);
         }
+
+        @Override
+	public boolean isEnrolmentEntry() {
+            return true;
+	}
 
         public Enrolment getEnrolment() {
             return enrolmentDomainReference.getObject();
         }
     }
 
-    public static class EquivalentEnrolmentEntry extends Entry {
-        private final DomainReference<CurricularCourse> curricularCourseDomainReference;
-        private final Collection<DomainReference<Enrolment>> enrolmentDomainReferences = new ArrayList<DomainReference<Enrolment>>();
+    public static class NotNeedToEnrolEntry extends SimpleEntry {
+	private final DomainReference<NotNeedToEnrollInCurricularCourse> notNeedToEnrolDomainReference;
 
-        public EquivalentEnrolmentEntry(final CurricularCourse curricularCourse, final Collection<Enrolment> enrolments) {
-            super();
-            this.curricularCourseDomainReference = new DomainReference<CurricularCourse>(curricularCourse);
-            for (final Enrolment enrolment : enrolments) {
-                enrolmentDomainReferences.add(new DomainReference<Enrolment>(enrolment));
-            }
-        }
-
-        public CurricularCourse getCurricularCourse() {
-            return curricularCourseDomainReference.getObject();
-        }
-
-        public Collection<Enrolment> getEnrolments() {
-            final Collection<Enrolment> enrolments = new ArrayList<Enrolment>();
-            for (final DomainReference<Enrolment> enrolmentDomainReference : enrolmentDomainReferences) {
-                enrolments.add(enrolmentDomainReference.getObject());
-            }
-            return enrolments;
-        }
-    }
-
-    public static class ExtraCurricularEntry extends EnrolmentEntry {
-	public ExtraCurricularEntry(Enrolment enrolment) {
-	    super(enrolment);
+	public NotNeedToEnrolEntry(final CurricularCourse curricularCourse, final NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse) {
+	    super(curricularCourse);
+	    this.notNeedToEnrolDomainReference = new DomainReference<NotNeedToEnrollInCurricularCourse>(notNeedToEnrollInCurricularCourse);
 	}
 
 	@Override
-	public boolean isExtraCurricularEnrolment() {
+	public boolean isNotNeedToEnrolEntry() {
 	    return true;
 	}
+
+	public NotNeedToEnrollInCurricularCourse getNotNeedToEnrol() {
+	    return notNeedToEnrolDomainReference.getObject();
+	}
+    }
+
+    public static class EquivalentEnrolmentEntry extends Entry {
+        private final DomainReference<CurricularCourse> curricularCourseDomainReference;
+        private final Set<SimpleEntry> entries = new HashSet<SimpleEntry>();
+
+        public EquivalentEnrolmentEntry(final CurricularCourse curricularCourse) {
+            super();
+            this.curricularCourseDomainReference = new DomainReference<CurricularCourse>(curricularCourse);
+        }
+
+        @Override
+	public boolean isEquivalentEnrolmentEntry() {
+            return true;
+	}
+
+	public CurricularCourse getCurricularCourse() {
+            return curricularCourseDomainReference.getObject();
+        }
+	public Set<SimpleEntry> getEntries() {
+	    return entries;
+	}
+    }
+
+    public static class ExtraCurricularEnrolmentEntry extends Entry {
+        private final DomainReference<Enrolment> enrolmentDomainReference;
+
+        public ExtraCurricularEnrolmentEntry(final Enrolment enrolment) {
+            super();
+            this.enrolmentDomainReference = new DomainReference<Enrolment>(enrolment);
+        }
+
+        @Override
+        public boolean isExtraCurricularEnrolmentEntry() {
+            return true;
+        }
+
+        public Enrolment getEnrolment() {
+            return enrolmentDomainReference.getObject();
+        }
     }
 
     private final DomainReference<Registration> registrationDomainReference;
@@ -147,38 +204,79 @@ public class StudentCurriculum implements Serializable {
         final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
             if (curricularCourse.isActive(executionYear)) {
-
-                final Enrolment enrolment = findEnrolmentForSameCompetence(approvedEnrolments, curricularCourse);
-                if (enrolment != null) {
-                    entries.add(new EnrolmentEntry(enrolment));
-                    approvedEnrolments.remove(enrolment);
-                }
-
-                final Set<Enrolment> enrolments = findEquivalentEnrolments(approvedEnrolments, curricularCourse);
-                if (enrolments != null && !enrolments.isEmpty()) {
-                    entries.add(new EquivalentEnrolmentEntry(curricularCourse, enrolments));
-                    approvedEnrolments.removeAll(enrolments);
-                }
+        	final SimpleEntry simpleEntry = getSimpleEntry(entries, studentCurricularPlan, approvedEnrolments, curricularCourse);
+        	if (simpleEntry == null) {
+        	    final Set<SimpleEntry> simpleEntries = findEquivalentEnrolments(entries, studentCurricularPlan, approvedEnrolments, curricularCourse);
+        	    if (simpleEntries != null && !simpleEntries.isEmpty()) {
+        		entries.add(new EquivalentEnrolmentEntry(curricularCourse));
+        		for (final SimpleEntry otherSimpleEntry : simpleEntries) {
+        		    removeProcessedEnrolments(approvedEnrolments, otherSimpleEntry);
+        		}
+        	    }        	    
+        	} else {
+        	    entries.add(simpleEntry);
+        	    removeProcessedEnrolments(approvedEnrolments, simpleEntry);
+        	}
             }
         }
     }
 
-    private Set<Enrolment> findEquivalentEnrolments(final EnrolmentSet approvedEnrolments, final CurricularCourse curricularCourse) {
+    private void removeProcessedEnrolments(final EnrolmentSet approvedEnrolments, final SimpleEntry simpleEntry) {
+	if (simpleEntry.isEnrolmentEntry()) {
+	    final EnrolmentEntry enrolmentEntry = (EnrolmentEntry) simpleEntry;
+	    approvedEnrolments.remove(enrolmentEntry.getEnrolment());
+	}
+    }
+
+    private SimpleEntry getSimpleEntry(final Collection<Entry> entries, final StudentCurricularPlan studentCurricularPlan,
+	    final EnrolmentSet approvedEnrolments, final CurricularCourse curricularCourse) {
+        final Enrolment enrolment = findEnrolmentForSameCompetence(approvedEnrolments, curricularCourse);
+        if (enrolment != null) {
+            return new EnrolmentEntry(curricularCourse, enrolment);
+        } else {
+            final NotNeedToEnrollInCurricularCourse notNeedToEnrol = studentCurricularPlan.findNotNeddToEnrol(curricularCourse);
+            if (notNeedToEnrol != null && !hasBeenProcessed(entries, notNeedToEnrol)) {
+        	return new NotNeedToEnrolEntry(curricularCourse, notNeedToEnrol);
+            }
+        }
+        return null;
+    }
+
+    private boolean hasBeenProcessed(final Collection<Entry> entries, final NotNeedToEnrollInCurricularCourse notNeedToEnrol) {
+	for (final Entry entry : entries) {
+	    if (entry.isNotNeedToEnrolEntry()) {
+		final NotNeedToEnrolEntry notNeedToEnrolEntry = (NotNeedToEnrolEntry) entry;
+		if (notNeedToEnrol == notNeedToEnrolEntry.getNotNeedToEnrol()) {
+		    return true;
+		}
+	    } else if (entry.isEquivalentEnrolmentEntry()) {
+		final EquivalentEnrolmentEntry equivalentEnrolmentEntry = (EquivalentEnrolmentEntry) entry;
+		if (hasBeenProcessed((Collection) equivalentEnrolmentEntry.getEntries(), notNeedToEnrol)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    private Set<SimpleEntry> findEquivalentEnrolments(final Collection<Entry> entries, final StudentCurricularPlan studentCurricularPlan,
+	    final EnrolmentSet approvedEnrolments, final CurricularCourse curricularCourse) {
         for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalencesSet()) {
+            final Set<SimpleEntry> simpleEntries = new HashSet<SimpleEntry>();
             final EnrolmentSet workingApprovedEnrolments = approvedEnrolments.clone();
-            final Set<Enrolment> enrolments = new HashSet<Enrolment>();
             final Set<CurricularCourse> oldCurricularCourses = curricularCourseEquivalence.getOldCurricularCoursesSet();
             for (final CurricularCourse oldCurricularCourse : oldCurricularCourses) {
-                final Enrolment enrolment = findEnrolmentForSameCompetence(approvedEnrolments, oldCurricularCourse);
-                if (enrolment == null) {
-                    break;
-                } else {
-                    enrolments.add(enrolment);
-                    workingApprovedEnrolments.remove(enrolment);
-                }
+        	final SimpleEntry simpleEntry = getSimpleEntry(entries, studentCurricularPlan, workingApprovedEnrolments, oldCurricularCourse);
+        	if (simpleEntry == null) {
+        	    break;
+        	} else {
+        	    simpleEntries.add(simpleEntry);
+        	    removeProcessedEnrolments(workingApprovedEnrolments, simpleEntry);
+        	}
             }
-            if (oldCurricularCourses.size() == enrolments.size()) {
-                return enrolments;
+
+            if (oldCurricularCourses.size() == simpleEntries.size()) {
+        	return simpleEntries;
             }
         }
         return null;
@@ -200,7 +298,7 @@ public class StudentCurriculum implements Serializable {
 	    final StudentCurricularPlan studentCurricularPlan, final Set<Enrolment> approvedEnrolments) {
 	for (final Enrolment enrolment : approvedEnrolments) {
 	    if (enrolment.getStudentCurricularPlan() == studentCurricularPlan) {
-		entries.add(new ExtraCurricularEntry(enrolment));
+		entries.add(new ExtraCurricularEnrolmentEntry(enrolment));
 	    }
 	}
     }

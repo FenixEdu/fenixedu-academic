@@ -784,15 +784,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return false;
     }
 
-    protected boolean notNeedToEnroll(final CurricularCourse curricularCourse) {
-
-	for (NotNeedToEnrollInCurricularCourse needToEnrollInCurricularCourse : getNotNeedToEnrollCurricularCourses()) {
-	    CurricularCourse otherCourse = needToEnrollInCurricularCourse.getCurricularCourse();
+    public NotNeedToEnrollInCurricularCourse findNotNeddToEnrol(final CurricularCourse curricularCourse) {
+	for (NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse : getNotNeedToEnrollCurricularCoursesSet()) {
+	    final CurricularCourse otherCourse = notNeedToEnrollInCurricularCourse.getCurricularCourse();
 	    if ((curricularCourse == otherCourse) || haveSameCompetence(curricularCourse, otherCourse)) {
-		return true;
+		return notNeedToEnrollInCurricularCourse;
 	    }
 	}
-	return false;
+	return null;
+    }
+
+    protected boolean notNeedToEnroll(final CurricularCourse curricularCourse) {
+	return findNotNeddToEnrol(curricularCourse) != null;
     }
 
     private boolean haveSameCompetence(CurricularCourse course1, CurricularCourse course2) {
