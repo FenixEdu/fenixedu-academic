@@ -43,7 +43,7 @@
 		</html:link></p>
 		
 		<p>	
-			<bean:define id="loginPeriods" name="login" property="loginPeriodsWithoutInvitationPeriods"></bean:define>
+			<bean:define id="loginPeriods" name="login" property="loginPeriodsWithoutInvitationPeriods" />
 			<logic:notEmpty name="loginPeriods">							
 				<fr:view name="loginPeriods" schema="ViewLoginPeriod" >
 					<fr:layout name="tabular">

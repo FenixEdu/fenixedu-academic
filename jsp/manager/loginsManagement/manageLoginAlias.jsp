@@ -41,8 +41,8 @@
 	
 		<%-- Institutional Alias --%>
 		<p>	
-			<bean:define id="personInstitutionalAlias" name="login" property="institutionalLoginAlias"></bean:define>
-			<logic:notEmpty name="personInstitutionalAlias">			
+			<logic:notEmpty name="login" property="institutionalLoginAlias">			
+				<bean:define id="personInstitutionalAlias" name="login" property="institutionalLoginAlias"></bean:define>
 				<p><b><bean:message key="label.institutional.alias" bundle="MANAGER_RESOURCES"/></b></p>
 				<fr:view name="personInstitutionalAlias" schema="ViewInstitutionalLoginAlias" >
 					<fr:layout name="tabular">
@@ -64,9 +64,9 @@
 					</html:link>
 				</li>
 			</ul>
-		
-			<bean:define id="personRoleTypeAlias" name="login" property="allRoleLoginAlias"></bean:define>
-			<logic:notEmpty name="personRoleTypeAlias">						
+			
+			<bean:define id="personRoleTypeAlias" name="login" property="allRoleLoginAlias"></bean:define>		
+			<logic:notEmpty name="personRoleTypeAlias">										
 				<fr:view name="personRoleTypeAlias" schema="ViewRoleTypeLoginAlias" >
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
@@ -94,9 +94,9 @@
 					</html:link>
 				</li>
 			</ul>
-		
-			<bean:define id="personCustomAlias" name="login" property="allCustomLoginAlias"></bean:define>
-			<logic:notEmpty name="personCustomAlias">						
+			
+			<bean:define id="personCustomAlias" name="login" property="allCustomLoginAlias" />
+			<logic:notEmpty name="personCustomAlias">										
 				<fr:view name="personCustomAlias" schema="ViewInstitutionalLoginAlias" >
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>

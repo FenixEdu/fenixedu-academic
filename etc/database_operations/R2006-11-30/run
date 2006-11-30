@@ -32,3 +32,8 @@ execute "Functionalities Changes 2" changes-20061130123539.sql
 execute "Create Table Student Statutes" CreateTableStudentStatutes.sql
 execute "Create Login Periods Table" createLoginPeriodsTable.sql
 execute "Alter table Registration State" alterTableRegistrationState.sql
+
+execute "Alter table LoginPeriod" alterTableLoginPeriod.sql
+execute "Creating Table GratuityExemption" CreateTableGratuityExemption.sql
+execute "Changing Table AccountingEvent" AlterTableAccountingEvent.sql
+execute "Migrate GratuityEvents to DfaGratuityEvents" MigrateGratuityEventsToDfaGratuityEvents.sql
