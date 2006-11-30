@@ -756,5 +756,6 @@
 	</definition>
 	<definition name="prepare-create-new-login-time-interval" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/loginsManagement/createNewLoginPeriod.jsp" />
-	</definition>		
+	</definition>	
+		
 </tiles-definitions>

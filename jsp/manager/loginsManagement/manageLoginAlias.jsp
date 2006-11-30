@@ -31,6 +31,12 @@
 					<bean:message key="label.return" bundle="MANAGER_RESOURCES"/>
 				</html:link>
 			</li>
+			<li>
+				<html:link page="/loginsManagement.do?method=prepareManageLoginTimeIntervals" paramId="personID" paramName="login" paramProperty="user.person.idInternal">
+					<bean:message key="link.manage.login.time.intervals" bundle="MANAGER_RESOURCES"/>
+				</html:link>			
+			</li>
+			
 		</ul>
 	
 		<%-- Institutional Alias --%>
