@@ -27,9 +27,17 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
         this.setJustification(justification);
     }
 
+    public UnavailablePeriod(DateTime beginDate, DateTime endDate, String justification, Vigilant vigilant) {
+    	this();
+    	this.setVigilant(vigilant);
+    	this.setBeginDate(beginDate);
+        this.setEndDate(endDate);
+        this.setJustification(justification);
+    }
+    
     public void setBeginDate(DateTime begin) {
     	DateTime currentTime = new DateTime();
-    	if(begin.isAfter(currentTime) && (this.getEndDate()==null || this.getEndDate().isAfter(begin))) {
+    	if((isExamCoordinatorRequesting(this.getVigilant()) || begin.isAfter(currentTime)) && (this.getEndDate()==null || this.getEndDate().isAfter(begin))) {
     		super.setBeginDate(begin);
     	}
     	else { 

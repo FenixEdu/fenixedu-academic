@@ -12,9 +12,7 @@ public class CreateUnavailablePeriod extends Service {
     public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification)
             throws ExcepcaoPersistencia {
 
-        UnavailablePeriod unavailablePeriod = new UnavailablePeriod(begin, end, justification);
-        unavailablePeriod.setVigilant(vigilant);
-
+        new UnavailablePeriod(begin, end, justification,vigilant);
     }
 
 }
