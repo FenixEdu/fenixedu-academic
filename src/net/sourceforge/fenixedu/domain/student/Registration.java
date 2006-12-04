@@ -16,9 +16,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -48,7 +46,6 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -635,7 +632,7 @@ public class Registration extends Registration_Base {
     public static List<Registration> readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
 	    String studentName, String docIdNumber, IDDocumentType idType, Integer studentNumber) {
 
-	final List<Registration> students = new ArrayList();
+	final List<Registration> students = new ArrayList<Registration>();
 	final String studentNameToMatch = (studentName == null) ? null : studentName.replaceAll("%",
 		".*").toLowerCase();
 
@@ -675,7 +672,7 @@ public class Registration extends Registration_Base {
     }
 
     public static List<Registration> readRegistrationsByDegreeType(DegreeType degreeType) {
-	final List<Registration> students = new ArrayList();
+	final List<Registration> students = new ArrayList<Registration>();
 	for (final Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
 	    if (registration.getDegreeType().equals(degreeType)) {
 		students.add(registration);
@@ -1192,16 +1189,6 @@ public class Registration extends Registration_Base {
 	return getLastStudentCurricularPlanExceptPast().getLastCampus().getName();
     }
 
-    private DegreeCandidacy getDegreeCandidacy() {
-	return ((DegreeCandidacy) getStudentCandidacy());
-    }
-
-    private boolean isBolonhaDegreeOrIntegratedMaster() {
-	return (getDegreeType() == DegreeType.BOLONHA_DEGREE || getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)
-		&& (hasStudentCandidacy());
-
-    }
-
     @Override
     public Degree getDegree() {
 	if (super.getDegree() != null) {
@@ -1282,7 +1269,7 @@ public class Registration extends Registration_Base {
 
     public boolean isConcluded() {
 	return getActiveStateType() == RegistrationStateType.CONCLUDED
-		|| calculateEctsCredits() >= getDegreeType().getDefaultEctsCredits();
+		|| getEctsCredits() >= getDegreeType().getDefaultEctsCredits();
     }
 
     public YearMonthDay getConclusionDate() {
@@ -1291,131 +1278,15 @@ public class Registration extends Registration_Base {
     }
     
     public double getEctsCredits() {
-	return calculateEctsCredits();
-    }
-
-    private double calculateEctsCredits() {
-	return calculateEctsCredits(null);
-    }
-
-    private double calculateEctsCredits(final ExecutionYear mostRecentExecutionYearToConsider) {
-	double ectsCredits = 0;
-
-	// TODO: this is not sufficient, this does not take into account
-	// equivalences!!! must modify the domain model!
-	final ExecutionYear executionYear = mostRecentExecutionYearToConsider == null ? findMostRecenteExecutionYearWithEnrolments()
-		: mostRecentExecutionYearToConsider;
-	if (executionYear == null) {
-	    return 1;
-	}
-	final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
-	final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
-	final Set<CurricularCourse> curricularCoursesToDisplay = new TreeSet<CurricularCourse>(
-		CurricularCourse.CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME);
-	int nacc = 0;
-	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
-	    if (isActive(curricularCourse, executionYear)
-		    && isCurricularCourseApproved(curricularCourse)
-		    && !containsSameCurricularCours(curricularCourses, curricularCourse)) {
-		nacc++;
-		curricularCoursesToDisplay.add(curricularCourse);
-		curricularCourses.add(curricularCourse);
-		curricularCourses.addAll(curricularCourse.getEquivalentCurricularCoursesSet());
-		curricularCourses.addAll(curricularCourse.getOldCurricularCoursesSet());
-		for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse
-			.getOldCurricularCourseEquivalencesSet()) {
-		    curricularCourses.addAll(curricularCourseEquivalence.getOldCurricularCoursesSet());
-		    curricularCourses.add(curricularCourseEquivalence.getEquivalentCurricularCourse());
-		}
-		ectsCredits += curricularCourse.getEctsCreditsForCurricularYearCalculation();
-	    }
-	}
-
-	System.out.println("lastExecutionYear: " + executionYear.getYear() + "   ectsCredits: "
-		+ ectsCredits + "   nacc: " + nacc);
-	for (final CurricularCourse curricularCourse : curricularCoursesToDisplay) {
-	    System.out.println("\t" + curricularCourse.getName() + "   "
-		    + curricularCourse.getEctsCredits());
-	}
-
-	return ectsCredits;
-    }
-
-    public Set<CurricularCourse> getCurricularCoursesOfCurrentCurricularPlanThatTheStudentHasConcluded() {
-	final DegreeCurricularPlan degreeCurricularPlan = getActiveOrConcludedOrLastDegreeCurricularPlan();
-	final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
-	final Set<CurricularCourse> curricularCoursesToDisplay = new TreeSet<CurricularCourse>(
-		CurricularCourse.CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME);
-	final ExecutionYear executionYear = findMostRecenteExecutionYearWithEnrolments();
-	if (executionYear != null) {
-	    for (final CurricularCourse curricularCourse : degreeCurricularPlan
-		    .getCurricularCoursesSet()) {
-		if (isActive(curricularCourse, executionYear)
-			&& isCurricularCourseApproved(curricularCourse)
-			&& !containsSameCurricularCours(curricularCourses, curricularCourse)) {
-		    curricularCoursesToDisplay.add(curricularCourse);
-		    curricularCourses.add(curricularCourse);
-		    curricularCourses.addAll(curricularCourse.getEquivalentCurricularCoursesSet());
-		    curricularCourses.addAll(curricularCourse.getOldCurricularCoursesSet());
-		    for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse
-			    .getOldCurricularCourseEquivalencesSet()) {
-			curricularCourses.addAll(curricularCourseEquivalence
-				.getOldCurricularCoursesSet());
-			curricularCourses.add(curricularCourseEquivalence
-				.getEquivalentCurricularCourse());
-		    }
-		}
-	    }
-	}
-	return curricularCoursesToDisplay;
+	return new StudentCurriculum(this).getTotalEctsCredits(ExecutionYear.readCurrentExecutionYear());
     }
 
     public int getCurricularYear() {
-	return calculateCurricularYear(calculateEctsCredits());
+	return new StudentCurriculum(this).calculateCurricularYear(ExecutionYear.readCurrentExecutionYear());
     }
 
     public int getCurricularYear(ExecutionYear executionYear) {
-	return calculateCurricularYear(calculateEctsCredits(executionYear));
-    }
-
-    private int calculateCurricularYear(double ectsCredits) {
-	int degreeCurricularYears = getActiveOrConcludedOrLastStudentCurricularPlan()
-		.getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
-	int ectsCreditsCurricularYear = (int) Math.floor((((ectsCredits + 24) / 60) + 1));
-	return Math.min(ectsCreditsCurricularYear, degreeCurricularYears);
-    }
-
-    private boolean isActive(final CurricularCourse curricularCourse, final ExecutionYear executionYear) {
-        return curricularCourse.isActive(executionYear);
-    }
-
-    private ExecutionYear findMostRecenteExecutionYearWithEnrolments() {
-	ExecutionYear executionYear = null;
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-		final ExecutionYear enrolmentExecutionYear = enrolment.getExecutionPeriod()
-			.getExecutionYear();
-		if (executionYear == null || enrolmentExecutionYear.compareTo(executionYear) > 0) {
-		    executionYear = enrolmentExecutionYear;
-		}
-	    }
-	}
-	return executionYear;
-    }
-
-    private boolean containsSameCurricularCours(final Set<CurricularCourse> curricularCourses,
-	    CurricularCourse curricularCourse) {
-	final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
-	for (final CurricularCourse otherCurricularCourse : curricularCourses) {
-	    if (otherCurricularCourse == curricularCourse
-		    || (competenceCourse != null && competenceCourse == otherCurricularCourse
-			    .getCompetenceCourse())
-		    || curricularCourse.isEquivalent(otherCurricularCourse)
-		    || otherCurricularCourse.isEquivalent(curricularCourse)) {
-		return true;
-	    }
-	}
-	return false;
+	return new StudentCurriculum(this).calculateCurricularYear(executionYear);
     }
 
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
