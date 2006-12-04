@@ -217,8 +217,14 @@
 	</slot>			
 </schema>
 
+<schema name="student.StudentsSearchBean" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="number" key="label.studentNumber" />
+	<slot name="identificationNumber" key="label.identificationNumber.descriptive" />
+	<slot name="documentType" key="label.idDocumentType.descriptive" />
+</schema>
+
 <schema name="student.StudentsSearchBeanByNumber" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="number" key="label.studentNumber"/>
+	<slot name="number" key="label.studentNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="student.StudentsSearchBeanByNumberWithExecutionYear" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -422,3 +428,15 @@
 	</slot>
 </schema>
 
+<schema name="studentCurricularPlan.create" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.applicationTier.factoryExecutors.StudentCurricularPlanFactoryExecutor$StudentCurricularPlanCreator" >
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlansForCreateStudentCurricularPlan" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
+		<property name="format" value="${name}" />
+	</slot>
+</schema>
