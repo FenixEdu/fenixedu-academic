@@ -76,6 +76,16 @@
 		<fr:property name="contextRelative(enrol)" value="true"/>      	
 	</fr:layout>
 </fr:view>
+<logic:equal name="registration" property="active" value="true">
+<ul>
+	<li>
+		<html:link action="/addNewStudentCurricularPlan.do?method=prepareCreateSCP" paramName="registration" paramProperty="idInternal" paramId="registrationId">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.registration.addNewSCP" />
+		</html:link>
+	</li>
+</ul>
+</logic:equal>
+
 <br/>
 
 <logic:present name="registration" property="studentCandidacy">
