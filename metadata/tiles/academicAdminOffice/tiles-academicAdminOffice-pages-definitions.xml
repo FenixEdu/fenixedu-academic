@@ -55,9 +55,11 @@
     <definition name="student.showManageEnrolmentModel" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageEnrolmentModel.jsp"></put>
     </definition>      
-
     <definition name="student.showRegistrationStates" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageRegistrationState.jsp"></put>
+    </definition>      
+    <definition name="student.showCreateNewStudentCurricularPlan" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/createStudentCurricularPlan.jsp"></put>
     </definition>      
 
 	<!-- ************* Academic Service Requests Management ************* -->
@@ -168,6 +170,29 @@
 	
 	<definition name="payments.management.gratuityExemptions.view" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/gratuityExemptions/view.jsp"/>
+	</definition>
+
+	<!-- ************* Contributors ************* -->
+	<definition name="contributor.createContributorSuccess" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/createContributorSuccess.jsp"/>
+	</definition>
+	<definition name="contributor.createContributor" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/createContributor.jsp"/>
+	</definition>
+	<definition name="contributor.chooseContributor" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/chooseContributor.jsp"/>
+	</definition>
+	<definition name="contributor.visualizeContributor" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/visualizeContributor.jsp"/>
+	</definition>
+	<definition name="contributor.selectContributorFromList" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/selectContributorFromList.jsp"/>
+	</definition>
+	<definition name="contributor.editContributor" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/editContributor.jsp"/>
+	</definition>
+	<definition name="contributor.editContributorSuccess" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/editContributorSuccess.jsp"/>
 	</definition>
 	
 	<!-- ************************************* -->
