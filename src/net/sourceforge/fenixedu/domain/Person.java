@@ -998,7 +998,7 @@ public class Person extends Person_Base {
 
     private boolean hasParking() {
 	if (hasParkingParty()) {
-	    return getParkingParty().hasCar();
+	    return getParkingParty().hasAnyVehicles();
 	}
 	return false;
     }

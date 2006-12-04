@@ -19,148 +19,96 @@
 
 <!--  PARKING PARTY -->
 
-<logic:equal name="parkingParty" property="hasDriverLicense" value="true">
+<logic:notEmpty name="parkingParty" property="vehicles">
+<p class="mtop15 mbottom025"><strong><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES" /></strong></p>		
 <table class="tstyle1 thright thlight mtop025 mbottom1">
 	<tr>
 		<th><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES"/></th>
 		<td><bean:write name="parkingParty" property="driverLicenseFileNameToDisplay"/></td>
 		<td class="noborder">
-		<logic:present name="partyDriverLicenselink">
-			<bean:define id="partyDriverLicenselink" name="partyDriverLicenselink" type="java.lang.String"/>
+		<bean:define id="partyDriverLicenselink" name="parkingParty" property="declarationDocumentLink" type="java.lang.String"/>
+		<logic:notEqual name="partyDriverLicenselink" value="">							
 			<html:link href="<%= partyDriverLicenselink %>" target="_blank">
 				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
 			</html:link>		
-		</logic:present>		
+		</logic:notEqual>		
 		</td>
 	</tr>
-</table>		
-</logic:equal>
+</table>
 
-<logic:equal name="parkingParty" property="hasFirstCar" value="true">
+<bean:define id="date" name="todayDate"/>
+<p class="mtop1 mbottom025"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES" /></strong></p>
 <table class="tstyle1 thright thlight mtop025 mbottom1">
+<logic:iterate id="vehicle" name="parkingParty" property="vehicles">
 	<tr>
-		<th><bean:message key="label.firstCarMake" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="firstCarMake"/></td>
+		<th><bean:message key="label.vehicleMake" bundle="PARKING_RESOURCES"/>:</th>
+		<td><bean:write name="vehicle" property="vehicleMake"/></td>
 		<td class="noborder"></td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="firstCarPlateNumber"/></td>
-		<td class="noborder"></td>
-	</tr>
-	<tr>
-		<th><bean:message key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="firstCarPropertyRegistryFileNameToDisplay"/></td>
+		<th><bean:message key="label.vehiclePlateNumber" bundle="PARKING_RESOURCES"/>:</th>
+		<bean:define id="plateNumber" name="vehicle" property="plateNumber"/>
+		<td><bean:write name="plateNumber"/></td>
 		<td class="noborder">
-		<logic:present name="partyRegister1link">
-			<bean:define id="partyRegister1link" name="partyRegister1link" type="java.lang.String"/>
-			<html:link href="<%= partyRegister1link %>" target="_blank">
-				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-			</html:link>		
-		</logic:present>		
+			<html:link href="<%= "http://www.isp.pt/NR/exeres/36FAA444-8049-428C-8E89-09909A9C1300.htm?matricula=" + plateNumber + "&data=" + 20061130 %>" target="_blank"><bean:message key="link.verifyInsurance" bundle="PARKING_RESOURCES"/></html:link>
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.firstInsurance" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="firstCarInsuranceFileNameToDisplay"/></td>
+		<th><bean:message key="label.vehiclePropertyRegistry" bundle="PARKING_RESOURCES"/>:</th>
+		<td><bean:write name="vehicle" property="propertyRegistryFileNameToDisplay"/></td>
 		<td class="noborder">
-		<logic:present name="partyInsurance1link">
-			<bean:define id="partyInsurance1link" name="partyInsurance1link" type="java.lang.String"/>
-			<html:link href="<%= partyInsurance1link %>" target="_blank">
+		<bean:define id="vehiclePropertyRegisterLink" name="vehicle" property="propertyRegistryDocumentLink" type="java.lang.String"/>
+		<logic:notEqual name="vehiclePropertyRegisterLink" value="">							
+			<html:link href="<%= vehiclePropertyRegisterLink %>" target="_blank">
 				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
 			</html:link>		
-		</logic:present>		
+		</logic:notEqual>		
+		</td>
+	</tr>	
+	<tr>
+		<th><bean:message key="label.vehicleInsurance" bundle="PARKING_RESOURCES"/>:</th>
+		<td><bean:write name="vehicle" property="insuranceFileNameToDisplay"/></td>
+		<td class="noborder">
+		<bean:define id="vehicleInsuranceLink" name="vehicle" property="insuranceDocumentLink" type="java.lang.String"/>
+		<logic:notEqual name="vehicleInsuranceLink" value="">							
+			<html:link href="<%= vehicleInsuranceLink %>" target="_blank">
+				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
+			</html:link>		
+		</logic:notEqual>		
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.firstCarOwnerId" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="firstCarOwnerIdFileNameToDisplay"/></td>
+		<th><bean:message key="label.vehicleOwnerID" bundle="PARKING_RESOURCES"/>:</th>
+		<td><bean:write name="vehicle" property="ownerIdFileNameToDisplay"/></td>
 		<td class="noborder">
-		<logic:present name="partyOwnerID1link">
-			<bean:define id="partyOwnerID1link" name="partyOwnerID1link" type="java.lang.String"/>
-			<html:link href="<%= partyOwnerID1link %>" target="_blank">
+		<bean:define id="vehicleOwnerIDLink" name="vehicle" property="ownerIdDocumentLink" type="java.lang.String"/>
+		<logic:notEqual name="vehicleOwnerIDLink" value="">							
+			<html:link href="<%= vehicleOwnerIDLink %>" target="_blank">
 				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
 			</html:link>		
-		</logic:present>		
+		</logic:notEqual>		
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="firstDeclarationAuthorizationFileNameToDisplay"/></td>
+		<th><bean:message key="label.vehicleAuthorizationDeclaration" bundle="PARKING_RESOURCES"/>:</th>
+		<td><bean:write name="vehicle" property="authorizationDeclarationFileNameToDisplay"/></td>
 		<td class="noborder">
-		<logic:present name="partyDeclaration1link">
-			<bean:define id="partyDeclaration1link" name="partyDeclaration1link" type="java.lang.String"/>
-			<html:link href="<%= partyDeclaration1link %>" target="_blank">
+		<bean:define id="vehicleAuthorizationDeclarationLink" name="vehicle" property="declarationDocumentLink" type="java.lang.String"/>
+		<logic:notEqual name="vehicleAuthorizationDeclarationLink" value="">							
+			<html:link href="<%= vehicleAuthorizationDeclarationLink %>" target="_blank">
 				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
 			</html:link>		
-		</logic:present>		
-		</td>
-	</tr>
-</table>	
-</logic:equal>
-
-<logic:equal name="parkingParty" property="hasSecondCar" value="true">
-<table class="tstyle1 thright thlight mtop025 mbottom1">
-	<tr>
-		<th><bean:message key="label.secondCarMake" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="secondCarMake"/></td>
-		<td class="noborder"></td>
-	</tr>
-	<tr>
-		<th><bean:message key="label.secondCarPlateNumber" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="secondCarPlateNumber"/></td>
-		<td class="noborder"></td>
-	</tr>
-	<tr>
-		<th><bean:message key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="secondCarPropertyRegistryFileNameToDisplay"/></td>
-		<td class="noborder">
-		<logic:present name="partyRegister2link">
-			<bean:define id="partyRegister2link" name="partyRegister2link" type="java.lang.String"/>
-			<html:link href="<%= partyRegister2link %>" target="_blank">
-				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-			</html:link>		
-		</logic:present>		
+		</logic:notEqual>		
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.secondInsurance" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="secondCarInsuranceFileNameToDisplay"/></td>
-		<td class="noborder">
-		<logic:present name="partyInsurance2link">
-			<bean:define id="partyInsurance2link" name="partyInsurance2link" type="java.lang.String"/>
-			<html:link href="<%= partyInsurance2link %>" target="_blank">
-				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-			</html:link>		
-		</logic:present>		
-		</td>
+		<td class="noborder"> </td>
+		<td class="noborder"> </td>
+		<td class="noborder"> </td>
 	</tr>
-	<tr>
-		<th><bean:message key="label.secondCarOwnerId" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="secondCarOwnerIdFileNameToDisplay"/></td>
-		<td class="noborder">
-		<logic:present name="partyOwnerID2link">
-			<bean:define id="partyOwnerID2link" name="partyOwnerID2link" type="java.lang.String"/>
-			<html:link href="<%= partyOwnerID2link %>" target="_blank">
-				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-			</html:link>		
-		</logic:present>		
-		</td>
-	</tr>
-	<tr>
-		<th><bean:message key="label.secondDeclarationAuthorization" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingParty" property="secondDeclarationAuthorizationFileNameToDisplay"/></td>
-		<td class="noborder">
-		<logic:present name="partyDeclaration2link">
-			<bean:define id="partyDeclaration2link" name="partyDeclaration2link" type="java.lang.String"/>
-			<html:link href="<%= partyDeclaration2link %>" target="_blank">
-				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-			</html:link>		
-		</logic:present>		
-		</td>
-	</tr>
-</table>	
-</logic:equal>
+</logic:iterate>
+</table>
+</logic:notEmpty>			
 
 <!-- PARKING REQUEST -->
 
@@ -176,147 +124,93 @@
 			<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
 		</fr:layout>
 </fr:view>
-<logic:equal name="parkingRequest" property="hasDriverLicense" value="true">
+
+<logic:notEmpty name="parkingRequest" property="vehicles">
+<p class="mtop15 mbottom025"><strong><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES" /></strong></p>		
 <table class="tstyle1 thright thlight mtop025 mbottom1">
 	<tr>
 		<th><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES"/></th>
 		<td><bean:write name="parkingRequest" property="driverLicenseFileNameToDisplay"/></td>
 		<td class="noborder">
-		<logic:present name="requestDriverLicenselink">
-			<bean:define id="requestDriverLicenselink" name="requestDriverLicenselink" type="java.lang.String"/>
-			<html:link href="<%= requestDriverLicenselink %>" target="_blank">
+		<bean:define id="parkingRequestDriverLicenselink" name="parkingRequest" property="declarationDocumentLink" type="java.lang.String"/>
+		<logic:notEqual name="parkingRequestDriverLicenselink" value="">							
+			<html:link href="<%= parkingRequestDriverLicenselink %>" target="_blank">
 				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
 			</html:link>		
-		</logic:present>		
+		</logic:notEqual>		
 		</td>
 	</tr>
 </table>
-</logic:equal>
 
-<logic:equal name="parkingRequest" property="hasFirstCar" value="true">
-<p class="mtop1 mbottom025"><strong><bean:message key="label.firstCar" bundle="PARKING_RESOURCES" /></strong></p>
+<p class="mtop1 mbottom025"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES" /></strong></p>
 <table class="tstyle1 thright thlight mtop025 mbottom1">
+<logic:iterate id="vehicle" name="parkingRequest" property="vehicles">
 	<tr>
-		<th><bean:message key="label.firstCarMake" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="firstCarMake"/></td>
+		<th><bean:message key="label.vehicleMake" bundle="PARKING_RESOURCES"/>:</th>
+		<td><bean:write name="vehicle" property="vehicleMake"/></td>
 		<td class="noborder"></td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="firstCarPlateNumber"/></td>
-		<td class="noborder"></td>
+		<th><bean:message key="label.vehiclePlateNumber" bundle="PARKING_RESOURCES"/>:</th>
+		<bean:define id="plateNumber" name="vehicle" property="plateNumber"/>
+		<td><bean:write name="plateNumber"/></td>
+		<td class="noborder">
+			<html:link href="<%= "http://www.isp.pt/NR/exeres/36FAA444-8049-428C-8E89-09909A9C1300.htm?matricula=" + plateNumber + "&data=" + 20061130 %>" target="_blank"><bean:message key="link.verifyInsurance" bundle="PARKING_RESOURCES"/></html:link>
+		</td>
+	</tr>
+	<tr>
+		<th><bean:message key="label.vehiclePropertyRegistry" bundle="PARKING_RESOURCES"/>:</th>
+		<td><bean:write name="vehicle" property="propertyRegistryFileNameToDisplay"/></td>
+		<td class="noborder">
+		<bean:define id="vehiclePropertyRegisterLink" name="vehicle" property="propertyRegistryDocumentLink" type="java.lang.String"/>
+		<logic:notEqual name="vehiclePropertyRegisterLink" value="">							
+			<html:link href="<%= vehiclePropertyRegisterLink %>" target="_blank">
+				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
+			</html:link>		
+		</logic:notEqual>		
+		</td>
 	</tr>	
 	<tr>
-		<th><bean:message key="label.firstCarPropertyRegistry" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="firstCarPropertyRegistryFileNameToDisplay"/></td>
+		<th><bean:message key="label.vehicleInsurance" bundle="PARKING_RESOURCES"/>:</th>
+		<td><bean:write name="vehicle" property="insuranceFileNameToDisplay"/></td>
 		<td class="noborder">
-		<logic:present name="requestRegister1link">
-			<bean:define id="requestRegister1link" name="requestRegister1link" type="java.lang.String"/>
-			<html:link href="<%= requestRegister1link %>" target="_blank">
+		<bean:define id="vehicleInsuranceLink" name="vehicle" property="insuranceDocumentLink" type="java.lang.String"/>
+		<logic:notEqual name="vehicleInsuranceLink" value="">							
+			<html:link href="<%= vehicleInsuranceLink %>" target="_blank">
 				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
 			</html:link>		
-		</logic:present>		
+		</logic:notEqual>		
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.firstInsurance" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="firstCarInsuranceFileNameToDisplay"/></td>
+		<th><bean:message key="label.vehicleOwnerID" bundle="PARKING_RESOURCES"/>:</th>
+		<td><bean:write name="vehicle" property="ownerIdFileNameToDisplay"/></td>
 		<td class="noborder">
-		<logic:present name="requestInsurance1link">
-			<bean:define id="requestInsurance1link" name="requestInsurance1link" type="java.lang.String"/>
-			<html:link href="<%= requestInsurance1link %>" target="_blank">
+		<bean:define id="vehicleOwnerIDLink" name="vehicle" property="ownerIdDocumentLink" type="java.lang.String"/>
+		<logic:notEqual name="vehicleOwnerIDLink" value="">							
+			<html:link href="<%= vehicleOwnerIDLink %>" target="_blank">
 				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
 			</html:link>		
-		</logic:present>		
+		</logic:notEqual>		
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.firstCarOwnerId" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="firstCarOwnerIdFileNameToDisplay"/></td>
+		<th><bean:message key="label.vehicleAuthorizationDeclaration" bundle="PARKING_RESOURCES"/>:</th>
+		<td><bean:write name="vehicle" property="authorizationDeclarationFileNameToDisplay"/></td>
 		<td class="noborder">
-		<logic:present name="requestOwnerID1link">
-			<bean:define id="requestOwnerID1link" name="requestOwnerID1link" type="java.lang.String"/>
-			<html:link href="<%= requestOwnerID1link %>" target="_blank">
+		<bean:define id="vehicleAuthorizationDeclarationLink" name="vehicle" property="declarationDocumentLink" type="java.lang.String"/>
+		<logic:notEqual name="vehicleAuthorizationDeclarationLink" value="">							
+			<html:link href="<%= vehicleAuthorizationDeclarationLink %>" target="_blank">
 				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
 			</html:link>		
-		</logic:present>		
+		</logic:notEqual>		
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.firstDeclarationAuthorization" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="firstDeclarationAuthorizationFileNameToDisplay"/></td>
-		<td class="noborder">
-		<logic:present name="requestDeclaration1link">
-			<bean:define id="requestDeclaration1link" name="requestDeclaration1link" type="java.lang.String"/>
-			<html:link href="<%= requestDeclaration1link %>" target="_blank">
-				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-			</html:link>		
-		</logic:present>		
-		</td>
+		<td class="noborder"> </td>
+		<td class="noborder"> </td>
+		<td class="noborder"> </td>
 	</tr>
+</logic:iterate>
 </table>
-</logic:equal>
-
-<logic:equal name="parkingRequest" property="hasSecondCar" value="true">
-<p class="mtop1 mbottom025"><strong><bean:message key="label.secondCar" bundle="PARKING_RESOURCES" /></strong></p>
-<table class="tstyle1 thright thlight mtop025 mbottom1">
-	<tr>
-		<th><bean:message key="label.secondCarMake" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="secondCarMake"/></td>
-		<td class="noborder"></td>
-	</tr>
-	<tr>
-		<th><bean:message key="label.secondCarPlateNumber" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="secondCarPlateNumber"/></td>
-		<td class="noborder"></td>
-	</tr>	
-	<tr>
-		<th><bean:message key="label.secondCarPropertyRegistry" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="secondCarPropertyRegistryFileNameToDisplay"/></td>
-		<td class="noborder">
-		<logic:present name="requestRegister2link">
-			<bean:define id="requestRegister2link" name="requestRegister2link" type="java.lang.String"/>
-			<html:link href="<%= requestRegister2link %>" target="_blank">
-				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-			</html:link>		
-		</logic:present>		
-		</td>
-	</tr>
-	<tr>
-		<th><bean:message key="label.secondInsurance" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="secondCarInsuranceFileNameToDisplay"/></td>
-		<td class="noborder">
-		<logic:present name="requestInsurance2link">
-			<bean:define id="requestInsurance2link" name="requestInsurance2link" type="java.lang.String"/>
-			<html:link href="<%= requestInsurance2link %>" target="_blank">
-				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-			</html:link>		
-		</logic:present>		
-		</td>
-	</tr>
-	<tr>
-		<th><bean:message key="label.secondCarOwnerId" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="secondCarOwnerIdFileNameToDisplay"/></td>
-		<td class="noborder">
-		<logic:present name="requestOwnerID2link">
-			<bean:define id="requestOwnerID2link" name="requestOwnerID2link" type="java.lang.String"/>
-			<html:link href="<%= requestOwnerID2link %>" target="_blank">
-				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-			</html:link>		
-		</logic:present>		
-		</td>
-	</tr>
-	<tr>
-		<th><bean:message key="label.secondDeclarationAuthorization" bundle="PARKING_RESOURCES"/></th>
-		<td><bean:write name="parkingRequest" property="secondDeclarationAuthorizationFileNameToDisplay"/></td>
-		<td class="noborder">
-		<logic:present name="requestDeclaration2link">
-			<bean:define id="requestDeclaration2link" name="requestDeclaration2link" type="java.lang.String"/>
-			<html:link href="<%= requestDeclaration2link %>" target="_blank">
-				<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-			</html:link>		
-		</logic:present>		
-		</td>
-	</tr>
-</table>
-</logic:equal>
+</logic:notEmpty>

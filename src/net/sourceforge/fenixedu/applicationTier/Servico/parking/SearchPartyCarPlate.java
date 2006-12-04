@@ -27,7 +27,7 @@ public class SearchPartyCarPlate extends Service {
             List<ParkingParty> parkingParties = rootDomainObject.getParkingParties();
             for (ParkingParty parkingParty : parkingParties) {
                 if (!StringUtils.isEmpty(carPlateNumber)) {
-                    if (parkingParty.hasCarContainingPlateNumber(carPlateNumber.trim())) {
+                    if (parkingParty.hasVehicleContainingPlateNumber(carPlateNumber.trim())) {
                         if (StringUtils.isEmpty(nameSearch)) {
                             result.add(parkingParty.getParty());
                         } else {

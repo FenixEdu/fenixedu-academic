@@ -123,7 +123,7 @@ function hideCardValidPeriod(toShow){
 			<br/><html:messages id="message" property="mustFillInDates" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/><br/></span></html:messages>
 			<html:messages id="message" property="invalidPeriod" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>				
 			<div id="cardValidPeriodDivId" style="display:block">
-			<fr:edit id="cardValidPeriod" name="parkingPartyBean" schema="edit.parkingParty.cardValidPeriod">
+			<fr:edit id="cardValidPeriod" name="parkingPartyBean" schema="edit.parkingPartyBean.cardValidPeriod">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle8 thright thlight"/>
 					<fr:property name="columnClasses" value=",,noborder"/>
@@ -140,9 +140,6 @@ function hideCardValidPeriod(toShow){
 			<html:textarea rows="7" cols="45" property="note"/>
 			<p class="mtop2">
 			<html:button bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="accept" onclick="confirmation();"><bean:message key="button.accept"/></html:button>
-			<%--
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="acceptPrint"><bean:message key="button.acceptPrint"/></html:submit>
-			--%>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="notify"><bean:message key="button.notify"/></html:submit>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="reject"><bean:message key="button.reject"/></html:submit>
 			</p>	

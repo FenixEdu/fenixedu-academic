@@ -287,7 +287,7 @@
 	<slot name="limitlessAccessCard" key="label.requestLimitlessAccessCard" bundle="PARKING_RESOURCES" />
 </schema>
 
-<schema name="edit.parkingParty.user" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
+<schema name="edit.parkingPartyBean.user" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
 	<slot name="cardNumber" key="label.cardNumber">
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
 			<property name="lowerBound" value="1"/>
@@ -305,19 +305,21 @@
 	<slot name="parkingParty" hidden="true" />
 </schema>
 
-<schema name="edit.parkingParty.cardValidPeriod" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
+<schema name="edit.parkingPartyBean.cardValidPeriod" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
 	<slot name="cardStartDate" key="label.cardStartDate" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
 	<slot name="cardEndDate" key="label.cardEndDate" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
 </schema>
 
-<schema name="edit.parkingParty.firstCar" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
-	<slot name="firstCarMake" key="label.firstCarMake" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="firstCarPlateNumber" key="label.firstCarPlateNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+<schema name="edit.parkingPartyBean.vehicles" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
+	<slot name="vehicles" layout="tabular-editable" schema="edit.vehicleBean" key="label.vehicles">
+		<property name="classes" value="tstyle1" />
+	</slot>
 </schema>
 
-<schema name="edit.parkingParty.secondCar" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
-	<slot name="secondCarMake" key="label.secondCarMake" />
-	<slot name="secondCarPlateNumber" key="label.secondCarPlateNumber" />	
+<schema name="edit.vehicleBean" type="net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean">
+	<slot name="deleteVehicle" key="label.deleteVehicle"/>
+	<slot name="vehicleMake" key="label.vehicleMake"/>
+	<slot name="vehiclePlateNumber" key="label.vehiclePlateNumber"/>	
 </schema>	
 
 <schema name="show.parkingRequest.noDetail"

@@ -171,6 +171,8 @@ valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeState											
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeType												as PaymentCodeType;
 valueType net.sourceforge.fenixedu.domain.student.StudentStatuteType												as StudentStatuteType;
 valueType net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionType							as GratuityExemptionType;
+valueType net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType											as DocumentDeliveryType;
+valueType net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType											as NewParkingDocumentType;
 
 /*
 *
@@ -1926,6 +1928,7 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 
 	class net.sourceforge.fenixedu.domain.parking.ParkingFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyParkingDocument;
+		Integer keyNewParkingDocument;
 	}
 
 class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3952,6 +3955,7 @@ class net.sourceforge.fenixedu.domain.parking.ParkingRequest extends net.sourcef
 	Boolean firstRequest;
 	DateTime creationDate;
 	Integer keyParkingParty;	
+	Integer keyDriverLicenseDocument;
 	String firstCarPlateNumber;
 	String firstCarMake;
 	String secondCarPlateNumber;
@@ -3960,6 +3964,7 @@ class net.sourceforge.fenixedu.domain.parking.ParkingRequest extends net.sourcef
 	String mobile;
 	String email;
 	String note;
+	DocumentDeliveryType driverLicenseDeliveryType;
     ParkingDocumentState driverLicenseDocumentState;
     ParkingDocumentState firstCarPropertyRegistryDocumentState;
     ParkingDocumentState firstCarInsuranceDocumentState;
@@ -3978,6 +3983,14 @@ class net.sourceforge.fenixedu.domain.parking.ParkingDocument extends net.source
 	Integer keyParkingFile;
 }
 
+class net.sourceforge.fenixedu.domain.parking.NewParkingDocument extends net.sourceforge.fenixedu.domain.DomainObject {
+	NewParkingDocumentType parkingDocumentType;
+	Integer keyVehicle;
+	Integer keyParkingRequest;
+	Integer keyParkingParty;
+	Integer keyParkingFile;
+}
+
 class net.sourceforge.fenixedu.domain.parking.ParkingParty extends net.sourceforge.fenixedu.domain.DomainObject {
 	Long cardNumber;
 	Integer keyParkingGroup;
@@ -3988,9 +4001,11 @@ class net.sourceforge.fenixedu.domain.parking.ParkingParty extends net.sourcefor
 	String secondCarMake;
 	Boolean authorized;
 	Integer keyParty;
+	Integer keyDriverLicenseDocument;
 	Boolean acceptedRegulation;
 	DateTime cardStartDate;
 	DateTime cardEndDate;
+	DocumentDeliveryType driverLicenseDeliveryType;
 	ParkingDocumentState driverLicenseDocumentState;
     ParkingDocumentState firstCarPropertyRegistryDocumentState;
     ParkingDocumentState firstCarInsuranceDocumentState;
@@ -4002,6 +4017,16 @@ class net.sourceforge.fenixedu.domain.parking.ParkingParty extends net.sourcefor
     ParkingDocumentState secondCarDeclarationDocumentState;
 }
 
+class net.sourceforge.fenixedu.domain.parking.Vehicle extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyParkingRequest;
+	Integer keyParkingParty;
+	String plateNumber;
+	String vehicleMake;
+	DocumentDeliveryType propertyRegistryDeliveryType;
+    DocumentDeliveryType insuranceDeliveryType;
+    DocumentDeliveryType ownerIdDeliveryType;
+    DocumentDeliveryType authorizationDeclarationDeliveryType;
+}
 
 class net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
@@ -8406,6 +8431,20 @@ relation ParkingRequestParkingDocument {
 	}
 }
 
+relation VehicleParkingParty {
+	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParty;
+	net.sourceforge.fenixedu.domain.parking.Vehicle playsRole vehicles{
+		multiplicity *;
+	}
+}
+
+relation VehicleParkingRequest {
+	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequest;
+	net.sourceforge.fenixedu.domain.parking.Vehicle playsRole vehicles{
+		multiplicity *;
+	}
+}
+
 relation ParkingPartyParkingDocument {
 	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParty;
 	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocuments{
@@ -8413,11 +8452,32 @@ relation ParkingPartyParkingDocument {
 	}
 }
 
+relation VehicleNewParkingDocument {
+	net.sourceforge.fenixedu.domain.parking.Vehicle playsRole vehicle;
+	net.sourceforge.fenixedu.domain.parking.NewParkingDocument playsRole newParkingDocuments{
+		multiplicity *;
+	}
+}
+
+relation ParkingPartyNewParkingDocument {
+	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParty;
+	net.sourceforge.fenixedu.domain.parking.NewParkingDocument playsRole driverLicenseDocument;
+}
+
+relation ParkingRequestNewParkingDocument {
+	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequest;
+	net.sourceforge.fenixedu.domain.parking.NewParkingDocument playsRole driverLicenseDocument;
+}
+
 relation ParkingFileParkingDocument {
 	net.sourceforge.fenixedu.domain.parking.ParkingFile playsRole parkingFile;
 	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocument;
 }
 
+relation ParkingFileNewParkingDocument {
+	net.sourceforge.fenixedu.domain.parking.ParkingFile playsRole parkingFile;
+	net.sourceforge.fenixedu.domain.parking.NewParkingDocument playsRole newParkingDocument;
+}
 
 /*
  * Relations definitions of relations to RootDomainObject
@@ -8449,6 +8509,20 @@ relation RootDomainObjectParkingRequest {
 relation RootDomainObjectParkingDocument {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocuments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectNewParkingDocument {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.parking.NewParkingDocument playsRole newParkingDocuments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectVehicle {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.parking.Vehicle playsRole vehicles {
 		multiplicity *;
 	}
 }

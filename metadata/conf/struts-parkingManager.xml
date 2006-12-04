@@ -22,6 +22,7 @@
 			<form-property name="page" type="java.lang.Integer" />		
 			<form-property name="accepted" type="java.lang.String" />
 			<form-property name="cardAlwaysValid" type="java.lang.String" />			
+			<form-property name="addVehicle" type="java.lang.String" />			
 		</form-bean>
 	</form-beans>
 

@@ -6,3 +6,7 @@
 </class-descriptor>
 <class-descriptor class="net.sourceforge.fenixedu.domain.parking.ParkingDocument" table="PARKING_DOCUMENT">
 </class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.parking.NewParkingDocument" table="NEW_PARKING_DOCUMENT">
+</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.parking.Vehicle" table="VEHICLE">
+</class-descriptor>

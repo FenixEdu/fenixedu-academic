@@ -23,6 +23,12 @@ function hideCardValidPeriod(toShow){
 	}
 }
 
+function addVehicle(){
+	document.getElementById('editUser').method.value='prepareEditParkingParty';	
+	document.getElementById('editUser').addVehicle.value='yes';	
+	document.getElementById('editUser').submit();
+	return true;
+}
 // -->
 </script>
 
@@ -30,10 +36,12 @@ function hideCardValidPeriod(toShow){
 <h2><bean:message key="title.editUser" /></h2>
 
 <span class="error0"><html:errors/></span>
-<html:form action="/parking.do?method=editParkingParty">
+<html:form action="/parking.do" styleId="editUser">
 <fr:context>
+	<html:hidden name="parkingForm" property="method" value="editParkingParty"/>
+	<html:hidden name="parkingForm" property="addVehicle" value="no"/>
 	<html:messages id="message" property="cardNumber" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
-	<fr:edit id="user" name="parkingPartyBean" schema="edit.parkingParty.user">
+	<fr:edit id="user" name="parkingPartyBean" schema="edit.parkingPartyBean.user">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle8 thright thlight"/>
 			<fr:property name="columnClasses" value=",,noborder"/>
@@ -44,34 +52,28 @@ function hideCardValidPeriod(toShow){
 	<html:radio styleId="cardValidPeriodIdNo" name="parkingForm" property="cardAlwaysValid" value="no" onclick="displayCardValidPeriod(true)">não</html:radio>	
 	<br/><html:messages id="message" property="mustFillInDates" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
 	<div id="cardValidPeriodDivId" style="display:block">
-	<fr:edit id="cardValidPeriod" name="parkingPartyBean" schema="edit.parkingParty.cardValidPeriod">
+	<fr:edit id="cardValidPeriod" name="parkingPartyBean" schema="edit.parkingPartyBean.cardValidPeriod">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle8 thright thlight"/>
 			<fr:property name="columnClasses" value=",,noborder"/>
 		</fr:layout>
 	</fr:edit>
 	</div>
-	
-	<p class="mbottom05"><strong><bean:message key="label.firstCar" bundle="PARKING_RESOURCES" /></strong></p>
-	<fr:edit id="firstCarDelete" name="parkingPartyBean" slot="deleteFirstCar" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean"/><bean:message key="label.deleteCar" bundle="PARKING_RESOURCES"/>
-	<fr:edit id="firstCar" name="parkingPartyBean" schema="edit.parkingParty.firstCar">
+	 
+	<p><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES"/>:</strong></p>
+	<html:messages id="message" property="vehicleMandatoryData" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
+	<html:messages id="message" property="noVehicles" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
+	<fr:edit id="vehicle" name="parkingPartyBean" property="vehicles" layout="tabular-editable" schema="edit.vehicleBean">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle8 thright thlight"/>
-			<fr:property name="columnClasses" value=",,noborder"/>
 		</fr:layout>
 	</fr:edit>
+	<p><html:link href="javascript:addVehicle()"><bean:message key="link.addVehicle" bundle="PARKING_RESOURCES"/></html:link></p>
+	<br/><br/>
 	
-	<p class="mbottom05"><strong><bean:message key="label.secondCar" bundle="PARKING_RESOURCES" /></strong></p>
-	<fr:edit id="secondCarDelete" name="parkingPartyBean" slot="deleteSecondCar" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean"/><bean:message key="label.deleteCar" bundle="PARKING_RESOURCES"/>
-	<fr:edit id="secondCar" name="parkingPartyBean" schema="edit.parkingParty.secondCar">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle8 thright thlight"/>
-			<fr:property name="columnClasses" value=",,noborder"/>
-		</fr:layout>
-	</fr:edit>
-	
-	<html:submit value="Confirmar"/>
-</fr:context>	
+	<html:submit value="Confirmar"/>	
+
+</fr:context>
 </html:form>
 
 <script type="text/javascript">

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean;
+import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
@@ -102,7 +103,6 @@ public class ParkingParty extends ParkingParty_Base {
             } else {
                 number = teacher.getTeacherNumber().toString();
             }
-
         }
 
         return MessageFormat.format(bundle.getString("message.acceptedRegulation"), new Object[] { name,
@@ -126,6 +126,29 @@ public class ParkingParty extends ParkingParty_Base {
         return false;
     }
 
+    public String getDriverLicenseFileNameToDisplay() {
+        NewParkingDocument driverLicenseDocument = getDriverLicenseDocument();
+        if (driverLicenseDocument != null) {
+            return driverLicenseDocument.getParkingFile().getFilename();
+        } else if (getDriverLicenseDeliveryType() != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+                    .getLocale());
+            return bundle.getString(getDriverLicenseDeliveryType().name());
+        }
+        return "";
+    }
+
+    public String getDeclarationDocumentLink() {
+        NewParkingDocument parkingDocument = getDriverLicenseDocument();
+        if (parkingDocument != null
+                && parkingDocument.getParkingDocumentType() == NewParkingDocumentType.DRIVER_LICENSE) {
+            ParkingFile parkingFile = parkingDocument.getParkingFile();
+            return FileManagerFactory.getFileManager().getDirectDownloadUrlFormat(
+                    parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
+        }
+        return "";
+    }
+
     public ParkingDocument getParkingDocument(ParkingDocumentType documentType) {
         for (ParkingDocument parkingDocument : getParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType().equals(documentType)) {
@@ -134,224 +157,7 @@ public class ParkingParty extends ParkingParty_Base {
         }
         return null;
     }
-
-    public String getDriverLicenseFileName() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.DRIVER_LICENSE)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        return null;
-    }
-
-    public String getDriverLicenseFileNameToDisplay() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.DRIVER_LICENSE)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        if (getDriverLicenseDocumentState() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-                    .getLocale());
-            return bundle.getString(getDriverLicenseDocumentState().name());
-        }
-        return null;
-    }
-
-    public String getFirstCarPropertyRegistryFileName() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(
-                    ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        return null;
-    }
-
-    public String getFirstCarPropertyRegistryFileNameToDisplay() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(
-                    ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        if (getFirstCarPropertyRegistryDocumentState() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-                    .getLocale());
-            return bundle.getString(getFirstCarPropertyRegistryDocumentState().name());
-        }
-        return null;
-    }
-
-    public String getFirstCarInsuranceFileName() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_INSURANCE)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        return null;
-    }
-
-    public String getFirstCarInsuranceFileNameToDisplay() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_INSURANCE)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        if (getFirstCarInsuranceDocumentState() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-                    .getLocale());
-            return bundle.getString(getFirstCarInsuranceDocumentState().name());
-        }
-        return null;
-    }
-
-    public String getFirstCarOwnerIdFileName() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_OWNER_ID)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        return null;
-    }
-
-    public String getFirstCarOwnerIdFileNameToDisplay() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.FIRST_CAR_OWNER_ID)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        if (getFirstCarOwnerIdDocumentState() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-                    .getLocale());
-            return bundle.getString(getFirstCarOwnerIdDocumentState().name());
-        }
-        return null;
-    }
-
-    public String getFirstDeclarationAuthorizationFileName() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(
-                    ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        return null;
-    }
-
-    public String getFirstDeclarationAuthorizationFileNameToDisplay() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(
-                    ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        if (getFirstCarDeclarationDocumentState() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-                    .getLocale());
-            return bundle.getString(getFirstCarDeclarationDocumentState().name());
-        }
-        return null;
-    }
-
-    public String getSecondCarPropertyRegistryFileName() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(
-                    ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        return null;
-    }
-
-    public String getSecondCarPropertyRegistryFileNameToDisplay() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(
-                    ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        if (getSecondCarPropertyRegistryDocumentState() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-                    .getLocale());
-            return bundle.getString(getSecondCarPropertyRegistryDocumentState().name());
-        }
-        return null;
-    }
-
-    public String getSecondCarInsuranceFileName() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType()
-                    .equals(ParkingDocumentType.SECOND_CAR_INSURANCE)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        return null;
-    }
-
-    public String getSecondCarInsuranceFileNameToDisplay() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType()
-                    .equals(ParkingDocumentType.SECOND_CAR_INSURANCE)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        if (getSecondCarInsuranceDocumentState() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-                    .getLocale());
-            return bundle.getString(getSecondCarInsuranceDocumentState().name());
-        }
-        return null;
-    }
-
-    public String getSecondCarOwnerIdFileName() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.SECOND_CAR_OWNER_ID)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        return null;
-    }
-
-    public String getSecondCarOwnerIdFileNameToDisplay() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(ParkingDocumentType.SECOND_CAR_OWNER_ID)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        if (getSecondCarOwnerIdDocumentState() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-                    .getLocale());
-            return bundle.getString(getSecondCarOwnerIdDocumentState().name());
-        }
-        return null;
-    }
-
-    public String getSecondDeclarationAuthorizationFileName() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(
-                    ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        return null;
-    }
-
-    public String getSecondDeclarationAuthorizationFileNameToDisplay() {
-        for (ParkingDocument parkingDocument : getParkingDocuments()) {
-            if (parkingDocument.getParkingDocumentType().equals(
-                    ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION)) {
-                return parkingDocument.getParkingFile().getFilename();
-            }
-        }
-        if (getSecondCarDeclarationDocumentState() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-                    .getLocale());
-            return bundle.getString(getSecondCarDeclarationDocumentState().name());
-        }
-        return null;
-    }
-
+    
     public String getParkingGroupToDisplay() {
         if (getParkingGroup() != null) {
             return getParkingGroup().getGroupName();
@@ -364,19 +170,6 @@ public class ParkingParty extends ParkingParty_Base {
             return ((Person) getParty()).getWorkPhone();
         }
         return null;
-    }
-
-    public boolean getHasFirstCar() {
-        return !StringUtils.isEmpty(getFirstCarMake());
-    }
-
-    public boolean getHasSecondCar() {
-        return !StringUtils.isEmpty(getSecondCarMake());
-    }
-
-    public boolean getHasDriverLicense() {
-        return (getDriverLicenseFileName() != null && getDriverLicenseFileName().length() > 0)
-                || getDriverLicenseDocumentState() != null;
     }
 
     public List<RoleType> getSubmitAsRoles() {
@@ -498,81 +291,36 @@ public class ParkingParty extends ParkingParty_Base {
         return occupations;
     }
 
-    public boolean hasCarContainingPlateNumber(String plateNumber) {
-        if (getFirstCarPlateNumber() != null
-                && (getFirstCarPlateNumber().equalsIgnoreCase(plateNumber) || getFirstCarPlateNumber()
-                        .toLowerCase().contains(plateNumber.toLowerCase()))) {
-            return true;
-        }
-        if (getSecondCarPlateNumber() != null
-                && (getSecondCarPlateNumber().equalsIgnoreCase(plateNumber) || getSecondCarPlateNumber()
-                        .toLowerCase().contains(plateNumber.toLowerCase()))) {
-            return true;
-        }
-        return false;
-    }
-
-    public void deleteSecondCar() {
-        setSecondCarMake(null);
-        setSecondCarPlateNumber(null);
-        setSecondCarDeclarationDocumentState(null);
-        setSecondCarInsuranceDocumentState(null);
-        setSecondCarOwnerIdDocumentState(null);
-        setSecondCarPropertyRegistryDocumentState(null);
-
-        deleteFile(ParkingDocumentType.SECOND_CAR_INSURANCE);
-        deleteFile(ParkingDocumentType.SECOND_CAR_OWNER_ID);
-        deleteFile(ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER);
-        deleteFile(ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION);
-    }
-
-    private void deleteFirstCar() {
-        setFirstCarMake(null);
-        setFirstCarPlateNumber(null);
-        setFirstCarDeclarationDocumentState(null);
-        setFirstCarInsuranceDocumentState(null);
-        setFirstCarOwnerIdDocumentState(null);
-        setFirstCarPropertyRegistryDocumentState(null);
-
-        deleteFile(ParkingDocumentType.FIRST_CAR_INSURANCE);
-        deleteFile(ParkingDocumentType.FIRST_CAR_OWNER_ID);
-        deleteFile(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
-        deleteFile(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
-    }
-
-    private void deleteFile(ParkingDocumentType documentType) {
-        ParkingDocument parkingDocument = getParkingDocument(documentType);
-        if (parkingDocument != null) {
-            String externalIdentifier = parkingDocument.getParkingFile()
-                    .getExternalStorageIdentification();
-            parkingDocument.delete();
-            if (externalIdentifier != null) {
-                FileManagerFactory.getFileManager().deleteFile(externalIdentifier);
+    public boolean hasVehicleContainingPlateNumber(String plateNumber) {
+        String plateNumberLowerCase = plateNumber.toLowerCase();
+        for (Vehicle vehicle : getVehicles()) {
+            if(vehicle.getPlateNumber().toLowerCase().contains(plateNumberLowerCase)){
+                return true;
             }
         }
-    }
-
-    public boolean hasCar() {
-        return !StringUtils.isEmpty(getFirstCarMake());
+        return false;
     }
 
     public void delete() {
         if (canBeDeleted()) {
             setParty(null);
-            setDriverLicenseDocumentState(null);
-            deleteFile(ParkingDocumentType.DRIVER_LICENSE);
-            deleteFirstCar();
-            deleteSecondCar();
-            List<ParkingRequest> parkingRequests = new ArrayList<ParkingRequest>(getParkingRequests());
-            for (ParkingRequest parkingRequest : parkingRequests) {
-                parkingRequest.delete();
-            }
+            setParkingGroup(null);
+            deleteDriverLicenseDocument();
+            for (; getVehicles().size() != 0; getVehicles().get(0).delete());
+            for (; getParkingRequests().size() != 0; getParkingRequests().get(0).delete());
             deleteDomainObject();
         }
     }
 
+    private void deleteDriverLicenseDocument() {
+        NewParkingDocument parkingDocument = getDriverLicenseDocument();
+        if (parkingDocument != null) {
+            parkingDocument.delete();
+        }
+    }
+    
     private boolean canBeDeleted() {
-        return !hasCar();
+        return !getVehicles().isEmpty();
     }
 
     public boolean hasFirstTimeRequest() {
@@ -618,20 +366,8 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public void edit(ParkingPartyBean parkingPartyBean) {
-        if (parkingPartyBean.getDeleteFirstCar() && parkingPartyBean.getDeleteSecondCar()) {
-            throw new DomainException("error.parkingParty.no.cars");
-        }
-        if (!parkingPartyBean.getParkingParty().getHasSecondCar()
-                && parkingPartyBean.getDeleteFirstCar()) {
-            throw new DomainException("error.parkingParty.no.cars");
-        }
-        if (parkingPartyBean.getDeleteFirstCar()) {
-            moveSecondCarToFirstCar();
-            deleteSecondCar();
-        } else if (parkingPartyBean.getDeleteSecondCar()) {
-            deleteSecondCar();
-        }
-        if(!parkingPartyBean.getCardAlwaysValid() && parkingPartyBean.getCardStartDate().isAfter(parkingPartyBean.getCardEndDate())){
+        if (!parkingPartyBean.getCardAlwaysValid()
+                && parkingPartyBean.getCardStartDate().isAfter(parkingPartyBean.getCardEndDate())) {
             throw new DomainException("error.parkingParty.invalidPeriod");
         }
         setCardNumber(parkingPartyBean.getCardNumber());
@@ -639,55 +375,46 @@ public class ParkingParty extends ParkingParty_Base {
         setCardEndDate(parkingPartyBean.getCardEndDate());
         setPhdNumber(parkingPartyBean.getPhdNumber());
         setParkingGroup(parkingPartyBean.getParkingGroup());
-        setFirstCarPlateNumber(parkingPartyBean.getFirstCarPlateNumber());
-        setFirstCarMake(parkingPartyBean.getFirstCarMake());
-        setSecondCarPlateNumber(parkingPartyBean.getSecondCarPlateNumber());
-        setSecondCarMake(parkingPartyBean.getSecondCarMake());
-        if(getParty().isPerson()){
-            ((Person)getParty()).setEmail(parkingPartyBean.getEmail());
-        }
-    }
-
-    private void moveSecondCarToFirstCar() {
-        setFirstCarMake(getSecondCarMake());
-        setFirstCarPlateNumber(getSecondCarPlateNumber());
-        setFirstCarDeclarationDocumentState(getSecondCarDeclarationDocumentState());
-        setFirstCarInsuranceDocumentState(getSecondCarInsuranceDocumentState());
-        setFirstCarOwnerIdDocumentState(getSecondCarOwnerIdDocumentState());
-        setFirstCarPropertyRegistryDocumentState(getSecondCarPropertyRegistryDocumentState());
-
-        deleteFirstCarFile(ParkingDocumentType.FIRST_CAR_INSURANCE);
-        ParkingDocument parkingDocument = getParkingDocument(ParkingDocumentType.SECOND_CAR_INSURANCE);
-        if (parkingDocument != null) {
-            parkingDocument.setParkingDocumentType(ParkingDocumentType.FIRST_CAR_INSURANCE);
-        }
-        deleteFirstCarFile(ParkingDocumentType.FIRST_CAR_OWNER_ID);
-        parkingDocument = getParkingDocument(ParkingDocumentType.SECOND_CAR_OWNER_ID);
-        if (parkingDocument != null) {
-            parkingDocument.setParkingDocumentType(ParkingDocumentType.FIRST_CAR_OWNER_ID);
-        }
-        deleteFirstCarFile(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
-        parkingDocument = getParkingDocument(ParkingDocumentType.SECOND_CAR_PROPERTY_REGISTER);
-        if (parkingDocument != null) {
-            parkingDocument.setParkingDocumentType(ParkingDocumentType.FIRST_CAR_PROPERTY_REGISTER);
-        }
-        deleteFirstCarFile(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
-        parkingDocument = getParkingDocument(ParkingDocumentType.SECOND_DECLARATION_OF_AUTHORIZATION);
-        if (parkingDocument != null) {
-            parkingDocument
-                    .setParkingDocumentType(ParkingDocumentType.FIRST_DECLARATION_OF_AUTHORIZATION);
-        }
-    }
-
-    private void deleteFirstCarFile(ParkingDocumentType documentType) {
-        ParkingDocument parkingDocument = getParkingDocument(documentType);
-        if (parkingDocument != null) {
-            String externalIdentifier = parkingDocument.getParkingFile()
-                    .getExternalStorageIdentification();
-            parkingDocument.delete();
-            if (externalIdentifier != null) {
-                FileManagerFactory.getFileManager().deleteFile(externalIdentifier);
+        for (VehicleBean vehicleBean : parkingPartyBean.getVehicles()) {
+            if (vehicleBean.getVehicle() != null) {
+                if (vehicleBean.getDeleteVehicle()) {
+                    vehicleBean.getVehicle().delete();
+                } else {
+                    vehicleBean.getVehicle().edit(vehicleBean);
+                }
+            } else {
+                if (!vehicleBean.getDeleteVehicle()) {
+                    new Vehicle(vehicleBean);
+                }
             }
         }
+        if (getParty().isPerson()) {
+            ((Person) getParty()).setEmail(parkingPartyBean.getEmail());
+        }
+    }
+
+    public void edit(ParkingRequest parkingRequest) {
+        setDriverLicenseDeliveryType(parkingRequest.getDriverLicenseDeliveryType());
+        parkingRequest.deleteDriverLicenseDocument();
+
+        for (Vehicle vehicle : parkingRequest.getVehicles()) {
+            Vehicle partyVehicle = geVehicleByPlateNumber(vehicle.getPlateNumber());
+            if (partyVehicle != null) {
+                partyVehicle.edit(vehicle);
+                vehicle.deleteDocuments();
+            } else {
+                addVehicles(new Vehicle(vehicle));
+                vehicle.deleteDocuments();
+            }
+        }
+    }
+
+    private Vehicle geVehicleByPlateNumber(String plateNumber) {
+        for (Vehicle vehicle : getVehicles()) {
+            if (vehicle.getPlateNumber().equalsIgnoreCase(plateNumber)) {
+                return vehicle;
+            }
+        }
+        return null;
     }
 }

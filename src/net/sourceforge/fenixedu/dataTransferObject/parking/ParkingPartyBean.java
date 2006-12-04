@@ -1,11 +1,14 @@
 package net.sourceforge.fenixedu.dataTransferObject.parking;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
+import net.sourceforge.fenixedu.domain.parking.Vehicle;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.joda.time.DateTime;
@@ -17,41 +20,30 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
     private Long cardNumber;
 
     private Integer phdNumber;
-    
+
     private String email;
-
-    private String firstCarPlateNumber;
-
-    private String firstCarMake;
-
-    private String secondCarPlateNumber;
-
-    private String secondCarMake;
 
     private DateTime cardStartDate;
 
     private DateTime cardEndDate;
 
     private DomainReference<ParkingGroup> parkingGroup;
-    
-    private Boolean deleteFirstCar;
-    private Boolean deleteSecondCar;
+
     private Boolean cardAlwaysValid;
+
+    private List<VehicleBean> vehicles = new ArrayList();
 
     public ParkingPartyBean(ParkingParty parkingParty) {
         setParkingParty(parkingParty);
         setCardNumber(parkingParty.getCardNumber());
         setPhdNumber(parkingParty.getPhdNumber());
-        setFirstCarPlateNumber(parkingParty.getFirstCarPlateNumber());
-        setFirstCarMake(parkingParty.getFirstCarMake());
-        setSecondCarPlateNumber(parkingParty.getSecondCarPlateNumber());
-        setSecondCarMake(parkingParty.getSecondCarMake());
         setCardStartDate(parkingParty.getCardStartDate());
         setCardEndDate(parkingParty.getCardEndDate());
         setParkingGroup(parkingParty.getParkingGroup());
-        if(parkingParty.getParty().isPerson()){
-            setEmail(((Person)parkingParty.getParty()).getEmail());
+        if (parkingParty.getParty().isPerson()) {
+            setEmail(((Person) parkingParty.getParty()).getEmail());
         }
+        setVehicles(parkingParty.getVehicles());        
     }
 
     public Object execute() {
@@ -96,22 +88,6 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
         this.cardStartDate = cardStartDate;
     }
 
-    public String getFirstCarMake() {
-        return firstCarMake;
-    }
-
-    public void setFirstCarMake(String firstCarMake) {
-        this.firstCarMake = firstCarMake;
-    }
-
-    public String getFirstCarPlateNumber() {
-        return firstCarPlateNumber;
-    }
-
-    public void setFirstCarPlateNumber(String firstCarPlateNumber) {
-        this.firstCarPlateNumber = firstCarPlateNumber;
-    }
-
     public ParkingGroup getParkingGroup() {
         return parkingGroup == null ? null : parkingGroup.getObject();
     }
@@ -132,38 +108,6 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
         this.phdNumber = phdNumber;
     }
 
-    public String getSecondCarMake() {
-        return secondCarMake;
-    }
-
-    public void setSecondCarMake(String secondCarMake) {
-        this.secondCarMake = secondCarMake;
-    }
-
-    public String getSecondCarPlateNumber() {
-        return secondCarPlateNumber;
-    }
-
-    public void setSecondCarPlateNumber(String secondCarPlateNumber) {
-        this.secondCarPlateNumber = secondCarPlateNumber;
-    }
-
-    public Boolean getDeleteFirstCar() {
-        return deleteFirstCar;
-    }
-
-    public void setDeleteFirstCar(Boolean deleteFirstCar) {
-        this.deleteFirstCar = deleteFirstCar;
-    }
-
-    public Boolean getDeleteSecondCar() {
-        return deleteSecondCar;
-    }
-
-    public void setDeleteSecondCar(Boolean deleteSecondCar) {
-        this.deleteSecondCar = deleteSecondCar;
-    }
-
     public Boolean getCardAlwaysValid() {
         return cardAlwaysValid;
     }
@@ -178,6 +122,28 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<VehicleBean> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<Vehicle> vehicles) {
+        if (vehicles != null) {
+            List<VehicleBean> vehicleBeanList = new ArrayList<VehicleBean>();
+            for (Vehicle vehicle : vehicles) {
+                vehicleBeanList.add(new VehicleBean(vehicle,vehicle.getParkingParty()));
+            }
+            this.vehicles = vehicleBeanList;
+        }
+    }
+    
+    public void updateVehicles(List<VehicleBean> vehicles){
+        this.vehicles = vehicles;
+    }
+
+    public void addVehicle() {
+        getVehicles().add(new VehicleBean(getParkingParty()));
     }
 
 }

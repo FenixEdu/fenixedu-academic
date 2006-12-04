@@ -18,11 +18,6 @@ function hideStudentRadioButtons(){
 	document.getElementById('registry1Div').style.display='block';
 	document.getElementById('registry1Radio').style.display='none';		
 	document.getElementById('registry1Student').style.display='block';
-	
-	document.getElementsByName('insurance1')[1].checked=true;
-	document.getElementById('insurance1Div').style.display='block';
-	document.getElementById('insurance1Radio').style.display='none';
-	document.getElementById('insurance1Student').style.display='block';	
 
 	document.getElementsByName('Id1')[2].checked=true;
 	document.getElementById('Id1Div').style.display='block';
@@ -37,12 +32,7 @@ function hideStudentRadioButtons(){
 	document.getElementsByName('registry2')[2].checked=true;
 	document.getElementById('registry2Div').style.display='block';
 	document.getElementById('registry2Radio').style.display='none';		
-	document.getElementById('registry2Student').style.display='block';	
-	
-	document.getElementsByName('insurance2')[1].checked=true;
-	document.getElementById('insurance2Div').style.display='block';
-	document.getElementById('insurance2Radio').style.display='none';
-	document.getElementById('insurance2Student').style.display='block';		
+	document.getElementById('registry2Student').style.display='block';		
 
 	document.getElementsByName('Id2')[2].checked=true;
 	document.getElementById('Id2Div').style.display='block';
@@ -75,11 +65,6 @@ function hideInputBoxes(){
 		document.getElementById('registry1File').style.display='none';		
 		document.getElementById('registry1DivTop').style.display='block';
 	}
-	if(document.getElementsByName('insurance1')[1].checked==false){
-		document.getElementById('insurance1Div').style.display='none';
-		document.getElementById('insurance1File').style.display='none';		
-		document.getElementById('insurance1DivTop').style.display='block';
-	}
 	if(document.getElementsByName('Id1')[2].checked==false){
 		document.getElementById('Id1Div').style.display='none';
 		document.getElementById('Id1File').style.display='none';		
@@ -94,11 +79,6 @@ function hideInputBoxes(){
 		document.getElementById('registry2Div').style.display='none';
 		document.getElementById('registry2File').style.display='none';		
 		document.getElementById('registry2DivTop').style.display='block';
-	}
-	if(document.getElementsByName('insurance2')[1].checked==false){
-		document.getElementById('insurance2Div').style.display='none';
-		document.getElementById('insurance2File').style.display='none';		
-		document.getElementById('insurance2DivTop').style.display='block';
 	}
 	if(document.getElementsByName('Id2')[2].checked==false){
 		document.getElementById('Id2Div').style.display='none';
@@ -141,7 +121,6 @@ margin: 0.5em 0;
 	<ul>
 		<li><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES"/></li>		
 		<li><bean:message key="title.registo" bundle="PARKING_RESOURCES"/> <span class="greytxt1">(<bean:message key="title.forEachVehicle" bundle="PARKING_RESOURCES"/>)</span></li>
-		<li><bean:message key="title.insurance" bundle="PARKING_RESOURCES"/> <span class="greytxt1">(<bean:message key="title.forEachVehicle" bundle="PARKING_RESOURCES"/>)</span></li>	
 		<li><bean:message key="title.ownerId" bundle="PARKING_RESOURCES"/> <span class="greytxt1">(<bean:message key="title.forEachVehicleNotOwned" bundle="PARKING_RESOURCES"/>)</span></li>
 		<bean:define id="url" type="java.lang.String">
 			<html:link page="/parking.do?method=downloadAuthorizationDocument">
@@ -177,9 +156,6 @@ margin: 0.5em 0;
 	</bean:define>
 	<bean:define id="propertyRegisterLabel">
 		<bean:message  key="title.registo" bundle="PARKING_RESOURCES"/>
-	</bean:define>
-	<bean:define id="insuranceLabel">
-		<bean:message  key="title.insurance" bundle="PARKING_RESOURCES"/>
 	</bean:define>
 	<bean:define id="ownerId">
 		<bean:message  key="title.ownerId" bundle="PARKING_RESOURCES"/>
@@ -389,73 +365,6 @@ margin: 0.5em 0;
 			<span class="error0 mtop0"><html:messages id="message" property="firstCarPropertyRegistryDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>
-
-
-	<div class="separator1"></div>
-		<div id="insurance1Radio">
-		<table class="tstyle8 thright thlight mtop0 mbottom0">
-		<tr>
-			<th class="width150px"><div id="insurance1DivTop" style="display:none"><bean:message key="label.firstInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td>
-				<p>	
-				<html:radio name="parkingForm" property="insurance1" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('insurance1Div','insurance1File', 'none', 'block')">
-					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
-				</html:radio>
-				</p>
-				<p>				
-				<html:radio name="parkingForm" property="insurance1" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('insurance1Div','insurance1File', 'block', 'none')">
-					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
-				</html:radio>
-				</p>
-				<div id="insurance1File">
-				<logic:notEmpty name="<%= factoryName %>" property="firstInsuranceFileName">
-					<p>
-					<span class="warning0 mtop05">
-						<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>:
-						<bean:write name="<%= factoryName %>" property="firstInsuranceFileName"/>
-					</span>
-					</p>
-				</logic:notEmpty>				
-				</div>
-			</td>
-			<td class="noborder"></td>
-		</tr>
-		</table>
-		</div>
-		<div id="insurance1Student" style="display:none">
-		<logic:notEmpty name="<%= factoryName %>" property="firstInsuranceFileName">
-			<table class="tstyle8 thright thlight mbottom0 mtop0 tstylepark">
-				<tr>
-					<th class="width150px"/>
-					<td>						
-						<span class="warning0 mtop025">
-							<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>:
-							<bean:write name="<%= factoryName %>" property="firstInsuranceFileName"/>
-						</span>											
-					</td>
-				</tr>
-			</table>
-		</logic:notEmpty>
-		</div>
-			<div id="insurance1Div">
-				<fr:edit id="insurance1FR" name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.firstCarInsurance"%>"
-					type="<%= type %>">
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle8 thright thlight mtop0 mbottom0"/>
-						<fr:property name="columnClasses" value="width150px,,noborder"/>
-					</fr:layout>				
-				</fr:edit>
-	
-				<span class="error0 mtop025"><html:messages id="message" property="firstInsuranceMessage" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/><br/>
-				</html:messages></span>
-
-			</div>
-
-			<span class="error0 mtop0"><html:messages id="message" property="firstInsuranceDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
-				<bean:write name="message"/><br/>
-			</html:messages></span>	
-	
 
 	<div class="separator1"></div>
 
@@ -714,70 +623,6 @@ margin: 0.5em 0;
 			</div>
 
 			<span class="error0 mtop0"><html:messages id="message" property="secondCarPropertyRegistryDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
-				<bean:write name="message"/><br/>
-			</html:messages></span>
-
-	<div class="separator1"></div>
-		<div id="insurance2Radio">			
-		<table class="tstyle8 thright thlight mtop0 mbottom0">
-		<tr>
-			<th class="width150px"><div id="insurance2DivTop" style="display:none"><bean:message key="label.secondInsurance" bundle="PARKING_RESOURCES"/>:</div></th>
-			<td>
-				<p>
-				<html:radio name="parkingForm" property="insurance2" value="WILL_DELIVER_HARD_COPY" onclick="changeElementsDisplay('insurance2Div','insurance2File', 'none', 'block')">
-					<bean:message key="label.willdeliverDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
-				</html:radio>
-				</p>
-				<p>
-				<html:radio name="parkingForm" property="insurance2" value="ELECTRONIC_DELIVERY" onclick="changeElementsDisplay('insurance2Div','insurance2File', 'block', 'none')">
-					<bean:message key="label.deliverOnlineDocument" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>
-				</html:radio>
-				</p>
-				<div id="insurance2File">
-				<logic:notEmpty name="<%= factoryName %>" property="secondInsuranceFileName">
-					<p>
-					<span class="warning0 mtop05">
-						<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>:
-						<bean:write name="<%= factoryName %>" property="secondInsuranceFileName"/>
-					</span>
-					</p>
-				</logic:notEmpty>				
-				</div>
-			</td>	
-		</tr>
-		</table>
-		</div>
-		<div id="insurance2Student" style="display:none">
-		<logic:notEmpty name="<%= factoryName %>" property="secondInsuranceFileName">
-			<table class="tstyle8 thright thlight mbottom0 mtop0 tstylepark">
-				<tr>
-					<th class="width150px"/>
-					<td>						
-						<span class="warning0 mtop025">
-							<bean:message key="label.currentFile" bundle="PARKING_RESOURCES" arg0="<%=insuranceLabel%>"/>:
-							<bean:write name="<%= factoryName %>" property="secondInsuranceFileName"/>
-						</span>											
-					</td>
-				</tr>
-			</table>
-		</logic:notEmpty>
-		</div>		
-			<div id="insurance2Div">
-				<fr:edit id="insurance2FR" name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.secondCarInsurance"%>"
-					type="<%= type %>">
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle8 thright thlight mtop0 mbottom0"/>
-						<fr:property name="columnClasses" value="width150px,,noborder"/>
-					</fr:layout>				
-				</fr:edit>
-
-				<span class="error0 mtop025"><html:messages id="message" property="secondInsuranceMessage" message="true" bundle="PARKING_RESOURCES">
-					<bean:write name="message"/><br/>
-				</html:messages></span>
-
-			</div>
-
-			<span class="error0 mtop0"><html:messages id="message" property="secondInsuranceDeliveryMessage" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>
 

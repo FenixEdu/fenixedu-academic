@@ -62,21 +62,14 @@ public class ParkingRequestSearch implements Serializable {
                 parkingRequests.add(request);
             }
         }
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("creationDate"));
-        comparatorChain.addComparator(new BeanComparator("parkingRequestState"));
-        Collections.sort(parkingRequests, comparatorChain);
         return parkingRequests;
     }
 
     private boolean satisfiedCarPlateNumber(ParkingRequest request) {
-        return getCarPlateNumber() == null
-                || (request.getFirstCarPlateNumber() != null && (request.getFirstCarPlateNumber()
-                        .equalsIgnoreCase(getCarPlateNumber()) || request.getFirstCarPlateNumber()
-                        .toLowerCase().contains(getCarPlateNumber().toLowerCase())))
-                || (request.getSecondCarPlateNumber() != null && (request.getSecondCarPlateNumber()
-                        .equalsIgnoreCase(getCarPlateNumber()) || request.getSecondCarPlateNumber()
-                        .toLowerCase().contains(getCarPlateNumber().toLowerCase())));
+        if (getCarPlateNumber() == null) {
+            return true;
+        }
+        return request.hasVehicleContainingPlateNumber(getCarPlateNumber());       
     }
 
     private boolean satisfiedRequestState(ParkingRequest request) {
