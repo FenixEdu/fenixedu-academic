@@ -187,3 +187,19 @@
 	<slot name="detailed" read-only="true" key="detailed.view"/>			
 	<slot name="average" read-only="true" key="average.view"/>
 </schema>
+
+<schema name="DocumentRequest.view-documentPurposeTypeInformation" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
+	<remove name="numberOfPages"  read-only="true" />
+	<remove name="documentPurposeType"  read-only="true" />
+	<remove name="otherDocumentPurposeTypeDescription"  read-only="true" />
+	<slot name="serviceRequestNumber"  read-only="true" />
+	<slot name="academicServiceRequestSituationType"  read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
+	<slot name="registration.number"  read-only="true" />
+</schema>
+
+<schema name="DocumentRequestSearchBean.view" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="chosenDocumentRequestType"  key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType"/>
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"/>
+</schema>
+
