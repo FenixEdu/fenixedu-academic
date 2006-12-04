@@ -269,7 +269,7 @@ public class WorkSchedule extends WorkSchedule_Base {
             Interval mealInterval = new Interval(getWorkScheduleType().getMeal().getBeginMealBreak()
                     .toDateTimeToday(), getWorkScheduleType().getMeal().getEndMealBreak()
                     .toDateTimeToday());
-            if (leaveInterval.overlaps(mealInterval)) {
+            if (leaveInterval.overlaps(mealInterval) || leaveInterval.abuts(mealInterval)) {
                 return true;
             }
         }
