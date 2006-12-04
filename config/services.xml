@@ -1724,7 +1724,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
+			<chain name="AcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -1734,7 +1734,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
+			<chain name="AcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -1752,7 +1752,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
+			<chain name="AcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -1762,7 +1762,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
+			<chain name="AcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
