@@ -6,6 +6,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentsSearchBean;
@@ -24,9 +25,9 @@ public class DeclarationsDA extends FenixDispatchAction {
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        StudentsSearchBean studentsSearchBean = (StudentsSearchBean) getRenderedObject();
+	StudentSearchBeanWithExecutionYear studentsSearchBean = (StudentSearchBeanWithExecutionYear) getRenderedObject();
         if (studentsSearchBean == null) {
-            studentsSearchBean = new StudentsSearchBean();
+            studentsSearchBean = new StudentSearchBeanWithExecutionYear();
         }
         request.setAttribute("studentsSearchBean", studentsSearchBean);
         return mapping.findForward("declarations-search-form");
@@ -36,9 +37,10 @@ public class DeclarationsDA extends FenixDispatchAction {
         throws Exception {
 
         final Registration registration = getRegistration(request);
+        final ExecutionYear executionYear = getExecutionYear(request);
 
         if (registration != null) {
-            final RegistrationDeclaration registrationDeclaration = new RegistrationDeclaration(registration, getLoggedPerson(request));
+            final RegistrationDeclaration registrationDeclaration = new RegistrationDeclaration(registration, executionYear, getLoggedPerson(request));
             
             final byte[] data = ReportsUtils.exportToPdf(
         	    "registrationDeclaration", 
@@ -80,6 +82,12 @@ public class DeclarationsDA extends FenixDispatchAction {
         final String registrationIDString = request.getParameter("registrationID");
         final Integer registrationID = Integer.valueOf(registrationIDString);
         return rootDomainObject.readRegistrationByOID(registrationID);
+    }
+
+    private ExecutionYear getExecutionYear(final HttpServletRequest request) {
+        final String executionYearIDString = request.getParameter("executionYearID");
+        final Integer executionYearID = Integer.valueOf(executionYearIDString);
+        return rootDomainObject.readExecutionYearByOID(executionYearID);
     }
 
 }

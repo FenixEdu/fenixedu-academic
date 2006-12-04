@@ -221,6 +221,14 @@
 	<slot name="number" key="label.studentNumber"/>
 </schema>
 
+<schema name="student.StudentsSearchBeanByNumberWithExecutionYear" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="number" key="label.studentNumber"/>
+	<slot name="executionYear" layout="menu-select" key="label.executionYear">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+		<property name="format" value="${year}"/>
+	</slot>
+</schema>
+
 <schema name="student.StudentsSearchBeanByIdentification" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="identificationNumber" key="label.identificationNumber"/>
 	<slot name="documentType" key="label.idDocumentType"/>

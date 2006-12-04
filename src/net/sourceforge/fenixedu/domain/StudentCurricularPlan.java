@@ -1817,6 +1817,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getDegreeCurricularPlan().getName();
     }
 
+    
+    public int countEnrolments(final ExecutionYear executionYear) {
+	int numberEnrolments = 0;
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.getExecutionPeriod().getExecutionYear() == executionYear) {
+		numberEnrolments++;
+	    }
+	}
+	return numberEnrolments;
+    }
+
     public int countCurrentEnrolments() {
 	int result = 0;
 	for (final Enrolment enrolment : getEnrolmentsSet()) {

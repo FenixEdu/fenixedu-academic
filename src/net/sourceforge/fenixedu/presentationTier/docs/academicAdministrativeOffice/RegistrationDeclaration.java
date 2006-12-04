@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -24,17 +25,20 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
     private DomainReference<Person> employeeDomainReference;
 
+    private DomainReference<ExecutionYear> executionYearDomainReference;
+
     protected RegistrationDeclaration(final DocumentRequest documentRequest) {
 	super(documentRequest);
     }
 
-    public RegistrationDeclaration(final Registration registration, final Person loggedPerson) {
-	init(registration, loggedPerson);
+    public RegistrationDeclaration(final Registration registration, final ExecutionYear executionYear, final Person loggedPerson) {
+	init(registration, executionYear, loggedPerson);
     }
 
-    private void init(Registration registration, Person loggedPerson) {
+    private void init(Registration registration, ExecutionYear executionYear, Person loggedPerson) {
 	this.registrationDomainReference = new DomainReference<Registration>(registration);
 	this.employeeDomainReference = new DomainReference<Person>(loggedPerson);
+	this.executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
 
 	parameters.put("RegistrationDeclaration", this);
 	resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
@@ -44,7 +48,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
-	init(getDocumentRequest().getRegistration(), AccessControl.getPerson());
+	init(getDocumentRequest().getRegistration(), getExecutionYear(), AccessControl.getPerson());
     }
 
     public Person getEmployee() {
@@ -53,6 +57,14 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
     public Registration getRegistration() {
 	return registrationDomainReference == null ? null : registrationDomainReference.getObject();
+    }
+
+    public ExecutionYear getExecutionYear() {
+        return executionYearDomainReference == null ? null : executionYearDomainReference.getObject();
+    }
+
+    public void setExecutionYear(ExecutionYear executionYear) {
+        this.executionYearDomainReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
     }
 
     public static final ResourceBundle enumResourceBundle = ResourceBundle.getBundle(
@@ -65,8 +77,11 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	final Person employee = getEmployee();
 	final Registration registration = getRegistration();
 	final Person student = registration.getStudent().getPerson();
-	final StudentCurricularPlan studentCurricularPlan = registration
-		.getActiveStudentCurricularPlan();
+	final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
+	final ExecutionYear executionYear = getExecutionYear();
+	final int curricularYear = studentCurriculum.calculateCurricularYear(executionYear);
+	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getStudentCurricularPlan(executionYear);
+	final int numberEnrolments = studentCurricularPlan.countEnrolments(executionYear);
 
 	final StringBuilder stringBuilder = new StringBuilder();
 	try {
@@ -126,7 +141,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	    stringBuilder.append(resourceBundle
 		    .getString("message.declaration.registration.execution.year.prefix"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(ExecutionYear.readCurrentExecutionYear().getYear());
+	    stringBuilder.append(executionYear.getYear());
 	    stringBuilder.append(" ");
 	    stringBuilder
 		    .append(resourceBundle.getString("message.declaration.registration.is.enroled"));
@@ -134,7 +149,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	    // stringBuilder.append(resourceBundle.getString("message.declaration.registration.was.enroled"));
 	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.in"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(registration.getCurricularYear());
+	    stringBuilder.append(curricularYear);
 	    stringBuilder.append(resourceBundle
 		    .getString("message.declaration.registration.degree.prefix"));
 	    stringBuilder.append(" ");
@@ -148,7 +163,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	    stringBuilder.append(resourceBundle
 		    .getString("message.declaration.registration.enroled.courses.prefix"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(studentCurricularPlan.countCurrentEnrolments());
+	    stringBuilder.append(numberEnrolments);
 	    stringBuilder.append(" ");
 	    stringBuilder.append(resourceBundle
 		    .getString("message.declaration.registration.enroled.courses.posfix"));

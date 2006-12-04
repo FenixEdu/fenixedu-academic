@@ -45,8 +45,8 @@ public class Enrolment extends Enrolment_Base {
 
 	public static final Comparator<Enrolment> REVERSE_COMPARATOR_BY_EXECUTION_PERIOD = new ComparatorChain();
 	static {
-	((ComparatorChain) REVERSE_COMPARATOR_BY_EXECUTION_PERIOD).addComparator(new BeanComparator(
-		"executionPeriod"), true);
+	    ((ComparatorChain) REVERSE_COMPARATOR_BY_EXECUTION_PERIOD).addComparator(new BeanComparator("executionPeriod"), true);
+	    ((ComparatorChain) REVERSE_COMPARATOR_BY_EXECUTION_PERIOD).addComparator(new BeanComparator("idInternal"));
 	}
 
     private Integer accumulatedWeight;

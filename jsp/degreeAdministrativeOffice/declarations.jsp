@@ -2,6 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@page import="net.sourceforge.fenixedu.domain.student.StudentCurriculum"%>
+<%@page import="java.util.Collection"%>
+<%@page import="net.sourceforge.fenixedu.domain.student.StudentCurriculum.Entry"%>
+<%@page import="net.sourceforge.fenixedu.domain.StudentCurricularPlan"%>
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.StudentSearchBeanWithExecutionYear"%>
 <html:xhtml />
 
 <logic:present role="DEGREE_ADMINISTRATIVE_OFFICE">
@@ -11,7 +17,9 @@
 	<hr />
 	<br />
 
-	<fr:edit name="studentsSearchBean" schema="student.StudentsSearchBeanByNumber" >
+	<bean:define id="studentsSearchBean" name="studentsSearchBean" type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.StudentSearchBeanWithExecutionYear"/>
+
+	<fr:edit id="studentsSearchBean" name="studentsSearchBean" schema="student.StudentsSearchBeanByNumberWithExecutionYear" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
@@ -49,40 +57,108 @@
 					</tr>
 				</table>
 				<br/>
-				<logic:iterate id="registration" name="student" property="registrations">
+				<logic:iterate id="registration" type="net.sourceforge.fenixedu.domain.student.Registration" name="student" property="registrations">
 					<logic:equal name="registration" property="payedTuition" value="true">
-						<logic:present name="registration" property="activeStudentCurricularPlan">
-							<bean:define id="studentCurricularPlan" name="registration" property="activeStudentCurricularPlan"/>
-							<bean:define id="numberCompetedCourses" name="studentCurricularPlan" property="countCurrentEnrolments"/>
-							<logic:greaterThan name="numberCompetedCourses" value="0">
-								<br/>
-								<bean:define id="url" type="java.lang.String">/declarations.do?method=registrationDeclaration&amp;registrationID=<bean:write name="registration" property="idInternal"/></bean:define>
-								<html:link action="<%= url %>"><bean:message key="link.declaration.registration.with.curricular.year.and.number.enroled.courses"/></html:link>
-								<br/>
 
-								<bean:define id="curricularCourses" name="registration" property="curricularCoursesOfCurrentCurricularPlanThatTheStudentHasConcluded"/>
-								<br/>
-								<bean:size id="numberAprovedCurricularCourses" name="curricularCourses"/>
-								<bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-								<bean:write name="numberAprovedCurricularCourses"/>
-								<br/>
-								<bean:message key="label.total.ects.credits" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-								<bean:write name="registration" property="ectsCredits"/>
-								<br/>
-								<fr:view name="curricularCourses" schema="student.approved.curricular.courses.with.ects.credits" >
-									<fr:layout name="tabular" >
-										<fr:property name="classes" value="tstyle4"/>
-								        <fr:property name="columnClasses" value="listClasses,,"/>
-									</fr:layout>
-								</fr:view>
-							</logic:greaterThan>
-							<logic:lessEqual name="numberCompetedCourses" value="0">
-								<span class="error"><bean:message key="message.student.has.no.enrolments"/></span>
-							</logic:lessEqual>
+						<br/>
+
+						<%
+							final ExecutionYear executionYear = ((StudentSearchBeanWithExecutionYear) studentsSearchBean).getExecutionYear();
+							request.setAttribute("executionYear", executionYear);
+							final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
+							request.setAttribute("studentCurriculum", studentCurriculum);
+							final Collection<StudentCurriculum.Entry> curriculumEntries = studentCurriculum.getCurriculumEntries(executionYear);
+							request.setAttribute("curriculumEntries", curriculumEntries);
+							final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getStudentCurricularPlan(executionYear);
+							request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+							final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(executionYear);
+							request.setAttribute("totalEctsCredits", totalEctsCredits);
+							final int numberEnrolments = studentCurricularPlan.countEnrolments(executionYear);
+							request.setAttribute("numberEnrolments", numberEnrolments);
+						%>
+
+						<bean:message bundle="ENUMERATION_RESOURCES" name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name"/>
+						<bean:message bundle="APPLICATION_RESOURCES" key="label.in"/>
+						<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+						<br/>
+						<bean:write name="studentCurricularPlan" property="startDateYearMonthDay"/>
+						<br/>
+						<bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+						<bean:size id="curricularEntiesCount" name="curriculumEntries"/>
+						<bean:write name="curricularEntiesCount"/>
+						<br/>
+						<bean:message key="label.total.ects.credits" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+						<bean:write name="totalEctsCredits"/>
+						<br/>
+						<br/>
+						<logic:present name="executionYear">
+							<bean:define id="url" type="java.lang.String">/declarations.do?method=registrationDeclaration&amp;registrationID=<bean:write name="registration" property="idInternal"/>&amp;executionYearID=<bean:write name="executionYear" property="idInternal"/></bean:define>
+							<html:link action="<%= url %>"><bean:message key="link.declaration.registration.with.curricular.year.and.number.enroled.courses"/></html:link>
+							<br/>
+							<br/>
 						</logic:present>
-						<logic:notPresent name="registration" property="activeStudentCurricularPlan">
-							<span class="error"><bean:message key="message.student.has.no.active.student.curricular.plan"/></span>
-						</logic:notPresent>
+
+						<logic:present name="executionYear">
+						<logic:lessEqual name="numberEnrolments" value="0">
+							<span class="error"><bean:message key="message.student.has.no.enrolments"/></span>
+						</logic:lessEqual>
+						<logic:greaterThan name="numberEnrolments" value="0">
+						<table class="tstyle4">
+							<tr>
+								<th>
+									<bean:message bundle="APPLICATION_RESOURCES" key="label.curricular.course.from.curriculum"/>
+								</th>
+								<th>
+									<bean:message bundle="APPLICATION_RESOURCES" key="label.type.of.aproval"/>
+								</th>
+								<th colspan="2">
+									<bean:message bundle="APPLICATION_RESOURCES" key="label.curricular.course.aproved"/>
+								</th>
+								<th>
+									<bean:message bundle="APPLICATION_RESOURCES" key="label.ects.credits"/>
+								</th>
+							</tr>
+							<logic:iterate id="curriculumEntry" name="curriculumEntries">
+								<tr>
+									<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$NotNeedToEnrolEntry">
+										<td><bean:write name="curriculumEntry" property="curricularCourse.name"/></td>
+										<td><bean:message bundle="APPLICATION_RESOURCES" key="label.not.need.to.enrol"/></td>
+										<td colspan="2"></td>
+										<td><bean:write name="curriculumEntry" property="ectsCredits"/></td>
+									</logic:equal>
+									<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$EnrolmentEntry">
+										<td><bean:write name="curriculumEntry" property="curricularCourse.name"/></td>
+										<td><bean:message bundle="APPLICATION_RESOURCES" key="label.directly.approved"/></td>
+										<td colspan="2"><bean:write name="curriculumEntry" property="enrolment.curricularCourse.name"/></td>
+										<td><bean:write name="curriculumEntry" property="ectsCredits"/></td>
+									</logic:equal>
+									<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$EquivalentEnrolmentEntry">
+										<bean:define id="numberEntries" name="curriculumEntry" property="entries"/>
+										<td rowspan="<%= numberEntries %>"><bean:write name="curriculumEntry" property="curricularCourse.name"/></td>
+										<td rowspan="<%= numberEntries %>"><bean:message bundle="APPLICATION_RESOURCES" key="label.equivalency"/></td>
+										<logic:iterate id="simpleEntry" name="curriculumEntry" property="entries">
+											<logic:equal name="simpleEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$NotNeedToEnrolEntry">
+												<td><bean:message bundle="APPLICATION_RESOURCES" key="label.not.need.to.enrol"/></td>
+											</logic:equal>
+											<logic:equal name="simpleEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$EnrolmentEntry">
+												<td><bean:message bundle="APPLICATION_RESOURCES" key="label.directly.approved"/></td>
+											</logic:equal>
+											<td><bean:write name="simpleEntry" property="curricularCourse.name"/></td>
+										</logic:iterate>
+										<td rowspan="<%= numberEntries %>"><bean:write name="curriculumEntry" property="ectsCredits"/></td>
+									</logic:equal>
+									<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$ExtraCurricularEnrolmentEntry">
+										<td></td>
+										<td><bean:message bundle="APPLICATION_RESOURCES" key="label.extra.curricular.course"/></td>
+										<td colspan="2"><bean:write name="curriculumEntry" property="enrolment.curricularCourse.name"/></td>
+										<td><bean:write name="curriculumEntry" property="ectsCredits"/></td>
+									</logic:equal>
+								</tr>
+							</logic:iterate>
+						</table>
+						</logic:greaterThan>
+						</logic:present>
+						<br/>
 					</logic:equal>
 					<logic:notEqual name="registration" property="payedTuition" value="true">
 						<span class="error"><bean:message key="message.student.has.not.payed.all.tuition"/></span>
