@@ -14,8 +14,8 @@
 <%-- 
 	<ul>
 		<li class="navheader"><bean:message key="link.documentsOperations" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
-		<li><html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.createDocumentRequest" /></html:link></li>
-		<li><html:link action="/documentRequestsManagement.do?method=prepareSearch"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchDocumentRequests" /></html:link></li>
+		<li><html:link action="/documentRequestsManagement.do?method=prepareSearch&academicSituationType=NEW"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.requests" /></html:link></li>
+		<li><html:link action="/documentRequestsManagement.do?method=prepareSearch&academicSituationType=PROCESSING"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests" /></html:link></li>
 	</ul>
 --%>
 
