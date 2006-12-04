@@ -19,59 +19,58 @@
 		<br />
 </logic:messagesPresent>
 
-<html:form action="/documentRequestsManagement.do">
-	<html:hidden property="method" value="search" />
-	<br/>
-	<table class="tstyle4 thlight thright"">
-		<tr>
-			<td>
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" />:
-			</td>
-			<td>
-				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType" bundle="ENUMERATION_RESOURCES" />
-				<html:select property="documentRequestType">
-					<html:option value=""><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="dropDown.Default" bundle="ENUMERATION_RESOURCES"/></html:option>
-					<html:options collection="values" property="value" labelProperty="label"/>
-				</html:select>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchDocumentRequests.requestSituationType" />:
-			</td>
-			<td>
-				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType" bundle="ENUMERATION_RESOURCES"/>
-				<html:select property="requestSituationType">
-					<html:option value=""><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="dropDown.Default" bundle="ENUMERATION_RESOURCES"/></html:option>
-					<html:options collection="values" property="value" labelProperty="label"/>
-				</html:select>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />:
-			</td>
-			<td>
-				<html:select property="isUrgent">
-					<html:option value=""><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="dropDown.Default" bundle="ENUMERATION_RESOURCES"/></html:option>
-					<html:option value="true"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchDocumentRequests.urgent.yes"/></html:option>
-					<html:option value="false"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchDocumentRequests.urgent.no"/></html:option>
-				</html:select>
-				
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchDocumentRequests.studentNumber" />:
-			</td>
-			<td>
-				<html:text property="studentNumber" />
-			</td>
-		</tr>
+<fr:form action="/documentRequestsManagement.do">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
 	
-	</table>
+	<br/>
+	<table class="tstyle4 thlight thright">
+									  
+<!--   <fr:edit id="documentRequestSearch" name="documentRequestSearchBean" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestSearchBean"
+   		schema="DocumentRequestSearchBean.view">
+	 	<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		</fr:layout>
+	</fr:edit>
+	
+			<fr:property name="linkFormat(view)" value="<%="/documentRequestsManagement.do?method=viewDocumentRequest&documentRequestId=${idInternal}" %>"/>
+			<fr:property name="key(view)" value="label.documentRequestsManagement.viewRequest"/>
+	
 	
 	<html:submit styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.search" /></html:submit>
-	<html:submit onclick="this.form.method.value='showOperations';" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.back" /></html:submit>
-
-</html:form>
+	-->
+	</table> 
+	
+	<logic:notEmpty  name="documentRequestsResult">
+	<bean:define id="newRequestUrl">
+	/documentRequestsManagement.do?method=processNewAcademicServiceRequest&academicSituationType=<bean:write name="academicSituationType" property="name"/>
+	</bean:define>
+	<bean:define id="processRequestUrl">
+	/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest
+	</bean:define>
+	<fr:view name="documentRequestsResult" schema="DocumentRequest.view-documentPurposeTypeInformation" >			
+		
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright" />
+			
+		
+			<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+			<fr:property name="key(processing)" value="processing"/>
+			<fr:property name="visibleIf(processing)" value="newRequest"/>
+			
+			<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+			<fr:property name="key(concluded)" value="concluded"/>
+			<fr:property name="visibleIf(concluded)" value="processing"/>
+		
+		
+			<fr:property name="sortBy" value="urgentRequest=desc,creationDate=asc"/>
+		</fr:layout>
+	</fr:view>
+	</logic:notEmpty> 
+	
+	<logic:empty name="documentRequestsResult">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.noDocumentRequests" />
+		<br/>
+		<br/>
+	</logic:empty>
+</fr:form>
