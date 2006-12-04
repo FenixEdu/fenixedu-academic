@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -24,13 +25,13 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	super.fillReport();
 	
 	final EnrolmentCertificateRequest enrolmentCertificateRequest = (EnrolmentCertificateRequest) getDocumentRequest();
+	final Registration registration = enrolmentCertificateRequest.getRegistration();
 	final ExecutionYear executionYear = enrolmentCertificateRequest.getExecutionYear();
-
-	final Integer curricularYear = Integer.valueOf(enrolmentCertificateRequest.getRegistration()
-		.getCurricularYear(executionYear));
+	
+	final Integer curricularYear = Integer.valueOf(registration.getCurricularYear(executionYear));
 	parameters.put("curricularYear", curricularYear);
 
-	final List<Enrolment> enrolments = enrolmentCertificateRequest.getRegistration().getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
+	final List<Enrolment> enrolments = registration.getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
 	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
 	
 	if (enrolmentCertificateRequest.getDetailed()) {
