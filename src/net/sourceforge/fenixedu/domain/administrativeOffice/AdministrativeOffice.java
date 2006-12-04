@@ -84,10 +84,6 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
 	for (final AcademicServiceRequest serviceRequest : getAcademicServiceRequestsSet()) {
 
-	    if (serviceRequest.isNewRequest()) {
-		continue;
-	    }
-
 	    if (serviceRequest instanceof DocumentRequest) {
 
 		final DocumentRequest documentRequest = (DocumentRequest) serviceRequest;
