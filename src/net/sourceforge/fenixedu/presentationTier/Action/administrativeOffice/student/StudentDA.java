@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -28,10 +27,10 @@ public class StudentDA extends FenixDispatchAction {
 
     private Registration getRegistration(final HttpServletRequest request) {
 	String registrationID = request.getParameter("registrationID");
-    if (registrationID == null) {
-        registrationID = (String) request.getAttribute("registrationId");
-    }
-    final Registration registration = rootDomainObject.readRegistrationByOID(Integer
+	if (registrationID == null) {
+	    registrationID = (String) request.getAttribute("registrationId");
+	}
+	final Registration registration = rootDomainObject.readRegistrationByOID(Integer
 		.valueOf(registrationID));
 	request.setAttribute("registration", registration);
 	return registration;
@@ -66,11 +65,11 @@ public class StudentDA extends FenixDispatchAction {
 	getRegistration(request);
 	return mapping.findForward("viewRegistrationDetails");
     }
-    
+
     public ActionForward visualizeStudent(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	getStudent(request);
 	return mapping.findForward("viewStudentDetails");
     }
-    
+
 }
