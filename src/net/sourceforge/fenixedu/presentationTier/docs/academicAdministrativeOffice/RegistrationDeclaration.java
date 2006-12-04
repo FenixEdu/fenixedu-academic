@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -48,7 +49,9 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
-	init(getDocumentRequest().getRegistration(), getExecutionYear(), AccessControl.getPerson());
+	super.fillReport();
+	
+	init(getDocumentRequest().getRegistration(), ((SchoolRegistrationDeclarationRequest)getDocumentRequest()).getExecutionYear(), AccessControl.getPerson());
     }
 
     public Person getEmployee() {
