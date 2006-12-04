@@ -260,16 +260,18 @@
 							<bean:write name="subSpace" property="containedSpacesCount"/>
 						</td>
 						<td>
+							<bean:define id="subSpaceToCheck" name="subSpace" type="net.sourceforge.fenixedu.domain.space.Space"/>
+							<%
+								if(!subSpaceToCheck.personHasPermissionsToManageSpace(person)){
+							%>
 							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="subSpace" paramProperty="spaceInformation.idInternal">
 								<bean:message bundle="SPACE_RESOURCES" key="label.view"/>
 							</html:link>
-							<bean:define id="subSpaceToCheck" name="subSpace" type="net.sourceforge.fenixedu.domain.space.Space"/>
-							<%
-								if(subSpaceToCheck.personHasPermissionsToManageSpace(person)){
-							%>	
-							,
-							<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="subSpace" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
-								<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
+							<% 
+								} else {
+							%>															
+							<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="subSpace" paramProperty="spaceInformation.idInternal">
+								<bean:message bundle="SPACE_RESOURCES" key="link.manage.space"/>
 							</html:link>
 							<% 
 								}
