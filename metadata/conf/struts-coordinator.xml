@@ -829,9 +829,9 @@
 	    	name="finalDegreeWorkProposal" 
 	    	scope="request" 
 	    	validate="true">
-				<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
-				<forward name="show-final-degree-work-list" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
-				<forward name="detailed-proposal-list" path="detailed-proposal-list"/>
+		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
+		<forward name="show-final-degree-work-list" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
+		<forward name="detailed-proposal-list" path="detailed-proposal-list"/>
 	</action>
 
 		<!-- =================== View Old Inquiries Teacher's Results ============== -->

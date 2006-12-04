@@ -80,6 +80,9 @@ public class FenixErrorExceptionHandler extends ExceptionHandler {
         	}
             property = error.getKey();
         }
+        if (ae.getPath() != null && ae.getPath().length() > 0) {
+            forward = new ActionForward(ae.getPath());
+        }
         request.setAttribute(Globals.EXCEPTION_KEY, ex);
         super.storeException(request, property, error, forward, ae.getScope());
         return forward;

@@ -38,7 +38,7 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
                 scheduleing.setMinimumNumberOfStudents(minimumNumberOfStudents);
                 scheduleing.setMaximumNumberOfStudents(maximumNumberOfStudents);
                 scheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(maximumNumberOfProposalCandidaciesPerGroup);
-                scheduleing.setAttributionByTeachers(attributionByTeachers);
+                scheduleing.setAttributionByTeachers(Boolean.valueOf(attributionByTeachers != null && attributionByTeachers.booleanValue()));
             }
 
         }

@@ -78,6 +78,7 @@ import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
 
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 /**
  * @author Luis Cruz
@@ -443,6 +444,15 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, executionDegreeOID);
         final Scheduleing scheduleing = executionDegree.getScheduling();
+        if (scheduleing == null) {
+            final ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.scheduling.not.defined", new ActionError("error.scheduling.not.defined"));
+            saveErrors(request, actionErrors);
+            final String path = StringAppender.append("/manageFinalDegreeWork.do?method=prepare&degreeCurricularPlanID=", degreeCurricularPlanID.toString(), "&executionDegreeOID=" + executionDegreeOID.toString());
+            final ActionForward actionForward = new ActionForward(path);
+            return actionForward;
+        }
+
         final List branches = new ArrayList();
         for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
             final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
@@ -456,6 +466,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 .getLabelValueList());
 
         return mapping.findForward("show-final-degree-work-proposal");
+    }
+
+    public static class NoScheduleExistsException extends FenixActionException {
     }
 
     public ActionForward setFinalDegreeProposalPeriod(ActionMapping mapping, ActionForm form,
@@ -865,6 +878,17 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         Integer executionDegreeOID = Integer.valueOf((String) dynaActionForm.get("executionDegreeOID"));
         request.setAttribute("executionDegreeOID", executionDegreeOID);
+
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+        final Scheduleing scheduleing = executionDegree.getScheduling();
+        if (scheduleing == null) {
+            final ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.scheduling.not.defined", new ActionError("error.scheduling.not.defined"));
+            saveErrors(request, actionErrors);
+            final String path = StringAppender.append("/manageFinalDegreeWork.do?method=prepare&degreeCurricularPlanID=", executionDegree.getDegreeCurricularPlan().getIdInternal().toString(), "&executionDegreeOID=" + executionDegreeOID.toString());
+            final ActionForward actionForward = new ActionForward(path);
+            return actionForward;
+        }
 
         Object args[] = { executionDegreeOID };
         try {
