@@ -50,10 +50,10 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     protected void init(AdministrativeOffice administrativeOffice, Person person,
 	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	super.init(administrativeOffice, EventType.GRATUITY, person);
 	checkParameters(studentCurricularPlan, executionYear);
 	super.setStudentCurricularPlan(studentCurricularPlan);
 	super.setExecutionYear(executionYear);
+	super.init(administrativeOffice, EventType.GRATUITY, person);
     }
 
     private void checkParameters(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
@@ -141,11 +141,11 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 	if (hasGratuityExemption()) {
 	    if (isClosed()) {
 	    return calculatePayedAmount().greaterOrEqualThan(calculateTotalAmountToPayWithoutDiscount(when));
-	    }
+}
 	}
 	return true;
     }
-
+    
     private Money calculateTotalAmountToPayWithoutDiscount(final DateTime when) {
 	return getPostingRule(when).calculateTotalAmountToPay(this, when, false);
     }
