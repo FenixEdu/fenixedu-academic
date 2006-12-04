@@ -448,7 +448,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Secretaria dos Serviços Académicos do Instituto Superior Técnico, em Lisboa, " + $P{day}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Secretaria dos Serviços Académicos do Instituto Superior Técnico, em " + $P{documentRequest}.getRegistration().getCurrentCampus().getLocation() + ", " + $P{day}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
