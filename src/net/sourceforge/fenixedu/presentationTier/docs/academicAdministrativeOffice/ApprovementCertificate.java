@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -18,8 +17,6 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ApprovementCertificate extends AdministrativeOfficeDocument {
     
-    private static final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
-
     protected ApprovementCertificate(final DocumentRequest documentRequest) {
 	super(documentRequest);
     }

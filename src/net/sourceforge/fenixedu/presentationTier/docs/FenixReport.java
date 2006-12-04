@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.LanguageUtils;
+
 public abstract class FenixReport implements Serializable {
 
     protected final Map<String, Object> parameters = new HashMap<String, Object>();
@@ -13,6 +15,9 @@ public abstract class FenixReport implements Serializable {
     protected ResourceBundle resourceBundle;
     
     protected Collection dataSource;
+    
+    protected static final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
+	    "resources.EnumerationResources", LanguageUtils.getLocale());
     
     public final Map<String, Object> getParameters() {
 	return parameters;
