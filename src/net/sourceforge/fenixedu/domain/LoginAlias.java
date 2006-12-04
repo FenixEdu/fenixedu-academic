@@ -84,10 +84,7 @@ public class LoginAlias extends LoginAlias_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public void delete() {
-	if (this.getType().equals(LoginAliasType.INSTITUTION_ALIAS)) {
-	    throw new DomainException("error.cannot.delete.institutional.loginAlias");
-	}
+    public void delete() {	
 	super.setLogin(null);
 	removeRootDomainObject();
 	super.deleteDomainObject();
