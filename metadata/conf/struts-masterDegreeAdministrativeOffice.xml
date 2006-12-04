@@ -92,36 +92,7 @@
 		 <form-property name="candidateNumber" type="java.lang.String" />
 		 <form-property name="executionYear" type="java.lang.String" />
       </form-bean>
-      
-      <!-- Bean for The Creation of a Contributor -->
-      <form-bean name="createContributorForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-
-         <form-property name="page" type="java.lang.Integer" />
-			<form-property name="contributorType" type="java.lang.String" />
-         <form-property name="contributorNumber" type="java.lang.String" />
-         <form-property name="contributorName" type="java.lang.String" />
-         <form-property name="contributorAddress" type="java.lang.String" />
-	        <form-property name="areaCode" type="java.lang.String" />
-	        <form-property name="areaOfAreaCode" type="java.lang.String" />
-	        <form-property name="area" type="java.lang.String" />
-	        <form-property name="parishOfResidence" type="java.lang.String" />
-	        <form-property name="districtSubdivisionOfResidence" type="java.lang.String" />
-	        <form-property name="districtOfResidence" type="java.lang.String" />
-      </form-bean>
-
-
-      <!-- Bean for The Choosing of a Contributor -->
-      <form-bean name="chooseContributorForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-
-         <form-property name="page" type="java.lang.Integer" />
-         <form-property name="contributorNumber" type="java.lang.String" />
-      </form-bean>
-      
-      
+            
 	  <!-- Bean for The Choosing of a Guide -->
       <form-bean name="chooseGuideForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -1175,74 +1146,6 @@
 	         <forward name="CreateStudentGuideReady" path="/guide/createGuideReady.jsp"/>
 	  </action>
 
-
-      
-      <!-- Dispatch Action to Create the Contributor Information -->
-      <action path="/createContributorDispatchAction"
-	     attribute="createContributorForm"
-	          name="createContributorForm"
-	         input="/contributor/createContributor.jsp"
-	      validate="true"
-		 parameter="method"
-  	         scope="request"
-      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.CreateContributorDispatchAction">
-   		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-            key="resources.Action.exceptions.ExistingActionException"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-      	  <forward name="CreateSuccess" path="/contributor/createContributorSuccess.jsp"/>
-      	  <forward name="PrepareReady" path="/contributor/createContributor.jsp"/>
-      </action>
-
-      <!-- action to visualize Contributors -->
-      <action attribute="chooseContributorForm"
-      		  input="/contributor/chooseContributor.jsp"
-      	      name="chooseContributorForm"
-		      path="/visualizeContributors"
-		      parameter="method"
-		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
-              validate="true">
-	         <forward name="PrepareReady" path="/contributor/chooseContributor.jsp"/>  
-	         <forward name="ActionReady" path="/contributor/visualizeContributor.jsp"/>  
-	         <forward name="ChooseContributor" path="/contributor/selectContributorFromList.jsp"/>  
-      </action>
-
-      <!-- action to edit Contributors -->
-      <action attribute="chooseContributorForm"
-      		  input="/contributor/chooseContributor.jsp"
-      	      name="chooseContributorForm"
-		      path="/editContributors"
-		      parameter="method"
-		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
-              validate="true">
-     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-		                key="resources.Action.exceptions.ExistingActionException"
-                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-	         <forward name="PrepareReady" path="/contributor/chooseContributor.jsp"/>  
-	         <forward name="ActionReady" path="/editContributor.do?method=prepareEdit&amp;page=0" />  
-	         <forward name="ChooseContributor" path="/contributor/selectContributorFromList.jsp"/>  
-      </action>
-
-	  <!-- Action to Edit ONE contributor -->
-      <action attribute="createContributorForm"
-      		  input="/contributor/editContributor.jsp"
-      	      name="createContributorForm"
-		      path="/editContributor"
-		      parameter="method"
-		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
-              validate="true">
-     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-		                key="resources.Action.exceptions.ExistingActionException"
-                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-	         <forward name="EditReady" path="/contributor/editContributor.jsp"/>  
-	         <forward name="EditSuccess" path="/contributor/editContributorSuccess.jsp"/>  
-      </action>
-      
-      
-      
-
       <!-- action to create a guide -->
       <action attribute="createGuideForm"
       		  input="/createGuideDispatchAction.do?method=prepare&amp;page=0"
@@ -1263,7 +1166,6 @@
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
 	         <forward name="CreateStudentGuide" path="/guide/chooseStudentGuide.jsp"/>  
       </action>
-
 
       <!-- action to choose a guide -->
       <action attribute="chooseGuideForm"
