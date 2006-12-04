@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 public class StudentsSearchBean implements Serializable {
@@ -42,10 +42,21 @@ public class StudentsSearchBean implements Serializable {
 
     public Set<Student> search() {
 	final Set<Student> students = new HashSet<Student>();
-	final Student student = Student.readStudentByNumber(number);
-	if (student != null) {
-	    students.add(student);
+
+	if (getNumber() != null) {
+	    final Student student = Student.readStudentByNumber(getNumber());
+	    if (student != null) {
+		students.add(student);
+	    }
+	} else if (getIdentificationNumber() != null && getDocumentType() != null) {
+	    Person person = Person.readByDocumentIdNumberAndIdDocumentType(getIdentificationNumber(),
+		    getDocumentType());
+	    if (person != null && person.hasStudent()) {
+		students.add(person.getStudent());
+
+	    }
 	}
+
 	return students;
     }
 
