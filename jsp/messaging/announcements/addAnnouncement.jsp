@@ -65,6 +65,17 @@
 			<span class="error0"><fr:message for="announcement-body-validated"/></span>
 		</td>
 	</tr>
+<%-- Visível --%>
+	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:
+		</th>
+		<td>
+			<fr:create type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="visible">
+				<fr:default value="true" slot="visible"/>
+			</fr:create>
+		</td>
+	</tr>
 </table>
 
 <p class="mtop1 mbottom025"><strong>Campos opcionais:</strong></p>
@@ -186,18 +197,6 @@
 		<td>
 			<fr:create id="publicationEnd-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="publicationEnd" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
 			<span class="error0"><fr:message for="publicationEnd-validated"/></span>
-		</td>
-	</tr>
-
-<%-- Visível --%>
-	<tr>
-		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:
-		</th>
-		<td>
-			<fr:create type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="visible">
-				<fr:default value="true" slot="visible"/>
-			</fr:create>
 		</td>
 	</tr>
 </table>

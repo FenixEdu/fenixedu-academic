@@ -8,9 +8,9 @@
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 	<logic:empty name="component" property="announcements">
-		<h2><bean:message key="message.announcements.not.available" /></h2>
+		<p><em><bean:message key="message.announcements.not.available" /></em></p>
 	</logic:empty>
-	
+		
 	<logic:notEmpty name="component" property="announcements">
 		<h2><bean:message key="label.announcements"/></h2>
 		<logic:iterate id="announcement" name="component" property="announcements" >	

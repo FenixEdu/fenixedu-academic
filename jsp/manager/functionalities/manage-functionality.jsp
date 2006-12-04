@@ -73,7 +73,7 @@
         expression help
      ======================  -->
 
-<div class="infoop2 mvert1">
+<div class="infoop2 mtop15 mbottom1" style="width: 600px;">
     <bean:message key="functionalities.expression.help" bundle="FUNCTIONALITY_RESOURCES" arg0="<%= request.getContextPath() %>"/>
 </div>
 

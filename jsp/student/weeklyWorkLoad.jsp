@@ -91,7 +91,7 @@
 
 <logic:present name="firstAttends" property="responseWeek">
 	<bean:define id="previousWeek" name="firstAttends" property="responseWeek"/>
-	<table class="tstyle3" width="50%">
+	<table class="tstyle3 tdcenter">
 		<tr>
 			<th colspan="5">
 				<bean:message key="title.weekly.work.load.week"/>
@@ -107,7 +107,7 @@
 			</th>
 		</tr>
 		<tr>
-			<th width="25%">
+			<th style="width: 200px;">
 				<bean:message key="title.execution.course"/>
 			</th>
 			<th  title="<%= contact_tooltip %>" width="20%">
@@ -122,7 +122,7 @@
 			<th width="15%">
 			</th>
 		</tr>
-	</table>
+
 	<logic:iterate id="attend" name="attends">
 		<logic:notPresent name="attend" property="weeklyWorkLoadOfPreviousWeek">
 			<html:form action="/weeklyWorkLoad.do">
@@ -131,33 +131,38 @@
 				<bean:define id="attendsID" type="java.lang.Integer" name="attend" property="idInternal"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.attendsID" property="attendsID" value="<%= attendsID.toString() %>"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodID" property="executionPeriodID"/>	
-				<table class="tstyle3" width="50%">
-					<tr>
-						<td width="25%">
-							<bean:write name="attend" property="disciplinaExecucao.nome"/>
-						</td>
-						<td title="<%= contact_tooltip %>" width="20%">
-							<html:text bundle="HTMLALT_RESOURCES" altKey="text.contact" size="3" maxlength="3" property="contact"/>
-						</td>
-						<td  title="<%= autonomousStudy_tooltip %>" width="20%">
-							<html:text bundle="HTMLALT_RESOURCES" altKey="text.autonomousStudy" size="3" maxlength="3" property="autonomousStudy"/>
-						</td>
-						<td title="<%= other_tooltip %>" width="20%">
-							<html:text bundle="HTMLALT_RESOURCES" altKey="text.other" size="3" maxlength="3" property="other"/>
-						</td>
-						<td width="15%">
-							<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%= submitConfirm %>'>
-								<bean:message key="button.submit"/>
-							</html:submit>
-						</td>
-					</tr>
-				</table>
+				<tr>
+					<td width="35%">
+						<bean:write name="attend" property="disciplinaExecucao.nome"/>
+					</td>
+					<td title="<%= contact_tooltip %>" width="20%">
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.contact" size="3" maxlength="3" property="contact"/>
+					</td>
+					<td  title="<%= autonomousStudy_tooltip %>" width="20%">
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.autonomousStudy" size="3" maxlength="3" property="autonomousStudy"/>
+					</td>
+					<td title="<%= other_tooltip %>" width="20%">
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.other" size="3" maxlength="3" property="other"/>
+					</td>
+					<td width="15%">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%= submitConfirm %>'>
+							<bean:message key="button.submit"/>
+						</html:submit>
+					</td>
+				</tr>
 			</html:form>
 		</logic:notPresent>
 	</logic:iterate>
+</table>	
 </logic:present>
 
+
+
+
 <br/>
+
+
+
 
 <logic:present name="weeklyWorkLoadView">
 	<table class="tstyle3 tpadding01">

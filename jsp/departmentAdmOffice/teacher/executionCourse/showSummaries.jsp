@@ -21,7 +21,19 @@
 		<p>
 	</logic:messagesPresent>
 	
+	
+	<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+	<div class="gen-button mtop1 mbottom2">
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link page="<%= insertSummaryLink %>">
+			<bean:message key="label.insertSummary" bundle="DEFAULT"/>
+		</html:link>	
+		<bean:message key="link.summary.insert.info" bundle="DEFAULT"/>
+	</div>
+	
+	
 	<logic:notEmpty name="nextPossibleLessonsDates">
+	
 		<p class="mbottom025"><bean:message key="label.last.lessons.without.summaries" bundle="DEFAULT"/></p>	
 		<bean:define id="createComplexSummaryUrl">/summariesManagement.do?method=prepareCreateComplexSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
 		<fr:form action="<%= createComplexSummaryUrl %>">			
@@ -40,27 +52,17 @@
 			<table style="width: 500px;" class="tstyle1 mtop0">
 				<tr><td><html:submit><bean:message key="label.fill" bundle="DEFAULT"/></html:submit></td></tr>
 			</table>
-
 		</fr:form>
 	</logic:notEmpty>	
 
 
-	<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
-	<div class="gen-button mtop1 mbottom2">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link page="<%= insertSummaryLink %>">
-			<bean:message key="label.insertSummary" bundle="DEFAULT"/>
-		</html:link>	
-		<bean:message key="link.summary.insert.info" bundle="DEFAULT"/>
-	</div>
-	
-		
+	<h3 class="mtop2 mbottom05"><bean:message key="label.show.summaries" bundle="DEFAULT"/></h3>
 	<bean:define id="showSummariesPostBackUrl">/summariesManagement.do?method=showSummariesPostBack&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 	<fr:form>
 		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToExecutionCourseManagementToDepartmentAdmOffice" nested="true">
 			<fr:destination name="postBack" path="<%= showSummariesPostBackUrl %>"/>		
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright"/>
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 				<fr:property name="columnClasses" value=",,tdclear"/>
 			</fr:layout>
 		</fr:edit>
