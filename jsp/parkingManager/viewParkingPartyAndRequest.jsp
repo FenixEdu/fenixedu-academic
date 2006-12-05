@@ -36,7 +36,6 @@
 	</tr>
 </table>
 
-<bean:define id="date" name="todayDate"/>
 <p class="mtop1 mbottom025"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES" /></strong></p>
 <table class="tstyle1 thright thlight mtop025 mbottom1">
 <logic:iterate id="vehicle" name="parkingParty" property="vehicles">
@@ -50,7 +49,7 @@
 		<bean:define id="plateNumber" name="vehicle" property="plateNumber"/>
 		<td><bean:write name="plateNumber"/></td>
 		<td class="noborder">
-			<html:link href="<%= "http://www.isp.pt/NR/exeres/36FAA444-8049-428C-8E89-09909A9C1300.htm?matricula=" + plateNumber + "&data=" + 20061130 %>" target="_blank"><bean:message key="link.verifyInsurance" bundle="PARKING_RESOURCES"/></html:link>
+			<html:link href="http://www.isp.pt/NR/exeres/019EEB91-E357-4A7C-8BD2-B62293701692.htm" target="_blank"><bean:message key="link.verifyInsurance" bundle="PARKING_RESOURCES"/></html:link>
 		</td>
 	</tr>
 	<tr>
@@ -155,7 +154,7 @@
 		<bean:define id="plateNumber" name="vehicle" property="plateNumber"/>
 		<td><bean:write name="plateNumber"/></td>
 		<td class="noborder">
-			<html:link href="<%= "http://www.isp.pt/NR/exeres/36FAA444-8049-428C-8E89-09909A9C1300.htm?matricula=" + plateNumber + "&data=" + 20061130 %>" target="_blank"><bean:message key="link.verifyInsurance" bundle="PARKING_RESOURCES"/></html:link>
+			<html:link href="http://www.isp.pt/NR/exeres/019EEB91-E357-4A7C-8BD2-B62293701692.htm" target="_blank"><bean:message key="link.verifyInsurance" bundle="PARKING_RESOURCES"/></html:link>
 		</td>
 	</tr>
 	<tr>

@@ -135,7 +135,6 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         request.setAttribute("parkingPartyClassification", parkingPartyClassification);
         request.setAttribute("personName", personName);
         request.setAttribute("carPlateNumber", carPlateNumber);
-        request.setAttribute("todayDate", new DateTime().toString("yyyyMMdd"));
         return mapping.findForward("showParkingRequest");
     }
 
