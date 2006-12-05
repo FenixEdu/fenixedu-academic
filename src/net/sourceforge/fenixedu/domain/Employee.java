@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.ContractType;
 
 import org.joda.time.DateTime;
@@ -211,4 +212,18 @@ public class Employee extends Employee_Base {
 	}
 	return null;
     }
+    
+    public Campus getCurrentCampus() {
+	final YearMonthDay now = new YearMonthDay();
+	
+	final List<Campus> campus = getAssiduousness().getCampusForInterval(now, now);
+	if (campus.size() > 1) {
+	    throw new DomainException("Employee.with.more.than.one.campus.for.same.day");
+	} else if (!campus.isEmpty()) {
+	    campus.iterator().next();
+	}
+	
+	return null; 
+    }
+    
 }
