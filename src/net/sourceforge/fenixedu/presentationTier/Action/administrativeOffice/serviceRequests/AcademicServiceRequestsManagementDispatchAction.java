@@ -44,7 +44,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
 	if (!StringUtils.isEmpty(request.getParameter("backAction"))) {
 	    result.append("/").append(request.getParameter("backAction")).append(".do?");
-	    
+
 	    if (!StringUtils.isEmpty(request.getParameter("backMethod"))) {
 		result.append("method=").append(request.getParameter("backMethod"));
 	    }
@@ -79,10 +79,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	documentIdsToProcess.add(academicServiceRequest.getIdInternal());
 
 	try {
-	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
-		    "ProcessNewAcademicServiceRequests", new Object[] {
-			    SessionUtils.getUserView(request).getPerson().getEmployee(),
-			    documentIdsToProcess });
+	    executeService("ProcessNewAcademicServiceRequests", academicServiceRequest);
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
 	    request.setAttribute("failingCondition", ex.getKey());
@@ -93,9 +90,9 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	return mapping.findForward("viewRegistrationDetails");
     }
 
-    public ActionForward prepareRejectAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward prepareRejectAcademicServiceRequest(ActionMapping mapping,
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
 
 	getAndSetAcademicServiceRequest(request);
 	return mapping.findForward("prepareRejectAcademicServiceRequest");
@@ -109,23 +106,25 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final String justification = ((DynaActionForm) actionForm).getString("justification");
 
 	try {
-		ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
-			"RejectAcademicServiceRequest", new Object[] { academicServiceRequest, justification });
+	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
+		    "RejectAcademicServiceRequest",
+		    new Object[] { academicServiceRequest, justification });
 	} catch (DomainExceptionWithLabelFormatter ex) {
-	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
+		    .getLabelFormatterArgs()));
 	    return mapping.findForward("prepareRejectAcademicServiceRequest");
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
 	    return mapping.findForward("prepareRejectAcademicServiceRequest");
 	}
-	
+
 	request.setAttribute("registration", academicServiceRequest.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
     }
 
-    public ActionForward prepareCancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward prepareCancelAcademicServiceRequest(ActionMapping mapping,
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
 
 	getAndSetAcademicServiceRequest(request);
 	return mapping.findForward("prepareCancelAcademicServiceRequest");
@@ -140,22 +139,24 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
 	try {
 	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
-		    "CancelAcademicServiceRequest", new Object[] { academicServiceRequest, justification });
+		    "CancelAcademicServiceRequest",
+		    new Object[] { academicServiceRequest, justification });
 	} catch (DomainExceptionWithLabelFormatter ex) {
-	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
+		    .getLabelFormatterArgs()));
 	    return mapping.findForward("prepareCancelAcademicServiceRequest");
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
 	    return mapping.findForward("prepareCancelAcademicServiceRequest");
-	} 
-	
+	}
+
 	request.setAttribute("registration", academicServiceRequest.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
     }
 
-    public ActionForward prepareConcludeAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward prepareConcludeAcademicServiceRequest(ActionMapping mapping,
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
 
 	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
@@ -163,7 +164,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    return mapping.findForward("prepareConcludeDocumentRequest");
 	} else {
 	    request.setAttribute("registration", academicServiceRequest.getRegistration());
-	    return mapping.findForward("viewRegistrationDetails");    
+	    return mapping.findForward("viewRegistrationDetails");
 	}
     }
 
@@ -179,7 +180,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
 	}
-	
+
 	request.setAttribute("registration", academicServiceRequest.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
     }
@@ -196,7 +197,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
 	}
-	
+
 	request.setAttribute("registration", academicServiceRequest.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
     }
