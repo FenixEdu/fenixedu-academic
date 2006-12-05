@@ -12,19 +12,7 @@
 	<slot name="number" key="label.studentNumber"/>
 </schema>
 
-<schema name="AcademicServiceRequest.stateless-view-for-given-registration" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
-	<remove name="registration.number" />
-	<remove name="registration.person.name" />
-</schema>
-
-<schema name="AcademicServiceRequest.view-without-urgentRequest" extends="AcademicServiceRequest.stateless-view-for-given-registration"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
-	<remove name="registration.number" />
-	<remove name="registration.person.name" />
-</schema>
-
 <schema name="AcademicServiceRequest.view-for-given-registration" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
-	<remove name="registration.number" />
-	<remove name="registration.person.name" />
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
 </schema>
 
@@ -62,8 +50,6 @@
 </schema>
 
 <schema name="DocumentRequest.summary-view-by-student" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
-	<remove name="registration.number"/>
-	<remove name="registration.person.name"/>
 	<remove name="numberOfPages" />
 	<remove name="otherDocumentPurposeTypeDescription" />
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
@@ -188,12 +174,12 @@
 	<slot name="average" read-only="true" key="average.view"/>
 </schema>
 
-<schema name="DocumentRequest.view-documentPurposeTypeInformation" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
+<schema name="DocumentRequest.view-documentPurposeTypeInformation" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES" extends="DocumentRequest.view">
 	<remove name="numberOfPages"  read-only="true" />
 	<remove name="documentPurposeType"  read-only="true" />
 	<remove name="otherDocumentPurposeTypeDescription"  read-only="true" />
 	<slot name="serviceRequestNumber"  read-only="true" />
-	<slot name="academicServiceRequestSituationType"  read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
+	<slot name="academicServiceRequestSituationType"  read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="registration.number"  read-only="true" />
 </schema>
 
