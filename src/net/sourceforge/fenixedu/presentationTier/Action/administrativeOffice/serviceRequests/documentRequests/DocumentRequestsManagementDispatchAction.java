@@ -320,9 +320,9 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         request.setAttribute("registration", ((DocumentRequestCreateBean) getRenderedObject())
                 .getRegistration());
 
-        ActionForward actionForward = buildActionForward(mapping.findForward("viewRegistrationDetails"),
-                ((DocumentRequestCreateBean) getRenderedObject()).getRegistration());
-        return actionForward;
+        return buildActionForward(mapping.findForward("viewRegistrationDetails"),
+                ((DocumentRequestCreateBean) getRenderedObject()).getRegistration());        
+//        return mapping.findForward("viewRegistrationDetails");
     }
 
     private ActionForward buildActionForward(ActionForward forward, Registration registration) {
@@ -330,7 +330,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         forwardBuilded.setName(forward.getName());
         forwardBuilded.setRedirect(true);
         StringBuilder path = new StringBuilder(forward.getPath());
-        path.append("&registrationID=").append(registration.getIdInternal());
+        //path.append("&registrationID=").append(registration.getIdInternal());
         forwardBuilded.setPath(path.toString());
         return forwardBuilded;
     }
