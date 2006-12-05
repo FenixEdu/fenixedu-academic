@@ -60,10 +60,18 @@ public abstract class Event extends Event_Base {
 	return (getEventState() == EventState.OPEN);
     }
 
+    public boolean isInDebt() {
+	return isOpen();
+    }
+
     public boolean isClosed() {
 	return (getEventState() == EventState.CLOSED);
     }
 
+    public boolean isPayed() {
+	return isClosed();
+    }
+    
     public boolean isCancelled() {
 	return (getEventState() == EventState.CANCELLED);
     }
@@ -215,6 +223,28 @@ public abstract class Event extends Event_Base {
 	return payedAmount;
     }
 
+    public Money getPayedAmount(final int civilYear) {
+	Money result = Money.ZERO;
+	
+	for (final Entry entry : getPayedEntries(civilYear)) {
+	    result = result.add(entry.getAmountWithAdjustment());
+	}
+	
+	return result;
+    }
+    
+    private Set<Entry> getPayedEntries(final int civilYear) {
+	final Set<Entry> result = new HashSet<Entry>();
+	
+	for (final AccountingTransaction accountingTransaction : getAccountingTransactionsSet()) {
+	    if (accountingTransaction.isPayed(civilYear)) {
+		result.add(accountingTransaction.getToAccountEntry());
+	    }
+	}
+	
+	return result;
+    }
+
     public void recalculateState(final DateTime whenRegistered) {
 	if (canCloseEvent(whenRegistered)) {
 	    super.setEventState(EventState.CLOSED);
@@ -364,9 +394,5 @@ public abstract class Event extends Event_Base {
     public abstract LabelFormatter getDescriptionForEntryType(EntryType entryType);
 
     protected abstract PostingRule getPostingRule(DateTime whenRegistered);
-
-    public boolean isInDebt() {
-	return isOpen();
-    }
 
 }
