@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -70,6 +71,7 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringNormalizer;
 import net.sourceforge.fenixedu.util.UsernameUtils;
@@ -1251,6 +1253,15 @@ public class Person extends Person_Base {
 	return (getStudentCandidacyForExecutionDegree(executionDegree) != null);
     }
 
+    public String getPostalCode() {
+	final StringBuilder result = new StringBuilder();
+	result.append(getAreaCode());
+	result.append(" ");
+	result.append(getAreaOfAreaCode());
+	
+	return result.toString();
+    }
+    
     @Deprecated
     public String getCodigoFiscal() {
 	return super.getFiscalCode();
@@ -2237,7 +2248,7 @@ public class Person extends Person_Base {
     }
 
     public boolean hasAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
-	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE)) {
+	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
 	    if (((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() == executionYear) {
 		return true;
 	    }
@@ -2250,4 +2261,21 @@ public class Person extends Person_Base {
 	return (Set<GratuityEvent>) getEventsByEventType(EventType.GRATUITY);
     }
 
+    public Money getGratuityEventsPayedAmount(final int civilYear) {
+	return getPayedAmount(EventType.GRATUITY, civilYear);
+    }
+
+    public Money getAdministrativeOfficeFeeAndInsuranceEventsPayedAmount(final int civilYear) {
+	return getPayedAmount(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, civilYear);
+    }
+
+    private Money getPayedAmount(final EventType eventType, final int civilYear) {
+	Money result = Money.ZERO;
+	for (final AnnualEvent annualEvent : (Set<AnnualEvent>) getEventsByEventType(eventType)) {
+	    result = result.add(annualEvent.getPayedAmount(civilYear));
+	}
+	
+	return result; 
+    }
+    
 }
