@@ -11,13 +11,11 @@
 		<li><html:link page="/students.do?method=prepareSearch"><bean:message key="link.studentOperations.viewStudents" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 	</ul>
 
-<%-- 
 	<ul>
-		<li class="navheader"><bean:message key="link.documentsOperations" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
+		<li class="navheader"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link action="/documentRequestsManagement.do?method=prepareSearch&academicSituationType=NEW"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.requests" /></html:link></li>
 		<li><html:link action="/documentRequestsManagement.do?method=prepareSearch&academicSituationType=PROCESSING"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests" /></html:link></li>
 	</ul>
---%>
 
 	<ul>
 		<li class="navheader"><bean:message key="label.masterDegree.administrativeOffice.contributor" bundle="APPLICATION_RESOURCES"/></li>
