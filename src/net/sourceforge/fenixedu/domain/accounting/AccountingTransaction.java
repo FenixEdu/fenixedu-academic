@@ -180,5 +180,9 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public DateTime getWhenProcessed() {
 	return getTransactionDetail().getWhenProcessed();
     }
+    
+    public boolean isPayed(final int civilYear) {
+	return getWhenRegistered().getYear() == civilYear;
+    }
 
 }
