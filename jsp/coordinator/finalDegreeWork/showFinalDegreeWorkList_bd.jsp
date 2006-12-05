@@ -432,14 +432,23 @@
 			
 			<logic:notEmpty name="groupProposal" property="infoGroup">
 			<logic:iterate id="groupStudent" name="groupProposal" property="infoGroup.groupStudents" length="1">
-				<bean:define id="student" name="groupStudent" property="student"/>
-				<bean:define id="email" name="student" property="infoPerson.email"/>
-				<% emails += email; %>
+				<logic:present name="groupStudent" property="student">
+					<bean:define id="student" name="groupStudent" property="student"/>
+					<logic:present name="student" property="infoPerson.email">
+						<bean:define id="email" name="student" property="infoPerson.email"/>
+						<% emails += email; %>
+					</logic:present>
+				</logic:present>
 			</logic:iterate>
 			<logic:iterate id="groupStudent" name="groupProposal" property="infoGroup.groupStudents" offset="1">
-				<bean:define id="student" name="groupStudent" property="student"/>
-				<bean:define id="email" name="student" property="infoPerson.email"/>
-				<% emails += "," + email; %>
+				<logic:present name="groupStudent" property="student">
+					<bean:define id="student" name="groupStudent" property="student"/>
+					<logic:present name="student" property="infoPerson.email">
+						<bean:define id="student" name="groupStudent" property="student"/>
+						<bean:define id="email" name="student" property="infoPerson.email"/>
+						<% emails += "," + email; %>
+					</logic:present>
+				</logic:present>
 			</logic:iterate>
 				<tr>
 					<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
@@ -459,32 +468,40 @@
 						<a href="mailto:<%= emails %>"><bean:write name="groupProposal" property="orderOfPreference"/></a>
 					</td>
 					<logic:iterate id="groupStudent" name="groupProposal" property="infoGroup.groupStudents" length="1">
-						<bean:define id="student" name="groupStudent" property="student"/>
-						<td bgcolor="<%= bgColor %>" align="center">
-							<bean:define id="studentNumber" name="student" property="number"/>
-							<bean:define id="curriculumLink">
-								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID.toString() %>
-							</bean:define>
-							<html:link page='<%= curriculumLink.toString() %>'>
-								<bean:write name="student" property="infoPerson.username"/>
-							</html:link>
-						</td>
-						<td bgcolor="<%= bgColor %>" align="center">
-							<bean:define id="studentNumber" name="student" property="number"/>
-							<bean:define id="curriculumLink">
-								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID.toString() %>
-							</bean:define>
-							<html:link page='<%= curriculumLink.toString() %>'>
-								<bean:write name="student" property="infoPerson.nome"/>
-							</html:link>
-						</td>
-						<td bgcolor="<%= bgColor %>" align="center">
-							<bean:define id="email" name="student" property="infoPerson.email"/>
-							<a href="mailto:<%= email %>"><bean:write name="email"/></a>
-						</td>
-						<td bgcolor="<%= bgColor %>" align="center">
-							<bean:write name="student" property="infoPerson.telefone"/>
-						</td>
+						<logic:present name="groupStudent" property="student">
+							<bean:define id="student" name="groupStudent" property="student"/>
+							<td bgcolor="<%= bgColor %>" align="center">
+								<logic:present name="student" property="number">
+									<bean:define id="studentNumber" name="student" property="number"/>
+									<bean:define id="curriculumLink">
+										/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID.toString() %>
+									</bean:define>
+									<html:link page='<%= curriculumLink.toString() %>'>
+										<bean:write name="student" property="infoPerson.username"/>
+									</html:link>
+								</logic:present>
+							</td>
+							<td bgcolor="<%= bgColor %>" align="center">
+								<logic:present name="student" property="number">
+									<bean:define id="studentNumber" name="student" property="number"/>
+									<bean:define id="curriculumLink">
+										/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID.toString() %>
+									</bean:define>
+									<html:link page='<%= curriculumLink.toString() %>'>
+										<bean:write name="student" property="infoPerson.nome"/>
+									</html:link>
+								</logic:present>
+							</td>
+							<td bgcolor="<%= bgColor %>" align="center">
+								<logic:present name="student" property="infoPerson.email">
+									<bean:define id="email" name="student" property="infoPerson.email"/>
+									<a href="mailto:<%= email %>"><bean:write name="email"/></a>
+								</logic:present>
+							</td>
+							<td bgcolor="<%= bgColor %>" align="center">
+								<bean:write name="student" property="infoPerson.telefone"/>
+							</td>
+						</logic:present>
 					</logic:iterate>
 					<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.attributedByTeacher" property="attributedByTeacher" disabled="true">
@@ -525,8 +542,10 @@
 							</html:link>
 						</td>
 						<td bgcolor="<%= bgColor %>" align="center">
-							<bean:define id="email" name="student" property="infoPerson.email"/>
-							<a href="mailto:<%= email %>"><bean:write name="email"/></a>
+							<logic:present name="student" property="infoPerson.email">
+								<bean:define id="email" name="student" property="infoPerson.email"/>
+								<a href="mailto:<%= email %>"><bean:write name="email"/></a>
+							</logic:present>
 						</td>
 						<td bgcolor="<%= bgColor %>" align="center">
 							<bean:write name="student" property="infoPerson.telefone"/>
