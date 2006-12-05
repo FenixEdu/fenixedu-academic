@@ -80,6 +80,11 @@ public class StudentCurriculum implements Serializable {
 	public boolean getIsExtraCurricularEnrolmentEntry() {
 	    return isExtraCurricularEnrolmentEntry();
 	}
+
+	protected double ectsCredits(final CurricularCourse curricularCourse) {
+	    final double ectsCredits = curricularCourse.getEctsCredits().doubleValue();
+	    return ectsCredits == 0 ? 6.0 : ectsCredits;
+	}
     }
 
     public static abstract class SimpleEntry extends Entry {
@@ -116,7 +121,7 @@ public class StudentCurriculum implements Serializable {
 	public double getEctsCredits() {
 	    final Enrolment enrolment = getEnrolment();
 	    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-	    return curricularCourse.getEctsCredits().doubleValue();
+	    return ectsCredits(curricularCourse);
 	}
     }
 
@@ -141,7 +146,7 @@ public class StudentCurriculum implements Serializable {
 	public double getEctsCredits() {
 	    final NotNeedToEnrollInCurricularCourse notNeedToEnroll = getNotNeedToEnrol();
 	    final CurricularCourse curricularCourse = notNeedToEnroll.getCurricularCourse();
-	    return curricularCourse.getEctsCredits().doubleValue();
+	    return ectsCredits(curricularCourse);
 	}
     }
 
@@ -169,8 +174,11 @@ public class StudentCurriculum implements Serializable {
 
 	@Override
 	public double getEctsCredits() {
-	    final CurricularCourse curricularCourse = getCurricularCourse();
-	    return curricularCourse.getEctsCredits().doubleValue();
+	    double ectsCredits = 0;
+	    for (final SimpleEntry simpleEntry : getEntries()) {
+		ectsCredits += ectsCredits(simpleEntry.getCurricularCourse());
+	    }
+	    return ectsCredits;
 	}
     }
 
@@ -195,7 +203,7 @@ public class StudentCurriculum implements Serializable {
 	public double getEctsCredits() {
 	    final Enrolment enrolment = getEnrolment();
 	    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-	    return curricularCourse.getEctsCredits().doubleValue();
+	    return ectsCredits(curricularCourse);
 	}
     }
 
