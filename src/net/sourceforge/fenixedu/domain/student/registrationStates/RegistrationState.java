@@ -78,6 +78,13 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     public abstract RegistrationStateType getStateType();
+    
+    public void delete(){
+	removeRegistration();
+	removeResponsiblePerson();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
 
     public static class RegistrationStateCreator extends RegistrationStateBean implements
 	    FactoryExecutor {
