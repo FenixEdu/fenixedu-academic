@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
@@ -236,6 +238,15 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
 
 	public int numberCompletedCoursesForSpecifiedDegrees(final Set<Degree> degrees) {
 		return getRegistration().countCompletedCoursesForActiveUndergraduateCurricularPlan();
+	}
+
+	@Override
+	public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
+	    final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+	    final DegreeCurricularPlanState degreeCurricularPlanState = degreeCurricularPlan.getState();
+	    if (degreeCurricularPlanState != DegreeCurricularPlanState.PAST) {
+		super.addApprovedEnrolments(enrolments);
+	    }
 	}
 
 }
