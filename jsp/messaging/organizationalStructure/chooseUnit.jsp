@@ -19,13 +19,9 @@
 
 	<h:outputText value="#{organizationalStructure.title}" escape="false"/>	
 
-	<h:outputText value="<br/>" escape="false"/>
 			
-	<h:outputText value="<p><b>#{messagingResources['label.unit.webAddress']}:</b></p>" escape="false" rendered="#{!empty organizationalStructure.unit.webAddress}"/><h:outputText value="#{organizationalStructure.unit.webAddress}" escape="false" rendered="#{!empty organizationalStructure.unit.webAddress}"/>	
-	
-	<h:outputText value="<p><b>#{messagingResources['label.unit.costCenterCode']}:</b></p>" escape="false" rendered="#{!empty organizationalStructure.unit.costCenterCode}"/><h:outputText value="#{organizationalStructure.unit.costCenterCode}" escape="false" rendered="#{!empty organizationalStructure.unit.costCenterCode}"/>		
-	
-	<h:outputText value="<br/><br/>" escape="false"/>
+	<h:outputText value="<p class='mtop15 mbottom05'><b>#{messagingResources['label.unit.webAddress']}:</b> " escape="false" rendered="#{!empty organizationalStructure.unit.webAddress}"/><h:outputText value="<a href='#{organizationalStructure.unit.webAddress}'>#{organizationalStructure.unit.webAddress}</a></p>" escape="false" rendered="#{!empty organizationalStructure.unit.webAddress}"/>		
+	<h:outputText value="<p class='mtop05 mbottom15'><b>#{messagingResources['label.unit.costCenterCode']}:</b> " escape="false" rendered="#{!empty organizationalStructure.unit.costCenterCode}"/><h:outputText value="#{organizationalStructure.unit.costCenterCode}</p>" escape="false" rendered="#{!empty organizationalStructure.unit.costCenterCode}"/>		
 	
 	<h:panelGrid columns="2">	
 		<h:outputText value="<b>#{messagingResources['label.choose.year']}:</b>" escape="false"/>
