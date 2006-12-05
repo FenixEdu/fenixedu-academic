@@ -1257,6 +1257,7 @@
             <forward name="prepareInsertSummary" path="prepare-insert-summary" />            
             <forward name="prepareInsertComplexSummary" path="prepare-insert-complex-summary" />            
             <forward name="prepareShowSummaries" path="prepare-show-summaries" />           
+            <forward name="showSummariesCalendar" path="show-summaries-calendar" />           
         </action>	
 
         <!-- Actions For Groups -->

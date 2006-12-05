@@ -3,22 +3,25 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ReverseComparator;
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
+import org.joda.time.YearMonthDay;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 
 public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 
-    public final static Comparator COMPARATOR_BY_DATE = new ReverseComparator (new BeanComparator("date"));
-    
-    private DomainReference<Lesson> lessonReference;    
+    public final static Comparator COMPARATOR_BY_DATE = new ReverseComparator(new BeanComparator("date"));
+
+    private DomainReference<Lesson> lessonReference;
 
     private YearMonthDay date;
-    
+
     private Integer studentsNumber;
 
     public NextPossibleSummaryLessonsAndDatesBean(Lesson lesson, YearMonthDay date) {
@@ -27,13 +30,13 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
     }
 
     public Integer getStudentsNumber() {
-        return studentsNumber;
+	return studentsNumber;
     }
 
     public void setStudentsNumber(Integer studentsNumber) {
-        this.studentsNumber = studentsNumber;
+	this.studentsNumber = studentsNumber;
     }
-    
+
     public YearMonthDay getDate() {
 	return date;
     }
@@ -50,6 +53,27 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 	this.lessonReference = (lesson != null) ? new DomainReference<Lesson>(lesson) : null;
     }
 
+    public boolean getWrittenSummary() {
+	return getLesson().getSummaryByDate(getDate()) != null;
+    }
+
+    private static final DateTimeFormatter monthOfYearTextFormatter = new DateTimeFormatterBuilder().appendMonthOfYearText()
+	    .toFormatter();
+
+    public String getMonthString() {	
+	return getDate().toString(monthOfYearTextFormatter);
+    }
+
+    public boolean getWithoutSummary() {
+	Lesson lesson = getLesson();
+	if (lesson.isDateValidToInsertSummary(getDate())
+		&& lesson.isTimeValidToInsertSummary(new HourMinuteSecond(), getDate())
+		&& !getWrittenSummary()) {
+	    return true;
+	}
+	return false;
+    }
+
     public String getCheckBoxValue() {
 	StringBuilder stringBuilder = new StringBuilder();
 	stringBuilder.append(getDate().toString());
@@ -57,7 +81,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 	return stringBuilder.toString();
     }
 
-    public static NextPossibleSummaryLessonsAndDatesBean getNewInstance(String value) {	
+    public static NextPossibleSummaryLessonsAndDatesBean getNewInstance(String value) {
 	int year = Integer.parseInt(value.substring(0, 4));
 	int month = Integer.parseInt(value.substring(5, 7));
 	int day = Integer.parseInt(value.substring(8, 10));
@@ -68,5 +92,5 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 	Integer lessonIdInternal = Integer.parseInt(value.substring(11));
 	Lesson lesson = RootDomainObject.getInstance().readLessonByOID(lessonIdInternal);
 	return new NextPossibleSummaryLessonsAndDatesBean(lesson, date);
-    }  
+    }
 }

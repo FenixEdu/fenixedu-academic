@@ -456,7 +456,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	SelectItem selectItem = null;
 	for (AccountabilityTypeEnum type : AccountabilityTypeEnum.values()) {
 	    if (type.equals(AccountabilityTypeEnum.ACADEMIC_STRUCTURE)
-		    || type.equals(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)) {
+		    || type.equals(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)
+		    || type.equals(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE)) {
 		selectItem = new SelectItem();
 		selectItem.setLabel(bundle.getString(type.getName()));
 		selectItem.setValue(type.getName());

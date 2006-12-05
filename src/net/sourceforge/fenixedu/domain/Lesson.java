@@ -172,10 +172,12 @@ public class Lesson extends Lesson_Base {
 
     public SortedSet<Summary> getSummariesSortedByNewestDate() {
 	return getSummaries(Summary.COMPARATOR_BY_DATE_AND_HOUR);
-    }   
+    }
 
     public boolean isTimeValidToInsertSummary(HourMinuteSecond time, YearMonthDay summaryDate) {
-	return (!summaryDate.equals(new YearMonthDay()) ? true : !getEndHourMinuteSecond().isAfter(time));
+	YearMonthDay currentDate = new YearMonthDay();
+	return ((summaryDate.isAfter(currentDate) || summaryDate == null) ? false : summaryDate
+		.isBefore(currentDate) ? true : !getEndHourMinuteSecond().isAfter(time));
     }
 
     public boolean isDateValidToInsertSummary(YearMonthDay date) {
@@ -215,7 +217,7 @@ public class Lesson extends Lesson_Base {
 	}
 	return null;
     }
-   
+
     public YearMonthDay getNextPossibleSummaryDate() {
 	YearMonthDay currentDate = new YearMonthDay();
 	YearMonthDay lessonEndDay = getLessonEndDay();
@@ -264,19 +266,21 @@ public class Lesson extends Lesson_Base {
 	if (!startDateToSearch.isAfter(endDateToSearch)) {
 	    if (summaries.isEmpty()) {
 		while (true) {
-		    startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, now, lessonCampus);
+		    startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch,
+			    startDateToSearch, now, lessonCampus);
 		    if (startDateToSearch.isAfter(endDateToSearch)) {
 			break;
 		    }
 		}
-	    } else {		
-		for (Summary summary : summaries) {		    
+	    } else {
+		for (Summary summary : summaries) {
 		    if (!datesSearched.contains(summary.getSummaryDateYearMonthDay())) {
 			YearMonthDay summaryDate = summary.getSummaryDateYearMonthDay();
 			while (true) {
 			    if (!hasLessonWeekDayChanges(summaryDate)) {
 				if (startDateToSearch.isBefore(summaryDate)) {
-				    startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, now, lessonCampus);
+				    startDateToSearch = addPossibleDate(datesToInsert,
+					    startDateToSearch, startDateToSearch, now, lessonCampus);
 				} else if (startDateToSearch.isEqual(summaryDate)) {
 				    startDateToSearch = startDateToSearch.plusDays(7);
 				    break;
@@ -291,9 +295,11 @@ public class Lesson extends Lesson_Base {
 				break;
 
 			    } else if (startDateToSearch.isBefore(summaryDate)) {
-				YearMonthDay day = getPossibleDateInValidSummaryDateWeekDay(startDateToSearch, summaryDate);
-				startDateToSearch = addPossibleDate(datesToInsert, day, startDateToSearch, now, lessonCampus);				
-			    
+				YearMonthDay day = getPossibleDateInValidSummaryDateWeekDay(
+					startDateToSearch, summaryDate);
+				startDateToSearch = addPossibleDate(datesToInsert, day,
+					startDateToSearch, now, lessonCampus);
+
 			    } else {
 				// ERROR: I hope that never enter here
 				System.out.println("3 2 1 ... BOOOOOOMMMMMMMMM!!!");
@@ -309,7 +315,8 @@ public class Lesson extends Lesson_Base {
 		}
 		if (!startDateToSearch.isAfter(endDateToSearch)) {
 		    while (true) {
-			startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, now, lessonCampus);
+			startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch,
+				startDateToSearch, now, lessonCampus);
 			if (startDateToSearch.isAfter(endDateToSearch)) {
 			    break;
 			}
@@ -323,12 +330,13 @@ public class Lesson extends Lesson_Base {
     private YearMonthDay addPossibleDate(List<YearMonthDay> datesToInsert, YearMonthDay dayToInsert,
 	    YearMonthDay startDateToSearch, HourMinuteSecond now, Campus lessonCampus) {
 
-	if (!Holiday.isHoliday(dayToInsert, lessonCampus) && isTimeValidToInsertSummary(now, dayToInsert)) {
+	if (!Holiday.isHoliday(dayToInsert, lessonCampus)
+		&& isTimeValidToInsertSummary(now, dayToInsert)) {
 	    datesToInsert.add(dayToInsert);
 	}
 	return startDateToSearch.plusDays(7);
     }
-  
+
     public List<YearMonthDay> getAllLessonDatesEvenToday() {
 	YearMonthDay startDateToSearch = getLessonStartDay();
 	YearMonthDay lessonEndDay = getLessonEndDay();
@@ -402,13 +410,13 @@ public class Lesson extends Lesson_Base {
 	}
 	return possibleDate;
     }
-    
+
     private SortedSet<Summary> getSummaries(Comparator comparator) {
 	SortedSet<Summary> lessonSummaries = new TreeSet<Summary>(comparator);
 	lessonSummaries.addAll(getAssociatedSummariesSet());
 	return lessonSummaries;
     }
-    
+
     public String prettyPrint() {
 	final StringBuilder result = new StringBuilder();
 

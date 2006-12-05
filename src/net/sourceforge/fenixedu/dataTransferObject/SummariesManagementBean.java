@@ -58,6 +58,10 @@ public class SummariesManagementBean implements Serializable {
     private List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean;
     
 
+    protected SummariesManagementBean() {
+	
+    }
+    
     public SummariesManagementBean(SummaryType summaryType, ExecutionCourse executionCourse, Professorship professorship, List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {        
         setSummaryType(summaryType);
         setExecutionCourse(executionCourse);

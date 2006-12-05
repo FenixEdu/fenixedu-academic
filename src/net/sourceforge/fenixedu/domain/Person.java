@@ -1507,6 +1507,9 @@ public class Person extends Person_Base {
 	if (!StringUtils.isEmpty(socialSecurityNumber)) {
 	    final Party existingContributor = Party.readByContributorNumber(socialSecurityNumber);
 	    if (existingContributor != null && existingContributor != this) {
+		System.out.println("existingContributorIDInternal: "
+			+ existingContributor.getIdInternal() + " socialSecurityNumber: "
+			+ socialSecurityNumber);
 		throw new DomainException("PERSON.createContributor.existing.contributor.number");
 	    }
 	    super.setSocialSecurityNumber(socialSecurityNumber);

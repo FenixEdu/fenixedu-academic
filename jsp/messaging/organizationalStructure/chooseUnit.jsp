@@ -17,11 +17,15 @@
 	<h:inputHidden value="#{organizationalStructure.unitID}" />			
 	<h:inputHidden value="#{organizationalStructure.choosenExecutionYearID}" />
 
-	<h:panelGroup>	
-		<h:outputText value="#{organizationalStructure.title}" escape="false"/>	
-	</h:panelGroup>
+	<h:outputText value="#{organizationalStructure.title}" escape="false"/>	
 
 	<h:outputText value="<br/>" escape="false"/>
+			
+	<h:outputText value="<p><b>#{messagingResources['label.unit.webAddress']}:</b></p>" escape="false" rendered="#{!empty organizationalStructure.unit.webAddress}"/><h:outputText value="#{organizationalStructure.unit.webAddress}" escape="false" rendered="#{!empty organizationalStructure.unit.webAddress}"/>	
+	
+	<h:outputText value="<p><b>#{messagingResources['label.unit.costCenterCode']}:</b></p>" escape="false" rendered="#{!empty organizationalStructure.unit.costCenterCode}"/><h:outputText value="#{organizationalStructure.unit.costCenterCode}" escape="false" rendered="#{!empty organizationalStructure.unit.costCenterCode}"/>		
+	
+	<h:outputText value="<br/><br/>" escape="false"/>
 	
 	<h:panelGrid columns="2">	
 		<h:outputText value="<b>#{messagingResources['label.choose.year']}:</b>" escape="false"/>

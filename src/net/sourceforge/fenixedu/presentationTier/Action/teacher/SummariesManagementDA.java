@@ -13,8 +13,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean;
+import net.sourceforge.fenixedu.dataTransferObject.SummariesCalendarBean;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean.ListSummaryType;
+import net.sourceforge.fenixedu.dataTransferObject.SummariesCalendarBean.LessonCalendarViewType;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean.SummaryType;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SummaryTeacherBean;
@@ -366,6 +368,23 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	return mapping.findForward("prepareShowSummaries");
     }
 
+    public ActionForward prepareCreateComplexSummaryInSummariesCalendarMode(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	Professorship loggedProfessorship = (Professorship) request.getAttribute("loggedTeacherProfessorship");
+	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+	NextPossibleSummaryLessonsAndDatesBean nextSummaryDateBean = getNextSummaryDateBeanFromParameter(request);
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
+	
+	List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleLessonsDates = new ArrayList<NextPossibleSummaryLessonsAndDatesBean>();
+	nextPossibleLessonsDates.add(nextSummaryDateBean);
+	SummariesManagementBean bean = new SummariesManagementBean(SummariesManagementBean.SummaryType.NORMAL_SUMMARY, executionCourse, loggedProfessorship, nextPossibleLessonsDates);
+	
+	request.setAttribute("summariesManagementBean", bean);	
+	dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
+	return mapping.findForward("prepareInsertComplexSummary");
+    }
+    
     public ActionForward prepareCreateComplexSummary(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -459,7 +478,6 @@ public class SummariesManagementDA extends FenixDispatchAction {
     public ActionForward chooseLastSummaryToCreateComplexSummary(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-
 	IViewState summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithLastSummary");
 	if(summaryViewState == null) {
 	    summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithSummary");
@@ -475,7 +493,61 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	
 	return returnToCreateComplexSummary(mapping, form, request, summaryBean, null);
     }
+    
+    public ActionForward showSummariesCalendar(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
 
+	ExecutionCourse executinCourse = getExecutinCourseFromParameter(request);
+	
+	Set<NextPossibleSummaryLessonsAndDatesBean> summariesCalendar = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE);
+	for (Lesson lesson : executinCourse.getLessons()) {
+	    for (YearMonthDay lessonDate : lesson.getAllLessonDates()) {
+		summariesCalendar.add(new NextPossibleSummaryLessonsAndDatesBean(lesson, lessonDate));
+	    }
+	}			
+	
+	request.setAttribute("showSummariesCalendarBean", new SummariesCalendarBean(executinCourse));	
+	request.setAttribute("summariesCalendarResult", summariesCalendar);
+	return mapping.findForward("showSummariesCalendar");
+    }
+
+    public ActionForward showSummariesCalendarPostBack(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+		
+	final IViewState viewState = RenderUtils.getViewState();
+	SummariesCalendarBean bean = (SummariesCalendarBean) viewState.getMetaObject().getObject();
+
+	ExecutionCourse executionCourse = bean.getExecutionCourse();
+	Shift shift = bean.getShift();
+	ShiftType shiftType = bean.getShiftType();
+	LessonCalendarViewType calendarViewType = bean.getCalendarViewType();
+	
+	Set<NextPossibleSummaryLessonsAndDatesBean> summariesCalendar = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE);
+	for (Lesson lesson : executionCourse.getLessons()) {
+	    boolean insert = true;
+	    if ((shift != null && !shift.getAssociatedLessons().contains(lesson))
+		    || (shiftType != null && !lesson.getShift().getTipo().equals(shiftType))) {
+		insert = false;
+	    }
+	    if (insert) {			
+		for (YearMonthDay lessonDate : lesson.getAllLessonDates()) {
+		    if((calendarViewType.equals(LessonCalendarViewType.ALL_LESSONS))
+			    || (calendarViewType.equals(LessonCalendarViewType.PAST_LESSON) && lesson.isTimeValidToInsertSummary(new HourMinuteSecond(), lessonDate))
+			    || (calendarViewType.equals(LessonCalendarViewType.PAST_LESSON_WITHOUT_SUMMARY) 
+				    && lesson.getSummaryByDate(lessonDate) == null) 
+				    && lesson.isTimeValidToInsertSummary(new HourMinuteSecond(), lessonDate)) {
+			
+		    summariesCalendar.add(new NextPossibleSummaryLessonsAndDatesBean(lesson, lessonDate));
+		    }
+		}
+	    }	    	   
+	}
+		
+	request.setAttribute("summariesCalendarResult", summariesCalendar);
+	request.setAttribute("showSummariesCalendarBean", bean);
+	return mapping.findForward("showSummariesCalendar");
+    }
+    
     // -------- Private Methods --------- //
 
     private ActionForward goToInsertComplexSummaryAgain(HttpServletRequest request,
@@ -581,6 +653,11 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	final String summaryIDString = request.getParameterMap().containsKey("summaryID") ? request.getParameter("summaryID") : (String) request.getAttribute("summaryID");
 	final Integer summaryID = summaryIDString != null ? Integer.valueOf(summaryIDString) : null;
 	return rootDomainObject.readSummaryByOID(summaryID);
+    }    
+    
+    private NextPossibleSummaryLessonsAndDatesBean getNextSummaryDateBeanFromParameter(final HttpServletRequest request) {
+	final String summaryDateString = request.getParameterMap().containsKey("summaryDate") ? request.getParameter("summaryDate") : (String) request.getAttribute("summaryDate");
+	return StringUtils.isEmpty(summaryDateString) ? null : NextPossibleSummaryLessonsAndDatesBean.getNewInstance(summaryDateString);
     }
 
     private Professorship getProfessorshipFromParameter(final HttpServletRequest request) {

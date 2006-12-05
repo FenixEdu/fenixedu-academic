@@ -443,7 +443,38 @@
 		<property name="size" value="4"/>	
 	</slot>
 </schema>
-
+<schema name="ShowSummariesCalendar" type="net.sourceforge.fenixedu.dataTransferObject.SummariesCalendarBean" bundle="DEFAULT">	
+	<slot name="calendarViewType" layout="radio-postback"  key="label.lessons">
+		<property name="classes" value="list2 liinline" />
+		<property name="destination" value="postBack"/>
+	</slot>
+	<slot name="shiftType" layout="menu-select-postback"  key="label.lessonPlanning.lessonType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesToShowSummariesProvider" />						
+		<property name="destination" value="postBack"/>
+		<property name="eachLayout" value=""/>		
+		<property name="defaultText" value="label.summaries.all" />
+		<property name="key" value="true"/>
+		<property name="bundle" value="DEFAULT"/>
+	</slot>
+	<slot name="shift" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ListShiftsToShowSummariesProvider" />				
+		<property name="eachLayout" value="shift-plain" />
+		<property name="destination" value="postBack"/>
+		<property name="defaultText" value="label.summaries.all" />
+		<property name="key" value="true"/>
+		<property name="bundle" value="DEFAULT"/>
+	</slot>	
+</schema>
+<schema name="SummariesCalendarList" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean"  bundle="DEFAULT">
+	<slot name="date.dayOfMonth" key="label.day"/>
+	<slot name="monthString" key="label.month"/>
+	<slot name="date.year" key="labe.summary.year"/>
+	<slot name="lesson" key="label.lesson">
+		<property name="format"	value="${diaSemana.diaSemanaString} (${beginHourMinuteSecond.hour,02d}:${beginHourMinuteSecond.minuteOfHour,02d} - ${endHourMinuteSecond.hour,02d}:${endHourMinuteSecond.minuteOfHour,02d}) ${sala.name}" />
+	</slot>			
+	<slot name="lesson.tipo" layout="" key="label.type"/>
+	<slot name="writtenSummary" key="label.summary"/>
+</schema>
 <schema name="site.item.file.basic" type="net.sourceforge.fenixedu.domain.FileItem">
     <slot name="displayName" layout="link">
         <property name="useParent" value="true"/>
@@ -451,7 +482,6 @@
         <property name="linkFormat" value="${downloadUrl}"/>
     </slot>
 </schema>
-
 <schema name="site.item.files.visible" type="net.sourceforge.fenixedu.domain.FileItem" bundle="SITE_RESOURCES">
     <slot name="visible"/>
     <slot name="displayName" layout="link" read-only="true">

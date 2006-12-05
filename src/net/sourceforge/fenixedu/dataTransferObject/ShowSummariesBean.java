@@ -23,6 +23,10 @@ public class ShowSummariesBean implements Serializable {
     
     private DomainReference<Professorship> professorshipLoggedReference;
     
+    protected ShowSummariesBean() {
+	// TODO Auto-generated constructor stub
+    }
+    
     public ShowSummariesBean(SummaryTeacherBean teacher, ExecutionCourse executionCourse, ListSummaryType type, Professorship loggedProfessorship) {
 	setSummaryTeacher(teacher);	
 	setExecutionCourse(executionCourse);

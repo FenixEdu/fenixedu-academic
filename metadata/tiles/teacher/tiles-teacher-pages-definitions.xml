@@ -683,7 +683,10 @@
 	<definition name="prepare-insert-complex-summary" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/createComplexSummary.jsp" />
 	</definition>		
-	
+		<definition name="show-summaries-calendar" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/showSummariesCalendar.jsp" />
+	</definition>		
+		
 	<!-- Tests Pages Definitions -->
 	<definition name="manageTreeQuestionBankPage" extends="definition.teacher.two-column">
 		<put name="body" value="/teacher/tests/questionBank/manageTreeQuestionBank.jsp" />
