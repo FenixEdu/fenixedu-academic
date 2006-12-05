@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
@@ -32,8 +34,9 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() != null) {
 	    StringBuilder documentPurpose = new StringBuilder();
     
-	    documentPurpose.append("Esta Declaração é válida apenas para");
-	    if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.OTHER) {
+	    documentPurpose.append(resourceBundle.getString("documents.declaration.valid.purpose")).append(" ");
+	    if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.OTHER
+		    && !StringUtils.isEmpty(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription())) {
 		documentPurpose.append(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription().toUpperCase());		
 	    } else {
 		documentPurpose.append(enumerationBundle.getString(enrolmentDeclarationRequest.getDocumentPurposeType().name()).toUpperCase());
