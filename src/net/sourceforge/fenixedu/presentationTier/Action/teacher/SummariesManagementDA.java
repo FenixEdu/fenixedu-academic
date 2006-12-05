@@ -522,7 +522,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	ShiftType shiftType = bean.getShiftType();
 	LessonCalendarViewType calendarViewType = bean.getCalendarViewType();
 	
-	Set<NextPossibleSummaryLessonsAndDatesBean> summariesCalendar = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE);
+	List<NextPossibleSummaryLessonsAndDatesBean> summariesCalendar = new ArrayList<NextPossibleSummaryLessonsAndDatesBean>();
 	for (Lesson lesson : executionCourse.getLessons()) {
 	    boolean insert = true;
 	    if ((shift != null && !shift.getAssociatedLessons().contains(lesson))
@@ -542,7 +542,8 @@ public class SummariesManagementDA extends FenixDispatchAction {
 		}
 	    }	    	   
 	}
-		
+	
+	Collections.sort(summariesCalendar, NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE);
 	request.setAttribute("summariesCalendarResult", summariesCalendar);
 	request.setAttribute("showSummariesCalendarBean", bean);
 	return mapping.findForward("showSummariesCalendar");
