@@ -21,26 +21,7 @@
 
 <fr:form action="/documentRequestsManagement.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
-	
-	<br/>
-	<table class="tstyle4 thlight thright">
-									  
-<!--   <fr:edit id="documentRequestSearch" name="documentRequestSearchBean" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestSearchBean"
-   		schema="DocumentRequestSearchBean.view">
-	 	<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-		</fr:layout>
-	</fr:edit>
-	
-			<fr:property name="linkFormat(view)" value="<%="/documentRequestsManagement.do?method=viewDocumentRequest&documentRequestId=${idInternal}" %>"/>
-			<fr:property name="key(view)" value="label.documentRequestsManagement.viewRequest"/>
-	
-	
-	<html:submit styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.search" /></html:submit>
-	-->
-	</table> 
-	
+		
 	<logic:notEmpty  name="documentRequestsResult">
 	<bean:define id="newRequestUrl">
 	/documentRequestsManagement.do?method=processNewAcademicServiceRequest&academicSituationType=<bean:write name="academicSituationType" property="name"/>
@@ -59,7 +40,7 @@
 			<fr:property name="visibleIf(processing)" value="newRequest"/>
 			
 			<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-			<fr:property name="key(concluded)" value="concluded"/>
+			<fr:property name="key(concluded)" value="conclude"/>
 			<fr:property name="visibleIf(concluded)" value="processing"/>
 		
 		
