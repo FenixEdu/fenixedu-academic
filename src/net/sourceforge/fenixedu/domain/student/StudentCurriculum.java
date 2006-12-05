@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 
 import org.joda.time.YearMonthDay;
@@ -360,6 +361,46 @@ public class StudentCurriculum implements Serializable {
 	int degreeCurricularYears = getStudentCurricularPlan(executionYear).getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
 	int ectsCreditsCurricularYear = (int) Math.floor((((ectsCredits + 24) / 60) + 1));
 	return Math.min(ectsCreditsCurricularYear, degreeCurricularYears);
+    }
+
+    private class AverageCalculator {
+	private double pc = 0;
+	private double p = 0;
+
+	public double result() {
+	    return p == 0 ? 0 : pc / p;
+	}
+
+	public void add(final Collection<Entry> entries) {
+	    for (final Entry entry : entries) {
+		add(entry);
+	    }
+	}
+
+	public void add(final Entry entry) {
+	    if (entry instanceof EnrolmentEntry) {
+		final EnrolmentEntry enrolmentEntry = (EnrolmentEntry) entry;
+		final Enrolment enrolment = enrolmentEntry.getEnrolment();
+		add(enrolment);
+	    } else if (entry instanceof ExtraCurricularEnrolmentEntry) {
+		final ExtraCurricularEnrolmentEntry extraCurricularEnrolmentEntry = (ExtraCurricularEnrolmentEntry) entry;
+		final Enrolment enrolment = extraCurricularEnrolmentEntry.getEnrolment();
+		add(enrolment);
+	    } else if (entry instanceof EquivalentEnrolmentEntry) {
+		final EquivalentEnrolmentEntry equivalentEnrolmentEntry = (EquivalentEnrolmentEntry) entry;
+		add(equivalentEnrolmentEntry);
+	    }
+	}
+
+	public void add(final Enrolment enrolment) {
+	    // TODO : do some magin here ...
+	}
+    }
+
+    public double calculateAverage(final ExecutionYear executionYear) {
+	final AverageCalculator averageCalculator = new AverageCalculator();
+	averageCalculator.add(getCurriculumEntries(executionYear));
+	return averageCalculator.result();
     }
 
 }
