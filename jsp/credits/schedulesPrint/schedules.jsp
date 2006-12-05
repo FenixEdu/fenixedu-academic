@@ -72,7 +72,10 @@
 								      ,
 							    </logic:iterate>
 						    </td>						    						    
-						    <td><bean:write name="degreeTeachingService" property="percentage"/>%</td>
+						    <td>
+								<bean:define id="teachingServicePercentage" name="degreeTeachingService" property="percentage"/>
+								<%= ((Math.round(((Double)teachingServicePercentage).doubleValue() * 100.0)) / 100.0) %>%	
+							</td>
 						</tr>
 					
 					</logic:iterate>
@@ -102,7 +105,10 @@
 									      ,
 								    </logic:iterate>
 							    </td>							    						    
-							    <td><bean:write name="degreeTeachingService" property="percentage"/>%</td>
+							    <td>
+								    <bean:define id="teachingServicePercentage" name="degreeTeachingService" property="percentage"/>
+									<%= ((Math.round(((Double)teachingServicePercentage).doubleValue() * 100.0)) / 100.0) %>%							    							    
+							    </td>
 							</tr>						
 						</logic:iterate>
 					</table>

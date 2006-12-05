@@ -129,7 +129,8 @@
 										</logic:empty>
 									</td>
 									<td style="text-align: right;" rowspan="<%= numberOfLessons %>">
-										<bean:write name="degreeTeachingService" property="percentage"/>
+										<bean:define id="teachingServicePercentage" name="degreeTeachingService" property="percentage"/>
+										<%= ((Math.round(((Double)teachingServicePercentage).doubleValue() * 100.0)) / 100.0) %>
 									</td>
 								</tr>
 							</logic:equal>
