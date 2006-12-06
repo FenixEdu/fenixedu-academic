@@ -45,7 +45,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
-import org.joda.time.DateTime;
 
 public class ParkingManagerDispatchAction extends FenixDispatchAction {
     private static final int MAX_NOTE_LENGTH = 250;
