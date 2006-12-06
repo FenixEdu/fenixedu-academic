@@ -92,13 +92,12 @@
 						<br/>
 						<br/>
 						<logic:present name="executionYear">
+						<logic:greaterThan name="numberEnrolments" value="0">
 							<bean:define id="url" type="java.lang.String">/declarations.do?method=registrationDeclaration&amp;registrationID=<bean:write name="registration" property="idInternal"/>&amp;executionYearID=<bean:write name="executionYear" property="idInternal"/></bean:define>
 							<html:link action="<%= url %>"><bean:message key="link.declaration.registration.with.curricular.year.and.number.enroled.courses"/></html:link>
 							<br/>
 							<br/>
-						</logic:present>
-
-						<logic:present name="executionYear">
+						</logic:greaterThan>
 						<logic:lessEqual name="numberEnrolments" value="0">
 							<span class="error"><bean:message key="message.student.has.no.enrolments"/></span>
 						</logic:lessEqual>
