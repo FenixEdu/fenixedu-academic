@@ -28,13 +28,13 @@ public class DefineFinalDegreeWorkProposalSubmisionPeriod extends Service {
                 if (scheduleing == null) {
                     scheduleing = new Scheduleing();
                     scheduleing.setCurrentProposalNumber(new Integer(1));
+                    scheduleing.setAttributionByTeachers(Boolean.FALSE);
                 }
 
                 scheduleing.addExecutionDegrees(executionDegree);
                 scheduleing.setStartOfProposalPeriod(startOfProposalPeriod);
                 scheduleing.setEndOfProposalPeriod(endOfProposalPeriod);
             }
-
         }
 
     }
