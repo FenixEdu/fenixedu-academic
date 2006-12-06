@@ -59,6 +59,13 @@ public class StudentDA extends FenixDispatchAction {
 	addActionMessage(request, "message.student.personDataEditedWithSuccess");
 	return mapping.findForward("viewStudentDetails");
     }
+    
+    public ActionForward viewPersonalData(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("personBean", new PersonBeanFactoryEditor(getStudent(request).getPerson()));
+	return mapping.findForward("viewPersonalData");
+    }
 
     public ActionForward visualizeRegistration(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {

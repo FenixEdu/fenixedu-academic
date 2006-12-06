@@ -382,7 +382,7 @@ public class Registration extends Registration_Base {
 	    throw new DomainException(
 		    "Registration.getting.final.arithmetic.mean.from.non.concluded.registration");
 	}
-	
+
 	if (this.arithmeticMean == null) {
 	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
 	}
@@ -458,14 +458,14 @@ public class Registration extends Registration_Base {
 
     public Collection<Enrolment> getApprovedEnrolments() {
 	final Collection<Enrolment> result = new HashSet<Enrolment>();
-	
+
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    result.addAll(studentCurricularPlan.getAprovedEnrolments());
 	}
-	
+
 	return result;
     }
-    
+
     public boolean hasAnyApprovedEnrolment() {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.hasAnyApprovedEnrolment()) {
@@ -481,7 +481,7 @@ public class Registration extends Registration_Base {
 	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(
 		Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
 	enrolments.addAll(studentCurricularPlan.getAprovedEnrolments());
-	
+
 	final Iterator<Enrolment> iterator = enrolments.tailSet(enrolments.last()).iterator();
 	final Enrolment oneEnrolment = iterator.next();
 	final ExecutionPeriod lastExecutionPeriod = oneEnrolment.getExecutionPeriod();
@@ -491,17 +491,17 @@ public class Registration extends Registration_Base {
 	    if (anotherEnrolment.getExecutionPeriod() != lastExecutionPeriod) {
 		break;
 	    }
-	    
+
 	    final EnrolmentEvaluation enrolmentEvaluation = anotherEnrolment
 		    .getLatestEnrolmentEvaluation();
 	    if (enrolmentEvaluation.getWhenDateTime().isAfter(result)) {
-		result = enrolmentEvaluation.getWhenDateTime(); 
+		result = enrolmentEvaluation.getWhenDateTime();
 	    }
 	}
 
 	return result;
     }
-    
+
     public List<Advise> getAdvisesByTeacher(final Teacher teacher) {
 	return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate() {
 
@@ -1218,25 +1218,12 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isActiveForOffice(Unit office) {
-
-	Collection<Party> officeDegreeUnits = (Collection<Party>) office.getChildParties(
-		AccountabilityTypeEnum.ACADEMIC_STRUCTURE, Unit.class);
-
-	StudentCurricularPlan activeStudentCurricularPlan = getActiveStudentCurricularPlan();
-	if (activeStudentCurricularPlan != null) {
-	    if (officeDegreeUnits.contains(activeStudentCurricularPlan.getDegreeCurricularPlan()
-		    .getDegree().getUnit())) {
-		return true;
-	    }
-	}
-	return false;
+	return isActive() && isForOffice(office.getAdministrativeOffice());
     }
 
     public boolean isForOffice(final AdministrativeOffice administrativeOffice) {
-
 	return getDegreeType().getAdministrativeOfficeType().equals(
 		administrativeOffice.getAdministrativeOfficeType());
-
     }
 
     public boolean getIsForOffice() {
@@ -1291,7 +1278,7 @@ public class Registration extends Registration_Base {
 	return getActiveStateType() == RegistrationStateType.CONCLUDED ? getActiveState().getStateDate()
 		.toYearMonthDay() : getLastApprovedEnrolmentEvaluationDate().toYearMonthDay();
     }
-    
+
     public double getEctsCredits() {
 	return new StudentCurriculum(this).getTotalEctsCredits(null);
     }
@@ -1378,15 +1365,15 @@ public class Registration extends Registration_Base {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan(final YearMonthDay date) {
-        StudentCurricularPlan result = null;
+	StudentCurricularPlan result = null;
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            final YearMonthDay startDate = studentCurricularPlan.getStartDateYearMonthDay();
+	    final YearMonthDay startDate = studentCurricularPlan.getStartDateYearMonthDay();
 	    if (!startDate.isAfter(date)
 		    && (result == null || startDate.isAfter(result.getStartDateYearMonthDay()))) {
-                result = studentCurricularPlan;
+		result = studentCurricularPlan;
 	    }
 	}
-        return result;
+	return result;
     }
 
     @Override
@@ -1553,13 +1540,13 @@ public class Registration extends Registration_Base {
     }
 
     public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            studentCurricularPlan.addApprovedEnrolments(enrolments);
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    studentCurricularPlan.addApprovedEnrolments(enrolments);
 	}
     }
-    
+
     public Campus getCurrentCampus() {
 	return getLastStudentCurricularPlanExceptPast().getCurrentCampus();
     }
-    
+
 }

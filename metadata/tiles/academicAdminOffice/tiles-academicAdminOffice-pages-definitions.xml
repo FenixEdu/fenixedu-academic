@@ -31,6 +31,9 @@
     <definition name="student.editPersonalData" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/editPersonalData.jsp"></put>
     </definition>
+    <definition name="student.viewPersonalData" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/viewPersonalData.jsp"></put>
+    </definition>
     <definition name="student.viewRegistrationDetails" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/viewRegistrationDetails.jsp"></put>
     </definition>

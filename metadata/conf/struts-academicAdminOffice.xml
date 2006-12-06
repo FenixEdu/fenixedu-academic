@@ -145,6 +145,7 @@
 		        parameter="method"
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA">
 			<forward name="editPersonalData" path="student.editPersonalData"/>
+			<forward name="viewPersonalData" path="student.viewPersonalData"/>
 			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
 			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>			
 		</action>         

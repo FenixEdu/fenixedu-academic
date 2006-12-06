@@ -33,11 +33,16 @@
 </table>
 
 <logic:equal name="student" property="hasActiveRegistrationForOffice" value="true">
-	<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
-		<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-	</html:link>
+	<logic:equal name="student" property="hasAnyBolonhaRegistration" value="true">
+		<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
+			<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</logic:equal>
 </logic:equal>
 
+<html:link page="/student.do?method=viewPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
+	<bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+</html:link>
 
 <h3 class="mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="student" property="registrations" schema="student.registrationsWithStartData" >

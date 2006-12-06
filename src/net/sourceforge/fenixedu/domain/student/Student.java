@@ -439,15 +439,15 @@ public class Student extends Student_Base {
     }
 
     public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
-        for (final Registration registration : getRegistrationsSet()) {
-            registration.addApprovedEnrolments(enrolments);
-        }        
+	for (final Registration registration : getRegistrationsSet()) {
+	    registration.addApprovedEnrolments(enrolments);
+	}
     }
 
     public Set<Enrolment> getApprovedEnrolments() {
-        final Set<Enrolment> enrolments = new HashSet<Enrolment>();
-        addApprovedEnrolments(enrolments);
-        return enrolments;
+	final Set<Enrolment> enrolments = new HashSet<Enrolment>();
+	addApprovedEnrolments(enrolments);
+	return enrolments;
     }
 
     public boolean isHandicapped() {
@@ -460,4 +460,12 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    public boolean getHasAnyBolonhaRegistration() {
+	for (final Registration registration : getRegistrationsSet()) {
+	    if (registration.getDegreeType().isBolonhaType()) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }
