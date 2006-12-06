@@ -10,6 +10,9 @@
 <%-- 
 	<li><html:link page="/administrativeOfficeServicesSection.do" titleKey="administrative.office.services"><bean:message key="administrative.office.services"/></html:link></li>
 --%>
+
+	<li><html:link page="/payments.do?method=showEvents" titleKey="link.title.payments"><bean:message key="link.title.payments"/></html:link></li>
+
 	<li class="navheader"><bean:message key="participate"/></li>
 	<li><html:link page="/viewExecutionCourseForuns.do?method=prepare" titleKey="link.viewExecutionCourseForuns"><bean:message key="link.viewExecutionCourseForuns"/></html:link></li>
 	<li><html:link page="/weeklyWorkLoad.do?method=prepare" titleKey="link.weekly.work.load"><bean:message key="link.weekly.work.load"/></html:link></li>

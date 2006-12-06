@@ -265,4 +265,14 @@
 		<put name="body" value="/student/tests/viewTest.jsp" />
 	</definition>
 	
+	<!-- Begin: Payments -->
+	<definition name="payments.management.showEvents" extends="definition.student.masterPage">
+		<put name="body" value="/student/payments/showStudentEvents.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showEventDetails" extends="definition.student.masterPage">
+		<put name="body" value="/student/payments/showEventDetails.jsp"/>
+	</definition>
+	<!-- End: Payments -->
+	
 </tiles-definitions>

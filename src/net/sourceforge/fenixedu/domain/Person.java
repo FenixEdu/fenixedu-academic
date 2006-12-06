@@ -1778,6 +1778,15 @@ public class Person extends Person_Base {
 
 	return result;
     }
+    
+    public Set<Entry> getPayments() {
+	final Set<Entry> result = new HashSet<Entry>();
+	for (final Event event : getEventsSet()) {
+	    result.addAll(event.getEntries());
+	}
+	return result;
+    }
+
 
     public Set<Receipt> getReceiptsByAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	final Set<Receipt> result = new HashSet<Receipt>();
@@ -1833,8 +1842,7 @@ public class Person extends Person_Base {
 	}
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Professorship professorship : getTeacher().getProfessorships()) {
-	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod
-		    .readActualExecutionPeriod()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod.readActualExecutionPeriod()) {
 		final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
 		if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
 		    result.add(board);
@@ -1849,12 +1857,14 @@ public class Person extends Person_Base {
 	    return Collections.emptyList();
 	}
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
-	for (final ExecutionCourse executionCourse : ExecutionPeriod.readActualExecutionPeriod()
-		.getAssociatedExecutionCoursesSet()) {
-	    final AnnouncementBoard board = executionCourse.getBoard();
-	    if (board != null && (board.hasReader(this) || board.hasWriter(this))
-		    && getStudent().attends(executionCourse)) {
-		result.add(board);
+	for (final Registration registration : getStudent().getRegistrationsSet()) {
+	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
+		if (attends.getDisciplinaExecucao().isLecturedIn(ExecutionPeriod.readActualExecutionPeriod())) {
+		    final AnnouncementBoard board = attends.getDisciplinaExecucao().getBoard();
+		    if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
+			result.add(board);
+		    } 
+		}
 	    }
 	}
 	return result;

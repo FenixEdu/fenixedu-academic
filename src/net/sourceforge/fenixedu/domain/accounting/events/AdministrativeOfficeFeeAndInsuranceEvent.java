@@ -179,4 +179,11 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	    getNonProcessedPaymentCode().setState(getPaymentCodeStateFor(paymentMode));
 	}
     }
+    
+    @Override
+    public LabelFormatter getDescription() {
+	final LabelFormatter labelFormatter = super.getDescription();
+        labelFormatter.appendLabel(" ").appendLabel(getExecutionYear().getYear());
+        return labelFormatter;
+    }
 }

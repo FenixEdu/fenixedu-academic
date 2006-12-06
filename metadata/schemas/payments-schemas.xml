@@ -102,16 +102,12 @@
 	<slot name="paymentDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 
-
 <schema name="AccountingEvent.view" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES">
-	<slot name="eventType" key="label.net.sourceforge.fenixedu.domain.accounting.Event.eventType" />
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.Event.description" />
 </schema>
 
-<schema name="GratuityEvent.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent" bundle="APPLICATION_RESOURCES" extends="AccountingEvent.view">
-	<slot name="degree" layout="format">
-		<property name="format" value="${degreeType.localizedName} - ${name}" />
-	</slot>
-	<slot name="executionYear.year" />
+<schema name="AccountingEvent.view-with-amountToPay" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES" extends="AccountingEvent.view">
+	<slot name="amountToPay" key="label.net.sourceforge.fenixedu.domain.accounting.Event.amountToPay" />
 </schema>
 
 <schema name="CreateGratuityExemptionBean" type="net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean" bundle="APPLICATION_RESOURCES">
@@ -150,5 +146,11 @@
 	<slot name="value" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption.value"/>
 </schema>
 
+<schema name="PaymentCode.view" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode" bundle="APPLICATION_RESOURCES">
+	<slot name="type" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.type" />
+	<slot name="formattedCode" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.formattedCode" />
+	<slot name="minAmount" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.minAmount" />
+</schema>
 
-
+<schema name="AccountingEventPaymentCode.view" type="net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode" bundle="APPLICATION_RESOURCES" extends="PaymentCode.view">
+</schema>

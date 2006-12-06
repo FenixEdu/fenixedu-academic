@@ -103,6 +103,16 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
 	return labelFormatter;
     }
+    
+    @Override
+    public LabelFormatter getDescription() {
+        final LabelFormatter labelFormatter = super.getDescription();
+        labelFormatter.appendLabel(" ");
+        labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
+        labelFormatter.appendLabel(getDegree().getName()).appendLabel(" - ");
+        labelFormatter.appendLabel(getExecutionYear().getYear());
+        return labelFormatter;
+    }
 
     @Override
     protected PostingRule getPostingRule(DateTime whenRegistered) {

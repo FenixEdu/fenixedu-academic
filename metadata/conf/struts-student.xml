@@ -273,6 +273,11 @@
 			<form-property name="page" type="java.lang.Integer" />
 			<form-property name="method" type="java.lang.String" />
 		</form-bean>
+		
+		<!-- Payments -->
+		<form-bean name="paymentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+	    </form-bean>
 
     </form-beans>
     
@@ -887,6 +892,19 @@
 			<forward name="viewTests" path="viewTestsPage" />
 			<forward name="viewTest" path="viewTestPage" />
 		</action>
+		
+		<!-- Begin : Payments -->
+		<action path="/payments"
+				name="paymentsForm"
+				type="net.sourceforge.fenixedu.presentationTier.Action.student.payments.StudentPaymentsDispatchAction" 
+				parameter="method"
+				scope="request">
+				
+			<forward name="showEvents" path="payments.management.showEvents" />
+			<forward name="showEventDetails" path="payments.management.showEventDetails" />
+		</action>
+		
+		<!-- End : Payments -->
   		
 	</action-mappings>     
 

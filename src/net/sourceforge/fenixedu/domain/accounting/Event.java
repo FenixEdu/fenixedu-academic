@@ -258,6 +258,10 @@ public abstract class Event extends Event_Base {
 		: Money.ZERO;
 
     }
+    
+    public Money getAmountToPay() {
+	return calculateAmountToPay(new DateTime());
+    }
 
     public List<EntryDTO> calculateEntries() {
 	return calculateEntries(new DateTime());
@@ -327,7 +331,7 @@ public abstract class Event extends Event_Base {
 	return Collections.EMPTY_LIST;
     }
 
-    protected List<AccountingEventPaymentCode> getNonProcessedPaymentCodes() {
+    public List<AccountingEventPaymentCode> getNonProcessedPaymentCodes() {
 	final List<AccountingEventPaymentCode> result = new ArrayList<AccountingEventPaymentCode>();
 	for (final AccountingEventPaymentCode paymentCode : super.getPaymentCodesSet()) {
 	    if (paymentCode.isNew()) {
@@ -385,6 +389,12 @@ public abstract class Event extends Event_Base {
     public PaymentCodeState getPaymentCodeStateFor(final PaymentMode paymentMode) {
 	return (paymentMode == PaymentMode.ATM) ? PaymentCodeState.PROCESSED
 		: PaymentCodeState.CANCELLED;
+    }
+    
+    public LabelFormatter getDescription() {
+	final LabelFormatter result = new LabelFormatter();
+	result.appendLabel(getEventType().name(), "enum");
+	return result;
     }
 
     protected abstract Account getFromAccount();
