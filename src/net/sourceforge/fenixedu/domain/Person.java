@@ -2282,7 +2282,7 @@ public class Person extends Person_Base {
 	return getPayedAmount(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, civilYear);
     }
 
-    private Money getPayedAmount(final EventType eventType, final int civilYear) {
+    public Money getPayedAmount(final EventType eventType, final int civilYear) {
 	Money result = Money.ZERO;
 	for (final AnnualEvent annualEvent : (Set<AnnualEvent>) getEventsByEventType(eventType)) {
 	    result = result.add(annualEvent.getPayedAmount(civilYear));
