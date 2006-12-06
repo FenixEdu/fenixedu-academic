@@ -255,7 +255,17 @@ public class RenderUtils {
                 try {
                     Object value = PropertyUtils.getProperty(object, property);
                     
-                    args.add(value);
+                    /* Enumerations aren't been localized on format
+                     * Fix until Claudio doesn't arrive.
+                     * Claudio please fix me =)
+                     */
+                    if(value instanceof Enum) {
+                    	Enum enumerate = (Enum) value;
+                    	args.add(RenderUtils.getEnumString(enumerate, null));
+                    }
+                    else {
+                    	args.add(value);
+                    }
                 } catch (Exception e) {
                     throw new RuntimeException("could not retrieve property '" + property + "' for object " + object, e);
                 }
