@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -897,5 +898,21 @@ public class Unit extends Unit_Base {
 	}
 
 	return builder.toString();
+    }
+
+    @Override
+    public AdministrativeOffice getAdministrativeOffice() {
+
+	if (super.getAdministrativeOffice() != null) {
+	    return super.getAdministrativeOffice();
+	}
+
+	for (Unit parentUnit : getParentUnits(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE)) {
+	    if (parentUnit.hasAdministrativeOffice()) {
+		return parentUnit.getAdministrativeOffice();
+	    }
+	}
+
+	return null;
     }
 }
