@@ -38,11 +38,11 @@
 			</band>
 		</background>
 		<title>
-			<band height="219"  isSplitAllowed="true" >
+			<band height="346"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="246"
-						y="175"
+						x="245"
+						y="303"
 						width="131"
 						height="21"
 						key="staticText-10"/>
@@ -52,6 +52,62 @@
 					</textElement>
 				<text><![CDATA[DECLARAÇÃO]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="290"
+						y="150"
+						width="261"
+						height="22"
+						key="textField-27"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Bold" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getPerson().getName().toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="290"
+						y="176"
+						width="261"
+						height="22"
+						key="textField-28"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Bold" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getPerson().getAddress().toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="290"
+						y="213"
+						width="261"
+						height="22"
+						key="textField-29"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Bold" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getPerson().getPostalCode().toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="290"
+						y="191"
+						width="261"
+						height="22"
+						key="textField-30"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Bold" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getPerson().getArea().toUpperCase()]]></textFieldExpression>
+				</textField>
 			</band>
 		</title>
 		<pageHeader>
@@ -63,7 +119,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="305"  isSplitAllowed="true" >
+			<band height="190"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="66"
@@ -120,7 +176,7 @@
 				</textField>
 				<staticText>
 					<reportElement
-						x="163"
+						x="175"
 						y="26"
 						width="72"
 						height="22"
@@ -149,7 +205,7 @@
 					<reportElement
 						x="66"
 						y="72"
-						width="233"
+						width="256"
 						height="22"
 						key="staticText-12"
 						positionType="Float"/>
@@ -157,7 +213,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isBold="false" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[aluno deste Instuto com o Número ]]></text>
+				<text><![CDATA[aluno deste Instituto com o Número ]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -217,16 +273,16 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="226"
+						x="238"
 						y="26"
-						width="310"
+						width="346"
 						height="22"
 						key="staticText-16"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isBold="false" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[, DECLARA, a pedido do interessado, que recebeu de]]></text>
+				<text><![CDATA[, DECLARA, a seu pedido, que recebeu de]]></text>
 				</staticText>
 			</band>
 		</detail>

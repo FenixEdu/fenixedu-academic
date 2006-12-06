@@ -29,7 +29,7 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	parameters.put("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, '-'));
 
 	final String registrationNumber = registration.getNumber().toString();
-	parameters.put("registrationNumber", StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH - "aluno deste Instuto com o Número ".length(), '-'));
+	parameters.put("registrationNumber", StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH - "aluno deste Instituto com o Número ".length(), '-'));
 	
 	final String documentIdNumber = person.getDocumentIdNumber();
 	parameters.put("documentIdNumber", StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH - "portador do Bilhete de Identidade ".length(), '-'));
