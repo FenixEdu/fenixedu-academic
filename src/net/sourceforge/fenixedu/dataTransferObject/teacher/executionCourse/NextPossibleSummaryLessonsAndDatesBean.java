@@ -9,15 +9,20 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
 public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 
-    public final static Comparator COMPARATOR_BY_DATE = new ReverseComparator(new BeanComparator("date"));
-
+    public static final Comparator<NextPossibleSummaryLessonsAndDatesBean> COMPARATOR_BY_DATE_AND_HOUR = new ComparatorChain();
+    static {
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("date"), true);
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("lesson.beginHourMinuteSecond"), true);
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("lesson.idInternal"));
+    }
+    
     private DomainReference<Lesson> lessonReference;
 
     private YearMonthDay date;

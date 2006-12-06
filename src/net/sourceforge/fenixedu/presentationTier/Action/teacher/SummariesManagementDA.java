@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -499,7 +498,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	ExecutionCourse executinCourse = getExecutinCourseFromParameter(request);
 	
-	Set<NextPossibleSummaryLessonsAndDatesBean> summariesCalendar = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE);
+	Set<NextPossibleSummaryLessonsAndDatesBean> summariesCalendar = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE_AND_HOUR);
 	for (Lesson lesson : executinCourse.getLessons()) {
 	    for (YearMonthDay lessonDate : lesson.getAllLessonDates()) {
 		summariesCalendar.add(new NextPossibleSummaryLessonsAndDatesBean(lesson, lessonDate));
@@ -522,7 +521,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	ShiftType shiftType = bean.getShiftType();
 	LessonCalendarViewType calendarViewType = bean.getCalendarViewType();
 	
-	List<NextPossibleSummaryLessonsAndDatesBean> summariesCalendar = new ArrayList<NextPossibleSummaryLessonsAndDatesBean>();
+	Set<NextPossibleSummaryLessonsAndDatesBean> summariesCalendar = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE_AND_HOUR);
 	for (Lesson lesson : executionCourse.getLessons()) {
 	    boolean insert = true;
 	    if ((shift != null && !shift.getAssociatedLessons().contains(lesson))
@@ -542,8 +541,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 		}
 	    }	    	   
 	}
-	
-	Collections.sort(summariesCalendar, NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE);
+		
 	request.setAttribute("summariesCalendarResult", summariesCalendar);
 	request.setAttribute("showSummariesCalendarBean", bean);
 	return mapping.findForward("showSummariesCalendar");
@@ -608,7 +606,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     private void readAndSaveNextPossibleSummaryLessonsAndDates(HttpServletRequest request, ExecutionCourse executionCourse) {	
-	List<NextPossibleSummaryLessonsAndDatesBean> possibleLessonsAndDates = new ArrayList<NextPossibleSummaryLessonsAndDatesBean>();
+	Set<NextPossibleSummaryLessonsAndDatesBean> possibleLessonsAndDates = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE_AND_HOUR);
 	for (Shift shift : executionCourse.getAssociatedShiftsSet()) {
 	    for (Lesson lesson : shift.getAssociatedLessonsSet()) {
 		YearMonthDay nextPossibleSummaryDate = lesson.getNextPossibleSummaryDate();
@@ -618,7 +616,6 @@ public class SummariesManagementDA extends FenixDispatchAction {
 		}
 	    }
 	}
-	Collections.sort(possibleLessonsAndDates, NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE);
 	request.setAttribute("nextPossibleLessonsDates", possibleLessonsAndDates);
     }
 
