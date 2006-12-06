@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Create assiduousness access group and Month Closure" addStaffManagementSectionTable.sql
