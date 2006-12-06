@@ -249,6 +249,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     Integer keyAdministrativeOffice;
     DateTime whenCancelled;
     Integer keyEmployeeResponsibleForCancel;
+    String cancelJustification;
 }
 
 	class net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
@@ -280,7 +281,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 			}
 	
 		class net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
-	}
+		}
 
 		class net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
 		}

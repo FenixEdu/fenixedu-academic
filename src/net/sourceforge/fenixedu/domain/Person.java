@@ -1258,10 +1258,10 @@ public class Person extends Person_Base {
 	result.append(getAreaCode());
 	result.append(" ");
 	result.append(getAreaOfAreaCode());
-	
+
 	return result.toString();
     }
-    
+
     @Deprecated
     public String getCodigoFiscal() {
 	return super.getFiscalCode();
@@ -1778,15 +1778,16 @@ public class Person extends Person_Base {
 
 	return result;
     }
-    
+
     public Set<Entry> getPayments() {
 	final Set<Entry> result = new HashSet<Entry>();
 	for (final Event event : getEventsSet()) {
-	    result.addAll(event.getEntries());
+	    if (!event.isCancelled()) {
+		result.addAll(event.getEntries());
+	    }
 	}
 	return result;
     }
-
 
     public Set<Receipt> getReceiptsByAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	final Set<Receipt> result = new HashSet<Receipt>();
@@ -1842,7 +1843,8 @@ public class Person extends Person_Base {
 	}
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Professorship professorship : getTeacher().getProfessorships()) {
-	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod.readActualExecutionPeriod()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod
+		    .readActualExecutionPeriod()) {
 		final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
 		if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
 		    result.add(board);
@@ -1859,11 +1861,12 @@ public class Person extends Person_Base {
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Registration registration : getStudent().getRegistrationsSet()) {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
-		if (attends.getDisciplinaExecucao().isLecturedIn(ExecutionPeriod.readActualExecutionPeriod())) {
+		if (attends.getDisciplinaExecucao().isLecturedIn(
+			ExecutionPeriod.readActualExecutionPeriod())) {
 		    final AnnouncementBoard board = attends.getDisciplinaExecucao().getBoard();
 		    if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
 			result.add(board);
-		    } 
+		    }
 		}
 	    }
 	}
@@ -2138,7 +2141,7 @@ public class Person extends Person_Base {
 	final Set<Event> result = new HashSet<Event>();
 
 	for (final Event event : getEventsSet()) {
-	    if (event.getEventType() == eventType) {
+	    if (!event.isCancelled() && event.getEventType() == eventType) {
 		result.add(event);
 	    }
 	}
@@ -2287,8 +2290,8 @@ public class Person extends Person_Base {
 	for (final Event event : (Set<Event>) getEventsByEventType(eventType)) {
 	    result = result.add(event.getPayedAmount(civilYear));
 	}
-	
-	return result; 
+
+	return result;
     }
-    
+
 }

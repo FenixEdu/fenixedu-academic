@@ -71,7 +71,7 @@ public abstract class Event extends Event_Base {
     public boolean isPayed() {
 	return isClosed();
     }
-    
+
     public boolean isCancelled() {
 	return (getEventState() == EventState.CANCELLED);
     }
@@ -225,29 +225,36 @@ public abstract class Event extends Event_Base {
 
     public Money getPayedAmount(final int civilYear) {
 	Money result = Money.ZERO;
-	
+
 	for (final Entry entry : getPayedEntries(civilYear)) {
 	    result = result.add(entry.getAmountWithAdjustment());
 	}
-	
+
 	return result;
     }
-    
+
     private Set<Entry> getPayedEntries(final int civilYear) {
 	final Set<Entry> result = new HashSet<Entry>();
-	
+
 	for (final AccountingTransaction accountingTransaction : getAccountingTransactionsSet()) {
 	    if (accountingTransaction.isPayed(civilYear)) {
 		result.add(accountingTransaction.getToAccountEntry());
 	    }
 	}
-	
+
 	return result;
     }
 
     public void recalculateState(final DateTime whenRegistered) {
 	if (canCloseEvent(whenRegistered)) {
+	    closeNonProcessedCodes();
 	    super.setEventState(EventState.CLOSED);
+	}
+    }
+
+    private void closeNonProcessedCodes() {
+	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
+	    paymentCode.setState(PaymentCodeState.CANCELLED);
 	}
     }
 
@@ -258,7 +265,7 @@ public abstract class Event extends Event_Base {
 		: Money.ZERO;
 
     }
-    
+
     public Money getAmountToPay() {
 	return calculateAmountToPay(new DateTime());
     }
@@ -276,10 +283,16 @@ public abstract class Event extends Event_Base {
     }
 
     public void cancel(final Employee responsibleEmployee) {
+	cancel(responsibleEmployee, null);
+    }
+
+    public void cancel(final Employee responsibleEmployee, final String cancelJustification) {
 	checkRulesToCancel();
 	super.setWhenCancelled(new DateTime());
 	super.setEmployeeResponsibleForCancel(responsibleEmployee);
 	super.setEventState(EventState.CANCELLED);
+	super.setCancelJustification(cancelJustification);
+	closeNonProcessedCodes();
     }
 
     private void checkRulesToCancel() {
@@ -390,7 +403,7 @@ public abstract class Event extends Event_Base {
 	return (paymentMode == PaymentMode.ATM) ? PaymentCodeState.PROCESSED
 		: PaymentCodeState.CANCELLED;
     }
-    
+
     public LabelFormatter getDescription() {
 	final LabelFormatter result = new LabelFormatter();
 	result.appendLabel(getEventType().name(), "enum");

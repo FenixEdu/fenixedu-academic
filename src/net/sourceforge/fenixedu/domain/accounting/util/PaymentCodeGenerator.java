@@ -9,7 +9,13 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.lang.StringUtils;
 
+/**
+ * Code Format: <studentNumber{6}><typeDigit{1}><controlDigits{2}>
+ * 
+ */
 public class PaymentCodeGenerator {
+
+    private static final int CONTROL_DIGITS_LENGTH = 2;
 
     private static final String CODE_FILLER = "0";
 
@@ -62,15 +68,22 @@ public class PaymentCodeGenerator {
 
     private static String generateFinalCode(final PaymentCodeType paymentCodeType,
 	    final Student student, int digits) {
-	return StringUtils.rightPad(getCodePrefix(paymentCodeType, student) + digits, CODE_LENGTH,
-		CODE_FILLER);
+	final String finalCode = getCodePrefix(paymentCodeType, student)
+		+ StringUtils.leftPad(String.valueOf(digits), CONTROL_DIGITS_LENGTH);
+
+	if (finalCode.length() != CODE_LENGTH) {
+	    throw new RuntimeException("Unexpected code length for generated code");
+	}
+
+	return finalCode;
+
     }
 
     private static String getCodePrefix(final PaymentCodeType paymentCodeType, final Student student) {
 	return StringUtils.leftPad(student.getNumber().toString(), STUDENT_NUMBER_LENGTH, CODE_FILLER)
 		+ paymentCodeType.getTypeDigit();
     }
-    
+
     public static Integer getStudentNumberFrom(final String code) {
 	return Integer.valueOf(code.substring(0, STUDENT_NUMBER_LENGTH));
     }

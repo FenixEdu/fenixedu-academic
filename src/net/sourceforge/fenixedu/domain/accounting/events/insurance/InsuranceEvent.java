@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.accounting.events.insurance;
 
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -8,12 +12,15 @@ import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 import dml.runtime.RelationAdapter;
 
@@ -24,7 +31,8 @@ public class InsuranceEvent extends InsuranceEvent_Base {
 	    @Override
 	    public void beforeAdd(Event event, Person person) {
 		if (event instanceof InsuranceEvent) {
-		    if (person.hasAdministrativeOfficeFeeInsuranceEvent(((InsuranceEvent) event).getExecutionYear())) {
+		    if (person.hasAdministrativeOfficeFeeInsuranceEvent(((InsuranceEvent) event)
+			    .getExecutionYear())) {
 			throw new DomainException(
 				"error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
 
@@ -84,5 +92,28 @@ public class InsuranceEvent extends InsuranceEvent_Base {
     private Unit getInstitutionUnit() {
 	return RootDomainObject.getInstance().getInstitutionUnit();
     }
-    
+
+    @Override
+    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+	getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
+		entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+
+	return getNonProcessedPaymentCodes();
+
+    }
+
+    @Override
+    protected List<AccountingEventPaymentCode> createPaymentCodes() {
+	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+
+	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.INSURANCE,
+		new YearMonthDay(), calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(),
+		entryDTO.getAmountToPay(), getPerson().getStudent()));
+    }
+
+    private YearMonthDay calculatePaymentCodeEndDate() {
+	return new YearMonthDay().plusMonths(1);
+    }
+
 }
