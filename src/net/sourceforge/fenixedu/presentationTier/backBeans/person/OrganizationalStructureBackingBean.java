@@ -58,9 +58,6 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	if (getRequestParameter("unitID") != null) {
 	    getUnitIDHidden().setValue(getRequestParameter("unitID"));
 	}	
-	if(getChoosenExecutionYearID() == null) {
-	    setChoosenExecutionYearID(1);
-	}
 	this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
 		.getLocale());
     }
@@ -77,7 +74,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
 
 	Collections.reverse(result);
-	if (getChoosenExecutionYearID() == 0) {
+	if (getChoosenExecutionYearID() == null) {
 	    for (SelectItem selectExecutionYear : result) {
 		if (selectExecutionYear.getDescription().equals(PeriodState.CURRENT_CODE)) {		   
 		    setChoosenExecutionYearID((Integer) selectExecutionYear.getValue());
