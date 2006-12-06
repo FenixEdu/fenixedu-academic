@@ -32,6 +32,7 @@
 	</tr>
 </table>
 
+
 <h3 class="mbottom025"><bean:message key="label.studentStatutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
 <logic:empty name="student" property="allStatutes">

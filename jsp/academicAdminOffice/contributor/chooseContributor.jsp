@@ -5,10 +5,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+
 <bean:define id="title" name="<%= SessionConstants.CONTRIBUTOR_ACTION %>" scope="session" />    
+
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message name="title"/></h2>
-<span class="error"><!-- Error messages go here --><html:errors /><br/></span>    
-<table>
+
+<span class="error"><!-- Error messages go here --><html:errors /></span>    
+
+<table class="mtop15">
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
         <html:form action="<%=path%>">
         <input alt="input.method" type="hidden" value="getContributors" name="method"/>
@@ -20,7 +25,8 @@
          </td>
        </tr>
    </table>
-   <br />
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Escolher" styleClass="inputbutton" property="ok"/>
-<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton"/>
+
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Escolher" styleClass="inputbutton" property="ok"/>
+	</p>
 </html:form>

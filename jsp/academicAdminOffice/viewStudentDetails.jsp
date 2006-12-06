@@ -7,6 +7,7 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.studentPage" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
+
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
 		<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
@@ -33,20 +34,23 @@
 </table>
 
 
-<logic:equal name="student" property="hasActiveRegistrationForOffice" value="true">
-	<logic:equal name="student" property="hasAnyBolonhaRegistration" value="true">
-		<p class="mvert05">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
-				<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</p>
-	</logic:equal>
-</logic:equal>
+<p class="mvert05">
+	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+	<html:link page="/student.do?method=viewPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
+		<bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	</html:link>
 
-<html:link page="/student.do?method=viewPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
-	<bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-</html:link>
+	<logic:equal name="student" property="hasActiveRegistrationForOffice" value="true">
+		<logic:equal name="student" property="hasAnyBolonhaRegistration" value="true">
+			<span class="pleft05">
+				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+				<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
+					<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				</html:link>
+			</span>
+		</logic:equal>
+	</logic:equal>
+</p>
 
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="student" property="registrations" schema="student.registrationsWithStartData" >
@@ -60,6 +64,8 @@
 		<fr:property name="contextRelative(view)" value="true"/>
 	</fr:layout>
 </fr:view>
+
+
 
 <!-- Student Statues -->
 <h3 class="mbottom025"><bean:message key="label.statutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>

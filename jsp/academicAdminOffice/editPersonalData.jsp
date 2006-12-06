@@ -16,7 +16,7 @@
 	<fr:edit id="personData" name="personBean" schema="student.personalData-edit" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 	
@@ -24,7 +24,7 @@
 	<fr:edit id="personFiliation" name="personBean" schema="student.filiation-edit" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 	
@@ -32,7 +32,7 @@
 	<fr:edit id="personAddress" name="personBean" schema="student.address-edit" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 	
@@ -40,7 +40,7 @@
 	<fr:edit id="personContacts" name="personBean" schema="student.contacts-edit" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 

@@ -3,12 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
-
 <html:xhtml/>
 
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchDocumentRequests" /></h2>
 
-<hr/><br/>
 
 <logic:messagesPresent message="true">
 		<ul>
@@ -16,7 +15,6 @@
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
-		<br />
 </logic:messagesPresent>
 
 <fr:form action="/documentRequestsManagement.do">
@@ -32,18 +30,13 @@
 	<fr:view name="documentRequestsResult" schema="DocumentRequest.view-documentPurposeTypeInformation" >			
 		
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright" />
-			
-		
+			<fr:property name="classes" value="tstyle4 tdcenter" />
 			<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 			<fr:property name="key(processing)" value="processing"/>
 			<fr:property name="visibleIf(processing)" value="newRequest"/>
-			
 			<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 			<fr:property name="key(concluded)" value="conclude"/>
 			<fr:property name="visibleIf(concluded)" value="processing"/>
-		
-		
 			<fr:property name="sortBy" value="urgentRequest=desc,creationDate=asc"/>
 		</fr:layout>
 	</fr:view>
@@ -51,7 +44,5 @@
 	
 	<logic:empty name="documentRequestsResult">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.noDocumentRequests" />
-		<br/>
-		<br/>
 	</logic:empty>
 </fr:form>

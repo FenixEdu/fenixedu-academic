@@ -3,16 +3,16 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 
-<title><bean:message key="title.masterDegree.administrativeOffice.createContributor" /></title>
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<h2><bean:message key="label.action.contributors.create" /></h2>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<h2><bean:message key="label.action.contributors.create" /></h2>
-
 <html:form action="/createContributorDispatchAction?method=create">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
-	<table>
+	<table class="tstyle5 thlight">
 		<tr>
+			<th><bean:message key="label.type" />:</th>
 			<td>
 				<e:labelValues id="values"
 					enumeration="net.sourceforge.fenixedu.dataTransferObject.InfoContributor$ContributorType"
@@ -26,48 +26,49 @@
 
 		<!-- Contributor Name -->
 		<tr>
-			<td><bean:message key="label.masterDegree.administrativeOffice.contributorName" />:</td>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorNumber" property="contributorName" /></td>
+			<th><bean:message key="label.masterDegree.administrativeOffice.contributorName" />:</th>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorNumber" property="contributorName" size="40"/></td>
 		</tr>
 
 		<!-- Contributor Number -->
 		<tr>
-			<td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber" />:</td>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorName" property="contributorNumber" /></td>
+			<th><bean:message key="label.masterDegree.administrativeOffice.contributorNumber" />:</th>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorName" property="contributorNumber" size="20"/></td>
 		</tr>
 
 		<!-- Contributor Address -->
 		<tr>
-			<td><bean:message key="label.masterDegree.administrativeOffice.contributorAddress" />:</td>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorAddress" property="contributorAddress" /></td>
+			<th><bean:message key="label.masterDegree.administrativeOffice.contributorAddress" />:</th>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorAddress" property="contributorAddress" size="40"/></td>
 		</tr>
 		<tr>
-			<td><bean:message key="label.person.postCode" /></td>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.areaCode" property="areaCode" /></td>
+			<th><bean:message key="label.person.postCode" /></th>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.areaCode" property="areaCode" size="10"/></td>
 		</tr>
 		<tr>
-			<td><bean:message key="label.person.areaOfPostCode" /></td>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.areaOfAreaCode" property="areaOfAreaCode" /></td>
+			<th><bean:message key="label.person.areaOfPostCode" /></th>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.areaOfAreaCode" property="areaOfAreaCode" size="20"/></td>
 		</tr>
 		<tr>
-			<td><bean:message key="label.person.place" /></td>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.area" property="area" /></td>
+			<th><bean:message key="label.person.place" /></th>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.area" property="area" size="20"/></td>
 		</tr>
 		<tr>
-			<td><bean:message key="label.person.addressParish" /></td>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.parishOfResidence" property="parishOfResidence" /></td>
+			<th><bean:message key="label.person.addressParish" /></th>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.parishOfResidence" property="parishOfResidence" size="20"/></td>
 		</tr>
 		<tr>
-			<td><bean:message key="label.person.addressMunicipality" /></td>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.districtSubdivisionOfResidence" property="districtSubdivisionOfResidence" /></td>
+			<th><bean:message key="label.person.addressMunicipality" /></th>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.districtSubdivisionOfResidence" property="districtSubdivisionOfResidence" size="20"/></td>
 		</tr>
 		<tr>
-			<td><bean:message key="label.person.addressDistrict" /></td>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.districtOfResidence" property="districtOfResidence" /></td>
+			<th><bean:message key="label.person.addressDistrict" /></th>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.districtOfResidence" property="districtOfResidence" size="20"/></td>
 		</tr>
 	</table>
-	<br />
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Criar" styleClass="inputbutton" property="ok" />
-	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton" />
+
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Criar" styleClass="inputbutton" property="ok" />
+	</p>
 
 </html:form>
