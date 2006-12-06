@@ -30,8 +30,9 @@
 	<parameter name="civilYear" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="registrationNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="gratuityEventsPayedAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
-	<parameter name="administrativeOfficeFeeAndInsuranceEventsPayedAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
+	<parameter name="eventTypes" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="payedAmounts" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="totalPayedAmount" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -119,7 +120,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="190"  isSplitAllowed="true" >
+			<band height="226"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="66"
@@ -283,6 +284,62 @@
 						<font pdfFontName="Courier-Oblique" size="12" isBold="false" isItalic="true"/>
 					</textElement>
 				<text><![CDATA[, DECLARA, a seu pedido, que recebeu de]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="108"
+						y="152"
+						width="300"
+						height="22"
+						key="textField-31"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" lineSpacing="1_1_2">
+						<font pdfFontName="Courier" size="12" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{eventTypes}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="334"
+						y="152"
+						width="133"
+						height="22"
+						key="textField-32"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Bold" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{payedAmounts}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="308"
+						y="175"
+						width="159"
+						height="22"
+						key="textField-34"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Bold" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{totalPayedAmount}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="108"
+						y="175"
+						width="474"
+						height="22"
+						key="staticText-17"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Bold" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+				<text><![CDATA[- TOTAL ..............................]]></text>
 				</staticText>
 			</band>
 		</detail>
