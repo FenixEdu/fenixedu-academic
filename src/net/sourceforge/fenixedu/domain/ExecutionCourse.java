@@ -1141,6 +1141,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean isLecturedIn(final ExecutionYear executionYear) {
 	return getExecutionPeriod().getExecutionYear() == executionYear;
     }
+    
+    public boolean isLecturedIn(final ExecutionPeriod executionPeriod) {
+	return getExecutionPeriod() == executionPeriod;
+    }
 
     public SortedSet<Professorship> getProfessorshipsSortedAlphabetically() {
 	final SortedSet<Professorship> professorhips = new TreeSet<Professorship>(
