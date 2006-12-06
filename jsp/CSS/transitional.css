@@ -470,6 +470,7 @@ padding-right: 0.5em;
 .mleft1 { margin-left: 1em; }
 .mright075 { margin-right: 0.75em; }
 .indent0 { margin-left: 0; }
+.indent05 { margin-left: 0.5em; }
 .indent1 { margin-left: 1em; }
 .indent2 { margin-left: 2em; }
 .indent3 { margin-left: 3em; }
@@ -1211,6 +1212,7 @@ tr td.tdhl1 { background-color: #fdfbdd; } /* amarelo */
 tr.tdhl1 td { background-color: #fdfbdd; } /* amarelo */
 
 table.asdasd tr td a { font-weight: bold; padding: 0.25em; margin: 0.25em; }
+
 /* section header*/
 .sheader1 {
 background: #f5f5e5;

@@ -27,9 +27,10 @@
 			<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>				
 			<span class="gen-button" style="margin-left: 2em;">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<html:link page="<%= insertSummaryLink %>"><bean:message key="label.insertSummary"/></html:link><bean:message key="link.summary.insert.info"/>				
+				<html:link page="<%= insertSummaryLink %>"><bean:message key="label.insertSummary"/></html:link> <bean:message key="link.summary.insert.info"/>				
 			</span>					
 		</p>
+		<p>Pode também visualizar a lista completa de aulas:</p>
 		<p>
 			<bean:define id="showSummariesCalendarLink">/summariesManagement.do?method=showSummariesCalendar&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>			
 			<span class="gen-button" style="margin-left: 2em;">
@@ -46,7 +47,7 @@
 			<fr:edit id="showSummariesBeanWithChoicesHidden" name="showSummariesBean" nested="true" visible="false" />
 			<fr:view name="nextPossibleLessonsDates" schema="PossibleNextSummaryLessonAndDate">
 				<fr:layout name="tabular">
-					<fr:property name="style" value="width: 500px;"/>
+					<fr:property name="style" value="width: 600px;"/>
 					<fr:property name="checkable" value="true"/>
 					<fr:property name="checkboxName" value="selectedLessonAndDate"/>
 					<fr:property name="checkboxValue" value="checkBoxValue"/>
@@ -55,7 +56,7 @@
 				</fr:layout>
 			</fr:view>
 			
-			<table style="width: 500px;" class="tstyle1 mtop0">
+			<table style="width: 600px;" class="tstyle1 mtop0">
 				<tr><td><html:submit><bean:message key="label.fill.summaries"/></html:submit></td></tr>
 			</table>
 			

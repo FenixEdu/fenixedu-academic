@@ -35,7 +35,7 @@
 		</li>
 	</ul>
 	
-	<h3 class="mtop2 mbottom05"><bean:message key="label.visualization.options"/></h3>
+	<h3 class="mtop15 mbottom05"><bean:message key="label.visualization.options"/></h3>
 	<fr:form>
 		<fr:edit id="showSummariesCalendar" name="showSummariesCalendarBean" schema="ShowSummariesCalendar" nested="true">
 			<fr:destination name="postBack" path="/summariesManagement.do?method=showSummariesCalendarPostBack"/>		
@@ -50,16 +50,12 @@
 		<bean:define id="createComplexSummaryURL" type="java.lang.String">/summariesManagement.do?method=prepareCreateComplexSummaryInSummariesCalendarMode&page=0&executionCourseID=<bean:write name="executionCourseID"/></bean:define>
 		<fr:view name="summariesCalendarResult" schema="SummariesCalendarList">
 			<fr:layout name="tabular">
-				<fr:property name="style" value="width: 500px;"/>			
 				<fr:property name="classes" value="tstyle1 mtop025 mbottom0"/>
-				<fr:property name="columnClasses" value="acenter,,,"/>
-				
 				<fr:property name="link(insertNewSummary)" value="<%= createComplexSummaryURL %>"/>
 	            <fr:property name="param(insertNewSummary)" value="checkBoxValue/summaryDate"/>
 		        <fr:property name="key(insertNewSummary)" value="title.summary.insert"/>
 	            <fr:property name="order(insertNewSummary)" value="0"/>	
 	            <fr:property name="visibleIf(insertNewSummary)" value="withoutSummary"/>	
-	            
 			</fr:layout>		
 		</fr:view>		
 	</logic:notEmpty>
