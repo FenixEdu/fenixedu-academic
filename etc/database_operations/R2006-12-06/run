@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Create assiduousness access group and Month Closure" addStaffManagementSectionTable.sql
+execute "Fixing Payment Code to Event Associations" FixPaymentCodeAssociations.sql
+execute "Changing Table AccountingEvent" AlterTableAccountingEvent.sql

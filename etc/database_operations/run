@@ -27,6 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Fixing Payment Code to Event Associations" FixPaymentCodeAssociations.sql
-execute "Changing Table AccountingEvent" AlterTableAccountingEvent.sql
-execute "Fix Past LEEC student curricular plans." fixLEECPast.sql
