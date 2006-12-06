@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.administrativeOffice;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -12,8 +11,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -151,19 +148,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     public static AdministrativeOffice readByEmployee(Employee employee) {
-
-	if (employee.getCurrentWorkingPlace().hasAdministrativeOffice()) {
-	    return employee.getCurrentWorkingPlace().getAdministrativeOffice();
-	}
-
-	for (Accountability accountability : employee.getCurrentWorkingPlace()
-		.getParentAccountabilities(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE, Unit.class)) {
-	    if (((Unit) accountability.getParentParty()).hasAdministrativeOffice()) {
-		return ((Unit) accountability.getParentParty()).getAdministrativeOffice();
-	    }
-	}
-
-	return null;
+	return employee.getCurrentWorkingPlace().getAdministrativeOffice();
     }
 
     public Set<Degree> getAdministratedDegrees() {
