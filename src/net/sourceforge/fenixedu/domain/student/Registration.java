@@ -1293,11 +1293,11 @@ public class Registration extends Registration_Base {
     }
     
     public double getEctsCredits() {
-	return new StudentCurriculum(this).getTotalEctsCredits(ExecutionYear.readCurrentExecutionYear());
+	return new StudentCurriculum(this).getTotalEctsCredits(null);
     }
 
     public int getCurricularYear() {
-	return new StudentCurriculum(this).calculateCurricularYear(ExecutionYear.readCurrentExecutionYear());
+	return new StudentCurriculum(this).calculateCurricularYear(null);
     }
 
     public int getCurricularYear(ExecutionYear executionYear) {
