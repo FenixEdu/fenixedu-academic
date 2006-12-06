@@ -23,6 +23,27 @@ public class MissingClocking extends MissingClocking_Base {
         setOjbConcreteClass(MissingClocking.class.getName());
     }
 
+    public MissingClocking(Assiduousness assiduousness, DateTime date,
+            JustificationMotive justificationMotive, DateTime lastModifiedDate, Employee modifiedBy) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setAssiduousness(assiduousness);
+        setDate(date);
+        setJustificationMotive(justificationMotive);
+        setLastModifiedDate(lastModifiedDate);
+        setModifiedBy(modifiedBy);
+        setOracleSequence(0);
+        setOjbConcreteClass(MissingClocking.class.getName());
+    }
+
+    public void modify(DateTime date, JustificationMotive justificationMotive, Employee modifiedBy) {
+        setDate(date);
+        setJustificationMotive(justificationMotive);
+        setLastModifiedDate(new DateTime());
+        setModifiedBy(modifiedBy);
+        setOjbConcreteClass(MissingClocking.class.getName());
+    }
+
     public TimeOfDay getTime() {
         return getDate().toTimeOfDay();
     }

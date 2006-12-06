@@ -92,13 +92,63 @@
 	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="justificationType" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="dayType" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="justificationGroup" key="label.group" bundle="ASSIDUOUSNESS_RESOURCES"/>		
+	<slot name="justificationGroup" key="label.group" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
-<schema name="show.regularizationMotives"
-	type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
-	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES"/>
+<schema name="create.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
+	constructor="acronym, description, justificationType, dayType, justificationGroup, modifiedBy">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="justificationType" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationType" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="dayType" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.DayType" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="justificationGroup" key="label.group" bundle="ASSIDUOUSNESS_RESOURCES" >
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationGroup" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>	
+	<slot name="modifiedBy" hidden="true"/>
+</schema>
+
+<schema name="edit.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="justificationType" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationType" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="dayType" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.DayType" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="justificationGroup" key="label.group" bundle="ASSIDUOUSNESS_RESOURCES" >
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationGroup" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>	
+	<slot name="modifiedBy" hidden="true"/>
+	<setter signature="editJustificationMotive(acronym,description,justificationType,dayType,justificationGroup,modifiedBy)"/>
+</schema>
+
+<schema name="show.regularizationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" 
+	constructor="acronym, description, modifiedBy">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"
+	validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES"
+	validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="modifiedBy" hidden="true"/>
+</schema>
+
+<schema name="edit.regularizationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"
+	validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES"
+	validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="modifiedBy" hidden="true"/>
+	<setter signature="editJustificationMotive(acronym,description,modifiedBy)"/>
 </schema>
 
 <schema name="show.workScheduleType" type="net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType">
@@ -137,5 +187,137 @@
 	</slot>
 	<slot name="mandatoryMealDiscount">
 		<property name="format" value="' - obr: 'HH:mm)" />
+	</slot>
+</schema>
+
+<!-- WorkScheduleTypeFactory -->
+
+<schema name="workScheduleTypeFactory.acronym" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="modifiedBy" hidden="true"/>
+</schema>
+
+<schema name="workScheduleTypeFactory.validity" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
+	<slot name="beginValidDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endValidDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="workScheduleTypeFactory.dayTime" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
+	<slot name="beginDayTime" key="label.beginHour" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDayTime" key="label.endHour" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDayNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="workScheduleTypeFactory.clockingTime" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
+	<slot name="beginClockingTime" key="label.beginHour" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endClockingTime" key="label.endHour" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endClockingNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="workScheduleTypeFactory.normalWorkFirstPeriod" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
+	<slot name="beginNormalWorkFirstPeriod" key="label.beginHour" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endNormalWorkFirstPeriod" key="label.endHour" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endNormalWorkFirstPeriodNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="workScheduleTypeFactory.normalWorkSecondPeriod" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
+	<slot name="beginNormalWorkSecondPeriod" key="label.beginHour" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="endNormalWorkSecondPeriod" key="label.endHour" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="endNormalWorkSecondPeriodNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
+<schema name="workScheduleTypeFactory.fixedWorkFirstPeriod" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
+	<slot name="beginFixedWorkFirstPeriod" key="label.beginHour" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="endFixedWorkFirstPeriod" key="label.endHour" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="endFixedWorkFirstPeriodNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
+<schema name="workScheduleTypeFactory.fixedWorkSecondPeriod" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
+	<slot name="beginFixedWorkSecondPeriod" key="label.beginHour" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="endFixedWorkSecondPeriod" key="label.endHour" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="endFixedWorkSecondPeriodNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
+<schema name="workScheduleTypeFactory.meal" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
+	<slot name="mealBeginTime" key="label.beginHour" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="mealEndTime" key="label.endHour" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="minimumMealBreakInterval" key="label.minimumInterval" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="mandatoryMealDiscount" key="label.mandatoryDiscount" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
+<!-- Employee Assiduousness -->
+<schema name="edit.employeeCorrectionType" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
+	<slot name="correctionType" key="label.correction" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select-postback">
+		<property name="choiceType" value="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory$CorrectionType" />
+		<property name="eachLayout" value="this-does-not-exist" />
+		<property name="destination" value="justificationMotivePostBack"/>
+	</slot>
+	<slot name="modifiedBy" hidden="true"/>
+</schema>
+
+<schema name="edit.employeeJustificationType" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
+	<slot name="justificationType" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select-postback">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType" />
+		<property name="eachLayout" value="this-does-not-exist" />
+		<property name="destination" value="justificationMotivePostBack"/>
+	</slot>
+</schema>
+
+<schema name="edit.employeeTimeJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
+	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
+		<property name="format" value="${acronym} - ${description}"/>
+	</slot>
+	<slot name="beginDate" key="label.date" bundle="ASSIDUOUSNESS_RESOURCES" >
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+	<slot name="beginTime" key="label.beginHour" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="format" value="HH:mm" />
+	</slot>
+	<slot name="endTime" key="label.endHour" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="format" value="HH:mm" />
+	</slot>
+</schema>
+
+<schema name="edit.employeeOccurrenceJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
+	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
+		<property name="format" value="${acronym} - ${description}"/>
+	</slot>
+	<slot name="beginDate" >
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+	<slot name="endDate" >
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+</schema>
+
+<schema name="edit.employeeBalanceJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
+	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
+		<property name="format" value="${acronym} - ${description}"/>
+	</slot>
+	<slot name="beginDate" >
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+	<slot name="beginTime" key="label.hoursNumber" bundle="ASSIDUOUSNESS_RESOURCES" >
+		<property name="format" value="HH:mm" />
+	</slot>
+</schema>
+
+<schema name="edit.employeeRegularization" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
+	<slot name="justificationMotive" key="label.regularization" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
+		<property name="format" value="${acronym} - ${description}"/>
+	</slot>
+	<slot name="beginDate" key="label.date" bundle="ASSIDUOUSNESS_RESOURCES" >
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+	<slot name="beginTime" key="label.hour" bundle="ASSIDUOUSNESS_RESOURCES" >
+		<property name="format" value="HH:mm" />
 	</slot>
 </schema>

@@ -94,4 +94,14 @@ public class Meal extends Meal_Base {
         return !hasAnyWorkScheduleTypes();
     }
 
+    public boolean equivalent(TimeOfDay beginMeal, TimeOfDay endMeal, Duration minium, Duration maxium) {
+        if ((getBeginMealBreak().equals(beginMeal) && getEndMealBreak().equals(endMeal))
+                && ((getMinimumMealBreakInterval() == null && minium == null) || (getMinimumMealBreakInterval() != null
+                        && minium != null && getMinimumMealBreakInterval().equals(minium)))
+                && ((getMandatoryMealDiscount() == null && maxium == null) || (getMandatoryMealDiscount() != null
+                        && maxium != null && getMandatoryMealDiscount().equals(maxium)))) {
+            return true;
+        }
+        return false;
+    }
 }

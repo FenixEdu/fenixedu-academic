@@ -15,17 +15,13 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
-/**
- * 
- * @author velouria@velouria.org
- * 
- */
 public class WorkSchedule extends WorkSchedule_Base {
 
     public WorkSchedule(WorkScheduleType workScheduleType, WorkWeek workWeek, Periodicity periodicity) {
@@ -41,8 +37,8 @@ public class WorkSchedule extends WorkSchedule_Base {
                 weekNumber, maxWorkWeek));
     }
 
-    public WorkDaySheet calculateWorkingPeriods(WorkDaySheet workDaySheet, YearMonthDay day,
-            Timeline timeline, List<Leave> timeLeaves) {
+    public WorkDaySheet calculateWorkingPeriods(WorkDaySheet workDaySheet, Timeline timeline,
+            List<Leave> timeLeaves) {
         Duration firstWorkPeriod = Duration.ZERO;
         Duration lastWorkPeriod = Duration.ZERO;
         TimeInterval mealInterval = null;
@@ -276,8 +272,8 @@ public class WorkSchedule extends WorkSchedule_Base {
         return false;
     }
 
-    public void setWorkScheduleDays(
-            HashMap<String, WorkScheduleDaySheet> workScheduleDays, ResourceBundle bundle) {
+    public void setWorkScheduleDays(HashMap<String, WorkScheduleDaySheet> workScheduleDays,
+            ResourceBundle bundle) {
         for (WeekDay weekDay : getWorkWeek().getDays()) {
             WorkScheduleDaySheet workScheduleDaySheet = new WorkScheduleDaySheet();
             workScheduleDaySheet.setSchedule(getWorkScheduleType().getAcronym());
@@ -302,6 +298,54 @@ public class WorkSchedule extends WorkSchedule_Base {
 
     public boolean canBeDeleted() {
         return !hasAnySchedules();
+    }
+
+    // if returns false the clocking belongs to the clocking date
+    // if returns true it may belong to the clocking date or the day before
+    public static boolean overlapsSchedule(DateTime clocking,
+            HashMap<YearMonthDay, WorkSchedule> workScheduleMap) {
+        WorkSchedule thisDaySchedule = workScheduleMap.get(clocking.toYearMonthDay());
+        WorkSchedule dayBeforeSchedule = workScheduleMap.get(clocking.toYearMonthDay().minusDays(1));
+
+        Interval thisDayWorkTimeInterval = WorkScheduleType
+                .getDefaultWorkTime(clocking.toYearMonthDay());
+        if (thisDaySchedule != null) {
+            DateTime beginThisDayWorkTime = clocking.toYearMonthDay().toDateTime(
+                    thisDaySchedule.getWorkScheduleType().getWorkTime());
+            DateTime endThisDayWorkTime = clocking.toYearMonthDay().toDateTime(
+                    thisDaySchedule.getWorkScheduleType().getWorkEndTime());
+            if (thisDaySchedule.getWorkScheduleType().isWorkTimeNextDay()) {
+                endThisDayWorkTime = endThisDayWorkTime.plusDays(1);
+            }
+            thisDayWorkTimeInterval = new Interval(beginThisDayWorkTime, endThisDayWorkTime);
+        }
+        Interval dayBeforeWorkTimeInterval = WorkScheduleType.getDefaultWorkTime(clocking
+                .toYearMonthDay().minusDays(1));
+        if (dayBeforeSchedule != null) {
+            DateTime beginDayBeforeWorkTime = clocking.toYearMonthDay().toDateTime(
+                    dayBeforeSchedule.getWorkScheduleType().getWorkTime()).minusDays(1);
+            DateTime endDayBeforeWorkTime = clocking.toYearMonthDay().toDateTime(
+                    dayBeforeSchedule.getWorkScheduleType().getWorkEndTime()).minusDays(1);
+            if (dayBeforeSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
+                endDayBeforeWorkTime = endDayBeforeWorkTime.plusDays(1);
+            }
+
+            dayBeforeWorkTimeInterval = new Interval(beginDayBeforeWorkTime, endDayBeforeWorkTime);
+        }
+        Interval overlapResult = thisDayWorkTimeInterval.overlap(dayBeforeWorkTimeInterval);
+        if (overlapResult == null) {
+            Interval gapResult = dayBeforeWorkTimeInterval.gap(thisDayWorkTimeInterval);
+            if (gapResult != null) {
+                if (!gapResult.contains(clocking)) {
+                    return dayBeforeWorkTimeInterval.contains(clocking);
+                }
+            } else {
+                return dayBeforeWorkTimeInterval.contains(clocking);
+            }
+        } else if (!overlapResult.contains(clocking) && clocking.isAfter(overlapResult.getStart())) {
+            return false;
+        }
+        return true;
     }
 
 }

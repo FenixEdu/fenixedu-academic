@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -15,6 +17,67 @@ import org.joda.time.YearMonthDay;
 public class WorkScheduleType extends WorkScheduleType_Base {
 
     public static Duration maximumContinuousWorkPeriod = new Duration(18000000); // 5 hours
+
+    // public WorkScheduleType(String acronym, TimeOfDay beginWorkTime, TimeOfDay endWorkTime,
+    // TimeOfDay beginClockingTime, TimeOfDay endClockingTime, TimeOfDay beginFirstPeriod,
+    // TimeOfDay endFirstPeriod, TimeOfDay beginSecondPeriod, TimeOfDay endSecondPeriod,
+    // TimeOfDay beginFirstFixedPeriod, TimeOfDay endFirstFixedPeriod,
+    // TimeOfDay beginSecondFixedPeriod, TimeOfDay endSecondFixedPeriod, TimeOfDay mealBeginTime,
+    // TimeOfDay mealEndTime, Duration mandatoryMealDiscount, Duration minimumMealBreakInterval,
+    // YearMonthDay beginValidDate, YearMonthDay endValidDate, Employee modifiedBy) {
+    // setRootDomainObject(RootDomainObject.getInstance());
+    // setAcronym(acronym);
+    // // /setOjbConcreteClass(className);
+    // setWorkTime(beginWorkTime);
+    // //
+    // setWorkTimeDuration(new Duration(beginWorkTime.toDateTimeToday(), endWorkTime.toDateTimeToday()));
+    // setClockingTime(beginClockingTime);
+    // //
+    // setClockingTimeDuration(new Duration(beginClockingTime.toDateTimeToday(), endClockingTime
+    // .toDateTimeToday()));
+    //
+    // WorkPeriod normalWorkPeriod = null;
+    // // new WorkPeriod(TimeOfDay beginFirstPeriod, TimeOfDay endFirstPeriod, TimeOfDay
+    // // beginSecondPeriod,
+    // // TimeOfDay endSecondPeriod) ;
+    // WorkPeriod fixedWorkPeriod = null;
+    // // new WorkPeriod(TimeOfDay beginFirstFixedPeriod, TimeOfDay endFirstFixedPeriod, TimeOfDay
+    // // beginSecondFixedPeriod,
+    // // TimeOfDay endSecondFixedPeriod) ;
+    //
+    // setNormalWorkPeriod(normalWorkPeriod);
+    // setFixedWorkPeriod(fixedWorkPeriod);
+    // Meal meal = null;
+    // // (mealBeginTime, mealEndTime, mandatoryMealDiscount, minimumMealBreakInterval)
+    // setMeal(meal);
+    // setBeginValidDate(beginValidDate);
+    // setEndValidDate(endValidDate);
+    // setLastModifiedDate(new DateTime());
+    // setModifiedBy(modifiedBy);
+    // }
+
+    public WorkScheduleType() {
+        super();
+    }
+
+    public WorkScheduleType(String acronym, WorkPeriod normalWorkPeriod, Employee modifiedBy) {
+        if (alreadyExistsWorkScheduleTypeAcronym(acronym)) {
+            throw new DomainException("error.workScheduleTypeAcronymAlreadyExists");
+        }
+        setRootDomainObject(RootDomainObject.getInstance());
+        setAcronym(acronym);
+        // setNormalWorkPeriod(normalWorkPeriod);
+        setModifiedBy(modifiedBy);
+    }
+
+    private boolean alreadyExistsWorkScheduleTypeAcronym(String acronym) {
+        for (WorkScheduleType workScheduleType : RootDomainObject.getInstance().getWorkScheduleTypes()) {
+            if (workScheduleType.getAcronym().equalsIgnoreCase(acronym)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void update(String className, YearMonthDay beginValidDate, YearMonthDay endValidDate,
             String acronym, TimeOfDay dayTime, Duration dayTimeDuration, TimeOfDay clockingTime,
@@ -188,11 +251,87 @@ public class WorkScheduleType extends WorkScheduleType_Base {
                 new TimeOfDay(6, 0, 0, 0)).plusDays(1));
     }
 
+    public boolean isValidWorkScheduleType() {
+        return new Interval(getBeginValidDate().toDateMidnight(), getEndValidDate().toDateMidnight())
+                .contains(new YearMonthDay().toDateMidnight());
+    }
+
     public Duration getMaximumContinuousWorkPeriod() {
         // if (getMeal() == null || getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO)) {
         // return null;
         // }
         // return maximumContinuousWorkPeriod;
         return null;
+    }
+
+    public boolean equals(YearMonthDay beginValid, YearMonthDay endValid, TimeOfDay workTime,
+            Duration workTimeDuration, TimeOfDay clockingTime, Duration clockingTimeDuration,
+            TimeOfDay firstNormalPeriod, Duration firstNormalPeriodDuration,
+            TimeOfDay secondNormalPeriod, Duration secondNormalPeriodDuration,
+            TimeOfDay firstFixedPeriod, Duration firstFixedPeriodDuration, TimeOfDay secondFixedPeriod,
+            Duration secondFixedPeriodDuration, TimeOfDay beginMeal, TimeOfDay endMeal, Duration minium,
+            Duration maxium) {
+
+        if (getBeginValidDate().equals(beginValid)
+                && getEndValidDate().equals(endValid)
+                && equivalent(workTime, workTimeDuration, clockingTime, clockingTimeDuration,
+                        firstNormalPeriod, firstNormalPeriodDuration, secondNormalPeriod,
+                        secondNormalPeriodDuration, firstFixedPeriod, firstFixedPeriodDuration,
+                        secondFixedPeriod, secondFixedPeriodDuration, beginMeal, endMeal, minium, maxium)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean equivalent(TimeOfDay workTime, Duration workTimeDuration, TimeOfDay clockingTime,
+            Duration clockingTimeDuration, TimeOfDay firstNormalPeriod,
+            Duration firstNormalPeriodDuration, TimeOfDay secondNormalPeriod,
+            Duration secondNormalPeriodDuration, TimeOfDay firstFixedPeriod,
+            Duration firstFixedPeriodDuration, TimeOfDay secondFixedPeriod,
+            Duration secondFixedPeriodDuration, TimeOfDay beginMeal, TimeOfDay endMeal, Duration minium,
+            Duration maxium) {
+        if ((getWorkTime().equals(workTime) && getWorkTimeDuration().equals(workTimeDuration)
+                && getClockingTime().equals(clockingTime) && getClockingTimeDuration().equals(
+                clockingTimeDuration))
+                && ((!hasNormalWorkPeriod() && firstNormalPeriod == null) || (hasNormalWorkPeriod() && getNormalWorkPeriod()
+                        .equivalent(firstNormalPeriod, firstNormalPeriodDuration, secondNormalPeriod,
+                                secondNormalPeriodDuration)))
+                && ((!hasFixedWorkPeriod() && firstFixedPeriod == null) || (hasFixedWorkPeriod() && getFixedWorkPeriod()
+                        .equivalent(firstFixedPeriod, firstFixedPeriodDuration, secondFixedPeriod,
+                                secondFixedPeriodDuration)))
+                && ((!hasMeal() && beginMeal == null) || (hasMeal() && getMeal().equivalent(beginMeal,
+                        endMeal, minium, maxium)))) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean equivalent(WorkScheduleType workScheduleType) {
+        TimeOfDay firstFixedPeriod = null, secondFixedPeriod = null, beginMeal = null, endMeal = null;
+        Duration firstFixedPeriodDuration = null, secondFixedPeriodDuration = null, minium = null, maxium = null;
+
+        if (workScheduleType.hasFixedWorkPeriod()) {
+            firstFixedPeriod = workScheduleType.getFixedWorkPeriod().getFirstPeriod();
+            firstFixedPeriodDuration = workScheduleType.getFixedWorkPeriod().getFirstPeriodDuration();
+            if (workScheduleType.getFixedWorkPeriod().isSecondWorkPeriodDefined()) {
+                secondFixedPeriod = workScheduleType.getFixedWorkPeriod().getSecondPeriod();
+                secondFixedPeriodDuration = workScheduleType.getFixedWorkPeriod()
+                        .getSecondPeriodDuration();
+            }
+        }
+        if (workScheduleType.hasMeal()) {
+            beginMeal = workScheduleType.getMeal().getBeginMealBreak();
+            endMeal = workScheduleType.getMeal().getEndMealBreak();
+            minium = workScheduleType.getMeal().getMinimumMealBreakInterval();
+            maxium = workScheduleType.getMeal().getMandatoryMealDiscount();
+        }
+
+        return equivalent(workScheduleType.getWorkTime(), workScheduleType.getWorkTimeDuration(),
+                workScheduleType.getClockingTime(), workScheduleType.getClockingTimeDuration(),
+                workScheduleType.getNormalWorkPeriod().getFirstPeriod(), workScheduleType
+                        .getNormalWorkPeriod().getFirstPeriodDuration(), workScheduleType
+                        .getNormalWorkPeriod().getSecondPeriod(), workScheduleType.getNormalWorkPeriod()
+                        .getSecondPeriodDuration(), firstFixedPeriod, firstFixedPeriodDuration,
+                secondFixedPeriod, secondFixedPeriodDuration, beginMeal, endMeal, minium, maxium);
     }
 }

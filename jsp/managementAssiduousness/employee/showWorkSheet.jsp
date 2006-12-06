@@ -15,8 +15,80 @@
 	<logic:present name="yearMonth">
 		<bean:define id="month" name="yearMonth" property="month" />
 		<bean:define id="year" name="yearMonth" property="year" />
-		<bean:define id="employeeNumber" name="employeeWorkSheet"
-			property="employee.employeeNumber" />
+		<bean:define id="employeeNumber" name="employeeWorkSheet" property="employee.employeeNumber" />
+
+		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
+                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
+            if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user
+                    .getPerson())) {
+                %>
+       <logic:equal name="yearMonth" property="isThisYearMonthClosed" value="false">
+		<logic:present name="employeeJustificationFactory">
+		<span class="error0 mtop0"><html:messages id="errorMessage" message="true" property="errorMessage">
+			<bean:write name="errorMessage" />
+			<br />
+		</html:messages></span>
+			<bean:define id="method" value="editEmployeeJustification" />
+			<%--
+			<logic:notEmpty name="" property="">
+					<bean:define id="method" value="editEmployeeJustification"/>
+			</logic:notEmpty>		
+			--%>
+			<fr:form action="<%="/employeeAssiduousness.do?method="+method.toString()%>" encoding="multipart/form-data">
+				<fr:edit id="editEmployeeJustificationType" name="employeeJustificationFactory"
+					type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+					schema="edit.employeeCorrectionType">
+					<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseJustificationMotivePostBack" />
+					<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+				</fr:edit>
+				<logic:notEmpty name="employeeJustificationFactory" property="correctionType">
+					<logic:equal name="employeeJustificationFactory" property="correctionType" value="<%= net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.CorrectionType.JUSTIFICATION.toString()%>">
+						<fr:edit id="editEmployeeJustificationType" name="employeeJustificationFactory"
+							type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+							schema="edit.employeeJustificationType">
+							<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseJustificationMotivePostBack" />
+						</fr:edit>
+						<logic:notEmpty name="employeeJustificationFactory" property="justificationType">
+							<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.TIME.toString()%>">
+								<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
+									type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+									schema="edit.employeeTimeJustificationMotive">
+								</fr:edit>
+							</logic:equal>
+							<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.OCCURRENCE.toString()%>">
+								<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
+									type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+									schema="edit.employeeOccurrenceJustificationMotive">
+								</fr:edit>
+							</logic:equal>
+							<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.BALANCE.toString()%>">
+								<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
+									type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+									schema="edit.employeeBalanceJustificationMotive">
+								</fr:edit>
+							</logic:equal>
+							<p><html:submit>
+								<bean:message key="button.submit" />
+							</html:submit></p>
+						</logic:notEmpty>
+					</logic:equal>
+					<logic:equal name="employeeJustificationFactory" property="correctionType" value="<%= net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.CorrectionType.REGULARIZATION.toString()%>">
+						<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
+							type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+							schema="edit.employeeRegularization">
+						</fr:edit>
+						<p><html:submit>
+							<bean:message key="button.submit" />
+						</html:submit></p>
+					</logic:equal>
+				</logic:notEmpty>		
+			</fr:form>
+		<br/>
+		<br/>
+		</logic:present>
+		</logic:equal>
+	 	<%}%>			
+			
 		<p><bean:message key="label.show"/>: <html:link
 			page="<%="/viewEmployeeAssiduousness.do?method=showWorkSheet&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 			<bean:message key="link.workSheet" />
@@ -41,7 +113,7 @@
 		</fr:view>
 
 		<logic:messagesPresent message="true">
-			<html:messages id="message" message="true">
+			<html:messages id="message" message="true" property="message">
 				<p><span class="error0"><bean:write name="message" /></span></p>
 			</html:messages>
 		</logic:messagesPresent>
@@ -56,7 +128,7 @@
 				property="employeeNumber" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page"
 				name="employeeForm" property="page" value="0" />
-			<fr:edit name="yearMonth" schema="choose.date">
+			<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
 				<fr:layout>
 					<fr:property name="classes" value="thlight thright" />
 				</fr:layout>
@@ -74,7 +146,7 @@
 			property="year" /></p>
 		<br />
 		</div>
-	</logic:present>
+	
 
 	<logic:empty name="employeeWorkSheet" property="workDaySheetList">
 		<bean:message key="message.employee.noWorkSheet" />
@@ -85,8 +157,22 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 printborder tpadding1" />
 				<fr:property name="columnClasses"
-					value="bgcolor3 acenter,,acenter,aright,aright,aleft,aleft" />
+					value="bgcolor3 acenter,,acenter,aright,aright,aleft,aleft,acenter" />
 				<fr:property name="headerClasses" value="acenter" />
+				<%if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user
+                    .getPerson())) {
+                %>
+                <logic:equal name="yearMonth" property="isThisYearMonthClosed" value="false">
+	                <fr:property name="link(justification)" value="<%="/employeeAssiduousness.do?method=prepareCreateEmployeeJustification&correction=JUSTIFICATION&employeeNumber="+employeeNumber.toString()%>" />
+					<fr:property name="key(justification)" value="label.justification" />
+					<fr:property name="param(justification)" value="date" />
+					<fr:property name="bundle(justification)" value="ASSIDUOUSNESS_RESOURCES" />
+	                <fr:property name="link(regularization)" value="<%="/employeeAssiduousness.do?method=prepareCreateEmployeeJustification&correction=REGULARIZATION&employeeNumber="+employeeNumber.toString()%>" />
+					<fr:property name="key(regularization)" value="label.regularization" />
+					<fr:property name="param(regularization)" value="date" />
+					<fr:property name="bundle(regularization)" value="ASSIDUOUSNESS_RESOURCES" />
+				</logic:equal>
+                <%}%>
 			</fr:layout>
 		</fr:view>
 
@@ -109,7 +195,7 @@
 			<p class="mvert05"><bean:message key="label.totalWeeklyRest" />: <b><bean:write name="employeeWorkSheet" property="weeklyRestString"/></b></p>
 		</logic:present> --%>
 	</logic:notEmpty>
-
+	</logic:present>
 </logic:present>
 
 <logic:notPresent name="employeeWorkSheet">

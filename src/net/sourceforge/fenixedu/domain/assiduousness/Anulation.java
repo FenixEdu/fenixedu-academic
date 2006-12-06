@@ -23,4 +23,29 @@ public class Anulation extends Anulation_Base {
         setOjbConcreteClass(Anulation.class.getName());
     }
 
+    public Anulation(AssiduousnessRecord assiduousnessRecord, Employee modifiedBy) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setAnulatedAssiduousnessRecord(assiduousnessRecord);
+        setAssiduousness(assiduousnessRecord.getAssiduousness());
+        setOracleSequence(assiduousnessRecord.getOracleSequence());
+        setState(AnulationState.VALID);
+        setJustificationMotive(getJustificationMotiveForAnulation());
+        DateTime now = new DateTime();
+        setDate(now);
+        setLastModifiedDate(now);
+        setModifiedBy(modifiedBy);
+        setOjbConcreteClass(Anulation.class.getName());
+    }
+
+    protected JustificationMotive getJustificationMotiveForAnulation() {
+        for (JustificationMotive justificationMotive : RootDomainObject.getInstance()
+                .getJustificationMotives()) {
+            if (justificationMotive.getAcronym().equalsIgnoreCase("REG_MA")) {
+                return justificationMotive;
+            }
+        }
+        return null;
+    }
+
 }

@@ -26,8 +26,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.renderers.components.state.ViewState;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.WeekDay;
@@ -205,7 +203,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
         Integer employeeNumber = null;
         String employeeNumberString = form.getString("employeeNumber");
         if (StringUtils.isEmpty(employeeNumberString)) {
-            employeeNumber = new Integer(request.getParameter("employeeNumber"));
+            Object number = getFromRequest(request, "employeeNumber");
+            employeeNumber = number instanceof String ? new Integer((String) number) : (Integer) number;
         } else {
             employeeNumber = new Integer(employeeNumberString);
         }
@@ -213,17 +212,14 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
     }
 
     private YearMonth getYearMonth(HttpServletRequest request, Employee employee) {
-        YearMonth yearMonth = null;
-        ViewState viewState = (ViewState) RenderUtils.getViewState();
-        if (viewState != null) {
-            yearMonth = (YearMonth) viewState.getMetaObject().getObject();
+        YearMonth yearMonth = (YearMonth) getRendererObject("yearMonth");
+        if (yearMonth == null) {
+            yearMonth = (YearMonth) request.getAttribute("yearMonth");
         }
         if (yearMonth == null) {
             yearMonth = new YearMonth();
-
             String year = request.getParameter("year");
             String month = request.getParameter("month");
-
             if (StringUtils.isEmpty(year)) {
                 yearMonth.setYear(new YearMonthDay().getYear());
             } else {

@@ -81,10 +81,17 @@ public class Assiduousness extends Assiduousness_Base {
         }
     }
 
-    public WorkDaySheet calculateDailyBalance(WorkDaySheet workDaySheet, YearMonthDay day,
-            boolean isDayHoliday) {
+    private Timeline getTimeline(WorkDaySheet workDaySheet, List<Leave> timeLeaves) {
+        Timeline timeline = new Timeline(workDaySheet.getWorkSchedule().getWorkScheduleType());
+        Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
+                .iterator();
+        timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), timeLeaves, attributesIt,
+                workDaySheet.getDate());
+        return timeline;
+    }
+
+    public WorkDaySheet calculateDailyBalance(WorkDaySheet workDaySheet, boolean isDayHoliday) {
         if (workDaySheet.getWorkSchedule() != null && !isDayHoliday) {
-            Timeline timeline = new Timeline(workDaySheet.getWorkSchedule().getWorkScheduleType());
 
             List<Leave> dayOccurrences = getLeavesByType(workDaySheet.getLeaves(),
                     JustificationType.OCCURRENCE);
@@ -95,12 +102,10 @@ public class Assiduousness extends Assiduousness_Base {
                 List<Leave> balanceLeaves = getLeavesByType(workDaySheet.getLeaves(),
                         JustificationType.BALANCE);
                 if (!workDaySheet.getAssiduousnessRecords().isEmpty() || !timeLeaves.isEmpty()) {
-                    Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES
-                            .getAttributes().iterator();
-                    timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), timeLeaves,
-                            attributesIt, day);
+
+                    Timeline timeline = getTimeline(workDaySheet, timeLeaves);
                     workDaySheet = workDaySheet.getWorkSchedule().calculateWorkingPeriods(workDaySheet,
-                            day, timeline, timeLeaves);
+                            timeline, timeLeaves);
                 } else {
                     workDaySheet.setBalanceTime(Duration.ZERO.minus(
                             workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
@@ -143,7 +148,7 @@ public class Assiduousness extends Assiduousness_Base {
         return workDaySheet;
     }
 
-    private List<Leave> getLeavesByType(List<Leave> leaves, JustificationType justificationType) {
+    public List<Leave> getLeavesByType(List<Leave> leaves, JustificationType justificationType) {
         List<Leave> leavesByType = new ArrayList<Leave>();
         for (Leave leave : leaves) {
             if (leave.getJustificationMotive().getJustificationType() == justificationType) {

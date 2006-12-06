@@ -3473,6 +3473,11 @@ class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory e
 	Integer keyModifiedBy;
 }
 
+class net.sourceforge.fenixedu.domain.assiduousness.MonthClosure extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyAssiduousness;
+	Partial yearMonth;
+}
+
 class net.sourceforge.fenixedu.domain.assiduousness.Schedule extends net.sourceforge.fenixedu.domain.DomainObject {
 	YearMonthDay beginDate;
 	YearMonthDay endDate;
@@ -3480,6 +3485,10 @@ class net.sourceforge.fenixedu.domain.assiduousness.Schedule extends net.sourcef
 	DateTime lastModifiedDate;
 	Integer keyModifiedBy;
 	Boolean exception;
+}
+
+class net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection extends net.sourceforge.fenixedu.domain.DomainObject {
+	Group sectionManagers;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.WorkPeriod extends net.sourceforge.fenixedu.domain.DomainObject{
@@ -4569,6 +4578,14 @@ relation AssiduousnessAssiduousnessRecord {
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
 	
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
+		multiplicity *;
+	}
+}
+
+relation AssiduousnessMonthClosure {
+	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
+	
+	net.sourceforge.fenixedu.domain.assiduousness.MonthClosure playsRole monthsClosures {
 		multiplicity *;
 	}
 }
@@ -8565,6 +8582,20 @@ relation RootDomainObjectAssiduousnessStatus {
 relation RootDomainObjectAssiduousnessStatusHistory {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistory {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMonthClosure {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.MonthClosure playsRole monthsClosures {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectStaffManagementSection {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection playsRole staffManagementSections{
 		multiplicity *;
 	}
 }

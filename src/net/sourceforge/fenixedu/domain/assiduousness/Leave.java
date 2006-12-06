@@ -43,6 +43,36 @@ public class Leave extends Leave_Base {
         setOjbConcreteClass(Leave.class.getName());
     }
 
+    public Leave(Assiduousness assiduousness, DateTime date, Duration dateDuration,
+            JustificationMotive justificationMotive, WorkWeek aplicableWeekDays, String notes,
+            DateTime lastModificationDate, Employee modifiedBy) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setDate(date);
+        setJustificationMotive(justificationMotive);
+        setAplicableWeekDays(aplicableWeekDays);
+        setAssiduousness(assiduousness);
+        setNotes(notes);
+        setDuration(dateDuration);
+        setLastModifiedDate(lastModificationDate);
+        setModifiedBy(modifiedBy);
+        setOracleSequence(0);
+        setOjbConcreteClass(Leave.class.getName());
+    }
+
+    public void modify(DateTime date, Duration dateDuration, JustificationMotive justificationMotive,
+            WorkWeek aplicableWeekDays, String notes, Employee modifiedBy) {
+        setDate(date);
+        setJustificationMotive(justificationMotive);
+        setAplicableWeekDays(aplicableWeekDays);
+        setNotes(notes);
+        setDuration(dateDuration);
+        setLastModifiedDate(new DateTime());
+        setModifiedBy(modifiedBy);
+        setOracleSequence(0);
+        setOjbConcreteClass(Leave.class.getName());
+    }
+
     public DateTime getEndDate() {
         return getDate().plus(getDuration());
     }

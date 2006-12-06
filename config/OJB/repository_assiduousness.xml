@@ -125,3 +125,9 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.CostCenter" table="ass_CENTRO_CUSTO">
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection" table="STAFF_MANAGEMENT_SECTION">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.MonthClosure" table="MONTH_CLOSURE">
+</class-descriptor>

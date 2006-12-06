@@ -36,5 +36,4 @@ public class Justification extends Justification_Base {
         }
         return null;
     }
-
 }

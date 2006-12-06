@@ -31,7 +31,18 @@
 	<definition name="show-regularization-motives" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/showRegularizationMotives.jsp"/>
 	</definition>
+	<!-- Export -->
 	<definition name="choose-year-month" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/chooseYearMonth.jsp"/>
+	</definition>
+	<!-- Parametrization -->
+	<definition name="edit-justification-motive" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/editJustificationMotive.jsp"/>
+	</definition>
+	<definition name="edit-regularization-motive" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/editRegularizationMotive.jsp"/>
+	</definition>
+	<definition name="insert-schedule" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/insertSchedule.jsp"/>
 	</definition>
 </tiles-definitions>

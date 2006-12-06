@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 
+import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.TimeOfDay;
 
@@ -21,6 +22,28 @@ public class WorkPeriod extends WorkPeriod_Base {
         setFirstPeriodDuration(firstPeriodDuration);
         setSecondPeriod(secondPeriod);
         setSecondPeriodDuration(secondPeriodDuration);
+    }
+
+    public WorkPeriod(TimeOfDay firstPeriod) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setFirstPeriod(firstPeriod);
+        // setFirstPeriodDuration(new Duration(firstPeriod.toDateTimeToday(), endFirstPeriod
+        // .toDateTimeToday()));
+        // setSecondPeriod(secondPeriod);
+        // setSecondPeriodDuration(new Duration(secondPeriod.toDateTimeToday(), endSecondPeriod
+        // .toDateTimeToday()));
+    }
+
+    public WorkPeriod getWorkPeriod(TimeOfDay firstPeriod, TimeOfDay secondPeriod) {
+        // setRootDomainObject(RootDomainObject.getInstance());
+        // setFirstPeriod(firstPeriod);
+        // setFirstPeriodDuration(new Duration(firstPeriod.toDateTimeToday(), endFirstPeriod
+        // .toDateTimeToday()));
+        // setSecondPeriod(secondPeriod);
+        // setSecondPeriodDuration(new Duration(secondPeriod.toDateTimeToday(), endSecondPeriod
+        // .toDateTimeToday()));
+        return RootDomainObject.getInstance().getWorkPeriods().get(0);
     }
 
     public TimeInterval getFirstPeriodInterval() {
@@ -68,6 +91,20 @@ public class WorkPeriod extends WorkPeriod_Base {
         return getSecondPeriod().plus(getSecondPeriodDuration().toPeriod());
     }
 
+    public boolean isFirstPeriodNextDay() {
+        DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
+        Duration maxDuration = new Duration(getFirstPeriod().toDateTime(now).getMillis(), now
+                .plusDays(1).getMillis());
+        return (getFirstPeriodDuration().compareTo(maxDuration) >= 0);
+    }
+
+    public boolean isSecondPeriodNextDay() {
+        DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
+        Duration maxDuration = new Duration(getSecondPeriod().toDateTime(now).getMillis(), now.plusDays(
+                1).getMillis());
+        return (getSecondPeriodDuration().compareTo(maxDuration) >= 0);
+    }
+
     public void delete() {
         if (canBeDeleted()) {
             removeRootDomainObject();
@@ -78,7 +115,7 @@ public class WorkPeriod extends WorkPeriod_Base {
     public boolean canBeDeleted() {
         return !(hasAnyFixedWorkScheduleTypes() || hasAnyNormalWorkScheduleTypes());
     }
-    
+
     public boolean isSecondWorkPeriodDefined() {
         if (getSecondPeriod() != null) {
             return true;
@@ -86,6 +123,19 @@ public class WorkPeriod extends WorkPeriod_Base {
             return false;
         }
     }
-    
+
+    public boolean equivalent(TimeOfDay firstPeriod, Duration firstPeriodDuration,
+            TimeOfDay secondPeriod, Duration secondPeriodDuration) {
+        if (((firstPeriod != null && firstPeriodDuration != null) && (getFirstPeriod().equals(
+                firstPeriod) && getFirstPeriodDuration().equals(firstPeriodDuration)))
+                && ((getSecondPeriod() == null && secondPeriod == null && secondPeriodDuration == null) || (getSecondPeriod() != null
+                        && secondPeriod != null
+                        && secondPeriodDuration != null
+                        && getSecondPeriod().equals(secondPeriod) && getSecondPeriodDuration().equals(
+                        secondPeriodDuration)))) {
+            return true;
+        }
+        return false;
+    }
+
 }
-        

@@ -1,6 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-
 <ul>
 	<li class="navheader"><bean:message key="link.employeeConsult" /></li>
 	<li><html:link page="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showWorkSheet"><bean:message key="link.workSheet" /></html:link></li>

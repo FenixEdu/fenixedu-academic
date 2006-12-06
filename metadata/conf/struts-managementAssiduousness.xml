@@ -53,6 +53,26 @@
 				scope="request"
 				validate="true">
 				<forward name="choose-year-month" path="choose-year-month"/>
+		</action>
+		<action path="/assiduousnessParametrization"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.AssiduousnessParametrizationDispatchAction" 
+				parameter="method"
+				scope="request"
+				validate="true">
+				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="error.justificationMotiveAcronymAlreadyExists" 
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
+				<forward name="edit-justification-motive" path="edit-justification-motive"/>
+				<forward name="edit-regularization-motive" path="edit-regularization-motive"/>
+				<forward name="insert-schedule" path="insert-schedule"/>
+				<forward name="show-all-schedules" path="show-all-schedules"/>
+		</action>
+		<action path="/employeeAssiduousness" name="employeeForm"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.EmployeeAssiduousnessDispatchAction" 
+				parameter="method"
+				scope="request"
+				validate="true">
+			<forward name="show-employee-work-sheet" path="show-employee-work-sheet"/>
+			<forward name="show-justifications" path="show-justifications"/>
 		</action>	
  	</action-mappings>
 

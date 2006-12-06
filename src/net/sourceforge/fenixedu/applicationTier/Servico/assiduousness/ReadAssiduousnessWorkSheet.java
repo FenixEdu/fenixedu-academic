@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
-import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
@@ -84,7 +82,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
         HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = new HashMap<YearMonthDay, List<AssiduousnessRecord>>();
         for (AssiduousnessRecord record : clockings) {
             YearMonthDay clockDay = record.getDate().toYearMonthDay();
-            if (overlapsSchedule(record.getDate(), workScheduleMap)) {
+            if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap)) {
                 if (clockingsMap.get(clockDay.minusDays(1)) != null
                         && clockingsMap.get(clockDay.minusDays(1)).size() % 2 != 0) {
                     clockDay = clockDay.minusDays(1);
@@ -159,8 +157,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
                     workDaySheet.setNotes(notes.toString());
 
                     if (!thisDay.equals(today)) {
-                        workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, thisDay,
-                                isDayHoliday);
+                        workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday);
                         totalBalance = totalBalance.plus(workDaySheet.getBalanceTime().toDurationFrom(
                                 new DateMidnight()));
                         totalUnjustified = totalUnjustified.plus(workDaySheet.getUnjustifiedTime());
@@ -190,8 +187,8 @@ public class ReadAssiduousnessWorkSheet extends Service {
                     }
                     workDaySheet.setNotes(notes.toString());
                     if (isDayHoliday) {
-                        ResourceBundle bundle = ResourceBundle
-                                .getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+                        ResourceBundle bundle = ResourceBundle.getBundle(
+                                "resources.AssiduousnessResources", LanguageUtils.getLocale());
                         workDaySheet.setWorkScheduleAcronym(bundle.getString("label.holiday"));
                     }
                     workDaySheet.setUnjustifiedTime(Duration.ZERO);
@@ -204,8 +201,10 @@ public class ReadAssiduousnessWorkSheet extends Service {
         employeeWorkSheet.setEmployee(assiduousness.getEmployee());
         Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);
         if (assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING) != null
-                && assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING).getMailingUnit() != null) {
-            unit = assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING).getMailingUnit();
+                && assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING)
+                        .getMailingUnit() != null) {
+            unit = assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING)
+                    .getMailingUnit();
         }
         employeeWorkSheet.setUnit(unit);
         if (unit != null) {
@@ -220,52 +219,6 @@ public class ReadAssiduousnessWorkSheet extends Service {
         // employeeWorkSheet.setComplementaryWeeklyRest(totalComplementaryWeeklyRestBalance);
         // employeeWorkSheet.setWeeklyRest(totalWeeklyRestBalance);
         return employeeWorkSheet;
-    } // if returns false the clocking belongs to the clocking date // if returns true it may
-
-    // belong to the clocking date or the day before
-    private boolean overlapsSchedule(DateTime clocking,
-            HashMap<YearMonthDay, WorkSchedule> workScheduleMap) {
-        WorkSchedule thisDaySchedule = workScheduleMap.get(clocking.toYearMonthDay());
-        WorkSchedule dayBeforeSchedule = workScheduleMap.get(clocking.toYearMonthDay().minusDays(1));
-
-        Interval thisDayWorkTimeInterval = WorkScheduleType
-                .getDefaultWorkTime(clocking.toYearMonthDay());
-        if (thisDaySchedule != null) {
-            DateTime beginThisDayWorkTime = clocking.toYearMonthDay().toDateTime(
-                    thisDaySchedule.getWorkScheduleType().getWorkTime());
-            DateTime endThisDayWorkTime = clocking.toYearMonthDay().toDateTime(
-                    thisDaySchedule.getWorkScheduleType().getWorkEndTime());
-            if (thisDaySchedule.getWorkScheduleType().isWorkTimeNextDay()) {
-                endThisDayWorkTime = endThisDayWorkTime.plusDays(1);
-            }
-            thisDayWorkTimeInterval = new Interval(beginThisDayWorkTime, endThisDayWorkTime);
-        }
-        Interval dayBeforeWorkTimeInterval = WorkScheduleType.getDefaultWorkTime(clocking
-                .toYearMonthDay().minusDays(1));
-        if (dayBeforeSchedule != null) {
-            DateTime beginDayBeforeWorkTime = clocking.toYearMonthDay().toDateTime(
-                    dayBeforeSchedule.getWorkScheduleType().getWorkTime()).minusDays(1);
-            DateTime endDayBeforeWorkTime = clocking.toYearMonthDay().toDateTime(
-                    dayBeforeSchedule.getWorkScheduleType().getWorkEndTime()).minusDays(1);
-            if (dayBeforeSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
-                endDayBeforeWorkTime = endDayBeforeWorkTime.plusDays(1);
-            }
-
-            dayBeforeWorkTimeInterval = new Interval(beginDayBeforeWorkTime, endDayBeforeWorkTime);
-        }
-        Interval overlapResult = thisDayWorkTimeInterval.overlap(dayBeforeWorkTimeInterval);
-        if (overlapResult == null) {
-            Interval gapResult = dayBeforeWorkTimeInterval.gap(thisDayWorkTimeInterval);
-            if (gapResult != null) {
-                if (!gapResult.contains(clocking)) {
-                    return dayBeforeWorkTimeInterval.contains(clocking);
-                }
-            } else {
-                return dayBeforeWorkTimeInterval.contains(clocking);
-            }
-        } else if (!overlapResult.contains(clocking) && clocking.isAfter(overlapResult.getStart())) {
-            return false;
-        }
-        return true;
     }
+
 }
