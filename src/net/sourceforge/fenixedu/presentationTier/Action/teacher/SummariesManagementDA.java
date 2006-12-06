@@ -378,6 +378,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleLessonsDates = new ArrayList<NextPossibleSummaryLessonsAndDatesBean>();
 	nextPossibleLessonsDates.add(nextSummaryDateBean);
 	SummariesManagementBean bean = new SummariesManagementBean(SummariesManagementBean.SummaryType.NORMAL_SUMMARY, executionCourse, loggedProfessorship, nextPossibleLessonsDates);
+	bean.setShift(nextSummaryDateBean.getLesson().getShift());
 	
 	request.setAttribute("summariesManagementBean", bean);	
 	dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
@@ -496,16 +497,15 @@ public class SummariesManagementDA extends FenixDispatchAction {
     public ActionForward showSummariesCalendar(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	ExecutionCourse executinCourse = getExecutinCourseFromParameter(request);
-	
+	ExecutionCourse executionCourse = getExecutinCourseFromParameter(request);	
 	Set<NextPossibleSummaryLessonsAndDatesBean> summariesCalendar = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE_AND_HOUR);
-	for (Lesson lesson : executinCourse.getLessons()) {
+	for (Lesson lesson : executionCourse.getLessons()) {
 	    for (YearMonthDay lessonDate : lesson.getAllLessonDates()) {
 		summariesCalendar.add(new NextPossibleSummaryLessonsAndDatesBean(lesson, lessonDate));
 	    }
 	}			
 	
-	request.setAttribute("showSummariesCalendarBean", new SummariesCalendarBean(executinCourse));	
+	request.setAttribute("showSummariesCalendarBean", new SummariesCalendarBean(executionCourse));	
 	request.setAttribute("summariesCalendarResult", summariesCalendar);
 	return mapping.findForward("showSummariesCalendar");
     }

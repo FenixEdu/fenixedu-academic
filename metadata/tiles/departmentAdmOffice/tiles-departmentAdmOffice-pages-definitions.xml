@@ -333,6 +333,9 @@
 	<definition name="prepare-insert-complex-summary" extends="definition.teacher.summaryPage">
 		<put name="body" value="/departmentAdmOffice/teacher/executionCourse/createComplexSummary.jsp" />
 	</definition>
+	<definition name="show-summaries-calendar" extends="definition.teacher.summaryPage">
+		<put name="body" value="/departmentAdmOffice/teacher/executionCourse/showSummariesCalendar.jsp" />
+	</definition>	
 
 	<definition name="examCoordinator-management" extends="departmentAdmOffice.masterPage" >
 		<put name="body" value="/departmentAdmOffice/vigilancy/manageExamCoordinator.jsp" />

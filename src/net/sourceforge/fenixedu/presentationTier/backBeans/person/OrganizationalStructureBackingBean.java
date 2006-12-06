@@ -43,27 +43,23 @@ import org.joda.time.YearMonthDay;
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public Integer choosenExecutionYearID;
-
+    
     public Unit parentUnit;
 
     public Integer personID;
-
-    public Integer unitID;
-
-    public HtmlInputHidden unitTypeNameHidden;
 
     public ResourceBundle bundle;
 
     public String listType;
 
+    private HtmlInputHidden unitIDHidden;
+
     public OrganizationalStructureBackingBean() {
 	if (getRequestParameter("unitID") != null) {
-	    this.unitID = Integer.valueOf(getRequestParameter("unitID"));
-	} else if (getRequestAttribute("unitID") != null) {
-	    this.unitID = Integer.valueOf((String) getRequestAttribute("unitID"));
-	}
-	if (getRequestParameter("choosenExecutionYearID") == null) {
-	    this.choosenExecutionYearID = Integer.valueOf(0);
+	    getUnitIDHidden().setValue(getRequestParameter("unitID"));
+	}	
+	if(getChoosenExecutionYearID() == null) {
+	    setChoosenExecutionYearID(1);
 	}
 	this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
 		.getLocale());
@@ -81,10 +77,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
 
 	Collections.reverse(result);
-	if (this.choosenExecutionYearID == 0) {
+	if (getChoosenExecutionYearID() == 0) {
 	    for (SelectItem selectExecutionYear : result) {
-		if (selectExecutionYear.getDescription().equals(PeriodState.CURRENT_CODE)) {
-		    this.choosenExecutionYearID = (Integer) selectExecutionYear.getValue();
+		if (selectExecutionYear.getDescription().equals(PeriodState.CURRENT_CODE)) {		   
+		    setChoosenExecutionYearID((Integer) selectExecutionYear.getValue());
 		}
 	    }
 	}
@@ -134,8 +130,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 		    buffer.append("\t<li><img ").append("src='").append(getContextPath()).append(
 			    "/images/toggle_plus10.gif' id='").append(unit.getIdInternal()).append("'")
-			    .append("indexed='true' onClick=\"check(document.getElementById('aa").append(
-				    unit.getIdInternal()).append("'),document.getElementById('").append(
+			    .append("indexed='true' onClick=\"check(document.getElementById('aa")
+			    .append(unit.getIdInternal()).append("'),document.getElementById('").append(
 				    unit.getIdInternal()).append("'));return false;\"/> ");
 
 		    buffer.append("<a href='").append(getContextPath()).append(
@@ -296,7 +292,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	StringBuffer buffer = new StringBuffer();
 	YearMonthDay currentDate = new YearMonthDay();
 	Unit chooseUnit = this.getUnit();
-	ExecutionYear iExecutionYear = getExecutionYear(this.choosenExecutionYearID);
+	ExecutionYear iExecutionYear = getExecutionYear(getChoosenExecutionYearID());
 
 	buffer.append("<ul class='mtop3 nobullet'><li>");
 	// buffer.append("<image
@@ -543,17 +539,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	list.add(0, firstItem);
     }
 
-    public void setChoosenExecutionYearID(Integer choosenExecutionYearID) {
-	this.choosenExecutionYearID = choosenExecutionYearID;
-    }
-
-    public Integer getChoosenExecutionYearID() {
-	return this.choosenExecutionYearID;
-    }
-
     public Unit getUnit() throws FenixFilterException, FenixServiceException {
 	if (parentUnit == null) {
-	    this.parentUnit = (Unit) rootDomainObject.readPartyByOID(Integer.valueOf(this.unitID));
+	    this.parentUnit = (Unit) rootDomainObject.readPartyByOID(Integer.valueOf((String) getUnitIDHidden()
+		    .getValue()));
 	}
 	return parentUnit;
     }
@@ -570,29 +559,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	this.personID = personID;
     }
 
-    public Integer getUnitID() {
-	return unitID;
-    }
-
-    public void setUnitID(Integer unitID) {
-	this.unitID = unitID;
-    }
-
     protected String getRequestParameter(String parameterName) {
 	return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
 		.get(parameterName);
-    }
-
-    public HtmlInputHidden getUnitTypeNameHidden() {
-	if (this.unitTypeNameHidden == null) {
-	    this.unitTypeNameHidden = new HtmlInputHidden();
-
-	}
-	return unitTypeNameHidden;
-    }
-
-    public void setUnitTypeNameHidden(HtmlInputHidden unitTypeNameHidden) {
-	this.unitTypeNameHidden = unitTypeNameHidden;
     }
 
     public ResourceBundle getBundle() {
@@ -609,5 +578,24 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void setListType(String listType) {
 	this.listType = listType;
+    }
+   
+    public HtmlInputHidden getUnitIDHidden() {
+	if (this.unitIDHidden == null) {
+	    this.unitIDHidden = new HtmlInputHidden();
+	}
+	return unitIDHidden;
+    }
+
+    public void setUnitIDHidden(HtmlInputHidden unitIDHidden) {
+	this.unitIDHidden = unitIDHidden;
+    }
+
+    public Integer getChoosenExecutionYearID() {
+        return choosenExecutionYearID;
+    }
+
+    public void setChoosenExecutionYearID(Integer choosenExecutionYearID) {
+        this.choosenExecutionYearID = choosenExecutionYearID;
     }
 }

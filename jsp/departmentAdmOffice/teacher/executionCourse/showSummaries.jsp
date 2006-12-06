@@ -20,18 +20,19 @@
 		</span>
 		<p>
 	</logic:messagesPresent>
-	
-	
+		
 	<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
-	<div class="gen-button mtop1 mbottom2">
+	<div class="gen-button mtop1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link page="<%= insertSummaryLink %>">
-			<bean:message key="label.insertSummary" bundle="DEFAULT"/>
-		</html:link>	
+		<html:link page="<%= insertSummaryLink %>"><bean:message key="label.insertSummary" bundle="DEFAULT"/></html:link>	
 		<bean:message key="link.summary.insert.info" bundle="DEFAULT"/>
 	</div>
-	
-	
+	<div class="gen-button mtop05 mbottom2">
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />	
+		<bean:define id="showSummariesCalendarLink">/summariesManagement.do?method=showSummariesCalendar&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>			
+		<html:link page="<%= showSummariesCalendarLink %>"><bean:message key="label.show.summaries.calendar" bundle="DEFAULT"/></html:link>						
+	</div>
+		
 	<logic:notEmpty name="nextPossibleLessonsDates">
 	
 		<p class="mbottom025"><bean:message key="label.last.lessons.without.summaries" bundle="DEFAULT"/></p>	

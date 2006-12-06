@@ -169,25 +169,13 @@
 
 <schema name="PersonSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">
 	<slot name="person.name"/>
-	<slot name="personWorkingPlace" layout="null-as-label" key="label.person.working.place">
-		<property name="label" value=""/>
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="personWorkingPlace.presentationName"/>
-	</slot>
+	<slot name="person.username"/>
 	<slot name="begin"/>
 	<slot name="end"/>
 </schema>
 <schema name="PersonSpaceOccupationsWithUsername" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">			
-	<slot name="personWorkingPlace" layout="null-as-label" key="label.person.working.place">
-		<property name="label" value=""/>
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="personWorkingPlace.presentationName"/>
-	</slot>	
 	<slot name="person.name"/>
 	<slot name="person.username"/>		
-</schema>
-<schema name="personWorkingPlace.presentationName" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="SPACE_RESOURCES">	
-	<slot name="presentationNameWithParents"/>
 </schema>
 <schema name="EditPersonSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">	
 	<slot name="begin" key="label.begin.date">
