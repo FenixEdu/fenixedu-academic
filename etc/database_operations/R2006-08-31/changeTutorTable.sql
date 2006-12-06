@@ -1,1 +1,0 @@
-alter table TUTOR_SHIP change column KEY_STUDENT KEY_STUDENT int(11) NULL;
