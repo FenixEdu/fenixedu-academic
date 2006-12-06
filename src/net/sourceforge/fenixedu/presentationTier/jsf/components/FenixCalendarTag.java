@@ -12,6 +12,7 @@ public class FenixCalendarTag extends UIComponentTag {
     private String createLink;
     private String editLinkPage;
     private String editLinkParameters;
+    private String extraLines;
 
     public String getBegin() {
         return begin;
@@ -53,6 +54,14 @@ public class FenixCalendarTag extends UIComponentTag {
         this.editLinkParameters = editLinkParameters;
     }
 
+    public String getExtraLines() {
+        return extraLines;
+    }
+    
+    public void setExtraLines(String extraLines) {
+        this.extraLines = extraLines;
+    }
+
     public String getComponentType() {
         return UIFenixCalendar.COMPONENT_TYPE;
     }
@@ -69,6 +78,7 @@ public class FenixCalendarTag extends UIComponentTag {
         JsfTagUtils.setString(component,"createLink",this.createLink);
         JsfTagUtils.setString(component,"editLinkPage",this.editLinkPage);
         JsfTagUtils.setString(component,"editLinkParameters",this.editLinkParameters);
+        JsfTagUtils.setString(component,"extraLines",this.extraLines);
     }
 
     public void release() {
@@ -78,6 +88,8 @@ public class FenixCalendarTag extends UIComponentTag {
         createLink = null;
         editLinkPage = null;
         editLinkParameters = null;
+        extraLines = null;
     }
+
 
 }

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -53,6 +54,10 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     private String examCapacity;
 
     private Integer executionPeriodOID;
+
+    private String startDate;
+
+    private String endDate;
 
     public String getBuilding() {
         return building;
@@ -225,12 +230,18 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return (executionPeriodID != null) ? rootDomainObject.readExecutionPeriodByOID(executionPeriodID) : null;
     }
 
-    public Date getCalendarBegin() throws FenixFilterException, FenixServiceException {
+    public Date getCalendarBegin() throws FenixFilterException, FenixServiceException, ParseException {
+        if (getStartDate() != null && getStartDate().length() > 0) {
+            return DateFormatUtil.parse("dd/MM/yyyy", getStartDate());
+        }
         final ExecutionPeriod executionPeriod = getExecutionPeriod();
         return executionPeriod.getBeginDate();
     }
 
-    public Date getCalendarEnd() throws FenixFilterException, FenixServiceException {
+    public Date getCalendarEnd() throws FenixFilterException, FenixServiceException, ParseException {
+        if (getEndDate() != null && getEndDate().length() > 0) {
+            return DateFormatUtil.parse("dd/MM/yyyy", getEndDate());
+        }
         final ExecutionPeriod executionPeriod = getExecutionPeriod();
         return executionPeriod.getEndDate();
     }
@@ -344,6 +355,22 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         stringBuilder.append(DateFormatUtil.format("HH:mm", writtenEvaluation.getBeginning().getTime()));
         stringBuilder.append(")");
         return stringBuilder.toString();
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
 }

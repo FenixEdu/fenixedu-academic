@@ -166,6 +166,7 @@ public class UIFenixCalendar extends UIInput {
 
                 if (iter.after(end)) {
                     writer.startElement("td", this);
+                    appendExtraLines(writer);
                     writer.endElement("td");
                 } else if (iter.get(Calendar.DAY_OF_WEEK) == beginDayOfWeek) {
                     writer.startElement("td", this);
@@ -193,15 +194,36 @@ public class UIFenixCalendar extends UIInput {
                         encodeDay(writer, createLink, now, iter);
                     }
 
+                    appendExtraLines(writer);
+
                     writer.endElement("td");
 
                     doMonthAwareRoll(iter);
                 } else {
                     writer.startElement("td", this);
+                    appendExtraLines(writer);
                     writer.endElement("td");
                 }
             }
             writer.endElement("tr");
+        }
+    }
+
+    private void appendExtraLines(final ResponseWriter writer) throws IOException {
+        final String extraLines = (String) this.getAttributes().get("extraLines");
+        if (extraLines != null && extraLines.length() > 0 && Boolean.valueOf(extraLines).equals(Boolean.TRUE)) {
+            writer.startElement("br", this);
+            writer.endElement("br");
+            writer.startElement("br", this);
+            writer.endElement("br");
+            writer.startElement("br", this);
+            writer.endElement("br");
+            writer.startElement("br", this);
+            writer.endElement("br");
+            writer.startElement("br", this);
+            writer.endElement("br");
+            writer.startElement("br", this);
+            writer.endElement("br");
         }
     }
 

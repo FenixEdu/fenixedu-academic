@@ -1344,6 +1344,12 @@
 			<rtexprvalue>false</rtexprvalue>
 			<description>List of CalendarLinks of objects to print on specific dates of the calendar. Type: List</description>
 		</attribute>
+		<attribute>
+			<name>extraLines</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>Include extra empty lines in calendar entries</description>
+		</attribute>
 	</tag>
 	<tag>
 		<name>degreeCurricularPlanRender</name>

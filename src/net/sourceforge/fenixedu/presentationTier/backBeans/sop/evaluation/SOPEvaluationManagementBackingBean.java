@@ -850,7 +850,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             writtenEvaluationsRooms.put(writtenTest.getIdInternal(), buffer.toString());
             int numberOfEnroledStudents = writtenTest.getCountStudentsEnroledAttendingExecutionCourses();
 //            int numberOfEnroledStudents = calculateEnroledStudents(associatedWrittenEvaluations, getExecutionPeriod());
-            System.out.println("Execution course: " + executionCourse.getIdInternal() + " " + executionCourse.getNome() + " written evaluation: " + writtenTest.getIdInternal()  + " " + numberOfEnroledStudents);
 //            executionCoursesEnroledStudents.put(executionCourse.getIdInternal(), numberOfEnroledStudents);
             executionCoursesEnroledStudents.put(writtenTest.getIdInternal(), numberOfEnroledStudents);
             writtenEvaluationsMissingPlaces.put(writtenTest.getIdInternal(), Integer.valueOf(numberOfEnroledStudents - totalCapacity));

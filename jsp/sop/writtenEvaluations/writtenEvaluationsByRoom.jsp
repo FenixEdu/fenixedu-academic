@@ -74,6 +74,18 @@
 			<h:outputText value="#{bundle['property.room.capacity.exame']}"/>
 			<h:inputText alt="#{htmlAltBundle['inputText.examCapacity']}" value="#{writtenEvaluationsByRoom.examCapacity}" size="3"/>
 
+			<h:outputText value="#{bundle['property.startDate']}"/>
+			<h:panelGroup>
+				<h:inputText alt="#{htmlAltBundle['inputText.start.date']}" value="#{writtenEvaluationsByRoom.startDate}" size="10"/>
+				<h:outputText value=" dd/MM/yyyy"/>
+			</h:panelGroup>
+
+			<h:outputText value="#{bundle['property.endDate']}"/>
+			<h:panelGroup>
+				<h:inputText alt="#{htmlAltBundle['inputText.start.date']}" value="#{writtenEvaluationsByRoom.endDate}" size="10"/>
+				<h:outputText value=" dd/MM/yyyy"/>
+			</h:panelGroup>
+
 			<h:commandButton alt="#{htmlAltBundle['commandButton.search']}" styleClass="inputbutton" value="#{bundle['label.search']}"/>
 		</h:panelGrid>
 	</h:form>
@@ -155,6 +167,7 @@
 		 			end="#{writtenEvaluationsByRoom.calendarEnd}"
 					editLinkPage="editWrittenTest.faces"
 		 			editLinkParameters="#{calendarLinks.value}"
+		 			extraLines="true"
 			 		/>
 		</h:panelGroup>
 	</fc:dataRepeater>
