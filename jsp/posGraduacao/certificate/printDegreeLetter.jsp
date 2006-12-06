@@ -63,7 +63,7 @@ background: #e0a;
 
 <p style="margin-top: -2px; margin-bottom: 1.00cm; position: relative;">
 	<span class="hide">ção com o título &nbsp;&nbsp;</span>
-	<span style="position: absolute; left: 0; top: -3px;">
+	<span style="position: absolute; left: 0; top: -3px; line-height: 15pt;">
 		&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 		<bean:write name="infoThesisDataVersion" property="dissertationTitle"/>
 	</span>
