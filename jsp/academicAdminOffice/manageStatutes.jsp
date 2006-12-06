@@ -33,25 +33,32 @@
 </table>
 
 <h3 class="mbottom025"><bean:message key="label.studentStatutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="student" property="allStatutes" schema="student.statutes" >
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4"/>
-		<fr:property name="columnClasses" value="listClasses,,"/>
-      	
-		<fr:property name="linkFormat(delete)" value="/studentStatutes.do?method=deleteStatute&statuteId=${studentStatute.idInternal}" />
-		<fr:property name="key(delete)" value="link.student.statute.delete"/>
-		<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
-		<fr:property name="visibleIf(delete)" value="statuteType.explicitCreation"/>
-		<fr:property name="contextRelative(delete)" value="true"/> 		
-	</fr:layout>
-</fr:view>
+
+<logic:empty name="student" property="allStatutes">
+	<p><em><bean:message key="label.studentStatutes.unavailable" bundle="ACADEMIC_OFFICE_RESOURCES"/>.</em></p>
+</logic:empty>
+
+<logic:notEmpty name="student" property="allStatutes">
+	<fr:view name="student" property="allStatutes" schema="student.statutes" >
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight"/>
+			<fr:property name="linkFormat(delete)" value="/studentStatutes.do?method=deleteStatute&statuteId=${studentStatute.idInternal}" />
+			<fr:property name="key(delete)" value="link.student.statute.delete"/>
+			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
+			<fr:property name="visibleIf(delete)" value="statuteType.explicitCreation"/>
+			<fr:property name="contextRelative(delete)" value="true"/> 		
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+
 
 <bean:define id="studentID" name="student" property="idInternal" />
-<h3 class="mbottom025"><bean:message key="label.addNewStatute" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mtop15 mbottom025"><bean:message key="label.addNewStatute" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:edit name="manageStatuteBean" schema="student.createStatutes" action="/studentStatutes.do?method=addNewStatute">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4"/>
-      	<fr:property name="columnClasses" value="listClasses,,"/>
+		<fr:property name="classes" value="tstyle4 thright thlight"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	<fr:destination name="cancel" path="<%="/student.do?method=visualizeStudent&studentID=" + studentID%>" />
 </fr:edit>
+

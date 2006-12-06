@@ -1222,3 +1222,11 @@ border-bottom: 1px solid #ddc;
 /*
 background: #ddd; padding: 0.25em; margin: 0.25em; border: 1px solid #aaa;
 */
+
+
+img.showphoto {
+border: 1px solid #ddd;
+padding: 1em;
+margin: 1em;
+background: #fff;
+}

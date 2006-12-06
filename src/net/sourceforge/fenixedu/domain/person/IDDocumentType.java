@@ -3,6 +3,9 @@
  */
 package net.sourceforge.fenixedu.domain.person;
 
+import java.util.ResourceBundle;
+import net.sourceforge.fenixedu.util.LanguageUtils;
+
 public enum IDDocumentType {
 
     IDENTITY_CARD,
@@ -26,5 +29,9 @@ public enum IDDocumentType {
     public String getName() {
         return name();
     }
-    
+
+    public String getLocalizedName() {
+    	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(name());
+    }
+
 }

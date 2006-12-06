@@ -9,7 +9,7 @@
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
-	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
+		<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
 	</p>
 </html:messages>
 
@@ -20,7 +20,7 @@
 		<td>
 			<fr:view name="student" schema="student.show.personAndStudentInformation">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
+					<fr:property name="classes" value="tstyle4 thright thlight mtop0 mbottom0"/>
 		      		<fr:property name="rowClasses" value="tdhl1,,,,"/>
 				</fr:layout>
 			</fr:view>
@@ -32,11 +32,15 @@
 	</tr>
 </table>
 
+
 <logic:equal name="student" property="hasActiveRegistrationForOffice" value="true">
 	<logic:equal name="student" property="hasAnyBolonhaRegistration" value="true">
-		<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
-			<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</html:link>
+		<p class="mvert05">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+			<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
+				<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:link>
+		</p>
 	</logic:equal>
 </logic:equal>
 
@@ -44,7 +48,7 @@
 	<bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 </html:link>
 
-<h3 class="mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="student" property="registrations" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight mtop025 asdasd"/>
@@ -57,28 +61,27 @@
 	</fr:layout>
 </fr:view>
 
-
 <!-- Student Statues -->
 <h3 class="mbottom025"><bean:message key="label.statutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="student" property="currentStatutes" schema="student.statutes.current" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight mtop025 asdasd"/>
+		<fr:property name="classes" value="tstyle4 thlight mtop025 mbottom0"/>
 		<fr:property name="columnClasses" value=",tdhl1"/>
 	</fr:layout>
 </fr:view>
-<ul>
-	<li>
-		<html:link action="/studentStatutes.do?method=prepare" paramName="student" paramProperty="idInternal" paramId="studentId">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentStatutes.manage" />
-		</html:link>
-	</li>
-</ul>
 
-<br/>
+
+<p class="mvert05">
+	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+	<html:link action="/studentStatutes.do?method=prepare" paramName="student" paramProperty="idInternal" paramId="studentId">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentStatutes.manage" />
+	</html:link>
+</p>
+
 
 <!-- Payments -->
 <bean:define id="personId" name="student" property="person.idInternal" />
-<h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mtop15 mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <ul>
 	<li>
 			<html:link action="<%="/payments.do?method=showEvents&personId=" + personId %>">
