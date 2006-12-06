@@ -5,137 +5,29 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEM"/>    
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    
-    	
-	
-	
-	
-		
-	
-	
-		
-	    
-	
-		
-	
-			
-    <!---->
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanPastLEEC"/>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC" table="STUDENT_CURRICULAR_PLAN">
-	
-	
-	
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    
-	
-	
-	
-	
-	
-	
-	
-	    
-	
-	
-		
-		
- <!--    -->
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC" table="STUDENT_CURRICULAR_PLAN">
-	
-	
-	
-	
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    
-	
-	
-	
-	
-	
-		
-	
-	
-	    
-	
-	
-		
-				
-  <!--  -->
 </class-descriptor>
+
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.StudentCurricularPlan -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEM" table="STUDENT_CURRICULAR_PLAN">
+</class-descriptor>
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    
-    	
-	
-	
-	
-		
-	
-		
-	    
-	
-	
-		
-		
-			
-    <!---->
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.StudentCurricularPlanPastLEEC -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlanPastLEEC" table="STUDENT_CURRICULAR_PLAN">
 </class-descriptor>

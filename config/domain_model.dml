@@ -2984,6 +2984,8 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
 		Integer keySecundaryBranch;
     }
 
+    class net.sourceforge.fenixedu.domain.StudentCurricularPlanPastLEEC extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
+    }
     
     class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEM extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
     }
