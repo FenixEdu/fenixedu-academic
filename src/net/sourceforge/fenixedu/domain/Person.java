@@ -2284,8 +2284,8 @@ public class Person extends Person_Base {
 
     public Money getPayedAmount(final EventType eventType, final int civilYear) {
 	Money result = Money.ZERO;
-	for (final AnnualEvent annualEvent : (Set<AnnualEvent>) getEventsByEventType(eventType)) {
-	    result = result.add(annualEvent.getPayedAmount(civilYear));
+	for (final Event event : (Set<Event>) getEventsByEventType(eventType)) {
+	    result = result.add(event.getPayedAmount(civilYear));
 	}
 	
 	return result; 
