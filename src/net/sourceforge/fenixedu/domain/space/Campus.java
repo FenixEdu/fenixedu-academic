@@ -113,4 +113,17 @@ public class Campus extends Campus_Base {
     public void delete() {
 	super.delete();
     }
+    
+    // TODO : fix this when the new spaces structure is introduced
+    // and the location of each campus is known.
+    public String getLocation() {
+	if (getSpaceInformation().getName().equals("Alameda")) {
+	    return "Lisboa";
+	} else if (getSpaceInformation().getName().equals("TagusPark")) {
+	    return "Oeiras";
+	}
+	
+	return null;
+    }
+
 }
