@@ -266,12 +266,12 @@
 	</definition>
 	
 	<!-- Begin: Payments -->
-	<definition name="payments.management.showEvents" extends="definition.student.masterPage">
-		<put name="body" value="/student/payments/showStudentEvents.jsp"/>
+	<definition name="payments.management.showEvents" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/payments/showStudentEvents.jsp"/>
 	</definition>
 	
-	<definition name="payments.management.showEventDetails" extends="definition.student.masterPage">
-		<put name="body" value="/student/payments/showEventDetails.jsp"/>
+	<definition name="payments.management.showEventDetails" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/payments/showEventDetails.jsp"/>
 	</definition>
 	<!-- End: Payments -->
 	
