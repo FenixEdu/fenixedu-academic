@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -44,5 +45,10 @@ public class DegreeDiploma extends DegreeDiploma_Base {
     public EventType getEventType() {
 	return null;
     }
-    
+
+    @Override
+    public Event getEvent() {
+	return null;
+    }
+
 }

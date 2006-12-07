@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -38,6 +39,11 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 
     @Override
     public EventType getEventType() {
+	return null;
+    }
+
+    @Override
+    public Event getEvent() {
 	return null;
     }
 

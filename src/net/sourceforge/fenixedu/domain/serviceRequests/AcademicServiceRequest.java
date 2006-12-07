@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -62,10 +63,12 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public final boolean isPayable() {
-	return getEventType() != null;
+	return getEvent() != null;
     }
 
     public abstract EventType getEventType();
+
+    public abstract Event getEvent();
 
     public abstract String getDescription();
 
@@ -127,6 +130,10 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public void delivered() {
+	if (this.isPayable() && this.getEvent().isInDebt()) {
+	    throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
+	}
+
 	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.DELIVERED, employee, null);
     }
