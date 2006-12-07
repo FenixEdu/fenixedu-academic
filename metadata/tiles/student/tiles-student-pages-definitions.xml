@@ -279,4 +279,10 @@
 	</definition>
 	<!-- End: Payments -->
 	
+	<!-- Begin: Prices -->
+	<definition name="prices.viewPrices" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/prices/viewPrices.jsp"/>
+	</definition>
+	<!-- End: Prices -->
+	
 </tiles-definitions>

@@ -20,7 +20,7 @@
 			<fr:property name="classes" value="tstyle4 tdleftm mtop025" />
 			<fr:property name="columnClasses" value=",," />
 			<fr:property name="sortBy" value="whenOccured=asc"/>
-			<fr:property name="linkFormat(view)" value="/payments.do?method=showEventDetails&eventId=${idInternal}"/>
+			<fr:property name="linkFormat(view)" value="/payments.do?eventId=${idInternal}&amp;method=showEventDetails"/>
 			<fr:property name="key(view)" value="label.payments.viewDetails"/>
 			<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
 		</fr:layout>

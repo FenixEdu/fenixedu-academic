@@ -908,6 +908,17 @@
 		</action>
 		
 		<!-- End : Payments -->
+		
+		<!-- Begin : Prices -->
+		<action path="/prices"
+				type="net.sourceforge.fenixedu.presentationTier.Action.student.prices.StudentPricesDispatchAction" 
+				parameter="method"
+				scope="request">
+				
+			<forward name="viewPrices" path="prices.viewPrices" />
+		</action>
+		
+		<!-- End : Payments -->
   		
 	</action-mappings>     
 

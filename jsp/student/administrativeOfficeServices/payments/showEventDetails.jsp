@@ -45,8 +45,8 @@
 	</fr:view>
 </logic:notEmpty>
 
-<p>
-	<html:form action="/payments.do?method=showEvents">
-		<html:submit styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>
-	</html:form>
-</p>
+<br/>
+<html:form action="/payments.do?method=showEvents">
+	<html:submit styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>
+</html:form>
+
