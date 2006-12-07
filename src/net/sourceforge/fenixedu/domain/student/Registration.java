@@ -58,8 +58,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
@@ -164,6 +162,7 @@ public class Registration extends Registration_Base {
 	setRequestedChangeBranch(false);
     }
 
+    @Deprecated
     public void delete() {
 
 	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
@@ -1547,6 +1546,21 @@ public class Registration extends Registration_Base {
 
     public Campus getCurrentCampus() {
 	return getLastStudentCurricularPlanExceptPast().getCurrentCampus();
+    }
+
+    @Override
+    public void setStudentCandidacy(StudentCandidacy studentCandidacy) {
+	if (hasStudentCandidacy()) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.student.Registration.studentCandidacy.cannot.be.modified");
+	}
+
+	super.setStudentCandidacy(studentCandidacy);
+    }
+
+    @Override
+    public void removeStudentCandidacy() {
+	super.removeStudentCandidacy();
     }
 
 }

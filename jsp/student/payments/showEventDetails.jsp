@@ -35,8 +35,8 @@
 </fr:view>
 </logic:notEmpty>
 
-<p class="mtop15 mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.sibsPayments" /></strong></p>
 <logic:notEmpty name="accountingEventPaymentCodes">
+	<p class="mtop15 mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.sibsPayments" /></strong></p>
 	<fr:view name="accountingEventPaymentCodes" schema="AccountingEventPaymentCode.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thcenter tdcenter thlight mtop025" />
