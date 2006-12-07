@@ -31,6 +31,7 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 	super();
 	setSpace(space);
 	setUnit(unit);
+	checkUnitSpaceOccupationIntersection(begin, end, space, unit);
 	super.setBegin(begin);
 	super.setEnd(end);
     }
