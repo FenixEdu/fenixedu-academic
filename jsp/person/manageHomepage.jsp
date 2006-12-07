@@ -317,9 +317,11 @@
 			<td>
 				<logic:present name="UserView" property="person.webAddress">
 					<bean:define id="url" type="java.lang.String" name="UserView" property="person.webAddress"/>
-					<html:link href="<%= url %>">
-						<bean:write name="UserView" property="person.webAddress"/>
-					</html:link>
+					<logic:notEmpty name="url">
+						<html:link href="<%= url %>">
+							<bean:write name="UserView" property="person.webAddress"/>
+						</html:link>
+					</logic:notEmpty>
 				</logic:present>
 			</td>
 		</tr>
