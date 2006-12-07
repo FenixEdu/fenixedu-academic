@@ -1355,6 +1355,27 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     @Override
     public String getNome() {
 	if (LanguageUtils.getUserLanguage() == Language.en && hasAnyAssociatedCurricularCourses()) {
+            final StringBuilder stringBuilder = new StringBuilder();
+
+            final Set<String> names = new HashSet<String>();
+
+            for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+                if (!curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(getExecutionPeriod()).isEmpty()) {
+                    final String name = curricularCourse.getNameEn();
+                    if (!names.contains(name)) {
+                        names.add(name);
+                        if (stringBuilder.length() > 0) {
+                            stringBuilder.append(" / ");
+                        }
+                        stringBuilder.append(name);
+                    }
+                }
+            }
+
+            if (stringBuilder.length() > 0) {
+                return stringBuilder.toString();
+            }
+
 	    boolean unique = true;
 	    final String nameEn = getAssociatedCurricularCourses().get(0).getNameEn();
 
@@ -1370,9 +1391,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    } else {
 		return super.getNome();
 	    }
-	} else {
-	    return super.getNome();
 	}
+        return super.getNome();
     }
 
     public String getDegreePresentationString() {
