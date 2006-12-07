@@ -214,7 +214,7 @@ public class DataInitializer {
 	final Login login = user.readUserLoginIdentification();
 	login.setActive(Boolean.TRUE);
 	LoginAlias.createNewCustomLoginAlias(login, "admin");
-	login.openLogin();
+	login.openLoginIfNecessary(RoleType.MANAGER);
     }
 
 }
