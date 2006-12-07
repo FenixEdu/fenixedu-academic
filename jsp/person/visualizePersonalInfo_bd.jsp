@@ -4,8 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.util.Data" %>
-<%@ page import="java.util.Date" %>
+
 <html:xhtml/>
  
  <table width="100%">
