@@ -220,7 +220,7 @@ public class Employee extends Employee_Base {
 	if (campus.size() > 1) {
 	    throw new DomainException("Employee.with.more.than.one.campus.for.same.day");
 	} else if (!campus.isEmpty()) {
-	    campus.iterator().next();
+	    return campus.iterator().next();
 	}
 	
 	return null; 
