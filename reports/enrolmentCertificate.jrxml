@@ -230,7 +230,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font fontName="Courier New" pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[     A TÉCNICA SUPERIOR DA SECÇÃO DE GRADUAÇÃO DO INSTITUTO SUPERIOR]]></text>
+				<text><![CDATA[     A TÉCNICA SUPERIOR DA SECÇÃO DE GRADUAÇÃO DO INSTITUTO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -243,7 +243,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font fontName="Courier New" pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[TÉCNICO DA UNIVERSIDADE TÉCNICA DE LISBOA]]></text>
+				<text><![CDATA[SUPERIOR TÉCNICO DA UNIVERSIDADE TÉCNICA DE LISBOA]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
