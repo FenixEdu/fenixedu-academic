@@ -257,17 +257,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
     }
 
     public boolean isFirstYear() {
-
-	List<ExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
-
-	ExecutionDegree firstExecutionDegree = (ExecutionDegree) Collections.min(executionDegrees,
+	final List<ExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
+	final ExecutionDegree firstExecutionDegree = (ExecutionDegree) Collections.min(executionDegrees,
 		new BeanComparator("executionYear.year"));
-
-	if (firstExecutionDegree.equals(this)) {
-	    return true;
-	}
-
-	return false;
+	return firstExecutionDegree.equals(this);
     }
 
     public Set<Shift> findAvailableShifts(final CurricularYear curricularYear,
