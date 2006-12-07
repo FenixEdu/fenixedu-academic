@@ -69,7 +69,7 @@ public class PaymentCodeGenerator {
     private static String generateFinalCode(final PaymentCodeType paymentCodeType,
 	    final Student student, int digits) {
 	final String finalCode = getCodePrefix(paymentCodeType, student)
-		+ StringUtils.leftPad(String.valueOf(digits), CONTROL_DIGITS_LENGTH);
+		+ StringUtils.leftPad(String.valueOf(digits), CONTROL_DIGITS_LENGTH, CODE_FILLER);
 
 	if (finalCode.length() != CODE_LENGTH) {
 	    throw new RuntimeException("Unexpected code length for generated code");
