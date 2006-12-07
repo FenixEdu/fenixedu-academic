@@ -93,6 +93,8 @@
 	<h:panelGroup rendered="#{writtenEvaluationsByRoom.rooms != null}">
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.startDate' id='startDate' name='startDate' type='hidden' value='#{writtenEvaluationsByRoom.startDate}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.endDate' id='endDate' name='endDate' type='hidden' value='#{writtenEvaluationsByRoom.endDate}'/>"/>
 		<h:dataTable value="#{writtenEvaluationsByRoom.rooms}" var="room"
 				headerClass="listClasses-header" rowClasses="listClasses" width="80%">
 			<h:column>
@@ -145,7 +147,7 @@
 
 	<fc:dataRepeater value="#{writtenEvaluationsByRoom.writtenEvaluationCalendarLinksEntryList}" var="calendarLinks">
 		<h:panelGroup>
-			<h:outputFormat value="<h3 class='break-before'> </h3>" escape="false"/>
+			<h:outputFormat value=" <br style='page-break-before:always;'/> " escape="false"/>
 			<h:panelGrid columns="6" rowClasses="listClasses-header, listClasses" width="80%">
 				<h:outputText value="#{bundle['property.room.name']}"/>
 				<h:outputText value="#{bundle['property.room.building']}"/>

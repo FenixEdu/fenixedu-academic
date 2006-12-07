@@ -358,7 +358,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public String getEndDate() {
-        return endDate;
+        return (endDate == null) ? endDate = getAndHoldStringParameter("endDate") : endDate;
     }
 
     public void setEndDate(String endDate) {
@@ -366,7 +366,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public String getStartDate() {
-        return startDate;
+        return (startDate == null) ? startDate = getAndHoldStringParameter("startDate") : startDate;
     }
 
     public void setStartDate(String startDate) {
