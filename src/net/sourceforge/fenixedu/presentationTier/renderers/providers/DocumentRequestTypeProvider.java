@@ -34,6 +34,14 @@ public class DocumentRequestTypeProvider implements DataProvider {
 		.getAdministrativeOfficeType())) {
 	    result.add(DocumentRequestType.ENROLMENT_CERTIFICATE);
 	}
+	if (administrativeOfficeType.equals(DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION
+		.getAdministrativeOfficeType())) {
+	    result.add(DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION);
+	}
+	if (administrativeOfficeType.equals(DocumentRequestType.ENROLMENT_DECLARATION
+		.getAdministrativeOfficeType())) {
+	    result.add(DocumentRequestType.ENROLMENT_DECLARATION);
+	}
 
 	return result;
     }
