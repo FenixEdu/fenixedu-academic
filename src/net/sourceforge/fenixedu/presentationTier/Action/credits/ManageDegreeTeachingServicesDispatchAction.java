@@ -61,8 +61,8 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             for (Iterator iterator = shift.getDegreeTeachingServices().iterator(); iterator.hasNext();) {
                 DegreeTeachingService degreeTeachingService = (DegreeTeachingService) iterator.next();
                 if (professorship == degreeTeachingService.getProfessorship()) {
-                    teacherPercentageMap.put(shift.getIdInternal().toString(), degreeTeachingService
-                            .getPercentage());
+                    teacherPercentageMap.put(shift.getIdInternal().toString(), round(degreeTeachingService
+                            .getPercentage()));
                     break;
                 }
             }
@@ -75,7 +75,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
         request.setAttribute("teachingServicePercentages", teachingServicePercentagesIterator);
         dynaForm.set("teacherPercentageMap", teacherPercentageMap);
     }
-
+    
     protected ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, RoleType roleType) throws NumberFormatException,
             FenixFilterException, FenixServiceException {
@@ -178,5 +178,9 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
         public void setShift(Shift shift) {
             this.shift = shift;
         }
+    }
+    
+    private Double round(double n) {
+	return Math.round((n * 100.0)) / 100.0;
     }
 }
