@@ -22,6 +22,8 @@
 	font-weight: 600;
 	text-align: center;	
 	background: #000000;
+	border-top: 1px solid #C1C1C1;
+	border-right: 1px solid #C1C1C1;
 	border-left: 1px solid #C1C1C1; 
 	border-bottom: 1px solid #C1C1C1; 
 	width: 16.7%;
@@ -38,6 +40,8 @@
 .fenixCalendar_dayWithObjectOccurence{
 	text-align: right;
 	background: #BCBCBC;
+	border-left: 1px solid #C1C1C1; 
+	border-right: 1px solid #C1C1C1; 	
 	width: 16.7%;	
 }
 
