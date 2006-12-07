@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;

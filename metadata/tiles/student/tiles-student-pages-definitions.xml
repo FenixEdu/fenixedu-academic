@@ -230,6 +230,10 @@
 	<definition name="df.page.documentRequest.createDocumentRequests" extends="definition.student.administrativeOfficeServices">
 		<put name="body" value="/student/administrativeOfficeServices/documentRequest/createDocumentRequests.jsp" />
 	</definition>
+	
+	<definition name="df.page.documentRequest.chooseRegistration" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/chooseRegistration.jsp" />
+	</definition>
 		
 	<definition name="df.page.documentRequest.viewDocumentRequestsToCreate" extends="definition.student.administrativeOfficeServices">
 		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequestsToCreate.jsp" />

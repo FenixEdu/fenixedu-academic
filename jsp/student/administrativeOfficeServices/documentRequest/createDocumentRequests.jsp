@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType" %> 
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <em><bean:message key="administrative.office.services"/></em>
 <h2><bean:message key="documents.requirement"/></h2>
@@ -18,7 +18,7 @@
 <logic:present name="registration">
 	<html:form action="/documentRequest">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewDocumentRequestsToCreate" />
-		<html:hidden name="documentRequestCreateBean" property="registration"/>
+		<html:hidden property="registrationId"/>
 		<p class="mbottom05">Identificação:</p>
 		<table class="tstyle4 thlight thright mtop05">
 			<tr>

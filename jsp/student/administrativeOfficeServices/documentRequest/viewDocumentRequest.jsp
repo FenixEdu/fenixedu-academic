@@ -24,5 +24,6 @@
 </fr:view>
 
 <html:form action="/documentRequest.do?method=viewDocumentRequests">
+	<html:hidden property="registrationId"/>
 	<html:submit styleClass="inputbutton"><bean:message key="button.back" /></html:submit>
 </html:form>

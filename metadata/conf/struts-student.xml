@@ -264,6 +264,8 @@
 			<form-property name="otherPurpose" type="java.lang.String" />
 			<form-property name="notes" type="java.lang.String" />
 			<form-property name="urgentRequest" type="java.lang.String" initial="false"/>
+			<form-property name="registrationId" type="java.lang.Integer" />
+			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
 
 		<form-bean 	name="studentTimeTableForm" 
@@ -875,6 +877,7 @@
 			scope="request"
 			parameter="method"
 			input="/administrativeOfficeServicesSection.do">
+			<forward name="chooseRegistration" path="df.page.documentRequest.chooseRegistration" />
 			<forward name="createDocumentRequests" path="df.page.documentRequest.createDocumentRequests"/>
 			<forward name="viewDocumentRequestsToCreate" path="df.page.documentRequest.viewDocumentRequestsToCreate"/>
 			<forward name="createSuccess" path="df.page.documentRequest.createSuccess"/>

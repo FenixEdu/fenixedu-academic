@@ -161,6 +161,13 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	}
     }
 
+    protected Integer getIntegerFromRequestOrForm(final HttpServletRequest request,
+	    final DynaActionForm form, final String name) {
+	final Integer value = getIntegerFromRequest(request, name);
+
+	return (value != null) ? value : getInteger(form, name);
+    }
+
     /**
          * Searches in request parameters first and next in request attributed
          * 

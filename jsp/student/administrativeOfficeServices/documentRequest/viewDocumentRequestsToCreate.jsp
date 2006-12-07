@@ -35,6 +35,8 @@
 	<html:hidden property="otherPurpose" />
 	<html:hidden property="notes" />
 	<html:hidden property="urgentRequest" />
+	<html:hidden property="registrationId"/>
+	
 
 	<logic:iterate id="chosenDocumentRequestType" name="chosenDocumentRequestTypes">
 		<html:hidden property="chosenDocumentRequestTypes" value="<%=chosenDocumentRequestType.toString()%>"/>
