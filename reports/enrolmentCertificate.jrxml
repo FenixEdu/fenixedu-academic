@@ -38,6 +38,7 @@
 	<parameter name="baseAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="urgencyAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="enrolmentsInfo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>	
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -449,7 +450,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Secretaria dos Serviços Académicos do Instituto Superior Técnico, em " + $P{documentRequest}.getRegistration().getCurrentCampus().getLocation() + ", " + $P{day}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Secretaria dos Serviços Académicos do Instituto Superior Técnico, em " + $P{employeeLocation} + ", " + $P{day}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.C
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Money;
@@ -84,7 +85,6 @@ public class AdministrativeOfficeDocument extends FenixReport {
     @Override
     protected void fillReport() {
 	parameters.put("documentRequest", getDocumentRequest());
-	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 
 	final Person person = getDocumentRequest().getRegistration().getPerson();
 	final String name = person.getName().toUpperCase();
@@ -117,6 +117,9 @@ public class AdministrativeOfficeDocument extends FenixReport {
             parameters.put("urgencyAmount", urgencyAmount);
             parameters.put("totalAmount", totalAmount);
         }
+        
+	parameters.put("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
+	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
     }
     
     protected final PostingRule getPostingRule() {
