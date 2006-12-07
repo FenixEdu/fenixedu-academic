@@ -318,6 +318,30 @@
 		}
 	%>
 	
+	<%-- Unit Occupations --%>	
+	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.unit.occupations"/></h3>
+	<logic:notEmpty name="selectedSpaceInformation" property="space.activeUnitSpaceOccupations">
+		<fr:view schema="ViewUnitSpaceOccupations" name="selectedSpaceInformation" property="space.activeUnitSpaceOccupations">
+			<fr:layout name="tabular">      			
+	   			<fr:property name="classes" value="tstyle4 thlight tdcenter mvert0"/>
+	   		</fr:layout>	
+		</fr:view>
+	</logic:notEmpty>
+	<logic:empty name="selectedSpaceInformation" property="space.activeUnitSpaceOccupations">
+		<p class="mtop05"><em><bean:message key="label.empty.unitSpaceOccupations" bundle="SPACE_RESOURCES"/>.</em></p>		
+	</logic:empty>
+	<%
+		if(thisSpace.personHasPermissionsToManageSpace(person)){
+	%>	
+	<p class="mtop05">
+		<p class="mtop05"><html:link page="/manageUnitSpaceOccupations.do?method=prepareManageUnitSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+			<bean:message bundle="SPACE_RESOURCES" key="link.manage.unit.space.occupations"/>
+		</html:link>
+	</p>
+	<%
+		}
+	%>
+	
 	<%-- Person Occupations --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.person.occupations"/></h3>
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
@@ -340,7 +364,7 @@
 		}
 	%>
 
-	<%-- Material --%>	
+	<%-- Material Occupations --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></h3>
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
 		<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial">

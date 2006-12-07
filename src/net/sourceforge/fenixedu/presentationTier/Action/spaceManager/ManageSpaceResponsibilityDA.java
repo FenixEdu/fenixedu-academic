@@ -44,16 +44,15 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	}
-
-	readAndSetAllAttributes(request);
-	return mapping.findForward("showSpaceResponsibility");
+	
+	return showSpaceResponsibility(mapping, form, request, response);
     }
 
     private void readAndSetAllAttributes(HttpServletRequest request) throws FenixFilterException,
 	    FenixServiceException, ExcepcaoPersistencia {
 	SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	setSpaceInformation(request, spaceInformation);
-	readAndSetInitialUnit(request);
+	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
 	request.setAttribute("searchExternalPartyBean", new SearchPartyBean());
     }
 
@@ -107,11 +106,6 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 	ActionMessages actionMessages = new ActionMessages();
 	actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
 	saveMessages(request, actionMessages);
-    }
-
-    private void readAndSetInitialUnit(HttpServletRequest request) throws FenixFilterException,
-	    FenixServiceException, ExcepcaoPersistencia {
-	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
     }
 
     private void setSpaceInformation(HttpServletRequest request, final SpaceInformation spaceInformation) {

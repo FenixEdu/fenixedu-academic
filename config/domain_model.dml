@@ -2738,6 +2738,12 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 	    Integer keyWrittenEvaluation;
 	    Integer keyLesson;
 	}
+	
+	class net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
+		YearMonthDay begin;
+		YearMonthDay end;
+		Integer keyUnit;
+	}
 
 class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.DomainObject {
 	YearMonthDay begin;
@@ -6972,6 +6978,13 @@ relation UnitSpaceResponsibility {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+}
+
+relation UnitUnitSpaceOccupation{
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+	net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation playsRole unitSpaceOccupations {
+		multiplicity *;
+	}
 }
 
 relation PersonPersonSpaceOccupation {

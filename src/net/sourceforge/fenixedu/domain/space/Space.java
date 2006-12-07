@@ -96,6 +96,16 @@ public abstract class Space extends Space_Base {
 	}
 	return materialSpaceOccupations;
     }
+    
+    public List<UnitSpaceOccupation> getUnitSpaceOccupations() {
+	List<UnitSpaceOccupation> unitSpaceOccupations = new ArrayList<UnitSpaceOccupation>();
+	for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
+	    if (spaceOccupation instanceof UnitSpaceOccupation) {
+		unitSpaceOccupations.add((UnitSpaceOccupation) spaceOccupation);
+	    }
+	}
+	return unitSpaceOccupations;
+    }
 
     public SortedSet<PersonSpaceOccupation> getActivePersonSpaceOccupations() {
 	return getPersonSpaceOccupationsByState(true);
@@ -135,6 +145,26 @@ public abstract class Space extends Space_Base {
 	    }
 	}
 	return spaceResponsibility;
+    }
+    
+    public SortedSet<UnitSpaceOccupation> getActiveUnitSpaceOccupations() {
+	return getUnitSpaceOccupationsByState(true);
+    }
+
+    public SortedSet<UnitSpaceOccupation> getInactiveUnitSpaceOccupations() {
+	return getUnitSpaceOccupationsByState(false);
+    }
+
+    private SortedSet<UnitSpaceOccupation> getUnitSpaceOccupationsByState(boolean state) {
+	SortedSet<UnitSpaceOccupation> unitSpaceOccupations = new TreeSet<UnitSpaceOccupation>(
+		UnitSpaceOccupation.COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT);
+	YearMonthDay current = new YearMonthDay();
+	for (UnitSpaceOccupation unitSpaceOccupation : getUnitSpaceOccupations()) {
+	    if (unitSpaceOccupation.isActive(current) == state) {
+		unitSpaceOccupations.add(unitSpaceOccupation);
+	    }
+	}
+	return unitSpaceOccupations;
     }
 
     public SortedSet<Material> getActiveSpaceMaterial() {
@@ -199,6 +229,7 @@ public abstract class Space extends Space_Base {
 	    classs.add(BuildingInformation.class);
 	    classs.add(PersonSpaceOccupation.class);
 	    classs.add(ExtensionSpaceOccupation.class);
+	    classs.add(UnitSpaceOccupation.class);
 	    classs.add(SpaceResponsibility.class);
 	    classs.add(Blueprint.class);
 	    return DomainObjectActionLog.readDomainObjectActionLogsOrderedByInstant(classs);

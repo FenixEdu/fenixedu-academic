@@ -34,6 +34,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceOccupation" table="SPACE_OCCUPATION">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation" />
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" table="SPACE_OCCUPATION">
@@ -44,6 +45,9 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation" table="SPACE_OCCUPATION">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation" table="SPACE_OCCUPATION">
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Room" table="SPACE">

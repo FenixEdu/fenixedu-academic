@@ -73,6 +73,13 @@
        		<forward name="manageResponsabilityInterval" path="manage-responsability-interval"/>        		        	
         </action>
         
+       <action path="/manageUnitSpaceOccupations"        		
+        		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageUnitSpaceOccupationsDA"
+        		parameter="method">                		
+       		<forward name="prepareManageUnitSpaceOccupations" path="manage-unit-space-occupations"/>        		        	
+       		<forward name="prepareManageUnitSpaceOccupationInterval" path="manage-unit-space-occupation-interval"/>        		        	
+        </action>
+        
         <action path="/listChangesInTheSpaces"        		
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ListChangesInTheSpacesDA"
         		parameter="method">                		

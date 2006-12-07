@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.domain.space.SpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.SpaceResponsibility;
+import net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
@@ -41,6 +42,13 @@ public class SpacePredicates {
     public static final AccessControlPredicate<Blueprint> checkIfLoggedPersonHasPermissionsToManageBlueprints = new AccessControlPredicate<Blueprint>() {
 	public boolean evaluate(Blueprint blueprint) {
 	    blueprint.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson());
+	    return true;
+	}
+    };
+    
+    public static final AccessControlPredicate<UnitSpaceOccupation> checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations = new AccessControlPredicate<UnitSpaceOccupation>() {
+	public boolean evaluate(UnitSpaceOccupation unitSpaceOccupation) {
+	    unitSpaceOccupation.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson());
 	    return true;
 	}
     };

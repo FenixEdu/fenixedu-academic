@@ -54,5 +54,11 @@
     </definition>              
     <definition name="list-changes-in-the-spaces" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/listChangesInTheSpaces.jsp"></put>
-    </definition>              	    
+    </definition>    
+    <definition name="manage-unit-space-occupations" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/manageUnitSpaceOccupations.jsp"></put>
+    </definition>    
+    <definition name="manage-unit-space-occupation-interval" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/manageUnitSpaceOccupationInterval.jsp"></put>
+    </definition>                            	    
 </tiles-definitions>
