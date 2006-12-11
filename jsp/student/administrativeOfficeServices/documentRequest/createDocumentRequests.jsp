@@ -6,7 +6,7 @@
 
 <em><bean:message key="administrative.office.services"/></em>
 <h2><bean:message key="documents.requirement"/></h2>
-<hr/>
+
 
 <logic:messagesPresent message="true">
 	<span class="error"><!-- Error messages go here -->
@@ -119,7 +119,7 @@
 
 
 
-		<p class="mbottom05"><%--<bean:message key="document.to.request"/>--%>Escolha a(s) certidões que deseja requerer:</p>
+		<p class="mtop15 mbottom05"><bean:message key="label.choose.documentToRequest" bundle="STUDENT_RESOURCES"/></p>
  		
 			<table class="tstyle2 mtop05">
 				<e:labelValues 
@@ -188,7 +188,7 @@
 				</logic:iterate>
 			</table>
 			
-			<p class="mtop2">
+			<div class="mtop2">
 				<bean:message key="document.purpose"/>:
 				<e:labelValues 
 					id="documentPurposeTypes" 
@@ -202,26 +202,25 @@
 						</logic:equal>
 					</p>
 				</logic:iterate>
-			</p>
+			</div>
 			
-			<p class="mtop2">
-				<bean:message key="notes"/>:
+			<div class="mtop2">
+				<bean:message key="notes"/> (<bean:message key="label.optional.lowercase" bundle="STUDENT_RESOURCES"/>):
 				<p>
 					<html:textarea property="notes" cols="70" rows="2"/>
 				</p>
-			</p>
+			</div>
 			
-			<p style="margin-top: 2em;">
-				<bean:message key="urgency.charge"/><br/>
-				<div class="warning0"><bean:message key="urgency.charge.explanation"/></div>
-				
-				<p>
-					<html:radio property="urgentRequest" value="true"/><bean:message key="label.yes"/>
-				</p>
-				<p>
+			<div style="margin-top: 2em;">
+				<div class="infoop2">
+					<p class="mvert05"><bean:message key="label.urgency.charge" bundle="STUDENT_RESOURCES"/></p>
+					<p class="mvert05"><bean:message key="urgency.charge.explanation"/></p>
+				</div>
+				<p><bean:message key="urgency.charge"/>
+					<html:radio property="urgentRequest" value="true"/><bean:message key="label.yes"/> &nbsp;
 					<html:radio property="urgentRequest" value="false"/><bean:message key="label.no"/>
 				</p>
-			</p>
+			</div>
 			
 			<p class="mtop2"><html:submit styleClass="inputbutton"><bean:message key="button.continue"/></html:submit></p>
 

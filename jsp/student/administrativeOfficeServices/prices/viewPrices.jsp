@@ -6,9 +6,8 @@
 
 <logic:present role="STUDENT">
 
+	<em><bean:message key="administrative.office.services" bundle="STUDENT_RESOURCES"/></em>
 	<h2><bean:message key="label.prices" /></h2>
-	<hr/>
-	<br />
 
 	<logic:messagesPresent message="true">
 		<ul>
@@ -16,53 +15,34 @@
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
-		<br />
 	</logic:messagesPresent>
-	
-	<table>
-		<tr>
-			<td colspan="2" align="left">
-				<h3><bean:message name="insurancePostingRule" property="eventType.qualifiedName" bundle="ENUMERATION_RESOURCES" /></h3>
-				<hr />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:define id="insurancePostingRuleClassName" name="insurancePostingRule" property="class.simpleName" />
-				<fr:view name="insurancePostingRule" schema="<%= insurancePostingRuleClassName + ".view-student" %>" layout="tabular" />
-			</td>
-		</tr>
+
+
+		<h3 class="mtop15 mbottom025"><bean:message name="insurancePostingRule" property="eventType.qualifiedName" bundle="ENUMERATION_RESOURCES" /></h3>
+		<bean:define id="insurancePostingRuleClassName" name="insurancePostingRule" property="class.simpleName" />
+		<fr:view name="insurancePostingRule" schema="<%= insurancePostingRuleClassName + ".view-student" %>">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="thlight mtop025" />
+			</fr:layout>
+		</fr:view>
 
 		<logic:iterate id="entry" name="postingRulesByAdminOfficeType">
 			<bean:define id="adminOfficeType" name="entry" property="key" />
 			<bean:define id="postingRules" name="entry" property="value" />
 			
-			<tr>
-				<th colspan="2" align="left">
-					<br/>
-					<h2><em><bean:message name="adminOfficeType" property="qualifiedName" bundle="ENUMERATION_RESOURCES" /></em></h2>
-				</th>
-			
-			</tr>
-			
-			<logic:iterate id="postingRule" name="postingRules">
-			<tr>
-				<td colspan="2" align="left">
-					<h3><bean:message name="postingRule" property="eventType.qualifiedName" bundle="ENUMERATION_RESOURCES" /></h3>
-					<hr />
-				</td>
-			</tr>
-
-			<tr>
-				<td>
+			<div style="background: #f5f5f5; width: 300px; margin: 1em 1em 0 0; float: left; border: 1px solid #ddd; padding: 0 1em 1em 1em;">
+			<h3 style="color: #369;"><bean:message name="adminOfficeType" property="qualifiedName" bundle="ENUMERATION_RESOURCES" /></h3>
+				<logic:iterate id="postingRule" name="postingRules">
+					<p class="mtop15 mbottom025"><strong><bean:message name="postingRule" property="eventType.qualifiedName" bundle="ENUMERATION_RESOURCES" /></strong></p>
 					<bean:define id="postingRuleClassName" name="postingRule" property="class.simpleName" />
-					<fr:view name="postingRule" schema="<%=postingRuleClassName + ".view-student" %>" layout="tabular" />
-				</td>
-			</tr>
-			</logic:iterate>	
-			
+						<fr:view name="postingRule" schema="<%=postingRuleClassName + ".view-student" %>">
+							<fr:layout name="tabular">
+								<fr:property name="classes" value="thlight mtop025"/>
+							</fr:layout>
+						</fr:view>
+				</logic:iterate>	
+			</div>
 		</logic:iterate>
-		
-	</table>
+
 	
 </logic:present>

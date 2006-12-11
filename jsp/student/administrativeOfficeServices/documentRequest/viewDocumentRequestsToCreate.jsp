@@ -5,14 +5,16 @@
 
 <em><bean:message key="administrative.office.services"/></em>
 <h2><bean:message key="documents.requirement"/></h2>
-<hr/><br/>
+
 
 <logic:messagesPresent message="true">
-	<span class="error"><!-- Error messages go here -->
+	<p>
+	<span class="error0"><!-- Error messages go here -->
 		<html:messages id="message" message="true" bundle="STUDENT_RESOURCES">
 			<bean:write name="message"/>
 		</html:messages>
 	</span>
+	</p>
 </logic:messagesPresent>
 
 <logic:notEmpty name="warningsToReport">
@@ -41,10 +43,11 @@
 	<logic:iterate id="chosenDocumentRequestType" name="chosenDocumentRequestTypes">
 		<html:hidden property="chosenDocumentRequestTypes" value="<%=chosenDocumentRequestType.toString()%>"/>
 	</logic:iterate>
-
+	
+	<p>Corfirma?</p>
 	<fr:edit nested="true" schema="DocumentRequestCreateBean.viewToConfirmCreation" name="documentRequestCreateBeans" id="documentRequestCreateBeans" action="/documentRequest.do?method=create">
 		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4 thlight thright" />
+			<fr:property name="classes" value="tstyle4 thlight" />
 		</fr:layout>
 		<fr:destination name="cancel" path="/documentRequest.do?method=prepare"/>
 	</fr:edit>
