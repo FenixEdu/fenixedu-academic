@@ -20,7 +20,7 @@
 <logic:iterate id="infoOldPublication" name="infoSiteOldPublications" property="infoOldPublications">
 <tr>
 	<td class="listClasses" style="text-align:left" width="60%">
-		<pre><bean:write name="infoOldPublication" property="publication" /></pre>
+		<span><bean:write name="infoOldPublication" property="publication" /></span>
 	</td>
 	<td class="listClasses"> 
 		<div class="gen-button">
