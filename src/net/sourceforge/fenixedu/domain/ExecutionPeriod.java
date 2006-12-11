@@ -318,4 +318,19 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     public String getYear() {
 	return getExecutionYear().getYear();
     }
+
+    public void delete() {
+        if (!getAssociatedExecutionCoursesSet().isEmpty()) {
+            throw new Error("cannot.delete.execution.period.because.execution.courses.exist");
+        }
+        if (!getEnrolmentsSet().isEmpty()) {
+            throw new Error("cannot.delete.execution.period.because.enrolments.exist");
+        }
+        removeExecutionYear();
+        removeRootDomainObject();
+        removePreviousExecutionPeriod();
+        removeNextExecutionPeriod();
+        deleteDomainObject();
+    }
+
 }

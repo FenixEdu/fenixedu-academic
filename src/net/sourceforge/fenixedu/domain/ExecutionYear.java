@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -222,6 +223,15 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 
     public ShiftDistribution createShiftDistribution() {
 	return new ShiftDistribution(this);
+    }
+
+    public void delete() {
+        if (!getExecutionDegreesSet().isEmpty()) {
+            throw new Error("cannot.delete.execution.year.because.execution.degrees.exist");
+        }
+        for (final Set<ExecutionPeriod> executionPeriods = getExecutionPeriodsSet(); !executionPeriods.isEmpty(); executionPeriods.iterator().next().delete());
+        removeRootDomainObject();
+        deleteDomainObject();
     }
 
 }

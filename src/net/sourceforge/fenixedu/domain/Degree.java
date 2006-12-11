@@ -92,7 +92,7 @@ public class Degree extends Degree_Base {
 
 	this.setTipoCurso(degreeType);
 	this.setEctsCredits(ectsCredits);
-	this.setPrevailingScientificArea(prevailingScientificArea.trim());
+	this.setPrevailingScientificArea(prevailingScientificArea == null ? null : prevailingScientificArea.trim());
     }
 
     public void edit(String name, String nameEn, String code, DegreeType degreeType,

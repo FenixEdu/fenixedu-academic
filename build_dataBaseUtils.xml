@@ -14,7 +14,7 @@
 
     <target name="compile"
     		description="Compile tools">
-    	<ant antfile="build.xml" target="compile"/>
+    	<ant antfile="build_compile.xml" target="compile-without-injectionCode"/>
     	<ant antfile="build_codeGenerator.xml" target="compile"/>
     </target>
 
@@ -54,6 +54,20 @@
 			<arg value="${from}"/>
 			<arg value="${basedir}/etc/run"/>
 			<classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    </target>
+
+    <target name="create-test-data"
+    		description="Generate sql schema for fenix database."
+    		depends="compile">
+		<java classname="pt.utl.ist.codeGenerator.database.CreateTestData" fork="true">
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
