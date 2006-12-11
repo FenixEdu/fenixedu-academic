@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
@@ -13,6 +14,8 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public abstract class PaymentCode extends PaymentCode_Base {
+
+    private static final String ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
 
     public static Comparator<PaymentCode> COMPARATOR_BY_CODE = new Comparator<PaymentCode>() {
 	public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
@@ -41,6 +44,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	super.setWhenCreated(new DateTime());
 	super.setWhenUpdated(new DateTime());
 	super.setState(PaymentCodeState.NEW);
+	super.setEntityCode(ENTITY_CODE);
 
     }
 
@@ -153,6 +157,11 @@ public abstract class PaymentCode extends PaymentCode_Base {
     public void setState(PaymentCodeState state) {
 	super.setWhenUpdated(new DateTime());
 	super.setState(state);
+    }
+
+    @Override
+    public void setEntityCode(String entityCode) {
+	throw new DomainException("error.accounting.PaymentCode.cannot.modify.entityCode");
     }
 
     public boolean isNew() {

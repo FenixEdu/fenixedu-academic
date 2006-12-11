@@ -148,6 +148,7 @@
 
 <schema name="PaymentCode.view" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode" bundle="APPLICATION_RESOURCES">
 	<slot name="type" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.type" />
+	<slot name="entityCode" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.entityCode" />
 	<slot name="formattedCode" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.formattedCode" />
 	<slot name="minAmount" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.minAmount" />
 </schema>

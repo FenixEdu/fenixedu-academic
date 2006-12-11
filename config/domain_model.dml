@@ -438,6 +438,7 @@ class net.sourceforge.fenixedu.domain.accounting.Installment extends net.sourcef
 
 
 class net.sourceforge.fenixedu.domain.accounting.PaymentCode extends net.sourceforge.fenixedu.domain.DomainObject {
+    String entityCode;
 	String code;
 	DateTime whenCreated;
 	DateTime whenUpdated;
