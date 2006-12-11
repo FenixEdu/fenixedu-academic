@@ -1,3 +1,4 @@
+build/*
 src_gen
 src_gen/*
 classes
