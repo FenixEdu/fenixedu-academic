@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
@@ -56,7 +57,7 @@ public class CreateReceiptBean implements Serializable {
     }
 
     public String getContributorNumber() {
-        return contributorNumber;
+        return (StringUtils.isEmpty(contributorNumber) && person != null) ? person.getObject().getSocialSecurityNumber() : contributorNumber;
     }
 
     public void setContributorNumber(String contributorNumber) {
