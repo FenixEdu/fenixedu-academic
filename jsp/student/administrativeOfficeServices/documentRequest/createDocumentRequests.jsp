@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-
+<html:xhtml />
 <em><bean:message key="administrative.office.services"/></em>
 <h2><bean:message key="documents.requirement"/></h2>
 
@@ -223,8 +223,6 @@
 			</div>
 			
 			<p class="mtop2"><html:submit styleClass="inputbutton"><bean:message key="button.continue"/></html:submit></p>
-
-		</p>
 
 		</logic:present>
 		

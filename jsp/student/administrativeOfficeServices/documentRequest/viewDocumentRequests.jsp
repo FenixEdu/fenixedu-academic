@@ -6,7 +6,6 @@
 <em><bean:message key="administrative.office.services" bundle="STUDENT_RESOURCES"/></em>
 <h2><bean:message key="documents.requirement.consult"/></h2>
 
-
 <logic:messagesPresent message="true">
 	<span class="error0"><!-- Error messages go here -->
 		<html:messages id="message" message="true" bundle="STUDENT_RESOURCES">
@@ -22,7 +21,7 @@
 
 <fr:view name="documentRequests" schema="DocumentRequest.summary-view-by-student">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight thright" />
+		<fr:property name="classes" value="tstyle4 thlight" />
 		<fr:property name="linkFormat(view)" value="/documentRequest.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
 		<fr:property name="key(view)" value="view"/>
 		<fr:property name="sortBy" value="creationDate=desc, documentRequestType=asc, urgentRequest=desc"/>

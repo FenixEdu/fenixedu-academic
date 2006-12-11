@@ -5,7 +5,7 @@
 
 <html:xhtml/>
 
-
+<em><bean:message key="administrative.office.services" bundle="STUDENT_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.eventDetails" /></h2>
 
 <%--

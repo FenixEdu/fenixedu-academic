@@ -353,7 +353,7 @@ padding: 0.2em 0.5em 0.2em 0em;
 .error2 p { padding: 0.5em 0.5em;}
 .error3 { padding: 0.2em 0.5em 0.2em 28px; background: #fee url(../../pics/error01.gif) 6px 50% no-repeat; }
 
-.success0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #dfd; color: #070; }
+.success0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #e2f5e2; color: #146e14; }
 .success1, .success2, .success3 { background-color: #efe; color: #070; }
 .success1 { border: 2px solid #0a0; }
 .success1 h4 { border-bottom: 1px dotted #0a0; background: #fff url(../../pics/success01.gif) 6px 50% no-repeat; }

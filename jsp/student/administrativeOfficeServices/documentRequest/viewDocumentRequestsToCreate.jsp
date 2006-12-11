@@ -6,7 +6,6 @@
 <em><bean:message key="administrative.office.services"/></em>
 <h2><bean:message key="documents.requirement"/></h2>
 
-
 <logic:messagesPresent message="true">
 	<p>
 	<span class="error0"><!-- Error messages go here -->
@@ -44,14 +43,14 @@
 		<html:hidden property="chosenDocumentRequestTypes" value="<%=chosenDocumentRequestType.toString()%>"/>
 	</logic:iterate>
 	
-	<p>Corfirma?</p>
+	<p class="mbottom025"><bean:message key="label.document.request.confirm" bundle="STUDENT_RESOURCES"/></p>
 	<fr:edit nested="true" schema="DocumentRequestCreateBean.viewToConfirmCreation" name="documentRequestCreateBeans" id="documentRequestCreateBeans" action="/documentRequest.do?method=create">
 		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4 thlight" />
+			<fr:property name="classes" value="tstyle4 thlight mtop025" />
 		</fr:layout>
 		<fr:destination name="cancel" path="/documentRequest.do?method=prepare"/>
 	</fr:edit>
 
-	<html:submit styleClass="inputbutton"><bean:message key="submit"/></html:submit>
+	<html:submit styleClass="inputbutton"><bean:message key="button.confirm" bundle="APPLICATION_RESOURCES"/></html:submit>
 	<html:cancel styleClass="inputbutton"><bean:message key="return"/></html:cancel>
 </html:form>
