@@ -35,7 +35,7 @@
 	<parameter name="amountPerPage" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="baseAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="urgencyAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
-	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>	
+	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -201,6 +201,18 @@
 		</columnHeader>
 		<detail>
 			<band height="400"  isSplitAllowed="true" >
+				<rectangle radius="0" >
+					<reportElement
+						mode="Transparent"
+						x="57"
+						y="3"
+						width="489"
+						height="393"
+						forecolor="#666666"
+						key="rectangle-1"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight" pen="1Point"/>
+				</rectangle>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="68"
@@ -275,7 +287,7 @@
 						x="68"
 						y="212"
 						width="468"
-						height="22"
+						height="67"
 						key="textField-6"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
@@ -287,7 +299,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="68"
-						y="247"
+						y="286"
 						width="468"
 						height="22"
 						key="textField-7"
@@ -301,7 +313,7 @@
 				<staticText>
 					<reportElement
 						x="68"
-						y="270"
+						y="309"
 						width="468"
 						height="41"
 						key="staticText-3"
@@ -312,18 +324,6 @@
 					</textElement>
 				<text><![CDATA[                          A Técnica Superior]]></text>
 				</staticText>
-				<rectangle radius="0" >
-					<reportElement
-						mode="Transparent"
-						x="57"
-						y="3"
-						width="489"
-						height="393"
-						forecolor="#666666"
-						key="rectangle-1"
-						stretchType="RelativeToBandHeight"/>
-					<graphicElement stretchType="RelativeToBandHeight" pen="1Point"/>
-				</rectangle>
 				<staticText>
 					<reportElement
 						x="68"
