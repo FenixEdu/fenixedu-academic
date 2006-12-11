@@ -84,3 +84,4 @@ simian-log.txt
 .rsync-rules
 build.properties.lt
 prepISAdb
+build.properties.w3c
