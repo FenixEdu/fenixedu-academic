@@ -38,8 +38,9 @@ public class SqlTable {
         }
 
         public void appendCreateTableMySql(final StringBuilder stringBuilder) {
+            stringBuilder.append("`");
             stringBuilder.append(name);
-            stringBuilder.append(" ");
+            stringBuilder.append("` ");
             String typeTranslated=mySqlTypeTranslation.get(type);
             if(typeTranslated==null)
             {
