@@ -35,6 +35,8 @@ public class DocumentRequestCreateBean implements Serializable {
 
     private Collection<String> warningsToReport;
 
+    private Integer year;
+
     public DocumentRequestCreateBean(Registration registration) {
 	setRegistration(registration);
     }
@@ -105,24 +107,20 @@ public class DocumentRequestCreateBean implements Serializable {
     }
 
     public ExecutionYear getExecutionYear() {
-
-	if (chosenDocumentRequestType == DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION
-		|| chosenDocumentRequestType == DocumentRequestType.ENROLMENT_DECLARATION) {
-
-	    final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	    if (getRegistration().getActiveStudentCurricularPlan().hasAnyEnrolmentForExecutionYear(
-		    currentExecutionYear)) {
-		return currentExecutionYear;
-	    }
-	    throw new DomainException("error.no.enrolments.for.current.year");
-	}
-
 	return (this.executionYear != null) ? this.executionYear.getObject() : null;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
 	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear)
 		: null;
+    }
+
+    public Integer getYear() {
+	return this.year;
+    }
+
+    public void setYear(Integer year) {
+	this.year = year;
     }
 
     public Boolean getToBeCreated() {
