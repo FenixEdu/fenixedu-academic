@@ -83,10 +83,13 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
             HttpServletRequest request, HttpServletResponse response) {
 
         final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
-        if (!academicServiceRequest.getRegistration().getLastStudentCurricularPlanExceptPast()
-                .isBolonha()) {
-            addActionMessage(request, "print.preBolonha.documentRequest.in.aplica");
-        }
+
+// should this be checked?
+//        
+//        if (!academicServiceRequest.getRegistration().getLastStudentCurricularPlanExceptPast()
+//                .isBolonha()) {
+//            addActionMessage(request, "print.preBolonha.documentRequest.in.aplica");
+//        }
 
         return mapping.findForward("printDocument");
     }
