@@ -6,7 +6,7 @@
 
 <div id="logoist">
 	<a href="<%= institutionUrl %>">
-		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" width="234" height="51" border="0"
+		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" width="234" height="51"
 			src="<bean:message key="university.logo.public" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 	</a>
 </div>
@@ -21,8 +21,10 @@
 		<input alt="input.ie" type="hidden" name="ie" value="iso-8859-1" />
 		<input alt="input.domains" type="hidden" name="domains" value="ist.utl.pt" />
 		<input alt="input.sitesearch" type="hidden" name="sitesearch" value="ist.utl.pt" />
-		Pesquisar:
-		<input alt="input.q" type="text" id="textfield" name="q" size="17" />
+		<label for="textfield">
+			<bean:message bundle="GLOBAL_RESOURCES" key="search.title"/>:
+			<input alt="input.q" type="text" id="textfield" name="q" size="17"/>
+		</label>
 		<input alt="input.sa" type="submit" id="submit" name="sa" value="Google" />
 		</form>
 	</div>
