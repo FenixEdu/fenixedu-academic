@@ -225,5 +225,10 @@ public class Employee extends Employee_Base {
 	
 	return null; 
     }
+
+    public void delete() {
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
     
 }

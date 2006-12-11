@@ -1062,4 +1062,9 @@ public class Teacher extends Teacher_Base {
 	return false;
     }
 
+    public void delete() {
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }

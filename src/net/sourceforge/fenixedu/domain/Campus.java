@@ -28,4 +28,9 @@ public class Campus extends Campus_Base {
 	return null;
     }
 
+    public void delete() {
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }

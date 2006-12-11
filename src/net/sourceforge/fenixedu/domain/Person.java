@@ -923,76 +923,76 @@ public class Person extends Person_Base {
 
     private boolean canBeDeleted() {
 	if (getInvitationAccountabilitiesCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getDomainObjectActionLogsCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getStudentsCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getSentSmsCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getExportGroupingReceiversCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getPersonFunctions().size() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getAssociatedQualificationsCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getAssociatedAlteredCurriculumsCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getEnrolmentEvaluationsCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getExportGroupingSendersCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getResponsabilityTransactionsCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getMasterDegreeCandidatesCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getGuidesCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getProjectAccessesCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getPersonAuthorshipsCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getEmployee() != null) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getTeacher() != null) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getAssociatedPersonAccount() != null) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getGrantOwner() != null) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getAccountsCount() > 0) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (hasAnyPayedGuides()) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (hasAnyPayedReceipts()) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getExternalPerson() != null) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (hasParking()) {
-	    return false;
+	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	return true;
     }
