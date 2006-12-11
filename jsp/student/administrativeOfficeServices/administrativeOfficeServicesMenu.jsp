@@ -9,8 +9,6 @@
 --%>
 	<li><html:link page="/documentRequest.do?method=viewDocumentRequests" titleKey="documents.requirement.consult.link.title"><bean:message key="documents.requirement.consult"/></html:link></li>
 	<li><html:link page="/payments.do?method=showEvents" titleKey="link.title.payments"><bean:message key="link.title.payments"/></html:link></li>
-<%-- 
 	<li><html:link page="/prices.do?method=viewPrices" titleKey="link.title.payments"><bean:message key="label.prices"/></html:link></li>
---%>
 
 </ul>
