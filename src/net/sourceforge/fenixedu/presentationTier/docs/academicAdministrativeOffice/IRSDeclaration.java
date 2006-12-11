@@ -1,15 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.joda.time.YearMonthDay;
 
 public class IRSDeclaration extends AdministrativeOfficeDocument {
 
@@ -37,24 +38,37 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	final Integer civilYear = IRSDeclarationRequest.getYear();
 	parameters.put("civilYear", civilYear.toString());
 
+	Money gratuityPayedAmount = person.getPayedAmount(EventType.GRATUITY, civilYear);
+	Money officeFeeAndInsurancePayedAmount = person.getPayedAmount(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, civilYear);
+	Money othersPayedAmount = Money.ZERO;
+	for (final EventType eventType : EventType.values()) {
+	    if (eventType != EventType.GRATUITY && eventType != EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE) {
+		othersPayedAmount = othersPayedAmount.add(person.getPayedAmount(eventType, civilYear));
+	    }
+	}
+
 	final StringBuilder eventTypes = new StringBuilder();
 	final StringBuilder payedAmounts = new StringBuilder();
-	Money totalPayedAmount = Money.ZERO;
-	for (final EventType eventType : EventType.values()) {
-	    Money payedAmount = person.getPayedAmount(eventType, civilYear);
-	    
-	    if (!payedAmount.isZero()) {
-		eventTypes.append("- ").append(enumerationBundle.getString(eventType.getQualifiedName())).append("\n");
-		payedAmounts.append("*").append(payedAmount.toPlainString()).append("Eur").append("\n");
-	    }
-	    
-	    totalPayedAmount = totalPayedAmount.add(payedAmount);
+	if (!gratuityPayedAmount.isZero()) {
+	    eventTypes.append("- ").append(enumerationBundle.getString(EventType.GRATUITY.getQualifiedName())).append("\n");
+	    payedAmounts.append("*").append(gratuityPayedAmount.toPlainString()).append("Eur").append("\n");
+	}
+	if (!officeFeeAndInsurancePayedAmount.isZero()) {
+	    eventTypes.append("- ").append(enumerationBundle.getString(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE.getQualifiedName())).append("\n");
+	    payedAmounts.append("*").append(officeFeeAndInsurancePayedAmount.toPlainString()).append("Eur").append("\n");
+	}
+	if (!othersPayedAmount.isZero()) {
+	    eventTypes.append("- Diversos").append("\n");
+	    payedAmounts.append("*").append(othersPayedAmount.toPlainString()).append("Eur").append("\n");
 	}
 	
 	parameters.put("eventTypes", eventTypes.toString());
 	parameters.put("payedAmounts", payedAmounts.toString());
+
+	Money totalPayedAmount = othersPayedAmount.add(gratuityPayedAmount).add(officeFeeAndInsurancePayedAmount);
 	parameters.put("totalPayedAmount", "*" + totalPayedAmount.toString() + "Eur");
 	
+	parameters.put("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
 	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
     }
 
