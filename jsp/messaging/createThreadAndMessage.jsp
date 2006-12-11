@@ -27,7 +27,7 @@
 	<fr:create id="createThreadAndMessage"
 			type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean" 
            	schema="conversationThreadAndMessage.create"
-           	action="<%= contextPrefix + "method=createThreadAndMessage&forumId="+forumId+"&goToLastPage=true" %>">
+           	action="<%= contextPrefix + "method=createThreadAndMessage&amp;forumId="+forumId+"&amp;goToLastPage=true" %>">
 
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="thlight mtop05"/>

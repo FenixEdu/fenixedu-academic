@@ -85,7 +85,7 @@ public class HtmlLink extends HtmlComponent {
                 
                 if (indexOfQuestion < url.length()) {
                     String parameters = url.substring(indexOfQuestion + 1);
-                    String[] parameresParts = parameters.split("&");
+                    String[] parameresParts = parameters.split("&amp;");
                     
                     for (int i = 0; i < parameresParts.length; i++) {
                         String part = parameresParts[i];
@@ -234,7 +234,7 @@ public class HtmlLink extends HtmlComponent {
                     buffer.append("?");
                 }
                 else {
-                    buffer.append("&");
+                    buffer.append("&amp;");
                 }
                 
                 Set<String> keys = getParameters().keySet();
@@ -244,7 +244,7 @@ public class HtmlLink extends HtmlComponent {
                     String[] values = getParameters().get(key);
                     for (int i = 0; i < values.length; i++) {
                         if (i > 0) {
-                            buffer.append("&");
+                            buffer.append("&amp;");
                         }
 
                         buffer.append(key);
@@ -259,7 +259,7 @@ public class HtmlLink extends HtmlComponent {
 
                     count--;
                     if (count > 0) {
-                        buffer.append("&");
+                        buffer.append("&amp;");
                     }
                 }
             }

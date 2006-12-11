@@ -14,7 +14,7 @@
 </noscript>
 
 <logic:present name='<%= InquiriesUtil.ANCHOR %>'>
-	<script>
+	<script type="text/javascript">
 		if(navigator.appName=="Microsoft Internet Explorer") {
 			location.hash='<%= request.getAttribute(InquiriesUtil.ANCHOR) %>';
 		}
@@ -127,7 +127,7 @@
 						1.3 <bean:message key="table.rowname.inquiries.student.form.school.class" bundle="INQUIRIES_RESOURCES"/>
 					</td>
 					<td class="right">
-						<html:select bundle="HTMLALT_RESOURCES" altKey="select.attendingCourseSchoolClassId" property="attendingCourseSchoolClassId">
+						<html:select property="attendingCourseSchoolClassId">
 							<bean:define id="noChoice">
 								<bean:message key="value.inquiries.no.choice" bundle="INQUIRIES_RESOURCES"/>
 							</bean:define>
@@ -1486,7 +1486,7 @@
 </div>
 
 <logic:present name='<%= InquiriesUtil.ANCHOR %>'>
-	<script>
+	<script type="text/javascript">
 		if(navigator.appName != "Microsoft Internet Explorer") {
 			location.hash='<%= request.getAttribute(InquiriesUtil.ANCHOR) %>';
 		}
