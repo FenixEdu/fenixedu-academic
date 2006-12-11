@@ -5,7 +5,7 @@
 
 <ft:tilesView definition="df.page.structure" attributeName="body-inline">
 
-<script language="JavaScript">
+<script type="text/javascript">
 function check(e,v)
 {
 

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
+
 <ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/StudentResources" var="bundle"/>
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
@@ -32,7 +33,7 @@
 				   valueChangeListener="#{displayEvaluationsToEnrol.changeEvaluationType}">
 					<f:selectItems value="#{displayEvaluationsToEnrol.evaluationTypes}" />
 				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</h:panelGroup>
 		</h:panelGrid>
 		<h:outputText value="</div>" escape="false" />

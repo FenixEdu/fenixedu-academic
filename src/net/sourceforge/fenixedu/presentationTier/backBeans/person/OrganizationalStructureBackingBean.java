@@ -126,8 +126,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		if (!activeSubUnits.isEmpty()) {
 
 		    buffer.append("\t<li><img ").append("src='").append(getContextPath()).append(
-			    "/images/toggle_plus10.gif' id='").append(unit.getIdInternal()).append("'")
-			    .append("indexed='true' onClick=\"check(document.getElementById('aa")
+			    "/images/toggle_plus10.gif' id='img").append(unit.getIdInternal()).append("'")
+			    .append("onClick=\"check(document.getElementById('aa")
 			    .append(unit.getIdInternal()).append("'),document.getElementById('").append(
 				    unit.getIdInternal()).append("'));return false;\"/> ");
 
@@ -157,12 +157,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    List<Unit> activeSubUnits, YearMonthDay currentDate) {
 
 	if (!activeSubUnits.isEmpty()) {
-	    buffer.append("\t<ul class='mvert0' id='aa").append(parentUnit.getIdInternal()).append(
+	    buffer.append("\t<li class='nobullet'><ul class='mvert0' id='aa").append(parentUnit.getIdInternal()).append(
 		    "' style='display:none'>\r\n");
 	    for (Unit subUnit : activeSubUnits) {
 		getSubUnitsWithoutAggregatedUnitsList(buffer, currentDate, subUnit);
 	    }
-	    buffer.append("\t</ul>\r\n");
+	    buffer.append("\t</ul></li>\r\n");
 	}
     }
 
@@ -177,7 +177,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
 
 	if (!activeSubUnits.isEmpty()) {
-	    buffer.append("\t\t<ul class='mvert0'>\r\n");
+	    buffer.append("\t\t<li class='nobullet'><ul class='mvert0'>\r\n");
 	}
 
 	for (Unit subUnit : activeSubUnits) {
@@ -185,7 +185,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
 
 	if (!activeSubUnits.isEmpty()) {
-	    buffer.append("\t\t</ul>\r\n");
+	    buffer.append("\t\t</ul></li>\r\n");
 	}
     }
 
@@ -295,7 +295,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	// buffer.append("<image
 	// src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
 	// .append(" ");
-	buffer.append("<strong class='eo_highlight' id='");
+	buffer.append("<strong class='highlight6' id='aa");
 	buffer.append(chooseUnit.getIdInternal()).append("'>");
 	buffer.append(chooseUnit.getName()).append("</strong>");
 
@@ -336,7 +336,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	// buffer.append("<image
 	// src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
 	// .append(" ");
-	buffer.append("<strong id='").append(subUnit.getIdInternal()).append("' >").append(
+	buffer.append("<strong id='aa").append(subUnit.getIdInternal()).append("' >").append(
 		subUnit.getName()).append("</strong>");
 
 	if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("0")) {
@@ -514,10 +514,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	List<SelectItem> list = new ArrayList<SelectItem>();
 
 	SelectItem selectItem = new SelectItem();
-	selectItem.setLabel("Funcionários");
+	selectItem.setLabel("Funcionï¿½rios");
 	selectItem.setValue("0");
 	SelectItem selectItem2 = new SelectItem();
-	selectItem2.setLabel("Cargos de Gestão");
+	selectItem2.setLabel("Cargos de Gestï¿½o");
 	selectItem2.setValue("1");
 
 	list.add(selectItem);

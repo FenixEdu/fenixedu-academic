@@ -1,6 +1,6 @@
 
 
-/* transitional.css - 01.2006 by João Alfaiate @ Fenix */
+/* transitional.css - 01.2006 by Joï¿½o Alfaiate @ Fenix */
 
 /* ----------------------
  ---- Headings ---------
@@ -233,7 +233,7 @@ text-align: center;
 /* table classes - td properties */
 
 .tstyle1 td, .tstyle2 td, .tstyle3 td, .tstyle4 td  {
-padding: 5px; /*padding em "em" dá problemas de rendering no firefox, faz arredondamentos incoerentes */
+padding: 5px; /*padding em "em" dï¿½ problemas de rendering no firefox, faz arredondamentos incoerentes */
 }
 
 .tstyle1 td { border: 1px solid #cccccc; }
@@ -262,7 +262,7 @@ background-color: #fff8bb; color: #664400;
 
 table.mtop05 { margin-top: 0.5em; }
 table.smallmargin td { padding: 0.25em; }
-	/* não funcionava com indent ou padding normal? testar*/
+	/* nï¿½o funcionava com indent ou padding normal? testar*/
 td.pleft1 { padding-left: 1em; }
 td.pleft2 { padding-left: 2em; }
 td.pleft3 { padding-left: 3em; }
@@ -451,6 +451,8 @@ padding-right: 0.5em;
 .mtop1 { margin-top: 1em;}
 .mtop15 { margin-top: 1.5em;}
 .mtop2 { margin-top: 2em;}
+.mtop2 { margin-top: 2em;}
+.mtop25 { margin-top: 2.5em;}
 .mtop3 { margin-top: 3em;}
 .mbottom0 { margin-bottom: 0;}
 .mbottom025 { margin-bottom: 0.25em;}
@@ -503,6 +505,8 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width18em { width: 18em; }
 .width20em { width: 20em; }
 .width30em { width: 30em; }
+.width35em { width: 35em; }
+.width46em { width: 46em; }
 .width50em { width: 50em; }
 .width100px { width: 100px; }
 .width150px { width: 150px; }
@@ -533,6 +537,7 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .highlight3 { background-color: #def; } /* azul */
 .highlight4 { background-color: #dfb ; } /* verde */
 .highlight5 { background-color: #fdfbdd; } /* amarelo */
+.highlight6 { background-color: #ffc; }
 .lowlight1 { color: #999; }
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fbfbdd; }
@@ -982,7 +987,7 @@ table.nospace label { width: auto; }
 	border-color: #CCCCCC;
 }
 
-/* Vigilância */
+/* Vigilï¿½ncia */
 .mvert15 { margin-top: 1.5em; margin-bottom: 1.5em; }
 .greytxt1 { color: #777; }
 .greytxt2 { color: #777; }
@@ -1214,7 +1219,7 @@ tr.tdhl1 td { background-color: #fdfbdd; } /* amarelo */
 
 table.asdasd tr td a { font-weight: bold; padding: 0.25em; margin: 0.25em; }
 
-/* section header*/
+/* section header*/font-weight: bold;
 .sheader1 {
 background: #f5f5e5;
 padding: 0.25em;
@@ -1231,3 +1236,8 @@ padding: 1em;
 margin: 1em;
 background: #fff;
 }
+
+/* Annoucements Archives */
+.aarchives { margin-top: 2em;}
+.aarchives p { margin: 0.5em 0; padding: 0; }
+.aarchives span { font-weight: bold; padding-right: 0.5em; }

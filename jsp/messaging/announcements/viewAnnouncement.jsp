@@ -8,7 +8,7 @@
 
 	<bean:define id="announcement" name="announcement" type="net.sourceforge.fenixedu.domain.messaging.Announcement"/>
 		
-	<em>Portal Comunicação</em>
+	<em><bean:message key="label.communicationPortal.header" bundle="MESSAGING_RESOURCES"/></em>
 	<h2><bean:write name="announcement" property="announcementBoard.name"/></h2>
 
 	<%
@@ -22,8 +22,9 @@
 
 	<%-- Publication Date --%>
 	<p class="mvert025 smalltxt greytxt1">
-		<span id="10367">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar">
+	<span>
+	<!--  	<span id="10367">-->
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar"/>
 			<logic:notEmpty name="announcement" property="publicationBegin">
 				Publicado em 
 					<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
@@ -31,7 +32,7 @@
 				if (announcement.getAnnouncementBoard().hasWriter(person)) {
 				%>
 					<logic:notEmpty name="announcement" property="publicationEnd">
-					 	até 
+					 	atï¿½ 
 						<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
 					</logic:notEmpty>
 				<%
@@ -46,7 +47,7 @@
 		</span>
 	</p>
 				
-<%-- Título --%>
+<%-- Tï¿½tulo --%>
 	<h3 class="mvert025">
 		<b><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></b>
 	</h3>
@@ -119,9 +120,9 @@
 	}
 	%>
 
-<%-- Data de Criação --%>
-	<html:link linkName="<%=announcement.getIdInternal().toString()%>"/>
-		Data de criação: 
+<%-- Data de Criaï¿½ï¿½o --%>
+	<html:link linkName="<%= "ID_" + announcement.getIdInternal().toString()%>"/>
+		<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES"/>
 		<fr:view name="announcement" property="creationDate" type="org.joda.time.DateTime" layout="no-time"/>
 	</em>
 </p>

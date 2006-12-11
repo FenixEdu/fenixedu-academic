@@ -17,6 +17,7 @@
 	<h2><bean:write name="announcementBoard" property="name"/>
 
 	<span title="Really Simple Syndication" style="font-weight: normal; font-size: 0.7em;">
+		<!--  w3c complient -->
 		 <%
 			java.util.Map parameters = new java.util.HashMap();
 			parameters.put("method","simple");
@@ -40,8 +41,8 @@
 				{
 			%>
 			<li>
-				<html:link action="<%= contextPrefix + "method=addAnnouncement&announcementBoardId="+announcementBoardId+"&"+extraParameters%>">
-					Criar Anúncio
+				<html:link action="<%= contextPrefix + "method=addAnnouncement&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
+					<bean:message key="label.createAnnouncement" bundle="MESSAGING_RESOURCES"/>
 				</html:link>
 			</li>				
 			<%

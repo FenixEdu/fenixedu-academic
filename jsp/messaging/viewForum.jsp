@@ -63,7 +63,7 @@
 				<bean:write name="pageNumber"/>
 			</logic:equal>
 			<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
-				<html:link action="<%= contextPrefix + "method=viewForum&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber%>">
+				<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId=" + forumId.toString() + "&amp;pageNumber=" + pageNumber%>">
 					<bean:write name="pageNumber"/>
 				</html:link>			
 			</logic:notEqual>

@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-<script language="JavaScript">
+<script type="text/javascript">
 function getElementsByClass(searchClass,node,tag) {
 	var classElements = new Array();
 	if ( node == null )
@@ -52,18 +52,26 @@ function check(e,v){
 <h2><bean:message key="label.manager.findPerson"/></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<table class="search">
+<table class="search mbottom0">
 	<tr>
-		<td class="leftcolumn"><bean:message key="label.type"/>:</td>
-		
-		<td>			<html:form action="/preparePerson" >				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="preparePerson" />				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.countPage" property="countPage" value="1"/>				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.departmentId" property="departmentId" name="findPersonForm"/>				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" name="findPersonForm"/>				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewPhoto" property="viewPhoto" name="findPersonForm"/>				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.RoleType" bundle="ENUMERATION_RESOURCES" includedFields="STUDENT,TEACHER,GRANT_OWNER,EMPLOYEE" />
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.roleType" property="roleType" onchange="this.form.submit()">
-					<html:option value=""/>
+		<td class="leftcolumn width10em"><bean:message key="label.type"/>:</td>
+		<td class="width35em">			<html:form action="/preparePerson" >
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="preparePerson" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.countPage" property="countPage" value="1"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.departmentId" property="departmentId" name="findPersonForm"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" name="findPersonForm"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewPhoto" property="viewPhoto" name="findPersonForm"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>
+
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.RoleType" bundle="ENUMERATION_RESOURCES" includedFields="STUDENT,TEACHER,GRANT_OWNER,EMPLOYEE" />
+				<html:select bundle="HTMLALT_RESOURCES" property="roleType" onchange="this.form.submit()">
+					<html:option value=""><!-- w3c complient --></html:option>
 					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
-				</html:submit>			</html:form>
+				</html:submit>
+			</html:form>
 		</td>
 	</tr>
 	<logic:present name="degreeType">
@@ -71,8 +79,8 @@ function check(e,v){
 			<td class="leftcolumn"><bean:message key="label.degree"/>:</td>
 			<td>
 				<html:form action="/preparePerson" >					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="preparePerson" />					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.countPage" property="countPage" value="1"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.departmentId" property="departmentId" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewPhoto" property="viewPhoto" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roleType" property="roleType" name="findPersonForm"/>					<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"  />
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" onchange="this.form.submit()">
-						<html:option value=""/>
+					<html:select bundle="HTMLALT_RESOURCES" property="degreeType" onchange="this.form.submit()">
+						<html:option value=""><!-- w3c complient --> </html:option>
 						<html:options collection="values" property="value" labelProperty="label"/>				
 					</html:select>
 					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -80,8 +88,9 @@ function check(e,v){
 					</html:submit>				</html:form>
 			</td>
 		</tr>
-	</logic:present>
-<html:form action="/findPerson" >
+	</logic:present>
+</table>
+<html:form action="/findPerson" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="findPerson" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.startIndex" property="startIndex" value="1" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
@@ -89,15 +98,16 @@ function check(e,v){
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roleType" property="roleType" value="<%= roleType %>"/>
 	<bean:define id="degreeType" name="findPersonForm" property="degreeType" type="java.lang.String"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" value="<%= degreeType %>"/>
-
+
+	<table class="search mtop0">
 		<logic:present name="departments">
 			<tr>
 				<td class="leftcolumn">
 					<bean:message key="label.teacher.finalWork.department"/>:
 				</td>
 				<td>
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.departmentId" property="departmentId">	
-						<html:option value=""/>
+					<html:select bundle="HTMLALT_RESOURCES" property="departmentId">	
+						<html:option value=""> <!-- w3c complient --> </html:option>
 						<logic:iterate id="department" name="departments"> 
 						   	<bean:define id="departmentID" name="department" property="idInternal"/>
 							<html:option value="<%= departmentID.toString() %>">								<bean:write name="department" property="realName"/> 							</html:option>
@@ -112,8 +122,8 @@ function check(e,v){
 					<bean:message key="label.degree.name"/>:
 				</td>
 				<td>
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeId" property="degreeId">	
-						<html:option value=""/>
+					<html:select bundle="HTMLALT_RESOURCES" property="degreeId">	
+						<html:option value=""> <!-- w3c complient --> </html:option>
 						<logic:iterate id="degree" name="nonMasterDegree" > 
 						   	<bean:define id="degreeID" name="degree" property="idInternal"/>
 							<html:option value="<%= degreeID.toString() %>">								<bean:write name="degree" property="nome"/> 							</html:option>
@@ -123,8 +133,8 @@ function check(e,v){
 			</tr>
 		</logic:present>
 		<tr>
-			<td class="leftcolumn"><bean:message key="label.nameWord" />:</td>
-			<td>
+			<td class="leftcolumn width10em"><bean:message key="label.nameWord" />:</td>
+			<td class="width35em">
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" name="findPersonForm" property="name" size="50"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>
 			</td>		
@@ -151,6 +161,7 @@ function check(e,v){
 	</table>
 </html:form>
 
+
 <logic:present name="personListFinded" >
 	
 	<logic:notEqual name="totalFindedPersons" value="1">
@@ -160,8 +171,8 @@ function check(e,v){
 		<p><b><bean:message key="label.manager.findedOnePersons" arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" /></b></p>
 	</logic:equal>
 
-	<bean:define id="url">/messaging/findPerson.do?method=findPerson&name=<bean:write name="name"/>&roleType=<bean:write name="roleType"/>&degreeId=<bean:write name="degreeId"/>&degreeType=<bean:write name="degreeType"/>&departmentId=<bean:write name="departmentId"/>&viewPhoto=<bean:write name="viewPhoto"/></bean:define>			
-	<p>Páginas:					
+	<bean:define id="url">/messaging/findPerson.do?method=findPerson&amp;name=<bean:write name="name"/>&amp;roleType=<bean:write name="roleType"/>&amp;degreeId=<bean:write name="degreeId"/>&amp;degreeType=<bean:write name="degreeType"/>&amp;departmentId=<bean:write name="departmentId"/>&amp;viewPhoto=<bean:write name="viewPhoto"/></bean:define>			
+	<p>PÃ¡ginas:					
 		<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
 	</p>
 	
@@ -183,13 +194,13 @@ function check(e,v){
 					</td>
 					<td width="30%" style="text-align: right;">
 						<bean:define id="aa" value="<%= "aa" + personIndex %>" />
-						<bean:define id="id" value="<%= "id" + (personIndex.intValue() + 40)  %>" />						<td width="30%" style="text-align: right;">
+						<bean:define id="id" value="<%= "id" + (personIndex.intValue() + 40)  %>" />						  <!--  <td width="30%" style="text-align: right;">-->
 							<bean:define id="aa" value="<%= "aa" + personIndex %>" />
 							<bean:define id="id" value="<%= "id" + (personIndex.intValue() + 40) %>" />
 							<span class="switchInline">
-								<input alt="input.input" type = button value="+"  id="<%= pageContext.findAttribute("id").toString()%>" indexed="true" onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'),document.getElementById('<%= pageContext.findAttribute("id").toString() %>'));return false;" >													
+								<input alt="input.input" type = button value="+"  id="<%= pageContext.findAttribute("id").toString()%>" onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'),document.getElementById('<%= pageContext.findAttribute("id").toString() %>'));return false;"/>													
 							</span>
-						</td>
+  						<!-- </td>-->
 					</td>
 				</tr>
 			</table>
@@ -309,13 +320,13 @@ function check(e,v){
 	 
 	 <logic:notEqual name="numberOfPages" value="1">
 	 	<br/>
-		<p>Páginas:			
+		<p>PÃ¡ginas:			
 			<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
 		</p>
 	</logic:notEqual>	 
 	
 </logic:present>
 
-<script>
+<script type="text/javascript">
 	switchDisplay();
 </script>

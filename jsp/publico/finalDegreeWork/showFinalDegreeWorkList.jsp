@@ -16,7 +16,7 @@
 				<html:form action="/finalDegreeWorks" focus="executionDegreeOID">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareSearch"/>
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearOID" property="executionYearOID"
+					<html:select bundle="HTMLALT_RESOURCES" property="executionYearOID"
 								 size="1"
 								 onchange="this.form.submit();">
 						<html:options property="idInternal" 
@@ -39,9 +39,9 @@
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 					<bean:define id="executionYearOID" name="finalDegreeWorksForm" property="executionYearOID"/>
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="select.executionYearOID" property="executionYearOID" value="<%= executionYearOID.toString() %>"/>
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" size="1"
+					<html:select bundle="HTMLALT_RESOURCES" property="executionDegreeOID" size="1"
 								 onchange="this.form.submit();">
-						<html:option value=""/>
+						<html:option value=""> <!-- w3c complient --> </html:option>
 						<html:options property="idInternal"
 									  labelProperty="infoDegreeCurricularPlan.name"
 									  collection="infoExecutionDegrees" />
@@ -75,9 +75,9 @@
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="select.executionYearOID" property="executionYearOID" value="<%= executionYearOID.toString() %>"/>
 						<bean:define id="executionDegreeOID" name="finalDegreeWorksForm" property="executionDegreeOID"/>
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
-						<html:select bundle="HTMLALT_RESOURCES" altKey="select.branchOID" property="branchOID" size="1"
+						<html:select bundle="HTMLALT_RESOURCES" property="branchOID" size="1"
 									 onchange="this.form.submit();">
-							<html:option value=""/>
+							<html:option value=""><!-- w3c complient--> </html:option>
 							<html:options property="idInternal"
 										  labelProperty="name"
 										  collection="branches" />

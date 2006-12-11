@@ -10,7 +10,7 @@
 
 <logic:present name="unit">
 
-	<p class="mtop2 mbottom0">Canal: <span class="emphasis1"><bean:write name="unit" property="name"/></span></p>
+	<p class="mtop2 mbottom0"><bean:message key="label.channel" bundle="MESSAGING_RESOURCES"/>: <span class="emphasis1"><bean:write name="unit" property="name"/></span></p>
 
 	
 	<%--
@@ -24,7 +24,7 @@
 	<jsp:include page="/messaging/announcements/listAnnouncementBoards.jsp" flush="true"/>		
 
 
-<p class="mbottom0"><strong>Criar Canal:</strong></p>
+<p class="mbottom0"><strong><bean:message key="label.createChannel" bundle="MESSAGING_RESOURCES"/>:</strong></p>
 
 <%--
 <p><span>(associada a <bean:write name="unit" property="name"/>)</span></p>
@@ -44,7 +44,7 @@
 			</tr>
 			<tr>
 				<th>
-					Obrigatória:
+					<bean:message key="label.mandatory" bundle="MESSAGING_RESOURCES"/>
 				</th>
 				<td>
 					<html:checkbox property="mandatory" value="true"/>

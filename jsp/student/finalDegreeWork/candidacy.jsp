@@ -6,7 +6,12 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <h2><bean:message key="title.finalDegreeWork.candidacy"/></h2>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+
+<div class="mvert15">
+<!-- Error messages go here -->
+<html:errors />
+</div>
+
 <html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="somemethod"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -16,9 +21,9 @@
 
 	<bean:message key="label.finalDegreeWork.degree"/>:
 	<br />
-	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" size="1"
+	<html:select bundle="HTMLALT_RESOURCES" property="executionDegreeOID" size="1"
 				 onchange='this.form.method.value=\'selectExecutionDegree\';this.form.page.value=\'0\';this.form.submit();'>
-		<html:option value=""/>
+		<html:option value=""><!-- w3c complient--></html:option>
 		<html:options property="idInternal"
 					  labelProperty="infoDegreeCurricularPlan.infoDegree.nome"
 					  collection="infoExecutionDegrees" />

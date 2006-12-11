@@ -5,22 +5,8 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.StartHiddenActionMessages" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<script language="JavaScript">
-function check(e)
-{
-if (e.style.display == "none")
-  {
-	  e.style.display = "";
-  }
-else
-  {
-	  e.style.display = "none";
-  }
-}
-</script>
-
-
 <span class="infoMsg">
+	<!-- w3c compliant -->
 		 <%
 				int infoMessageNumber =0;
 				ActionMessages infoMessages = (ActionMessages) request.getAttribute(org.apache.struts.Globals.MESSAGE_KEY);
@@ -42,7 +28,8 @@ else
 		</html:messages>
 </span>
 
-<span class="error">
+<span class="error"><!-- w3c compliant -->
+
 		 <%
 				int errorMessageNumber =0;
 				ActionMessages errorMessages = (ActionMessages) request.getAttribute(org.apache.struts.Globals.ERROR_KEY);

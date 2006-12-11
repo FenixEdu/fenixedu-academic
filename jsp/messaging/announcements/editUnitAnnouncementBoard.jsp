@@ -5,12 +5,13 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 
-<em>Portal de Comunicação</em>
-<h2>Gerir Canal</h2>
+<html:xhtml/>
+<em><bean:message key="label.communicationPortal.header" bundle="MESSAGING_RESOURCES"/></em>
+<h2><bean:message key="label.manageChannel" bundle="MESSAGING_RESOURCES"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
 
-<p class="mbottom0"><b>Unidade</b>: <span class="emphasis1"><bean:write name="unit" property="name"/><span></p>
+<p class="mbottom0"><b>Unidade</b>: <span class="emphasis1"><bean:write name="unit" property="name"/></span></p>
 
 <logic:present name="announcementBoard">
 <bean:define id="contextPrefix" name="contextPrefix" />
@@ -35,7 +36,7 @@
 			</tr>
 			<tr>
 				<th>
-					Obrigatória:
+					<bean:message key="label.mandatory" bundle="MESSAGING_RESOURCES"/>
 				</th>
 				<td>
 					<html:checkbox property="mandatory" value="true"/>
@@ -79,7 +80,7 @@
 	</html:form>
 
 <p>Apagar este canal? 
-	<html:link action="<%= contextPrefix + "method=deleteAnnouncementBoard&announcementBoardId="+announcementBoardId+ "&"+extraParameters +"&returnAction="+request.getParameter("returnAction") + "&returnMethod="+request.getParameter("returnMethod")%>">
+	<html:link action="<%= contextPrefix + "method=deleteAnnouncementBoard&amp;announcementBoardId="+announcementBoardId+ "&amp;"+extraParameters +"&amp;returnAction="+request.getParameter("returnAction") + "&amp;returnMethod="+request.getParameter("returnMethod")%>">
 		Apagar
 	</html:link>
 </p>
@@ -98,8 +99,8 @@
 					{
 				%>
 				<li>
-					<html:link action="<%= contextPrefix + "method=addAnnouncement&announcementBoardId="+announcementBoardId+"&"+extraParameters%>">
-						Criar Anúncio
+					<html:link action="<%= contextPrefix + "method=addAnnouncement&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
+						<bean:message key="label.createAnnouncement" bundle="MESSAGING_RESOURCES"/>
 					</html:link>
 				</li>				
 				<%

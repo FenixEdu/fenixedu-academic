@@ -169,19 +169,19 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         String announcementBoardAccessLevel = request.getParameter("announcementBoardAccessLevel");
 
         if (announcementBoardAccessType != null) {
-            buffer.append("&announcementBoardAccessType=").append(announcementBoardAccessType);
+            buffer.append("&amp;announcementBoardAccessType=").append(announcementBoardAccessType);
         }
         if (announcementBoardAccessLevel != null) {
-            buffer.append("&announcementBoardAccessLevel=").append(announcementBoardAccessLevel);
+            buffer.append("&amp;announcementBoardAccessLevel=").append(announcementBoardAccessLevel);
         }
         if (request.getParameter("howManyAnnouncementsToShow") != null) {
-            buffer.append("&howManyAnnouncementsToShow=").append(request.getParameter("howManyAnnouncementsToShow"));
+            buffer.append("&amp;howManyAnnouncementsToShow=").append(request.getParameter("howManyAnnouncementsToShow"));
         }
         if (request.getParameter("recentBoardsTimeSpanSelection") != null) {
-            buffer.append("&recentBoardsTimeSpanSelection=").append(request.getParameter("recentBoardsTimeSpanSelection"));
+            buffer.append("&amp;recentBoardsTimeSpanSelection=").append(request.getParameter("recentBoardsTimeSpanSelection"));
         }
         if (request.getParameter("boardType") != null) {
-            buffer.append("&boardType=").append(request.getParameter("boardType"));
+            buffer.append("&amp;boardType=").append(request.getParameter("boardType"));
         }
 
         return buffer.toString();

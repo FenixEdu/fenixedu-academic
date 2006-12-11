@@ -35,8 +35,8 @@
 
            <fr:hidden slot="creator" name="person"/>
            <fr:hidden slot="forum" name="forum"/>
-           <fr:destination name="cancel" path="<%= contextPrefix + "method=viewForum&forumId="+forumId%>"/>
-           <fr:destination name="exception" path="<%= contextPrefix + "method=viewForum&forumId="+forumId%>"/>
+           <fr:destination name="cancel" path="<%= contextPrefix + "method=viewForum&amp;forumId="+forumId%>"/>
+           <fr:destination name="exception" path="<%= contextPrefix + "method=viewForum&amp;forumId="+forumId%>"/>
 	</fr:create>
 
 

@@ -131,7 +131,7 @@ public class ArchiveTag extends TagSupport {
             if (month != null && this.getTargetUrl() != null) {
                 buffer.append("<a href=\"").append(this.getTargetUrl());
                 buffer.append("selectedYear=").append(year.getYear());
-                buffer.append("&selectedMonth=").append(month.getMonth());
+                buffer.append("&amp;selectedMonth=").append(month.getMonth());
                 buffer.append("\">");
             }
             if (month != null) {

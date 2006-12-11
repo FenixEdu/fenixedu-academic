@@ -261,7 +261,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 	    result.append("keyUnit=").append(getRequestedUnitOID(request));
 	}
 	if (!StringUtils.isEmpty(request.getParameter("tabularVersion"))) {
-	    result.append("&tabularVersion=").append(request.getParameter("tabularVersion"));
+	    result.append("&amp;tabularVersion=").append(request.getParameter("tabularVersion"));
 	}
         return result.toString();
     }

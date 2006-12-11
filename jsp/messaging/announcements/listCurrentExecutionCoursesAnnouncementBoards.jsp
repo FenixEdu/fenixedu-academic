@@ -60,7 +60,7 @@
 				{
 				%>
 				<th>
-					Permissões
+					<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>
 				</th>
 				<%
 				}
@@ -86,7 +86,7 @@
 						if (ableToRead)
 						{
 						%>
-							<html:link title="<%= announcementBoard.getQualifiedName()%>" page="<%= contextPrefix + "method=viewAnnouncements" +"&" +extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal()%>">
+							<html:link title="<%= announcementBoard.getQualifiedName()%>" page="<%= contextPrefix + "method=viewAnnouncements" +"&amp;" +extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal()%>">
 								<bean:write name="announcementBoard" property="name"/>
 							</html:link>
 						<%
@@ -106,10 +106,10 @@
 					</td>
 					<td>
 						<logic:empty name="announcementBoard" property="readers">
-							Público
+							<bean:message key="label.public" bundle="MESSAGING_RESOURCES"/>
 						</logic:empty>
 						<logic:notEmpty name="announcementBoard" property="readers">
-							Privado
+							<bean:message key="label.private" bundle="MESSAGING_RESOURCES"/>
 						</logic:notEmpty>					
 					</td>
 					<%
@@ -117,8 +117,8 @@
 					{
 					%>						
 					<td>
-						Não
-						(<html:link page="<%= contextPrefix + "method=addBookmark" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal()%>">Adicionar</html:link>)
+						<bean:message key="label.no" bundle="MESSAGING_RESOURCES"/>
+						(<html:link page="<%= contextPrefix + "method=addBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal()%>">Adicionar</html:link>)
 					</td>									
 					<%
 					}
@@ -126,8 +126,8 @@
 					{
 					%>
 					<td>
-						Sim
-						(<html:link page="<%= contextPrefix + "method=removeBookmark" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal()%>">Remover</html:link>)
+						<bean:message key="label.yes" bundle="MESSAGING_RESOURCES"/>
+						(<html:link page="<%= contextPrefix + "method=removeBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal()%>">Remover</html:link>)
 					</td>										
 					<%				
 					}
@@ -137,7 +137,7 @@
 						{
 						%>
 							<td class="acenter">
-								<html:link page="<%= prefix +"manage" + announcementBoard.getClass().getSimpleName() + suffix + "method=prepareEditAnnouncementBoard" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal() + "&returnAction="+request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")+"&tabularVersion=true"%>">
+								<html:link page="<%= prefix +"manage" + announcementBoard.getClass().getSimpleName() + suffix + "method=prepareEditAnnouncementBoard" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction="+request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")+"&amp;tabularVersion=true"%>">
 										Gerir
 								</html:link>				
 							</td>

@@ -6,6 +6,8 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
 
+<html:xhtml/>
+
 <em><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.portal"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board.announcements"/></h2>
 
@@ -19,7 +21,7 @@
 	<p class="mbottom025"><strong><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board.filtering"/></strong></p>
 	<table class="tstyle5 thlight thright mtop0">
 	<tr>
-		<td>Privilégios:</td>
+		<td><bean:message key="label.priviledge" bundle="MESSAGING_RESOURCES"/>:</td>
 		<td>
 		<html:select property="announcementBoardAccessLevel" onchange="this.form.submit();">
 	        <html:options collection="levelValues" property="value" labelProperty="label" />
@@ -27,7 +29,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>Tipo:</td>
+		<td><bean:message key="label.type" bundle="MESSAGING_RESOURCES"/>:</td>
 		<td>
 	    <html:select property="announcementBoardAccessType" onchange="this.form.submit();">
 	        <html:options collection="typeValues" property="value" labelProperty="label" />
@@ -38,7 +40,7 @@
 	
 </html:form>
 
-<h3 class="mbottom05">Canais de Unidades</h3>
+<h3 class="mbottom05"><bean:message key="label.unitChannels" bundle="MESSAGING_RESOURCES"/></h3>
 <logic:present name="unitAnnouncementBoards">	
 	<logic:notEmpty name="unitAnnouncementBoards">
 		<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
@@ -80,21 +82,21 @@
 			}
 	
 		%>
-	Página:
+	<bean:message key="label.page" bundle="MESSAGING_RESOURCES"/>:
  	        
-       <bean:define id="urlToUnitBoards" type="java.lang.String">/messaging/announcements/announcementsStartPageHandler.do?page=0&method=handleBoardListing&<%=extraParameters%></bean:define>
+       <bean:define id="urlToUnitBoards" type="java.lang.String">/messaging/announcements/announcementsStartPageHandler.do?page=0&amp;method=handleBoardListing&amp;<%=extraParameters%></bean:define>
        <cp:collectionPages url="<%= urlToUnitBoards %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberUnitBoards" numberOfPagesAttributeName="numberOfPagesUnitBoards"/>	
 	
   	   <table class="tstyle2 tdcenter mtop05">	
 			<tr>
-				<th>
-					Nome
+				<th>									   
+					<bean:message key="label.name"/>
 				</th>
 				<th>
 					<bean:message bundle="MESSAGING_RESOURCES" key="label.board.unit" />
 				</th>
 				<th>
-					Tipo
+					<bean:message key="label.type" bundle="MESSAGING_RESOURCES"/>
 				</th>
 				<th>
 					Favoritos
@@ -104,7 +106,7 @@
 				{
 				%>
 				<th>
-					Permissões
+					<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>
 				</th>
 				<%
 				}
@@ -131,7 +133,7 @@
 						if (ableToRead)
 						{
 						%>
-							<html:link title="<%= announcementBoard.getQualifiedName()%>" page="<%= contextPrefix + "method=viewAnnouncements" +"&" +extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal()%>">
+							<html:link title="<%= announcementBoard.getQualifiedName()%>" page="<%= contextPrefix + "method=viewAnnouncements" +"&amp;" +extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal()%>">
 								<bean:write name="announcementBoard" property="name"/>
 							</html:link>
 						<%
@@ -149,25 +151,25 @@
 						</td>
 						<td class="acenter">
 							<logic:empty name="announcementBoard" property="readers">
-								Público
+								<bean:message key="label.public" bundle="MESSAGING_RESOURCES"/>
 							</logic:empty>
 							<logic:notEmpty name="announcementBoard" property="readers">
-								Privado
+								<bean:message key="label.private" bundle="MESSAGING_RESOURCES"/>
 							</logic:notEmpty>					
 						</td>
 					<%
 					if (!announcementBoard.getBookmarkOwner().contains(person)) {
 					%>						
 						<td class="acenter">
-							Não 
-							(<html:link page="<%= contextPrefix + "method=addBookmark" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal() + "&returnAction=" + request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")%>">Adicionar</html:link>)
+							<bean:message key="label.no" bundle="MESSAGING_RESOURCES"/>
+							(<html:link page="<%= contextPrefix + "method=addBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction=" + request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")%>">Adicionar</html:link>)
 						</td>									
 					<%
 					} else {
 					%>
 						<td class="acenter">
-							Sim 
-							(<html:link page="<%= contextPrefix + "method=removeBookmark" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal() + "&returnAction=" + request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")%>">Remover</html:link>)
+							<bean:message key="label.yes" bundle="MESSAGING_RESOURCES"/>
+							(<html:link page="<%= contextPrefix + "method=removeBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction=" + request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")%>">Remover</html:link>)
 						</td>
 					<%
 					} 
@@ -177,7 +179,7 @@
 					{
 					%>
 						<td class="acenter">
-							<html:link page="<%= prefix +"manage" + announcementBoard.getClass().getSimpleName() + suffix + "method=prepareEditAnnouncementBoard" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal() + "&returnAction="+request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")+"&tabularVersion=true"%>">
+							<html:link page="<%= prefix +"manage" + announcementBoard.getClass().getSimpleName() + suffix + "method=prepareEditAnnouncementBoard" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction="+request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")+"&amp;tabularVersion=true"%>">
 									Gerir
 							</html:link>				
 						</td>
@@ -215,20 +217,19 @@
 						}
 						%>
 				</tr>
-				</tr>
 			</logic:iterate>
 		</table>
 		
-		Página:				 	       
+		<bean:message key="label.page" bundle="MESSAGING_RESOURCES"/>			 	       
         <cp:collectionPages url="<%= urlToUnitBoards %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberUnitBoards" numberOfPagesAttributeName="numberOfPagesUnitBoards"/>			       	
         
 	</logic:notEmpty>
 	<logic:empty name="unitAnnouncementBoards">
-			Não existem canais de unidade<br/>
+	<bean:message key="label.noChannelsInUnit" bundle="MESSAGING_RESOURCES"/><br/>
 	</logic:empty>
 </logic:present>
 
-<h3 class="mtop2 mbottom05">Canais de Disciplinas</h3>
+<h3 class="mtop2 mbottom05"><bean:message key="label.coursesChannels" bundle="MESSAGING_RESOURCES"/></h3>
 
 <logic:present name="executionCourseAnnouncementBoards">	
 	<logic:notEmpty name="executionCourseAnnouncementBoards">
@@ -276,9 +277,9 @@
 	
 		%>
 
-	Página:
+	<bean:message key="label.page" bundle="MESSAGING_RESOURCES"/>:
  	 
-       <bean:define id="urlToExecutionCourses" type="java.lang.String">/messaging/announcements/announcementsStartPageHandler.do?page=0&method=handleBoardListing&<%=extraParameters%></bean:define>
+       <bean:define id="urlToExecutionCourses" type="java.lang.String">/messaging/announcements/announcementsStartPageHandler.do?page=0&amp;method=handleBoardListing&amp;<%=extraParameters%></bean:define>
        <cp:collectionPages url="<%= urlToExecutionCourses %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberExecutionCourseBoards" numberOfPagesAttributeName="numberOfPagesExecutionCourseBoards"/>	
 	
 		<table class="tstyle2 tdcenter mtop05">	
@@ -300,7 +301,7 @@
 				{
 				%>
 				<th>
-					Permissões
+					<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>
 				</th>
 				<%
 				}
@@ -325,7 +326,7 @@
 					if (ableToRead)
 						{
 					%>
-							<html:link title="<%= announcementBoard.getQualifiedName()%>" page="<%= contextPrefix + "method=viewAnnouncements" +"&" +extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal()%>">
+							<html:link title="<%= announcementBoard.getQualifiedName()%>" page="<%= contextPrefix + "method=viewAnnouncements" +"&amp;" +extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal()%>">
 								<bean:write name="announcementBoard" property="name"/>
 							</html:link>
 						<%
@@ -343,10 +344,10 @@
 					</td>
 					<td class="acenter">
 						<logic:empty name="announcementBoard" property="readers">
-							Público
+							<bean:message key="label.public" bundle="MESSAGING_RESOURCES"/>
 						</logic:empty>
 						<logic:notEmpty name="announcementBoard" property="readers">
-							Privado
+							<bean:message key="label.private" bundle="MESSAGING_RESOURCES"/>
 						</logic:notEmpty>					
 					</td>
 					<%
@@ -354,8 +355,8 @@
 					{
 					%>						
 					<td class="acenter">
-						Não 
-						(<html:link page="<%= contextPrefix + "method=addBookmark" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal() + "&returnAction="+request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")%>">Adicionar</html:link>)
+						<bean:message key="label.no" bundle="MESSAGING_RESOURCES"/>
+						(<html:link page="<%= contextPrefix + "method=addBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction="+request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")%>">Adicionar</html:link>)
 					</td>									
 					<%
 					}
@@ -363,8 +364,8 @@
 					{
 					%>
 					<td class="acenter">
-						Sim 
-						(<html:link page="<%= contextPrefix + "method=removeBookmark" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal() + "&returnAction="+request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")%>">Remover</html:link>)
+						<bean:message key="label.yes" bundle="MESSAGING_RESOURCES"/> 
+						(<html:link page="<%= contextPrefix + "method=removeBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction="+request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")%>">Remover</html:link>)
 					</td>										
 					<%				
 					}
@@ -374,7 +375,7 @@
 						{
 						%>
 							<td class="acenter">
-								<html:link page="<%= prefix +"manage" + announcementBoard.getClass().getSimpleName() + suffix + "method=prepareEditAnnouncementBoard" + "&" + extraParameters +"&announcementBoardId="+announcementBoard.getIdInternal() + "&returnAction="+request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")+"&tabularVersion=true"%>">
+								<html:link page="<%= prefix +"manage" + announcementBoard.getClass().getSimpleName() + suffix + "method=prepareEditAnnouncementBoard" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction="+request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")+"&amp;tabularVersion=true"%>">
 										Gerir
 								</html:link>				
 							</td>
@@ -415,11 +416,13 @@
 				</tr>
 			</logic:iterate>
 		</table>
-		Página:
+		<bean:message key="label.page" bundle="MESSAGING_RESOURCES"/>:
 	    <cp:collectionPages url="<%= urlToExecutionCourses %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberExecutionCourseBoards" numberOfPagesAttributeName="numberOfPagesExecutionCourseBoards"/>	
 	
 	</logic:notEmpty>
 	<logic:empty name="executionCourseAnnouncementBoards">
-		<p><em class="warning0">Não existem canais de disciplinas com o critério escolhido</em></p>
+		<p><em class="warning0">
+		<bean:message key="label.noCoursesWithSelectedCriteria" bundle="MESSAGING_RESOURCES"/>
+</em></p>
 	</logic:empty>
 </logic:present>

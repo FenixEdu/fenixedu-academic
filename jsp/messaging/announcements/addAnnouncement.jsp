@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em>Gestão de Canais</em>
+<em><bean:message key="label.manageChannels" bundle="MESSAGING_RESOURCES"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.add.label"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
@@ -21,15 +21,15 @@
 	String suffix = contextPrefix.substring(indexOfDot,contextPrefix.length());
 %>
 
-<bean:define id="action"><%= "method=prepareEditAnnouncementBoard&announcementBoardId=" + announcementBoardId + "&" + extraParameters %></bean:define>
+<bean:define id="action"><%= "method=prepareEditAnnouncementBoard&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
 
 <fr:form action="<%=  contextPrefix + action %>">
 
-<p class="mtop2 mbottom025"><strong>Campos obrigatórios:</strong></p>
+<p class="mtop2 mbottom025"><strong>Campos obrigatï¿½rios:</strong></p>
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
-<%-- Título --%>
+<%-- Tï¿½tulo --%>
 	<tr>
 		<th>
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
@@ -65,7 +65,7 @@
 			<span class="error0"><fr:message for="announcement-body-validated"/></span>
 		</td>
 	</tr>
-<%-- Visível --%>
+<%-- Visï¿½vel --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:
@@ -78,7 +78,7 @@
 	</tr>
 </table>
 
-<p class="mtop1 mbottom025"><strong>Campos opcionais:</strong></p>
+<p class="mtop1 mbottom025"><strong><bean:message key="label.optionalFields" bundle="MESSAGING_RESOURCES"/>:</strong></p>
 <table class="tstyle5 thlight thtop thright mtop025">
 <%-- Excerto --%>
 	<tr>
@@ -140,7 +140,7 @@
 		</td>
 	</tr>
 
-<%-- Início do Evento --%>
+<%-- Inï¿½cio do Evento --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
@@ -178,7 +178,7 @@
 
 
 
-<%-- Anúncio disponível apartir... --%>
+<%-- Anï¿½ncio disponï¿½vel apartir... --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:
@@ -189,7 +189,7 @@
 		</td>
 	</tr>
 
-<%-- Anúncio disponível até... --%>
+<%-- Anï¿½ncio disponï¿½vel atï¿½... --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.label"/>:
@@ -214,7 +214,7 @@
 	</fr:create>			
 	</p>
 
-<p class="smalltxt"><em>Campos assinalados com <span class="required">*</span> são de preenchimento obrigatório.</em></p>
+<p class="smalltxt"><em><bean:message key="label.fieldsWith" bundle="SITE_RESOURCES"/><span class="required">*</span><bean:message key="label.areRequired" bundle="SITE_RESOURCES"/></em></p>
 
 	<p class="mtop1">
 		<html:submit styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>

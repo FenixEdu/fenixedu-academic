@@ -208,7 +208,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	String contextPrefix = getContextInformation(request);
 
 	if (contextPrefix.contains("?")) {
-	    contextPrefix += "&";
+	    contextPrefix += "&amp;";
 	} else {
 	    contextPrefix += "?";
 	}

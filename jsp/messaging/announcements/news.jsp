@@ -7,6 +7,8 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
+<html:xhtml/>
+
 <bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 <logic:notEmpty name="userView" property="person.user.lastLoginHost">
 	<logic:notEmpty name="userView" property="person.user.lastLoginDateTime">
@@ -73,7 +75,7 @@
 	<e:labelValues id="values" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.presentationTier.Action.messaging.RecentBoardsTimeSpanSelection" /> 
 	<table class="tstyle5 mvert05">
 		<tr>
-			<td>Mostrar canais criados nos últimos:</td>
+			<td>Mostrar canais criados nos ï¿½ltimos:</td>
 			<td>
 			    <html:select property="recentBoardsTimeSpanSelection" onchange="this.form.submit();">
 	        		<html:options collection="values" property="value" labelProperty="label" />

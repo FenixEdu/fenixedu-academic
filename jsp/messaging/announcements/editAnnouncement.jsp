@@ -4,7 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em>Gestão de Canais</em>
+
+<em><bean:message bundle="MESSAGING_RESOURCES" key="label.manageChannels"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.edit.label"/></h2>
 
 
@@ -13,16 +14,16 @@
 <bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
 
 
-<bean:define id="action"><%= "method=prepareEditAnnouncementBoard&announcementBoardId=" + announcementBoardId + "&" + extraParameters %></bean:define>
+<bean:define id="action"><%= "method=prepareEditAnnouncementBoard&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
 
 <fr:form action="<%=  contextPrefix + action %>">
 
 
-<p class="mtop2 mbottom025"><strong>Campos obrigatórios:</strong></p>
+<p class="mtop2 mbottom025"><strong>Campos obrigatï¿½rios:</strong></p>
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
-<%-- Título --%>
+<%-- Tï¿½tulo --%>
 	<tr>
 		<th>
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
@@ -58,7 +59,7 @@
 
 </table>
 
-<p class="mtop1 mbottom025"><strong>Campos opcionais:</strong></p>
+<p class="mtop1 mbottom025"><strong><bean:message bundle="MESSAGING_RESOURCES" key="label.optionalFields"/>:</strong></p>
 <table class="tstyle5 thlight thtop thright mtop025">
 <%-- Excerto --%>
 	<tr>
@@ -133,7 +134,7 @@
 		</td>
 	</tr>
 
-<%-- Início do evento --%>
+<%-- Inï¿½cio do evento --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
@@ -153,7 +154,7 @@
 		</td>
 	</tr>
 
-<%-- Início de publicação --%>
+<%-- Inï¿½cio de publicaï¿½ï¿½o --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:
@@ -163,7 +164,7 @@
 		</td>
 	</tr>
 
-<%-- Fim de publicação --%>
+<%-- Fim de publicaï¿½ï¿½o --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.label"/>:
@@ -173,7 +174,7 @@
 		</td>
 	</tr>
 
-<%-- Visível --%>
+<%-- Visï¿½vel --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:
