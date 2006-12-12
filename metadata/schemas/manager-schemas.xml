@@ -7,7 +7,12 @@
 </schema>	
 
 <schema name="EditTeacherPastServiceDomainObject" type="net.sourceforge.fenixedu.domain.teacher.TeacherPastService" bundle="MANAGER_RESOURCES">
+	<slot name="credits" />	
+</schema>	
+
+<schema name="EditTeacherMasterDegreeServiceDomainObject" type="net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService" bundle="MANAGER_RESOURCES">
 	<slot name="credits" />
+	<slot name="hours" />
 </schema>	
 
 <schema name="EditStudentDomainObject" type="net.sourceforge.fenixedu.domain.student.Student" bundle="MANAGER_RESOURCES">
