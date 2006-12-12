@@ -34,6 +34,7 @@
     <fr:view name="section" property="name"/>
 </div>
 
+<div class="infoop2">
 <p>
     <span style="color: #888;">
         <bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
@@ -50,7 +51,7 @@
 </p>
 
 <p>
-    <span style="color: #888;">
+    <span style="color: #888;" class="anchorcaaa">
         <bean:message key="label.section.directLink" bundle="SITE_RESOURCES"/>:
         
         <bean:define id="sectionDirectLink" type="java.lang.String">
@@ -61,6 +62,7 @@
         </html:link>
     </span>
 </p>
+</div>
 
 <p>
 	<span>
