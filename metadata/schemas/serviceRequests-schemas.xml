@@ -24,10 +24,11 @@
 </schema>
 
 
-<schema name="DocumentRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="AcademicServiceRequest.view">
-	<slot name="documentPurposeType" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.documentPurposeType" />
+<schema name="DocumentRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES" extends="AcademicServiceRequest.view">
+	<slot name="documentPurposeType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose" />
 	<slot name="otherDocumentPurposeTypeDescription" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.otherDocumentPurposeTypeDescription" />
 	<slot name="numberOfPages" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.numberOfPages" />
+	<slot name="serviceRequestNumber"  />
 </schema>
 
 <schema name="DocumentRequest.view-without-numberOfPages" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
@@ -205,3 +206,12 @@
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"/>
 </schema>
 
+<schema name="AcademicServiceRequest.view-for-given-registration-and-search" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
+	<slot name="serviceRequestNumber"  read-only="true" />
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
+	<slot name="registration.number" layout="link">
+        <property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
+        <property name="contextRelative" value="true"/>
+        <property name="useParent" value="true"/>
+	</slot>
+</schema>
