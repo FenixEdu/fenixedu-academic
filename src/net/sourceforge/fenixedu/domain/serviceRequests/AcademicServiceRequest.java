@@ -189,6 +189,12 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 		.max(getAcademicServiceRequestSituations(), new BeanComparator("creationDate"))
 		: null;
     }
+    
+    public AcademicServiceRequestSituation getCreationSituation() {
+        return (!getAcademicServiceRequestSituations().isEmpty()) ? (AcademicServiceRequestSituation) Collections
+                .min(getAcademicServiceRequestSituations(), new BeanComparator("creationDate"))
+                : null;
+    }
 
     public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
 	return getActiveSituation().getAcademicServiceRequestSituationType();
@@ -302,5 +308,15 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     public boolean isDocumentRequest() {
 	return this instanceof DocumentRequest;
     }
+    
+    public boolean createdByStudent(){
+        return getCreationSituation().getEmployee() == null;
+    }
+    
+    public boolean getStudentCanCancel() {
+        return this.isNewRequest() && this.createdByStudent();
+    }
+    
+    
 
 }
