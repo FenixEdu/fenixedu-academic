@@ -8,11 +8,13 @@
 		<property name="classes" value="list2"/>
 	</slot>
 </schema>
+
 <schema name="net.sourceforge.fenixedu.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"
 		type="net.sourceforge.fenixedu.domain.Degree">
 	<slot name="tipoCurso"/>
 	<slot name="name"/>
 </schema>
+
 <schema name="net.sourceforge.fenixedu.domain.StudentCurricularPlan.List"
 		type="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 		bundle="APPLICATION_RESOURCES">
@@ -20,4 +22,88 @@
 	<slot name="registration.student.number"/>
 	<slot name="registration.student.person.name"/>
 	<slot name="registration.student.person.email"/>
+</schema>
+
+<schema name="ViewSeniorInfo" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="student.person.name" key="label.student.name"/>
+	<slot name="student.person.address" key="address"/>
+	<slot name="student.person.areaCode" key="areaCode"/>
+	<slot name="student.person.areaOfAreaCode" key="areaOfAreaCode"/>
+	<slot name="student.person.phone" key="phone"/>
+	<slot name="student.person.mobile" key="mobile"/>	
+	<slot name="student.person.email" key="email"/>	
+</schema>
+
+<schema name="EditSeniorExpectedInfo" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="expectedDegreeTerminationYearMonthDay" key="label.senior.expectedDegreeTermination">
+		<property name="size" value="10" />
+		<property name="maxLength" value="10" />
+	</slot>
+	<slot name="expectedDegreeAverageGrade" key="label.senior.expectedDegreeAverageGrade">
+		<property name="size" value="2" />
+		<property name="maxLength" value="2" />
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
+			<property name="lowerBound" value="1"/>
+			<property name="upperBound" value="20"/>
+			<property name="required" value="false"/>
+		</validator>
+	</slot>
+</schema>
+
+<schema name="ViewSeniorExpectedInfo" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="expectedDegreeTerminationYearMonthDay" key="label.senior.expectedDegreeTermination" />
+	<slot name="expectedDegreeAverageGrade" key="label.senior.expectedDegreeAverageGrade" />
+</schema>
+
+<schema name="ViewSeniorInfoLastModificationDate" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="lastModificationDateDateTime" layout="no-time" key="label.senior.lastModificationDate"/>
+</schema>
+
+<schema name="EditSeniorSpecialtyField" type="net.sourceforge.fenixedu.domain.student.Senior">
+	<slot name="specialtyField" layout="rich-text" key="label.senior.specialtyField">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
+</schema>
+<schema name="EditSeniorProfessionalInterests" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="professionalInterests" layout="rich-text" key="label.senior.professionalInterests">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
+</schema>
+<schema name="EditSeniorLanguageSkills" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="languageSkills" layout="rich-text" key="label.senior.languageSkills">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
+</schema>
+<schema name="EditSeniorInformaticsSkillss" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="informaticsSkills" layout="rich-text" key="label.senior.informaticsSkills">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
+</schema>
+<schema name="EditSeniorExtracurricularActivities" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="extracurricularActivities" layout="rich-text" key="label.senior.extracurricularActivities">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
+</schema>
+<schema name="EditSeniorProfessionalExperience" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="professionalExperience" layout="rich-text" key="label.senior.professionalExperience">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
 </schema>

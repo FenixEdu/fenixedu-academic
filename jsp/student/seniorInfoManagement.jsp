@@ -1,286 +1,101 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
-
-<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/html2xhtml.js"></script>
-<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/richtext.js"></script>
-<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/htmleditor.js"></script>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<html:xhtml/>
 
 <h2><bean:message key="label.title.seniorInfo"/></h2>
-<logic:equal name="seniorInfoForm" property="name" value="">
-	<html:errors/>
-</logic:equal>
-<logic:notEqual name="seniorInfoForm" property="name" value="">
-  <html:form action="/seniorInformation?method=change">
-	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.seniorIDInternal" property="seniorIDInternal"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="seniorInfoForm"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.address" property="address" name="seniorInfoForm"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.areaCode" property="areaCode" name="seniorInfoForm"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.areaCodeArea" property="areaCodeArea" name="seniorInfoForm"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.phone" property="phone" name="seniorInfoForm"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mobilePhone" property="mobilePhone" name="seniorInfoForm"/>			
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.email" property="email" name="seniorInfoForm"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.availablePhoto" property="availablePhoto" name="seniorInfoForm"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.personID" property="personID" name="seniorInfoForm"/>		
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.specialtyField" property="specialtyField"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.professionalInterests" property="professionalInterests"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.languageSkills" property="languageSkills"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.informaticsSkills" property="informaticsSkills"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.extracurricularActivities" property="extracurricularActivities"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.professionalExperience" property="professionalExperience"/>
 
+<logic:notEmpty name="senior">
 	
-    <table width="100%" cellspacing="0">
-		<tr>
+	<bean:define id="personID" name="senior" property="student.person.idInternal"/>
+	<fr:form action="/seniorInformation.do?method=change">
+		
+	    <table width="100%" cellspacing="0">
 			<tr>
-				<td class="infoop"><span class="emphasis-box">info</span>
-     			<td class="infoop"><bean:message key="label.senior.personalInfoWarning"/></td>
-     	</tr>
-    </table>
-	<br/>
-	<table border="0" width="100%" cellspacing="9">
-          <tr><td colspan="2">
-          	<table border="0" width="100%" height="100%" cellspacing="4">
-				<tr>
-        		    <td align="right"><bean:message key="label.person.name"/>:</td>
-		        	<td colspan="5"><bean:write name="seniorInfoForm" property="name"/></td>
-					<td rowspan="3" valign="center" height="12px" width="5px" align="center">
-						<logic:equal name="seniorInfoForm" property="availablePhoto" value="true">
-							<bean:define id="personID" name="seniorInfoForm" property="personID"/>
-      						<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
-						</logic:equal>
-						<logic:equal name="seniorInfoForm" property="availablePhoto" value="false">
-							<html:img src="<%= request.getContextPath() +"/images/photoPlaceHolder.jpg"%>" altKey="photoPlaceHolder" bundle="IMAGE_RESOURCES"/>
-						</logic:equal>
-					</td>
-		        </tr>
-          		<tr>
-		            <td align="right"><bean:message key="label.person.address" bundle="APPLICATION_RESOURCES"/></td>
-		            <td colspan="5"><bean:write name="seniorInfoForm" property="address" filter="false"/></td>
-		        </tr>
-          		<tr>
-		            <td align="right"><bean:message key="label.person.postCode" bundle="APPLICATION_RESOURCES"/></td>
-		            <td><bean:write name="seniorInfoForm" property="areaCode" filter="false"/></td>
-		            <td align="right" colspan="2"><bean:message key="label.person.areaOfPostCode" bundle="APPLICATION_RESOURCES"/></td>
-		            <td><bean:write name="seniorInfoForm" property="areaCodeArea" filter="false"/></td>
-		        </tr>
-				<tr>	
-					<td align="right" width="14%"><bean:message key="label.person.telephone" bundle="APPLICATION_RESOURCES"/></td>
-            		<td width="8%"><bean:write name="seniorInfoForm" property="phone"/></td>
-            		<td align="right"width="16%" colspan="2"><bean:message key="label.person.mobilePhone" bundle="APPLICATION_RESOURCES"/></td>
-            		<td width="16%"><bean:write name="seniorInfoForm" property="mobilePhone"/></td>
-            		<td align="right" width="16%"><bean:message key="label.person.email" bundle="APPLICATION_RESOURCES"/></td>
-	        		<td width="16%"><bean:write name="seniorInfoForm" property="email"/></td>
-				</tr>
-	        </table>				
-	      </td></tr>
-		  <tr>
-			<td colspan="2">&nbsp;
-				<span class="error"><!-- Error messages go here --><html:errors /></span>
-			</td>
-		  </tr>
-		  <tr>
-            <td width="20%"><bean:message key="label.senior.expectedDegreeTermination"/></td>
-            <td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.expectedDegreeTerminationDay" maxlength="2" size="2" property="expectedDegreeTerminationDay"/> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.expectedDegreeTerminationMonth" maxlength="2" size="2" property="expectedDegreeTerminationMonth"/> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.expectedDegreeTerminationYear" maxlength="4" size="4" property="expectedDegreeTerminationYear"/>
-				<bean:message key="label.senior.expectedDegreeTerminationHelp"/>
-			</td>
-          </tr>
-		  <tr>
-            <td><bean:message key="label.senior.expectedDegreeAverageGrade"/>:</td>
-            <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.expectedDegreeAverageGrade" maxlength="2" size="2" property="expectedDegreeAverageGrade"/></td>
-          </tr>
-    </table>
-   	<table border="0" width="100%" cellspacing="9">
-          <tr>
-			<td colspan='2'>&nbsp;</td>
-		  </tr>		  
-          <tr>
-	          <td valign="top"><bean:message key="label.senior.specialtyField_"/></td>	          
-          </tr>		  
-		  <tr>
-            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.specialtyField" rows="5" cols="65" property="specialtyField"/></td>-->           
-            <td>		        
-				<script language="JavaScript" type="text/javascript"> 
-					<!--
-					initEditor();		
-					//-->
-					</script>
+				<td class="infoop"><span class="emphasis-box">info</span></td>
+	     		<td class="infoop"><bean:message key="label.senior.personalInfoWarning"/></td>
+		   	</tr>	   		
+	    </table>
 					
-					<noscript>JavaScript must be enable to use this form <br/> </noscript>
-					
-					<script language="JavaScript" type="text/javascript"> 
-					<!--
-					writeMultipleTextEditor('rte1' ,100, 130, document.forms[0].specialtyField.value);		
-					//-->
-				</script>		
-			</td>
-            <td valign="middle" align="center"><bean:message key="label.senior.specialtyFieldFinalWork"/></td>
-          </tr>
-          <tr>
-			<td colspan='2'>&nbsp;</td>
-		  </tr>	
-          <tr>
-			<td colspan='2'>&nbsp;</td>
-		  </tr>		  
-		  <tr>		  	 
-		  	<td valign="top" ><bean:message key="label.senior.professionalInterests_"/></td>		 
-		  </tr>		  
-		  <tr>
-			<!--<td valign="top"><bean:message key="label.senior.professionalInterests"/></td>-->
-            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.professionalInterests" rows="5" cols="65" property="professionalInterests"/></td>-->
-            <td>	
-				<script language="JavaScript" type="text/javascript"> 
-					<!--
-					initEditor();		
-					//-->
-					</script>
-					
-					<noscript>JavaScript must be enable to use this form <br/> </noscript>
-					
-					<script language="JavaScript" type="text/javascript"> 
-					<!--
-					writeMultipleTextEditor('rte2', 100, 130, document.forms[0].professionalInterests.value);		
-					//-->
-				</script>		
-			</td>
-          </tr>
-          <tr>
-			<td colspan='2'>&nbsp;</td>
-		  </tr>	
-		  <tr>
-			<td colspan='2'>&nbsp;</td>
-		  </tr>		  
-		   <tr>		 
-	          <td valign="top"><bean:message key="label.senior.languageSkills_"/></td>	          
-          </tr>		  
-		  <tr>
-            <!--<td valign="top"><bean:message key="label.senior.languageSkills"/></td>-->
-            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.languageSkills" rows="5" cols="65" property="languageSkills"/></td>-->
-            <td>	
-				<script language="JavaScript" type="text/javascript"> 
-					<!--
-					initEditor();		
-					//-->
-					</script>
-					
-					<noscript>JavaScript must be enable to use this form <br/> </noscript>
-					
-					<script language="JavaScript" type="text/javascript"> 
-					<!--
-					writeMultipleTextEditor('rte3', 100, 130, document.forms[0].languageSkills.value);		
-					//-->
-				</script>		
-			</td>
-          </tr>
-          <tr>
-			<td colspan='2'>&nbsp;</td>
-		  </tr>
-		  <tr>
-			<td colspan='2'>&nbsp;</td>
-		  </tr>	
-		  <tr>		   	
-	          <td valign="top" ><bean:message key="label.senior.informaticsSkills_"/></td>
-          </tr>		  
-		  <tr>
-            <!--<td valign="top"><bean:message key="label.senior.informaticsSkills"/></td>-->
-            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.informaticsSkills" rows="5" cols="65" property="informaticsSkills"/></td>-->
-            <td>	
-				<script language="JavaScript" type="text/javascript"> 
-					<!--
-					initEditor();		
-					//-->
-					</script>
-					
-					<noscript>JavaScript must be enable to use this form <br/> </noscript>
-					
-					<script language="JavaScript" type="text/javascript"> 
-					<!--
-					writeMultipleTextEditor('rte4' ,100, 130, document.forms[0].informaticsSkills.value);		
-					//-->
-				</script>		
-			</td>
-          </tr>
-          <tr>
-			<td colspan='2'>&nbsp;</td>
-		  </tr>	
-		  <tr>
-			<td colspan='2'>&nbsp;</td>
-		  </tr>		  
-		  <tr>
-	          <td valign="top" ><bean:message key="label.senior.extracurricularActivities_"/></td>
-          </tr>		  
-		  <tr>
-            <!--<td valign="top"><bean:message key="label.senior.extracurricularActivities"/></td>-->
-            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.extracurricularActivities" rows="5" cols="65" property="extracurricularActivities"/></td>-->            
-            <td>	
-				<script language="JavaScript" type="text/javascript"> 
-					<!--
-					initEditor();		
-					//-->
-					</script>
-					
-					<noscript>JavaScript must be enable to use this form <br/> </noscript>
-					
-					<script language="JavaScript" type="text/javascript"> 
-					<!--
-					writeMultipleTextEditor('rte5', 100, 130, document.forms[0].extracurricularActivities.value);		
-					//-->
-				</script>		
-			</td>
-          </tr>
-          <tr>
-			<td colspan='2'>&nbsp;</td>
-		  </tr>		 
-		  <tr>
-			<td colspan='2'>&nbsp;</td>
-		  </tr>	 
-		  <tr>		  
-	          <td valign="top" ><bean:message key="label.senior.professionalExperience_"/></td>
-          </tr>		  
-  		  <tr>
-            <!--<td valign="top"><bean:message key="label.senior.professionalExperience"/></td>-->
-            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.professionalExperience" rows="5" cols="65" property="professionalExperience"/></td>-->            
-          	<td>	
-				<script language="JavaScript" type="text/javascript"> 
-					<!--
-					initEditor();		
-					//-->
-					</script>
-					
-					<noscript>JavaScript must be enable to use this form <br/> </noscript>
-					
-					<script language="JavaScript" type="text/javascript"> 
-					<!--
-					writeMultipleTextEditor('rte6', 100, 130, document.forms[0].professionalExperience.value);		
-					//-->
-				</script>		
-			</td>
-          </tr>		  		  
-		  <tr>
-			<td>&nbsp;</td>
-		  </tr>
-  		  <tr>
-            <td valign="bottom" align="right" colspan="3">
-				<bean:message key="label.senior.lastModificationDate"/>
-				<bean:define id="formatDate">
-					<dt:format pattern="dd/MM/yyyy">
-						<bean:write name="seniorInfoForm" property="lastModificationDate.time"/>
-					</dt:format>
-				</bean:define>
-				<br/><bean:write name="formatDate"/>
-			</td>
-          </tr>
-   	</table>
-<br /><br />
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" styleClass="inputbutton" property="Alterar" onclick="this.form.specialtyField.value=update1();this.form.professionalInterests.value=update2();this.form.languageSkills.value=update3();this.form.informaticsSkills.value=update4();this.form.extracurricularActivities.value=update5(); this.form.professionalExperience.value=update6()"><bean:message key="button.change"/></html:submit>
-<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.Reset" property="Reset" styleClass="inputbutton"><bean:message key="button.reset"/></html:reset>
-</html:form>
+	 	<p><html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></p>
+		
+		<fr:view name="senior" schema="ViewSeniorInfo">			
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
+				<fr:property name="columnClasses" value="aleft,,,,"/>   		
+			</fr:layout>							
+		</fr:view>
+				
+		<fr:edit id="editSeniorExpectedInfoID" name="senior" schema="EditSeniorExpectedInfo">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thlight mtop05"/>
+				<fr:property name="columnClasses" value="aleft,,,,"/>   		
+			</fr:layout>
+		</fr:edit>
+		
+		<p><bean:message key="label.senior.specialtyField_"/>&nbsp;(<bean:message key="label.senior.specialtyFieldFinalWork"/>)</p>
+		<fr:edit id="EditSeniorSpecialtyFieldID" name="senior" schema="EditSeniorSpecialtyField"> 
+			<fr:layout name="flow">
+                <fr:property name="eachInline" value="true"/>
+                <fr:property name="labelExcluded" value="true"/>
+            </fr:layout>
+		</fr:edit>
+		
+		<p><bean:message key="label.senior.professionalInterests_"/></p>
+		<fr:edit id="EditSeniorProfessionalInterestsID" name="senior" schema="EditSeniorProfessionalInterests"> 
+			<fr:layout name="flow">
+                <fr:property name="eachInline" value="true"/>
+                <fr:property name="labelExcluded" value="true"/>
+            </fr:layout>
+		</fr:edit>
+		
+		<p><bean:message key="label.senior.languageSkills_"/></p>
+		<fr:edit id="EditSeniorLanguageSkillsID" name="senior" schema="EditSeniorLanguageSkills"> 
+			<fr:layout name="flow">
+                <fr:property name="eachInline" value="true"/>
+                <fr:property name="labelExcluded" value="true"/>
+            </fr:layout>	
+		</fr:edit>
+		
+		<p><bean:message key="label.senior.informaticsSkills_"/></p>
+		<fr:edit id="EditSeniorInformaticsSkillssID" name="senior" schema="EditSeniorInformaticsSkillss">
+			<fr:layout name="flow">
+                <fr:property name="eachInline" value="true"/>
+                <fr:property name="labelExcluded" value="true"/>
+            </fr:layout>		
+		</fr:edit>
+		
+		<p><bean:message key="label.senior.extracurricularActivities_"/></p>
+		<fr:edit id="EditSeniorExtracurricularActivitiesID" name="senior" schema="EditSeniorExtracurricularActivities"> 
+			<fr:layout name="flow">
+                <fr:property name="eachInline" value="true"/>
+                <fr:property name="labelExcluded" value="true"/>
+            </fr:layout>
+		</fr:edit>
+				
+		<p><bean:message key="label.senior.professionalExperience_"/></p>
+		<fr:edit id="EditSeniorProfessionalExperienceID" name="senior" schema="EditSeniorProfessionalExperience"> 
+			<fr:layout name="flow">
+                <fr:property name="eachInline" value="true"/>
+                <fr:property name="labelExcluded" value="true"/>
+            </fr:layout>		
+		</fr:edit>
+		
+		<fr:view name="senior" schema="ViewSeniorInfoLastModificationDate">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
+				<fr:property name="columnClasses" value="aleft,,,,"/>   		
+			</fr:layout>
+		</fr:view>
+   	         
+		<p>
+			<html:submit><bean:message key="button.change"/></html:submit>
+			<html:reset><bean:message key="button.reset"/></html:reset>
+		</p>
+		
+ 	 </fr:form>
 
-</logic:notEqual>
+</logic:notEmpty>

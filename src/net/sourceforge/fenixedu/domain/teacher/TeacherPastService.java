@@ -17,6 +17,14 @@ public class TeacherPastService extends TeacherPastService_Base {
         setCredits(credits);
     }
     
+    @Override
+    public void setCredits(Double credits) {
+	if(credits == null) {
+	    throw new DomainException("arguments can't be null");
+	}
+	super.setCredits(credits);
+    }
+
     private int countPastServices(Teacher teacher) {
         int count = 0;
         for (TeacherService teacherService : teacher.getTeacherServices()) {

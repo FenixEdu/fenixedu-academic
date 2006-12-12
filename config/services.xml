@@ -6606,25 +6606,7 @@
         <filterChains>         
 			<chain name="StudentAuthorization" />
         </filterChains>
-    </service>
-    <service>
-		<name>ReadSeniorInfoByUsername</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.ReadSeniorInfoByUsername</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>
-	</service>
-	<service>
-		<name>EditSeniorInfo</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.EditSeniorInfo</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>
-	</service>
+    </service>	
 	<service>
 		<name>EditExecutionDegreePeriods</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.EditExecutionDegreePeriods</implementationClass>

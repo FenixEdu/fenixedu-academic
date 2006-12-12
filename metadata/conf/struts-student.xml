@@ -130,34 +130,7 @@
 			<form-property name="selectedGroupProposal" type="java.lang.String"/>
 			<form-property name="attributedByTeacher" type="java.lang.String"/>
 			<form-property name="confirmAttributions" type="java.lang.String[]"/>
-		</form-bean>
-
-      <form-bean name="seniorInfoForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        	<form-property name="seniorIDInternal" type="java.lang.Integer" />
-        	<form-property name="page" type="java.lang.Integer" />			
-			<form-property name="name" type="java.lang.String" />
-			<form-property name="address" type="java.lang.String" />
-			<form-property name="areaCode" type="java.lang.String" />
-			<form-property name="areaCodeArea" type="java.lang.String" />			
-			<form-property name="phone" type="java.lang.String" />
-			<form-property name="mobilePhone" type="java.lang.String" />		
-			<form-property name="email" type="java.lang.String" />
-			<form-property name="availablePhoto" type="java.lang.Boolean" />
-			<form-property name="personID" type="java.lang.Integer" />
-        	<form-property name="expectedDegreeTerminationDay" type="java.lang.Integer" />
-			<form-property name="expectedDegreeTerminationMonth" type="java.lang.Integer" />
-			<form-property name="expectedDegreeTerminationYear" type="java.lang.Integer" />			
-			<form-property name="expectedDegreeAverageGrade" type="java.lang.Integer" />
-			<form-property name="specialtyField" type="java.lang.String" />
-			<form-property name="professionalInterests" type="java.lang.String" />
-			<form-property name="languageSkills" type="java.lang.String" />
-			<form-property name="informaticsSkills" type="java.lang.String" />
-			<form-property name="extracurricularActivities" type="java.lang.String" />
-			<form-property name="professionalExperience" type="java.lang.String" />
-			<form-property name="lastModificationDate" type="java.util.Date" />
-      </form-bean>
+		</form-bean>     
 
 	  <!-- =================== Fill Inquiries ============== -->
       <form-bean name="fillInquiriesForm" 
@@ -786,12 +759,12 @@
 		</action>
 
 		<!-- SENIOR INFORMATION -->
-      	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.SeniorInformationAction"
-			path="/seniorInformation"
-			name="seniorInfoForm"
+      	<action path="/seniorInformation"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.SeniorInformationAction"
 			parameter="method"
-			scope="request" validate="true"
+			scope="request"
 			input="/seniorInformation.do?method=prepareEdit&amp;page=0">
+			
 			<forward name="show-form" path="senior-info-management"/>
 			<forward name="show-result" path="senior-info"/>
 		</action>
@@ -802,8 +775,7 @@
 			name = "fillInquiriesForm"
 			scope="request"
 			input="/fillInquiries.do?method=prepare&amp;page=0"
-			parameter="method"
-			>
+			parameter="method">
 
 			<forward name="inquiryIntroduction" path="inquiry-introduction"/>
 			<forward name="fillInquiry" path="fill-inquiry" />
@@ -818,8 +790,8 @@
   			name="studentInquiryDataForm"
   			scope="request"
   			input="/studentPersonalDataAuthorization.do?method=preparePersonalDataInquiry"
-  			parameter="method"
-  			>
+  			parameter="method">
+  			
   			<forward name="showAuthorizationInquiry" path="show-personal-data-use-inquiry"/>
   			<forward name="proceedToEnrollment" path="/curricularCoursesEnrollment.do?method=start"/>
   		</action>

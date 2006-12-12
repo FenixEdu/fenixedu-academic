@@ -3130,12 +3130,15 @@ class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.f
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.sourceforge.fenixedu.domain.DomainObject {
 	//Integer keyPartyType;
-    String ojbConcreteClass;
+	
 	PartyType type;
+	Integer keyParkingParty;
+	Integer keyQuestionBank;
+	
+    String ojbConcreteClass;		
 	String name;
 	String webAddress;
 	String socialSecurityNumber;
-
 	String address;	
 	String areaCode;
 	String areaOfAreaCode;
@@ -3143,8 +3146,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	String parishOfResidence;
 	String districtSubdivisionOfResidence;	
 	String districtOfResidence;	
-	Integer keyParkingParty;
-	Integer keyQuestionBank;
+	
 }
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer costCenterCode;
