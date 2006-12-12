@@ -12,9 +12,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.DocumentRequestCreator;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -56,8 +60,8 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 		request.setAttribute("executionYears", registration.getEnrolmentsExecutionYears());
 	    }
 	}
-
-	return mapping.findForward("createDocumentRequests");
+       
+        return mapping.findForward("createDocumentRequests");
     }
 
     private Registration getRegistration(final HttpServletRequest request, final ActionForm actionForm) {
@@ -82,7 +86,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("executionYears", studentCurricularPlan.getEnrolmentsExecutionYears());
 	}
     }
-
+    
     private StudentCurricularPlan getAndSetStudentCurricularPlans(HttpServletRequest request,
 	    final DynaActionForm actionForm) {
 	final Registration registration = getRegistration(request, actionForm);
@@ -94,6 +98,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 	return registration.getActiveStudentCurricularPlan();
 
     }
+
 
     public ActionForward viewDocumentRequestsToCreate(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
@@ -184,9 +189,9 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 	    final String notes, final Boolean urgentRequest,
 	    final DocumentRequestType documentRequestType, final HttpServletRequest request) {
 
-	final DocumentRequestCreateBean documentRequestCreateBean = new DocumentRequestCreateBean(
+       final DocumentRequestCreateBean documentRequestCreateBean = new DocumentRequestCreateBean(
 		getRegistration(request, dynaActionForm));
-
+		
 	documentRequestCreateBean.setToBeCreated(Boolean.TRUE);
 	documentRequestCreateBean.getRegistration();
 	documentRequestCreateBean.setChosenDocumentRequestType(documentRequestType);
@@ -246,17 +251,17 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     }
 
     private List<DocumentRequestCreateBean> getConfirmedDocumentRequestCreateBeans() {
-	final List<DocumentRequestCreateBean> result = new ArrayList<DocumentRequestCreateBean>();
+        final List<DocumentRequestCreateBean> result = new ArrayList<DocumentRequestCreateBean>();
 
-	for (final DocumentRequestCreateBean documentRequestCreateBean : (List<DocumentRequestCreateBean>) RenderUtils
-		.getViewState().getMetaObject().getObject()) {
+        for (final DocumentRequestCreateBean documentRequestCreateBean : (List<DocumentRequestCreateBean>) RenderUtils
+                .getViewState().getMetaObject().getObject()) {
 
-	    if (documentRequestCreateBean.getToBeCreated()) {
+            if (documentRequestCreateBean.getToBeCreated()) {
 
-		result.add(documentRequestCreateBean);
-	    }
-	}
-	return result;
+                result.add(documentRequestCreateBean);
+            }
+        }
+        return result;
     }
 
     public ActionForward viewDocumentRequests(ActionMapping mapping, ActionForm actionForm,
@@ -284,6 +289,46 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 			"documentRequestId")));
 
 	return mapping.findForward("viewDocumentRequest");
+    }
+
+    public ActionForward prepareCancelAcademicServiceRequest(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+            throws FenixFilterException, FenixServiceException {
+
+        getAndSetAcademicServiceRequest(request);
+        return mapping.findForward("prepareCancelAcademicServiceRequest");
+    }
+
+    public ActionForward cancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
+
+        final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+        final String justification = ((DynaActionForm) actionForm).getString("justification");
+        final String message = null;
+
+        try {
+            executeService("CancelAcademicServiceRequest", academicServiceRequest, justification);
+        } catch (DomainExceptionWithLabelFormatter ex) {
+            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
+                    .getLabelFormatterArgs()));
+            return mapping.findForward("prepareCancelAcademicServiceRequest");
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getKey());
+            return mapping.findForward("prepareCancelAcademicServiceRequest");
+        }
+       
+        
+       // return viewDocumentRequests(mapping, actionForm, request, response);
+        return mapping.findForward("cancelSuccess");
+    }
+
+    private AcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
+        final AcademicServiceRequest academicServiceRequest = rootDomainObject
+                .readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
+                        "academicServiceRequestId"));
+        request.setAttribute("academicServiceRequest", academicServiceRequest);
+        return academicServiceRequest;
     }
 
 }
