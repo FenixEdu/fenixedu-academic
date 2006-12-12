@@ -24,6 +24,10 @@
 		<fr:property name="classes" value="tstyle4 thlight" />
 		<fr:property name="linkFormat(view)" value="/documentRequest.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
 		<fr:property name="key(view)" value="view"/>
+		<fr:property name="linkFormat(cancel)" value="/documentRequest.do?method=prepareCancelAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
+		<fr:property name="key(cancel)" value="cancel"/>
+		<fr:property name="visibleIf(cancel)" value="studentCanCancel"/>
+			
 		<fr:property name="sortBy" value="creationDate=desc, documentRequestType=asc, urgentRequest=desc"/>
 	</fr:layout>
 </fr:view>
