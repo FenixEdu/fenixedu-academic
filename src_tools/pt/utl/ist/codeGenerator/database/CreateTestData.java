@@ -7,26 +7,36 @@ import java.util.Set;
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Campus;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Identification;
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -36,46 +46,54 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.messaging.Announcement;
+import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class CreateTestData {
 
     public static void main(String[] args) {
+        try {
+            MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
+            SuportePersistenteOJB.fixDescriptors();
+            RootDomainObject.init();
 
-	MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
-	SuportePersistenteOJB.fixDescriptors();
-	RootDomainObject.init();
+            ISuportePersistente persistentSupport = null;
+            try {
+                persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+                persistentSupport.iniciarTransaccao();
+                clearData();
+                createManagerUser();
+                createTestData();
+                persistentSupport.confirmarTransaccao();
+            } catch (Exception ex) {
+                ex.printStackTrace();
 
-	ISuportePersistente persistentSupport = null;
-	try {
-	    persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-	    persistentSupport.iniciarTransaccao();
-            clearData();
-            createManagerUser();
-            createTestData();
-	    persistentSupport.confirmarTransaccao();
-	} catch (Exception ex) {
-	    ex.printStackTrace();
-
-	    try {
-		if (persistentSupport != null) {
-		    persistentSupport.cancelarTransaccao();
-		}
-	    } catch (ExcepcaoPersistencia e) {
-		throw new Error(e);
-	    }
-	}
-
+                try {
+                    if (persistentSupport != null) {
+                        persistentSupport.cancelarTransaccao();
+                    }
+                } catch (ExcepcaoPersistencia e) {
+                    throw new Error(e);
+                }
+            }
+        } finally {
+            System.err.flush();
+            System.out.flush();
+        }
 	System.out.println("Creation of test data complete.");
 	System.exit(0);
     }
@@ -94,6 +112,16 @@ public class CreateTestData {
 
     private static void clearData() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+
+        for (final Set<ExecutionCourseSite> sites = rootDomainObject.getExecutionCourseSitesSet(); !sites.isEmpty(); sites.iterator().next().delete());
+        for (final Set<Forum> forums = rootDomainObject.getForunsSet(); !forums.isEmpty(); forums.iterator().next().delete());
+        for (final Set<Announcement> announcements = rootDomainObject.getAnnouncementsSet(); !announcements.isEmpty(); announcements.iterator().next().delete());
+        for (final Set<AnnouncementBoard> announcementBoards = rootDomainObject.getAnnouncementBoardsSet(); !announcementBoards.isEmpty(); announcementBoards.iterator().next().delete());
+        for (final Set<LessonPlanning> lessonPlannings = rootDomainObject.getLessonPlanningsSet(); !lessonPlannings.isEmpty(); lessonPlannings.iterator().next().deleteWithoutReOrder());
+        for (final Set<Evaluation> evaluations = rootDomainObject.getEvaluationsSet(); !evaluations.isEmpty(); evaluations.iterator().next().delete());
+        for (final Set<Professorship> professorships = rootDomainObject.getProfessorshipsSet(); !professorships.isEmpty(); professorships.iterator().next().delete());
+        for (final Set<ExecutionCourse> executionCourses = rootDomainObject.getExecutionCoursesSet(); !executionCourses.isEmpty(); executionCourses.iterator().next().delete());
+
         for (final Party party : rootDomainObject.getPartysSet()) {
             if (party.isPerson()) {
                 final Person person = (Person) party;
@@ -115,6 +143,7 @@ public class CreateTestData {
             }
             parties.remove(party);
         }
+
         for (final Set<ExecutionDegree> executionDegrees = rootDomainObject.getExecutionDegreesSet(); !executionDegrees.isEmpty(); executionDegrees.iterator().next().delete());
         for (final Set<CurricularCourseScope> curricularCourseScopes = rootDomainObject.getCurricularCourseScopesSet(); !curricularCourseScopes.isEmpty(); curricularCourseScopes.iterator().next().delete());
         for (final Set<DegreeModule> degreeModules = rootDomainObject.getDegreeModulesSet(); !degreeModules.isEmpty(); degreeModules.iterator().next().delete());
@@ -130,19 +159,20 @@ public class CreateTestData {
         createExecutionYears();
         createCampus();
         createDegrees();
+        createExecutionCourses();
     }
 
     private static Teacher createTeachers(final int i) {
-        final Person person = createPerson(i);
+        final Person person = createPerson("Guru Diplomado", i);
         final Teacher teacher = new Teacher(Integer.valueOf(i), person);
         final Login login = person.getUser().readUserLoginIdentification();
         login.openLoginIfNecessary(RoleType.TEACHER);
         return teacher;
     }
 
-    private static Person createPerson(final int i) {
+    private static Person createPerson(final String namePrefix, final int i) {
         final Person person = new Person();
-        person.setName("Nome da Pessoa" + i);
+        person.setName(namePrefix + i);
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
@@ -233,18 +263,116 @@ public class CreateTestData {
         }
     }
 
+    private static void createExecutionCourses() {
+        for (final DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModulesSet()) {
+            if (degreeModule instanceof CurricularCourse) {
+                final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
+                for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+                    if (!curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod).isEmpty()) {
+                        createExecutionCourse(executionPeriod, curricularCourse);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void createExecutionCourse(final ExecutionPeriod executionPeriod, final CurricularCourse curricularCourse) {
+        final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(), curricularCourse.getAcronym(), executionPeriod);
+        executionCourse.addAssociatedCurricularCourses(curricularCourse);
+        executionCourse.setTheoreticalHours(Double.valueOf(3d));
+        executionCourse.setPraticalHours(Double.valueOf(2d));
+        final ExecutionCourseSite executionCourseSite = executionCourse.createSite();
+        executionCourseSite.setInitialStatement("Bla bla bla bla bla bla bla.");
+        executionCourseSite.setAlternativeSite("http://www.google.com/");
+        executionCourseSite.setIntroduction("Blur blur bla blur ble blur bla.");
+        executionCourseSite.setLessonPlanningAvailable(Boolean.TRUE);
+        createProfessorship(executionCourse, Boolean.TRUE);
+        createProfessorship(executionCourse, Boolean.FALSE);
+        createAnnouncementsAndPlanning(executionCourse);
+        createShifts(executionCourse);
+    }
+
+    private static void createShifts(final ExecutionCourse executionCourse) {
+        final Shift shift1 = new Shift(executionCourse, ShiftType.TEORICA, Integer.valueOf(50), Integer.valueOf(50));
+        final Shift shift2 = new Shift(executionCourse, ShiftType.PRATICA, Integer.valueOf(50), Integer.valueOf(50));
+    }
+
+    private static void createAnnouncementsAndPlanning(final ExecutionCourse executionCourse) {
+        final AnnouncementBoard announcementBoard = executionCourse.getBoard();
+        final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+        final YearMonthDay start = executionPeriod.getBeginDateYearMonthDay();
+        final YearMonthDay end = executionPeriod.getEndDateYearMonthDay();
+        for (YearMonthDay day = start; day.compareTo(end) < 0; day = day.plusDays(7)) {
+            createAnnouncements(announcementBoard, day);
+            createPlanning(executionCourse, ShiftType.TEORICA);
+            createPlanning(executionCourse, ShiftType.TEORICA);
+            createPlanning(executionCourse, ShiftType.PRATICA);
+        }
+    }
+
+    private static void createPlanning(ExecutionCourse executionCourse, ShiftType shiftType) {
+        final LessonPlanning lessonPlanning = new LessonPlanning(new MultiLanguageString("Titulo do Planeamento"), new MultiLanguageString("Corpo do Planeamento"), shiftType, executionCourse);
+        lessonPlanning.getTitle().setContent(Language.en, "Title of the planning.");
+        lessonPlanning.getPlanning().setContent(Language.en, "Planning contents.");
+    }
+
+    private static void createAnnouncements(final AnnouncementBoard announcementBoard, final YearMonthDay day) {
+        final Announcement announcement = new Announcement();
+        announcement.setAnnouncementBoard(announcementBoard);
+        announcement.setAuthor("Autor do anúncio");
+        announcement.setAuthorEmail("http://www.google.com/");
+        announcement.setBody(new MultiLanguageString("Corpo do anúncio. Bla bla bla bla."));
+        announcement.getBody().setContent(Language.en, "Content of the announcement. Blur blur blur blur.");
+        announcement.setCreationDate(day.toDateTimeAtMidnight());
+        announcement.setCreator(null);
+        announcement.setExcerpt(new MultiLanguageString("Bla ..."));
+        announcement.getExcerpt().setContent(Language.en, "Blur ...");
+        announcement.setKeywords(new MultiLanguageString("Bla"));
+        announcement.getKeywords().setContent(Language.en, "Blur");
+        announcement.setLastModification(day.toDateTimeAtCurrentTime());
+        announcement.setPlace("Here.");
+//        announcement.setPublicationBegin();
+//        announcement.setPublicationEnd();
+//        announcement.setReferedSubjectBegin();
+//        announcement.setReferedSubjectEnd();
+        announcement.setSubject(new MultiLanguageString("Assunto Bla."));
+        announcement.getSubject().setContent(Language.en, "Subject blur.");
+        announcement.setVisible(Boolean.TRUE);
+    }
+
     private static void createPreBolonhaCurricularCourses(final DegreeCurricularPlan degreeCurricularPlan, int dcpCounter, final ExecutionYear executionYear, final Branch branch) {
-	final Degree degree = degreeCurricularPlan.getDegree();
-	final DegreeType degreeType = degree.getDegreeType();
 	for (final CurricularSemester curricularSemester : RootDomainObject.getInstance().getCurricularSemestersSet()) {
 	    final CurricularYear curricularYear = curricularSemester.getCurricularYear();
 	    for (int i = 1; i < 6; i++) {
 		final String x = "" + dcpCounter + i + curricularYear.getYear() + curricularSemester.getSemester();
 		final CurricularCourse curricularCourse = degreeCurricularPlan.createCurricularCourse("Disciplina" + x, "C" + x, "D" + x, Boolean.TRUE, CurricularStage.OLD);
+                curricularCourse.setNameEn("Course" + x);
 		curricularCourse.setType(CurricularCourseType.NORMAL_COURSE);
+                curricularCourse.setTheoreticalHours(Double.valueOf(3d));
+                curricularCourse.setPraticalHours(Double.valueOf(2d));
 		new CurricularCourseScope(branch, curricularCourse, curricularSemester, executionYear.getBeginDateYearMonthDay().toDateMidnight().toCalendar(null), null, null);
+                final Curriculum curriculum = new Curriculum();
+                curriculum.setCurricularCourse(curricularCourse);
+                curriculum.setGeneralObjectives("Objectivos gerais bla bla bla bla bla.");
+                curriculum.setGeneralObjectivesEn("General objectives blur ble ble blur.");
+                curriculum.setOperacionalObjectives("Objectivos Operacionais bla bla bla bla bla.");
+                curriculum.setOperacionalObjectivesEn("Operational objectives blur ble ble blur.");
+                curriculum.setProgram("Programa bla bla bla bla bla.");
+                curriculum.setProgramEn("Program blur ble ble blur.");
+                curriculum.setLastModificationDateDateTime(new DateTime());
+                final CompetenceCourse competenceCourse = new CompetenceCourse(curricularCourse.getCode(), curricularCourse.getName(), null);
+                curricularCourse.setCompetenceCourse(competenceCourse);
 	    }
 	}
+    }
+
+    private static void createProfessorship(final ExecutionCourse executionCourse, final Boolean isResponsibleFor) {
+        final int n = RootDomainObject.getInstance().getTeachersSet().size();
+        final Teacher teacher = createTeachers(n + 1);
+        final Professorship professorship = new Professorship();
+        professorship.setTeacher(teacher);
+        professorship.setExecutionCourse(executionCourse);
+        professorship.setResponsibleFor(isResponsibleFor);
     }
 
     private static String constructExecutionYearString() {
