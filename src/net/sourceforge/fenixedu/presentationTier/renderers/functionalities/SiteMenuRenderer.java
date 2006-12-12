@@ -46,10 +46,14 @@ public class SiteMenuRenderer extends MenuRenderer {
     }
 
     private void addSiteSections(FunctionalityContext context, Site site, List<Section> sections, HtmlList list) {
-        List<Section> orderedSections = new ArrayList<Section>(sections);
-        Collections.sort(orderedSections, Section.COMPARATOR_BY_ORDER);
+	HtmlListItem item = null;
+	List<Section> orderedSections = new ArrayList<Section>(sections);
+	
+        if(!orderedSections.isEmpty()) {
+            Collections.sort(orderedSections, Section.COMPARATOR_BY_ORDER);
+            item = list.createItem();        
+        }
         
-        HtmlListItem item = list.createItem();
         for (Section section : orderedSections) {
             if (! section.isVisible(context)) {
                 continue;

@@ -43,8 +43,8 @@
 		<tr>
 			<th><bean:message key="label.studentCurricularPlan.basic" bundle="STUDENT_RESOURCES" /></th>
 			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.studentCPID" property="studentCPID"
-						onchange='this.form.submit();'> <html:options collection="scpsLabelValueBeanList" property="value" labelProperty="label" />
+				<html:select bundle="HTMLALT_RESOURCES" property="studentCPID" onchange='this.form.submit();'> 
+					<html:options collection="scpsLabelValueBeanList" property="value" labelProperty="label" />
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
@@ -55,8 +55,7 @@
 		<tr>
 			<th><bean:message key="label.enrollmentsFilter.basic" bundle="STUDENT_RESOURCES" /></th>
 			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.select" property="select"
-					onchange='this.form.submit();' >
+				<html:select bundle="HTMLALT_RESOURCES" property="select" onchange='this.form.submit();' >
 					<html:options collection="enrollmentOptions" property="value" labelProperty="label"/>
 				</html:select>
 				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">

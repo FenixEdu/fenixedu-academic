@@ -85,7 +85,7 @@ public class HtmlLink extends HtmlComponent {
                 
                 if (indexOfQuestion < url.length()) {
                     String parameters = url.substring(indexOfQuestion + 1);
-                    String[] parameresParts = parameters.split("&amp;");
+                    String[] parameresParts = getParameters(parameters);                              
                     
                     for (int i = 0; i < parameresParts.length; i++) {
                         String part = parameresParts[i];
@@ -100,6 +100,14 @@ public class HtmlLink extends HtmlComponent {
         }
         
         this.url = realUrl != null ? realUrl : url;
+    }
+
+    private String[] getParameters(String parameters) {
+	String[] parameresParts = parameters.split("&amp;");
+	if(parameresParts.length < 2) {
+	    parameresParts = parameters.split("&");
+	}
+	return parameresParts;
     }
 
     public String getModule() {

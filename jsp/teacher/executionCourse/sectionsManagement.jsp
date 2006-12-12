@@ -53,7 +53,7 @@
                 <fr:property name="schemaFor(Section)" value="site.section.name"/>
                 <fr:property name="childrenFor(Section)" value="orderedSubSections"/>
             </fr:layout>
-            <fr:destination name="section.view" path="<%= "/manageExecutionCourse.do?method=section&sectionID=${idInternal}&executionCourseID=" + executionCourseId %>"/>
+            <fr:destination name="section.view" path="<%= "/manageExecutionCourse.do?method=section&amp;sectionID=${idInternal}&amp;executionCourseID=" + executionCourseId %>"/>
         </fr:view>
 	
 		<p class="mtop15">
