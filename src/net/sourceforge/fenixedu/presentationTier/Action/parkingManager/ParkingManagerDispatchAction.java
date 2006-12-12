@@ -318,7 +318,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         if (p.getParkingParty().getPhdNumber() != null) {
             return "Nº: " + p.getParkingParty().getPhdNumber();
         }
-        if (p.getTeacher() != null
+        if (p.getTeacher() != null && p.getTeacher().getCurrentWorkingDepartment() != null
                 && !p.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
             return "Nº Mec: " + p.getTeacher().getTeacherNumber();
         }
@@ -339,6 +339,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         }
         if (p.getGrantOwner() != null && p.getGrantOwner().hasCurrentContract()) {
             return "Nº: " + p.getGrantOwner().getNumber();
+        }
+        if (p.getTeacher() != null
+                && !p.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+            return "Nº Mec: " + p.getTeacher().getTeacherNumber();
         }
         return "";
     }
