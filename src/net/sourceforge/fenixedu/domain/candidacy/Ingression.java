@@ -26,7 +26,7 @@ public enum Ingression {
 	    "Naturais e filhos de naturais de territórios sob administração portuguesa, mas temporariamente ocupados por Forças Armadas e Estados Estrangeiros"), REA09(
 	    "Estudantes nacionais da República de Angola, não bolseiros e que não tenham residido em território português durante a aquisição da habilitação precedente ao 12º ano de escolaridade"), VAG01(
 	    "Vagas Adicionais - Vagas que são necessárias criar por erros de serviços do Ministério da Educação (Direcção Geral de Acesso ao Ensino Superior)"), CIA2C(
-	    "Concurso Interno de Acesso ao 2º Ciclo"), PMT("Permuta");
+	    "Concurso Interno de Acesso ao 2º Ciclo"), PMT("Permuta"), MCI("Mudança de Curso Interna");
 
     String description;
 
