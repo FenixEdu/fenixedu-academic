@@ -108,6 +108,11 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
     }
 
+    public ExecutionPeriod getLastExecutionPeriod() {
+        return (ExecutionPeriod) Collections.max(this.getExecutionPeriods(),
+                ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+    }
+
     public List<ExecutionPeriod> readNotClosedPublicExecutionPeriods() {
 	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
 	for (final ExecutionPeriod executionPeriod : this.getExecutionPeriodsSet()) {
