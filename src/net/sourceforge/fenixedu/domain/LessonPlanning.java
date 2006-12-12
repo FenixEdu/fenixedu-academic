@@ -21,14 +21,14 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     public LessonPlanning(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType,
 	    ExecutionCourse executionCourse) {
-	this();	
+	this();
 	setLastOrder(executionCourse, lessonType);
 	setTitle(title);
 	setPlanning(planning);
 	setLessonType(lessonType);
 	setExecutionCourse(executionCourse);
     }
-    
+
     @Override
     public void setLessonType(ShiftType lessonType) {
 	if (lessonType == null) {
@@ -63,12 +63,12 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     public void delete() {
 	reOrderLessonPlannings();
-        deleteWithoutReOrder();
+	deleteWithoutReOrder();
     }
 
     public void deleteWithoutReOrder() {
 	super.setExecutionCourse(null);
-        removeRootDomainObject();
+	removeRootDomainObject();
 	deleteDomainObject();
     }
 
@@ -105,9 +105,10 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     public String getLessonPlanningLabel() {
 	StringBuilder builder = new StringBuilder();
-	builder.append("Aula ").append(getOrderOfPlanning()).append(" (").append(
-		RenderUtils.getEnumString(getLessonType(), null)).append(") - ").append(
-		getTitle().getContent());
+	builder.append(RenderUtils.getResourceString("DEFAULT", "label.lesson")).append(" ");
+	builder.append(getOrderOfPlanning()).append(" (");
+	builder.append(RenderUtils.getEnumString(getLessonType(), null)).append(") - ");
+	builder.append(getTitle().getContent());
 	return builder.toString();
     }
 }

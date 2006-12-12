@@ -56,7 +56,7 @@
 </schema>
 
 <schema name="ViewSeniorInfoLastModificationDate" type="net.sourceforge.fenixedu.domain.student.Senior" >
-	<slot name="lastModificationDateDateTime" layout="no-time" key="label.senior.lastModificationDate"/>
+	<slot name="lastModificationDateDateTime" key="label.senior.lastModificationDate"/>
 </schema>
 
 <schema name="EditSeniorSpecialtyField" type="net.sourceforge.fenixedu.domain.student.Senior">
