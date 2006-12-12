@@ -71,6 +71,14 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     protected CurricularCourse() {
 	super();
+        final Double d = Double.valueOf(0d);
+        setTheoreticalHours(d);
+        setTheoPratHours(d);
+        setLabHours(d);
+        setPraticalHours(d);
+        setCredits(d);
+        setEctsCredits(d);
+        setWeigth(d);
     }
 
     protected CurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
