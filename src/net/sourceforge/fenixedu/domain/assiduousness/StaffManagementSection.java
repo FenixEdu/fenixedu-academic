@@ -11,7 +11,7 @@ public class StaffManagementSection extends StaffManagementSection_Base {
     }
 
     public static boolean isMember(Person person) {
-        return RootDomainObject.getInstance().getStaffManagementSections() == null ? false
+        return RootDomainObject.getInstance().getStaffManagementSections().isEmpty() ? false
                 : RootDomainObject.getInstance().getStaffManagementSectionsIterator().next()
                         .getSectionManagers().isMember(person);
     }
