@@ -217,13 +217,13 @@ table td.cornerright { }
 /* table classes - th properties */
 
 .tstyle1 th, .tstyle2 th, .tstyle3 th, .tstyle4 th {
-padding: 5px;
+padding: 5px; /* different top/bottom padding affect left/right padding rendering in different tables with same dimensions (?) */
 text-align: center;
 }
 
 .tstyle1 th { border: 1px solid #ccc; background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x;}
 .tstyle2 th { border: none; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; background: #f5f5f5 /*url(../../pics/back_32gray.gif) left bottom repeat-x*/; }
-.tstyle3 th { padding: 5px 10px; border: 1px solid #ccc; background: #eee; }
+.tstyle3 th { border: 1px solid #ccc; background: #eee; }
 .tstyle4 th { border: 1px solid #ccc; background: #eee; }
 .tstyle5 th { padding: 4px; border: 1px solid #fff; vertical-align: top; background: #f5f5f5; }
 .tstyle7 th { border: 1px solid #eee; background: #eee; }
@@ -233,7 +233,7 @@ text-align: center;
 /* table classes - td properties */
 
 .tstyle1 td, .tstyle2 td, .tstyle3 td, .tstyle4 td  {
-padding: 5px; /*padding em "em" d� problemas de rendering no firefox, faz arredondamentos incoerentes */
+padding: 5px; /*padding em "em"� problemas de rendering no firefox, faz arredondamentos incoerentes */
 }
 
 .tstyle1 td { border: 1px solid #cccccc; }

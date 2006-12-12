@@ -33,15 +33,14 @@
 <html:form action="/weeklyWorkLoad.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
-	Semestre: 
-	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" onchange="this.form.submit();">
+	<bean:message key="label.semester"/>: 
+	<html:select bundle="HTMLALT_RESOURCES" property="executionPeriodID" onchange="this.form.submit();">
 		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
 	</html:select>
 	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.submit"/>
 	</html:submit>
 </html:form>
-
 
 <p><!-- Error messages go here --><html:errors/></p>
 
@@ -86,12 +85,12 @@
 </logic:notPresent>
 
 <p class="mbottom0">
-	<span class="attention">Atenção:</span> Deve submeter uma disciplina de cada vez e preencher os três campos (Contacto, Trabalho Autï¿½nomo e Outro).
+	<span class="attention"><bean:message key="label.attention.nonCaps"/>:</span> <bean:message key="label.attention.text"/>
 </p>
 
 <logic:present name="firstAttends" property="responseWeek">
 	<bean:define id="previousWeek" name="firstAttends" property="responseWeek"/>
-	<table class="tstyle3 tdcenter">
+	<table class="tstyle3 mbottom0">
 		<tr>
 			<th colspan="5">
 				<bean:message key="title.weekly.work.load.week"/>
@@ -107,59 +106,78 @@
 			</th>
 		</tr>
 		<tr>
-			<th style="width: 200px;">
+			<th style="width: 300px">
 				<bean:message key="title.execution.course"/>
 			</th>
-			<th  title="<%= contact_tooltip %>" width="20%">
+			<th  title="<%= contact_tooltip %>" style="width: 100px">
 				<bean:message key="title.weekly.work.load.contact"/><br/><span style="font-weight: normal;"><bean:message key="label.weekly.work.load.hoursperweek"/></span>
 			</th>
-			<th title="<%= autonomousStudy_tooltip %>" width="20%">
+			<th title="<%= autonomousStudy_tooltip %>" style="width: 100px">
 				<bean:message key="title.weekly.work.load.autonomousStudy"/><br/><span style="font-weight: normal;"><bean:message key="label.weekly.work.load.hoursperweek"/></span>
 			</th>
-			<th title="<%= other_tooltip %>" width="20%">
+			<th title="<%= other_tooltip %>" style="width: 100px">
 				<bean:message key="title.weekly.work.load.other"/><br/><span style="font-weight: normal;"><bean:message key="label.weekly.work.load.hoursperweek"/></span>
 			</th>
-			<th width="15%">
+			<th style="width: 100px">
 			</th>
 		</tr>
 
-	<logic:iterate id="attend" name="attends">
+</table>					
+
+	<html:form action="/weeklyWorkLoad.do">
+	
+		
+		<table class="tstyle3 mtop0 tdcenter">				
+		<logic:iterate id="attend" name="attends">
+
 		<logic:notPresent name="attend" property="weeklyWorkLoadOfPreviousWeek">
-			<html:form action="/weeklyWorkLoad.do">
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createFromForm"/>
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-				<bean:define id="attendsID" type="java.lang.Integer" name="attend" property="idInternal"/>
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.attendsID" property="attendsID" value="<%= attendsID.toString() %>"/>
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodID" property="executionPeriodID"/>	
+
+				 <bean:define id="attendsID" type="java.lang.Integer" name="attend" property="idInternal"/>		
+				 <tr class="dnone">
+					<td >
+				 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createFromForm"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/> 		
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.attendsID" property="attendsID" value="<%= attendsID.toString() %>"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodID" property="executionPeriodID"/>	
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>					
+					<td></td>
+				 </tr>
+
 				<tr>
-					<td width="35%">
+					<td style="width: 300px">
 						<bean:write name="attend" property="disciplinaExecucao.nome"/>
 					</td>
-					<td title="<%= contact_tooltip %>" width="20%">
+					<td title="<%= contact_tooltip %>" style="width: 100px">
 						<html:text bundle="HTMLALT_RESOURCES" altKey="text.contact" size="3" maxlength="3" property="contact"/>
 					</td>
-					<td  title="<%= autonomousStudy_tooltip %>" width="20%">
+					<td  title="<%= autonomousStudy_tooltip %>" style="width: 100px">
 						<html:text bundle="HTMLALT_RESOURCES" altKey="text.autonomousStudy" size="3" maxlength="3" property="autonomousStudy"/>
 					</td>
-					<td title="<%= other_tooltip %>" width="20%">
+					<td title="<%= other_tooltip %>" style="width: 100px">
 						<html:text bundle="HTMLALT_RESOURCES" altKey="text.other" size="3" maxlength="3" property="other"/>
 					</td>
-					<td width="15%">
+					<td style="width: 100px">
+			
 						<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%= submitConfirm %>'>
 							<bean:message key="button.submit"/>
 						</html:submit>
+
 					</td>
 				</tr>
-			</html:form>
+
 		</logic:notPresent>
 	</logic:iterate>
 </table>	
+</html:form>					
 </logic:present>
 
 
 
 
-<br/>
+
 
 
 
