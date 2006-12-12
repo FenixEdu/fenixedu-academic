@@ -21,19 +21,21 @@
     <logic:present name="hasRestrictedItems">
         <p>
             <em><bean:message key="message.section.items.hasRestricted" bundle="SITE_RESOURCES"/></em>
-            <html:link page="<%= String.format("/executionCourse.do?method=sectionWithLogin&executionCourseID=%s&sectionID=%s", executionCourse.getIdInternal(), section.getIdInternal()) %>">
+            <html:link page="<%= String.format("/executionCourse.do?method=sectionWithLogin&amp;executionCourseID=%s&amp;sectionID=%s", executionCourse.getIdInternal(), section.getIdInternal()) %>">
                 <bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
            </html:link>.
         </p>
     </logic:present>
  
-    <fr:view name="section" property="orderedSubSections" layout="list">
-        <fr:layout>
-            <fr:property name="eachLayout" value="values"/>
-            <fr:property name="eachSchema" value="site.section.name"/>
-        </fr:layout>
-        <fr:destination name="section.view" path="<%= "/executionCourse.do?method=section&sectionID=${idInternal}&executionCourseID=" + executionCourse.getIdInternal() %>"/>
-    </fr:view>
+ 	<logic:notEmpty name="section" property="orderedSubSections">
+		<fr:view name="section" property="orderedSubSections" layout="list">
+		    <fr:layout>
+		        <fr:property name="eachLayout" value="values"/>
+		        <fr:property name="eachSchema" value="site.section.name"/>
+		    </fr:layout>
+		    <fr:destination name="section.view" path="<%= "/executionCourse.do?method=section&amp;sectionID=${idInternal}&amp;executionCourseID=" + executionCourse.getIdInternal() %>"/>
+		</fr:view>
+    </logic:notEmpty>
     
     <logic:empty name="protectedItems">
         <logic:empty name="section" property="associatedSections">
@@ -44,19 +46,20 @@
     </logic:empty>
     
     <logic:notEmpty name="protectedItems">
-        	<logic:iterate id="protectedItem" name="protectedItems">
-            
+       	
+       	<logic:iterate id="protectedItem" name="protectedItems">
+           
             <bean:define id="item" name="protectedItem" property="item" type="net.sourceforge.fenixedu.domain.Item"/>
             <bean:define id="available" name="protectedItem" property="available"/>
             
        		<h3 class="mtop2">
-                <a name="<%= "item" + item.getIdInternal() %>"></a>
+                <a name="<%= "item" + item.getIdInternal() %>" />
                 <fr:view name="item" property="name"/>
-            <span class="permalink1">(<a href="<%= request.getContextPath() + ItemProcessor.getItemAbsolutePath(executionCourse, item) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+           		<span class="permalink1">(<a href="<%= request.getContextPath() + ItemProcessor.getItemAbsolutePath(executionCourse, item) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
             </h3>
 
             <logic:equal name="available" value="true">
-                <logic:notEmpty name="item" property="information">
+              	  <logic:notEmpty name="item" property="information">
             			<fr:view name="item" property="information">
             				<fr:layout>
             					<fr:property name="classes" value="coutput1" />
@@ -93,7 +96,8 @@
                     </p>
                 </logic:equal>
             </logic:equal>
-
-        	</logic:iterate>
+            
+       	</logic:iterate>
+       	
     </logic:notEmpty>
 </logic:present>

@@ -13,7 +13,7 @@ if (board!=null && board.getReaders()==null)
 %>
 	<bean:define name="announcementBoard" id="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
 	<bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=context%><%="/external/announcementsRSS.do?announcementBoardId=" + announcementBoard.getIdInternal().toString()%></bean:define>	
-	<link rel="alternate" type="application/rss+xml" title="<%= announcementBoard.getName()%>" href="<%= linkRSS.toString()%>">
+	<link rel="alternate" type="application/rss+xml" title="<%= announcementBoard.getName()%>" href="<%= linkRSS.toString()%>" />
 <%
 }
 else if(ann!=null && ann.getAnnouncementBoard().getReaders()==null)
@@ -21,7 +21,7 @@ else if(ann!=null && ann.getAnnouncementBoard().getReaders()==null)
 %>
 	<bean:define name="announcement" id="announcement" type="net.sourceforge.fenixedu.domain.messaging.Announcement"/>
 	<bean:define id="linkRSSAnn" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=context%><%="/external/announcementsRSS.do?announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal().toString()%></bean:define>	
-	<link rel="alternate" type="application/rss+xml" title="<%= announcement.getAnnouncementBoard().getName()%>" href="<%= linkRSSAnn.toString()%>">
+	<link rel="alternate" type="application/rss+xml" title="<%= announcement.getAnnouncementBoard().getName()%>" href="<%= linkRSSAnn.toString()%>" />
 <%
 }
 %>

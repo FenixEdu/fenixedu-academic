@@ -1203,8 +1203,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean getHasAnySecondaryBibliographicReference() {
+	return hasAnyBibliographicReferenceByBibliographicReferenceType(BibliographicReferenceType.SECONDARY);
+    }
+    
+    public boolean getHasAnyMainBibliographicReference() {
+	return hasAnyBibliographicReferenceByBibliographicReferenceType(BibliographicReferenceType.MAIN);
+    }
+    
+    private boolean hasAnyBibliographicReferenceByBibliographicReferenceType(BibliographicReferenceType referenceType) {
 	for (final BibliographicReference bibliographicReference : getAssociatedBibliographicReferencesSet()) {
-	    if (bibliographicReference.getOptional().booleanValue()) {
+	    if ((referenceType.equals(BibliographicReferenceType.SECONDARY) && bibliographicReference.getOptional().booleanValue())
+		    || (referenceType.equals(BibliographicReferenceType.MAIN) && !bibliographicReference.getOptional().booleanValue())) {
 		return true;
 	    }
 	}
@@ -1219,7 +1228,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    if (bibliographicReferences != null) {
 			for (final net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference bibliographicReference : bibliographicReferences
 				.getBibliographicReferencesList()) {
-			    if (bibliographicReference.getType() == BibliographicReferenceType.SECONDARY) {
+			    if (bibliographicReference.getType() == referenceType) {
 				return true;
 			    }
 			}

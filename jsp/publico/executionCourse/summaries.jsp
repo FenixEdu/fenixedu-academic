@@ -17,7 +17,7 @@
 		<tr>
 			<td><bean:message key="label.summary.shift.type" />:</td>
 			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.bySummaryType" property="shiftType" onchange="this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" property="shiftType" onchange="this.form.submit();">
 					<html:option value="" key="label.showBy.all"/>
 					<logic:iterate id="shiftType" name="summariesSearchBean" property="shiftTypes">
 						<html:option value="<%= shiftType.toString() %>" key="<%= shiftType.toString() %>" bundle="ENUMERATION_RESOURCES"/>
@@ -31,7 +31,7 @@
 		<tr>
 			<td><bean:message key="label.shift" />:</td>
 			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.byShift" property="shiftID" onchange="this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" property="shiftID" onchange="this.form.submit();">
 					<html:option value="" key="label.showBy.all"/>
 					<logic:iterate id="shift" name="executionCourse" property="shiftsOrderedByLessons">
 						<bean:define id="shiftID" name="shift" property="idInternal"/>
@@ -59,7 +59,7 @@
 		<tr>
 			<td><bean:message key="label.teacher" />:</td>
 			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.byTeacher" property="professorshipID" onchange="this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" property="professorshipID" onchange="this.form.submit();">
 					<html:option value="0" key="label.showBy.all" />
 					<logic:iterate id="professorship" name="executionCourse" property="professorshipsSortedAlphabetically">
 						<bean:define id="professorshipID" name="professorship" property="idInternal"/>

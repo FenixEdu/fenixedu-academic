@@ -267,7 +267,7 @@ if (month != null && year!=null)
 </style>
 
 		<div class="asd">
-			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + context + module + contextPrefix + "method=viewArchive&announcementBoardId=" + board.getIdInternal() + "&" + extraParameters + "&" %>"/>	
+			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + context + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getIdInternal() + "&amp;" + extraParameters + "&amp;" %>"/>	
 		</div>
 
 	</logic:present>
