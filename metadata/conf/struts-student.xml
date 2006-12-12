@@ -264,6 +264,8 @@
 			<form-property name="otherPurpose" type="java.lang.String" />
 			<form-property name="notes" type="java.lang.String" />
 			<form-property name="urgentRequest" type="java.lang.String" initial="false"/>
+			<form-property name="justification" type="java.lang.String" />
+			<form-property name="numberOfPages" type="java.lang.Integer" />
 			<form-property name="registrationId" type="java.lang.Integer" />
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
@@ -881,8 +883,12 @@
 			<forward name="createDocumentRequests" path="df.page.documentRequest.createDocumentRequests"/>
 			<forward name="viewDocumentRequestsToCreate" path="df.page.documentRequest.viewDocumentRequestsToCreate"/>
 			<forward name="createSuccess" path="df.page.documentRequest.createSuccess"/>
-			<forward name="viewDocumentRequests" path="df.page.documentRequest.viewDocumentRequests"/>
+			<forward name="viewDocumentRequests" path="df.page.documentRequest.viewDocumentRequests" redirect ="true"/>
 			<forward name="viewDocumentRequest" path="df.page.documentRequest.viewDocumentRequest"/>
+			<forward name="prepareCancelAcademicServiceRequest" path="df.page.documentRequest.prepareCancelAcademicServiceRequest"/>
+			<forward name="cancelSuccess" path="df.page.documentRequest.cancelSuccess"/>
+			
+		
 		</action>
 
 		<!-- ONLINE TESTS -->
