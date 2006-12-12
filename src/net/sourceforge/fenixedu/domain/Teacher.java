@@ -1063,6 +1063,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public void delete() {
+	removePerson();
         removeRootDomainObject();
         deleteDomainObject();
     }

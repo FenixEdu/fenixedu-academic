@@ -33,7 +33,7 @@ public class Branch extends Branch_Base {
     }
 
     public Boolean representsCommonBranch() {
-        if (this.getBranchType().equals(BranchType.COMNBR)) {
+        if (getBranchType() != null && getBranchType().equals(BranchType.COMNBR)) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
@@ -75,18 +75,18 @@ public class Branch extends Branch_Base {
 
     public Boolean canBeDeleted() {
         if (this.hasAnyAssociatedFinalDegreeWorkProposals())
-            return false;
+            throw new DomainException("error.branch.cant.delete");
 
 		if (this.representsCommonBranch() && 
 				(this.hasAnyCurricularCourseGroups() || this.hasAnyScopes()))
-            return false;
+		    throw new DomainException("error.branch.cant.delete");
 
         Branch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
-        if (commonBranch == null)
-            return false;
+//        if (commonBranch == null)
+//            throw new DomainException("error.branch.cant.delete");
 
         if (!canDeleteAllEligibleCurricularCourseScopes(commonBranch))
-            return false;
+            throw new DomainException("error.branch.cant.delete");
 
         return true;
     }

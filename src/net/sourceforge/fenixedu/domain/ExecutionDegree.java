@@ -178,10 +178,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
     public boolean canBeDeleted() {
 	return (!hasAnySchoolClasses() && !hasAnyMasterDegreeCandidates() && !hasAnyGuides()
 		&& !hasScheduling() && !hasAnyAssociatedFinalDegreeWorkGroups()
-		&& getPeriodLessonsFirstSemester().getRoomOccupations().isEmpty()
-		&& getPeriodLessonsSecondSemester().getRoomOccupations().isEmpty()
-		&& getPeriodExamsFirstSemester().getRoomOccupations().isEmpty() && getPeriodExamsSecondSemester()
-		.getRoomOccupations().isEmpty());
+		&& (getPeriodLessonsFirstSemester() == null || getPeriodLessonsFirstSemester().getRoomOccupations().isEmpty())
+		&& (getPeriodLessonsSecondSemester() == null || getPeriodLessonsSecondSemester().getRoomOccupations().isEmpty())
+		&& (getPeriodExamsFirstSemester() == null || getPeriodExamsFirstSemester().getRoomOccupations().isEmpty())
+		&& (getPeriodExamsSecondSemester() == null || getPeriodExamsSecondSemester().getRoomOccupations().isEmpty()));
     }
 
     public void edit(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap,

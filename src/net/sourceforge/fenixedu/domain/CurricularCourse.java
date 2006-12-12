@@ -184,8 +184,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return true;
     }
 
+    @Override
     public void delete() {
 	super.delete();
+	removeDegreeCurricularPlan();
 	removeCompetenceCourse();
 	removeRootDomainObject();
 	super.deleteDomainObject();
