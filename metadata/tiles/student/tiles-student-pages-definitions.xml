@@ -250,6 +250,15 @@
 	<definition name="df.page.documentRequest.viewDocumentRequest" extends="definition.student.administrativeOfficeServices">
 		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequest.jsp" />
 	</definition>
+	
+	<definition name="df.page.documentRequest.prepareCancelAcademicServiceRequest" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/prepareCancelAcademicServiceRequest.jsp"/>
+	</definition>
+	
+	<definition name="df.page.documentRequest.cancelSuccess" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/cancelSuccess.jsp" />
+	</definition>
+	
 
 	<!-- TimeTable -->
 	<definition name="df.timeTable.chooseRegistration" extends="definition.student.masterPage">
