@@ -51,7 +51,7 @@
 		<put name="navLocal" value="/student/administrativeOfficeServices/administrativeOfficeServicesMenu.jsp"/>
 	</definition>
 
-	<definition name="student.print.masterPage" path="/layout/fenixPrint.jsp">
+	<definition name="student.print.masterPage" path="/commons/student/timeTable/classTimeTable.jsp">
       <put name="body" value="/commons/blank.jsp" />
 	</definition>
 </tiles-definitions>

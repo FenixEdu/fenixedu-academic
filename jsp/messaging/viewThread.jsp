@@ -75,7 +75,7 @@
 					</p>								
 					
 					<logic:iterate indexId="currentMessageId" id="conversationMessage" name="messages" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
-						<html:link linkName="<%=currentMessageId.toString()%>"/>
+						<html:link linkName="<%="ID_" + currentMessageId.toString()%>"/>
 						<fr:view name="conversationMessage" layout="tabular" schema="conversationMessage.view-with-author-creationDate-and-body">			
 							<fr:layout>
 								<fr:property name="style" value="width:100%"/>
@@ -86,7 +86,7 @@
 						<logic:equal name="loggedPersonCanWrite" value="true">
 							<bean:define id="quotedMessageId" name="conversationMessage" property="idInternal" />
 							<p class="mtop05">
-							<html:link action="<%=contextPrefix.toString() + "method=prepareCreateMessage&showReplyBox=true&amp;goToLastPage=true&amp;threadId=" + threadId + "&amp;forumId=" + forumId + "&amp;quotedMessageId=" + quotedMessageId%>"> 
+							<html:link action="<%=contextPrefix.toString() + "method=prepareCreateMessage&amp;showReplyBox=true&amp;goToLastPage=true&amp;threadId=" + threadId + "&amp;forumId=" + forumId + "&amp;quotedMessageId=" + quotedMessageId%>"> 
 								<bean:message key="messaging.viewThread.quote" bundle="MESSAGING_RESOURCES"/>
 							</html:link>
 							</p>
