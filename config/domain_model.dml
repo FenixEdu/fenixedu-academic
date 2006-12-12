@@ -3537,6 +3537,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType extends net
 	String ojbConcreteClass;
 	YearMonthDay beginValidDate;
 	YearMonthDay endValidDate;
+	Boolean mandatoryClocking;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.FlexibleSchedule extends net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType {

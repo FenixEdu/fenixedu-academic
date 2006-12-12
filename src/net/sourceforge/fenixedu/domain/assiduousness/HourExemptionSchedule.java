@@ -23,7 +23,7 @@ import org.joda.time.YearMonthDay;
 
 public class HourExemptionSchedule extends HourExemptionSchedule_Base {
 
-    public HourExemptionSchedule(String acronym, YearMonthDay beginValidDate, YearMonthDay endValidDate,
+    public HourExemptionSchedule(String acronym, Boolean mandatoryClocking, YearMonthDay beginValidDate, YearMonthDay endValidDate,
             TimeOfDay dayTime, Duration dayTimeDuration, TimeOfDay clockingTime,
             Duration clockingTimeDuration, WorkPeriod normalWorkPeriod, WorkPeriod fixedWorkPeriod,
             Meal meal, DateTime lastModifiedDate, Employee modifiedBy) {
@@ -31,6 +31,7 @@ public class HourExemptionSchedule extends HourExemptionSchedule_Base {
         setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(this.getClass().getName());
         setAcronym(acronym);
+        setMandatoryClocking(mandatoryClocking);
         setWorkTime(dayTime);
         setWorkTimeDuration(dayTimeDuration);
         setClockingTime(clockingTime);

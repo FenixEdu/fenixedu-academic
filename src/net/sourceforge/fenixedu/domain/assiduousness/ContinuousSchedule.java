@@ -17,7 +17,7 @@ import org.joda.time.YearMonthDay;
  */
 public class ContinuousSchedule extends ContinuousSchedule_Base {
 
-    public ContinuousSchedule(String acronym, YearMonthDay beginValidDate, YearMonthDay endValidDate,
+    public ContinuousSchedule(String acronym, Boolean mandatoryClocking, YearMonthDay beginValidDate, YearMonthDay endValidDate,
             TimeOfDay dayTime, Duration dayTimeDuration, TimeOfDay clockingTime,
             Duration clockingTimeDuration, WorkPeriod normalWorkPeriod, WorkPeriod fixedWorkPeriod,
             DateTime lastModifiedDate, Employee modifiedBy) {
@@ -25,6 +25,7 @@ public class ContinuousSchedule extends ContinuousSchedule_Base {
         setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(this.getClass().getName());
         setAcronym(acronym);
+        setMandatoryClocking(mandatoryClocking);
         setWorkTime(dayTime);
         setWorkTimeDuration(dayTimeDuration);
         setClockingTime(clockingTime);

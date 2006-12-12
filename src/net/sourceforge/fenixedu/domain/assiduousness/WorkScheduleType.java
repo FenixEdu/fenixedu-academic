@@ -79,12 +79,13 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         return false;
     }
 
-    public void update(String className, YearMonthDay beginValidDate, YearMonthDay endValidDate,
+    public void update(String className, Boolean mandatoryClocking, YearMonthDay beginValidDate, YearMonthDay endValidDate,
             String acronym, TimeOfDay dayTime, Duration dayTimeDuration, TimeOfDay clockingTime,
             Duration clockingTimeDuration, WorkPeriod normalWorkPeriod, WorkPeriod fixedWorkPeriod,
             Meal meal, DateTime lastModifiedDate, Employee modifiedBy) {
         setOjbConcreteClass(className);
         setAcronym(acronym);
+        setMandatoryClocking(mandatoryClocking);
         setWorkTime(dayTime);
         setWorkTimeDuration(dayTimeDuration);
         setClockingTime(clockingTime);
