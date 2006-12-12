@@ -9842,7 +9842,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
+			<chain name="StudentAuthorization" />
 		</filterChains>
 	</service>
 	<service>
