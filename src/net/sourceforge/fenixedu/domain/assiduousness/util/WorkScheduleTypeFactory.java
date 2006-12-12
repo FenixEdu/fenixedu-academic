@@ -7,15 +7,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.assiduousness.ContinuousSchedule;
-import net.sourceforge.fenixedu.domain.assiduousness.FlexibleSchedule;
-import net.sourceforge.fenixedu.domain.assiduousness.HalfTimeSchedule;
-import net.sourceforge.fenixedu.domain.assiduousness.HourExemptionSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.Meal;
 import net.sourceforge.fenixedu.domain.assiduousness.MonthClosure;
 import net.sourceforge.fenixedu.domain.assiduousness.Periodicity;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
-import net.sourceforge.fenixedu.domain.assiduousness.ScheduleExemption;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkPeriod;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
@@ -360,47 +355,47 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
         Duration clockingTimeDurtion = getDuration(getBeginClockingTime(), getEndClockingTime(),
                 getEndClockingNextDay());
 
-        if (normalWorkPeriod == null) {
-            workScheduleType = new ScheduleExemption(getAcronym(), getBeginValidDate(),
-                    getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(),
-                    clockingTimeDurtion, normalWorkPeriod, meal, lastModifiedDate, getModifiedBy());
-        } else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(halfTime) <= 0) {
-            workScheduleType = new HalfTimeSchedule(getAcronym(), getBeginValidDate(),
-                    getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(),
-                    clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod, lastModifiedDate,
-                    getModifiedBy());
-        } else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(totalTime) < 0) {
-            workScheduleType = new HourExemptionSchedule(getAcronym(), getBeginValidDate(),
-                    getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(),
-                    clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod, meal, lastModifiedDate,
-                    getModifiedBy());
-        } else {
-            if (normalWorkPeriod.getSecondPeriodInterval() != null) {
-                if (normalWorkPeriod.getEndFirstPeriod().equals(normalWorkPeriod.getSecondPeriod())) {
-                    workScheduleType = new ContinuousSchedule(getAcronym(), getBeginValidDate(),
-                            getEndValidDate(), getBeginDayTime(), dayTimeDuration,
-                            getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod,
-                            fixedWorkPeriod, lastModifiedDate, getModifiedBy());
-                } else {
-                    if (fixedWorkPeriod != null) {
-                        workScheduleType = new FlexibleSchedule(getAcronym(), getBeginValidDate(),
-                                getEndValidDate(), getBeginDayTime(), dayTimeDuration,
-                                getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod,
-                                fixedWorkPeriod, meal, lastModifiedDate, getModifiedBy());
-                    } else {
-                        workScheduleType = new ScheduleExemption(getAcronym(), getBeginValidDate(),
-                                getEndValidDate(), getBeginDayTime(), dayTimeDuration,
-                                getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod, meal,
-                                lastModifiedDate, getModifiedBy());
-                    }
-                }
-            } else {
-                workScheduleType = new ContinuousSchedule(getAcronym(), getBeginValidDate(),
-                        getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(),
-                        clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod, lastModifiedDate,
-                        getModifiedBy());
-            }
-        }
+//        if (normalWorkPeriod == null) {
+//            workScheduleType = new ScheduleExemption(getAcronym(), getBeginValidDate(),
+//                    getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(),
+//                    clockingTimeDurtion, normalWorkPeriod, meal, lastModifiedDate, getModifiedBy());
+//        } else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(halfTime) <= 0) {
+//            workScheduleType = new HalfTimeSchedule(getAcronym(), getBeginValidDate(),
+//                    getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(),
+//                    clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod, lastModifiedDate,
+//                    getModifiedBy());
+//        } else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(totalTime) < 0) {
+//            workScheduleType = new HourExemptionSchedule(getAcronym(), getBeginValidDate(),
+//                    getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(),
+//                    clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod, meal, lastModifiedDate,
+//                    getModifiedBy());
+//        } else {
+//            if (normalWorkPeriod.getSecondPeriodInterval() != null) {
+//                if (normalWorkPeriod.getEndFirstPeriod().equals(normalWorkPeriod.getSecondPeriod())) {
+//                    workScheduleType = new ContinuousSchedule(getAcronym(), getBeginValidDate(),
+//                            getEndValidDate(), getBeginDayTime(), dayTimeDuration,
+//                            getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod,
+//                            fixedWorkPeriod, lastModifiedDate, getModifiedBy());
+//                } else {
+//                    if (fixedWorkPeriod != null) {
+//                        workScheduleType = new FlexibleSchedule(getAcronym(), getBeginValidDate(),
+//                                getEndValidDate(), getBeginDayTime(), dayTimeDuration,
+//                                getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod,
+//                                fixedWorkPeriod, meal, lastModifiedDate, getModifiedBy());
+//                    } else {
+//                        workScheduleType = new ScheduleExemption(getAcronym(), getBeginValidDate(),
+//                                getEndValidDate(), getBeginDayTime(), dayTimeDuration,
+//                                getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod, meal,
+//                                lastModifiedDate, getModifiedBy());
+//                    }
+//                }
+//            } else {
+//                workScheduleType = new ContinuousSchedule(getAcronym(), getBeginValidDate(),
+//                        getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(),
+//                        clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod, lastModifiedDate,
+//                        getModifiedBy());
+//            }
+//        }
         return workScheduleType;
     }
 
