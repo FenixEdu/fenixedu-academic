@@ -260,13 +260,7 @@ if (month != null && year!=null)
 		%>
 
 
-<style type="text/css">
-.asd { margin-top: 2em;}
-.asd p { margin: 0.5em 0; padding: 0; }
-.asd span { font-weight: bold; padding-right: 0.5em; }
-</style>
-
-		<div class="asd">
+		<div class="aarchives">
 			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + context + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getIdInternal() + "&amp;" + extraParameters + "&amp;" %>"/>	
 		</div>
 
