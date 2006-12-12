@@ -63,12 +63,12 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     public void delete() {
 	reOrderLessonPlannings();
-	super.setExecutionCourse(null);
-	deleteDomainObject();
+        deleteWithoutReOrder();
     }
 
     public void deleteWithoutReOrder() {
 	super.setExecutionCourse(null);
+        removeRootDomainObject();
 	deleteDomainObject();
     }
 

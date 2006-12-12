@@ -22,8 +22,10 @@ public class Curriculum extends Curriculum_Base {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
     	final IUserView userView = AccessControl.getUserView();
-        this.setPersonWhoAltered(userView.getPerson());
-	}
+        if (userView != null) {
+            this.setPersonWhoAltered(userView.getPerson());
+        }
+    }
 
     public void edit(String generalObjectives, String operacionalObjectives, String program,
             String generalObjectivesEn, String operacionalObjectivesEn, String programEn) {
