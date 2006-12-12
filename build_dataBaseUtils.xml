@@ -64,7 +64,8 @@
     <target name="create-test-data"
     		description="Generate sql schema for fenix database."
     		depends="compile">
-		<java classname="pt.utl.ist.codeGenerator.database.CreateTestData" fork="true">
+		<java classname="pt.utl.ist.codeGenerator.database.CreateTestData" fork="true"
+				jvmargs="-Xmx1024m -Dfile.encoding=iso8859-1">
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>
 				<pathelement path="${build.home.webinf.classes}"/>
