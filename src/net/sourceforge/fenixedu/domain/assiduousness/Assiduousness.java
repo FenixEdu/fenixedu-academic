@@ -91,7 +91,8 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public WorkDaySheet calculateDailyBalance(WorkDaySheet workDaySheet, boolean isDayHoliday) {
-        if (workDaySheet.getWorkSchedule() != null && !isDayHoliday) {
+        if (workDaySheet.getWorkSchedule() != null && !isDayHoliday
+                && workDaySheet.getWorkSchedule().getWorkScheduleType().getMandatoryClocking()) {
 
             List<Leave> dayOccurrences = getLeavesByType(workDaySheet.getLeaves(),
                     JustificationType.OCCURRENCE);
