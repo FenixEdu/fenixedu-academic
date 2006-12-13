@@ -128,12 +128,12 @@
 		<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
    		<bean:message key="link.backToShiftsAndGroups"/></html:link> - <bean:message key="link.backToShiftsAndGroups.description"/>
    	</p>
-
-
 	
 	<logic:notEmpty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
 				 			 		
- 	<bean:size id="count" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList"/> <bean:message key="label.student.NumberOfStudentsInShift" /> <%= count %>
+ 	<bean:size id="count" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList"/> 
+ 	<bean:message key="label.student.NumberOfStudentsInShift" /> <%= count %>
+ 	
 	<br/><br/>
 
 <table class="style1" width="75%" cellpadding="0" border="0">

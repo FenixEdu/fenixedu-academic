@@ -1246,3 +1246,6 @@ background: #fff;
 .anchorcaaa a {
 color: #888;
 }
+
+.inobullet ul { list-style: none; padding-left: 0; }
+.inobullet ul li { list-style: none; }

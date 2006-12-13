@@ -18,7 +18,7 @@
 
 
 	<logic:empty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
-		<html:link page="<%="/viewExecutionCourseProjects.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")%>">
+		<html:link page="<%="/viewExecutionCourseProjects.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")%>">
 			<bean:message key="link.backToProjects"/>
 		</html:link>
 		<br />
@@ -42,7 +42,7 @@
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<ul>
-	<li><html:link page="<%="/viewExecutionCourseProjects.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")%>"><bean:message key="link.backToProjects"/></html:link> - <bean:message key="link.backToProjects.description"/></li>
+	<li><html:link page="<%="/viewExecutionCourseProjects.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")%>"><bean:message key="link.backToProjects"/></html:link> - <bean:message key="link.backToProjects.description"/></li>
 	<li><html:link page="<%="/viewAllStudentsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>"><bean:message key="link.viewAllStudentsAndGroups"/></html:link> - <bean:message key="link.viewAllStudentsAndGroups.description"/></li>
 	</ul>
 	
@@ -92,7 +92,7 @@
 			<tr>
 								
 								<td  class="listClasses">
-								<html:link page="<%="/viewStudentsAndGroupsWithoutShift.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+								<html:link page="<%="/viewStudentsAndGroupsWithoutShift.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 									Sem Turno
 								</html:link>	
 								</td>
@@ -125,7 +125,7 @@
 								 		<bean:message key="link.insertGroup"/>										
 									</logic:equal>	
 							 		<logic:notEqual name="nrOfGroups" value="0">
-								 		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+								 		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 									       <bean:message key="link.insertGroup"/>
 								        </html:link>	
 									</logic:notEqual>									        	   
@@ -165,7 +165,7 @@
 					<tr>
 						
 						<td  class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
-							<html:link page="<%="/viewStudentsAndGroupsByShift.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+							<html:link page="<%="/viewStudentsAndGroupsByShift.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 								<bean:write name="infoShift" property="nome"/>
 							</html:link>	
 						</td>
@@ -196,7 +196,7 @@
 								 		<bean:message key="link.insertGroup"/>										
 							</logic:equal>	
 							<logic:notEqual name="nrOfGroups" value="0">
-						 		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+						 		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 									<bean:message key="link.insertGroup"/>
 								</html:link>	   
 							</logic:notEqual>	

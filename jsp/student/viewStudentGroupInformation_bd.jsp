@@ -32,8 +32,10 @@
 	</div>
 
 		<br />
-			
-		<span class="error"><!-- Error messages go here --><html:errors /></span>
+		
+		<div class="inobullet">
+		<!-- Error messages go here --><html:errors />
+		</div>
 	
 		<bean:define id="nrOfElements" name="infoSiteStudentGroup" property="nrOfElements"/>
 		<b><bean:message key="label.nrOfElements"/> </b><bean:write name="nrOfElements"/>
@@ -41,7 +43,7 @@
 		<h2 style="color: #a00;"><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
 		
 	<span class="infoop3">	
-		<b><bean:message key="label.groupOption"/></b>&nbsp
+		<b><bean:message key="label.groupOption"/></b>&nbsp;
 		
 		<logic:lessEqual name="ShiftType" value="2">
 		<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
@@ -66,8 +68,10 @@
 		<bean:message key="label.student.viewStudentGroupInformation.description" />
 	</div>
 --%>
-
-	<span class="error"><!-- Error messages go here --><html:errors /></span> 	
+	
+	<div class="inobullet mvert15">
+	<!-- Error messages go here --><html:errors />
+	</div>
 
 <div class="infoop">
 	<ul>
@@ -80,19 +84,19 @@
 	
 
 <span class="infoop3">
-	<b><bean:message key="label.groupOperations"/></b>&nbsp
+	<b><bean:message key="label.groupOperations"/></b>&nbsp;
 	
 	<logic:lessEqual name="ShiftType" value="2">
 	<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
 	<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+"&amp;shiftCode=" + request.getParameter("shiftCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
 	<bean:message key="link.enrolment"/>
-	</html:link> &nbsp|&nbsp
+	</html:link> &nbsp;|&nbsp;
 	</logic:lessEqual>	
 	
 	<logic:greaterEqual name="ShiftType" value="3">
 	<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
     <bean:message key="link.enrolment"/>
-	</html:link> &nbsp|&nbsp
+	</html:link> &nbsp;|&nbsp;
 	</logic:greaterEqual>	
 
 
@@ -100,13 +104,13 @@
 	<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
 	<html:link page="<%="/removeGroupEnrolment.do?method=prepareRemove&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+"&amp;shiftCode=" + request.getParameter("shiftCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
 	<bean:message key="link.removeEnrolment"/>
-	</html:link> &nbsp|&nbsp
+	</html:link> &nbsp;|&nbsp;
 	</logic:lessEqual>
 		    
 	<logic:greaterEqual name="ShiftType" value="3">
 	<html:link page="<%="/removeGroupEnrolment.do?method=prepareRemove&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
    	<bean:message key="link.removeEnrolment"/>
-	</html:link> &nbsp|&nbsp
+	</html:link> &nbsp;|&nbsp;
 	</logic:greaterEqual>	    
   
 
