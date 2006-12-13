@@ -256,7 +256,6 @@
 		</action>
 		
 		<!-- Begin Payments -->
-		
 		<action path="/payments"
 				parameter="method"
 		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.AcademicAdminOfficePaymentsManagementDispatchAction"
@@ -280,8 +279,17 @@
 		 	    <forward name="gratuityExemptions.view" path="payments.management.gratuityExemptions.view"/>
 		 	    <forward name="gratuityExemptions.create" path="payments.management.gratuityExemptions.create"/>
 		</action>
-		
 		<!-- End Payments -->
+		
+		<!-- Begin Prices Management -->
+		<action path="/pricesManagement"
+		     	parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.pricesManagement.AcademicAdminOfficePricesManagementDispatchAction"
+				scope="request">
+				<forward name="viewPrices" path="prices.management.viewPrices"/>
+		       	<forward name="editPrice" path="prices.management.editPrice"/>
+		</action>
+		<!-- End Prices Management -->
 		
       <!-- Dispatch Action to Create the Contributor Information -->
       <action path="/createContributorDispatchAction"

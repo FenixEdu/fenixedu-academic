@@ -200,4 +200,14 @@
 	
 	<!-- ************************************* -->
 	
+	<!-- ************* Prices Management ************* -->
+	<definition name="prices.management.editPrice" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/pricesManagement/editPrice.jsp"/>
+	</definition>
+
+	<definition name="prices.management.viewPrices" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/pricesManagement/viewPrices.jsp"/>
+	</definition>
+	<!-- ************************************* -->
+	
 </tiles-definitions>

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.pricesManagement;
 
 import java.util.SortedSet;
@@ -11,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -25,9 +21,8 @@ public abstract class PricesManagementDispatchAction extends FenixDispatchAction
 
 	final SortedSet<PostingRule> sortedPostingRules = new TreeSet<PostingRule>(
 		PostingRule.COMPARATOR_BY_EVENT_TYPE);
-	sortedPostingRules.addAll(getAdministrativeOffice().getServiceAgreementTemplate()
+	sortedPostingRules.addAll(getAdministrativeOffice(request).getServiceAgreementTemplate()
 		.getActiveVisiblePostingRules());
-
 	request.setAttribute("postingRules", sortedPostingRules);
 
 	return mapping.findForward("viewPrices");
@@ -38,14 +33,9 @@ public abstract class PricesManagementDispatchAction extends FenixDispatchAction
 
 	request.setAttribute("postingRule", rootDomainObject
 		.readPostingRuleByOID(getRequestParameterAsInteger(request, "postingRuleId")));
-
 	return mapping.findForward("editPrice");
     }
 
-    private AdministrativeOffice getAdministrativeOffice() {
-	return AdministrativeOffice.readByAdministrativeOfficeType(getAdministrativeOfficeType());
-    }
-
-    protected abstract AdministrativeOfficeType getAdministrativeOfficeType();
+    abstract protected AdministrativeOffice getAdministrativeOffice(final HttpServletRequest request);
 
 }
