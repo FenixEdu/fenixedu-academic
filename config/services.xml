@@ -11144,5 +11144,15 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>  
+    
+    <service>
+    	<name>ReadStudentSenior</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.senior.ReadStudentSenior</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="StudentAuthorization" />
+        </filterChains>     
+    </service>  
   
 </serviceDefinitions>
