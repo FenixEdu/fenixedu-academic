@@ -14,8 +14,7 @@
 			<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
 		</bean:define>
 		<bean:define id="institutionUrlStructure" type="java.lang.String">
-			<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
-			<bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
+			<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
 		</bean:define>
 		<bean:define id="departmentUrl" type="java.lang.String">
 			<bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.webAddress"/>
