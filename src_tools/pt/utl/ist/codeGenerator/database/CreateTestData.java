@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginAlias;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Role;
@@ -124,20 +125,33 @@ public class CreateTestData {
     private static void clearData() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
+        System.out.println("Deleting lessons.");
         for (final Set<Lesson> lessons = rootDomainObject.getLessonsSet(); !lessons.isEmpty(); lessons.iterator().next().delete());
+        System.out.println("Deleting shifts.");
         for (final Set<Shift> shifts = rootDomainObject.getShiftsSet(); !shifts.isEmpty(); shifts.iterator().next().delete());
+        System.out.println("Deleting evaluation methods.");
         for (final Set<EvaluationMethod> evaluationMethods = rootDomainObject.getEvaluationMethodsSet(); !evaluationMethods.isEmpty(); evaluationMethods.iterator().next().delete());
+        System.out.println("Deleting bibliographic references.");
         for (final Set<BibliographicReference> bibliographicReferences = rootDomainObject.getBibliographicReferencesSet(); !bibliographicReferences.isEmpty(); bibliographicReferences.iterator().next().delete());
 
+        System.out.println("Deleting execution course sites.");
         for (final Set<ExecutionCourseSite> sites = rootDomainObject.getExecutionCourseSitesSet(); !sites.isEmpty(); sites.iterator().next().delete());
+        System.out.println("Deleting forums.");
         for (final Set<Forum> forums = rootDomainObject.getForunsSet(); !forums.isEmpty(); forums.iterator().next().delete());
+        System.out.println("Deleting announcements.");
         for (final Set<Announcement> announcements = rootDomainObject.getAnnouncementsSet(); !announcements.isEmpty(); announcements.iterator().next().delete());
+        System.out.println("Deleting announcement boards.");
         for (final Set<AnnouncementBoard> announcementBoards = rootDomainObject.getAnnouncementBoardsSet(); !announcementBoards.isEmpty(); announcementBoards.iterator().next().delete());
+        System.out.println("Deleting lesson plannings.");
         for (final Set<LessonPlanning> lessonPlannings = rootDomainObject.getLessonPlanningsSet(); !lessonPlannings.isEmpty(); lessonPlannings.iterator().next().deleteWithoutReOrder());
+        System.out.println("Deleting evaluations.");
         for (final Set<Evaluation> evaluations = rootDomainObject.getEvaluationsSet(); !evaluations.isEmpty(); evaluations.iterator().next().delete());
+        System.out.println("Deleting professorships.");
         for (final Set<Professorship> professorships = rootDomainObject.getProfessorshipsSet(); !professorships.isEmpty(); professorships.iterator().next().delete());
+        System.out.println("Deleting execution courses.");
         for (final Set<ExecutionCourse> executionCourses = rootDomainObject.getExecutionCoursesSet(); !executionCourses.isEmpty(); executionCourses.iterator().next().delete());
 
+        System.out.println("Deleting person roles.");
         for (final Party party : rootDomainObject.getPartysSet()) {
             if (party.isPerson()) {
                 final Person person = (Person) party;
@@ -145,12 +159,19 @@ public class CreateTestData {
             }
         }
 
+        System.out.println("Deleting coordinators.");
         for (final Set<Coordinator> coordinators = rootDomainObject.getCoordinatorsSet(); !coordinators.isEmpty(); coordinators.iterator().next().delete());
+        System.out.println("Deleting teachers.");
         for (final Set<Teacher> teachers = rootDomainObject.getTeachersSet(); !teachers.isEmpty(); teachers.iterator().next().delete());
+        System.out.println("Deleting employees.");
         for (final Set<Employee> employees = rootDomainObject.getEmployeesSet(); !employees.isEmpty(); employees.iterator().next().delete());
+        System.out.println("Deleting identifications.");
         for (final Set<Identification> identifications = rootDomainObject.getIdentificationsSet(); !identifications.isEmpty(); identifications.iterator().next().delete());
+        System.out.println("Deleting users.");
         for (final Set<User> users = rootDomainObject.getUsersSet(); !users.isEmpty(); users.iterator().next().delete());
+        System.out.println("Deleting accounts.");
         for (final Set<Account> accounts = rootDomainObject.getAccountsSet(); !accounts.isEmpty(); accounts.iterator().next().delete());
+        System.out.println("Deleting people.");
         for (final Set<Party> parties = new HashSet<Party>(rootDomainObject.getPartysSet()); !parties.isEmpty(); ) {
             final Party party = parties.iterator().next();
             if (party.isPerson()) {
@@ -160,17 +181,32 @@ public class CreateTestData {
             parties.remove(party);
         }
 
+        System.out.println("Deleting execution degrees.");
         for (final Set<ExecutionDegree> executionDegrees = rootDomainObject.getExecutionDegreesSet(); !executionDegrees.isEmpty(); executionDegrees.iterator().next().delete());
+        System.out.println("Deleting curricular course scopes.");
         for (final Set<CurricularCourseScope> curricularCourseScopes = rootDomainObject.getCurricularCourseScopesSet(); !curricularCourseScopes.isEmpty(); curricularCourseScopes.iterator().next().delete());
+        System.out.println("Deleting degree modules.");
         for (final Set<DegreeModule> degreeModules = rootDomainObject.getDegreeModulesSet(); !degreeModules.isEmpty(); degreeModules.iterator().next().delete());
+        System.out.println("Deleting branches.");
         for (final Set<Branch> branches = rootDomainObject.getBranchsSet(); !branches.isEmpty(); branches.iterator().next().delete());
+        System.out.println("Deleting degree curricular plans.");
         for (final Set<DegreeCurricularPlan> degreeCurricularPlanss = rootDomainObject.getDegreeCurricularPlansSet(); !degreeCurricularPlanss.isEmpty(); degreeCurricularPlanss.iterator().next().delete());
+        System.out.println("Deleting degree infos.");
         for (final Set<DegreeInfo> degreeInfos = rootDomainObject.getDegreeInfosSet(); !degreeInfos.isEmpty(); degreeInfos.iterator().next().delete());
+        System.out.println("Deleting degrees.");
         for (final Set<Degree> degrees = rootDomainObject.getDegreesSet(); !degrees.isEmpty(); degrees.iterator().next().delete());
+        System.out.println("Deleting execution years.");
         for (final Set<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet(); !executionYears.isEmpty(); executionYears.iterator().next().delete());
+        System.out.println("Deleting occupation periods.");
+        for (final Set<OccupationPeriod> occupationPeriods = rootDomainObject.getOccupationPeriodsSet(); !occupationPeriods.isEmpty(); occupationPeriods.iterator().next().deleteIfEmpty());
 
+        System.out.println("Deleting spaces.");
         for (final Set<Space> spaces = rootDomainObject.getSpacesSet(); !spaces.isEmpty(); spaces.iterator().next().delete());
+        System.out.println("Deleting campi.");
         for (final Set<Campus> campi = rootDomainObject.getCampussSet(); !campi.isEmpty(); campi.iterator().next().delete());
+
+        System.out.println("Completed clearing any existing data.");
+        System.out.println("Loading the test data...");
     }
 
     private static void createTestData() {
@@ -259,6 +295,12 @@ public class CreateTestData {
             executionPeriod1.setState(PeriodState.CURRENT);
             executionPeriod2.setState(PeriodState.OPEN);
         }
+
+        new OccupationPeriod(executionPeriod1.getBeginDateYearMonthDay(), executionPeriod1.getEndDateYearMonthDay().minusDays(32));
+        new OccupationPeriod(executionPeriod1.getEndDateYearMonthDay().minusDays(31), executionPeriod1.getEndDateYearMonthDay());
+        new OccupationPeriod(executionPeriod2.getBeginDateYearMonthDay(), executionPeriod2.getEndDateYearMonthDay().minusDays(32));
+        new OccupationPeriod(executionPeriod2.getEndDateYearMonthDay().minusDays(31), executionPeriod2.getEndDateYearMonthDay());
+        new OccupationPeriod(executionPeriod2.getEndDateYearMonthDay().plusDays(31), executionPeriod2.getEndDateYearMonthDay().plusDays(46));
     }
 
     private static void createCampus() {
@@ -298,7 +340,26 @@ public class CreateTestData {
             final ExecutionDegree executionDegree = degreeCurricularPlan.createExecutionDegree(executionYear, campus, Boolean.FALSE);
             final Teacher teacher = createTeachers(i);
             new Coordinator(executionDegree, teacher.getPerson(), Boolean.TRUE);
+            createPeriodsForExecutionDegree(executionDegree);
         }
+    }
+
+    private static void createPeriodsForExecutionDegree(ExecutionDegree executionDegree) {
+        final ExecutionYear executionYear = executionDegree.getExecutionYear();
+        final ExecutionPeriod executionPeriod1 = executionYear.getFirstExecutionPeriod();
+        final ExecutionPeriod executionPeriod2 = executionYear.getLastExecutionPeriod();
+
+        final OccupationPeriod occupationPeriod1 = OccupationPeriod.readFor(executionPeriod1.getBeginDateYearMonthDay(), executionPeriod1.getEndDateYearMonthDay().minusDays(32));
+        final OccupationPeriod occupationPeriod2 = OccupationPeriod.readFor(executionPeriod1.getEndDateYearMonthDay().minusDays(31), executionPeriod1.getEndDateYearMonthDay());
+        final OccupationPeriod occupationPeriod3 = OccupationPeriod.readFor(executionPeriod2.getBeginDateYearMonthDay(), executionPeriod2.getEndDateYearMonthDay().minusDays(32));
+        final OccupationPeriod occupationPeriod4 = OccupationPeriod.readFor(executionPeriod2.getEndDateYearMonthDay().minusDays(31), executionPeriod2.getEndDateYearMonthDay());
+        final OccupationPeriod occupationPeriod5 = OccupationPeriod.readFor(executionPeriod2.getEndDateYearMonthDay().plusDays(31), executionPeriod2.getEndDateYearMonthDay().plusDays(46));
+
+        executionDegree.setPeriodLessonsFirstSemester(occupationPeriod1);
+        executionDegree.setPeriodExamsFirstSemester(occupationPeriod2);
+        executionDegree.setPeriodLessonsSecondSemester(occupationPeriod3);
+        executionDegree.setPeriodExamsSecondSemester(occupationPeriod4);
+        executionDegree.setPeriodExamsSpecialSeason(occupationPeriod5);
     }
 
     private static void createExecutionCourses() {
@@ -363,14 +424,18 @@ public class CreateTestData {
     }
 
     private static void createLesson(final Shift shift, int durationInMinutes) {
-	final HourMinuteSecond start = roomManager.getNextHourMinuteSecond();
+	final HourMinuteSecond start = roomManager.getNextHourMinuteSecond(durationInMinutes);
 	final HourMinuteSecond end = start.plusMinutes(durationInMinutes);
 	final Calendar cStart = toCalendar(start);
 	final Calendar cEnd = toCalendar(end);
 	final DiaSemana diaSemana = new DiaSemana(roomManager.getNextWeekDay());
 	final OldRoom oldRoom = roomManager.getNextOldRoom();
-	final RoomOccupation roomOccupation = new RoomOccupation(oldRoom, cStart, cEnd, diaSemana, 1); 
-	new Lesson(diaSemana, cStart, cEnd, shift.getTipo(), oldRoom, roomOccupation, shift, Integer.valueOf(0), Integer.valueOf(1));
+	final RoomOccupation roomOccupation = new RoomOccupation(oldRoom, cStart, cEnd, diaSemana, 1);
+        final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();
+        final OccupationPeriod occupationPeriod = OccupationPeriod.readFor(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay().minusDays(32));
+        roomOccupation.setPeriod(occupationPeriod);
+	final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift.getTipo(), oldRoom, roomOccupation, shift, Integer.valueOf(0), Integer.valueOf(1));
+        lesson.setExecutionPeriod(executionPeriod);
     }
 
     private static Calendar toCalendar(final HourMinuteSecond hourMinuteSecond) {

@@ -16,7 +16,7 @@ public class RoomManager extends Stack<OldRoom> {
     private HourMinuteSecond nextHourMinuteSecond = new HourMinuteSecond(8, 0, 0);
     private HourMinuteSecond limitHourMinuteSecond = new HourMinuteSecond(20, 0, 0);
 
-    public HourMinuteSecond getNextHourMinuteSecond() {
+    public HourMinuteSecond getNextHourMinuteSecond(final int durationInMinutes) {
 	final HourMinuteSecond nextHourMinuteSecond = this.nextHourMinuteSecond;
 	if (nextHourMinuteSecond.isAfter(limitHourMinuteSecond)) {
 	    this.nextHourMinuteSecond = new HourMinuteSecond(8, 0, 0);
@@ -27,7 +27,7 @@ public class RoomManager extends Stack<OldRoom> {
 		this.nextWeekDay = nextWeekDay + 1;
 	    }
 	} else {
-	    this.nextHourMinuteSecond = nextHourMinuteSecond.plusHours(1);
+	    this.nextHourMinuteSecond = nextHourMinuteSecond.plusMinutes(durationInMinutes);
 	}
         return nextHourMinuteSecond;
     }

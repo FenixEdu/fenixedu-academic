@@ -16,7 +16,8 @@ public class OldBuilding extends OldBuilding_Base {
     
     public void delete() {
         if (!hasAnyRooms()) {
-            removeCampus();            
+            removeCampus();
+            removeRootDomainObject();
             deleteDomainObject();    
         } else {
             throw new DomainException("");
