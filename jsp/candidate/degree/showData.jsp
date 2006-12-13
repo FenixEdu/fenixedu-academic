@@ -14,7 +14,7 @@
 <logic:present name="operations">
 	<logic:iterate id="operation" name="operations">
 		<bean:define id="operationType" name="operation" property="type.name" />
-		<html:link action="/degreeCandidacyManagement.do?method=doOperation&operationType=<%=operationType%>">
+		<html:link action="/degreeCandidacyManagement.do?method=doOperation&amp;operationType=<%=operationType%>">
 			<bean:message name="operation" property="label" />
 		</html:link>
 	</logic:iterate>

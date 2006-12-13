@@ -20,10 +20,10 @@
 
 <bean:define id="candidacyID" name="candidacy" property="idInternal" />
 <logic:equal name="canChangePersonalData" value="true">
-	<html:link action="<%="/changePersonalData.do?method=prepare&candidacyID=" + candidacyID%>"><bean:message  key="link.changePersonalData"/></html:link>
+	<html:link action="<%="/changePersonalData.do?method=prepare&amp;candidacyID=" + candidacyID%>"><bean:message  key="link.changePersonalData"/></html:link>
 	<br/>
 </logic:equal>
 
-<html:link action="<%="/viewCandidacies.do?method=prepareUploadDocuments&candidacyID=" + candidacyID%>"><bean:message  key="link.candidacyDocuments"/></html:link>
+<html:link action="<%="/viewCandidacies.do?method=prepareUploadDocuments&amp;candidacyID=" + candidacyID%>"><bean:message  key="link.candidacyDocuments"/></html:link>
 
 	

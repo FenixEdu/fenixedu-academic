@@ -48,12 +48,12 @@
 			</logic:equal>
 			
 			<logic:present name="requiresNewWindow">
-				<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&operationType=" + operationType + "&candidacyID=" + candidacyID%>" target="_blank">
+				<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>" target="_blank">
 					<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
 				</html:link>
 			</logic:present>
 			<logic:notPresent name="requiresNewWindow">
-				<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&operationType=" + operationType + "&candidacyID=" + candidacyID%>">
+				<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>">
 					<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
 				</html:link>
 			</logic:notPresent>
