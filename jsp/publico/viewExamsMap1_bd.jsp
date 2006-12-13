@@ -83,7 +83,7 @@
 				<tr>
 				    <td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.property.executionPeriod"/>:</td>
 				    <td>
-						<html:select bundle="HTMLALT_RESOURCES" altKey="select.indice" property="indice" size="1" onchange="this.form.submit();">
+						<html:select bundle="HTMLALT_RESOURCES" property="indice" size="1" onchange="this.form.submit();">
 							<html:options property="value" labelProperty="label" collection="lista"/>
 						</html:select>
 				    </td>

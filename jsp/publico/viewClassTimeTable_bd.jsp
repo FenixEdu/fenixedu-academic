@@ -1,9 +1,10 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+
+<html:xhtml/>
 
 <bean:define id="component" name="siteView" property="component" />
 <bean:define id="lessonList" name="component" property="lessons" />

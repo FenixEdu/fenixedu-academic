@@ -21,7 +21,7 @@
 		<tr>
 		    <td nowrap="nowrap" width="125"><bean:message key="property.execution.period"/>:</td>
 		    <td nowrap="nowrap">
-		        <html:select bundle="HTMLALT_RESOURCES" altKey="select.selectedExecutionPeriodID" property="selectedExecutionPeriodID" size="1" onchange="this.form.submit();">
+		        <html:select bundle="HTMLALT_RESOURCES"  property="selectedExecutionPeriodID" size="1" onchange="this.form.submit();">
    					<html:options property="value" labelProperty="label"
 						collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD %>" />
 				</html:select>
@@ -32,7 +32,7 @@
 		<tr>
 		    <td nowrap="nowrap" width="125"><bean:message key="property.week"/>:</td>
 		    <td nowrap="nowrap">
-		        <html:select bundle="HTMLALT_RESOURCES" altKey="select.indexWeek" property="indexWeek" size="1" onchange="this.form.submit();">
+		        <html:select bundle="HTMLALT_RESOURCES" property="indexWeek" size="1" onchange="this.form.submit();">
 	    			<html:options property="value" labelProperty="label" 
 						collection="<%= SessionConstants.LABELLIST_WEEKS%>" />
 				</html:select>

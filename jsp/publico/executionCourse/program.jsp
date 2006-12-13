@@ -39,6 +39,7 @@
 			<div class="mtop05 coutput2" style="line-height: 1.5em;">
 				<fr:view name="competenceCourse" property="programI18N" layout="html"/>
 			</div>
+	   </div>
 	</logic:equal>
 </logic:iterate>
 
