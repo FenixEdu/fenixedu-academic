@@ -1,4 +1,5 @@
-<schema name="AcademicServiceRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
+<schema name="AcademicServiceRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="serviceRequestNumber"  />
 	<slot name="creationDate" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.creationDate"/>
 	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
 	<slot name="urgentRequest" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>
@@ -12,26 +13,27 @@
 	<slot name="number" key="label.studentNumber"/>
 </schema>
 
-<schema name="AcademicServiceRequest.view-for-given-registration" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
+<schema name="AcademicServiceRequest.view-for-given-registration" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
+                                                          
 </schema>
 
-<schema name="AcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation"  bundle="APPLICATION_RESOURCES">
-	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.creationDate" />
-	<slot name="employee.person.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.employee.person.name" />
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
-	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.justification" />
+<schema name="AcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation"  bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.creationDate" />
+	<slot name="employee.person.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" />
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
+	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.justification" />
 </schema>
 
 
 <schema name="DocumentRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES" extends="AcademicServiceRequest.view">
 	<slot name="documentPurposeType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose" />
-	<slot name="otherDocumentPurposeTypeDescription" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.otherDocumentPurposeTypeDescription" />
-	<slot name="numberOfPages" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.numberOfPages" />
-	<slot name="serviceRequestNumber"  />
+	<slot name="otherDocumentPurposeTypeDescription" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.otherPurpose" />
+	<slot name="numberOfPages" key="label.documentRequests.DocumentRequest.numberOfPages" />
+	
 </schema>
 
-<schema name="DocumentRequest.view-without-numberOfPages" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
+<schema name="DocumentRequest.view-without-numberOfPages" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES" extends="DocumentRequest.view">
 	<remove name="numberOfPages" />
 </schema>
 
@@ -43,27 +45,27 @@
 	</slot>
 </schema>
 
-<schema name="DocumentRequest.view-without-numberOfPages-documentPurposeTypeInformation" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
+<schema name="DocumentRequest.view-without-numberOfPages-documentPurposeTypeInformation" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES" extends="DocumentRequest.view">
 	<remove name="numberOfPages" />
 	<remove name="documentPurposeType" />
 	<remove name="otherDocumentPurposeTypeDescription" />
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
 </schema>
 
-<schema name="DocumentRequest.summary-view-by-student" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
+<schema name="DocumentRequest.summary-view-by-student" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES" extends="DocumentRequest.view">
 	<remove name="numberOfPages" />
 	<remove name="otherDocumentPurposeTypeDescription" />
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 </schema>
 
-<schema name="DocumentRequest.view-simple" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES">
+<schema name="DocumentRequest.view-simple" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="creationDate" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.creationDate"/>
-	<slot name="studentCurricularPlan.registration.studentNumber" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.registration.studentNumber" />
-	<slot name="documentRequestType" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.documentRequestType" />
+	<slot name="studentCurricularPlan.registration.studentNumber" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.studentNumber" />
+	<slot name="documentRequestType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" />
 	<slot name="urgentRequest" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>
 </schema>
 
-<schema name="CertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest"  extends="DocumentRequest.view" bundle="APPLICATION_RESOURCES">
+<schema name="CertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest"  extends="DocumentRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
 
 <schema name="DegreeFinalizationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -71,7 +73,7 @@
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />	
 </schema>
 
-<schema name="ApprovementCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
+<schema name="ApprovementCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
 
 <schema name="EnrolmentCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -79,28 +81,28 @@
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
 </schema>
 
-<schema name="SchoolRegistrationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
-	<slot name="executionYear.year" key="label.executionYear"/>
+<schema name="SchoolRegistrationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear.year" key="label.serviceRequests.documentRequests.executionYear"/>
 </schema>
 
 
-<schema name="DeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest"  extends="DocumentRequest.view" bundle="APPLICATION_RESOURCES">
+<schema name="DeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest"  extends="DocumentRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
 
-<schema name="SchoolRegistrationDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest"  extends="DeclarationRequest.view" bundle="APPLICATION_RESOURCES">
-	<slot name="executionYear.year" key="label.executionYear"/>
+<schema name="SchoolRegistrationDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear.year" key="label.serviceRequests.documentRequests.executionYear"/>
 </schema>
 
-<schema name="IRSDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest"  extends="DeclarationRequest.view" bundle="APPLICATION_RESOURCES">
+<schema name="IRSDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
 
-<schema name="EnrolmentDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest"  extends="DeclarationRequest.view" bundle="APPLICATION_RESOURCES">
-	<slot name="executionYear.year" key="label.executionYear"/>
+<schema name="EnrolmentDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear.year" key="label.serviceRequests.documentRequests.executionYear"/>
 </schema>
 
 
 
-<schema name="DocumentRequestEditBean" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestEditBean" bundle="APPLICATION_RESOURCES">
+<schema name="DocumentRequestEditBean" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestEditBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.justification" layout="longText"/>
 	<slot name="numberOfPages" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.numberOfPages" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
@@ -195,20 +197,22 @@
 	<remove name="numberOfPages"  read-only="true" />
 	<remove name="documentPurposeType"  read-only="true" />
 	<remove name="otherDocumentPurposeTypeDescription"  read-only="true" />
-	<slot name="serviceRequestNumber"  read-only="true" />
 	<slot name="academicServiceRequestSituationType"  read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
-	<slot name="registration.number"  read-only="true" />
+	<slot name="registration.number" layout="link">
+        <property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
+        <property name="contextRelative" value="true"/>
+        <property name="useParent" value="true"/>
+	</slot>
 </schema>
 
 <schema name="DocumentRequestSearchBean.view" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="chosenDocumentRequestType"  key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType"/>
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"/>
 </schema>
 
-<schema name="AcademicServiceRequest.view-for-given-registration-and-search" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
-	<slot name="serviceRequestNumber"  read-only="true" />
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
+<schema name="AcademicServiceRequest.view-for-given-registration-and-search" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="registration.number" layout="link">
         <property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
         <property name="contextRelative" value="true"/>
