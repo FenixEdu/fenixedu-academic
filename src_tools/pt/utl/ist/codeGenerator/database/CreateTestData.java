@@ -1,10 +1,12 @@
 package pt.utl.ist.codeGenerator.database;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -19,6 +21,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -51,19 +54,27 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.space.OldBuilding;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class CreateTestData {
+
+    private static final RoomManager roomManager = new RoomManager();
 
     public static void main(String[] args) {
         try {
@@ -113,6 +124,11 @@ public class CreateTestData {
     private static void clearData() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
+        for (final Set<Lesson> lessons = rootDomainObject.getLessonsSet(); !lessons.isEmpty(); lessons.iterator().next().delete());
+        for (final Set<Shift> shifts = rootDomainObject.getShiftsSet(); !shifts.isEmpty(); shifts.iterator().next().delete());
+        for (final Set<EvaluationMethod> evaluationMethods = rootDomainObject.getEvaluationMethodsSet(); !evaluationMethods.isEmpty(); evaluationMethods.iterator().next().delete());
+        for (final Set<BibliographicReference> bibliographicReferences = rootDomainObject.getBibliographicReferencesSet(); !bibliographicReferences.isEmpty(); bibliographicReferences.iterator().next().delete());
+
         for (final Set<ExecutionCourseSite> sites = rootDomainObject.getExecutionCourseSitesSet(); !sites.isEmpty(); sites.iterator().next().delete());
         for (final Set<Forum> forums = rootDomainObject.getForunsSet(); !forums.isEmpty(); forums.iterator().next().delete());
         for (final Set<Announcement> announcements = rootDomainObject.getAnnouncementsSet(); !announcements.isEmpty(); announcements.iterator().next().delete());
@@ -152,14 +168,36 @@ public class CreateTestData {
         for (final Set<DegreeInfo> degreeInfos = rootDomainObject.getDegreeInfosSet(); !degreeInfos.isEmpty(); degreeInfos.iterator().next().delete());
         for (final Set<Degree> degrees = rootDomainObject.getDegreesSet(); !degrees.isEmpty(); degrees.iterator().next().delete());
         for (final Set<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet(); !executionYears.isEmpty(); executionYears.iterator().next().delete());
+
+        for (final Set<Space> spaces = rootDomainObject.getSpacesSet(); !spaces.isEmpty(); spaces.iterator().next().delete());
         for (final Set<Campus> campi = rootDomainObject.getCampussSet(); !campi.isEmpty(); campi.iterator().next().delete());
     }
 
     private static void createTestData() {
         createExecutionYears();
         createCampus();
+        createRooms();
         createDegrees();
         createExecutionCourses();
+    }
+
+    private static void createRooms() {
+	final Campus campus = RootDomainObject.getInstance().getCampussSet().iterator().next();
+	for (int b = 1; b <= 10; b++) {
+	    final OldBuilding oldBuilding = new OldBuilding();
+	    oldBuilding.setCampus(campus);
+	    oldBuilding.setName("Edifício" + b);
+	    for (int r = 1; r <= 100; r++) {
+		final OldRoom oldRoom = new OldRoom();
+		oldRoom.setBuilding(oldBuilding);
+		oldRoom.setName("Sala" + r);
+		oldRoom.setCapacidadeNormal(Integer.valueOf(50));
+		oldRoom.setCapacidadeExame(Integer.valueOf(25));
+		oldRoom.setPiso(Integer.valueOf(0));
+		oldRoom.setTipo(new TipoSala(TipoSala.PLANA));
+		roomManager.push(oldRoom);
+	    }
+	}
     }
 
     private static Teacher createTeachers(final int i) {
@@ -290,11 +328,57 @@ public class CreateTestData {
         createProfessorship(executionCourse, Boolean.FALSE);
         createAnnouncementsAndPlanning(executionCourse);
         createShifts(executionCourse);
+        createEvaluationMethod(executionCourse);
+        createBibliographicReferences(executionCourse);
+    }
+
+    private static void createEvaluationMethod(final ExecutionCourse executionCourse) {
+	final EvaluationMethod evaluationMethod = new EvaluationMethod();
+	evaluationMethod.setExecutionCourse(executionCourse);
+	evaluationMethod.setEvaluationElements(new MultiLanguageString("Método de avaliação. Bla bla bla bla bla."));
+	evaluationMethod.getEvaluationElements().setContent(Language.en, "Evaluation method. Blur blur ble blur bla.");
+    }
+
+    private static void createBibliographicReferences(final ExecutionCourse executionCourse) {
+	createBibliographicReference(executionCourse, Boolean.FALSE);
+	createBibliographicReference(executionCourse, Boolean.TRUE);
+    }
+
+    private static void createBibliographicReference(final ExecutionCourse executionCourse, final Boolean optional) {
+	final BibliographicReference bibliographicReference = new BibliographicReference();
+	bibliographicReference.setAuthors("Nome do Autor");
+	bibliographicReference.setExecutionCourse(executionCourse);
+	bibliographicReference.setOptional(optional);
+	bibliographicReference.setReference("Referência");
+	bibliographicReference.setTitle("Título");
+	bibliographicReference.setYear("Ano");
     }
 
     private static void createShifts(final ExecutionCourse executionCourse) {
         final Shift shift1 = new Shift(executionCourse, ShiftType.TEORICA, Integer.valueOf(50), Integer.valueOf(50));
+        createLesson(shift1, 90);
+        createLesson(shift1, 90);
         final Shift shift2 = new Shift(executionCourse, ShiftType.PRATICA, Integer.valueOf(50), Integer.valueOf(50));
+        createLesson(shift2, 120);
+    }
+
+    private static void createLesson(final Shift shift, int durationInMinutes) {
+	final HourMinuteSecond start = roomManager.getNextHourMinuteSecond();
+	final HourMinuteSecond end = start.plusMinutes(durationInMinutes);
+	final Calendar cStart = toCalendar(start);
+	final Calendar cEnd = toCalendar(end);
+	final DiaSemana diaSemana = new DiaSemana(roomManager.getNextWeekDay());
+	final OldRoom oldRoom = roomManager.getNextOldRoom();
+	final RoomOccupation roomOccupation = new RoomOccupation(oldRoom, cStart, cEnd, diaSemana, 1); 
+	new Lesson(diaSemana, cStart, cEnd, shift.getTipo(), oldRoom, roomOccupation, shift, Integer.valueOf(0), Integer.valueOf(1));
+    }
+
+    private static Calendar toCalendar(final HourMinuteSecond hourMinuteSecond) {
+	Calendar calendar = Calendar.getInstance();
+	calendar.set(Calendar.HOUR_OF_DAY, hourMinuteSecond.getHour());
+	calendar.set(Calendar.MINUTE, hourMinuteSecond.getMinuteOfHour());
+	calendar.set(Calendar.SECOND, hourMinuteSecond.getSecondOfMinute());
+	return calendar;
     }
 
     private static void createAnnouncementsAndPlanning(final ExecutionCourse executionCourse) {
