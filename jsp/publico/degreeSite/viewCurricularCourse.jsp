@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 
 <ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.mainPageIST" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
@@ -9,7 +11,7 @@
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="publicDegreeInfoBundle"/>
-	
+
 	<h:outputLink value="#{globalBundle['institution.url']}" >
 		<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
 	</h:outputLink>
@@ -18,37 +20,18 @@
 		<h:outputText value="#{publicDegreeInfoBundle['public.degree.information.label.education']}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
-	<h:outputLink value="../showDegreeSite.do" >
-		<h:outputText value="#{CurricularCourseManagement.degreeCurricularPlan.degree.sigla}"/>
-		<f:param name="method" value="showDescription"/>
-		<f:param name="degreeID" value="#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}"/>
-	</h:outputLink>
+
+	<h:outputText value="<a href='../showDegreeSite.do?method=showDescription&amp;degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}'>#{CurricularCourseManagement.degreeCurricularPlan.degree.sigla}</a>" escape="false"/>
+
 	&nbsp;&gt;&nbsp;
-	<h:outputLink value="../showDegreeSite.do" >
-		<h:outputText value="#{CurricularCourseManagement.degreeCurricularPlan.name}"/>
-		<f:param name="method" value="showCurricularPlan"/>
-		<f:param name="degreeID" value="#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}"/>
-		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
-	</h:outputLink>
+    <h:outputText value="<a href='../showDegreeSite.do?method=showCurricularPlan&amp;degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}'>#{CurricularCourseManagement.degreeCurricularPlan.name}</a>" escape="false"/>
+	
 	&nbsp;&gt;&nbsp;
-	<h:outputLink rendered="#{!empty CurricularCourseManagement.organizeBy}" value="showDegreeCurricularPlanBolonha.faces" >
-		<h:outputText value="#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}"/>
-		<f:param name="degreeID" value="#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}"/>
-		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
-		<f:param name="executionPeriodID" value="#{CurricularCourseManagement.executionYearID}"/>
-		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
-		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
-		<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
-	</h:outputLink>
-	<h:outputLink rendered="#{empty CurricularCourseManagement.organizeBy}" value="showDegreeCurricularPlanBolonha.faces" >
-		<h:outputText value="#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}"/>
-		<f:param name="degreeID" value="#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}"/>
-		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
-		<f:param name="executionPeriodID" value="#{CurricularCourseManagement.executionYearID}"/>
-		<f:param name="organizeBy" value="groups"/>
-		<f:param name="showRules" value="false"/>
-		<f:param name="hideCourses" value="false"/>
-	</h:outputLink>
+
+     <h:outputText rendered="#{!empty CurricularCourseManagement.organizeBy}" value="<a href='showDegreeCurricularPlanBolonha.faces?degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}&amp;executionPeriodID=#{CurricularCourseManagement.executionYearID}&amp;organizeBy=#{CurricularCourseManagement.organizeBy}&amp;showRules=#{CurricularCourseManagement.showRules}&amp;hideCourses=#{CurricularCourseManagement.hideCourses}'>#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}</a>" escape="false"/>	
+
+     <h:outputText rendered="#{empty CurricularCourseManagement.organizeBy}" value="<a href='showDegreeCurricularPlanBolonha.faces?degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}&amp;executionPeriodID=#{CurricularCourseManagement.executionYearID}&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false'>#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}</a>" escape="false"/>	 	
+
 	&nbsp;&gt;&nbsp;
 	<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.name}"/>
 	<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.nameEn}"/>
@@ -76,12 +59,11 @@
 		<h:outputText value="<tr><td class='box_header'>" escape="false"/>
 		<h:outputText value="<strong>#{bolonhaBundle['competenceCourse']}</strong></td></tr>" escape="false"/>
 		<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
-			<h:outputLink value="../department/showCompetenceCourse.faces">
-				<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.name}"/>
-				<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.nameEn}"/>
-				<f:param name="competenceCourseID" value="#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}"/>
-				<f:param name="selectedDepartmentUnitID" value="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.idInternal}"/>
-			</h:outputLink>
+			
+			<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="<a href='../department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.idInternal}'>#{CurricularCourseManagement.curricularCourse.name}</a>" escape="false"/> 
+
+			<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="<a href='../department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.idInternal}'>#{CurricularCourseManagement.curricularCourse.nameEn}</a>" escape="false"/> 			
+						
 			<h:outputText value=" #{publicDegreeInfoBundle['public.degree.information.label.from.masculine']} "/>
 			<h:outputLink value="../department/showDepartmentCompetenceCourses.faces">
 				<h:outputText value="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}"/>
@@ -95,11 +77,8 @@
 		<h:outputText value="<strong>#{publicDegreeInfoBundle['public.degree.information.label.courses']}</strong></td></tr>" escape="false"/>
 		<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.associatedExecutionCourses}" var="executionCourse">
 			<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
-			<h:outputLink value="../executionCourse.do" >
-				<h:outputText value="#{executionCourse.nome} (#{executionCourse.executionPeriod.executionYear.year} - #{executionCourse.executionPeriod.name})"/>
-				<f:param name="method" value="firstPage"/>
-				<f:param name="executionCourseID" value="#{executionCourse.idInternal}"/>
-			</h:outputLink>
+
+			<h:outputText value="<a href='../executionCourse.do?method=firstPage&amp;executionCourseID=#{executionCourse.idInternal}'>#{executionCourse.nome} (#{executionCourse.executionPeriod.executionYear.year} - #{executionCourse.executionPeriod.name})</a>" escape="false"/>
 			<h:outputText value="</td></tr>" escape="false"/>
 		</fc:dataRepeater>
 	</h:panelGroup>
