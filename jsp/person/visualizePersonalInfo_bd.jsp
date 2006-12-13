@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml/>
- 
+
  <table width="100%">
  	<tr valign="bottom">
  		<td valign="top"><h2><bean:message key="label.person.title.personalConsult" /></h2></td>
@@ -16,7 +16,8 @@
  	</tr>
  </table>
 
-<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
+
 
 <br/>
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -26,7 +27,7 @@
 	</tr>
 </table>
 <br />
-<fr:form>
+<fr:form action="/visualizePersonalInfo.do">
 	<fr:edit id="contact" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.contact.info">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thleft thlight"/>
@@ -45,7 +46,7 @@
 	</tr>
 </table>
 <br />
-<fr:form>
+<fr:form action="/visualizePersonalInfo.do">
 	<fr:edit id="photo" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.information.to.publish">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thleft thlight"/>
@@ -63,7 +64,7 @@
 		<td class="infoop"><strong><bean:message key="label.person.title.personal.info" /></strong></td>
 	</tr>
 </table>
-<fr:form>
+<fr:form action="/visualizePersonalInfo.do">
 	<br/>
 	<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
 	<fr:edit id="nickname" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.nickname">

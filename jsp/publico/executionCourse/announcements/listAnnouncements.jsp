@@ -7,7 +7,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/messaging.tld" prefix="messaging" %>
 
-<h2>Anúncios</h2>
+<h2><bean:message key="messaging.menu.announcements.link" bundle="MESSAGING_RESOURCES"/></h2>
 
 <%
 net.sourceforge.fenixedu.domain.Person person = (net.sourceforge.fenixedu.domain.Person) request.getAttribute("person");
@@ -46,8 +46,9 @@ if (month != null && year!=null)
 
 		<%-- Event Date OR Publication Date --%>
 			<p class="mvert025 smalltxt greytxt2">
-				<span id="10367">
-					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar">
+				<span>
+				<!--  <span id="10367">-->
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar"/>
 					<logic:notEmpty name="announcement" property="publicationBegin">
 						Publicado em 
 							<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
@@ -55,7 +56,7 @@ if (month != null && year!=null)
 						if (announcement.getAnnouncementBoard().hasWriter(person)) {
 						%>
 							<logic:notEmpty name="announcement" property="publicationEnd">
-							 	até 
+							 	atï¿½ 
 								<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
 							</logic:notEmpty>
 						<%
@@ -70,10 +71,10 @@ if (month != null && year!=null)
 				</span>
 			</p>
 
-		<%-- Título --%>
+		<%-- Tï¿½tulo --%>
 			<logic:equal name="announcement" property="visible" value="true">
 				<h3 class="mvert025">
-				<html:link action="<%=contextPrefix +extraParameters +"&method=viewAnnouncement&announcementId=" + announcement.getIdInternal()%>">
+				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
 					<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
@@ -82,11 +83,11 @@ if (month != null && year!=null)
 			<logic:equal name="announcement" property="visible" value="false">
 				<p class="mvert025">
 				<h3 class="mvert0 dinline">
-				<html:link action="<%=contextPrefix +extraParameters +"&method=viewAnnouncement&announcementId=" + announcement.getIdInternal()%>">
+				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
 					<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
-				<em class="warning1">Invisível</em>
+				<em class="warning1">Invisï¿½vel</em>
 				</p>
 			</logic:equal>
 
@@ -97,7 +98,7 @@ if (month != null && year!=null)
 				 	{
 				 %>				 
 				 	<fr:view name="announcement" property="excerpt"/>
-				 	 <html:link action="<%=contextPrefix + "method=viewAnnouncement&announcementId=" + announcement.getIdInternal()%>">
+				 	 <html:link action="<%=contextPrefix + "method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
 						 Continuar a ler...
 					 </html:link> 
 				 <%				 		
@@ -123,7 +124,7 @@ if (month != null && year!=null)
 
 		<%-- Board e RSS --%>
 				Canal: 
-				<html:link action="<%=contextPrefix + extraParameters +"&method=viewAnnouncements&announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "#" + announcement.getIdInternal()%>">
+				<html:link action="<%=contextPrefix + extraParameters +"&amp;method=viewAnnouncements&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "#" + announcement.getIdInternal()%>">
 					<fr:view name="announcement" property="announcementBoard.name" type="java.lang.String"/>
 				</html:link>
 				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
@@ -132,8 +133,8 @@ if (month != null && year!=null)
 			<%
 				if (!request.getRequestURI().contains("public") && announcement.getAnnouncementBoard().hasManager(person)) {
 			%>
-				Permissões:
-				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=prepareEditAnnouncementBoard" + "&announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "&tabularVersion=true" %>">
+				Permissï¿½es:
+				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=prepareEditAnnouncementBoard" + "&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "&amp;tabularVersion=true" %>">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.manage.link"/>
 				</html:link>
 				 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
@@ -141,8 +142,8 @@ if (month != null && year!=null)
 				} else if (!request.getRequestURI().contains("public") && announcement.getAnnouncementBoard().hasWriter(person)) {
 			%>
 				
-				Permissões:
-				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=viewAnnouncements" + "&announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() %>">
+				Permissï¿½es:
+				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=viewAnnouncements" + "&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() %>">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.write.link"/>
 				</html:link>
 				 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
@@ -190,13 +191,13 @@ if (month != null && year!=null)
 				<%
 				}
 				%>
-		<%-- Data de Criação --%>
+		<%-- Data de Criaï¿½ï¿½o --%>
 				<%
 				if (announcement.getAnnouncementBoard().hasWriter(person)) {
 				
 				%>
-					Data de criação:
-					<span id="<%=announcement.getIdInternal().toString()%>">
+					Data de criaï¿½ï¿½o:
+					<span id="<%="ID_" + announcement.getIdInternal().toString()%>">
 						<fr:view name="announcement" property="creationDate" layout="no-time"/>
 					</span>
 				<%
@@ -217,7 +218,7 @@ if (month != null && year!=null)
 				<fr:layout name="tabular-sortable">
 					<fr:property name="classes" value="tstyle2"/>
 			     		<fr:property name="columnClasses" value=""/>
-						<fr:property name="link(edit)" value="<%= contextPrefix + "method=editAnnouncement" + "&"+extraParameters + "&tabularVersion=true"%>"/>
+						<fr:property name="link(edit)" value="<%= contextPrefix + "method=editAnnouncement" + "&amp;"+extraParameters + "&amp;tabularVersion=true"%>"/>
 						<fr:property name="param(edit)" value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId"/>
 						<fr:property name="key(edit)" value="messaging.edit.link"/>
 						<fr:property name="bundle(edit)" value="MESSAGING_RESOURCES"/>
@@ -227,13 +228,13 @@ if (month != null && year!=null)
 						<fr:property name="key(view)" value="messaging.view.link"/>
 						<fr:property name="bundle(view)" value="MESSAGING_RESOURCES"/>						
 						<fr:property name="order(view)" value="1"/>
-						<fr:property name="link(remove)" value="<%= contextPrefix + "method=deleteAnnouncement" + "&" + extraParameters + "&tabularVersion=true"%>"/>
+						<fr:property name="link(remove)" value="<%= contextPrefix + "method=deleteAnnouncement" + "&amp;" + extraParameters + "&amp;tabularVersion=true"%>"/>
 						<fr:property name="param(remove)" value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId"/>
 						<fr:property name="key(remove)" value="messaging.delete.label"/>
 						<fr:property name="bundle(remove)" value="MESSAGING_RESOURCES"/>				
 						<fr:property name="order(remove)" value="3"/>
 						
-						<fr:property name="sortUrl" value="<%= "/announcements/manageUnitAnnouncementBoard.do?method=prepareEditAnnouncementBoard&announcementBoardId=" + announcementBoardId + "&tabularVersion=true" %>"/>
+						<fr:property name="sortUrl" value="<%= "/announcements/manageUnitAnnouncementBoard.do?method=prepareEditAnnouncementBoard&amp;announcementBoardId=" + announcementBoardId + "&amp;tabularVersion=true" %>"/>
 						<fr:property name="sortParameter" value="sortBy"/>
 						<fr:property name="sortBy" value="<%= sortCriteria %>"/>
 				</fr:layout>
@@ -245,7 +246,7 @@ if (month != null && year!=null)
 	
 	<logic:empty name="announcements">
 		<p class="mtop2">
-			<em>Não existem anúncios.</em>
+			<em><bean:message key="label.noAnnouncements" bundle="MESSAGING_RESOURCES"/></em>
 		</p>
 	</logic:empty>
 </logic:present>

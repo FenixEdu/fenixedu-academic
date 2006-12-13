@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 
+import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlForm;
 import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
@@ -229,8 +230,8 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
         
         if (isNested() || hasFormParent()) {
-            HtmlInlineContainer container = new HtmlInlineContainer();
-            
+            HtmlBlockContainer container = new HtmlBlockContainer();
+            container.setClasses("dinline");
             for (HtmlHiddenField field : hiddenFields) {
                 container.addChild(field);    
             }
