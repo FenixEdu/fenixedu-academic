@@ -188,10 +188,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 	setCurricularStage(curricularStage);
     }
 
-    public Boolean getCanBeDeleted() {
-	return true;
-    }
-
     @Override
     public void delete() {
 	super.delete();

@@ -56,10 +56,18 @@ public abstract class DegreeModule extends DegreeModule_Base {
     }
     
     public void delete() {
-        for (;!getParentContexts().isEmpty(); getParentContexts().get(0).delete());
-        for (;!getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
-        for (;!getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().get(0).delete());
-        for (;!getParticipatingExclusivenessCurricularRules().isEmpty(); getParticipatingExclusivenessCurricularRules().get(0).delete());
+	if(getCanBeDeleted()) {
+	    for (;!getParentContexts().isEmpty(); getParentContexts().get(0).delete());
+	    for (;!getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
+	    for (;!getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().get(0).delete());
+	    for (;!getParticipatingExclusivenessCurricularRules().isEmpty(); getParticipatingExclusivenessCurricularRules().get(0).delete());
+	} else {
+	    throw new DomainException("courseGroup.notEmptyCurriculumModules");
+	}
+    }
+    
+    protected Boolean getCanBeDeleted() {
+	return !hasAnyCurriculumModules();
     }
     
     public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
@@ -141,7 +149,6 @@ public abstract class DegreeModule extends DegreeModule_Base {
     
     public abstract Double getEctsCredits();
     public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
-    public abstract Boolean getCanBeDeleted();
     public abstract boolean isLeaf();
     public abstract boolean isRoot();
     public abstract DegreeCurricularPlan getParentDegreeCurricularPlan();

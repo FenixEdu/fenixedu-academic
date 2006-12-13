@@ -71,7 +71,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Boolean getCanBeDeleted() {
-	return !hasAnyChildContexts();
+	return super.getCanBeDeleted() && !hasAnyChildContexts();
     }
 
     public void delete() {
