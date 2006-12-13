@@ -13,29 +13,22 @@
 <bean:define id="institutionUrl" type="java.lang.String">
 	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES" />
 </bean:define>
-<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message
-	key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> <bean:define
-	id="institutionUrlTeaching" type="java.lang.String">
-	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES" />
-	<bean:message key="link.institution" bundle="GLOBAL_RESOURCES" />
-</bean:define> &nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message
-	key="public.degree.information.label.education"
-	bundle="PUBLIC_DEGREE_INFORMATION" /></a> <bean:define id="degreeType"
-	name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>"
-	property="infoDegree.tipoCurso" /> <bean:define
-	id="infoDegreeCurricularPlan"
-	name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>" />
-&nbsp;&gt;&nbsp; <html:link
-	page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString()%>">
-	<bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" />
-</html:link> &nbsp;&gt;&nbsp; <html:link
-	page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  %>">
-	<bean:write name="infoDegreeCurricularPlan" property="name" />
-</html:link> &nbsp;&gt;&nbsp; <html:link
-	page="<%= "/chooseContextDANew.do?method=nextPagePublic&amp;nextPage=classSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" +  pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>">
-	<bean:message bundle="PUBLIC_DEGREE_INFORMATION"
-		key="public.degree.information.label.classes" />
-</html:link> &nbsp;&gt;&nbsp;<bean:write name="className" /></div>
+
+<div class="breadcumbs">
+   <a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES" /></a> 
+   <bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES" /><bean:message key="link.institution" bundle="GLOBAL_RESOURCES" /></bean:define> 
+    &nbsp;&gt;&nbsp;
+    <a href="<%= institutionUrlTeaching %>"><bean:message key="public.degree.information.label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a> 
+    <bean:define id="degreeType" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>" property="infoDegree.tipoCurso" /> 
+    <bean:define id="infoDegreeCurricularPlan"name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>" />
+    &nbsp;&gt;&nbsp; 
+    <html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString()%>"> <bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" /> </html:link> 
+    &nbsp;&gt;&nbsp; 
+    <html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  %>"> <bean:write name="infoDegreeCurricularPlan" property="name" /> </html:link> 
+    &nbsp;&gt;&nbsp; 
+    <html:link page="<%= "/chooseContextDANew.do?method=nextPagePublic&amp;nextPage=classSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" +  pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>"> <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.classes" /> </html:link> 
+    &nbsp;&gt;&nbsp;<bean:write name="className" />
+</div>
 
 
 

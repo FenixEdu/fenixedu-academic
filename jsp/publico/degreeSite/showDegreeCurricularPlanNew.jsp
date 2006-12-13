@@ -6,7 +6,6 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
-
 <logic:present name="infoDegreeCurricularPlan">
 	<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
 
@@ -68,7 +67,7 @@
 			<tr>
 				<td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.executionYear"/>:</td>
 				<td>
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.indice" property="indice" size="1" onchange="this.form.submit();">
+					<html:select bundle="HTMLALT_RESOURCES" property="indice" size="1" onchange="this.form.submit();">
 						<html:options property="value" labelProperty="label" collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>"/>
 						<bean:define id="indiceID" name="chooseContextDegreeForm" property="indice"/>
 					</html:select>
@@ -80,7 +79,7 @@
 			<tr>
 				<td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularYear"/>:</td>
 				<td>
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.curYear" property="curYear" size="1" onchange="this.form.submit();">
+					<html:select bundle="HTMLALT_RESOURCES" property="curYear" size="1" onchange="this.form.submit();">
 						<html:options collection="curricularYearList" property="value" labelProperty="label"/>
 					</html:select>			
 					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -93,7 +92,7 @@
 	
 	<br/>
 	
-	<em><span class="error"><html:errors/></span></em>
+	<em><span class="error"><!-- w3c complient--><html:errors/></span></em>
 	
 	<logic:present name="allActiveCurricularCourseScopes">
 	<logic:notEmpty name="allActiveCurricularCourseScopes">

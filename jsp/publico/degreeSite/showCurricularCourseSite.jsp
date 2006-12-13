@@ -131,7 +131,7 @@
 <logic:present name="infoCurriculum" property="generalObjectives">
 	<logic:notEmpty name="infoCurriculum" property="generalObjectives">
 		<logic:notEqual name="infoCurriculum" property="generalObjectives" value="">
-			<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.generalObjectives" />	</h2>
+			<h2 class='arrow_bullet'>&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.generalObjectives" />	</h2>
 			<p><bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></p>
 		</logic:notEqual>
 	</logic:notEmpty>
@@ -140,7 +140,7 @@
 <logic:present name="infoCurriculum" property="operacionalObjectives">
 <logic:notEmpty name="infoCurriculum" property="operacionalObjectives">
 	<logic:notEqual name="infoCurriculum" property="operacionalObjectives" value="">
-		<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.operacionalObjectives" /></h2>
+		<h2 class='arrow_bullet'>&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.operacionalObjectives" /></h2>
 		<p><bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/></p>
 	</logic:notEqual>
 </logic:notEmpty> 
@@ -149,7 +149,7 @@
 <logic:present name="infoCurriculum" property="program">
 <logic:notEmpty name="infoCurriculum" property="program">
 	<logic:notEqual name="infoCurriculum" property="program" value="">
-		<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.program" /></h2>	
+		<h2 class='arrow_bullet'>&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.program" /></h2>	
 		<p><bean:write name="infoCurriculum" property="program" filter="false" /></p>	
 	</logic:notEqual>
 </logic:notEmpty>
