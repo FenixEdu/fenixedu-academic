@@ -27,7 +27,8 @@ public class SeniorInformationAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = getUserView(request);
-	Senior senior = Senior.readByUsername(userView.getPerson());
+	
+	Senior senior = (Senior) executeService("ReadStudentSenior", new Object[] {userView.getPerson()});
 	request.setAttribute("senior", senior);
 
 	return mapping.findForward("show-form");
