@@ -33,7 +33,7 @@
 	<parameter name="eventTypes" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="payedAmounts" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="totalPayedAmount" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>	
+	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -57,7 +57,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="290"
-						y="150"
+						y="147"
 						width="261"
 						height="22"
 						key="textField-27"
@@ -71,13 +71,13 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="290"
-						y="176"
+						y="173"
 						width="261"
 						height="22"
 						key="textField-28"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
+					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Bold" size="12" isBold="true" isItalic="false"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getPerson().getAddress().toUpperCase()]]></textFieldExpression>
@@ -99,7 +99,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="290"
-						y="191"
+						y="195"
 						width="261"
 						height="22"
 						key="textField-30"
