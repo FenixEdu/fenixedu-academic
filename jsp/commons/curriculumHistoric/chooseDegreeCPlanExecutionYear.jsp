@@ -11,7 +11,7 @@
 	<html:form action="/chooseExecutionYearAndDegreeCurricularPlan">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseDegreeCurricularPlan"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
-		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID" onchange="this.form.submit()">
+		<html:select bundle="HTMLALT_RESOURCES" property="executionYearID" onchange="this.form.submit()">
 			<option value=""><bean:message key="label.curriculumHistoric.chooseExecutionYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/></option>
 			<logic:notEmpty name="executionYears">
 				<html:options collection="executionYears" property="idInternal" labelProperty="year" />
@@ -32,7 +32,7 @@
 	<logic:notEmpty name="degreeCurricularPlans">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 		<strong><bean:message key="label.curriculumHistoric.chooseDegreeCurricularPlan" bundle="CURRICULUM_HISTORIC_RESOURCES"/>:</strong><br />
-		<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlanID" property="degreeCurricularPlanID">
+		<html:select bundle="HTMLALT_RESOURCES" property="degreeCurricularPlanID">
 			<html:options collection="degreeCurricularPlans" property="value" labelProperty="label" />
 		</html:select>
 	</logic:notEmpty>

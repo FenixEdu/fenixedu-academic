@@ -30,7 +30,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.coResponsibleCreditsPercentage" property="coResponsibleCreditsPercentage"/>
 
 	<strong><bean:message key="label.teacher.finalWork.chooseDegreeAndYear"/>:</strong><br />
-	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYear" property="executionYear"
+	<html:select bundle="HTMLALT_RESOURCES" property="executionYear"
 			onchange="this.form.method.value='changeExecutionYear';this.form.submit();"
 			>
 		<html:options collection="infoExecutionYears" property="idInternal" labelProperty="nextExecutionYearYear" />
@@ -38,7 +38,7 @@
 	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.submit"/>
 	</html:submit>
-	<html:select bundle="HTMLALT_RESOURCES" altKey="select.degree" property="degree"
+	<html:select bundle="HTMLALT_RESOURCES" property="degree"
 			onchange="this.form.method.value='chooseDegree';this.form.submit();"
 			>
 		<html:options collection="executionDegreeList" property="idInternal" labelProperty="infoDegreeCurricularPlan.presentationName" />

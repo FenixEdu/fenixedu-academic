@@ -25,7 +25,7 @@
 			<html:form action="/showProfessorships" >
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="list"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" size="1" onchange="this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" property="executionPeriodID" size="1" onchange="this.form.submit();">
 					<html:option key="option.all.execution.periods" value=""/>
 					<html:options labelProperty="label" property="value" collection="executionPeriodLabelValueBeans"/>
 				</html:select>
