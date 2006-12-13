@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.C
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -105,6 +107,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	parameters.put("nameOfMother", StringUtils.multipleLineRightPad(andOf + " " + nameOfMother, LINE_LENGTH, '-'));
 	
         if (getDocumentRequest().isCertificate()) {
+            // FIXME remove this once refactoring is commited by lmre
+            if (getDocumentRequest().getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE) {
+        	parameters.put("situation", (((SchoolRegistrationCertificateRequest) getDocumentRequest()).getExecutionYear().containsDate(new DateTime())) ? " ESTÁ" : " ESTEVE");
+            }
+            
             final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
             
             final Money amountPerPage = certificateRequestPR.getAmountPerPage();

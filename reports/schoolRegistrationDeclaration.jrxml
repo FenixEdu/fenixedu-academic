@@ -32,6 +32,7 @@
 	<parameter name="birthLocale" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="nameOfFather" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="nameOfMother" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="situation" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>	
 
 		<background>
@@ -223,7 +224,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["no ano lectivo " + ((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest)$P{documentRequest}).getExecutionYear().getYear() + " ESTEVE INSCRITO no curso " + $P{documentRequest}.getRegistration().getDegreeType().getLocalizedName().toUpperCase() + " em " + $P{documentRequest}.getRegistration().getDegree().getName().toUpperCase() + " deste Instituto."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["no ano lectivo " + ((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest)$P{documentRequest}).getExecutionYear().getYear() + $P{situation} + " INSCRITO no curso " + $P{documentRequest}.getRegistration().getDegreeType().getLocalizedName().toUpperCase() + " em " + $P{documentRequest}.getRegistration().getDegree().getName().toUpperCase() + " deste Instituto."]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement

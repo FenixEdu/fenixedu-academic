@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
@@ -52,6 +53,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	super.fillReport();
 	
 	init(getDocumentRequest().getRegistration(), ((SchoolRegistrationDeclarationRequest)getDocumentRequest()).getExecutionYear(), AccessControl.getPerson());
+	parameters.put("situation", (getExecutionYear().containsDate(new DateTime())) ? " ESTÁ" : " ESTEVE");
     }
 
     public Person getEmployee() {

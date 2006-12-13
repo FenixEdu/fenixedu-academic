@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -30,6 +31,8 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
 	final List<Enrolment> enrolments = registration.getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
 	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
+
+	parameters.put("situation", (executionYear.containsDate(new DateTime())) ? " ESTÁ" : " ESTEVE");
 	
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() != null) {
 	    StringBuilder documentPurpose = new StringBuilder();
