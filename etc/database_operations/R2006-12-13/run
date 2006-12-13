@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing table PaymentCode" AlterTablePaymentCode.sql
+execute "Adding a column to WorkScheduleType" AlterWorkScheduleTypeTable.sql
