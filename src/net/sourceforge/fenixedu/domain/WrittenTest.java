@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.joda.time.YearMonthDay;
@@ -63,13 +64,10 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     @Override
+    @Checked("WrittenTestPredicates.changeDatePredicate")
     public void setDayDate(Date date) {
         final IUserView requestor = AccessControl.getUserView();
-        if (requestor == null) {
-            throw new NullPointerException("requester.cannot.be.null");
-        }
-        
-        if (hasTimeTableManagerPrivledges(requestor) || hasCoordinatorPrivledges(requestor) || allowedPeriod(date)) {
+        if (requestor == null || hasTimeTableManagerPrivledges(requestor) || hasCoordinatorPrivledges(requestor) || allowedPeriod(date)) {
             super.setDayDate(date);
         } else {
             throw new DomainException("not.authorized.to.set.this.date");
@@ -100,7 +98,7 @@ public class WrittenTest extends WrittenTest_Base {
         return true;
     }
 
-    private boolean hasCoordinatorPrivledges(final IUserView requestor) {
+    public boolean hasCoordinatorPrivledges(final IUserView requestor) {
         if (requestor.hasRoleType(RoleType.COORDINATOR)) {
             final Person person = requestor.getPerson();
             if (person != null) {
@@ -122,7 +120,7 @@ public class WrittenTest extends WrittenTest_Base {
         return false;
     }
 
-    private boolean hasTimeTableManagerPrivledges(final IUserView requestor) {
+    public boolean hasTimeTableManagerPrivledges(final IUserView requestor) {
         return requestor.hasRoleType(RoleType.TIME_TABLE_MANAGER);
     }
     
