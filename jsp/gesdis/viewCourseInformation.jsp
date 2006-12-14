@@ -265,13 +265,14 @@
 	<br />
 	<p class="infoop"><span class="emphasis-box">8</span>
 	<bean:message key="message.courseInformation.courseSupportLessons" /></p>
- 	<table border="0" cellspacing="1" style="margin-top:10px">
+<%--  	<table border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
 			<td> 
-					<bean:message key="message.courseInformation.notYetAvailable"/>
-			<%-- <bean:write name="siteCourseInformation" property="courseSupportLessons"/>--%></td>
+			
+			< <bean:write name="siteCourseInformation" property="courseSupportLessons"/></td>
 		</tr>
 	</table>
+	--%>
 	<br/>
 	<p class="infoop"><span class="emphasis-box">9</span>
 	<bean:message key="message.courseInformation.courseReport" /></p>
