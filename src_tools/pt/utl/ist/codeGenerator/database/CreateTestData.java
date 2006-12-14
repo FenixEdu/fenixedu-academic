@@ -1,8 +1,10 @@
 package pt.utl.ist.codeGenerator.database;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
@@ -19,9 +21,11 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -39,10 +43,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -68,6 +74,7 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.Season;
 import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.joda.time.DateTime;
@@ -75,7 +82,9 @@ import org.joda.time.YearMonthDay;
 
 public class CreateTestData {
 
-    private static final RoomManager roomManager = new RoomManager();
+    private static final LessonRoomManager lessonRoomManager = new LessonRoomManager();
+    private static final ExamRoomManager examRoomManager = new ExamRoomManager();
+    private static final WrittenTestsRoomManager writtenTestsRoomManager = new WrittenTestsRoomManager();
 
     public static void main(String[] args) {
         try {
@@ -125,6 +134,8 @@ public class CreateTestData {
     private static void clearData() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
+        System.out.println("Deleting school classes.");
+        for (final Set<SchoolClass> schoolClasses = rootDomainObject.getSchoolClasssSet(); !schoolClasses.isEmpty(); schoolClasses.iterator().next().delete());
         System.out.println("Deleting lessons.");
         for (final Set<Lesson> lessons = rootDomainObject.getLessonsSet(); !lessons.isEmpty(); lessons.iterator().next().delete());
         System.out.println("Deleting shifts.");
@@ -215,6 +226,8 @@ public class CreateTestData {
         createRooms();
         createDegrees();
         createExecutionCourses();
+        connectShiftsToSchoolClasses();
+        createWrittenEvaluations();
     }
 
     private static void createRooms() {
@@ -231,7 +244,9 @@ public class CreateTestData {
 		oldRoom.setCapacidadeExame(Integer.valueOf(25));
 		oldRoom.setPiso(Integer.valueOf(0));
 		oldRoom.setTipo(new TipoSala(TipoSala.PLANA));
-		roomManager.push(oldRoom);
+		lessonRoomManager.push(oldRoom);
+		examRoomManager.add(oldRoom);
+		writtenTestsRoomManager.add(oldRoom);
 	    }
 	}
     }
@@ -341,7 +356,22 @@ public class CreateTestData {
             final Teacher teacher = createTeachers(i);
             new Coordinator(executionDegree, teacher.getPerson(), Boolean.TRUE);
             createPeriodsForExecutionDegree(executionDegree);
+            createSchoolClasses(executionDegree);
         }
+    }
+
+    private static void createSchoolClasses(final ExecutionDegree executionDegree) {
+	final ExecutionYear executionYear = executionDegree.getExecutionYear();
+	final Degree degree = executionDegree.getDegree();
+	final DegreeType degreeType = degree.getTipoCurso();
+	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+	    for (int y = 1; y <= degreeType.getYears(); y++) {
+		for (int i = 1; i <= 3 ; i++) {
+		    final String name = degreeType.isBolonhaType() ? Integer.toString(i) : degree.getSigla() + y + i;
+		    new SchoolClass(executionDegree, executionPeriod, name, Integer.valueOf(y));
+		}
+	    }
+	}
     }
 
     private static void createPeriodsForExecutionDegree(ExecutionDegree executionDegree) {
@@ -424,12 +454,12 @@ public class CreateTestData {
     }
 
     private static void createLesson(final Shift shift, int durationInMinutes) {
-	final HourMinuteSecond start = roomManager.getNextHourMinuteSecond(durationInMinutes);
+	final HourMinuteSecond start = lessonRoomManager.getNextHourMinuteSecond(durationInMinutes);
 	final HourMinuteSecond end = start.plusMinutes(durationInMinutes);
 	final Calendar cStart = toCalendar(start);
 	final Calendar cEnd = toCalendar(end);
-	final DiaSemana diaSemana = new DiaSemana(roomManager.getNextWeekDay());
-	final OldRoom oldRoom = roomManager.getNextOldRoom();
+	final DiaSemana diaSemana = new DiaSemana(lessonRoomManager.getNextWeekDay());
+	final OldRoom oldRoom = lessonRoomManager.getNextOldRoom();
 	final RoomOccupation roomOccupation = new RoomOccupation(oldRoom, cStart, cEnd, diaSemana, 1);
         final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();
         final OccupationPeriod occupationPeriod = OccupationPeriod.readFor(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay().minusDays(32));
@@ -522,6 +552,74 @@ public class CreateTestData {
         professorship.setTeacher(teacher);
         professorship.setExecutionCourse(executionCourse);
         professorship.setResponsibleFor(isResponsibleFor);
+    }
+
+    private static void connectShiftsToSchoolClasses() {
+	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+	for (final CurricularCourseScope curricularCourseScope : rootDomainObject.getCurricularCourseScopesSet()) {
+	    final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
+	    final CurricularYear curricularYear = curricularSemester.getCurricularYear();
+	    final CurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+	    final ExecutionCourse executionCourse = curricularCourse.getAssociatedExecutionCoursesSet().iterator().next();
+	    final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreesSet().iterator().next();
+	    for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
+		for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
+		    if (schoolClass.getExecutionPeriod() == executionCourse.getExecutionPeriod()
+			    && schoolClass.getAnoCurricular().intValue() == curricularYear.getYear().intValue()) {
+			schoolClass.addAssociatedShifts(shift);
+		    }
+		}
+	    }
+	}
+	// TODO : do the same for bolonha structure.
+    }
+
+    private static void createWrittenEvaluations() {
+	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+	for (final ExecutionPeriod executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
+	    createWrittenEvaluations(executionPeriod, new Season(Season.SEASON1), "Teste1");
+	    createWrittenEvaluations(executionPeriod, new Season(Season.SEASON2), "Teste2");
+	}
+    }
+
+    private static void createWrittenEvaluations(final ExecutionPeriod executionPeriod, final Season season, final String writtenTestName) {
+	for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCoursesSet()) {
+	    createWrittenEvaluation(executionPeriod, executionCourse, writtenTestName);
+	    createExam(executionPeriod, executionCourse, season);
+	}
+    }
+
+    private static void createWrittenEvaluation(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse, final String name) {
+	final DateTime startDateTime = examRoomManager.getNextDateTime(executionPeriod);
+	final DateTime endDateTime = startDateTime.plusMinutes(180);
+	final OldRoom oldRoom = examRoomManager.getNextOldRoom(executionPeriod);
+	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+	executionCourses.add(executionCourse);
+	final List<DegreeModuleScope> degreeModuleScopes = new ArrayList<DegreeModuleScope>();
+	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+	    degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
+	}
+	final List<OldRoom> oldRooms = new ArrayList<OldRoom>();
+	oldRooms.add(oldRoom);
+	final OccupationPeriod occupationPeriod = new OccupationPeriod(startDateTime.toYearMonthDay(), endDateTime.toYearMonthDay());
+	new WrittenTest(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, name);
+    }
+
+    private static void createExam(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse, final Season season) {
+	final DateTime startDateTime = examRoomManager.getNextDateTime(executionPeriod);
+	final DateTime endDateTime = startDateTime.plusMinutes(180);
+	final OldRoom oldRoom = examRoomManager.getNextOldRoom(executionPeriod);
+	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+	executionCourses.add(executionCourse);
+	final List<DegreeModuleScope> degreeModuleScopes = new ArrayList<DegreeModuleScope>();
+	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+	    degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
+	}
+	final List<OldRoom> oldRooms = new ArrayList<OldRoom>();
+	oldRooms.add(oldRoom);
+	final OccupationPeriod occupationPeriod = new OccupationPeriod(startDateTime.toYearMonthDay(), endDateTime.toYearMonthDay());
+	new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, season);
     }
 
     private static String constructExecutionYearString() {

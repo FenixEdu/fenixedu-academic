@@ -5,7 +5,7 @@ import java.util.Stack;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
-public class RoomManager extends Stack<OldRoom> {
+public class LessonRoomManager extends Stack<OldRoom> {
 
     private int nextWeekDay = 2;
 
