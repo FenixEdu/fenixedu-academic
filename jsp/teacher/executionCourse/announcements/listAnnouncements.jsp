@@ -38,8 +38,9 @@ if (month != null && year!=null)
 
 		<%-- Event Date OR Publication Date --%>
 			<p class="mvert025 smalltxt greytxt2">
-				<span id="10367">
-					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar">
+			<span>
+<!--  				<span id="10367">-->
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar"/>
 					<logic:notEmpty name="announcement" property="publicationBegin">
 						Publicado em 
 							<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
@@ -47,7 +48,7 @@ if (month != null && year!=null)
 						if (announcement.getAnnouncementBoard().hasWriter(person)) {
 						%>
 							<logic:notEmpty name="announcement" property="publicationEnd">
-							 	até 
+							 	atï¿½ 
 								<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
 							</logic:notEmpty>
 						<%
@@ -62,10 +63,10 @@ if (month != null && year!=null)
 				</span>
 			</p>
 
-		<%-- Título --%>
+		<%-- Tï¿½tulo --%>
 			<logic:equal name="announcement" property="visible" value="true">
 				<h3 class="mtop0 mbottom025">
-				<html:link action="<%=contextPrefix +extraParameters +"&method=viewAnnouncement&announcementId=" + announcement.getIdInternal()%>">
+				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
 					<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
@@ -74,11 +75,11 @@ if (month != null && year!=null)
 			<logic:equal name="announcement" property="visible" value="false">
 				<p class="mvert025">
 				<h3 class="mvert0 dinline">
-				<html:link action="<%=contextPrefix +extraParameters +"&method=viewAnnouncement&announcementId=" + announcement.getIdInternal()%>">
+				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
 					<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
-				<em class="warning1">Invisível</em>
+				<em class="warning1">Invisï¿½vel</em>
 				</p>
 			</logic:equal>
 
@@ -89,7 +90,7 @@ if (month != null && year!=null)
 				 	{
 				 %>				 
 				 	<fr:view name="announcement" property="excerpt" layout="html"/>
-				 	 <html:link action="<%=contextPrefix + "method=viewAnnouncement&announcementId=" + announcement.getIdInternal()%>">
+				 	 <html:link action="<%=contextPrefix + "method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
 						 Continuar a ler...
 					 </html:link> 
 				 <%				 		
@@ -115,7 +116,7 @@ if (month != null && year!=null)
 
 		<%-- Board e RSS --%>
 				Canal: 
-				<html:link action="<%=contextPrefix + extraParameters +"&method=viewAnnouncements&announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "#" + announcement.getIdInternal()%>">
+				<html:link action="<%=contextPrefix + extraParameters +"&amp;method=viewAnnouncements&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "#" + announcement.getIdInternal()%>">
 					<fr:view name="announcement" property="announcementBoard.name" type="java.lang.String"/>
 				</html:link>
 				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
@@ -124,15 +125,15 @@ if (month != null && year!=null)
 			<%	
 				if (announcement.getAnnouncementBoard().hasWriter(person)) {
 			%>
-				Permissões:
+				<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>:
 				<bean:define id="announcementId" name="announcement" property="idInternal" />
-				<html:link action="<%= contextPrefix + "method=editAnnouncement&announcementId="+announcementId+"&"+extraParameters%>">
+				<html:link action="<%= contextPrefix + "method=editAnnouncement&amp;announcementId="+announcementId+"&amp;"+extraParameters%>">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.edit.link"/>
 				</html:link>
 				
 				<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.comma" />
 				
-				<html:link action="<%= contextPrefix + "method=deleteAnnouncement&announcementId="+announcementId+"&"+extraParameters%>">
+				<html:link action="<%= contextPrefix + "method=deleteAnnouncement&amp;announcementId="+announcementId+"&amp;"+extraParameters%>">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.delete.link"/>
 				</html:link>
 				
@@ -193,13 +194,13 @@ if (month != null && year!=null)
 				<%
 				}
 				%>
-		<%-- Data de Criação --%>
+		<%-- Data de Criaï¿½ï¿½o --%>
 				<%
 				if (announcement.getAnnouncementBoard().hasWriter(person)) {
 				
 				%>
-					Data de criação:
-					<span id="<%=announcement.getIdInternal().toString()%>">
+					<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES"/>
+					<span id="<%="ID_" + announcement.getIdInternal().toString()%>">
 						<fr:view name="announcement" property="creationDate" layout="no-time"/>
 					</span>
 				<%
@@ -217,7 +218,7 @@ if (month != null && year!=null)
 	
 	<logic:empty name="announcements">
 		<p class="mtop2">
-			<em>Não existem anúncios.</em>
+			<em><bean:message key="label.noAnnouncements" bundle="MESSAGING_RESOURCES"/></em>
 		</p>
 	</logic:empty>
 </logic:present>
@@ -234,7 +235,7 @@ if (month != null && year!=null)
 
 
 		<div class="aarchives">
-			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + context + module + contextPrefix + "method=viewArchive&announcementBoardId=" + board.getIdInternal() + "&" + extraParameters + "&" %>"/>	
+			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + context + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getIdInternal() + "&amp;" + extraParameters + "&amp;" %>"/>	
 		</div>
 
 	</logic:present>

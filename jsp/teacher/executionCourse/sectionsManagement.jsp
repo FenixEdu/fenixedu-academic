@@ -37,7 +37,7 @@
 </logic:empty>
 
 <logic:notEmpty name="executionCourse" property="site.orderedTopLevelSections">
-    <fr:form action="<%= "/manageExecutionCourse.do?method=saveSectionsOrder&executionCourseID=" + executionCourseId %>">
+    <fr:form action="<%= "/manageExecutionCourse.do?method=saveSectionsOrder&amp;executionCourseID=" + executionCourseId %>">
         <input id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
     
@@ -57,7 +57,7 @@
         </fr:view>
 	
 		<p class="mtop15">
-	    <fr:form action="<%= "/manageExecutionCourse.do?method=sections&executionCourseID=" + executionCourseId %>">
+	    <fr:form action="<%= "/manageExecutionCourse.do?method=sections&amp;executionCourseID=" + executionCourseId %>">
 	        <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('" + treeId + "');" %>">
 	            <bean:message key="button.sections.order.save" bundle="SITE_RESOURCES"/>
 	        </html:button>
@@ -73,4 +73,3 @@
 </p>
 
 </logic:notEmpty>
-

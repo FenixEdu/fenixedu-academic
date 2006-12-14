@@ -9,9 +9,9 @@
 <logic:present name="executionCourse">
 
 	<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>		
-	<bean:define id="showCustomizationOptions">/alternativeSite.do?method=prepareCustomizationOptions&objectCode=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="submitURL">/alternativeSite.do?method=submitDataToImportCustomizationOptions&objectCode=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="chooseExecutionPeriodUrl">/alternativeSite.do?method=submitDataToImportCustomizationOptionsPostBack&objectCode=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="showCustomizationOptions">/alternativeSite.do?method=prepareCustomizationOptions&amp;objectCode=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="submitURL">/alternativeSite.do?method=submitDataToImportCustomizationOptions&amp;objectCode=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="chooseExecutionPeriodUrl">/alternativeSite.do?method=submitDataToImportCustomizationOptionsPostBack&amp;objectCode=<bean:write name="executionCourseID"/></bean:define>	
 	
 	<h2><bean:message key="label.import.customizationOptions.title"/></h2>
 	

@@ -19,7 +19,7 @@
 	<span class="error"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
-	<span class="info">
+	<span class="info"><!-- w3c complient -->
 		<html:messages id="info" message="true"/>
 	</span>
 </p>

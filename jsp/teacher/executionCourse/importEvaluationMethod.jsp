@@ -9,10 +9,10 @@
 <logic:present name="executionCourse">
 
 	<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>	
-	<bean:define id="submitUrl">/manageExecutionCourse.do?method=listExecutionCoursesToImportEvaluationMethod&executionCourseID=<bean:write name="executionCourseID"/></bean:define>
-	<bean:define id="showEvaluationMethod">/manageExecutionCourse.do?method=evaluationMethod&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportEvaluationMethodPostBack&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareBiliographicReferencesInvalid&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="submitUrl">/manageExecutionCourse.do?method=listExecutionCoursesToImportEvaluationMethod&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>
+	<bean:define id="showEvaluationMethod">/manageExecutionCourse.do?method=evaluationMethod&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportEvaluationMethodPostBack&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareBiliographicReferencesInvalid&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 
 	<H2><bean:message key="link.import.evaluationMethod"/></H2>
 					
@@ -32,7 +32,7 @@
 	 	<logic:notEmpty name="importContentBean" property="executionPeriod">	
 	 		<logic:notEmpty name="importContentBean" property="executionDegree">	
 				<br/>
-				<bean:define id="importEvaluationMethodUrl">/manageExecutionCourse.do?method=importEvaluationMethod&executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
+				<bean:define id="importEvaluationMethodUrl">/manageExecutionCourse.do?method=importEvaluationMethod&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
 				<H3><bean:message key="label.choose.course"/></H3>			
 				<fr:edit id="importContentBeanWithExecutionCourse" name="importContentBean" schema="ListExecutionCoursesToImportContent" 
 					action="<%= importEvaluationMethodUrl %>" >

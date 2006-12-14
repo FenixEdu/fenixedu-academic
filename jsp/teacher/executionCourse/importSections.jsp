@@ -9,10 +9,10 @@
 <logic:present name="executionCourse">
 
 	<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>	
-	<bean:define id="submitUrl">/manageExecutionCourse.do?method=listExecutionCoursesToImportSections&executionCourseID=<bean:write name="executionCourseID"/></bean:define>
-	<bean:define id="showSections">/manageExecutionCourse.do?method=sections&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportSectionsPostBack&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareBiliographicReferencesInvalid&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="submitUrl">/manageExecutionCourse.do?method=listExecutionCoursesToImportSections&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>
+	<bean:define id="showSections">/manageExecutionCourse.do?method=sections&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportSectionsPostBack&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareBiliographicReferencesInvalid&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 
 	<H2><bean:message key="label.import.sections"/></H2>
 			
@@ -32,7 +32,7 @@
 	 	<logic:notEmpty name="importContentBean" property="executionPeriod">	
 	 		<logic:notEmpty name="importContentBean" property="executionDegree">	
 				<br/>
-				<bean:define id="importSectionsUrl">/manageExecutionCourse.do?method=importSections&executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
+				<bean:define id="importSectionsUrl">/manageExecutionCourse.do?method=importSections&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
 				<H3><bean:message key="label.choose.course"/></H3>			
 				<fr:edit id="importContentBeanWithExecutionCourse" name="importContentBean" schema="ListExecutionCoursesToImportContent" 
 					action="<%= importSectionsUrl %>" >

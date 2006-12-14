@@ -372,6 +372,7 @@ padding: 0.2em 0.5em 0.2em 0em;
 form { margin: 0; padding: 0; }
 form p { clear: both; margin: 0.5em; margin-left: 0; }
 span.required { color: #d30; }
+.forminline form { display: inline; }
 
 fieldset {
 margin: 0.4em 0; padding: 0.4em 0;
@@ -527,6 +528,8 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .switchNone { display: block; }
 .input_hidden { display: none; }
 .input_inline { display: inline; }
+
+
 
 /* colors */
 .color1 { color: #808060; }

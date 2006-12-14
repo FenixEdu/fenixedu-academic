@@ -26,13 +26,13 @@
 		<h4>
 			<bean:message key="title.evaluationMethod"/>
 		</h4>
-		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=evaluationMethod&executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=evaluationMethod&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 		<fr:edit name="executionCourse" property="evaluationMethod"
 				schema="net.sourceforge.fenixedu.domain.EvaluationMethod"
 				action="<%= url %>">
 			<fr:layout name="flow">
-				<property name="labelExcluded" value="true" />
-				<property name="labelTerminator" value="" />
+				<fr:property name="labelExcluded" value="true" />
+				<fr:property name="labelTerminator" value="" />
 			</fr:layout>
 		</fr:edit>
 	</blockquote>

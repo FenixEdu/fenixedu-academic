@@ -41,8 +41,8 @@
 				{
 			%>
 			<li>
-				<html:link action="<%= contextPrefix + "method=addAnnouncement&announcementBoardId="+announcementBoardId+"&"+extraParameters%>">
-					Criar Anúncio
+				<html:link action="<%= contextPrefix + "method=addAnnouncement&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
+					<bean:message key="label.createAnnouncement" bundle="MESSAGING_RESOURCES"/>
 				</html:link>
 			</li>				
 			<%

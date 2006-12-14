@@ -20,11 +20,11 @@
 <br/>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<html:form action="/createGroupProperties">
+<html:form action="/createGroupProperties" styleClass="dinline" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-<u><bean:message key="message.insertGroupPropertiesData"/></u>
-<br/>
-<br/>
+
+<p><u><bean:message key="message.insertGroupPropertiesData"/></u></p>
+
 
 
 <table>
@@ -36,7 +36,7 @@
 	    
 		<tr>
 			<td><bean:message key="message.groupPropertiesProjectDescription"/></td>
-			<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.projectDescription" property="projectDescription" cols="30" rows="4"/></td>
+			<td><html:textarea bundle="HTMLALT_RESOURCES" property="projectDescription" cols="30" rows="4"/></td>
 		</tr>
 		
     	<tr>
@@ -59,7 +59,7 @@
     
     	<tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentPolicy"/></td>
-			<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.enrolmentPolicy" property="enrolmentPolicy">
+			<td><html:select bundle="HTMLALT_RESOURCES" property="enrolmentPolicy">
 	    		<html:option key="option.groupProperties.enrolmentPolicy.atomic" value="true"/>
 	    		<html:option key="option.groupProperties.enrolmentPolicy.individual" value="false"/>
 	    		</html:select>
@@ -70,7 +70,7 @@
 		<tr>
 			<td><bean:message key="message.groupPropertiesShiftType"/></td>
 			<td>
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.shiftType" property="shiftType" >
+			<html:select bundle="HTMLALT_RESOURCES" property="shiftType" >
 				<html:options collection="shiftTypeValues" property="value" labelProperty="label"/>
 			</html:select>
 			</td>		
@@ -112,44 +112,32 @@
 
 
 </table>
-<br />
-<br />
 
-<table>
-<tr>
-	<td>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
-		</html:submit>       
-	</td>
-	<td>
-		<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
-		</html:reset>  
-	</td>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createGroupProperties"/>	
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-
-		</html:form>
-
+<p class="mtop15">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.save"/></html:submit>       
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>  
 	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createGroupProperties"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+</p>	
 
-	
-		<html:form action="/viewExecutionCourseProjects" method="get">
-	<td>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
-		</html:cancel>
-	</td>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareViewExecutionCourseProjects"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-		</html:form>
-	
-</tr>
-</table>
+</html:form>
+		
+<div style="position: relative;">
+<div style="position: absolute; top: -30px; left: 206px;">
+	<html:form action="/viewExecutionCourseProjects" method="get">
+			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareViewExecutionCourseProjects"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />	
+	</html:form>
+</div>
+</div>
 
 
 </logic:present>
 
 <logic:notPresent name="siteView">
-<h2>
-<bean:message key="message.insert.infoGroupProperties.not.available" />
-</h2> 
+<p class="mvert15">
+	<em><bean:message key="message.insert.infoGroupProperties.not.available" /></em>
+</p> 
 </logic:notPresent> 

@@ -19,7 +19,7 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <bean:define id="bodyComponent" name="siteView" property="component"/>
 <bean:define id="objectCode"><%= pageContext.findAttribute("objectCode").toString() %></bean:define>
-<p><html:link page="/alternativeSite.do?method=prepareImportCustomizationOptions&page=0" paramId="objectCode" paramName="objectCode">
+<p><html:link page="/alternativeSite.do?method=prepareImportCustomizationOptions&amp;page=0" paramId="objectCode" paramName="objectCode">
 	<bean:message key="link.import.customizationOptions"/>
 </html:link></p>
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -33,10 +33,10 @@
 <br />
 <table width="100%">
 <tr>
-	<td width="200">
+	<td style="width: 200">
 		<bean:message key="message.siteAddress"/>
 	</td>
-	<td witdh="1">
+	<td style="width: 1">
 	</td>
 	<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.siteAddress" property="siteAddress" size="30"/>
 	</td>
@@ -44,10 +44,10 @@
 	</td>
 </tr>
 <tr>
-	<td width="200">
+	<td style="width: 200">
 		<bean:message key="message.mailAddressCourse"/>	 
 	</td>
-	<td width="1">
+	<td style="width: 1">
 		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dynamicMailDistribution" property="dynamicMailDistribution" value="false"/>
 	</td>
 	<td>  	  
@@ -60,10 +60,10 @@
 <tr>
 	<td>
 	</td>
-	<td width="1">
+	<td style="width: 1">
 		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dynamicMailDistribution" property="dynamicMailDistribution" value="true"/>
 	</td>
-	<td width="400">
+	<td style="width: 400">
 	  	<%=ExecutionCourseAliasExpandingAction.emailAddressPrefix%><%=request.getParameter("objectCode")%>&#64;<%=TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration() %>	
 	</td>		
 	<td><span class="error" ><!-- Error messages go here -->
@@ -89,10 +89,10 @@
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td width="200" valign="top">
+	<td style="width: 200 valign: top">
 		<bean:message key="message.initialStatement"/>
 	</td>	
-	<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.initialStatement" name="bodyComponent" property="initialStatement" rows="10" cols="56"/> 
+	<td><html:textarea bundle="HTMLALT_RESOURCES" name="bodyComponent" property="initialStatement" rows="10" cols="56"/> 
 	</td>
 </tr>
 </table>
@@ -109,10 +109,10 @@
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td width="200" valign="top">
+	<td style="width: 200 valign: top">
 		<bean:message key="message.introduction"/>
 	</td>	
-	<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.introduction" name="bodyComponent" property="introduction" rows="10" cols="56"/></td> 
+	<td><html:textarea bundle="HTMLALT_RESOURCES" name="bodyComponent" property="introduction" rows="10" cols="56"/></td> 
 </tr>
 </table>
 <br/>

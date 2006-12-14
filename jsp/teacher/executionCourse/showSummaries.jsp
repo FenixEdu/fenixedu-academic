@@ -24,15 +24,15 @@
 		<p><bean:message key="label.summaries.management.instructions.part1"/></p>
 		<p><bean:message key="label.summaries.management.instructions.part2"/>:</p>
 		<p>
-			<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>				
+			<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>				
 			<span class="gen-button" style="margin-left: 2em;">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= insertSummaryLink %>"><bean:message key="label.insertSummary"/></html:link> <bean:message key="link.summary.insert.info"/>				
 			</span>					
 		</p>
-		<p>Pode também visualizar a lista completa de aulas:</p>
+		<p>Pode tambï¿½m visualizar a lista completa de aulas:</p>
 		<p>
-			<bean:define id="showSummariesCalendarLink">/summariesManagement.do?method=showSummariesCalendar&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>			
+			<bean:define id="showSummariesCalendarLink">/summariesManagement.do?method=showSummariesCalendar&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>			
 			<span class="gen-button" style="margin-left: 2em;">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= showSummariesCalendarLink %>"><bean:message key="label.show.summaries.calendar"/></html:link>				
@@ -65,7 +65,7 @@
 	</logic:notEmpty>
 	
 	<h3 class="mtop2 mbottom05"><bean:message key="label.show.summaries"/></h3>
-	<fr:form>
+	<fr:form action="/summariesManagement.do">
 		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToExecutionCourseManagement" nested="true">
 			<fr:destination name="postBack" path="/summariesManagement.do?method=showSummariesPostBack"/>		
 			<fr:layout name="tabular">
@@ -163,14 +163,14 @@
 			</p>
 			
 			<div class="gen-button">
-				<bean:define id="editSummaryLink">/summariesManagement.do?method=prepareEditSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/></bean:define>
-				<bean:define id="deleteSummaryLink">/summariesManagement.do?method=deleteSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/></bean:define>	
+				<bean:define id="editSummaryLink">/summariesManagement.do?method=prepareEditSummary&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&amp;summaryID=<bean:write name="summary" property="idInternal"/></bean:define>
+				<bean:define id="deleteSummaryLink">/summariesManagement.do?method=deleteSummary&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&amp;summaryID=<bean:write name="summary" property="idInternal"/></bean:define>	
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= editSummaryLink %>">
 					<bean:message key="button.edit" /> 
 				</html:link>				 
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<html:link page="<%= deleteSummaryLink %>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
+				<html:link page="<%= deleteSummaryLink %>" onclick="return confirm('Tem a certeza que deseja apagar este sumï¿½rio?')">
 					<bean:message key="button.delete" />
 				</html:link>
 			</div>

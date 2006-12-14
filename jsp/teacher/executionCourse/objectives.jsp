@@ -20,6 +20,7 @@
 		<html:errors/>
 	</span>
 	<span class="info">
+	<!-- w3c Complient -->
 		<html:messages id="info" message="true"/>
 	</span>
 </p>

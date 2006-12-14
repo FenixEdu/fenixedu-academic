@@ -68,7 +68,7 @@
 	<bean:message key="message.courseInformation.timeTable" /></p>
 	<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-		    <th class="listClasses-header" width="200px"><bean:message key="message.courseInformation.classType"/></th>
+		    <th class="listClasses-header" style="width: 200px;"><bean:message key="message.courseInformation.classType"/></th>
 		    <th class="listClasses-header"><bean:message key="message.courseInformation.numberOfClasses"/></th>
 		    <th class="listClasses-header"><bean:message key="message.courseInformation.classDuration"/></th>
 			<th class="listClasses-header"><bean:message key="message.courseInformation.totalDuration"/></th>
@@ -265,9 +265,11 @@
 	<br />
 	<p class="infoop"><span class="emphasis-box">8</span>
 	<bean:message key="message.courseInformation.courseSupportLessons" /></p>
-	<table border="0" cellspacing="1" style="margin-top:10px">
+ 	<table border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<%--<td> <bean:write name="siteCourseInformation" property="courseSupportLessons"/></td>--%>
+			<td> 
+					<bean:message key="message.courseInformation.notYetAvailable"/>
+			<%-- <bean:write name="siteCourseInformation" property="courseSupportLessons"/>--%></td>
 		</tr>
 	</table>
 	<br/>
