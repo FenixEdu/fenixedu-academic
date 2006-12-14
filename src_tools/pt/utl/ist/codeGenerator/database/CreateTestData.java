@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
+import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Campus;
@@ -126,6 +127,7 @@ public class CreateTestData {
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
+        login.setPassword(PasswordEncryptor.encryptPassword("pass"));
         login.setActive(Boolean.TRUE);
         LoginAlias.createNewCustomLoginAlias(login, "admin");
         login.openLoginIfNecessary(RoleType.MANAGER);
@@ -265,6 +267,7 @@ public class CreateTestData {
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
+        login.setPassword(PasswordEncryptor.encryptPassword("pass"));
         login.setActive(Boolean.TRUE);
         LoginAlias.createNewCustomLoginAlias(login, "person" + i);
         return person;
@@ -320,7 +323,7 @@ public class CreateTestData {
 
     private static void createCampus() {
         final Campus campus = new Campus();
-        campus.setName("Nome do Campus");
+        campus.setName("Herdade do Conhecimento");
     }
 
     private static void createDegrees() {
@@ -335,11 +338,11 @@ public class CreateTestData {
             final Degree degree;
             final DegreeCurricularPlan degreeCurricularPlan;
             if (degreeType.isBolonhaType()) {
-                degree = new Degree("Nome do Curso", "Degree Name", "CODE" + i, degreeType, 0d, gradeScale, null);
+                degree = new Degree("Agricultura do Conhecimento", "Knowledge Agriculture", "CODE" + i, degreeType, 0d, gradeScale, null);
                 degreeCurricularPlan = degree.createBolonhaDegreeCurricularPlan("DegreeCurricularPlanName", gradeScale, person);
                 degreeCurricularPlan.setCurricularStage(CurricularStage.PUBLISHED);
             } else {
-                degree = new Degree("Nome do Curso", "Degree Name", "CODE" + i, degreeType, gradeScale, DegreeCurricularPlan.class.getName());
+                degree = new Degree("Agricultura do Conhecimento", "Knowledge Agriculture", "CODE" + i, degreeType, gradeScale, DegreeCurricularPlan.class.getName());
                 degreeCurricularPlan = degree.createPreBolonhaDegreeCurricularPlan("DegreeCurricularPlanName", DegreeCurricularPlanState.ACTIVE,
                         new Date(), null, degreeType.getYears(), Integer.valueOf(1), Double.valueOf(degreeType.getDefaultEctsCredits()),
                         MarkType.TYPE20_OBJ, Integer.valueOf(100), null, gradeScale);
@@ -579,6 +582,7 @@ public class CreateTestData {
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	for (final ExecutionPeriod executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
 	    createWrittenEvaluations(executionPeriod, new Season(Season.SEASON1), "Teste1");
+            for (int i = 0; i++ < 500 ; writtenTestsRoomManager.getNextDateTime(executionPeriod));
 	    createWrittenEvaluations(executionPeriod, new Season(Season.SEASON2), "Teste2");
 	}
     }
@@ -591,9 +595,9 @@ public class CreateTestData {
     }
 
     private static void createWrittenEvaluation(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse, final String name) {
-	final DateTime startDateTime = examRoomManager.getNextDateTime(executionPeriod);
-	final DateTime endDateTime = startDateTime.plusMinutes(180);
-	final OldRoom oldRoom = examRoomManager.getNextOldRoom(executionPeriod);
+	final DateTime startDateTime = writtenTestsRoomManager.getNextDateTime(executionPeriod);
+	final DateTime endDateTime = startDateTime.plusMinutes(120);
+	final OldRoom oldRoom = writtenTestsRoomManager.getNextOldRoom(executionPeriod);
 	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 	executionCourses.add(executionCourse);
 	final List<DegreeModuleScope> degreeModuleScopes = new ArrayList<DegreeModuleScope>();

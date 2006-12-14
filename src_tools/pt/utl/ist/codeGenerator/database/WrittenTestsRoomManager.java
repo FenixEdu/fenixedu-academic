@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.joda.time.DateTime;
 
@@ -21,7 +23,17 @@ public class WrittenTestsRoomManager extends HashSet<OldRoom> {
 		    executionPeriod.getEndDateYearMonthDay().minusDays(31).toDateTimeAtMidnight(), 120, this);
 	    evaluationRoomManagerMap.put(executionPeriod, evaluationRoomManager);
 	}
-	return evaluationRoomManager.getNextDateTime();
+
+        DateTime dateTime;
+        OldRoom oldRoom;
+        OccupationPeriod occupationPeriod;
+        do {
+            dateTime = evaluationRoomManager.getNextDateTime();
+            oldRoom = evaluationRoomManager.getNextOldRoom();
+            occupationPeriod = new OccupationPeriod(dateTime.toYearMonthDay(), dateTime.plusMinutes(120).toYearMonthDay());
+        } while (!oldRoom.isFree(occupationPeriod, dateTime.toCalendar(null), dateTime.plusMinutes(120).toCalendar(null), new DiaSemana(dateTime.getDayOfWeek() + 1), Integer.valueOf(1), Integer.valueOf(1)));
+
+        return dateTime;
     }
 
     public OldRoom getNextOldRoom(final ExecutionPeriod executionPeriod) {

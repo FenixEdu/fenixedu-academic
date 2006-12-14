@@ -3,6 +3,7 @@ package pt.utl.ist.codeGenerator.database;
 import java.util.Set;
 import java.util.Stack;
 
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 import org.joda.time.DateTime;
