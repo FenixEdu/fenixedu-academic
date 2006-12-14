@@ -147,6 +147,27 @@ public abstract class DegreeModule extends DegreeModule_Base {
     }
 
     
+    public List<Context> getParentContextsByExecutionYear(ExecutionYear executionYear) {
+	final List<Context> result = new ArrayList<Context>();
+	for (final Context context : this.getParentContexts()) {
+	    if (executionYear == null || context.isValid(executionYear)) {
+		result.add(context);
+	    }
+	}
+	return result;
+    }
+
+    public List<Context> getParentContextsByExecutionPeriod(ExecutionPeriod executionPeriod) {
+	final List<Context> result = new ArrayList<Context>();
+	for (final Context context : this.getParentContexts()) {
+	    if (executionPeriod == null || context.isValid(executionPeriod)) {
+		result.add(context);
+	    }
+	}
+	return result;
+    }
+
+    
     public abstract Double getEctsCredits();
     public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
     public abstract boolean isLeaf();
