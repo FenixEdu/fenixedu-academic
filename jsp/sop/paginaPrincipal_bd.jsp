@@ -9,11 +9,11 @@
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
     </td>
-    <td class="infoop"><html:link page="/manageExecutionCourses.do?method=prepareSearch&page=0&"><strong>Gest&atilde;o de Disciplinas</strong></html:link></td>
+    <td class="infoop"><html:link page="/manageExecutionCourses.do?method=prepareSearch&amp;page=0"><strong>Gest&atilde;o de Disciplinas</strong></html:link></td>
   </tr>
 </table>
 <p>Na &aacute;rea da Gest&atilde;o de Disciplinas pode efectuar algumas opera&ccedil;&otilde;es sobre <strong>disciplinas de execu&ccedil;&atilde;o</strong> 
-	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas horárias).</p>
+	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas horï¿½rias).</p>
 <br />
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -53,7 +53,7 @@ e alterar aulas).</p>
     <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
     </td>
     <td class="infoop">
-		<strong><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/></html:link></strong></li>
+		<strong><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/></html:link></strong>
     </td>
   </tr>
 </table>

@@ -20,7 +20,7 @@
                         <bean:message key="property.room.building"/>:
                     </td>
                     <td nowrap="nowrap" class="formTD">
-                        <html:select bundle="HTMLALT_RESOURCES" altKey="select.building" property="building" size="1">
+                        <html:select bundle="HTMLALT_RESOURCES" property="building" size="1">
                             <html:options collection="publico.buildings" property="value" labelProperty="label"/>
                         </html:select>
                     </td>
@@ -38,7 +38,7 @@
                         <bean:message key="property.room.type"/>:
                     </td>
                     <td nowrap="nowrap" class="formTD">
-                        <html:select bundle="HTMLALT_RESOURCES" altKey="select.type" property="type" size="1">
+                        <html:select bundle="HTMLALT_RESOURCES" property="type" size="1">
                             <html:options collection="publico.types" property="value" labelProperty="label"/>
                         </html:select>
                     </td>

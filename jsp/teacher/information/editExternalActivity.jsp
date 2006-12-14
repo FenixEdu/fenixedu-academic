@@ -30,8 +30,8 @@
 		<td><bean:message key="message.externalActivities.activity" /></td>
 	</tr>
 	<tr>
-		<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.activity" property="activity" cols="90%" rows="4"/></td>
-	<tr/>
+		<td><html:textarea bundle="HTMLALT_RESOURCES" property="activity" cols="90%" rows="4"/></td>
+	</tr>
 </table>
 <br/>
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm"><bean:message key="button.save"/>

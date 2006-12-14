@@ -40,9 +40,9 @@
 	    <tr>
         	<td nowrap class="formTD"><bean:message key="property.aula.weekDay"/></td>
         	<td nowrap class="formTD">
-     			<html:select bundle="HTMLALT_RESOURCES" altKey="select.weekDay" property="weekDay"  size="1">
+     			<html:select bundle="HTMLALT_RESOURCES" property="weekDay"  size="1">
                 <!-- TODO : Change query to allow wildcards with weekdays (all weekdays)-->
-                	<option value="1" selected="selected"></option>
+                	<option value="1" selected="selected"><!--  w3c Complient --></option>
                     <html:options collection="weekDays" property="value" labelProperty="label"/>
             	</html:select>
            	</td>
@@ -50,12 +50,12 @@
         <tr>
         	<td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.begining"/></td>
             <td nowrap="nowrap">
-            	<html:select bundle="HTMLALT_RESOURCES" altKey="select.startHour" property="startHour"  size="1">
-                	<option value="" selected="selected"></option>                        
+            	<html:select bundle="HTMLALT_RESOURCES" property="startHour"  size="1">
+                	<option value="" selected="selected"><!--  w3c Complient --></option>                        
                     <html:options name="hours"/>
                	</html:select> :
-                <html:select bundle="HTMLALT_RESOURCES" altKey="select.startMinutes" property="startMinutes" size="1">
-                	<option value="" selected="selected"></option>                        
+                <html:select bundle="HTMLALT_RESOURCES" property="startMinutes" size="1">
+                	<option value="" selected="selected"><!--  w3c Complient --></option>                        
                 	<html:options name="minutes"/>
                 </html:select>
            	</td>
@@ -63,12 +63,12 @@
         <tr>
         	<td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.end"/></td>
            	<td nowrap="nowrap">
-            	<html:select bundle="HTMLALT_RESOURCES" altKey="select.endHour" property="endHour" size="1">
-                	<option value="" selected="selected"></option>                        
+            	<html:select bundle="HTMLALT_RESOURCES" property="endHour" size="1">
+                	<option value="" selected="selected"><!--  w3c Complient --></option>                        
                   	<html:options name="hours"/>
                	</html:select> :
-               	<html:select bundle="HTMLALT_RESOURCES" altKey="select.endMinutes" property="endMinutes" size="1">
-                	<option value="" selected="selected"></option>                        
+               	<html:select bundle="HTMLALT_RESOURCES" property="endMinutes" size="1">
+                	<option value="" selected="selected"><!--  w3c Complient --></option>                        
                     <html:options name="minutes"/>
                	</html:select>
           	</td> 

@@ -64,7 +64,7 @@
 	</html:link>
 </div>
 <br />
-<h3>
+
 <table>
 <tr align="center">	
 	<td>
@@ -76,5 +76,5 @@
 	</td>
 </tr>
 </table>
-</h3>
+
 </logic:present>

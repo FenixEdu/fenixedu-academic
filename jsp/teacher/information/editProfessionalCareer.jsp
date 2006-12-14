@@ -33,19 +33,19 @@
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.beginYear" property="beginYear"/>&nbsp;-&nbsp;
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.endYear" property="endYear"/>
 		</td>
-	<tr/>
+	</tr>
 	<tr>
 		<td><bean:message key="message.professionalCareer.entity" /></td>
 	</tr>
 	<tr>
 		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.entity" property="entity"/></td>
-	<tr/>
+	</tr>
 	<tr>
 		<td><bean:message key="message.professionalCareer.function" /></td>
 	</tr>
 	<tr>
 		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.function" property="function"/></td>
-	<tr/>
+	</tr>
 </table>
 <br/>
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm"><bean:message key="button.save"/>

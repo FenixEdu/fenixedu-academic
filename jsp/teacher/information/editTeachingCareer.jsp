@@ -34,23 +34,23 @@
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.beginYear" property="beginYear"/>&nbsp;-&nbsp;
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.endYear" property="endYear"/>
 		</td>
-	<tr/>
+	</tr>
 	<tr>
 		<td><bean:message key="message.teachingCareer.category" /></td>
 	</tr>
 	<tr>
 		<td>
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.infoCategory#idInternal" property="infoCategory#idInternal">
+			<html:select bundle="HTMLALT_RESOURCES" property="infoCategory#idInternal">
 				<html:options collection="categories" property="idInternal" labelProperty="shortName"/>
 			</html:select>
 		</td>
-	<tr/>
+	</tr>
 	<tr>
 		<td><bean:message key="message.teachingCareer.CourseOrPosition" /></td>
 	</tr>
 	<tr>
 		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.courseOrPosition" property="courseOrPosition"/></td>
-	<tr/>
+	</tr>
 </table>
 <br/>
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm"><bean:message key="button.save"/>
