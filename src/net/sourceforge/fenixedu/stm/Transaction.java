@@ -162,7 +162,8 @@ public abstract class Transaction extends jvstm.Transaction {
                 txFinished = true;
             } finally {
                 if (! txFinished) {
-                    Transaction.abort();
+                    STATISTICS.incAborts();
+                    jvstm.Transaction.abort();
                 }
             }
         }
