@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenTest;
@@ -66,6 +67,9 @@ import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -135,6 +139,13 @@ public class CreateTestData {
 
     private static void clearData() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+
+        System.out.println("Deleting student curricular plans.");
+        for (final Set<StudentCurricularPlan> studentCurricularPlans = rootDomainObject.getStudentCurricularPlansSet(); !studentCurricularPlans.isEmpty(); studentCurricularPlans.iterator().next().delete());
+        System.out.println("Deleting registrations.");
+        for (final Set<Registration> registrations = rootDomainObject.getRegistrationsSet(); !registrations.isEmpty(); registrations.iterator().next().delete());
+        System.out.println("Deleting students.");
+        for (final Set<Student> students = rootDomainObject.getStudentsSet(); !students.isEmpty(); students.iterator().next().delete());
 
         System.out.println("Deleting school classes.");
         for (final Set<SchoolClass> schoolClasses = rootDomainObject.getSchoolClasssSet(); !schoolClasses.isEmpty(); schoolClasses.iterator().next().delete());
@@ -230,6 +241,7 @@ public class CreateTestData {
         createExecutionCourses();
         connectShiftsToSchoolClasses();
         createWrittenEvaluations();
+        createStudents();
     }
 
     private static void createRooms() {
@@ -254,14 +266,14 @@ public class CreateTestData {
     }
 
     private static Teacher createTeachers(final int i) {
-        final Person person = createPerson("Guru Diplomado", i);
+        final Person person = createPerson("Guru Diplomado", "teacher", i);
         final Teacher teacher = new Teacher(Integer.valueOf(i), person);
         final Login login = person.getUser().readUserLoginIdentification();
         login.openLoginIfNecessary(RoleType.TEACHER);
         return teacher;
     }
 
-    private static Person createPerson(final String namePrefix, final int i) {
+    private static Person createPerson(final String namePrefix, final String usernamePrefix, final int i) {
         final Person person = new Person();
         person.setName(namePrefix + i);
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
@@ -269,8 +281,29 @@ public class CreateTestData {
         final Login login = user.readUserLoginIdentification();
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));
         login.setActive(Boolean.TRUE);
-        LoginAlias.createNewCustomLoginAlias(login, "person" + i);
+        LoginAlias.createNewCustomLoginAlias(login, usernamePrefix + i);
         return person;
+    }
+
+    private static void createStudents() {
+	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+	int i = 1;
+	for (final DegreeCurricularPlan degreeCurricularPlan : rootDomainObject.getDegreeCurricularPlansSet()) {
+	    for (int k = 1; k <= 20; k++) {
+		createStudent(degreeCurricularPlan, i++);
+	    }
+	}
+    }
+
+    private static void createStudent(final DegreeCurricularPlan degreeCurricularPlan, final int i) {
+	final Person person = createPerson("Esponga de Informação", "student", i);
+	final Student student = new Student(person, Integer.valueOf(i));
+	final Registration registration = new Registration(person, degreeCurricularPlan);
+	registration.setStudent(student);
+	final StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(registration, degreeCurricularPlan, StudentCurricularPlanState.ACTIVE, new YearMonthDay().minusMonths(6));
+	person.addPersonRoleByRoleType(RoleType.STUDENT);
+        final Login login = person.getUser().readUserLoginIdentification();
+        login.openLoginIfNecessary(RoleType.STUDENT);
     }
 
     private static void createExecutionYears() {
