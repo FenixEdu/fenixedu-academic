@@ -68,8 +68,9 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
 	    final EntryDTO entryDTO = findEntryDTOForPaymentCode(entryDTOs, paymentCode);
 	    if (paymentCode instanceof InstallmentPaymentCode) {
+		final InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) paymentCode;
 		paymentCode.update(new YearMonthDay(),
-			calculateInstallmentPaymentCodeEndDate((InstallmentPaymentCode) paymentCode),
+			calculateInstallmentPaymentCodeEndDate(installmentPaymentCode.getInstallment()),
 			entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
 	    } else {
 		paymentCode.update(new YearMonthDay(), calculateFullPaymentCodeEndDate(), entryDTO
@@ -81,16 +82,16 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	return getNonProcessedPaymentCodes();
     }
 
-    private YearMonthDay calculateInstallmentPaymentCodeEndDate(final InstallmentPaymentCode paymentCode) {
+    private YearMonthDay calculateInstallmentPaymentCodeEndDate(final Installment installment) {
 	final YearMonthDay today = new YearMonthDay();
-	final YearMonthDay installmentEndDate = paymentCode.getInstallment().getEndDate();
-	return today.isBefore(installmentEndDate) ? installmentEndDate : today.plusMonths(1);
+	final YearMonthDay installmentEndDate = installment.getEndDate();
+	return today.isBefore(installmentEndDate) ? installmentEndDate : calculateNextEndDate(today);
     }
 
     private YearMonthDay calculateFullPaymentCodeEndDate() {
 	final YearMonthDay today = new YearMonthDay();
 	final YearMonthDay totalEndDate = getFirstInstallment().getEndDate();
-	return today.isBefore(totalEndDate) ? totalEndDate : today.plusMonths(1);
+	return today.isBefore(totalEndDate) ? totalEndDate : calculateNextEndDate(today);
     }
 
     private EntryDTO findEntryDTOForPaymentCode(List<EntryDTO> entryDTOs,
@@ -139,15 +140,15 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO,
 	    final Student student) {
 	return AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
-		getFirstInstallment().getEndDate(), this, entryDTO.getAmountToPay(), entryDTO
+		calculateFullPaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO
 			.getAmountToPay(), student);
     }
 
     private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry,
 	    final Student student) {
 	return InstallmentPaymentCode.create(getPaymentCodeTypeFor(entry.getInstallment()),
-		new YearMonthDay(), entry.getInstallment().getEndDate(), this, entry.getInstallment(),
-		entry.getAmountToPay(), entry.getAmountToPay(), student);
+		new YearMonthDay(), calculateInstallmentPaymentCodeEndDate(entry.getInstallment()),
+		this, entry.getInstallment(), entry.getAmountToPay(), entry.getAmountToPay(), student);
     }
 
     private PaymentCodeType getPaymentCodeTypeFor(Installment installment) {

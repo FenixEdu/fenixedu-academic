@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public abstract class Event extends Event_Base {
 
@@ -82,7 +83,7 @@ public abstract class Event extends Event_Base {
 	    throw new DomainException("error.accounting.Event.process.requires.entries.to.be.processed");
 	}
 
-	checkConditionsToProcessEvent();
+	checkConditionsToProcessEvent(transactionDetail);
 
 	final Set<Entry> result = internalProcess(responsibleUser, entryDTOs, transactionDetail);
 
@@ -96,7 +97,7 @@ public abstract class Event extends Event_Base {
 	    final AccountingEventPaymentCode paymentCode, final Money amountToPay,
 	    final SibsTransactionDetailDTO transactionDetailDTO) {
 
-	checkConditionsToProcessEvent();
+	checkConditionsToProcessEvent(transactionDetailDTO);
 
 	final Set<Entry> result = internalProcess(responsibleUser, paymentCode, amountToPay,
 		transactionDetailDTO);
@@ -107,10 +108,14 @@ public abstract class Event extends Event_Base {
 
     }
 
-    private void checkConditionsToProcessEvent() {
-	if (isClosed()) {
+    private void checkConditionsToProcessEvent(final AccountingTransactionDetailDTO transactionDetail) {
+	if (isClosed() && !isSibsTransaction(transactionDetail)) {
 	    throw new DomainException("error.accounting.Event.is.already.closed");
 	}
+    }
+
+    private boolean isSibsTransaction(final AccountingTransactionDetailDTO transactionDetail) {
+	return transactionDetail instanceof SibsTransactionDetailDTO;
     }
 
     protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
@@ -408,6 +413,11 @@ public abstract class Event extends Event_Base {
 	final LabelFormatter result = new LabelFormatter();
 	result.appendLabel(getEventType().getQualifiedName(), "enum");
 	return result;
+    }
+    
+    protected YearMonthDay calculateNextEndDate(final YearMonthDay yearMonthDay) {
+	final YearMonthDay nextMonth = yearMonthDay.plusMonths(1);
+	return new YearMonthDay(nextMonth.getYear(), nextMonth.getMonthOfYear(), 1).minusDays(1);
     }
 
     protected abstract Account getFromAccount();

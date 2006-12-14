@@ -68,6 +68,6 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     }
 
     private YearMonthDay calculatePaymentCodeEndDate() {
-	return new YearMonthDay().plusMonths(1);
+	return calculateNextEndDate(new YearMonthDay());
     }
 }

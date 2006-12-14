@@ -196,15 +196,13 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
     public void process(Person responsiblePerson, Money amount, DateTime whenRegistered,
 	    String sibsTransactionId) {
-
-	if (isCancelled()) {
-	    throw new DomainException("error.accounting.paymentCodes.PaymentCode.code.is.cancelled");
+	
+	if (isProcessed()) {
+	    return;
 	}
-
-	if (isNew()) {
-	    internalProcess(responsiblePerson, amount, whenRegistered, sibsTransactionId);
-	    setState(PaymentCodeState.PROCESSED);
-	}
+	
+	internalProcess(responsiblePerson, amount, whenRegistered, sibsTransactionId);
+	setState(PaymentCodeState.PROCESSED);	
     }
 
     abstract protected void internalProcess(final Person person, final Money amount,

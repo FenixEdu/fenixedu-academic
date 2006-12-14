@@ -117,7 +117,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	final Money totalAmount = calculateTotalAmount();
 	return Collections.singletonList(AccountingEventPaymentCode.create(
 		PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE, new YearMonthDay(),
-		getAdministrativeOfficeFeePaymentLimitDate(), this, totalAmount, totalAmount,
+		calculatePaymentCodeEndDate(), this, totalAmount, totalAmount,
 		getPerson().getStudent()));
     }
 
@@ -138,7 +138,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	final YearMonthDay today = new YearMonthDay();
 	final YearMonthDay administrativeOfficeFeePaymentLimitDate = getAdministrativeOfficeFeePaymentLimitDate();
 	return today.isBefore(administrativeOfficeFeePaymentLimitDate) ? administrativeOfficeFeePaymentLimitDate
-		: today.plusMonths(1);
+		: calculateNextEndDate(today);
     }
 
     private Money calculateTotalAmount() {

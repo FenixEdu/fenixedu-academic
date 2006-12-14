@@ -40,7 +40,6 @@ public class InsuranceEvent extends InsuranceEvent_Base {
 		}
 	    }
 	});
-
     }
 
     private InsuranceEvent() {
@@ -113,7 +112,7 @@ public class InsuranceEvent extends InsuranceEvent_Base {
     }
 
     private YearMonthDay calculatePaymentCodeEndDate() {
-	return new YearMonthDay().plusMonths(1);
+	return calculateNextEndDate(new YearMonthDay());
     }
 
 }

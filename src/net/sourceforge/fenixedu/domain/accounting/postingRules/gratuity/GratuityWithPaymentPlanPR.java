@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.Install
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -158,7 +157,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
     }
 
     private void checkIfCanAddAmount(EntryDTO entryDTO, DateTime whenRegistered, Event event) {
-	if (entryDTO.getAmountToPay().compareTo(event.calculateAmountToPay(whenRegistered)) != 0) {
+	if (entryDTO.getAmountToPay().compareTo(event.calculateAmountToPay(whenRegistered)) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value",
 		    event.getDescriptionForEntryType(getEntryType()));
@@ -169,7 +168,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	    DateTime whenRegistered, Event event) {
 	final Money installmentAmount = getPaymentPlan(event).calculateRemainingAmountFor(
 		entryDTO.getInstallment(), event, whenRegistered, getDiscountPercentage(event));
-	if (entryDTO.getAmountToPay().compareTo(installmentAmount) != 0) {
+	if (entryDTO.getAmountToPay().compareTo(installmentAmount) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value",
 		    event.getDescriptionForEntryType(getEntryType()));
