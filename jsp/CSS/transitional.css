@@ -151,6 +151,7 @@ table.vamiddle td, table.vamiddle th { vertical-align: middle; }
 /* font-weight */
 table.thlight th { font-weight: normal; }
 table.thbold th { font-weight: bold; }
+.tdbold td { font-weight: bold; }
 
 /* text-align */
 table.taleft th, table.taleft td { text-align: left; }
@@ -162,6 +163,7 @@ table.thcenter th { text-align: center; }
 .tdleft td { text-align: left; }
 .tdright td { text-align: right; } /* take table from all, to work with tr ? */
 .tdcenter td { text-align: center; }
+
 
 	/* delete? */
 table .aleft  { text-align: left; }
@@ -528,8 +530,6 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .switchNone { display: block; }
 .input_hidden { display: none; }
 .input_inline { display: inline; }
-
-
 
 /* colors */
 .color1 { color: #808060; }
