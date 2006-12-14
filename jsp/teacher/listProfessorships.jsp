@@ -10,6 +10,7 @@
 <% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
 <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 <bean:define id="hostURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/</bean:define>
+<bean:define id="hostURL2" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %></bean:define>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
@@ -50,7 +51,7 @@
 			<bean:message key="label.semestre"/>
 		</th>
         <th class="listClasses-header" style="text-align:left">
-            &nbsp;
+            <bean:message key="link.executionCourseManagement.menu.view.course.page"/>
         </th>
 	</tr>
 	<logic:iterate id="executionCourse" name="executionCourses" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
@@ -74,8 +75,9 @@
 				<bean:write name="executionCourse" property="executionPeriod.qualifiedName"/>
 			</td>
             <td class="listClasses">
-                <html:link href="<%= request.getContextPath() + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) %>">
-                    <bean:message key="label.public.site"/>
+	            <bean:define id="executionCourseURL"><%= hostURL2 + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) %></bean:define>	            
+                <html:link href="<%= executionCourseURL %>" >
+                    <bean:write name="executionCourseURL"/>
                 </html:link>
             </td>
 		</tr>		
