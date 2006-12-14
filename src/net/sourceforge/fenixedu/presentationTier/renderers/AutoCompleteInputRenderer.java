@@ -424,6 +424,7 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                 link.setParameter("valueField", "idInternal"); // TODO: allow configuration, needs also converter
                 link.setParameter("styleClass", getAutoCompleteItemsStyleClass() == null ? "" : getAutoCompleteItemsStyleClass());
                 link.setParameter("class", getClassName());
+                link.setEscapeAmpersand(false);
                 
                 if (getFormat() != null) {
                     link.setParameter("format", getFormat());
