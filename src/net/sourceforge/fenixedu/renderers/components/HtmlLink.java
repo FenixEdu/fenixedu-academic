@@ -25,6 +25,7 @@ public class HtmlLink extends HtmlComponent {
     private String charSet;
     private boolean moduleRelative;
     private boolean contextRelative;
+    private boolean escapeAmpersand;
     
     private HtmlComponent body;
     
@@ -35,6 +36,7 @@ public class HtmlLink extends HtmlComponent {
         
         parameters = new Hashtable<String, String[]>();
         setModuleRelative(true);
+        setEscapeAmpersand(true);
     }
 
     public String getTarget() {
@@ -72,7 +74,7 @@ public class HtmlLink extends HtmlComponent {
     public String getUrl() {
         return url;
     }
-
+    
     public void setUrl(String url) {
         String realUrl = null;
 
@@ -187,6 +189,14 @@ public class HtmlLink extends HtmlComponent {
             setContextRelative(true);
         }
     }
+    
+    public boolean isEscapeAmpersand() {
+        return escapeAmpersand;
+    }
+
+    public void setEscapeAmpersand(boolean escapeAmpersand) {
+        this.escapeAmpersand = escapeAmpersand;
+    }
 
     @Override
     public List<HtmlComponent> getChildren() {
@@ -242,7 +252,7 @@ public class HtmlLink extends HtmlComponent {
                     buffer.append("?");
                 }
                 else {
-                    buffer.append("&amp;");
+                    buffer.append(getParametersSeparator());
                 }
                 
                 Set<String> keys = getParameters().keySet();
@@ -252,7 +262,7 @@ public class HtmlLink extends HtmlComponent {
                     String[] values = getParameters().get(key);
                     for (int i = 0; i < values.length; i++) {
                         if (i > 0) {
-                            buffer.append("&amp;");
+                            buffer.append(getParametersSeparator());
                         }
 
                         buffer.append(key);
@@ -267,7 +277,7 @@ public class HtmlLink extends HtmlComponent {
 
                     count--;
                     if (count > 0) {
-                        buffer.append("&amp;");
+                        buffer.append(getParametersSeparator());
                     }
                 }
             }
@@ -284,6 +294,10 @@ public class HtmlLink extends HtmlComponent {
         }
         
         return buffer.toString();
+    }
+
+    private String getParametersSeparator() {
+	return isEscapeAmpersand() ? "&amp;" : "&";
     }
     
     /**
