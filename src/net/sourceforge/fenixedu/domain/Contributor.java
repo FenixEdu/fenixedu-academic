@@ -2,18 +2,17 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+/**
+ * This class only exists to allow database access in scripts.
+ * A Contributor is now a Party: either a Person or an ExternalUnit 
+ *
+ */
+
+@Deprecated
 public class Contributor extends Contributor_Base {
 
-    public Contributor() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public Contributor(Integer contributorNumber, String contributorName, String contributorAddress) {
-        this();
-        this.setContributorNumber(contributorNumber);
-        this.setContributorName(contributorName);
-        this.setContributorAddress(contributorAddress);
+    private Contributor() {
+        throw new DomainException("Contributor.class.is.deprecated");
     }
 
     public void edit(Integer contributorNumber, String contributorName, String contributorAddress) {
