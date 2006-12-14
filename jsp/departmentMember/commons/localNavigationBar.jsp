@@ -25,18 +25,21 @@
 			</html:link>
 		</li>
 		
-		<li><logic:notEmpty name="UserView" property="person.vigilants">
+		<logic:notEmpty name="UserView" property="person.vigilants">
 		<li><html:link  page="/vigilancy/vigilantManagement.do?method=prepareMap"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></html:link></li>
-		</logic:notEmpty></li>
+		</logic:notEmpty>
 
-		<br/>
+		</ul>
+		<ul style="margin-top: 1em">
   		<li>
   		
 		  	<html:link page="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume">
 		  		<bean:message key="link.teacher.credits"/>
 		  	</html:link>  
 		</li>
-		<br/>
+		</ul>
+		
+		<ul style="margin-top: 1em">
 		<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 		<% String deiCode = "28"; %>
 		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">
@@ -61,7 +64,8 @@
 		
 		<%IUserView user = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
             if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.ASSIDUOUSNESS_RESPONSIBLE)) {%>
-            <br/>
+			</ul>
+			<ul style="margin-top: 1em">
 			<li class="navheader"><bean:message key="title.assiduousnessResponsible" bundle="ASSIDUOUSNESS_RESOURCES"/></li>
 			<li><html:link page="/assiduousnessResponsible.do?method=showEmployeeList">
 				<bean:message key="label.employees" bundle="ASSIDUOUSNESS_RESOURCES"/>
@@ -69,17 +73,16 @@
 		<% } %>
 		
 		
-		<%-- TeacherServiceDistribution entry point
-		<br/>
+		<%-- TeacherServiceDistribution entry point --%>
+		</ul>
+		<ul style="margin-top: 1em">
   		<li>
 		  	<html:link page="/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution">
 		  		<bean:message key="link.teacherServiceDistribution"/>
 		  	</html:link>  
 		</li> 				
-		<br/>				
-		--%>
+		
 	
 	</ul>
 	
-	<br />
 </logic:present>

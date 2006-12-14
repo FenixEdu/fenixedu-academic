@@ -43,9 +43,7 @@ margin-bottom: 0;
 		</h:commandLink>
 --%>
 		<h:outputText value="<b> | </b>" escape="false"/>
-		<h:outputLink value="#{evaluationManagementBackingBean.contextPath}/teacher/markSheetManagement.do?method=prepareSubmitMarks&executionCourseID=#{evaluationManagementBackingBean.executionCourseID}">
-			<h:outputText value="#{bundle['label.submit.listMarks']}"/>
-		</h:outputLink>
+		<h:outputText value="<a href='#{evaluationManagementBackingBean.contextPath}/teacher/markSheetManagement.do?method=prepareSubmitMarks&amp;executionCourseID=#{evaluationManagementBackingBean.executionCourseID}'>#{bundle['label.submit.listMarks']}</a>" escape="false"/>
 		
 		<h:outputText value="</li></ul>" escape="false"/>
 	</h:form>

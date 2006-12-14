@@ -20,7 +20,6 @@
 
 <br/>
 
-<bean:define id="downloadUrlPrefix" name="fileDownloadUrlFormat" />
 <bean:define id="executionCourseID" name="executionCourseID" />
 <logic:empty name="project" property="projectSubmissions">
 	<span class="error"><!-- Error messages go here -->
@@ -32,7 +31,7 @@
 		<fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle2"/>
 	        <fr:property name="columnClasses" value=",,,acenter"/>
-	        <fr:property name="linkFormat(download)" value="<%= downloadUrlPrefix + "/${projectSubmissionFile.externalStorageIdentification}/${projectSubmissionFile.filename}"%>"/>
+	        <fr:property name="linkFormat(download)" value="${projectSubmissionFile.downloadUrl}"/>
 			<fr:property name="key(download)" value="link.common.download"/>
 			<fr:property name="contextRelative(download)" value="false"/>
 			<fr:property name="order(download)" value="1"/>

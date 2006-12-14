@@ -4,7 +4,7 @@
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
-	
+
 	<h:outputText value="<h2>#{bundle['link.projects']}</h2>" escape="false" />
 	<h:form>
 		<h:inputHidden binding="#{projectManagementBackingBean.executionCourseIdHidden}" />
@@ -36,12 +36,8 @@
 						<f:param value="#{project.end}" />
 					</h:outputFormat>
 					<h:outputText value="<b> | </b>" escape="false"/>
-					<h:outputLink value="#{projectManagementBackingBean.contextPath}/teacher/projectSubmissionsManagement.do">
-						<f:param id="method" name="method" value="viewLastProjectSubmissionForEachGroup" />
-						<f:param id="executionCourseID" name="executionCourseID" value="#{projectManagementBackingBean.executionCourseID}" />
-						<f:param id="projectID" name="projectID" value="#{project.idInternal}" />
-						<h:outputFormat value="#{bundle['link.teacher.executionCourseManagement.evaluation.project.viewProjectSubmissions']}"/>
-					</h:outputLink>
+
+					<h:outputText value="<a href='#{projectManagementBackingBean.contextPath}/teacher/projectSubmissionsManagement.do?method=viewLastProjectSubmissionForEachGroup&amp;executionCourseID=#{projectManagementBackingBean.executionCourseID}&amp;projectID=#{project.idInternal}'>#{bundle['link.teacher.executionCourseManagement.evaluation.project.viewProjectSubmissions']}</a>" escape="false"/>
 					<h:outputText value="<b> | </b>" escape="false"/>
 					<h:commandLink action="enterEditProject">
 						<f:param id="projectIDToEdit" name="projectID" value="#{project.idInternal}" />

@@ -27,7 +27,7 @@
 		</tr>
 		<tr>
 			<td><html:file bundle="HTMLALT_RESOURCES" altKey="file.xmlZipFile" property="xmlZipFile" size="50"/></td>
-		<tr/>
+		</tr>
 	</table>	
 	<br />
 	<br />

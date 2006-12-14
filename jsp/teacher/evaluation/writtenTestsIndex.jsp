@@ -25,9 +25,11 @@ margin-bottom: 0;
 		<h:outputText value="<h2>#{bundle['title.evaluation.WrittenTests']}</h2>" escape="false" />
 
 		<h:commandLink action="enterCreateWrittenTest">
-			<h:outputFormat value="<br/>#{bundle['link.create.written.test']} <br/><br/><hr/>" escape="false"/>
+			<h:outputFormat value="<br/>#{bundle['link.create.written.test']} <br/><br/>" escape="false"/>
 		</h:commandLink>
 
+		<h:outputText value="<hr/>" escape="false"/>
+		
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/>" escape="false" />
 

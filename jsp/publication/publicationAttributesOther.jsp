@@ -45,7 +45,7 @@
 			</logic:notEqual>
 		</td>
 		<td>
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.month" property="month">
+			<html:select bundle="HTMLALT_RESOURCES" property="month">
 				<logic:iterate id="month" name="monthList" >
 					<html:option value='<%=month.toString()%>'>
 						<bean:write name="month" />		
@@ -106,7 +106,7 @@
 			<bean:message key="message.publicationAttribute.format" />
 		</td>
 		<td>
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.format" property="format">
+			<html:select bundle="HTMLALT_RESOURCES" property="format">
 				<html:options collection="formatList" property="format" />
 			</html:select>
 		</td>

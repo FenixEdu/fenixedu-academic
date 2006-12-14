@@ -85,7 +85,7 @@
 </p>
 	<bean:message key="message.publications.fieldsToFill"/>
 	
-	<html:select bundle="HTMLALT_RESOURCES" altKey="select.infoPublicationTypeId" property="infoPublicationTypeId" onchange="this.form.method.value='prepareEdit';
+	<html:select bundle="HTMLALT_RESOURCES" property="infoPublicationTypeId" onchange="this.form.method.value='prepareEdit';
 		this.form.page.value='0';this.form.typePublication.value='Cientific';this.form.submit();">
 		<html:options collection="publicationTypesList" property="idInternal" labelProperty="publicationType"/>
 	</html:select>
@@ -103,7 +103,7 @@
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.subType" />
 					</td>
 					<td>
-						<html:select bundle="HTMLALT_RESOURCES" altKey="select.subtype" property="subtype">
+						<html:select bundle="HTMLALT_RESOURCES" property="subtype">
 							<html:options collection="subTypeList" property="subtype" />
 						</html:select>
 					</td>
@@ -176,7 +176,7 @@
 						</logic:notEqual>	
 					</td>
 					<td>
-						<html:select bundle="HTMLALT_RESOURCES" altKey="select.month" property="month">
+						<html:select bundle="HTMLALT_RESOURCES" property="month">
 							<logic:iterate id="month" name="monthList" >
 								<html:option value='<%=month.toString()%>'>
 									<bean:write name="month" />		

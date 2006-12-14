@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<html:xhtml/>
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.department"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></h2>
 

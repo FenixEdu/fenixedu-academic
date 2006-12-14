@@ -353,11 +353,11 @@
 	<br />
 	<p class="infoop"><span class="emphasis-box">8</span>
 	<bean:message key="message.courseInformation.courseSupportLessons" /></p>
-	<table border="0" cellspacing="1" style="margin-top:10px">
+<%-- 	<table border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<%--<td> <bean:write name="infoSiteCourseInformation" property="courseSupportLessons"/></td>--%>
+			<td> <bean:write name="infoSiteCourseInformation" property="courseSupportLessons"/></td>
 		</tr>
-	</table>
+	</table>--%>
 	<br/>
 	<p class="infoop"><span class="emphasis-box">9</span>
 	<bean:message key="message.courseInformation.courseReport" /></p>

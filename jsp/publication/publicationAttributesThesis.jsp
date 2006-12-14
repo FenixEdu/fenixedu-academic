@@ -11,7 +11,7 @@
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.subType" />
 		</td>
 		<td>
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.subtype" property="subtype">
+			<html:select bundle="HTMLALT_RESOURCES" property="subtype">
 				<html:options collection="subTypeList" property="subtype" />
 			</html:select>
 		</td>
@@ -46,7 +46,7 @@
 			</logic:notEqual>
 		</td>
 		<td>
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.month" property="month">
+			<html:select bundle="HTMLALT_RESOURCES" property="month">
 				<logic:iterate id="month" name="monthList" >
 					<html:option value='<%=month.toString()%>'>
 						<bean:write name="month" />		
@@ -76,7 +76,7 @@
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.month_end" />
 		</td>
 		<td>
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.month_end" property="month_end">
+			<html:select bundle="HTMLALT_RESOURCES" property="month_end">
 				<logic:iterate id="month" name="monthList" >
 					<html:option value='<%=month.toString()%>'>
 						<bean:write name="month" />		
@@ -112,7 +112,7 @@
 			<bean:message key="message.publicationAttribute.format" />
 		</td>
 		<td>
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.format" property="format">
+			<html:select bundle="HTMLALT_RESOURCES" property="format">
 				<html:options collection="formatList" property="format" />
 			</html:select>
 		</td>

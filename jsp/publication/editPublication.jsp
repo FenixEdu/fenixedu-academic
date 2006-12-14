@@ -67,7 +67,7 @@
 				<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.type" />
 			</td>
 			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.infoPublicationTypeId" property="infoPublicationTypeId" onchange="this.form.method.value='lightPrepare';this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" property="infoPublicationTypeId" onchange="this.form.method.value='lightPrepare';this.form.submit();">
 					<html:options collection="publicationTypesList" property="idInternal" labelProperty="publicationType"/>
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -75,9 +75,10 @@
 				</html:submit>
 			</td>
 		</tr>
-		
-		<hr/>
-		
+	</table>
+	<hr/>
+	
+	<table>			
 	    <%-- MAJOR ABSTRACTION BREACH under Prof. Rito's permission
 	    		these values are idInternal's from the PublicationType table
 	    		will be redone on the new architecture --%>
