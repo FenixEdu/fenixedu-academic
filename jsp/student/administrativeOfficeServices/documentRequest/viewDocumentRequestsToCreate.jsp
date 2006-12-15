@@ -3,18 +3,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<html:xhtml/>
-<em><bean:message key="administrative.office.services"/></em>
-<h2><bean:message key="documents.requirement"/></h2>
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<h2><bean:message key="documentRequests" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+<h3 class="mtop15"><bean:message key="label.documentRequests.confirmation" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
 <logic:messagesPresent message="true">
-	<p>
-	<span class="error0"><!-- Error messages go here -->
+	<span class="error"><!-- Error messages go here -->
 		<html:messages id="message" message="true" bundle="STUDENT_RESOURCES">
 			<bean:write name="message"/>
 		</html:messages>
 	</span>
-	</p>
 </logic:messagesPresent>
 
 <logic:notEmpty name="warningsToReport">
@@ -26,32 +24,69 @@
 	</ul>
 </logic:notEmpty>
 
-<html:form action="/documentRequest.do?method=create">
-	<html:hidden property="scpId" />
-	<html:hidden property="schoolRegistrationExecutionYearId" />
-	<html:hidden property="enrolmentDetailed"  />	
-	<html:hidden property="enrolmentExecutionYearId" />
-	<html:hidden property="degreeFinalizationAverage" />
-	<html:hidden property="degreeFinalizationDetailed"/>
-	<html:hidden property="chosenDocumentPurposeType" />
-	<html:hidden property="otherPurpose" />
-	<html:hidden property="notes" />
-	<html:hidden property="urgentRequest" />
-	<html:hidden property="registrationId"/>
-	
 
-	<logic:iterate id="chosenDocumentRequestType" name="chosenDocumentRequestTypes">
-		<html:hidden property="chosenDocumentRequestTypes" value="<%=chosenDocumentRequestType.toString()%>"/>
-	</logic:iterate>
-	
-	<p class="mbottom025"><bean:message key="label.document.request.confirm" bundle="STUDENT_RESOURCES"/></p>
-	<fr:edit nested="true" schema="DocumentRequestCreateBean.viewToConfirmCreation" name="documentRequestCreateBeans" id="documentRequestCreateBeans" action="/documentRequest.do?method=create">
-		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4 thlight mtop025" />
-		</fr:layout>
-		<fr:destination name="cancel" path="/documentRequest.do?method=prepare"/>
-	</fr:edit>
+<fr:form action="/documentRequest.do?method=create">
+<fr:edit schema="DocumentRequestCreateBean.chooseDocumentRequestType" name="documentRequestCreateBean" visible="false"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" >
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4"/>
+      	<fr:property name="columnClasses" value="listClasses,,"/>
+	</fr:layout>
+</fr:edit>
 
-	<html:submit styleClass="inputbutton"><bean:message key="button.confirm" bundle="APPLICATION_RESOURCES"/></html:submit>
-	<html:cancel styleClass="inputbutton"><bean:message key="return"/></html:cancel>
-</html:form>
+<logic:present name="additionalInformationSchemaName">
+	<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>
+	<fr:edit name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" visible="false"
+		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" />
+</logic:present>
+
+<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes"  visible="false"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" />
+
+<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.notes"  visible="false"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" />
+
+
+
+<fr:view schema="DocumentRequestCreateBean.chooseDocumentRequestType" name="documentRequestCreateBean" >
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+		<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+	</fr:layout>	
+</fr:view>
+
+
+<logic:present name="additionalInformationSchemaName">
+	<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>	
+	<fr:view name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" 
+		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" >
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+			<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+		</fr:layout>	
+	</fr:view>		
+</logic:present>
+
+
+<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" 
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+		<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+	</fr:layout>	
+</fr:view>
+
+
+<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.notes" 
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+		<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+	</fr:layout>	
+</fr:view>	
+
+<p class="mtop15">
+	<html:submit><bean:message key="button.confirm" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+</p>
+	
+</fr:form>
