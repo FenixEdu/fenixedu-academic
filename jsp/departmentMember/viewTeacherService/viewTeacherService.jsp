@@ -93,8 +93,10 @@
 							</fc:dataRepeater>
 							<fc:dataRepeater value="#{teacher.exemptionSituationList}" var="exemptionSituation">
 								<h:outputText value="<li>" escape="false"/>
-								<h:outputText value="#{bundleEnumeration[exemptionSituation.functionName]}" />
-								<h:outputText value=" - #{exemptionSituation.credits}</li>" escape="false" />
+								<fc:dataRepeater value="#{exemptionSituation.exemptionTypes}" var="exemptionType">
+									<h:outputText value="#{bundleEnumeration[exemptionType]}; " escape="false"/>
+								</fc:dataRepeater>								
+								<h:outputText value="- #{exemptionSituation.credits}</li>" escape="false" />
 							</fc:dataRepeater>
 						<h:outputText value="</ul>" escape="false" />
 					<h:outputText value="</td>" escape="false" />

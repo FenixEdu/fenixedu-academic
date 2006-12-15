@@ -6,6 +6,9 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
+import java.util.Set;
+
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
@@ -36,5 +39,19 @@ public class Category extends Category_Base implements Comparable {
 
     public boolean isMonitorCategory() {
 	return getCode().equals("MNL") || getCode().equals("MNT");
+    }
+
+    public static Category readCategoryByCodeAndNameInPT(String code, String ptName) {
+	for (Category category : (Set<Category>) RootDomainObject.readAllDomainObjects(Category.class)) {
+	    if (category.getName().getContent(Language.pt).equalsIgnoreCase(ptName)
+		    && category.getCode().equalsIgnoreCase(code)) {
+		return category;
+	    }
+	}
+	return null;
+    }
+
+    public boolean isMostImportantThan(Category anotherCategory) {
+	return (getWeight().intValue() < anotherCategory.getWeight().intValue());
     }
 }

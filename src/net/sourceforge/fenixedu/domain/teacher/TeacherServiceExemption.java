@@ -4,19 +4,33 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
+import java.util.Comparator;
+
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.joda.time.Interval;
+import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
 public class TeacherServiceExemption extends TeacherServiceExemption_Base {
+
+    public static final Comparator<TeacherServiceExemption> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
+    static {
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator(
+		"startYearMonthDay"));
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
+    }
 
     public TeacherServiceExemption(Teacher teacher, YearMonthDay beginDate, YearMonthDay endDate,
 	    ServiceExemptionType type, String institution) {
 
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());	
+	setRootDomainObject(RootDomainObject.getInstance());
 	setTeacher(teacher);
 	setType(type);
 	setInstitution(institution);
@@ -78,7 +92,52 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		.equals(ServiceExemptionType.CHILDBIRTH_LICENSE));
     }
 
-    public boolean isServiceExemptionToCountZeroInCredits() {
+    public boolean isLongDuration() {
+	Integer daysBetween = null;
+	if (getEndYearMonthDay() != null) {
+	    daysBetween = new Interval(getStartYearMonthDay().toDateMidnight(), getEndYearMonthDay()
+		    .toDateMidnight()).toPeriod(PeriodType.days()).getDays();
+	}
+	return (daysBetween == null || daysBetween > 90);
+    }
+
+    public boolean isForCountInCreditsBecauseIsSabbaticalOrEquivalent() {
+	return getType().equals(ServiceExemptionType.SABBATICAL)
+		|| getType().equals(ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_E_C_D_U)
+		|| getType().equals(ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL);
+    }
+
+    public boolean isForCountInCreditsButDontIsSabbatical(Teacher teacher,
+	    ExecutionPeriod executionPeriod) {
+	
+	if (isLongDuration() && !isForCountInCreditsBecauseIsSabbaticalOrEquivalent()) {
+
+	    if (getType().equals(ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY)
+		    || getType().equals(
+			    ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS)
+		    || getType().equals(
+			    ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_DL24_84_ART51_N6_EST_DISC)) {
+		return true;
+	    }
+
+	    if (getType().equals(ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)) {
+
+		Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionPeriod);
+		Category pax_category = Category.readCategoryByCodeAndNameInPT("PAX",
+			"Professor Auxiliar");
+		if (teacherCategory != null
+			&& pax_category != null
+			&& (!teacherCategory.equals(pax_category) && !teacherCategory
+				.isMostImportantThan(pax_category))) {
+		    return true;
+		}
+	    }
+	}
+
+	return false;
+    }
+
+    public boolean isForNotCountInCredits() {
 	return (this.getType().equals(ServiceExemptionType.CONTRACT_SUSPEND_ART_73_ECDU)
 		|| this.getType().equals(ServiceExemptionType.CONTRACT_SUSPEND)
 		|| this.getType().equals(ServiceExemptionType.GOVERNMENT_MEMBER)
@@ -98,31 +157,18 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		|| this.getType().equals(ServiceExemptionType.FUNCTIONS_MANAGEMENT_SERVICE_EXEMPTION) || this
 		.getType().equals(ServiceExemptionType.PUBLIC_MANAGER));
     }
-
-    public boolean isServiceExemptionToCountInCredits() {
-	return (this.getType().equals(ServiceExemptionType.SABBATICAL)
-		|| this.getType().equals(ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY)
-		|| this.getType().equals(ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)
-		|| this.getType().equals(
-			ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL)
-		|| this.getType().equals(
-			ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS)
-		|| this.getType().equals(ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_E_C_D_U) || this
-		.getType().equals(
-			ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_DL24_84_ART51_N6_EST_DISC));
-    }
-
+    
     private void checkTeacherServiceExemptionsDatesIntersection(Teacher teacher, YearMonthDay begin,
 	    YearMonthDay end, ServiceExemptionType type) {
 
 	checkBeginDateAndEndDate(begin, end);
 	// for (TeacherServiceExemption serviceExemption :
-        // teacher.getServiceExemptionSituations()) {
+	// teacher.getServiceExemptionSituations()) {
 	// if (serviceExemption.getType().equals(type)
 	// && serviceExemption.checkDatesIntersections(begin, end)) {
 	// System.out.println("Teacher Number: " + teacher.getTeacherNumber());
 	// throw new
-        // DomainException("error.teacherLegalRegimen.dates.intersection");
+	// DomainException("error.teacherLegalRegimen.dates.intersection");
 	// }
 	// }
     }
