@@ -24,6 +24,7 @@
 <fr:view name="receipt" schema="receipt.view-with-number-and-year">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thright mtop15" />
+		<fr:property name="columnClasses" value=",tdhl1" />
 	</fr:layout>
 </fr:view>
 
