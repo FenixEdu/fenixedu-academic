@@ -26,5 +26,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-execute "Add new employee for department credits management" addNewEmployeeForDepartmentCreditsManagement.sql
