@@ -23,7 +23,7 @@
 
 
 	<html:form action="/documentRequest.do">
-		<html:hidden property="method" value="prepare" />
+		<html:hidden property="method" value="prepareCreateDocumentRequest" />
 
 		<p class="mtop2">
 			<bean:message key="label.registration" />: <html:select property="registrationId">
