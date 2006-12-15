@@ -7,6 +7,10 @@ import java.util.List;
 
 public class LabelFormatter implements Serializable {
 
+    public final static String ENUMERATION_RESOURCES = "enum";
+    
+    public final static String APPLICATION_RESOURCES = "application";
+    
     private static class Label implements Serializable {
         private String key;
 
