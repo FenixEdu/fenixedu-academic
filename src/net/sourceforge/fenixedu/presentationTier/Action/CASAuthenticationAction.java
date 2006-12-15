@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -15,6 +16,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import edu.yale.its.tp.cas.client.CASReceipt;
 
 public class CASAuthenticationAction extends BaseAuthenticationAction {
 
@@ -31,7 +34,8 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
         if (userView == null) {
             final String casTicket = (String) request.getParameter("ticket");
             final String requestURL = request.getRequestURL().toString();
-            final Object authenticationArgs[] = { casTicket, requestURL , remoteHostName};
+            final CASReceipt receipt = Authenticate.getCASReceipt(casTicket, requestURL);
+            final Object authenticationArgs[] = { receipt, requestURL , remoteHostName};
 
             userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
                     authenticationArgs);

@@ -147,14 +147,8 @@ public class Authenticate extends Service implements Serializable {
 	return new UserView(person, allowedRoles);
     }
 
-    public IUserView run(final String casTicket, final String requestURL, final String remoteHost)
+    public IUserView run(final CASReceipt receipt, final String requestURL, final String remoteHost)
 	    throws ExcepcaoPersistencia, ExcepcaoAutenticacao {
-	final CASReceipt receipt = getCASReceipt(casTicket, requestURL);
-
-	if (receipt == null) {
-	    throw new ExcepcaoAutenticacao("bad.authentication");
-	}
-
 	final String username = receipt.getUserName();
 
 	Person person = Person.readPersonByUsernameWithOpenedLogin(username);
@@ -174,7 +168,7 @@ public class Authenticate extends Service implements Serializable {
 	user.setCurrentLoginHost(remoteHost);
     }
 
-    private CASReceipt getCASReceipt(final String casTicket, final String requestURL)
+    public static CASReceipt getCASReceipt(final String casTicket, final String requestURL)
 	    throws ExcepcaoAutenticacao {
 	CASReceipt receipt = null;
 
@@ -196,6 +190,10 @@ public class Authenticate extends Service implements Serializable {
 	} catch (CASAuthenticationException e) {
 	    e.printStackTrace();
 	    throw new ExcepcaoAutenticacao("bad.authentication", e);
+	}
+
+	if (receipt == null) {
+	    throw new ExcepcaoAutenticacao("bad.authentication");
 	}
 
 	return receipt;
