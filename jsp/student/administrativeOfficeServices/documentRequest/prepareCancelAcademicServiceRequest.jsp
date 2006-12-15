@@ -56,7 +56,7 @@
 			</span>
 		</html:form>
 
-		<html:form action="/documentRequest.do?method=method=viewDocumentRequests" style="display: inline;">
+		<html:form action="/documentRequest.do?method=viewDocumentRequests" style="display: inline;">
 			<span>
 				<html:submit><bean:message key="button.cancel" bundle="STUDENT_RESOURCES"/></html:submit>
 			</span>
