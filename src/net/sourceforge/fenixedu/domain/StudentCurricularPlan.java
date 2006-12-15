@@ -339,7 +339,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private boolean allCurricularCoursesInTheList(List<CurricularCourse> oldCurricularCourses,
 	    List<CurricularCourse> otherCourses) {
 	for (CurricularCourse oldCurricularCourse : oldCurricularCourses) {
-	    if (!isThisCurricularCoursesInTheList(oldCurricularCourse, otherCourses)) {
+	    if (!isThisCurricularCoursesInTheList(oldCurricularCourse, otherCourses) && !hasEquivalenceInNotNeedToEnroll(oldCurricularCourse)) {
 		return false;
 	    }
 	}
