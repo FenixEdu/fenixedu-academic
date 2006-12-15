@@ -36,7 +36,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	Collections.sort(approvedEnrolments, comparatorChain);
 
 	final StringBuilder approvementsInfo = new StringBuilder();
-	ExecutionYear lastReportedExecutionYear = approvedEnrolments.iterator().next().getExecutionPeriod().getExecutionYear(); 
+	ExecutionYear lastReportedExecutionYear = approvedEnrolments.get(0).getExecutionPeriod().getExecutionYear(); 
 	for (final Enrolment approvedEnrolment : approvedEnrolments) {
 	    final ExecutionYear executionYear = approvedEnrolment.getExecutionPeriod().getExecutionYear();
 	    final EnrolmentEvaluation latestEnrolmentEvaluation = approvedEnrolment.getLatestEnrolmentEvaluation();
