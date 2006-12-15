@@ -145,6 +145,7 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 
     private boolean isEndLegalRegimenType(LegalRegimenType legalRegimenType) {
 	return (legalRegimenType.equals(LegalRegimenType.DEATH)
+		|| legalRegimenType.equals(LegalRegimenType.TERM_WORK_CONTRACT_END)
 		|| legalRegimenType.equals(LegalRegimenType.EMERITUS)
 		|| legalRegimenType.equals(LegalRegimenType.RETIREMENT)
 		|| legalRegimenType.equals(LegalRegimenType.RETIREMENT_IN_PROGRESS)
