@@ -150,8 +150,6 @@
 		<fr:view name="newAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
-				<fr:property name="key(cancel)" value="cancel"/>
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
 				<fr:property name="linkFormat(processing)" value="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&academicServiceRequestId=${idInternal}"/>
@@ -179,8 +177,6 @@
 		<fr:view name="processingAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
-				<fr:property name="key(cancel)" value="cancel"/>
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
 				<fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&academicServiceRequestId=${idInternal}"/>
