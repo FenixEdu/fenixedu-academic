@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import net.sourceforge.fenixedu._development.Custodian;
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -68,14 +69,20 @@ public class StartupServlet extends HttpServlet {
                 System.out.println("Check is alive is not working. Caught excpetion.");
                 ex.printStackTrace();
             }
+
+            loadLogins();
         } finally {
             Transaction.forceFinish();
         }
     }
 
-    /**
-     * 
-     */
+    private void loadLogins() {
+        long start = System.currentTimeMillis();
+        Login.readLoginByUsername("...PlaceANonExistingLoginHere...");
+        long end = System.currentTimeMillis();
+        System.out.println("Load of all logins took: " + (end - start));
+    }
+
     private void setScheduleForGratuitySituationCreation() {
 
         TimerTask gratuitySituationCreatorTask = new TimerTask() {
