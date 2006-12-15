@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.stm.IllegalWriteException;
 import net.sourceforge.fenixedu.stm.ServiceInfo;
 
 import org.apache.commons.collections.FastHashMap;
@@ -96,17 +98,30 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
             ServiceInfo.setCurrentServiceInfo((id == null) ? null : id.getUtilizador(), service, args);
 
             Object serviceResult = null;
+            Boolean readOnly = Boolean.TRUE;
             while (true) {
                 try {
+                    SuportePersistenteOJB.setReadOnly(readOnly);
                     serviceResult = manager.execute(id, service, method, args);
                     break;
+                } catch (IllegalWriteException ce) {
+                    readOnly = Boolean.FALSE;
+                    System.out.println("Restarting TX and upgrading it to a write TX");
                 } catch (jvstm.CommitException ce) {
 //                    ce.printStackTrace();
                     System.out.println("Restarting TX because of CommitException");
+                    if (readOnly.booleanValue()) {
+                        System.out.println("Restarting TX and upgrading it to a write TX");
+                        readOnly = Boolean.FALSE;
+                    }
                     // repeat service
                 } catch (DomainObject.UnableToDetermineIdException ce) {
 //                    ce.printStackTrace();
                     System.out.println("Restarting TX because of UnableToDetermineIdException");
+                    if (readOnly.booleanValue()) {
+                        System.out.println("Restarting TX and upgrading it to a write TX");
+                        readOnly = Boolean.FALSE;
+                    }
                     // repeat service
                 }
             }

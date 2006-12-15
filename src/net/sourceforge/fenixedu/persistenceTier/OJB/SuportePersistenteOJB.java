@@ -74,12 +74,23 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     protected void finalize() throws Throwable {
 	}
 
+    private static InheritableThreadLocal<Boolean> readOnly = new InheritableThreadLocal<Boolean>();
+
+    public static Boolean getReadOnly() {
+        return readOnly.get();
+    }
+
+    public static void setReadOnly(Boolean readOnly) {
+        SuportePersistenteOJB.readOnly.set(readOnly);
+    }
+
     public void iniciarTransaccao() {
 		// commit any current transaction
         if (Transaction.current() != null) {
 			Transaction.commit();
 		}
-		Transaction.begin();
+            final Boolean readOnly = getReadOnly();
+            Transaction.begin(readOnly == null ? Boolean.FALSE : readOnly);
 	}
 
     public void confirmarTransaccao() {
@@ -146,5 +157,5 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 			}
 		}
 	}
-    
+
 }
