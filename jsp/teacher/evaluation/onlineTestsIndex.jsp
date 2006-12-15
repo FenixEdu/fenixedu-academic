@@ -4,19 +4,6 @@
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 
-<style type="text/css">
-ul.links {
-list-style: none;
-padding-left: 2em;
-}
-ul.links li {
-padding-top: 0;
-padding-bottom: 0;
-margin-top: 0;
-margin-bottom: 0;
-}
-</style>
-
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	
 	<h:form>

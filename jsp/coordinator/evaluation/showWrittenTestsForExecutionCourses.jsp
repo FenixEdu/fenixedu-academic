@@ -7,62 +7,7 @@
 
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
-<style type="text/css">
-table.style2u {
-	margin-bottom: 1em;
-	border: 2px solid #ccc;
-	border-collapse: collapse;
-	margin-top: 0.5em;
-}
-table.style2u th {
-	padding: 0.2em 1em;
-	border-bottom: 2px solid #ccc;
-	background-color: #ddd;
-	border-left: 1px solid #ccc;
-	text-align: center;
-}
-table.style2u td.header {
-	padding: 0.2em 0.5em;
-	border: 1px solid #ddd;
-	background-color: #eee;
-	font-weight: bold;
-	text-align: left;
-	margin-top: 1em;
-}
-table.style2u td {
-	padding: 0.2em 0.5em;
-	background-color: #fafafa;
-	border: none;
-	border: 1px solid #ddd;
-	text-align: center;
-}
-table.style2u td.courses {
-	border-right: 1px solid #ddd;
-	background-color: #ffe;
-	padding: 0 1em;
-}
-table.style2u tr.space {
-padding: 1em;
-}
-table.style2u tr.space td {
-padding: 0.5em;
-background: none;
-border: none;
-}
-table.executionCoursesWithoutWrittenEvaluations {
-	margin-bottom: 1em;
-	border: 2px solid #ccc;
-	border-collapse: collapse;
-	margin-top: 0.5em;
-}
-table.executionCoursesWithoutWrittenEvaluations td {
-	padding: 0.2em 0.5em;
-	background-color: #fafafa;
-	border: none;
-	border: 1px solid #ddd;
-	text-align: left;
-}
-</style>
+
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>	
 	<h:form>
 		<h:inputHidden binding="#{coordinatorWrittenTestsInformationBackingBean.degreeCurricularPlanIdHidden}"/>		
@@ -90,7 +35,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 		<h:outputText value="<li>#{bundle['label.coordinator.instruction2']}</li>" escape="false" />
 		<h:outputText value="</ul>" escape="false" />
 		<h:outputText value="<br/>" escape="false" />				
-		<style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>		
+
 		<fc:fenixCalendar 
 			begin="#{coordinatorWrittenTestsInformationBackingBean.calendarBeginDate}"
 			end="#{coordinatorWrittenTestsInformationBackingBean.calendarEndDate}"

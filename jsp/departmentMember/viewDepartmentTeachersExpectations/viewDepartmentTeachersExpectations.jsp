@@ -5,23 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<style>
-	.header {
-	background-color: #eee;
-	padding: 0.5em;
-	font-size: 1.4em;
-	}
-	.block {
-	padding: 0 0.5em;
-	}
-	.indent {
-	padding: 0 2em;
-	}
-	.limbottom li {
-	padding-bottom: 8px;			
-	
-	}
-</style>
 
 <html:form
 	action="/viewDepartmentTeachersExpectations.do">

@@ -7,39 +7,6 @@
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style type="text/css">@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
-
-<style type="text/css">
-.greyBorderClass {
-	background-color: #EBECED;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #909090;
-	width: 100%
-}
-.blackBorderClass {
-	background-color: #ffffff;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #909090
-}
-.boldFontClass { 
-	font-weight: bold
-}
-.listClasses-header	{
-	background: #ccc;
-	font-weight: bold;
-	text-align: center;
-	padding: 5px;
-}
-.listClasses	{
-	background: #EBECED;
-	border: 1px solid #ccc;
-	text-align: center;
-	height: 30px;
-}
-</style>
-
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundle"/>
 	<h:outputFormat value="<h2>#{bundle['link.writtenEvaluation.by.room']}</h2>" escape="false"/>
 

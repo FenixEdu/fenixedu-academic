@@ -2,7 +2,6 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
 
 <ul>
     <li><html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" /></html:link></li>

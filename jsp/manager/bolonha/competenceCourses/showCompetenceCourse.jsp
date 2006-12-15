@@ -7,16 +7,7 @@
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
-<style>
-.temp1 {
-clear: both;
-}
-.temp1 li span {
-float: left; 
-width: 100px;
-padding-right: 10px;
-}
-</style>
+
 	<h:outputText value="<em>#{bolonhaBundle['competenceCourse']}</em>" escape="false" />
 	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name} " escape="false"/>
 	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.acronym}" value="(#{CompetenceCourseManagement.competenceCourse.acronym})" escape="false"/>

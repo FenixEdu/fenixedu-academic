@@ -5,36 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<style type="text/css">
-	table.ts01 {
-	border-collapse: collapse;
-	margin: 1em 0;
-	}
-	table.ts01 th {
-	border: 1px solid #ccc;
-	background-color: #eee;
-	padding: 0.5em;
-	text-align: center;
-	}
-	table.ts01 td {
-	border: 1px solid #ccc;
-	background-color: #fff;
-	padding: 0.5em;
-	text-align: center;
-	}
-	table.ts01 .highlight01 {
-	background-color: #ffc;
-	}
-	table.ts01 .aleft {
-	text-align: left;
-	}
-	table.ts01 .aright {
-	text-align: right;
-	}
-	.asterisk01 {
-	color: #d42;
-	}		
-</style>
 
 <em><bean:message key="label.teacherService.credits"/></em>
 <h2><bean:message key="label.teacherService.credits.resume"/></h2>

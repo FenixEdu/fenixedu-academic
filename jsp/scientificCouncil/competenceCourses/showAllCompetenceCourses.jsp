@@ -6,16 +6,7 @@
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
-<style>
-.cboth {
-clear: both;
-}
-.cboth li span {
-float: left; 
-width: 100px;
-padding-right: 10px;
-}
-</style>
+
 	<fc:dataRepeater rendered="#{!empty CompetenceCourseManagement.departmentCompetenceCourses}" value="#{CompetenceCourseManagement.departmentCompetenceCourses}" var="competenceCourse">
 
 		<h:outputText value="<em>#{scouncilBundle['competenceCourse']}</em>" escape="false" />

@@ -5,12 +5,6 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="df.page.structure" attributeName="body-inline">
-<!--  
-
-<style>
-	.eo_highlight { background-color: #ffc; }
-</style>
--->
 
 <f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 <f:loadBundle basename="resources/MessagingResources" var="messagingResources"/>

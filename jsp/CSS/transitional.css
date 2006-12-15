@@ -1250,3 +1250,202 @@ color: #888;
 
 .inobullet ul { list-style: none; padding-left: 0; }
 .inobullet ul li { list-style: none; }
+
+
+/* evaluation calendar */
+table.style2u {
+	margin-bottom: 1em;
+	border: 2px solid #ccc;
+	border-collapse: collapse;
+	margin-top: 0.5em;
+}
+table.style2u th {
+	padding: 0.2em 1em;
+	border-bottom: 2px solid #ccc;
+	background-color: #ddd;
+	border-left: 1px solid #ccc;
+	text-align: center;
+}
+table.style2u td.header {
+	padding: 0.2em 0.5em;
+	border: 1px solid #ddd;
+	background-color: #eee;
+	font-weight: bold;
+	text-align: left;
+	margin-top: 1em;
+}
+table.style2u td {
+	padding: 0.2em 0.5em;
+	background-color: #fafafa;
+	border: none;
+	border: 1px solid #ddd;
+	text-align: center;
+}
+table.style2u td.courses {
+	border-right: 1px solid #ddd;
+	background-color: #ffe;
+	padding: 0 1em;
+}
+table.style2u tr.space {
+	padding: 1em;
+}
+table.style2u tr.space td {
+	padding: 0.5em;
+	background: none;
+	border: none;
+}
+table.executionCoursesWithoutWrittenEvaluations {
+	margin-bottom: 1em;
+	border: 2px solid #ccc;
+	border-collapse: collapse;
+	margin-top: 0.5em;
+}
+table.executionCoursesWithoutWrittenEvaluations td {
+	padding: 0.2em 0.5em;
+	background-color: #fafafa;
+	border: none;
+	border: 1px solid #ddd;
+	text-align: left;
+}
+
+
+table.ts01 {
+border-collapse: collapse;
+margin: 1em 0;
+}
+table.ts01 th {
+border: 1px solid #ccc;
+background-color: #eee;
+padding: 0.5em;
+text-align: center;
+}
+table.ts01 td {
+border: 1px solid #ccc;
+background-color: #fff;
+padding: 0.5em;
+text-align: center;
+}
+table.ts01 .highlight01 {
+background-color: #ffc;
+}
+table.ts01 .aleft {
+text-align: left;
+}
+table.ts01 .aright {
+text-align: right;
+}
+.asterisk01 {
+color: #d42;
+}
+
+/* display curricular plan */
+.boldFontClass { font-weight: bold }
+.bluecell { background: #EDF3FE; width: 100% }
+.lightBluecell { background: #F9F9FF; width: 100% }
+.white { background: #FFFFFF; width: 100% }
+.grey { background: #909090; width: 100% }
+.solidBorderClass {
+	border-style: solid;
+	border-width: 1px;
+	width: 100%	
+}
+.greyBorderClass {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #909090;
+	width: 100%	
+}
+.fullWidthClass {
+	width: 100%	
+}
+.dcpName { 
+	font: bold 15px "Trebuchet MS", Arial, Helvetica, sans-serif; 
+	width: 100%	
+}
+.executionYear {
+	font: bold 15px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	width: 100%	
+}
+.year {
+	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;	
+}
+.centerClass {
+	text-align: center
+}
+
+/* view execution courses */
+td.listClasses p { margin: 6px 0; padding: 0; }
+
+
+table.special {
+border-collapse: collapse;
+border: 2px solid #aaa;
+}
+table.special tr th {
+width: 10%;
+text-align: center;
+border: 2px solid #aaa;
+padding: 0.5em;
+background-color: #eee;
+}
+table.special tr td {
+border: 1px solid #aaa;
+margin: 1em;
+padding: 0.4em;
+background-color: #fff;
+}
+table.special tr td.disciplina {
+width: 40%;
+background-color: #fafafa;
+}
+table.special tr td.reservado {
+background-color: #dfd;
+text-align: center;
+}
+table.special tr td.reservar {
+background-color: #fdd;
+text-align: center;
+padding: 0;
+margin: 0;
+}
+table.special tr td.reservar a {
+}
+table.special tr td.reservar a:hover {
+}
+span.t_warning {
+background-color: #000;
+color: #ffc;
+padding: 0.5em;
+}
+span.t_success {
+background-color: #000;
+color: #bdb;
+padding: 0.5em;
+}
+
+.box1 {
+border: 1px solid #ddc;
+padding: 2%;
+background-color: #f5f5e5;
+width: 98%;
+}
+
+
+ul.links {
+list-style: none;
+padding-left: 2em;
+}
+ul.links li {
+padding-top: 0;
+padding-bottom: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+
+
+.tableClass {
+	background: #EBECED;
+	border: 1px solid #ccc;
+	text-align: left;
+	height: 30px;
+}

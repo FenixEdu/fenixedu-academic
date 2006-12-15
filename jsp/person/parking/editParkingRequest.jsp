@@ -101,13 +101,6 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 </script>
 
 
-<style>
-.separator1 {
-border-bottom: 1px solid #ddd;
-margin: 0.5em 0;
-}
-
-</style>
 
 
 <h2><bean:message key="label.parking" bundle="PARKING_RESOURCES" /></h2>

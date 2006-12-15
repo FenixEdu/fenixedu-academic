@@ -5,17 +5,6 @@
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
-<style type="text/css">
-.tableClass {
-	background: #EBECED;
-	border: 1px solid #ccc;
-	text-align: left;
-	height: 30px;
-}
-.boldFontClass { 
-	font-weight: bold
-}
-</style>
 
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<h:form>

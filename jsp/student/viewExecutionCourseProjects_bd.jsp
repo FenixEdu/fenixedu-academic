@@ -7,9 +7,6 @@
 
 <logic:present name="infoGroupPropertiesList">
 
-<style>
-td.listClasses p { margin: 6px 0; padding: 0; }
-</style>
 
 <h2><bean:message key="title.ExecutionCourseProjects.short"/></h2>
 

@@ -4,42 +4,6 @@
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline" >
 
-<style type="text/css">
-.boldFontClass { font-weight: bold }
-.bluecell { background: #EDF3FE; width: 100% }
-.lightBluecell { background: #F9F9FF; width: 100% }
-.white { background: #FFFFFF; width: 100% }
-.grey { background: #909090; width: 100% }
-.solidBorderClass {
-	border-style: solid;
-	border-width: 1px;
-	width: 100%	
-}
-.greyBorderClass {
-	border-style: solid;
-	border-width: 1px;
-	border-color: #909090;
-	width: 100%	
-}
-.fullWidthClass {
-	width: 100%	
-}
-.dcpName { 
-	font: bold 15px "Trebuchet MS", Arial, Helvetica, sans-serif; 
-	width: 100%	
-}
-.executionYear {
-	font: bold 15px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	width: 100%	
-}
-.year {
-	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;	
-}
-.centerClass {
-	text-align: center
-}
-</style>
-
 	<f:loadBundle basename="resources/DegreeAdministrativeOfficeResources" var="bundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 

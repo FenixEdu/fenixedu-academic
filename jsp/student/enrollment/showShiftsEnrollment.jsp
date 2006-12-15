@@ -56,67 +56,6 @@
 	<br />
 
 
-
-<style>
-table.special {
-/*width: 60%;*/
-border-collapse: collapse;
-border: 2px solid #aaa;
-}
-table.special tr th {
-width: 10%;
-text-align: center;
-border: 2px solid #aaa;
-padding: 0.5em;
-background-color: #eee;
-}
-table.special tr td {
-/*text-align: center;*/
-border: 1px solid #aaa;
-margin: 1em;
-padding: 0.4em;
-background-color: #fff;
-}
-table.special tr td.disciplina {
-width: 40%;
-background-color: #fafafa;
-}
-table.special tr td.reservado {
-background-color: #dfd;
-text-align: center;
-}
-table.special tr td.reservar {
-background-color: #fdd;
-text-align: center;
-padding: 0;
-margin: 0;
-}
-table.special tr td.reservar a {
-/*background-color: #faa;*/
-/*color: #00f;*/
-}
-table.special tr td.reservar a:hover {
-}
-span.t_warning {
-background-color: #000;
-color: #ffc;
-padding: 0.5em;
-}
-span.t_success {
-background-color: #000;
-color: #bdb;
-padding: 0.5em;
-}
-
-.box1 {
-border: 1px solid #ddc;
-padding: 2%;
-background-color: #f5f5e5;
-width: 98%;
-}
-</style>
-
-
 	<div class="box1">
 
 	<logic:present name="studentShifts">
