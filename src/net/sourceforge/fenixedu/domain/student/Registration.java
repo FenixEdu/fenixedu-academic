@@ -456,6 +456,10 @@ public class Registration extends Registration_Base {
 	this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
     }
 
+    public Collection<Enrolment> getEnrolments(final ExecutionYear executionYear) {
+	return getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
+    }
+
     public Collection<Enrolment> getApprovedEnrolments() {
 	final Collection<Enrolment> result = new HashSet<Enrolment>();
 
