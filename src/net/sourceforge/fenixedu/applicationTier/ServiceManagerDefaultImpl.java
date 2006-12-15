@@ -98,15 +98,16 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
             ServiceInfo.setCurrentServiceInfo((id == null) ? null : id.getUtilizador(), service, args);
 
             Object serviceResult = null;
-            Boolean readOnly = Boolean.TRUE;
+//            Boolean readOnly = Boolean.TRUE;
+            Boolean readOnly = Boolean.FALSE;
             while (true) {
                 try {
                     SuportePersistenteOJB.setReadOnly(readOnly);
                     serviceResult = manager.execute(id, service, method, args);
                     break;
-                } catch (IllegalWriteException ce) {
-                    readOnly = Boolean.FALSE;
-                    System.out.println("Restarting TX and upgrading it to a write TX");
+//                } catch (IllegalWriteException ce) {
+//                    readOnly = Boolean.FALSE;
+//                    System.out.println("Restarting TX and upgrading it to a write TX");
                 } catch (jvstm.CommitException ce) {
 //                    ce.printStackTrace();
                     System.out.println("Restarting TX because of CommitException");
