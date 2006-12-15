@@ -32,7 +32,7 @@
 	<fr:view name="receiptsForAdministrativeOffice" schema="receipt.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright" />
-			<fr:property name="linkFormat(view)" value="<%="/payments.do?method=prepareShowReceipt&receiptID=${idInternal}&personId=" + personId %>"/>
+			<fr:property name="linkFormat(view)" value="<%="/payments.do?method=prepareShowReceipt&amp;=${idInternal}&amp;personId=" + personId %>"/>
 			<fr:property name="key(view)" value="label.payments.show"/>
 			<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="sortBy" value="year=desc,number=desc"/>
@@ -44,7 +44,7 @@
 </logic:empty>
 
 <bean:define id="personId" name="person" property="idInternal"/>
-<html:form action='<%= "/payments.do?method=backToShowOperations&personId=" + personId %>'>
+<html:form action='<%= "/payments.do?method=backToShowOperations&amp;personId=" + personId %>'>
 	<br/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>
 </html:form>

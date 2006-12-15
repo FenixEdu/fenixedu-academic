@@ -28,7 +28,7 @@
 		</td>
 		<td>
 			<bean:define id="personID" name="student" property="person.idInternal"/>
-			<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
+			<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 		</td>
 	</tr>
 </table>
@@ -90,22 +90,22 @@
 <h3 class="mtop15 mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <ul>
 	<li>
-			<html:link action="<%="/payments.do?method=showEvents&personId=" + personId %>">
+			<html:link action="<%="/payments.do?method=showEvents&amp;personId=" + personId %>">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.currentEvents" />
 			</html:link>
 	</li>
 	<li>
-			<html:link action="<%="/payments.do?method=showEventsWithInstallments&personId=" + personId%>">
+			<html:link action="<%="/payments.do?method=showEventsWithInstallments&amp;personId=" + personId%>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.eventsWithInstallments" />
 			</html:link>
 	</li>
 	<li>
-			<html:link action="<%="/payments.do?method=showPaymentsWithoutReceipt&personId=" + personId %>">
+			<html:link action="<%="/payments.do?method=showPaymentsWithoutReceipt&amp;personId=" + personId %>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentsWithoutReceipt" />
 			</html:link>
 	</li>
 	<li>
-		<html:link action="<%="/payments.do?method=showReceipts&personId=" + personId%>">
+		<html:link action="<%="/payments.do?method=showReceipts&amp;personId=" + personId%>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipts" />
 		</html:link>
 	</li>
@@ -113,7 +113,7 @@
 
 	<%--
 	<li>
-		<html:link action="<%="/payments.do?method=showGratuityEvents&personId=" + personId%>">
+		<html:link action="<%="/payments.do?method=showGratuityEvents&amp;personId=" + personId%>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions" />
 		</html:link>
 	</li>

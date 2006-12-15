@@ -22,7 +22,7 @@
 		
 	<logic:notEmpty  name="documentRequestsResult">
 	<bean:define id="newRequestUrl">
-	/documentRequestsManagement.do?method=processNewAcademicServiceRequest&academicSituationType=<bean:write name="academicSituationType" property="name"/>
+	/documentRequestsManagement.do?method=processNewAcademicServiceRequest&amp;academicSituationType=<bean:write name="academicSituationType" property="name"/>
 	</bean:define>
 	<bean:define id="processRequestUrl">
 	/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest
