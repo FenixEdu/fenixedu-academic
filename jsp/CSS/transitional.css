@@ -1342,7 +1342,7 @@ color: #d42;
 .boldFontClass { font-weight: bold }
 .bluecell { background: #EDF3FE; width: 100% }
 .lightBluecell { background: #F9F9FF; width: 100% }
-.white { background: #FFFFFF; width: 100% }
+.bgwhite { background: #FFFFFF; width: 100% }
 .grey { background: #909090; width: 100% }
 .solidBorderClass {
 	border-style: solid;

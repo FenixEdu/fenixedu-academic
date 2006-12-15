@@ -25,7 +25,7 @@
 									<h:dataTable value="#{branch.semesters}" var="semester" styleClass="solidBorderClass" >
 										<h:column>
 											<h:outputText value="#{bundle['label.semester']}" styleClass="boldFontClass"/><h:outputText value=": " /><h:outputText value="#{semester.semester}" />
-											<h:dataTable value="#{semester.scopes}" var="scope" rowClasses="white, bluecell" columnClasses=",,,,,,centerClass" styleClass="greyBorderClass" headerClass="grey">
+											<h:dataTable value="#{semester.scopes}" var="scope" rowClasses="bgwhite, bluecell" columnClasses=",,,,,,centerClass" styleClass="greyBorderClass" headerClass="grey">
 												<h:column>
 													<f:facet name="header"><h:outputText value="#{bundle['label.curricularCourse']}" /></f:facet>
 													<h:outputText value="#{scope.infoCurricularCourse.name}" />
