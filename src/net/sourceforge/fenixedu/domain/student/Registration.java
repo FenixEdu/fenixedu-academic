@@ -171,6 +171,7 @@ public class Registration extends Registration_Base {
 
 	removeStudent();
 	removeRootDomainObject();
+	getShiftsSet().clear();
 	super.deleteDomainObject();
     }
 

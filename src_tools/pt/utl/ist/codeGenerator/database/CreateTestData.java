@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +27,10 @@ import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -50,8 +55,10 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
@@ -72,6 +79,7 @@ import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -143,6 +151,25 @@ public class CreateTestData {
 
     private static void clearData() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+
+        System.out.println("Deleting students from shifts.");
+        for (final Iterator<Shift> shiftIterator = rootDomainObject.getShiftsSet().iterator(); !shiftIterator.hasNext(); ) {
+            final Shift shift = shiftIterator.next();
+            for (final Set<Registration> registrations = shift.getStudentsSet(); !registrations.isEmpty(); registrations.remove(registrations.iterator().next()));
+        }
+        for (final Shift shift : rootDomainObject.getShiftsSet()) {
+            if (!shift.getStudentsSet().isEmpty()) {
+        	shift.getStudentsSet().clear();
+            }
+        }
+        for (final Set<StudentGroup> studentGroups = rootDomainObject.getStudentGroupsSet(); !studentGroups.isEmpty(); studentGroups.iterator().next().delete());
+        System.out.println("Deleting student data by execution year.");
+        for (final Set<StudentDataByExecutionYear> data = rootDomainObject.getStudentDataByExecutionYearSet(); !data.isEmpty(); data.iterator().next().delete());
+        System.out.println("Deleting attends.");
+        for (final Set<Attends> attends = rootDomainObject.getAttendssSet(); !attends.isEmpty(); attends.iterator().next().delete());
+
+        System.out.println("Deleting enrolment periods.");
+        for (final Set<EnrolmentPeriod> enrolmentPeriods = rootDomainObject.getEnrolmentPeriodsSet(); !enrolmentPeriods.isEmpty(); enrolmentPeriods.iterator().next().delete());
 
         System.out.println("Deleting curriculum modules.");
         for (final Set<CurriculumModule> curriculumModules = rootDomainObject.getCurriculumModulesSet(); !curriculumModules.isEmpty(); curriculumModules.iterator().next().delete());
@@ -402,7 +429,19 @@ public class CreateTestData {
             new Coordinator(executionDegree, teacher.getPerson(), Boolean.TRUE);
             createPeriodsForExecutionDegree(executionDegree);
             createSchoolClasses(executionDegree);
+            createEnrolmentPeriods(degreeCurricularPlan, executionYear);
         }
+    }
+
+    private static void createEnrolmentPeriods(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear) {
+	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+	    final Date start = executionPeriod.getBeginDateYearMonthDay().toDateMidnight().toDate();
+	    final Date end = executionPeriod.getEndDateYearMonthDay().toDateMidnight().toDate();
+
+	    new EnrolmentPeriodInClasses(degreeCurricularPlan, executionPeriod, start, end);
+	    new EnrolmentPeriodInCurricularCourses(degreeCurricularPlan, executionPeriod, start, end);
+	    new EnrolmentPeriodInCurricularCoursesSpecialSeason(degreeCurricularPlan, executionPeriod, start, end);
+	}
     }
 
     private static void createSchoolClasses(final ExecutionDegree executionDegree) {
@@ -574,6 +613,7 @@ public class CreateTestData {
 		curricularCourse.setType(CurricularCourseType.NORMAL_COURSE);
                 curricularCourse.setTheoreticalHours(Double.valueOf(3d));
                 curricularCourse.setPraticalHours(Double.valueOf(2d));
+                curricularCourse.setMinimumValueForAcumulatedEnrollments(Integer.valueOf(0));
 		new CurricularCourseScope(branch, curricularCourse, curricularSemester, executionYear.getBeginDateYearMonthDay().toDateMidnight().toCalendar(null), null, null);
                 final Curriculum curriculum = new Curriculum();
                 curriculum.setCurricularCourse(curricularCourse);
@@ -649,7 +689,8 @@ public class CreateTestData {
 	final List<OldRoom> oldRooms = new ArrayList<OldRoom>();
 	oldRooms.add(oldRoom);
 	final OccupationPeriod occupationPeriod = new OccupationPeriod(startDateTime.toYearMonthDay(), endDateTime.toYearMonthDay());
-	new WrittenTest(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, name);
+	final WrittenTest writtenTest = new WrittenTest(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, name);
+	createWrittenEvaluationEnrolmentPeriod(writtenTest);
     }
 
     private static void createExam(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse, final Season season) {
@@ -665,7 +706,13 @@ public class CreateTestData {
 	final List<OldRoom> oldRooms = new ArrayList<OldRoom>();
 	oldRooms.add(oldRoom);
 	final OccupationPeriod occupationPeriod = new OccupationPeriod(startDateTime.toYearMonthDay(), endDateTime.toYearMonthDay());
-	new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, season);
+	final Exam exam = new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, season);
+	createWrittenEvaluationEnrolmentPeriod(exam);
+    }
+
+    private static void createWrittenEvaluationEnrolmentPeriod(WrittenEvaluation writtenEvaluation) {
+	writtenEvaluation.setEnrollmentBeginDayDateYearMonthDay(new YearMonthDay().minusDays(6));
+	writtenEvaluation.setEnrollmentEndDayDateYearMonthDay(new YearMonthDay().plusDays(6));
     }
 
     private static String constructExecutionYearString() {

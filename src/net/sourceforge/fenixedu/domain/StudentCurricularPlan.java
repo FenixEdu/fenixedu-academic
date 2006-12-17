@@ -1593,8 +1593,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean hasSpecialSeasonFor(ExecutionPeriod executionPeriod) {
 	final ExecutionPeriod previousExecutionPeriod = executionPeriod.getPreviousExecutionPeriod();
 
-	if (isEnroledInSpecialSeason(previousExecutionPeriod)
-		|| isEnroledInSpecialSeason(previousExecutionPeriod.getPreviousExecutionPeriod())) {
+	if (previousExecutionPeriod != null && (isEnroledInSpecialSeason(previousExecutionPeriod)
+		|| isEnroledInSpecialSeason(previousExecutionPeriod.getPreviousExecutionPeriod()))) {
 	    final EnrolmentPeriodInCurricularCoursesSpecialSeason periodInCurricularCoursesSpecialSeason = getDegreeCurricularPlan()
 		    .getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(executionPeriod);
 

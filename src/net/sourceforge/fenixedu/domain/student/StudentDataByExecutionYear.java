@@ -28,4 +28,12 @@ public class StudentDataByExecutionYear extends StudentDataByExecutionYear_Base 
 	setStudent(student);
     }
 
+    public void delete() {
+	removeExecutionYear();
+	removeResidenceCandidacy();
+	removeStudent();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
 }

@@ -72,17 +72,22 @@ public class Attends extends Attends_Base {
     }
 
     public void delete() throws DomainException {
-	if (!hasAnyShiftEnrolments() && !hasAnyStudentGroups() && !hasAnyAssociatedMarks()
-		&& !hasAnyProjectSubmissions()) {
+	if (canDelete()) {
 	    removeAluno();
 	    removeDisciplinaExecucao();
 	    removeEnrolment();
 
 	    removeRootDomainObject();
 	    deleteDomainObject();
-	} else {
-	    throw new DomainException("error.attends.cant.delete");
 	}
+    }
+
+    private boolean canDelete() {
+	if (hasAnyShiftEnrolments()) throw new DomainException("error.attends.cant.delete");
+	if (hasAnyStudentGroups()) throw new DomainException("error.attends.cant.delete");
+	if (hasAnyAssociatedMarks()) throw new DomainException("error.attends.cant.delete");
+	if (hasAnyProjectSubmissions()) throw new DomainException("error.attends.cant.delete");
+	return true;
     }
 
     private boolean hasAnyShiftEnrolments() {

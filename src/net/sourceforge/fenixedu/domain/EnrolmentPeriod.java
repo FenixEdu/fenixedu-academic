@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+
+import org.joda.time.DateTime;
 
 /**
  * @author jpvl
@@ -49,6 +49,13 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 
     public boolean containsDate(DateTime date) {
 	return !(getStartDateDateTime().isAfter(date) || getEndDateDateTime().isBefore(date));
+    }
+
+    public void delete() {
+	removeDegreeCurricularPlan();
+	removeExecutionPeriod();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
 }
