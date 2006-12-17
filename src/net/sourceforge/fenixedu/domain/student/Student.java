@@ -280,7 +280,7 @@ public class Student extends Student_Base {
 	}
 
 	removePerson();
-
+	removeRootDomainObject();
 	deleteDomainObject();
     }
 

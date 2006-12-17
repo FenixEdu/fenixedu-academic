@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Campus;
@@ -24,6 +25,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -54,6 +56,7 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -70,6 +73,7 @@ import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -140,6 +144,8 @@ public class CreateTestData {
     private static void clearData() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
+        System.out.println("Deleting curriculum modules.");
+        for (final Set<CurriculumModule> curriculumModules = rootDomainObject.getCurriculumModulesSet(); !curriculumModules.isEmpty(); curriculumModules.iterator().next().delete());
         System.out.println("Deleting student curricular plans.");
         for (final Set<StudentCurricularPlan> studentCurricularPlans = rootDomainObject.getStudentCurricularPlansSet(); !studentCurricularPlans.isEmpty(); studentCurricularPlans.iterator().next().delete());
         System.out.println("Deleting registrations.");
@@ -298,12 +304,15 @@ public class CreateTestData {
     private static void createStudent(final DegreeCurricularPlan degreeCurricularPlan, final int i) {
 	final Person person = createPerson("Esponga de Informação", "student", i);
 	final Student student = new Student(person, Integer.valueOf(i));
-	final Registration registration = new Registration(person, degreeCurricularPlan);
+	//final Registration registration = new Registration(person, degreeCurricularPlan);
+	final Registration registration = new Registration(person, Integer.valueOf(i));
+	registration.setDegree(degreeCurricularPlan.getDegree());
 	registration.setStudent(student);
 	final StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(registration, degreeCurricularPlan, StudentCurricularPlanState.ACTIVE, new YearMonthDay().minusMonths(6));
 	person.addPersonRoleByRoleType(RoleType.STUDENT);
         final Login login = person.getUser().readUserLoginIdentification();
         login.openLoginIfNecessary(RoleType.STUDENT);
+        createStudentEnrolments(studentCurricularPlan);
     }
 
     private static void createExecutionYears() {
@@ -668,6 +677,43 @@ public class CreateTestData {
 
     private static String constructExecutionYearString(final YearMonthDay year1, final YearMonthDay year2) {
         return year1.toString("yyyy") + "/" + year2.toString("yyyy");
+    }
+
+    private static void createStudentEnrolments(final StudentCurricularPlan studentCurricularPlan) {
+	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	if (studentCurricularPlan.isBolonha()) {
+	    
+	} else {
+	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+	    for (final DegreeModuleScope degreeModuleScope : degreeCurricularPlan.getDegreeModuleScopes()) {
+		if (degreeModuleScope.getCurricularYear().intValue() == 1 && degreeModuleScope.getCurricularSemester() == executionPeriod.getSemester().intValue()) {
+		    if (degreeModuleScope.isActiveForExecutionPeriod(executionPeriod)) {
+			final Enrolment enrolment = new Enrolment(studentCurricularPlan, degreeModuleScope.getCurricularCourse(), executionPeriod, EnrollmentCondition.FINAL, null);
+			final Attends attends = enrolment.getAttendsFor(executionPeriod);
+			createStudentShifts(attends);
+		    }
+		}
+	    }
+	}
+    }
+
+    private static void createStudentShifts(final Attends attends) {
+	final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+	for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
+	    if (!isEnroledInShift(attends, shift.getTipo())) {
+		shift.reserveForStudent(attends.getAluno());
+	    }
+	}
+    }
+
+    private static boolean isEnroledInShift(final Attends attends, final ShiftType shiftType) {
+	final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+	for (final Shift shift : attends.getAluno().getShiftsSet()) {
+	    if (shift.getTipo() == shiftType && shift.getDisciplinaExecucao() == executionCourse) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private static void createDegreeInfo(final Degree degree) {
