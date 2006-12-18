@@ -153,13 +153,15 @@ public class CreateTestData {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
         System.out.println("Deleting students from shifts.");
-        for (final Iterator<Shift> shiftIterator = rootDomainObject.getShiftsSet().iterator(); !shiftIterator.hasNext(); ) {
-            final Shift shift = shiftIterator.next();
-            for (final Set<Registration> registrations = shift.getStudentsSet(); !registrations.isEmpty(); registrations.remove(registrations.iterator().next()));
-        }
-        for (final Shift shift : rootDomainObject.getShiftsSet()) {
-            if (!shift.getStudentsSet().isEmpty()) {
-        	shift.getStudentsSet().clear();
+        if (!rootDomainObject.getShiftsSet().isEmpty()) {
+            for (final Iterator<Shift> shiftIterator = rootDomainObject.getShiftsSet().iterator(); !shiftIterator.hasNext(); ) {
+                final Shift shift = shiftIterator.next();
+                for (final Set<Registration> registrations = shift.getStudentsSet(); !registrations.isEmpty(); registrations.remove(registrations.iterator().next()));
+            }
+            for (final Shift shift : rootDomainObject.getShiftsSet()) {
+                if (!shift.getStudentsSet().isEmpty()) {
+                    shift.getStudentsSet().clear();
+                }
             }
         }
         for (final Set<StudentGroup> studentGroups = rootDomainObject.getStudentGroupsSet(); !studentGroups.isEmpty(); studentGroups.iterator().next().delete());
@@ -388,6 +390,11 @@ public class CreateTestData {
         new OccupationPeriod(executionPeriod2.getBeginDateYearMonthDay(), executionPeriod2.getEndDateYearMonthDay().minusDays(32));
         new OccupationPeriod(executionPeriod2.getEndDateYearMonthDay().minusDays(31), executionPeriod2.getEndDateYearMonthDay());
         new OccupationPeriod(executionPeriod2.getEndDateYearMonthDay().plusDays(31), executionPeriod2.getEndDateYearMonthDay().plusDays(46));
+
+        executionPeriod1.setInquiryResponseBeginDateTime(executionPeriod1.getBeginDateYearMonthDay().toDateTimeAtMidnight());
+        executionPeriod1.setInquiryResponseEndDateTime(executionPeriod1.getEndDateYearMonthDay().toDateTimeAtMidnight());
+        executionPeriod2.setInquiryResponseBeginDateTime(executionPeriod2.getBeginDateYearMonthDay().toDateTimeAtMidnight());
+        executionPeriod2.setInquiryResponseEndDateTime(executionPeriod2.getEndDateYearMonthDay().toDateTimeAtMidnight());
     }
 
     private static void createCampus() {
@@ -494,6 +501,7 @@ public class CreateTestData {
         executionCourse.addAssociatedCurricularCourses(curricularCourse);
         executionCourse.setTheoreticalHours(Double.valueOf(3d));
         executionCourse.setPraticalHours(Double.valueOf(2d));
+        executionCourse.setAvailableForInquiries(Boolean.TRUE);
         final ExecutionCourseSite executionCourseSite = executionCourse.createSite();
         executionCourseSite.setInitialStatement("Bla bla bla bla bla bla bla.");
         executionCourseSite.setAlternativeSite("http://www.google.com/");
