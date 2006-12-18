@@ -99,7 +99,7 @@ public class SemesterProcessor extends PathProcessor {
             }
             
             String semester = getSemester();
-            if (! semester.matches("\\p{Digit}-semestre")) {
+            if (! semester.matches("\\p{Digit}-[sS][eE][mM][eE][sS][tT][rR][eE]")) {
                 return null;
             }
             
