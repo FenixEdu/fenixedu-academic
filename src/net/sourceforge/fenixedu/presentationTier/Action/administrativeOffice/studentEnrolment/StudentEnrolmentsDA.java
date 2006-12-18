@@ -167,7 +167,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	List<CurriculumModuleBean> result = new ArrayList<CurriculumModuleBean>();
 	
 	for (CurriculumLine curriculumLine : group.getCurriculumLines()) {
-	    if(((CurriculumLine) curriculumLine).isEnrolment()) {
+	    if(curriculumLine.isEnrolment()) {
 		Enrolment enrolment = (Enrolment) curriculumLine;
 		if(enrolment.getExecutionPeriod().equals(executionPeriod) && enrolment.isEnroled()) {
 		    CurriculumModuleBean curriculumModuleBean = new CurriculumModuleBean();
