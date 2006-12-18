@@ -113,7 +113,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     
     @Override
     public Integer getNumberOfUnits() {
-	return getDetailed() ? getEnrolmentsToDisplay().size() : 0;
+	return getEnrolmentsToDisplay().size();
     }
 
 }
