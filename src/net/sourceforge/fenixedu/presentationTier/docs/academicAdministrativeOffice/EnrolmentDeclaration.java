@@ -2,15 +2,14 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.apache.commons.lang.StringUtils;
 
 public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
@@ -32,8 +31,6 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 	final List<Enrolment> enrolments = registration.getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
 	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
 
-	parameters.put("situation", (executionYear.containsDate(new DateTime())) ? " ESTÁ" : " ESTEVE");
-	
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() != null) {
 	    StringBuilder documentPurpose = new StringBuilder();
     

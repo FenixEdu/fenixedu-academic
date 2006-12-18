@@ -35,7 +35,7 @@
 	<parameter name="nameOfMother" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="postingRule" isForPrompting="false" class="net.sourceforge.fenixedu.domain.accounting.PostingRule"/>
 	<parameter name="amountPerPage" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
-	<parameter name="baseAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
+	<parameter name="baseAmountPlusAmountForUnits" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="urgencyAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="approvementsInfo" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>	
@@ -137,7 +137,7 @@
 					<textElement textAlignment="Right">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{baseAmount}.toString() + " Eur"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{baseAmountPlusAmountForUnits}.toString() + " Eur"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -190,7 +190,7 @@
 					<textElement textAlignment="Right">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{amountPerPage}.multiply(new BigDecimal($V{PAGE_NUMBER})).add($P{baseAmount}).add($P{urgencyAmount}).toString() + " Eur"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{amountPerPage}.multiply(new BigDecimal($V{PAGE_NUMBER})).add($P{baseAmountPlusAmountForUnits}).add($P{urgencyAmount}).toString() + " Eur"]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -10,8 +11,6 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.C
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -106,21 +105,22 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	final String andOf = resourceBundle.getString("label.candidacy.registration.declaration.section5");
 	parameters.put("nameOfMother", StringUtils.multipleLineRightPad(andOf + " " + nameOfMother, LINE_LENGTH, '-'));
 	
+        if (getDocumentRequest().hasExecutionYear()) {
+            parameters.put("situation", getDocumentRequest().getExecutionYear().containsDate(new DateTime()) ? " ESTÁ" : " ESTEVE");
+        }
+        
         if (getDocumentRequest().isCertificate()) {
-            // FIXME remove this once refactoring is commited by lmre
-            if (getDocumentRequest().getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE) {
-        	parameters.put("situation", (((SchoolRegistrationCertificateRequest) getDocumentRequest()).getExecutionYear().containsDate(new DateTime())) ? " ESTÁ" : " ESTEVE");
-            }
+            final CertificateRequest certificateRequest = (CertificateRequest) getDocumentRequest();
             
             final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
             
             final Money amountPerPage = certificateRequestPR.getAmountPerPage();
-            final Money baseAmount = certificateRequestPR.getBaseAmount();
-            final Money urgencyAmount = ((CertificateRequest)getDocumentRequest()).getUrgentRequest() ? certificateRequestPR.getBaseAmount() : Money.ZERO;
-            final Money totalAmount = amountPerPage.add(baseAmount).add(urgencyAmount);
+            final Money baseAmountPlusAmountForUnits = certificateRequestPR.getBaseAmount().add(certificateRequestPR.getAmountPerUnit().multiply(new BigDecimal(certificateRequest.getNumberOfUnits())));
+            final Money urgencyAmount = certificateRequest.getUrgentRequest() ? certificateRequestPR.getBaseAmount() : Money.ZERO;
+            final Money totalAmount = amountPerPage.add(baseAmountPlusAmountForUnits).add(urgencyAmount);
             
             parameters.put("amountPerPage", amountPerPage);
-            parameters.put("baseAmount", baseAmount);
+            parameters.put("baseAmountPlusAmountForUnits", baseAmountPlusAmountForUnits);
             parameters.put("urgencyAmount", urgencyAmount);
             parameters.put("totalAmount", totalAmount);
         }

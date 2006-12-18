@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.joda.time.DateTime;
 
 public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
@@ -35,8 +34,6 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
 	final List<Enrolment> enrolments = new ArrayList<Enrolment>(enrolmentCertificateRequest.getEnrolmentsToDisplay());
 	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
-	
-	parameters.put("situation", (executionYear.containsDate(new DateTime())) ? " ESTÁ" : " ESTEVE");
 	
 	if (enrolmentCertificateRequest.getDetailed()) {
 	    StringBuilder enrolmentsInfo = new StringBuilder();
