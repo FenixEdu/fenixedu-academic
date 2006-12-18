@@ -57,6 +57,8 @@ public class UIFenixCalendar extends UIInput {
                         endPeriod.setTime(end.getTime());
                     }
 
+                    writer.append("<br style='page-break-after:always;'/>");
+                    
                     encodeMonthTable(writer, context, "MONTH" + begin.get(Calendar.MONTH), begin,
                             endPeriod);
                 }
@@ -90,7 +92,7 @@ public class UIFenixCalendar extends UIInput {
     private void encodeMonthTable(ResponseWriter writer, FacesContext context, String key,
             Calendar begin, Calendar end) throws IOException {
         writer.startElement("table", this);
-        writer.writeAttribute("class", "fenixCalendar", null);
+        writer.writeAttribute("class", "fenixCalendar breakafter", null);
         //writer.writeAttribute("name", getFieldKey(context, key), null);
 
         encodeMonthRow(writer, begin, context.getViewRoot().getLocale());
