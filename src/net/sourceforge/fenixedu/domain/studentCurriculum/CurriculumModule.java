@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
-import java.text.Collator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +12,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -25,6 +23,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 
     static {
 	COMPARATOR_BY_NAME.addComparator(new BeanComparator("name"));
+	COMPARATOR_BY_NAME.addComparator(new BeanComparator("idInternal"));
     }
 
     public CurriculumModule() {
@@ -60,6 +59,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     
     public MultiLanguageString getName() {
 	final MultiLanguageString multiLanguageString = new MultiLanguageString();
+	
 	if (this.getDegreeModule().getName() != null && this.getDegreeModule().getName().length() > 0) {
 	    multiLanguageString.setContent(Language.pt, this.getDegreeModule().getName());
 	}
@@ -95,4 +95,6 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	    return getCurriculumGroup().getFullPath() + " > " + getName().getContent();
 	}
     }
+    
+    
 }
