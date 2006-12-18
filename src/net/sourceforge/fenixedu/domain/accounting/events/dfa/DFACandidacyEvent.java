@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -33,7 +34,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     }
 
     private void init(AdministrativeOffice administrativeOffice, Person person, DFACandidacy candidacy) {
-	init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person);
+	init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person, (AcademicServiceRequest) null);
 	checkParameters(candidacy);
 	super.setCandidacy(candidacy);
     }

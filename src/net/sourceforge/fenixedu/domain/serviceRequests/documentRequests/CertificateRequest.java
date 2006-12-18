@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -91,40 +89,40 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
 	if (isPayed() && !getNumberOfPages().equals(numberOfPages)) {
 	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.CertificateRequest.cannot.change.numberOfPages.on.payed.certificates");
-
+		    "error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
 	}
 
 	super.edit(academicServiceRequestSituationType, employee, justification);
 	super.setNumberOfPages(numberOfPages);
     }
 
-    @Override
-    public void setCertificateRequestEvent(CertificateRequestEvent certificateRequestEvent) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.certificateRequestEvent");
-    }
-
-    public Integer getNumberOfUnits() {
-	return 0;
-    }
-
-    private boolean isPayed() {
-	return (hasCertificateRequestEvent() && getCertificateRequestEvent().isClosed());
-    }
-
+    abstract public Integer getNumberOfUnits();
+    
     @Override
     protected void internalChangeState(
 	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
 	if ((academicServiceRequestSituationType == AcademicServiceRequestSituationType.CANCELLED || academicServiceRequestSituationType == AcademicServiceRequestSituationType.REJECTED)
-		&& hasCertificateRequestEvent()) {
-	    getCertificateRequestEvent().cancel(employee);
+		&& hasEvent()) {
+	    getEvent().cancel(employee);
 	}
     }
 
-    protected boolean isFirstRequestFromExecutionYear() {
+    protected boolean isFree() {
+	if (getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE
+		|| getDocumentRequestType() == DocumentRequestType.ENROLMENT_CERTIFICATE) {
+	    return !isRequestForPreviousExecutionYear() && isFirstRequestOfCurrentExecutionYear();
+	} else {
+	    return false;
+	}
+    }
+    
+    private boolean isRequestForPreviousExecutionYear() {
+	return getExecutionYear() != ExecutionYear.readCurrentExecutionYear();
+    }
+
+    private boolean isFirstRequestOfCurrentExecutionYear() {
 	return getRegistration().getSucessfullyFinishedDocumentRequestsBy(
 		ExecutionYear.readCurrentExecutionYear(), getDocumentRequestType()).isEmpty();
     }
@@ -136,8 +134,4 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	}
     }
 
-    public Event getEvent() {
-	return this.getCertificateRequestEvent();
-    }
-    
 }

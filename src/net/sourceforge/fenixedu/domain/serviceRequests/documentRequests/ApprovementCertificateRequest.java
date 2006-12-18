@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -87,6 +88,16 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     @Override
     public EventType getEventType() {
 	return EventType.APPROVEMENT_CERTIFICATE_REQUEST;
+    }
+
+    @Override
+    public ExecutionYear getExecutionYear() {
+	return null;
+    }
+
+    @Override
+    public Integer getNumberOfUnits() {
+	return getRegistration().getApprovedEnrolments().size();
     }
 
 }

@@ -3,9 +3,13 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Base {
@@ -14,36 +18,25 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
         super();
     }
 
-    public EnrolmentDeclarationRequest(Registration registration ,DocumentPurposeType documentPurposeType,
-            String otherDocumentPurposeTypeDescription,  
-            ExecutionYear executionYear) {
+    public EnrolmentDeclarationRequest(Registration registration,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription) {
 
-        this();
-
-        init(registration ,documentPurposeType,
-            otherDocumentPurposeTypeDescription, executionYear);
-        }
+	this();
+	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription);
+    }
 
     protected void init(Registration registration,DocumentPurposeType documentPurposeType,
-            String otherDocumentPurposeTypeDescription, 
-            ExecutionYear executionYear) {
+            String otherDocumentPurposeTypeDescription) {
 
-        init(registration, documentPurposeType, otherDocumentPurposeTypeDescription);
+        super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription);
 
-        checkParameters(executionYear);
-        super.setExecutionYear(executionYear);
+        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        if (!getRegistration().hasSchoolRegistration(currentExecutionYear)) {
+            throw new DomainException("error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
+        }
+        super.setExecutionYear(currentExecutionYear);
     }
 
-    private void checkParameters(ExecutionYear executionYear) {
-	if (executionYear == null) {
-	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
-	} else if (!getRegistration().hasSchoolRegistration(executionYear)) {
-	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
-	}
-    }
-    
     @Override
     public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
 	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
@@ -67,6 +60,24 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
     public void setExecutionYear(ExecutionYear executionYear) {
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.EnrolmentCertificateRequest.cannot.modify.executionYear");
+    }
+    
+    @Override
+    protected void internalChangeState(
+	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
+
+	super.internalChangeState(academicServiceRequestSituationType, employee);
+
+	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
+		&& !isFree()) {
+	    new DeclarationRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration()
+		    .getPerson(), this);
+	}
+    }
+
+    @Override
+    public EventType getEventType() {
+	return EventType.ENROLMENT_DECLARATION_REQUEST;
     }
 
 }

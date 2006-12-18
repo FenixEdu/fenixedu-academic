@@ -250,6 +250,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     DateTime whenCancelled;
     Integer keyEmployeeResponsibleForCancel;
     String cancelJustification;
+	Integer keyAcademicServiceRequest;
 }
 
 	class net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
@@ -261,7 +262,9 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 	}
 
 	class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-		Integer keyCertificateRequest;
+	}
+	
+	class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 	}
 	
 	
@@ -361,6 +364,9 @@ class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourcef
 			Money fixedAmount;
 		}
 		
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DeclarationRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR {
+			}
+		
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR {   
 				Money fixedAmountPenalty;
 			}
@@ -380,13 +386,13 @@ class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourcef
 			Money amountPerUnit;
 		}
 		
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR {
+				Money amountPerPage;
+			}
+		
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR {
 			}
 			
-				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR {
-					Money amountPerPage;
-				}
-		
 		class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 			Money dfaTotalAmount;
 			Money dfaAmountPerEctsCredit;
@@ -3135,10 +3141,11 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	Integer keyParkingParty;
 	Integer keyQuestionBank;
 	
-    String ojbConcreteClass;		
+    String ojbConcreteClass;
 	String name;
 	String webAddress;
 	String socialSecurityNumber;
+
 	String address;	
 	String areaCode;
 	String areaOfAreaCode;
@@ -3913,13 +3920,13 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 	String ojbConcreteClass;
 	Integer serviceRequestNumber;
 	Boolean urgentRequest;
+	Integer keyEvent;
 }
 
 		class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
 		}
 		
 			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
-				Integer keyCertificateRequestEvent;
 				DocumentPurposeType documentPurposeType;
 				String otherDocumentPurposeTypeDescription;
 				Integer numberOfPages;
@@ -8155,9 +8162,9 @@ relation AnnualEventExecutionYear {
 	}
 }
 
-relation CertificateRequestEventCertificateRequest {
-	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest playsRole certificateRequest;
-	net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent playsRole certificateRequestEvent;
+relation EventAcademicServiceRequest {
+	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequest;
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole event;
 }
 
 relation RootDomainObjectReceipt {

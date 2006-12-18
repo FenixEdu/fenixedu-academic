@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter Relation between Events and AcademicServices" alterRelationBetweenEventsAndAcademicServices.sql

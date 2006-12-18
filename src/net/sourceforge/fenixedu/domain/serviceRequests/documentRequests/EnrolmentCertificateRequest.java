@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
@@ -92,15 +94,26 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
-		&& !isFirstRequestFromExecutionYear()) {
+		&& !isFree()) {
 	    new CertificateRequestEvent(getAdministrativeOffice(),
 		    getEventType(), getRegistration().getPerson(), this);
 	}
     }
+    
+    
 
     @Override
     public EventType getEventType() {
 	return EventType.ENROLMENT_CERTIFICATE_REQUEST;
+    }
+
+    public Collection<Enrolment> getEnrolmentsToDisplay() {
+	return getRegistration().getEnrolments(getExecutionYear());
+    }
+    
+    @Override
+    public Integer getNumberOfUnits() {
+	return getDetailed() ? getEnrolmentsToDisplay().size() : 0;
     }
 
 }

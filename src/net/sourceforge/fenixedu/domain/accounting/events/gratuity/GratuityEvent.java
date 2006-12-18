@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
@@ -50,7 +51,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     protected void init(AdministrativeOffice administrativeOffice, Person person,
 	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	super.init(administrativeOffice, EventType.GRATUITY, person);
+	super.init(administrativeOffice, EventType.GRATUITY, person, (AcademicServiceRequest) null);
 	checkParameters(studentCurricularPlan, executionYear);
 	super.setExecutionYear(executionYear);
 	super.setStudentCurricularPlan(studentCurricularPlan);

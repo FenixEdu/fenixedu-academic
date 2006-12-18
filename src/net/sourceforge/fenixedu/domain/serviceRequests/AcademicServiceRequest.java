@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -22,6 +24,7 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.DateTime;
 
 public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base {
 
@@ -63,14 +66,22 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public final boolean isPayable() {
-	return getEvent() != null;
+	return hasEvent();
     }
 
-    public abstract EventType getEventType();
+    protected boolean isPayed() {
+	return isPayable() && getEvent().isPayed();
+    }
 
-    public abstract Event getEvent();
+    abstract public EventType getEventType();
 
-    public abstract String getDescription();
+    abstract public String getDescription();
+
+    abstract public ExecutionYear getExecutionYear();
+    
+    public boolean hasExecutionYear() {
+	return getExecutionYear() != null;
+    }
 
     protected String getDescription(final String academicServiceRequestType,
 	    final String specificServiceType) {
@@ -163,6 +174,12 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     @Override
+    public void setEvent(Event event) {
+	throw new DomainException(
+		"error.serviceRequests.AcademicServiceRequest.cannot.modify.event");
+    }
+
+    @Override
     public List<AcademicServiceRequestSituation> getAcademicServiceRequestSituations() {
 	return Collections.unmodifiableList(super.getAcademicServiceRequestSituations());
     }
@@ -191,9 +208,16 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
     
     public AcademicServiceRequestSituation getCreationSituation() {
-        return (!getAcademicServiceRequestSituations().isEmpty()) ? (AcademicServiceRequestSituation) Collections
-                .min(getAcademicServiceRequestSituations(), new BeanComparator("creationDate"))
-                : null;
+	return getSituationByType(AcademicServiceRequestSituationType.NEW);
+    }
+
+    public AcademicServiceRequestSituation getSituationByType(AcademicServiceRequestSituationType type) {
+	for (AcademicServiceRequestSituation situation : getAcademicServiceRequestSituationsSet()) {
+	    if (situation.getAcademicServiceRequestSituationType().equals(type)) {
+		return situation;
+	    }
+	}
+	return null;
     }
 
     public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
@@ -316,7 +340,15 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     public boolean getStudentCanCancel() {
         return this.isNewRequest() && this.createdByStudent();
     }
-    
-    
+
+    public DateTime getCreationDate() {
+	return getCreationSituation().getCreationDate();
+    }
+
+    public Degree getDegree() {
+	final ExecutionYear executionYear = hasExecutionYear() ? getExecutionYear() : ExecutionYear
+		.readByDateTime(getCreationDate());
+	return getRegistration().getStudentCurricularPlan(executionYear).getDegree();
+    }
 
 }

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	final Integer curricularYear = Integer.valueOf(registration.getCurricularYear(executionYear));
 	parameters.put("curricularYear", curricularYear);
 
-	final List<Enrolment> enrolments = registration.getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
+	final List<Enrolment> enrolments = new ArrayList<Enrolment>(enrolmentCertificateRequest.getEnrolmentsToDisplay());
 	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
 	
 	parameters.put("situation", (executionYear.containsDate(new DateTime())) ? " ESTÁ" : " ESTEVE");

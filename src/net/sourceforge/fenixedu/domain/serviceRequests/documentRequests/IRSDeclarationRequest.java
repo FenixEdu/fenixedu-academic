@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -61,6 +62,11 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
     public void setYear(Integer year) {
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.IRSDeclarationRequest.cannot.modify.year");
+    }
+
+    @Override
+    public ExecutionYear getExecutionYear() {
+	return null;
     }
 
 }

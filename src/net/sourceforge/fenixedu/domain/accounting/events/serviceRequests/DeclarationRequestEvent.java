@@ -10,33 +10,34 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
-public class CertificateRequestEvent extends CertificateRequestEvent_Base {
+public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
 
-    protected CertificateRequestEvent() {
+    protected DeclarationRequestEvent() {
 	super();
     }
 
-    public CertificateRequestEvent(AdministrativeOffice administrativeOffice, EventType eventType,
-	    Person person, CertificateRequest certificateRequest) {
+    public DeclarationRequestEvent(AdministrativeOffice administrativeOffice, EventType eventType,
+	    Person person, DeclarationRequest declarationRequest) {
 	this();
-	init(administrativeOffice, eventType, person, certificateRequest);
+	init(administrativeOffice, eventType, person, declarationRequest);
+
     }
 
     protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
-	    CertificateRequest certificateRequest) {
-	checkParameters(certificateRequest);
-	super.init(administrativeOffice, eventType, person, certificateRequest);
+	    DeclarationRequest declarationRequest) {
+	checkParameters(declarationRequest);
+	super.init(administrativeOffice, eventType, person, declarationRequest);
     }
 
-    private void checkParameters(CertificateRequest certificateRequest) {
-	if (certificateRequest == null) {
+    private void checkParameters(DeclarationRequest declarationRequest) {
+	if (declarationRequest == null) {
 	    throw new DomainException(
-		    "error.accounting.events.serviceRequests.CertificateRequestEvent.certificateRequest.cannot.be.null");
+		    "error.accounting.events.serviceRequests.DeclarationRequestEvent.declarationRequest.cannot.be.null");
 	}
     }
 
@@ -81,17 +82,8 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
 	return getAcademicServiceRequest().getExecutionYear();
     }
 
-    public Integer getNumberOfUnits() {
-	return ((CertificateRequest)getAcademicServiceRequest()).getNumberOfUnits();
-    }
-
     public Integer getNumberOfPages() {
-	return ((CertificateRequest)getAcademicServiceRequest()).getNumberOfPages();
-    }
-
-    public boolean isUrgentRequest() {
-	return ((CertificateRequest)getAcademicServiceRequest()).isUrgentRequest();
-
+	return ((DeclarationRequest)getAcademicServiceRequest()).getNumberOfPages();
     }
 
 }

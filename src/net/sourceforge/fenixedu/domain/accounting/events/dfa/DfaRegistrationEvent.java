@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.Admi
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -33,7 +34,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     }
 
     private void init(AdministrativeOffice administrativeOffice, Person person, Registration registration) {
-	super.init(administrativeOffice, EventType.DFA_REGISTRATION, person);
+	super.init(administrativeOffice, EventType.DFA_REGISTRATION, person, (AcademicServiceRequest) null);
 	checkParameters(registration);
 	super.setRegistration(registration);
 

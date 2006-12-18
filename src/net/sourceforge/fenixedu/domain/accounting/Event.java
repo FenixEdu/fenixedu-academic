@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.Install
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -36,15 +37,15 @@ public abstract class Event extends Event_Base {
     }
 
     protected void init(EventType eventType, Person person) {
-	init(null, eventType, person);
+	init((AdministrativeOffice) null, eventType, person, (AcademicServiceRequest) null);
     }
 
-    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person) {
+    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person, AcademicServiceRequest academicServiceRequest) {
 	checkParameters(eventType, person);
 	super.setAdministrativeOffice(administrativeOffice);
 	super.setEventType(eventType);
 	super.setPerson(person);
-
+	super.setAcademicServiceRequest(academicServiceRequest);
     }
 
     private void checkParameters(EventType eventType, Person person) throws DomainException {
@@ -127,6 +128,12 @@ public abstract class Event extends Event_Base {
 
     protected void closeEvent() {
 	super.setEventState(EventState.CLOSED);
+    }
+
+    @Override
+    public void setAcademicServiceRequest(AcademicServiceRequest academicServiceRequest) {
+	throw new DomainException(
+		"error.accounting.Event.cannot.modify.academicServiceRequest");
     }
 
     @Override

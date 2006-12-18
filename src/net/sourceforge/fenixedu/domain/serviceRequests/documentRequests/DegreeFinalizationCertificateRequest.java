@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -103,6 +104,16 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     public EventType getEventType() {
 	return EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST;
+    }
+
+    @Override
+    public ExecutionYear getExecutionYear() {
+	return null;
+    }
+
+    @Override
+    public Integer getNumberOfUnits() {
+	return getDetailed() ? getRegistration().getApprovedEnrolments().size() : 0;
     }
 
 }

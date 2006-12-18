@@ -7,8 +7,8 @@ public enum DocumentRequestType {
     SCHOOL_REGISTRATION_CERTIFICATE(true, AdministrativeOfficeType.DEGREE), ENROLMENT_CERTIFICATE(true,
 	    AdministrativeOfficeType.DEGREE), APPROVEMENT_CERTIFICATE(true,
 	    AdministrativeOfficeType.DEGREE), DEGREE_FINALIZATION_CERTIFICATE(true,
-	    AdministrativeOfficeType.DEGREE), SCHOOL_REGISTRATION_DECLARATION(true,
-	    AdministrativeOfficeType.DEGREE), ENROLMENT_DECLARATION(true,
+	    AdministrativeOfficeType.DEGREE), SCHOOL_REGISTRATION_DECLARATION(false,
+	    AdministrativeOfficeType.DEGREE), ENROLMENT_DECLARATION(false,
 	    AdministrativeOfficeType.DEGREE), IRS_DECLARATION(true, AdministrativeOfficeType.DEGREE), DEGREE_DIPLOMA(
 	    false, AdministrativeOfficeType.DEGREE);
 

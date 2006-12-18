@@ -12,6 +12,11 @@
 	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
 </schema>
 
+<schema name="DeclarationRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DeclarationRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+</schema>
+
 <schema name="FixedAmountWithPenaltyPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
@@ -52,6 +57,11 @@
 	bundle="APPLICATION_RESOURCES">
 	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
 	<setter signature="edit(fixedAmount)"/>
+</schema>
+
+<schema name="DeclarationRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DeclarationRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
 </schema>
 
 <schema name="FixedAmountWithPenaltyPR.edit"
@@ -99,6 +109,12 @@
 
 <schema name="FixedAmountPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
 	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
+</schema>
+
+<schema name="DeclarationRequestPR.view-student" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DeclarationRequestPR" 
+		extends="FixedAmountPR.view-student" 
+		bundle="APPLICATION_RESOURCES">
 </schema>
 
 <schema name="FixedAmountWithPenaltyPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR" extends="FixedAmountPR.view-student" bundle="APPLICATION_RESOURCES" >

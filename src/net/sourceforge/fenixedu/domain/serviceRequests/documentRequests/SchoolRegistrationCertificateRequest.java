@@ -82,7 +82,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
-		&& !isFirstRequestFromExecutionYear()) {
+		&& !isFree()) {
 	    new CertificateRequestEvent(getAdministrativeOffice(),
 		    getEventType(), getRegistration().getPerson(), this);
 	}
@@ -91,6 +91,11 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
     @Override
     public EventType getEventType() {
 	return EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST;
+    }
+
+    @Override
+    public Integer getNumberOfUnits() {
+	return 0;
     }
 
 }

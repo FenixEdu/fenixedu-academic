@@ -21,9 +21,9 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 		.getQualifiedName());
     }
 
-    public abstract DocumentRequestType getDocumentRequestType();
+    abstract public DocumentRequestType getDocumentRequestType();
 
-    public abstract String getDocumentTemplateKey();
+    abstract public String getDocumentTemplateKey();
 
     public boolean isCertificate() {
 	return this instanceof CertificateRequest;
@@ -58,8 +58,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	    } else if (getChosenDocumentRequestType().isDeclaration()) {
 		return DeclarationRequest.create(getRegistration(), getChosenDocumentRequestType(),
 			getChosenDocumentPurposeType(), getOtherPurpose(),
-
-			getNotes(), getAverage(), getDetailed(), getExecutionYear());
+			getNotes(), getAverage(), getDetailed(), getYear());
 
 	    }
 	    return null;
@@ -71,15 +70,6 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     public DateTime getCreationDate() {
 	AcademicServiceRequestSituation situation = getSituationByType(AcademicServiceRequestSituationType.NEW);
 	return situation != null ? situation.getCreationDate() : null;
-    }
-
-    public AcademicServiceRequestSituation getSituationByType(AcademicServiceRequestSituationType type) {
-	for (AcademicServiceRequestSituation situation : getAcademicServiceRequestSituationsSet()) {
-	    if (situation.getAcademicServiceRequestSituationType().equals(type)) {
-		return situation;
-	    }
-	}
-	return null;
     }
 
     @Override
