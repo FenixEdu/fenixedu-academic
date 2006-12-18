@@ -65,8 +65,10 @@ public abstract class ResearchResult extends ResearchResult_Base {
     @Checked("ResultPredicates.createPredicate")
     private void setOnCreateAtributes() {
         super.setOjbConcreteClass(getClass().getName());
-        super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
-        setCreator(AccessControl.getUserView().getPerson());
+        if (AccessControl.getUserView() != null) {
+        	super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
+        	setCreator(AccessControl.getUserView().getPerson());
+        }
         super.setLastModificationDate(new DateTime());
     }
 
@@ -272,7 +274,9 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     private void updateModifiedByAndDate() {
-        super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
+        if(AccessControl.getUserView()!=null) {
+        	super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
+        }
         super.setLastModificationDate(new DateTime());
     }
 
@@ -331,10 +335,10 @@ public abstract class ResearchResult extends ResearchResult_Base {
         throw new DomainException("error.researcher.Result.call", "setOjbConcreteClass");
     }
 
-    @Override
-    public void setModifiedBy(String modifiedBy) {
-    	throw new DomainException("error.researcher.Result.call", "setModifiedBy");
-    }
+//    @Override
+//    public void setModifiedBy(String modifiedBy) {
+//    	throw new DomainException("error.researcher.Result.call", "setModifiedBy");
+//    }
 
     @Override
     public void setLastModificationDate(DateTime lastModificationDate) {
