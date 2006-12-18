@@ -7,7 +7,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
 import net.sourceforge.fenixedu.util.StringNormalizer;
-import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.tests.Response;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
@@ -37,9 +36,13 @@ public class TestResponse2SqlVarcharFieldConversion implements FieldConversion {
             try {
                 respose = (Response) decoder.readObject();
             } catch (ArrayIndexOutOfBoundsException e) {
-                decoder = new XMLDecoder(new ByteArrayInputStream(StringNormalizer
-                        .normalize(xmlResponse).getBytes()));
-                respose = (Response) decoder.readObject();
+                try {
+                    decoder = new XMLDecoder(new ByteArrayInputStream(StringNormalizer.normalize(xmlResponse).getBytes()));
+                    respose = (Response) decoder.readObject();
+                } catch (ArrayIndexOutOfBoundsException e2) {
+                    decoder = new XMLDecoder(new ByteArrayInputStream(StringNormalizer.normalizeAndRemoveMinorChars(xmlResponse).getBytes()));
+                    respose = (Response) decoder.readObject();
+                }
             }
             decoder.close();
             return respose;
