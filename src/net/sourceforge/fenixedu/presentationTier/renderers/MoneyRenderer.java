@@ -31,10 +31,13 @@ public class MoneyRenderer extends OutputRenderer {
 
 	    @Override
 	    public HtmlComponent createComponent(Object object, Class type) {
-		final Number number = (Number) ((Money) object).getAmount();
-		return new HtmlText(new DecimalFormat(getFormat()).format(number));
+		if (object != null) {
+		    final Number number = (Number) ((Money) object).getAmount();
+		    return new HtmlText(new DecimalFormat(getFormat()).format(number));
+		} else {
+		    return new HtmlText("");
+		}
 	    }
-
 	};
     }
 

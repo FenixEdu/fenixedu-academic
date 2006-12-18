@@ -165,7 +165,8 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
     public Map<Installment, Money> calculateInstallmentRemainingAmounts(final Event event,
 	    final DateTime when, final BigDecimal discountPercentage) {
 	final Map<Installment, Money> result = new HashMap<Installment, Money>();
-	Money totalPayedAmount = calculateTotalPayedAmountForInstallments(event);
+	Money totalPayedAmount = calculateTotalPayedAmountForInstallments(event).add(
+		event.calculateOtherPartiesPayedAmount());
 	Money remainingAmountAfterPayed = Money.ZERO;
 	Installment lastInstallmentToBePayed = null;
 

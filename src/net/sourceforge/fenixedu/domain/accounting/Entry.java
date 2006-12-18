@@ -1,9 +1,15 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -92,33 +98,101 @@ public class Entry extends Entry_Base {
     }
 
     @Override
-    public void setReceipt(Receipt receipt) {
-	if (hasReceipt()) {
-	    throw new DomainException("error.accounting.entry.receipt.already.defined");
-	} else {
-	    super.setReceipt(receipt);
+    public void addReceipts(Receipt receipt) {
+	throw new DomainException("error.accounting.Entry.cannot.add.receipt");
+    }
+
+    @Override
+    public List<Receipt> getReceipts() {
+	return Collections.unmodifiableList(super.getReceipts());
+    }
+
+    @Override
+    public Set<Receipt> getReceiptsSet() {
+	return Collections.unmodifiableSet(super.getReceiptsSet());
+    }
+
+    @Override
+    public Iterator<Receipt> getReceiptsIterator() {
+	return getReceiptsSet().iterator();
+    }
+
+    @Override
+    public void removeReceipts(Receipt receipt) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Entry.cannot.remove.receipt");
+    }
+
+    public void setActiveReceipt(Receipt receipt) {
+	if (hasAdjustmentCreditNoteEntry()) {
+	    throw new DomainException("error.accounting.entry.is.already.associated.to.payed.creditNote");
 	}
+
+	if (isAssociatedToAnyActiveReceipt()) {
+	    throw new DomainExceptionWithLabelFormatter(
+		    "error.Entry.cannot.be.associated.to.receipt.because.is.already.associated.to.another.active.receipt",
+		    getDescription());
+	}
+
+	super.addReceipts(receipt);
     }
 
     public LabelFormatter getDescription() {
 	return getAccountingTransaction().getDescriptionForEntryType(getEntryType());
     }
 
-    public boolean isAdjustement() {
-	return (this.getAccountingTransaction().hasAdjustedTransaction());
-    }
-
-    public boolean isAdjusted() {
-	return (this.getAccountingTransaction().hasAdjustmentTransaction());
-    }
-
     public Money getAmountWithAdjustment() {
-	return isAdjusted() ? getOriginalAmount().add(getTotalAdjustedAmount()) : getOriginalAmount();
+	return hasBeenAdjusted() ? getOriginalAmount().add(getTotalAdjustedAmount())
+		: getOriginalAmount();
     }
 
     private Money getTotalAdjustedAmount() {
-	return getAccountingTransaction().getAdjustmentTransaction().getFromAccountEntry()
-		.getAmountWithAdjustment();
+	Money result = Money.ZERO;
+	for (final AccountingTransaction transaction : getAccountingTransaction()
+		.getAdjustmentTransactionsSet()) {
+	    result = result.add(transaction.getEntryFor(getAccount()).getOriginalAmount());
+	}
+
+	return result;
+    }
+
+    public boolean isAdjusting() {
+	return getAccountingTransaction().isAdjustingTransaction();
+    }
+
+    public boolean hasBeenAdjusted() {
+	return getAccountingTransaction().hasBeenAdjusted();
+    }
+
+    private boolean canApplyAdjustment(final Money amountToAdjust) {
+	return isAdjustmentAppliable()
+		&& getAmountWithAdjustment().add(amountToAdjust).greaterOrEqualThan(Money.ZERO);
+    }
+
+    private boolean isAdjustmentAppliable() {
+	return getPerson() == getAccountingTransaction().getFromAccount().getParty();
+    }
+
+    public boolean isReimbursementAppliable() {
+	return isAdjustmentAppliable();
+    }
+
+    private Person getPerson() {
+	return getAccountingTransaction().getEvent().getPerson();
+    }
+
+    public boolean canApplyReimbursement(final Money amountToReimburse) {
+	return canApplyAdjustment(amountToReimburse.negate());
+    }
+
+    protected boolean isAssociatedToAnyActiveReceipt() {
+	for (final Receipt receipt : getReceiptsSet()) {
+	    if (receipt.isActive()) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
 }

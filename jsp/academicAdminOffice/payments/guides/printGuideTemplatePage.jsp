@@ -147,7 +147,7 @@
 	 
      <tr>	 
 	 <td>
-		 <jsp:include page="/degreeAdministrativeOffice/payments/commons/footer.jsp" flush="true" />
+		 <jsp:include page="/academicAdminOffice/payments/commons/footer.jsp" flush="true" />
     </td>
     </tr>
     </table>

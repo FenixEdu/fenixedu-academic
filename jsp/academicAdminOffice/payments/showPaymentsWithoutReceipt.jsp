@@ -1,8 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
@@ -29,7 +29,6 @@
 			<fr:property name="rowClasses" value="tdhl1,," />
 		</fr:layout>
 	</fr:view>
-
 
 	<logic:notEmpty name="createReceiptBean" property="entries">
 
@@ -62,6 +61,8 @@
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.noPaymentsWithoutReceipt" />.
 			</em>
 		</p>
+		<br/>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
 	</logic:empty>
 </fr:form>
 

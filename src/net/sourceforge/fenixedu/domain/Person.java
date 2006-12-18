@@ -1782,7 +1782,7 @@ public class Person extends Person_Base {
 	final Set<Entry> result = new HashSet<Entry>();
 	for (final Event event : getEventsSet()) {
 	    if (!event.isCancelled()) {
-		result.addAll(event.getEntries());
+		result.addAll(event.getPositiveEntries());
 	    }
 	}
 	return result;
@@ -2270,6 +2270,17 @@ public class Person extends Person_Base {
 	}
 
 	return false;
+    }
+
+    public Set<Event> getEventsSupportingPaymentByOtherParties() {
+	final Set<Event> result = new HashSet<Event>();
+	for (final Event event : getEventsSet()) {
+	    if (!event.isCancelled() && event.isOtherPartiesPaymentsSupported()) {
+		result.add(event);
+	    }
+	}
+
+	return result;
     }
 
     public Set<GratuityEvent> getGratuityEvents() {

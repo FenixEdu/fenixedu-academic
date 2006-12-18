@@ -108,15 +108,20 @@
 		</html:link>
 	</li>
 	
+<%--
+	<li>
+		<html:link action="<%="/payments.do?method=showEventsForOtherPartyPayment&personId=" + personId%>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.otherPartyPayment" />
+		</html:link>
+	</li>
+	
 
-	<%--
 	<li>
 		<html:link action="<%="/payments.do?method=showGratuityEvents&amp;personId=" + personId%>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions" />
 		</html:link>
 	</li>
-	
-	 --%>
-
+ --%>
+ 
 </ul>
 

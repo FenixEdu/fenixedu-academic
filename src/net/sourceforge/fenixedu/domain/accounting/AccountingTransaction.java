@@ -1,13 +1,17 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -20,6 +24,16 @@ import org.joda.time.DateTime;
  * 
  */
 public class AccountingTransaction extends AccountingTransaction_Base {
+
+    public static Comparator<AccountingTransaction> COMPARATOR_BY_WHEN_REGISTERED = new Comparator<AccountingTransaction>() {
+	public int compare(AccountingTransaction leftAccountingTransaction,
+		AccountingTransaction rightAccountingTransaction) {
+	    int comparationResult = leftAccountingTransaction.getWhenRegistered().compareTo(
+		    rightAccountingTransaction.getWhenRegistered());
+	    return (comparationResult == 0) ? leftAccountingTransaction.getIdInternal().compareTo(
+		    rightAccountingTransaction.getIdInternal()) : comparationResult;
+	}
+    };
 
     protected AccountingTransaction() {
 	super();
@@ -117,15 +131,36 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     @Override
-    public void setAdjustmentTransaction(AccountingTransaction adjustementTransaction) {
-	throw new DomainException(
-		"error.accounting.accountingTransaction.cannot.modify.adjustmentTransaction");
-    }
-
-    @Override
     public void setTransactionDetail(AccountingTransactionDetail transactionDetail) {
 	throw new DomainException(
 		"error.accounting.AccountingTransaction.cannot.modify.transactionDetail");
+    }
+
+    @Override
+    public void addAdjustmentTransactions(AccountingTransaction accountingTransaction) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.AccountingTransaction.cannot.add.accountingTransaction");
+    }
+
+    @Override
+    public List<AccountingTransaction> getAdjustmentTransactions() {
+	return Collections.unmodifiableList(super.getAdjustmentTransactions());
+    }
+
+    @Override
+    public Set<AccountingTransaction> getAdjustmentTransactionsSet() {
+	return Collections.unmodifiableSet(super.getAdjustmentTransactionsSet());
+    }
+
+    @Override
+    public Iterator<AccountingTransaction> getAdjustmentTransactionsIterator() {
+	return getAdjustmentTransactionsSet().iterator();
+    }
+
+    @Override
+    public void removeAdjustmentTransactions(AccountingTransaction adjustmentTransactions) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.AccountingTransaction.cannot.remove.accountingTransaction");
     }
 
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
@@ -162,6 +197,18 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
     public AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode,
 	    Money amountToReimburse) {
+
+	if (!canApplyReimbursement(amountToReimburse)) {
+	    throw new DomainException(
+		    "error.accounting.AccountingTransaction.cannot.reimburse.events.that.may.open");
+	}
+
+	if (!getToAccountEntry().canApplyReimbursement(amountToReimburse)) {
+	    throw new DomainExceptionWithLabelFormatter(
+		    "error.accounting.AccountingTransaction.amount.to.reimburse.exceeds.entry.amount",
+		    getToAccountEntry().getDescription());
+	}
+
 	final AccountingTransaction transaction = new AccountingTransaction(responsibleUser, new Entry(
 		EntryType.ADJUSTMENT, amountToReimburse.negate(), getToAccount()), new Entry(
 		EntryType.ADJUSTMENT, amountToReimburse, getFromAccount()),
@@ -180,9 +227,37 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public DateTime getWhenProcessed() {
 	return getTransactionDetail().getWhenProcessed();
     }
-    
+
     public boolean isPayed(final int civilYear) {
 	return getWhenRegistered().getYear() == civilYear;
+    }
+
+    public boolean isAdjustingTransaction() {
+	return hasAdjustedTransaction();
+    }
+
+    public boolean hasBeenAdjusted() {
+	return hasAnyAdjustmentTransactions();
+    }
+
+    public Entry getEntryFor(final Account account) {
+	for (final Entry accountingEntry : getEntriesSet()) {
+	    if (accountingEntry.getAccount() == account) {
+		return accountingEntry;
+	    }
+	}
+
+	throw new DomainException(
+		"error.accounting.accountingTransaction.transaction.data.is.corrupted.because.no.entry.belongs.to.account");
+    }
+
+    private boolean canApplyReimbursement(final Money amount) {
+	final Money extraAmount = getEvent().calculateExtraPayedAmount();
+	return extraAmount.greaterOrEqualThan(amount);
+    }
+
+    public boolean isSourceAccountFromParty(Party party) {
+	return getFromAccount().getParty() == party;
     }
 
 }

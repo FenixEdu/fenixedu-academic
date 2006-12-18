@@ -19,8 +19,6 @@
     <li><html:link page="/listDFACandidacy.do?method=prepareListCandidacies"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.listCandidacies" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>
     <li><html:link page="/selectDFACandidacies.do?method=prepareListCandidacies"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.selectCandidacies" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>
     <li><html:link page="/dfaPeriodsManagement.do?method=prepare"><bean:message key="link.candidacy.dfa.periodsManagement" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>
-	<br/>
-    <li><html:link page="/payments.do?method=prepareSearchPerson"><bean:message key="link.masterDegree.administrativeOffice.payments" /></html:link></li>
 </ul>
 	   
   	

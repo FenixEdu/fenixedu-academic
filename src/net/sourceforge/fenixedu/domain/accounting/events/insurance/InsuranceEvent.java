@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
@@ -73,9 +74,8 @@ public class InsuranceEvent extends InsuranceEvent_Base {
     }
 
     @Override
-    protected PostingRule getPostingRule(DateTime whenRegistered) {
-	return getInstitutionUnit().getUnitServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(
-		getEventType(), whenRegistered);
+    protected UnitServiceAgreementTemplate getServiceAgreementTemplate() {
+	return getInstitutionUnit().getUnitServiceAgreementTemplate();
     }
 
     @Override

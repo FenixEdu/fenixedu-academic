@@ -176,7 +176,8 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 			getExecutionYear()));
     }
 
-    private DegreeCurricularPlanServiceAgreementTemplate getServiceAgreementTemplate() {
+    @Override
+    protected DegreeCurricularPlanServiceAgreementTemplate getServiceAgreementTemplate() {
 	return getStudentCurricularPlan().getDegreeCurricularPlan().getServiceAgreementTemplate();
     }
 

@@ -35,6 +35,10 @@ public class PaymentsManagementDTO implements Serializable {
     public void setPerson(Person person) {
 	this.person = (person != null) ? new DomainReference<Person>(person) : null;
     }
+    
+    public void addEntryDTO(EntryDTO entryDTO) {
+	this.entryDTOs.add(entryDTO);
+    }
 
     public void addEntryDTOs(List<EntryDTO> entryDTOs) {
 	this.entryDTOs.addAll(entryDTOs);

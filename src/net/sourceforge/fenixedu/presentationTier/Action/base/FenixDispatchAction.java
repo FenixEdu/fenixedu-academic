@@ -305,5 +305,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
 	return bundleMappings;
     }
+    
+    protected Object getObjectFromViewState(final String viewStateId) {
+	return RenderUtils.getViewState(viewStateId).getMetaObject().getObject();
+    }
 
 }

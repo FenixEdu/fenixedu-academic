@@ -28,3 +28,11 @@ function executeWithTempFile() {
 }
 
 execute "Alter Relation between Events and AcademicServices" alterRelationBetweenEventsAndAcademicServices.sql
+
+execute "Drop column from AccountingTransaction" AlterTableAccountingTransaction.sql
+execute "Add key CreditNote to accounting entry table" AlterTableAccountingEntry.sql
+execute "Create CreditNote tables" CreateCreditNoteTables.sql
+execute "Alter table AccountingEvent" AlterTableAccountingEvent.sql
+execute "Alter Table Receipt" AlterTableReceipt.sql
+execute "Changing AccountingEntry to Receipt Relation to M-N" ChangeAccountingEntryRelationWithReceipt.sql
+

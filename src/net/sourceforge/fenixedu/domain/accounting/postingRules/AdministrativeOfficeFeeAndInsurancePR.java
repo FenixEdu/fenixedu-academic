@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
@@ -40,8 +41,11 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	return getPostingRuleForAdministrativeOfficeFee(when).calculateTotalAmountToPay(event, when)
-		.add(getPostingRuleForInsurance(when).calculateTotalAmountToPay(event, when));
+	final AnnualEvent annualEvent = (AnnualEvent) event;
+	return getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(),
+		annualEvent.getEndDate()).calculateTotalAmountToPay(event, when).add(
+		getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate())
+			.calculateTotalAmountToPay(event, when));
     }
 
     @Override
@@ -49,12 +53,14 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 
 	final List<EntryDTO> result = new ArrayList<EntryDTO>();
 	final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
-
+	final AnnualEvent annualEvent = (AnnualEvent) event;
 	if (administrativeOfficeFeeAndInsuranceEvent.hasToPayAdministrativeOfficeFee()) {
-	    result.addAll(getPostingRuleForAdministrativeOfficeFee(when).calculateEntries(event, when));
+	    result.addAll(getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(),
+		    annualEvent.getEndDate()).calculateEntries(event, when));
 	}
 	if (administrativeOfficeFeeAndInsuranceEvent.hasToPayInsurance()) {
-	    result.addAll(getPostingRuleForInsurance(when).calculateEntries(event, when));
+	    result.addAll(getPostingRuleForInsurance(annualEvent.getStartDate(),
+		    annualEvent.getEndDate()).calculateEntries(event, when));
 	}
 
 	return result;
@@ -67,16 +73,18 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 
 	final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
 	final Set<Entry> createdEntries = new HashSet<Entry>();
+	final AnnualEvent annualEvent = (AnnualEvent) event;
 	for (final EntryDTO entryDTO : entryDTOs) {
 
 	    if (entryDTO.getEntryType() == EntryType.INSURANCE_FEE) {
-		createdEntries.addAll(getPostingRuleForInsurance(transactionDetail.getWhenRegistered())
-			.process(user, Collections.singletonList(entryDTO), event, fromAccount,
-				toAccount, transactionDetail));
+
+		createdEntries.addAll(getPostingRuleForInsurance(annualEvent.getStartDate(),
+			annualEvent.getEndDate()).process(user, Collections.singletonList(entryDTO),
+			event, fromAccount, toAccount, transactionDetail));
 
 	    } else if (entryDTO.getEntryType() == EntryType.ADMINISTRATIVE_OFFICE_FEE) {
 		createdEntries.addAll(getPostingRuleForAdministrativeOfficeFee(
-			transactionDetail.getWhenRegistered()).process(user,
+			annualEvent.getStartDate(), annualEvent.getEndDate()).process(user,
 			Collections.singletonList(entryDTO), event, fromAccount, toAccount,
 			transactionDetail));
 	    } else {
@@ -95,15 +103,15 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 	return result;
     }
 
-    private FixedAmountPR getPostingRuleForInsurance(DateTime whenRegistered) {
-	return (FixedAmountPR) getServiceAgreementTemplateForInsurance()
-		.findPostingRuleByEventTypeAndDate(EventType.INSURANCE, whenRegistered);
+    private FixedAmountPR getPostingRuleForInsurance(DateTime startDate, DateTime endDate) {
+	return (FixedAmountPR) getServiceAgreementTemplateForInsurance().findPostingRuleBy(
+		EventType.INSURANCE, startDate, endDate);
     }
 
     private FixedAmountWithPenaltyFromDatePR getPostingRuleForAdministrativeOfficeFee(
-	    DateTime whenRegistered) {
-	return (FixedAmountWithPenaltyFromDatePR) getServiceAgreementTemplate()
-		.findPostingRuleByEventTypeAndDate(EventType.ADMINISTRATIVE_OFFICE_FEE, whenRegistered);
+	    DateTime startDate, DateTime endDate) {
+	return (FixedAmountWithPenaltyFromDatePR) getServiceAgreementTemplate().findPostingRuleBy(
+		EventType.ADMINISTRATIVE_OFFICE_FEE, startDate, endDate);
     }
 
     public UnitServiceAgreementTemplate getServiceAgreementTemplateForInsurance() {
@@ -115,21 +123,21 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 	return false;
     }
 
-    public Money getAdministrativeOfficeFeeAmount() {
-	return getPostingRuleForAdministrativeOfficeFee(new DateTime()).getFixedAmount();
+    public Money getAdministrativeOfficeFeeAmount(DateTime startDate, DateTime endDate) {
+	return getPostingRuleForAdministrativeOfficeFee(startDate, endDate).getFixedAmount();
     }
 
-    public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate() {
-	return getPostingRuleForAdministrativeOfficeFee(new DateTime())
+    public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate(DateTime startDate, DateTime endDate) {
+	return getPostingRuleForAdministrativeOfficeFee(startDate, endDate)
 		.getWhenToApplyFixedAmountPenalty();
     }
 
-    public Money getAdministrativeOfficeFeePenaltyAmount() {
-	return getPostingRuleForAdministrativeOfficeFee(new DateTime()).getFixedAmountPenalty();
+    public Money getAdministrativeOfficeFeePenaltyAmount(DateTime startDate, DateTime endDate) {
+	return getPostingRuleForAdministrativeOfficeFee(startDate, endDate).getFixedAmountPenalty();
     }
 
-    public Money getInsuranceAmount() {
-	return getPostingRuleForInsurance(new DateTime()).getFixedAmount();
+    public Money getInsuranceAmount(DateTime startDate, DateTime endDate) {
+	return getPostingRuleForInsurance(startDate, endDate).getFixedAmount();
     }
 
 }

@@ -155,6 +155,11 @@
 		<put name="body" value="/academicAdminOffice/payments/receipts/confirmCreateReceipt.jsp"/>
 	</definition>
 	
+	<definition name="payments.management.confirmCancelReceipt" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/receipts/confirmCancelReceipt.jsp"/>
+	</definition>
+	
+	
 	<definition name="payments.management.preparePayment" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/preparePayment.jsp"/>
 	</definition>
@@ -174,7 +179,39 @@
 	<definition name="payments.management.gratuityExemptions.view" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/gratuityExemptions/view.jsp"/>
 	</definition>
-
+	
+	<definition name="payments.management.creditNotes.list" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/creditNotes/listCreditNotes.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.creditNotes.show" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/creditNotes/showCreditNote.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.creditNotes.create" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/creditNotes/createCreditNote.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.otherPartyPayment.showEvents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/otherPartyPayment/showEventsForOtherPartyPayment.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.otherPartyPayment.showPaymentsForEvent" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/otherPartyPayment/showOtherPartyPaymentsForEvent.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.otherPartyPayment.prepareCreate" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/otherPartyPayment/prepareCreateOtherPartyPayment.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.otherPartyPayment.confirmCreate" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/otherPartyPayment/confirmCreateOtherPartyPayment.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.otherPartyPayment.showGuide" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/otherPartyPayment/showGuideForOtherPartyPayment.jsp"/>
+	</definition>
+	
 	<!-- ************* Contributors ************* -->
 	<definition name="contributor.createContributorSuccess" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/contributor/createContributorSuccess.jsp"/>

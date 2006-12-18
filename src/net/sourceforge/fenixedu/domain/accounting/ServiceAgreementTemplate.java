@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -91,6 +92,20 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 	}
 
 	return postingRule;
+
+    }
+
+    public PostingRule findPostingRuleBy(EventType eventType, DateTime startDate, DateTime endDate) {
+	final List<PostingRule> activePostingRulesInPeriod = new ArrayList<PostingRule>();
+	for (final PostingRule postingRule : getPostingRulesSet()) {
+	    if (postingRule.isActiveForPeriod(startDate, endDate)
+		    && postingRule.getEventType() == eventType) {
+		activePostingRulesInPeriod.add(postingRule);
+	    }
+	}
+
+	return activePostingRulesInPeriod.isEmpty() ? null : Collections.max(activePostingRulesInPeriod,
+		PostingRule.COMPARATOR_BY_START_DATE);
 
     }
 

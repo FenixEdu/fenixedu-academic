@@ -1,0 +1,1 @@
+alter table ACCOUNTING_EVENT change column WHEN_CANCELLED EVENT_STATE_DATE datetime NULL;

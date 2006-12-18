@@ -28,12 +28,12 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	super();
     }
 
-    public DFAGratuityPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+    public DFAGratuityPR(DateTime startDate, DateTime endDate,
 	    ServiceAgreementTemplate serviceAgreementTemplate, Money dfaTotalAmount,
 	    BigDecimal partialAcceptedPercentage, Money dfaAmountPerEctsCredit) {
 	super();
-	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, dfaTotalAmount,
-		partialAcceptedPercentage, dfaAmountPerEctsCredit);
+	init(EntryType.GRATUITY_FEE, EventType.GRATUITY, startDate, endDate, serviceAgreementTemplate,
+		dfaTotalAmount, partialAcceptedPercentage, dfaAmountPerEctsCredit);
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
@@ -188,5 +188,10 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	final GratuityEvent gratuityEvent = (GratuityEvent) event;
 	return gratuityEvent.hasGratuityExemption() ? gratuityEvent.getGratuityExemption()
 		.calculateDiscountPercentage(amount) : BigDecimal.ZERO;
+    }
+
+    @Override
+    public boolean isOtherPartiesPaymentsSupported() {
+	return true;
     }
 }

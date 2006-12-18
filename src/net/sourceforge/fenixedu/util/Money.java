@@ -135,4 +135,8 @@ public class Money implements Comparable<Money>, Serializable {
 	return this.amount.longValueExact();
     }
 
+    public Money abs() {
+	return new Money(this.amount.abs());
+    }
+    
 }

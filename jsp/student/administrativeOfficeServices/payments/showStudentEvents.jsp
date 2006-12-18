@@ -38,7 +38,7 @@
 	
 <p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.payedEvents2" /></strong></p>
 <logic:notEmpty name="payedEntries">
-	<fr:view name="payedEntries" schema="entry.view">
+	<fr:view name="payedEntries" schema="entry.view-for-student">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 tdleft tdcenter mtop025" />
 			<fr:property name="columnClasses" value=",," />

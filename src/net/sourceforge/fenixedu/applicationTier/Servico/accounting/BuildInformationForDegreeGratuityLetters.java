@@ -49,7 +49,8 @@ public class BuildInformationForDegreeGratuityLetters extends
 	final AdministrativeOffice administrativeOffice = AdministrativeOffice
 		.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
 
-	fillInsuranceAndAdminOfficeFeePriceInformation(administrativeOffice, gratuityLetterDTO);
+	fillInsuranceAndAdminOfficeFeePriceInformation(administrativeOffice, gratuityLetterDTO,
+		executionYear);
 
 	for (final Event event : eventsForPerson) {
 	    if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
@@ -101,14 +102,22 @@ public class BuildInformationForDegreeGratuityLetters extends
     }
 
     private void fillInsuranceAndAdminOfficeFeePriceInformation(
-	    AdministrativeOffice administrativeOffice, GratuityLetterDTO debtDTO) {
+	    AdministrativeOffice administrativeOffice, GratuityLetterDTO debtDTO,
+	    final ExecutionYear executionYear) {
 	final AdministrativeOfficeServiceAgreementTemplate serviceAgreementTemplate = administrativeOffice
 		.getServiceAgreementTemplate();
 	final AdministrativeOfficeFeeAndInsurancePR postingRule = (AdministrativeOfficeFeeAndInsurancePR) serviceAgreementTemplate
 		.findPostingRuleByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE);
-	debtDTO.setInsuranceAmount(postingRule.getInsuranceAmount());
-	debtDTO.setAdministrativeOfficeFeeAmount(postingRule.getAdministrativeOfficeFeeAmount());
-	debtDTO.setAdministrativeOfficeFeePenalty(postingRule.getAdministrativeOfficeFeePenaltyAmount());
+	final DateTime executionYearStartDate = executionYear.getBeginDateYearMonthDay()
+		.toDateTimeAtMidnight();
+	final DateTime executionYearEndDate = executionYear.getEndDateYearMonthDay()
+		.toDateTimeAtMidnight();
+	debtDTO.setInsuranceAmount(postingRule.getInsuranceAmount(executionYearStartDate,
+		executionYearEndDate));
+	debtDTO.setAdministrativeOfficeFeeAmount(postingRule.getAdministrativeOfficeFeeAmount(
+		executionYearStartDate, executionYearEndDate));
+	debtDTO.setAdministrativeOfficeFeePenalty(postingRule.getAdministrativeOfficeFeePenaltyAmount(
+		executionYearStartDate, executionYearEndDate));
     }
 
 }

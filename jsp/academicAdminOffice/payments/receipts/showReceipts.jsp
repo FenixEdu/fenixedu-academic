@@ -9,7 +9,6 @@
 <em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipts" /></h2>
 
-
 <logic:messagesPresent message="true">
 	<ul class="nobullet">
 		<html:messages id="messages" message="true">
@@ -32,10 +31,16 @@
 	<fr:view name="receiptsForAdministrativeOffice" schema="receipt.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 mtop15" />
-			<fr:property name="linkFormat(view)" value="<%="/payments.do?method=prepareShowReceipt&amp;=${idInternal}&amp;personId=" + personId %>"/>
+			<fr:property name="sortBy" value="year=desc,number=desc"/>
+			<fr:property name="linkFormat(view)" value="<%="/payments.do?method=prepareShowReceipt&receiptID=${idInternal}&personId=" + personId %>"/>
 			<fr:property name="key(view)" value="label.payments.show"/>
 			<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="sortBy" value="year=desc,number=desc"/>
+			<%--
+			<fr:property name="linkFormat(cancel)" value="<%="/payments.do?receiptID=${idInternal}&amp;method=prepareCancelReceipt&amp;personId=" + personId %>"/>
+			<fr:property name="visibleIf(cancel)" value="active" />
+			<fr:property name="key(cancel)" value="label.payments.cancel"/>
+			<fr:property name="bundle(cancel)" value="ACADEMIC_OFFICE_RESOURCES"/>
+			--%>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

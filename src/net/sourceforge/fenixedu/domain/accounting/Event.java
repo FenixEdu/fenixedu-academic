@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.Install
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
@@ -33,14 +34,15 @@ public abstract class Event extends Event_Base {
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setOjbConcreteClass(getClass().getName());
 	super.setWhenOccured(new DateTime());
-	super.setEventState(EventState.OPEN);
+	changeState(EventState.OPEN);
     }
 
     protected void init(EventType eventType, Person person) {
-	init((AdministrativeOffice) null, eventType, person, (AcademicServiceRequest) null);
+	init(null, eventType, person, null);
     }
 
-    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person, AcademicServiceRequest academicServiceRequest) {
+    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
+	    AcademicServiceRequest academicServiceRequest) {
 	checkParameters(eventType, person);
 	super.setAdministrativeOffice(administrativeOffice);
 	super.setEventType(eventType);
@@ -127,13 +129,7 @@ public abstract class Event extends Event_Base {
     }
 
     protected void closeEvent() {
-	super.setEventState(EventState.CLOSED);
-    }
-
-    @Override
-    public void setAcademicServiceRequest(AcademicServiceRequest academicServiceRequest) {
-	throw new DomainException(
-		"error.accounting.Event.cannot.modify.academicServiceRequest");
+	changeState(EventState.CLOSED);
     }
 
     @Override
@@ -143,12 +139,21 @@ public abstract class Event extends Event_Base {
 
     @Override
     public List<AccountingTransaction> getAccountingTransactions() {
-	return Collections.unmodifiableList(super.getAccountingTransactions());
+	throw new DomainException(
+		"error.accounting.Event.this.method.should.not.be.used.directly.use.getNonAdjustingTransactions.method.instead");
+
     }
 
     @Override
     public Set<AccountingTransaction> getAccountingTransactionsSet() {
-	return Collections.unmodifiableSet(super.getAccountingTransactionsSet());
+	throw new DomainException(
+		"error.accounting.Event.this.method.should.not.be.used.directly.use.getNonAdjustingTransactions.method.instead");
+    }
+
+    @Override
+    public int getAccountingTransactionsCount() {
+	throw new DomainException(
+		"error.accounting.Event.this.method.should.not.be.used.directly.use.getNonAdjustingTransactions.method.instead");
     }
 
     @Override
@@ -192,18 +197,23 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
-    public void setWhenCancelled(DateTime whenCancelled) {
-	throw new DomainException("error.accounting.Event.cannot.modify.whenCancelled");
+    public void setEventStateDate(DateTime eventStateDate) {
+	// TODO:
+	// throw new DomainException(
+	// "error.accounting.Event.cannot.modify.eventStateDate");
+	super.setEventStateDate(eventStateDate);
     }
 
     protected boolean canCloseEvent(DateTime whenRegistered) {
 	return calculateAmountToPay(whenRegistered).lessOrEqualThan(Money.ZERO);
     }
 
-    public Set<Entry> getEntries() {
+    public Set<Entry> getPositiveEntries() {
 	final Set<Entry> result = new HashSet<Entry>();
-	for (final AccountingTransaction transaction : getAccountingTransactions()) {
-	    result.add(transaction.getToAccountEntry());
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (transaction.getToAccountEntry().getAmountWithAdjustment().isPositive()) {
+		result.add(transaction.getToAccountEntry());
+	    }
 	}
 
 	return result;
@@ -211,14 +221,27 @@ public abstract class Event extends Event_Base {
 
     public Set<Entry> getEntriesWithoutReceipt() {
 	final Set<Entry> result = new HashSet<Entry>();
-	for (final AccountingTransaction transaction : getAccountingTransactions()) {
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
 	    final Entry entry = transaction.getToAccountEntry();
-	    if (!entry.hasReceipt()) {
+	    if (!entry.isAssociatedToAnyActiveReceipt()) {
 		result.add(entry);
 	    }
 	}
 
 	return result;
+    }
+
+    public List<AccountingTransaction> getNonAdjustingTransactions() {
+	final List<AccountingTransaction> result = new ArrayList<AccountingTransaction>();
+
+	for (final AccountingTransaction transaction : super.getAccountingTransactionsSet()) {
+	    if (!transaction.isAdjustingTransaction()) {
+		result.add(transaction);
+	    }
+	}
+
+	return result;
+
     }
 
     public Money calculatePayedAmount() {
@@ -228,7 +251,7 @@ public abstract class Event extends Event_Base {
 	}
 
 	Money payedAmount = Money.ZERO;
-	for (final AccountingTransaction transaction : getAccountingTransactions()) {
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
 	    payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
 	}
 
@@ -248,7 +271,7 @@ public abstract class Event extends Event_Base {
     private Set<Entry> getPayedEntries(final int civilYear) {
 	final Set<Entry> result = new HashSet<Entry>();
 
-	for (final AccountingTransaction accountingTransaction : getAccountingTransactionsSet()) {
+	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
 	    if (accountingTransaction.isPayed(civilYear)) {
 		result.add(accountingTransaction.getToAccountEntry());
 	    }
@@ -260,7 +283,7 @@ public abstract class Event extends Event_Base {
     public void recalculateState(final DateTime whenRegistered) {
 	if (canCloseEvent(whenRegistered)) {
 	    closeNonProcessedCodes();
-	    super.setEventState(EventState.CLOSED);
+	    changeState(EventState.CLOSED);
 	}
     }
 
@@ -271,11 +294,14 @@ public abstract class Event extends Event_Base {
     }
 
     public Money calculateAmountToPay(DateTime whenRegistered) {
-	final Money totalAmountToPay = getPostingRule(whenRegistered).calculateTotalAmountToPay(this,
-		whenRegistered);
+	final Money totalAmountToPay = calculateTotalAmountToPay(whenRegistered);
 	return totalAmountToPay.isPositive() ? totalAmountToPay.subtract(calculatePayedAmount())
 		: Money.ZERO;
 
+    }
+
+    private Money calculateTotalAmountToPay(DateTime whenRegistered) {
+	return getPostingRule().calculateTotalAmountToPay(this, whenRegistered);
     }
 
     public Money getAmountToPay() {
@@ -287,7 +313,7 @@ public abstract class Event extends Event_Base {
     }
 
     public List<EntryDTO> calculateEntries(DateTime when) {
-	return getPostingRule(when).calculateEntries(this, when);
+	return getPostingRule().calculateEntries(this, when);
     }
 
     public final boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice) {
@@ -300,9 +326,9 @@ public abstract class Event extends Event_Base {
 
     public void cancel(final Employee responsibleEmployee, final String cancelJustification) {
 	checkRulesToCancel();
-	super.setWhenCancelled(new DateTime());
+
+	changeState(EventState.CANCELLED);
 	super.setEmployeeResponsibleForCancel(responsibleEmployee);
-	super.setEventState(EventState.CANCELLED);
 	super.setCancelJustification(cancelJustification);
 	closeNonProcessedCodes();
     }
@@ -321,8 +347,8 @@ public abstract class Event extends Event_Base {
 
     protected Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
 	    AccountingTransactionDetailDTO transactionDetail) {
-	return getPostingRule(transactionDetail.getWhenRegistered()).process(responsibleUser, entryDTOs,
-		this, getFromAccount(), getToAccount(), transactionDetail);
+	return getPostingRule().process(responsibleUser, entryDTOs, this, getFromAccount(),
+		getToAccount(), transactionDetail);
     }
 
     public boolean hasAccountingTransactionFor(final Installment installment) {
@@ -330,7 +356,7 @@ public abstract class Event extends Event_Base {
     }
 
     public InstallmentAccountingTransaction getAccountingTransactionFor(final Installment installment) {
-	for (final AccountingTransaction accountingTransaction : getAccountingTransactionsSet()) {
+	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
 	    if (accountingTransaction instanceof InstallmentAccountingTransaction
 		    && ((InstallmentAccountingTransaction) accountingTransaction).getInstallment() == installment) {
 		return (InstallmentAccountingTransaction) accountingTransaction;
@@ -421,10 +447,57 @@ public abstract class Event extends Event_Base {
 	result.appendLabel(getEventType().getQualifiedName(), "enum");
 	return result;
     }
-    
+
     protected YearMonthDay calculateNextEndDate(final YearMonthDay yearMonthDay) {
 	final YearMonthDay nextMonth = yearMonthDay.plusMonths(1);
 	return new YearMonthDay(nextMonth.getYear(), nextMonth.getMonthOfYear(), 1).minusDays(1);
+    }
+
+    public Money calculateExtraPayedAmount() {
+	return calculateTotalAmountToPay(getDateToCalculateEventAmount()).subtract(
+		calculatePayedAmount()).abs();
+    }
+
+    private DateTime getDateToCalculateEventAmount() {
+	return !isClosed() ? new DateTime() : getEventStateDate();
+    }
+
+    private void changeState(EventState state) {
+	super.setEventState(state);
+	super.setEventStateDate(new DateTime());
+    }
+
+    public boolean isOtherPartiesPaymentsSupported() {
+	return getPostingRule().isOtherPartiesPaymentsSupported();
+    }
+
+    public void addOtherPartyAmount(User responsibleUser, Party party, Money amount,
+	    AccountingTransactionDetailDTO transactionDetailDTO) {
+	getPostingRule().addOtherPartyAmount(responsibleUser, this,
+		party.getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, transactionDetailDTO);
+    }
+
+    public Money calculateOtherPartiesPayedAmount() {
+	Money extraPayedAmount = Money.ZERO;
+	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
+	    if (!accountingTransaction.isSourceAccountFromParty(getPerson())) {
+		extraPayedAmount = extraPayedAmount.add(accountingTransaction.getToAccountEntry()
+			.getAmountWithAdjustment());
+	    }
+	}
+
+	return extraPayedAmount;
+    }
+
+    public Set<Entry> getOtherPartyEntries() {
+	final Set<Entry> result = new HashSet<Entry>();
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (!transaction.isSourceAccountFromParty(getPerson())) {
+		result.add(transaction.getToAccountEntry());
+	    }
+	}
+
+	return result;
     }
 
     protected abstract Account getFromAccount();
@@ -433,6 +506,6 @@ public abstract class Event extends Event_Base {
 
     public abstract LabelFormatter getDescriptionForEntryType(EntryType entryType);
 
-    protected abstract PostingRule getPostingRule(DateTime whenRegistered);
+    protected abstract PostingRule getPostingRule();
 
 }

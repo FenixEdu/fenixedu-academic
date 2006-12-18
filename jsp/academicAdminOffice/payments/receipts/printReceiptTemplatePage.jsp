@@ -136,7 +136,7 @@
 						</app:labelFormatter>
 					</td>
 					<td>.........................................&nbsp;</td>
-					<td><bean:define id="amount" name="entry" property="amountWithAdjustment"
+					<td><bean:define id="amount" name="entry" property="originalAmount"
 						type="Money" /> <%=amount.toPlainString()%> &nbsp;<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" bundle="ACADEMIC_OFFICE_RESOURCES" 
 						key="label.currencySymbol" /></td>
 				</tr>
@@ -189,7 +189,7 @@
 	</tr>
 
 	<tr>
-		<td><br/><br/><jsp:include page="/degreeAdministrativeOffice/payments/commons/footer.jsp" flush="true" /></td>
+		<td><br/><br/><jsp:include page="/academicAdminOffice/payments/commons/footer.jsp" flush="true" /></td>
 	</tr>
 </table>
 

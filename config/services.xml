@@ -6606,8 +6606,8 @@
         <filterChains>         
 			<chain name="StudentAuthorization" />
         </filterChains>
-    </service>	
-	<service>
+    </service>
+    <service>
 		<name>EditExecutionDegreePeriods</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.EditExecutionDegreePeriods</implementationClass>
 		<description />
@@ -11143,9 +11143,9 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>  
-    
-    <service>
+    </service>
+
+	<service>
     	<name>ReadStudentSenior</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.senior.ReadStudentSenior</implementationClass>
         <description></description>
@@ -11154,5 +11154,49 @@
         	<chain name="StudentAuthorization" />
         </filterChains>     
     </service>  
+    
+    
+    <service>
+    	<name>CreateCreditNote</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateCreditNote</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    
+    <service>
+    	<name>ChangeCreditNoteState</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.ChangeCreditNoteState</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    
+    
+    <service>
+    	<name>CancelReceipt</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelReceipt</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    
+    <service>
+    	<name>CreateOtherPartyPayment</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateOtherPartyPayment</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    
+    
   
 </serviceDefinitions>

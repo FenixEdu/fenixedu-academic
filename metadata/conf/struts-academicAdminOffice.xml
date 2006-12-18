@@ -57,6 +57,7 @@
     	<!-- Payments -->
 		<form-bean name="paymentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String" />
+			<form-property name="creditNoteState" type="java.lang.String" />
 	    </form-bean>
 
       <!-- Bean for The Creation of a Contributor -->
@@ -270,6 +271,7 @@
 		 	    <forward name="showReceipts" path="payments.management.showReceipts"/>
 		 	    <forward name="showReceipt" path="payments.management.showReceipt"/>
 		 	    <forward name="printReceipt" path="/payments/receipts/printReceiptPage.jsp"/>
+		 	    <forward name="confirmCancelReceipt" path="payments.management.confirmCancelReceipt"/>
 		 	    <forward name="preparePayment" path="payments.management.preparePayment"/> 
 	 	        <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
 		 	    <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
@@ -278,6 +280,19 @@
 		 	    <forward name="gratuityExemptions.showGratuityEvents" path="payments.management.gratuityExemptions.showGratuityEvents"/> 
 		 	    <forward name="gratuityExemptions.view" path="payments.management.gratuityExemptions.view"/>
 		 	    <forward name="gratuityExemptions.create" path="payments.management.gratuityExemptions.create"/>
+		 	    	 	    
+   		 	    <forward name="creditNotes.list" path="payments.management.creditNotes.list"/> 
+		 	    <forward name="creditNotes.create" path="payments.management.creditNotes.create"/>
+		 	    <forward name="creditNotes.show" path="payments.management.creditNotes.show"/>
+		 	    <forward name="creditNotes.print" path="/payments/creditNotes/printCreditNote.jsp"/>
+		 	    
+		 	    
+		 	    <forward name="otherPartyPayment.showEvents" path="payments.management.otherPartyPayment.showEvents"/>
+		 	    <forward name="otherPartyPayment.showPaymentsForEvent" path="payments.management.otherPartyPayment.showPaymentsForEvent"/>
+		 	    <forward name="otherPartyPayment.prepareCreate" path="payments.management.otherPartyPayment.prepareCreate"/>
+		 	    <forward name="otherPartyPayment.confirmCreate" path="payments.management.otherPartyPayment.confirmCreate"/>
+		 	    <forward name="otherPartyPayment.showGuide" path="payments.management.otherPartyPayment.showGuide"/>
+		 	    <forward name="otherPartyPayment.printGuide" path="/payments/otherPartyPayment/printGuideForOtherPartyPayment.jsp"/>
 		</action>
 		<!-- End Payments -->
 		

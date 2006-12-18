@@ -226,47 +226,6 @@
 		<put name="navLocal" value="/posGraduacao/lists/listsMenu.jsp" />
 		<put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp" />
 	</definition>
-
-	<!-- ************* Payments ************* -->
-	<definition name="payments.management.searchPerson" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/payments/searchPerson.jsp"/>
-	</definition>
-	
-	<definition name="payments.management.showEvents" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/payments/showEvents.jsp"/>
-	</definition>
-	
-	<definition name="payments.management.showOperations" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/payments/showOperations.jsp"/>
-	</definition>
-	
-	<definition name="payments.management.showPaymentsWithoutReceipt" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/payments/showPaymentsWithoutReceipt.jsp"/>
-	</definition>
-
-	<definition name="payments.management.showGuide" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/payments/guides/showGuide.jsp"/>
-	</definition>
-	
-	<definition name="payments.management.showReceipts" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/payments/receipts/showReceipts.jsp"/>
-	</definition>
-	
-	<definition name="payments.management.showReceipt" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/payments/receipts/showReceipt.jsp"/>
-	</definition>
-	
-	<definition name="payments.management.confirmCreateReceipt" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/payments/receipts/confirmCreateReceipt.jsp"/>
-	</definition>
-	
-	<definition name="payments.management.preparePayment" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/payments/preparePayment.jsp"/>
-	</definition>
-	
-	<definition name="payments.management.paymentConfirmed" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/payments/paymentConfirmed.jsp"/>
-	</definition>
 	
 	<!-- ************* DFA candidacy ************* -->
 	<definition name="df.page.dfaCandidacyIndex" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
@@ -341,15 +300,6 @@
 	<definition name="df.page.candidacyRegistrationSuccess" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
 		<put name="body" value="/posGraduacao/candidacy/candidacyRegistrationSuccess.jsp"/>
 	</definition>	
-
-	<!-- ************* Prices Management ************* -->
-	<definition name="prices.management.editPrice" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/pricesManagement/editPrice.jsp"/>
-	</definition>
-
-	<definition name="prices.management.viewPrices" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="body" value="/posGraduacao/pricesManagement/viewPrices.jsp"/>
-	</definition>
 	
 	<!-- ************* DFA Periods Management ************* -->
 	<definition name="dfa.periodsManagement.chooseExecutionYear" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">

@@ -29,6 +29,15 @@ public abstract class PostingRule extends PostingRule_Base {
 	}
     };
 
+    public static Comparator<PostingRule> COMPARATOR_BY_START_DATE = new Comparator<PostingRule>() {
+	public int compare(PostingRule leftPostingRule, PostingRule rightPostingRule) {
+	    int comparationResult = leftPostingRule.getStartDate().compareTo(
+		    rightPostingRule.getStartDate());
+	    return (comparationResult == 0) ? leftPostingRule.getIdInternal().compareTo(
+		    rightPostingRule.getIdInternal()) : comparationResult;
+	}
+    };
+
     static {
 	ServiceAgreementTemplatePostingRule
 		.addListener(new RelationAdapter<PostingRule, ServiceAgreementTemplate>() {
@@ -204,6 +213,37 @@ public abstract class PostingRule extends PostingRule_Base {
 	return calculateTotalAmountToPay(event, when, true);
     }
 
+    public boolean isOtherPartiesPaymentsSupported() {
+	return false;
+    }
+
+    public void addOtherPartyAmount(User responsibleUser, Event event, Account fromAcount,
+	    Account toAccount, Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
+
+	if (!isOtherPartiesPaymentsSupported()) {
+	    throw new DomainException("error.accounting.PostingRule.is.not.allowed.to.add.extra.amount");
+	}
+
+	checkRulesToAddOtherPartyAmount(event, amount);
+	internalAddOtherPartyAmount(responsibleUser, event, fromAcount, toAccount, amount,
+		transactionDetailDTO);
+
+    }
+
+    protected void checkRulesToAddOtherPartyAmount(Event event, Money amount) {
+	if (amount.greaterThan(calculateTotalAmountToPay(event, event.getWhenOccured(), false))) {
+	    throw new DomainException(
+		    "error.accounting.PostingRule.cannot.add.other.party.amount.that.exceeds.event.amount.to.pay");
+	}
+
+    }
+
+    public void internalAddOtherPartyAmount(User responsibleUser, Event event, Account fromAcount,
+	    Account toAccount, Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
+	throw new DomainException(
+		"error.accounting.PostingRule.does.not.implement.internal.other.party.amount");
+    }
+
     public abstract Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount);
 
     public abstract List<EntryDTO> calculateEntries(Event event, DateTime when);
@@ -211,5 +251,18 @@ public abstract class PostingRule extends PostingRule_Base {
     protected abstract Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
 	    Event event, Account fromAccount, Account toAccount,
 	    AccountingTransactionDetailDTO transactionDetail);
+
+    public boolean isActiveForPeriod(DateTime startDate, DateTime endDate) {
+	if (getStartDate().isAfter(endDate)) {
+	    return false;
+	}
+
+	if (getEndDate() != null && getEndDate().isBefore(startDate)) {
+	    return false;
+	}
+
+	return true;
+
+    }
 
 }

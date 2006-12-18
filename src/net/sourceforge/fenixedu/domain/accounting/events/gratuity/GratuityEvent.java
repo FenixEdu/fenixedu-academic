@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -104,21 +105,20 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
 	return labelFormatter;
     }
-    
+
     @Override
     public LabelFormatter getDescription() {
-        final LabelFormatter labelFormatter = super.getDescription();
-        labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
-        labelFormatter.appendLabel(getDegree().getName()).appendLabel(" - ");
-        labelFormatter.appendLabel(getExecutionYear().getYear());
-        return labelFormatter;
+	final LabelFormatter labelFormatter = super.getDescription();
+	labelFormatter.appendLabel(" ");
+	labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
+	labelFormatter.appendLabel(getDegree().getName()).appendLabel(" - ");
+	labelFormatter.appendLabel(getExecutionYear().getYear());
+	return labelFormatter;
     }
 
     @Override
-    protected PostingRule getPostingRule(DateTime whenRegistered) {
-	return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate()
-		.findPostingRuleByEventTypeAndDate(getEventType(), whenRegistered);
+    protected DegreeCurricularPlanServiceAgreementTemplate getServiceAgreementTemplate() {
+	return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate();
     }
 
     public Registration getRegistration() {
@@ -160,7 +160,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     private Money calculateTotalAmountToPayWithoutDiscount(final DateTime when) {
-	return getPostingRule(when).calculateTotalAmountToPay(this, when, false);
+	return getPostingRule().calculateTotalAmountToPay(this, when, false);
     }
 
     public boolean isGratuityExemptionAvailable() {

@@ -11,4 +11,5 @@
 	<li><html:link page="/payments.do?method=showEvents" titleKey="link.title.payments"><bean:message key="link.title.payments"/></html:link></li>
 	<li><html:link page="/prices.do?method=viewPrices" titleKey="link.title.payments"><bean:message key="label.prices"/></html:link></li>
 
+
 </ul>

@@ -23,6 +23,20 @@
 </schema>
 
 <schema name="entry.view" type="net.sourceforge.fenixedu.domain.accounting.Entry" bundle="APPLICATION_RESOURCES">
+	<slot name="reimbursementAppliable"  />
+	<slot name="description" />
+	<slot name="whenRegistered" />
+	<slot name="originalAmount"  />
+</schema>
+
+<schema name="entry.view-for-other-parties" type="net.sourceforge.fenixedu.domain.accounting.Entry" bundle="APPLICATION_RESOURCES">
+	<slot name="description" />
+	<slot name="whenRegistered" />
+	<slot name="originalAmount"  />
+	<slot name="accountingTransaction.fromAccount.party.socialSecurityNumber" key="label.contributor" />
+</schema>
+
+<schema name="entry.view-for-student" type="net.sourceforge.fenixedu.domain.accounting.Entry" bundle="APPLICATION_RESOURCES">
 	<slot name="description" />
 	<slot name="whenRegistered" />
 	<slot name="amountWithAdjustment"  />
@@ -37,6 +51,7 @@
 	<slot name="number"/>
 	<slot name="year"/>
 	<slot name="whenCreated"/>
+	<slot name="state" />
 	<slot name="totalAmount" />
 </schema>
 
@@ -154,4 +169,61 @@
 </schema>
 
 <schema name="AccountingEventPaymentCode.view" type="net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode" bundle="APPLICATION_RESOURCES" extends="PaymentCode.view">
+</schema>
+
+<schema name="CreditNote.view" type="net.sourceforge.fenixedu.domain.accounting.CreditNote" bundle="APPLICATION_RESOURCES">
+	<slot name="whenCreated" layout="no-time" />
+	<slot name="year" />
+	<slot name="number" />
+	<slot name="state" />
+	<slot name="totalAmount" />
+</schema>
+
+<schema name="CreditNoteEntry.view" type="net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry" bundle="APPLICATION_RESOURCES">
+	<slot name="accountingEntry.description" />
+	<slot name="amount" />
+</schema>
+
+<schema name="CreditNoteEntryDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreditNoteEntryDTO" bundle="APPLICATION_RESOURCES">
+	<slot name="selected" />
+	<slot name="entry.description" read-only="true" />
+	<slot name="totalAmount" read-only="true"/>
+	<slot name="amountToPay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="CreateOtherPartyPaymentBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateOtherPartyPaymentBean" bundle="APPLICATION_RESOURCES">
+	<slot name="event.description" read-only="true" />
+	<slot name="contributorParty" layout="autoComplete"
+			validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.CreateOtherPartyPaymentBean.contributorParty.socialSecurityNumber">
+		<property name="size" value="70"/>
+		<property name="labelField" value="socialSecurityNumber"/>
+		<property name="format" value="${socialSecurityNumber} - ${name}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
+		<property name="minChars" value="1"/>
+		<property name="maxCount" value="20"/>
+	</slot>
+	<slot name="amount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="CreateOtherPartyPaymentBean.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateOtherPartyPaymentBean" bundle="APPLICATION_RESOURCES">
+	<slot name="event.description" read-only="true" />
+	<slot name="contributorParty.name" read-only="true" />
+	<slot name="contributorParty.socialSecurityNumber" read-only="true" />
+	<slot name="amount" read-only="true" />
+</schema>
+
+<schema name="GratuityEvent.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent" bundle="APPLICATION_RESOURCES" extends="AccountingEvent.view">
+	<slot name="degree" layout="format">
+		<property name="format" value="${degreeType.localizedName} - ${name}" />
+	</slot>
+	<slot name="executionYear.year" />
 </schema>

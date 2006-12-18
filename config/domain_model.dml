@@ -135,6 +135,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.EventType     												a
 valueType net.sourceforge.fenixedu.domain.accounting.EntryType     												as EntryType;
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentMode   												as PaymentMode;
 valueType net.sourceforge.fenixedu.domain.accounting.EventState     											as AccountingEventState;
+valueType net.sourceforge.fenixedu.domain.accounting.ReceiptState											as ReceiptState;
 valueType net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType     					as AdministrativeOfficeType;
 valueType net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType  					as AcademicServiceRequestSituationType;
 valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType  				as DocumentRequestType;
@@ -169,6 +170,7 @@ valueType net.sourceforge.fenixedu.domain.student.EnrolmentModel												as E
 valueType net.sourceforge.fenixedu.util.Money												as Money;
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeState												as PaymentCodeState;
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeType												as PaymentCodeType;
+valueType net.sourceforge.fenixedu.domain.accounting.CreditNoteState												as CreditNoteState;
 valueType net.sourceforge.fenixedu.domain.student.StudentStatuteType												as StudentStatuteType;
 valueType net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionType							as GratuityExemptionType;
 valueType net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType											as DocumentDeliveryType;
@@ -210,7 +212,6 @@ class net.sourceforge.fenixedu.domain.accounting.AccountingTransaction extends n
     Integer keyEvent;
     Integer keyResponsibleUser;
     Integer keyAdjustedTransaction;
-    Integer keyAdjustmentTransaction;
     String ojbConcreteClass;
     Integer keyTransactionDetail;
 }
@@ -235,9 +236,10 @@ class net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail ext
 class net.sourceforge.fenixedu.domain.accounting.Entry extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyAccount;
     Integer keyAccountingTransaction;
-    Integer keyReceipt;
     Money originalAmount;
     EntryType entryType;
+    Integer keyCreditNote;
+    Integer keyAdjustmentCreditNoteEntry;
 }
 
 class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -247,7 +249,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     AccountingEventState eventState;
     Integer keyPerson;
     Integer keyAdministrativeOffice;
-    DateTime whenCancelled;
+    DateTime eventStateDate;
     Integer keyEmployeeResponsibleForCancel;
     String cancelJustification;
 	Integer keyAcademicServiceRequest;
@@ -266,7 +268,6 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 	
 	class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 	}
-	
 	
 	class net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 		Integer keyExecutionYear;
@@ -314,12 +315,31 @@ class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge
     Integer year;
     DateTime whenCreated;
 	Integer keyEmployee;
+	ReceiptState state;
+	DateTime whenUpdated;
 }
 
 class net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion extends net.sourceforge.fenixedu.domain.DomainObject {
     DateTime whenCreated;
     Integer keyReceipt;
     Integer keyEmployee;
+}
+
+class net.sourceforge.fenixedu.domain.accounting.CreditNote extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyReceipt;
+	Integer keyEmployee;
+	DateTime whenCreated;
+	Integer year;
+	Integer number;
+	CreditNoteState state;
+	DateTime whenUpdated;
+}
+
+class net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCreditNote;
+	Integer keyAccountingEntry;
+	Integer keyAdjustmentAccountingEntry;
+	Money amount;
 }
 
 class net.sourceforge.fenixedu.domain.accounting.ServiceAgreement extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -389,10 +409,10 @@ class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourcef
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR {
 				Money amountPerPage;
 			}
-		
-			class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR {
-			}
 			
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR {
+				}
+		
 		class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 			Money dfaTotalAmount;
 			Money dfaAmountPerEctsCredit;
@@ -8119,7 +8139,9 @@ relation AccountTransactionUser {
 
 relation AccountTransactionAdjustedTransaction {
 	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole adjustedTransaction;
-	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole adjustmentTransaction;
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole adjustmentTransactions {
+		multiplicity *;
+	}
 }
 
 relation InstallmentAccountingTransactionInstallment {
@@ -8175,7 +8197,9 @@ relation RootDomainObjectReceipt {
 }
 
 relation ReceiptEntry {
-	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipt;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
 		multiplicity *;
 	}
@@ -8387,6 +8411,53 @@ relation GratuityExemptionEmployee {
 	}
 }
 
+relation ReceiptCreditNote {
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipt;
+	net.sourceforge.fenixedu.domain.accounting.CreditNote playsRole creditNotes {
+		multiplicity *;
+	}
+}
+
+relation EmployeeCreditNote {
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.accounting.CreditNote playsRole creditNotes {
+		multiplicity *;
+	}
+}
+
+
+relation RootDomainObjectCreditNote {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.CreditNote playsRole creditNotes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCreditNoteEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry playsRole creditNoteEntries {
+		multiplicity *;
+	}
+}
+
+relation CreditNoteCreditNoteEntry {
+	net.sourceforge.fenixedu.domain.accounting.CreditNote playsRole creditNote;
+	net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry playsRole creditNoteEntries {
+		multiplicity *;
+	}
+}
+
+relation AccountingEntryCreditNoteEntry {
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole accountingEntry;
+	net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry playsRole creditNoteEntries {
+		multiplicity *;
+	}
+}
+
+relation AdjustmentAccountingEntryCreditNoteEntry {
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole adjustmentAccountingEntry;
+	net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry playsRole adjustmentCreditNoteEntry;
+}
 
 //End Of Accounting Relations
 

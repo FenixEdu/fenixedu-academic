@@ -51,9 +51,9 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
     }
 
     @Override
-    protected PostingRule getPostingRule(DateTime whenRegistered) {
+    protected PostingRule getPostingRule() {
 	return getAdministrativeOffice().getServiceAgreementTemplate()
-		.findPostingRuleByEventTypeAndDate(getEventType(), whenRegistered);
+		.findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
     }
 
     @Override

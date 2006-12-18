@@ -52,12 +52,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     @Override
-    protected PostingRule getPostingRule(DateTime whenRegistered) {
-	return getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
-		whenRegistered);
-    }
-
-    private AdministrativeOfficeServiceAgreementTemplate getServiceAgreementTemplate() {
+    protected AdministrativeOfficeServiceAgreementTemplate getServiceAgreementTemplate() {
 	return getAdministrativeOffice().getServiceAgreementTemplate();
     }
 
@@ -73,7 +68,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     public boolean hasToPayInsurance() {
-	for (final AccountingTransaction accountingTransaction : getAccountingTransactionsSet()) {
+	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
 	    if (accountingTransaction.getToAccountEntry().getEntryType() == EntryType.INSURANCE_FEE) {
 		return false;
 	    }
@@ -83,7 +78,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     public boolean hasToPayAdministrativeOfficeFee() {
-	for (final AccountingTransaction accountingTransaction : getAccountingTransactionsSet()) {
+	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
 	    if (accountingTransaction.getToAccountEntry().getEntryType() == EntryType.ADMINISTRATIVE_OFFICE_FEE) {
 		return false;
 	    }
@@ -93,32 +88,37 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     private AdministrativeOfficeFeeAndInsurancePR getAdministrativeOfficeFeeAndInsurancePR() {
-	return (AdministrativeOfficeFeeAndInsurancePR) getPostingRule(new DateTime());
+	return (AdministrativeOfficeFeeAndInsurancePR) getPostingRule();
     }
 
     public Money getAdministrativeOfficeFeeAmount() {
-	return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeeAmount();
+	return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeeAmount(
+		getStartDate(), getEndDate());
     }
 
     public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate() {
-	return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeePaymentLimitDate();
+	return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeePaymentLimitDate(
+		getStartDate(), getEndDate());
     }
 
     public Money getAdministrativeOfficeFeePenaltyAmount() {
-	return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeePenaltyAmount();
+	return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeePenaltyAmount(
+		getStartDate(), getEndDate());
     }
 
     public Money getInsuranceAmount() {
-	return getAdministrativeOfficeFeeAndInsurancePR().getInsuranceAmount();
+	return getAdministrativeOfficeFeeAndInsurancePR().getInsuranceAmount(getStartDate(),
+		getEndDate());
     }
 
     @Override
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
 	final Money totalAmount = calculateTotalAmount();
-	return Collections.singletonList(AccountingEventPaymentCode.create(
-		PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE, new YearMonthDay(),
-		calculatePaymentCodeEndDate(), this, totalAmount, totalAmount,
-		getPerson().getStudent()));
+	return Collections
+		.singletonList(AccountingEventPaymentCode.create(
+			PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE, new YearMonthDay(),
+			calculatePaymentCodeEndDate(), this, totalAmount, totalAmount, getPerson()
+				.getStudent()));
     }
 
     @Override
@@ -154,10 +154,11 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
-        return internalProcess(responsibleUser, buildEntryDTOsFrom(amountToPay), transactionDetail);
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
+	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
+	return internalProcess(responsibleUser, buildEntryDTOsFrom(amountToPay), transactionDetail);
     }
-    
+
     private List<EntryDTO> buildEntryDTOsFrom(final Money amountToPay) {
 	final List<EntryDTO> result = new ArrayList<EntryDTO>(2);
 	Money insuranceAmountToDiscount = Money.ZERO;
@@ -179,11 +180,11 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	    getNonProcessedPaymentCode().setState(getPaymentCodeStateFor(paymentMode));
 	}
     }
-    
+
     @Override
     public LabelFormatter getDescription() {
 	final LabelFormatter labelFormatter = super.getDescription();
-        labelFormatter.appendLabel(" ").appendLabel(getExecutionYear().getYear());
-        return labelFormatter;
+	labelFormatter.appendLabel(" ").appendLabel(getExecutionYear().getYear());
+	return labelFormatter;
     }
 }

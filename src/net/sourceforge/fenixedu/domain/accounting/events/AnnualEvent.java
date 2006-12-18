@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -31,5 +35,22 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 	}
 
     }
+
+    public DateTime getStartDate() {
+	return getExecutionYear().getBeginDateYearMonthDay().toDateTimeAtMidnight();
+
+    }
+
+    public DateTime getEndDate() {
+	return getExecutionYear().getEndDateYearMonthDay().toDateTimeAtMidnight();
+    }
+
+    @Override
+    protected PostingRule getPostingRule() {
+	return getServiceAgreementTemplate().findPostingRuleBy(getEventType(), getStartDate(),
+		getEndDate());
+    }
+
+    abstract protected ServiceAgreementTemplate getServiceAgreementTemplate();
 
 }

@@ -405,3 +405,17 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption" table="GRATUITY_EXEMPTION">
 	
 	</class-descriptor>	
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.CreditNote -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.CreditNote" table="CREDIT_NOTE">
+
+</class-descriptor>	
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry" table="CREDIT_NOTE_ENTRY">
+
+</class-descriptor>	

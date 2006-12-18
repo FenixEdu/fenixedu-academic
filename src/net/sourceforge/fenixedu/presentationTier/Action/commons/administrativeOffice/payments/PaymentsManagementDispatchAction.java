@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -337,8 +338,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     }
 
     protected Person getPerson(HttpServletRequest request) {
-	return (Person) rootDomainObject.readPartyByOID(Integer.valueOf(getFromRequest(request,
-		"personId").toString()));
+	return (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
     }
 
     public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm,
@@ -373,8 +373,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	PaymentsManagementDTO managementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
 		"paymentsManagementDTO").getMetaObject().getObject();
 	request.setAttribute("paymentsManagementDTO", managementDTO);
-	request.setAttribute("currentUnit", getUserView(request).getPerson().getEmployee()
-		.getCurrentWorkingPlace());
+	request.setAttribute("currentUnit", getCurrentUnit(request));
 	return mapping.findForward("printGuide");
     }
 
@@ -382,8 +381,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final Person person = getPerson(request);
-	final Integer receiptID = Integer.valueOf(getFromRequest(request, "receiptID").toString());
-	final Receipt receipt = rootDomainObject.readReceiptByOID(receiptID);
+	final Receipt receipt = getReceipt(request);
 
 	if (receipt == null) {
 	    addActionMessage(request, "error.administrativeOffice.payments.receipt.not.found");
@@ -401,6 +399,10 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	return mapping.findForward("showReceipt");
     }
 
+    protected Receipt getReceipt(final HttpServletRequest request) {
+	return rootDomainObject.readReceiptByOID(getIntegerFromRequest(request, "receiptID"));
+    }
+
     public ActionForward printReceipt(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
@@ -413,8 +415,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
 	request.setAttribute("receipt", receipt);
 	request.setAttribute("sortedEntries", sortedEntries);
-	request.setAttribute("currentUnit", getUserView(request).getPerson().getEmployee()
-		.getCurrentWorkingPlace());
+	request.setAttribute("currentUnit", getCurrentUnit(request));
 
 	try {
 
@@ -429,6 +430,48 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	    return prepareShowReceipt(mapping, actionForm, request, response);
 	}
 
+    }
+
+    public ActionForward prepareCancelReceipt(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final Receipt receipt = getReceipt(request);
+	request.setAttribute("receipt", receipt);
+	request.setAttribute("person", receipt.getPerson());
+
+	return mapping.findForward("confirmCancelReceipt");
+    }
+
+    protected Receipt getReceiptFromViewState(String viewStateName) {
+	final Receipt receipt = (Receipt) RenderUtils.getViewState(viewStateName).getMetaObject()
+		.getObject();
+	return receipt;
+    }
+
+    public ActionForward cancelReceipt(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+
+	final Receipt receipt = getReceiptFromViewState("receiptToCancel");
+	try {
+	    executeService(request, "CancelReceipt", new Object[] {
+		    getUserView(request).getPerson().getEmployee(), receipt });
+
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+	    request.setAttribute("receipt", receipt);
+	    request.setAttribute("person", receipt.getPerson());
+
+	    return mapping.findForward("confirmCancelReceipt");
+	}
+
+	request.setAttribute("personId", receipt.getPerson().getIdInternal());
+
+	return showReceipts(mapping, form, request, response);
+    }
+
+    protected Unit getCurrentUnit(HttpServletRequest request) {
+	return getUserView(request).getPerson().getEmployee().getCurrentWorkingPlace();
     }
 
     public ActionForward prepareShowPaymentsWithoutReceiptInvalid(ActionMapping mapping,
@@ -455,7 +498,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
 	return mapping.findForward("showEvents");
     }
-
+    
     public ActionForward prepareShowEventsWithInstallmentsInvalid(ActionMapping mapping,
 	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 

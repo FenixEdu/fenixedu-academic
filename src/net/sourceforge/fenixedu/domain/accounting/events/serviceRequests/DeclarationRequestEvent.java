@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
-import org.joda.time.DateTime;
-
 public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
 
     protected DeclarationRequestEvent() {
@@ -52,25 +50,26 @@ public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
     }
 
     @Override
-    protected PostingRule getPostingRule(DateTime whenRegistered) {
+    protected PostingRule getPostingRule() {
 	return getAdministrativeOffice().getServiceAgreementTemplate()
-		.findPostingRuleByEventTypeAndDate(getEventType(), whenRegistered);
+		.findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
     }
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	
+
 	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
 	labelFormatter.appendLabel(" (");
-	labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
+	labelFormatter.appendLabel(getDegree().getDegreeType().name(),
+		LabelFormatter.ENUMERATION_RESOURCES);
 	labelFormatter.appendLabel(" ");
 	labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
 	labelFormatter.appendLabel(" ");
 	labelFormatter.appendLabel(getDegree().getName());
 	labelFormatter.appendLabel(" ) - ");
 	labelFormatter.appendLabel(getExecutionYear().getYear());
-	
+
 	return labelFormatter;
     }
 
@@ -83,7 +82,7 @@ public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
     }
 
     public Integer getNumberOfPages() {
-	return ((DeclarationRequest)getAcademicServiceRequest()).getNumberOfPages();
+	return ((DeclarationRequest) getAcademicServiceRequest()).getNumberOfPages();
     }
 
 }

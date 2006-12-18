@@ -38,21 +38,18 @@
 
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments" /></strong></p>
 <fr:view name="createReceiptBean" property="selectedEntries" schema="entry.view">
-<fr:layout name="tabular" >
-		<fr:property name="classes" value="tstyle4 mtop05 mbottom0" />
-		<fr:property name="columnClasses" value="width30em aleft,width10em acenter,width15em aright"/>
-	<fr:property name="sortBy" value="whenRegistered=desc"/>
-</fr:layout>
+	<fr:layout name="tabular" >
+		<fr:property name="classes" value="tstyle4 mtop05 mbottom0 width700px" />
+		<fr:property name="columnClasses" value="width8em acenter, width30em acenter,width8em acenter,width15em aright"/>
+		<fr:property name="sortBy" value="whenRegistered=desc"/>
+	</fr:layout>
 </fr:view>
 
-	<table class="tstyle4 mtop0">
-		<tr>
-			<td class="width30em"></td>
-			<td class="width10em"></td>
-			<td class="width15em aright" style="background-color: #fdfbdd;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.totalAmount"/>: <bean:define id="totalAmount" name="createReceiptBean" property="totalAmount" type="Money"/>&nbsp;<%= totalAmount.toPlainString() %>&nbsp;<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.currencySymbol"/></td>
-		</tr>
-	</table>
-
+<table class="tstyle4 mtop0" style="width: 700px;">
+	<tr>
+		<td class="aright" colspan="4"><span style="background-color: #fdfbdd;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.totalAmount"/>: <bean:define id="totalAmount" name="createReceiptBean" property="totalAmount" type="Money"/>&nbsp;<%= totalAmount.toPlainString() %>&nbsp;<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.currencySymbol"/></span></td>
+	</tr>
+</table>
 
 <bean:define id="personId" name="createReceiptBean" property="person.idInternal"/>
 
