@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="c"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
-<ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+<ft:tilesView definition="definition.sop.examsPage.print" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundle"/>

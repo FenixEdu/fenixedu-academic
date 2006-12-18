@@ -43,18 +43,11 @@
 
 <!-- End NavGeral -->
 <!-- Navbar Lateral e Body Content -->
-<table width="100%" border="0" cellspacing="0">
-   <tr>
-     <td id="navlateral" align="left" valign="top" nowrap="nowrap">
-     	<tiles:insert attribute="navLocal" ignore="true"/>
-    </td>
-     <td id="bodycontent" width="100%" align="left" valign="top" >
+<div id="bodycontent">
      	<tiles:insert attribute="body-context" ignore="true"/>
      	<tiles:insert attribute="body" ignore="true"/>
      	<tiles:getAsString name="body-inline" ignore="true"/>
-	</td>
-  </tr>
-</table>
+</div>
 <!--End Navbar Lateral e Body Content -->
 <!-- Footer -->
 <div id="footer">

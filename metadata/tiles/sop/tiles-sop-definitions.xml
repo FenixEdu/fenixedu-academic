@@ -21,6 +21,17 @@
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>
+	<definition name="definition.sop.examsPage.print" page="/layout/fenixLayoutPrint.jsp">
+	  <put name="title" value="SOP" type="string" />
+	  <put name="head" value="/commons/blank.jsp"/>
+	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />
+	  <put name="navLocal" value="/sop/exams/commonNavLocalExamsSop.jsp" />
+	  <put name="navGeral" value="/sop/commonNavGeralSopExam.jsp" />
+	  <put name="body-context" value="/commons/blank.jsp"/>
+      <put name="body" value="/commons/blank.jsp" />
+      <put name="body-inline" value="" />
+      <put name="footer" value="/copyright.jsp" />
+	</definition>
 	<definition name="definition.sop.foto" extends="df.layout.two-column-photo">
 	  <put name="title" value="SOP" type="string" />
 	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />

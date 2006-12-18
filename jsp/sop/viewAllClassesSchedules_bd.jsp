@@ -14,6 +14,7 @@
 			<table width="100%" cellspacing="0">
 		</logic:equal>
 		<logic:notEqual name="i" value="0">
+			<br style="page-break-before" />
 			<table class="break-before" width="100%" cellspacing="0">
 		</logic:notEqual>
 			<tr>
