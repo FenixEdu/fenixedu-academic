@@ -1365,8 +1365,7 @@ public class Registration extends Registration_Base {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan(final ExecutionYear executionYear) {
-	return executionYear == null ? null : getStudentCurricularPlan(executionYear
-		.getEndDateYearMonthDay());
+	return executionYear == null ? null : initializeStudentCurricularPlansByExecutionYear().get(executionYear);
     }
 
     public StudentCurricularPlan getStudentCurricularPlan(final YearMonthDay date) {
