@@ -9,7 +9,7 @@ public class StringNormalizer {
     }
 
     public static String normalizeAndRemoveMinorChars(String string) {
-        final String normalizedString = Normalizer.normalize(string, Normalizer.DECOMP, Normalizer.DONE).replaceAll("[^\\p{ASCII}]", "");
+        final String normalizedString = normalize(string);
         final StringBuilder stringBuilder = new StringBuilder();
         for (final char c : normalizedString.toCharArray()) {
             final int i = c;
