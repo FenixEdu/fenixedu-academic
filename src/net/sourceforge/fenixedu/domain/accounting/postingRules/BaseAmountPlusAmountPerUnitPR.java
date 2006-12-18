@@ -58,9 +58,13 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
 		"error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.cannot.modify.amountPerUnit");
     }
 
+    public Money getAmountForUnits(Event event) {
+	return getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event)));
+    }
+
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	return getBaseAmount().add(getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event))));
+	return getBaseAmount().add(getAmountForUnits(event));
 
     }
 
