@@ -11,10 +11,9 @@
 
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-
+ <html:form action="/editContributor?method=edit">
+ <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
    <table class="tstyle5 thlight">
-    <html:form action="/editContributor?method=edit">
-   	  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
        <!-- Contributor Number -->
        <tr>
          <th><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>: </th>

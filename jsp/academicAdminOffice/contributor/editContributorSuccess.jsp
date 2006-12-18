@@ -1,9 +1,3 @@
 <div align="center">
-
-  <font color="#023264" size="-1">
-
-    <h2>Contribuinte alterado com sucesso !</h2>
-
-  </font>
-
+   <h2><font color="#023264" size="-1">Contribuinte alterado com sucesso!</font></h2>
 </div>

@@ -30,7 +30,7 @@
 			<bean:define id="postingRuleId" name="postingRule" property="idInternal"/>
 			<p class="indent1">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<html:link page="<%= "/pricesManagement.do?method=prepareEditPrice&postingRuleId=" + postingRuleId %>"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="link.pricesManagement.edit"/></html:link>
+				<html:link page="<%= "/pricesManagement.do?method=prepareEditPrice&amp;postingRuleId=" + postingRuleId %>"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="link.pricesManagement.edit"/></html:link>
 			</p>
 		</div>
 	</logic:iterate>

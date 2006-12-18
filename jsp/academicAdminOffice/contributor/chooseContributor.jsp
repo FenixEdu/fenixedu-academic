@@ -12,21 +12,19 @@
 <h2><bean:message name="title"/></h2>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>    
-
-<table class="mtop15">
-    <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
-        <html:form action="<%=path%>">
-        <input alt="input.method" type="hidden" value="getContributors" name="method"/>
-     	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>        
-       <!-- Contributor Number -->
-       <tr>
-         <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>: </td>
-         <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorNumber" property="contributorNumber" /></td>
-         </td>
-       </tr>
-   </table>
-
-	<p>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Escolher" styleClass="inputbutton" property="ok"/>
-	</p>
+<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
+<html:form action="<%=path%>">
+	<input alt="input.method" type="hidden" value="getContributors" name="method"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>        
+	<table class="mtop15">
+	       <!-- Contributor Number -->
+	       <tr>
+	         <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>: </td>
+	         <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorNumber" property="contributorNumber" /></td>
+	       </tr>
+	   </table>
+	
+		<p>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Escolher" styleClass="inputbutton" property="ok"/>
+		</p>
 </html:form>

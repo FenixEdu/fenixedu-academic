@@ -13,7 +13,7 @@
 	</p>
 </html:messages>
 
-<fr:form>
+<fr:form action="/createStudent.do">
 
 	<h3 class="mtop15 mbottom025"><bean:message key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:edit id="executionDegree"

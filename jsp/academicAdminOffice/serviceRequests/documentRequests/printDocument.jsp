@@ -71,24 +71,24 @@
 	<logic:equal name="documentRequest" property="pagedDocument" value="true">
 		<fr:edit id="documentRequestConclude" name="documentRequest" 
 				schema="DocumentRequest.conclude-info"
-				action="<%="/academicServiceRequestsManagement.do?method=concludeAcademicServiceRequest&academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>">
+				action="<%="/academicServiceRequestsManagement.do?method=concludeAcademicServiceRequest&amp;academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thright thlight mtop025 mbottom1"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="cancel" path="<%="/student.do?method=visualizeRegistration&registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>"/>
+			<fr:destination name="cancel" path="<%="/student.do?method=visualizeRegistration&amp;registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>"/>
 		</fr:edit>
 	</logic:equal>
 	
 	<logic:equal name="documentRequest" property="pagedDocument" value="false">
 		<p class="mtop15">
 			<span>
-					<html:form action="<%="/academicServiceRequestsManagement.do?method=concludeAcademicServiceRequest&academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>">
+					<html:form action="<%="/academicServiceRequestsManagement.do?method=concludeAcademicServiceRequest&amp;academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>">
 						<html:submit styleClass="inputbutton"><bean:message key="conclude" bundle="APPLICATION_RESOURCES"/></html:submit>
 					</html:form>		
 			</span>
 			<span>
-					<html:form action="<%="/student.do?method=visualizeRegistration&registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>">
+					<html:form action="<%="/student.do?method=visualizeRegistration&amp;registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>">
 						<html:submit styleClass="inputbutton"><bean:message key="cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
 					</html:form>
 			</span>

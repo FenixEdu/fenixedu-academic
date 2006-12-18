@@ -95,7 +95,7 @@
 <fr:view name="registration" property="studentCurricularPlans" schema="student.studentCurricularPlans" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-		<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&scpID=${idInternal}" />
+		<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&amp;scpID=${idInternal}" />
 		<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
 		<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
 		<fr:property name="visibleIf(enrol)" value="enrolable"/>
@@ -150,11 +150,11 @@
 		<fr:view name="newAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
+				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
-				<fr:property name="linkFormat(processing)" value="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&academicServiceRequestId=${idInternal}"/>
+				<fr:property name="linkFormat(processing)" value="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(processing)" value="processing"/>
-				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${idInternal}&backAction=student&backMethod=visualizeRegistration"/>
+				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
 				<fr:property name="key(view)" value="view"/>
 				<fr:property name="sortBy" value="creationDate=desc, urgentRequest=desc, description=asc"/>
 			</fr:layout>
@@ -177,11 +177,11 @@
 		<fr:view name="processingAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
+				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
-				<fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&academicServiceRequestId=${idInternal}"/>
+				<fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(conclude)" value="conclude"/>
-				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${idInternal}&backAction=student&backMethod=visualizeRegistration"/>
+				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
 				<fr:property name="key(view)" value="view"/>
 				<fr:property name="sortBy" value="creationDate=desc, urgentRequest=desc, description=asc"/>
 			</fr:layout>
@@ -204,9 +204,9 @@
 		<fr:view name="concludedAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&academicServiceRequestId=${idInternal}"/>
+				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(deliver)" value="deliver"/>
-				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${idInternal}&backAction=student&backMethod=visualizeRegistration"/>
+				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
 				<fr:property name="key(view)" value="view"/>
 				<fr:property name="sortBy" value="creationDate=desc, urgentRequest=desc, description=asc"/>
 			</fr:layout>
