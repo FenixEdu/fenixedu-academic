@@ -41,14 +41,12 @@
 	</html:link>
 
 	<logic:equal name="student" property="hasActiveRegistrationForOffice" value="true">
-		<logic:equal name="student" property="hasAnyBolonhaRegistration" value="true">
-			<span class="pleft05">
-				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
-					<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</html:link>
-			</span>
-		</logic:equal>
+		<span class="pleft05">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+			<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
+				<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:link>
+		</span>
 	</logic:equal>
 </p>
 
