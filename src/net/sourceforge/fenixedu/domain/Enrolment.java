@@ -71,6 +71,11 @@ public class Enrolment extends Enrolment_Base {
     	createEnrolmentLog(studentCurricularPlan.getRegistration(), EnrolmentAction.ENROL);
     }
     
+    @Override
+    public boolean isEnrolment() {
+        return true;
+    }
+    
     @Deprecated
     public EnrollmentCondition getCondition() {
     	return getEnrolmentCondition();
@@ -637,15 +642,7 @@ public class Enrolment extends Enrolment_Base {
 	return this.getStudentCurricularPlan().countEnrolmentsByCurricularCourse(
 		this.getCurricularCourse());
     }
-    
-    public CurricularCourse getCurricularCourse() {
-    	return (CurricularCourse) getDegreeModule();
-    }
-    
-    public void setCurricularCourse(CurricularCourse curricularCourse) {
-    	setDegreeModule(curricularCourse);
-    }
-    
+        
     protected void createEnrolmentLog(Registration registration, EnrolmentAction action) {
 	new EnrolmentLog(action, registration, this.getCurricularCourse(), this.getExecutionPeriod(),
 		getCurrentUser());

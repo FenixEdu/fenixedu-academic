@@ -43,7 +43,7 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     }
 
     public boolean isEnrolment() {
-	return this instanceof Enrolment;
+	return false;
     }
     
     @Override
@@ -55,5 +55,14 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
         return false;
     }
+    
+    public CurricularCourse getCurricularCourse() {
+    	return (CurricularCourse) getDegreeModule();
+    }
+    
+    public void setCurricularCourse(CurricularCourse curricularCourse) {
+    	setDegreeModule(curricularCourse);
+    }
+
     
 }
