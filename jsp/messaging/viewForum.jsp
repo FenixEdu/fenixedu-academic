@@ -26,13 +26,13 @@
 	<logic:equal name="receivingMessagesByEmail" value="true">
 		<span style="color: #888;">
 			<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.receivingMessagesByEmail"/>
-			<html:link action="<%= contextPrefix + "&amp;method=emailUnsubscribe"%>" paramId="forumId" paramName="forumId"><bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.quitSubscription"/></html:link>
+			<html:link action="<%= contextPrefix + "method=emailUnsubscribe"%>" paramId="forumId" paramName="forumId"><bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.quitSubscription"/></html:link>
 		</span>
 	</logic:equal>
 	<logic:equal name="receivingMessagesByEmail" value="false">
 		<span style="color: #888;">
 			<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.notReceivingMessagesByEmail"/>
-			<html:link action="<%= contextPrefix + "amp;method=emailSubscribe"%>" paramId="forumId" paramName="forumId"><bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.subscribe"/></html:link>
+			<html:link action="<%= contextPrefix + "method=emailSubscribe"%>" paramId="forumId" paramName="forumId"><bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.subscribe"/></html:link>
 		</span>
 	</logic:equal>
 
@@ -44,7 +44,7 @@
 		<p>
 			<span class="gen-button">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link action="<%= contextPrefix + "amp;method=prepareCreateThreadAndMessage"%>" paramId="forumId" paramName="forum" paramProperty="idInternal" styleClass="gen-button">
+			<html:link action="<%= contextPrefix + "method=prepareCreateThreadAndMessage"%>" paramId="forumId" paramName="forum" paramProperty="idInternal" styleClass="gen-button">
 				<bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.createThread"/>
 			</html:link>
 			</span>
@@ -63,7 +63,7 @@
 				<bean:write name="pageNumber"/>
 			</logic:equal>
 			<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
-				<html:link action="<%= contextPrefix + "amp;method=viewForum&amp;forumId=" + forumId.toString() + "&amp;pageNumber=" + pageNumber%>">
+				<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId=" + forumId.toString() + "&amp;pageNumber=" + pageNumber%>">
 					<bean:write name="pageNumber"/>
 				</html:link>			
 			</logic:notEqual>
@@ -73,7 +73,7 @@
 			<fr:layout name="tabular">
 		        <fr:property name="classes" value="tstyle2"/>
 		        <fr:property name="columnClasses" value=",,,acenter"/>
-       			<fr:property name="link(view)" value="<%= contextPrefix + "amp;method=viewThread"%>"/>
+       			<fr:property name="link(view)" value="<%= contextPrefix + "method=viewThread"%>"/>
 				<fr:property name="param(view)" value="forum.idInternal/forumId,idInternal/threadId"/>
 				<fr:property name="key(view)" value="label.viewForum.viewThread"/>
 				<fr:property name="bundle(view)" value="MESSAGING_RESOURCES"/>
