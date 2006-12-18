@@ -19,7 +19,7 @@
 				<tr>
 					<td><bean:write name="executionCourseForum" property="name"/></td>
 					<td><html:link action="/viewExecutionCourseForuns.do?method=viewForum" paramId="forumId" paramName="executionCourseForum" paramProperty="idInternal">
- 					<bean:message key="link.viewExecutionCourseForuns.viewForum"/>
+	 					<bean:message key="link.viewExecutionCourseForuns.viewForum"/>
 					</html:link>
 					</td>
 				</tr>
