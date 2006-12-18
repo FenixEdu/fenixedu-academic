@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -345,10 +346,18 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getCreationSituation().getCreationDate();
     }
 
-    public Degree getDegree() {
+    public StudentCurricularPlan getStudentCurricularPlan() {
 	final ExecutionYear executionYear = hasExecutionYear() ? getExecutionYear() : ExecutionYear
 		.readByDateTime(getCreationDate());
-	return getRegistration().getStudentCurricularPlan(executionYear).getDegree();
+	return getRegistration().getStudentCurricularPlan(executionYear);
+    }
+
+    public Degree getDegree() {
+	return getStudentCurricularPlan().getDegree();
+    }
+
+    public boolean isBolonha() {
+	return getDegree().isBolonhaDegree();
     }
 
 }
