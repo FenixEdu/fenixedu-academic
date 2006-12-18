@@ -117,12 +117,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
             final Money amountPerPage = certificateRequestPR.getAmountPerPage();
             final Money baseAmountPlusAmountForUnits = certificateRequestPR.getBaseAmount().add(certificateRequestPR.getAmountPerUnit().multiply(new BigDecimal(certificateRequest.getNumberOfUnits())));
             final Money urgencyAmount = certificateRequest.getUrgentRequest() ? certificateRequestPR.getBaseAmount() : Money.ZERO;
-            final Money totalAmount = amountPerPage.add(baseAmountPlusAmountForUnits).add(urgencyAmount);
             
             parameters.put("amountPerPage", amountPerPage);
             parameters.put("baseAmountPlusAmountForUnits", baseAmountPlusAmountForUnits);
             parameters.put("urgencyAmount", urgencyAmount);
-            parameters.put("totalAmount", totalAmount);
         }
         
 	parameters.put("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
