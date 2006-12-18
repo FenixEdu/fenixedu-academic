@@ -41,9 +41,6 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
-    private static final String FILE_DOWNLOAD_URL_FORMAT = FileManagerFactory.getFileManager()
-	    .getDirectDownloadUrlFormat();
-
     public ActionForward prepareCreateCandidacy(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	CreateDFACandidacyBean createDFACandidacyBean = new CreateDFACandidacyBean();
@@ -180,7 +177,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute("candidacyDocuments", candidacyDocuments);
 	request.setAttribute("candidacy", candidacy);
-	request.setAttribute("fileDownloadUrlFormat", FILE_DOWNLOAD_URL_FORMAT);
+	
     }
 
     public ActionForward showCandidacyGeneratePass(ActionMapping mapping, ActionForm actionForm,

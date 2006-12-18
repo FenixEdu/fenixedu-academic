@@ -8,20 +8,19 @@
 
 
 		<bean:define id="currentSchema" name="currentSchema" scope="request" type="java.lang.String"/>
-		<ul>
+		<ul style="width: 600px;">
 		<logic:iterate id="result" name="results" scope="request">
  			<bean:define id="resultId" name="result" property="idInternal"/>
 				<li class="mtop1">
-		 			<fr:view name="result" layout="values" schema="<%=currentSchema%>">
+		 			<fr:view name="result" layout="nonNullValues" schema="<%=currentSchema%>">
 		 				<fr:layout>
 		 					<fr:property name="htmlSeparator" value=", "/>
 		 					<fr:property name="indentation" value="false"/>
 		 				</fr:layout>
-		 			</fr:view>
+		 			</fr:view> (<html:link target="_blank" page="<%="/publications/bibtexManagement.do?method=exportPublicationToBibtex&publicationId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" /></html:link>)
 		 			<p class="mtop025">
 			 		<html:link page="<%="/resultPublications/prepareEdit.do?resultId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.details.link" /></html:link>, 
-		 			<html:link page="<%="/resultPublications/prepareDelete.do?&resultId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.delete" /></html:link>, 
-			 		<html:link target="_blank" page="<%="/publications/bibtexManagement.do?method=exportPublicationToBibtex&publicationId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" /></html:link>
+		 			<html:link page="<%="/resultPublications/prepareDelete.do?&resultId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.delete" /></html:link> 
 			 		</p>
 	 			</li>
 		</logic:iterate>

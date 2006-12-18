@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.util.cas;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -32,10 +34,17 @@ public class CASServiceUrlProvider {
         }
     }
 
+    //fenix fenix.linkare.local
     public static String getServiceUrl(final String requestURL) {
-        for (final Entry<String, String> entry : serviceUrlsByHostnameMap.entrySet()) {
+    	URL location;
+		try {
+			location = new URL(requestURL);
+		} catch (MalformedURLException e) {
+			return null;
+		}
+    	for (final Entry<String, String> entry : serviceUrlsByHostnameMap.entrySet()) {
             final String hostname = entry.getKey();
-            if (StringUtils.substringAfter(requestURL, "://").startsWith(hostname)) {
+            if (location.getHost().equals(hostname)) {
                 return entry.getValue();
             }
         }

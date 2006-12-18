@@ -24,7 +24,7 @@
 		<fr:view name="participations" schema="<%= listSchema %>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2"/>
-				<fr:property name="columnClasses" value="acenter,,"/>
+				<fr:property name="columnClasses" value="acenter,,,aleft,"/>
 				<fr:property name="sortBy" value="personOrder"/>
 				
 				<fr:property name="link(remove)" value="<%= remove %>"/>

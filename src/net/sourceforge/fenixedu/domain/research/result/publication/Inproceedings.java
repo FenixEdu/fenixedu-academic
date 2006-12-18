@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.research.event.Event;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * (conference: The same as Inproceedings.) An article in a conference
@@ -22,37 +23,38 @@ import net.sourceforge.fenixedu.util.Month;
  */
 public class Inproceedings extends Inproceedings_Base {
 
+	private static final String usedSchema = "result.publication.presentation.Inproceedings";
     public Inproceedings() {
 	super();
     }
 
     public Inproceedings(Person participator, ResultParticipationRole participatorRole, String title,
-	    Integer year, Event event, ScopeType scope, Unit publisher, Unit organization,
-	    String address, Integer firstPage, Integer lastPage, String note, String language,
+	    Integer year, String conference, ScopeType scope, Unit publisher, Unit organization,
+	    String address, Integer firstPage, Integer lastPage, MultiLanguageString note, String language,
 	    Month month, String url) {
 	this();
-	checkRequiredParameters(title, year, event);
+	checkRequiredParameters(title, year, conference);
 	super.setCreatorParticipation(participator, participatorRole);
-	fillAllAttributes(title, year, event, scope, publisher, organization, address, firstPage,
+	fillAllAttributes(title, year, conference, scope, publisher, organization, address, firstPage,
 		lastPage, note, language, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, Integer year, Event event, ScopeType scope, Unit publisher,
-	    Unit organization, String address, Integer firstPage, Integer lastPage, String note,
+    public void setEditAll(String title, Integer year, String conference, ScopeType scope, Unit publisher,
+	    Unit organization, String address, Integer firstPage, Integer lastPage, MultiLanguageString note,
 	    String language, Month month, String url) {
-	checkRequiredParameters(title, year, event);
-	fillAllAttributes(title, year, event, scope, publisher, organization, address, firstPage,
+	checkRequiredParameters(title, year, conference);
+	fillAllAttributes(title, year, conference, scope, publisher, organization, address, firstPage,
 		lastPage, note, language, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, Integer year, Event event, ScopeType scope,
+    private void fillAllAttributes(String title, Integer year, String conference, ScopeType scope,
 	    Unit publisher, Unit organization, String address, Integer firstPage, Integer lastPage,
-	    String note, String language, Month month, String url) {
+	    MultiLanguageString note, String language, Month month, String url) {
 	super.setTitle(title);
 	super.setYear(year);
-	super.setEvent(event);
+	super.setConference(conference);
 	super.setScope(scope);
 	super.setPublisher(publisher);
 	super.setOrganization(organization);
@@ -65,12 +67,12 @@ public class Inproceedings extends Inproceedings_Base {
 	super.setUrl(url);
     }
 
-    private void checkRequiredParameters(String title, Integer year, Event event) {
+    private void checkRequiredParameters(String title, Integer year, String conference) {
 	if ((title == null) || (title.length() == 0))
 	    throw new DomainException("error.researcher.Inproceedings.title.null");
 	if (year == null)
 	    throw new DomainException("error.researcher.Inproceedings.year.null");
-	if (event == null)
+	if (conference == null)
 	    throw new DomainException("error.researcher.Inproceedings.event.null");
     }
 
@@ -84,8 +86,8 @@ public class Inproceedings extends Inproceedings_Base {
 	if ((getFirstPage() != null) && (getFirstPage() > 0) && (getLastPage() != null)
 		&& (getLastPage() > 0))
 	    resume = resume + "Pag. " + getFirstPage() + " - " + getLastPage() + ", ";
-	if (getEvent() != null && getEvent().getName() != null)
-	    resume = resume + getEvent().getName().getContent() + ", ";
+	if (getConference() != null)
+	    resume = resume + getConference() + ", ";
 	if (getOrganization() != null)
 	    resume = resume + getOrganization().getName() + ", ";
 
@@ -100,8 +102,8 @@ public class Inproceedings extends Inproceedings_Base {
 	BibtexEntry bibEntry = bibtexFile.makeEntry("inproceedings", generateBibtexKey());
 	bibEntry.setField("title", bibtexFile.makeString(getTitle()));
 	bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
-	if (getEvent() != null && getEvent().getName() != null)
-	    bibEntry.setField("booktitle", bibtexFile.makeString(getEvent().getName().getContent()));
+	if (getConference() != null && getConference() != null)
+	    bibEntry.setField("booktitle", bibtexFile.makeString(getConference()));
 	if (getPublisher() != null)
 	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher().getName()));
 	if ((getFirstPage() != null) && (getLastPage() != null) && (getFirstPage() < getLastPage()))
@@ -112,8 +114,8 @@ public class Inproceedings extends Inproceedings_Base {
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
 	if (getMonth() != null)
 	    bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
-	if ((getNote() != null) && (getNote().length() > 0))
-	    bibEntry.setField("note", bibtexFile.makeString(getNote()));
+	if ((getNote() != null) && (getNote().hasContent()))
+	    bibEntry.setField("note", bibtexFile.makeString(getNote().getContent()));
 
 	BibtexPersonList authorsList = getBibtexAuthorsList(bibtexFile, getAuthors());
 	if (authorsList != null) {
@@ -141,8 +143,8 @@ public class Inproceedings extends Inproceedings_Base {
     }
 
     @Override
-    public void setEvent(Event event) {
-	throw new DomainException("error.researcher.Inproceedings.call", "setEvent");
+    public void setConference(String conference) {
+	throw new DomainException("error.researcher.Inproceedings.call", "setConference");
     }
 
     @Override
@@ -171,7 +173,7 @@ public class Inproceedings extends Inproceedings_Base {
     }
 
     @Override
-    public void setNote(String note) {
+    public void setNote(MultiLanguageString note) {
 	throw new DomainException("error.researcher.Inproceedings.call", "setNote");
     }
 
@@ -199,4 +201,9 @@ public class Inproceedings extends Inproceedings_Base {
     public void setScope(ScopeType scope) {
 	throw new DomainException("error.researcher.Inproceedings.call", "setScope");
     }
+
+	@Override
+	public String getSchema() {
+		return usedSchema;
+	}
 }

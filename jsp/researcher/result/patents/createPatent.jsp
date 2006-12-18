@@ -8,7 +8,7 @@
 <logic:present role="RESEARCHER">
 	<!-- Titles -->
 	<em>Patentes</em> <!-- tobundle -->
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.create.link"/></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.create.link"/></h2>
 	
 	<!-- Author name -->
 	<p>
@@ -23,7 +23,7 @@
 	</logic:messagesPresent>
 	
 	<p class="mbottom05"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></strong></p>
-	<fr:create id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
+	<fr:create id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" 
 				schema="patent.create"
 				action="/resultPatents/prepareEdit.do">
 		<fr:hidden slot="participation" name="UserView" property="person"/>

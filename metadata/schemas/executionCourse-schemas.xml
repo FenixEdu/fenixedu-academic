@@ -530,12 +530,45 @@
 </schema>
 
 <schema name="item.file.create" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemCreationBean" bundle="SITE_RESOURCES">
-    <slot name="permittedGroup" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="permittedGroup" layout="radio-select" >
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.FileItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
         <property name="eachLayout" value="values"/>
-        <property name="saveOptions" value="true"/>
+        <property name="saveOptions" value="false"/>
     </slot>
+</schema>
+
+<schema name="item.file.create.scorm" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ScormCreationBean" bundle="SITE_RESOURCES">
+    <slot name="displayName"/>
+    <slot name="file">
+	    <property name="size" value="40"/>
+        <property name="fileNameSlot" value="fileName"/>
+        <property name="fileSizeSlot" value="fileSize"/>
+    </slot>
+	<slot name="virtualCardFile">
+		    <property name="size" value="40"/>
+		    <property name="fileNameSlot" value="virtualCardFilename"/>
+	        <property name="fileSizeSlot" value="virtualCardSize"/>
+    </slot>
+    <slot name="generalTitle"/>
+    <slot name="generalDescription"/>
+    <slot name="generalCatalog"/>
+    <slot name="generalEntry"/>
+    <slot name="generalLanguage"/>
+    <slot name="contributeRole"/>
+    <slot name="contributeEntity"/>
+    <slot name="contributeDate"/>
+    <slot name="keywords"/>
+    <slot name="educationalInteractivityType"/>
+    <slot name="educationalLearningResourceType"/>
+    <slot name="educationalLanguage"/>
+    <slot name="rightsCost" layout="radio">
+    	<property name="classes" value="nobullet liinline"/>
+    </slot>
+    <slot name="rightsCopyRightOtherRestrictions" layout="radio">             
+    	<property name="classes" value="nobullet liinline"/>
+    </slot>
+    <slot name="rightsDescription"/>
 </schema>
 
 <schema name="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean" type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean" bundle="APPLICATION_RESOURCES">
@@ -554,4 +587,14 @@
 <schema name="net.sourceforge.fenixedu.domain.ExecutionCourse.ForInquiryEvaluationDefinition" type="net.sourceforge.fenixedu.domain.ExecutionCourse" bundle="APPLICATION_RESOURCES">
 	<slot name="nome" key="label.executionCourse.name" read-only="true"/>
 	<slot name="availableForInquiries" key="label.executionCourse.availableForInquiries"/>
+</schema>
+
+<schema name="scormSearch" bundle="APPLICATION_RESOURCES" 
+	type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.SearchDSpaceBean">
+	<slot name="searchField" key="label.searchField" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="defaultText" value=""/>
+	</slot> 
+	<slot name="value" key="label.value" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+	</slot>
 </schema>

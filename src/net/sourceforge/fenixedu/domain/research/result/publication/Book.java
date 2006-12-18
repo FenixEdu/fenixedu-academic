@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * A book with an explicit publisher. Required fields: author or editor, title,
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.util.Month;
  */
 public class Book extends Book_Base {
 
+	private static final String usedSchema = "result.publication.presentation.Book";
     private Book() {
 	super();
     }
@@ -28,7 +30,7 @@ public class Book extends Book_Base {
     public Book(Person participator, ResultParticipationRole participatorRole, String title,
 	    Unit publisher, Integer year, String volume, String series, String address, String edition,
 	    Integer isbn, Integer numberPages, String language, Country country, ScopeType scope,
-	    String note, Month month, String url) {
+	    MultiLanguageString note, Month month, String url) {
 	this();
 	checkRequiredParameters(title, publisher, year);
 	super.setCreatorParticipation(participator, participatorRole);
@@ -39,7 +41,7 @@ public class Book extends Book_Base {
     @Checked("ResultPredicates.writePredicate")
     public void setEditAll(String title, Unit publisher, Integer year, String volume, String series,
 	    String address, String edition, Integer isbn, Integer numberPages, String language,
-	    Country country, ScopeType scope, String note, Month month, String url) {
+	    Country country, ScopeType scope, MultiLanguageString note, Month month, String url) {
 	checkRequiredParameters(title, publisher, year);
 	fillAllAttributes(title, publisher, year, volume, series, address, edition, isbn, numberPages,
 		language, country, scope, note, month, url);
@@ -48,7 +50,7 @@ public class Book extends Book_Base {
 
     private void fillAllAttributes(String title, Unit publisher, Integer year, String volume,
 	    String series, String address, String edition, Integer isbn, Integer numberPages,
-	    String language, Country country, ScopeType scope, String note, Month month, String url) {
+	    String language, Country country, ScopeType scope, MultiLanguageString note, Month month, String url) {
 	super.setTitle(title);
 	super.setPublisher(publisher);
 	super.setYear(year);
@@ -115,8 +117,8 @@ public class Book extends Book_Base {
 	    bibEntry.setField("edition", bibtexFile.makeString(getEdition()));
 	if (getMonth() != null)
 	    bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
-	if ((getNote() != null) && (getNote().length() > 0))
-	    bibEntry.setField("note", bibtexFile.makeString(getNote()));
+	if ((getNote() != null) && (getNote().hasContent()))
+	    bibEntry.setField("note", bibtexFile.makeString(getNote().getContent()));
 
 	BibtexPersonList authorsList = getBibtexAuthorsList(bibtexFile, getAuthors());
 	if (authorsList != null) {
@@ -169,7 +171,7 @@ public class Book extends Book_Base {
     }
 
     @Override
-    public void setNote(String note) {
+    public void setNote(MultiLanguageString note) {
 	throw new DomainException("error.researcher.Book.call", "setNote");
     }
 
@@ -212,4 +214,9 @@ public class Book extends Book_Base {
     public void setOrganization(Unit organization) {
 	throw new DomainException("error.researcher.Book.call", "setOrganization");
     }
+
+	@Override
+	public String getSchema() {
+		return usedSchema;
+	}
 }

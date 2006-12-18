@@ -77,7 +77,11 @@ Documentation:
     <!--@ This layout shows each slot value after the previous without a special organization. You can specify
           a separator between values and achive simple presentations like "6666 / José Dias" for a person. -->
     <renderer type="java.lang.Object" layout="values" class="net.sourceforge.fenixedu.renderers.ValuesRenderer"/>
-    
+
+
+	<!--@ Same thing as values renderer but does not displays slots with null values -->
+    <renderer type="java.lang.Object" layout="nonNullValues" class="net.sourceforge.fenixedu.presentationTier.renderers.NonNullValuesRenderer"/>
+
     <!--@ The format offers other way of presenting objects inline. The <tt>format</tt> property accepts a special
           syntax that allows you to choose how the information is presented. Read the renderer documentation for
           more details. -->
@@ -127,6 +131,10 @@ Documentation:
     </renderer>
     
     <renderer type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
+    <renderer type="java.lang.Number" layout="fileSize" class="net.sourceforge.fenixedu.presentationTier.renderers.FileSizeRenderer">
+    	<property name="shortUnit" value="true"/>
+    </renderer>
+
     <renderer type="int" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
     <renderer type="long" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
     <renderer type="short" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>

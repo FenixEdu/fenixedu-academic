@@ -10,13 +10,13 @@ import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
 import bibtex.dom.BibtexPerson;
 import bibtex.dom.BibtexPersonList;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
-import net.sourceforge.fenixedu.injectionCode.Checked;
 
-public abstract class ResultPublication extends ResultPublication_Base {
+public abstract class ResearchResultPublication extends ResearchResultPublication_Base {
 
     public enum ScopeType {
 	LOCAL, NATIONAL, INTERNATIONAL;
@@ -25,8 +25,8 @@ public abstract class ResultPublication extends ResultPublication_Base {
     /**
          * Comparator than can be used to order publications by Year.
          */
-    static class OrderComparator implements Comparator<ResultPublication> {
-	public int compare(ResultPublication rp1, ResultPublication rp2) {
+    static class OrderComparator implements Comparator<ResearchResultPublication> {
+	public int compare(ResearchResultPublication rp1, ResearchResultPublication rp2) {
 	    Integer pub1 = rp1.getYear();
 	    Integer pub2 = rp2.getYear();
 	    if (pub1 == null) {
@@ -38,14 +38,14 @@ public abstract class ResultPublication extends ResultPublication_Base {
 	}
     }
 
-    public static <T extends ResultPublication> List<T> sort(Collection<T> resultPublications) {
+    public static <T extends ResearchResultPublication> List<T> sort(Collection<T> resultPublications) {
 	List<T> sorted = new ArrayList<T>(resultPublications);
-	Collections.sort(sorted, new ResultPublication.OrderComparator());
+	Collections.sort(sorted, new ResearchResultPublication.OrderComparator());
 
 	return sorted;
     }
 
-    public ResultPublication() {
+    public ResearchResultPublication() {
 	super();
     }
 
@@ -94,7 +94,7 @@ public abstract class ResultPublication extends ResultPublication_Base {
     protected String generateBibtexKey() {
 	String key = "";
 	ResultParticipation participation = getOrderedResultParticipations().get(0);
-	key = participation.getPerson().getName();
+	key = participation.getPerson().getNickname();
 	key = key.replace(" ", "");
 	if ((getYear() != null) && (getYear() > 0))
 	    key = key + getYear();
@@ -107,7 +107,7 @@ public abstract class ResultPublication extends ResultPublication_Base {
 	    BibtexPersonList authorsList = bibtexFile.makePersonList();
 	    BibtexPerson bp;
 	    for (Person person : authors) {
-		bp = bibtexFile.makePerson(person.getName(), null, null, null, false);
+		bp = bibtexFile.makePerson(person.getNickname(), null, null, null, false);
 		authorsList.add(bp);
 	    }
 	    return authorsList;
@@ -120,7 +120,7 @@ public abstract class ResultPublication extends ResultPublication_Base {
 	    BibtexPersonList editorsList = bibtexFile.makePersonList();
 	    BibtexPerson bp;
 	    for (Person person : editors) {
-		bp = bibtexFile.makePerson(person.getName(), null, null, null, false);
+		bp = bibtexFile.makePerson(person.getNickname(), null, null, null, false);
 		editorsList.add(bp);
 	    }
 	    return editorsList;
@@ -162,4 +162,8 @@ public abstract class ResultPublication extends ResultPublication_Base {
 	}
 	return personList;
     }
+    
+    public abstract String getSchema();
+    	
+    
 }

@@ -39,9 +39,7 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
  */
 public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 
-    private static final String FILE_DOWNLOAD_URL_FORMAT = FileManagerFactory.getFileManager()
-            .getDirectDownloadUrlFormat();
-
+ 
     public ActionForward viewProjectsWithOnlineSubmission(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException, FenixServiceException {
@@ -71,7 +69,6 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
                     project, studentGroup);
 
             request.setAttribute("attends", attends);
-            request.setAttribute("fileDownloadUrlFormat", FILE_DOWNLOAD_URL_FORMAT);
             request.setAttribute("projectSubmissions", projectSubmissionsSortedByMostRecent);
         } else {
             request.setAttribute("noStudentGroupForGrouping", true);

@@ -6,7 +6,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
-	<bean:define id="publications" name="UserView" property="person.resultPublications"/>
+	<bean:define id="publications" name="UserView" property="person.researchResultPublications"/>
+	<bean:define id="personId" name="person" property="idInternal"/>
+	
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></h2>
 
 	<logic:messagesPresent name="messages" message="true">
@@ -17,13 +19,18 @@
 
 	<ul class="list5">
 		<li>
+			<html:link page="/resultPublications/prepareCreate.do">
+				<bean:message bundle="RESEARCHER_RESOURCES"	key="researcher.ResultPublication.insert.link"/>
+			</html:link>
+		</li>
+		<li>
 			<html:link page="/publications/bibtexManagement.do?method=prepareOpenBibtexFile">
 				<bean:message bundle="RESEARCHER_RESOURCES"	key="researcher.result.publication.importBibtex"/>
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/resultPublications/prepareCreate.do">
-				<bean:message bundle="RESEARCHER_RESOURCES"	key="researcher.ResultPublication.insert.link"/>
+			<html:link target="_blank" page="<%="/publications/bibtexManagement.do?method=exportAllPublicationsToBibtex&amp;personOID=" + personId %>">
+					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportAllToBibTeX" />
 			</html:link>
 		</li>
 	</ul>

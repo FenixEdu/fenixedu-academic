@@ -43,9 +43,7 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
-    private static final String FILE_DOWNLOAD_URL_FORMAT = FileManagerFactory.getFileManager()
-            .getDirectDownloadUrlFormat();
-
+  
     public ActionForward curricularCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {

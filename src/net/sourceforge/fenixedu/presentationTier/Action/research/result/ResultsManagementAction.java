@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.result.Result;
-import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
+import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -21,15 +21,15 @@ import org.apache.struts.action.ActionMessages;
 public class ResultsManagementAction extends FenixDispatchAction {
     public ActionForward backToResult(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
-        final Result result = getResultFromRequest(request);
+        final ResearchResult result = getResultFromRequest(request);
         if (result == null) {
             return backToResultList(mapping, form, request, response);
         }
 
         request.setAttribute("resultId", result.getIdInternal());
-        if (result instanceof ResultPatent) {
+        if (result instanceof ResearchResultPatent) {
             return mapping.findForward("editPatent");
-        } else if (result instanceof ResultPublication) {
+        } else if (result instanceof ResearchResultPublication) {
             return mapping.findForward("viewEditPublication");
         }
         return null;
@@ -40,7 +40,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
         final String resultType = (String) getFromRequest(request, "resultType");
 
         if (!(resultType == null || resultType.equals(""))) {
-            if (resultType.compareTo(ResultPatent.class.getSimpleName()) == 0) {
+            if (resultType.compareTo(ResearchResultPatent.class.getSimpleName()) == 0) {
                 return mapping.findForward("listPatents");
             }
             return mapping.findForward("ListPublications");
@@ -48,12 +48,12 @@ public class ResultsManagementAction extends FenixDispatchAction {
         return null;
     }
 
-    private Result getResultByIdFromRequest(HttpServletRequest request) {
+    private ResearchResult getResultByIdFromRequest(HttpServletRequest request) {
         final Integer resultId = Integer.valueOf(getFromRequest(request, "resultId").toString());
 
         if (resultId != null) {
             try {
-                return Result.readByOid(resultId);
+                return ResearchResult.readByOid(resultId);
             } catch (DomainException e) {
                 addMessage(request, e.getKey(), e.getArgs());
             }
@@ -61,8 +61,8 @@ public class ResultsManagementAction extends FenixDispatchAction {
         return null;
     }
 
-    public final Result getResultFromRequest(HttpServletRequest request) {
-        Result result = null;
+    public final ResearchResult getResultFromRequest(HttpServletRequest request) {
+        ResearchResult result = null;
         try {
             result = getResultByIdFromRequest(request);
         } catch (Exception e) {
@@ -72,11 +72,11 @@ public class ResultsManagementAction extends FenixDispatchAction {
             try {
                 final Object object = getRenderedObject(null);
 
-                if (object instanceof Result) {
-                    result = (Result) object;
+                if (object instanceof ResearchResult) {
+                    result = (ResearchResult) object;
                 }
                 if (object instanceof ResultPublicationBean) {
-                    result = Result.readByOid(((ResultPublicationBean) object).getIdInternal());
+                    result = ResearchResult.readByOid(((ResultPublicationBean) object).getIdInternal());
                 }
 
             } catch (Exception e) {

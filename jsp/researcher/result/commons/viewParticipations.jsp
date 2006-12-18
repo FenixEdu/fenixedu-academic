@@ -19,7 +19,7 @@
 		<fr:view name="participations" schema="<%= newParticipationsSchema %>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1"/>
-				<fr:property name="columnClasses" value="acenter,,"/>
+				<fr:property name="columnClasses" value="acenter,,,aleft"/>
 				<fr:property name="sortBy" value="personOrder"/>
 			</fr:layout>
 		</fr:view>

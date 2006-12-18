@@ -19,9 +19,8 @@ import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.util.ByteArray;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.FileMetadata;
-import pt.utl.ist.fenix.tools.file.FilePath;
-import pt.utl.ist.fenix.tools.file.Node;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
+import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public abstract class BlueprintVersionManagmentService extends Service {
@@ -39,13 +38,13 @@ public abstract class BlueprintVersionManagmentService extends Service {
             final Space space, final Person person, final Blueprint blueprint) throws IOException {
         final String filename = blueprintSubmissionBean.getSpaceInformation().getIdInternal()
                 + String.valueOf(System.currentTimeMillis());
-        final FileMetadata fileMetadata = new FileMetadata(filename, person.getName());
+        
 
         final byte[] contents = readInputStream(blueprintSubmissionBean.getInputStream());
         final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(contents);
 
         final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
-                getFilePath(space.getMostRecentSpaceInformation()), filename, true, fileMetadata,
+        		getVirtualPath(space.getMostRecentSpaceInformation()), filename, true, person.getName(),filename,
                 byteArrayInputStream);
 
         final String displayName = blueprintSubmissionBean.getFilename();
@@ -62,12 +61,12 @@ public abstract class BlueprintVersionManagmentService extends Service {
         return byteArrayOutputStream.toByteArray();
     }
 
-    protected FilePath getFilePath(SpaceInformation spaceInformation) {
-        final FilePath filePath = new FilePath();
-        filePath.addNode(new Node("Spaces", "Spaces"));
-        filePath.addNode(new Node("Spaces" + spaceInformation.getSpace().getIdInternal(),
+    protected VirtualPath getVirtualPath(SpaceInformation spaceInformation) {
+        final VirtualPath filePath = new VirtualPath();
+        filePath.addNode(new VirtualPathNode("Spaces", "Spaces"));
+        filePath.addNode(new VirtualPathNode("Spaces" + spaceInformation.getSpace().getIdInternal(),
                 spaceInformation.getPresentationName()));
-        filePath.addNode(new Node("Blueprints", "Blueprints"));
+        filePath.addNode(new VirtualPathNode("Blueprints", "Blueprints"));
         return filePath;
     }
 

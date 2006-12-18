@@ -26,13 +26,13 @@
 			key="label.projectSubmissions.viewProjectSubmissions.noProjectSubmissions" />
 		</span>
 	</logic:empty>
-	<bean:define id="downloadUrlPrefix" name="fileDownloadUrlFormat" />
+
 	<logic:notEmpty name="projectSubmissions">
 		<fr:view name="projectSubmissions" schema="projectSubmission.view-full">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2" />
 				<fr:property name="columnClasses" value=",,,acenter" />
-				<fr:property name="linkFormat(download)" value="<%= downloadUrlPrefix + "/${projectSubmissionFile.externalStorageIdentification}/${projectSubmissionFile.filename}"%>"/>
+				<fr:property name="linkFormat(download)" value="${projectSubmissionFile.downloadUrl}"/>
 				<fr:property name="key(download)" value="link.common.download"/>
 				<fr:property name="contextRelative(download)" value="false"/>
 				<fr:property name="bundle(download)" value="APPLICATION_RESOURCES"/>

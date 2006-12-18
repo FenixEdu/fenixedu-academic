@@ -20,6 +20,14 @@
 	<bean:message key="link.teacherServiceDistribution.permissionSupportService"/>
 </h3>
 
+<ul>
+<li>
+<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+	<bean:message key="link.back"/>
+</html:link>
+</li>
+</ul>
+
 <html:form action="/valuationGroupingSupport">
 <html:hidden property="method" value=""/>
 <html:hidden property="teacherServiceDistribution"/>
@@ -133,6 +141,3 @@
 <br/>
 <br/>
 
-<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-	<bean:message key="link.back"/>
-</html:link>

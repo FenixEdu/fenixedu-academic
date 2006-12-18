@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
-import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -16,13 +16,15 @@ import org.apache.struts.action.ActionMapping;
 public class ResultDocumentFilesManagementAction extends ResultsManagementAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-        final Result result = getResultFromRequest(request);
+        final ResearchResult result = getResultFromRequest(request);
         if (result == null) {
             return backToResultList(mapping, form, request, response);
         }
 
         setResDocFileRequestAttributes(request, result);
-        return mapping.findForward("editDocumentFiles");
+        String forwardTo = request.getParameter("forwardTo");
+    	
+        return mapping.findForward(forwardTo);
     }
 
     public ActionForward prepareAlter(ActionMapping mapping, ActionForm form,
@@ -63,7 +65,7 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
         return prepareEdit(mapping, form, request, response);
     }
 
-    private void setResDocFileRequestAttributes(HttpServletRequest request, Result result)
+    private void setResDocFileRequestAttributes(HttpServletRequest request, ResearchResult result)
             throws FenixFilterException, FenixServiceException {
         final ResultDocumentFileSubmissionBean bean = new ResultDocumentFileSubmissionBean(result);
         request.setAttribute("bean", bean);

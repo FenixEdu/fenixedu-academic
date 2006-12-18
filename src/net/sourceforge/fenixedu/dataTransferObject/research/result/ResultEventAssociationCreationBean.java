@@ -5,20 +5,20 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.event.Event;
 import net.sourceforge.fenixedu.domain.research.event.EventType;
-import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ResultEventAssociationCreationBean implements Serializable {
-    private DomainReference<Result> result;
+    private DomainReference<ResearchResult> result;
     private DomainReference<Event> event;
     private ResultEventAssociationRole role;
     private MultiLanguageString eventNameMLS;
     private String eventNameStr;
     private EventType eventType;
 
-    public ResultEventAssociationCreationBean(Result result) {
-	setResult(new DomainReference<Result>(result));
+    public ResultEventAssociationCreationBean(ResearchResult result) {
+	setResult(new DomainReference<ResearchResult>(result));
         setRole(ResultEventAssociationRole.getDefaultRole());
         setEvent(null);
         setEventType(EventType.getDefaultType());
@@ -50,11 +50,11 @@ public class ResultEventAssociationCreationBean implements Serializable {
         this.event = (event != null) ? new DomainReference<Event>(event) : null;
     }
     
-    public Result getResult() {
+    public ResearchResult getResult() {
         return result.getObject();
     }
 
-    public void setResult(DomainReference<Result> result) {
+    public void setResult(DomainReference<ResearchResult> result) {
         this.result = result;
     }
     

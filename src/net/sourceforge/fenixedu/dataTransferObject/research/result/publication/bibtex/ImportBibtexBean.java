@@ -4,97 +4,215 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean.ParticipationType;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 public class ImportBibtexBean implements Serializable {
 
-    private List<BibtexPublicationBean> bibtexPublications = new ArrayList<BibtexPublicationBean>();
+	private List<BibtexPublicationBean> bibtexPublications = new ArrayList<BibtexPublicationBean>();
 
-    private int totalPublicationsReaded = 0;
+	private int totalPublicationsReaded = 0;
 
-    private int currentPublicationPosition = 1;
+	private int currentPublicationPosition = 0;
 
-    public List<BibtexPublicationBean> getBibtexPublications() {
-	return bibtexPublications;
-    }
+	private int currentAuthorPosition = 0;
 
-    public void setBibtexPublications(List<BibtexPublicationBean> bibtexPublications) {
-	this.bibtexPublications = bibtexPublications;
-    }
+	private int currentEditorPosition = 0;
 
-    public ResultPublicationBean getCurrentPublicationBean() {
-	if (bibtexPublications.get(0) != null)
-	    return bibtexPublications.get(0).getPublicationBean();
-	return null;
-    }
-
-    public BibtexPublicationBean getCurrentBibtexPublication() {
-	if (bibtexPublications.get(0) != null)
-	    return bibtexPublications.get(0);
-	return null;
-    }
-
-    public String getCurrentBibtex() {
-	if (bibtexPublications.get(0) != null)
-	    return bibtexPublications.get(0).getBibtex();
-	return null;
-    }
-
-    public List<BibtexParticipatorBean> getCurrentAuthors() {
-	if (bibtexPublications.get(0) != null)
-	    return bibtexPublications.get(0).getAuthors();
-	return null;
-    }
-
-    public List<BibtexParticipatorBean> getCurrentEditors() {
-	if (bibtexPublications.get(0) != null)
-	    return bibtexPublications.get(0).getEditors();
-	return null;
-    }
-
-    public List<BibtexParticipatorBean> getCurrentParticipators() {
-	if (bibtexPublications.get(0) != null)
-	    return bibtexPublications.get(0).getParticipators();
-	return null;
-    }
-
-    public boolean isCurrentProcessedParticipators() {
-	return bibtexPublications.get(0).isProcessedParticipators();
-    }
-
-    public void setCurrentProcessedParticipators(boolean value) {
-	bibtexPublications.get(0).setProcessedParticipators(value);
-    }
-
-    public boolean hasMorePublications() {
-	if (bibtexPublications.size() > 0)
-	    return true;
-	return false;
-    }
-
-    public int getCurrentPublicationPosition() {
-	return currentPublicationPosition;
-    }
-
-    public void setCurrentPublicationPosition(int currentPublicationPosition) {
-	this.currentPublicationPosition = currentPublicationPosition;
-    }
-
-    public int getTotalPublicationsReaded() {
-	return totalPublicationsReaded;
-    }
-
-    public void setTotalPublicationsReaded(int totalPublicationsReaded) {
-	this.totalPublicationsReaded = totalPublicationsReaded;
-    }
-
-    public boolean moveToNextPublicaton() {
-	if (hasMorePublications()) {
-	    bibtexPublications.remove(0);
-	    currentPublicationPosition++;
-	    if (hasMorePublications())
-		return true;
+	public List<BibtexPublicationBean> getBibtexPublications() {
+		return bibtexPublications;
 	}
-	return false;
-    }
+
+	public void setBibtexPublications(List<BibtexPublicationBean> bibtexPublications) {
+		this.bibtexPublications = bibtexPublications;
+	}
+
+	public ResultPublicationBean getCurrentPublicationBean() {
+		BibtexPublicationBean bean = getCurrentBibtexPublication();
+		return (bean != null) ? bean.getPublicationBean() : null;
+
+	}
+
+	public BibtexPublicationBean getCurrentBibtexPublication() {
+		BibtexPublicationBean bean = bibtexPublications.get(currentPublicationPosition);
+		return (bean != null) ? bean : null;
+	}
+
+	public String getCurrentBibtex() {
+		BibtexPublicationBean bean = getCurrentBibtexPublication();
+		return (bean != null) ? bean.getBibtex() : null;
+	}
+
+	public List<BibtexParticipatorBean> getCurrentAuthors() {
+		BibtexPublicationBean bean = getCurrentBibtexPublication();
+		return (bean != null) ? bean.getAuthors() : new ArrayList<BibtexParticipatorBean>();
+
+	}
+
+	public List<BibtexParticipatorBean> getCurrentEditors() {
+		BibtexPublicationBean bean = getCurrentBibtexPublication();
+		return (bean != null) ? bean.getEditors() : new ArrayList<BibtexParticipatorBean>();
+	}
+
+	public List<BibtexParticipatorBean> getCurrentParticipators() {
+		BibtexPublicationBean bean = getCurrentBibtexPublication();
+		return (bean != null) ? bean.getParticipators() : new ArrayList<BibtexParticipatorBean>();
+	}
+
+	public boolean isCurrentProcessedParticipators() {
+		return getCurrentBibtexPublication().isProcessedParticipators();
+	}
+
+	public void setCurrentProcessedParticipators(boolean value) throws FenixActionException {
+		Person person = AccessControl.getUserView().getPerson();
+		if (this.personBelongsToParticipators(person)) {
+			getCurrentBibtexPublication().setProcessedParticipators(value);
+		} else {
+			throw new FenixActionException("error.importBibtex.personImportingNotInParticipants");
+		}
+	}
+
+	public boolean hasMorePublications() {
+		return currentPublicationPosition < bibtexPublications.size();
+	}
+
+	public int getCurrentPublicationPosition() {
+		return currentPublicationPosition + 1;
+	}
+
+	public void setCurrentPublicationPosition(int currentPublicationPosition) {
+		this.currentPublicationPosition = currentPublicationPosition;
+	}
+
+	public int getTotalPublicationsReaded() {
+		return totalPublicationsReaded;
+	}
+
+	public void setTotalPublicationsReaded(int totalPublicationsReaded) {
+		this.totalPublicationsReaded = totalPublicationsReaded;
+	}
+
+	public boolean moveToNextPublicaton() {
+		currentPublicationPosition++;
+		currentAuthorPosition = 0;
+		return (hasMorePublications()) ? true : false;
+	}
+
+	public int getNumberOfAuthors() {
+		List authors = getCurrentAuthors();
+		return (authors!=null) ? authors.size() : 0;
+	}
+
+	public int getCurrentAuthorIndex() {
+		return currentAuthorPosition;
+	}
+
+	public int getCurrentAuthorPosition() {
+		return currentAuthorPosition + 1;
+	}
+
+	public boolean hasMoreAuthors() {
+		List<BibtexParticipatorBean> authors = getCurrentAuthors().subList(currentAuthorPosition, getNumberOfAuthors());
+		for(BibtexParticipatorBean author : authors) {
+			if(!author.isParticipatorProcessed()) {
+				return true;
+			}
+			moveToNextAuthor();
+		}
+		
+		return false;
+	}
+
+	public BibtexParticipatorBean getNextAuthor() {
+		return (hasMoreAuthors()) ? getCurrentAuthors().get(currentAuthorPosition) : null;
+	}
+
+	public void moveToNextAuthor() {
+		currentAuthorPosition++;
+	}
+
+	public int getNumberOfEditors() {
+		List editors =getCurrentEditors(); 
+		return (editors!=null) ? editors.size() : 0;
+	}
+
+	public int getCurrentEditorIndex() {
+		return currentEditorPosition;
+	}
+
+	public int getCurrentEditorPosition() {
+		return currentEditorPosition + 1;
+	}
+
+	public boolean hasMoreEditors() {
+		List<BibtexParticipatorBean> editors = getCurrentEditors().subList(currentEditorPosition, getNumberOfEditors());
+		for(BibtexParticipatorBean editor : editors) {
+			if(!editor.isParticipatorProcessed()) {
+				return true;
+			}
+			moveToNextEditor();
+		}
+		return false;
+	}
+
+	public BibtexParticipatorBean getNextEditor() {
+		return (hasMoreEditors()) ? getCurrentEditors().get(currentEditorPosition) : null;
+	}
+
+	public void moveToNextEditor() {
+		currentEditorPosition++;
+	}
+
+	public boolean hasMoreParticipations() {
+		return this.hasMoreAuthors() || this.hasMoreEditors();
+	}
+
+	public boolean personBelongsToParticipators(Person person) {
+		for (BibtexParticipatorBean participation : this.getCurrentParticipators()) {
+			if (person.equals(participation.getPerson())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void moveToNextParticipation(String participationType) {
+		if (participationType.equalsIgnoreCase("author")) {
+			this.moveToNextAuthor();
+		} else {
+			this.moveToNextEditor();
+		}
+	}
+
+	public BibtexParticipatorBean getNextParticipation(String participationType) {
+		return (participationType.equalsIgnoreCase("author")) ? this.getNextAuthor() : this.getNextEditor();
+	}
+	
+	public void resetBeanCounters() {
+		currentAuthorPosition=0;
+		currentEditorPosition=0;
+		List<BibtexParticipatorBean> beans = this.getCurrentParticipators();
+		for(BibtexParticipatorBean bean : beans) {
+			bean.reset();
+		}
+	}
+	
+	public List<BibtexParticipatorBean> getProcessedBeans() {
+		List<BibtexParticipatorBean> beans = this.getCurrentParticipators();
+		return beans.subList(0, currentAuthorPosition + currentEditorPosition);
+	}
+
+	public void resetParticipationBean(Integer index) {
+		getCurrentParticipators().get(index).reset();
+		if(currentAuthorPosition>index) {
+			currentAuthorPosition = index;
+		}
+		else {
+			currentEditorPosition = index;
+		}
+	}
+	
 }

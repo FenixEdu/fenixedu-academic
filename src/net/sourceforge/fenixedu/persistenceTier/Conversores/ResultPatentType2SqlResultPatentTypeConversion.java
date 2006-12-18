@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent.ResultPatentType;
+import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent.ResultPatentType;
 
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;

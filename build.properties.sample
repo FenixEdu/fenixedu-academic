@@ -462,12 +462,25 @@ markSheet.printers=
 # File Manager
 #----------------------------------------------------------------
 file.manager.implementation.class=pt.utl.ist.fenix.tools.file.dspace.DspaceFileManager
+dspace.client.transport.class=pt.utl.ist.fenix.tools.file.dspace.DSpaceHttpClient
+dspace.rmi.server.name=DSpaceRMIRemoteManager
+
+jndi.properties.file=classpath://dspace.jndi.properties
+rmi.registry.port=1091
+rmi.port=0
+rmi.ssl=1
+rmi.ssl.truststore=classpath://DSpaceClient.truststore
+rmi.ssl.truststore.password=dspace
+rmi.stream.bytes.min=2048
+rmi.stream.bytes.max=32768
+rmi.stream.bytes.block=512
+
 
 #----------------------------------------------------------------
 # File Manager - Dspace Configuration
 #----------------------------------------------------------------
 dspace.serverUrl=https://localhost:8443/dspace
-dspace.downloadUriFormat=bitstream
+dspace.downloadUriFormat=bitstream/{0}/{1}
 dspace.username=ist12628
 dspace.password=pass
 

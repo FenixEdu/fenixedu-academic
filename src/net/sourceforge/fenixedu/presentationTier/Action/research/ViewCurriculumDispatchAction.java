@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.research.event.Event;
 import net.sourceforge.fenixedu.domain.research.event.EventParticipation;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -44,10 +44,10 @@ public class ViewCurriculumDispatchAction extends FenixDispatchAction {
         final List<ResearchInterest> researchInterests = loggedPerson.getResearchInterests();
         request.setAttribute("researchInterests", researchInterests);
         
-        final List<ResultPublication> resultPublications = loggedPerson.getResultPublications();
-        request.setAttribute("resultPublications", ResultPublication.sort(resultPublications));
+        final List<ResearchResultPublication> resultPublications = loggedPerson.getResearchResultPublications();
+        request.setAttribute("resultPublications", ResearchResultPublication.sort(resultPublications));
         
-        request.setAttribute("resultPatents", loggedPerson.getResultPatents());
+        request.setAttribute("resultPatents", loggedPerson.getResearchResultPatents());
 
         return mapping.findForward("Success");
     }

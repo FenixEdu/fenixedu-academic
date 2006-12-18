@@ -7,28 +7,23 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class ResultTeacher extends ResultTeacher_Base {
-    
-    static {
-        Teacher.ResultTeacherTeacher.addListener(new ResultTeacherTeacherListener());
-    }
-    
-    
+     
     public ResultTeacher()
     {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
     
-    public ResultTeacher(Result result, Teacher teacher, PublicationArea area) {
-	this();
-	if (result == null)
+    public ResultTeacher(ResearchResult result, Teacher teacher, PublicationArea area) {
+        this();
+        if (result == null)
 	    throw new DomainException("error.researcher.ResultTeacher.Result.null");
 	if (teacher == null)
 	    throw new DomainException("error.researcher.ResultTeacher.Teacher.null");
 	if (area == null)
 	    throw new DomainException("error.researcher.ResultTeacher.PublicationArea.null");
-        verifyIfParticipator(teacher, result);
-        setPublicationArea(area);
+		verifyIfParticipator(teacher, result);
+		setPublicationArea(area);
         setResult(result);
         setTeacher(teacher);
     }
@@ -42,7 +37,7 @@ public class ResultTeacher extends ResultTeacher_Base {
         super.deleteDomainObject();
     }
  
-    private void verifyIfParticipator(Teacher teacher, Result result) {
+    private void verifyIfParticipator(Teacher teacher, ResearchResult result) {
         boolean isParticipator = false;
         Person author = teacher.getPerson();
         for(ResultParticipation participation: result.getResultParticipations()) {
@@ -51,12 +46,4 @@ public class ResultTeacher extends ResultTeacher_Base {
         if (!isParticipator) throw new DomainException("error.result.teacherNotAuthor");
     }
     
-    private static class ResultTeacherTeacherListener extends dml.runtime.RelationAdapter<Teacher,ResultTeacher> {
-        @Override
-        public void beforeAdd(Teacher teacher, ResultTeacher result) {
-            if (teacher != null && !teacher.canAddResultToTeacherInformationSheet(result.getPublicationArea())) {
-                throw new DomainException("error.teacherSheetFull", result.getPublicationArea().getName());
-            }
-        }
-    }
 }

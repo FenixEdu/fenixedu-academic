@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.R
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
 import net.sourceforge.fenixedu.domain.research.event.Event;
-import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
@@ -21,15 +21,15 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings
 import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
 import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 
 public class EditResultPublication extends ResultPublicationService {
 
-    public ResultPublication run(BookBean bean) throws FenixServiceException {
-	final ResultPublication publication = getResultPublication(bean);
+    public ResearchResultPublication run(BookBean bean) throws FenixServiceException {
+	final ResearchResultPublication publication = getResultPublication(bean);
 
 	if (publication instanceof Book) {
 	    ((Book) publication).setEditAll(bean.getTitle(), getPublisher(bean), bean.getYear(), bean
@@ -45,8 +45,8 @@ public class EditResultPublication extends ResultPublicationService {
 	return publication;
     }
 
-    public ResultPublication run(InbookBean bean) throws FenixServiceException {
-	final ResultPublication publication = getResultPublication(bean);
+    public ResearchResultPublication run(InbookBean bean) throws FenixServiceException {
+	final ResearchResultPublication publication = getResultPublication(bean);
 
 	if (publication instanceof BookPart) {
 	    if (((BookPart) publication).getBookPartType().equals(BookPartType.Inbook)) {
@@ -66,8 +66,8 @@ public class EditResultPublication extends ResultPublicationService {
 	return publication;
     }
 
-    public ResultPublication run(IncollectionBean bean) throws FenixServiceException {
-	final ResultPublication publication = getResultPublication(bean);
+    public ResearchResultPublication run(IncollectionBean bean) throws FenixServiceException {
+	final ResearchResultPublication publication = getResultPublication(bean);
 
 	if (publication instanceof BookPart) {
 	    if (((BookPart) publication).getBookPartType().equals(BookPartType.Incollection)) {
@@ -86,8 +86,8 @@ public class EditResultPublication extends ResultPublicationService {
 	return publication;
     }
 
-    public ResultPublication run(ArticleBean bean) throws FenixServiceException {
-	final ResultPublication publication = getResultPublication(bean);
+    public ResearchResultPublication run(ArticleBean bean) throws FenixServiceException {
+	final ResearchResultPublication publication = getResultPublication(bean);
 
 	if (publication instanceof Article) {
 	    ((Article) publication).setEditAll(bean.getTitle(), bean.getJournal(), bean.getYear(),
@@ -103,13 +103,13 @@ public class EditResultPublication extends ResultPublicationService {
 	return publication;
     }
 
-    public ResultPublication run(InproceedingsBean bean) throws FenixServiceException {
-	final ResultPublication publication = getResultPublication(bean);
+    public ResearchResultPublication run(InproceedingsBean bean) throws FenixServiceException {
+	final ResearchResultPublication publication = getResultPublication(bean);
 
 	if (publication instanceof Inproceedings) {
-	    final Event event = getEventFromBean(bean);
+	    
 
-	    ((Inproceedings) publication).setEditAll(bean.getTitle(), bean.getYear(), event, bean
+	    ((Inproceedings) publication).setEditAll(bean.getTitle(), bean.getYear(), bean.getConference(), bean
 		    .getScope(), getPublisher(bean), getOrganization(bean), bean.getAddress(), bean
 		    .getFirstPage(), bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean
 		    .getMonth(), bean.getUrl());
@@ -122,13 +122,12 @@ public class EditResultPublication extends ResultPublicationService {
 	return publication;
     }
 
-    public ResultPublication run(ProceedingsBean bean) throws FenixServiceException {
-	final ResultPublication publication = getResultPublication(bean);
+    public ResearchResultPublication run(ProceedingsBean bean) throws FenixServiceException {
+	final ResearchResultPublication publication = getResultPublication(bean);
 
 	if (publication instanceof Proceedings) {
-	    final Event event = getEventFromBean(bean);
-
-	    ((Proceedings) publication).setEditAll(bean.getTitle(), bean.getYear(), event, bean
+	    
+	    ((Proceedings) publication).setEditAll(bean.getTitle(), bean.getYear(), bean.getConference(), bean
 		    .getScope(), getPublisher(bean), getOrganization(bean), bean.getAddress(), bean
 		    .getNote(), bean.getMonth(), bean.getUrl());
 	} else {
@@ -140,8 +139,8 @@ public class EditResultPublication extends ResultPublicationService {
 	return publication;
     }
 
-    public ResultPublication run(ThesisBean bean) throws FenixServiceException {
-	final ResultPublication publication = getResultPublication(bean);
+    public ResearchResultPublication run(ThesisBean bean) throws FenixServiceException {
+	final ResearchResultPublication publication = getResultPublication(bean);
 
 	if (publication instanceof Thesis) {
 	    ((Thesis) publication).setEditAll(bean.getThesisType(), bean.getTitle(),
@@ -157,8 +156,8 @@ public class EditResultPublication extends ResultPublicationService {
 	return publication;
     }
 
-    public ResultPublication run(ManualBean bean) throws FenixServiceException {
-	final ResultPublication publication = getResultPublication(bean);
+    public ResearchResultPublication run(ManualBean bean) throws FenixServiceException {
+	final ResearchResultPublication publication = getResultPublication(bean);
 
 	if (publication instanceof Manual) {
 	    ((Manual) publication)
@@ -174,8 +173,8 @@ public class EditResultPublication extends ResultPublicationService {
 	return publication;
     }
 
-    public ResultPublication run(TechnicalReportBean bean) throws FenixServiceException {
-	final ResultPublication publication = getResultPublication(bean);
+    public ResearchResultPublication run(TechnicalReportBean bean) throws FenixServiceException {
+	final ResearchResultPublication publication = getResultPublication(bean);
 
 	if (publication instanceof TechnicalReport) {
 	    ((TechnicalReport) publication).setEditAll(bean.getTitle(), getOrganization(bean), bean
@@ -191,8 +190,8 @@ public class EditResultPublication extends ResultPublicationService {
 	return publication;
     }
 
-    public ResultPublication run(OtherPublicationBean bean) throws FenixServiceException {
-	final ResultPublication publication = getResultPublication(bean);
+    public ResearchResultPublication run(OtherPublicationBean bean) throws FenixServiceException {
+	final ResearchResultPublication publication = getResultPublication(bean);
 
 	if (publication instanceof OtherPublication) {
 	    ((OtherPublication) publication).setEditAll(bean.getTitle(), getPublisher(bean), bean
@@ -209,12 +208,12 @@ public class EditResultPublication extends ResultPublicationService {
 	return publication;
     }
 
-    private ResultPublication getResultPublication(ResultPublicationBean bean)
+    private ResearchResultPublication getResultPublication(ResultPublicationBean bean)
 	    throws FenixServiceException {
 	if ((bean == null) || (bean.getIdInternal() == null))
 	    throw new FenixServiceException();
 
-	ResultPublication publication = (ResultPublication) Result.readByOid(bean.getIdInternal());
+	ResearchResultPublication publication = (ResearchResultPublication) ResearchResult.readByOid(bean.getIdInternal());
 	if (publication == null)
 	    throw new FenixServiceException();
 	return publication;

@@ -4,12 +4,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultEventAssociationCreationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.event.Event;
-import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 
 public class CreateResultEventAssociation extends Service {
 
     public void run(ResultEventAssociationCreationBean bean) {
-	final Result result = bean.getResult();
+	final ResearchResult result = bean.getResult();
 	Event event = bean.getEvent();
 
 	try {

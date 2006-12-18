@@ -25,9 +25,6 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAction {
 
-    private static final String FILE_DOWNLOAD_URL_FORMAT = FileManagerFactory.getFileManager()
-            .getDirectDownloadUrlFormat();
-
     public ActionForward viewLastProjectSubmissionForEachGroup(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
@@ -75,7 +72,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
 
     private void setRequestParameters(HttpServletRequest request, Project project,
             List<ProjectSubmission> projectSubmissions, List<ProjectSubmissionLog> projectSubmissionLogs) {
-        request.setAttribute("fileDownloadUrlFormat", FILE_DOWNLOAD_URL_FORMAT);
+        
         request.setAttribute("executionCourseID", getExecutionCourseID(request));
         request.setAttribute("project", project);
         request.setAttribute("projectSubmissions", projectSubmissions);

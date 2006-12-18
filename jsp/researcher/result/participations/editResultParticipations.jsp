@@ -13,13 +13,13 @@
 
 	<!-- Action paths definitions -->
 	<bean:define id="backLink" value="<%="/resultParticipations/backToResult.do?" + parameters%>"/>
-	
+
 	<!-- Titles -->
 	<logic:equal name="resultType" value="ResultPatent">
-		<em>Patentes</em> <!-- tobundle -->
+		<em><bean:message key="researcher.viewCurriculum.publicationsTitle" bundle="RESEARCHER_RESOURCES"/></em> 
 	</logic:equal>
 	<logic:notEqual name="resultType" value="ResultPatent">
-		<em>Publicações</em> <!-- tobundle -->
+		<em><bean:message key="researcher.viewCurriculum.publicationsTitle" bundle="RESEARCHER_RESOURCES"/></em> 
 	</logic:notEqual>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.useCase.title"/>: <fr:view name="result" property="title"/></h2>
 	

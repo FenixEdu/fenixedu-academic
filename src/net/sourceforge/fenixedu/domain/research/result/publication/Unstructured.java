@@ -11,7 +11,9 @@ import bibtex.dom.BibtexEntry;
  */
 public class Unstructured extends Unstructured_Base {
 
-    public Unstructured() {
+	private static final String usedSchema = "result.publication.presentation.Unstructured";
+    
+	public Unstructured() {
 	super();
     }
     
@@ -39,4 +41,10 @@ public class Unstructured extends Unstructured_Base {
 	return resume;
     }
 
+	@Override
+	public String getSchema() {
+		return usedSchema;
+	}
+
+    
 }

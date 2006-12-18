@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * (Misc, Booklet, Unpublished, ...) Use this type when nothing else fits.
@@ -20,12 +21,14 @@ import net.sourceforge.fenixedu.util.Month;
 
 public class OtherPublication extends OtherPublication_Base {
 
+	private static final String usedSchema = "result.publication.presentation.OtherPublication";
+	
     public OtherPublication() {
 	super();
     }
 
     public OtherPublication(Person participator, String title, Unit publisher, Integer year,
-	    String howPublished, String note, String address, String otherPublicationType,
+	    String howPublished, MultiLanguageString note, String address, String otherPublicationType,
 	    Integer numberPages, String language, Country country, Month month, String url) {
 	this();
 	checkRequiredParameters(title);
@@ -35,7 +38,7 @@ public class OtherPublication extends OtherPublication_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, Unit publisher, Integer year, String howPublished, String note,
+    public void setEditAll(String title, Unit publisher, Integer year, String howPublished, MultiLanguageString note,
 	    String address, String otherPublicationType, Integer numberPages, String language,
 	    Country country, Month month, String url) {
 	checkRequiredParameters(title);
@@ -45,7 +48,7 @@ public class OtherPublication extends OtherPublication_Base {
     }
 
     private void fillAllAttributes(String title, Unit publisher, Integer year, String howPublished,
-	    String note, String address, String otherPublicationType, Integer numberPages,
+    		MultiLanguageString note, String address, String otherPublicationType, Integer numberPages,
 	    String language, Country country, Month month, String url) {
 	super.setTitle(title);
 	super.setPublisher(publisher);
@@ -93,8 +96,8 @@ public class OtherPublication extends OtherPublication_Base {
 	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher().getName()));
 	if ((getAddress() != null) && (getAddress().length() > 0))
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
-	if ((getNote() != null) && (getNote().length() > 0))
-	    bibEntry.setField("note", bibtexFile.makeString(getNote()));
+	if ((getNote() != null) && (getNote().hasContent()))
+	    bibEntry.setField("note", bibtexFile.makeString(getNote().getContent()));
 
 	BibtexPersonList authorsList = getBibtexAuthorsList(bibtexFile, getAuthors());
 	if (authorsList != null) {
@@ -136,7 +139,7 @@ public class OtherPublication extends OtherPublication_Base {
     }
 
     @Override
-    public void setNote(String note) {
+    public void setNote(MultiLanguageString note) {
 	throw new DomainException("error.researcher.OtherPublication.call", "setNote");
     }
 
@@ -169,4 +172,9 @@ public class OtherPublication extends OtherPublication_Base {
     public void setPublisher(Unit publisher) {
 	throw new DomainException("error.researcher.OtherPublication.call", "setPublisher");
     }
+
+	@Override
+	public String getSchema() {
+		return usedSchema;
+	}
 }

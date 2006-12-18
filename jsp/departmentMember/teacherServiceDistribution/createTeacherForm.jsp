@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+
 <h3>
 	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
 		<bean:message key="link.teacherServiceDistribution"/>
@@ -21,6 +22,14 @@
 	>
 	<bean:message key="label.teacherService.createTeacher"/>
 </h3>
+
+<ul>
+<li>
+<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
+	<bean:message key="link.back"/>
+</html:link>
+</li>
+</ul>
 
 <br/>
 <br/>
@@ -62,9 +71,9 @@
 			</td>
 		</tr>
 	</table>
-	<html:button property="" onclick="this.form.submit();"> 
-		<bean:message key="label.teacherServiceDistribution.create"/> 
-	</html:button>
+	<html:submit>
+ 		<bean:message key="label.teacherServiceDistribution.create"/> 
+	</html:submit>
 </html:form> 
 
 <br/>
@@ -76,6 +85,4 @@
 </span>
 <br/>
 <br/>
-<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
-	<bean:message key="link.back"/>
-</html:link>
+

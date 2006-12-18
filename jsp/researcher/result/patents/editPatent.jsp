@@ -11,7 +11,7 @@
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + result.getClass().getSimpleName()%>"/>
 	
 	<em>Patentes</em> <!-- tobundle -->
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.edit.useCase.title"/></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.edit.useCase.title"/></h2>
 	
 	
 	<%-- Go back --%>
@@ -82,6 +82,7 @@
 	
 
 	<%-- Event Associations --%>
+	<%-- 
 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.title.label"/></b></p>
 	<jsp:include page="../commons/viewEventAssociations.jsp"/>
 	<ul class="mtop0 list5">
@@ -91,7 +92,7 @@
 		</html:link>
 		</li>
 	</ul>
-	
+	--%>
 	<%-- Unit Associations --%>
 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b></p>
 	<jsp:include page="../commons/viewUnitAssociations.jsp"/>

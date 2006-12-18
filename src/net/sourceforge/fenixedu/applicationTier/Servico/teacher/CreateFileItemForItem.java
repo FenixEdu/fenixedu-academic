@@ -15,63 +15,70 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.FileMetadata;
-import pt.utl.ist.fenix.tools.file.FilePath;
 import pt.utl.ist.fenix.tools.file.IFileManager;
-import pt.utl.ist.fenix.tools.file.Node;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
+import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 /**
  * @author naat
  */
 public class CreateFileItemForItem extends FileItemService {
 
-    public void run(Item item, InputStream inputStream, String originalFilename,
-            String displayName, Group permittedGroup)
-            throws FenixServiceException, ExcepcaoPersistencia, DomainException {
+	public void run(Item item, InputStream inputStream, String originalFilename, String displayName,
+			Group permittedGroup) throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
-        ExecutionCourseSite site = (ExecutionCourseSite) item.getSection().getSite();
-        
-        final FilePath filePath = getFilePath(item);
-        final FileMetadata fileMetadata = new FileMetadata(displayName, site
-                .getExecutionCourse().getNome());
-        final IFileManager fileManager = FileManagerFactory.getFileManager();
-        final FileDescriptor fileDescriptor = fileManager.saveFile(filePath, originalFilename,
-                !isPublic(permittedGroup), fileMetadata, inputStream);
-        
-        new FileItem(item, fileDescriptor.getFilename(), displayName, fileDescriptor.getMimeType(),
-                fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor
-                        .getSize(), fileDescriptor.getUniqueId(), permittedGroup);
-    }
+		ExecutionCourseSite site = (ExecutionCourseSite) item.getSection().getSite();
 
-    // TODO: avoid depending on ExecutionCourseSite, use Site only
-    private FilePath getFilePath(Item item) {
-	final FilePath filePath = new FilePath();
-	filePath.addNode(new Node("I" + item.getIdInternal(), item.getName().getContent()));
+		final VirtualPath filePath = getVirtualPath(item);
 
-	final Section section = item.getSection();
-	filePath.addNode(0, new Node("S" + section.getIdInternal(), section.getName().getContent()));
+		final FileDescriptor fileDescriptor = saveFile(filePath, originalFilename, !isPublic(permittedGroup),
+				site.getExecutionCourse().getNome(), displayName, inputStream);
 
-	if (section.getSuperiorSection() != null) {
-	    Section superiorSection = section.getSuperiorSection();
-	    while (superiorSection != null) {
-		filePath.addNode(0, new Node("S" + superiorSection.getIdInternal(), superiorSection
-			.getName().getContent()));
-
-		superiorSection = superiorSection.getSuperiorSection();
-	    }
+		new FileItem(item, fileDescriptor.getFilename(), displayName, fileDescriptor.getMimeType(),
+				fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
+				fileDescriptor.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
 	}
 
-	ExecutionCourseSite site = (ExecutionCourseSite) section.getSite();
-	final ExecutionCourse executionCourse = site.getExecutionCourse();
-	filePath.addNode(0, new Node("EC" + executionCourse.getIdInternal(), executionCourse.getNome()));
+	protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
+			String name, String displayName, InputStream inputStream) {
+		final IFileManager fileManager = FileManagerFactory.getFileManager();
+		return fileManager.saveFile(filePath, originalFilename, permission, name, displayName, inputStream);
+	}
 
-	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-	filePath.addNode(0, new Node("EP" + executionPeriod.getIdInternal(), executionPeriod.getName()));
+	// TODO: avoid depending on ExecutionCourseSite, use Site only
+	private VirtualPath getVirtualPath(Item item) {
+		final VirtualPath filePath = new VirtualPath();
+		filePath.addNode(new VirtualPathNode("I" + item.getIdInternal(), item.getName().getContent()));
 
-	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-	filePath.addNode(0, new Node("EY" + executionYear.getIdInternal(), executionYear.getYear()));
+		final Section section = item.getSection();
+		filePath.addNode(0,
+				new VirtualPathNode("S" + section.getIdInternal(), section.getName().getContent()));
 
-	return filePath;
-    }
+		if (section.getSuperiorSection() != null) {
+			Section superiorSection = section.getSuperiorSection();
+			while (superiorSection != null) {
+				filePath.addNode(0, new VirtualPathNode("S" + superiorSection.getIdInternal(),
+						superiorSection.getName().getContent()));
+
+				superiorSection = superiorSection.getSuperiorSection();
+			}
+		}
+
+		ExecutionCourseSite site = (ExecutionCourseSite) section.getSite();
+		final ExecutionCourse executionCourse = site.getExecutionCourse();
+		filePath.addNode(0, new VirtualPathNode("EC" + executionCourse.getIdInternal(), executionCourse
+				.getNome()));
+
+		final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+		filePath.addNode(0, new VirtualPathNode("EP" + executionPeriod.getIdInternal(), executionPeriod
+				.getName()));
+
+		final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+		filePath.addNode(0,
+				new VirtualPathNode("EY" + executionYear.getIdInternal(), executionYear.getYear()));
+
+		filePath.addNode(0, new VirtualPathNode("Courses","Courses"));
+		return filePath;
+	}
 
 }

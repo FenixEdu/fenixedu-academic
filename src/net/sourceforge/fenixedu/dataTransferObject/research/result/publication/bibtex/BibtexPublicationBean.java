@@ -18,6 +18,11 @@ public class BibtexPublicationBean implements Serializable {
 
     private String bibtex;
 
+    public BibtexPublicationBean() {
+    	authors = new ArrayList<BibtexParticipatorBean>();
+    	editors = new ArrayList<BibtexParticipatorBean>();
+    }
+    
     public List<BibtexParticipatorBean> getAuthors() {
 	return authors;
     }

@@ -134,6 +134,8 @@
 		    <forward name="PreparedToEdit" path="publications.editPublicationData"/>
 		    <forward name="PreparedToDelete" path="publications.deletePublication"/>
 		    <forward name="PublicationDeleted" path="/resultPublications/listPublications.do"/>
+			<forward name="SearchPublication"  path="publications.search"/>
+			<forward name="associatingInCreation"  path="publications.addAssociationsInCreation"/>
 		</action>
 		
 		<!-- Bibtex Publications Management Action Mapping -->
@@ -144,6 +146,14 @@
 		    <forward name="OpenBibtexFile" path="publications.openBibtexFile"/>
 		    <forward name="ImportBibtex" path="publications.importBibtex"/>
 		    <forward name="PublicationsManagement" path="/resultPublications/listPublications.do"/>
+		    <forward name="dealWithAssociations" path="publications.import.associations"/>
+		</action>
+		
+		<!-- Result Publication Search Action  Mapping -->
+			<action path="/publications/search"
+	        	 parameter="method"
+	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.SearchPublicationsAction">
+			<forward name="SearchPublication"  path="publications.search"/>
 		</action>
 				
         <!-- Result Patents Management Action Mapping -->
@@ -178,6 +188,8 @@
 			<forward name="listPatents" path="/resultPatents/management.do"/>
 			<forward name="viewEditPublication" path="/resultPublications/prepareEdit.do"/>
 			<forward name="ListPublications" path="/resultPublications/listPublications.do"/>
+			<forward name="fileAssociation" path="/resultPublications/showAssociations.do"/>
+			<forward name="bibTexImport" path="/bibtexManagement/showAssociations.do"/>
 		</action>
 
 		<!-- Result Associations Management Action Mapping -->
@@ -190,6 +202,8 @@
 			<forward name="listPatents" path="/resultPatents/management.do"/>
 			<forward name="viewEditPublication" path="/resultPublications/prepareEdit.do"/>
 			<forward name="ListPublications" path="/resultPublications/listPublications.do"/>
+			<forward name="unitAssociation" path="/resultPublications/showAssociations.do"/>
+			<forward name="bibTexImport" path="/bibtexManagement/showAssociations.do"/>
 		</action>
 	
 		<action path="/changeLocaleTo"

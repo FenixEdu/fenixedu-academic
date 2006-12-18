@@ -12,10 +12,9 @@ import net.sourceforge.fenixedu.domain.tests.PictureMaterialFile;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.FileMetadata;
-import pt.utl.ist.fenix.tools.file.FilePath;
 import pt.utl.ist.fenix.tools.file.IFileManager;
-import pt.utl.ist.fenix.tools.file.Node;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
+import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreatePictureMaterial extends Service {
 
@@ -24,10 +23,10 @@ public class CreatePictureMaterial extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
 		final IFileManager fileManager = FileManagerFactory.getFileManager();
-		final FilePath filePath = getFilePath();
-		final FileMetadata fileMetadata = new FileMetadata(displayName == null ? originalFilename : displayName, teacher.getPerson().getName());
+		final VirtualPath filePath = getVirtualPath();
+		
 		final FileDescriptor fileDescriptor = fileManager.saveFile(filePath, originalFilename, false,
-				fileMetadata, inputStream);
+				teacher.getPerson().getName(), displayName == null ? originalFilename : displayName, inputStream);
 		final PictureMaterialFile pictureMaterialFile = new PictureMaterialFile(fileDescriptor
 				.getFilename(), displayName, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(),
 				fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
@@ -37,11 +36,11 @@ public class CreatePictureMaterial extends Service {
 
 	}
 
-	private FilePath getFilePath() {
-		final FilePath filePath = new FilePath();
-		filePath.addNode(new Node("tests", "Online tests"));
-		filePath.addNode(new Node("materials", "Presentation materials"));
-		filePath.addNode(new Node("pictures", "Pictures"));
+	private VirtualPath getVirtualPath() {
+		final VirtualPath filePath = new VirtualPath();
+		filePath.addNode(new VirtualPathNode("tests", "Online tests"));
+		filePath.addNode(new VirtualPathNode("materials", "Presentation materials"));
+		filePath.addNode(new VirtualPathNode("pictures", "Pictures"));
 
 		return filePath;
 	}

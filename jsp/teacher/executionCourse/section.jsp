@@ -109,6 +109,7 @@
 		    <bean:message key="link.section.group.edit" bundle="SITE_RESOURCES"/>
 		</html:link>
 	</span>
+	
 </p>
 
 <p class="mvert1">
@@ -289,6 +290,14 @@
 			</html:link>
 		</span>
 
+		<span class="pleft1">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+			<bean:define id="url" type="java.lang.String">/searchScormContent.do?method=prepareSearchScormContents&searchType=simple&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
+			<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="link.searhScormContent" bundle="SITE_RESOURCES"/>
+			</html:link>
+		</span>
+		
         <logic:notEmpty name="item" property="fileItems">
             <bean:size id="filesCount" name="item" property="fileItems"/>
         
@@ -301,7 +310,16 @@
         	            </html:link>
                 </span>
             </logic:greaterThan>
+            
         </logic:notEmpty>
+        		
+        <span class="pleft1">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+			<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?forwardTo=uploadScorm&method=prepareCreateScormFile&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
+			<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="link.scorm.create" bundle="SITE_RESOURCES"/>
+			</html:link>
+		</span>
         
         <div id="<%= deleteId %>" class="dnone mvert05">
             <fr:form action="<%= deleteUrl %>">

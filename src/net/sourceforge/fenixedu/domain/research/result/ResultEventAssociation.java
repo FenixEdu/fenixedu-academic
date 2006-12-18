@@ -20,7 +20,7 @@ public class ResultEventAssociation extends ResultEventAssociation_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    ResultEventAssociation(Result result, Event event, ResultEventAssociationRole role) {
+    ResultEventAssociation(ResearchResult result, Event event, ResultEventAssociationRole role) {
 	this();
 	checkParameters(result, event, role);
 	fillAllAttributes(result, event, role);
@@ -66,13 +66,13 @@ public class ResultEventAssociation extends ResultEventAssociation_Base {
 	event.sweep();
     }
     
-    private void fillAllAttributes(Result result, Event event, ResultEventAssociationRole role){
+    private void fillAllAttributes(ResearchResult result, Event event, ResultEventAssociationRole role){
 	super.setResult(result);
 	super.setEvent(event);
 	super.setRole(role);
     }
     
-    private void checkParameters(Result result, Event event, ResultEventAssociationRole role) {
+    private void checkParameters(ResearchResult result, Event event, ResultEventAssociationRole role) {
 	if (result == null) {
 	    throw new DomainException("error.researcher.ResultEventAssociation.result.null");
 	}
@@ -96,7 +96,7 @@ public class ResultEventAssociation extends ResultEventAssociation_Base {
      * Setters block!
      */
     @Override
-    public void setResult(Result Result) {
+    public void setResult(ResearchResult Result) {
 	throw new DomainException("error.researcher.ResultEventAssociation.call","setResult");
     }
 

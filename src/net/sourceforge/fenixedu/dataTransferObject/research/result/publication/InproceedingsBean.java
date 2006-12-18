@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import bibtex.dom.BibtexEntry;
 
 public class InproceedingsBean extends ConferenceArticlesBean implements Serializable {
@@ -39,12 +39,12 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
     }
 
     @Override
-    protected void fillSpecificFields(ResultPublication publication) {
+    protected void fillSpecificFields(ResearchResultPublication publication) {
 	this.setAddress(((Inproceedings) publication).getAddress());
 	this.setFirstPage(((Inproceedings) publication).getFirstPage());
 	this.setLastPage(((Inproceedings) publication).getLastPage());
 	this.setLanguage(((Inproceedings) publication).getLanguage());
-	this.setEvent(((Inproceedings) publication).getEvent());
+	this.setConference(((Inproceedings) publication).getConference());
     }
 
     @Override

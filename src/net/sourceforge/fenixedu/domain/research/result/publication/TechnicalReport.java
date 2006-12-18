@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * A report published by a school or other institution, usually numbered within
@@ -21,12 +22,14 @@ import net.sourceforge.fenixedu.util.Month;
  */
 public class TechnicalReport extends TechnicalReport_Base {
 
+	private static final String usedSchema = "result.publication.presentation.TechnicalReport";
+	
     public TechnicalReport() {
 	super();
     }
 
     public TechnicalReport(Person participator, String title, Unit institution, Integer year,
-	    String technicalReportType, String number, String address, String note, Integer numberPages,
+	    String technicalReportType, String number, String address, MultiLanguageString note, Integer numberPages,
 	    String language, Month month, String url) {
 	this();
 	checkRequiredParameters(title, institution, year);
@@ -37,7 +40,7 @@ public class TechnicalReport extends TechnicalReport_Base {
 
     @Checked("ResultPredicates.writePredicate")
     public void setEditAll(String title, Unit institution, Integer year, String technicalReportType,
-	    String number, String address, String note, Integer numberPages, String language,
+	    String number, String address, MultiLanguageString note, Integer numberPages, String language,
 	    Month month, String url) {
 	checkRequiredParameters(title, institution, year);
 	fillAllAttributes(title, institution, year, technicalReportType, number, address, note,
@@ -46,7 +49,7 @@ public class TechnicalReport extends TechnicalReport_Base {
     }
 
     private void fillAllAttributes(String title, Unit institution, Integer year,
-	    String technicalReportType, String number, String address, String note, Integer numberPages,
+	    String technicalReportType, String number, String address, MultiLanguageString note, Integer numberPages,
 	    String language, Month month, String url) {
 	super.setTitle(title);
 	super.setOrganization(institution);
@@ -101,8 +104,8 @@ public class TechnicalReport extends TechnicalReport_Base {
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
 	if (getMonth() != null)
 	    bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
-	if ((getNote() != null) && (getNote().length() > 0))
-	    bibEntry.setField("note", bibtexFile.makeString(getNote()));
+	if ((getNote() != null) && (getNote().hasContent()))
+	    bibEntry.setField("note", bibtexFile.makeString(getNote().getContent()));
 
 	BibtexPersonList authorsList = getBibtexAuthorsList(bibtexFile, getAuthors());
 	if (authorsList != null) {
@@ -139,7 +142,7 @@ public class TechnicalReport extends TechnicalReport_Base {
     }
 
     @Override
-    public void setNote(String note) {
+    public void setNote(MultiLanguageString note) {
 	throw new DomainException("error.researcher.TechnicalReport.call", "setNote");
     }
 
@@ -177,4 +180,9 @@ public class TechnicalReport extends TechnicalReport_Base {
     public void setPublisher(Unit publisher) {
 	throw new DomainException("error.researcher.TechnicalReport.call", "setPublisher");
     }
+
+	@Override
+	public String getSchema() {
+		return usedSchema;
+	}
 }

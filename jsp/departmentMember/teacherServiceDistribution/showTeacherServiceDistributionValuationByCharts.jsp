@@ -77,6 +77,7 @@
 <br/>
 <br/>
 
+<bean:message key="label.teacherService.navigateBy"/>:
 <html:link href="javascript:document.teacherServiceDistributionValuationForm.method.value='changeToViewCourses'; document.teacherServiceDistributionValuationForm.submit();">
 	<bean:message key="label.teacherService.navigateByCourse"/>
 </html:link> | 

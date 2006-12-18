@@ -58,7 +58,7 @@
 		<bean:message key="message.publications.more5"/>
 	</logic:greaterEqual>
 	<br />
-	<h3>
+
 	<table>
 		<tr align="center">	
 			<td>
@@ -70,4 +70,4 @@
 			</td>
 		</tr>
 	</table>
-	</h3>
+

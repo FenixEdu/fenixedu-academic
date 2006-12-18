@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import bibtex.dom.BibtexEntry;
 
 public class InbookBean extends ResultPublicationBean implements Serializable {
@@ -44,7 +44,7 @@ public class InbookBean extends ResultPublicationBean implements Serializable {
     }
 
     @Override
-    protected void fillSpecificFields(ResultPublication publication) {
+    protected void fillSpecificFields(ResearchResultPublication publication) {
 	this.setChapter(((BookPart) publication).getChapter());
 	this.setFirstPage(((BookPart) publication).getFirstPage());
 	this.setLastPage(((BookPart) publication).getLastPage());

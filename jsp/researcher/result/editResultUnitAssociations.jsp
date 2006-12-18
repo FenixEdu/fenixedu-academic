@@ -13,18 +13,19 @@
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>"/>		
 	
 	<!-- Action paths definitions -->
-	<bean:define id="create" value="<%="/resultAssociations/createUnitAssociation.do?" + parameters%>"/>
-	<bean:define id="prepareEdit" value="<%="/resultAssociations/prepareEditUnitAssociations.do?" + parameters%>"/>
-	<bean:define id="prepareAlter" value="<%="/resultAssociations/prepareEditUnitRole.do?" + parameters%>"/>	
-	<bean:define id="remove" value="<%="/resultAssociations/removeUnitAssociation.do?" + parameters%>"/>
-	<bean:define id="backLink" value="<%="/resultAssociations/backToResult.do?" + parameters%>"/>
 
-	<%-- Title --%>		
+	<bean:define id="create" value="<%="/resultAssociations/createUnitAssociation.do?forwardTo=editUnitAssociations&" + parameters%>" />
+	<bean:define id="prepareEdit" value="<%="/resultAssociations/prepareEditUnitAssociations.do?forwardTo=editUnitAssociations&" + parameters%>" />
+	<bean:define id="prepareAlter" value="<%="/resultAssociations/prepareEditUnitRole.do?forwardTo=editUnitAssociations&" + parameters%>"/>	
+	<bean:define id="remove" value="<%="/resultAssociations/removeUnitAssociation.do?forwardTo=editUnitAssociations&" + parameters%>"/>
+	<bean:define id="backLink" value="<%="/resultAssociations/backToResult.do?forwardTo=editUnitAssociations&" + parameters%>" />
+
+<%-- Title --%>		
 	<logic:equal name="resultType" value="ResultPatent">
-		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.management.title"/></em>
+		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.management.title"/></em>
 	</logic:equal>
 	<logic:notEqual name="resultType" value="ResultPatent">
-		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
+		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	</logic:notEqual>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.useCase.title"/>: <fr:view name="result" property="title"/></h2>
 
@@ -70,14 +71,29 @@
 					<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 				</fr:layout>
 			</fr:view>
+			<%-- 
 			<html:link page="<%=prepareAlter%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.edit"/></html:link>
+			--%>
 		</logic:notPresent>
 	</logic:notEmpty>
 	
+	
+	
 	<%-- Create new result unit association --%>
 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.add"/></b></p>
-	<logic:present name="bean">
-		<fr:edit id="bean" name="bean" schema="resultUnitAssociation.create" action="<%= create %>">
+	<logic:present name="unitBean">
+		
+		<logic:equal name="unitBean" property="externalUnit" value="true">
+				<bean:define id="schema" value="resultUnitAssociation.create.external" toScope="request"/>
+		</logic:equal>
+		<logic:equal name="unitBean" property="externalUnit" value="false">
+			<bean:define id="schema" value="resultUnitAssociation.create.internal" toScope="request"/>
+		</logic:equal>
+		
+		<bean:define id="schema" name="schema" type="java.lang.String"/>
+		
+
+		<fr:edit id="unitBean" name="unitBean" schema="<%= schema %>" action="<%= create %>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 thright thlight"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -85,7 +101,9 @@
 			<fr:destination name="exception" path="<%= prepareEdit %>"/>
 			<fr:destination name="invalid" path="<%= prepareEdit %>"/>	
 			<fr:destination name="cancel" path="<%= backLink %>"/>	
+			<fr:destination name="postBack" path="<%= "/resultAssociations/changeTypeOfUnit.do?forwardTo=editUnitAssociations&" + parameters %>"/>
 		</fr:edit>
+
 	</logic:present>
 
 </logic:present>

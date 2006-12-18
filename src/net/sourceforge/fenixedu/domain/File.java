@@ -50,16 +50,14 @@ public abstract class File extends File_Base {
          *         the associated file from the external file storage
          */
     public String getDownloadUrl() {
-	// TODO: remove the dependancy between the domain and the dspace
-        // infrastructure
-	return FileManagerFactory.getFileManager().getDirectDownloadUrlFormat() + "/"
-		+ getExternalStorageIdentification() + "/" + getFilename();
+        // TODO: remove the dependancy between the domain and the dspace infrastructure
+        return FileManagerFactory.getFileManager().formatDownloadUrl(getExternalStorageIdentification(), getFilename());
     }
 
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
-    public static File readByExternalStorageIdentification(String externalStorageIdentification) {
+   public static File readByExternalStorageIdentification(String externalStorageIdentification) {
 	// For performance reasons...
 	PreparedStatement stmt = null;
 	try {

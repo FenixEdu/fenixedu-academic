@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * An article from a journal or magazine. Required fields: author, title,
@@ -20,12 +21,14 @@ import net.sourceforge.fenixedu.util.Month;
  */
 public class Article extends Article_Base {
 
+	private static final String usedSchema = "result.publication.presentation.Article";
+	
     public Article() {
 	super();
     }
 
     public Article(Person participator, String title, String journal, Integer year, Unit publisher,
-	    String volume, String number, Integer firstPage, Integer lastPage, String note,
+	    String volume, String number, Integer firstPage, Integer lastPage, MultiLanguageString note,
 	    Integer issn, String language, Country country, ScopeType scope, Month month, String url) {
 	this();
 	checkRequiredParameters(title, journal, year);
@@ -36,7 +39,7 @@ public class Article extends Article_Base {
 
     @Checked("ResultPredicates.writePredicate")
     public void setEditAll(String title, String journal, Integer year, Unit publisher, String volume,
-	    String number, Integer firstPage, Integer lastPage, String note, Integer issn,
+	    String number, Integer firstPage, Integer lastPage, MultiLanguageString note, Integer issn,
 	    String language, Country country, ScopeType scope, Month month, String url) {
 	checkRequiredParameters(title, journal, year);
 	fillAllAttributes(title, journal, year, publisher, volume, number, firstPage, lastPage, note,
@@ -45,7 +48,7 @@ public class Article extends Article_Base {
     }
 
     private void fillAllAttributes(String title, String journal, Integer year, Unit publisher,
-	    String volume, String number, Integer firstPage, Integer lastPage, String note,
+	    String volume, String number, Integer firstPage, Integer lastPage, MultiLanguageString note,
 	    Integer issn, String language, Country country, ScopeType scope, Month month, String url) {
 	super.setTitle(title);
 	super.setJournal(journal);
@@ -110,8 +113,8 @@ public class Article extends Article_Base {
 	    bibEntry.setField("pages", bibtexFile.makeString(getFirstPage() + "-" + getLastPage()));
 	if (getMonth() != null)
 	    bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
-	if ((getNote() != null) && (getNote().length() > 0))
-	    bibEntry.setField("note", bibtexFile.makeString(getNote()));
+	if ((getNote() != null) && (getNote().hasContent()))
+	    bibEntry.setField("note", bibtexFile.makeString(getNote().getContent()));
 
 	BibtexPersonList authorsList = getBibtexAuthorsList(bibtexFile, getAuthors());
 	if (authorsList != null) {
@@ -163,7 +166,7 @@ public class Article extends Article_Base {
     }
 
     @Override
-    public void setNote(String note) {
+    public void setNote(MultiLanguageString note) {
 	throw new DomainException("error.researcher.Article.call", "setNote");
     }
 
@@ -200,5 +203,9 @@ public class Article extends Article_Base {
     @Override
     public void setOrganization(Unit organization) {
 	throw new DomainException("error.researcher.Article.call", "setOrganization");
+    }
+    
+    public String getSchema() {
+    	return usedSchema;
     }
 }

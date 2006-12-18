@@ -55,9 +55,10 @@
 		<div style="padding: 00px 00px 00px 20px" >
 			<logic:notEmpty name="resultPublications">
 				<fr:view name="resultPublications">
-					<fr:layout name="tabular-list">
-						<fr:property name="subLayout" value="values"/>
-						<fr:property name="subSchema" value="result.simple.detail"/>
+					<fr:layout name="list">
+						<fr:property name="eachClasses" value="mvert05"/>
+						<fr:property name="eachLayout" value="values"/>
+						<fr:property name="eachSchema" value="result.simple.detail"/>
 					</fr:layout>
 				</fr:view>
 			</logic:notEmpty>
@@ -78,7 +79,7 @@
 				</fr:view>
 			</logic:notEmpty>
 			<logic:empty name="resultPatents">
-				<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.emptyList"/></em></p>
+				<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.emptyList"/></em></p>
 			</logic:empty>
 		</div>
 </logic:present>

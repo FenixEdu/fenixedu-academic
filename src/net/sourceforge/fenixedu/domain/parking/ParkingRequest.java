@@ -5,6 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -24,9 +26,9 @@ import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.FileMetadata;
-import pt.utl.ist.fenix.tools.file.FilePath;
-import pt.utl.ist.fenix.tools.file.Node;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
+import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class ParkingRequest extends ParkingRequest_Base {
@@ -405,7 +407,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             this.secondInsuranceInputStream = secondInsuranceInputStream;
         }
 
-        protected void writeFirstVehicleDocuments(Vehicle vehicle, FilePath filePath) {
+        protected void writeFirstVehicleDocuments(Vehicle vehicle, VirtualPath filePath) {
             writeVehicleFile(vehicle, filePath, getFirstCarOwnerIdFileName(),
                     NewParkingDocumentType.VEHICLE_OWNER_ID, getFirstCarOwnerIdInputStream(),
                     getFirstCarOwnerIdDeliveryType());
@@ -420,7 +422,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                     getFirstCarInsuranceDeliveryType());
         }
 
-        protected void writeSecondVehicleDocuments(Vehicle vehicle, FilePath filePath) {
+        protected void writeSecondVehicleDocuments(Vehicle vehicle, VirtualPath filePath) {
             writeVehicleFile(vehicle, filePath, getSecondCarOwnerIdFileName(),
                     NewParkingDocumentType.VEHICLE_OWNER_ID, getSecondCarOwnerIdInputStream(),
                     getSecondCarOwnerIdDeliveryType());
@@ -437,7 +439,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                     getSecondCarInsuranceDeliveryType());
         }
 
-        private void writeVehicleFile(Vehicle vehicle, FilePath filePath, String filename,
+        private void writeVehicleFile(Vehicle vehicle, VirtualPath filePath, String filename,
                 NewParkingDocumentType parkingDocumentType, InputStream inputStream,
                 DocumentDeliveryType documentDeliveryType) {
             NewParkingDocument parkingDocument = vehicle.getParkingDocument(parkingDocumentType);
@@ -447,10 +449,9 @@ public class ParkingRequest extends ParkingRequest_Base {
             }
             if (documentDeliveryType == DocumentDeliveryType.ELECTRONIC_DELIVERY && inputStream != null) {
                 final Group group = getGroup(vehicle.getParkingRequest().getParkingParty().getParty());
-                final FileMetadata fileMetadata = new FileMetadata(filename, getParkingParty()
-                        .getParty().getName());
                 final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
-                        filePath, filename, false, fileMetadata, inputStream);
+                        filePath, filename, false, getParkingParty()
+                        .getParty().getName(), filename, inputStream);
 
                 final ParkingFile parkingFile = new ParkingFile(filename, filename, fileDescriptor
                         .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
@@ -461,7 +462,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             }
         }
 
-        protected void writeDriverLicenseFile(ParkingRequest parkingRequest, FilePath filePath) {
+        protected void writeDriverLicenseFile(ParkingRequest parkingRequest, VirtualPath filePath) {
             NewParkingDocument parkingDocument = parkingRequest.getDriverLicenseDocument();
             DocumentDeliveryType documentDeliveryType = getDriverLicenseDeliveryType();
             String filename = getDriverLicenseFileName();
@@ -477,10 +478,9 @@ public class ParkingRequest extends ParkingRequest_Base {
             if (documentDeliveryType == DocumentDeliveryType.ELECTRONIC_DELIVERY
                     && getDriverLicenseInputStream() != null) {
                 final Group group = getGroup(getParkingParty().getParty());
-                final FileMetadata fileMetadata = new FileMetadata(filename, getParkingParty()
-                        .getParty().getName());
                 final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
-                        filePath, filename, false, fileMetadata, getDriverLicenseInputStream());
+                        filePath, filename, false, getParkingParty()
+                        .getParty().getName(), filename, getDriverLicenseInputStream());
 
                 final ParkingFile parkingFile = new ParkingFile(filename, filename, fileDescriptor
                         .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
@@ -498,14 +498,14 @@ public class ParkingRequest extends ParkingRequest_Base {
             return new GroupUnion(personGroup, roleGroup);
         }
 
-        protected FilePath getFilePath(final Integer requestID) {
+        protected VirtualPath getFilePath(final Integer requestID) {
             Party party = getParkingParty().getParty();
-            final FilePath filePath = new FilePath();
+            final VirtualPath filePath = new VirtualPath();
 
-            filePath.addNode(new Node("ParkingFiles", "Parking Files"));
+            filePath.addNode(new VirtualPathNode("ParkingFiles", "Parking Files"));
 
-            filePath.addNode(new Node("Party" + party.getIdInternal(), party.getName()));
-            filePath.addNode(new Node("PR" + requestID, "Parking Request ID"));
+            filePath.addNode(new VirtualPathNode("Party" + party.getIdInternal(), party.getName()));
+            filePath.addNode(new VirtualPathNode("PR" + requestID, "Parking Request ID"));
 
             return filePath;
         }
@@ -700,7 +700,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         public ParkingRequest execute() {
             if (!getParkingParty().hasFirstTimeRequest()) {
                 ParkingRequest parkingRequest = new ParkingRequest(this);
-                FilePath filePath = getFilePath(parkingRequest.getIdInternal());
+                VirtualPath filePath = getFilePath(parkingRequest.getIdInternal());
 
                 writeDriverLicenseFile(parkingRequest, filePath);
 
@@ -798,7 +798,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         public ParkingRequest execute() {
             ParkingRequest parkingRequest = getParkingRequest();
             parkingRequest.edit(this);
-            FilePath filePath = getFilePath(parkingRequest.getIdInternal());
+            VirtualPath filePath = getFilePath(parkingRequest.getIdInternal());
 
             writeDriverLicenseFile(parkingRequest, filePath);
 
@@ -891,7 +891,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         if (parkingDocument != null
                 && parkingDocument.getParkingDocumentType() == NewParkingDocumentType.DRIVER_LICENSE) {
             ParkingFile parkingFile = parkingDocument.getParkingFile();
-            return FileManagerFactory.getFileManager().getDirectDownloadUrlFormat(
+            return FileManagerFactory.getFileManager().formatDownloadUrl(
                     parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
         }
         return "";

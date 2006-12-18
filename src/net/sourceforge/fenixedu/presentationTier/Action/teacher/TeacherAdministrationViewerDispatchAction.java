@@ -100,9 +100,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     private static Properties properties;
 
-    private static final String FILE_DOWNLOAD_URL_FORMAT = FileManagerFactory.getFileManager()
-	    .getDirectDownloadUrlFormat();
-
     public ActionForward instructions(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
@@ -716,9 +713,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    FenixFilterException {
 	ISiteComponent sectionComponent = new InfoSiteSection();
 	readSiteView(request, sectionComponent, null, sectionCode, null);
-
-	request.setAttribute("fileDownloadUrlFormat", FILE_DOWNLOAD_URL_FORMAT);
-
+	
 	return mapping.findForward("viewSection");
     }
 
@@ -1448,7 +1443,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	enrolmentPolicyValues.add(new Integer(2));
 
 	List enrolmentPolicyNames = new ArrayList();
-	enrolmentPolicyNames.add("Atómica");
+	enrolmentPolicyNames.add("Atï¿½mica");
 	enrolmentPolicyNames.add("Individual");
 
 	InfoGrouping infoGroupProperties = ((InfoSiteGrouping) siteView.getComponent())

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * Technical documentation. Required fields: title. Optional fields: author,
@@ -18,12 +19,14 @@ import net.sourceforge.fenixedu.util.Month;
  */
 public class Manual extends Manual_Base {
 
+	private static final String usedSchema = "result.publication.presentation.Manual";
+	
     public Manual() {
 	super();
     }
 
     public Manual(Person participator, String title, Unit organization, Integer year, String address,
-	    String note, String edition, Month month, String url) {
+    		MultiLanguageString note, String edition, Month month, String url) {
 	this();
 	checkRequiredParameters(title);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
@@ -31,7 +34,7 @@ public class Manual extends Manual_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, Unit organization, Integer year, String address, String note,
+    public void setEditAll(String title, Unit organization, Integer year, String address, MultiLanguageString note,
 	    String edition, Month month, String url) {
 	checkRequiredParameters(title);
 	fillAllAttributes(title, organization, year, address, note, edition, month, url);
@@ -39,7 +42,7 @@ public class Manual extends Manual_Base {
     }
 
     private void fillAllAttributes(String title, Unit organization, Integer year, String address,
-	    String note, String edition, Month month, String url) {
+    		MultiLanguageString note, String edition, Month month, String url) {
 	super.setTitle(title);
 	super.setOrganization(organization);
 	super.setYear(year);
@@ -83,8 +86,8 @@ public class Manual extends Manual_Base {
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
 	if (getMonth() != null)
 	    bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
-	if ((getNote() != null) && (getNote().length() > 0))
-	    bibEntry.setField("note", bibtexFile.makeString(getNote()));
+	if ((getNote() != null) && (getNote().hasContent()))
+	    bibEntry.setField("note", bibtexFile.makeString(getNote().getContent()));
 
 	BibtexPersonList authorsList = getBibtexAuthorsList(bibtexFile, getAuthors());
 	if (authorsList != null) {
@@ -121,7 +124,7 @@ public class Manual extends Manual_Base {
     }
 
     @Override
-    public void setNote(String note) {
+    public void setNote(MultiLanguageString note) {
 	throw new DomainException("error.researcher.Manual.call", "setNote");
     }
 
@@ -144,4 +147,9 @@ public class Manual extends Manual_Base {
     public void setEdition(String edition) {
 	throw new DomainException("error.researcher.Manual.call", "setEdition");
     }
+
+	@Override
+	public String getSchema() {
+		return usedSchema;
+	}
 }

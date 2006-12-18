@@ -22,9 +22,8 @@ import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.FileMetadata;
-import pt.utl.ist.fenix.tools.file.FilePath;
-import pt.utl.ist.fenix.tools.file.Node;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
+import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreateProjectSubmission extends Service {
 
@@ -69,11 +68,9 @@ public class CreateProjectSubmission extends Service {
         final Project project = createProjectSubmissionBean.getProject();
         final StudentGroup studentGroup = createProjectSubmissionBean.getStudentGroup();
         final String fileToDeleteExternalId = getFileToDeleteExternalId(project, studentGroup);
-        final FilePath filePath = getFilePath(attends.getDisciplinaExecucao(), project, studentGroup);
-        final FileMetadata fileMetadata = new FileMetadata(filename, attends.getAluno().getPerson()
-                .getNome());
+        final VirtualPath filePath = getVirtualPath(attends.getDisciplinaExecucao(), project, studentGroup);
         final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(filePath,
-                filename, (permittedGroup != null) ? true : false, fileMetadata, inputStream);
+                filename, (permittedGroup != null) ? true : false, attends.getAluno().getPerson().getNome(), filename, inputStream);
 
         final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filename,
                 filename, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
@@ -104,22 +101,23 @@ public class CreateProjectSubmission extends Service {
         return fileToDeleteStorageId;
     }
 
-    private FilePath getFilePath(final ExecutionCourse executionCourse, final Project project,
+    private VirtualPath getVirtualPath(final ExecutionCourse executionCourse, final Project project,
             final StudentGroup studentGroup) {
-        final FilePath filePath = new FilePath();
+        final VirtualPath filePath = new VirtualPath();
 
-        filePath.addNode(new Node("GRP" + studentGroup.getIdInternal(), studentGroup.getGroupNumber()
+        filePath.addNode(new VirtualPathNode("GRP" + studentGroup.getIdInternal(), studentGroup.getGroupNumber()
                 .toString()));
 
-        filePath.addNode(0, new Node("PRJ" + project.getIdInternal(), project.getName()));
-        filePath.addNode(0, new Node("EC" + executionCourse.getIdInternal(), executionCourse.getNome()));
+        filePath.addNode(0, new VirtualPathNode("PRJ" + project.getIdInternal(), project.getName()));
+        filePath.addNode(0, new VirtualPathNode("EC" + executionCourse.getIdInternal(), executionCourse.getNome()));
 
         final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-        filePath.addNode(0, new Node("EP" + executionPeriod.getIdInternal(), executionPeriod.getName()));
+        filePath.addNode(0, new VirtualPathNode("EP" + executionPeriod.getIdInternal(), executionPeriod.getName()));
 
         final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-        filePath.addNode(0, new Node("EY" + executionYear.getIdInternal(), executionYear.getYear()));
+        filePath.addNode(0, new VirtualPathNode("EY" + executionYear.getIdInternal(), executionYear.getYear()));
 
+        filePath.addNode(0, new VirtualPathNode("Courses","Courses"));
         return filePath;
     }
 }

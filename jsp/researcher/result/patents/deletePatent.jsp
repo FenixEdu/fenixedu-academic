@@ -13,7 +13,7 @@
 	<em>Patentes</em> <!-- tobundle -->
 	<h2>Apagar Patente</h2> <!-- tobundle -->
 	
-	<p class="mvert2"><span class="warning0"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.delete.useCase.title"/></span></p>
+	<p class="mvert2"><span class="warning0"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.delete.useCase.title"/></span></p>
 	
 	<%-- Action Messages --%>
 	<logic:messagesPresent name="messages" message="true">

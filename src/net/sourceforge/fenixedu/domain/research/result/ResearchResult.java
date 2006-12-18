@@ -6,13 +6,14 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.event.Event;
-import net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile.FileResultPermittedGroupType;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
 import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;
@@ -25,13 +26,13 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.joda.time.DateTime;
 
-public abstract class Result extends Result_Base {
+public abstract class ResearchResult extends ResearchResult_Base {
 
-    public Result() {
-        super();
+    public ResearchResult() {
+        
+    	super();
         setRootDomainObject(RootDomainObject.getInstance());
-        super.setOjbConcreteClass(getClass().getName());
-        updateModifiedByAndDate();
+        setOnCreateAtributes();
     }
     
     public abstract String getResume();
@@ -61,6 +62,13 @@ public abstract class Result extends Result_Base {
         return resume;
     }
 
+    @Checked("ResultPredicates.createPredicate")
+    private void setOnCreateAtributes() {
+        super.setOjbConcreteClass(getClass().getName());
+        super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
+        setCreator(AccessControl.getUserView().getPerson());
+        super.setLastModificationDate(new DateTime());
+    }
 
     @Checked("ResultPredicates.createPredicate")
     public ResultParticipation setCreatorParticipation(Person participator, ResultParticipationRole role) {
@@ -77,9 +85,16 @@ public abstract class Result extends Result_Base {
 
     @Checked("ResultPredicates.writePredicate")
     public void removeParticipation(ResultParticipation participation) {
-        participation.deleteIfNotLast();
+        
+    	Person person = participation.getPerson();
+    	if(person.equals(this.getCreator())) {
+    		throw new DomainException("error.researcher.Result.cannotRemoveCreatorParticipation");
+    	}
+    	else {
+    	participation.deleteIfNotLast();
         this.reOrderParticipations(this.getOrderedResultParticipations());
         updateModifiedByAndDate();
+    	}
     }
 
     @Checked("ResultPredicates.writePredicate")
@@ -109,22 +124,22 @@ public abstract class Result extends Result_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public ResultDocumentFile addDocumentFile(String filename, String displayName,
+    public ResearchResultDocumentFile addDocumentFile(String filename, String displayName,
             FileResultPermittedGroupType permittedGroupType, String mimeType, String checksum,
             String checksumAlgorithm, Integer size, String externalStorageId, Group permittedGroup) {
-        final ResultDocumentFile documentFile = new ResultDocumentFile(this, filename, displayName,
+        final ResearchResultDocumentFile documentFile = new ResearchResultDocumentFile(this, filename, displayName,
                 permittedGroupType, mimeType, checksum, checksumAlgorithm, size, externalStorageId,
                 permittedGroup);
         updateModifiedByAndDate();
         return documentFile;
     }
-
+    
     @Checked("ResultPredicates.writePredicate")
-    public void removeDocumentFile(ResultDocumentFile documentFile) {
+    public void removeDocumentFile(ResearchResultDocumentFile documentFile) {
         documentFile.delete();
         updateModifiedByAndDate();
     }
-
+    
     @Checked("ResultPredicates.writePredicate")
     public void setParticipationsOrder(List<ResultParticipation> newParticipationsOrder) {
         reOrderParticipations(newParticipationsOrder);
@@ -138,13 +153,17 @@ public abstract class Result extends Result_Base {
 
     @Checked("ResultPredicates.writePredicate")
     public void delete() {
-        removeAssociations();
+    	Person requestingPerson = AccessControl.getUserView().getPerson();
+    	if(!requestingPerson.equals(this.getCreator())) {
+    		throw new DomainException("error.researcher.Result.onlyCreatorCanDelete");
+    	} 	
+    	removeAssociations();
         removeRootDomainObject();
         deleteDomainObject();
     }
 
-    public final static Result readByOid(Integer oid) {
-        final Result result = RootDomainObject.getInstance().readResultByOID(oid);
+    public final static ResearchResult readByOid(Integer oid) {
+        final ResearchResult result = RootDomainObject.getInstance().readResearchResultByOID(oid);
 
         if (result == null) {
             throw new DomainException("error.researcher.Result.null");
@@ -254,8 +273,6 @@ public abstract class Result extends Result_Base {
 
     private void updateModifiedByAndDate() {
         super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
-	//Used for migration of old publications
-        //super.setModifiedBy("Fénix");
         super.setLastModificationDate(new DateTime());
     }
 
@@ -287,7 +304,7 @@ public abstract class Result extends Result_Base {
     private void removeAssociations() {
         super.setCountry(null);
 
-        for (ResultDocumentFile documentFile : getResultDocumentFiles()) {
+        for (ResearchResultDocumentFile documentFile : getResultDocumentFiles()) {
             documentFile.delete();
         }
 
@@ -316,7 +333,7 @@ public abstract class Result extends Result_Base {
 
     @Override
     public void setModifiedBy(String modifiedBy) {
-        throw new DomainException("error.researcher.Result.call", "setModifiedBy");
+    	throw new DomainException("error.researcher.Result.call", "setModifiedBy");
     }
 
     @Override
@@ -408,17 +425,18 @@ public abstract class Result extends Result_Base {
     }
 
     @Override
-    public List<ResultDocumentFile> getResultDocumentFiles() {
+    public List<ResearchResultDocumentFile> getResultDocumentFiles() {
         return Collections.unmodifiableList(super.getResultDocumentFiles());
     }
 
     @Override
-    public Iterator<ResultDocumentFile> getResultDocumentFilesIterator() {
+    public Iterator<ResearchResultDocumentFile> getResultDocumentFilesIterator() {
         return getResultDocumentFilesSet().iterator();
     }
 
     @Override
-    public Set<ResultDocumentFile> getResultDocumentFilesSet() {
+    public Set<ResearchResultDocumentFile> getResultDocumentFilesSet() {
         return Collections.unmodifiableSet(super.getResultDocumentFilesSet());
     }
+    
 }

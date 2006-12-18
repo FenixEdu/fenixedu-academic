@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.research.event.Event;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * (collection: A collection of works. Same as Proceedings.) The proceedings of
@@ -22,31 +23,33 @@ import net.sourceforge.fenixedu.util.Month;
  */
 public class Proceedings extends Proceedings_Base {
 
+	private static final String usedSchema = "result.publication.presentation.Proceedings";
+	
     public Proceedings() {
 	super();
     }
 
-    public Proceedings(Person participator, String title, Integer year, Event event, ScopeType scope,
-	    Unit publisher, Unit organization, String address, String note, Month month, String url) {
+    public Proceedings(Person participator, String title, Integer year, String conference, ScopeType scope,
+	    Unit publisher, Unit organization, String address, MultiLanguageString note, Month month, String url) {
 	this();
-	checkRequiredParameters(title, year, event);
+	checkRequiredParameters(title, year, conference);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Editor);
-	fillAllAttributes(title, year, event, scope, publisher, organization, address, note, month, url);
+	fillAllAttributes(title, year, conference, scope, publisher, organization, address, note, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, Integer year, Event event, ScopeType scope, Unit publisher,
-	    Unit organization, String address, String note, Month month, String url) {
-	checkRequiredParameters(title, year, event);
-	fillAllAttributes(title, year, event, scope, publisher, organization, address, note, month, url);
+    public void setEditAll(String title, Integer year, String conference, ScopeType scope, Unit publisher,
+	    Unit organization, String address, MultiLanguageString note, Month month, String url) {
+	checkRequiredParameters(title, year, conference);
+	fillAllAttributes(title, year, conference, scope, publisher, organization, address, note, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, Integer year, Event event, ScopeType scope,
-	    Unit publisher, Unit organization, String address, String note, Month month, String url) {
+    private void fillAllAttributes(String title, Integer year, String conference, ScopeType scope,
+	    Unit publisher, Unit organization, String address, MultiLanguageString note, Month month, String url) {
 	super.setTitle(title);
 	super.setYear(year);
-	super.setEvent(event);
+	super.setConference(conference);
 	super.setScope(scope);
 	super.setPublisher(publisher);
 	super.setOrganization(organization);
@@ -56,12 +59,12 @@ public class Proceedings extends Proceedings_Base {
 	super.setUrl(url);
     }
 
-    private void checkRequiredParameters(String title, Integer year, Event event) {
+    private void checkRequiredParameters(String title, Integer year, String conference) {
 	if ((title == null) || (title.length() == 0))
 	    throw new DomainException("error.researcher.Proceedings.title.null");
 	if (year == null)
 	    throw new DomainException("error.researcher.Proceedings.year.null");
-	if (event == null)
+	if (conference == null)
 	    throw new DomainException("error.researcher.Proceedings.event.null");
     }
 
@@ -72,8 +75,8 @@ public class Proceedings extends Proceedings_Base {
 	    resume = resume + getPublisher().getName() + ", ";
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
-	if (getEvent() != null)
-	    resume = resume + getEvent().getName().getContent() + ", ";
+	if (getConference() != null)
+	    resume = resume + getConference() + ", ";
 
 	resume = finishResume(resume);
 	return resume;
@@ -94,8 +97,8 @@ public class Proceedings extends Proceedings_Base {
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
 	if (getMonth() != null)
 	    bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
-	if ((getNote() != null) && (getNote().length() > 0))
-	    bibEntry.setField("note", bibtexFile.makeString(getNote()));
+	if ((getNote() != null) && (getNote().hasContent()))
+	    bibEntry.setField("note", bibtexFile.makeString(getNote().getContent()));
 
 	BibtexPersonList editorsList = getBibtexEditorsList(bibtexFile, getEditors());
 	if (editorsList != null) {
@@ -117,8 +120,8 @@ public class Proceedings extends Proceedings_Base {
     }
 
     @Override
-    public void setEvent(Event event) {
-	throw new DomainException("error.researcher.Proceedings.call", "setEvent");
+    public void setConference(String conference) {
+	throw new DomainException("error.researcher.Proceedings.call", "setConference");
     }
 
     @Override
@@ -137,7 +140,7 @@ public class Proceedings extends Proceedings_Base {
     }
 
     @Override
-    public void setNote(String note) {
+    public void setNote(MultiLanguageString note) {
 	throw new DomainException("error.researcher.Proceedings.call", "setNote");
     }
 
@@ -160,4 +163,9 @@ public class Proceedings extends Proceedings_Base {
     public void setScope(ScopeType scope) {
 	throw new DomainException("error.researcher.Inproceedings.call", "setScope");
     }
+
+	@Override
+	public String getSchema() {
+		return usedSchema;
+	}
 }

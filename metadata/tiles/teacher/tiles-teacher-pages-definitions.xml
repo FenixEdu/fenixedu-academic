@@ -485,6 +485,7 @@
 	    <put name="navLocal" value="/teacher/sectionsNavbar.jsp" type="page"/>
 	</definition>
 
+
 	<definition name="sendMail" extends="definition.teacher.two-column">
  		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/cms/messaging/sendMail.jsp" />
@@ -618,6 +619,18 @@
 
 	<definition name="manage-execution-course-editFile" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/editFile.jsp" />
+	</definition>
+
+	<definition name="create-scorm" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/createScorm.jsp" />
+	</definition>
+
+	<definition name="upload-scorm" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/uploadScorm.jsp" />
+	</definition>
+	
+	<definition name="search-scorm-content" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/searchScormContent.jsp" />
 	</definition>
 
     <definition name="manage-execution-course-organizeItems" extends="execution-course-administration">

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import bibtex.dom.BibtexEntry;
 
@@ -25,7 +25,7 @@ public class UnstructuredBean extends ResultPublicationBean implements Serializa
     }
 
     @Override
-    protected void fillSpecificFields(ResultPublication publication) {
+    protected void fillSpecificFields(ResearchResultPublication publication) {
 	//no specific fields
     }
 

@@ -1,28 +1,28 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.research.result.Result;
-import net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile.FileResultPermittedGroupType;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
 
 public class ResultDocumentFileSubmissionBean extends OpenFileBean {
     
-    private DomainReference<Result> result;
+    private DomainReference<ResearchResult> result;
     private String displayName;
     private FileResultPermittedGroupType permission;
 
-    public ResultDocumentFileSubmissionBean(Result result) {
-	setResult(new DomainReference<Result>(result));
+    public ResultDocumentFileSubmissionBean(ResearchResult result) {
+	setResult(new DomainReference<ResearchResult>(result));
 	setFileName(null);
 	setDisplayName(null);
 	setInputStream(null);
 	setPermission(FileResultPermittedGroupType.getDefaultType());
     }
 
-    public Result getResult() {
+    public ResearchResult getResult() {
 	return result.getObject();
     }
 
-    public void setResult(DomainReference<Result> result) {
+    public void setResult(DomainReference<ResearchResult> result) {
 	this.result = result;
     }
 

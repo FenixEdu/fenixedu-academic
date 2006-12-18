@@ -14,25 +14,30 @@
 	<!-- Action paths definitions -->
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>" toScope="request"/>
 
-	<bean:define id="prepareEdit" value="<%="/result/resultDocumentFilesManagement.do?method=prepareEdit&" + parameters%>" toScope="request"/>
-	<bean:define id="prepareAlter" value="<%="/result/resultDocumentFilesManagement.do?method=prepareAlter&" + parameters%>"/>	
-	<bean:define id="create" value="<%="/result/resultDocumentFilesManagement.do?method=create&" + parameters%>"/>
-	<bean:define id="cancel" value="<%="/result/resultDocumentFilesManagement.do?method=backToResult&" + parameters%>"/>
-	<bean:define id="backLink" value="<%="/result/resultDocumentFilesManagement.do?method=backToResult&" + parameters%>"/>
+
+
+	<bean:define id="create" value="<%="/result/resultDocumentFilesManagement.do?forwardTo=editDocumentFiles&method=create&" + parameters%>" />
+	<bean:define id="backLink" value="<%="/result/resultDocumentFilesManagement.do?forwardTo=editDocumentFiles&method=backToResult&" + parameters %>" />
+	<bean:define id="prepareEdit" value="<%="/result/resultDocumentFilesManagement.do?forwardTo=editDocumentFiles&method=prepareEdit&" + parameters%>" />
+	<bean:define id="prepareAlter" value="<%="/result/resultDocumentFilesManagement.do?forwardTo=editDocumentFiles&method=prepareAlter&" + parameters%>"/>	
+	<bean:define id="cancel" value="<%="/result/resultDocumentFilesManagement.do?forwardTo=editDocumentFiles&method=backToResult&" + parameters%>"/>
 	
 	<%-- Use Case Titles --%>
 	<logic:equal name="resultType" value="ResultPatent">
 		<em>Patentes</em> <!-- tobundle -->
 	</logic:equal>
 	<logic:notEqual name="resultType" value="ResultPatent">
-		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
+		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	</logic:notEqual>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.useCase.title"/>: <fr:view name="result" property="title"/></h2>
 	
 	<%-- Go to previous page --%>
 	<ul class="mvert2 list5">
 		<li>
+
 			<html:link page="<%= backLink %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.goBackToView"/></html:link>
+
+
 		</li>
 	</ul>
 
@@ -60,6 +65,7 @@
 
 	<%-- Document File Submission --%>
 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.selectFile"/>:</b></p>
+	
 	<fr:edit id="editBean" name="bean" schema="resultDocumentFile.submission.edit" action="<%= create %>">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thright thtop" />

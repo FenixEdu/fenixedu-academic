@@ -171,57 +171,65 @@ public class FlowCollectionRenderer extends OutputRenderer {
 
     @Override
     protected Layout getLayout(final Object object, Class type) {
-        final Iterator iterator = ((Collection) object).iterator();
-
-        return new FlowLayout() {
-
-            private boolean insertSeparator;
-
-            private boolean empty;
-
-            @Override
-            public HtmlComponent createComponent(Object object, Class type) {
-                HtmlComponent component = null;
-
-                if ((getEmptyMessageKey() != null) && (hasMoreComponents() == false)) {
-                    component = new HtmlText(RenderUtils.getResourceString(getEmptyMessageBundle(), getEmptyMessageKey()));
-                    this.empty = true;
-                } else {
-                    component = super.createComponent(object, type);
-                    this.empty = false;
-                }
-
-                return component;
-
-            }
-
-            @Override
-            public void applyStyle(HtmlComponent component) {
-                if (this.empty) {
-                    component.setClasses(getEmptyMessageClasses());
-                } else {
-                    super.applyStyle(component);
-                }
-            }
-
-            @Override
-            protected boolean hasMoreComponents() {
-                return iterator.hasNext();
-            }
-
-            @Override
-            protected HtmlComponent getNextComponent() {
-                if (this.insertSeparator) {
-                    this.insertSeparator = false;
-                    return new HtmlText(getHtmlSeparator(),false);
-                } else if (hasMoreComponents() && getHtmlSeparator() != null) {
-                    this.insertSeparator = true;
-                }
-
-                return renderValue(iterator.next(), RenderKit.getInstance().findSchema(getEachSchema()),
-                        getEachLayout());
-            }
-        };
+        return new FlowCollectionLayout(object,type);
     }
+
+
+    public class FlowCollectionLayout extends FlowLayout {
+
+        protected boolean insertSeparator;
+        
+        protected Iterator iterator;
+        
+        private boolean empty;
+        
+        public FlowCollectionLayout(final Object object, Class type) {
+        	iterator = ((Collection) object).iterator();   	
+        }
+        
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            HtmlComponent component = null;
+
+            if ((getEmptyMessageKey() != null) && (hasMoreComponents() == false)) {
+                component = new HtmlText(RenderUtils.getResourceString(getEmptyMessageBundle(), getEmptyMessageKey()));
+                this.empty = true;
+            } else {
+                component = super.createComponent(object, type);
+                this.empty = false;
+            }
+
+            return component;
+
+        }
+
+        @Override
+        public void applyStyle(HtmlComponent component) {
+            if (this.empty) {
+                component.setClasses(getEmptyMessageClasses());
+            } else {
+                super.applyStyle(component);
+            }
+        }
+
+        @Override
+        protected boolean hasMoreComponents() {
+            return iterator.hasNext();
+        }
+
+        @Override
+        protected HtmlComponent getNextComponent() {
+            if (this.insertSeparator) {
+                this.insertSeparator = false;
+                return new HtmlText(getHtmlSeparator(),false);
+            } else if (hasMoreComponents() && getHtmlSeparator() != null) {
+                this.insertSeparator = true;
+            }
+
+            return renderValue(iterator.next(), RenderKit.getInstance().findSchema(getEachSchema()),
+                    getEachLayout());
+        }
+    };
+
 
 }

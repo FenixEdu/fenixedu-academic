@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.YearMonthDay;
@@ -38,16 +39,19 @@ public class UnitUtils {
 	return allUnitsWithoutParent;
     }
 
+    public static List<Unit> readAllUnitsByType(PartyTypeEnum type) {
+    	final List<Unit> result = new ArrayList<Unit>();
+    	final YearMonthDay now = new YearMonthDay();
+    	for (final Unit unit : Unit.readAllUnits()) {
+    	    if (unit.isActive(now) && unit.getType() == type) {
+    		result.add(unit);
+    	    }
+    	}
+    	return result;
+    }
+    
     public static List<Unit> readAllDepartmentUnits() {
-	final List<Unit> result = new ArrayList<Unit>();
-	final YearMonthDay now = new YearMonthDay();
-	for (final Unit unit : Unit.readAllUnits()) {
-	    if (unit.isActive(now) && unit.getType() == PartyTypeEnum.DEPARTMENT
-		    && unit.getDepartment() != null) {
-		result.add(unit);
-	    }
-	}
-	return result;
+    	return readAllUnitsByType(PartyTypeEnum.DEPARTMENT);
     }
 
     public static Unit readUnitWithoutParentstByAcronym(String acronym) {

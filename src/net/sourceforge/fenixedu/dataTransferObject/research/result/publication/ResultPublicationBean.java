@@ -15,11 +15,12 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings
 import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
 import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 import bibtex.dom.BibtexAbstractValue;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexMacroReference;
@@ -34,7 +35,7 @@ public abstract class ResultPublicationBean implements Serializable {
 	    return Book;
 	}
 
-	public static ResultPublicationType getTypeFromPublication(ResultPublication publication) {
+	public static ResultPublicationType getTypeFromPublication(ResearchResultPublication publication) {
 	    String typeStr = publication.getClass().getSimpleName();
 	    if (typeStr.equals("Unstructured"))
 		return null;
@@ -98,7 +99,7 @@ public abstract class ResultPublicationBean implements Serializable {
 
     private String title;
 
-    private String note;
+    private MultiLanguageString note;
 
     private String url;
 
@@ -112,7 +113,7 @@ public abstract class ResultPublicationBean implements Serializable {
 
     public abstract ResultPublicationBean convertTo(ResultPublicationType type);
 
-    protected abstract void fillSpecificFields(ResultPublication publication);
+    protected abstract void fillSpecificFields(ResearchResultPublication publication);
 
     protected abstract void fillBibTeXFields(BibtexEntry bibtexEntry);
 
@@ -143,7 +144,7 @@ public abstract class ResultPublicationBean implements Serializable {
 	}
     }
 
-    public static ResultPublicationBean getBeanToEdit(ResultPublication publication) {
+    public static ResultPublicationBean getBeanToEdit(ResearchResultPublication publication) {
 	if (publication instanceof Unstructured)
 	    return new UnstructuredBean((Unstructured) publication);
 
@@ -200,7 +201,7 @@ public abstract class ResultPublicationBean implements Serializable {
 	}
     }
 
-    protected void fillCommonFields(ResultPublication publication) {
+    protected void fillCommonFields(ResearchResultPublication publication) {
 	this.setIdInternal(publication.getIdInternal());
 	this.setTitle(publication.getTitle());
 	this.setNote(publication.getNote());
@@ -402,11 +403,15 @@ public abstract class ResultPublicationBean implements Serializable {
 	this.month = month;
     }
 
-    public String getNote() {
+    public MultiLanguageString getNote() {
 	return note;
     }
 
     public void setNote(String note) {
+    	this.note = new MultiLanguageString(note);
+    }
+    
+    public void setNote(MultiLanguageString note) {
 	this.note = note;
     }
 

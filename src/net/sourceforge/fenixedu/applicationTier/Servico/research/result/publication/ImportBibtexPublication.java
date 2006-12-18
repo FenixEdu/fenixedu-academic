@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.T
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexPublicationBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 
 public class ImportBibtexPublication extends ResultPublicationService {
 
-    public void run(Person personImporting, BookBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+    public ResearchResultPublication run(Person personImporting, BookBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null)
             throw new NullPointerException();
         
@@ -28,11 +28,12 @@ public class ImportBibtexPublication extends ResultPublicationService {
         bean.setPerson(participator.getPerson());
         bean.setRole(participator.getPersonRole());
         
-        ResultPublication publication = createBookFromBean(bean);
+        ResearchResultPublication publication = createBookFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
+        return publication;
     }
     
-    public void run(Person personImporting, InbookBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+    public ResearchResultPublication run(Person personImporting, InbookBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null)
             throw new NullPointerException();
         
@@ -40,11 +41,12 @@ public class ImportBibtexPublication extends ResultPublicationService {
         bean.setPerson(participator.getPerson());
         bean.setRole(participator.getPersonRole());
         
-        ResultPublication publication = createInbookFromBean(bean);
+        ResearchResultPublication publication = createInbookFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
+        return publication;
     }
     
-    public void run(Person personImporting, IncollectionBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+    public ResearchResultPublication run(Person personImporting, IncollectionBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null)
             throw new NullPointerException();
         
@@ -52,22 +54,24 @@ public class ImportBibtexPublication extends ResultPublicationService {
         bean.setPerson(participator.getPerson());
         bean.setRole(participator.getPersonRole());
         
-        ResultPublication publication = createIncollectionFromBean(bean);
+        ResearchResultPublication publication = createIncollectionFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
+        return publication;
     }
     
-    public void run(Person personImporting, ArticleBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+    public ResearchResultPublication run(Person personImporting, ArticleBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null)
             throw new NullPointerException();
         
         BibtexParticipatorBean participator = verifyPersonImporting(personImporting, bibtexPublicationBean.getParticipators());
         bean.setPerson(participator.getPerson());
         
-        ResultPublication publication = createArticleFromBean(bean);
+        ResearchResultPublication publication = createArticleFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
+        return publication;
     }
     
-    public void run(Person personImporting, InproceedingsBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+    public ResearchResultPublication run(Person personImporting, InproceedingsBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null)
             throw new NullPointerException();
         
@@ -75,67 +79,73 @@ public class ImportBibtexPublication extends ResultPublicationService {
         bean.setPerson(participator.getPerson());
         bean.setRole(participator.getPersonRole());
         
-        ResultPublication publication = createInproceedingsFromBean(bean);
+        ResearchResultPublication publication = createInproceedingsFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
+        return publication;
     }
 
-    public void run(Person personImporting, ProceedingsBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+    public ResearchResultPublication run(Person personImporting, ProceedingsBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null)
             throw new NullPointerException();
         
         BibtexParticipatorBean participator = verifyPersonImporting(personImporting, bibtexPublicationBean.getParticipators());
         bean.setPerson(participator.getPerson());
         
-        ResultPublication publication = createProceedingsFromBean(bean);
+        ResearchResultPublication publication = createProceedingsFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
+        return publication;
     }
     
-    public void run(Person personImporting, ThesisBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+    public ResearchResultPublication run(Person personImporting, ThesisBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null)
             throw new NullPointerException();
         
         BibtexParticipatorBean participator = verifyPersonImporting(personImporting, bibtexPublicationBean.getParticipators());
         bean.setPerson(participator.getPerson());
         
-        ResultPublication publication = createThesisFromBean(bean);
+        ResearchResultPublication publication = createThesisFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
+        return publication;
     }
     
-    public void run(Person personImporting, ManualBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+    public ResearchResultPublication run(Person personImporting, ManualBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null)
             throw new NullPointerException();
         
         BibtexParticipatorBean participator = verifyPersonImporting(personImporting, bibtexPublicationBean.getParticipators());
         bean.setPerson(participator.getPerson());
         
-        ResultPublication publication = createManualFromBean(bean);
+        ResearchResultPublication publication = createManualFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
+        return publication;
     }
     
-    public void run(Person personImporting, TechnicalReportBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+    public ResearchResultPublication run(Person personImporting, TechnicalReportBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null)
             throw new NullPointerException();
         
         BibtexParticipatorBean participator = verifyPersonImporting(personImporting, bibtexPublicationBean.getParticipators());
         bean.setPerson(participator.getPerson());
         
-        ResultPublication publication = createTechnicalReportFromBean(bean);
+        ResearchResultPublication publication = createTechnicalReportFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
+        return publication;
     }
     
-    public void run(Person personImporting, OtherPublicationBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+    public ResearchResultPublication run(Person personImporting, OtherPublicationBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null)
             throw new NullPointerException();
         
         BibtexParticipatorBean participator = verifyPersonImporting(personImporting, bibtexPublicationBean.getParticipators());
         bean.setPerson(participator.getPerson());
         
-        ResultPublication publication = createOtherPublicationFromBean(bean);
+        ResearchResultPublication publication = createOtherPublicationFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
+        return publication;
     }
     
     private void createRestOfParticipations(Person personImporting,
-            List<BibtexParticipatorBean> participators, ResultPublication publication)
+            List<BibtexParticipatorBean> participators, ResearchResultPublication publication)
             throws FenixServiceException {
 
         for (BibtexParticipatorBean participator : participators) {

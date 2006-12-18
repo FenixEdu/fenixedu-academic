@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlForm;
 import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
-import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.components.state.HiddenSlot;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;

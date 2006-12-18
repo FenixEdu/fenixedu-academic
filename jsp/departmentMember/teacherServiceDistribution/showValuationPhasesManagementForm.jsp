@@ -7,7 +7,6 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-
 <h3>
 	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
 		<bean:message key="link.teacherServiceDistribution"/>
@@ -15,7 +14,7 @@
 	>
 	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
 		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-<%--		(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>º<bean:message key="label.common.courseSemester"/>--%>
+<%--		(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>ï¿½<bean:message key="label.common.courseSemester"/>--%>
 		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
 	</html:link>
 	>
@@ -23,12 +22,26 @@
 </h3>
 
 <html:form action="/valuationPhasesManagement">
-<html:hidden property="method" value=""/>
+<html:hidden property="method" value="createValuationPhase"/>
 <html:hidden property="teacherServiceDistribution"/>
 <html:hidden property="valuationPhase"/>
 <html:hidden property="isPublished"/>
-<html:hidden property="page" value="0"/>
+<html:hidden property="page" value="1"/>
 
+<bean:define id="teacherServiceDistribution" name="valuationPhasesManagementForm" property="teacherServiceDistribution"/>
+
+<ul class="list5">
+	<li>
+		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+			<bean:message key="link.back"/>
+		</html:link>
+	</li>
+	<span class="switchInline"><li><a href="#" onclick="switchDisplay('createNewValuationPhase')"><bean:message key="label.teacherServiceDistribution.createNewValuationPhase"/></a></li></span>
+</ul>
+
+
+
+<div id="createNewValuationPhase" class="switchNone">
 <table class="vtsbc">
 	<tr>
 		<th colspan="2">
@@ -42,12 +55,13 @@
 		<td>
 			<html:text property="name" size="24" maxlength="240"/> 
 			&nbsp;&nbsp;&nbsp;
-			<html:button property="" onclick="this.form.method.value='createValuationPhase'; this.form.page.value=1; this.form.submit();">
+			<html:submit> 
 			<bean:message key="label.teacherServiceDistribution.create"/>
-		</html:button>
+			</html:submit>
 		</td>
 	</tr>
 </table>
+</div>
 
 <br/>
 <span class="error">
@@ -94,8 +108,9 @@
 		<bean:define id="valuationPhaseId" name="valuationPhase" property="idInternal" />
 		<td>
 			<logic:equal name="valuationPhase" property="status.name" value="<%=ValuationPhaseStatus.OPEN.name()%>">
-				<html:link href='<%= "javascript:document.valuationPhasesManagementForm.valuationPhase.value=" + valuationPhaseId + ";document.valuationPhasesManagementForm.method.value='setCurrentValuationPhase'; document.valuationPhasesManagementForm.submit();" %>'>
-					<bean:message key="label.teacherServiceDistribution.setCurrent"/>
+				<html:link href="<%= request.getContextPath() + "/departmentMember/valuationPhasesManagement.do?&method=setCurrentValuationPhase&valuationPhase=" + valuationPhaseId + "&teacherServiceDistribution=" + teacherServiceDistribution %>">
+				<%-- <html:link href='<%= "javascript:document.valuationPhasesManagementForm.valuationPhase.value=" + valuationPhaseId + ";document.valuationPhasesManagementForm.method.value='setCurrentValuationPhase'; document.valuationPhasesManagementForm.submit();" %>'>
+					--%> <bean:message key="label.teacherServiceDistribution.setCurrent"/>
 				</html:link>			
 			</logic:equal>
 			<logic:notEqual name="valuationPhase" property="status.name" value="<%=ValuationPhaseStatus.OPEN.name()%>">
@@ -105,20 +120,25 @@
 		</td>
 		<td>
 			<logic:equal name="valuationPhase" property="status.name" value="<%=ValuationPhaseStatus.OPEN.name()%>">
-			<html:link href='<%= "javascript:document.valuationPhasesManagementForm.valuationPhase.value=" + valuationPhaseId + ";document.valuationPhasesManagementForm.method.value='closeValuationPhase'; document.valuationPhasesManagementForm.submit();" %>'> 
-				<bean:message key="label.teacherServiceDistribution.close"/>
+			<html:link href="<%= request.getContextPath() + "/departmentMember/valuationPhasesManagement.do?&method=closeValuationPhase&valuationPhase=" + valuationPhaseId  + "&teacherServiceDistribution=" + teacherServiceDistribution%>">
+			<%-- <html:link href="<%= "javascript:document.valuationPhasesManagementForm.valuationPhase.value=" + valuationPhaseId + ";document.valuationPhasesManagementForm.method.value='closeValuationPhase'; document.valuationPhasesManagementForm.submit();" %>"> 
+				--%> <bean:message key="label.teacherServiceDistribution.close"/>
 			</html:link>
 			</logic:equal>
 			<logic:equal name="valuationPhase" property="status.name" value="<%=ValuationPhaseStatus.CLOSED.name()%>">
-				<html:link href='<%= "javascript:document.valuationPhasesManagementForm.valuationPhase.value=" + valuationPhaseId + ";document.valuationPhasesManagementForm.method.value='openValuationPhase'; document.valuationPhasesManagementForm.submit();" %>'> 
+				<html:link href="<%= request.getContextPath() + "/departmentMember/valuationPhasesManagement.do?&method=openValuationPhase&valuationPhase=" + valuationPhaseId  + "&teacherServiceDistribution=" + teacherServiceDistribution%>">
+<%-- 				<html:link href='<%= "javascript:document.valuationPhasesManagementForm.valuationPhase.value=" + valuationPhaseId + ";document.valuationPhasesManagementForm.method.value='openValuationPhase'; document.valuationPhasesManagementForm.submit();" %>'> 
+					--%> 
 					<bean:message key="label.teacherServiceDistribution.open"/>
 				</html:link>
 			</logic:equal>
 		</td>
 		<td>
 			<logic:equal name="valuationPhase" property="status.name" value="<%=ValuationPhaseStatus.CLOSED.name()%>">
-			<html:link href='<%= "javascript:document.valuationPhasesManagementForm.valuationPhase.value=" + ((ValuationPhase) valuationPhase).getIdInternal() + ";document.valuationPhasesManagementForm.method.value='deleteValuationPhase'; document.valuationPhasesManagementForm.submit();" %>'> 
-				<bean:message key="label.teacherServiceDistribution.delete"/>
+		
+			<html:link href="<%= request.getContextPath() + "/departmentMember/valuationPhasesManagement.do?&method=deleteValuationPhase&valuationPhase=" + ((ValuationPhase) valuationPhase).getIdInternal() + "&teacherServiceDistribution=" + teacherServiceDistribution%>">
+		<%-- 	<html:link href='<%= "javascript:document.valuationPhasesManagementForm.valuationPhase.value=" + ((ValuationPhase) valuationPhase).getIdInternal() + ";document.valuationPhasesManagementForm.method.value='deleteValuationPhase'; document.valuationPhasesManagementForm.submit();" %>'> 
+			--%>	<bean:message key="label.teacherServiceDistribution.delete"/>
 			</html:link>
 			</logic:equal>
 			<logic:notEqual name="valuationPhase" property="status.name" value="<%=ValuationPhaseStatus.CLOSED.name()%>">
@@ -128,13 +148,15 @@
 		</td>					
 		<td>
 			<logic:equal name="valuationPhase" property="isPublished" value="true">
-				<html:link href='<%= "javascript: document.valuationPhasesManagementForm.valuationPhase.value=" + ((ValuationPhase) valuationPhase).getIdInternal() + ";document.valuationPhasesManagementForm.method.value='setPublishedStateOnValuationPhase'; document.valuationPhasesManagementForm.isPublished.value='false'; document.valuationPhasesManagementForm.submit();" %>'> 
-					<bean:message key="label.yes"/>
+				<html:link href="<%= request.getContextPath() + "/departmentMember/valuationPhasesManagement.do?&method=setPublishedStateOnValuationPhase&isPublished=false&valuationPhase=" + ((ValuationPhase) valuationPhase).getIdInternal() + "&teacherServiceDistribution=" + teacherServiceDistribution%>">
+				<%-- <html:link href='<%= "javascript: document.valuationPhasesManagementForm.valuationPhase.value=" + ((ValuationPhase) valuationPhase).getIdInternal() + ";document.valuationPhasesManagementForm.method.value='setPublishedStateOnValuationPhase'; document.valuationPhasesManagementForm.isPublished.value='false'; document.valuationPhasesManagementForm.submit();" %>'> 
+					--%> <bean:message key="label.unpublish"/>
 				</html:link>
 			</logic:equal>
 			<logic:notEqual name="valuationPhase" property="isPublished" value="true">
-				<html:link href='<%= "javascript: document.valuationPhasesManagementForm.valuationPhase.value=" + ((ValuationPhase) valuationPhase).getIdInternal() + ";document.valuationPhasesManagementForm.method.value='setPublishedStateOnValuationPhase'; document.valuationPhasesManagementForm.isPublished.value='true'; document.valuationPhasesManagementForm.submit();" %>'> 
-					<bean:message key="label.no"/>
+				<html:link href="<%= request.getContextPath() + "/departmentMember/valuationPhasesManagement.do?&method=setPublishedStateOnValuationPhase&isPublished=true&valuationPhase=" + ((ValuationPhase) valuationPhase).getIdInternal() + "&teacherServiceDistribution=" + teacherServiceDistribution%>">
+				<%-- <html:link href='<%= "javascript: document.valuationPhasesManagementForm.valuationPhase.value=" + ((ValuationPhase) valuationPhase).getIdInternal() + ";document.valuationPhasesManagementForm.method.value='setPublishedStateOnValuationPhase'; document.valuationPhasesManagementForm.isPublished.value='true'; document.valuationPhasesManagementForm.submit();" %>'> 
+					--%> <bean:message key="label.publish"/>
 				</html:link>
 			</logic:notEqual>
 		</td>					
@@ -143,8 +165,10 @@
 </table>
 <br/>
 
-<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-	<bean:message key="link.back"/>
-</html:link>
+
 
 </html:form>
+
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

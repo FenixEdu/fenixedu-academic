@@ -82,6 +82,8 @@ public class EnumRadioInputRendererWithPostBack extends EnumRadioInputRenderer  
          @Override
          public void execute(IViewState viewState) {
              if (hidden.getValue() != null && hidden.getValue().length() != 0) {
+            	 hidden.setValue(null);
+            	 
                  String destinationName = this.destination == null ? "postBack" : this.destination;
                  ViewDestination destination = viewState.getDestination(destinationName);
 

@@ -19,7 +19,7 @@
 	<bean:define id="teacherServiceDistributionId" name="teacherServiceDistribution" property="idInternal"/>
 	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + teacherServiceDistributionId %>'>
 		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-<%-- 		(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>º<bean:message key="label.common.courseSemester"/>--%>
+<%-- 		(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>ï¿½<bean:message key="label.common.courseSemester"/>--%>
 		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
 	</html:link>
 	>
@@ -75,6 +75,7 @@
 <br/>
 <br/>
 
+<bean:message key="label.teacherService.navigateBy"/>:
 <html:link href="javascript:document.teacherServiceDistributionValuationForm.method.value='changeToViewCourses'; document.teacherServiceDistributionValuationForm.submit();">
 	<bean:message key="label.teacherService.navigateByCourse"/> </b> 
 </html:link> | 

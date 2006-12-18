@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@page import="pt.utl.ist.fenix.tools.file.FileManagerFactory"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
@@ -33,7 +34,7 @@
 					<tr>
 						<td><img src="<%= request.getContextPath() %>/images/list-bullet.gif" alt="<bean:message key="list-bullet" bundle="IMAGE_RESOURCES" />" /></td>
 						<td>
-							<html:link href="<%= pageContext.findAttribute("fileDownloadUrlFormat") + "/" + externalStorageIdentification + "/" + filename %>" ><bean:write name="infoFileItem" property="displayName"/></html:link>
+							<html:link href="<%= FileManagerFactory.getFileManager().formatDownloadUrl(externalStorageIdentification,filename) %>" ><bean:write name="infoFileItem" property="displayName"/></html:link>
 						</td>
 					</tr>	
 				</logic:iterate>

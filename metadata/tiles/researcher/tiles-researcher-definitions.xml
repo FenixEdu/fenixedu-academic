@@ -8,7 +8,8 @@
 	  <put name="serviceName" value="Investigação" />
 	  <put name="navLocal" value="/researcher/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
-	  <put name="body-context" value="/researcher/languageContext.jsp"/>
+	  <put name="body-context" value="/commons/blank.jsp"/> 
+<!--  	  <put name="body-context" value="/researcher/languageContext.jsp"/> -->
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>

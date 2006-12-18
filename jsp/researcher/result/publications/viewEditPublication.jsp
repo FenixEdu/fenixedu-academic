@@ -65,13 +65,14 @@
 	<jsp:include page="../commons/viewDocumentFiles.jsp"/>
 	<ul class="mtop0 list5">
 		<li>
-		<html:link page="<%="/resultDocumentFiles/prepareEdit.do?" + parameters %>">
+		<html:link page="<%="/resultDocumentFiles/prepareEdit.do?forwardTo=editDocumentFiles&" + parameters %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.documents.link" />
 		</html:link>
 		</li>
 	</ul>
 
 	<%-- Event Associations --%>
+	<%-- 
 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.title.label"/></b></p>
 	<jsp:include page="../commons/viewEventAssociations.jsp"/>
 	<ul class="mtop0 list5">
@@ -81,13 +82,14 @@
 		</html:link>
 		</li>
 	</ul>
+	--%>
 	
 	<%-- Unit Associations --%>
 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b></p>
 	<jsp:include page="../commons/viewUnitAssociations.jsp"/>
 	<ul class="mtop0 list5">
 		<li>
-		<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?" + parameters %>">
+		<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?forwardTo=editUnitAssociations&" + parameters %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.manage.unitAssociations.link" />
 		</html:link>	
 		</li>

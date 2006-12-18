@@ -22,7 +22,7 @@ public class FileItemCreationBean implements Serializable {
 
     transient private InputStream file;
     
-    public FileItemCreationBean(Item item) {
+	public FileItemCreationBean(Item item) {
         super();
         
         this.item = new DomainReference<Item>(item);

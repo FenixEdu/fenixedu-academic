@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
-import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
@@ -111,11 +111,11 @@ public class Teacher extends Teacher_Base {
          * BUSINESS SERVICES *
          **********************************************************************/
 
-    public void addToTeacherInformationSheet(Result result, PublicationArea publicationArea) {
+    public void addToTeacherInformationSheet(ResearchResult result, PublicationArea publicationArea) {
 	new ResultTeacher(result, this, publicationArea);
     }
 
-    public void removeFromTeacherInformationSheet(Result result) {
+    public void removeFromTeacherInformationSheet(ResearchResult result) {
 	for (ResultTeacher resultTeacher : getTeacherResults()) {
 	    if (resultTeacher.getResult().equals(result)) {
 		resultTeacher.delete();

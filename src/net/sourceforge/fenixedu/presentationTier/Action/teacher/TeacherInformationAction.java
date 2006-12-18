@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRe
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -413,14 +413,10 @@ public class TeacherInformationAction extends FenixDispatchAction {
         request.setAttribute("providerRegimeTypeList", ProviderRegimeType.getEnumList());
         
         
-        /* 
-         * This code is to replace PublicationTeacher by ResultTeacher.
-         * Sergio Patricio & Luis Santos
-        /*
         List<ResultTeacher> teacherResults = getUserView(request).getPerson().getTeacher()
                 .getTeacherResults();
-        List<Result> didaticResults = new ArrayList<Result>();
-        List<Result> cientificResults = new ArrayList<Result>();
+        List<ResearchResult> didaticResults = new ArrayList<ResearchResult>();
+        List<ResearchResult> cientificResults = new ArrayList<ResearchResult>();
         for (ResultTeacher resultTeacher : teacherResults) {
             if (resultTeacher.getPublicationArea().equals(PublicationArea.DIDATIC))
                 didaticResults.add(resultTeacher.getResult());
@@ -429,9 +425,9 @@ public class TeacherInformationAction extends FenixDispatchAction {
                 cientificResults.add(resultTeacher.getResult());
         }
         request.setAttribute("didaticResults",didaticResults);
-        request.setAttribute("cientificResults",cientificResults);*/
+        request.setAttribute("cientificResults",cientificResults);
         
-        /*END modification*/
+    
         
         return mapping.findForward("show-form");
     }

@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-
 <h3>
 	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
 		<bean:message key="link.teacherServiceDistribution"/>
@@ -13,7 +12,7 @@
 	>
 	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal() %>'>
 		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-<%--		(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>º<bean:message key="label.common.courseSemester"/>--%>
+<%--		(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>ï¿½<bean:message key="label.common.courseSemester"/>--%>
 		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
 	</html:link>
 	>
@@ -111,7 +110,7 @@
 					</td>
 					<td class="courses" align="center">
 						<logic:iterate id="executionPeriod" name="teacherServiceDistribution" property="orderedExecutionPeriods">
-							<bean:write name="executionPeriod" property="semester"/>º&nbsp;
+							<bean:write name="executionPeriod" property="semester"/>ï¿½&nbsp;
 						</logic:iterate>
 					</td>
 				</tr>
@@ -135,7 +134,7 @@
 					&nbsp;&nbsp;&nbsp;
 					<b><bean:message key="label.teacherServiceDistribution.semesters"/>: </b>
 					<logic:iterate id="executionPeriod" name="teacherServiceDistribution" property="orderedExecutionPeriods">
-						<bean:write name="executionPeriod" property="semester"/>º&nbsp;
+						<bean:write name="executionPeriod" property="semester"/>ï¿½&nbsp;
 					</logic:iterate></b>
 				</th>
 			</tr>

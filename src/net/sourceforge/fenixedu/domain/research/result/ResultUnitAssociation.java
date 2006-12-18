@@ -11,7 +11,7 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
 	Sponsor, Participant;
 
 	public static ResultUnitAssociationRole getDefaultRole() {
-	    return Sponsor;
+	    return Participant;
 	}
     }
 
@@ -20,7 +20,7 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    ResultUnitAssociation(Result result, Unit unit, ResultUnitAssociationRole role) {
+    ResultUnitAssociation(ResearchResult result, Unit unit, ResultUnitAssociationRole role) {
 	this();
 	checkParameters(result, unit, role);
 	fillAllAttributes(result, unit, role);
@@ -66,13 +66,13 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
 	super.setUnit(null);
     }
     
-    private void fillAllAttributes(Result result, Unit unit, ResultUnitAssociationRole role) {
+    private void fillAllAttributes(ResearchResult result, Unit unit, ResultUnitAssociationRole role) {
 	super.setResult(result);
 	super.setUnit(unit);
 	super.setRole(role);
     }
 
-    private void checkParameters(Result result, Unit unit, ResultUnitAssociationRole role) {
+    private void checkParameters(ResearchResult result, Unit unit, ResultUnitAssociationRole role) {
 	if (result == null) {
 	    throw new DomainException("error.researcher.ResultUnitAssociation.result.null");
 	}
@@ -91,7 +91,7 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
      * Setters block!
      */
     @Override
-    public void setResult(Result Result) {
+    public void setResult(ResearchResult Result) {
 	throw new DomainException("error.researcher.ResultUnitAssociation.call","setResult");
     }
 

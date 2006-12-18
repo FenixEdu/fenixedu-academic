@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType;
 import net.sourceforge.fenixedu.util.Month;
@@ -45,7 +45,7 @@ public class ThesisBean extends ResultPublicationBean implements Serializable {
     }
 
     @Override
-    protected void fillSpecificFields(ResultPublication publication) {
+    protected void fillSpecificFields(ResearchResultPublication publication) {
 	this.setThesisType(((Thesis) publication).getThesisType());
 	this.setAddress(((Thesis) publication).getAddress());
 	this.setNumberPages(((Thesis) publication).getNumberPages());

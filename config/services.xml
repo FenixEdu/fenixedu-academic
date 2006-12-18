@@ -8316,6 +8316,13 @@
         <isTransactional>true</isTransactional>    
     </service>   
     <service>
+    	<name>SearchInternalUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchInternalUnits</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>   
+    <service>
     	<name>CreateUnit</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnit</implementationClass>
         <description></description>
@@ -9222,6 +9229,24 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>CreateScormPackageForItem</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateScormPackageForItem</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateScormFileItemForItem</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateScormFileItemForItem</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>DeleteFileItemFromItem</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteFileItemFromItem</implementationClass>
 		<description />
@@ -9434,13 +9459,21 @@
         <name>SearchPersonsForParticipations</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations</implementationClass>
         <description>
-            Generic service to search all external Units that have a string property
-            that matches some user input.
         </description>
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
     </service>        
+	<service>
+        <name>SearchPersonForParticipationWithWrapping</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonForParticipationWithWrapping</implementationClass>
+        <description>
+        </description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>            
+
 	<service>
 		<name>ChangeResultParticipationsOrder</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultParticipationsOrder</implementationClass>
@@ -11198,5 +11231,15 @@
     </service>
     
     
+  
+    <service>
+    	<name>ReadStudentSenior</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.senior.ReadStudentSenior</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="StudentAuthorization" />
+        </filterChains>     
+    </service>  
   
 </serviceDefinitions>

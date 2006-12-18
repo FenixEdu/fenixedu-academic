@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * Inbook A part of a book, which may be a chapter and/or a range of pages.
@@ -22,6 +23,8 @@ import net.sourceforge.fenixedu.util.Month;
  */
 public class BookPart extends BookPart_Base {
 
+	private static final String usedSchema = "result.publication.presentation.Inbook";
+	
     public enum BookPartType {
 	Inbook, Incollection;
     }
@@ -36,7 +39,7 @@ public class BookPart extends BookPart_Base {
     public BookPart(Person participator, ResultParticipationRole participatorRole,
 	    BookPartType bookPartType, String title, String chapter, Integer firstPage,
 	    Integer lastPage, Unit publisher, Integer year, String volume, String series,
-	    String edition, Country country, String address, String note, Month month, String url) {
+	    String edition, Country country, String address, MultiLanguageString note, Month month, String url) {
 	this();
 	checkInbookRequiredParameters(bookPartType, title, chapter, firstPage, lastPage, publisher, year);
 	super.setCreatorParticipation(participator, participatorRole);
@@ -50,7 +53,7 @@ public class BookPart extends BookPart_Base {
     public BookPart(Person participator, ResultParticipationRole participatorRole,
 	    BookPartType bookPartType, String title, String bookTitle, Unit publisher, Integer year,
 	    Integer firstPage, Integer lastPage, Unit organization, Country country, String address,
-	    String note, Month month, String url) {
+	    MultiLanguageString note, Month month, String url) {
 	this();
 	checkIncollectionRequiredParameters(bookPartType, title, bookTitle, publisher, year);
 	super.setCreatorParticipation(participator, participatorRole);
@@ -61,7 +64,7 @@ public class BookPart extends BookPart_Base {
     @Checked("ResultPredicates.writePredicate")
     public void setEditAllInbook(BookPartType bookPartType, String title, String chapter,
 	    Integer firstPage, Integer lastPage, Unit publisher, Integer year, String volume,
-	    String series, String edition, Country country, String address, String note, Month month,
+	    String series, String edition, Country country, String address, MultiLanguageString note, Month month,
 	    String url) {
 	checkInbookRequiredParameters(bookPartType, title, chapter, firstPage, lastPage, publisher, year);
 	checkBookPartTypeChange(bookPartType);
@@ -73,7 +76,7 @@ public class BookPart extends BookPart_Base {
     @Checked("ResultPredicates.writePredicate")
     public void setEditAllIncollection(BookPartType bookPartType, String title, String bookTitle,
 	    Unit publisher, Integer year, Integer firstPage, Integer lastPage, Unit organization,
-	    Country country, String address, String note, Month month, String url) {
+	    Country country, String address, MultiLanguageString note, Month month, String url) {
 	checkIncollectionRequiredParameters(bookPartType, title, bookTitle, publisher, year);
 	checkBookPartTypeChange(bookPartType);
 	fillAllIncollectionAttributes(bookPartType, title, bookTitle, publisher, year, firstPage,
@@ -83,7 +86,7 @@ public class BookPart extends BookPart_Base {
 
     private void fillAllInbookAttributes(BookPartType bookPartType, String title, String chapter,
 	    Integer firstPage, Integer lastPage, Unit publisher, Integer year, String volume,
-	    String series, String edition, Country country, String address, String note, Month month,
+	    String series, String edition, Country country, String address, MultiLanguageString note, Month month,
 	    String url) {
 	super.setBookPartType(bookPartType);
 	super.setTitle(title);
@@ -115,7 +118,7 @@ public class BookPart extends BookPart_Base {
 
     private void fillAllIncollectionAttributes(BookPartType bookPartType, String title,
 	    String bookTitle, Unit publisher, Integer year, Integer firstPage, Integer lastPage,
-	    Unit organization, Country country, String address, String note, Month month, String url) {
+	    Unit organization, Country country, String address, MultiLanguageString note, Month month, String url) {
 	super.setBookPartType(bookPartType);
 	super.setTitle(title);
 	super.setBookTitle(bookTitle);
@@ -235,8 +238,8 @@ public class BookPart extends BookPart_Base {
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
 	if (getMonth() != null)
 	    bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
-	if ((getNote() != null) && (getNote().length() > 0))
-	    bibEntry.setField("note", bibtexFile.makeString(getNote()));
+	if ((getNote() != null) && (getNote().hasContent()))
+	    bibEntry.setField("note", bibtexFile.makeString(getNote().getContent()));
 
 	BibtexPersonList authorsList = getBibtexAuthorsList(bibtexFile, getAuthors());
 	if (authorsList != null) {
@@ -314,7 +317,7 @@ public class BookPart extends BookPart_Base {
     }
 
     @Override
-    public void setNote(String note) {
+    public void setNote(MultiLanguageString note) {
 	throw new DomainException("error.researcher.BookPart.call", "setNote");
     }
 
@@ -337,4 +340,9 @@ public class BookPart extends BookPart_Base {
     public void setOrganization(Unit organization) {
 	throw new DomainException("error.researcher.BookPart.call", "setOrganization");
     }
+
+	@Override
+	public String getSchema() {
+		return usedSchema;
+	}
 }

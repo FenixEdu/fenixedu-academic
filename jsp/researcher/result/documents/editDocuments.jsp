@@ -11,11 +11,12 @@
 	<bean:define id="resultType" name="result" property="class.simpleName"/>
 	<bean:define id="result" name="result"/>
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>" toScope="request"/>
-	<bean:define id="prepareEdit" value="<%="/result/resultDocumentFilesManagement.do?method=prepareEdit&" + parameters%>"/>
+
+	<bean:define id="prepareEdit" value="<%="/result/resultDocumentFilesManagement.do?method=prepareEdit&" + parameters + "&forwardTo=" + request.getParameter("forwardTo")%>"/>
 
 	<fr:edit id="editDocuments" name="documents" schema="resultDocumentFile.submited.edit" action="<%= prepareEdit %>">
 		<fr:layout name="tabular-row">
-			<fr:property name="classes" value="tstyle2"/>
+			<fr:property name="classes" value="tstyle2 mtop05"/>
 			<fr:property name="columnClasses" value=",acenter,acenter,acenter"/>
 		</fr:layout>
 	</fr:edit>

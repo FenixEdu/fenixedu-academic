@@ -74,6 +74,7 @@
 <br/>
 <br/>
 
+<bean:message key="label.teacherService.navigateBy"/>:
 <html:link href="javascript:document.teacherServiceDistributionValuationForm.method.value='changeToViewCourses'; document.teacherServiceDistributionValuationForm.submit();">
 	<bean:message key="label.teacherService.navigateByCourse"/>
 </html:link> | 
@@ -185,7 +186,7 @@
 						<bean:write name="curricularCourseInformation" property="key"/>
 						(<logic:iterate name="curricularCourseInformation" property="value" id="curricularYear">
 							<bean:write name="curricularYear"/>&nbsp;
-						</logic:iterate>ºano)
+						</logic:iterate>ï¿½ano)
 			</logic:iterate>)
 			- <fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="professorshipValuationDTOEntry" property="professorshipValuation.totalHours"/></fmt:formatNumber>
 			<bean:message key="label.teacherService.hours"/>

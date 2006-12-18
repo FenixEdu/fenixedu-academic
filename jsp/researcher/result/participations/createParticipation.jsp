@@ -18,7 +18,7 @@
 	<logic:equal name="bean" property="beanExternal" value="true">
 		<bean:define id="cancel" value="<%=prepareEdit%>"/>
 	</logic:equal>
-		
+	
 	<!-- Schema definitions -->
 	<bean:define id="createSchema" name="createSchema" type="java.lang.String"/>
 	
@@ -40,6 +40,7 @@
 		</fr:layout>
 		<fr:destination name="exception" path="<%= prepareEdit %>"/>	
 		<fr:destination name="invalid" path="<%= prepareEdit %>"/>	
-		<fr:destination name="cancel" path="<%= cancel %>"/>	
+		<fr:destination name="cancel" path="<%= cancel %>"/>
+		<fr:destination name="postBack" path="/resultParticipations/changeParticipationType.do"/>	
 	</fr:edit>
 </logic:present>

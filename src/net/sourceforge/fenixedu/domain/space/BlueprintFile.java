@@ -46,8 +46,8 @@ public class BlueprintFile extends BlueprintFile_Base {
     }
 
     public String getDirectDownloadUrlFormat() {
-	return FileManagerFactory.getFileManager().getDirectDownloadUrlFormat(
-		getExternalStorageIdentification(), getDisplayName());
+        return FileManagerFactory.getFileManager().formatDownloadUrl(
+                getExternalStorageIdentification(), getFilename());
     }
 
     private static class BlueprintBlueprintFileListener extends

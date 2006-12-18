@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.IFileManager;
 
-public class ResultDocumentFile extends ResultDocumentFile_Base {
+public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base {
     
     public enum FileResultPermittedGroupType {
 	PUBLIC, INSTITUTION, RESEARCHER;
@@ -20,11 +20,11 @@ public class ResultDocumentFile extends ResultDocumentFile_Base {
 	}
     }
     
-    private ResultDocumentFile() {
+    private ResearchResultDocumentFile() {
 	super();
     }
 
-    ResultDocumentFile(Result result, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
+    ResearchResultDocumentFile(ResearchResult result, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
 	    String mimeType, String checksum, String checksumAlgorithm, Integer size, String externalStorageIdentification, 
 	    Group permittedGroup) {
 	this();
@@ -65,8 +65,8 @@ public class ResultDocumentFile extends ResultDocumentFile_Base {
 	}
     }
     
-    public final static ResultDocumentFile readByOID(Integer oid) {
-	final ResultDocumentFile documentFile = (ResultDocumentFile) RootDomainObject.getInstance().readFileByOID(oid);
+    public final static ResearchResultDocumentFile readByOID(Integer oid) {
+	final ResearchResultDocumentFile documentFile = (ResearchResultDocumentFile) RootDomainObject.getInstance().readFileByOID(oid);
 	
 	if (documentFile==null) 
 	    throw new DomainException("error.researcher.ResultDocumentFile.null");
@@ -79,7 +79,7 @@ public class ResultDocumentFile extends ResultDocumentFile_Base {
 	fileManager.deleteFile(getExternalStorageIdentification());
     }
 
-    private void checkParameters(Result result, String filename, String displayName, FileResultPermittedGroupType permittedGroupType) {
+    private void checkParameters(ResearchResult result, String filename, String displayName, FileResultPermittedGroupType permittedGroupType) {
 	if (result == null) 
 	    throw new DomainException("error.researcher.ResultDocumentFile.result.null");
 	if (filename==null||filename.equals(""))
@@ -98,8 +98,12 @@ public class ResultDocumentFile extends ResultDocumentFile_Base {
 	FileManagerFactory.getFileManager().changeFilePermissions(getExternalStorageIdentification(), (group != null) ? true : false);
     }
 
+    public void moveFileToNewResearchResultType(ResearchResult result) {
+    	super.setResult(result);
+    }
+    
     @Override
-    public void setResult(Result result) {
+    public void setResult(ResearchResult result) {
 	throw new DomainException("error.researcher.ResultDocumentFile.call","setResult");
     }
 
@@ -117,12 +121,7 @@ public class ResultDocumentFile extends ResultDocumentFile_Base {
      * This is not domain logic. Is used only to simplify the access to the url on presentation.
      */
     public String getDownloadUrl() {
-	StringBuilder downloadUrl = new StringBuilder();
-	downloadUrl.append(FileManagerFactory.getFileManager().getDirectDownloadUrlFormat());
-	downloadUrl.append("/");
-	downloadUrl.append(getExternalStorageIdentification());
-	downloadUrl.append("/");
-	downloadUrl.append(getFilename());
-	return downloadUrl.toString();
+	return FileManagerFactory.getFileManager().formatDownloadUrl(getExternalStorageIdentification(),getFilename());
+	
     }
 }

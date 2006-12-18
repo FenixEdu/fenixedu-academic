@@ -12,11 +12,10 @@
 
 <bean:define id="candidacyID" name="candidacy" property="idInternal" />
 <fr:form action="<%="/viewCandidacies.do?candidacyID=" +candidacyID %>" encoding="multipart/form-data">
-	<bean:define id="downloadUrlPrefix" name="fileDownloadUrlFormat" />
 	<p class="infoop"><span><h2 class="inline"><bean:message key="label.candidacy.title.documents" /></h2></span></p>
 	<fr:edit id="candidacyDocuments" name="candidacyDocuments" schema="candidacyDocuments.full">
 		<fr:layout name="tabular-editable" >
-<%--			<fr:property name="linkFormat(download)" value="<%= downloadUrlPrefix + "/${candidacyDocument.file.externalStorageIdentification}/${candidacyDocument.file.filename}"%>"/>
+<--			<fr:property name="linkFormat(download)" value="${candidacyDocument.file.downloadUrl}"/>
 			<fr:property name="key(download)" value="link.common.download"/>
 			<fr:property name="bundle(download)" value="APPLICATION_RESOURCES"/>
 			<fr:property name="visibleIf(download)" value="isFileUploaded"/>

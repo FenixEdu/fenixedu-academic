@@ -10,11 +10,12 @@
 	<bean:define id="resultId" name="result" property="idInternal"/>
 	<bean:define id="result" name="result"/>
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + result.getClass().getSimpleName()%>"/>
-	<bean:define id="remove" value="<%="/result/resultDocumentFilesManagement.do?method=remove&" + parameters%>"/>
+
+	<bean:define id="remove" value="<%="/result/resultDocumentFilesManagement.do?method=remove&" + parameters + "&forwardTo=" + request.getParameter("forwardTo")%>"/>
 
 	<fr:view name="documents" schema="resultDocumentFile.submited.edit">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2"/>
+			<fr:property name="classes" value="tstyle2 mtop05"/>
 			<fr:property name="columnClasses" value=",acenter,acenter,acenter"/>
 						
 			<fr:property name="linkFormat(download)" value="${downloadUrl}"/>

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import bibtex.dom.BibtexEntry;
 
 public class OtherPublicationBean extends ResultPublicationBean implements Serializable {
@@ -41,7 +41,7 @@ public class OtherPublicationBean extends ResultPublicationBean implements Seria
     }
 
     @Override
-    protected void fillSpecificFields(ResultPublication publication) {
+    protected void fillSpecificFields(ResearchResultPublication publication) {
 	this.setHowPublished(((OtherPublication) publication).getHowPublished());
 	this.setOtherPublicationType(((OtherPublication) publication).getOtherPublicationType());
 	this.setNumberPages(((OtherPublication) publication).getNumberPages());

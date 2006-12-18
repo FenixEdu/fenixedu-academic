@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
+import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsManagementAction;
 
 import org.apache.struts.action.ActionForm;
@@ -21,14 +21,14 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 	   addActionMessage(request, message.getMessage());
 	}*/
 	
-	request.setAttribute("resultPatents", getLoggedPerson(request).getResultPatents());
+	request.setAttribute("resultPatents", getLoggedPerson(request).getResearchResultPatents());
 	
 	return mapping.findForward("listPatents");
     }
     
     public ActionForward prepareDetails(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	final ResultPatent patent = (ResultPatent) (ResultPatent)getResultFromRequest(request);
+	final ResearchResultPatent patent = (ResearchResultPatent) (ResearchResultPatent)getResultFromRequest(request);
 	if (patent == null) {
 	    return management(mapping, form, request, response);
 	}
@@ -40,7 +40,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 	
-	final ResultPatent patent = (ResultPatent)getResultFromRequest(request);
+	final ResearchResultPatent patent = (ResearchResultPatent)getResultFromRequest(request);
 	if (patent == null) {
 	    return management(mapping, form, request, response);
 	}
@@ -59,7 +59,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 
     public ActionForward prepareEditData(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final ResultPatent patent = (ResultPatent)getResultFromRequest(request);
+	final ResearchResultPatent patent = (ResearchResultPatent)getResultFromRequest(request);
 	if (patent == null) {
 	    return management(mapping, form, request, response);
 	}
@@ -69,7 +69,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 
     public ActionForward prepareDelete(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final ResultPatent patent = (ResultPatent)getResultFromRequest(request);
+	final ResearchResultPatent patent = (ResearchResultPatent)getResultFromRequest(request);
 	if (patent == null) {
 	    return management(mapping, form, request, response);
 	}
@@ -96,7 +96,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
     }
 
     @Override
-    public ResultPatent getRenderedObject(String id) {
-	return (ResultPatent) super.getRenderedObject(id);
+    public ResearchResultPatent getRenderedObject(String id) {
+	return (ResearchResultPatent) super.getRenderedObject(id);
     }
 }

@@ -248,6 +248,33 @@ public class ValuationTeachersGroupAction extends FenixDispatchAction {
 		return mapping.findForward("showFormToCreateCourse");
 	}
 	
+	public ActionForward showFormToCreateCourseNew(
+			ActionMapping mapping, 
+			ActionForm form, 
+			HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {		
+	
+		DynaActionForm dynaForm = (DynaActionForm) form;
+		
+		List<DegreeCurricularPlan> curricularPlansList = DegreeCurricularPlan.readByCurricularStage(CurricularStage.APPROVED); 
+		List<CurricularYear> curricularyearsList = new ArrayList<CurricularYear>(rootDomainObject.readAllDomainObjects(CurricularYear.class));
+		
+		Collections.sort(curricularPlansList, new BeanComparator("name"));
+		Collections.sort(curricularyearsList, new BeanComparator("year"));
+		
+		request.setAttribute("curricularPlansList", curricularPlansList);
+		request.setAttribute("curricularYearsList", curricularyearsList);
+		
+		ValuationGrouping selectedValuationGrouping = getSelectedValuationGrouping(request);
+
+		request.setAttribute("teacherServiceDistribution", selectedValuationGrouping.getValuationPhase().getTeacherServiceDistribution());
+		request.setAttribute("competenceCoursesList", selectedValuationGrouping.getGhostValuationCompetenceCourses());
+		request.setAttribute("executionPeriodsList", selectedValuationGrouping.getValuationPhase().getTeacherServiceDistribution().getOrderedExecutionPeriods());
+		
+		
+		return mapping.findForward("showFormToCreateCourse");
+	}
+	
 	public ActionForward createValuationTeacher(
 			ActionMapping mapping, 
 			ActionForm form, 
@@ -311,6 +338,13 @@ public class ValuationTeachersGroupAction extends FenixDispatchAction {
 		return selectedValuationGrouping;
 	}
 
+	private ValuationGrouping getSelectedValuationGrouping(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+		Integer selectedValuationGroupingId = Integer.valueOf(request.getParameter("valuationGrouping"));
+		ValuationGrouping selectedValuationGrouping = rootDomainObject.readValuationGroupingByOID(selectedValuationGroupingId);
+		
+		return selectedValuationGrouping;
+	}
+	
 	private Integer getFromRequestAndSetOnFormValuationGroupingId(HttpServletRequest request, DynaActionForm dynaForm) {
 		Integer valuationGroupingId = new Integer(request.getParameter("valuationGroupingID"));
 		dynaForm.set("valuationGrouping", valuationGroupingId);
@@ -356,6 +390,13 @@ public class ValuationTeachersGroupAction extends FenixDispatchAction {
 		return course;
 	}
 	
+	private ValuationCompetenceCourse getSelectedValuationCompetenceCourse(HttpServletRequest request) {
+		Integer selectedCourseId = Integer.valueOf(request.getParameter("valuationCourse"));
+		ValuationCompetenceCourse course = rootDomainObject.readValuationCompetenceCourseByOID(selectedCourseId);
+		
+		return course;
+	}
+	
 	private Category getSelectedCategory(DynaActionForm dynaForm) {
 		Integer selectedCategoryId = (Integer) dynaForm.get("category");
 		
@@ -384,6 +425,23 @@ public class ValuationTeachersGroupAction extends FenixDispatchAction {
 		return showFormToCreateCourse(mapping, form, request, response);
 	}
 	
+	public ActionForward loadValuationCompetenceCourseNew(
+			ActionMapping mapping, 
+			ActionForm form, 
+			HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+				
+		ValuationCompetenceCourse valuationCompetenceCourse = getSelectedValuationCompetenceCourse(request);
+		
+		if(valuationCompetenceCourse != null){
+			if(valuationCompetenceCourse.getAssociatedValuationCurricularCourses().size() > 0){
+				request.setAttribute("curricularCoursesList", valuationCompetenceCourse.getAssociatedValuationCurricularCourses());
+			}
+			request.setAttribute("competenceCourseName", valuationCompetenceCourse.getName());
+		}
+						
+		return showFormToCreateCourseNew(mapping, form, request, response);
+	}
 	
 	public ActionForward addValuationCurricularCourse(
 			ActionMapping mapping, 
@@ -426,13 +484,14 @@ public class ValuationTeachersGroupAction extends FenixDispatchAction {
 			ActionForm form, 
 			HttpServletRequest request,
 			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		IUserView userView = SessionUtils.getUserView(request);
-		DynaActionForm dynaForm = (DynaActionForm) form;
 		
-		Integer valuationCurricularCourseId = (Integer) dynaForm.get("valuationCurricularCourse");
+		//IUserView userView = SessionUtils.getUserView(request);
+		//DynaActionForm dynaForm = (DynaActionForm) form;
+		
+		Integer valuationCurricularCourseId = Integer.valueOf(request.getParameter("valuationCurricularCourse")); //(Integer) dynaForm.get("valuationCurricularCourse");
 			
-		ServiceUtils.executeService(userView, "DeleteValuationCurricularCourse",new Object[] {valuationCurricularCourseId});
+		executeService(request, "DeleteValuationCurricularCourse",new Object[] {valuationCurricularCourseId});
 		
-		return loadValuationCompetenceCourse(mapping, form, request, response);
+		return loadValuationCompetenceCourseNew(mapping, form, request, response);
 	}
 }

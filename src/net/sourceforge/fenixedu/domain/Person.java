@@ -58,10 +58,10 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
-import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
-import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -496,27 +496,27 @@ public class Person extends Person_Base {
 	return this.getPais().getNationality();
     }
 
-    public List<ResultPublication> getResultPublications() {
-	List<ResultPublication> resultPublications = new ArrayList<ResultPublication>();
-	Result result = null;
+    public List<ResearchResultPublication> getResearchResultPublications() {
+	List<ResearchResultPublication> resultPublications = new ArrayList<ResearchResultPublication>();
+	ResearchResult result = null;
 	for (ResultParticipation resultParticipation : this.getResultParticipations()) {
 	    result = resultParticipation.getResult();
 	    // filter only publication participations
-	    if (result instanceof ResultPublication) {
-		resultPublications.add((ResultPublication) result);
+	    if (result instanceof ResearchResultPublication) {
+		resultPublications.add((ResearchResultPublication) result);
 	    }
 	}
 	return resultPublications;
     }
 
-    public List<ResultPatent> getResultPatents() {
-	List<ResultPatent> resultPatents = new ArrayList<ResultPatent>();
-	Result result = null;
+    public List<ResearchResultPatent> getResearchResultPatents() {
+	List<ResearchResultPatent> resultPatents = new ArrayList<ResearchResultPatent>();
+	ResearchResult result = null;
 	for (ResultParticipation resultParticipation : this.getResultParticipations()) {
 	    result = resultParticipation.getResult();
 	    // filter only patent participations
-	    if (result instanceof ResultPatent) {
-		resultPatents.add((ResultPatent) result);
+	    if (result instanceof ResearchResultPatent) {
+		resultPatents.add((ResearchResultPatent) result);
 	    }
 	}
 	return resultPatents;

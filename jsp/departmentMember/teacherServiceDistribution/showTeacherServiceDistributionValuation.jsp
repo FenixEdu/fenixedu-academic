@@ -106,6 +106,7 @@
 <br/>
 <br/>
 
+<bean:message key="label.teacherService.navigateBy"/>:
 <b> <bean:message key="label.teacherService.navigateByCourse"/> </b> | 
 <html:link href="javascript:document.teacherServiceDistributionValuationForm.method.value='changeToViewTeachers'; document.teacherServiceDistributionValuationForm.submit();">
 	<bean:message key="label.teacherService.navigateByTeacher"/>
@@ -215,7 +216,7 @@
 					</td>
 					<td width='5%' class="aright">
 						<logic:iterate name="curricularCourseInformation" property="value" id="curricularYear">
-							<bean:write name="curricularYear"/>º&nbsp;
+							<bean:write name="curricularYear"/>ï¿½&nbsp;
 						</logic:iterate>
 					</td>
 				</tr>				

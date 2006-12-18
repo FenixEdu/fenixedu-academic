@@ -3,11 +3,13 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication.
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import bibtex.dom.BibtexPerson;
+
+import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean.ParticipationType;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import bibtex.dom.BibtexPerson;
 
 public class BibtexParticipatorBean implements Serializable {
 
@@ -33,9 +35,19 @@ public class BibtexParticipatorBean implements Serializable {
 
     private ParticipatorBean personChosen;
 
+    private ParticipationType personType;
+    
+    private ParticipationType organizationType;
+       
+    public BibtexParticipatorBean() {
+    	setPerson(null);
+    	setOrganization(null);
+    	setPersonType(ParticipationType.INTERNAL);
+    	setOrganizationType(ParticipationType.INTERNAL);
+    }
     /**/
 
-    public Unit getOrganization() {
+	public Unit getOrganization() {
 	return (this.organization == null) ? null : this.organization.getObject();
     }
 
@@ -52,11 +64,11 @@ public class BibtexParticipatorBean implements Serializable {
     }
 
     public Person getPerson() {
-	return (this.person == null) ? null : this.person.getObject();
+    	return person.getObject();
     }
 
     public void setPerson(Person person) {
-	this.person = (person != null) ? new DomainReference<Person>(person) : null;
+    	this.person = new DomainReference<Person>(person);
     }
 
     public String getPersonName() {
@@ -147,4 +159,46 @@ public class BibtexParticipatorBean implements Serializable {
     public void setParticipatorProcessed(boolean participatorProcessed) {
 	this.participatorProcessed = participatorProcessed;
     }
+
+	public ParticipationType getPersonType() {
+		return personType;
+	}
+
+	public void setPersonType(ParticipationType personType) {
+		this.personType = personType;
+	}
+
+	public ParticipationType getOrganizationType() {
+		return organizationType;
+	}
+
+	public void setOrganizationType(ParticipationType organizationType) {
+		this.organizationType = organizationType;
+	}
+	
+	public boolean isExternalUnit() {
+		return this.organizationType.equals(ParticipationType.EXTERNAL);
+	}
+	
+	public boolean isExternalPerson() {
+		return this.personType.equals(ParticipationType.EXTERNAL);
+	}
+	
+	public void reset() {
+		this.setParticipatorProcessed(false);
+		this.setActiveSchema("bibtex.participator");
+		this.setPersonType(ParticipationType.INTERNAL);
+		this.setOrganizationType(ParticipationType.INTERNAL);
+		this.setPerson(null);
+		this.setOrganization(null);
+		this.setOrganizationName(null);
+		this.setPersonName(null);
+	}
+	
+	public String getName() {
+		if(getPerson()!=null) { 
+			return getPerson().getName(); 
+		}
+		else return personName;
+	}
 }

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -24,7 +24,7 @@ public class ResultTeacherManagementDispatchAction extends FenixDispatchAction {
         Teacher teacher = getUserView(request).getPerson().getTeacher();
         String type = request.getParameter("typeResult");
 
-        List<Result> results = new ArrayList<Result>();
+        List<ResearchResult> results = new ArrayList<ResearchResult>();
         for (ResultTeacher resultTeacher : teacher.getTeacherResults()) {
             if (resultTeacher.getPublicationArea().getName().equals(type))
                 results.add(resultTeacher.getResult());
@@ -44,12 +44,12 @@ public class ResultTeacherManagementDispatchAction extends FenixDispatchAction {
         String type = request.getParameter("typeResult");
         Teacher teacher = getUserView(request).getPerson().getTeacher();
 
-        List<Result> resultsInTeacherSheet = new ArrayList<Result>();
+        List<ResearchResult> resultsInTeacherSheet = new ArrayList<ResearchResult>();
         for (ResultTeacher resultTeacher : teacher.getTeacherResults()) {
             resultsInTeacherSheet.add(resultTeacher.getResult());
         }
 
-        List<Result> resultsNotInTeacherSheet = new ArrayList<Result>();
+        List<ResearchResult> resultsNotInTeacherSheet = new ArrayList<ResearchResult>();
         for (ResultParticipation participation : teacher.getPerson().getResultParticipations()) {
             if (!resultsInTeacherSheet.contains(participation.getResult())) {
                 resultsNotInTeacherSheet.add(participation.getResult());

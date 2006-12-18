@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication.ScopeType;
 import bibtex.dom.BibtexEntry;
 
 public class ArticleBean extends ResultPublicationBean implements Serializable {
@@ -53,7 +53,7 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
     }
 
     @Override
-    protected void fillSpecificFields(ResultPublication publication) {
+    protected void fillSpecificFields(ResearchResultPublication publication) {
 	final Article article = (Article) publication;
 
 	this.setJournal(article.getJournal());

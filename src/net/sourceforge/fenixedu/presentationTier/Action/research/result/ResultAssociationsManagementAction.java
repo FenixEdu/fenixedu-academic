@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultEventAssociationCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
-import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -23,13 +23,31 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
     public ActionForward prepareEditUnitAssociations(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
-	final Result result = getResultFromRequest(request);
+	final ResearchResult result = getResultFromRequest(request);
 	if (result == null) {
 	    return backToResultList(mapping, form, request, response);
 	}
-	
 	setResUnitAssRequestAttributes(request, result);
-	return mapping.findForward("editUnitAssociations");
+	String forwardTo = request.getParameter("forwardTo");
+		
+	return mapping.findForward(forwardTo);
+    }
+    
+    public ActionForward changeTypeOfUnit(ActionMapping mapping, ActionForm form,
+    	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+    	    FenixServiceException {
+    	
+    	ResultUnitAssociationCreationBean bean = (ResultUnitAssociationCreationBean) RenderUtils.getViewState("unitBean").getMetaObject().getObject();
+    	request.setAttribute("unitBean", bean);
+    
+    	if(getFromRequest(request, "editExisting")!=null) {
+    	    request.setAttribute("editExisting", "editExisting");
+    	}
+    	final ResearchResult result = getResultFromRequest(request);
+    	request.setAttribute("result", result);
+    	
+    	String forwardTo = request.getParameter("forwardTo");
+    	return mapping.findForward(forwardTo);
     }
     
     public ActionForward prepareEditUnitRole(ActionMapping mapping, ActionForm form,
@@ -42,18 +60,15 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
     public ActionForward createUnitAssociation(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
-	final ResultUnitAssociationCreationBean bean = (ResultUnitAssociationCreationBean) getRenderedObject("bean");
+	final ResultUnitAssociationCreationBean bean = (ResultUnitAssociationCreationBean) getRenderedObject("unitBean");
 	
 	try {
 	    final Object[] args = { bean };
 	    executeService(request, "CreateResultUnitAssociation", args);
 	} catch (Exception e) {
-	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
-	    return processException(request, mapping, defaultForward, e);
+	    addActionMessage(request, "error.label.invalidNameForInternalUnit",null);
 	}
 	
-	RenderUtils.invalidateViewState();
-
 	return prepareEditUnitAssociations(mapping, form, request, response);
     }
 
@@ -79,7 +94,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
     public ActionForward prepareEditEventAssociations(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
-	final Result result = getResultFromRequest(request);
+	final ResearchResult result = getResultFromRequest(request);
 	if (result == null) {
 	    return backToResultList(mapping, form, request, response);
 	}
@@ -98,7 +113,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
     public ActionForward createEventAssociation(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
-	final ResultEventAssociationCreationBean bean = (ResultEventAssociationCreationBean) getRenderedObject("bean");
+	final ResultEventAssociationCreationBean bean = (ResultEventAssociationCreationBean) getRenderedObject("unitBean");
 	
 	if (!(bean.getEvent() == null && bean.getEventNameMLS() == null)) {
 	    try {
@@ -134,7 +149,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	return prepareEditEventAssociations(mapping, form, request, response);
     }
 
-    private void setResEventAssRequestAttributes(HttpServletRequest request, Result result)
+    private void setResEventAssRequestAttributes(HttpServletRequest request, ResearchResult result)
 	    throws FenixFilterException, FenixServiceException {
 	final ResultEventAssociationCreationBean bean = getEventBeanFromRequest(request,result);
 	String creationSchema = "resultEventAssociation.fullCreation";
@@ -152,7 +167,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	request.setAttribute("result", result);
     }
 
-    private ResultEventAssociationCreationBean getEventBeanFromRequest(HttpServletRequest request, Result result) {
+    private ResultEventAssociationCreationBean getEventBeanFromRequest(HttpServletRequest request, ResearchResult result) {
 	ResultEventAssociationCreationBean bean = (ResultEventAssociationCreationBean) getFromRequest(request, "bean");
 	
 	if (bean==null) {
@@ -162,12 +177,13 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	return bean;
     }
 
-    private void setResUnitAssRequestAttributes(HttpServletRequest request, Result result)
+    private void setResUnitAssRequestAttributes(HttpServletRequest request, ResearchResult result)
 	    throws FenixFilterException, FenixServiceException {
 	if(getFromRequest(request, "editExisting")!=null) {
 	    request.setAttribute("editExisting", "editExisting");
 	}
-	request.setAttribute("bean", new ResultUnitAssociationCreationBean(result));
+	
+	request.setAttribute("unitBean", new ResultUnitAssociationCreationBean(result));
 	request.setAttribute("result", result);
     }
 }

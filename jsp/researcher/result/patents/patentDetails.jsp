@@ -16,7 +16,7 @@
 
 <logic:present role="RESEARCHER">
 	<em>Patentes</em> <!-- tobundle -->
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.details.useCase.title"/></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.details.useCase.title"/></h2>
 
 	<ul class="mvert2 list5">
 		<li>

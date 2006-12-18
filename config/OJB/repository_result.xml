@@ -1,12 +1,12 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.research.result.Result -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.Result" table="RESULT">
-  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication" />
-  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResearchResult" table="RESULT">
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" />
 </class-descriptor>
 	
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" table="RESULT" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" table="RESULT" />
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication" table="RESULT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication" table="RESULT">
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Book" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.BookPart" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Article" />

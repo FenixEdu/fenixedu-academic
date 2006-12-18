@@ -31,7 +31,7 @@
 		<em>Patentes</em> <!-- tobundle -->
 	</logic:equal>
 	<logic:notEqual name="resultType" value="ResultPatent">
-		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></em>
+		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	</logic:notEqual>
 	<h2>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.useCase.title"/>: 

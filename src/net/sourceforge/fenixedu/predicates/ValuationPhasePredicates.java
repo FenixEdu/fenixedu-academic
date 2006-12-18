@@ -15,7 +15,7 @@ public class ValuationPhasePredicates {
 
 			Person person = AccessControl.getUserView().getPerson();
 
-			return teacherServiceDistribution.getIsMemberOfAutomaticValuationGroup(person)
+			return (teacherServiceDistribution == null) ? true : teacherServiceDistribution.getIsMemberOfAutomaticValuationGroup(person)
 					|| teacherServiceDistribution.getIsMemberOfOmissionConfigurationGroup(person)
 					|| teacherServiceDistribution.getIsMemberOfPhasesManagementGroup(person)
 					|| teacherServiceDistribution.getIsMemberOfValuationCompetenceCoursesAndTeachersManagementGroup(person);

@@ -19,9 +19,8 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.FileMetadata;
-import pt.utl.ist.fenix.tools.file.FilePath;
-import pt.utl.ist.fenix.tools.file.Node;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
+import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -43,9 +42,9 @@ public class SaveCandidacyDocumentFiles extends Service {
                 CandidacyDocument candidacyDocument = candidacyDocumentUploadBean.getCandidacyDocument();
                 Candidacy candidacy = candidacyDocument.getCandidacy();
                 Person person = candidacy.getPerson();
-                final FileMetadata fileMetadata = new FileMetadata(filename, person.getName());
+              
                 final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
-                        getFilePath(candidacy), filename, true, fileMetadata,
+                		getVirtualPath(candidacy), filename, true, person.getName(), filename,
                         candidacyDocumentUploadBean.getFileInputStream());
                 
                 if(candidacyDocument.getFile() != null){
@@ -62,11 +61,11 @@ public class SaveCandidacyDocumentFiles extends Service {
 
     }
 
-    private FilePath getFilePath(Candidacy candidacy) {
-        final FilePath filePath = new FilePath();
-        filePath.addNode(new Node("Candidacies", "Candidacies"));
+    private VirtualPath getVirtualPath(Candidacy candidacy) {
+        final VirtualPath filePath = new VirtualPath();
+        filePath.addNode(new VirtualPathNode("Candidacies", "Candidacies"));
         filePath
-                .addNode(new Node("CANDIDACY" + candidacy.getNumber(), candidacy.getNumber().toString()));
+                .addNode(new VirtualPathNode("CANDIDACY" + candidacy.getNumber(), candidacy.getNumber().toString()));
         return filePath;
     }
 

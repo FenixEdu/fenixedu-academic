@@ -21,6 +21,7 @@
 </h3>
 
 <br/>
+
 <html:form action="/valuationTeachersGroup">
 <html:hidden property="method" value=""/>
 <html:hidden property="valuationGrouping"/>

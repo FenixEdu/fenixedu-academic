@@ -7,20 +7,19 @@
 
 <logic:present role="RESEARCHER">
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex"/></h3>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex"/></h2>
 	
-	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.openBibtexFile"/></b></p>
-
 	<logic:messagesPresent name="messages" message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
 			<p><span class="error0"><bean:write name="messages"/></span></p>
 		</html:messages>
 	</logic:messagesPresent>
 
+	<p class="mtop2 mbottom05"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.openBibtexFile"/>:</p>
+
 	<fr:edit id="openFileBean" name="openFileBean" schema="publication.openBibtexFile" action="/publications/bibtexManagement.do?method=prepareBibtexImport">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="style1" />
-			<fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle5 thlight thmiddle mtop0" />
 		</fr:layout>
 		<fr:destination name="invalid" path="/publications/bibtexManagement.do?method=prepareOpenBibtexFile"/>
 		<fr:destination name="cancel" path="/publications/management.do?method=listPublications"/>

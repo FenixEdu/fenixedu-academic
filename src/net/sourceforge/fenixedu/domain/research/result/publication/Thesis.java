@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * mastersthesis A Master's thesis. Required fields: author, title, school,
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.util.Month;
  */
 public class Thesis extends Thesis_Base {
 
+	private static final String usedSchema="result.publication.presentation.Thesis";
     public enum ThesisType {
 	PhD_Thesis, Masters_Thesis, Graduation_Thesis;
     }
@@ -34,7 +36,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public Thesis(Person participator, ThesisType thesisType, String title, Unit school, Integer year,
-	    String address, String note, Integer numberPages, String language, Month month,
+	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
 	this();
 	checkRequiredParameters(thesisType, title, school, year);
@@ -45,7 +47,7 @@ public class Thesis extends Thesis_Base {
 
     @Checked("ResultPredicates.writePredicate")
     public void setEditAll(ThesisType thesisType, String title, Unit school, Integer year,
-	    String address, String note, Integer numberPages, String language, Month month,
+	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
 	checkRequiredParameters(thesisType, title, school, year);
 	fillAllAttributes(thesisType, title, school, year, address, note, numberPages, language, month,
@@ -54,9 +56,12 @@ public class Thesis extends Thesis_Base {
     }
 
     private void fillAllAttributes(ThesisType thesisType, String title, Unit school, Integer year,
-	    String address, String note, Integer numberPages, String language, Month month,
+	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
-	super.setTitle(title);
+	if(year<yearBegin || (year.compareTo(yearBegin)==0 && month.ordinal()<monthBegin.ordinal())) {
+		throw new DomainException("error.researcher.Thesis.dateBeginBeforeDateEnd");
+	}
+    super.setTitle(title);
 	super.setThesisType(thesisType);
 	super.setOrganization(school);
 	super.setYear(year);
@@ -113,8 +118,8 @@ public class Thesis extends Thesis_Base {
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
 	if (getMonth() != null)
 	    bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
-	if ((getNote() != null) && (getNote().length() > 0))
-	    bibEntry.setField("note", bibtexFile.makeString(getNote()));
+	if ((getNote() != null) && (getNote().hasContent()))
+	    bibEntry.setField("note", bibtexFile.makeString(getNote().getContent()));
 
 	BibtexPersonList authorsList = getBibtexAuthorsList(bibtexFile, getAuthors());
 	if (authorsList != null) {
@@ -147,7 +152,7 @@ public class Thesis extends Thesis_Base {
     }
 
     @Override
-    public void setNote(String note) {
+    public void setNote(MultiLanguageString note) {
 	throw new DomainException("error.researcher.Thesis.call", "setNote");
     }
 
@@ -194,5 +199,9 @@ public class Thesis extends Thesis_Base {
     @Override
     public void setCountry(Country country) {
 	throw new DomainException("error.researcher.Thesis.call", "setCountry");
+    }
+    
+    public String getSchema() {
+    	return usedSchema;
     }
 }

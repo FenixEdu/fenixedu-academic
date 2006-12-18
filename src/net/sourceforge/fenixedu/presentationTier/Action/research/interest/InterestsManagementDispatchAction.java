@@ -24,110 +24,173 @@ import org.apache.struts.action.ActionMapping;
 
 public class InterestsManagementDispatchAction extends FenixDispatchAction {
 
-    private static final int UP = -1;
+	private static final int UP = -1;
 
-    private static final int DOWN = 1;
+	private static final int DOWN = 1;
 
-    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	public ActionForward delete(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-        Integer oid = Integer.parseInt(request.getParameter("oid"));
-        IUserView userView = getUserView(request);
+		Integer oid = Integer.parseInt(request.getParameter("oid"));
+		IUserView userView = getUserView(request);
 
-        ServiceUtils.executeService(userView, "DeleteResearchInterest", new Object[] { oid });
+		ServiceUtils.executeService(userView, "DeleteResearchInterest",
+				new Object[] { oid });
 
-        return prepare(mapping, form, request, response);
-    }
+		return prepare(mapping, form, request, response);
+	}
 
-    public ActionForward up(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	public ActionForward up(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-        changeOrder(request, UP);
-        return prepare(mapping, form, request, response);
-    }
+		changeOrder(request, UP);
+		return prepare(mapping, form, request, response);
+	}
 
-    public ActionForward down(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	public ActionForward down(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-        changeOrder(request, DOWN);
-        return prepare(mapping, form, request, response);
-    }
+		changeOrder(request, DOWN);
+		return prepare(mapping, form, request, response);
+	}
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-        List<ResearchInterest> orderedInterests = getOrderedInterests(request);                    
-        RenderUtils.invalidateViewState();
-        request.setAttribute("researchInterests", orderedInterests);
-        
-        return mapping.findForward("Success");
-    }
+		List<ResearchInterest> orderedInterests = getOrderedInterests(request);
+		RenderUtils.invalidateViewState();
+		request.setAttribute("researchInterests", orderedInterests);
 
-    public ActionForward prepareInsertInterest (ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        
-        List<ResearchInterest> orderedInterests = getOrderedInterests(request);
+		return mapping.findForward("Success");
+	}
 
-        if (orderedInterests.size() > 0) {
-            request.setAttribute("lastOrder", orderedInterests.get(orderedInterests.size() - 1)
-                    .getOrder() + 1);
-        } else {
-            request.setAttribute("lastOrder", 1);
-        }
-               
-        request.setAttribute("party", (Party) getUserView(request).getPerson());
+	public ActionForward alterOrder(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-        return mapping.findForward("InsertNewInterest");        
-    }
-    
-    public ActionForward prepareEditInterest (ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response){
-        
-        Integer interestOid = Integer.parseInt(request.getParameter("oid"));
-        ResearchInterest researchInterest = rootDomainObject.readResearchInterestByOID(interestOid);
-        
-        request.setAttribute("interest", researchInterest);
-        
-        return mapping.findForward("EditInterest");      
-    }
-    
-    private void changeOrder(HttpServletRequest request, int direction) throws FenixFilterException,
-            FenixServiceException {
-        Integer oid = Integer.parseInt(request.getParameter("oid"));
+		request.setAttribute("alterOrder", "alterOrder");
+		return prepare(mapping, form, request, response);
+	}
 
-        IUserView userView = getUserView(request);
-        Person person = userView.getPerson();
+	public ActionForward prepareInsertInterest(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-        ResearchInterest interest = rootDomainObject.readResearchInterestByOID(oid);
-        List<ResearchInterest> orderedInterests = getOrderedInterests(request);
+		List<ResearchInterest> orderedInterests = getOrderedInterests(request);
 
-        int index = orderedInterests.indexOf(interest);
-        if (index + direction >= 0) {
-            orderedInterests.remove(interest);
-            if (index + direction > orderedInterests.size()) {
-                orderedInterests.add(index, interest);
-            } else {
-                orderedInterests.add(index + direction, interest);
-            }
+		if (orderedInterests.size() > 0) {
+			request.setAttribute("lastOrder", orderedInterests.get(
+					orderedInterests.size() - 1).getOrder() + 1);
+		} else {
+			request.setAttribute("lastOrder", 1);
+		}
 
-            ServiceUtils.executeService(userView, "ChangeResearchInterestOrder", new Object[] { person,
-                    orderedInterests });
-        }
-    }
+		request.setAttribute("party", (Party) getUserView(request).getPerson());
 
-    private List<ResearchInterest> getOrderedInterests(HttpServletRequest request)
-            throws FenixFilterException, FenixServiceException {
-       
-        List<ResearchInterest> researchInterests = getUserView(request).getPerson()
-                .getResearchInterests();
+		return mapping.findForward("InsertNewInterest");
+	}
 
-        List<ResearchInterest> orderedInterests = new ArrayList<ResearchInterest>(researchInterests);
-        Collections.sort(orderedInterests, new Comparator<ResearchInterest>() {
-            public int compare(ResearchInterest researchInterest1, ResearchInterest researchInterest2) {
-                return researchInterest1.getOrder().compareTo(researchInterest2.getOrder());
-            }
-        });
-        return orderedInterests;
-    }
+	public ActionForward prepareEditInterest(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Integer interestOid = Integer.parseInt(request.getParameter("oid"));
+		ResearchInterest researchInterest = rootDomainObject
+				.readResearchInterestByOID(interestOid);
+
+		request.setAttribute("interest", researchInterest);
+
+		return mapping.findForward("EditInterest");
+	}
+
+	private void changeOrder(HttpServletRequest request, int direction)
+			throws FenixFilterException, FenixServiceException {
+		Integer oid = Integer.parseInt(request.getParameter("oid"));
+
+		IUserView userView = getUserView(request);
+		Person person = userView.getPerson();
+
+		ResearchInterest interest = rootDomainObject
+				.readResearchInterestByOID(oid);
+		List<ResearchInterest> orderedInterests = getOrderedInterests(request);
+
+		int index = orderedInterests.indexOf(interest);
+		if (index + direction >= 0) {
+			orderedInterests.remove(interest);
+			if (index + direction > orderedInterests.size()) {
+				orderedInterests.add(index, interest);
+			} else {
+				orderedInterests.add(index + direction, interest);
+			}
+
+			ServiceUtils.executeService(userView,
+					"ChangeResearchInterestOrder", new Object[] { person,
+							orderedInterests });
+		}
+	}
+
+	public ActionForward changeOrderUsingAjaxTree(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		String treeStructure = (String) getFromRequest(request, "tree");
+		List<ResearchInterest> newInterestsOrder = reOrderInterests(treeStructure, getOrderedInterests(request));
+		executeService(request, "ChangeResearchInterestOrder", new Object[] {
+				getLoggedPerson(request), newInterestsOrder });
+
+		return prepare(mapping, form, request, response);
+	}
+
+	
+	private List<ResearchInterest> reOrderInterests(String treeStructure,
+			List<ResearchInterest> oldOrder) {
+		List<ResearchInterest> newInterestsOrder = new ArrayList<ResearchInterest>();
+		List<ResearchInterest> oldInterestsOrder = oldOrder;
+		String[] nodes = treeStructure.split(",");
+
+		for (int i = 0; i < nodes.length; i++) {
+			String[] parts = nodes[i].split("-");
+
+			Integer index = getId(parts[0]) - 1;
+			ResearchInterest interest = oldInterestsOrder.get(index);
+			newInterestsOrder.add(interest);
+		}
+		return newInterestsOrder;
+	}
+
+	private Integer getId(String id) {
+		if (id == null) {
+			return null;
+		}
+		try {
+			return new Integer(id);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private List<ResearchInterest> getOrderedInterests(
+			HttpServletRequest request) throws FenixFilterException,
+			FenixServiceException {
+
+		List<ResearchInterest> researchInterests = getUserView(request)
+				.getPerson().getResearchInterests();
+
+		List<ResearchInterest> orderedInterests = new ArrayList<ResearchInterest>(
+				researchInterests);
+		Collections.sort(orderedInterests, new Comparator<ResearchInterest>() {
+			public int compare(ResearchInterest researchInterest1,
+					ResearchInterest researchInterest2) {
+				return researchInterest1.getOrder().compareTo(
+						researchInterest2.getOrder());
+			}
+		});
+		return orderedInterests;
+	}
 
 }

@@ -4,20 +4,22 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;
 
 public class ResultUnitAssociationCreationBean implements Serializable {
-    private DomainReference<Result> result;
+    private DomainReference<ResearchResult> result;
     private DomainReference<Unit> unit;
     private String role;
     private String unitName;
-
-    public ResultUnitAssociationCreationBean(Result result) {
-	setResult(new DomainReference<Result>(result));
+    private UnitType unitType; 
+    
+    public ResultUnitAssociationCreationBean(ResearchResult result) {
+	setResult(new DomainReference<ResearchResult>(result));
 	setUnit(null);
 	setUnitName(null);
 	setRole(ResultUnitAssociationRole.getDefaultRole());
+	setUnitType(UnitType.INTERNAL_UNIT);
     }
     
     public ResultUnitAssociationRole getRole() {
@@ -44,11 +46,43 @@ public class ResultUnitAssociationCreationBean implements Serializable {
         this.unit = (unit != null) ? new DomainReference<Unit>(unit) : null;
     }
     
-    public Result getResult() {
+    public ResearchResult getResult() {
         return result.getObject();
     }
 
-    public void setResult(DomainReference<Result> result) {
+    public void setResult(DomainReference<ResearchResult> result) {
         this.result = result;
     }
+
+
+    public Boolean getExternalUnit() {
+    	return isExternalUnit();
+    }
+    
+	public Boolean isExternalUnit() {
+		return getUnitType().equals(UnitType.EXTERNAL_UNIT);
+	}
+	
+	public static enum UnitType {
+		INTERNAL_UNIT ("Internal"),
+		EXTERNAL_UNIT ("External");
+		
+		private String type;
+		
+		private UnitType(String type) {
+			this.type = type;
+		}
+		
+		public String getType() {
+			return type;
+		}
+	}
+
+	public UnitType getUnitType() {
+		return unitType;
+	}
+
+	public void setUnitType(UnitType unitType) {
+		this.unitType = unitType;
+	}
 }

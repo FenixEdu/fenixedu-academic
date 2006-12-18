@@ -434,7 +434,7 @@ public class SearchCoursesInformationAction extends SearchAction {
         }
 
         /**
-         * @param name
+         * @param value
          *            The name to set.
          */
         public void setCurricularCourseNameAndCode(String curricularCourseNameAndCode) {

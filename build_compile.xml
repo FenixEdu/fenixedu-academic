@@ -506,7 +506,38 @@
 							property="dspace.username"/>
 				<replacefilter token="@dspace.password@"
 							property="dspace.password"/>
+				<replacefilter token="@dspace.client.transport.class@" 
+							property="dspace.client.transport.class"/>
+				<replacefilter token="@dspace.rmi.server.name@" 
+							property="dspace.rmi.server.name"/>
+				<replacefilter token="@rmi.registry.port@" 
+							property="rmi.registry.port"/>
+				<replacefilter token="@jndi.properties.file@" 
+							property="jndi.properties.file"/>
+				<replacefilter token="@rmi.port@" 
+							property="rmi.port"/>
+				<replacefilter token="@rmi.ssl@" 
+							property="rmi.ssl"/>
+				<replacefilter token="@rmi.ssl.truststore@" 
+							property="rmi.ssl.truststore"/>
+				<replacefilter token="@rmi.ssl.truststore.password@" 
+							property="rmi.ssl.truststore.password"/>
+				<replacefilter token="@rmi.stream.bytes.min@" 
+							property="rmi.stream.bytes.min"/>
+				<replacefilter token="@rmi.stream.bytes.max@" 
+							property="rmi.stream.bytes.max"/>
+				<replacefilter token="@rmi.stream.bytes.block@" 
+							property="rmi.stream.bytes.block"/>
+				
 			</replace>
+			
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
+								 propertyFile="build.properties">
+							<include name="dspace.jndi.properties"/>
+							<replacefilter token="@something@"
+								property="rmi.stream.bytes.block"/>
+			</replace>
+			
 		</sequential>
 	</target>
 

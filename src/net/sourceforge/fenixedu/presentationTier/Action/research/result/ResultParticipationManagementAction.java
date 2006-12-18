@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.OrderChange;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -22,258 +22,264 @@ import org.apache.struts.action.ActionMapping;
 
 public class ResultParticipationManagementAction extends ResultsManagementAction {
 
-    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
-	final Result result = getResultFromRequest(request);
-	if (result == null || !result.hasPersonParticipation(getLoggedPerson(request))) {
-	    return backToResultList(mapping, form, request, response);
-	}
-	
-	setResParticipationRequestAttributes(request, result);
-	return mapping.findForward("editParticipation");
-    }
+	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		final ResearchResult result = getResultFromRequest(request);
+		if (result == null || !result.hasPersonParticipation(getLoggedPerson(request))) {
+			return backToResultList(mapping, form, request, response);
+		}
 
-    public ActionForward create(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
-	final ResultParticipationCreationBean bean = getRenderedObject("bean");
-	
-	if (checkBean(bean)) {
-	    try {
+		ResultParticipationCreationBean bean = getRenderedObject("bean"); 
+			
+		setResParticipationRequestAttributes(request, result,(bean==null) ? getBeanFromRequest(request, result) : bean);
+		return mapping.findForward("editParticipation");
+	}
+
+	public ActionForward changeParticipationType(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+		final ResultParticipationCreationBean bean = getRenderedObject("bean");
+		setResParticipationRequestAttributes(request, bean.getResult(),bean);
+		RenderUtils.invalidateViewState("bean");
+		return mapping.findForward("editParticipation");
+	}
+
+	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		final ResultParticipationCreationBean bean = getRenderedObject("bean");
+
+		try {
+			if (!bean.isBeanExternal()) {
+				createParticipation(request, bean);
+			} else {
+				if (bean.hasOrganization()) {
+					createParticipation(request, bean);
+				} else {
+					request.setAttribute("bean", bean);
+				}
+			}
+		} catch (Exception e) {
+			final ActionForward defaultForward = backToResultList(mapping, form, request, response);
+			return processException(request, mapping, defaultForward, e);
+		}
+
+		RenderUtils.invalidateViewState();
+		return prepareEdit(mapping, form, request, response);
+	}
+
+	private void createParticipation(HttpServletRequest request, ResultParticipationCreationBean bean)
+			throws FenixFilterException, FenixServiceException {
 		final Object[] args = { bean };
 		executeService(request, "CreateResultParticipation", args);
-		RenderUtils.invalidateViewState();
-	    } catch (Exception e) {
-		final ActionForward defaultForward = backToResultList(mapping, form, request, response);
-		return processException(request, mapping, defaultForward, e);
-	    }
-	} else {
-	    bean.setBeanExternal(true);
-	    request.setAttribute("bean", bean);
-	}
-	RenderUtils.invalidateViewState();
-	return prepareEdit(mapping, form, request, response);
-    }
-
-    public ActionForward remove(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
-	final ResultParticipation participation = readResultParticipationFromRequest(request);
-	if (participation == null) {
-	    return backToResultList(mapping, form, request, response);
-	}
-	
-	final Person loggedPerson = getLoggedPerson(request);
-
-	if(participation.getPerson().equals(loggedPerson) && getFromRequest(request, "confirm")==null
-		&&getFromRequest(request, "cancel")==null) {
-	    request.setAttribute("deleteConfirmation", participation.getIdInternal());
-	}
-	
-	if (getFromRequest(request, "confirm")!=null || !participation.getPerson().equals(loggedPerson)){
-	    
-	    try {
-		final Object[] args = { participation };
-		executeService(request, "DeleteResultParticipation", args);
-	    } catch (Exception e) {
-		final ActionForward defaultForward = backToResultList(mapping, form, request, response);
-		return processException(request, mapping, defaultForward, e);
-	    }
-	}
-	
-	return prepareEdit(mapping, form, request, response);
-    }
-
-    public ActionForward saveOrder(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	final String treeStructure = (String) getFromRequest(request, "tree");
-	final Result result = getResultFromRequest(request);
-
-	if (treeStructure != null && treeStructure.length() != 0) {
-	    final List<ResultParticipation> newParticipationsOrder = reOrderParticipations(
-		    treeStructure, result);
-	    try {
-		final Object[] args = { result, newParticipationsOrder };
-		executeService(request, "SaveResultParticipationsOrder", args);
-	    } catch (Exception e) {
-		final ActionForward defaultForward = backToResultList(mapping, form, request, response);
-		return processException(request, mapping, defaultForward, e);
-	    }
 	}
 
-	return prepareEdit(mapping, form, request, response);
-    }
+	public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		final ResultParticipation participation = readResultParticipationFromRequest(request);
+		if (participation == null) {
+			return backToResultList(mapping, form, request, response);
+		}
 
-    public ActionForward moveUp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return move(ResultParticipation.OrderChange.MoveUp, mapping, form, request, response);
-    }
+		final Person loggedPerson = getLoggedPerson(request);
 
-    public ActionForward moveDown(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return move(ResultParticipation.OrderChange.MoveDown, mapping, form, request, response);
-    }
+		if (participation.getPerson().equals(loggedPerson) && getFromRequest(request, "confirm") == null
+				&& getFromRequest(request, "cancel") == null) {
+			request.setAttribute("deleteConfirmation", participation.getIdInternal());
+		}
 
-    public ActionForward moveTop(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return move(ResultParticipation.OrderChange.MoveTop, mapping, form, request, response);
-    }
+		if (getFromRequest(request, "confirm") != null || !participation.getPerson().equals(loggedPerson)) {
 
-    public ActionForward moveBottom(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	return move(ResultParticipation.OrderChange.MoveBottom, mapping, actionForm, request, response);
-    }
-    
-    public ActionForward prepareEditRoles(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	request.setAttribute("editRoles", "editRoles");
-	return prepareEdit(mapping, form, request, response);
-    }
+			try {
+				final Object[] args = { participation };
+				executeService(request, "DeleteResultParticipation", args);
+			} catch (Exception e) {
+				final ActionForward defaultForward = backToResultList(mapping, form, request, response);
+				return processException(request, mapping, defaultForward, e);
+			}
+		}
 
-    public ActionForward prepareAlterOrder(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	request.setAttribute("alterOrder", "alterOrder");
-	return prepareEdit(mapping, form, request, response);
-    }
-
-    private ActionForward move(OrderChange orderChange, ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
-	final ResultParticipation participation = readResultParticipationFromRequest(request);
-	if (participation == null) {
-	    return backToResultList(mapping, form, request, response);
+		return prepareEdit(mapping, form, request, response);
 	}
 
-	try {
-	    final Object[] args = { participation, orderChange };
-	    executeService(request, "ChangeResultParticipationsOrder", args);
-	} catch (Exception e) {
-	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
-	    return processException(request, mapping, defaultForward, e);
+	public ActionForward saveOrder(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		final String treeStructure = (String) getFromRequest(request, "tree");
+		final ResearchResult result = getResultFromRequest(request);
+
+		if (treeStructure != null && treeStructure.length() != 0) {
+			final List<ResultParticipation> newParticipationsOrder = reOrderParticipations(treeStructure,
+					result);
+			try {
+				final Object[] args = { result, newParticipationsOrder };
+				executeService(request, "SaveResultParticipationsOrder", args);
+			} catch (Exception e) {
+				final ActionForward defaultForward = backToResultList(mapping, form, request, response);
+				return processException(request, mapping, defaultForward, e);
+			}
+		}
+
+		return prepareEdit(mapping, form, request, response);
 	}
 
-	return prepareEdit(mapping, form, request, response);
-    }
-
-    private void checkNeededSchemas(HttpServletRequest request, Result result,
-	    ResultParticipationCreationBean bean) {
-	String resultParticipationsSchema = "resultParticipation.withoutRole";
-	String createResultParticipationSchema = "resultParticipation.creation";
-
-	if (bean.isBeanExternal()) {
-	    createResultParticipationSchema = "resultParticipation.fullCreation";
+	public ActionForward moveUp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return move(ResultParticipation.OrderChange.MoveUp, mapping, form, request, response);
 	}
 
-	// Defining schemas with roles
-	if (result.getIsPossibleSelectPersonRole()) {
-	    resultParticipationsSchema = "resultParticipation.full";
-	    if (!bean.isBeanExternal()) {
-		createResultParticipationSchema = "resultParticipation.creationWithRole";
-	    } else {
-		createResultParticipationSchema = "resultParticipation.fullCreationWithRole";
-	    }
-	}
-	
-	request.setAttribute("listSchema", resultParticipationsSchema);
-	request.setAttribute("createSchema", createResultParticipationSchema);
-    }
-
-    private void checkNeededWarnings(HttpServletRequest request, Result result)
-	    throws FenixFilterException, FenixServiceException {
-	if (!result.hasPersonParticipation(getLoggedPerson(request))) {
-	    addActionMessage(request, "researcher.ResultParticipation.last.participation.warning");
-	}
-    }
-
-    private List<ResultParticipation> reOrderParticipations(String treeStructure, Result result) {
-	final List<ResultParticipation> newParticipationsOrder = new ArrayList<ResultParticipation>();
-	final List<ResultParticipation> oldParticipationsOrder = result.getOrderedResultParticipations();
-	final String[] nodes = treeStructure.split(",");
-
-	for (int i = 0; i < nodes.length; i++) {
-	    String[] parts = nodes[i].split("-");
-
-	    Integer index = getId(parts[0]) - 1;
-	    ResultParticipation participation = oldParticipationsOrder.get(index);
-	    newParticipationsOrder.add(participation);
-	}
-	return newParticipationsOrder;
-    }
-
-    private ResultParticipationCreationBean getBeanFromRequest(HttpServletRequest request, Result result)
-	    throws FenixFilterException, FenixServiceException {
-	ResultParticipationCreationBean bean = (ResultParticipationCreationBean) getFromRequest(request, "bean");
-	
-	if (bean==null) {
-	    bean = new ResultParticipationCreationBean(result);
+	public ActionForward moveDown(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return move(ResultParticipation.OrderChange.MoveDown, mapping, form, request, response);
 	}
 
-	return bean;
-    }
-
-    private boolean checkBean(ResultParticipationCreationBean bean) {
-	// Person already exists in system.
-	if (bean.getParticipator() != null) {
-	    return true;
+	public ActionForward moveTop(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return move(ResultParticipation.OrderChange.MoveTop, mapping, form, request, response);
 	}
-	// External person creation
-	if (bean.getParticipatorName() != null && !bean.getParticipatorName().equals("")) {
-	    if (bean.getOrganization() != null
-		    || (bean.getOrganizationName() != null && !bean.getOrganizationName().equals(""))) {
-		return true;
-	    }
-	}
-	return false;
-    }
 
-    private ResultParticipation readResultParticipationFromRequest(HttpServletRequest request) {
-	final Integer oid = getRequestParameterAsInteger(request, "participationId");
-	ResultParticipation participation = null;
-	
-	try {
-	    participation = ResultParticipation.readByOid(oid);
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey(), e.getArgs());
+	public ActionForward moveBottom(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return move(ResultParticipation.OrderChange.MoveBottom, mapping, actionForm, request, response);
 	}
-	
-	return participation;
-    }
 
-    private void setResParticipationRequestAttributes(HttpServletRequest request, Result result)
-	    throws FenixFilterException, FenixServiceException {
-	final ResultParticipationCreationBean bean = getBeanFromRequest(request, result);
-	
-	checkNeededSchemas(request, result, bean); // Define schemas to use
-	checkNeededWarnings(request, result); // Action Warning Messages
-	
-	if(getFromRequest(request, "editRoles")!=null) {
-	    request.setAttribute("editRoles","editRoles");
-	} else if(getFromRequest(request, "alterOrder")!=null){
+	public ActionForward prepareEditRoles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		request.setAttribute("editRoles", "editRoles");
+		return prepareEdit(mapping, form, request, response);
+	}
+
+	public ActionForward prepareAlterOrder(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setAttribute("alterOrder", "alterOrder");
-	} else {
-	    request.setAttribute("removeOnly", "removeOnly");
-	}
-	
-	request.setAttribute("bean", bean);
-	request.setAttribute("result", result);
-    }
-
-    protected Integer getId(String id) {
-	if (id == null) {
-	    return null;
+		return prepareEdit(mapping, form, request, response);
 	}
 
-	try {
-	    return new Integer(id);
-	} catch (NumberFormatException e) {
-	    e.printStackTrace();
-	    return null;
-	}
-    }
+	private ActionForward move(OrderChange orderChange, ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+		final ResultParticipation participation = readResultParticipationFromRequest(request);
+		if (participation == null) {
+			return backToResultList(mapping, form, request, response);
+		}
 
-    @Override
-    public ResultParticipationCreationBean getRenderedObject(String id) {
-	return (ResultParticipationCreationBean) super.getRenderedObject(id);
-    }
+		try {
+			final Object[] args = { participation, orderChange };
+			executeService(request, "ChangeResultParticipationsOrder", args);
+		} catch (Exception e) {
+			final ActionForward defaultForward = backToResultList(mapping, form, request, response);
+			return processException(request, mapping, defaultForward, e);
+		}
+
+		return prepareEdit(mapping, form, request, response);
+	}
+
+	private void checkNeededSchemas(HttpServletRequest request, ResearchResult result,
+			ResultParticipationCreationBean bean) {
+		String resultParticipationsSchema = "resultParticipation.withoutRole";
+		String createResultParticipationSchema = "resultParticipation.creation";
+
+		if ( (bean.getParticipator()!=null || (bean.getParticipatorName()!=null && bean.getParticipatorName().length()>0)) && (bean.isBeanExternal() || bean.isUnitExternal())) {
+			createResultParticipationSchema = "resultParticipation.fullCreation";
+		}
+
+		// Defining schemas with roles
+		if (result.getIsPossibleSelectPersonRole()) {
+			resultParticipationsSchema = "resultParticipation.full";
+			if (!bean.isBeanExternal()) {
+				createResultParticipationSchema = "resultParticipation.creationWithRole";
+			} else {
+				if((bean.getParticipator()!=null || (bean.getParticipatorName()!=null && bean.getParticipatorName().length()>0))) {
+					createResultParticipationSchema = "resultParticipation.fullCreationWithRole";
+				}
+				else {
+					createResultParticipationSchema = "resultParticipation.creation";
+				}
+			}
+		}
+
+		request.setAttribute("listSchema", resultParticipationsSchema);
+		request.setAttribute("createSchema", createResultParticipationSchema);
+	}
+
+	private void checkNeededWarnings(HttpServletRequest request, ResearchResult result)
+			throws FenixFilterException, FenixServiceException {
+		if (!result.hasPersonParticipation(getLoggedPerson(request))) {
+			addActionMessage(request, "researcher.ResultParticipation.last.participation.warning");
+		}
+	}
+
+	private List<ResultParticipation> reOrderParticipations(String treeStructure, ResearchResult result) {
+		final List<ResultParticipation> newParticipationsOrder = new ArrayList<ResultParticipation>();
+		final List<ResultParticipation> oldParticipationsOrder = result.getOrderedResultParticipations();
+		final String[] nodes = treeStructure.split(",");
+
+		for (int i = 0; i < nodes.length; i++) {
+			String[] parts = nodes[i].split("-");
+
+			Integer index = getId(parts[0]) - 1;
+			ResultParticipation participation = oldParticipationsOrder.get(index);
+			newParticipationsOrder.add(participation);
+		}
+		return newParticipationsOrder;
+	}
+
+	private ResultParticipationCreationBean getBeanFromRequest(HttpServletRequest request,
+			ResearchResult result) throws FenixFilterException, FenixServiceException {
+		ResultParticipationCreationBean bean = (ResultParticipationCreationBean) getFromRequest(request,
+				"bean");
+
+		if (bean == null) {
+			bean = new ResultParticipationCreationBean(result);
+		}
+
+		return bean;
+	}
+
+	private ResultParticipation readResultParticipationFromRequest(HttpServletRequest request) {
+		final Integer oid = getRequestParameterAsInteger(request, "participationId");
+		ResultParticipation participation = null;
+
+		try {
+			participation = ResultParticipation.readByOid(oid);
+		} catch (DomainException e) {
+			addActionMessage(request, e.getKey(), e.getArgs());
+		}
+
+		return participation;
+	}
+
+	private void setResParticipationRequestAttributes(HttpServletRequest request, ResearchResult result,ResultParticipationCreationBean bean)
+			throws FenixFilterException, FenixServiceException {
+		
+		checkNeededSchemas(request, result, bean); // Define schemas to use
+		checkNeededWarnings(request, result); // Action Warning Messages
+
+		if (getFromRequest(request, "editRoles") != null) {
+			request.setAttribute("editRoles", "editRoles");
+		} else if (getFromRequest(request, "alterOrder") != null) {
+			request.setAttribute("alterOrder", "alterOrder");
+		} else {
+			request.setAttribute("removeOnly", "removeOnly");
+		}
+
+		request.setAttribute("bean", bean);
+		request.setAttribute("result", result);
+	}
+
+	protected Integer getId(String id) {
+		if (id == null) {
+			return null;
+		}
+
+		try {
+			return new Integer(id);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public ResultParticipationCreationBean getRenderedObject(String id) {
+		return (ResultParticipationCreationBean) super.getRenderedObject(id);
+	}
 }

@@ -115,7 +115,8 @@ public class HtmlTable extends HtmlComponent {
 
     @Override
     public HtmlTag getOwnTag(PageContext context) {
-        HtmlTag tag = super.getOwnTag(context);
+        
+    	HtmlTag tag = super.getOwnTag(context);
         
         tag.setName("table");
         

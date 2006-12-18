@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -31,9 +30,6 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
  * 
  */
 public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
-
-    private static final String FILE_DOWNLOAD_URL_FORMAT = FileManagerFactory.getFileManager()
-	    .getDirectDownloadUrlFormat();
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -97,7 +93,6 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
 
 	request.setAttribute("candidacyDocuments", candidacyDocuments);
 	request.setAttribute("candidacy", candidacy);
-	request.setAttribute("fileDownloadUrlFormat", FILE_DOWNLOAD_URL_FORMAT);
     }
 
     private Candidacy getCandidacy(List<CandidacyDocumentUploadBean> beans) {

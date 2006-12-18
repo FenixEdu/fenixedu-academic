@@ -13,6 +13,8 @@ public enum RoleType {
 
     TEACHER("Teacher"),
 
+    RESEARCHER("Researcher"),
+    
     DEPARTMENT_MEMBER("Department Member"),
 
     TIME_TABLE_MANAGER("Timetable Management"),
@@ -74,8 +76,6 @@ public enum RoleType {
     SPACE_MANAGER("Space Management"),
     
     SPACE_MANAGER_SUPER_USER("Space Management (Super User)"),
-
-    RESEARCHER("Researcher"),
 
     ALUMNI("Alumni"),
 

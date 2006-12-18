@@ -1,20 +1,20 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
-import org.joda.time.YearMonthDay;
-import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.research.event.Event;
+
 import net.sourceforge.fenixedu.domain.research.event.EventType;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication.ScopeType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.YearMonthDay;
 
 public abstract class ConferenceArticlesBean extends ResultPublicationBean implements Serializable {
     private ScopeType scope;
 
-    private DomainReference<Event> event;
-
     private String eventNameAutoComplete;
 
+    private String conference;
+    
     private MultiLanguageString eventName;
 
     // default type is Conference
@@ -80,13 +80,7 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
 	this.eventNameAutoComplete = name;
     }
 
-    public Event getEvent() {
-	return (this.event == null) ? null : this.event.getObject();
-    }
-
-    public void setEvent(Event event) {
-	this.event = (event != null) ? new DomainReference<Event>(event) : null;
-    }
+   
 
     public ScopeType getScope() {
 	return scope;
@@ -95,4 +89,12 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
     public void setScope(ScopeType scope) {
 	this.scope = scope;
     }
+
+	public String getConference() {
+		return conference;
+	}
+
+	public void setConference(String conference) {
+		this.conference = conference;
+	}
 }

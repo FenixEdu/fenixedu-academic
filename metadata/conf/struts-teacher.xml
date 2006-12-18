@@ -930,6 +930,13 @@
             <forward name="editSectionPermissions" path="manage-execution-course-editSectionPermissions"/>
             <forward name="editItemPermissions" path="manage-execution-course-editItemPermissions"/>
             <forward name="editFile" path="manage-execution-course-editFile"/>
+   			<forward name="createScorm" path="create-scorm"/>
+   			<forward name="uploadScorm" path="upload-scorm"/>
+        </action>
+        <action path="/searchScormContent"
+        		parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SearchScormContentAction">	
+				<forward name="search" path="search-scorm-content"/>
         </action>
         <action path="/createProgram"
         		parameter="method"

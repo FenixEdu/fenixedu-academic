@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import bibtex.dom.BibtexEntry;
 
@@ -41,7 +41,7 @@ public class TechnicalReportBean extends ResultPublicationBean implements Serial
     }
 
     @Override
-    protected void fillSpecificFields(ResultPublication publication) {
+    protected void fillSpecificFields(ResearchResultPublication publication) {
 	this.setTechnicalReportType(((TechnicalReport) publication).getTechnicalReportType());
 	this.setNumber(((TechnicalReport) publication).getNumber());
 	this.setAddress(((TechnicalReport) publication).getAddress());

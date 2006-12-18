@@ -5,7 +5,7 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.FileItem" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.ProjectSubmissionFile" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.BlueprintFile" />
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.parking.ParkingFile"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.PictureMaterialFile"/>
 </class-descriptor>
@@ -22,7 +22,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.BlueprintFile" table="FILE">
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile" table="FILE"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile" table="FILE"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.parking.ParkingFile" table="FILE"/>
 

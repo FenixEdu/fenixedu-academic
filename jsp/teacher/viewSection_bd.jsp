@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@page import="pt.utl.ist.fenix.tools.file.FileManagerFactory"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -29,12 +30,12 @@
 				<logic:notEmpty name="section" property="superiorInfoSection">
 					<bean:define id="superiorSection" name="section" property="superiorInfoSection"/>
 					<bean:define id="superiorSectionCode" name="superiorSection" property="idInternal"/>
-					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode + "&amp;superiorSectionCode=" + superiorSectionCode %>" onclick="<%= "return confirm('Tem a certeza que deseja apagar a secção " + sectionName + " ?')"%>">		
+					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode + "&amp;superiorSectionCode=" + superiorSectionCode %>" onclick="<%= "return confirm('Tem a certeza que deseja apagar a secï¿½ï¿½o " + sectionName + " ?')"%>">		
 						<bean:message key="button.deleteSection"/>
 					</html:link>
 				</logic:notEmpty>
 				<logic:empty name="section" property="superiorInfoSection">
-					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>" onclick="<%= "return confirm('Tem a certeza que deseja apagar a secção " + sectionName + " ?')"%>">		
+					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>" onclick="<%= "return confirm('Tem a certeza que deseja apagar a secï¿½ï¿½o " + sectionName + " ?')"%>">		
 						<bean:message key="button.deleteSection"/>
 					</html:link>
 				</logic:empty>
@@ -115,7 +116,7 @@
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		</td>
 		<td>
-			<html:link href="<%= pageContext.findAttribute("fileDownloadUrlFormat") + "/" + externalStorageIdentification + "/" + filename %>" ><bean:write name="displayName"/>&nbsp;&nbsp;(<bean:message key="<%=permittedGroupType.toString() %>" bundle="ENUMERATION_RESOURCES"/>)</html:link>
+			<html:link href="<%= FileManagerFactory.getFileManager().formatDownloadUrl(externalStorageIdentification,filename) %>" ><bean:write name="displayName"/>&nbsp;&nbsp;(<bean:message key="<%=permittedGroupType.toString() %>" bundle="ENUMERATION_RESOURCES"/>)</html:link>
 		</td>
 		<td>&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		</td>

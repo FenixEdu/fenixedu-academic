@@ -6,13 +6,13 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
-	<em>Patentes</em> <!-- tobundle -->
-	<h2/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.management.title"/></h2>
+	<em><bean:message key="researcher.viewCurriculum.patentsTitle" bundle="RESEARCHER_RESOURCES"/></em> <!-- tobundle -->
+	<h2/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.management.title"/></h2>
 	
 	<ul>
 		<li>
 			<html:link module="/researcher" page="/resultPatents/prepareCreate.do">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.create.link"/>
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.create.link"/>
 			</html:link>
 		</li>
 	</ul>
@@ -26,33 +26,39 @@
 	
 	<%-- Result Patents Listing --%>
 	<%--
-	<h3 class='cd_heading'><span><bean:message key="researcher.ResultPatent.list.label" bundle="RESEARCHER_RESOURCES"/></span></h3>
+	<h3 class='cd_heading'><span><bean:message key="researcher.ResearchResultPatent.list.label" bundle="RESEARCHER_RESOURCES"/></span></h3>
 	--%>
 	
 	<logic:empty name="resultPatents">
-		<p><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.emptyList"/></p>
+		<p><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.emptyList"/></p>
 	</logic:empty>
-	
+
 	<logic:notEmpty name="resultPatents">
-		<p class="mtop15 mbottom05"><bean:message key="researcher.ResultPatent.list.label" bundle="RESEARCHER_RESOURCES"/>:</p>
-		<fr:view name="resultPatents" layout="tabular" schema="result.patentShortList" >
-			<fr:layout>
-				<fr:property name="classes" value="tstyle1 mtop0"/>
-				<fr:property name="columnClasses" value=",acenter width5em,acenter width5em,acenter"/>
-				<fr:property name="sortBy" value="lastModificationDate=desc"/>
-				
-				<fr:property name="link(edit)" value="/resultPatents/prepareEdit.do"/>
-				<fr:property name="param(edit)" value="idInternal/resultId"/>
-				<fr:property name="key(edit)" value="link.edit"/>
-				<fr:property name="bundle(edit)" value="RESEARCHER_RESOURCES"/>
-				<fr:property name="order(edit)" value="1"/>
-	
-				<fr:property name="link(delete)" value="/resultPatents/prepareDelete.do"/>
-				<fr:property name="param(delete)" value="idInternal/resultId"/>
-				<fr:property name="key(delete)" value="link.delete"/>
-				<fr:property name="bundle(delete)" value="RESEARCHER_RESOURCES"/>
-				<fr:property name="order(delete)" value="2"/>
-			</fr:layout>
-		</fr:view>
+		<p class="mtop2 mbottom0"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.management.title"/></strong></p>
+		<ul style="width: 600px;">
+		<logic:iterate id="patent" name="resultPatents">
+			<bean:define id="patentId" name="patent" property="idInternal"/>
+			
+			<li class="mtop1">
+	 			<span><strong><fr:view name="patent" property="title"/></strong></span><br/>
+	 			<span style="color: #888;">
+	 			<bean:message key="label.registrationDate" bundle="RESEARCHER_RESOURCES"/>
+	 			<fr:view name="patent" property="registrationDate"/></span> 
+	 			<span style="color: #888;">
+	 			<bean:message key="label.approvalDate" bundle="RESEARCHER_RESOURCES"/>
+	 			<fr:view name="patent" property="approvalDate"/></span>
+	 			<logic:equal name="patent" property="note.empty" value="false">
+				<br/><span><fr:view name="patent" property="note"/></span><br/>
+				</logic:equal>
+	 			<p class="mtop025">
+			 		<a href="<%= request.getContextPath() + "/researcher/resultPatents/prepareEdit.do?resultId=" + patentId %>"><bean:message key="link.edit" bundle="RESEARCHER_RESOURCES"/></a>, 
+		 			<a href="<%= request.getContextPath() + "/researcher/resultPatents/prepareDelete.do?&amp;resultId=" + patentId %>"><bean:message key="link.delete" bundle="RESEARCHER_RESOURCES"/></a>
+		 		</p>
+ 			</li>
+		</logic:iterate>		
+		</ul>
+			
 	</logic:notEmpty>
+	
+	
 </logic:present>

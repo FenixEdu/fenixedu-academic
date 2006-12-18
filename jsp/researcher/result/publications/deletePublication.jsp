@@ -41,9 +41,11 @@
 	<jsp:include page="../commons/viewDocumentFiles.jsp"/>
 	
  	<%-- Event Associations --%>
+	<%-- 
 	<p class="mbottom1 mtop2"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.title.label"/></b></p>
 	<jsp:include page="../commons/viewEventAssociations.jsp"/>
-
+	--%>
+	
 	<%-- Unit Associations --%>
 	<p class="mbottom1 mtop2"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b></p>
 	<jsp:include page="../commons/viewUnitAssociations.jsp"/>

@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
-import bibtex.dom.BibtexEntry;
-
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import bibtex.dom.BibtexEntry;
 
 /**
  * Used for relation of Inproceedings and Proceedings with Event Required
@@ -17,7 +15,6 @@ public abstract class ConferenceArticles extends ConferenceArticles_Base {
 
     @Checked("ResultPredicates.writePredicate")
     public void delete() {
-	super.setEvent(null);
 	super.delete();
     }
 
@@ -27,9 +24,6 @@ public abstract class ConferenceArticles extends ConferenceArticles_Base {
     @Override
     public abstract String getResume();
 
-    @Override
-    public void removeEvent() {
-	throw new DomainException("error.researcher.ConferenceArticles.call", "removeEvent");
-    }
+
 
 }

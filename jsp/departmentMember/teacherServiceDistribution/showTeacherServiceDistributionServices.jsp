@@ -6,16 +6,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
-</h3>
-<h2>
-	<bean:write name="teacherServiceDistribution" property="name"/>
-</h2>
+<h3><bean:message key="link.teacherServiceDistribution"/></h3>
+<em><bean:write name="teacherServiceDistribution" property="name"/></em>
 
+<ul>
+<li>
+	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+	<bean:message key="link.back"/> 
+	</html:link>
+</li>
+</ul>
 
 <h4>
 	<table class='vtsbc'>
@@ -33,7 +33,7 @@
 			</td>
 			<td align="center">
 				<logic:iterate id="executionPeriod" name="teacherServiceDistribution" property="orderedExecutionPeriods">
-					<bean:write name="executionPeriod" property="semester"/>º&nbsp;
+					<bean:write name="executionPeriod" property="semester"/>&nbsp;
 					<bean:message key="label.teacherServiceDistribution.semester"/>&nbsp;&nbsp;
 				</logic:iterate>
 			</td>
@@ -67,7 +67,7 @@
 </logic:equal>
 <logic:equal name="omissionConfigurationPermission" value="true">		
 	<li>
-	  	<html:link page='<%= "/valuationPhasesManagement.do?method=prepareForOmissionValuesValuation&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+	  	<html:link page='<%= "/valuationPhasesManagement.do?method=prepareForOmissionValuesValuation&amp;edit=no&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
 	  		<bean:message key="link.teacherServiceDistribution.omissionValuesValuation"/>
 	  	</html:link>
 	</li>

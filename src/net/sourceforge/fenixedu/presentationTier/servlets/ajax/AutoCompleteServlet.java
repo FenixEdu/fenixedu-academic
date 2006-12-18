@@ -38,6 +38,8 @@ public class AutoCompleteServlet extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+    	request.setCharacterEncoding("UTF-8");
+    	
         String service = request.getParameter("serviceName");
         Class type = getConcreteType(request.getParameter("class"));
         String value = new String(request.getParameter("value").getBytes(), JAVASCRIPT_LIBRARY_ENCODING);
