@@ -6,11 +6,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -1232,8 +1230,8 @@ public class Registration extends Registration_Base {
     }
 
     public boolean getIsForOffice() {
-	final AdministrativeOffice administrativeOffice = AdministrativeOffice
-		.readByEmployee(AccessControl.getUserView().getPerson().getEmployee());
+	final AdministrativeOffice administrativeOffice = AccessControl.getUserView().getPerson()
+		.getEmployee().getAdministrativeOffice();
 	return isForOffice(administrativeOffice);
     }
 
@@ -1336,36 +1334,34 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    private Map<ExecutionYear, StudentCurricularPlan> initializeStudentCurricularPlansByExecutionYear() {
-	Map<ExecutionYear, StudentCurricularPlan> studentCurricularPlansByExecutionYear = new HashMap<ExecutionYear, StudentCurricularPlan>();
+    public Set<ExecutionYear> getEnrolmentsExecutionYears() {
+	final Set<ExecutionYear> sortedExecutionYears = new TreeSet<ExecutionYear>(
+		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
 
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    for (final ExecutionYear executionYear : studentCurricularPlan.getEnrolmentsExecutionYears()) {
-		studentCurricularPlansByExecutionYear.put(executionYear, studentCurricularPlan);
+	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+		sortedExecutionYears.add(enrolment.getExecutionPeriod().getExecutionYear());
 	    }
 	}
 
-	return studentCurricularPlansByExecutionYear;
-    }
-
-    public Set<ExecutionYear> getEnrolmentsExecutionYears() {
-	Set<ExecutionYear> sortedExecutionYears = new TreeSet<ExecutionYear>(
-		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
-	sortedExecutionYears.addAll(initializeStudentCurricularPlansByExecutionYear().keySet());
 	return sortedExecutionYears;
     }
 
     public Set<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
-	Set<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(
+	final Set<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(
 		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
-	for (ExecutionYear executionYear : getEnrolmentsExecutionYears()) {
-	    result.addAll(executionYear.getExecutionPeriods());
+
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+		result.add(enrolment.getExecutionPeriod());
+	    }
 	}
+
 	return result;
     }
 
     public StudentCurricularPlan getStudentCurricularPlan(final ExecutionYear executionYear) {
-	return executionYear == null ? null : initializeStudentCurricularPlansByExecutionYear().get(executionYear);
+	return executionYear == null ? null : getStudentCurricularPlan(executionYear.getEndDateYearMonthDay());
     }
 
     public StudentCurricularPlan getStudentCurricularPlan(final YearMonthDay date) {
@@ -1499,11 +1495,21 @@ public class Registration extends Registration_Base {
 
     public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
 	    final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+	
+	final Person loggedPerson = AccessControl.getPerson();
+	
 	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 
 	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
 	    if ((academicServiceRequestSituationType == null && academicServiceRequest.isNewRequest())
 		    || academicServiceRequest.getAcademicServiceRequestSituationType() == academicServiceRequestSituationType) {
+		
+		if (loggedPerson.hasEmployee()
+			&& loggedPerson.getEmployee().getCurrentCampus() != academicServiceRequest
+				.getStudentCurricularPlan().getLastCampus().getSpaceCampus()) {
+		    continue;
+		}
+		
 		result.add((DocumentRequest) academicServiceRequest);
 	    }
 	}
