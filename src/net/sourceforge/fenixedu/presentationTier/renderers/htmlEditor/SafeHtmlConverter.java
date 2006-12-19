@@ -51,11 +51,13 @@ public class SafeHtmlConverter extends TidyConverter {
             // filter children
             filterChildren(element);
             break;
-        case Node.TEXT_NODE:
-            break;
+        // case Node.TEXT_NODE:
+        // break;
+        // default:
+        // Node parent = node.getParentNode();
+        // parent.removeChild(node);
+        // break;
         default:
-            Node parent = node.getParentNode();
-            parent.removeChild(node);
             break;
         }
     }
@@ -78,12 +80,33 @@ public class SafeHtmlConverter extends TidyConverter {
     }
 
     private boolean isThustedNode(Node child) {
-        if (child.getNodeType() != Node.ELEMENT_NODE && child.getNodeType() != Node.TEXT_NODE) {
-            return false;
-        }
-
-        if (child.getNodeType() == Node.TEXT_NODE) {
+        switch (child.getNodeType()) {
+        case Node.PROCESSING_INSTRUCTION_NODE:
+        case Node.TEXT_NODE:
+        case Node.COMMENT_NODE:
+        case Node.DOCUMENT_TYPE_NODE:
+        case Node.ENTITY_NODE:
+        case Node.ENTITY_REFERENCE_NODE:
+        case Node.NOTATION_NODE:
             return true;
+        case Node.ELEMENT_NODE:
+            // processed bellow
+            break;
+            
+        case -1: 
+            // HACK: when xHTML is requested JTidy inserts a tag equivalent to
+            // <?xml encoding='iso-8859-1' version='1.0'?>, a node with the type
+            // org.w3c.tidy.Node.XML_DECL. Nevertheless, this node, answers with
+            // -1 to getNodeType(). This node needs to be accepted since nothing
+            // of the document is printed if this node is removed.
+            
+            NamedNodeMap attributes = child.getAttributes();
+            if (attributes.getNamedItem("encoding") != null
+                    && attributes.getNamedItem("version") != null) {
+                return true;
+            }
+        default:
+            return false;
         }
 
         List<String> forbiddenElements = Arrays.asList(new String[] { "script", "iframe",
