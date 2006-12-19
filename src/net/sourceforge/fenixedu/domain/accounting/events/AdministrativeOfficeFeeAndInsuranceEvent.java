@@ -164,15 +164,24 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	Money insuranceAmountToDiscount = Money.ZERO;
 	if (hasToPayInsurance()) {
 	    insuranceAmountToDiscount = getInsuranceAmount();
-	    result.add(new EntryDTO(EntryType.INSURANCE_FEE, this, insuranceAmountToDiscount));
+	    result.add(buildInsuranceEntryDTO(insuranceAmountToDiscount));
 	}
 
-	if (hasToPayAdministrativeOfficeFee()) {
-	    result.add(new EntryDTO(EntryType.ADMINISTRATIVE_OFFICE_FEE, this, amountToPay
-		    .subtract(insuranceAmountToDiscount)));
+	final Money remainingAmount = amountToPay.subtract(insuranceAmountToDiscount);
+	if (remainingAmount.isPositive()) {
+	    result.add(buildAdministrativeOfficeFeeEntryDTO(remainingAmount));
 	}
 
 	return result;
+    }
+
+    private EntryDTO buildAdministrativeOfficeFeeEntryDTO(Money administrativeOfficeFeeAmountToDiscount) {
+	return new EntryDTO(EntryType.ADMINISTRATIVE_OFFICE_FEE, this,
+		administrativeOfficeFeeAmountToDiscount);
+    }
+
+    private EntryDTO buildInsuranceEntryDTO(Money insuranceAmountToDiscount) {
+	return new EntryDTO(EntryType.INSURANCE_FEE, this, insuranceAmountToDiscount);
     }
 
     public void changePaymentCodeState(DateTime whenRegistered, PaymentMode paymentMode) {
