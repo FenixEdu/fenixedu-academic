@@ -51,7 +51,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward showParkingRequests(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // verificar autorizaï¿½ï¿½o
+        // verificar autorização
         ParkingRequestSearch parkingRequestSearch = (ParkingRequestSearch) getRendererObject("parkingRequestSearch");
 
         if (parkingRequestSearch == null) {
@@ -82,7 +82,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward showRequest(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // verificar autorizaï¿½ï¿½o
+        // verificar autorização
         final String codeString = request.getParameter("idInternal");
         Integer code = null;
         if (codeString == null) {
@@ -316,15 +316,15 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     private String getMostSignificantNumber(Person p, ParkingGroup parkingGroup) {
         if (p.getParkingParty().getPhdNumber() != null) {
-            return "Nï¿½: " + p.getParkingParty().getPhdNumber();
+            return "Nº: " + p.getParkingParty().getPhdNumber();
         }
         if (p.getTeacher() != null && p.getTeacher().getCurrentWorkingDepartment() != null
                 && !p.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
-            return "Nï¿½ Mec: " + p.getTeacher().getTeacherNumber();
+            return "Nº Mec: " + p.getTeacher().getTeacherNumber();
         }
         if (p.getEmployee() != null && p.getEmployee().getCurrentWorkingContract() != null
                 && p.getTeacher() == null) {
-            return "Nï¿½ Mec: " + p.getEmployee().getEmployeeNumber();
+            return "Nº Mec: " + p.getEmployee().getEmployeeNumber();
         }
         if (p.getStudent() != null && !parkingGroup.getGroupName().equalsIgnoreCase("Bolseiros")) {
             DegreeType degreeType = p.getStudent().getMostSignificantDegreeType();
@@ -333,16 +333,16 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             for (Registration registration : registrations) {
                 StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
                 if (scp != null) {
-                    return "Nï¿½: " + p.getStudent().getNumber();
+                    return "Nº: " + p.getStudent().getNumber();
                 }
             }
         }
         if (p.getGrantOwner() != null && p.getGrantOwner().hasCurrentContract()) {
-            return "Nï¿½: " + p.getGrantOwner().getNumber();
+            return "Nº: " + p.getGrantOwner().getNumber();
         }
         if (p.getTeacher() != null
                 && !p.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
-            return "Nï¿½ Mec: " + p.getTeacher().getTeacherNumber();
+            return "Nº Mec: " + p.getTeacher().getTeacherNumber();
         }
         return "";
     }
