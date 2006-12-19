@@ -87,8 +87,15 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 	InfoExecutionCourse executionCourse = (InfoExecutionCourse) request
 		.getAttribute(InquiriesUtil.ATTENDING_EXECUTION_COURSE);
-	if ((executionCourse.getTheoPratHours() == 0) && (executionCourse.getTheoreticalHours() == 0)
-		&& (executionCourse.getPraticalHours() == 0) && (executionCourse.getLabHours() == 0)) {
+	if ((executionCourse.getTheoPratHours() == 0)
+                && (executionCourse.getTheoreticalHours() == 0)
+		&& (executionCourse.getPraticalHours() == 0)
+                && (executionCourse.getLabHours() == 0)
+                && (executionCourse.getSeminaryHours() == 0)
+                && (executionCourse.getProblemsHours() == 0)
+                && (executionCourse.getFieldWorkHours() == 0)
+                && (executionCourse.getTrainingPeriodHours() == 0)
+                && (executionCourse.getTutorialOrientationHours() == 0)) {
 	    request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY,
 		    "message.inquiries.unavailable.course");
 	    return actionMapping.findForward("unavailableInquiry");
