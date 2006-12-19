@@ -1,0 +1,1 @@
+alter table ACCOUNTING_EVENT MODIFY COLUMN EVENT_STATE_DATE datetime not null;

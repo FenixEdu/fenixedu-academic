@@ -198,10 +198,7 @@ public abstract class Event extends Event_Base {
 
     @Override
     public void setEventStateDate(DateTime eventStateDate) {
-	// TODO:
-	// throw new DomainException(
-	// "error.accounting.Event.cannot.modify.eventStateDate");
-	super.setEventStateDate(eventStateDate);
+	throw new DomainException("error.accounting.Event.cannot.modify.eventStateDate");
     }
 
     protected boolean canCloseEvent(DateTime whenRegistered) {
