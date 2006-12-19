@@ -30,7 +30,7 @@ public class AcademicAdminOfficePaymentsManagementDispatchAction extends
 
     @Override
     protected AdministrativeOffice getAdministrativeOffice(HttpServletRequest request) {
-	return AdministrativeOffice.readByEmployee(getUserView(request).getPerson().getEmployee());
+	return getUserView(request).getPerson().getEmployee().getAdministrativeOffice();
     }
 
     @Override

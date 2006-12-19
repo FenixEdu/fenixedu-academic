@@ -26,7 +26,7 @@ public class SearchForStudentsDA extends FenixDispatchAction {
             studentsSearchBean = new StudentsSearchBean();
         } else {
             final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
-            final AdministrativeOffice administrativeOffice = AdministrativeOffice.readByEmployee(employee); 
+            final AdministrativeOffice administrativeOffice = employee.getAdministrativeOffice(); 
             
             final Set<Student> students = studentsSearchBean.searchForOffice(administrativeOffice);
         

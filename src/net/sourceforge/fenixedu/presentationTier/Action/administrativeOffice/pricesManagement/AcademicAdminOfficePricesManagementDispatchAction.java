@@ -9,7 +9,7 @@ public class AcademicAdminOfficePricesManagementDispatchAction extends PricesMan
 
     @Override
     protected AdministrativeOffice getAdministrativeOffice(HttpServletRequest request) {
-	return AdministrativeOffice.readByEmployee(getLoggedPerson(request).getEmployee());
+	return getLoggedPerson(request).getEmployee().getAdministrativeOffice();
     }
 
 }
