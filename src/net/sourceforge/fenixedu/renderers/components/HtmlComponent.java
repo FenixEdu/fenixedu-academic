@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import javax.servlet.jsp.PageContext;
 
@@ -81,8 +82,16 @@ public abstract class HtmlComponent implements Serializable {
         return id;
     }
 
+    /**
+     * Sets the id of the component. If the given id is not a valid id then it
+     * will be transformed to obey SGML rules. As such {@link #getId()} may
+     * return a value that is not equal to the one given to this method.
+     * 
+     * @param id
+     *            the desired id
+     */
     public void setId(String id) {
-        this.id = id;
+        this.id = getValidIdOrName(id);
     }
 
     public String getStyle() {
@@ -339,5 +348,43 @@ public abstract class HtmlComponent implements Serializable {
     
     public void register(String id) {
         RenderUtils.registerComponent(id, this);
+    }
+
+    //
+    //
+    //
+    
+    private static Pattern ACCEPTABLE_ID_START_CHAR = Pattern.compile("[A-Za-z]");
+    private static Pattern ACCEPTABLE_ID_CHAR = Pattern.compile("[A-Za-z0-9_:.-]");
+    
+    protected static String getValidIdOrName(String desired) {
+        if (desired == null) {
+            return null;
+        }
+        
+        // ID and NAME tokens must begin with a letter ([A-Za-z]) and may be
+        // followed by any number of letters, digits ([0-9]), hyphens ("-"),
+        // underscores ("_"), colons (":"), and periods (".").
+
+        StringBuilder name = new StringBuilder();
+
+        int position = 0;
+        for (Character c : desired.toCharArray()) {
+            if (position == 0) {
+                if (! ACCEPTABLE_ID_START_CHAR.matcher(c.toString()).matches()) {
+                    name.append("i"); // ensure that it starts with a letter
+                }
+            }
+
+            if (ACCEPTABLE_ID_CHAR.matcher(c.toString()).matches()) {
+                name.append(c);
+            } else {
+                name.append('_'); // an acceptable character
+            }
+            
+            position++;
+        }
+        
+        return name.toString();
     }
 }

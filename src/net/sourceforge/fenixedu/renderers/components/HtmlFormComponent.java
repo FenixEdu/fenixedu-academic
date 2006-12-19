@@ -42,8 +42,16 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
         return name;
     }
 
+    /**
+     * Sets the name of this form component. If the name does not obey the rules
+     * for component names then it may be transformed to become conformat. Thus
+     * {@link #getName()} may return a value that is not equal to the name given
+     * in this method.
+     * 
+     * @param name the desired name
+     */
     public void setName(String name) {
-        this.name = name;
+        this.name = getValidIdOrName(name);
     }
     
     public void setDisabled(boolean disabled) {
@@ -155,7 +163,7 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
     public HtmlTag getOwnTag(PageContext context) {
         HtmlTag tag = super.getOwnTag(context);
         
-        tag.setAttribute("name", this.name);
+        tag.setAttribute("name", getName());
         
         return tag;
     }
