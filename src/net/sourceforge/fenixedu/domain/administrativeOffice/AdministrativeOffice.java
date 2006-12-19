@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -145,10 +144,6 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     public static AdministrativeOffice getResponsibleAdministrativeOffice(Degree degree) {
 	return readByAdministrativeOfficeType(degree.getDegreeType().getAdministrativeOfficeType());
-    }
-
-    public static AdministrativeOffice readByEmployee(Employee employee) {
-	return employee.getCurrentWorkingPlace().getAdministrativeOffice();
     }
 
     public Set<Degree> getAdministratedDegrees() {
