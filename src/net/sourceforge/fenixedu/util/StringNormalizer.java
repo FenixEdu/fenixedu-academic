@@ -17,7 +17,7 @@ public class StringNormalizer {
                 stringBuilder.append(c);
             }
         }
-        return string.toString();
+        return stringBuilder.toString();
     }    
 
 }
