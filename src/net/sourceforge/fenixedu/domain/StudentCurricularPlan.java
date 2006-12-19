@@ -1942,4 +1942,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		&& getRegistration().getLastStudentCurricularPlanExceptPast().equals(this);
     }
 
+    public boolean hasEnrolments(final ExecutionYear executionYear) {
+        for (final Enrolment enrolment : getEnrolmentsSet()) {
+            final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
+            if (executionPeriod.getExecutionYear() == executionYear) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
