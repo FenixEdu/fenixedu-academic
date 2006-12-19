@@ -126,4 +126,8 @@ public class Campus extends Campus_Base {
 	return null;
     }
 
+    public String getName() {
+	return getSpaceInformation().getName();
+    }
+
 }
