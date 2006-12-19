@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add string column for new group slot in StaffManagementSection" AddNewGroupExpressionColumn.sql

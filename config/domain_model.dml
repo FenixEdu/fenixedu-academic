@@ -3528,6 +3528,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.Schedule extends net.sourcef
 
 class net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection extends net.sourceforge.fenixedu.domain.DomainObject {
 	Group sectionManagers;
+	String sectionManagersExpression;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.WorkPeriod extends net.sourceforge.fenixedu.domain.DomainObject{

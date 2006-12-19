@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 public class StaffManagementSection extends StaffManagementSection_Base {
 
@@ -16,4 +17,14 @@ public class StaffManagementSection extends StaffManagementSection_Base {
                         .getSectionManagers().isMember(person);
     }
 
+    @Override
+    public void setSectionManagers(Group group) {
+        super.setSectionManagers(group);
+
+        if (group == null) {
+            setSectionManagersExpression(null);
+        } else {
+            setSectionManagersExpression(group.getExpression());
+        }
+    }
 }
