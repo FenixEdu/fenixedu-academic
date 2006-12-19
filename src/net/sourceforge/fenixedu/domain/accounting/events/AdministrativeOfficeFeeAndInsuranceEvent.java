@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
-import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
@@ -131,7 +130,8 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     private AccountingEventPaymentCode getNonProcessedPaymentCode() {
-	return getNonProcessedPaymentCodes().iterator().next();
+	return (getNonProcessedPaymentCodes().isEmpty() ? null : getNonProcessedPaymentCodes()
+		.iterator().next());
     }
 
     private YearMonthDay calculatePaymentCodeEndDate() {
@@ -176,9 +176,13 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     public void changePaymentCodeState(DateTime whenRegistered, PaymentMode paymentMode) {
-	if (canCloseEvent(whenRegistered)) {
+	if (canCloseEvent(whenRegistered) && hasNonProcessedPaymentCode()) {
 	    getNonProcessedPaymentCode().setState(getPaymentCodeStateFor(paymentMode));
 	}
+    }
+
+    private boolean hasNonProcessedPaymentCode() {
+	return (getNonProcessedPaymentCode() != null);
     }
 
     @Override
