@@ -38,20 +38,11 @@ public abstract class DegreeModule extends DegreeModule_Base {
     public String getOneFullName() {
 	boolean pt = !(LanguageUtils.getUserLanguage() == Language.en);
 	
-        StringBuilder result = new StringBuilder();
-        
-        DegreeModule iter = this; 
-        result.append((pt) ? iter.getName() : iter.getNameEn());
-        if (iter.isRoot()) {
-            return result.toString();
+        if (isRoot()) {
+            return ((pt) ? getName() : getNameEn()) + "(" + getIdInternal() + ")";
         } else {
-            iter = iter.getParentContexts().get(0).getParentCourseGroup();
-            
-            for (;iter.hasAnyParentContexts(); iter = iter.getParentContexts().get(0).getParentCourseGroup()) {
-                result.insert(0, ((pt) ? iter.getName() : iter.getNameEn()) + " > ");
-            }
-            
-            return result.toString();
+            final CourseGroup parentCourseGroup = getParentContexts().get(0).getParentCourseGroup();
+            return parentCourseGroup.getOneFullName() + " > " + (((pt) ? getName() : getNameEn()) + "(" + getIdInternal() + ")");
         }
     }
     
