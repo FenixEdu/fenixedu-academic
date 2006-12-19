@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
@@ -229,6 +230,10 @@ public class Employee extends Employee_Base {
     public void delete() {
         removeRootDomainObject();
         deleteDomainObject();
+    }
+
+    public AdministrativeOffice getAdministrativeOffice() {
+	return getCurrentWorkingPlace().getAdministrativeOffice();
     }
     
 }
