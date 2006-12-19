@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add string column for new group slot in StaffManagementSection" AddNewGroupExpressionColumn.sql
+execute "Changing table AccountingEvent" AlterTableAccountingEvent.sql
