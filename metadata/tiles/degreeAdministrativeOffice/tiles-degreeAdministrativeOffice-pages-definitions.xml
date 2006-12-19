@@ -209,4 +209,19 @@
 		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/prepareGradesToSubmitSendMail.jsp"></put>
 	</definition>	
 	
+	
+	<definition name="examCoordinator-management" extends="definition.degreeAdministrativeOffice.masterPage" >
+		<put name="body" value="/vigilancy/manageExamCoordinator.jsp" />
+    </definition>
+
+	
+	<definition name="declarations-search-form" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/declarations.jsp"/>
+	</definition>
+
+	<definition name="search-students" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/searchStudents.jsp"/>
+	</definition>
+	
+	
 </tiles-definitions>
