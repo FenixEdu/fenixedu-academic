@@ -93,8 +93,11 @@
 						<br/>
 						<logic:present name="executionYear">
 						<logic:greaterThan name="numberEnrolments" value="0">
+							<%-- 
 							<bean:define id="url" type="java.lang.String">/declarations.do?method=registrationDeclaration&amp;registrationID=<bean:write name="registration" property="idInternal"/>&amp;executionYearID=<bean:write name="executionYear" property="idInternal"/></bean:define>
 							<html:link action="<%= url %>"><bean:message key="link.declaration.registration.with.curricular.year.and.number.enroled.courses"/></html:link>
+							--%>
+							<span class="warning0">Para obter uma Declaração de Matrícula deverá recorrer à nova funcionalidade de Pedidos de Documentos no portal Secretaria Académica.</span>
 							<br/>
 							<br/>
 						</logic:greaterThan>
