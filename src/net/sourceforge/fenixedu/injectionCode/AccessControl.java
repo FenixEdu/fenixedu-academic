@@ -31,7 +31,7 @@ public class AccessControl {
     }
 
     public static void check(DomainObject c, AccessControlPredicate<DomainObject> predicate) {
-	Person requester = AccessControl.getUserView().getPerson();
+	Person requester = AccessControl.getPerson();
 	boolean result = false;
 
 	result |= (predicate != null && predicate.evaluate(c));

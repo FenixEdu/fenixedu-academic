@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 public class PreCandidacySituation extends PreCandidacySituation_Base {
 
     public PreCandidacySituation(Candidacy candidacy) {
-        this(candidacy, AccessControl.getUserView().getPerson());
+        this(candidacy, AccessControl.getPerson());
     }
 
     public PreCandidacySituation(Candidacy candidacy, Person person) {

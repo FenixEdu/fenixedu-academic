@@ -28,7 +28,7 @@ public class FenixDomainObjectLogCallsGenerator implements CodeGenerator {
 
 	if(methodName != null) {
             buffer.append("new net.sourceforge.fenixedu.domain.DomainObjectActionLog(");
-            buffer.append("net.sourceforge.fenixedu.injectionCode.AccessControl.getUserView().getPerson(),this,");
+            buffer.append("net.sourceforge.fenixedu.injectionCode.AccessControl.getPerson(),this,");
             buffer.append("\"" + methodName.trim()).append("\",___map);");
 	}
 	

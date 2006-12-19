@@ -1230,7 +1230,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean getIsForOffice() {
-	final AdministrativeOffice administrativeOffice = AccessControl.getUserView().getPerson()
+	final AdministrativeOffice administrativeOffice = AccessControl.getPerson()
 		.getEmployee().getAdministrativeOffice();
 	return isForOffice(administrativeOffice);
     }

@@ -136,7 +136,7 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 	}
 
 	public Person getPerson() {
-		return AccessControl.getUserView().getPerson();
+		return AccessControl.getPerson();
 	}
 
 	public void deleteAnswer(Person person) {

@@ -24,7 +24,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	Person loggedPerson = AccessControl.getUserView().getPerson();
+	Person loggedPerson = AccessControl.getPerson();
 	if (spaceInformation.getSpace().personHasPermissionsToManageSpace(loggedPerson)
 		|| spaceInformation.getSpace()
 			.personHasPermissionToManagePersonOccupations(loggedPerson)) {

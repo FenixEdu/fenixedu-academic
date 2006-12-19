@@ -15,7 +15,7 @@ public class CancelledCandidacySituation extends CancelledCandidacySituation_Bas
     }
 
     public CancelledCandidacySituation(Candidacy candidacy) {
-	this(candidacy, (AccessControl.getUserView() != null) ? AccessControl.getUserView().getPerson()
+	this(candidacy, (AccessControl.getUserView() != null) ? AccessControl.getPerson()
 		: null);
     }
 

@@ -25,7 +25,7 @@ public class SearchForStudentsDA extends FenixDispatchAction {
         if (studentsSearchBean == null) { //1st time
             studentsSearchBean = new StudentsSearchBean();
         } else {
-            final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+            final Employee employee = AccessControl.getPerson().getEmployee();
             final AdministrativeOffice administrativeOffice = employee.getAdministrativeOffice(); 
             
             final Set<Student> students = studentsSearchBean.searchForOffice(administrativeOffice);

@@ -25,7 +25,7 @@ public class CourseGroupPredicates {
                 return true;
             }
 
-            final Person person = AccessControl.getUserView().getPerson();
+            final Person person = AccessControl.getPerson();
             if(person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || person.hasRole(RoleType.MANAGER) || person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
                 return true;
             }

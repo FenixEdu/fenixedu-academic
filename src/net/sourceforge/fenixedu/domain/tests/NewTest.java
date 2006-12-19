@@ -65,7 +65,7 @@ public class NewTest extends NewTest_Base implements Positionable {
 	}
 	
 	public Person getPerson() {
-		return AccessControl.getUserView().getPerson();
+		return AccessControl.getPerson();
 	}
 
 }

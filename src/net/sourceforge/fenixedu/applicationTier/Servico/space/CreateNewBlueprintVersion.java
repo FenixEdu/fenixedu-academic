@@ -16,7 +16,7 @@ public class CreateNewBlueprintVersion extends BlueprintVersionManagmentService 
 
         final Space space = getSpace(blueprintSubmissionBean);
 
-        final Person person = AccessControl.getUserView().getPerson();
+        final Person person = AccessControl.getPerson();
 
         final Blueprint blueprint = new Blueprint(space, person);
 

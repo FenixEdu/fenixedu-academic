@@ -14,7 +14,7 @@ public class DegreesByEmployeeUnit implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-	Person person = AccessControl.getUserView().getPerson();
+	Person person = AccessControl.getPerson();
 	Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
 	AdministrativeOffice administrativeOffice = currentWorkingPlace.getAdministrativeOffice();
 

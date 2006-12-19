@@ -42,7 +42,7 @@ public class NewMultipleChoiceQuestion extends NewMultipleChoiceQuestion_Base {
 	}
 
 	private List<NewChoice> getRandomlyOrderedChoices() {
-		Person person = AccessControl.getUserView().getPerson();
+		Person person = AccessControl.getPerson();
 		Random random = new Random(person.getIdInternal());
 		
 		int[] indexes = new int[this.getChoicesCount()];

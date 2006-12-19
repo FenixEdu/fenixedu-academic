@@ -20,35 +20,35 @@ public class SpacePredicates {
     
     public static final AccessControlPredicate<Space> checkPermissionsToManageSpace = new AccessControlPredicate<Space>() {
 	public boolean evaluate(Space space) {
-	    space.checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson());
+	    space.checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getPerson());
 	    return true;
 	}
     };
 
     public static final AccessControlPredicate<SpaceInformation> checkIfLoggedPersonHasPermissionsToManageSpaceInformation = new AccessControlPredicate<SpaceInformation>() {
 	public boolean evaluate(SpaceInformation spaceInformation) {
-	    spaceInformation.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson());
+	    spaceInformation.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getPerson());
 	    return true;
 	}
     };
    
     public static final AccessControlPredicate<SpaceResponsibility> checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits = new AccessControlPredicate<SpaceResponsibility>() {
 	public boolean evaluate(SpaceResponsibility spaceResponsibility) {
-	    spaceResponsibility.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson());
+	    spaceResponsibility.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getPerson());
 	    return true;
 	}
     };
     
     public static final AccessControlPredicate<Blueprint> checkIfLoggedPersonHasPermissionsToManageBlueprints = new AccessControlPredicate<Blueprint>() {
 	public boolean evaluate(Blueprint blueprint) {
-	    blueprint.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson());
+	    blueprint.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getPerson());
 	    return true;
 	}
     };
     
     public static final AccessControlPredicate<UnitSpaceOccupation> checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations = new AccessControlPredicate<UnitSpaceOccupation>() {
 	public boolean evaluate(UnitSpaceOccupation unitSpaceOccupation) {
-	    unitSpaceOccupation.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getUserView().getPerson());
+	    unitSpaceOccupation.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getPerson());
 	    return true;
 	}
     };

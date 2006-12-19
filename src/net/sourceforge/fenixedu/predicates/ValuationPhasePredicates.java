@@ -13,7 +13,7 @@ public class ValuationPhasePredicates {
 		public boolean evaluate(ValuationPhase valuationPhase) {
 			TeacherServiceDistribution teacherServiceDistribution = valuationPhase.getTeacherServiceDistribution();
 
-			Person person = AccessControl.getUserView().getPerson();
+			Person person = AccessControl.getPerson();
 
 			return (teacherServiceDistribution == null) ? true : teacherServiceDistribution.getIsMemberOfAutomaticValuationGroup(person)
 					|| teacherServiceDistribution.getIsMemberOfOmissionConfigurationGroup(person)
@@ -28,7 +28,7 @@ public class ValuationPhasePredicates {
 		public boolean evaluate(ValuationPhase valuationPhase) {
 			TeacherServiceDistribution teacherServiceDistribution = valuationPhase.getTeacherServiceDistribution();
 
-			Person person = AccessControl.getUserView().getPerson();
+			Person person = AccessControl.getPerson();
 
 			return teacherServiceDistribution.getIsMemberOfOmissionConfigurationGroup(person);
 		}

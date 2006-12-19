@@ -173,7 +173,7 @@ public class NewTestGroup extends NewTestGroup_Base {
 	}
 
 	public NewTest getTest() {
-		return this.getTest(AccessControl.getUserView().getPerson());
+		return this.getTest(AccessControl.getPerson());
 	}
 
 	private NewTest getLeastUsedTest() {

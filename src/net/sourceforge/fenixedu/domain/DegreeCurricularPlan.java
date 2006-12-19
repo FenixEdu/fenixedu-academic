@@ -949,7 +949,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public Boolean getUserCanBuild() {
-	Person person = AccessControl.getUserView().getPerson();
+	Person person = AccessControl.getPerson();
 	return (this.getCurricularPlanMembersGroup().isMember(person)
 		|| person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person
 		.hasRole(RoleType.MANAGER));

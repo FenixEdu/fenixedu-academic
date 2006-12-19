@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 public class StandByCandidacySituation extends StandByCandidacySituation_Base {
 
     public StandByCandidacySituation(Candidacy candidacy) {
-        this(candidacy, AccessControl.getUserView().getPerson());
+        this(candidacy, AccessControl.getPerson());
     }
 
     public StandByCandidacySituation(Candidacy candidacy, Person person) {

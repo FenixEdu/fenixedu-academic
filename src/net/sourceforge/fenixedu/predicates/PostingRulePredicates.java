@@ -16,7 +16,7 @@ public class PostingRulePredicates {
 	}
 
 	private boolean postingRuleBelongsToAdministrativeOffice(PostingRule postingRule) {
-	    return AccessControl.getUserView().getPerson().getEmployee().getCurrentWorkingPlace()
+	    return AccessControl.getPerson().getEmployee().getCurrentWorkingPlace()
 		    .getAdministrativeOffice().getServiceAgreementTemplate() == postingRule
 		    .getServiceAgreementTemplate();
 	}

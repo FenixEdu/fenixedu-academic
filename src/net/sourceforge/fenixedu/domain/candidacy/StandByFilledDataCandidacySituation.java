@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 public class StandByFilledDataCandidacySituation extends StandByFilledDataCandidacySituation_Base {
 
     public StandByFilledDataCandidacySituation(Candidacy candidacy) {
-        this(candidacy, AccessControl.getUserView().getPerson());
+        this(candidacy, AccessControl.getPerson());
     }
 
     public StandByFilledDataCandidacySituation(Candidacy candidacy, Person person) {

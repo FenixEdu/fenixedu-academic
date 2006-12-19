@@ -39,7 +39,7 @@ public class TestFilterContext implements FunctionalityContext {
             return null;
         }
         else {
-            return AccessControl.getUserView().getPerson().getUser();
+            return AccessControl.getPerson().getUser();
         }
     }
 

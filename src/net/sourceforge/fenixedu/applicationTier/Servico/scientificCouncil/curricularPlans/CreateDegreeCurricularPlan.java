@@ -17,7 +17,7 @@ public class CreateDegreeCurricularPlan extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Person creator = AccessControl.getUserView().getPerson();
+        final Person creator = AccessControl.getPerson();
         if (creator == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.creator");
         }

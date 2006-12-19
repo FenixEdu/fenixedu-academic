@@ -66,8 +66,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
     private void setOnCreateAtributes() {
         super.setOjbConcreteClass(getClass().getName());
         if (AccessControl.getUserView() != null) {
-        	super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
-        	setCreator(AccessControl.getUserView().getPerson());
+        	super.setModifiedBy(AccessControl.getPerson().getName());
+        	setCreator(AccessControl.getPerson());
         }
         super.setLastModificationDate(new DateTime());
     }
@@ -155,7 +155,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
     @Checked("ResultPredicates.writePredicate")
     public void delete() {
-    	Person requestingPerson = AccessControl.getUserView().getPerson();
+    	Person requestingPerson = AccessControl.getPerson();
     	if(!requestingPerson.equals(this.getCreator())) {
     		throw new DomainException("error.researcher.Result.onlyCreatorCanDelete");
     	} 	
@@ -275,7 +275,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
     private void updateModifiedByAndDate() {
         if(AccessControl.getUserView()!=null) {
-        	super.setModifiedBy(AccessControl.getUserView().getPerson().getName());
+        	super.setModifiedBy(AccessControl.getPerson().getName());
         }
         super.setLastModificationDate(new DateTime());
     }

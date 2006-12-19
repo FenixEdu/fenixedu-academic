@@ -26,7 +26,7 @@ public class ContextPredicates {
                 return true;
             }
 
-            Person person = AccessControl.getUserView().getPerson();
+            Person person = AccessControl.getPerson();
             if (person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person.hasRole(RoleType.MANAGER)) {
                 return true;
             }

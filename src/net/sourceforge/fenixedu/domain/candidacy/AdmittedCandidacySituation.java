@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 public class AdmittedCandidacySituation extends AdmittedCandidacySituation_Base {
 
     public AdmittedCandidacySituation(Candidacy candidacy) {
-	this(candidacy, AccessControl.getUserView().getPerson());
+	this(candidacy, AccessControl.getPerson());
     }
 
     public AdmittedCandidacySituation(Candidacy candidacy, Person person) {

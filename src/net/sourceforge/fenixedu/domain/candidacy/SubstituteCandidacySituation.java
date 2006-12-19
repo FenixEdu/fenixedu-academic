@@ -9,7 +9,7 @@ public class SubstituteCandidacySituation extends SubstituteCandidacySituation_B
 
     public SubstituteCandidacySituation(Candidacy candidacy) {
 	super();
-	init(candidacy, AccessControl.getUserView().getPerson());
+	init(candidacy, AccessControl.getPerson());
     }
 
     @Override

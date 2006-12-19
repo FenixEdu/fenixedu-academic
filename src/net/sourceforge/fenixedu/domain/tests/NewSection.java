@@ -65,7 +65,7 @@ public class NewSection extends NewSection_Base {
 	}
 
 	public Person getPerson() {
-		return AccessControl.getUserView().getPerson();
+		return AccessControl.getPerson();
 	}
 
 	public List<NewTestElement> getCorrectableOrderedTestElements(Person person) {
@@ -138,7 +138,7 @@ public class NewSection extends NewSection_Base {
 	}
 
 	public int getUnansweredQuestionsCount() {
-		return this.getUnansweredQuestionsCount(AccessControl.getUserView().getPerson());
+		return this.getUnansweredQuestionsCount(AccessControl.getPerson());
 	}
 
 	public int getGivenUpQuestionsCount(Person person) {
@@ -157,7 +157,7 @@ public class NewSection extends NewSection_Base {
 	}
 
 	public int getGivenUpQuestionsCount() {
-		return this.getGivenUpQuestionsCount(AccessControl.getUserView().getPerson());
+		return this.getGivenUpQuestionsCount(AccessControl.getPerson());
 	}
 
 	public int getVisibleQuestionsCount(Person person) {
@@ -177,7 +177,7 @@ public class NewSection extends NewSection_Base {
 	}
 
 	public int getVisibleQuestionsCount() {
-		return this.getVisibleQuestionsCount(AccessControl.getUserView().getPerson());
+		return this.getVisibleQuestionsCount(AccessControl.getPerson());
 	}
 
 	public double getVisibleQuestionsValuesSum(Person person) {
@@ -197,7 +197,7 @@ public class NewSection extends NewSection_Base {
 	}
 
 	public double getVisibleQuestionsValuesSum() {
-		return this.getVisibleQuestionsValuesSum(AccessControl.getUserView().getPerson());
+		return this.getVisibleQuestionsValuesSum(AccessControl.getPerson());
 	}
 
 	public int getQuestionCount() {

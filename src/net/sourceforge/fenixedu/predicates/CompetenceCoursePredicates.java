@@ -32,7 +32,7 @@ public class CompetenceCoursePredicates {
                 return true;
             }
 
-            Person person = AccessControl.getUserView().getPerson();
+            Person person = AccessControl.getPerson();
             if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
                 return true;
             }
@@ -70,7 +70,7 @@ public class CompetenceCoursePredicates {
                 return true;
             }
 
-            Person person = AccessControl.getUserView().getPerson();
+            Person person = AccessControl.getPerson();
             
             if(person.hasRole(RoleType.MANAGER)){
                 return true;
@@ -104,7 +104,7 @@ public class CompetenceCoursePredicates {
     
         public boolean evaluate(CompetenceCourse competenceCourse) {
 
-            Person person = AccessControl.getUserView().getPerson();
+            Person person = AccessControl.getPerson();
             boolean isCompetenceGroupMember = isMemberOfCompetenceCourseGroup(competenceCourse, person);
             
             switch (competenceCourse.getCurricularStage()) {

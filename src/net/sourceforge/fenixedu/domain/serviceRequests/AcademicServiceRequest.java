@@ -39,7 +39,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected void init(Registration registration) {
 
 	AdministrativeOffice administrativeOffice = null;
-	final Employee employee = AccessControl.getUserView() == null ? null : AccessControl.getUserView().getPerson().getEmployee();
+	final Employee employee = AccessControl.getUserView() == null ? null : AccessControl.getPerson().getEmployee();
 	if (employee != null) {
 	    administrativeOffice = employee.getAdministrativeOffice();
 	}
@@ -112,17 +112,17 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     final public void process() throws DomainException {
 	assertProcessingStatePreConditions();
 
-	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	final Employee employee = AccessControl.getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.PROCESSING, employee, null);
     }
 
     final public void reject(final String justification) {
-	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	final Employee employee = AccessControl.getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.REJECTED, employee, justification);
     }
 
     final public void cancel(final String justification) {
-	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	final Employee employee = AccessControl.getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.CANCELLED, employee, justification);
     }
 
@@ -137,7 +137,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     final public void conclude() {
 	assertConcludedStatePreConditions();
 
-	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	final Employee employee = AccessControl.getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.CONCLUDED, employee, null);
     }
 
@@ -146,7 +146,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	    throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	}
 
-	final Employee employee = AccessControl.getUserView().getPerson().getEmployee();
+	final Employee employee = AccessControl.getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.DELIVERED, employee, null);
     }
 

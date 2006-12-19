@@ -92,7 +92,7 @@ public abstract class NewTestElement extends NewTestElement_Base {
 	}
 
 	public boolean isVisible() {
-		return this.isVisible(AccessControl.getUserView().getPerson());
+		return this.isVisible(AccessControl.getPerson());
 	}
 
 	public boolean isCorrectable(Person person) {

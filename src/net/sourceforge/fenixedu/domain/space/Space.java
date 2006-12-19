@@ -192,7 +192,7 @@ public abstract class Space extends Space_Base {
 	SortedSet<MaterialSpaceOccupation> materialOccupations = new TreeSet<MaterialSpaceOccupation>(
 		MaterialSpaceOccupation.COMPARATOR_BY_CLASS_NAME);
 	YearMonthDay current = new YearMonthDay();
-	Person loggedPerson = AccessControl.getUserView().getPerson();
+	Person loggedPerson = AccessControl.getPerson();
 
 	for (MaterialSpaceOccupation materialSpaceOccupation : getMaterialSpaceOccupations()) {
 	    if (materialSpaceOccupation.isActive(current) == state
@@ -217,7 +217,7 @@ public abstract class Space extends Space_Base {
 
     public static Set<DomainObjectActionLog> getListOfChangesInSpacesOrderedByInstant() {
 	Set<Class> classs = new HashSet<Class>();
-	Person loggedPerson = AccessControl.getUserView().getPerson();
+	Person loggedPerson = AccessControl.getPerson();
 	if (personIsSpacesAdministrator(loggedPerson)) {
 	    classs.add(Room.class);
 	    classs.add(Floor.class);

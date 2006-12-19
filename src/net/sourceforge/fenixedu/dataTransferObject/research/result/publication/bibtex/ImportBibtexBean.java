@@ -67,7 +67,7 @@ public class ImportBibtexBean implements Serializable {
 	}
 
 	public void setCurrentProcessedParticipators(boolean value) throws FenixActionException {
-		Person person = AccessControl.getUserView().getPerson();
+		Person person = AccessControl.getPerson();
 		if (this.personBelongsToParticipators(person)) {
 			getCurrentBibtexPublication().setProcessedParticipators(value);
 		} else {

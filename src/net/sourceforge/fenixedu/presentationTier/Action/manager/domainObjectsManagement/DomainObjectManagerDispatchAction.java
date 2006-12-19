@@ -128,7 +128,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
     }
 
     private Person checkUser() {
-	Person person = AccessControl.getUserView().getPerson();
+	Person person = AccessControl.getPerson();
 	String ciistCostCenterCode = PropertiesManager.getProperty("ciistCostCenterCode");
 	Unit ciistUnit = Unit.readByCostCenterCode(Integer.valueOf(ciistCostCenterCode));
 	Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();

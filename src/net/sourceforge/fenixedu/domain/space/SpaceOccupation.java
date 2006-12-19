@@ -23,7 +23,7 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
     public abstract Group getAccessGroup();
 
     public void checkPermissionsToManageSpaceOccupations() {
-	Person loggedPerson = AccessControl.getUserView().getPerson();
+	Person loggedPerson = AccessControl.getPerson();
 	if (getSpace().personHasPermissionsToManageSpace(loggedPerson)) {
 	    return;
 	}

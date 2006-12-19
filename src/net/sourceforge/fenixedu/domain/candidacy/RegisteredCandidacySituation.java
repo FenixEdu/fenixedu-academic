@@ -22,7 +22,7 @@ import org.joda.time.YearMonthDay;
 public class RegisteredCandidacySituation extends RegisteredCandidacySituation_Base {
 
     public RegisteredCandidacySituation(Candidacy candidacy) {
-	this(candidacy, (AccessControl.getUserView() != null) ? AccessControl.getUserView().getPerson()
+	this(candidacy, (AccessControl.getUserView() != null) ? AccessControl.getPerson()
 		: null);
     }
 

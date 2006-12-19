@@ -235,7 +235,7 @@ public class Student extends Student_Base {
 
     // Convenience method for invocation as bean.
     public boolean getHasActiveRegistrationForOffice() {
-	Unit workingPlace = AccessControl.getUserView().getPerson().getEmployee()
+	Unit workingPlace = AccessControl.getPerson().getEmployee()
 		.getCurrentWorkingPlace();
 	return hasActiveRegistrationForOffice(workingPlace);
     }

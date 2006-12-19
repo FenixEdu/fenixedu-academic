@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 public class StandByConfirmedDataCandidacySituation extends StandByConfirmedDataCandidacySituation_Base {
 
     public StandByConfirmedDataCandidacySituation(Candidacy candidacy) {
-        this(candidacy, AccessControl.getUserView().getPerson());
+        this(candidacy, AccessControl.getPerson());
     }
 
     public StandByConfirmedDataCandidacySituation(Candidacy candidacy, Person person) {

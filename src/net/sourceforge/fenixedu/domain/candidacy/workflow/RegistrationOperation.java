@@ -108,7 +108,7 @@ public class RegistrationOperation extends CandidacyOperation {
 
     private String getCurrentUsername() {
 	if (AccessControl.getUserView() != null) {
-	    return AccessControl.getUserView().getPerson().getUsername();
+	    return AccessControl.getPerson().getUsername();
 	}
 	return getDegreeCandidacy().getPerson().getUsername();
     }

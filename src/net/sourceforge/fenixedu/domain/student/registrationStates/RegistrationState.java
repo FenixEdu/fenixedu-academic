@@ -64,7 +64,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     protected void init(Registration registration, Person responsiblePerson, DateTime stateDate) {
 	setRegistration(registration != null ? registration : null);
 	final Person person = responsiblePerson != null ? responsiblePerson : (AccessControl
-		.getUserView() != null ? AccessControl.getUserView().getPerson() : null);
+		.getUserView() != null ? AccessControl.getPerson() : null);
 	setResponsiblePerson(person);
 	setStateDate(stateDate != null ? stateDate : new DateTime());
     }
