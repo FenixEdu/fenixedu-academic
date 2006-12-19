@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "addRelationOldCampusSpaceCampus" addRelationOldCampusSpaceCampus.sql
+executeWithTempFile "setRelationOldCampusSpaceCampus" setRelationOldCampusSpaceCampus.sql

@@ -562,6 +562,7 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
 
 
 class net.sourceforge.fenixedu.domain.Campus extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keySpaceCampus;
 	String name;
 }
 
@@ -2677,6 +2678,7 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 	String spaceManagementAccessGroupExpression;
 }
 	class net.sourceforge.fenixedu.domain.space.Campus extends net.sourceforge.fenixedu.domain.space.Space {
+		Integer keyOldCampus;
 	}
 
 	class net.sourceforge.fenixedu.domain.space.Building extends net.sourceforge.fenixedu.domain.space.Space {
@@ -4702,6 +4704,11 @@ relation PersonHasPersonalGroups {
 	{
 		multiplicity *;
 	}
+}
+
+relation OldCampusSpaceCampus {
+	net.sourceforge.fenixedu.domain.Campus playsRole oldCampus;
+	net.sourceforge.fenixedu.domain.space.Campus playsRole spaceCampus;
 }
 
 relation CampusInformationLocality {
