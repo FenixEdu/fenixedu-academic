@@ -1514,15 +1514,28 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    public ExecutionYear getLastExecutionYear() {
-	TreeSet<ExecutionYear> result = new TreeSet<ExecutionYear>(
-		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
+    public ExecutionPeriod getFirstExecutionPeriod() {
+	ExecutionPeriod result = null;
 
 	for (final Enrolment enrolment : this.getEnrolmentsSet()) {
-	    result.add(enrolment.getExecutionPeriod().getExecutionYear());
+	    if (result == null || result.isAfter(enrolment.getExecutionPeriod())) {
+		result = enrolment.getExecutionPeriod();
+	    }
 	}
 
-	return result.last();
+	return result;
+    }
+
+    public ExecutionYear getLastExecutionYear() {
+	ExecutionYear result = null;
+
+	for (final Enrolment enrolment : this.getEnrolmentsSet()) {
+	    if (result == null || result.isBefore(enrolment.getExecutionPeriod().getExecutionYear())) {
+		result = enrolment.getExecutionPeriod().getExecutionYear();
+	    }
+	}
+
+	return result;
     }
 
     public Campus getLastCampus() {
