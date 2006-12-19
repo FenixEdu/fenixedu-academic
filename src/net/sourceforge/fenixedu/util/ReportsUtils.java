@@ -156,10 +156,8 @@ public class ReportsUtils extends PropertiesManager {
             String reportFileName = properties.getProperty(key);
             if (reportFileName != null) {
         	// Miracle solution for reloading jasper reports on the fly while developing...
-        	//File reportFile = new File("/home/lmre/workspace/fenix-head/build/WEB-INF/classes/" + reportFileName);
-        	//report = (JasperReport) JRLoader.loadObject(reportFile);
-        	
-        	report = (JasperReport) JRLoader.loadObject(ReportsUtils.class.getResourceAsStream(reportFileName));
+        	File reportFile = new File("/home/lmre/workspace/fenix-head/build/WEB-INF/classes/" + reportFileName);
+        	report = reportFile.exists() ? (JasperReport) JRLoader.loadObject(reportFile) : (JasperReport) JRLoader.loadObject(ReportsUtils.class.getResourceAsStream(reportFileName)); 
         	
         	reportsMap.put(key, report);
             }
