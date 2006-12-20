@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -22,8 +21,8 @@ public class DocumentRequestTypeProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-	AdministrativeOfficeType administrativeOfficeType = AdministrativeOffice.readByEmployee(
-		AccessControl.getUserView().getPerson().getEmployee()).getAdministrativeOfficeType();
+	AdministrativeOfficeType administrativeOfficeType = AccessControl.getPerson().getEmployee()
+		.getAdministrativeOffice().getAdministrativeOfficeType();
 
 	Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
 	if (administrativeOfficeType.equals(DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE
