@@ -60,7 +60,7 @@
 	</fr:hasMessages>
 		
 
- 	<fr:form action="<%= "/searchScormContent.do?method=searchScormContent&amp;searchType=" + request.getAttribute("searchType") + "&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() %>">
+ 	<fr:form action="<%= "/searchScormContent.do?method=searchScormContents&amp;searchType=" + request.getAttribute("searchType") + "&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() %>">
 		<fr:edit id="search" name="bean" nested="true" visible="false" />
 		<table class="tstyle5">
 		<tr>

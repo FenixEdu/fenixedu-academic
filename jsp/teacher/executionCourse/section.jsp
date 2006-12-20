@@ -312,15 +312,7 @@
             </logic:greaterThan>
             
         </logic:notEmpty>
-        		
-        <span class="pleft1">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-			<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?forwardTo=uploadScorm&method=prepareCreateScormFile&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
-			<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.scorm.create" bundle="SITE_RESOURCES"/>
-			</html:link>
-		</span>
-        
+        		        
         <div id="<%= deleteId %>" class="dnone mvert05">
             <fr:form action="<%= deleteUrl %>">
             	<p class="width550px">

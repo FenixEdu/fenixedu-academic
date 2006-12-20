@@ -16,7 +16,7 @@
 </h2>
 
 <h3>
-    <bean:message key="label.teacher.siteAdministration.scorm.insertScormContent"/>
+    <bean:message key="link.scorm.createScormFile" bundle="SITE_RESOURCES"/>
 </h3>
 
 <ul>
@@ -26,15 +26,15 @@
 </html:link>
 </li>
 </ul>
-
-
-<div class="infoop2">
-<p><bean:message key="label.scorm.description" bundle="SITE_RESOURCES"/></p>
-</div>
-
-
+	
 <p>
 <span>
+	<span class="pleft1">
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+		<html:link page="<%= "/manageExecutionCourse.do?method=uploadFile&itemID=" + item.getIdInternal() + "&executionCourseID=" + executionCourse.getIdInternal() + "&forwardTo=createScorm"%>">			
+			<bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
+		</html:link>
+	</span>
 	<span>
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 		<html:link page="<%= "/manageExecutionCourse.do?method=prepareCreateScormFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal() + "&amp;forwardTo=uploadScorm"%>">			
@@ -47,6 +47,11 @@
 	</span>
 </span>
 </p>
+
+
+<div class="infoop2">
+<p><bean:message key="label.scorm.description" bundle="SITE_RESOURCES"/></p>
+</div>
 
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true" bundle="SITE_RESOURCES">
