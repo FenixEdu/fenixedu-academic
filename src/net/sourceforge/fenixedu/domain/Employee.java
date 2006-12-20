@@ -235,5 +235,9 @@ public class Employee extends Employee_Base {
     public AdministrativeOffice getAdministrativeOffice() {
 	return getCurrentWorkingPlace().getAdministrativeOffice();
     }
+
+    public boolean isAdministrativeOfficeEmployee() {
+	return getCurrentWorkingPlace().getAdministrativeOffice() != null;
+    }
     
 }
