@@ -1,3 +1,4 @@
+
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -9,37 +10,30 @@
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
-<html>
-    <head>
-    	<title><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.printTemplates.guide"/></title>
-    </head>
-
-    <body>
-
-    <table width="100%" height="100%" border="0">
-    <tr height="30"><td>
-     <table width="100%" border="0" valign="top">
+    <table border="0" style="width: 100%; height: 100%">
+    <tr style="height: 30"><td>
+     <table width="100%" border="0" style="vertical-align: top">
       <tr> 
-        <td height="100" colspan="2">
-          <table border="0" width="100%" height="104" align="center" cellpadding="0" cellspacing="0">
+        <td colspan="2" style="height: 100">
+          <table border="0" align="center" cellpadding="0" cellspacing="0" style="width: 100%;height: 104">
             <tr> 
-              <td width="50" height="100">
+              <td style="width: 50; height: 100">
                <img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="LogoIST" bundle="IMAGE_RESOURCES" />" width="50" height="104" border="0"/> 
               </td>
               <td>
                 &nbsp;
               </td>
               <td>
-                <table border="0" width="100%" height="100%">
+                <table border="0" style="width: 100%; height: 100%">
                   <tr align="left"> 
                     <td>&nbsp;<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.printTemplates.institutionName.upper.case"/></b><br/>
                       &nbsp;<b><bean:write name="currentUnit" property="name"/></b><br/>
                       &nbsp;<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.costCenter"/> <bean:write name="currentUnit" property="costCenterCode"/></b>
-                      <hr size="1">
+                      <hr size="1"/>
                     </td>
                   </tr>
                   <tr> 
-                    <td align="right" valign="top"> <b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.guide"/></b>
+                    <td align="right" style="vertical-align: top"> <b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.guide"/></b>
                     </td>
                   </tr>
                 </table>
@@ -52,7 +46,7 @@
 
 	</td>
 	</tr>
-    <tr valign="top" >
+    <tr style="vertical-align: top;" >
     <td>
 
 	<table width="100%" border="0">
@@ -85,6 +79,12 @@
 	 <tr>
 	 <td> 
 	   <table align="right">
+	   				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
         	<logic:iterate id="entryDTO" name="paymentsManagementDTO" property="selectedEntries" >
         		<tr>
         			<td>
@@ -119,40 +119,81 @@
 	 <td>&nbsp;
 	 </td>
 	 </tr>
-	 <tr valign="bottom">
-	 <td>
-     <table valign="bottom" width="100%" border="0">
-       <tr>
-         <td>
-         	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", request.getLocale()).format(new java.util.Date()) %>
-         </td>
-       </tr>
-       
-       <tr>
-        <td>&nbsp;</td>
-         <td colspan="2" valign="bottom">
-           &nbsp;<div align="center">&nbsp;</div>
-           <div align="center">&nbsp;</div>
-           <div align="center"><b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.theEmployee"/></b> <br/>
-            <br/>
-            <br/>
-           </div>
-          <hr align="center" width="300" size="1">
-         </td>
-       </tr>
-
-	 </table>
-	 </td>
+	 <tr style="vertical-align: bottom;">
+		 <td>
+		     <table width="100%" border="0" style="vertical-align: bottom;">
+		       <tr>
+		         <td>
+		         	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", request.getLocale()).format(new java.util.Date()) %>
+		         </td>
+		       </tr>
+		      	<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+						<tr>
+					<td>&nbsp;</td>
+				</tr>
+		       <tr>
+		        <td>&nbsp;</td>
+		         <td colspan="2"  style="vertical-align: bottom;">
+		           &nbsp;<div align="center">&nbsp;</div>
+		           <div align="center">&nbsp;</div>
+		           <div align="center"><b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.theEmployee"/></b> <br/>
+		            <br/>
+		            <br/>
+		           </div>
+		          <hr align="center" width="300" size="1"/>
+		         </td>
+		       </tr>
+			 </table>
+		 </td>
 	 </tr>
 	 
-     <tr>	 
-	 <td>
-		 <jsp:include page="/academicAdminOffice/payments/commons/footer.jsp" flush="true" />
-    </td>
-    </tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>
+				<jsp:include page="/academicAdminOffice/payments/commons/footer.jsp" flush="true" />
+		</td>
+	</tr>
+	 
     </table>
-	
-    </body>
-</html>
-
+	 
 </logic:present>
