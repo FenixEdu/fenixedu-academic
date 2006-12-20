@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create assiduousness extra work tables" createExtraWorkTable.sql

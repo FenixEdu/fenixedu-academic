@@ -14,6 +14,10 @@
 	    	<form-property name="action" type="java.lang.String" />
 	    	<form-property name="page" type="java.lang.Integer"/>
 	    </form-bean>
+	    <form-bean name="extraWorkAuthorizationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	    	<form-property name="method" type="java.lang.String" />
+	    	<form-property name="addEmployee" type="java.lang.String" />
+	    </form-bean>
 	</form-beans>
 	
 	<!-- ========== Global Forward Definitions =============================== -->
@@ -74,6 +78,32 @@
 			<forward name="show-employee-work-sheet" path="show-employee-work-sheet"/>
 			<forward name="show-justifications" path="show-justifications"/>
 		</action>	
+		
+		<action path="/createExtraWorkAuthorization"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.AssiduousnessExtraWorkDispatchAction" 
+				parameter="method"
+				scope="request"
+				name="extraWorkAuthorizationForm"
+				input="/createExtraWorkAuthorization.do?method=prepareCreateExtraWorkAuthorization">
+				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
+			<forward name="create-extra-work-authorization" path="create-extra-work-authorization"/>
+			<forward name="show-extra-work-authorization" path="show-extra-work-authorization"/>
+			<forward name="view-extra-work-authorization" path="view-extra-work-authorization"/>
+		</action>
+		
+		<action path="/manageExtraWorkAuthorization"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.AssiduousnessExtraWorkDispatchAction" 
+				parameter="method"
+				scope="request"
+				name="extraWorkAuthorizationForm"
+				input="/manageExtraWorkAuthorization.do?method=prepareEditExtraWorkAuthorization">
+				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 				
+			<forward name="edit-extra-work-authorization" path="edit-extra-work-authorization"/>
+			<forward name="show-extra-work-authorizations" path="show-extra-work-authorizations"/>
+			<forward name="view-extra-work-authorization" path="view-extra-work-authorization"/>
+		</action>
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

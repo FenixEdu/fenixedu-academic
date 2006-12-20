@@ -321,3 +321,124 @@
 		<property name="format" value="HH:mm" />
 	</slot>
 </schema>
+
+<schema name="edit.extraWorkAuthorization" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthorizationFactory">
+	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES" 
+		validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES" 
+		validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<property name="format" value="dd/MM/yyyy" />
+		<property name="size" value="10"/>		
+	</slot>
+	<slot name="workingCostCenterCode" key="label.workingUnit" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+	</slot>
+	<slot name="payingCostCenterCode" key="label.payingUnit" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+	</slot>
+</schema>
+
+<schema name="edit.EmployeeExtraWorkAuthorizationBean" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkAuthorizationBean">
+	<slot name="delete" key="label.delete"/>
+ 	<slot name="employee" layout="autoComplete" key="label.employee">
+		<property name="size" value="50"/>
+		<property name="labelField" value="person.name"/>
+		<property name="format" value="${employeeNumber} - ${person.name}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchEmployeeAssiduousness"/>
+		<property name="serviceArgs" value="slot=employeeNumber"/>
+		<property name="minChars" value="2"/>
+		<property name="maxCount" value="100"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+	<slot name="normalExtraWork" key="label.A"/>
+    <slot name="normalExtraWorkPlusTwoHours" key="label.B2"/>
+    <slot name="normalExtraWorkPlusOneHundredHours" key="label.B100"/>
+    <slot name="nightExtraWork" key="label.C"/>
+    <slot name="weeklyRestExtraWork" key="label.D"/>
+    <slot name="auxiliarPersonel" key="label.E"/>
+    <slot name="executiveAuxiliarPersonel" key="label.F"/>
+</schema>
+
+<schema name="input.extraWorkAuthorizationSearch" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthorizationFactory">
+	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES">
+	    <validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+            <property name="required" value="false"/>
+         </validator>			
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES">
+	    <validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+            <property name="required" value="false"/>
+         </validator>
+		<property name="format" value="dd/MM/yyyy" />
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="workingCostCenterCode" key="label.workingUnit">
+	    <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+            <property name="required" value="false"/>
+         </validator>	
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+	</slot>
+    <slot name="payingCostCenterCode" key="label.payingUnit">
+	    <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+            <property name="required" value="false"/>
+         </validator>
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+	</slot>
+</schema>
+	
+<schema name="view.extraWorkAuthorizations" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthorizationSearchBean">	
+	<slot name="extraWorkAuthorizations">
+		<property name="eachSchema" value="show.extraWorkAuthorization" />
+	</slot>
+</schema>
+
+<schema name="show.extraWorkAuthorization" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthorizationFactory">
+	<slot name="extraWorkAuthorization.beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES" />		
+	<slot name="extraWorkAuthorization.endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES" />
+	<slot name="extraWorkAuthorization.workingUnit.costCenterCode" key="label.workingUnit" />
+    <slot name="extraWorkAuthorization.payingUnit.costCenterCode" key="label.payingUnit" />
+</schema>
+
+<schema name="view.extraWorkAuthorization" type="net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization">
+	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES" />
+	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES" />
+	<slot name="workingUnit" key="label.workingUnit" bundle="ASSIDUOUSNESS_RESOURCES" schema="show.unit" layout="values"/>
+	<slot name="payingUnit" key="label.payingUnit"  bundle="ASSIDUOUSNESS_RESOURCES" schema="show.unit" layout="values"/>
+</schema>
+
+<schema name="show.unit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+	<slot name="costCenterCode"/>		
+	<slot name="name"/>
+</schema>
+
+<schema name="view.extraWorkAuthorization.employees" type="net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization">	
+	<slot name="employeeExtraWorkAuthorizations">
+		<property name="eachSchema" value="view.employeeExtraWorkAuthorization" />
+	</slot>
+</schema>
+
+<schema name="view.employeeExtraWorkAuthorization" type="net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorization">
+	<slot name="assiduousness.employee" key="label.employee" schema="view.extraWorkEmployee" layout="values"/>
+	<slot name="normalExtraWork" key="label.A"/>
+    <slot name="normalExtraWorkPlusTwoHours" key="label.B2"/>
+    <slot name="normalExtraWorkPlusOneHundredHours" key="label.B100"/>
+    <slot name="nightExtraWork" key="label.C"/>
+    <slot name="weeklyRestExtraWork" key="label.D"/>
+    <slot name="auxiliarPersonel" key="label.E"/>
+    <slot name="executiveAuxiliarPersonel" key="label.F"/>
+</schema>
+
+<schema name="view.extraWorkEmployee" type="net.sourceforge.fenixedu.domain.Employee">
+	<slot name="employeeNumber"/>
+	<slot name="person.name"/>
+</schema>

@@ -310,12 +310,6 @@
 	<slot name="cardEndDate" key="label.cardEndDate" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
 </schema>
 
-<schema name="edit.parkingPartyBean.vehicles" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
-	<slot name="vehicles" layout="tabular-editable" schema="edit.vehicleBean" key="label.vehicles">
-		<property name="classes" value="tstyle1" />
-	</slot>
-</schema>
-
 <schema name="edit.vehicleBean" type="net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean">
 	<slot name="deleteVehicle" key="label.deleteVehicle"/>
 	<slot name="vehicleMake" key="label.vehicleMake"/>

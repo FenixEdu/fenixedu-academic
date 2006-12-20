@@ -12,6 +12,18 @@
 	<li><html:link page="/viewAssiduousness.do?method=showRegularizationMotives"><bean:message key="link.regularizations" /></html:link></li>
 	<li class="navheader"/>
     <li><html:link page="/exportAssiduousness.do?method=chooseYearMonth"><bean:message key="link.exportWorkSheets" /></html:link></li>
+    
+    <%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
+                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
+            if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user
+                    .getPerson())) {
+
+    %>
+    <li class="navheader"><bean:message key="title.extraWork" /></li>
+	<li><html:link page="/createExtraWorkAuthorization.do?method=prepareCreateExtraWorkAuthorization"><bean:message key="link.insertAuthorization" /></html:link></li>
+	<li><html:link page="/manageExtraWorkAuthorization.do?method=prepareExtraWorkAuthorizationsSearch"><bean:message key="link.showAuthorizations" /></html:link></li>
+	<%}%>
+    
     <%-- 
     <li><bean:message key="link.consult" />
     	<ul>

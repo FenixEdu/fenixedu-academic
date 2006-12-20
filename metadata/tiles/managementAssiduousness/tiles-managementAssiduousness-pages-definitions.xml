@@ -45,4 +45,16 @@
 	<definition name="insert-schedule" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/insertSchedule.jsp"/>
 	</definition>
+	<definition name="create-extra-work-authorization" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/createExtraWorkAuthorization.jsp"/>
+	</definition>	
+	<definition name="show-extra-work-authorizations" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/showExtraWorkAuthorizations.jsp"/>
+	</definition>
+	<definition name="view-extra-work-authorization" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/viewExtraWorkAuthorization.jsp"/>
+	</definition>
+	<definition name="edit-extra-work-authorization" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/editExtraWorkAuthorization.jsp"/>
+	</definition>	
 </tiles-definitions>

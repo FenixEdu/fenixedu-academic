@@ -11241,5 +11241,12 @@
         	<chain name="StudentAuthorization" />
         </filterChains>     
     </service>  
-  
+     <service>
+    	<name>SearchEmployeeAssiduousness</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchEmployeeAssiduousness</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>  
 </serviceDefinitions>
