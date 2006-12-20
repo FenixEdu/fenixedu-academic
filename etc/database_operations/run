@@ -26,5 +26,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-execute "Create assiduousness extra work tables" createExtraWorkTable.sql
