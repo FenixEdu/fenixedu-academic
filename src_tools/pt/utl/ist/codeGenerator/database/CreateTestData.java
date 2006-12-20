@@ -1,5 +1,6 @@
 package pt.utl.ist.codeGenerator.database;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -59,8 +60,32 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accounting.Account;
+import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
+import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -72,6 +97,7 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -89,6 +115,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MarkType;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.Season;
@@ -151,6 +178,21 @@ public class CreateTestData {
 
     private static void clearData() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+
+        System.out.println("Deleting events.");
+        for (final Set<Event> events = rootDomainObject.getAccountingEventsSet(); !events.isEmpty(); events.iterator().next().delete());
+
+        System.out.println("Deleting service agreements.");
+        for (final Set<ServiceAgreement> serviceAgreements = rootDomainObject.getServiceAgreementsSet(); !serviceAgreements.isEmpty(); serviceAgreements.iterator().next().delete());
+
+        System.out.println("Deleting posting rules.");
+        for (final Set<PostingRule> postingRules = rootDomainObject.getPostingRulesSet(); !postingRules.isEmpty(); postingRules.iterator().next().delete());
+
+        System.out.println("Deleting service agreement templates.");
+        for (final Set<ServiceAgreementTemplate> serviceAgreementTemplateSet = rootDomainObject.getServiceAgreementTemplatesSet(); !serviceAgreementTemplateSet.isEmpty(); serviceAgreementTemplateSet.iterator().next().delete());
+
+        System.out.println("Deleting writtenEvaluation enrolments.");
+        for (final Set<WrittenEvaluationEnrolment> writtenEvaluationEnrolment = rootDomainObject.getWrittenEvaluationEnrolmentsSet(); !writtenEvaluationEnrolment.isEmpty(); writtenEvaluationEnrolment.iterator().next().delete());
 
         System.out.println("Deleting students from shifts.");
         if (!rootDomainObject.getShiftsSet().isEmpty()) {
@@ -269,6 +311,7 @@ public class CreateTestData {
     }
 
     private static void createTestData() {
+        createUnits();
         createExecutionYears();
         createCampus();
         createRooms();
@@ -277,6 +320,31 @@ public class CreateTestData {
         connectShiftsToSchoolClasses();
         createWrittenEvaluations();
         createStudents();
+    }
+
+    private static void createUnits() {
+        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        final Unit institutionUnit = rootDomainObject.getInstitutionUnit();
+        institutionUnit.setName("Escola do Galo");
+        institutionUnit.setAcronym("Fenix");
+        final UnitServiceAgreementTemplate unitServiceAgreementTemplate = new UnitServiceAgreementTemplate(institutionUnit);
+        new FixedAmountPR(EntryType.INSURANCE_FEE, EventType.INSURANCE, new DateTime().minusYears(1), null, unitServiceAgreementTemplate, Money.valueOf(2));
+        final AdministrativeOffice administrativeOfficeDegree = new AdministrativeOffice(AdministrativeOfficeType.DEGREE, institutionUnit);
+        new AdministrativeOfficeServiceAgreementTemplate(administrativeOfficeDegree);
+        final AdministrativeOffice administrativeOfficeMasterDegree = new AdministrativeOffice(AdministrativeOfficeType.MASTER_DEGREE, institutionUnit);
+        new AdministrativeOfficeServiceAgreementTemplate(administrativeOfficeMasterDegree);
+        new FixedAmountWithPenaltyFromDatePR(EntryType.ADMINISTRATIVE_OFFICE_FEE,
+                    EventType.ADMINISTRATIVE_OFFICE_FEE, new DateTime(), null, administrativeOfficeDegree
+                            .getServiceAgreementTemplate(), new Money("21"), new Money("10.50"),
+                    new YearMonthDay(2006, 12, 16));
+        new FixedAmountWithPenaltyFromDatePR(EntryType.ADMINISTRATIVE_OFFICE_FEE,
+                EventType.ADMINISTRATIVE_OFFICE_FEE, new DateTime(), null, administrativeOfficeMasterDegree
+                        .getServiceAgreementTemplate(), new Money("21"), new Money("10.50"),
+                new YearMonthDay(2006, 12, 16));
+        new AdministrativeOfficeFeeAndInsurancePR(new DateTime(), null, administrativeOfficeDegree
+                .getServiceAgreementTemplate());
+        new AdministrativeOfficeFeeAndInsurancePR(new DateTime(), null, administrativeOfficeMasterDegree
+                .getServiceAgreementTemplate());
     }
 
     private static void createRooms() {
@@ -342,6 +410,12 @@ public class CreateTestData {
         final Login login = person.getUser().readUserLoginIdentification();
         login.openLoginIfNecessary(RoleType.STUDENT);
         createStudentEnrolments(studentCurricularPlan);
+        new DegreeCurricularPlanServiceAgreement(student.getPerson(), degreeCurricularPlan.getServiceAgreementTemplate());
+        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        final AdministrativeOffice administrativeOffice = AdministrativeOffice.readByAdministrativeOfficeType(studentCurricularPlan.getDegreeType().getAdministrativeOfficeType());
+        new GratuityEventWithPaymentPlan(administrativeOffice, student.getPerson(), studentCurricularPlan, executionYear);
+        new AdministrativeOfficeFeeAndInsuranceEvent(administrativeOffice, student.getPerson(), executionYear);
+        //new InsuranceEvent(student.getPerson(), executionYear);
     }
 
     private static void createExecutionYears() {
@@ -431,13 +505,41 @@ public class CreateTestData {
             degreeCurricularPlan.setDescription("Bla bla bla. Descrição do plano curricular do curso. Bla bla bla");
             degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
 
+
             final ExecutionDegree executionDegree = degreeCurricularPlan.createExecutionDegree(executionYear, campus, Boolean.FALSE);
             final Teacher teacher = createTeachers(i);
             new Coordinator(executionDegree, teacher.getPerson(), Boolean.TRUE);
             createPeriodsForExecutionDegree(executionDegree);
             createSchoolClasses(executionDegree);
             createEnrolmentPeriods(degreeCurricularPlan, executionYear);
+
+            createAgreementsAndPostingRules(executionYear, degreeCurricularPlan);
         }
+    }
+
+    private static void createAgreementsAndPostingRules(final ExecutionYear executionYear, final DegreeCurricularPlan degreeCurricularPlan) {
+        new DegreeCurricularPlanServiceAgreementTemplate(degreeCurricularPlan);
+        
+
+        final GratuityPaymentPlan gratuityPaymentPlan = new FullGratuityPaymentPlan(executionYear, degreeCurricularPlan.getServiceAgreementTemplate(), true);
+
+        new InstallmentWithMonthlyPenalty(gratuityPaymentPlan, new Money("350"),
+                    executionYear.getBeginDateYearMonthDay(),
+                    new YearMonthDay(2006, 12, 15), new BigDecimal("0.01"),
+                    new YearMonthDay(2007, 1, 1), 9);
+
+        new InstallmentWithMonthlyPenalty(gratuityPaymentPlan, new Money("570.17"),
+                    new YearMonthDay(2006, 12, 16), new YearMonthDay(2007, 5, 31),
+                    new BigDecimal("0.01"), new YearMonthDay(2007, 6, 1), 4);
+
+        final GratuityPaymentPlan gratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester = new GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(
+                    executionYear, degreeCurricularPlan.getServiceAgreementTemplate());
+
+        new InstallmentWithMonthlyPenalty(
+                    gratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester, new Money("920.17"), executionYear.getBeginDateYearMonthDay(),
+        new YearMonthDay(2007, 5, 31), new BigDecimal("0.01"), new YearMonthDay(2007, 06, 1), 4);
+
+        new GratuityWithPaymentPlanPR(EntryType.GRATUITY_FEE, EventType.GRATUITY, new DateTime(), null, degreeCurricularPlan.getServiceAgreementTemplate());
     }
 
     private static void createEnrolmentPeriods(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear) {
@@ -616,12 +718,13 @@ public class CreateTestData {
 	    final CurricularYear curricularYear = curricularSemester.getCurricularYear();
 	    for (int i = 1; i < 6; i++) {
 		final String x = "" + dcpCounter + i + curricularYear.getYear() + curricularSemester.getSemester();
-		final CurricularCourse curricularCourse = degreeCurricularPlan.createCurricularCourse("Disciplina" + x, "C" + x, "D" + x, Boolean.TRUE, CurricularStage.OLD);
-                curricularCourse.setNameEn("Course" + x);
+		final CurricularCourse curricularCourse = degreeCurricularPlan.createCurricularCourse("Germinação do Conhecimento" + x, "C" + x, "D" + x, Boolean.TRUE, CurricularStage.OLD);
+                curricularCourse.setNameEn("Knowledge Germination" + x);
 		curricularCourse.setType(CurricularCourseType.NORMAL_COURSE);
                 curricularCourse.setTheoreticalHours(Double.valueOf(3d));
                 curricularCourse.setPraticalHours(Double.valueOf(2d));
-                curricularCourse.setMinimumValueForAcumulatedEnrollments(Integer.valueOf(0));
+                curricularCourse.setMinimumValueForAcumulatedEnrollments(Integer.valueOf(1));
+                curricularCourse.setMaximumValueForAcumulatedEnrollments(Integer.valueOf(2));
 		new CurricularCourseScope(branch, curricularCourse, curricularSemester, executionYear.getBeginDateYearMonthDay().toDateMidnight().toCalendar(null), null, null);
                 final Curriculum curriculum = new Curriculum();
                 curriculum.setCurricularCourse(curricularCourse);
@@ -698,7 +801,7 @@ public class CreateTestData {
 	oldRooms.add(oldRoom);
 	final OccupationPeriod occupationPeriod = new OccupationPeriod(startDateTime.toYearMonthDay(), endDateTime.toYearMonthDay());
 	final WrittenTest writtenTest = new WrittenTest(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, name);
-	createWrittenEvaluationEnrolmentPeriod(writtenTest);
+        createWrittenEvaluationEnrolmentPeriod(executionPeriod, writtenTest);
     }
 
     private static void createExam(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse, final Season season) {
@@ -715,12 +818,14 @@ public class CreateTestData {
 	oldRooms.add(oldRoom);
 	final OccupationPeriod occupationPeriod = new OccupationPeriod(startDateTime.toYearMonthDay(), endDateTime.toYearMonthDay());
 	final Exam exam = new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, season);
-	createWrittenEvaluationEnrolmentPeriod(exam);
+        createWrittenEvaluationEnrolmentPeriod(executionPeriod, exam);
     }
 
-    private static void createWrittenEvaluationEnrolmentPeriod(WrittenEvaluation writtenEvaluation) {
-	writtenEvaluation.setEnrollmentBeginDayDateYearMonthDay(new YearMonthDay().minusDays(6));
-	writtenEvaluation.setEnrollmentEndDayDateYearMonthDay(new YearMonthDay().plusDays(6));
+    private static void createWrittenEvaluationEnrolmentPeriod(final ExecutionPeriod executionPeriod, final WrittenEvaluation writtenTest) {
+        writtenTest.setEnrollmentBeginDayDateYearMonthDay(executionPeriod.getBeginDateYearMonthDay());
+        writtenTest.setEnrollmentBeginTimeDateHourMinuteSecond(new HourMinuteSecond(0, 0, 0));
+        writtenTest.setEnrollmentEndDayDateYearMonthDay(writtenTest.getDayDateYearMonthDay().minusDays(1));
+        writtenTest.setEnrollmentEndTimeDateHourMinuteSecond(new HourMinuteSecond(0, 0, 0));
     }
 
     private static String constructExecutionYearString() {
