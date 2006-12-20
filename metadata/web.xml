@@ -566,19 +566,26 @@
             <taglib-uri>/WEB-INF/jsf_tiles.tld</taglib-uri>
             <taglib-location>/WEB-INF/jsf_tiles.tld</taglib-location>
         </taglib>
-        	<taglib>
-        		<taglib-uri>/WEB-INF/taglibs-datetime.tld</taglib-uri>
-        		<taglib-location>/WEB-INF/taglibs-datetime.tld</taglib-location>
-        	</taglib>
-        	<taglib>
-        		<taglib-uri>/WEB-INF/taglibs-string.tld</taglib-uri>
-        		<taglib-location>/WEB-INF/taglibs-string.tld</taglib-location>
-        	</taglib>
-        	<taglib>
-        		<taglib-uri>/WEB-INF/fenix-renders.tld</taglib-uri>
-        		<taglib-location>/WEB-INF/fenix-renders.tld</taglib-location>
-        	</taglib>
-	</jsp-config>
+       	<taglib>
+       		<taglib-uri>/WEB-INF/taglibs-datetime.tld</taglib-uri>
+       		<taglib-location>/WEB-INF/taglibs-datetime.tld</taglib-location>
+       	</taglib>
+       	<taglib>
+       		<taglib-uri>/WEB-INF/taglibs-string.tld</taglib-uri>
+       		<taglib-location>/WEB-INF/taglibs-string.tld</taglib-location>
+       	</taglib>
+       	<taglib>
+       		<taglib-uri>/WEB-INF/fenix-renders.tld</taglib-uri>
+       		<taglib-location>/WEB-INF/fenix-renders.tld</taglib-location>
+       	</taglib>
+       	
+		<jsp-property-group>
+	      <description>All JSPs</description>
+	      <url-pattern>*.jsp</url-pattern>
+	      <el-ignored>true</el-ignored>
+	      <page-encoding>ISO-8859-1</page-encoding>
+	    </jsp-property-group>
+    </jsp-config>
     
 	<security-constraint>
 		<web-resource-collection>
