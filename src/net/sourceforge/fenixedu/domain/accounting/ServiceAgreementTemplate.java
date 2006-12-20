@@ -138,9 +138,14 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
     }
 
     public final void delete() {
-	throw new DomainException(
-		"error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
-
+        if (!getServiceAgreementsSet().isEmpty()) {
+            throw new DomainException("error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
+        }
+        if (!getPostingRulesSet().isEmpty()) {
+            throw new DomainException("error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
+        }
+        removeRootDomainObject();
+        deleteDomainObject();
     }
 
     public PaymentPlan getDefaultPaymentPlan(final ExecutionYear executionYear) {

@@ -14,7 +14,7 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
 	ServiceAgreementPerson.addListener(new RelationAdapter<ServiceAgreement, Person>() {
 	    @Override
 	    public void beforeAdd(ServiceAgreement serviceAgreementToAdd, Person person) {
-		if (serviceAgreementToAdd != null) {
+		if (serviceAgreementToAdd != null && person != null) {
 		    for (final ServiceAgreement serviceAgreement : person.getServiceAgreements()) {
 			if (serviceAgreement.getServiceAgreementTemplate() == serviceAgreementToAdd
 				.getServiceAgreementTemplate()) {
@@ -66,6 +66,13 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
     public void setServiceAgreementTemplate(ServiceAgreementTemplate serviceAgreementTemplate) {
 	throw new DomainException(
 		"error.accounting.agreement.serviceAgreement.cannot.modify.serviceAgreementTemplate");
+    }
+
+    public void delete() {
+        super.setPerson(null);
+        super.setServiceAgreementTemplate(null);
+        removeRootDomainObject();
+        deleteDomainObject();
     }
 
 }

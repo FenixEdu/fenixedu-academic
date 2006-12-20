@@ -63,10 +63,9 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 
 	checkParameters(executionYear, serviceAgreementTemplate, defaultPlan);
 
+	super.setDefaultPlan(defaultPlan);
 	super.setExecutionYear(executionYear);
 	super.setServiceAgreementTemplate(serviceAgreementTemplate);
-	super.setDefaultPlan(defaultPlan);
-
     }
 
     private void checkParameters(final ExecutionYear executionYear,

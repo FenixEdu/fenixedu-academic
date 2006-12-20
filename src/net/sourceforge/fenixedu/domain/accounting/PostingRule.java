@@ -49,13 +49,15 @@ public abstract class PostingRule extends PostingRule_Base {
 
 		    private void checkIfPostingRuleOverlapsExisting(
 			    ServiceAgreementTemplate serviceAgreementTemplate, PostingRule postingRule) {
-			for (final PostingRule existingPostingRule : serviceAgreementTemplate
-				.getPostingRules()) {
-			    if (postingRule.overlaps(existingPostingRule)) {
-				throw new DomainException(
-					"error.accounting.agreement.ServiceAgreementTemplate.postingRule.overlaps.existing.one");
-			    }
-			}
+                        if (serviceAgreementTemplate != null) {
+                            for (final PostingRule existingPostingRule : serviceAgreementTemplate
+                                    .getPostingRules()) {
+                                if (postingRule.overlaps(existingPostingRule)) {
+                                    throw new DomainException(
+                                    "error.accounting.agreement.ServiceAgreementTemplate.postingRule.overlaps.existing.one");
+                                }
+                            }
+                        }
 		    }
 
 		});
@@ -171,7 +173,9 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public final void delete() {
-	throw new DomainException("error.accounting.PostingRule.cannot.be.deleted");
+        super.setServiceAgreementTemplate(null);
+        removeRootDomainObject();
+        deleteDomainObject();
     }
 
     @Override

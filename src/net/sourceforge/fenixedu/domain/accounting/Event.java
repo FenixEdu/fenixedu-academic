@@ -505,4 +505,9 @@ public abstract class Event extends Event_Base {
 
     protected abstract PostingRule getPostingRule();
 
+    public void delete() {
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }
