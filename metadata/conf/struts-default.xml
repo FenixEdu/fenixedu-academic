@@ -130,7 +130,7 @@
         <action path="/logoff"
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LogOffAction">
 			<forward name="showLoginPage" path="/loginPage.jsp"/>
-			<forward name="showBlankPage" path="/commons/blank.jsp"/>
+			<forward name="showBlankPage" path="/commons/blankWithTitle.jsp"/>
         </action>
         <action path="/dotIstPortal" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixSwitchAction">
         </action>
