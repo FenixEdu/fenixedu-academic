@@ -354,6 +354,9 @@
 		<forward name="execution-course-section" path="execution-course-section"/>
         <forward name="execution-course-section-deny" path="execution-course-section-deny"/>
         <forward name="execution-course-section-adviseLogin" path="execution-course-section-adviseLogin"/>
+        <forward name="execution-course-item" path="execution-course-item"/>
+        <forward name="execution-course-item-deny" path="execution-course-item-deny"/>
+        <forward name="execution-course-item-adviseLogin" path="execution-course-item-adviseLogin"/>
     		<forward name="execution-course-rss" path="execution-course-rss"/>
 		<forward name="execution-course-lesson-plannings" path="execution-course-lesson-plannings"/>
 		<forward name="execution-course-not-found" path="execution-course-not-found"/>

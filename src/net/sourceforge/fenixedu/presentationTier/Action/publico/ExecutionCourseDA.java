@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -200,7 +201,26 @@ public class ExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward item(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        return null;
+        Item item = selectItem(request);
+        
+        if (item == null) {
+            return mapping.findForward("execution-course-first-page");
+        }
+        
+        IUserView userView = prepareUserView(request);
+        FunctionalityContext context = prepareSectionContext(request);
+        
+        if (item.isAvailable(context)) {
+            return mapping.findForward("execution-course-item");
+        }
+        else {
+            if (isAuthenticated(userView)) {
+                return mapping.findForward("execution-course-item-deny");
+            }
+            else {
+                return mapping.findForward("execution-course-item-adviseLogin");
+            }
+        }
     }
     
     public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -214,7 +234,7 @@ public class ExecutionCourseDA extends FenixDispatchAction {
         FunctionalityContext context = prepareSectionContext(request);
 
         if (section.isAvailable(context)) {
-            prepareProtectedItems(request, userView, section, context);
+            prepareProtectedItems(request, userView, section.getOrderedItems(), context);
             return mapping.findForward("execution-course-section");
         }
         else {
@@ -227,6 +247,18 @@ public class ExecutionCourseDA extends FenixDispatchAction {
         }
     }
 
+    public ActionForward itemWithLogin(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        IUserView userView = getUserView(request);
+        
+        if (! isAuthenticated(userView)) {
+            RequestUtils.sendLoginRedirect(request, response);
+            return null;
+        }
+        else {
+            return item(mapping, form, request, response);
+        }
+    }
+    
     public ActionForward sectionWithLogin(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
         IUserView userView = getUserView(request);
         
@@ -239,8 +271,8 @@ public class ExecutionCourseDA extends FenixDispatchAction {
         }
     }
     
-    private void prepareProtectedItems(HttpServletRequest request, IUserView userView, Section section, FunctionalityContext context) {
-        List<ProtectedItem> protectedItems = setupItems(request, context, section);
+    private void prepareProtectedItems(HttpServletRequest request, IUserView userView, Collection<Item> items, FunctionalityContext context) {
+        List<ProtectedItem> protectedItems = setupItems(request, context, items);
         
         if (!isAuthenticated(userView) && hasRestrictedItems(protectedItems)) {
             request.setAttribute("hasRestrictedItems", true);
@@ -257,16 +289,16 @@ public class ExecutionCourseDA extends FenixDispatchAction {
         return false;
     }
 
-    private List<ProtectedItem> setupItems(HttpServletRequest request, FunctionalityContext context, Section section) {
-        List<ProtectedItem> items = new ArrayList<ProtectedItem>();
-        for (Item item : section.getOrderedItems()) {
+    private List<ProtectedItem> setupItems(HttpServletRequest request, FunctionalityContext context, Collection<Item> items) {
+        List<ProtectedItem> protectedItems = new ArrayList<ProtectedItem>();
+        for (Item item : items) {
             if (item.isVisible()) {
-                items.add(new ProtectedItem(context, item));
+                protectedItems.add(new ProtectedItem(context, item));
             }
         }
         
-        request.setAttribute("protectedItems", items);
-        return items;
+        request.setAttribute("protectedItems", protectedItems);
+        return protectedItems;
     }
 
     private IUserView prepareUserView(HttpServletRequest request) {
@@ -287,8 +319,10 @@ public class ExecutionCourseDA extends FenixDispatchAction {
     }
 
     private Section selectSection(HttpServletRequest request) {
-        Section section = getSection(request);
-        
+        return selectSection(request, getSection(request));
+    }
+
+    private Section selectSection(HttpServletRequest request, Section section) {
         if (section != null) {
             request.setAttribute("section", section);
             
@@ -299,10 +333,26 @@ public class ExecutionCourseDA extends FenixDispatchAction {
             
             request.setAttribute("selectedSections", selectedSections);
         }
-
+        
         return section;
     }
-
+    
+    private Item selectItem(HttpServletRequest request) {
+       Item item = getItem(request);
+       
+       if (item != null) {
+           selectSection(request, item.getSection());
+           request.setAttribute("item", item);
+       }
+       
+       return item;
+    }
+    
+    private Item getItem(HttpServletRequest request) {
+        final Integer itemID = Integer.valueOf(request.getParameter("itemID"));
+        return rootDomainObject.readItemByOID(itemID);
+    }
+    
     public ActionForward rss(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("execution-course-rss");
     }
