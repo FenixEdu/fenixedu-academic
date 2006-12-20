@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
-import java.lang.reflect.InvocationTargetException;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
@@ -103,7 +101,7 @@ public class InfoInquiriesRegistry extends InfoObject implements Comparable {
         return 0;
     }
 
-    public static InfoInquiriesRegistry newInfoFromDomain(InquiriesRegistry inquiriesRegistry) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static InfoInquiriesRegistry newInfoFromDomain(InquiriesRegistry inquiriesRegistry) {
         InfoInquiriesRegistry newInfo = null;
         if(inquiriesRegistry != null) {
             newInfo = new InfoInquiriesRegistry();
@@ -112,7 +110,7 @@ public class InfoInquiriesRegistry extends InfoObject implements Comparable {
         return newInfo;
     }
        
-    public void copyFromDomain(InquiriesRegistry inquiriesRegistry) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public void copyFromDomain(InquiriesRegistry inquiriesRegistry) {
         if (inquiriesRegistry != null) {
             super.copyFromDomain(inquiriesRegistry);
         }

@@ -168,6 +168,19 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 		}
     	return markSheets;
     }
+    
+    public List<Attends> getAttendsByDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan){
+	final List<Attends> attendsList = new ArrayList<Attends>();
+	for (ExecutionCourse executionCourse : this.getAssociatedExecutionCoursesSet()) {
+	    for (Attends attends : executionCourse.getAttendsSet()) {
+		if(attends.getEnrolment() != null && 
+			attends.getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+		    attendsList.add(attends);
+		}
+	    }
+	}
+	return attendsList;
+    }
 
 
     // -------------------------------------------------------------

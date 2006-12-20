@@ -5,9 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -21,8 +19,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -48,9 +44,7 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod ext
                 .readDegreeCurricularPlanByOID(degreeCurricularPlanId);
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
 
-        List<Attends> attendsList = Attends.readByDegreeCurricularPlanAndExecutionPeriod(
-                degreeCurricularPlan, executionPeriod);
-        Collections.sort(attendsList, new BeanComparator("idInternal"));
+        List<Attends> attendsList = executionPeriod.getAttendsByDegreeCurricularPlan(degreeCurricularPlan);
 
         // FIXME: It only concerns enrolled courses
         List<InfoStudentWithAttendsAndInquiriesRegistries> res = new ArrayList<InfoStudentWithAttendsAndInquiriesRegistries>();
@@ -85,19 +79,7 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod ext
                 inquiriesRegistries.size());
 
         for (InquiriesRegistry reg : inquiriesRegistries) {
-            try {
-                infoRegistries.add(InfoInquiriesRegistry.newInfoFromDomain(reg));
-
-            } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            infoRegistries.add(InfoInquiriesRegistry.newInfoFromDomain(reg));
         }
         currentStudent.setInquiriesRegistries(infoRegistries);
     }

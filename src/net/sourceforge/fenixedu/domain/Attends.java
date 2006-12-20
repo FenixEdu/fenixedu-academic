@@ -291,21 +291,6 @@ public class Attends extends Attends_Base {
 	}
     }
 
-    public static List<Attends> readByDegreeCurricularPlanAndExecutionPeriod(
-	    DegreeCurricularPlan degreeCurricularPlan, ExecutionPeriod executionPeriod) {
-	final Set<Attends> attends = new HashSet<Attends>();
-	for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
-		.getStudentCurricularPlans()) {
-	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-		for (final Attends attend : enrolment.getAttendsSet()) {
-		    if (attend.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
-			attends.add(attend);
-		    }
-		}
-	    }
-	}
-	return new ArrayList<Attends>(attends);
-    }
 
     public EnrolmentEvaluationType getEnrolmentEvaluationType() {
 	if (getEnrolment().getExecutionPeriod() != getDisciplinaExecucao().getExecutionPeriod()) {
