@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.util.StringNormalizer;
 
 public class CreateProjectSubmissionBean implements Serializable {
 
@@ -72,7 +73,7 @@ public class CreateProjectSubmissionBean implements Serializable {
     }
 
     public void setFilename(String filename) {
-        this.filename = filename;
+        this.filename = StringNormalizer.normalize(filename);
     }
 
 }

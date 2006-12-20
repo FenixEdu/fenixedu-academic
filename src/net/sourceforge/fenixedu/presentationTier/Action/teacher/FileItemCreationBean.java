@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.util.StringNormalizer;
 
 public class FileItemCreationBean implements Serializable {
 
@@ -62,7 +63,7 @@ public class FileItemCreationBean implements Serializable {
     }
 
     public void setFileName(String fileName) {
-        this.fileName = fileName;
+        this.fileName = StringNormalizer.normalize(fileName);
     }
 
     public Long getFileSize() {
