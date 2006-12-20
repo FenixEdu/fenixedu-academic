@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
@@ -71,7 +72,6 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
@@ -96,7 +96,10 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
@@ -112,6 +115,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.ContractType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -252,6 +256,22 @@ public class CreateTestData {
         System.out.println("Deleting execution courses.");
         for (final Set<ExecutionCourse> executionCourses = rootDomainObject.getExecutionCoursesSet(); !executionCourses.isEmpty(); executionCourses.iterator().next().delete());
 
+        System.out.println("Deleting coordinators.");
+        for (final Set<Coordinator> coordinators = rootDomainObject.getCoordinatorsSet(); !coordinators.isEmpty(); coordinators.iterator().next().delete());
+        System.out.println("Deleting teachers.");
+        for (final Set<Teacher> teachers = rootDomainObject.getTeachersSet(); !teachers.isEmpty(); teachers.iterator().next().delete());
+
+        for (final Iterator<Accountability> acountabilityIterator = RootDomainObject.getInstance().getAccountabilitysIterator(); acountabilityIterator.hasNext(); ) {
+            final Accountability accountability = acountabilityIterator.next();
+            if (accountability instanceof Contract) {
+                acountabilityIterator.remove();
+                accountability.delete();
+            }
+        }
+
+        System.out.println("Deleting employees.");
+        for (final Set<Employee> employees = rootDomainObject.getEmployeesSet(); !employees.isEmpty(); employees.iterator().next().delete());
+
         System.out.println("Deleting person roles.");
         for (final Party party : rootDomainObject.getPartysSet()) {
             if (party.isPerson()) {
@@ -260,12 +280,6 @@ public class CreateTestData {
             }
         }
 
-        System.out.println("Deleting coordinators.");
-        for (final Set<Coordinator> coordinators = rootDomainObject.getCoordinatorsSet(); !coordinators.isEmpty(); coordinators.iterator().next().delete());
-        System.out.println("Deleting teachers.");
-        for (final Set<Teacher> teachers = rootDomainObject.getTeachersSet(); !teachers.isEmpty(); teachers.iterator().next().delete());
-        System.out.println("Deleting employees.");
-        for (final Set<Employee> employees = rootDomainObject.getEmployeesSet(); !employees.isEmpty(); employees.iterator().next().delete());
         System.out.println("Deleting identifications.");
         for (final Set<Identification> identifications = rootDomainObject.getIdentificationsSet(); !identifications.isEmpty(); identifications.iterator().next().delete());
         System.out.println("Deleting users.");
@@ -309,6 +323,9 @@ public class CreateTestData {
         System.out.println("Deleting administrative offices.");
         for (final Set<AdministrativeOffice> administrativeOffices = rootDomainObject.getAdministrativeOfficesSet(); !administrativeOffices.isEmpty(); administrativeOffices.iterator().next().delete());
 
+        System.out.println("Deleting administrative offices.");
+        for (final Set<Department> departments = rootDomainObject.getDepartmentsSet(); !departments.isEmpty(); departments.iterator().next().delete());
+
         System.out.println("Completed clearing any existing data.");
         System.out.println("Loading the test data...");
     }
@@ -330,6 +347,7 @@ public class CreateTestData {
         final Unit institutionUnit = rootDomainObject.getInstitutionUnit();
         institutionUnit.setName("Escola do Galo");
         institutionUnit.setAcronym("Fenix");
+        institutionUnit.setType(PartyTypeEnum.DEPARTMENT);
         final UnitServiceAgreementTemplate unitServiceAgreementTemplate = new UnitServiceAgreementTemplate(institutionUnit);
         new FixedAmountPR(EntryType.INSURANCE_FEE, EventType.INSURANCE, new DateTime().minusYears(1), null, unitServiceAgreementTemplate, Money.valueOf(2));
         final AdministrativeOffice administrativeOfficeDegree = new AdministrativeOffice(AdministrativeOfficeType.DEGREE, institutionUnit);
@@ -348,6 +366,10 @@ public class CreateTestData {
                 .getServiceAgreementTemplate());
         new AdministrativeOfficeFeeAndInsurancePR(new DateTime(), null, administrativeOfficeMasterDegree
                 .getServiceAgreementTemplate());
+        final Department department = new Department();
+        department.setDepartmentUnit(institutionUnit);
+        department.setName("Department Name");
+        department.setCode("Xpto");
     }
 
     private static void createRooms() {
@@ -373,9 +395,14 @@ public class CreateTestData {
 
     private static Teacher createTeachers(final int i) {
         final Person person = createPerson("Guru Diplomado", "teacher", i);
+        final Employee employee = new Employee(person, Integer.valueOf(i), Boolean.TRUE);
         final Teacher teacher = new Teacher(Integer.valueOf(i), person);
+        person.addPersonRoleByRoleType(RoleType.TEACHER);
         final Login login = person.getUser().readUserLoginIdentification();
         login.openLoginIfNecessary(RoleType.TEACHER);
+        final Contract contractWorking = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.WORKING);
+        final Contract contractSalary = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.SALARY);
+        final Contract contractMailing = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.MAILING);
         return teacher;
     }
 
@@ -383,6 +410,7 @@ public class CreateTestData {
         final Person person = new Person();
         person.setName(namePrefix + i);
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
+        person.setDateOfBirthYearMonthDay(new YearMonthDay().minusYears(23));
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));
@@ -503,6 +531,10 @@ public class CreateTestData {
                 branch.setBranchType(BranchType.COMNBR);
                 createPreBolonhaCurricularCourses(degreeCurricularPlan, i, executionYear, branch);
             }
+
+            final Unit unit = RootDomainObject.getInstance().getInstitutionUnit();
+            final Department department = unit.getDepartment();
+            department.addDegrees(degree);
 
             createDegreeInfo(degree);
             degreeCurricularPlan.setDescription("Bla bla bla. Descrição do plano curricular do curso. Bla bla bla");
