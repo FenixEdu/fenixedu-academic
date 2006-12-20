@@ -10,6 +10,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -38,12 +40,13 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     protected void init(Registration registration) {
 
-	AdministrativeOffice administrativeOffice = null;
-	final Employee employee = AccessControl.getUserView() == null ? null : AccessControl.getPerson().getEmployee();
-	if (employee != null) {
-	    administrativeOffice = employee.getAdministrativeOffice();
-	}
-	if (administrativeOffice == null) {
+	final Person loggedPerson = AccessControl.getPerson();
+
+	final AdministrativeOffice administrativeOffice;
+	if (loggedPerson != null && loggedPerson.hasEmployee()
+		&& loggedPerson.getEmployee().isAdministrativeOfficeEmployee()) {
+	    administrativeOffice = loggedPerson.getEmployee().getAdministrativeOffice();
+	} else {
 	    administrativeOffice = AdministrativeOffice.getResponsibleAdministrativeOffice(registration
 		    .getDegree());
 	}
@@ -51,8 +54,8 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	checkParameters(registration, administrativeOffice);
 	super.setAdministrativeOffice(administrativeOffice);
 	super.setRegistration(registration);
-	new AcademicServiceRequestSituation(this, AcademicServiceRequestSituationType.NEW, employee,
-		null);
+	new AcademicServiceRequestSituation(this, AcademicServiceRequestSituationType.NEW, AccessControl
+		.getPerson().getEmployee(), null);
     }
 
     private void checkParameters(Registration registration, AdministrativeOffice administrativeOffice) {
@@ -358,6 +361,28 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     public boolean isBolonha() {
 	return getDegree().isBolonhaDegree();
+    }
+
+    public Campus getCampus() {
+	return getStudentCurricularPlan().getCurrentCampus();
+    }
+    
+    public boolean allowEmployeeToActUpon() {
+	final Person loggedPerson = AccessControl.getPerson();
+
+	if (loggedPerson.hasEmployee()) {
+	    final Employee employee = loggedPerson.getEmployee();
+
+	    return employee.getAdministrativeOffice() == getAdministrativeOffice()
+		    && employee.getCurrentCampus() == getCampus();
+	} else {
+	    throw new DomainException(
+		    "AcademicServiceRequest.non.employee.person.attempt.to.change.request");
+	}
+    }
+    
+    public boolean getAllowEmployeeToActUpon() {
+	return allowEmployeeToActUpon();
     }
 
 }
