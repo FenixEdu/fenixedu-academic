@@ -228,6 +228,7 @@ public class Employee extends Employee_Base {
     }
 
     public void delete() {
+        removePerson();
         removeRootDomainObject();
         deleteDomainObject();
     }
