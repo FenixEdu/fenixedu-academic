@@ -276,4 +276,10 @@ public class Department extends Department_Base {
             setCompetenceCourseMembersGroupExpression(group.getExpression());
         }
     }
+
+    public void delete() {
+        removeDepartmentUnit();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 }

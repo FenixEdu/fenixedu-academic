@@ -172,4 +172,9 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	return result;
     }
 
+    public void delete() {
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }
