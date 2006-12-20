@@ -1,11 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.parking;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-
-import pt.utl.ist.fenix.tools.util.FileUtils;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
