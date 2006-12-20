@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE web-app PUBLIC 
-      "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-      "http://java.sun.com/dtd/web-app_2_3.dtd">
-<web-app>
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
 	<distributable/>
+    
    	<context-param>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
 		<param-value>client</param-value>
@@ -113,7 +115,7 @@
         </init-param>
         <init-param>            
             <param-name>itemURI</param-name>
-            <param-value>/publico/executionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s#item%s</param-value>
+            <param-value>/publico/executionCourse.do?method=item&amp;executionCourseID=%s&amp;sectionID=%s&amp;itemID=%s</param-value>
         </init-param>
     </filter>
 	<filter>
@@ -133,12 +135,12 @@
         </init-param>
     </filter>
     <filter>
-        <filter-name>FunctionalityAccessFilter</filter-name>
         <description>
             This filter is used to check a requested path agains the model of functionalities. 
             The request proceeds normally if the path is not mapped in the model or if the targeted 
             functionality does not have an availability policy defined.
         </description>
+        <filter-name>FunctionalityAccessFilter</filter-name>
         <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter</filter-class>
         <init-param>
             <!-- the value of this param MUST be the same as the prefix for the url-pattern below 
@@ -245,6 +247,8 @@
     <filter-mapping>
         <filter-name>FunctionalityAccessFilter</filter-name>
         <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
     <!-- Listeners -->
@@ -455,8 +459,8 @@
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
-		<servlet-name>dwr-invoker</servlet-name>
 		<display-name>DWR Servlet</display-name>
+		<servlet-name>dwr-invoker</servlet-name>
 		<servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
 		<init-param>
 			<param-name>debug</param-name>
@@ -473,8 +477,8 @@
         <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.MathMlServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>XFireServlet</servlet-name>
         <display-name>XFire Servlet</display-name>
+        <servlet-name>XFireServlet</servlet-name>
         <servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
     </servlet>
     
@@ -529,51 +533,53 @@
 	    <location>/showErrorPage.do</location>
 	</error-page>
 
-    <taglib>
-        <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
-        <taglib-location>/WEB-INF/struts-html.tld</taglib-location>
-    </taglib>
-    <taglib>
-        <taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
-        <taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
-    </taglib>
-    <taglib>
-        <taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
-        <taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
-    </taglib>
-    <taglib>
-        <taglib-uri>/WEB-INF/app.tld</taglib-uri>
-        <taglib-location>/WEB-INF/app.tld</taglib-location>
-    </taglib>
-    <taglib>
-        <taglib-uri>/WEB-INF/c.tld</taglib-uri>
-        <taglib-location>/WEB-INF/c.tld</taglib-location>
-    </taglib>
-    <taglib>
-        <taglib-uri>/WEB-INF/html_basic.tld</taglib-uri>
-        <taglib-location>/WEB-INF/html_basic.tld</taglib-location>
-    </taglib>
-    <taglib>
-        <taglib-uri>/WEB-INF/jsf_core.tld</taglib-uri>
-        <taglib-location>/WEB-INF/jsf_core.tld</taglib-location>
-    </taglib>
-    <taglib>
-        <taglib-uri>/WEB-INF/jsf_tiles.tld</taglib-uri>
-        <taglib-location>/WEB-INF/jsf_tiles.tld</taglib-location>
-    </taglib>
-	<taglib>
-		<taglib-uri>/WEB-INF/taglibs-datetime.tld</taglib-uri>
-		<taglib-location>/WEB-INF/taglibs-datetime.tld</taglib-location>
-	</taglib>
-	<taglib>
-		<taglib-uri>/WEB-INF/taglibs-string.tld</taglib-uri>
-		<taglib-location>/WEB-INF/taglibs-string.tld</taglib-location>
-	</taglib>
-	<taglib>
-		<taglib-uri>/WEB-INF/fenix-renders.tld</taglib-uri>
-		<taglib-location>/WEB-INF/fenix-renders.tld</taglib-location>
-	</taglib>
-	
+    <jsp-config>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-html.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/app.tld</taglib-uri>
+            <taglib-location>/WEB-INF/app.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/c.tld</taglib-uri>
+            <taglib-location>/WEB-INF/c.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/html_basic.tld</taglib-uri>
+            <taglib-location>/WEB-INF/html_basic.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/jsf_core.tld</taglib-uri>
+            <taglib-location>/WEB-INF/jsf_core.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/jsf_tiles.tld</taglib-uri>
+            <taglib-location>/WEB-INF/jsf_tiles.tld</taglib-location>
+        </taglib>
+        	<taglib>
+        		<taglib-uri>/WEB-INF/taglibs-datetime.tld</taglib-uri>
+        		<taglib-location>/WEB-INF/taglibs-datetime.tld</taglib-location>
+        	</taglib>
+        	<taglib>
+        		<taglib-uri>/WEB-INF/taglibs-string.tld</taglib-uri>
+        		<taglib-location>/WEB-INF/taglibs-string.tld</taglib-location>
+        	</taglib>
+        	<taglib>
+        		<taglib-uri>/WEB-INF/fenix-renders.tld</taglib-uri>
+        		<taglib-location>/WEB-INF/fenix-renders.tld</taglib-location>
+        	</taglib>
+	</jsp-config>
+    
 	<security-constraint>
 		<web-resource-collection>
 	          <web-resource-name>KerberosPasswordCheck</web-resource-name>

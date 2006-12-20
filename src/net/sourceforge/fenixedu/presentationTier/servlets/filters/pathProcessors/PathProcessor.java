@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * This class is the case for all the path processors. A path processor is responsible
@@ -195,9 +198,23 @@ public abstract class PathProcessor {
      *             if the redirection of the user failed
      */
     protected static boolean doForward(ProcessingContext context, String uriFormat, Object ... args) throws IOException, ServletException {
-        String path = context.getContextPath() + String.format(uriFormat, args);
-        context.getResponse().sendRedirect(path);
+        // use client redirect
+        // String path = context.getContextPath() + String.format(uriFormat, args);
+        // context.getResponse().sendRedirect(path);
 
+        // try internal forward unless impossible
+        dispatch(context.getRequest(), context.getResponse(), String.format(uriFormat, args));
         return true;
+    }
+    
+    protected static void dispatch(HttpServletRequest request, HttpServletResponse response, String path) throws IOException, ServletException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+
+        if (dispatcher == null) {
+            response.sendRedirect(request.getContextPath() + path);
+        }
+        else {
+            dispatcher.forward(request, response);
+        }
     }
 }
