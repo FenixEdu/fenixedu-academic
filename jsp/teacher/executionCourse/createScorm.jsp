@@ -31,7 +31,7 @@
 <span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= "/manageExecutionCourse.do?method=uploadFile&itemID=" + item.getIdInternal() + "&executionCourseID=" + executionCourse.getIdInternal() + "&forwardTo=createScorm"%>">			
+		<html:link page="<%= "/manageExecutionCourse.do?method=uploadFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal() + "&amp;forwardTo=createScorm"%>">			
 			<bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
 		</html:link>
 	</span>

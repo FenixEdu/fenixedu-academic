@@ -23,7 +23,7 @@
 <bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
 <bean:define id="sectionId" name="item" property="section.idInternal"/>
 
-<fr:form action="<%= String.format("/manageExecutionCourse.do?method=section&executionCourseID=%s&sectionID=%s", executionCourseId, sectionId) %>">
+<fr:form action="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourseId, sectionId) %>">
     <fr:edit id="edit-item" name="item" type="net.sourceforge.fenixedu.domain.Item" schema="net.sourceforge.fenixedu.domain.ItemEditor">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright"/>

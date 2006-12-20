@@ -17,7 +17,7 @@
 </h2>
 
 <logic:notEmpty name="item" property="sortedFileItems">
-    <fr:form action="<%= "/manageExecutionCourse.do?method=saveFilesOrder&executionCourseID=" + executionCourseId + "&sectionID=" + section.getIdInternal() + "&itemID=" + item.getIdInternal() %>">
+    <fr:form action="<%= "/manageExecutionCourse.do?method=saveFilesOrder&amp;executionCourseID=" + executionCourseId + "&amp;sectionID=" + section.getIdInternal() + "&amp;itemID=" + item.getIdInternal() %>">
         <input id="files-order" type="hidden" name="filesOrder" value=""/>
     </fr:form>
     
@@ -33,7 +33,7 @@
         </fr:view>
 
 		<p class="mtop15">
-		    <fr:form action="<%= "/manageExecutionCourse.do?method=section&executionCourseID=" + executionCourseId + "&sectionID=" + section.getIdInternal() %>">
+		    <fr:form action="<%= "/manageExecutionCourse.do?method=section&amp;executionCourseID=" + executionCourseId + "&amp;sectionID=" + section.getIdInternal() %>">
 		        <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('filesOrder');" %>">
 		            <bean:message key="button.item.files.order.save" bundle="SITE_RESOURCES"/>
 		        </html:button>

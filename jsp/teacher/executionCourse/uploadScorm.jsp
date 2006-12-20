@@ -19,7 +19,7 @@
 
 <ul>
 <li>
-<html:link page="<%= "/manageExecutionCourse.do?method=section&sectionID=" + section.getIdInternal() + "&executionCourseID=" + request.getParameter("executionCourseID") %>">
+<html:link page="<%= "/manageExecutionCourse.do?method=section&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") %>">
 <bean:message key="link.goBack"/>
 </html:link>
 </li>
@@ -29,7 +29,7 @@
 <span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= "/manageExecutionCourse.do?method=uploadFile&itemID=" + item.getIdInternal() + "&executionCourseID=" + executionCourse.getIdInternal() + "&forwardTo=createScorm"%>">			
+		<html:link page="<%= "/manageExecutionCourse.do?method=uploadFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal() + "&amp;forwardTo=createScorm"%>">			
 			<bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
 		</html:link>
 	</span>
@@ -39,7 +39,7 @@
 	</span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= "/manageExecutionCourse.do?method=prepareCreateScormFile&itemID=" + item.getIdInternal() + "&executionCourseID=" + executionCourse.getIdInternal() + "&forwardTo=createScorm"%>">			
+		<html:link page="<%= "/manageExecutionCourse.do?method=prepareCreateScormFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal() + "&amp;forwardTo=createScorm"%>">			
 			<bean:message key="link.scorm.createScormFile" bundle="SITE_RESOURCES"/>
 		</html:link>
 	</span>
@@ -60,7 +60,7 @@
 
 
 <div class="switchNone" id="uploadScormFile">
-<bean:define id="url">/fileUpload.do?method=scormFileUpload&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
+<bean:define id="url">/fileUpload.do?method=scormFileUpload&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
 
 <fr:form action="<%= url %>" encoding="multipart/form-data">
     <fr:edit id="creator" name="bean" visible="false"/>
@@ -107,7 +107,7 @@
         <html:submit styleClass="inputButton">
             <bean:message key="button.save"/>
         </html:submit>
-		<html:link page="<%= String.format("/manageExecutionCourse.do?method=section&executionCourseID=%s&sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>">
+		<html:link page="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>">
             <bean:message key="button.cancel"/>
         </html:link>
     </p>

@@ -21,12 +21,12 @@
 </h2>
 
 <div class="mvert1">
-    <html:link page="<%= String.format("/manageExecutionCourse.do?method=sections&executionCourseID=%s", executionCourseId) %>">
+    <html:link page="<%= String.format("/manageExecutionCourse.do?method=sections&amp;executionCourseID=%s", executionCourseId) %>">
         <bean:message key="link.breadCrumbs.top" bundle="SITE_RESOURCES"/>
     </html:link> &gt;
     
     <logic:iterate id="crumb" name="sectionBreadCrumbs">
-        <html:link page="<%= String.format("/manageExecutionCourse.do?method=section&executionCourseID=%s", executionCourseId) %>" paramId="sectionID" paramName="crumb" paramProperty="idInternal">
+        <html:link page="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s", executionCourseId) %>" paramId="sectionID" paramName="crumb" paramProperty="idInternal">
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>
@@ -292,7 +292,7 @@
 
 		<span class="pleft1">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-			<bean:define id="url" type="java.lang.String">/searchScormContent.do?method=prepareSearchScormContents&searchType=simple&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
+			<bean:define id="url" type="java.lang.String">/searchScormContent.do?method=prepareSearchScormContents&amp;searchType=simple&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
 			<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.searhScormContent" bundle="SITE_RESOURCES"/>
 			</html:link>

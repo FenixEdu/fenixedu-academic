@@ -18,7 +18,7 @@
 <p><strong><bean:message key="link.section.items.organize" bundle="SITE_RESOURCES"/></strong></p>
 
 <logic:notEmpty name="section" property="orderedItems">
-    <fr:form action="<%= "/manageExecutionCourse.do?method=saveItemsOrder&executionCourseID=" + executionCourseId + "&sectionID=" + section.getIdInternal() %>">
+    <fr:form action="<%= "/manageExecutionCourse.do?method=saveItemsOrder&amp;executionCourseID=" + executionCourseId + "&amp;sectionID=" + section.getIdInternal() %>">
         <input id="items-order" type="hidden" name="itemsOrder" value=""/>
     </fr:form>
     
@@ -34,7 +34,7 @@
         </fr:view>
         
 		<p class="mtop15">
-			<fr:form action="<%= "/manageExecutionCourse.do?method=section&executionCourseID=" + executionCourseId + "&sectionID=" + section.getIdInternal() %>">
+			<fr:form action="<%= "/manageExecutionCourse.do?method=section&amp;executionCourseID=" + executionCourseId + "&amp;sectionID=" + section.getIdInternal() %>">
 		       <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('itemsTree');" %>">
 		           <bean:message key="button.items.order.save" bundle="SITE_RESOURCES"/>
 		       </html:button>

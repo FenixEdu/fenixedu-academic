@@ -8,7 +8,7 @@
 <bean:define id="section" type="net.sourceforge.fenixedu.domain.Section" name="item" property="section"/>
 <bean:define id="item" type="net.sourceforge.fenixedu.domain.Item" name="item"/>
 <bean:define id="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse" name="executionCourse"/>
-<bean:define id="url">/fileUpload.do?method=fileUpload&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
+<bean:define id="url">/fileUpload.do?method=fileUpload&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
 
 <h2>
 	<fr:view name="item" property="name" />
@@ -44,7 +44,7 @@
 	</span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= "/manageExecutionCourse.do?method=prepareCreateScormFile&itemID=" + item.getIdInternal() + "&executionCourseID=" + executionCourse.getIdInternal() + "&forwardTo=createScorm"%>">			
+		<html:link page="<%= "/manageExecutionCourse.do?method=prepareCreateScormFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal() + "&amp;forwardTo=createScorm"%>">			
 			<bean:message key="link.scorm.createScormFile" bundle="SITE_RESOURCES"/>
 		</html:link>
 	</span>
@@ -97,7 +97,7 @@
             <bean:message key="button.save"/>
         </html:submit>
          | 
-        <html:link page="<%= String.format("/manageExecutionCourse.do?method=section&executionCourseID=%s&sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>">
+        <html:link page="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>">
             <bean:message key="button.cancel"/>
         </html:link>
     </p>

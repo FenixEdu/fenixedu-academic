@@ -17,7 +17,7 @@
 </p>
 
 <fr:edit name="item" schema="item.group.edit" layout="tabular"
-         action="<%= String.format("/manageExecutionCourse.do?method=section&executionCourseID=%s&sectionID=%s", executionCourseId, sectionId) %>">
+         action="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourseId, sectionId) %>">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
