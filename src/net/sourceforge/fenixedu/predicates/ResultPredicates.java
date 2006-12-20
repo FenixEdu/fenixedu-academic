@@ -18,7 +18,7 @@ public class ResultPredicates {
 	public static final AccessControlPredicate<ResearchResult> createPredicate = new AccessControlPredicate<ResearchResult>() {
 		public boolean evaluate(ResearchResult result) {
 			final IUserView userView = AccessControl.getUserView();
-			if (userView.hasRoleType(RoleType.RESEARCHER)
+			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
 					&& !result.hasAnyResultParticipations()) {
 				return true;
 			}
@@ -29,7 +29,7 @@ public class ResultPredicates {
 	public static final AccessControlPredicate<ResearchResult> writePredicate = new AccessControlPredicate<ResearchResult>() {
 		public boolean evaluate(ResearchResult result) {
 			final IUserView userView = AccessControl.getUserView();
-			if (userView.hasRoleType(RoleType.RESEARCHER)
+			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
 					&& result.hasPersonParticipation(userView.getPerson())) {
 				return true;
 			}
@@ -44,7 +44,7 @@ public class ResultPredicates {
 		public boolean evaluate(ResultUnitAssociation association) {
 			final ResearchResult result = association.getResult();
 			final IUserView userView = AccessControl.getUserView();
-			if (userView.hasRoleType(RoleType.RESEARCHER)
+			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
 					&& result.hasPersonParticipation(userView.getPerson())) {
 				return true;
 			}
@@ -59,7 +59,7 @@ public class ResultPredicates {
 		public boolean evaluate(ResultEventAssociation association) {
 			final ResearchResult result = association.getResult();
 			final IUserView userView = AccessControl.getUserView();
-			if (userView.hasRoleType(RoleType.RESEARCHER)
+			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
 					&& result.hasPersonParticipation(userView.getPerson())) {
 				return true;
 			}
@@ -74,7 +74,7 @@ public class ResultPredicates {
 		public boolean evaluate(ResultParticipation participation) {
 			final ResearchResult result = participation.getResult();
 			final IUserView userView = AccessControl.getUserView();
-			if (userView.hasRoleType(RoleType.RESEARCHER)
+			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
 					&& result.hasPersonParticipation(userView.getPerson())) {
 				return true;
 			}
@@ -89,7 +89,7 @@ public class ResultPredicates {
 		public boolean evaluate(ResearchResultDocumentFile documentFile) {
 			final ResearchResult result = documentFile.getResult();
 			final IUserView userView = AccessControl.getUserView();
-			if (userView.hasRoleType(RoleType.RESEARCHER)
+			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
 					&& result.hasPersonParticipation(userView.getPerson())) {
 				return true;
 			}
