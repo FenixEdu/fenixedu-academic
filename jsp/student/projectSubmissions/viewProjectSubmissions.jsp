@@ -46,7 +46,7 @@
 		<bean:define id="attendsId" name="attends" property="idInternal" />
 		<bean:define id="projectId" name="project" property="idInternal" />
 		<html:link
-			action="<%="/projectSubmission.do?method=prepareProjectSubmission&attendsId="  + attendsId + "&projectId=" + projectId %>">
+			action="<%="/projectSubmission.do?method=prepareProjectSubmission&amp;attendsId="  + attendsId + "&amp;projectId=" + projectId %>">
 			<bean:message
 				key="link.projectSubmissions.viewProjectSubmissions.submitProject" />
 		</html:link>

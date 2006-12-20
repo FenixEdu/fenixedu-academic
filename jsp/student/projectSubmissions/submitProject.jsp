@@ -28,7 +28,7 @@
 <fr:edit id="createProjectSubmission"
 	name="projectSubmission"
 	schema="projectSubmission.create"
-	action="<%="/projectSubmission.do?method=submitProject&attendsId=" + attendsId + "&projectId=" + projectId%>">
+	action="<%="/projectSubmission.do?method=submitProject&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
 
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="thlight mtop05" />
@@ -39,5 +39,5 @@
 	<fr:hidden slot="studentGroup" name="studentGroup" />
 	<fr:hidden slot="person" name="person" />
 	
-    <fr:destination name="cancel" path="<%= "/projectSubmission.do?method=viewProjectSubmissions&attendsId=" + attendsId  + "&projectId="+ projectId%>"/>
+    <fr:destination name="cancel" path="<%= "/projectSubmission.do?method=viewProjectSubmissions&amp;attendsId=" + attendsId  + "&amp;projectId="+ projectId%>"/>
 </fr:edit>

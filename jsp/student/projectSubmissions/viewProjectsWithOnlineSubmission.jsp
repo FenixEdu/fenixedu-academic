@@ -19,7 +19,7 @@
 				<tr>
 					<td>
 						<bean:write name="projectWithOnlineSubmission" property="name"/>
-						<html:link action="<%="/projectSubmission.do?method=viewProjectSubmissions&attendsId=" + attendsId + "&projectId=" + projectId%>">
+						<html:link action="<%="/projectSubmission.do?method=viewProjectSubmissions&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
 							<bean:message key="link.projectSubmissions.viewProjectsWithOnlineSubmission.viewProjectSubmissions"/>
 						</html:link>
 					</td>
