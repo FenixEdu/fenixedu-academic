@@ -306,6 +306,9 @@ public class CreateTestData {
         System.out.println("Deleting campi.");
         for (final Set<Campus> campi = rootDomainObject.getCampussSet(); !campi.isEmpty(); campi.iterator().next().delete());
 
+        System.out.println("Deleting administrative offices.");
+        for (final Set<AdministrativeOffice> administrativeOffices = rootDomainObject.getAdministrativeOfficesSet(); !administrativeOffices.isEmpty(); administrativeOffices.iterator().next().delete());
+
         System.out.println("Completed clearing any existing data.");
         System.out.println("Loading the test data...");
     }
