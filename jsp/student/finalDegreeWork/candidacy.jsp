@@ -12,6 +12,13 @@
 <html:errors />
 </div>
 
+<logic:notPresent name="infoExecutionDegrees">
+	<apan class="error">
+		<bean:message key="message.no.final.degree.proposals.available"/>
+	</span>
+</logic:notPresent>
+
+<logic:present name="infoExecutionDegrees">
 <html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="somemethod"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -169,4 +176,4 @@
 		</html:submit>			
 	</logic:present>
 </html:form>
-<br />
+</logic:present>

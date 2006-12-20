@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student.finalDegreeWork;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -307,6 +308,9 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
             throws FenixServiceException, FenixFilterException {
         Object[] args = {};
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear();
+        if (executionYear == null) {
+            return new ArrayList(0);
+        }
         final InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
 
 //        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(null,
