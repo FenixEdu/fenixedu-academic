@@ -14,7 +14,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -64,6 +63,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
@@ -1203,10 +1203,6 @@ public class Registration extends Registration_Base {
 
     }
 
-    public String getIstUniversity() {
-	return getLastStudentCurricularPlanExceptPast().getLastCampus().getName();
-    }
-
     @Override
     public Degree getDegree() {
 	if (super.getDegree() != null) {
@@ -1496,19 +1492,11 @@ public class Registration extends Registration_Base {
     public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
 	    final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
 	
-	final Person loggedPerson = AccessControl.getPerson();
-	
 	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 
 	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
 	    if ((academicServiceRequestSituationType == null && academicServiceRequest.isNewRequest())
 		    || academicServiceRequest.getAcademicServiceRequestSituationType() == academicServiceRequestSituationType) {
-		
-		if (loggedPerson.hasEmployee()
-			&& loggedPerson.getEmployee().getCurrentCampus() != academicServiceRequest
-				.getStudentCurricularPlan().getLastCampus().getSpaceCampus()) {
-		    continue;
-		}
 		
 		result.add((DocumentRequest) academicServiceRequest);
 	    }
@@ -1516,7 +1504,7 @@ public class Registration extends Registration_Base {
 
 	return result;
     }
-
+    
     public Collection<AcademicServiceRequest> getNewAcademicServiceRequests() {
 	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests(AcademicServiceRequestSituationType.NEW);
     }
@@ -1555,8 +1543,12 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    public Campus getCurrentCampus() {
-	return getLastStudentCurricularPlanExceptPast().getCurrentCampus();
+    public Campus getCampus() {
+	return getLastStudentCurricularPlanExceptPast().getLastCampus();
+    }
+
+    public String getIstUniversity() {
+	return getCampus().getName();
     }
 
     @Override

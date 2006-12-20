@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -1538,10 +1539,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    public Campus getLastCampus() {
-	return getDegreeCurricularPlan().getExecutionDegreeByYear(getLastExecutionYear()).getCampus();
-    }
-
     public boolean hasAnyEnrolmentForExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	for (final Enrolment enrolment : this.getEnrolmentsSet()) {
 	    if (enrolment.getExecutionPeriod() == executionPeriod) {
@@ -1860,10 +1857,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	for (final ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegreesSet()) {
 	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
 	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
-		return executionDegree.getCampus();
+		return executionDegree.getCampus().getSpaceCampus();
 	    }
 	}
+	
 	return null;
+    }
+
+    public Campus getLastCampus() {
+	return getDegreeCurricularPlan().getExecutionDegreeByYear(getLastExecutionYear()).getCampus().getSpaceCampus();
     }
 
     @Override
