@@ -53,12 +53,18 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
         setPercentage(percentage);
     }
 
-    public void delete(RoleType roleType) {
-        getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+
+    @Override
+    public void delete() {
         removeTeacherService();
         removeShift();
         removeProfessorship();
         super.delete();
+    }
+
+    public void delete(RoleType roleType) {
+        getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        delete();
     }
 
     public void updatePercentage(Double percentage, RoleType roleType) {

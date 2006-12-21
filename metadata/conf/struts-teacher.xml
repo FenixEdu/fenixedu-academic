@@ -7,6 +7,10 @@
     <!-- ========== Data Source Configuration =============================== -->
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
+	    <form-bean name="teacherCreditsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="executionPeriodId" type="java.lang.Integer"/>
+			<form-property name="teacherId" type="java.lang.Integer" />
+		</form-bean>
         <form-bean name="voidForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="voidProperty" type="java.lang.Integer" />
         </form-bean>
@@ -2150,8 +2154,16 @@
         	<forward name="viewProjectSubmissionsByGroup" path="view-project-submissions-by-group"/>
         	<forward name="viewProjectSubmissionLogsByGroup" path="view-project-submission-logs-by-group"/>
         </action>
-        
-		
+
+        <action path="/credits"
+   	        name="teacherCreditsForm"
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.credits.DepartmentMemberShowTeacherCreditsDispatchAction">             
+            <forward name="show-teacher-credits" path="show-teacher-credits-sheet"/>
+            <forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>
+        </action>
+
 		<!-- Action mappings for tests -->
 		&tests-actions;
 		<!-- End of action mappings for tests -->

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Branch;
@@ -55,9 +56,11 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -111,6 +114,9 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -126,6 +132,7 @@ import net.sourceforge.fenixedu.util.Season;
 import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
 
 public class CreateTestData {
@@ -172,6 +179,7 @@ public class CreateTestData {
         person.setName("Fenix System Administrator");
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
+        person.setIsPassInKerberos(Boolean.TRUE);
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));
@@ -182,6 +190,12 @@ public class CreateTestData {
 
     private static void clearData() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+
+        System.out.println("Deleting teacher service items.");
+        for (final Set<TeacherServiceItem> teacherServiceItems = rootDomainObject.getTeacherServiceItemsSet(); !teacherServiceItems.isEmpty(); teacherServiceItems.iterator().next().delete());
+
+        System.out.println("Deleting teacher services.");
+        for (final Set<TeacherService> teacherServices = rootDomainObject.getTeacherServicesSet(); !teacherServices.isEmpty(); teacherServices.iterator().next().delete());
 
         System.out.println("Deleting events.");
         for (final Set<Event> events = rootDomainObject.getAccountingEventsSet(); !events.isEmpty(); events.iterator().next().delete());
@@ -500,6 +514,59 @@ public class CreateTestData {
         executionPeriod1.setInquiryResponseEndDateTime(executionPeriod1.getEndDateYearMonthDay().toDateTimeAtMidnight());
         executionPeriod2.setInquiryResponseBeginDateTime(executionPeriod2.getBeginDateYearMonthDay().toDateTimeAtMidnight());
         executionPeriod2.setInquiryResponseEndDateTime(executionPeriod2.getEndDateYearMonthDay().toDateTimeAtMidnight());
+
+        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 1, "2005/2006");
+        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 2, "2004/2005");
+        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 3, "2003/2004");
+        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 4, "2002/2003");
+        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 5, "2001/2002");
+        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 6, "2000/2001");
+    }
+
+    private static void createOtherExecutionYears(final ExecutionYear executionYear, final ExecutionPeriod executionPeriod1, final ExecutionPeriod executionPeriod2, int i, final String yearString) {
+        final ExecutionPeriod firstExecutionPeriod = findFirstExecutionPeriod();
+        final ExecutionYear otherExecutionYear = new ExecutionYear();
+        otherExecutionYear.setYear(yearString);
+        otherExecutionYear.setState(PeriodState.NOT_OPEN);
+        final ExecutionPeriod otherExecutionPeriod1 = new ExecutionPeriod();
+        otherExecutionPeriod1.setSemester(Integer.valueOf(1));
+        otherExecutionPeriod1.setExecutionYear(otherExecutionYear);
+        otherExecutionPeriod1.setName("Semester 1");
+        final ExecutionPeriod otherExecutionPeriod2 = new ExecutionPeriod();
+        otherExecutionPeriod2.setSemester(Integer.valueOf(2));
+        otherExecutionPeriod2.setExecutionYear(otherExecutionYear);
+        otherExecutionPeriod2.setName("Semester 2");
+        otherExecutionPeriod1.setNextExecutionPeriod(otherExecutionPeriod2);
+        otherExecutionPeriod2.setNextExecutionPeriod(firstExecutionPeriod);
+
+        otherExecutionYear.setBeginDateYearMonthDay(executionYear.getBeginDateYearMonthDay().minusYears(i));
+        otherExecutionYear.setEndDateYearMonthDay(executionYear.getEndDateYearMonthDay().minusYears(i));
+        otherExecutionPeriod1.setBeginDateYearMonthDay(executionPeriod1.getBeginDateYearMonthDay().minusYears(i));
+        otherExecutionPeriod1.setEndDateYearMonthDay(executionPeriod1.getEndDateYearMonthDay().minusYears(i));
+        otherExecutionPeriod2.setBeginDateYearMonthDay(executionPeriod2.getBeginDateYearMonthDay().minusYears(i));
+        otherExecutionPeriod2.setEndDateYearMonthDay(executionPeriod2.getEndDateYearMonthDay().minusYears(i));
+        otherExecutionPeriod1.setState(PeriodState.NOT_OPEN);
+        otherExecutionPeriod2.setState(PeriodState.NOT_OPEN);
+
+//        new OccupationPeriod(otherExecutionPeriod1.getBeginDateYearMonthDay(), executionPeriod1.getEndDateYearMonthDay().minusDays(32));
+//        new OccupationPeriod(execuotherotherExecutionPeriodEndDateYearMonthDay().minusDays(31), otherExecutionPeriod1.getEndDateYearMonthDay());
+//        new OccupationPeriod(otherExecutionPeriod2.getBeginDateYearMonthDay(), otherExecutionPeriod2.getEndDateYearMonthDay().minusDays(32));
+//        new OccupationPeriod(otherExecutionPeriod2.getEndDateYearMonthDay().minusDays(31), otherExecutionPeriod2.getEndDateYearMonthDay());
+//        new OccupationPeriod(otherExecutionPeriod2.getEndDateYearMonthDay().plusDays(31), otherExecutionPeriod2.getEndDateYearMonthDay().plusDays(46));
+//
+//        otherExecutionPeriod1.setInquiryResponseBeginDateTime(otherExecutionPeriod1.getBeginDateYearMonthDay().toDateTimeAtMidnight());
+//        otherExecutionPeriod1.setInquiryResponseEndDateTime(otherExecutionPeriod1.getEndDateYearMonthDay().toDateTimeAtMidnight());
+//        otherExecutionPeriod2.setInquiryResponseBeginDateTime(otherExecutionPeriod2.getBeginDateYearMonthDay().toDateTimeAtMidnight());
+//        otherExecutionPeriod2.setInquiryResponseEndDateTime(otherExecutionPeriod2.getEndDateYearMonthDay().toDateTimeAtMidnight());
+    }
+
+    private static ExecutionPeriod findFirstExecutionPeriod() {
+        for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+            if (executionPeriod.getPreviousExecutionPeriod() == null) {
+                return executionPeriod;
+            }
+        }
+        return null;
     }
 
     private static void createCampus() {
@@ -650,6 +717,36 @@ public class CreateTestData {
         createShifts(executionCourse);
         createEvaluationMethod(executionCourse);
         createBibliographicReferences(executionCourse);
+        createShiftProfessorhips(executionCourse);
+    }
+
+    private static void createShiftProfessorhips(final ExecutionCourse executionCourse) {
+        final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+        for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
+            final Teacher teacher = professorship.getTeacher();
+            for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
+                if ((professorship.isResponsibleFor() && shift.getTipo() == ShiftType.TEORICA)
+                        || (!professorship.isResponsibleFor() && shift.getTipo() != ShiftType.TEORICA)) {
+                    final ShiftProfessorship shiftProfessorship = new ShiftProfessorship();
+                    shiftProfessorship.setShift(shift);
+                    shiftProfessorship.setProfessorship(professorship);
+                    shiftProfessorship.setPercentage(Double.valueOf(100));
+                    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+                    if (teacherService == null) {
+                        teacherService = new TeacherService(teacher, executionPeriod);
+                    }
+                    final DegreeTeachingService degreeTeachingService = new DegreeTeachingService(teacherService, professorship, shift, Double.valueOf(100), RoleType.SCIENTIFIC_COUNCIL);
+
+                    final SupportLessonDTO supportLessonDTO = new SupportLessonDTO();
+                    supportLessonDTO.setProfessorshipID(professorship.getIdInternal());
+                    supportLessonDTO.setPlace("Room23");
+                    supportLessonDTO.setStartTime(new DateTime().withField(DateTimeFieldType.hourOfDay(), 20).toDate());
+                    supportLessonDTO.setEndTime(new DateTime().withField(DateTimeFieldType.hourOfDay(), 21).toDate());
+                    supportLessonDTO.setWeekDay(new DiaSemana(DiaSemana.SABADO));
+                    final SupportLesson supportLesson = SupportLesson.create(supportLessonDTO, professorship, RoleType.SCIENTIFIC_COUNCIL);
+                }
+            }
+        }
     }
 
     private static void createEvaluationMethod(final ExecutionCourse executionCourse) {

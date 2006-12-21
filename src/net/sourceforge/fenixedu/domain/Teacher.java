@@ -898,7 +898,7 @@ public class Teacher extends Teacher_Base {
 	    balanceCredits = firstTeacherService.getPastServiceCredits();
 	}
 
-	if (executionPeriod.isAfter(firstExecutionPeriod)) {
+	if (executionPeriod != null && executionPeriod.isAfter(firstExecutionPeriod)) {
 	    balanceCredits = sumCreditsBetweenPeriods(firstExecutionPeriod.getNextExecutionPeriod(),
 		    executionPeriod, balanceCredits);
 	}

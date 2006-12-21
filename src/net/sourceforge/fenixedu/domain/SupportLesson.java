@@ -99,4 +99,20 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
         super.setPlace(place);
     }
 
+    private SupportLesson() {
+        super();       
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public static SupportLesson create(SupportLessonDTO supportLessonDTO, Professorship professorship, RoleType roleType) {
+        final SupportLesson supportLesson = new SupportLesson();
+        supportLesson.setProfessorship(professorship);
+        supportLesson.getProfessorship().getExecutionCourse().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        supportLesson.setEndTime(supportLessonDTO.getEndTime());
+        supportLesson.setStartTime(supportLessonDTO.getStartTime());
+        supportLesson.setPlace(supportLessonDTO.getPlace());
+        supportLesson.setWeekDay(supportLessonDTO.getWeekDay());
+        return supportLesson;
+    }
+
 }

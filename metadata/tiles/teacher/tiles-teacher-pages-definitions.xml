@@ -201,6 +201,10 @@
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/teacher/viewFinalDegreeWorkProposal_bd.jsp"></put>
 	</definition>	
+	<definition name="show-teacher-credits-sheet" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+		<put name="body" value="/teacher/credits.jsp"/>
+	</definition>   
 <!-- TESTS DEFINITIONS -->
 	<definition name="tests-First-Page" extends="definition.teacher.testsPage">
 		<put name="body" value="/teacher/onlineTests/testsFirstPage.jsp"></put>		
