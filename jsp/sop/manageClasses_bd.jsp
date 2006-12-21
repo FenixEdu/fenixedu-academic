@@ -8,7 +8,7 @@
 	<tr>
     	<td class="infoselected">
     		<p>O curso seleccionado &eacute;:</p>
-    		<strong><jsp:include page="context.jsp"/></strong>
+    		<jsp:include page="context.jsp"/>
 		</td>
 	</tr>
 </table>
@@ -96,9 +96,9 @@
 						+ SessionConstants.EXECUTION_DEGREE_OID
 						+ "="
 						+ pageContext.findAttribute("executionDegreeOID") %>">
-					<div align="center">
+					<span style="align: center;">
 						<jsp:getProperty name="classView" property="nome" />
-					</div>
+					</span>
 				</html:link>
 			</td>
 			<td nowrap="nowrap" class="listClasses">

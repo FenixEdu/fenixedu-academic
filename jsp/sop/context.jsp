@@ -16,7 +16,7 @@
 								 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear"
 								 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID"
+					<html:select bundle="HTMLALT_RESOURCES" property="executionDegreeOID"
 								 size="1"
 								 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"
 								 onchange="this.form.submit();">
@@ -39,7 +39,7 @@
 								 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID"
 								 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear" size="1"
+					<html:select bundle="HTMLALT_RESOURCES" property="curricularYear" size="1"
 								 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"
 								 onchange="this.form.submit();">
 			       		<html:options collection="anosCurriculares"
@@ -55,7 +55,7 @@
 				<html:form action="/chooseExecutionPeriod">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.index" property="index" size="1"
+					<html:select bundle="HTMLALT_RESOURCES" property="index" size="1"
 								 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"
 								 onchange="this.form.submit();">
 				    	<html:options	property="value" 

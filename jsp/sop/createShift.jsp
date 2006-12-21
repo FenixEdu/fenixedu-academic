@@ -36,7 +36,7 @@
 				:
 			</td>
 			<td class="formTD">
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.tipoAula" property="tipoAula" size="1">
+				<html:select bundle="HTMLALT_RESOURCES" property="tipoAula" size="1">
 					<html:options collection="tiposAula" property="value" labelProperty="label"/>
 				</html:select>
 			</td>

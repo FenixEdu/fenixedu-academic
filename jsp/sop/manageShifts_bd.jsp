@@ -11,7 +11,7 @@
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
     	<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
-			<strong><jsp:include page="context.jsp"/></strong>
+			<jsp:include page="context.jsp"/>
      	</td>
     </tr>
 </table>

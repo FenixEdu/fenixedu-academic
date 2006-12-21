@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <bean:define id="executionCourseList" name="<%= SessionConstants.EXECUTION_COURSE_LIST_KEY %>"/>
-<html:select bundle="HTMLALT_RESOURCES" altKey="select.courseInitials" property="courseInitials" size="1">
-	<html:option value=""></html:option>
+<html:select bundle="HTMLALT_RESOURCES" property="courseInitials" size="1">
+	<html:option value=""><!-- w3c complient --></html:option>
 	<html:options property="sigla" labelProperty="nome" collection="executionCourseList"/>
 </html:select>

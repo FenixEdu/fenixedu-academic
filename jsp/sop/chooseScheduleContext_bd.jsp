@@ -27,7 +27,7 @@
 	<br />
 	<p>
 		<bean:message key="property.context.degree"/>:
-		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" size="1">
+		<html:select bundle="HTMLALT_RESOURCES" property="executionDegreeOID" size="1">
        		<html:options collection="licenciaturas"
        					  property="value"
        					  labelProperty="label"/>
@@ -49,7 +49,7 @@
 				<bean:message key="property.context.curricular.year"/>:
 			</td>
 			<td nowrap class="formTD">
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear" size="1">
+				<html:select bundle="HTMLALT_RESOURCES" property="curricularYear" size="1">
 		       		<html:options collection="anosCurriculares"
 		       					  property="value"
 		       					  labelProperty="label"/>

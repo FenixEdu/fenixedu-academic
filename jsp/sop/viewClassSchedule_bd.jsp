@@ -11,7 +11,7 @@
 	<tr>
     	<td class="infoselected">
     		<p>O curso seleccionado &eacute;:</p>
-    		<strong><jsp:include page="context.jsp"/></strong>
+    		<jsp:include page="context.jsp"/>
 		</td>
 	</tr>
 </table>
@@ -107,7 +107,7 @@
 </html:form>
 
 <br />
-	<h2>Horário da Turma</h2>
+	<h2>Horï¿½rio da Turma</h2>
 	<div align="center">
 		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"
 						  type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/>

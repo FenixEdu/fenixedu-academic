@@ -11,7 +11,7 @@
 	<tr>
 		<td bgcolor="#FFFFFF" class="infoselected">
 			<p>O curso seleccionado &eacute;:</p>
-			<strong><jsp:include page="context.jsp"/></strong>
+				<jsp:include page="context.jsp"/>
 		</td>
 	</tr>
 </table>
