@@ -37,7 +37,9 @@ public class UICommandLink extends HtmlCommandLink {
         writer.startElement("a", this);
         writer.writeAttribute("type", (this.getType() != null) ? this.getType() : "", null);
         writer.writeAttribute("title", (this.getTitle() != null) ? this.getTitle() : "", null);
-        writer.writeAttribute("target", (this.getTarget() != null) ? this.getTarget() : "", null);
+        if(this.getTarget() != null) {
+            writer.writeAttribute("target", this.getTarget(), null);
+        }
         writer.writeAttribute("onclick", getOnClickEvent(context, uiParameters), null);
         writer.writeAttribute("href", "#", null);
         writer.writeAttribute("id", getClientId(context), null);
