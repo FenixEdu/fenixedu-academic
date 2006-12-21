@@ -104,6 +104,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -117,6 +118,10 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -427,7 +432,22 @@ public class CreateTestData {
         final Contract contractWorking = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.WORKING);
         final Contract contractSalary = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.SALARY);
         final Contract contractMailing = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.MAILING);
-        person.addPersonRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);        
+        person.addPersonRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+        person.addPersonRoleByRoleType(RoleType.TIME_TABLE_MANAGER);
+        final Vigilant vigilant = new Vigilant(person, ExecutionYear.readCurrentExecutionYear());
+        final VigilantGroup vigilantGroup;
+        if (RootDomainObject.getInstance().getVigilantGroupsSet().isEmpty()) {
+            vigilantGroup = new VigilantGroup();
+            vigilantGroup.setName("Officers of the Law");
+            vigilantGroup.setUnit(RootDomainObject.getInstance().getInstitutionUnit());
+            vigilantGroup.setContactEmail("nowhere@nowhere.com");
+            vigilantGroup.setRulesLink("http://www.google.com/");
+            ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+            vigilantGroup.setExecutionYear(currentYear);
+        } else {
+            vigilantGroup = RootDomainObject.getInstance().getVigilantGroupsSet().iterator().next();
+        }
+        vigilantGroup.addVigilants(vigilant);
         return teacher;
     }
 
@@ -436,6 +456,8 @@ public class CreateTestData {
         person.setName(namePrefix + i);
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.setDateOfBirthYearMonthDay(new YearMonthDay().minusYears(23));
+        person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
+        person.setDocumentIdNumber(person.getIdInternal().toString());
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));
@@ -455,7 +477,7 @@ public class CreateTestData {
     }
 
     private static void createStudent(final DegreeCurricularPlan degreeCurricularPlan, final int i) {
-	final Person person = createPerson("Esponga de Informação", "student", i);
+	final Person person = createPerson("Esponja de Informação", "student", i);
 	final Student student = new Student(person, Integer.valueOf(i));
 	//final Registration registration = new Registration(person, degreeCurricularPlan);
 	final Registration registration = new Registration(person, Integer.valueOf(i));
@@ -610,9 +632,11 @@ public class CreateTestData {
                 createPreBolonhaCurricularCourses(degreeCurricularPlan, i, executionYear, branch);
             }
 
+
             final Unit unit = RootDomainObject.getInstance().getInstitutionUnit();
             final Department department = unit.getDepartment();
             department.addDegrees(degree);
+            degree.setUnit(unit);
 
             createDegreeInfo(degree);
             degreeCurricularPlan.setDescription("Bla bla bla. Descrição do plano curricular do curso. Bla bla bla");
@@ -945,7 +969,7 @@ public class CreateTestData {
 	oldRooms.add(oldRoom);
 	final OccupationPeriod occupationPeriod = new OccupationPeriod(startDateTime.toYearMonthDay(), endDateTime.toYearMonthDay());
 	final WrittenTest writtenTest = new WrittenTest(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, name);
-        createWrittenEvaluationEnrolmentPeriod(executionPeriod, writtenTest);
+        createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, writtenTest, executionCourse);
     }
 
     private static void createExam(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse, final Season season) {
@@ -962,14 +986,23 @@ public class CreateTestData {
 	oldRooms.add(oldRoom);
 	final OccupationPeriod occupationPeriod = new OccupationPeriod(startDateTime.toYearMonthDay(), endDateTime.toYearMonthDay());
 	final Exam exam = new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, season);
-        createWrittenEvaluationEnrolmentPeriod(executionPeriod, exam);
+        createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, exam, executionCourse);
     }
 
-    private static void createWrittenEvaluationEnrolmentPeriod(final ExecutionPeriod executionPeriod, final WrittenEvaluation writtenTest) {
-        writtenTest.setEnrollmentBeginDayDateYearMonthDay(executionPeriod.getBeginDateYearMonthDay());
-        writtenTest.setEnrollmentBeginTimeDateHourMinuteSecond(new HourMinuteSecond(0, 0, 0));
-        writtenTest.setEnrollmentEndDayDateYearMonthDay(writtenTest.getDayDateYearMonthDay().minusDays(1));
-        writtenTest.setEnrollmentEndTimeDateHourMinuteSecond(new HourMinuteSecond(0, 0, 0));
+    private static void createWrittenEvaluationEnrolmentPeriodAndVigilancies(final ExecutionPeriod executionPeriod, final WrittenEvaluation writtenEvaluation, final ExecutionCourse executionCourse) {
+        writtenEvaluation.setEnrollmentBeginDayDateYearMonthDay(executionPeriod.getBeginDateYearMonthDay());
+        writtenEvaluation.setEnrollmentBeginTimeDateHourMinuteSecond(new HourMinuteSecond(0, 0, 0));
+        writtenEvaluation.setEnrollmentEndDayDateYearMonthDay(writtenEvaluation.getDayDateYearMonthDay().minusDays(1));
+        writtenEvaluation.setEnrollmentEndTimeDateHourMinuteSecond(new HourMinuteSecond(0, 0, 0));
+
+        final YearMonthDay yearMonthDay = writtenEvaluation.getDayDateYearMonthDay();
+        writtenEvaluation.setDayDateYearMonthDay(new YearMonthDay().plusDays(1));
+        final Vigilancy vigilancy = new VigilancyWithCredits(writtenEvaluation);
+        writtenEvaluation.setDayDateYearMonthDay(yearMonthDay);
+        for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
+            final Vigilant vigilant = professorship.getTeacher().getPerson().getVigilantForGivenExecutionYear(executionPeriod.getExecutionYear());
+            vigilant.addVigilancys(vigilancy);
+        }
     }
 
     private static String constructExecutionYearString() {

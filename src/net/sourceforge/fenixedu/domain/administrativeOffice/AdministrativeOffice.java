@@ -155,6 +155,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    }
 	}
 
+        System.out.println("getAdministratedDegrees.size()= " + result.size());
 	return result;
     }
 
