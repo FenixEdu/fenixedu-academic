@@ -367,7 +367,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getStudentCurricularPlan().getCurrentCampus();
     }
     
-    public boolean allowEmployeeToActUpon() {
+    public boolean isAvailableForEmployeeToActUpon() {
 	final Person loggedPerson = AccessControl.getPerson();
 
 	if (loggedPerson.hasEmployee()) {
@@ -381,8 +381,4 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	}
     }
     
-    public boolean getAllowEmployeeToActUpon() {
-	return allowEmployeeToActUpon();
-    }
-
 }
