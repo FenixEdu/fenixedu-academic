@@ -185,7 +185,6 @@ public class CreateTestData {
         person.setName("Fenix System Administrator");
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
-        person.setIsPassInKerberos(Boolean.TRUE);
         person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
         person.setDocumentIdNumber(person.getIdInternal().toString());
         final User user = person.getUser();
@@ -194,6 +193,7 @@ public class CreateTestData {
         login.setActive(Boolean.TRUE);
         LoginAlias.createNewCustomLoginAlias(login, "admin");
         login.openLoginIfNecessary(RoleType.MANAGER);
+        person.setIsPassInKerberos(Boolean.TRUE);
     }
 
     private static void clearData() {
@@ -486,12 +486,12 @@ public class CreateTestData {
         person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
         person.setDocumentIdNumber(person.getIdInternal().toString());
         person.setEmail("abc" + person.getIdInternal() + "@gmail.com");
-        person.setIsPassInKerberos(Boolean.TRUE);
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));
         login.setActive(Boolean.TRUE);
         LoginAlias.createNewCustomLoginAlias(login, usernamePrefix + i);
+        person.setIsPassInKerberos(Boolean.TRUE);
         return person;
     }
 
