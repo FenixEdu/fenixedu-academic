@@ -965,12 +965,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setCurricularPlanMembersGroup(Group curricularPlanMembersGroup) {
 	super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
-
-        if (curricularPlanMembersGroup == null) {
-            setCurricularPlanMembersGroupExpression(null);
-        } else {
-            setCurricularPlanMembersGroupExpression(curricularPlanMembersGroup.getExpression());
-    }
     }
 
     @Override

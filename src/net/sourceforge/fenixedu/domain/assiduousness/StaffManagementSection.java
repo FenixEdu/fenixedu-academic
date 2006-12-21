@@ -17,14 +17,4 @@ public class StaffManagementSection extends StaffManagementSection_Base {
                         .getSectionManagers().isMember(person);
     }
 
-    @Override
-    public void setSectionManagers(Group group) {
-        super.setSectionManagers(group);
-
-        if (group == null) {
-            setSectionManagersExpression(null);
-        } else {
-            setSectionManagersExpression(group.getExpression());
-        }
-    }
 }

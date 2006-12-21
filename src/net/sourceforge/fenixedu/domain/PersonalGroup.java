@@ -54,14 +54,4 @@ public class PersonalGroup extends PersonalGroup_Base implements IGroup{
         return getConcreteGroup().getExpression();
     }
  
-    @Override
-    public void setConcreteGroup(Group group) {
-        super.setConcreteGroup(group);
-
-        if (group == null) {
-            setConcreteGroupExpression(null);
-        } else {
-            setConcreteGroupExpression(group.getExpression());
-        }
-    }
 }

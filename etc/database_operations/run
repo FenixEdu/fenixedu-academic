@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Remove old BLOB columns for groups and replace them with the new TEXT ones" DropGroupBlobColumns.sql

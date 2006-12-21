@@ -667,11 +667,8 @@ class net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard extends net.so
 	String ojbConcreteClass;
 	String name;
 	Group readers;
-	String readersExpression;
-	Group writers;	
-	String writersExpression;
-	Group managers;	
-	String managersExpression;
+	Group writers;
+	Group managers;
 	Boolean mandatory;
 }
 
@@ -714,7 +711,6 @@ class net.sourceforge.fenixedu.domain.PersonalGroup extends net.sourceforge.feni
 	String name;
 	String description;
 	Group concreteGroup;
-	String concreteGroupExpression;
 	Integer keyPerson;
 }
 
@@ -899,7 +895,6 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     CurricularStage curricularStage;
     Integer keyRoot;
    	Group curricularPlanMembersGroup;
-   	String curricularPlanMembersGroupExpression;
    	Integer keyDegreeStructure;
     Integer keyServiceAgreementTemplate;
 }
@@ -1166,7 +1161,6 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	String name;
 	Integer keyDepartmentUnit;
 	Group competenceCourseMembersGroup;
-	String competenceCourseMembersGroupExpression;
 }
 
 
@@ -1928,7 +1922,6 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 	String externalStorageIdentification;
 	DateTime uploadTime;
 	Group permittedGroup;
-	String permittedGroupExpression;
 }
 
 	class net.sourceforge.fenixedu.domain.FileItem extends net.sourceforge.fenixedu.domain.File {
@@ -2671,11 +2664,8 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 	Integer keySuroundingSpace;
 	YearMonthDay createdOn;
 	Group personOccupationsAccessGroup;
-	String personOccupationsAccessGroupExpression;
-	Group extensionOccupationsAccessGroup;	
-	String extensionOccupationsAccessGroupExpression;
-	Group spaceManagementAccessGroup;	
-	String spaceManagementAccessGroupExpression;
+	Group extensionOccupationsAccessGroup;
+	Group spaceManagementAccessGroup;
 }
 	class net.sourceforge.fenixedu.domain.space.Campus extends net.sourceforge.fenixedu.domain.space.Space {
 		Integer keyOldCampus;
@@ -3570,7 +3560,6 @@ class net.sourceforge.fenixedu.domain.assiduousness.Schedule extends net.sourcef
 
 class net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection extends net.sourceforge.fenixedu.domain.DomainObject {
 	Group sectionManagers;
-	String sectionManagersExpression;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.WorkPeriod extends net.sourceforge.fenixedu.domain.DomainObject{
@@ -4215,7 +4204,6 @@ class net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy extends
 	
 	class net.sourceforge.fenixedu.domain.functionalities.GroupAvailability extends net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy {
 		Group targetGroup;
-		String targetGroupExpression;
 }
 
 		class net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability extends net.sourceforge.fenixedu.domain.functionalities.GroupAvailability {
@@ -4247,13 +4235,9 @@ class net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceD
 	Integer keyCreator;
 	String name;
 	Group phasesManagementGroup;
-	String phasesManagementGroupExpression;
 	Group automaticValuationGroup;
-	String automaticValuationGroupExpression;
 	Group omissionConfigurationGroup;
-	String omissionConfigurationGroupExpression;
-	Group valuationCompetenceCoursesAndTeachersManagementGroup;	
-	String valuationCompetenceCoursesAndTeachersManagementGroupExpr;
+	Group valuationCompetenceCoursesAndTeachersManagementGroup;
 	
 }
 
@@ -4293,9 +4277,7 @@ class net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGroupi
 	Integer keyParent;
 	String name;
 	Group coursesAndTeachersValuationManagers;
-	String coursesAndTeachersValuationManagersExpression;
 	Group coursesAndTeachersManagementGroup;
-	String coursesAndTeachersManagementGroupExpression;
 }
 
 class net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCompetenceCourse extends net.sourceforge.fenixedu.domain.DomainObject {

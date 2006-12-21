@@ -266,18 +266,7 @@ public class Department extends Department_Base {
 	}	
     }
 
-    @Override
-    public void setCompetenceCourseMembersGroup(Group group) {
-        super.setCompetenceCourseMembersGroup(group);
-
-        if (group == null) {
-            setCompetenceCourseMembersGroupExpression(null);
-        } else {
-            setCompetenceCourseMembersGroupExpression(group.getExpression());
-        }
-    }
-
-    public void delete() {
+	public void delete() {
         removeDepartmentUnit();
         removeRootDomainObject();
         deleteDomainObject();

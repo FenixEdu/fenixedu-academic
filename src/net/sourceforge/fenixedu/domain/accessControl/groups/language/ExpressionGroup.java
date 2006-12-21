@@ -21,7 +21,7 @@ import antlr.TokenStreamRecognitionException;
  * compute it's members. If the context changes then the group may change. 
  * 
  * <p>
- * Note that because the group requires a context to be evaluated it cannot
+ * Note that because the group may require a context to be evaluated it cannot
  * be easily combined with other groups.
  * 
  * @author cfgi
@@ -33,16 +33,20 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
     private String expression;
     
     private transient GroupContext context;
-    private Group group;
+    private transient Group group;
     
     /**
-     * The given expression is parsed and a group is created from the expression.
-     * Since the expression is parsed you may have to deal with errors in the 
-     * expression.
+     * The given expression is parsed and a group is created from the
+     * expression. Since the expression is parsed you may have to deal with
+     * errors in the expression.
      * 
-     * @param expression the group expression
+     * @param expression
+     *            the group expression
      * 
-     * @exception GroupExpressionException when the expression is not correct
+     * @exception GroupExpressionException
+     *                when the expression is not correct
+     * 
+     * @see #getGroup()
      */
     public ExpressionGroup(String expression) {
         super();
@@ -91,7 +95,11 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
      * 
      * @return the group compiled from the expression
      */
-    protected Group getGroup() {
+    public Group getGroup() {
+        if (this.group == null) {
+            this.group = parseExpression(getExpression());
+        }
+        
         return this.group;
     }
     

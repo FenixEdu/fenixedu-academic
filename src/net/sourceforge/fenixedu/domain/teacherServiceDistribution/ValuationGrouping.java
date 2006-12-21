@@ -439,25 +439,4 @@ public class ValuationGrouping extends ValuationGrouping_Base {
 		return totalStudents;
 	}
     
-    @Override
-    public void setCoursesAndTeachersValuationManagers(Group group) {
-        super.setCoursesAndTeachersValuationManagers(group);
-
-        if (group == null) {
-            setCoursesAndTeachersValuationManagersExpression(null);
-        } else {
-            setCoursesAndTeachersValuationManagersExpression(group.getExpression());
-        }
-    }
-    
-    @Override
-    public void setCoursesAndTeachersManagementGroup(Group group) {
-        super.setCoursesAndTeachersManagementGroup(group);
-
-        if (group == null) {
-            setCoursesAndTeachersManagementGroupExpression(null);
-        } else {
-            setCoursesAndTeachersManagementGroupExpression(group.getExpression());
-        }
-    }
 }

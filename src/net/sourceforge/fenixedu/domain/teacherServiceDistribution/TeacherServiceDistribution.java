@@ -438,47 +438,4 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 		return false;
 	}
     
-    @Override
-    public void setPhasesManagementGroup(Group group) {
-        super.setPhasesManagementGroup(group);
-
-        if (group == null) {
-            setPhasesManagementGroupExpression(null);
-        } else {
-            setPhasesManagementGroupExpression(group.getExpression());
-        }
-    }
-    
-    @Override
-    public void setAutomaticValuationGroup(Group group) {
-        super.setAutomaticValuationGroup(group);
-
-        if (group == null) {
-            setAutomaticValuationGroupExpression(null);
-        } else {
-            setAutomaticValuationGroupExpression(group.getExpression());
-        }
-    }
-    
-    @Override
-    public void setOmissionConfigurationGroup(Group group) {
-        super.setOmissionConfigurationGroup(group);
-
-        if (group == null) {
-            setOmissionConfigurationGroupExpression(null);
-        } else {
-            setOmissionConfigurationGroupExpression(group.getExpression());
-        }
-    }
-    
-    @Override
-    public void setValuationCompetenceCoursesAndTeachersManagementGroup(Group group) {
-        super.setValuationCompetenceCoursesAndTeachersManagementGroup(group);
-
-        if (group == null) {
-            setValuationCompetenceCoursesAndTeachersManagementGroupExpr(null);
-        } else {
-            setValuationCompetenceCoursesAndTeachersManagementGroupExpr(group.getExpression());
-        }
-    }
 }

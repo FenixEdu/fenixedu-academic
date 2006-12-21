@@ -91,14 +91,4 @@ public abstract class File extends File_Base {
 	}
     }
 
-    @Override
-    public void setPermittedGroup(Group group) {
-	super.setPermittedGroup(group);
-
-	if (group == null) {
-	    setPermittedGroupExpression(null);
-	} else {
-	    setPermittedGroupExpression(group.getExpression());
-	}
-    }
 }

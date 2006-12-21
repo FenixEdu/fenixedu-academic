@@ -394,36 +394,4 @@ public abstract class Space extends Space_Base {
 	}
     }
     
-    @Override
-    public void setPersonOccupationsAccessGroup(Group group) {
-        super.setPersonOccupationsAccessGroup(group);
-
-        if (group == null) {
-            setPersonOccupationsAccessGroupExpression(null);
-        } else {
-            setPersonOccupationsAccessGroupExpression(group.getExpression());
-        }
-    }
-    
-    @Override
-    public void setExtensionOccupationsAccessGroup(Group group) {
-        super.setExtensionOccupationsAccessGroup(group);
-
-        if (group == null) {
-            setExtensionOccupationsAccessGroupExpression(null);
-        } else {
-            setExtensionOccupationsAccessGroupExpression(group.getExpression());
-        }
-    }
-    
-    @Override
-    public void setSpaceManagementAccessGroup(Group group) {
-        super.setSpaceManagementAccessGroup(group);
-
-        if (group == null) {
-            setSpaceManagementAccessGroupExpression(null);
-        } else {
-            setSpaceManagementAccessGroupExpression(group.getExpression());
-        }
-    }
 }
