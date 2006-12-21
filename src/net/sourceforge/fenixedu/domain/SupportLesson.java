@@ -115,4 +115,10 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
         return supportLesson;
     }
 
+    public void delete() {
+        removeProfessorship();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }

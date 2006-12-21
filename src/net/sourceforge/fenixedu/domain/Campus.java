@@ -33,7 +33,7 @@ public class Campus extends Campus_Base {
     
     @Override
     public String getName() {
-        return getSpaceCampus().getName();
+        return getSpaceCampus() == null ? super.getName() : getSpaceCampus().getName();
     }
 
 }
