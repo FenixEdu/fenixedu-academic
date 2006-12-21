@@ -123,7 +123,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
             parameters.put("urgencyAmount", urgencyAmount);
         }
         
-	parameters.put("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
+	parameters.put("employeeLocation", "Alameda" /*AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation()*/);
 	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
     }
     

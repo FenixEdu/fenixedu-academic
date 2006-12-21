@@ -83,6 +83,7 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOff
 import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
@@ -401,6 +402,27 @@ public class CreateTestData {
         department.setDepartmentUnit(institutionUnit);
         department.setName("Department Name");
         department.setCode("Xpto");
+
+        createAdminPostingRules(administrativeOfficeDegree.getServiceAgreementTemplate());
+        createAdminPostingRules(administrativeOfficeMasterDegree.getServiceAgreementTemplate());
+    }
+
+    private static void createAdminPostingRules(AdministrativeOfficeServiceAgreementTemplate agreementTemplate) {
+            new CertificateRequestPR(EntryType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST_FEE,
+                    EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST, new DateTime(), null,
+                    agreementTemplate, new Money("7"), new Money("0"), new Money("0.12"));
+
+            new CertificateRequestPR(EntryType.ENROLMENT_CERTIFICATE_REQUEST_FEE,
+                    EventType.ENROLMENT_CERTIFICATE_REQUEST, new DateTime(), null, agreementTemplate,
+                    new Money("7"), new Money("1"), new Money("0.12"));
+
+            new CertificateRequestPR(EntryType.APPROVEMENT_CERTIFICATE_REQUEST_FEE,
+                    EventType.APPROVEMENT_CERTIFICATE_REQUEST, new DateTime(), null, agreementTemplate,
+                    new Money("7"), new Money("1"), new Money("0.12"));
+
+            new CertificateRequestPR(EntryType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST_FEE,
+                    EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST, new DateTime(), null,
+                    agreementTemplate, new Money("15"), new Money("1"), new Money("0.12"));
     }
 
     private static void createRooms() {
@@ -428,6 +450,7 @@ public class CreateTestData {
         final Person person = createPerson("Guru Diplomado", "teacher", i);
         final Employee employee = new Employee(person, Integer.valueOf(i), Boolean.TRUE);
         final Teacher teacher = new Teacher(Integer.valueOf(i), person);
+        person.addPersonRoleByRoleType(RoleType.EMPLOYEE);
         person.addPersonRoleByRoleType(RoleType.TEACHER);
         final Login login = person.getUser().readUserLoginIdentification();
         login.openLoginIfNecessary(RoleType.TEACHER);
@@ -436,6 +459,8 @@ public class CreateTestData {
         final Contract contractMailing = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.MAILING);
         person.addPersonRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
         person.addPersonRoleByRoleType(RoleType.TIME_TABLE_MANAGER);
+        person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+        person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
         final Vigilant vigilant = new Vigilant(person, ExecutionYear.readCurrentExecutionYear());
         final VigilantGroup vigilantGroup;
         if (RootDomainObject.getInstance().getVigilantGroupsSet().isEmpty()) {
