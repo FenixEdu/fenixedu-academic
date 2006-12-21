@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:html xhtml="true">
 <head>
+<title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="<%= request.getContextPath() %>/CSS/dotist.css" rel="stylesheet" media="screen" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
@@ -18,13 +19,13 @@
 
 
 
-<table width="90%" height="100%" border="0">
+<table border="0" style="width: 90%;height: 100%;">
 <tr><td>
 
 <div style="font-size: 95%; line-height: 200%;">
 
 
-	<div class="registration" style="text-align: right;" width="90%" height="100%">
+	<div class="registration" style="text-align: right;width: 90%;height: 100%;">
 		<h2 class="registration" align="right"><bean:message  key="label.candidacy.registration.declaration.academicServicesOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 		<hr size=3 width="70%" noshade="true" align="right"/>
 		<h2 class="registration" align="right"><bean:message  key="label.candidacy.registration.declaration.graduationSection" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
@@ -35,7 +36,7 @@
 	<h3 class="registration" align="center"><bean:message  key="label.candidacy.registration.declaration" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<br/><br/><br/>
 
-	<div class="registration" width="100%" style="text-align: justify;">
+	<div class="registration" style="text-align: justify;width: 100%;">
 	<bean:define id="studentName" name="registration" property="student.person.name" />
 	<p><b><bean:message  key="label.candidacy.registration.declaration.institution.responsible" bundle="ACADEMIC_OFFICE_RESOURCES"/></b></p>
 	
