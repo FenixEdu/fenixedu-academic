@@ -46,7 +46,7 @@
   	</html:link>  
   </li>
   <li>
-  	<bean:define id="url"><%= request.getContextPath() %>/teacher/credits.do?method=showTeacherCredits&teacherId=<bean:write name="UserView" property="person.teacher.idInternal"/>&amp;executionPeriodId=<%= ExecutionPeriod.readActualExecutionPeriod().getIdInternal() %></bean:define>
+  	<bean:define id="url"><%= request.getContextPath() %>/teacher/credits.do?method=showTeacherCredits&amp;teacherId=<bean:write name="UserView" property="person.teacher.idInternal"/>&amp;executionPeriodId=<%= ExecutionPeriod.readActualExecutionPeriod().getIdInternal() %></bean:define>
   	<html:link href="<%= url %>">
   		<bean:message key="link.credits"/>
   	</html:link>  
