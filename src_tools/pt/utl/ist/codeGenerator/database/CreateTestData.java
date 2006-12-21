@@ -486,6 +486,7 @@ public class CreateTestData {
         person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
         person.setDocumentIdNumber(person.getIdInternal().toString());
         person.setEmail("abc" + person.getIdInternal() + "@gmail.com");
+        person.setIsPassInKerberos(Boolean.TRUE);
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));
