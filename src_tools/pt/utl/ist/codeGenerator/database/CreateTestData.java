@@ -191,6 +191,16 @@ public class CreateTestData {
     private static void clearData() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
+//        if (hasAnyAssociatedSummaries() || hasAnyAssociatedShiftProfessorship()
+//                || hasAnySupportLessons() || hasAnyDegreeTeachingServices()
+//                || hasAnyTeacherMasterDegreeServices()) {
+
+        System.out.println("Deleting shift professorships.");
+        for (final Set<ShiftProfessorship> shiftProfessorships = rootDomainObject.getShiftProfessorshipsSet(); !shiftProfessorships.isEmpty(); shiftProfessorships.iterator().next().delete());
+
+        System.out.println("Deleting support lessons");
+        for (final Set<SupportLesson> supportLessons = rootDomainObject.getSupportLessonsSet(); !supportLessons.isEmpty(); supportLessons.iterator().next().delete());
+
         System.out.println("Deleting teacher service items.");
         for (final Set<TeacherServiceItem> teacherServiceItems = rootDomainObject.getTeacherServiceItemsSet(); !teacherServiceItems.isEmpty(); teacherServiceItems.iterator().next().delete());
 
@@ -417,6 +427,7 @@ public class CreateTestData {
         final Contract contractWorking = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.WORKING);
         final Contract contractSalary = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.SALARY);
         final Contract contractMailing = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.MAILING);
+        person.addPersonRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);        
         return teacher;
     }
 
@@ -614,6 +625,7 @@ public class CreateTestData {
             createPeriodsForExecutionDegree(executionDegree);
             createSchoolClasses(executionDegree);
             createEnrolmentPeriods(degreeCurricularPlan, executionYear);
+            executionDegree.setCampus(RootDomainObject.getInstance().getCampussSet().iterator().next());
 
             createAgreementsAndPostingRules(executionYear, degreeCurricularPlan);
         }
