@@ -185,6 +185,8 @@ public class CreateTestData {
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
         person.setIsPassInKerberos(Boolean.TRUE);
+        person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
+        person.setDocumentIdNumber(person.getIdInternal().toString());
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));
@@ -410,7 +412,7 @@ public class CreateTestData {
 	    for (int r = 1; r <= 100; r++) {
 		final OldRoom oldRoom = new OldRoom();
 		oldRoom.setBuilding(oldBuilding);
-		oldRoom.setName("Sala" + r);
+		oldRoom.setName("Sala" + b + r);
 		oldRoom.setCapacidadeNormal(Integer.valueOf(50));
 		oldRoom.setCapacidadeExame(Integer.valueOf(25));
 		oldRoom.setPiso(Integer.valueOf(0));
@@ -458,6 +460,7 @@ public class CreateTestData {
         person.setDateOfBirthYearMonthDay(new YearMonthDay().minusYears(23));
         person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
         person.setDocumentIdNumber(person.getIdInternal().toString());
+        person.setEmail("abc" + person.getIdInternal() + "@gmail.com");
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));
