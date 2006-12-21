@@ -30,6 +30,6 @@
 <bean:define id="registrationID" name="registration" property="idInternal" />
 <ul>
 	<li>
-		<html:link action="<%="/createStudent.do?method=printRegistrationDeclarationTemplate&registrationID=" + registrationID%>" target="_blank"><bean:message key="link.student.printRegistrationDeclaration" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+		<html:link action="<%="/createStudent.do?method=printRegistrationDeclarationTemplate&amp;registrationID=" + registrationID%>" target="_blank"><bean:message key="link.student.printRegistrationDeclaration" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
 </ul>

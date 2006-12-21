@@ -8,7 +8,7 @@
 <bean:define id="type" name="extraEnrolmentBean" property="groupType"/>
 <h2><strong><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="<%= type.toString() %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 <br/>
-<fr:form >
+<fr:form action="/studentExtraEnrolments.do">
 	<fr:edit id="extraEnrolmentBean"
 			 name="extraEnrolmentBean"
 			 schema="studentOptionalEnrolment.base">
@@ -35,7 +35,7 @@
 		<fr:edit id="degreeCurricularPlan"
 				 name="extraEnrolmentBean">
 			<fr:layout name="student-optional-enrolments">
-				<fr:property name="linkFormat" value="/studentExtraEnrolments.do?method=enrol&scpID=${studentCurricularPlan.idInternal}&executionPeriodID=${executionPeriod.idInternal}&degreeType=${degreeType}&degreeID=${degree.idInternal}&dcpID=${degreeCurricularPlan.idInternal}&type=${groupType}"/>
+				<fr:property name="linkFormat" value="/studentExtraEnrolments.do?method=enrol&amp;scpID=${studentCurricularPlan.idInternal}&amp;executionPeriodID=${executionPeriod.idInternal}&amp;degreeType=${degreeType}&amp;degreeID=${degree.idInternal}&amp;dcpID=${degreeCurricularPlan.idInternal}&amp;type=${groupType}"/>
 			</fr:layout>
 		</fr:edit>
 		<br/>

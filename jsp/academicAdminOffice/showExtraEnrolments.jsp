@@ -20,7 +20,7 @@
 	<fr:edit id="extraEnrolmentBean" name="extraEnrolmentBean" visible="false"/>
 	<logic:present name="extraEnrolments">
 		<bean:define id="bean" name="extraEnrolmentBean" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentExtraEnrolmentBean"/>
-		<bean:define id="url">/studentExtraEnrolments.do?method=delete&enrolment=${idInternal}&scpID=<%= bean.getStudentCurricularPlan().getIdInternal().toString() %>&executionPeriodID=<%= bean.getExecutionPeriod().getIdInternal().toString() %>&type=<%= bean.getGroupType().toString() %></bean:define>
+		<bean:define id="url">/studentExtraEnrolments.do?method=delete&amp;enrolment=${idInternal}&amp;scpID=<%= bean.getStudentCurricularPlan().getIdInternal().toString() %>&amp;executionPeriodID=<%= bean.getExecutionPeriod().getIdInternal().toString() %>&amp;type=<%= bean.getGroupType().toString() %></bean:define>
 		<fr:view name="extraEnrolments" property="enrolments" schema="student.studentExtraEnrolments">
 			<fr:layout name="tabular">	 
 				<fr:property name="classes" value="tstyle4"/>

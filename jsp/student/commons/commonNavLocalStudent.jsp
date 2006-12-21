@@ -17,9 +17,9 @@
 	<li class="navheader"><bean:message key="submit"/></li>
 	<li><html:link page="/studentTests.do?method=viewStudentExecutionCoursesWithTests" titleKey="link.testsSubmissions"><bean:message key="link.tests"/></html:link></li>
 	<li><html:link page="/projectSubmission.do?method=viewProjectsWithOnlineSubmission" titleKey="link.projectSubmissions"><bean:message key="projects"/></html:link></li>
-	<%--<li><html:link page="/tests/tests.do?method=viewTests" titleKey="title.tests.view" bundle="TESTS_RESOURCES"><bean:message key="link.tests.view" bundle="TESTS_RESOURCES"/></html:link></li>--%>
-<%--
-		<li><html:link page="/studentGaugingTestResults.do" titleKey="link.title.results.test"><bean:message key="link.results.test"/></html:link></li>
+<%-- 	<li><html:link page="/tests/tests.do?method=viewTests" titleKey="title.tests.view" bundle="TESTS_RESOURCES"><bean:message key="link.tests.view" bundle="TESTS_RESOURCES"/></html:link></li>
+
+	<li><html:link page="/studentGaugingTestResults.do" titleKey="link.title.results.test"><bean:message key="link.results.test"/></html:link></li>
 --%>
 	
 	<li class="navheader"><bean:message key="enroll"/></li>

@@ -7,13 +7,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-<html>
-  <head>
-    <title><bean:message key="title.masterDegree.administrativeOffice.listContributors" /></title>
-  </head>
-  <body>
-   
-   
     <span class="error"><!-- Error messages go here --><html:errors /></span>
     <bean:define id="contributorList" name="<%= SessionConstants.CONTRIBUTOR_LIST %>" scope="session" />
     <bean:define id="title" name="<%= SessionConstants.CONTRIBUTOR_ACTION %>" scope="session" />
@@ -63,5 +56,4 @@
     		</logic:iterate>
           </table>
         <% } %>
-  </body>
-</html>
+ 
