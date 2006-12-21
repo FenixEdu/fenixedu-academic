@@ -73,7 +73,7 @@ function check(e,v){
 			<td class="aright"><bean:message key="label.type"/>:</td>
 			<td>
 				<div style="display: inline;">
-					<fr:form>
+					<fr:form action="/summariesManagement.do">
 						<fr:edit id="summariesManagementBeanWithSummaryType" name="summariesManagementBean" schema="ChooseSummaryType" nested="true">
 							<fr:destination name="postBack" path="/summariesManagement.do?method=chooseSummaryType"/>
 							<fr:layout name="flow">
