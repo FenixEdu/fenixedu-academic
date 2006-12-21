@@ -383,7 +383,7 @@ public class CreateTestData {
         new FixedAmountPR(EntryType.INSURANCE_FEE, EventType.INSURANCE, new DateTime().minusYears(1), null, unitServiceAgreementTemplate, Money.valueOf(2));
         final AdministrativeOffice administrativeOfficeDegree = new AdministrativeOffice(AdministrativeOfficeType.DEGREE, institutionUnit);
         new AdministrativeOfficeServiceAgreementTemplate(administrativeOfficeDegree);
-        final AdministrativeOffice administrativeOfficeMasterDegree = new AdministrativeOffice(AdministrativeOfficeType.MASTER_DEGREE, institutionUnit);
+        final AdministrativeOffice administrativeOfficeMasterDegree = new AdministrativeOffice(AdministrativeOfficeType.MASTER_DEGREE, rootDomainObject.getExternalInstitutionUnit());
         new AdministrativeOfficeServiceAgreementTemplate(administrativeOfficeMasterDegree);
         new FixedAmountWithPenaltyFromDatePR(EntryType.ADMINISTRATIVE_OFFICE_FEE,
                     EventType.ADMINISTRATIVE_OFFICE_FEE, new DateTime(), null, administrativeOfficeDegree
