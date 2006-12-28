@@ -237,17 +237,17 @@ encoding="multipart/form-data"
 
 </table>
 
-<p><em><bean:message key="label.fieldsWith" bundle="SITE_RESOURCES"/><span class="required">*</span><bean:message key="label.areRequired" bundle="SITE_RESOURCES"/></em></p>
+<p><em><bean:message key="label.fieldsWith" bundle="SITE_RESOURCES"/> <span class="required">*</span> <bean:message key="label.areRequired" bundle="SITE_RESOURCES"/></em></p>
 
 
   
-    <p class="mtop2">
-        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputButton">
-            <bean:message key="button.save"/>
-        </html:submit>
-		<html:link page="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>">
-            <bean:message key="button.cancel"/>
-        </html:link>
-    </p>
+ <p class="mtop2">
+    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputButton">
+          <bean:message key="button.save"/>
+    </html:submit>
+	<html:link page="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>">
+        <bean:message key="button.cancel"/>
+    </html:link>
+</p>
   
 </fr:form>
