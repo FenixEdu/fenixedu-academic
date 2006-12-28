@@ -77,7 +77,7 @@
 	
 	
 		<% for (int rowIndex=0; rowIndex < Integer.valueOf(pageContext.findAttribute("numberRowsCurrent").toString()).intValue(); rowIndex++) { %>
-		<% String rowColor = rowIndex % 2 == 0 ? "white" : "bluecell" ; %>
+		<% String rowColor = rowIndex % 2 == 0 ? "bgwhite" : "bluecell" ; %>
 		<tr>
 			<logic:iterate id="classView" name="classViewsTableCurrent" property='<%= "row[" + rowIndex + "]" %>'>
 				<td class="<%= rowColor %>">
@@ -129,7 +129,7 @@
 		</tr>
 	
 		<% for (int rowIndex=0; rowIndex < Integer.valueOf(pageContext.findAttribute("numberRowsNext").toString()).intValue(); rowIndex++) { %>
-		<% String rowColor = rowIndex % 2 == 0 ? "white" : "bluecell" ; %>
+		<% String rowColor = rowIndex % 2 == 0 ? "bgwhite" : "bluecell" ; %>
 		<tr>	
 			<logic:iterate id="classView" name="classViewsTableNext" property='<%= "row[" + rowIndex + "]" %>'>
 				<td class="<%= rowColor %>">

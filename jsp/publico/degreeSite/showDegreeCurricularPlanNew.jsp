@@ -287,7 +287,7 @@
 			</logic:iterate>
 			
 			<bean:size id="numberOfScopes" name="curricularCourseScopeElemList"/>
-			<% String rowColor = (row.intValue()+count) % 2 == 0 ? "white" : "bluecell" ; %>						
+			<% String rowColor = (row.intValue()+count) % 2 == 0 ? "bgwhite" : "bluecell" ; %>						
 			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1">
 				<tr>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>

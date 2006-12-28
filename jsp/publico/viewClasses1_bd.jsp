@@ -115,7 +115,7 @@
 					<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularYear"/></th>
 				</tr>		
 				<logic:iterate id="classview" name="classList" indexId="row">
-					<% String rowColor = row.intValue() % 2 == 0 ? "white" : "bluecell" ; %>
+					<% String rowColor = row.intValue() % 2 == 0 ? "bgwhite" : "bluecell" ; %>
 					<bean:define id="classId" name="classview" property="idInternal"/>
 					<tr>
 					    <td class="<%= rowColor %>">	

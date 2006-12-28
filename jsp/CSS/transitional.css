@@ -1341,9 +1341,9 @@ color: #d42;
 
 /* display curricular plan */
 .boldFontClass { font-weight: bold }
-.bluecell { background: #EDF3FE; width: 100% }
+.bluecell { background: #EDF3FE; }
 .lightBluecell { background: #F9F9FF; width: 100% }
-.bgwhite { background: #FFFFFF; width: 100% }
+.bgwhite { background: #FFFFFF; }
 .grey { background: #909090; width: 100% }
 .solidBorderClass {
 	border-style: solid;
