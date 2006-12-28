@@ -990,4 +990,20 @@
 			</classpath>
 		</jrc>
 	</target>
+
+	<target name="fix-html">
+		<java classname="pt.utl.ist.fenix.tools.html.JspHtmlValidator"
+				fork="true"
+				failonerror="true"
+				maxmemory="1024m"
+				>
+			<arg value="${basedir}"/>
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
 </project>
