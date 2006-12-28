@@ -5,6 +5,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.CourseValuationDTOEntry" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.ProfessorshipValuationDTOEntry" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -21,8 +22,8 @@
 </h3>
 
 <html:form action="/globalTeacherServiceDistributionValuation">
-<html:hidden property="method" value=""/>
-<html:hidden property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 
 <logic:iterate name="globalTeacherServiceDistributionValuationForm" property="selectedTeacherServiceDistributions" id="teacherServiceDistribution">
 	<bean:define name="teacherServiceDistribution" id="teacherServiceDistribution" type="String"/>
@@ -32,9 +33,9 @@
 		String valuationGroupingProperty = "valuationGrouping(" + (String) teacherServiceDistribution + ")"; 
 	%>
 	
-	<html:hidden property="<%= teacherServiceDistributionProperty %>"/>
-	<html:hidden property="<%= valuationPhaseProperty %>"/>
-	<html:hidden property="<%= valuationGroupingProperty %>"/>		
+	<html:hidden alt="<%= teacherServiceDistributionProperty %>" property="<%= teacherServiceDistributionProperty %>"/>
+	<html:hidden alt="<%= valuationPhaseProperty %>" property="<%= valuationPhaseProperty %>"/>
+	<html:hidden alt="<%= valuationGroupingProperty %>" property="<%= valuationGroupingProperty %>"/>		
 </logic:iterate>
 
 <table class='search'>

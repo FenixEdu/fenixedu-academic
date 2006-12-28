@@ -92,7 +92,7 @@
 	<td style="width: 200 valign: top">
 		<bean:message key="message.initialStatement"/>
 	</td>	
-	<td><html:textarea bundle="HTMLALT_RESOURCES" name="bodyComponent" property="initialStatement" rows="10" cols="56"/> 
+	<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.initialStatement" bundle="HTMLALT_RESOURCES" name="bodyComponent" property="initialStatement" rows="10" cols="56"/> 
 	</td>
 </tr>
 </table>
@@ -112,7 +112,7 @@
 	<td style="width: 200 valign: top">
 		<bean:message key="message.introduction"/>
 	</td>	
-	<td><html:textarea bundle="HTMLALT_RESOURCES" name="bodyComponent" property="introduction" rows="10" cols="56"/></td> 
+	<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.introduction" bundle="HTMLALT_RESOURCES" name="bodyComponent" property="introduction" rows="10" cols="56"/></td> 
 </tr>
 </table>
 <br/>

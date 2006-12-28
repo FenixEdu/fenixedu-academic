@@ -16,7 +16,7 @@
 <br/>
 
 <fr:form action="/studentEnrolments.do">
-	<html:hidden property="method" value="enrol"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="enrol"/>
 	<fr:edit id="showDegreeModulesToEnrol"
 			 name="studentEnrolmentBean">
 		<fr:layout name="student-enrolments">	 
@@ -26,5 +26,5 @@
 	<br />
 	<br />	
 	<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.submit"/></html:submit>
-	<html:submit onclick="this.form.method.value='end'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.end"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='end'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.end"/></html:submit>
 </fr:form>

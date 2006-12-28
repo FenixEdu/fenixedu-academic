@@ -39,11 +39,11 @@
     </p>
     
     <p class="mtop1">
-	    <html:submit property="confirm">
+	    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 	        <bean:message key="button.confirm" bundle="SITE_RESOURCES"/>
 	    </html:submit>
 	    
-	    <html:cancel property="cancel">
+	    <html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" property="cancel">
 	        <bean:message key="button.cancel" bundle="SITE_RESOURCES"/>
 	    </html:cancel>
     </p>

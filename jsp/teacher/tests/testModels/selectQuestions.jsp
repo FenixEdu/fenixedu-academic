@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -68,10 +69,10 @@ e <fr:view name="testModel" property="bag.childQuestionGroupsCount" /> grupo(s)<
 <label style="display: inline;">
 
 <logic:present name="wasSelected">
-<input type="checkbox" name="selectedAtomicQuestionRestrictions" value="<%= atomicRestriction.getIdInternal().toString() %>" checked="checked" />
+<input alt="input.selectedAtomicQuestionRestrictions" type="checkbox" name="selectedAtomicQuestionRestrictions" value="<%= atomicRestriction.getIdInternal().toString() %>" checked="checked" />
 </logic:present>
 <logic:notPresent name="wasSelected">
-<input type="checkbox" name="selectedAtomicQuestionRestrictions" value="<%= atomicRestriction.getIdInternal().toString() %>" />
+<input alt="input.selectedAtomicQuestionRestrictions" type="checkbox" name="selectedAtomicQuestionRestrictions" value="<%= atomicRestriction.getIdInternal().toString() %>" />
 </logic:notPresent>
 <bean:message key="message.select.atomicQuestion" bundle="TESTS_RESOURCES" />
 </label>
@@ -115,10 +116,10 @@ e <fr:view name="testModel" property="bag.childQuestionGroupsCount" /> grupo(s)<
 <td>
 <label style="display: inline;">
 <logic:present name="wasSelected">
-<input type="radio" name="selectedQuestionGroup" value="<%= groupRestriction.getIdInternal().toString() %>" checked="checked" />
+<input alt="input.selectedQuestionGroup" type="radio" name="selectedQuestionGroup" value="<%= groupRestriction.getIdInternal().toString() %>" checked="checked" />
 </logic:present>
 <logic:notPresent name="wasSelected">
-<input type="radio" name="selectedQuestionGroup" value="<%= groupRestriction.getIdInternal().toString() %>" />
+<input alt="input.selectedQuestionGroup" type="radio" name="selectedQuestionGroup" value="<%= groupRestriction.getIdInternal().toString() %>" />
 </logic:notPresent>
 <fr:view name="groupRestriction" property="question" schema="tests.questionGroup.name" layout="values" />
 (<fr:view name="groupRestriction" property="question.allChildAtomicQuestionsCount" /> <bean:message key="message.select.atomicQuestion.header" bundle="TESTS_RESOURCES" />)

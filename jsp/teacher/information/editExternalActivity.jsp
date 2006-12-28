@@ -30,7 +30,7 @@
 		<td><bean:message key="message.externalActivities.activity" /></td>
 	</tr>
 	<tr>
-		<td><html:textarea bundle="HTMLALT_RESOURCES" property="activity" cols="90%" rows="4"/></td>
+		<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.activity" bundle="HTMLALT_RESOURCES" property="activity" cols="90%" rows="4"/></td>
 	</tr>
 </table>
 <br/>

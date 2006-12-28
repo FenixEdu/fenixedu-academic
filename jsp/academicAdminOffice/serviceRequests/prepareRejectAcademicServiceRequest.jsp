@@ -46,10 +46,10 @@
 					<bean:define id="justification">
 						<bean:message key="<%=failingCondition.toString()%>" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 					</bean:define>
-					<html:textarea property="justification" value="<%=justification%>" cols="65" rows="5"/>
+					<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.justification" property="justification" value="<%=justification%>" cols="65" rows="5"/>
 				</logic:present>
 				<logic:notPresent name="failingCondition" scope="request">
-					<html:textarea property="justification" cols="65" rows="5"/>
+					<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.justification" property="justification" cols="65" rows="5"/>
 				</logic:notPresent>
 			</p>
 			<span>

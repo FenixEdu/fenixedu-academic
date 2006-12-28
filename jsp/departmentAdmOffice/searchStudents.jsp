@@ -20,11 +20,11 @@
 			</fr:layout>
 		</fr:edit>
 
-		<html:submit property="method" value="search"><bean:message key="button.submit"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" value="search"><bean:message key="button.submit"/></html:submit>
 
 		<bean:define id="studentCurricularPlans" name="searchStudentsWithEnrolmentsByDepartment" property="search"/>
 		<logic:notEmpty name="studentCurricularPlans">
-			<html:submit property="method" value="download"><bean:message key="button.download"/></html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" value="download"><bean:message key="button.download"/></html:submit>
 
 			<fr:view name="studentCurricularPlans"
 					schema="net.sourceforge.fenixedu.domain.StudentCurricularPlan.List">

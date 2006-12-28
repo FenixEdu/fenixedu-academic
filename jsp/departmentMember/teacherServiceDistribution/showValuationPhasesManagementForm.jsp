@@ -3,6 +3,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhaseStatus" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -22,11 +23,11 @@
 </h3>
 
 <html:form action="/valuationPhasesManagement">
-<html:hidden property="method" value="createValuationPhase"/>
-<html:hidden property="teacherServiceDistribution"/>
-<html:hidden property="valuationPhase"/>
-<html:hidden property="isPublished"/>
-<html:hidden property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createValuationPhase"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationPhase" property="valuationPhase"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.isPublished" property="isPublished"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <bean:define id="teacherServiceDistribution" name="valuationPhasesManagementForm" property="teacherServiceDistribution"/>
 
@@ -53,7 +54,7 @@
 			<b><bean:message key="label.teacherServiceDistribution.name"/>:</b> 
 		</td>
 		<td>
-			<html:text property="name" size="24" maxlength="240"/> 
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="24" maxlength="240"/> 
 			&nbsp;&nbsp;&nbsp;
 			<html:submit> 
 			<bean:message key="label.teacherServiceDistribution.create"/>

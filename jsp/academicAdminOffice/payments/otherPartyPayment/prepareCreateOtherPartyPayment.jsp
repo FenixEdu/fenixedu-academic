@@ -32,7 +32,7 @@
 	<bean:define id="eventId" name="createOtherPartyPaymentBean" property="event.idInternal" />
 	<bean:define id="personId" name="person" property="idInternal" />
 	<fr:form action="<%="/payments.do?personId=" + personId + "&amp;eventId=" + eventId%>">
-		<html:hidden name="paymentsForm" property="method" value=""/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" value=""/>
 		<fr:edit id="createOtherPartyPayment" name="createOtherPartyPaymentBean" schema="CreateOtherPartyPaymentBean.edit">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4" />

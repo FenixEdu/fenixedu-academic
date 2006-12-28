@@ -11,7 +11,7 @@
 			<bean:define id="professorship" name="summariesManagementBean" property="professorship" />
 		 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorship.idInternal" />
 			<tr>
-		 		<td><html:radio name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>"/></td>				
+		 		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>"/></td>				
 		 		<td><bean:write name="professorship" property="teacher.person.name"/></td>
 	 		</tr>
 		</logic:notEmpty>
@@ -19,23 +19,23 @@
 			<bean:define id="professorship" name="summariesManagementBean" property="professorshipLogged" />
 		 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorshipLogged.idInternal" />
 			<tr>
-		 		<td><html:radio name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>"/></td>				
+		 		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>"/></td>				
 		 		<td><bean:write name="professorship" property="teacher.person.name"/></td>
 	 		</tr>
 		</logic:empty>											
 		<tr>
-			<td><html:radio name="summariesManagementForm" property="teacher" value="0" /></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" name="summariesManagementForm" property="teacher" value="0" /></td>
 			<td>
 				<bean:message key="label.teacher.in" />
-				<html:text name="summariesManagementForm" property="teacherNumber" size="4" />
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" name="summariesManagementForm" property="teacherNumber" size="4" />
 				(<bean:message key="label.number" />)
 			</td>
 		</tr>
 		<tr>
-			<td><html:radio name="summariesManagementForm" property="teacher" value="-1" /></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" name="summariesManagementForm" property="teacher" value="-1" /></td>
 			<td>
 				<bean:message key="label.teacher.out" />
-				<html:text name="summariesManagementForm" property="teacherName" size="40"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherName" name="summariesManagementForm" property="teacherName" size="40"/>
 				(<bean:message key="label.name" />)
 			</td>
 		</tr>				

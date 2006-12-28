@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
@@ -19,7 +20,7 @@
 <fr:form action="/vigilancy/examCoordinatorManagement.do?method=selectUnitForCoordinator">
 <fr:edit id="selectUnit" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" layout="tabular"
 name="bean" schema="selectUnitInVigilantGroup"/>
-	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 <!--  selectUnitInVigilantGroup -->
 

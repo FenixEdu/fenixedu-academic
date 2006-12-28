@@ -89,7 +89,7 @@
 			</fr:view>
 		</logic:equal>
 		
-		<html:submit property="confirm">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="button.create"/>
 		</html:submit>
 		<html:cancel>

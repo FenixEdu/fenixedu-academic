@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
@@ -33,7 +34,7 @@
 	<ft:view schema="tests.question.testModels" layout="values" />
 	
 	<html:form action="<%= modelSelectPath %>">
-		<html:hidden property="oid" value="<%= questionId %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= questionId %>" />
 		<fr:create type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
 		           schema="tests.modelRestriction.create"
 		           id="<%= modelSelectId %>"
@@ -52,7 +53,7 @@
 	</script>
 </fr:hasMessages>
 
-<h4>a) Sumário</h4>
+<h4>a) Sumï¿½rio</h4>
 
 <ft:view schema="tests.allGroup.view">
 	<ft:layout name="tabular">
@@ -61,10 +62,10 @@
 </ft:view>
 
 <logic:equal name="questionGroup" property="gradeComplete" value="false">
-<span class="warning0">Deve atribuir cotação a todas as alineas desta pergunta</span>
+<span class="warning0">Deve atribuir cotaï¿½ï¿½o a todas as alineas desta pergunta</span>
 </logic:equal>
 
-<h4>b) Materiais de apresentação</h4>
+<h4>b) Materiais de apresentaï¿½ï¿½o</h4>
 
 <div class="questionBlockHeader">
 	<strong><bean:message key="label.testElement.presentationMaterials" bundle="TESTS_RESOURCES" />:</strong>
@@ -82,13 +83,13 @@
 	</ft:layout>
 </ft:view>
 
-<h4>c) Alíneas</h4>
+<h4>c) Alï¿½neas</h4>
 
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareCreateAtomicQuestion">
 		<f:parameter id="oid" name="questionGroup" property="idInternal" />
-		Criar alínea
+		Criar alï¿½nea
 	</f:parameterLink>
 </li>
 </ul>
@@ -103,7 +104,7 @@
 </ft:view>
 
 <logic:equal name="questionGroup" property="topAllGroup" value="false">
-<h4>d) Cotação</h4>
+<h4>d) Cotaï¿½ï¿½o</h4>
 
 <logic:notEmpty name="questionGroup" property="grade">
 <ul>
@@ -134,20 +135,20 @@
 </logic:equal>
 
 <logic:equal name="questionGroup" property="belongsToAllGroup" value="true">
-<h4>e) Pré-condição</h4>
+<h4>e) Prï¿½-condiï¿½ï¿½o</h4>
 <logic:notEmpty name="questionGroup" property="preCondition">
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=deletePreCondition">
 		<f:parameter id="oid" name="questionGroup" property="idInternal" />
-		Apagar pré-condição
+		Apagar prï¿½-condiï¿½ï¿½o
 	</f:parameterLink>
 </li>
 
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareEditPreCondition">
 		<f:parameter id="oid" name="questionGroup" property="idInternal" />
-		Editar pré-condição
+		Editar prï¿½-condiï¿½ï¿½o
 	</f:parameterLink>
 </li>
 </ul>
@@ -161,7 +162,7 @@
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareEditPreCondition">
 		<f:parameter id="oid" name="questionGroup" property="idInternal" />
-		Inserir pré-condição
+		Inserir prï¿½-condiï¿½ï¿½o
 	</f:parameterLink>
 </li>
 </ul>

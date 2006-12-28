@@ -50,10 +50,10 @@
 			<fr:form action="<%= remove + "&participationId=" + deleteConfirmationId %>">
 				<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.participation.remove"/></b></p>
 				<p><bean:message bundle="RESEARCHER_RESOURCES" key="label.participation.removeWarning"/></p>
-				<html:submit property="confirm">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 					<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
 				</html:submit>
-				<html:submit property="cancel">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
 					<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
 				</html:submit>
 			</fr:form>

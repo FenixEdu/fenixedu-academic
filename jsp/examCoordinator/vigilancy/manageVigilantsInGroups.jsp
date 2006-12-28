@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
@@ -86,7 +87,7 @@
 </fr:edit>
 <p class="mtop0">
 	<span class="switchInline"><a href="javascript:document.getElementById('addSingleVigilant').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.add"/></a></span>
-	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 </fr:form>
 

@@ -93,7 +93,7 @@
     </p>
     
     <p class="mtop2">
-        <html:submit styleClass="inputbutton">
+        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
             <bean:message key="button.save"/>
         </html:submit>
          | 

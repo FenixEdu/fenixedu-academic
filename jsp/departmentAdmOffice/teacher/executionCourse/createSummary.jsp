@@ -180,7 +180,7 @@ function check(e,v){
 	<bean:define id="createSummaryURL">/summariesManagement.do?teacherNumber_=<bean:write name="teacherNumber"/></bean:define>		
 
 	<fr:form action="<%= createSummaryURL %>">		
-		<html:hidden property="method" name="summariesManagementForm" value="createSummary"/>	
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" name="summariesManagementForm" value="createSummary"/>	
 				
 		<logic:equal name="summariesManagementBean" property="summaryType" value="NORMAL_SUMMARY">				
 		
@@ -197,12 +197,12 @@ function check(e,v){
 					<fr:property name="classes" value="tstyle5 thlight"/>
 				</fr:layout>
 			</fr:edit>
-			<html:submit titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>
 			<logic:empty name="summariesManagementBean" property="summary">	
-				<html:submit titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>
-				<html:submit titleKey="message.button.save.equal" onclick="this.form.method.value='createSummaryAndSame';this.form.submit();"><bean:message key="button.save.equal" bundle="DEFAULT"/></html:submit>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save.equal" onclick="this.form.method.value='createSummaryAndSame';this.form.submit();"><bean:message key="button.save.equal" bundle="DEFAULT"/></html:submit>
 			</logic:empty>
-			<html:cancel onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:cancel>
+			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:cancel>
 		</logic:equal>
 		
 		<logic:equal name="summariesManagementBean" property="summaryType" value="EXTRA_SUMMARY">		
@@ -220,12 +220,12 @@ function check(e,v){
 					<fr:property name="classes" value="tstyle5 thlight"/>
 				</fr:layout>
 			</fr:edit>	
-			<html:submit titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>			
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>			
 			<logic:empty name="summariesManagementBean" property="summary">				
-				<html:submit titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>
-				<html:submit titleKey="message.button.save.equal" onclick="this.form.method.value='createSummaryAndSame';this.form.submit();"><bean:message key="button.save.equal" bundle="DEFAULT"/></html:submit>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save.equal" onclick="this.form.method.value='createSummaryAndSame';this.form.submit();"><bean:message key="button.save.equal" bundle="DEFAULT"/></html:submit>
 			</logic:empty>
-			<html:cancel onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:cancel>
+			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:cancel>
 		</logic:equal>		
 	</fr:form>
 	

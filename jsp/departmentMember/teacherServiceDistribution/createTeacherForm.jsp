@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -34,9 +35,9 @@
 <br/>
 <br/>
 <html:form action="/valuationTeachersGroup">
-<html:hidden property="method" value="createValuationTeacher"/>
-<html:hidden property="valuationGrouping"/>
-<html:hidden property="page" value="2"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createValuationTeacher"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 
 	<table class="vtsbc">
 		<tr>
@@ -49,7 +50,7 @@
 				<b><bean:message key="label.teacherServiceDistribution.name"/>:</b>
 			</td>
 			<td>
-				<html:text property="name" size="25" maxlength="240"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="25" maxlength="240"/>
 			</td>
 		</tr>
 		<tr>
@@ -67,7 +68,7 @@
 				<b><bean:message key="label.teacherService.teacher.hours"/>:</b>
 			</td>
 			<td>
-				<html:text property="hours" size="3" maxlength="4"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.hours" property="hours" size="3" maxlength="4"/>
 			</td>
 		</tr>
 	</table>

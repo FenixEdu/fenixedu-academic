@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -18,7 +19,7 @@
 <li><html:link page="/tests/questionBank.do?method=prepareCreateAtomicQuestion" paramId="oid" paramName="questionBank" paramProperty="idInternal">Criar pergunta</html:link></li>
 <li><html:link page="/tests/questionBank.do?method=manageQuestionBank&amp;view=linear" paramId="oid" paramName="questionBank" paramProperty="idInternal">Ver lista de grupos</html:link></li>
 <%--<logic:equal name="isOwnBank" value="true">
-<li><html:link page="/tests/questionBank.do?method=prepareManagePermissionUnits" paramId="oid" paramName="UserView" paramProperty="person.questionBank.idInternal">Gerir permissões</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=prepareManagePermissionUnits" paramId="oid" paramName="UserView" paramProperty="person.questionBank.idInternal">Gerir permissï¿½es</html:link></li>
 </logic:equal>--%>
 </ul>
 

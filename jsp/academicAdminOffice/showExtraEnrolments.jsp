@@ -16,7 +16,7 @@
 <br/>
 
 <fr:form action="/studentExtraEnrolments.do">
-	<html:hidden property="method" value="chooseCurricular"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseCurricular"/>
 	<fr:edit id="extraEnrolmentBean" name="extraEnrolmentBean" visible="false"/>
 	<logic:present name="extraEnrolments">
 		<bean:define id="bean" name="extraEnrolmentBean" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentExtraEnrolmentBean"/>
@@ -38,5 +38,5 @@
 	<br />
 	<br />	
 	<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.enrol"/></html:submit>
-	<html:submit onclick="this.form.method.value='back'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="back"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='back'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="back"/></html:submit>
 </fr:form>

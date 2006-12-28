@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -12,7 +13,7 @@
 	>
 	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
 		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-<%--		(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>º<bean:message key="label.common.courseSemester"/>--%>
+<%--		(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>ï¿½<bean:message key="label.common.courseSemester"/>--%>
 		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
 	</html:link>
 	>
@@ -26,9 +27,9 @@
 <br/>
 
 <html:form action="/valuationTeachersGroup">
-<html:hidden property="method" value="showDepartmentCourses"/>
-<html:hidden property="valuationGrouping"/>
-<html:hidden property="valuationCourse"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showDepartmentCourses"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCourse" property="valuationCourse"/>
 
 	<b><bean:message key="label.teacherServiceDistribution.department"/>:</b>
 	<html:select property="department" title="Departamento" onchange="this.form.submit();">

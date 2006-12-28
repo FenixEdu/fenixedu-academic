@@ -62,7 +62,7 @@
 	<logic:present name="alterOrder">
 
 		<fr:form action="/interests/interestsManagement.do?method=changeOrderUsingAjaxTree">
-   		<input id="tree-structure" type="hidden" name="tree" value=""/>
+   		<input alt="input.tree" id="tree-structure" type="hidden" name="tree" value=""/>
 		</fr:form>
 	
 		<fr:view name="researchInterests" layout="tree">
@@ -88,7 +88,7 @@
 	<div id="tree-controls" style="display: none;" class="mtop1">
 	 	<fr:form action="/interests/interestsManagement.do?method=prepare">
 	        <!-- submits the form on top of the page, search for: tree-structure -->
-	        <html:button property="saveButton" onclick="treeRenderer_saveTree('tree');">
+	        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="treeRenderer_saveTree('tree');">
 	            <bean:message key="button.save" bundle="RESEARCHER_RESOURCES"/>
 	        </html:button>
 	    

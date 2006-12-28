@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
@@ -37,7 +38,7 @@
 	<span class="switchInline"><a href="javascript:document.getElementById('removeExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.removeCourse"/></a>, </span>
 	<span class="switchInline"><a href="javascript:checkall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
 	<span class="switchInline"><a class="switchInline" href="javascript:uncheckall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
-	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.remove" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.vigilancy.remove" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 <fr:edit name="bean" id="removeExecutionCourses" schema="removeExecutionCourses" 
 action="vigilancy/vigilancyCourseGroupManagement.do?method=removeExecutionCoursesFromGroup"
@@ -52,7 +53,7 @@ nested="true">
 	<span class="switchInline"><a href="javascript:document.getElementById('removeExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.removeCourse"/></a>, </span>
 	<span class="switchInline"><a href="javascript:checkall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
 	<span class="switchInline"><a class="switchInline" href="javascript:uncheckall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
-	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.remove" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.vigilancy.remove" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 </fr:form>
 </div>
@@ -67,7 +68,7 @@ nested="true">
 			<fr:property name="classes" value="mtop15"/>
 		</fr:layout>
 </fr:edit>
-<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
 <fr:form id="addExecutionCourseForm" action="/vigilancy/vigilancyCourseGroupManagement.do?method=addExecutionCourseToGroup">
@@ -75,7 +76,7 @@ nested="true">
 	<span class="switchInline"><a href="javascript:document.getElementById('addExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addCourse"/></a>, </span>
 	<span class="switchInline"><a href="javascript:checkall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
 	<span class="switchInline"><a href="javascript:uncheckall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
-	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 <fr:edit name="bean" id="addExecutionCourses" schema="addExecutionCourses" 
 			action="vigilancy/vigilancyCourseGroupManagement.do?method=addExecutionCourseToGroup">
@@ -89,7 +90,7 @@ nested="true">
 	<span class="switchInline"><a href="javascript:document.getElementById('addExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addCourse"/></a>, </span>
 	<span class="switchInline"><a href="javascript:checkall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
 	<span class="switchInline"><a href="javascript:uncheckall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
-	<html:submit styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 </fr:form>
 </div>

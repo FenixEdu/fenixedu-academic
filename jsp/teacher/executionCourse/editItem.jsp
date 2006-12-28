@@ -63,7 +63,7 @@
         </script>
     </logic:notEmpty>
     
-    <html:submit property="editItemButton">
+    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.editItemButton" property="editItemButton">
         <bean:message key="button.item.edit.submit" bundle="SITE_RESOURCES"/>
     </html:submit>
 

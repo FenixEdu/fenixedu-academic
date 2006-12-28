@@ -53,10 +53,10 @@
 	<%-- Confirmation buttons --%>
 	<p class="mbottom1 mtop2"><span class="warning0"><bean:message key="researcher.ResultPublication.delete.useCase.title"/></span></p>
 	<fr:form action="<%= "/resultPublications/delete.do?resultId=" + resultId %>">
-		<html:submit property="confirm">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
 		</html:submit>
-		<html:submit property="cancel">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
 		</html:submit>
 	</fr:form>

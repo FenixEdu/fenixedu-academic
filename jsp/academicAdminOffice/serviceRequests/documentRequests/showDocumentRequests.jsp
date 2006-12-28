@@ -46,5 +46,5 @@
 </logic:empty>
 
 <html:form action="/documentRequestsManagement.do?method=prepareSearch">
-	<html:submit styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.back" /></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.back" /></html:submit>
 </html:form>

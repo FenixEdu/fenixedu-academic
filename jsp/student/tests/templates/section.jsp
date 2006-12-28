@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
@@ -13,11 +14,11 @@
 	<ft:layout name="flowLayout">
 		<ft:property name="htmlSeparator" value="." />
 	</ft:layout>
-</ft:view>) Secção
+</ft:view>) Secï¿½ï¿½o
 </strong>
 
 <logic:equal name="section" property="showAllElements" value="false">
-	<div><span class="warning0">Consoante as respostas podem vir a aparecer mais perguntas nesta secção</span></div>
+	<div><span class="warning0">Consoante as respostas podem vir a aparecer mais perguntas nesta secï¿½ï¿½o</span></div>
 </logic:equal>
 
 <logic:notEmpty name="section" property="presentationMaterials">

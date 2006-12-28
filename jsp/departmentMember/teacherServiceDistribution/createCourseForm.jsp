@@ -3,6 +3,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.ExecutionPeriod" %>
 <%@ page import="net.sourceforge.fenixedu.domain.CurricularYear" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -35,11 +36,11 @@
 <br/>
 <br/>
 <html:form action="/valuationCoursesGroup">
-<html:hidden property="method" value="createValuationCompetenceCourse"/>
-<html:hidden property="valuationGrouping"/>
-<html:hidden property="valuationCurricularCourse"/>
-<html:hidden property="page" value="1"/>
-<html:hidden property="valuationCourse"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createValuationCompetenceCourse"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCurricularCourse" property="valuationCurricularCourse"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCourse" property="valuationCourse"/>
 
 <table class="vtsbc">
 	<tr>
@@ -52,7 +53,7 @@
 			<b><bean:message key="label.teacherServiceDistribution.name"/>:</b> 
 		</td>
 		<td>
-			<html:text property="name" size="24" maxlength="240"/> 
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="24" maxlength="240"/> 
 			&nbsp;&nbsp;&nbsp;
 			<html:submit>
 				<bean:message key="label.teacherServiceDistribution.create"/>
@@ -64,10 +65,10 @@
 
 
 <html:form action="/valuationCoursesGroup">
-<html:hidden property="method" value="loadValuationCompetenceCourse"/>
-<html:hidden property="valuationGrouping"/>
-<html:hidden property="valuationCurricularCourse"/>
-<html:hidden property="page" value="0"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="loadValuationCompetenceCourse"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCurricularCourse" property="valuationCurricularCourse"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
 <br/>
 <span class="error"><html:errors property="name"/></span>
@@ -98,11 +99,11 @@
 <bean:define id="valuationGroup" name="valuationTeachersGroupForm" property="valuationGrouping"/>
 
 <html:form action="/valuationCoursesGroup">
-<html:hidden property="method" value="addValuationCurricularCourse"/>
-<html:hidden property="valuationGrouping"/>
-<html:hidden property="valuationCurricularCourse"/>
-<html:hidden property="page" value="3"/>
-<html:hidden property="valuationCourse"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="addValuationCurricularCourse"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCurricularCourse" property="valuationCurricularCourse"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="3"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCourse" property="valuationCourse"/>
 <br/>
 <br/>
 <br/>
@@ -174,7 +175,7 @@
 					<td>
 						<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
 						<html:link page="<%= "/valuationCoursesGroup.do?method=removeValuationCurricularCourse&valuationCurricularCourse=" + curricularCourseId + "&page=0&valuationGrouping=" + valuationGroup +"&valuationCourse=" + valuationCourse %>">
-						<%--<html:button property="" onclick='<%= "this.form.method.value='removeValuationCurricularCourse';this.form.valuationCurricularCourse.value=" +  curricularCourseId + ";this.form.page.value=0;this.form.submit();"%>'>
+						<%--<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick='<%= "this.form.method.value='removeValuationCurricularCourse';this.form.valuationCurricularCourse.value=" +  curricularCourseId + ";this.form.page.value=0;this.form.submit();"%>'>
 							--%>
 						<bean:message key="link.remove"/>
 						</html:link>
@@ -220,10 +221,10 @@
 				<td>
 					<logic:present name="competenceCourseName">
 						<bean:define name="competenceCourseName" id="competenceCourseName" />
-						<html:text property="courseName" size="24" maxlength="240" value="<%= (String)competenceCourseName %>"/>
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.courseName" property="courseName" size="24" maxlength="240" value="<%= (String)competenceCourseName %>"/>
 					</logic:present>
 					<logic:notPresent name="competenceCourseName">
-						<html:text property="courseName" size="24" maxlength="240" />
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.courseName" property="courseName" size="24" maxlength="240" />
 					</logic:notPresent>
 				</td>
 				<td>
@@ -241,7 +242,7 @@
 						<logic:iterate name="curricularYearsList" id="curricularYear">
 							<tr>
 								<td>
-									<html:multibox property="curricularYearsArray">
+									<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularYearsArray" property="curricularYearsArray">
 										<bean:write name="curricularYear" property="idInternal"/>
 									</html:multibox>
 									<b><bean:write name="curricularYear" property="year"/></b>
@@ -257,7 +258,7 @@
 								<b><bean:message key="label.teacherServiceDistribution.theoretical"/></b>
 							</td>
 							<td>
-								<html:text property="theoreticalHours" size="2" maxlength="4" />
+								<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoreticalHours" property="theoreticalHours" size="2" maxlength="4" />
 							</td>
 						</tr>
 						<tr>
@@ -265,7 +266,7 @@
 								<b><bean:message key="label.teacherServiceDistribution.pratical"/></b>
 							</td>
 							<td>
-								<html:text property="praticalHours" size="2" maxlength="4" />
+								<html:text bundle="HTMLALT_RESOURCES" altKey="text.praticalHours" property="praticalHours" size="2" maxlength="4" />
 							</td>
 						</tr>
 						<tr>
@@ -273,7 +274,7 @@
 								<b><bean:message key="label.teacherServiceDistribution.theoPrat"/></b>
 							</td>
 							<td>
-								<html:text property="theoPratHours" size="2" maxlength="4" />
+								<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoPratHours" property="theoPratHours" size="2" maxlength="4" />
 							</td>
 						</tr>
 						<tr>
@@ -281,7 +282,7 @@
 								<b><bean:message key="label.teacherServiceDistribution.laboratorial"/></b>
 							</td>
 							<td>
-								<html:text property="laboratorialHours" size="2" maxlength="4" />
+								<html:text bundle="HTMLALT_RESOURCES" altKey="text.laboratorialHours" property="laboratorialHours" size="2" maxlength="4" />
 							</td>
 						</tr>
 					</table>
@@ -289,7 +290,7 @@
 			</tr>
 		</table>
 		
-		<%-- <html:button property="" onclick="this.form.method.value='addValuationCurricularCourse'; this.form.page.value=3; this.form.submit();">
+		<%-- <html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='addValuationCurricularCourse'; this.form.page.value=3; this.form.submit();">
 		--%>
 		<html:submit>
 			<bean:message key="button.add"/>

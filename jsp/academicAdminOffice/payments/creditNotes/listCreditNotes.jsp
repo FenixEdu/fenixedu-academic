@@ -53,7 +53,7 @@
 <bean:define id="receiptId" name="receipt" property="idInternal" />
 <html:form action="<%="/payments.do?personId=" + personId + "&amp;receiptID=" + receiptId%>">
 	<fr:edit id="receipt" name="receipt" visible="false" />
-	<html:hidden property="method" value=""/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='prepareCreateCreditNote';">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.create" />
 	</html:submit>

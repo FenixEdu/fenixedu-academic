@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -15,7 +16,7 @@
 </h3>
 
 <html:form action="/teacherServiceDistribution">
-<html:hidden property="method" value="prepareForTeacherServiceDistributionEdition"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareForTeacherServiceDistributionEdition"/>
 
 <table class='vtsbc'>
 <tr>
@@ -79,7 +80,7 @@
 			</td>
 			<td align="center">
 				<logic:iterate id="executionPeriod" name="teacherServiceDistribution" property="orderedExecutionPeriods">
-					<bean:write name="executionPeriod" property="semester"/>º&nbsp;
+					<bean:write name="executionPeriod" property="semester"/>ï¿½&nbsp;
 				</logic:iterate>
 			</td>
 		</tr>

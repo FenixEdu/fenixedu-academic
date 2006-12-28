@@ -81,7 +81,7 @@ Alunos Inscritos
 			<bean:define id="student" name="shiftEnrolment" property="registration"/>
 			<tr align="center">
 				<td class="listClasses">
-					<html:multibox property="studentIDs"><bean:write name="student" property="idInternal"/></html:multibox>
+					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentIDs" property="studentIDs"><bean:write name="student" property="idInternal"/></html:multibox>
 				</td>
 				<td class="listClasses">
 					<bean:write name="student" property="number"/>

@@ -35,8 +35,8 @@
 
 <bean:define id="url" name="url" type="java.lang.String"/>
 <html:form action="<%=url%>">
-	<html:hidden property="academicServiceRequestId" value="<%= academicServiceRequest.getIdInternal().toString() %>"/>
-	<html:hidden property="registrationID" value="<%= academicServiceRequest.getRegistration().getIdInternal().toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.academicServiceRequestId" property="academicServiceRequestId" value="<%= academicServiceRequest.getIdInternal().toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationID" property="registrationID" value="<%= academicServiceRequest.getRegistration().getIdInternal().toString() %>"/>
 	
 	<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="back" /></html:submit>
 </html:form>

@@ -26,10 +26,10 @@
 
 	<fr:form action="<%= "/resultPatents/delete.do?" + requestParameters %>">
 		<p>
-			<html:submit property="confirm">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
 			</html:submit>
-			<html:submit property="cancel">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
 			</html:submit>
 		</p>

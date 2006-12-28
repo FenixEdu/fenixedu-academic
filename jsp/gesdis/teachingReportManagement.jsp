@@ -147,7 +147,7 @@
 	</p>
 	<h3 class="bluetxt"><bean:message key="message.teachingReport.report"/></h3>
 	<bean:message key="message.teachingReport.note3"/>
-	<html:textarea bundle="HTMLALT_RESOURCES" property="report" cols="70%" rows="10"/>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.report" bundle="HTMLALT_RESOURCES" property="report" cols="70%" rows="10"/>
 	<br />
 	<br />
 	<strong><bean:message key="message.teachingReport.text1"/></strong>

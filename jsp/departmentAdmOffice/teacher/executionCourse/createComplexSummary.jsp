@@ -96,7 +96,7 @@ function check(e,v){
 	<bean:define id="createSummaryURL">/summariesManagement.do?teacherNumber_=<bean:write name="teacherNumber"/></bean:define>		
 	
 	<fr:form action="<%= createSummaryURL %>">		
-		<html:hidden property="method" name="summariesManagementForm" value="createComplexSummary"/>	
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" name="summariesManagementForm" value="createComplexSummary"/>	
 
 		<%-- Lessons --%>
 		<h3 class="mbottom0"><bean:message key="label.lesson.or.lessons" bundle="DEFAULT"/></h3>
@@ -138,7 +138,7 @@ function check(e,v){
 			</fr:layout>
 		</fr:edit>
 		
-		<html:submit titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>		
-		<html:cancel onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:cancel>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>		
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:cancel>
 	</fr:form>			
 </logic:present>

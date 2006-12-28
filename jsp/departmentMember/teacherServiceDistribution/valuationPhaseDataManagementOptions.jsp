@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -32,15 +33,15 @@
 
 <logic:notEqual name="valuationPhasesManagementForm" property="dataManagementOption" value="2">
 	<html:form action="/valuationPhasesManagement">
-	<html:hidden property="method" value="prepareToChooseValuationPhase"/>
-	<html:hidden property="teacherServiceDistribution"/>
-	<html:hidden property="page" value="0"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareToChooseValuationPhase"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 	
-	<html:radio property="dataManagementOption" value="0" onclick="this.form.method.value='showValuationPhaseDataManagementOptions'; this.form.submit();"> 
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dataManagementOption" property="dataManagementOption" value="0" onclick="this.form.method.value='showValuationPhaseDataManagementOptions'; this.form.submit();"> 
 		<bean:message key="label.teacherServiceDistribution.copyLastYearRealData"/> <%= "(" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getPreviousExecutionYear().getYear() + ")" %>
 	</html:radio>
 	<br/>
-	<html:radio property="dataManagementOption" value="1" onclick="this.form.method.value='prepareToChooseValuationPhase'; this.form.submit();"> <bean:message key="label.teacherServiceDistribution.copyPreviousValuationPhaseData"/> </html:radio>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dataManagementOption" property="dataManagementOption" value="1" onclick="this.form.method.value='prepareToChooseValuationPhase'; this.form.submit();"> <bean:message key="label.teacherServiceDistribution.copyPreviousValuationPhaseData"/> </html:radio>
 	<br/>
 	<br/>
 	<br/>
@@ -100,7 +101,7 @@
 				<tr>
 					<td>
 						<bean:define id="teacherServiceDistributionId" name="teacherServiceDistribution" property="idInternal" />
-						<html:radio property="selectedTeacherServiceDistribution" value="<%= ((Integer)teacherServiceDistributionId).toString() %>" onchange="this.form.method.value='prepareToChooseValuationPhase'; this.form.submit();" />
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.selectedTeacherServiceDistribution" property="selectedTeacherServiceDistribution" value="<%= ((Integer)teacherServiceDistributionId).toString() %>" onchange="this.form.method.value='prepareToChooseValuationPhase'; this.form.submit();" />
 					</td>
 					<td class="courses" align="left" width="200">
 						<bean:write name="teacherServiceDistribution" property="name"/>
@@ -158,7 +159,7 @@
 			</tr>
 			</table>
 			<logic:notEmpty name="valuationPhaseList">
-				<html:button property="" onclick="this.form.method.value='manageCurrentValuationPhaseData'; this.form.submit();">
+				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='manageCurrentValuationPhaseData'; this.form.submit();">
 					<bean:message key="label.teacherServiceDistribution.valuate"/>
 				</html:button>
 				<br/><br/>
@@ -168,7 +169,7 @@
 	
 	<logic:notEqual name="valuationPhasesManagementForm" property="dataManagementOption" value="1">
 		<br/><br/>
-		<html:button property="" onclick="this.form.method.value='manageCurrentValuationPhaseData'; this.form.page.value=0; this.form.submit();">
+		<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='manageCurrentValuationPhaseData'; this.form.page.value=0; this.form.submit();">
 			<bean:message key="label.teacherServiceDistribution.valuate"/>
 		</html:button>
 		<br/><br/>

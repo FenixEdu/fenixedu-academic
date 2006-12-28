@@ -39,7 +39,7 @@
 			</fr:layout>
 		</fr:view>
 
-		<input type="hidden" name="method" value="" />
+		<input alt="input.method" type="hidden" name="method" value="" />
 
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"
 			onclick="this.form.method.value='deleteExemption';">

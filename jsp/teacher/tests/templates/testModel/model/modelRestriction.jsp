@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
@@ -21,7 +22,7 @@
 		<td>Escolher <ft:view property="count" /> pergunta(s)</td>
 		<td rowspan="2"><a href="javascript:switchDisplay('edit-model-restriction-div<%= modelRestriction.getIdInternal() %>');switchDisplay('view-model-restriction-div<%= modelRestriction.getIdInternal() %>')">Editar</a></td>
 	</tr>
-	<tr><th>Cotação:</th><td>
+	<tr><th>Cotaï¿½ï¿½o:</th><td>
 		<logic:empty name="modelRestriction" property="value">
 			<bean:message key="label.atomicQuestion.grade.null" bundle="TESTS_RESOURCES" />
 		</logic:empty>
@@ -34,7 +35,7 @@
 
 	<div class="switchNone" id="<%= "edit-model-restriction-div" + modelRestriction.getIdInternal() %>">
 		<html:form action="/tests/testModels.do?method=editModelRestriction">
-			<html:hidden property="oid" value="<%= modelRestriction.getIdInternal().toString() %>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= modelRestriction.getIdInternal().toString() %>" />
 			<ft:edit id="<%= "edit-model-restriction" + modelRestriction.getIdInternal() %>"
 			         schema="tests.modelRestriction.edit.questionGroup"
 			         nested="true">
@@ -73,7 +74,7 @@
 	</ft:view>
 	<div class="switchBlock" id="<%= "view-model-restriction-div" + modelRestriction.getIdInternal() %>">
 		<table class="tstyle7 thright mtop0" style="width: 60em;"><tr>
-		<th class="width10em">Cotação:</th>
+		<th class="width10em">Cotaï¿½ï¿½o:</th>
 		<td>
 			<logic:empty name="modelRestriction" property="value">
 				<bean:message key="label.atomicQuestion.grade.null" bundle="TESTS_RESOURCES" />
@@ -88,7 +89,7 @@
 
 	<div class="switchNone" id="<%= "edit-model-restriction-div" + modelRestriction.getIdInternal() %>">
 		<html:form action="/tests/testModels.do?method=editModelRestriction">
-			<html:hidden property="oid" value="<%= modelRestriction.getIdInternal().toString() %>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= modelRestriction.getIdInternal().toString() %>" />
 			<ft:edit id="<%= "edit-model-restriction" + modelRestriction.getIdInternal() %>"
 			         schema="tests.modelRestriction.edit.atomicQuestion"
 			         nested="true">

@@ -27,8 +27,8 @@
 <h3><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.news"/></h3>
 
 <html:form action="/announcements/announcementsStartPageHandler.do" method="get">
-	<html:hidden property="method" value="news"/>
-	<html:hidden property="recentBoardsTimeSpanSelection"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="news"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.recentBoardsTimeSpanSelection" property="recentBoardsTimeSpanSelection"/>
 	<table class="tstyle5 thright thlight thmiddle mvert05">
 		<tr>
 			<th rowspan="2"><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.show"/>:</th>
@@ -39,11 +39,11 @@
 		        <html:option value="24">24 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.announcements.lowerCase" /></html:option>
 		    </html:select>
 		    
-				<html:radio property="boardType" value="BOOKMARKED" onchange="this.form.submit();">
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.boardType" property="boardType" value="BOOKMARKED" onchange="this.form.submit();">
 					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.bookmarked" />
 				</html:radio>
 
-				<html:radio property="boardType" value="INSTITUTIONAL" onchange="this.form.submit();">
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.boardType" property="boardType" value="INSTITUTIONAL" onchange="this.form.submit();">
 					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.institutional" />
 				</html:radio>
 		    
@@ -52,11 +52,11 @@
 <%--
 		<tr>
 			<td>
-				<html:radio property="boardType" value="BOOKMARKED" onchange="this.form.submit();">
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.boardType" property="boardType" value="BOOKMARKED" onchange="this.form.submit();">
 					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.bookmarked" />
 				</html:radio>
 				<br/>
-				<html:radio property="boardType" value="INSTITUTIONAL" onchange="this.form.submit();">
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.boardType" property="boardType" value="INSTITUTIONAL" onchange="this.form.submit();">
 					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.institutional" />
 				</html:radio>
 			</td>
@@ -70,8 +70,8 @@
 <%-- 
 <h3 class="mtop2 mbottom05"><bean:message bundle="MESSAGING_RESOURCES" key="label.last.created.boards"/></h3>
 <html:form action="/announcements/announcementsStartPageHandler.do" method="get">
-	<html:hidden property="method" value="news"/>
-	<html:hidden property="howManyAnnouncementsToShow"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="news"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.howManyAnnouncementsToShow" property="howManyAnnouncementsToShow"/>
 	<e:labelValues id="values" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.presentationTier.Action.messaging.RecentBoardsTimeSpanSelection" /> 
 	<table class="tstyle5 mvert05">
 		<tr>

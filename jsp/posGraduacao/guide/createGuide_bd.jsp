@@ -77,8 +77,8 @@
            </tr> 
 		</table>
 		<p>
-			<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
-			<html:reset value="Limpar" styleClass="inputbutton"/>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Seguinte" styleClass="inputbutton" property="ok"/>
+			<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton"/>
 		</p>
 	  </html:form>
 

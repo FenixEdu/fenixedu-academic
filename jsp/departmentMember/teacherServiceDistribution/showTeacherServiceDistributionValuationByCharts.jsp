@@ -3,6 +3,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -24,9 +25,9 @@
 </h3>
 
 <html:form action="/teacherServiceDistributionValuation">
-<html:hidden property="method" value=""/>
-<html:hidden property="teacherServiceDistribution"/>
-<html:hidden property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 
 <table class='search'>
 	<tr class='tdleft'>
@@ -107,25 +108,25 @@
 <bean:define id="valuationGroupingId" name="teacherServiceDistributionValuationForm" property="valuationGrouping"/>
 <bean:define id="executionPeriodId" name="teacherServiceDistributionValuationForm" property="executionPeriod"/>
 <a name="hoursByGrouping">
-	<html:img page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedHoursPerGrouping&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
+	<html:img bundle="HTMLALT_RESOURCES" altKey='img.img' page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedHoursPerGrouping&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
 </a>
 <br/>
 <br/>
 
 <a name="numberStudentsByGrouping">
-	<html:img page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedNumberStudentsPerGrouping&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
+	<html:img bundle="HTMLALT_RESOURCES" altKey='img.img' page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedNumberStudentsPerGrouping&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
 </a>
 <br/>
 <br/>
 
 <a name="hoursByGroupingPercentage">
-	<html:img page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedHoursPerGroupingPieChart&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
+	<html:img bundle="HTMLALT_RESOURCES" altKey='img.img' page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedHoursPerGroupingPieChart&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
 </a>
 <br/>
 <br/>
 
 <a name="numberStudentsByGroupingPercentage">
-	<html:img page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedNumberStudentsPerGroupingPieChart&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
+	<html:img bundle="HTMLALT_RESOURCES" altKey='img.img' page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedNumberStudentsPerGroupingPieChart&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
 </a>
 <br/>
 <br/>

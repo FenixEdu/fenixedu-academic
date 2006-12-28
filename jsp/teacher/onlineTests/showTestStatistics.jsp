@@ -45,7 +45,7 @@
 		<%}
 		 if(testQuestion.getStudentSubQuestions().size()>1){
 		 	if(itemIndex.equals(new Integer(0))){%>
-		 		<tr><td><span class="error">Esta pergunta é uma pergunta com alíneas. Após responder poderá surgir uma nova alínea para responder.</span></td></tr>
+		 		<tr><td><span class="error">Esta pergunta ï¿½ uma pergunta com alï¿½neas. Apï¿½s responder poderï¿½ surgir uma nova alï¿½nea para responder.</span></td></tr>
 		 	<%}%>
 			<tr><td><br/><b><bean:write name="subQuestion" property="title"/></b></td></tr>
 		<%}%>
@@ -57,10 +57,10 @@
 			<%if (((String)questionLabel).startsWith("image/")){%>
 				<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
 				<logic:equal name="correctionType" value="studentCorrection">
-					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode+"&amp;studentCode="+ studentCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()%>"/>
+					<html:img bundle="HTMLALT_RESOURCES" altKey="img.img" align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode+"&amp;studentCode="+ studentCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()%>"/>
 				</logic:equal>
 				<logic:notEqual name="correctionType" value="studentCorrection">
-					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()%>"/>
+					<html:img bundle="HTMLALT_RESOURCES" altKey="img.img" align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()%>"/>
 				</logic:notEqual>
 				<logic:equal name="imageLabel" value="true">
 					</td><td>
@@ -136,11 +136,11 @@
 			<%if (((String)optionLabel).startsWith("image/")){ %>
 				<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
 				<logic:equal name="correctionType" value="studentCorrection">
-					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;studentCode="+ studentCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()+"&amp;item="+item.toString()%>"/>
+					<html:img bundle="HTMLALT_RESOURCES" altKey="img.img" align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;studentCode="+ studentCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()+"&amp;item="+item.toString()%>"/>
 				</logic:equal>
 				<logic:notEqual name="correctionType" value="studentCorrection">
 					<bean:define id="optionShuffle" name="testQuestion" property="optionShuffle"/>
-					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()+"&amp;optionShuffle="+optionShuffle.toString()+"&amp;item="+item.toString()%>"/>
+					<html:img bundle="HTMLALT_RESOURCES" altKey="img.img" align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()+"&amp;optionShuffle="+optionShuffle.toString()+"&amp;item="+item.toString()%>"/>
 				</logic:notEqual>
 				<logic:equal name="imageLabel" value="true">
 					</td><td>

@@ -2,6 +2,7 @@
 <%@page import="org.joda.time.YearMonthDay"%>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -52,7 +53,7 @@ if (month != null && year!=null)
 						if (announcement.getAnnouncementBoard().hasWriter(person)) {
 						%>
 							<logic:notEmpty name="announcement" property="publicationEnd">
-							 	até 
+							 	atï¿½ 
 								<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
 							</logic:notEmpty>
 						<%
@@ -67,7 +68,7 @@ if (month != null && year!=null)
 				</span>
 			</p>
 
-		<%-- Título --%>
+		<%-- Tï¿½tulo --%>
 			<logic:equal name="announcement" property="visible" value="true">
 				<h3 class="mvert025">
 				<html:link action="<%=contextPrefix +extraParameters +"&method=viewAnnouncement&announcementId=" + announcement.getIdInternal()%>">
@@ -83,7 +84,7 @@ if (month != null && year!=null)
 					<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
-				<em class="warning1">Invisível</em>
+				<em class="warning1">Invisï¿½vel</em>
 				</p>
 			</logic:equal>
 
@@ -129,7 +130,7 @@ if (month != null && year!=null)
 			<%
 				if (!request.getRequestURI().contains("public") && announcement.getAnnouncementBoard().hasManager(person)) {
 			%>
-				Permissões:
+				Permissï¿½es:
 				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=prepareEditAnnouncementBoard" + "&announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "&tabularVersion=true" %>">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.manage.link"/>
 				</html:link>
@@ -138,7 +139,7 @@ if (month != null && year!=null)
 				} else if (!request.getRequestURI().contains("public") && announcement.getAnnouncementBoard().hasWriter(person)) {
 			%>
 				
-				Permissões:
+				Permissï¿½es:
 				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=viewAnnouncements" + "&announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() %>">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.write.link"/>
 				</html:link>
@@ -199,12 +200,12 @@ if (month != null && year!=null)
 				<%
 				}
 				%>
-		<%-- Data de Criação --%>
+		<%-- Data de Criaï¿½ï¿½o --%>
 				<%
 				if (announcement.getAnnouncementBoard().hasWriter(person)) {
 				
 				%>
-					Data de criação:
+					Data de criaï¿½ï¿½o:
 					<span id="<%=announcement.getIdInternal().toString()%>">
 						<fr:view name="announcement" property="creationDate" layout="no-time"/>
 					</span>
@@ -254,7 +255,7 @@ if (month != null && year!=null)
 	
 	<logic:empty name="announcements">
 		<p class="mtop2">
-			<em>Não existem anúncios para a selecção actual.</em>
+			<em>Nï¿½o existem anï¿½ncios para a selecï¿½ï¿½o actual.</em>
 		</p>
 	</logic:empty>
 </logic:present>

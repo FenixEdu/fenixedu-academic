@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
@@ -58,8 +59,8 @@
 
 <div id="<%= correctDiv %>" class="switchNone">
 <fr:form action="<%= editLink %>">
-	<html:hidden property="personId" value="<%= personId %>" />
-	<html:hidden property="testGroupId" value="<%= testGroupId %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.personId" property="personId" value="<%= personId %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testGroupId" property="testGroupId" value="<%= testGroupId %>" />
 	<fr:edit name="answer"
 	         schema="tests.answer.percentage"
 	         id="<%= correctId %>"

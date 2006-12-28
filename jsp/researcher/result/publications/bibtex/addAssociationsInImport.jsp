@@ -110,7 +110,7 @@
 			<td class="width46em">
 				<html:submit><bean:message key="button.insert" bundle="RESEARCHER_RESOURCES"/></html:submit>
 				<span class="switchInline">
-				<input type="button" onclick="javascript:switchDisplay('addFile');switchDisplay('linkFile');" value="<bean:message key="label.close" bundle="RESEARCHER_RESOURCES"/>"/>		
+				<input alt="input.input" type="button" onclick="javascript:switchDisplay('addFile');switchDisplay('linkFile');" value="<bean:message key="label.close" bundle="RESEARCHER_RESOURCES"/>"/>		
 				</span>
 			</td>
 		</tr>

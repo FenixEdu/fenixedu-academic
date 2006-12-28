@@ -1,10 +1,11 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em>Gestão de Canais</em>
+<em>Gestï¿½o de Canais</em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.add.label"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
@@ -25,11 +26,11 @@
 
 <fr:form action="<%=  contextPrefix + action %>">
 
-<p class="mtop2 mbottom025"><strong>Campos obrigatórios:</strong></p>
+<p class="mtop2 mbottom025"><strong>Campos obrigatï¿½rios:</strong></p>
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
-<%-- Título --%>
+<%-- Tï¿½tulo --%>
 	<tr>
 		<th>
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
@@ -127,7 +128,7 @@
 		</td>
 	</tr>
 
-<%-- Início do Evento --%>
+<%-- Inï¿½cio do Evento --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
@@ -165,7 +166,7 @@
 
 
 
-<%-- Anúncio disponível apartir... --%>
+<%-- Anï¿½ncio disponï¿½vel apartir... --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:
@@ -176,7 +177,7 @@
 		</td>
 	</tr>
 
-<%-- Anúncio disponível até... --%>
+<%-- Anï¿½ncio disponï¿½vel atï¿½... --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.label"/>:
@@ -187,7 +188,7 @@
 		</td>
 	</tr>
 
-<%-- Visível --%>
+<%-- Visï¿½vel --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:
@@ -213,11 +214,11 @@
 	</fr:create>			
 	</p>
 
-<p class="smalltxt"><em>Campos assinalados com <span class="required">*</span> são de preenchimento obrigatório.</em></p>
+<p class="smalltxt"><em>Campos assinalados com <span class="required">*</span> sï¿½o de preenchimento obrigatï¿½rio.</em></p>
 
 	<p class="mtop1">
-		<html:submit styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>
-		<html:cancel styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.cancel.button"/></html:cancel>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.cancel.button"/></html:cancel>
 	</p>
 
 

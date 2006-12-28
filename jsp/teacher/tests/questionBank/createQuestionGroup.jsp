@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -14,7 +15,7 @@
 </div>
 
 <fr:form action="/tests/questionBank.do?method=createQuestionGroup">
-	<html:hidden property="oid" value="<%= questionGroupId %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= questionGroupId %>" />
 	<fr:create type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup"
 	           schema="tests.questionGroup.create"
 	           id="createQuestionGroup"

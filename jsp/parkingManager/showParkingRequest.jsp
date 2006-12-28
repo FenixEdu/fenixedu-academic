@@ -8,7 +8,7 @@
 <!--
 
 function confirmation(){
-	var result = confirm("Os ficheiros submetidos electronicamente vão ser apagados. Deseja continuar ?");
+	var result = confirm("Os ficheiros submetidos electronicamente vï¿½o ser apagados. Deseja continuar ?");
 	if( result ) {
 		document.forms[0].accepted.value="true";
 		document.forms[0].submit();
@@ -84,18 +84,18 @@ function hideCardValidPeriod(toShow){
 		<bean:define id="parkingRequestID" name="parkingRequest" property="idInternal" />	
 		<bean:define id="groupName" value="" type="java.lang.String"/>		
 		<html:form action="/parking">
-			<html:hidden property="code" value="<%= parkingRequestID.toString()%>"/>
-			<html:hidden property="method" value="editFirstTimeParkingParty"/>
-			<html:hidden property="parkingRequestState" value="<%= pageContext.findAttribute("parkingRequestState").toString() %>"/>
-			<html:hidden property="parkingPartyClassification" value="<%= pageContext.findAttribute("parkingPartyClassification").toString() %>"/>
-			<html:hidden property="personName" value="<%= pageContext.findAttribute("personName").toString() %>"/>
-			<html:hidden property="carPlateNumber" value="<%= pageContext.findAttribute("carPlateNumber").toString() %>"/>
-			<html:hidden property="accepted" value=""/>	
-			<html:hidden property="parkingPartyID" value="<%= parkingPartyIdint.toString() %>" />		
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.code" property="code" value="<%= parkingRequestID.toString()%>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editFirstTimeParkingParty"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.parkingRequestState" property="parkingRequestState" value="<%= pageContext.findAttribute("parkingRequestState").toString() %>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.parkingPartyClassification" property="parkingPartyClassification" value="<%= pageContext.findAttribute("parkingPartyClassification").toString() %>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.personName" property="personName" value="<%= pageContext.findAttribute("personName").toString() %>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.carPlateNumber" property="carPlateNumber" value="<%= pageContext.findAttribute("carPlateNumber").toString() %>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.accepted" property="accepted" value=""/>	
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.parkingPartyID" property="parkingPartyID" value="<%= parkingPartyIdint.toString() %>" />		
 			
 			<span class="error"><!-- Error messages go here --><html:errors /></span>		
 			<p class="mbottom025"><strong><bean:message key="label.cardNumber"/></strong></p>
-			<html:text size="12" property="cardNumber"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.cardNumber" size="12" property="cardNumber"/>
 			<span class="error0 mtop0"><html:messages id="message" property="cardNumber" message="true" bundle="PARKING_RESOURCES">
 				<bean:write name="message"/><br/>
 			</html:messages></span>
@@ -118,8 +118,8 @@ function hideCardValidPeriod(toShow){
 			</html:messages></span>	
 			
 			<br/><br/><bean:message key="label.cardValidPeriod" bundle="PARKING_RESOURCES"/>	
-			<html:radio styleId="cardValidPeriodIdYes" name="parkingForm" property="cardAlwaysValid" value="yes" onclick="displayCardValidPeriod(false)">sim</html:radio>
-			<html:radio styleId="cardValidPeriodIdNo" name="parkingForm" property="cardAlwaysValid" value="no" onclick="displayCardValidPeriod(true)">não</html:radio>	
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardAlwaysValid" styleId="cardValidPeriodIdYes" name="parkingForm" property="cardAlwaysValid" value="yes" onclick="displayCardValidPeriod(false)">sim</html:radio>
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardAlwaysValid" styleId="cardValidPeriodIdNo" name="parkingForm" property="cardAlwaysValid" value="no" onclick="displayCardValidPeriod(true)">nï¿½o</html:radio>	
 			<br/><html:messages id="message" property="mustFillInDates" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/><br/></span></html:messages>
 			<html:messages id="message" property="invalidPeriod" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>				
 			<div id="cardValidPeriodDivId" style="display:block">
@@ -137,7 +137,7 @@ function hideCardValidPeriod(toShow){
 				<bean:write name="message"/><br/>
 			</html:messages></span>
 			<p class="mbottom025"><strong><bean:message key="label.note"/></strong></p>
-			<html:textarea rows="7" cols="45" property="note"/>
+			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.note" rows="7" cols="45" property="note"/>
 			<p class="mtop2">
 			<html:button bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="accept" onclick="confirmation();"><bean:message key="button.accept"/></html:button>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="notify"><bean:message key="button.notify"/></html:submit>

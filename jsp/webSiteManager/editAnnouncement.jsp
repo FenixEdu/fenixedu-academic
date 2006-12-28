@@ -1,10 +1,11 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em>Gestão de Canais</em>
+<em>Gestï¿½o de Canais</em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.edit.label"/></h2>
 
 <bean:define id="contextPrefix" name="contextPrefix" />
@@ -19,7 +20,7 @@
 
 <table class="tstyle8 thlight thtop thright">
 
-<%-- Título --%>
+<%-- Tï¿½tulo --%>
 	<tr>
 		<th>
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
@@ -127,7 +128,7 @@
 		</td>
 	</tr>
 
-<%-- Início do evento --%>
+<%-- Inï¿½cio do evento --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
@@ -147,7 +148,7 @@
 		</td>
 	</tr>
 
-<%-- Início de publicação --%>
+<%-- Inï¿½cio de publicaï¿½ï¿½o --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:
@@ -157,7 +158,7 @@
 		</td>
 	</tr>
 
-<%-- Fim de publicação --%>
+<%-- Fim de publicaï¿½ï¿½o --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.label"/>:
@@ -167,7 +168,7 @@
 		</td>
 	</tr>
 
-<%-- Visível --%>
+<%-- Visï¿½vel --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:
@@ -191,7 +192,7 @@
 	
 	
 	<p>
-		<html:submit styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>
-		<html:cancel styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.cancel.button"/></html:cancel>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.cancel.button"/></html:cancel>
 	</p>	
 </fr:form>

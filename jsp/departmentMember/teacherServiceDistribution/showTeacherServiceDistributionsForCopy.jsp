@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -19,8 +20,8 @@
 </h3>
 
 <html:form action="/teacherServiceDistributionCopy">
-<html:hidden property="method" value="copyTeacherServiceDistribution"/>
-<html:hidden property="page" value="0"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="copyTeacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
 <table class='vtsbc'>
 <tr>
@@ -74,7 +75,7 @@
 		<tr>
 			<td>
 				<bean:define id="teacherServiceDistributionId" name="teacherServiceDistribution" property="idInternal" />
-				<html:radio property="teacherServiceDistribution" value="<%= ((Integer)teacherServiceDistributionId).toString() %>"/>
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacherServiceDistribution" property="teacherServiceDistribution" value="<%= ((Integer)teacherServiceDistributionId).toString() %>"/>
 			</td>
 			<td class="courses" align="left" width="200">
 				<bean:write name="teacherServiceDistribution" property="name"/>
@@ -84,7 +85,7 @@
 			</td>
 			<td class="courses" align="center">
 				<logic:iterate id="executionPeriod" name="teacherServiceDistribution" property="orderedExecutionPeriods">
-					<bean:write name="executionPeriod" property="semester"/>º&nbsp;
+					<bean:write name="executionPeriod" property="semester"/>ï¿½&nbsp;
 				</logic:iterate>
 			</td>
 		</tr>
@@ -121,12 +122,12 @@
 		<td align="left" colspan="2">
 			<b><bean:message key="label.teacherServiceDistribution.name"/>:<b>
 			&nbsp;&nbsp;
-			<html:text property="name" size="40" maxlength="240" />
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="40" maxlength="240" />
 		</td>
 	</tr>
 	</table>
 
-	<html:button property="" onclick="this.form.method.value='copyTeacherServiceDistribution'; this.form.page.value=1; this.form.submit()">
+	<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='copyTeacherServiceDistribution'; this.form.page.value=1; this.form.submit()">
 		<bean:message key="label.teacherServiceDistribution.create"/>
 	</html:button>
 </logic:notEmpty>

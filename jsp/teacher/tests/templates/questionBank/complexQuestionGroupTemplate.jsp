@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
@@ -34,7 +35,7 @@
 	<ft:view schema="tests.question.testModels" layout="values" />
 	
 	<html:form action="<%= modelSelectPath %>">
-		<html:hidden property="oid" value="<%= questionId %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= questionId %>" />
 		<fr:create type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
 		           schema="tests.modelRestriction.create"
 		           id="<%= modelSelectId %>"
@@ -53,7 +54,7 @@
 	</script>
 </fr:hasMessages>
 
-<h4>a) Sumário</h4>
+<h4>a) Sumï¿½rio</h4>
 
 <div id="viewNameDiv" class="switchBlock">
 <ft:view schema="tests.questionGroup.name" layout="flow" />
@@ -62,7 +63,7 @@
 
 <div id="editNameDiv" class="switchNone">
 	<fr:form action="/tests/questionBank.do?method=editTestElement">
-		<html:hidden property="oid" value="<%= questionGroup.getIdInternal().toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= questionGroup.getIdInternal().toString() %>" />
 		<ft:edit schema="tests.questionGroup.edit.name"
 		         nested="true"
 		         id="editName">
@@ -86,7 +87,7 @@
 </ft:view>
 
 <logic:equal name="questionGroup" property="gradeComplete" value="false">
-<span class="warning0">Deve atribuir cotação a todas as perguntas deste grupo</span>
+<span class="warning0">Deve atribuir cotaï¿½ï¿½o a todas as perguntas deste grupo</span>
 </logic:equal>
 
 <h4>b) Perguntas</h4>

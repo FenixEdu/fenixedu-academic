@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -104,7 +105,7 @@
     </p>
         
     <p class="mtop2">
-        <html:submit styleClass="inputButton">
+        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputButton">
             <bean:message key="button.save"/>
         </html:submit>
 		<html:link page="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>">

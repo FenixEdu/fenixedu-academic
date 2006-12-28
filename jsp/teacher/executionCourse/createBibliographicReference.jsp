@@ -26,18 +26,18 @@
 				<bean:message key="message.bibliographicReferenceTitle"/>
 			</h4>
 			<span class="error"><!-- Error messages go here --><html:errors property="title"/></span>
-			<html:textarea bundle="HTMLALT_RESOURCES" property="title" cols="56" rows="4"/>
+			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.title" bundle="HTMLALT_RESOURCES" property="title" cols="56" rows="4"/>
 			<br/>
 			<h4>
 				<bean:message key="message.bibliographicReferenceAuthors"/>
 			</h4>
 			<span class="error"><!-- Error messages go here --><html:errors property="authors"/></span>
-			<html:textarea bundle="HTMLALT_RESOURCES" property="authors" cols="56" rows="4"/>
+			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.authors" bundle="HTMLALT_RESOURCES" property="authors" cols="56" rows="4"/>
 			<h4>
 				<bean:message key="message.bibliographicReferenceReference"/>
 			</h4>
 			<span class="error"><!-- Error messages go here --><html:errors property="reference"/></span>
-			<html:textarea bundle="HTMLALT_RESOURCES" property="reference" cols="56" rows="2"/>
+			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.reference" bundle="HTMLALT_RESOURCES" property="reference" cols="56" rows="2"/>
 			<br/>
 			<h4>
 				<bean:message key="message.bibliographicReferenceYear"/>

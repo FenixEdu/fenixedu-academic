@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -15,13 +16,13 @@
 </h3>
 
 <html:form action="/globalTeacherServiceDistributionValuation">
-<html:hidden property="method" value=""/>
-<html:hidden property="viewType"/>
-<html:hidden property="viewType"/>
-<html:hidden property="viewCurricularInformation"/>
-<html:hidden property="viewStudentsEnrolments"/>
-<html:hidden property="viewShiftHours"/>
-<html:hidden property="viewStudentsEnrolmentsPerShift"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewCurricularInformation" property="viewCurricularInformation"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewStudentsEnrolments" property="viewStudentsEnrolments"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewShiftHours" property="viewShiftHours"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewStudentsEnrolmentsPerShift" property="viewStudentsEnrolmentsPerShift"/>
 
 
 
@@ -33,9 +34,9 @@
 		String valuationGroupingProperty = "valuationGrouping(" + (String) teacherServiceDistribution + ")"; 
 	%>
 	
-	<html:hidden property="<%= teacherServiceDistributionProperty %>"/>
-	<html:hidden property="<%= valuationPhaseProperty %>"/>
-	<html:hidden property="<%= valuationGroupingProperty %>"/>		
+	<html:hidden alt="<%= teacherServiceDistributionProperty %>" property="<%= teacherServiceDistributionProperty %>"/>
+	<html:hidden alt="<%= valuationPhaseProperty %>" property="<%= valuationPhaseProperty %>"/>
+	<html:hidden alt="<%= valuationGroupingProperty %>" property="<%= valuationGroupingProperty %>"/>		
 </logic:iterate>
 
 
@@ -152,7 +153,7 @@
 						<bean:write name="curricularCourseInformation" property="key"/>
 						(<logic:iterate name="curricularCourseInformation" property="value" id="curricularYear">
 							<bean:write name="curricularYear"/>&nbsp;
-						</logic:iterate>ºano)
+						</logic:iterate>ï¿½ano)
 			</logic:iterate>)
 			- <fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="professorshipValuationDTOEntry" property="professorshipValuation.totalHours"/></fmt:formatNumber>
 			<bean:message key="label.teacherService.hours"/>

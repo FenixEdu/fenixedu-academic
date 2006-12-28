@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -27,7 +28,7 @@
 
 <table class="tstyle7 thright mtop0"><tr><td>
 <html:form action="/tests/testModels.do?method=editModelGroup">
-	<html:hidden property="oid" value="<%= modelGroup.getIdInternal().toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= modelGroup.getIdInternal().toString() %>" />
 	<fr:edit id="edit-model-group" name="modelGroup" schema="tests.modelGroup.name" layout="flow" nested="true" />
 	<html:submit><bean:message key="message.question.alter" bundle="TESTS_RESOURCES" /></html:submit>
 </html:form>

@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <bean:define id="thisModule" name="module" property="idInternal"/>
@@ -89,7 +90,7 @@
 	     search for: saveTree()
 	  -->	  
 	<fr:form action="<%= "/module/organize.do?module=" + thisModule %>">
-	    <input id="tree-structure" type="hidden" name="tree" value="" />
+	    <input alt="input.tree" id="tree-structure" type="hidden" name="tree" value="" />
 	</fr:form>
 	
 	<% String tree = "moduleTree" + thisModule; %>
@@ -144,7 +145,7 @@
 	   
 	   <fr:form action="<%= "/module/view.do?module=" + thisModule %>">
 	       <!-- submits the form on top of the page, search for: tree-structure -->
-	       <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('" + tree + "');" %>">
+	       <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('" + tree + "');" %>">
 	           <bean:message key="button.tree.save" bundle="FUNCTIONALITY_RESOURCES"/>
 	       </html:button>
 	   

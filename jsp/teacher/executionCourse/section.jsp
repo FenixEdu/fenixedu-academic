@@ -135,7 +135,7 @@
                 <bean:message key="button.confirm" bundle="SITE_RESOURCES"/>
             </html:submit>
         </logic:equal>
-        <html:button property="hide" onclick="<%= String.format("javascript:hideElement('%s');", deleteSectionId) %>">
+        <html:button bundle="HTMLALT_RESOURCES" altKey="button.hide" property="hide" onclick="<%= String.format("javascript:hideElement('%s');", deleteSectionId) %>">
             <bean:message key="button.cancel" bundle="SITE_RESOURCES"/>
         </html:button>
         </p>
@@ -152,7 +152,7 @@
 
 <logic:notEmpty name="section" property="orderedSubSections">
     <fr:form action="<%= "/manageExecutionCourse.do?method=saveSectionsOrder&amp;executionCourseID=" + executionCourseId + "&amp;sectionID=" + section.getIdInternal() %>">
-        <input id="sections-order" type="hidden" name="sectionsOrder" value=""/>
+        <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
     
     <% String treeId = "sectionTree" + section.getIdInternal(); %>
@@ -172,7 +172,7 @@
 
 		<p class="mtop15">
 		    <fr:form action="<%= "/manageExecutionCourse.do?method=section&amp;executionCourseID=" + executionCourseId + "&amp;sectionID=" + section.getIdInternal() %>">
-		        <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('" + treeId + "');" %>">
+		        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('" + treeId + "');" %>">
 		            <bean:message key="button.sections.order.save" bundle="SITE_RESOURCES"/>
 		        </html:button>
 		        <html:submit>
@@ -330,7 +330,7 @@
                         <bean:message key="button.confirm" bundle="SITE_RESOURCES"/>
                     </html:submit>
                 </logic:equal>
-                <html:button property="hide" onclick="<%= String.format("javascript:hideElement('%s');", deleteId) %>">
+                <html:button bundle="HTMLALT_RESOURCES" altKey="button.hide" property="hide" onclick="<%= String.format("javascript:hideElement('%s');", deleteId) %>">
                     <bean:message key="button.cancel" bundle="SITE_RESOURCES"/>
                 </html:button>
                 </p>

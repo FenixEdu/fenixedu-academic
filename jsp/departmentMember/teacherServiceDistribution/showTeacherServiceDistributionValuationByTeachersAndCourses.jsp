@@ -5,6 +5,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -27,9 +28,9 @@
 </h3>
 
 <html:form action="/teacherServiceDistributionValuation">
-<html:hidden property="method" value=""/>
-<html:hidden property="teacherServiceDistribution"/>
-<html:hidden property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 
 <table class='search'>
 	<tr class='tdleft'>

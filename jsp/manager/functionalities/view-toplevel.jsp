@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -39,7 +40,7 @@
      	search for: saveTree()
   	-->
 	<fr:form action="/toplevel/organize.do">
-	    <input id="tree-structure" type="hidden" name="tree" value="" />
+	    <input alt="input.tree" id="tree-structure" type="hidden" name="tree" value="" />
 	</fr:form>
 	
 	<% String tree = "topLevelTree"; %>
@@ -94,7 +95,7 @@
 	    
 	    <fr:form action="/toplevel/view.do">
 	        <!-- submits the form on top of the page, search for: tree-structure -->
-	        <html:button property="saveButton" onclick="<%= "treeRenderer_saveTree('" + tree + "');" %>">
+	        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('" + tree + "');" %>">
 	            <bean:message key="button.tree.save" bundle="FUNCTIONALITY_RESOURCES"/>
 	        </html:button>
 	    

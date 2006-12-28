@@ -32,7 +32,7 @@
 		<fr:property name="columnClasses" value=",,tdclear"/>
 	</fr:layout>
 	</fr:edit>
-	<html:submit styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
 

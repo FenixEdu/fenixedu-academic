@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <h2><bean:message key="title.delete.confirm" bundle="FUNCTIONALITY_RESOURCES"/></h2>
@@ -43,10 +44,10 @@
 <bean:define id="id" name="functionality" property="idInternal"/>
 
 <fr:form action="<%= "/functionality/delete.do?functionality=" + id %>">
-    <html:submit property="confirm">
+    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
         <bean:message key="link.functionality.delete" bundle="FUNCTIONALITY_RESOURCES"/>
     </html:submit>
-    <html:submit property="cancel">
+    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
         <bean:message key="link.functionality.delete.cancel" bundle="FUNCTIONALITY_RESOURCES"/>
     </html:submit>
 </fr:form>

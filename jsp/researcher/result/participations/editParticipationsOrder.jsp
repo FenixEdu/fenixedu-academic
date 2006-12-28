@@ -23,11 +23,11 @@
 	
 	<!-- form used to submit the tree structure -->
 	<fr:form action="<%= saveOrder %>">
-   		<input id="tree-structure" type="hidden" name="tree" value=""/>
+   		<input alt="input.tree" id="tree-structure" type="hidden" name="tree" value=""/>
 	</fr:form>
 
 	
-	<p><span class="warning0">Faça <em>drag & drop</em> dos items para reordenar a lista.</span></p> <!-- tobundle -->
+	<p><span class="warning0">Faï¿½a <em>drag & drop</em> dos items para reordenar a lista.</span></p> <!-- tobundle -->
 
 
 	<fr:view name="participations" layout="tree">
@@ -60,7 +60,7 @@
  	<div id="tree-controls" style="display: none;">
 	 	<fr:form action="<%= prepareEdit %>">
 	        <!-- submits the form on top of the page, search for: tree-structure -->
-	        <html:button property="saveButton" onclick="treeRenderer_saveTree('tree');">
+	        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="treeRenderer_saveTree('tree');">
 	            <bean:message key="button.save" bundle="RESEARCHER_RESOURCES"/>
 	        </html:button>
 	    

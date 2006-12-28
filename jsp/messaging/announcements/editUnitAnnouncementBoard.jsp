@@ -19,19 +19,19 @@
 <bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
 
 <html:form action="/announcements/manageUnitAnnouncementBoard" method="get">
-		<html:hidden property="method" value="editAnnouncementBoard"/>
-		<html:hidden property="keyUnit"/>
-		<html:hidden property="announcementBoardId" value="<%=request.getParameter("announcementBoardId")%>"/>		
-		<html:hidden property="returnAction"/>
-		<html:hidden property="returnMethod"/>
-		<html:hidden property="tabularVersion"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editAnnouncementBoard"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.keyUnit" property="keyUnit"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.announcementBoardId" property="announcementBoardId" value="<%=request.getParameter("announcementBoardId")%>"/>		
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.returnAction" property="returnAction"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.returnMethod" property="returnMethod"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tabularVersion" property="tabularVersion"/>
 		<table class="tstyle5 thlight thright">
 			<tr>
 				<th>
 					Nome:
 				</th>
 				<td>
-					<html:text property="name"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name"/>
 				</td>				
 			</tr>
 			<tr>
@@ -39,7 +39,7 @@
 					<bean:message key="label.mandatory" bundle="MESSAGING_RESOURCES"/>
 				</th>
 				<td>
-					<html:checkbox property="mandatory" value="true"/>
+					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.mandatory" property="mandatory" value="true"/>
 				</td>				
 			</tr>
 			<tr>

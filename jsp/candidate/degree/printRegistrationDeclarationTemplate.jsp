@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 
 <bean:define id="person" name="registration" property="student.person" />
 <bean:define id="studentName" name="person" property="name" />

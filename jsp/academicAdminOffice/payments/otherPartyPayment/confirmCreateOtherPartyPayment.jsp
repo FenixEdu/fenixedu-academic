@@ -21,7 +21,7 @@
 	<bean:define id="eventId" name="createOtherPartyPaymentBean" property="event.idInternal" />
 	<bean:define id="personId" name="person" property="idInternal" />
 	<html:form action="<%="/payments.do?eventId=" + eventId + "&amp;personId=" + personId%>">
-		<html:hidden property="method" value=""/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
 		
 		<fr:edit id="confirmCreateOtherPartyPayment" name="createOtherPartyPaymentBean" visible="false" nested="true"/>
 		

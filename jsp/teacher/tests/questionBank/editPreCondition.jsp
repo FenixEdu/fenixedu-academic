@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -26,7 +27,7 @@
 <logic:empty name="bean" property="predicateType">
 <h4><bean:message key="message.addRule" bundle="TESTS_RESOURCES" /></h4>
 <html:form action="/tests/questionBank.do?method=prepareCreateAtomicPredicate">
-<html:hidden property="returnTo" value="editPreCondition" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.returnTo" property="returnTo" value="editPreCondition" />
 <fr:edit name="bean"
          schema="tests.predicate.choose-type.preCondition"
          id="chooseAtomicPredicateType"
@@ -41,7 +42,7 @@
 <logic:notEmpty name="bean" property="predicateType">
 <h4><bean:message key="message.addRule.parameter" bundle="TESTS_RESOURCES" /></h4>
 <html:form action="/tests/questionBank.do?method=createAtomicPredicate">
-<html:hidden property="returnTo" value="editPreCondition" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.returnTo" property="returnTo" value="editPreCondition" />
 <fr:edit name="bean"
          schema="<%= "tests.predicate.choose-details-for." + bean.getPredicateType().getName() %>"
          id="createAtomicPredicate">
@@ -57,7 +58,7 @@
 <logic:empty name="bean" property="action">
 <h4><bean:message key="message.composeRules" bundle="TESTS_RESOURCES" /></h4>
 <html:form action="/tests/questionBank.do?method=managePredicates">
-<html:hidden property="returnTo" value="editPreCondition" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.returnTo" property="returnTo" value="editPreCondition" />
 <fr:edit name="bean"
          schema="tests.predicate.predicates"
          id="predicateList">
@@ -72,7 +73,7 @@
 <logic:notEmpty name="bean" property="action">
 <h4><bean:message key="message.composeRules" bundle="TESTS_RESOURCES" /></h4>
 <fr:form action="/tests/questionBank.do?method=composePredicates">
-<html:hidden property="returnTo" value="editPreCondition" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.returnTo" property="returnTo" value="editPreCondition" />
 <fr:edit name="bean"
          schema="tests.predicate.predicates.compose"
          id="predicateList"
@@ -89,7 +90,7 @@
 <h4><bean:message key="message.chooseRule" bundle="TESTS_RESOURCES" /></h4>
 <logic:notEmpty name="bean" property="predicates">
 <fr:form action="/tests/questionBank.do?method=choosePreCondition">
-<html:hidden property="returnTo" value="editPreCondition" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.returnTo" property="returnTo" value="editPreCondition" />
 <fr:edit name="bean"
          schema="tests.validator.choose"
          id="choosePredicate">

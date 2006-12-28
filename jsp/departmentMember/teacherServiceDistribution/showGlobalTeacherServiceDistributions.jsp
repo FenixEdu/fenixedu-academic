@@ -6,6 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.ValuationGroupingDTOEntry" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -20,8 +21,8 @@
 
 
 <html:form action="/globalTeacherServiceDistributionValuation">
-<html:hidden property="method" value="prepareForGlobalTeacherServiceDistributionValuation"/>
-<html:hidden property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareForGlobalTeacherServiceDistributionValuation"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 
 <table class='vtsbc'>
 <tr>
@@ -77,7 +78,7 @@
 	%>
 	<tr>
 		<td class="aleft">
-			<html:checkbox property="<%= teacherServiceDistributionProperty %>" value="true"/>
+			<html:checkbox alt="<%= teacherServiceDistributionProperty %>" property="<%= teacherServiceDistributionProperty %>" value="true"/>
 			<bean:write name="teacherServiceDistribution" property="name"/>
 		</td>
 		<td class="aleft">
@@ -99,7 +100,7 @@
 </logic:iterate>
 </table>
 
-<html:button property="" onclick="this.form.method.value='viewGlobalTeacherServiceDistributionValuation'; this.form.submit()">
+<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='viewGlobalTeacherServiceDistributionValuation'; this.form.submit()">
 	<bean:message key="label.teacherServiceDistribution.view"/>
 </html:button>
 

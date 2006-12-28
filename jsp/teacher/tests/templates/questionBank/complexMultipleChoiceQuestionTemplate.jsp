@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
@@ -32,7 +33,7 @@
 	<ft:view schema="tests.question.testModels" layout="values" />
 	
 	<html:form action="<%= modelSelectPath %>">
-		<html:hidden property="oid" value="<%= questionId %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= questionId %>" />
 		<fr:create type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
 		           schema="tests.modelRestriction.create"
 		           id="<%= modelSelectId %>"
@@ -52,7 +53,7 @@
 	</script>
 </fr:hasMessages>
 
-<h4>a) Sumário</h4>
+<h4>a) Sumï¿½rio</h4>
 
 <ft:view schema="tests.multipleChoiceQuestion.view">
 	<ft:layout name="tabular">
@@ -61,10 +62,10 @@
 </ft:view>
 
 <logic:empty name="atomicQuestion" property="choices">
-<span class="warning0">A pergunta nao tem qualquer opção</span>
+<span class="warning0">A pergunta nao tem qualquer opï¿½ï¿½o</span>
 </logic:empty>
 
-<h4>b) Materiais de apresentação</h4>
+<h4>b) Materiais de apresentaï¿½ï¿½o</h4>
 
 <div>
 	<strong><bean:message key="label.testElement.presentationMaterials" bundle="TESTS_RESOURCES" />:</strong>
@@ -82,7 +83,7 @@
 	</ft:layout>
 </ft:view>
 
-<h4>c) Opções</h4>
+<h4>c) Opï¿½ï¿½es</h4>
 
 <div id="viewShuffleDiv" class="switchBlock">
 <ft:view schema="tests.multipleChoiceQuestion.view.shuffle" layout="flow" />
@@ -91,7 +92,7 @@
 
 <div id="editShuffleDiv" class="switchNone">
 	<fr:form action="/tests/questionBank.do?method=editTestElement">
-		<html:hidden property="oid" value="<%= atomicQuestion.getIdInternal().toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= atomicQuestion.getIdInternal().toString() %>" />
 		<ft:edit schema="tests.multipleChoiceQuestion.edit.shuffle"
 		         nested="true"
 		         id="editShuffle">
@@ -110,7 +111,7 @@
 
 <ul>
 <li>
-	<html:link page="/tests/questionBank.do?method=createChoice" paramId="oid" paramName="atomicQuestion" paramProperty="idInternal">Inserir opção</html:link>
+	<html:link page="/tests/questionBank.do?method=createChoice" paramId="oid" paramName="atomicQuestion" paramProperty="idInternal">Inserir opï¿½ï¿½o</html:link>
 </li>
 </ul>
 
@@ -123,7 +124,7 @@
 	</ft:layout>
 </ft:view>
 
-<h4>d) Cotação</h4>
+<h4>d) Cotaï¿½ï¿½o</h4>
 
 <logic:notEmpty name="atomicQuestion" property="grade">
 <ul>
@@ -231,20 +232,20 @@
 </logic:empty>
 
 <logic:equal name="atomicQuestion" property="belongsToAllGroup" value="true">
-<h4>g) Pré-condição</h4>
+<h4>g) Prï¿½-condiï¿½ï¿½o</h4>
 <logic:notEmpty name="atomicQuestion" property="preCondition">
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=deletePreCondition">
 		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
-		Apagar pré-condição
+		Apagar prï¿½-condiï¿½ï¿½o
 	</f:parameterLink>
 </li>
 
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareEditPreCondition">
 		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
-		Editar pré-condição
+		Editar prï¿½-condiï¿½ï¿½o
 	</f:parameterLink>
 </li>
 </ul>
@@ -258,7 +259,7 @@
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareEditPreCondition">
 		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
-		Inserir pré-condição
+		Inserir prï¿½-condiï¿½ï¿½o
 	</f:parameterLink>
 </li>
 </ul>

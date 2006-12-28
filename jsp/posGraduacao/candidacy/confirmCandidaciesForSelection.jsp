@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -32,7 +33,7 @@
 		<br/><br/>
 	</logic:present>
 	
-    <input id="tree-structure" type="hidden" name="substituteCandidaciesOrder" value="" />
+    <input alt="input.substituteCandidaciesOrder" id="tree-structure" type="hidden" name="substituteCandidaciesOrder" value="" />
 	<logic:present name="substituteCandidacies">
 		<h2><strong><bean:message key="label.substituteCandidacies" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 		<logic:empty name="substituteCandidacies">
@@ -84,7 +85,7 @@
 	</logic:present>
 	
 	<p>
-		<html:submit onclick="treeRenderer_saveTree('substituteCandidaciesOrderTree');"><bean:message key="button.confirm" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="treeRenderer_saveTree('substituteCandidaciesOrderTree');"><bean:message key="button.confirm" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit>
 	</p>
 	
 </fr:form>

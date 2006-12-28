@@ -2,6 +2,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.Person" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -30,9 +31,9 @@
 </ul>
 
 <html:form action="/valuationGroupingSupport">
-<html:hidden property="method" value=""/>
-<html:hidden property="teacherServiceDistribution"/>
-<html:hidden property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 <br/>
 
 
@@ -132,13 +133,13 @@
 
 <b> <bean:message key="label.teacherServiceDistribution.permissions"/>:</b>
 <ul>
-	<li> <html:checkbox property="phaseManagementPermission"/> <bean:message key="label.teacherServiceDistribution.phaseManagementPermission"/> </li>
-	<li> <html:checkbox property="automaticValuationPermission"/> <bean:message key="label.teacherServiceDistribution.automaticValuationPermission"/> </li>
-	<li> <html:checkbox property="omissionConfigurationPermission"/> <bean:message key="label.teacherServiceDistribution.omissionConfigurationPermission"/> </li>
-	<li> <html:checkbox property="valuationCompetenceCoursesAndTeachersManagementPermission"/> <bean:message key="label.teacherServiceDistribution.valuationCompetenceCoursesAndTeachersManagementPermission"/> </li>
+	<li> <html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.phaseManagementPermission" property="phaseManagementPermission"/> <bean:message key="label.teacherServiceDistribution.phaseManagementPermission"/> </li>
+	<li> <html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.automaticValuationPermission" property="automaticValuationPermission"/> <bean:message key="label.teacherServiceDistribution.automaticValuationPermission"/> </li>
+	<li> <html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.omissionConfigurationPermission" property="omissionConfigurationPermission"/> <bean:message key="label.teacherServiceDistribution.omissionConfigurationPermission"/> </li>
+	<li> <html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.valuationCompetenceCoursesAndTeachersManagementPermission" property="valuationCompetenceCoursesAndTeachersManagementPermission"/> <bean:message key="label.teacherServiceDistribution.valuationCompetenceCoursesAndTeachersManagementPermission"/> </li>
 </ul>
 
-<html:button property="" onclick="this.form.method.value='setPermissionsToPerson'; this.form.submit()">
+<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='setPermissionsToPerson'; this.form.submit()">
 	<bean:message key="button.update"/>
 </html:button>
 </html:form>

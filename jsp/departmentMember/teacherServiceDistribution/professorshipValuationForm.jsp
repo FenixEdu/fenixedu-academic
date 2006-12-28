@@ -7,6 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation" %>
 <%@ page import="net.sourceforge.fenixedu.domain.CompetenceCourse" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -27,12 +28,12 @@
 </h3>
 
 <html:form action="/professorshipValuation">
-<html:hidden property="method" value=""/>
-<html:hidden property="teacherServiceDistribution"/>
-<html:hidden property="viewType"/>
-<html:hidden property="professorshipValuation"/>
-<html:hidden property="distributionViewAnchor"/>
-<html:hidden property="page" value="0"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.professorshipValuation" property="professorshipValuation"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.distributionViewAnchor" property="distributionViewAnchor"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
 <b> <bean:message key="label.teacherService.navigateByCourse"/> </b> |
 <html:link href="javascript:document.professorshipValuationForm.method.value='loadProfessorshipValuations'; document.professorshipValuationForm.viewType.value=0; document.professorshipValuationForm.submit()">
@@ -336,19 +337,19 @@
 			<bean:message key="label.teacherServiceDistribution.theoreticalHours"/>
 		</td>
 		<td>
-			<html:radio property="theoreticalHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>">
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.theoreticalHoursType" property="theoreticalHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>">
 			</html:radio>
-			<html:text property="theoreticalHoursManual" size="3" maxlength="4" />
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoreticalHoursManual" property="theoreticalHoursManual" size="3" maxlength="4" />
 		</td>
 		<td>
-			<html:radio property="theoreticalHoursType" value="<%= ValuationValueType.LAST_YEAR_REAL_VALUE.toString() %>">
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.theoreticalHoursType" property="theoreticalHoursType" value="<%= ValuationValueType.LAST_YEAR_REAL_VALUE.toString() %>">
 				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
 				<%= ((ValuationTeacherDTOEntry) request.getAttribute("selectedValuationTeacher")).getValuationTeachers().get(0).getRealTheoreticalHours(((CourseValuation) request.getAttribute("selectedCourseValuation")).getAssociatedExecutionCoursesLastYear()) %>
 				</fmt:formatNumber>
 			</html:radio>
 		</td>
 		<td>
-			<html:radio property="theoreticalHoursType" value="<%= ValuationValueType.REAL_VALUE.toString() %>">
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.theoreticalHoursType" property="theoreticalHoursType" value="<%= ValuationValueType.REAL_VALUE.toString() %>">
 				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
 				<%= ((ValuationTeacherDTOEntry) request.getAttribute("selectedValuationTeacher")).getValuationTeachers().get(0).getRealTheoreticalHours(((CourseValuation) request.getAttribute("selectedCourseValuation")).getAssociatedExecutionCourses()) %>
 				</fmt:formatNumber>
@@ -357,8 +358,8 @@
 	</tr>
 </logic:greaterThan>
 <logic:lessEqual name="selectedCourseValuation" property="theoreticalHoursPerShift" value="0.0">
-	<html:hidden property="theoreticalHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
-	<html:hidden property="theoreticalHoursManual" value="0.0"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.theoreticalHoursType" property="theoreticalHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.theoreticalHoursManual" property="theoreticalHoursManual" value="0.0"/>	
 </logic:lessEqual>
 
 	
@@ -368,18 +369,18 @@
 			<bean:message key="label.teacherServiceDistribution.praticalHours"/>
 		</td>
 		<td>
-			<html:radio property="praticalHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"></html:radio>
-			<html:text property="praticalHoursManual" size="3" maxlength="4"/>
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.praticalHoursType" property="praticalHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"></html:radio>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.praticalHoursManual" property="praticalHoursManual" size="3" maxlength="4"/>
 		</td>
 		<td>
-			<html:radio property="praticalHoursType" value="<%= ValuationValueType.LAST_YEAR_REAL_VALUE.toString() %>">
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.praticalHoursType" property="praticalHoursType" value="<%= ValuationValueType.LAST_YEAR_REAL_VALUE.toString() %>">
 				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
 				<%= ((ValuationTeacherDTOEntry) request.getAttribute("selectedValuationTeacher")).getValuationTeachers().get(0).getRealPraticalHours(((CourseValuation) request.getAttribute("selectedCourseValuation")).getAssociatedExecutionCoursesLastYear()) %>
 				</fmt:formatNumber>
 			</html:radio>
 		</td>
 		<td>
-			<html:radio property="praticalHoursType" value="<%= ValuationValueType.REAL_VALUE.toString() %>">
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.praticalHoursType" property="praticalHoursType" value="<%= ValuationValueType.REAL_VALUE.toString() %>">
 				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
 				<%= ((ValuationTeacherDTOEntry) request.getAttribute("selectedValuationTeacher")).getValuationTeachers().get(0).getRealPraticalHours(((CourseValuation) request.getAttribute("selectedCourseValuation")).getAssociatedExecutionCourses()) %>
 				</fmt:formatNumber>
@@ -388,8 +389,8 @@
 	</tr>
 </logic:greaterThan>
 <logic:lessEqual name="selectedCourseValuation" property="praticalHoursPerShift" value="0.0">
-	<html:hidden property="praticalHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
-	<html:hidden property="praticalHoursManual" value="0.0"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.praticalHoursType" property="praticalHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.praticalHoursManual" property="praticalHoursManual" value="0.0"/>	
 </logic:lessEqual>
 
 	
@@ -399,18 +400,18 @@
 			<bean:message key="label.teacherServiceDistribution.theoPratHours"/>
 		</td>
 		<td>
-			<html:radio property="theoPratHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"></html:radio>
-			<html:text property="theoPratHoursManual" size="3" maxlength="4"/>
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.theoPratHoursType" property="theoPratHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"></html:radio>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoPratHoursManual" property="theoPratHoursManual" size="3" maxlength="4"/>
 		</td>
 		<td>
-			<html:radio property="theoPratHoursType" value="<%= ValuationValueType.LAST_YEAR_REAL_VALUE.toString() %>">
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.theoPratHoursType" property="theoPratHoursType" value="<%= ValuationValueType.LAST_YEAR_REAL_VALUE.toString() %>">
 				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
 				<%= ((ValuationTeacherDTOEntry) request.getAttribute("selectedValuationTeacher")).getValuationTeachers().get(0).getRealTheoPratHours(((CourseValuation) request.getAttribute("selectedCourseValuation")).getAssociatedExecutionCoursesLastYear()) %>
 				</fmt:formatNumber>
 			</html:radio>
 		</td>
 		<td>
-			<html:radio property="theoPratHoursType" value="<%= ValuationValueType.REAL_VALUE.toString() %>">
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.theoPratHoursType" property="theoPratHoursType" value="<%= ValuationValueType.REAL_VALUE.toString() %>">
 				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
 				<%= ((ValuationTeacherDTOEntry) request.getAttribute("selectedValuationTeacher")).getValuationTeachers().get(0).getRealTheoPratHours(((CourseValuation) request.getAttribute("selectedCourseValuation")).getAssociatedExecutionCourses()) %>
 				</fmt:formatNumber>
@@ -419,8 +420,8 @@
 	</tr>
 </logic:greaterThan>
 <logic:lessEqual name="selectedCourseValuation" property="theoPratHoursPerShift" value="0.0">
-	<html:hidden property="theoPratHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
-	<html:hidden property="theoPratHoursManual" value="0.0"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.theoPratHoursType" property="theoPratHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.theoPratHoursManual" property="theoPratHoursManual" value="0.0"/>	
 </logic:lessEqual>
 
 	
@@ -430,18 +431,18 @@
 			<bean:message key="label.teacherServiceDistribution.laboratorialHours"/>
 		</td>
 		<td>
-			<html:radio property="laboratorialHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"></html:radio>
-			<html:text property="laboratorialHoursManual" size="3" maxlength="4"/>
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.laboratorialHoursType" property="laboratorialHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"></html:radio>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.laboratorialHoursManual" property="laboratorialHoursManual" size="3" maxlength="4"/>
 		</td>
 		<td>
-			<html:radio property="laboratorialHoursType" value="<%= ValuationValueType.LAST_YEAR_REAL_VALUE.toString() %>">
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.laboratorialHoursType" property="laboratorialHoursType" value="<%= ValuationValueType.LAST_YEAR_REAL_VALUE.toString() %>">
 				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
 				<%= ((ValuationTeacherDTOEntry) request.getAttribute("selectedValuationTeacher")).getValuationTeachers().get(0).getRealLaboratorialHours(((CourseValuation) request.getAttribute("selectedCourseValuation")).getAssociatedExecutionCoursesLastYear()) %>
 				</fmt:formatNumber>
 			</html:radio>
 		</td>
 		<td>
-			<html:radio property="laboratorialHoursType" value="<%= ValuationValueType.REAL_VALUE.toString() %>">
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.laboratorialHoursType" property="laboratorialHoursType" value="<%= ValuationValueType.REAL_VALUE.toString() %>">
 				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
 				<%= ((ValuationTeacherDTOEntry) request.getAttribute("selectedValuationTeacher")).getValuationTeachers().get(0).getRealLaboratorialHours(((CourseValuation) request.getAttribute("selectedCourseValuation")).getAssociatedExecutionCourses()) %>
 				</fmt:formatNumber>
@@ -450,12 +451,12 @@
 	</tr>
 </logic:greaterThan>
 <logic:lessEqual name="selectedCourseValuation" property="laboratorialHoursPerShift" value="0.0">
-	<html:hidden property="laboratorialHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
-	<html:hidden property="laboratorialHoursManual" value="0.0"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.laboratorialHoursType" property="laboratorialHoursType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.laboratorialHoursManual" property="laboratorialHoursManual" value="0.0"/>	
 </logic:lessEqual>
 </table>
 
-<html:button property="" onclick="this.form.method.value='setProfessorshipValuation'; this.form.page.value='1'; this.form.submit();">
+<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='setProfessorshipValuation'; this.form.page.value='1'; this.form.submit();">
 	<bean:message key="label.teacherServiceDistribution.assign"/>
 </html:button>
 <br/>

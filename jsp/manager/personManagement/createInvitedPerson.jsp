@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -59,7 +60,7 @@
 			<br/>			
 			&nbsp;&nbsp;<em><bean:message key="label.choose.responsibility.person" bundle="MANAGER_RESOURCES"/></em>
 			<fr:form action="/createInvitedPerson.do?">		
-				<html:hidden property="method" name="createInvitedPerson" value="associateResponsibilityParty"/>					
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" name="createInvitedPerson" value="associateResponsibilityParty"/>					
 				
 				<fr:edit name="invitedPersonBean" id="invitedPersonBeanWithResponsibilityParty" schema="ChooseInvitedPersonResponsibilityPerson" />						
 				<html:submit><bean:message key="button.submit" bundle="MANAGER_RESOURCES" /></html:submit>	

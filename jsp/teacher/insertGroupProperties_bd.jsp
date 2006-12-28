@@ -36,7 +36,7 @@
 	    
 		<tr>
 			<td><bean:message key="message.groupPropertiesProjectDescription"/></td>
-			<td><html:textarea bundle="HTMLALT_RESOURCES" property="projectDescription" cols="30" rows="4"/></td>
+			<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.projectDescription" bundle="HTMLALT_RESOURCES" property="projectDescription" cols="30" rows="4"/></td>
 		</tr>
 		
     	<tr>

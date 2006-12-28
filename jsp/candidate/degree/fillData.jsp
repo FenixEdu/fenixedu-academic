@@ -55,7 +55,7 @@
 	<bean:define id="candidacyID" name="candidacy" property="idInternal" />
 	<bean:define id="schemaSuffix" name="schemaSuffix" />
 	
-	<input type="hidden" name="candidacyID" value="<%=candidacyID%>" />
+	<input alt="input.candidacyID" type="hidden" name="candidacyID" value="<%=candidacyID%>" />
 	
 	<fr:edit id="operation-view-state" visible="false" name="operation" />
 	
@@ -76,7 +76,7 @@
 		</fr:edit>	
 	</logic:equal>	
 		
-	<html:submit ><bean:message key="button.next" /></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message key="button.next" /></html:submit>
 	
 </fr:form>
 

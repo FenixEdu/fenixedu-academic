@@ -38,8 +38,8 @@ function addVehicle(){
 <span class="error0"><html:errors/></span>
 <html:form action="/parking.do" styleId="editUser">
 <fr:context>
-	<html:hidden name="parkingForm" property="method" value="editParkingParty"/>
-	<html:hidden name="parkingForm" property="addVehicle" value="no"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="parkingForm" property="method" value="editParkingParty"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.addVehicle" name="parkingForm" property="addVehicle" value="no"/>
 	<html:messages id="message" property="cardNumber" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
 	<fr:edit id="user" name="parkingPartyBean" schema="edit.parkingPartyBean.user">
 		<fr:layout name="tabular">
@@ -48,8 +48,8 @@ function addVehicle(){
 		</fr:layout>
 	</fr:edit>
 	<bean:message key="label.cardValidPeriod" bundle="PARKING_RESOURCES"/>	
-	<html:radio styleId="cardValidPeriodIdYes" name="parkingForm" property="cardAlwaysValid" value="yes" onclick="displayCardValidPeriod(false)">sim</html:radio>
-	<html:radio styleId="cardValidPeriodIdNo" name="parkingForm" property="cardAlwaysValid" value="no" onclick="displayCardValidPeriod(true)">não</html:radio>	
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardAlwaysValid" styleId="cardValidPeriodIdYes" name="parkingForm" property="cardAlwaysValid" value="yes" onclick="displayCardValidPeriod(false)">sim</html:radio>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardAlwaysValid" styleId="cardValidPeriodIdNo" name="parkingForm" property="cardAlwaysValid" value="no" onclick="displayCardValidPeriod(true)">nï¿½o</html:radio>	
 	<br/><html:messages id="message" property="mustFillInDates" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
 	<div id="cardValidPeriodDivId" style="display:block">
 	<fr:edit id="cardValidPeriod" name="parkingPartyBean" schema="edit.parkingPartyBean.cardValidPeriod">
@@ -71,7 +71,7 @@ function addVehicle(){
 	<p><html:link href="javascript:addVehicle()"><bean:message key="link.addVehicle" bundle="PARKING_RESOURCES"/></html:link></p>
 	<br/><br/>
 	
-	<html:submit value="Confirmar"/>	
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Confirmar"/>	
 
 </fr:context>
 </html:form>

@@ -242,7 +242,7 @@ encoding="multipart/form-data"
 
   
     <p class="mtop2">
-        <html:submit styleClass="inputButton">
+        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputButton">
             <bean:message key="button.save"/>
         </html:submit>
 		<html:link page="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>">

@@ -2,6 +2,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.Person" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -29,9 +30,9 @@
 </ul>
 
 <html:form action="/valuationGroupingSupport">
-<html:hidden property="method" value=""/>
-<html:hidden property="teacherServiceDistribution"/>
-<html:hidden property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 <br/>
 
 
@@ -80,11 +81,11 @@
 
 <b> <bean:message key="label.teacherServiceDistribution.permissions"/>:</b>
 <ul>
-	<li> <html:checkbox property="coursesAndTeachersValuationPermission"/> <bean:message key="label.teacherServiceDistribution.coursesAndTeachersValuationPermission"/> </li>
-	<li> <html:checkbox property="coursesAndTeachersManagementPermission"/> <bean:message key="label.teacherServiceDistribution.coursesAndTeachersManagementPermission"/> </li>
+	<li> <html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.coursesAndTeachersValuationPermission" property="coursesAndTeachersValuationPermission"/> <bean:message key="label.teacherServiceDistribution.coursesAndTeachersValuationPermission"/> </li>
+	<li> <html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.coursesAndTeachersManagementPermission" property="coursesAndTeachersManagementPermission"/> <bean:message key="label.teacherServiceDistribution.coursesAndTeachersManagementPermission"/> </li>
 </ul>
 <br/>
-<html:button property="" onclick="this.form.method.value='addCoursesAndTeachersValuationPermissionToPerson'; this.form.submit()"><bean:message key="button.update"/></html:button>
+<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='addCoursesAndTeachersValuationPermissionToPerson'; this.form.submit()"><bean:message key="button.update"/></html:button>
 
 <br/>
 <br/>

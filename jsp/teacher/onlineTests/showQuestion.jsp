@@ -51,7 +51,7 @@
 	<bean:define id="questionLabel" name="questionBody" property="label"/>
 	<% if (((String)questionLabel).startsWith("image/")){%>
 		<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-		<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()+"&amp;metadataCode="+metadataCode%>"/>
+		<html:img bundle="HTMLALT_RESOURCES" altKey="img.img" align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()+"&amp;metadataCode="+metadataCode%>"/>
 		<logic:equal name="imageLabel" value="true">
 			</td><td>
 		</logic:equal>
@@ -176,11 +176,11 @@
 	<bean:define id="index" value="<%=firstOptionImage.toString()%>"/>
 	<tr>
 	<logic:equal name="rpIndex" value="0">
-		<td><b>Cotação</b></td>
+		<td><b>Cotaï¿½ï¿½o</b></td>
 		<td><b>Resposta</b></td>
 		<td><b>Feedback</b></td>
 		<td><b>Fenix</b></td>
-		<td><b>Próx alínea</b></td>
+		<td><b>Prï¿½x alï¿½nea</b></td>
 		</tr><tr>
 	</logic:equal>
 	<td><bean:write name="rp" property="responseValue"/></td>

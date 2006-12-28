@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -49,7 +50,7 @@
 <div id="edit-title-div" class="switchNone">
 	<table class="tstyle7 thright mtop0"><tr><td>
 	<html:form action="/tests/testModels.do?method=editTestModel">
-		<html:hidden property="oid" value="<%= testModelId %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= testModelId %>" />
 		<fr:edit id="edit-title" name="testModel" schema="tests.testModel.name" nested="true" layout="flow" />
 		<html:submit><bean:message key="message.question.alter" bundle="TESTS_RESOURCES" /></html:submit>
 		<span class="switchInline"><a href="javascript:switchDisplay('edit-title-div')"><bean:message key="message.cancel" bundle="TESTS_RESOURCES" /></a></span>
@@ -69,7 +70,7 @@
 <div id="edit-scale-div" class="switchNone">
 	<table class="tstyle7 thright mtop0"><tr><td>
 	<html:form action="/tests/testModels.do?method=editTestModel">
-		<html:hidden property="oid" value="<%= testModelId %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= testModelId %>" />
 		<fr:edit id="edit-scale" name="testModel" schema="tests.testModel.scale" layout="flow" />
 		<html:submit><bean:message key="message.question.alter" bundle="TESTS_RESOURCES" /></html:submit>
 		<span class="switchInline"><a href="javascript:switchDisplay('edit-scale-div')"><bean:message key="message.cancel" bundle="TESTS_RESOURCES" /></a></span>

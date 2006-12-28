@@ -41,7 +41,7 @@
 	<bean:define id="personId" name="createGratuityExemptionBean" property="gratuityEvent.person.idInternal" />
 	<fr:form action="<%="/payments.do?personId=" + personId%>">
 
-		<input type="hidden" name="method" value="" />
+		<input alt="input.method" type="hidden" name="method" value="" />
 
 		<fr:edit id="createGratuityExemptionBean" name="createGratuityExemptionBean" visible="false" />
 

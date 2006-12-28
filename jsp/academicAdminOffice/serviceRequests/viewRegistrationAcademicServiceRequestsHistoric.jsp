@@ -63,7 +63,7 @@
 <p class="mtop2">
 	<html:form action="/student.do?method=visualizeRegistration">
 		<bean:define id="registrationID" name="registration" property="idInternal"/>
-		<html:hidden property="registrationID" value="<%=registrationID.toString()%>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationID" property="registrationID" value="<%=registrationID.toString()%>"/>
 		<html:submit><bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	</html:form>
 </p>

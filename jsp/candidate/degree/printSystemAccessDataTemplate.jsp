@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 
 <table width="100%" height="90%" border="0">
 	<tr height="30">
@@ -18,8 +19,8 @@
 						<td>
 						<table border="0" width="100%" height="100%">
 							<tr valign="top" align="left">
-								<td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br />
-								&nbsp;<b>Centro de Informática do Instituto Superior Técnico</b><br />
+								<td>&nbsp;<b>INSTITUTO SUPERIOR Tï¿½CNICO</b><br />
+								&nbsp;<b>Centro de Informï¿½tica do Instituto Superior Tï¿½cnico</b><br />
 								<hr size="1">
 								</td>
 							</tr>

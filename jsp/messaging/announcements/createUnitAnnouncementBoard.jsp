@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
@@ -31,15 +32,15 @@
 --%>
 
 	<html:form action="/announcements/manageUnitAnnouncementBoard" method="get">
-		<html:hidden property="method" value="createBoard"/>
-		<html:hidden property="keyUnit"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createBoard"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.keyUnit" property="keyUnit"/>
 		<table class="tstyle5 thlight thright">
 			<tr>
 				<th>
 					Nome:
 				</th>
 				<td>
-					<html:text property="name" size="50"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="50"/>
 				</td>				
 			</tr>
 			<tr>
@@ -47,7 +48,7 @@
 					<bean:message key="label.mandatory" bundle="MESSAGING_RESOURCES"/>
 				</th>
 				<td>
-					<html:checkbox property="mandatory" value="true"/>
+					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.mandatory" property="mandatory" value="true"/>
 				</td>				
 			</tr>
 			<tr>

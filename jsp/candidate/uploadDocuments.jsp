@@ -24,7 +24,7 @@
 		</fr:layout>
 	</fr:edit>
 	
-	<html:hidden name="candidacyForm" property="method" value=""/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="candidacyForm" property="method" value=""/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='uploadDocuments'"><bean:message key="button.submit"/></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='viewDetail'"><bean:message key="button.back"/></html:cancel>
 </fr:form>

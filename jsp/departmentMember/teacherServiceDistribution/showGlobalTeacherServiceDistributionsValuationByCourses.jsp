@@ -2,6 +2,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.formbeans.teacherServiceDistribution.GlobalTeacherServiceDistributionValuationForm" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -17,8 +18,8 @@
 </h3>
 
 <html:form action="/globalTeacherServiceDistributionValuation">
-<html:hidden property="method" value=""/>
-<html:hidden property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 
 <logic:iterate name="globalTeacherServiceDistributionValuationForm" property="selectedTeacherServiceDistributions" id="teacherServiceDistribution">
 	<bean:define name="teacherServiceDistribution" id="teacherServiceDistribution" type="String"/>
@@ -28,9 +29,9 @@
 		String valuationGroupingProperty = "valuationGrouping(" + (String) teacherServiceDistribution + ")"; 
 	%>
 	
-	<html:hidden property="<%= teacherServiceDistributionProperty %>"/>
-	<html:hidden property="<%= valuationPhaseProperty %>"/>
-	<html:hidden property="<%= valuationGroupingProperty %>"/>		
+	<html:hidden alt="<%= teacherServiceDistributionProperty %>" property="<%= teacherServiceDistributionProperty %>"/>
+	<html:hidden alt="<%= valuationPhaseProperty %>" property="<%= valuationPhaseProperty %>"/>
+	<html:hidden alt="<%= valuationGroupingProperty %>" property="<%= valuationGroupingProperty %>"/>		
 </logic:iterate>
 
 <table class='search'>
@@ -50,25 +51,25 @@
 			<table>
 				<tr>
 					<td align=left>
-						<html:checkbox property="viewCurricularInformation"  onclick="this.form.method.value='viewGlobalTeacherServiceDistributionValuation'; this.form.submit()"/>
+						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewCurricularInformation" property="viewCurricularInformation"  onclick="this.form.method.value='viewGlobalTeacherServiceDistributionValuation'; this.form.submit()"/>
 						<bean:message key="label.teacherService.viewCourseInfo"/>
 					</td>
 				</tr>
 				<tr>
 					<td align=left>
-						<html:checkbox property="viewStudentsEnrolments"  onclick="this.form.method.value='viewGlobalTeacherServiceDistributionValuation'; this.form.submit()"/>		
+						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewStudentsEnrolments" property="viewStudentsEnrolments"  onclick="this.form.method.value='viewGlobalTeacherServiceDistributionValuation'; this.form.submit()"/>		
 						<bean:message key="label.teacherService.viewStudentsEnrolments"/>
 					</td>
 				</tr>
 				<tr>
 					<td align=left>
-						<html:checkbox property="viewShiftHours"  onclick="this.form.method.value='viewGlobalTeacherServiceDistributionValuation'; this.form.submit()"/>				
+						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewShiftHours" property="viewShiftHours"  onclick="this.form.method.value='viewGlobalTeacherServiceDistributionValuation'; this.form.submit()"/>				
 						<bean:message key="label.teacherService.viewHoursPerShift"/>
 					</td>
 				</tr>
 				<tr>
 					<td align=left>
-						<html:checkbox property="viewStudentsEnrolmentsPerShift"  onclick="this.form.method.value='viewGlobalTeacherServiceDistributionValuation'; this.form.submit()"/>				
+						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewStudentsEnrolmentsPerShift" property="viewStudentsEnrolmentsPerShift"  onclick="this.form.method.value='viewGlobalTeacherServiceDistributionValuation'; this.form.submit()"/>				
 						<bean:message key="label.teacherService.viewStudentsPerShift"/>
 					</td>
 				</tr>
@@ -167,7 +168,7 @@
 					</td>
 					<td width='5%' class="aright">
 						<logic:iterate name="curricularCourseInformation" property="value" id="curricularYear">
-							<bean:write name="curricularYear"/>º&nbsp;
+							<bean:write name="curricularYear"/>ï¿½&nbsp;
 						</logic:iterate>
 					</td>
 				</tr>				

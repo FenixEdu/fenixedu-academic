@@ -35,13 +35,13 @@
 			type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
 			<fr:layout name="flow" />
 		</fr:edit>
-		<p><strong>Horário dia:</strong></p>
+		<p><strong>Horï¿½rio dia:</strong></p>
 		<fr:edit name="workScheduleTypeFactory" id="dayTime"
 			schema="workScheduleTypeFactory.dayTime"
 			type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
 			<fr:layout name="flow" />
 		</fr:edit>
-		<p><strong>Horário marcações:</strong></p>
+		<p><strong>Horï¿½rio marcaï¿½ï¿½es:</strong></p>
 		<fr:edit name="workScheduleTypeFactory" id="clockingTime"
 			schema="workScheduleTypeFactory.clockingTime"
 			type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
@@ -74,7 +74,7 @@
 			<fr:layout name="flow" />
 		</fr:edit>
 
-		<p><strong>Refeição:</strong></p>
+		<p><strong>Refeiï¿½ï¿½o:</strong></p>
 		<fr:edit name="workScheduleTypeFactory" id="meal"
 			schema="workScheduleTypeFactory.meal"
 			type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
@@ -82,6 +82,6 @@
 		</fr:edit>
 
 
-		<p class="mtop2"><input type="submit" /></p>
+		<p class="mtop2"><input alt="input.input" type="submit" /></p>
 	</fr:form>
 </logic:present>

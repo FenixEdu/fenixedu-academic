@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
@@ -62,10 +63,10 @@ Material <ft:view property="position" />
 <div id="<%= editPresentationMaterialDivId %>" class="switchNone">
 	<table><tr><td style="background-color: #f0f0f0; padding: 0.1em 0.5em;">
 	<html:form action="/tests/questionBank/presentationMaterial.do?method=editPresentationMaterial">
-		<html:hidden property="oid" value="<%= testElementId %>" />
-		<html:hidden property="returnPath" name="bean" />
-		<html:hidden property="returnId" name="bean" />
-		<html:hidden property="contextKey" name="bean" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= testElementId %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.returnPath" property="returnPath" name="bean" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.returnId" property="returnId" name="bean" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.contextKey" property="contextKey" name="bean" />
 		<ft:edit id="<%= editPresentationMaterialId %>"
 		         schema="<%= schema %>"
 		         nested="true"

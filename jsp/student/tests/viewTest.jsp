@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -14,7 +15,7 @@
 
 <logic:equal name="test" property="unansweredQuestionsCount" value="0">
 	<p>
-		<span class="success5">Já respondeu a todas as perguntas<br />Desistiu de <fr:view name="test" property="givenUpQuestionsCount" /></span>
+		<span class="success5">Jï¿½ respondeu a todas as perguntas<br />Desistiu de <fr:view name="test" property="givenUpQuestionsCount" /></span>
 	</p>
 </logic:equal>
 
@@ -22,7 +23,7 @@
 <div class="infoop2">
 <p>Consegue ver <fr:view name="test" property="visibleQuestionsValuesSum" />
 valor(es) de <fr:view name="test" property="scale" />,
-correspondente(s) a <fr:view name="test" property="visibleQuestionsCount" /> pergunta(s) visível(eis)<br />
+correspondente(s) a <fr:view name="test" property="visibleQuestionsCount" /> pergunta(s) visï¿½vel(eis)<br />
 Existem ainda <fr:view name="test" property="unansweredQuestionsCount" /> pergunta(s) por responder</p>
 </div>
 </logic:notEqual>

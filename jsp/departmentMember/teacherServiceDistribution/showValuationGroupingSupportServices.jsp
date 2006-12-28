@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -40,9 +41,9 @@ table = document.getElementById(t);
 </h3>
 
 <html:form action="/valuationGroupingSupport">
-<html:hidden property="method" value=""/>
-<html:hidden property="teacherServiceDistribution"/>
-<html:hidden property="page" value="0"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
 <br/>
 <br/>
@@ -59,7 +60,7 @@ table = document.getElementById(t);
 		</td>
 		<logic:present name="parentGroupingName">
 			<td>
-				<html:button property="" onclick="this.form.method.value='deleteValuationGrouping'; this.form.submit();">
+				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='deleteValuationGrouping'; this.form.submit();">
 					<bean:message key="label.teacherServiceDistribution.delete"/>
 				</html:button>
 			</td>
@@ -95,14 +96,14 @@ table = document.getElementById(t);
 			</td>
 			<td>
 				<logic:notEmpty name="valuationTeacherList">
-					<html:button property="" onclick="this.form.method.value='associateValuationTeacher'; this.form.submit()">
+					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateValuationTeacher'; this.form.submit()">
 						<bean:message key="label.teacherServiceDistribution.associate"/>
 					</html:button>
 				</logic:notEmpty>
 			</td>
 			<td>
 				<logic:notEmpty name="valuationTeacherList">
-					<html:button property="" onclick="this.form.method.value='associateAllValuationTeachers'; this.form.submit()">
+					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateAllValuationTeachers'; this.form.submit()">
 						<bean:message key="label.teacherServiceDistribution.associateAll"/>
 					</html:button>
 				</logic:notEmpty>
@@ -125,14 +126,14 @@ table = document.getElementById(t);
 			</td>
 			<td>
 				<logic:notEmpty name="valuationCompetenceCourseList">
-					<html:button property="" onclick="this.form.method.value='associateValuationCompetenceCourse'; this.form.submit()">
+					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateValuationCompetenceCourse'; this.form.submit()">
 						<bean:message key="label.teacherServiceDistribution.associate"/>
 					</html:button>
 				</logic:notEmpty>
 			</td>
 			<td>
 				<logic:notEmpty name="valuationCompetenceCourseList">
-					<html:button property="" onclick="this.form.method.value='associateAllValuationCompetenceCourses'; this.form.submit()">
+					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateAllValuationCompetenceCourses'; this.form.submit()">
 						<bean:message key="label.teacherServiceDistribution.associateAllFemale"/>
 					</html:button>
 				</logic:notEmpty>
@@ -158,10 +159,10 @@ table = document.getElementById(t);
 
 </html:form>
 <html:form action="/valuationGroupingSupport">
-<html:hidden property="method" value="loadValuationGroupings"/>
-<html:hidden property="teacherServiceDistribution"/>
-<html:hidden property="page" value="0"/>
-<html:hidden property="valuationGrouping"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="loadValuationGroupings"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
 
 		<td>
 			<fr:edit id="name-validated" name="selectedValuationGrouping" slot="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" scope="request">
@@ -172,7 +173,7 @@ table = document.getElementById(t);
 			</fr:edit>
 		</td>
 		<td align="center">
-			<html:button property="" onclick="this.form.submit();">
+			<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.submit();">
 				<bean:message key="link.change"/>
 			</html:button>
 		</td>
@@ -189,12 +190,12 @@ table = document.getElementById(t);
 		
 </html:form>
 <html:form action="/valuationGroupingSupport">
-<html:hidden property="method" value=""/>
-<html:hidden property="teacherServiceDistribution"/>
-<html:hidden property="valuationCompetenceCourseDissociation" value=""/>
-<html:hidden property="valuationTeacherDissociation" value=""/>
-<html:hidden property="page" value="0"/>
-<html:hidden property="valuationGrouping"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCompetenceCourseDissociation" property="valuationCompetenceCourseDissociation" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationTeacherDissociation" property="valuationTeacherDissociation" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
 
 	</tr>
 	<tr>
@@ -202,10 +203,10 @@ table = document.getElementById(t);
 			&nbsp;<b><bean:message key="label.teacherServiceDistribution.createNewGrouping"/></b>
 		</td>
 		<td>
-			<html:text property="name" maxlength="240" size="44"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" maxlength="240" size="44"/>
 		</td>
 		<td align="center">
-			<html:button property="" onclick="this.form.method.value='createValuationGrouping'; this.form.page.value=1; this.form.submit();">
+			<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='createValuationGrouping'; this.form.page.value=1; this.form.submit();">
 				&nbsp;<bean:message key="label.teacherServiceDistribution.create"/>&nbsp;
 			</html:button>
 		</td>
@@ -222,7 +223,7 @@ table = document.getElementById(t);
 				</html:select>			
 			</td>
 			<td align="center">
-				<html:button property="" onclick="this.form.method.value='mergeValuationGroupings'; this.form.page.value=0; this.form.submit();">
+				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='mergeValuationGroupings'; this.form.page.value=0; this.form.submit();">
 					<bean:message key="label.teacherServiceDistribution.merge"/>
 				</html:button>
 			</td>
@@ -272,7 +273,7 @@ table = document.getElementById(t);
 		</td>
 		<logic:present name="parentGroupingName">
 			<td>
-				<html:button property="" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" styleClass="btn" 
+				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" styleClass="btn" 
 				onclick='<%= "this.form.valuationTeacherDissociation.value=" + valuationTeacherId + ";this.form.method.value='dissociateValuationTeacher'; this.form.submit()" %>'>
 					<bean:message key="label.teacherServiceDistribution.dissociate"/>
 				</html:button>
@@ -311,7 +312,7 @@ table = document.getElementById(t);
 		</td>
 		<logic:present name="parentGroupingName">
 			<td>
-				<html:button property="" styleClass="btn" onclick='<%= "this.form.valuationCompetenceCourseDissociation.value=" + valuationCompetenceCourseId + ";this.form.method.value='dissociateValuationCompetenceCourse'; this.form.submit()" %>'>
+				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" styleClass="btn" onclick='<%= "this.form.valuationCompetenceCourseDissociation.value=" + valuationCompetenceCourseId + ";this.form.method.value='dissociateValuationCompetenceCourse'; this.form.submit()" %>'>
 					<bean:message key="label.teacherServiceDistribution.dissociate"/>
 				</html:button>
 			</td>

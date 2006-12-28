@@ -36,7 +36,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod"/>
 		<bean:define id="studentID" name="student" property="idInternal"/>
-		<html:hidden property="studentID" value="<%= studentID.toString() %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentID" property="studentID" value="<%= studentID.toString() %>"/>
 		
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
@@ -103,7 +103,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod"/>
 		<bean:define id="studentID" name="student" property="idInternal"/>
-		<html:hidden property="studentID" value="<%= studentID.toString() %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentID" property="studentID" value="<%= studentID.toString() %>"/>
 		
 		
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">

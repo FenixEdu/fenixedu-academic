@@ -3,6 +3,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -23,9 +24,9 @@
 </h3>
 
 <html:form action="/teacherServiceDistributionValuation">
-<html:hidden property="method" value=""/>
-<html:hidden property="teacherServiceDistribution"/>
-<html:hidden property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 
 <table class='search'>
 	<tr class='tdleft'>
@@ -61,25 +62,25 @@
 			<table>
 				<tr>
 					<td align=left>
-						<html:checkbox property="viewCurricularInformation"  onclick="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit()"/>
+						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewCurricularInformation" property="viewCurricularInformation"  onclick="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit()"/>
 						<bean:message key="label.teacherService.viewCourseInfo"/>
 					</td>
 				</tr>
 				<tr>
 					<td align=left>
-						<html:checkbox property="viewStudentsEnrolments"  onclick="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit()"/>		
+						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewStudentsEnrolments" property="viewStudentsEnrolments"  onclick="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit()"/>		
 						<bean:message key="label.teacherService.viewStudentsEnrolments"/>
 					</td>
 				</tr>
 				<tr>
 					<td align=left>
-						<html:checkbox property="viewShiftHours"  onclick="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit()"/>				
+						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewShiftHours" property="viewShiftHours"  onclick="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit()"/>				
 						<bean:message key="label.teacherService.viewHoursPerShift"/>
 					</td>
 				</tr>
 				<tr>
 					<td align=left>
-						<html:checkbox property="viewStudentsEnrolmentsPerShift"  onclick="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit()"/>				
+						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewStudentsEnrolmentsPerShift" property="viewStudentsEnrolmentsPerShift"  onclick="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit()"/>				
 						<bean:message key="label.teacherService.viewStudentsPerShift"/>
 					</td>
 				</tr>

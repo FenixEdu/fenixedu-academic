@@ -23,7 +23,7 @@
 </fr:view>
 
 <html:form action="/dfaCandidacy.do?method=printRegistrationInformation" target="_blank">
-	<html:hidden property="candidacyNumber"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.candidacyNumber" property="candidacyNumber"/>
 	<br/>
 	<p>
 		<html:submit><bean:message key="button.printRegistrationInformation" bundle="ADMIN_OFFICE_RESOURCES" /></html:submit>

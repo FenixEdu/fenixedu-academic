@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
@@ -16,7 +17,7 @@
 <div>
 <strong>
 <logic:equal name="testElement" property="belongsToAllGroup" value="true">
-Alínea
+Alï¿½nea
 <ft:view property="path">
 	<ft:layout name="flowLayout">
 		<ft:property name="htmlSeparator" value="." />
@@ -47,7 +48,7 @@ Seleccionado para <ft:view property="modelRestrictionsCount" /> modelo(s) de tes
 	<ft:view schema="tests.question.testModels" layout="values" />
 	
 	<html:form action="<%= modelSelectPath %>">
-		<html:hidden property="oid" value="<%= questionId %>"  />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= questionId %>"  />
 		<fr:create type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
 		           schema="tests.modelRestriction.create"
 		           id="<%= modelSelectId %>"

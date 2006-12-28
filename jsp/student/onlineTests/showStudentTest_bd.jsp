@@ -36,7 +36,7 @@
 	<%}
 	 if(testQuestion.getStudentSubQuestions().size()>1){
 	 	if(itemIndex.equals(new Integer(0))){%>
-	 		<tr><td><span class="error">Esta pergunta é uma pergunta com alíneas. Após responder poderá surgir uma nova alínea para responder.</span></td></tr>
+	 		<tr><td><span class="error">Esta pergunta ï¿½ uma pergunta com alï¿½neas. Apï¿½s responder poderï¿½ surgir uma nova alï¿½nea para responder.</span></td></tr>
 	 	<%}
 	 }%>
 	 <tr><td>
@@ -46,7 +46,7 @@
 			<bean:define id="questionLabel" name="questionPresentation" property="label"/>	
 			<%if (((String)questionLabel).startsWith("image/")){%>
 				<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-				<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()%>"/>
+				<html:img bundle="HTMLALT_RESOURCES" altKey="img.img" align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;item="+item.toString()%>"/>
 				<logic:equal name="imageLabel" value="true">
 					</td><td>
 				</logic:equal>

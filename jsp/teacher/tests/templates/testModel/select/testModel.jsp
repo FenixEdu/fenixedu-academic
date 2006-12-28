@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
@@ -11,7 +12,7 @@
 <table>
 <tr>
 	<td>
-		<strong>Título: <ft:view schema="tests.testModel.name.view" layout="values" /></strong>
+		<strong>Tï¿½tulo: <ft:view schema="tests.testModel.name.view" layout="values" /></strong>
 	</td>
 	<td>
 		(<ft:view property="value" />/<ft:view property="scale" />)

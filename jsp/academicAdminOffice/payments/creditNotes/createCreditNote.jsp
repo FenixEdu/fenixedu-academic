@@ -40,7 +40,7 @@
 	<br />
 
 	<fr:form action="/payments.do">
-		<html:hidden property="method" value=""/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
 		<fr:edit id="receipt" name="createCreditNoteBean" property="receipt" visible="false" nested="true"/>
 		<logic:notEmpty name="createCreditNoteBean" property="creditNoteEntryDTOs">
 				<fr:edit id="create-credit-note" name="createCreditNoteBean" visible="false" nested="true" />

@@ -51,8 +51,8 @@
 		<br/>	
 		<H3><bean:message key="label.choose.shift"/></H3>
 		<html:form action="/manageExecutionCourse">
-			<html:hidden property="method" value="importLessonPlanningsBySummaries"/>
-			<html:hidden property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="importLessonPlanningsBySummaries"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
 			<table class="tstyle4" border="0">	
 				<tr>
 					<th class="listClasses"><bean:message key="label.shift"/>:</th>		
@@ -64,7 +64,7 @@
 				</tr>				
 			</table>
 			<html:submit><bean:message key="label.submit"/></html:submit>
-			<html:button property="cancel" onclick="this.form.method.value='evaluationMethod';this.form.submit()"><bean:message key="button.cancel"/></html:button>	
+			<html:button bundle="HTMLALT_RESOURCES" altKey="button.cancel" property="cancel" onclick="this.form.method.value='evaluationMethod';this.form.submit()"><bean:message key="button.cancel"/></html:button>	
 		</html:form>
 	</logic:notEmpty>
 	

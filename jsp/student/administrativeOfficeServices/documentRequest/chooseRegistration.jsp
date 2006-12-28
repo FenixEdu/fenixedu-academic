@@ -23,7 +23,7 @@
 
 
 	<html:form action="/documentRequest.do">
-		<html:hidden property="method" value="prepareCreateDocumentRequest" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareCreateDocumentRequest" />
 
 		<p class="mtop2">
 			<bean:message key="label.registration" />: <html:select property="registrationId">
@@ -33,7 +33,7 @@
 		</p>
 
 		<p class="mtop2">
-			<html:submit styleClass="inputbutton">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 				<bean:message key="button.continue" />
 			</html:submit>
 		</p>

@@ -14,7 +14,7 @@
 <jsp:include flush="true" page="/messaging/context.jsp"/>
 
 <html:form action="/announcements/announcementsStartPageHandler.do" method="get">
-	<html:hidden property="method" value="handleBoardListing"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="handleBoardListing"/>
 	<e:labelValues id="levelValues" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessLevel" /> 
 	<e:labelValues id="typeValues" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessType" /> 
 	

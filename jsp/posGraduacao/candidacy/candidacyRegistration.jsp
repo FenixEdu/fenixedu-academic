@@ -14,8 +14,8 @@
 
 <h2><strong><bean:message key="label.candidacy.title.detail" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 <html:form action="/dfaCandidacy.do">
-	<html:hidden property="method" value="registerCandidacy" />
-	<html:hidden property="candidacyNumber" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="registerCandidacy" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.candidacyNumber" property="candidacyNumber" />
 	
 	<fr:edit name="registerCandidacyBean" schema="candidacy.short.forRegistration" >
 		<fr:layout name="tabular" >
@@ -26,7 +26,7 @@
 	
 	<h2><strong><bean:message key="message.candidacy.registerCandidacy.confirm" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 	
-	<html:submit ><bean:message key="button.confirm" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit> 	
-	<html:submit onclick="document.forms[0].method.value='cancelRegisterCandidacy'" ><bean:message key="button.cancel" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message key="button.confirm" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit> 	
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="document.forms[0].method.value='cancelRegisterCandidacy'" ><bean:message key="button.cancel" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit>
 	
 </html:form>

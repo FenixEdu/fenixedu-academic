@@ -4,6 +4,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCompetenceCourse" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Department" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
@@ -23,10 +24,10 @@
 <br/>
 
 <html:form action="/valuationTeachersGroup">
-<html:hidden property="method" value=""/>
-<html:hidden property="valuationGrouping"/>
-<html:hidden property="valuationCourse" value=""/>
-<html:hidden property="valuationTeacher" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCourse" property="valuationCourse" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationTeacher" property="valuationTeacher" value=""/>
 
 <ul>
 	<li>

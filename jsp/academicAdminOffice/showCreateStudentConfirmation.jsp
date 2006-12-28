@@ -43,6 +43,6 @@
 	
 	<h3><bean:message key="message.student.registerStudent.confirm" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	
-	<html:submit ><bean:message key="button.confirm" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit> 	
-	<!--<html:submit onclick="document.forms[0].method.value='choosePerson'" ><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>	-->
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message key="button.confirm" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit> 	
+	<!--<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="document.forms[0].method.value='choosePerson'" ><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>	-->
 </fr:form>
