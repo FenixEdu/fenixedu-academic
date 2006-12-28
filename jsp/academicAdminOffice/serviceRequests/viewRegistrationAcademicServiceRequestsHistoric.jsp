@@ -47,7 +47,7 @@
 			<fr:property name="classes" value="tstyle4 thlight thright" />
 			<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${idInternal}&backAction=academicServiceRequestsManagement&backMethod=viewRegistrationAcademicServiceRequestsHistoric"/>
 			<fr:property name="key(view)" value="view"/>
-			<fr:property name="sortBy" value="creationDate=desc, urgentRequest=desc, description=asc"/>
+			<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
