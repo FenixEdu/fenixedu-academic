@@ -29,7 +29,14 @@
 
 <bean:define id="registrationID" name="registration" property="idInternal" />
 <ul>
+<%-- 
 	<li>
 		<html:link action="<%="/createStudent.do?method=printRegistrationDeclarationTemplate&amp;registrationID=" + registrationID%>" target="_blank"><bean:message key="link.student.printRegistrationDeclaration" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
+--%>
+	<li>
+		<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+			<bean:message key="link.student.createSchoolRegistrationDeclarationRequest" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>	
+	</li>		
 </ul>
