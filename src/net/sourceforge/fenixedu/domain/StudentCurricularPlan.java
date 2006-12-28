@@ -1561,10 +1561,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return hasAnyEnrolmentForExecutionYear(ExecutionYear.readCurrentExecutionYear());
     }
 
-    public boolean hasSchoolRegistration(ExecutionYear executionYear) {
-	return hasAnyEnrolmentForExecutionYear(executionYear);
-    }
-
     public Collection<Enrolment> getSpecialSeasonToEnrol(ExecutionYear executionYear) {
 	Map<CurricularCourse, Enrolment> result = new HashMap<CurricularCourse, Enrolment>();
 
