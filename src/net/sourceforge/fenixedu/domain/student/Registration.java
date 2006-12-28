@@ -786,15 +786,6 @@ public class Registration extends Registration_Base {
 	return getDistributedTestsByExecutionCourse(executionCourse).size();
     }
 
-    public boolean hasSchoolRegistration(ExecutionYear executionYear) {
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    if (studentCurricularPlan.hasSchoolRegistration(executionYear)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
     public Collection<DocumentRequest> getDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 	for (AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
@@ -1446,6 +1437,38 @@ public class Registration extends Registration_Base {
 
     public boolean isInRegisteredState() {
 	return getActiveStateType().equals(RegistrationStateType.REGISTERED);
+    }
+
+    public boolean isInRegisteredState(ExecutionYear executionYear) {
+	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionYear);
+
+	return registrationStatesTypes.contains(RegistrationStateType.REGISTERED)
+		&& !registrationStatesTypes.contains(RegistrationStateType.CANCELED)
+		&& !registrationStatesTypes.contains(RegistrationStateType.INTERRUPTED)
+		&& !registrationStatesTypes.contains(RegistrationStateType.INTERNAL_ABANDON)
+		&& !registrationStatesTypes.contains(RegistrationStateType.EXTERNAL_ABANDON);
+    }
+
+    public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
+	final Set<RegistrationState> result = new HashSet<RegistrationState>();
+	
+	for (final RegistrationState registrationState : getRegistrationStatesSet()) {
+	    if (executionYear.containsDate(registrationState.getStateDate())) {
+		result.add(registrationState);
+	    }
+	}
+	
+	return result;
+    }
+
+    public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionYear executionYear) {
+	final Set<RegistrationStateType> result = new HashSet<RegistrationStateType>();
+	
+	for (final RegistrationState registrationState : getRegistrationStates(executionYear)) {
+	    result.add(registrationState.getStateType());
+	}
+	
+	return result;
     }
 
     public boolean hasDegreeDiplomaRequest() {

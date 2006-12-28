@@ -44,7 +44,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	if (executionYear == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.cannot.be.null");
-	} else if (!getRegistration().hasSchoolRegistration(executionYear)) {
+	} else if (!getRegistration().isInRegisteredState(executionYear)) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.no.school.registration.for.given.executionYear");
 	}

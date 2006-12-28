@@ -31,7 +31,7 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
 	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription);
 
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        if (!getRegistration().hasSchoolRegistration(currentExecutionYear)) {
+        if (!getRegistration().isInRegisteredState(currentExecutionYear)) {
             throw new DomainException("error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
         }
         super.setExecutionYear(currentExecutionYear);
