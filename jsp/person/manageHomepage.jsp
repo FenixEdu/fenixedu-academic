@@ -5,7 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h2 class="mtop05"><bean:message key="title.manage.homepage" bundle="HOMEPAGE_RESOURCES"/></h2>
+<em><bean:message key="label.person.main.title" /></em>
+<h2><bean:message key="title.manage.homepage" bundle="HOMEPAGE_RESOURCES"/></h2>
 
 <div class="infoop2">
 <p class="mvert0"><bean:message key="message.homepage.info" bundle="HOMEPAGE_RESOURCES"/></p>

@@ -2,6 +2,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
+<em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key ="title.person.changepass" /></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 

@@ -7,30 +7,28 @@
 
 <html:xhtml/>
 
- <table width="100%">
- 	<tr valign="bottom">
- 		<td valign="top"><h2><bean:message key="label.person.title.personalConsult" /></h2></td>
- 		<td align="right">
- 			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
- 		</td>
- 	</tr>
- </table>
+<em><bean:message key="label.person.main.title" /></em>
+<h2><bean:message key="label.person.title.personalConsult" /></h2>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="float: right; border: 1px solid #aaa; padding: 3px;"/>
+
+<p>
+	<span class="error0"><!-- Error messages go here --><html:errors /></span>
+</p>
 
 
-<br/>
-<table width="100%" cellpadding="0" cellspacing="0">
+<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">1</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.contactInfo" /></strong></td>
 	</tr>
 </table>
-<br />
+
 <fr:form action="/visualizePersonalInfo.do">
 	<fr:edit id="contact" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.contact.info">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thleft thlight"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
@@ -50,6 +48,7 @@
 	<fr:edit id="photo" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.information.to.publish">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thleft thlight"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
@@ -70,6 +69,7 @@
 	<fr:edit id="nickname" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.nickname">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thleft thlight"/>
+			<fr:property name="columnClasses" value=",,tdclear "/>
 		</fr:layout>
 	</fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
