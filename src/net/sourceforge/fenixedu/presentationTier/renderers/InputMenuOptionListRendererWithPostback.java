@@ -63,8 +63,8 @@ public class InputMenuOptionListRendererWithPostback extends InputMenuOptionList
 
         @Override
         public void execute(IViewState viewState) {
-            if (hidden.getValue() != null && hidden.getValue().length() != 0) {
-                String destinationName = this.destination == null ? "postback" : this.destination;
+            if (hidden.getValue() != null && hidden.getValue().equalsIgnoreCase("true")) {
+            	String destinationName = this.destination == null ? "postback" : this.destination;
                 ViewDestination destination = viewState.getDestination(destinationName);
 
                 if (destination != null) {
@@ -72,7 +72,8 @@ public class InputMenuOptionListRendererWithPostback extends InputMenuOptionList
                 } else {
                     viewState.setCurrentDestination("postBack");
                 }
-
+                
+                hidden.setValue("false");
                 viewState.setSkipValidation(true);
             }
 
