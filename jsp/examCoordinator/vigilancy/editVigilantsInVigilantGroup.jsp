@@ -8,7 +8,8 @@
 
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.editVigilantGroup"/></h2>
-<script type="text/javascript" language="javascript" src="<%= request.getContextPath() %>/examCoordinator/vigilancy/checkall.js"></script>
+
+<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/checkall.js"></script>
 
 
 <ul>
