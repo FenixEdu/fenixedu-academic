@@ -242,6 +242,13 @@
 	</slot>
 </schema>
 
+<schema name="registration-select-execution-year" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear" layout="menu-select" key="label.executionYear">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForRegistrationProvider"/>
+		<property name="format" value="${year}"/>
+	</slot>
+</schema>
+
 <schema name="student.StudentsSearchBeanByIdentification" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="identificationNumber" key="label.identificationNumber"/>
 	<slot name="documentType" key="label.idDocumentType"/>
