@@ -1,19 +1,15 @@
 package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class DocumentRequestCreateBean implements Serializable {
-
-    private DomainReference<Registration> registration;
+public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBean {
 
     private DocumentRequestType chosenDocumentRequestType;
 
@@ -29,8 +25,6 @@ public class DocumentRequestCreateBean implements Serializable {
 
     private Boolean detailed;
 
-    private DomainReference<ExecutionYear> executionYear;
-
     private Boolean toBeCreated;
 
     private Collection<String> warningsToReport;
@@ -38,16 +32,7 @@ public class DocumentRequestCreateBean implements Serializable {
     private Integer year;
 
     public DocumentRequestCreateBean(Registration registration) {
-	setRegistration(registration);
-    }
-
-    public Registration getRegistration() {
-	return (this.registration != null) ? this.registration.getObject() : null;
-    }
-
-    private void setRegistration(Registration registration) {
-	this.registration = (registration != null) ? new DomainReference<Registration>(registration)
-		: null;
+	super(registration);
     }
 
     public DocumentRequestType getChosenDocumentRequestType() {
@@ -104,15 +89,6 @@ public class DocumentRequestCreateBean implements Serializable {
 
     public void setDetailed(Boolean detailed) {
 	this.detailed = detailed;
-    }
-
-    public ExecutionYear getExecutionYear() {
-	return (this.executionYear != null) ? this.executionYear.getObject() : null;
-    }
-
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear)
-		: null;
     }
 
     public Integer getYear() {

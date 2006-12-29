@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 public class ExecutionYearsForRegistrationProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	return ((DocumentRequestCreateBean) source).getRegistration().getEnrolmentsExecutionYears();
+	return ((RegistrationSelectExecutionYearBean) source).getRegistration().getEnrolmentsExecutionYears();
     }
 
     public Converter getConverter() {
