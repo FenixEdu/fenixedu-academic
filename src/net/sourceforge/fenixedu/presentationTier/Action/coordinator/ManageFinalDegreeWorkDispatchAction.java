@@ -1067,15 +1067,14 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     	final ExecutionDegree executionDegree = (ExecutionDegree)
     			readDomainObject(request, ExecutionDegree.class, Integer.valueOf(executionDegreeOIDString));
     	final String otherExecutionDegreeIDString = dynaActionForm.getString("otherExecutionDegreeID");
-    	final ExecutionDegree otherExecutionDegree = (ExecutionDegree)
+    	if (otherExecutionDegreeIDString != null && otherExecutionDegreeIDString.length() > 0) {
+    	    final ExecutionDegree otherExecutionDegree = (ExecutionDegree)
     			readDomainObject(request, ExecutionDegree.class, Integer.valueOf(otherExecutionDegreeIDString));
-
-    	final Object[] args = { executionDegree.getScheduling(), otherExecutionDegree };
-    	executeService(request, "AddExecutionDegreeToScheduling", args );
-
+    	    final Object[] args = { executionDegree.getScheduling(), otherExecutionDegree };
+    	    executeService(request, "AddExecutionDegreeToScheduling", args );
+    	}
     	dynaActionForm.set("otherExecutionDegreeID", null);
-
-        return prepare(mapping, form, request, response);
+    	return prepare(mapping, form, request, response);
     }
 
     public ActionForward removeExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

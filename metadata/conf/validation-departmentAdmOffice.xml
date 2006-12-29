@@ -642,6 +642,133 @@
 			</field>
 		</form>    	
 
+	<form name="finalDegreeWorkScheduleing">
+		<field property="startOfProposalPeriodDate" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.start" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>dd/MM/yyyy</var-value>
+    	    </var>
+		</field>
+		<field property="startOfProposalPeriodHour" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.start" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>HH:mm</var-value>
+    	    </var>
+		</field>
+		<field property="endOfProposalPeriodDate" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.end" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>dd/MM/yyyy</var-value>
+    	    </var>
+		</field>
+		<field property="endOfProposalPeriodHour" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.end" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>HH:mm</var-value>
+    	    </var>
+		</field>
+	</form>
+
+	<form name="finalDegreeWorkCandidacyPeriod">
+		<field property="startOfCandidacyPeriodDate" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkCandidacy.setCandidacyPeriod.validator.start" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>dd/MM/yyyy</var-value>
+    	    </var>
+		</field>
+		<field property="startOfCandidacyPeriodHour" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkCandidacy.setCandidacyPeriod.validator.start" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>HH:mm</var-value>
+    	    </var>
+		</field>
+		<field property="endOfCandidacyPeriodDate" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkCandidacy.setCandidacyPeriod.validator.end" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>dd/MM/yyyy</var-value>
+    	    </var>
+		</field>
+		<field property="endOfCandidacyPeriodHour" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkCandidacy.setCandidacyPeriod.validator.end" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>HH:mm</var-value>
+    	    </var>
+		</field>
+	</form>
+
+	<form name="finalDegreeWorkProposal">
+		<field property="degree" depends="required,integer" page="1">
+			<arg0 key="finalWorkInformationForm.degree" resource="true"/>
+		</field>
+		<field property="title" depends="required" page="2">
+			<arg0 key="finalWorkInformationForm.title" resource="true"/>
+		</field>
+		<field property="orientatorOID" depends="required,integer" page="2">
+			<arg0 key="finalWorkInformationForm.orientatorOID" resource="true"/>
+		</field>
+		<field property="coorientatorOID" depends="integer" page="2">
+			<arg0 key="finalWorkInformationForm.coorientatorOID" resource="true"/>
+		</field>
+		<field property="responsibleCreditsPercentage" depends="required,integer" page="2">
+			<arg0 key="finalWorkInformationForm.CreditsPercentage" resource="true"/>
+		</field>
+		<field property="coResponsibleCreditsPercentage" depends="required,integer" page="2">
+			<arg0 key="finalWorkInformationForm.CreditsPercentage" resource="true"/>
+		</field>
+		<field property="minimumNumberOfGroupElements" depends="required,integer" page="2">
+			<arg0 key="finalWorkInformationForm.numberOfGroupElements" resource="true"/>
+		</field>
+		<field property="maximumNumberOfGroupElements" depends="required,integer" page="2">
+			<arg0 key="finalWorkInformationForm.numberOfGroupElements" resource="true"/>
+		</field>
+<!--
+		<field property="degreeType" depends="required" page="2">
+			<arg0 key="finalWorkInformationForm.degreeType" resource="true"/>
+		</field>
+-->
+		<field property="companionPhone" depends="integer" page="2">
+			<arg0 key="finalWorkInformationForm.companionPhone" resource="true"/>
+		</field>
+		<field property="responsableTeacherNumber" depends="integer" page="1">
+			<arg0 key="finalWorkInformationForm.responsableNumber" resource="true"/>
+		</field>
+		<field property="coResponsableTeacherNumber" depends="integer" page="1">
+			<arg0 key="finalWorkInformationForm.coresponsableNumber" resource="true"/>
+		</field>
+		<field property="status" depends="integer" page="1">
+			<arg0 key="finalWorkInformationForm.status" resource="true"/>
+		</field>
+	</form>
+
+	<form name="finalDegreeWorkCandidacyRequirements">
+		<field property="minimumNumberOfCompletedCourses" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumNumberOfCompletedCourses" resource="true"/>
+		</field>
+		<field property="maximumCurricularYearToCountCompletedCourses" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.maximumCurricularYearToCountCompletedCourses" resource="true"/>
+		</field>
+		<field property="minimumCompletedCurricularYear" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumCompletedCurricularYear" resource="true"/>
+		</field>
+		<field property="minimumNumberOfStudents" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumNumberOfStudents" resource="true"/>
+		</field>
+		<field property="maximumNumberOfStudents" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.maximumNumberOfStudents" resource="true"/>
+		</field>
+		<field property="maximumNumberOfProposalCandidaciesPerGroup" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalCandidaciesPerGroup" resource="true"/>
+		</field>
+	</form>
+
 
     </formset>
 </form-validation>
