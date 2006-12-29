@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -77,6 +78,17 @@ public class StudentDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 	getStudent(request);
 	return mapping.findForward("viewStudentDetails");
+    }
+
+    public ActionForward viewRegistrationCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	RegistrationSelectExecutionYearBean bean = (RegistrationSelectExecutionYearBean) getRenderedObject();
+	if (bean == null) {
+	    bean = new RegistrationSelectExecutionYearBean(getRegistration(request));
+	}
+	
+	request.setAttribute("bean", bean);
+	return mapping.findForward("view-registration-curriculum");
     }
 
 }

@@ -61,8 +61,8 @@
 <p class="mtop0">
 	<span>
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link page="/viewCurriculum.do?method=getCurriculum" paramId="studentNumber" paramName="registration" paramProperty="number">
-			<bean:message key="link.student.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		<html:link page="/registration.do?method=viewRegistrationCurriculum" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+			<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</span>
 	<span class="pleft1">
@@ -71,7 +71,7 @@
 			<bean:message key="link.student.manageRegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</span>
-	<span>	
+	<span class="pleft1">	
 		<logic:equal name="registration" property="degreeType.name" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 			<html:link page="/manageEnrolmentModel.do?method=prepare" paramId="registrationID" paramName="registration" paramProperty="idInternal">
@@ -103,17 +103,22 @@
 	</fr:layout>
 </fr:view>
 
-<logic:equal name="registration" property="active" value="true">
-	<p class="mtop0">
-		<span>
+<p class="mtop0">
+	<span>
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link page="/viewCurriculum.do?method=getCurriculum" paramId="studentNumber" paramName="registration" paramProperty="number">
+			<bean:message key="link.registration.viewStudentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</span>
+	<logic:equal name="registration" property="active" value="true">
+		<span class="pleft1">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 			<html:link action="/addNewStudentCurricularPlan.do?method=prepareCreateSCP" paramName="registration" paramProperty="idInternal" paramId="registrationId">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.registration.newSCP" />
 			</html:link>
 		</span>
-	</p>
-</logic:equal>
-
+	</logic:equal>
+</p>
 
 
 <logic:present name="registration" property="studentCandidacy">

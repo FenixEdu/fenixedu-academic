@@ -37,6 +37,9 @@
     <definition name="student.viewRegistrationDetails" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/viewRegistrationDetails.jsp"></put>
     </definition>
+    <definition name="view-registration-curriculum" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/viewRegistrationCurriculum.jsp"></put>
+    </definition>
 	<definition name="student.showStudentCurriculum" extends="academicAdminOffice.masterPage" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>    

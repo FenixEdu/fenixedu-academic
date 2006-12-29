@@ -151,6 +151,13 @@
 			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>			
 		</action>         
 		
+		<action path="/registration"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA"
+				scope="request">
+			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
+		</action>	
+
 		<action path="/viewCurriculum"
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
 	        parameter="method"
