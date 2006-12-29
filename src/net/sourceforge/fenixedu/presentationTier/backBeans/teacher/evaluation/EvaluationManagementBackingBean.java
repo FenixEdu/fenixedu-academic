@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -613,6 +614,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             if (e instanceof NotAuthorizedFilterException) {
                 errorMessage = "message.error.notAuthorized";
             }
+            if (e instanceof IllegalDataAccessException) {
+                errorMessage = "message.error.notAuthorized.create.evaluation.during.exan.period";
+            }
             this.setErrorMessage(errorMessage);
             return "";
         }
@@ -740,6 +744,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             String errorMessage = e.getMessage();
             if (e instanceof NotAuthorizedFilterException) {
                 errorMessage = "message.error.notAuthorized";
+            }
+            if (e instanceof IllegalDataAccessException) {
+                errorMessage = "message.error.notAuthorized.create.evaluation.during.exan.period";
             }
             this.setErrorMessage(errorMessage);
             return "";

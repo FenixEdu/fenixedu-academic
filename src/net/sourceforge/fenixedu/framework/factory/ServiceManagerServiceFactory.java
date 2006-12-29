@@ -46,6 +46,10 @@ public class ServiceManagerServiceFactory {
                     throw notAuthorizedException;
                 }
             }
+            if (e != null && e.getCause() != null && e.getCause() instanceof RuntimeException) {
+        	RuntimeException runtimeException = (RuntimeException) e.getCause();
+                throw runtimeException;
+            }
             throw new FenixRemoteServiceException(e);
         }
     }
