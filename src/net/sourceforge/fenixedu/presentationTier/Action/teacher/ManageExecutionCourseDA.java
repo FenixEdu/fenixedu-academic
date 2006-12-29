@@ -111,8 +111,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	public ActionForward uploadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		Item item = selectItem(request);
-
+		
 		FileItemCreationBean bean = new FileItemCreationBean(item);
+		bean.setAuthorsName(((ExecutionCourseSite)item.getSection().getSite()).getExecutionCourse().getNome());
 		request.setAttribute("fileItemCreator", bean);
 
 		return mapping.findForward("uploadFile");
@@ -921,7 +922,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	private ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response, String service) throws Exception {
 		final Item item = selectItem(request);
-
+		
 		IViewState viewState = RenderUtils.getViewState("creator");
 		if (viewState == null) {
 			return section(mapping, form, request, response);
@@ -945,7 +946,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 			formFileInputStream = bean.getFile();
 
 			executeService(request, service, new Object[] { item, formFileInputStream, bean.getFileName(),
-					displayName, bean.getPermittedGroup() });
+					displayName, bean.getPermittedGroup(), getLoggedPerson(request), bean.getEducationalLearningResourceType() });
 		} catch (FileManagerException e) {
 			addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
 			
@@ -966,6 +967,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
 		Item item = selectItem(request);
 		ScormCreationBean bean = new ScormCreationBean(item);
+		bean.setAuthorsName(((ExecutionCourseSite)item.getSection().getSite()).getExecutionCourse().getNome());
 		ScormCreationBean possibleBean = (ScormCreationBean) getRenderedObject();
 		if (possibleBean != null) {
 			bean.copyValuesFrom(possibleBean);
@@ -1019,7 +1021,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 			formFileInputStream = bean.getFile();
 			final Object[] args = { new CreateScormFileItemForItem.CreateScormFileItemForItemArgs(item,
 					formFileInputStream, bean.getFileName(), displayName, bean.getPermittedGroup(), bean
-							.getMetaInformation()) };
+							.getMetaInformation(), getLoggedPerson(request),bean.getEducationalLearningResourceType()) };
 
 			executeService(request, "CreateScormFileItemForItem", args);
 

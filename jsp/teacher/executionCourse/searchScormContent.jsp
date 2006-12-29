@@ -9,13 +9,12 @@
 <bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
 <bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.Item"/>
 <bean:define id="section" name="item" property="section" type="net.sourceforge.fenixedu.domain.Section"/>
+<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean"/>
 
 <html:xhtml/>
 <h2><bean:message key="label.search.scorm"/></h2>
 
-<logic:equal name="searchType" value="simple">
-
- 	<fr:form action="<%= "/searchScormContent.do?method=searchScormContents&amp;searchType=" + request.getAttribute("searchType") + "&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() %>">
+ 	<fr:form id="searchForm" action="<%= "/searchScormContent.do?method=searchScormContents&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() %>">
 		<fr:hasMessages for="search" type="validation">
 			<p>
 			<span class="error0"><bean:message key="label.requiredFieldsNotPresent"/></span>
@@ -23,118 +22,93 @@
 		</fr:hasMessages>
 	
 		<fr:edit id="search" name="bean" visible="false"/>
-		
+	
 		<table class="tstyle5 thright thlight">
 		<tr>
+		<td colspan="4">
+			<bean:message key="label.educationalLearningResourceType" bundle="SITE_RESOURCES"/>: <fr:edit id="educationalType" name="bean" slot="educationalResourceTypes">
+				<fr:layout name="option-select">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.EducationalResourceProvider"/>
+					<fr:property name="classes" value="nobullet liinline"/>
+				</fr:layout>
+			</fr:edit>	
+		</td>
+		</tr>
+		<tr>
+		<td>
+			<bean:message key="label.executionYear" bundle="ADMIN_OFFICE_RESOURCES"/>: 
+			<fr:edit id="executionYearField" name="bean" slot="executionYear">
+			<fr:layout name="menu-select-postback">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/>
+				<fr:property name="format" value="${year}"/>
+				<fr:property name="bundle" value="APPLICATION_RESOURCES"/>
+				<fr:property name="defaultText" value="label.masterDegree.administrativeOffice.allExecutionYears"/>
+				<fr:property name="key" value="true"/>
+			</fr:layout>
+			<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeYear&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() %>"/>
+		</fr:edit>	
+		</td>
+		<td>
+			<bean:message key="label.executionPeriod" bundle="APPLICATION_RESOURCES"/>:
+			<fr:edit id="executionPeriodField" name="bean" slot="executionPeriod">
+			<fr:layout name="menu-select">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsForExecutionYear"/>
+				<fr:property name="format" value="${name}"/>
+				<fr:property name="bundle" value="APPLICATION_RESOURCES"/>
+				<fr:property name="defaultText" value="label.masterDegree.administrativeOffice.allExecutionYears"/>
+				<fr:property name="key" value="true"/>
+			</fr:layout>
+			</fr:edit>
+		</td>
+		<td colspan="2">
+		</td>
+		</tr>
+
+		<logic:iterate id="searchElement" indexId="index" name="bean" property="searchElements">
+		<tr>
+			<td>
+			<logic:notEqual name="index" value="0">
+			<fr:edit id="<%="conjunctionType" + index%>" name="searchElement" slot="conjunction"/>
+			</logic:notEqual>
+			</td>
 			<td><bean:message key="label.searchField"/> 
-			<fr:edit id="valueField" name="bean" slot="value" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<fr:edit id="<%="valueField" + index%>" name="searchElement" slot="queryValue" >
 				<fr:layout>
 					<fr:property name="size" value="40"/>
 				</fr:layout>
 			</fr:edit>
 			</td>
-			<td><fr:edit id="searchTypeField" name="bean" slot="searchField" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/></td>
-			<td> <html:link page="<%="/searchScormContent.do?method=prepareSearchScormContents&amp;searchType=advanced" + "&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() %>"><bean:message key="label.search.advanced" /></html:link></td>
+			<td><fr:edit id="<%= "searchTypeField" + index%>" name="searchElement" slot="searchField"/></td>
+			<td> 
+			<logic:equal name="index" value="0">
+				<div class="switchNone">
+				<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link>			
+				</div>
+				<div class="switchInline">
+				<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() + bean.getSearchElementsAsParameters() + "'; getElementById('searchForm').submit();" %>">
+				<bean:message key="label.add" bundle="APPLICATION_RESOURCES"/>
+				</a>
+				</div>
+			</logic:equal>
+			<logic:notEqual name="index" value="0">
+				<div class="switchNone">
+				<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
+				</div>
+				<div class="switchInline">
+				<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>">
+				<bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/>
+				</a>
+				</div>
+			</logic:notEqual>
+		
+			</td>
 		</tr>
+		</logic:iterate>
+
+
 		</table>
 			<html:submit><bean:message key="label.search" /></html:submit>
 	</fr:form>
-
-</logic:equal>
-
-<logic:equal name="searchType" value="advanced">
-
-	<logic:messagesPresent message="true">
-		<html:messages id="messages" message="true" >
-		<p>
-			<span class="error0"><bean:write name="messages" /></span>
-		</p>
-		</html:messages>
-	</logic:messagesPresent>
-	
-	<fr:hasMessages for="editf1" type="validation">
-		<span class="error0"><bean:message key="required.searchField" /></span>
-	</fr:hasMessages>
-	<fr:hasMessages for="editv1" type="validation">
-		<span class="error0"><bean:message key="required.value" /></span>
-	</fr:hasMessages>
-		
-
- 	<fr:form action="<%= "/searchScormContent.do?method=searchScormContents&amp;searchType=" + request.getAttribute("searchType") + "&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() %>">
-		<fr:edit id="search" name="bean" nested="true" visible="false" />
-		<table class="tstyle5">
-		<tr>
-		<td></td>
-		<td>
-			<fr:edit id="editf1" name="bean" slot="field1" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-				<fr:layout>
-					<fr:property name="defaultText" value=""/>
-				</fr:layout>
-			</fr:edit>
-		</td>
-		<td>
-			<fr:edit id="editv1" name="bean" slot="value1" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-				<fr:layout>
-					<fr:property name="size" value="40"/>
-				</fr:layout>
-			</fr:edit>
-		</td>
-		<td rowspan="3" style="vertical-align: bottom;">
-			<html:link page="<%="/searchScormContent.do?method=prepareSearchScormContents&amp;searchType=simple" + "&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() %>"><bean:message key="label.search.simple" /></html:link>
-		</td>
-		</tr>
-		<tr>
-		<td>
-			<fr:edit id="c1" name="bean" slot="firstConjunction">
-			<fr:layout>
-				<fr:property name="defaultText" value=""/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		<td>
-			<fr:edit id="editf2" name="bean" slot="field2">
-			<fr:layout>
-				<fr:property name="defaultText" value=""/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		<td>
-			<fr:edit id="editv2" name="bean" slot="value2">
-			<fr:layout>
-				<fr:property name="size" value="40"/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		</tr>
-		<tr>
-		<td>
-			<fr:edit id="c2" name="bean" slot="secondConjunction">
-			<fr:layout>
-				<fr:property name="defaultText" value=""/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		<td>
-			<fr:edit id="editf3" name="bean" slot="field3">
-			<fr:layout>
-				<fr:property name="defaultText" value=""/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		<td>
-			<fr:edit id="editv3" name="bean" slot="value3">
-			<fr:layout>
-				<fr:property name="size" value="40"/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		</tr>
-		</table>
-			<html:submit><bean:message key="label.search" /></html:submit>
-		</fr:form>
-
-
-</logic:equal>
 
 <logic:present name="searchResult">
 <logic:notEmpty name="searchResult">
@@ -146,11 +120,7 @@
 <p>
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
-	"/teacher/searchScormContent.do?method=moveIndex&amp;searchType=" + request.getAttribute("searchType")  
-	+ "&amp;field1=" + request.getAttribute("field1") + "&amp;value1=" + request.getAttribute("value1") 
-	+ "&amp;field2=" + request.getAttribute("field2") + "&amp;value1=" + request.getAttribute("value2") 
-	+ "&amp;field3=" + request.getAttribute("field3") + "&amp;value1=" + request.getAttribute("value3") 
-	+ "&amp;c1=" + request.getAttribute("c1") + "&amp;c2=" + request.getAttribute("c2") + 
+	"/teacher/searchScormContent.do?method=moveIndex" + bean.getSearchElementsAsParameters() + 
 	"&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + 
 	"&amp;itemID=" + item.getIdInternal()%>" 
 	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
@@ -163,8 +133,7 @@
 
 		 <li class="mtop1">
 		 	<logic:present name="file">
-		 	<%--<fr:view name="file"/>--%>
-		 	 <fr:view name="file" property="item.section.site.executionCourse.nome"/> (<fr:view name="file" property="item.section.site.executionCourse.executionYear.year"/>) <br/> 
+		 	 <fr:view name="file" property="item.section.site.executionCourse.nome"/> (<fr:view name="file" property="item.section.site.executionCourse.executionPeriod.name"/> - <fr:view name="file" property="item.section.site.executionCourse.executionYear.year"/>) <br/> 
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />  <fr:view name="file" property="displayName"></fr:view> (<a href="<fr:view name="file" property="downloadUrl"/>"><fr:view name="file" property="filename"/></a>)
 			</logic:present>
     	 </li>
@@ -176,11 +145,7 @@
 <p>
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
-	"/teacher/searchScormContent.do?method=moveIndex&amp;searchType=" + request.getAttribute("searchType")  
-	+ "&amp;field1=" + request.getAttribute("field1") + "&amp;value1=" + request.getAttribute("value1") 
-	+ "&amp;field2=" + request.getAttribute("field2") + "&amp;value1=" + request.getAttribute("value2") 
-	+ "&amp;field3=" + request.getAttribute("field3") + "&amp;value1=" + request.getAttribute("value3") 
-	+ "&amp;c1=" + request.getAttribute("c1") + "&amp;c2=" + request.getAttribute("c2") + 
+	"/teacher/searchScormContent.do?method=moveIndex" + bean.getSearchElementsAsParameters() + 
 	"&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + 
 	"&amp;itemID=" + item.getIdInternal()%>" 
 	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
@@ -194,3 +159,7 @@
 	<bean:message key="label.search.noResultsFound" /> 
 </logic:empty>
 </logic:present>
+
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

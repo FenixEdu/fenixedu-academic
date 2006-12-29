@@ -22,7 +22,18 @@ public class FileItemCreationBean implements Serializable {
     private Group permittedGroup;
 
     transient private InputStream file;
+    private EducationalResourceType educationalLearningResourceType;
+    private String authorsName;
     
+    
+	public String getAuthorsName() {
+		return authorsName;
+	}
+
+	public void setAuthorsName(String authorsName) {
+		this.authorsName = authorsName;
+	}
+
 	public FileItemCreationBean(Item item) {
         super();
         
@@ -73,5 +84,41 @@ public class FileItemCreationBean implements Serializable {
     public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
+    
+    public EducationalResourceType getEducationalLearningResourceType() {
+		return educationalLearningResourceType;
+	}
+
+	public void setEducationalLearningResourceType(EducationalResourceType educationalLearningResourceType) {
+		this.educationalLearningResourceType = educationalLearningResourceType;
+	}
+
+	
+    public enum EducationalResourceType {
+        EXERCISE ("exercise"),
+        SIMULATION ("simulation"),
+        QUESTIONNARIE ("questionnaire"),
+        //DIAGRAM ("diagram"),
+        FIGURE ("figure"),
+        //GRAPH ("graph"),
+        //INDEX ("index"),
+        //SLIDE ("slide"),
+        TABLE ("table"),
+        EXAM ("exam"),
+        TEST ("test"),
+        MARKSHEET ("marksheet");
+   	
+   	private String type;
+   	
+   	private EducationalResourceType(String type) {
+   		this.type = type;
+   	}
+   	
+   	public String getType() {
+   		return type;
+   	}
+   	
+   }
+
     
 }

@@ -31,12 +31,12 @@ public class ScormCreationBean extends FileItemCreationBean {
 	private Language generalLanguage;
 	private String generalAggregationLevel="1";
 	private String personName;
-	
+	  
 	private ScormContributionRecommendedRoles contributeRole;
 	private YearMonthDay contributeDate;
 	
 	private EducationalInteractivityType educationalInteractivityType;
-    private EducationalResourceType educationalLearningResourceType;
+    
     
     private Language educationalLanguage;
     
@@ -106,6 +106,7 @@ public class ScormCreationBean extends FileItemCreationBean {
 	}
 
 	private String getLearningResourceAsString() {
+		
 		EducationalResourceType type = getEducationalLearningResourceType(); 
 		return (type==null) ? "" : type.getType();
 	}
@@ -204,31 +205,6 @@ public class ScormCreationBean extends FileItemCreationBean {
     	}
     }
     
-    public enum EducationalResourceType {
-         EXERCISE ("exercise"),
-         SIMULATION ("simulation"),
-         QUESTIONNARIE ("questionnaire"),
-         DIAGRAM ("diagram"),
-         FIGURE ("figure"),
-         GRAPH ("graph"),
-         INDEX ("index"),
-         SLIDE ("slide"),
-         TABLE ("table"),
-         EXAM ("exam"),
-         LECTURE ("lecture");
-    	
-    	private String type;
-    	
-    	private EducationalResourceType(String type) {
-    		this.type = type;
-    	}
-    	
-    	public String getType() {
-    		return type;
-    	}
-    	
-    }
-
 	public String getKeywords() {
 		return keywords;
 	}
@@ -266,14 +242,6 @@ public class ScormCreationBean extends FileItemCreationBean {
 
 	public void setContributeRole(ScormContributionRecommendedRoles contributeRole) {
 		this.contributeRole = contributeRole;
-	}
-
-	public EducationalInteractivityType getEducationalInteractivityType() {
-		return educationalInteractivityType;
-	}
-
-	public void setEducationalInteractivityType(EducationalInteractivityType educationalInteractivityType) {
-		this.educationalInteractivityType = educationalInteractivityType;
 	}
 
 	public String getGeneralAggregationLevel() {
@@ -368,14 +336,6 @@ public class ScormCreationBean extends FileItemCreationBean {
 		this.technicalLocation = technicalLocation;
 	}
 
-	public EducationalResourceType getEducationalLearningResourceType() {
-		return educationalLearningResourceType;
-	}
-
-	public void setEducationalLearningResourceType(EducationalResourceType educationalLearningResourceType) {
-		this.educationalLearningResourceType = educationalLearningResourceType;
-	}
-
 	public Language getEducationalLanguage() {
 		return educationalLanguage;
 	}
@@ -392,7 +352,13 @@ public class ScormCreationBean extends FileItemCreationBean {
 		this.generalLanguage = generalLanguage;
 	}
 
+	  public EducationalInteractivityType getEducationalInteractivityType() {
+			return educationalInteractivityType;
+		}
 
+		public void setEducationalInteractivityType(EducationalInteractivityType educationalInteractivityType) {
+			this.educationalInteractivityType = educationalInteractivityType;
+		}
 
 	public void copyValuesFrom(ScormCreationBean possibleBean) {
 		this.setContributeDate(possibleBean.getContributeDate());

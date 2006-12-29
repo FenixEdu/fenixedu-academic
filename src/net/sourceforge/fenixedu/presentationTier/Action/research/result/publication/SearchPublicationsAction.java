@@ -46,7 +46,7 @@ public class SearchPublicationsAction extends SearchDSpaceGeneralAction {
 	}
 
 	@Override
-	protected VirtualPath getSearchPath() {
+	protected VirtualPath getSearchPath(HttpServletRequest request) {
 		
 		final VirtualPath searchPath = new VirtualPath();
 

@@ -35,7 +35,7 @@
 			<bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
 		</html:link>
 	</span>
-	<span>
+	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 		<html:link page="<%= "/manageExecutionCourse.do?method=prepareCreateScormFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal() + "&amp;forwardTo=uploadScorm"%>">			
 		<bean:message key="link.scorm.uploadScormFile" bundle="SITE_RESOURCES"/>
@@ -61,6 +61,7 @@
 	</html:messages>
 </logic:messagesPresent>
 
+<div class="dinline forminline">
 <fr:form 
 action="<%="/manageExecutionCourse.do?method=validateScormForm&amp;itemID=" + request.getParameter("itemID") + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;forwardTo=createScorm"%>"
 encoding="multipart/form-data"
@@ -239,15 +240,17 @@ encoding="multipart/form-data"
 
 <p><em><bean:message key="label.fieldsWith" bundle="SITE_RESOURCES"/> <span class="required">*</span> <bean:message key="label.areRequired" bundle="SITE_RESOURCES"/></em></p>
 
+        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton dinline">
+            <bean:message key="button.save"/>
+        </html:submit>
+	</fr:form>
+</div>
 
-  
- <p class="mtop2">
-    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputButton">
-          <bean:message key="button.save"/>
-    </html:submit>
-	<html:link page="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>">
-        <bean:message key="button.cancel"/>
-    </html:link>
-</p>
-  
-</fr:form>
+<div class="dinline forminline">
+	<fr:form action="<%=String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>" encoding="multipart/form-data">
+		<html:cancel styleClass="inputbutton dinline">
+			<bean:message key="button.cancel"/>
+		</html:cancel>
+	</fr:form>
+</div>
+

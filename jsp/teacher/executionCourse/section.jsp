@@ -289,7 +289,7 @@
 				<bean:message key="button.insertFile"/>
 			</html:link>
 		</span>
-
+<!--  
 		<span class="pleft1">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 			<bean:define id="url" type="java.lang.String">/searchScormContent.do?method=prepareSearchScormContents&amp;searchType=simple&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
@@ -297,7 +297,7 @@
 				<bean:message key="link.searhScormContent" bundle="SITE_RESOURCES"/>
 			</html:link>
 		</span>
-		
+		-->
         <logic:notEmpty name="item" property="fileItems">
             <bean:size id="filesCount" name="item" property="fileItems"/>
         

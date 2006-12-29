@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.SearchDSpaceBean;
+import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
+import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean.SearchElement;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemCreationBean.EducationalResourceType;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -26,28 +29,58 @@ import pt.utl.ist.fenix.tools.file.FileSearchCriteria.SearchField;
 import pt.utl.ist.fenix.tools.file.FilesetMetadataQuery.ConjunctionType;
 
 public class SearchDSpaceGeneralAction extends FenixDispatchAction {
-
+	
 	protected ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response, String forwardTo) throws FenixFilterException,
 			FenixServiceException {
 
-		SearchDSpaceBean bean = new SearchDSpaceBean();
+		SearchDSpaceBean bean = createNewBean();
+		bean.addSearchElement();
 		request.setAttribute("bean", bean);
-		String searchType = request.getParameter("searchType");
-		request.setAttribute("searchType", searchType);
 		return mapping.findForward(forwardTo);
 	}
 
+	protected ActionForward addNewSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
+	
+		SearchDSpaceBean bean = getBean(request);
+		bean.addSearchElement();
+		request.setAttribute("bean", bean);
+		return mapping.findForward(forwardTo);
+	}
+	
+	protected ActionForward removeSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
+	
+		SearchDSpaceBean bean = getBean(request);
+		String removeIndex = request.getParameter("removeIndex");
+		bean.removeSearchElement(Integer.valueOf(removeIndex));
+		
+		request.setAttribute("bean", bean);
+		return mapping.findForward(forwardTo);
+	}
+	
+	private SearchDSpaceBean getBean(HttpServletRequest request) {
+		SearchDSpaceBean bean;
+		IViewState viewState = RenderUtils.getViewState("search");
+		if (viewState==null) {
+			bean = reconstructBeanFromRequest(request);  
+		}
+		else {
+			bean = (SearchDSpaceBean) viewState.getMetaObject().getObject();
+			RenderUtils.invalidateViewState();
+		}
+		return bean;
+	}
+	
+	
 	protected ActionForward moveIndex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
 		
 		SearchDSpaceBean bean = reconstructBeanFromRequest(request);
-		String searchType = request.getParameter("searchType");
-		request.setAttribute("searchType", searchType);
 		request.setAttribute("bean", bean);
 		FileSearchResult searchResults = getSearchResults(request, bean);
 		putResearchResultsInRequest(request, searchResults.getSearchResults());
-		putBeanInRequest(request,bean);
 		return mapping.findForward(forwardTo);
 		
 	}
@@ -56,13 +89,10 @@ public class SearchDSpaceGeneralAction extends FenixDispatchAction {
 			HttpServletResponse response, String forwardTo) {
 		SearchDSpaceBean bean = (SearchDSpaceBean) RenderUtils.getViewState("search").getMetaObject()
 		.getObject();
-		String searchType = request.getParameter("searchType");
-		request.setAttribute("searchType", searchType);
 		request.setAttribute("bean", bean);
 
-		FileSearchResult searchResults = getSearchResults(request, bean,getSearchPath());
+		FileSearchResult searchResults = getSearchResults(request, bean,getSearchPath(request));
 		putResearchResultsInRequest(request, searchResults.getSearchResults());
-		putBeanInRequest(request, bean);
 
 		return mapping.findForward(forwardTo);
 	}
@@ -84,8 +114,12 @@ public class SearchDSpaceGeneralAction extends FenixDispatchAction {
 		return getSearchResults(request, bean, null);
 	}
 
-	protected VirtualPath getSearchPath() {
+	protected VirtualPath getSearchPath(HttpServletRequest request) {
 		return null;
+	}
+	
+	protected SearchDSpaceBean createNewBean() {
+		return new SearchDSpaceBean();
 	}
 	
 	protected void putResearchResultsInRequest(HttpServletRequest request, List<FileDescriptor> searchResults) {
@@ -97,38 +131,17 @@ public class SearchDSpaceGeneralAction extends FenixDispatchAction {
 		
 		request.setAttribute("searchResult", researchResults);	
 	}
-	
-	private SearchDSpaceBean reconstructBeanFromRequest(HttpServletRequest request) {
-		String field1 = request.getParameter("field1");
-		String field2 = request.getParameter("field2");
-		String field3 = request.getParameter("field3");
-		String value1 = request.getParameter("value1");
-		String value2 = request.getParameter("value2");
-		String value3 = request.getParameter("value3");
-		String connector1 = request.getParameter("c1");
-		String connector2 = request.getParameter("c2"); 
-	
-		SearchDSpaceBean bean = new SearchDSpaceBean();
-		bean.setField1(SearchField.valueOf(field1));
-		bean.setField2(SearchField.valueOf(field2));
-		bean.setField3(SearchField.valueOf(field3));
-		bean.setValue1(value1);
-		bean.setValue2(value2);
-		bean.setValue3(value3);
-		bean.setFirstConjunction(ConjunctionType.valueOf(connector1));
-		bean.setSecondConjunction(ConjunctionType.valueOf(connector2));
+		 
+	protected SearchDSpaceBean reconstructBeanFromRequest(HttpServletRequest request) {
+		SearchDSpaceBean bean = createNewBean();
+		
+		String values[] = request.getParameterValues("criteria");
+		for(int i=0;i<values.length;i++) {
+			String fields[] = values[i].split(":");			
+			bean.addSearchElement(new SearchElement(SearchField.valueOf(fields[1]),((fields.length==2) ? "" : fields[2]), ConjunctionType.valueOf(fields[0])));
+		}
 		
 		return bean;
 	}
-	
-	private void putBeanInRequest(HttpServletRequest request, SearchDSpaceBean bean) {
-		request.setAttribute("field1", bean.getField1());
-		request.setAttribute("field2", bean.getField2());
-		request.setAttribute("field3", bean.getField3());
-		request.setAttribute("value1", bean.getValue1());
-		request.setAttribute("value2", bean.getValue2());
-		request.setAttribute("value3", bean.getValue3());
-		request.setAttribute("c1", bean.getFirstConjunction());
-		request.setAttribute("c2", bean.getSecondConjunction());
-	}
+
 }

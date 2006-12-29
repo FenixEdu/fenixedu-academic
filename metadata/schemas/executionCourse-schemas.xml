@@ -590,7 +590,11 @@
 </schema>
 
 <schema name="scormSearch" bundle="APPLICATION_RESOURCES" 
-	type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.SearchDSpaceBean">
+	type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceCoursesBean">
+	<slot name="executionYear">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/>
+		<property name="format" value="${year}"/>
+	</slot>
 	<slot name="searchField" key="label.searchField" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="defaultText" value=""/>
 	</slot> 

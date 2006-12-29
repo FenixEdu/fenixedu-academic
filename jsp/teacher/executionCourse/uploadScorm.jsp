@@ -34,7 +34,7 @@
 			<bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
 		</html:link>
 	</span>
-	<span>
+	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 		<bean:message key="link.scorm.uploadScormFile" bundle="SITE_RESOURCES"/>
 	</span>
@@ -60,29 +60,41 @@
 </logic:messagesPresent>
 
 
-<div class="switchNone" id="uploadScormFile">
 <bean:define id="url">/fileUpload.do?method=scormFileUpload&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;itemID=<bean:write name="item" property="idInternal"/></bean:define>
 
+<div class="dinline forminline">
 <fr:form action="<%= url %>" encoding="multipart/form-data">
     <fr:edit id="creator" name="bean" visible="false"/>
-
-    <p class="mtop15">
-        <strong><bean:message key="label.teacher.siteAdministration.uploadFile.fileDisplayName"/>:</strong>
-    </p>
-    
-    <p>
-        <fr:edit name="bean" slot="displayName">
-            <fr:layout>
-                <fr:property name="size" value="40"/>
-            </fr:layout>
-        </fr:edit>
-    </p>
-        
-    <p class="mtop15">
-        <strong><bean:message key="label.teacher.siteAdministration.uploadFile.file"/>:</strong>
-    </p>
-    
-    <p>
+<table class="tstyle5 thright thlight mtop025">
+	<tr>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.fileDisplayName"/>:</th>
+		<td>
+	        <fr:edit name="bean" slot="displayName">
+	            <fr:layout>
+	                <fr:property name="size" value="40"/>
+	            </fr:layout>
+	        </fr:edit>
+		</td>
+	</tr>
+	<tr>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.AuthorsName"/>:</th>
+		<td>
+	        <fr:edit name="bean" slot="authorsName">
+	            <fr:layout>
+	                <fr:property name="size" value="40"/>
+	            </fr:layout>
+	        </fr:edit>
+		</td>
+	</tr>
+	<tr>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
+		<td>
+	        <fr:edit name="bean" slot="educationalLearningResourceType"/>
+		</td>
+	</tr>
+	<tr>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.file"/>:</th>
+		<td>
 	    <fr:edit name="bean" slot="file">
 	        <fr:layout>
 	            <fr:property name="size" value="40"/>
@@ -90,28 +102,32 @@
 	            <fr:property name="fileSizeSlot" value="fileSize"/>
 	        </fr:layout>
 	    </fr:edit>
-    </p>
-    
-    <p class="mtop15">
-        <strong><bean:message key="label.teacher.siteAdministration.uploadFile.permissions"/>:</strong>
-    </p>
-    <p>
-        <fr:edit name="bean" schema="item.file.create" layout="flow">
-            <fr:layout>
-                <fr:property name="eachInline" value="true"/>
-                <fr:property name="labelExcluded" value="true"/>
-            </fr:layout>
-        </fr:edit>
-    </p>
-        
-    <p class="mtop2">
-        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputButton">
+		</td>
+	</tr>
+	<tr>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.permissions"/>:</th>
+		<td>
+	        <fr:edit name="bean" schema="item.file.create" layout="flow">
+	            <fr:layout>
+	                <fr:property name="eachInline" value="true"/>
+	                <fr:property name="labelExcluded" value="true"/>
+	            </fr:layout>
+	        </fr:edit>
+		</td>
+	</tr>
+</table>
+
+
+        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton dinline">
             <bean:message key="button.save"/>
         </html:submit>
-		<html:link page="<%= String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>">
-            <bean:message key="button.cancel"/>
-        </html:link>
-    </p>
-</fr:form>
+	</fr:form>
 </div>
-<p/>
+
+<div class="dinline forminline">
+	<fr:form action="<%=String.format("/manageExecutionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s", executionCourse.getIdInternal(), item.getSection().getIdInternal()) %>" encoding="multipart/form-data">
+		<html:cancel styleClass="inputbutton dinline">
+			<bean:message key="button.cancel"/>
+		</html:cancel>
+	</fr:form>
+</div>

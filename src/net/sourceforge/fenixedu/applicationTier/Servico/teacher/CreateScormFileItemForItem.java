@@ -1,14 +1,18 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.io.InputStream;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemCreationBean.EducationalResourceType;
 import pt.linkare.scorm.utils.ScormMetaDataHash;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
@@ -27,14 +31,20 @@ public class CreateScormFileItemForItem extends CreateFileItemForItem {
 
 		private ScormMetaDataHash scormParameters;
 
+		private Person person;
+		
+		private EducationalResourceType educationalResourceType;
+		
 		public CreateScormFileItemForItemArgs(Item item, InputStream inputStream, String originalFilename,
-				String displayName, Group permittedGroup, ScormMetaDataHash scormParameters) {
+				String displayName, Group permittedGroup, ScormMetaDataHash scormParameters, Person person, EducationalResourceType educationalResourceType) {
 			this.item = item;
 			this.inputStream = inputStream;
 			this.originalFilename = originalFilename;
 			this.displayName = displayName;
 			this.permittedGroup = permittedGroup;
 			this.scormParameters = scormParameters;
+			this.person = person;
+			this.educationalResourceType = educationalResourceType;
 		}
 
 		public String getDisplayName() {
@@ -84,6 +94,22 @@ public class CreateScormFileItemForItem extends CreateFileItemForItem {
 		public void setScormParameters(ScormMetaDataHash scormParameters) {
 			this.scormParameters = scormParameters;
 		}
+		
+		public Person getPerson() {
+			return person;
+		}
+		
+		public void setPerson(Person person) {
+			this.person = person;
+		}
+		
+		public EducationalResourceType getEducationalResourceType() {
+			return educationalResourceType;
+		}
+		
+		public void setEducationalResourceType(EducationalResourceType resourceType) {
+			this.educationalResourceType = resourceType;
+		}
 	}
 
 	private ThreadLocal<ScormMetaDataHash> extraScormParam = null;
@@ -93,14 +119,14 @@ public class CreateScormFileItemForItem extends CreateFileItemForItem {
 		extraScormParam.set(args.getScormParameters());
 
 		super.run(args.getItem(), args.getInputStream(), args.getOriginalFilename(), args.getDisplayName(),
-				args.getPermittedGroup());
+				args.getPermittedGroup(), args.getPerson(), args.getEducationalResourceType());
 	}
 
 	@Override
 	protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
-			String name, String displayName, InputStream inputStream) {
+			Collection<FileSetMetaData> metaData, InputStream inputStream) {
 		final IFileManager fileManager = FileManagerFactory.getFileManager();
-		return fileManager.saveScormFile(filePath, originalFilename, permission, name, displayName, inputStream, extraScormParam
+		return fileManager.saveScormFile(filePath, originalFilename, permission, metaData, inputStream, extraScormParam
 				.get());
 
 	}

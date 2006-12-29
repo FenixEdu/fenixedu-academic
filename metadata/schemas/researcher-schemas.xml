@@ -1646,7 +1646,7 @@
 </schema>
 
 <schema name="publicationSearch" bundle="RESEARCHER_RESOURCES" 
-	type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.SearchDSpaceBean">
+	type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean">
 	<slot name="searchField" key="label.searchField" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="defaultText" value=""/>
 		<property name="excludedValues" value="KEYWORD, COURSE"/>
