@@ -767,6 +767,10 @@ public class Teacher extends Teacher_Base {
     private double calculateLessonsIntervalAndExemptionOverlapPercentage(OccupationPeriod lessonsPeriod,
 	    TeacherServiceExemption teacherServiceExemption) {
 
+	if (lessonsPeriod == null) {
+	    return 0.0;
+	}
+
 	Interval lessonsInterval = new Interval(lessonsPeriod.getStartYearMonthDay().toDateMidnight(),
 		lessonsPeriod.getEndYearMonthDay().toDateMidnight());
 	Interval serviceExemptionsInterval = new Interval(teacherServiceExemption.getStartYearMonthDay()
