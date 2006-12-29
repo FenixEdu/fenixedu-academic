@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.degreeAdministrativeOffice;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,8 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.CurricularCourseScopesForPrintDTO;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithCurricularCourseScopes;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -85,12 +87,16 @@ public class DisplayCurricularPlan extends FenixBackingBean {
         for (Integer degreeCurricularPlanID : this.getChoosenDegreeCurricularPlansIDs()) {
             Object[] args = { degreeCurricularPlanID, this.choosenExecutionYearID };
 
-            InfoDegreeCurricularPlanWithCurricularCourseScopes degreeCurricularPlan = (InfoDegreeCurricularPlanWithCurricularCourseScopes) ServiceManagerServiceFactory
+            Collection<DegreeModuleScope> degreeModuleScopes = (Collection<DegreeModuleScope>) ServiceManagerServiceFactory
                     .executeService(getUserView(),
                             "ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear",
                             args);
 
-            scopes.addAll(degreeCurricularPlan.getScopes());
+            for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
+        	if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
+        	    scopes.add(InfoCurricularCourseScope.newInfoFromDomain(((DegreeModuleScopeCurricularCourseScope) degreeModuleScope).getCurricularCourseScope()));    
+        	}
+            }
         }
 
         sortScopes(scopes);
