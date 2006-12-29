@@ -187,7 +187,7 @@
      Items
   -------------%>
 
-<h3 class="mtop15" style="background: #f5f5e5; padding: 0.25em; width: 550px;"><bean:message key="title.section.items" bundle="SITE_RESOURCES"/></h3>
+<h3 class="mtop15 separator2"><bean:message key="title.section.items" bundle="SITE_RESOURCES"/></h3>
 
 <span class="error">
     <html:errors property="items" bundle="SITE_RESOURCES"/>
@@ -224,7 +224,7 @@
 <logic:notEmpty name="section" property="associatedItems">
 	<logic:iterate id="item" name="section" property="orderedItems" type="net.sourceforge.fenixedu.domain.Item">
 
-		<div class="separator1 width550px mtop15 mbottom0"></div>
+		<div class="separator1 mtop15 mbottom0"></div>
 		
 		<p class="mtop0 mbottom05">
 			<%--<span style="color: #888;"><bean:message key="label.item"/></span><br/>--%>

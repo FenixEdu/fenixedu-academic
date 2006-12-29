@@ -60,14 +60,10 @@ function cleanSelect(checkboxes) {
     <span class="error"><!-- Error messages go here --><html:errors /></span>
 	<bean:size id="studentsListSize" name="studentsComponent" property="infoAttends"/>
 
-<table width="100%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td class="infoop">
-			<bean:message key="message.students.explanation"/>
-		</td>
-	</tr>
-	<tr><td>&nbsp;</td></tr>
-</table>
+
+<div class="infoop5">
+	<bean:message key="message.students.explanation"/>
+</div>
 
 
 <html:form action="/studentsByCurricularCourse.do" method="post">
@@ -75,104 +71,67 @@ function cleanSelect(checkboxes) {
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="readStudents"/>
 
 
-<table width="100%">
+<table class="tstyle1 mtop15 tdtop">
 	<tr>
-		<th width="25%">
+		<th>
 			<bean:message key="label.selectStudents"/>
 		</th>
-		<th width="25%">
+		<th>
 			<bean:message key="label.attends.courses"/>
 		</th>
-		<th width="50%">
+		<th>
 			<bean:message key="label.selectShift"/>
 		</th>
 	</tr>
 	
-	<tr valign="top">
+	<tr>
 		<td>
-			<table>
-				<tr>
-					<td>
-						<bean:message key="label.attends.allStudents"/>
-					</td>
-					<td>
-						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.enrollmentType" property="enrollmentType" value="<%= AttendacyStateSelectionType.ALL.toString() %>" onclick="invertSelect(document.forms[0].enrollmentType)" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<bean:message key="label.attends.enrolledStudents"/>
-					</td>
-					<td>		
-						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.enrollmentType" property="enrollmentType" value="<%= AttendacyStateSelectionType.ENROLLED.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<bean:message key="label.attends.improvementStudents"/>
-					</td>
-					<td>		
-						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.enrollmentType" property="enrollmentType" value="<%= AttendacyStateSelectionType.IMPROVEMENT.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<bean:message key="label.attends.notEnrolledStudents"/>
-					</td>
-					<td>
-						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.enrollmentType" property="enrollmentType" value="<%= AttendacyStateSelectionType.NOT_ENROLLED.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<bean:message key="label.attends.specialSeason"/>
-					</td>
-					<td>
-						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.enrollmentType" property="enrollmentType" value="<%= AttendacyStateSelectionType.SPECIAL_SEASON.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
-					</td>
-				</tr>
-			</table>				
+			<p>	
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.enrollmentType" property="enrollmentType" value="<%= AttendacyStateSelectionType.ALL.toString() %>" onclick="invertSelect(document.forms[0].enrollmentType)" />
+			<bean:message key="label.attends.allStudents"/>
+			</p>
+			<p>
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.enrollmentType" property="enrollmentType" value="<%= AttendacyStateSelectionType.ENROLLED.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
+			<bean:message key="label.attends.enrolledStudents"/>
+			</p>
+			<p>
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.enrollmentType" property="enrollmentType" value="<%= AttendacyStateSelectionType.IMPROVEMENT.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
+			<bean:message key="label.attends.improvementStudents"/>
+			</p>
+			<p>
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.enrollmentType" property="enrollmentType" value="<%= AttendacyStateSelectionType.NOT_ENROLLED.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
+			<bean:message key="label.attends.notEnrolledStudents"/>
+			</p>
+			<p>
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.enrollmentType" property="enrollmentType" value="<%= AttendacyStateSelectionType.SPECIAL_SEASON.toString() %>" onclick="cleanSelect(document.forms[0].enrollmentType)" />
+			<bean:message key="label.attends.specialSeason"/>
+			</p>
 		</td>
 		<td>
 			<bean:define id="degreeCurricularPlans" name="studentsComponent" property="infoDegreeCurricularPlans"/>
-			<table>
-				<tr>
-					<td>
-						<bean:message key="label.attends.allCourses"/>
-					</td>
-					<td>
-						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.coursesIDs" property="coursesIDs" value="0" onclick="invertSelect(document.forms[0].coursesIDs)"/>
-					</td>
-				</tr>
+				<p>
+					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.coursesIDs" property="coursesIDs" value="0" onclick="invertSelect(document.forms[0].coursesIDs)"/>
+					<bean:message key="label.attends.allCourses"/>
+				</p>
 		
 				<logic:iterate id="dcp" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan" name="degreeCurricularPlans">
 					<bean:define id="dcpID" name="dcp" property="idInternal"/>
 					<bean:define id="degree" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegree" name="dcp" property="infoDegree"/>
-					<tr>
-						<td>
-							<bean:write name="dcp" property="name"/>
-						</td>
-						<td>
-							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.coursesIDs" property="coursesIDs" value="<%= dcpID.toString() %>" onclick="cleanSelect(document.forms[0].coursesIDs)"/>
-						</td>					
-					</tr>
+					<p>
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.coursesIDs" property="coursesIDs" value="<%= dcpID.toString() %>" onclick="cleanSelect(document.forms[0].coursesIDs)"/>
+						<bean:write name="dcp" property="name"/>
+					</p>
 				</logic:iterate>
-			</table>			
+			
 		</td>
 		<td>
-			<table>
-				<tr>
-					<td>
-						<bean:message key="label.attends.allShifts"/>
-					</td>
-					<td>
-						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.shiftIDs" property="shiftIDs" value="0" onclick="invertSelect(document.forms[0].shiftIDs)"/>
-					</td>
-				</tr>	
-				
+			<p>
+				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.shiftIDs" property="shiftIDs" value="0" onclick="invertSelect(document.forms[0].shiftIDs)"/>
+				<bean:message key="label.attends.allShifts"/>
+			</p>
 				<bean:define id="shifts" name="studentsComponent" property="infoShifts" />
 				<logic:iterate type="net.sourceforge.fenixedu.dataTransferObject.InfoShift" name="shifts" id="shift">
-					<tr>
+					<p>
 							<%
 								String text = new String();
 								text += shift.getNome();
@@ -193,58 +152,48 @@ function cleanSelect(checkboxes) {
 								}
 								text += ")"; 
 							%>
-						<td>
-							<%= text %>
-						</td>
-						<td>
+
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.shiftIDs" property="shiftIDs" value="<%= shift.getIdInternal().toString() %>"
 								onclick="cleanSelect(document.forms[0].shiftIDs)"/>
-						</td>
-					</tr>
+
+							<%= text %>
+					</p>
 				</logic:iterate>
-			</table>			
 		</td>
 	</tr>
-</table>	
-		
-<br/>
-<table>
-	<tr valign="top">
-		<td>
-			<bean:message key="label.viewPhoto" />
-		</td>
+	
+	<tr>
 		<td colspan="3">
+			<bean:message key="label.viewPhoto" />
 			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewPhoto"  property="viewPhoto" />
 		</td>
 	</tr>
-</table>
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" property="submition"><bean:message key="button.selectShift"/></html:submit>
+	<tr>
+		<td colspan="3">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" property="submition"><bean:message key="button.selectShift"/></html:submit>
+		</td>
+	</tr>
+</table>	
 
-<table cellspacing="1" cellpadding="1">
-	<tr>
-		<td colspan="3">
-			<h3>
-				<%=studentsComponent.getInfoAttends().size()%> <bean:message key="message.attendingStudents"/>
-			</h3>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td colspan="3">
-		
-			<html:link page="/mailSender.do" name="sendMailLinkParameters">
-				<bean:message key="link.sendEmailToAllStudents"/>
-			</html:link>
-		</td>
-	</tr>
-	<tr><td>&nbsp;</td></tr>
-	<tr>
-		<td colspan="3">
-			<html:link page="/getTabSeparatedStudentList.do" name="spreadSheetLinkArgs">
-				<bean:message key="link.getExcelSpreadSheet"/><br/>
-			</html:link>
-		</td>
-	</tr> 
-	<tr><td>&nbsp;</td></tr>
+
+
+<p>
+	<h3><%=studentsComponent.getInfoAttends().size()%> <bean:message key="message.attendingStudents"/></h3>
+	<p>
+		<html:link page="/mailSender.do" name="sendMailLinkParameters">
+			<bean:message key="link.sendEmailToAllStudents"/>
+		</html:link>
+	</p>
+	<p>
+		<html:link page="/getTabSeparatedStudentList.do" name="spreadSheetLinkArgs">
+			<bean:message key="link.getExcelSpreadSheet"/><br/>
+		</html:link>
+	</p>
+</p>
+
+
+
+<table class="tstyle1 tdcenter">
 	<tr>
      	   <bean:define id="colspan" value="1"/>
      	   <bean:define id="rowspan" value="2"/>
@@ -259,41 +208,41 @@ function cleanSelect(checkboxes) {
 		   </logic:present>
 
 			<logic:equal name="viewPhoto" value="true">
-				<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+				<th rowspan="<%= rowspan.toString() %>">
 					<bean:message key="label.photo" /> 
 			   </th>
 			 </logic:equal>
-			<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+			<th rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.number" /> 
 		   </th>
-			<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+			<th rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.numberOfEnrollments" />
 		   </th>
-		   <th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+		   <th rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.attends.enrollmentState"/>
 		   </th>
-			<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+			<th rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.Degree" /> 
 		   </th>
-			<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+			<th rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.name" />
 		   </th>
 		   
 		   <logic:present name="groupsProperties">
 			<logic:notEmpty name="groupsProperties">
-					<th class="listClasses-header" colspan="<%= colspan.toString() %>">
+					<th colspan="<%= colspan.toString() %>">
 						<bean:message key="label.projectGroup"/>
 					</th>
 			</logic:notEmpty>
 		   </logic:present>
 	   
-			<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+			<th rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.mail" />
 		   </th>
 		   <% int shiftColSpan=((List)classTypes).size(); %>
          <% Integer shiftColSpanInteger = new Integer(shiftColSpan); %>
          <% if (shiftColSpan>0) {%>
-		 <th class="listClasses-header" colspan="<%= shiftColSpanInteger %>" >
+		 <th colspan="<%= shiftColSpanInteger %>" >
                 <bean:message key="label.attends.shifts"/>
             </th>
         <%		}%>
@@ -303,7 +252,7 @@ function cleanSelect(checkboxes) {
 		   <logic:present name="groupsProperties">
 			<logic:notEmpty name="groupsProperties">
 				<logic:iterate name="groupsProperties" id="gp" type="net.sourceforge.fenixedu.dataTransferObject.InfoGrouping">
-					<th class="listClasses-header">
+					<th>
 					<bean:write name="gp" property="name"/>
 					</th>
 				</logic:iterate>
@@ -311,7 +260,7 @@ function cleanSelect(checkboxes) {
 		   </logic:present>
 		   
 			<logic:iterate id="classType" type="net.sourceforge.fenixedu.domain.ShiftType" name="classTypes">
-			  <th class="listClasses-header" >
+			  <th >
 				<bean:define id="classTypeInt" name="classType" property="name"/>
 
 				<logic:equal name="classTypeInt" value='<%= ShiftType.TEORICA.toString()  %>' >
@@ -352,17 +301,17 @@ function cleanSelect(checkboxes) {
 			<bean:define id="attendacy" type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta" name="attend" property="infoAttends"/>
 			<tr>
 				<logic:equal name="viewPhoto" value="true">
-					<td class="listClasses">
+					<td>
 						<bean:define id="aluno" name="attendacy" property="aluno"/>
 						<bean:define id="infoPerson" name="aluno" property="infoPerson"/>			
 						<bean:define id="personID" name="infoPerson" property="idInternal"/>
 		      			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 					</td>
 				</logic:equal>
-				<td class="listClasses">
+				<td>
 					<bean:write name="attendacy" property="aluno.number"/>&nbsp;
 				</td>
-				<td class="listClasses">
+				<td>
 					<bean:define id="numEnrollments" name="attend" property="numberOfEnrollments"/>
 					
 					<logic:notEqual value="0" name="numEnrollments" >
@@ -373,7 +322,7 @@ function cleanSelect(checkboxes) {
 					</logic:equal>
 		
 				</td>
-				<td class="listClasses">
+				<td>
 
 					<logic:present name="attendacy" property="enrolmentEvaluationType">
 						<bean:define id="enrollmentEvaluationType" type="EnrolmentEvaluationType" 
@@ -393,13 +342,13 @@ function cleanSelect(checkboxes) {
 						<bean:message key="label.attends.enrollmentState.notEnrolled"/>
 					</logic:notPresent>
 				</td>
-				<td class="listClasses">
+				<td>
 					<bean:define id="infoDCP" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan" name="attend" property="attendingStudentInfoDCP"/>
 					<bean:define id="degree" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegree" name="infoDCP" property="infoDegree"/>
 
 					<bean:write name="infoDCP" property="name"/>
 				</td>
-				<td  class="listClasses" title="<bean:write name="attendacy" property="aluno.infoPerson.nome"/>">
+				<td  title="<bean:write name="attendacy" property="aluno.infoPerson.nome"/>">
 						<bean:define id="shortName" value="" type="java.lang.String"/>
 						<%
 							shortName = attendacy.getAluno().getInfoPerson().getNome();
@@ -434,7 +383,7 @@ function cleanSelect(checkboxes) {
 					}
 
 				%>
-				<td class="listClasses">
+				<td>
 				<%request.setAttribute("parameters",new TreeMap());%>
 				<bean:define name="parameters" type="java.util.TreeMap" id="parameters"/>
 				<%
@@ -463,7 +412,7 @@ function cleanSelect(checkboxes) {
 				<%
 				 }
 				%>
-				<td class="listClasses">
+				<td>
 					<logic:present name="attendacy" property="aluno.infoPerson.email">
 						<bean:define id="mail" name="attendacy" property="aluno.infoPerson.email"/>
 						<html:link href="<%= "mailto:"+ mail %>"><bean:write name="attendacy" property="aluno.infoPerson.email"/></html:link>
@@ -474,7 +423,7 @@ function cleanSelect(checkboxes) {
 				</td>
 				
 				<logic:iterate id="classType" name="classTypes" type="ShiftType">
-		          <td class="listClasses">
+		          <td>
 		            <bean:define id="map" name="attend" property="infoShifts" type="java.util.Map"/>
 
 					<% 
@@ -496,20 +445,17 @@ function cleanSelect(checkboxes) {
 </table>
 
 	
-<br/>
-<br/>
 
-	
-<table>
-	<tr><td><strong><bean:message key="label.attends.summary"/></strong></td></tr>
+<p class="mtop2 mbottom05"><bean:message key="label.attends.summary"/></p>
+<table class="tstyle1 tdcenter mtop05">
 	<tr>
-		<th class="listClasses-header"><bean:message key="label.attends.summary.enrollmentsNumber"/></th>
-		<th class="listClasses-header"><bean:message key="label.attends.summary.studentsNumber"/></th>
+		<th><bean:message key="label.attends.summary.enrollmentsNumber"/></th>
+		<th><bean:message key="label.attends.summary.studentsNumber"/></th>
 	</tr>
 	<logic:iterate id="enrollmentNumber" name="attendsSummary" property="numberOfEnrollments">
 		<tr>
-			<td class="listClasses"><bean:write name="enrollmentNumber"/></td>
-			<td class="listClasses"><%= ((net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSummary)attendsSummary).getEnrollmentDistribution().get(enrollmentNumber).toString() %></td>
+			<td><bean:write name="enrollmentNumber"/></td>
+			<td><%= ((net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSummary)attendsSummary).getEnrollmentDistribution().get(enrollmentNumber).toString() %></td>
 		</tr>
 	</logic:iterate> 
 </table>

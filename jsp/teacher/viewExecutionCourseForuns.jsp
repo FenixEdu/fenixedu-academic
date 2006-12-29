@@ -5,10 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-
 <h2><bean:message key="label.teacher.executionCourseManagement.viewForuns.title" /></h2>
-<br/>
+
+<p>
+	<span class="error0"><!-- Error messages go here --><html:errors /></span>
+</p>
 
 <logic:notEmpty name="foruns">
 	<bean:define id="executionCourseId" name="executionCourse" property="idInternal" />
@@ -19,12 +20,13 @@
 			<fr:property name="link(view)" value="<%="/executionCourseForumManagement.do?method=viewForum&executionCourseID=" + executionCourseId%>"/>
 			<fr:property name="key(view)" value="link.teacher.executionCourseManagement.foruns.viewForum"/>
 			<fr:property name="param(view)" value="idInternal/forumId"/>
-			
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
 
 <logic:empty name="foruns">
-	<span class="error"><!-- Error messages go here --><bean:message key="label.teacher.executionCourseManagement.viewForuns.noForuns"/></span>
+	<p>
+		<span class="error0"><!-- Error messages go here --><bean:message key="label.teacher.executionCourseManagement.viewForuns.noForuns"/></span>
+	</p>
 </logic:empty>
   

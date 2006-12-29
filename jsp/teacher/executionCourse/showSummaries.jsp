@@ -30,7 +30,7 @@
 				<html:link page="<%= insertSummaryLink %>"><bean:message key="label.insertSummary"/></html:link> <bean:message key="link.summary.insert.info"/>				
 			</span>					
 		</p>
-		<p>Pode tamb�m visualizar a lista completa de aulas:</p>
+		<p><bean:message key="label.summaries.management.instructions.part3"/>:</p>
 		<p>
 			<bean:define id="showSummariesCalendarLink">/summariesManagement.do?method=showSummariesCalendar&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>			
 			<span class="gen-button" style="margin-left: 2em;">

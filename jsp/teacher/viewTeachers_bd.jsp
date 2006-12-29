@@ -7,14 +7,11 @@
 
 <h2><bean:message key="title.teachers"/></h2>
 
-<table width="100%">
-	<tr>
-		<td class="infoop">
-			<bean:message key="label.teachers.explanation" />
-			<p><bean:message key="label.teachers.specialTeacherWarning" /></p>
-		</td>
-	</tr>
-</table>
+<div class="infoop5">
+	<bean:message key="label.teachers.explanation" />
+	<p><bean:message key="label.teachers.specialTeacherWarning" /></p>
+</div>
+
 <span class="error"><!-- Error messages go here --><html:errors /></span>	
 
 <logic:present name="siteView">
@@ -23,28 +20,28 @@
 <bean:define id="isResponsible" name="infoSiteTeachers" property="isResponsible"/>
 
 <logic:equal name="isResponsible" value="true">
-<ul>
+<ul class="mvert15">
 	<li>
 		<html:link page="<%= "/teacherManagerDA.do?method=prepareAssociateTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") %>"><bean:message key="link.addTeacher"/></html:link>
 	</li>
 </ul>
 </logic:equal>
 
-<table>
+<table class="tstyle2 tdcenter">
 	<tr>
-		<th width="150" class="listClasses-header"><bean:message key="label.teacherNumber" /></th>
-		<th width="250" class="listClasses-header"><bean:message key="label.name" /></th>			
+		<th><bean:message key="label.teacherNumber" /></th>
+		<th><bean:message key="label.name" /></th>			
 		<logic:equal name="isResponsible" value="true">
-			<th width="250" class="listClasses-header"><bean:message key="message.edit" /></th>    
+			<th><bean:message key="message.edit" /></th>    
 		</logic:equal>
 	</tr>	
 	<logic:iterate id="infoTeacher" name="teachersList">
 	<tr>
-		<td class="listClasses"><bean:write name="infoTeacher"  property="teacherNumber" /></td>
-		<td class="listClasses"><bean:write name="infoTeacher" property="infoPerson.nome" /></td>	
+		<td><bean:write name="infoTeacher"  property="teacherNumber" /></td>
+		<td><bean:write name="infoTeacher" property="infoPerson.nome" /></td>	
 		<logic:equal name="isResponsible" value="true">
 			<bean:define id="teacherCode" name="infoTeacher" property="idInternal"/>		
-			<td class="listClasses">
+			<td>
 				<html:link page="<%= "/teachersManagerDA.do?method=removeTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherCode=" + teacherCode %>">
 					<bean:message key="link.removeTeacher"/>
 				</html:link>

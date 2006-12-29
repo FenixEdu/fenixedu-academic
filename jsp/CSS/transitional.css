@@ -1204,6 +1204,10 @@ div.separator1 {
 padding-top: 0.5em;
 background: url(../images/ann_sep.gif) top left repeat-x;
 }
+.separator2 {
+background: #f5f5e5;
+padding: 0.25em;
+}
 
 .nowrap {
 white-space: nowrap;
@@ -1450,3 +1454,4 @@ margin-bottom: 0;
 	text-align: left;
 	height: 30px;
 }
+
