@@ -44,7 +44,7 @@ public class CASServiceUrlProvider {
 		}
     	for (final Entry<String, String> entry : serviceUrlsByHostnameMap.entrySet()) {
             final String hostname = entry.getKey();
-            if (location.getHost().equals(hostname)) {
+            if (location.getHost().startsWith(hostname)) {
                 return entry.getValue();
             }
         }
