@@ -68,10 +68,7 @@
 			<th>Organizar por:</th>
 			<td>
 				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.organizedBy" property="organizedBy" value="groups" onclick='this.form.submit();'/><bean:message key="groups" bundle="BOLONHA_MANAGER_RESOURCES"/>
-<%-- 
-				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.organizedBy" property="organizedBy" value="curricularYears" onclick='this.form.submit();'/><bean:message key="years" bundle="BOLONHA_MANAGER_RESOURCES"/> Curriculares
---%>
-				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.organizedBy" property="organizedBy" value="executionYears" onclick='this.form.submit();'/><bean:message key="years" bundle="BOLONHA_MANAGER_RESOURCES"/> Execu��o
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.organizedBy" property="organizedBy" value="executionYears" onclick='this.form.submit();'/><bean:message key="label.execution.year" bundle="STUDENT_RESOURCES"/>
 			</td>
 		</tr>
 
