@@ -90,6 +90,7 @@ public abstract class Transaction extends jvstm.Transaction {
 	    try {
 		commit();
 	    } catch (Throwable t) {
+		System.out.println("Aborting from Transaction.forceFinish(). If being called from CloseTransactionFilter it will leave an open transaction.");
 		abort();
 	    }
 	}
