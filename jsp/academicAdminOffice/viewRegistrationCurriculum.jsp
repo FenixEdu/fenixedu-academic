@@ -83,7 +83,7 @@
 		request.setAttribute("curriculumEntries", curriculumEntries);
 		final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(executionYear);
 		request.setAttribute("totalEctsCredits", totalEctsCredits);
-		final long average = studentCurriculum.calculateRoundedAverage(executionYear);
+		final double average = registration.getArithmeticMean(executionYear);
 		request.setAttribute("average", average);
 		final int curricularYear = studentCurriculum.calculateCurricularYear(executionYear);
 		request.setAttribute("curricularYear", curricularYear);
@@ -121,9 +121,6 @@
 			</th>
 			<td>
 				<bean:write name="average"/>
-			</td>
-			<td>
-				<em><bean:message key="info.last.execution.year.arithmetic.mean" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 			</td>
 		</tr>
 		<tr>

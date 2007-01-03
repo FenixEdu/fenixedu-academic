@@ -369,11 +369,12 @@ public class Registration extends Registration_Base {
 	return this.approvationRatio;
     }
 
-    public Double getArithmeticMean() {
-	if (this.arithmeticMean == null) {
-	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
-	}
-	return Double.valueOf(Math.round(this.arithmeticMean * 100) / 100.0);
+    public double getArithmeticMean() {
+	return Math.round((new StudentCurriculum(this).calculateAverage(null) * 100)) / 100.0;
+    }
+
+    public double getArithmeticMean(final ExecutionYear executionYear) {
+	return Math.round((new StudentCurriculum(this).calculateAverage(executionYear) * 100)) / 100.0;
     }
 
     public int getFinalArithmeticMean() {
@@ -382,10 +383,7 @@ public class Registration extends Registration_Base {
 		    "Registration.getting.final.arithmetic.mean.from.non.concluded.registration");
 	}
 
-	if (this.arithmeticMean == null) {
-	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
-	}
-	return Double.valueOf(Math.round(this.arithmeticMean)).intValue();
+	return new StudentCurriculum(this).calculateRoundedAverage(null);
     }
 
     public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {

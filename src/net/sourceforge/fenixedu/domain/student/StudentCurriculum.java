@@ -426,8 +426,8 @@ public class StudentCurriculum implements Serializable {
 	return averageCalculator.result();
     }
 
-    public long calculateRoundedAverage(final ExecutionYear executionYear) {
-	return Math.round(calculateAverage(executionYear));
+    public int calculateRoundedAverage(final ExecutionYear executionYear) {
+	return Long.valueOf(Math.round(calculateAverage(executionYear))).intValue();
     }
 
 }
