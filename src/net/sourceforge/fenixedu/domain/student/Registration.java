@@ -1265,8 +1265,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isConcluded() {
-	return getActiveStateType() == RegistrationStateType.CONCLUDED
-		|| getEctsCredits() >= getDegreeType().getDefaultEctsCredits();
+	return getActiveStateType() == RegistrationStateType.CONCLUDED;
     }
 
     public YearMonthDay getConclusionDate() {
