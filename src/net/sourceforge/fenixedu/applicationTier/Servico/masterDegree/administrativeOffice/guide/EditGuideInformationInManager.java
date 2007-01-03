@@ -21,7 +21,9 @@ public class EditGuideInformationInManager extends Service {
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         ExecutionDegree cursoExecucao = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear); 
             
-        guide.setPaymentType(PaymentType.valueOf(newPaymentType));
+        if(newPaymentType != null && newPaymentType.length() > 0){
+            guide.setPaymentType(PaymentType.valueOf(newPaymentType));
+        }
         guide.setExecutionDegree(cursoExecucao);
 
     }
