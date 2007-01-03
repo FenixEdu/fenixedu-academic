@@ -58,7 +58,9 @@ public class CreateFileItemForItem extends FileItemService {
 		metaData.add(FileSetMetaData.createAuthorMeta(author));
 		metaData.add(FileSetMetaData.createAuthorMeta(executionCourseName));
 		metaData.add(FileSetMetaData.createTitleMeta(title));
-		metaData.add(new FileSetMetaData("type",null,null,educationalType.toString()));
+		 if(educationalType!=null) {
+			metaData.add(new FileSetMetaData("type",null,null,educationalType.toString()));
+		}
 		return metaData;
 	}
 	// TODO: avoid depending on ExecutionCourseSite, use Site only
