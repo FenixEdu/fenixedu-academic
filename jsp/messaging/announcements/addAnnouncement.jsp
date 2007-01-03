@@ -26,7 +26,8 @@
 
 <fr:form action="<%=  contextPrefix + action %>">
 
-<p class="mtop2 mbottom025"><strong>Campos obrigat�rios:</strong></p>
+<h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.add.label"/></h2>
+<p class="mtop2 mbottom025"><strong><bean:message key="messaging.annoucenment.add.label" bundle="MESSAGING_RESOURCES"/>:</strong></p>
 
 <table class="tstyle5 thlight thtop thright mtop025">
 

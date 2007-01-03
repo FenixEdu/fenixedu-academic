@@ -20,7 +20,7 @@
 <fr:form action="<%=  contextPrefix + action %>">
 
 
-<p class="mtop2 mbottom025"><strong>Campos obrigat�rios:</strong></p>
+<p class="mtop2 mbottom025"><strong><bean:message key="label.messaging.requiredFields" bundle="MESSAGING_RESOURCES"/>:</strong></p>
 
 <table class="tstyle5 thlight thtop thright mtop025">
 

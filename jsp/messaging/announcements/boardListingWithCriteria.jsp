@@ -225,7 +225,9 @@
         
 	</logic:notEmpty>
 	<logic:empty name="unitAnnouncementBoards">
-	<bean:message key="label.noChannelsInUnit" bundle="MESSAGING_RESOURCES"/><br/>
+	<p>
+		<em><bean:message key="label.noChannelsInUnit" bundle="MESSAGING_RESOURCES"/></em>
+	</p>
 	</logic:empty>
 </logic:present>
 
@@ -421,8 +423,8 @@
 	
 	</logic:notEmpty>
 	<logic:empty name="executionCourseAnnouncementBoards">
-		<p><em class="warning0">
-		<bean:message key="label.noCoursesWithSelectedCriteria" bundle="MESSAGING_RESOURCES"/>
-</em></p>
+		<p>
+			<em><bean:message key="label.noCoursesWithSelectedCriteria" bundle="MESSAGING_RESOURCES"/></em>
+		</p>
 	</logic:empty>
 </logic:present>

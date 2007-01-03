@@ -26,7 +26,7 @@
 
 <fr:form action="<%=  contextPrefix + action %>">
 
-<p class="mtop2 mbottom025"><strong>Campos obrigat�rios:</strong></p>
+<p class="mtop2 mbottom025"><strong><bean:message key="label.messaging.requiredFields" bundle="MESSAGING_RESOURCES"/>:</strong></p>
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
@@ -214,7 +214,7 @@
 	</fr:create>			
 	</p>
 
-<p class="smalltxt"><em>Campos assinalados com <span class="required">*</span> s�o de preenchimento obrigat�rio.</em></p>
+<p class="smalltxt"><em><bean:message key="label.fieldsWith" bundle="SITE_RESOURCES"/><span class="required">*</span><bean:message key="label.areRequired" bundle="SITE_RESOURCES"/></em></p>
 
 	<p class="mtop1">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>
