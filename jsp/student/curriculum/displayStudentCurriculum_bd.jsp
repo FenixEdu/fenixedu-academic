@@ -90,7 +90,7 @@
 				</dt:format>
 			</bean:define>
 
-			<div class="infoop2 mvert2 mtop0">
+			<div class="mvert2 mtop0">
 				<p>
 					<strong>
 						<bean:message key="label.number" />: 

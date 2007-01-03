@@ -6,8 +6,9 @@
 <h2><bean:message key ="title.person.changepass" /></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<div class="pass_container">
-	<div class="pass_left">
+
+<div class="fleft">
+	<div style="margin-top: 1em; width: 29em; float: left;">
 		<html:form action="/changePasswordForm">
 			<table>
 				<!-- Old Password -->

@@ -69,7 +69,7 @@
 				<th>
 					<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
-				<td class="tdcheck">
+				<td class="valigntop width05em">
 					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showUnit" property="showUnit" value="true"/>
 				</td>
 				<td>
@@ -86,7 +86,7 @@
 					<th>
 						<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>:
 					</th>
-					<td class="tdcheck">
+					<td class="valigntop width05em">
 						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showCategory" property="showCategory" value="true"/>
 					</td>
 					<td>
@@ -99,7 +99,7 @@
 					<th>
 						<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
 					</th>
-					<td class="tdcheck">
+					<td class="valigntop width05em">
 						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showResearchUnitHomepage" property="showResearchUnitHomepage" value="true"/>
 					</td>					
 					<td>
@@ -115,7 +115,7 @@
 				<th>
 					<bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
-				<td class="tdcheck">
+				<td class="valigntop width05em">
 					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showActiveStudentCurricularPlans" property="showActiveStudentCurricularPlans" value="true"/>
 				</td>
 				<td>
@@ -162,7 +162,7 @@
 				<th>
 					<bean:message key="label.homepage.showCurrentAttendingExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
-				<td class="tdcheck">
+				<td class="valigntop width05em">
 					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showCurrentAttendingExecutionCourses" property="showCurrentAttendingExecutionCourses" value="true"/>
 				</td>
 				<td>
@@ -189,7 +189,7 @@
 				<th>
 					<bean:message key="label.homepage.showAlumniDegrees" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
-				<td class="tdcheck">
+				<td class="valigntop width05em">
 					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showAlumniDegrees" property="showAlumniDegrees" value="true"/>
 				</td>
 				<td>
@@ -252,7 +252,7 @@
 			<th>
 				<bean:message key="label.homepage.showPhoto" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td class="tdcheck">
+			<td class="valigntop width05em">
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showPhoto" property="showPhoto" value="true"/>
 			</td>
 			<td>
@@ -264,7 +264,7 @@
 			<th>
 				<bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td class="tdcheck">
+			<td class="valigntop width05em">
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showEmail" property="showEmail" value="true"/>
 			</td>
 			<td style="vertical-align: center;">
@@ -276,7 +276,7 @@
 			<th>
 				<bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td class="tdcheck">
+			<td class="valigntop width05em">
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showTelephone" property="showTelephone" value="true"/>
 			</td>
 			<td>
@@ -288,7 +288,7 @@
 			<th>
 				<bean:message key="label.homepage.showWorkTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td class="tdcheck">
+			<td class="valigntop width05em">
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showWorkTelephone" property="showWorkTelephone" value="true"/>
 			</td>
 			<td>
@@ -300,7 +300,7 @@
 			<th>
 				<bean:message key="label.homepage.showMobileTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td class="tdcheck">
+			<td class="valigntop width05em">
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showMobileTelephone" property="showMobileTelephone" value="true"/>
 			</td>
 			<td>
@@ -312,7 +312,7 @@
 			<th>
 				<bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td class="tdcheck">
+			<td class="valigntop width05em">
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showAlternativeHomepage" property="showAlternativeHomepage" value="true"/>
 			</td>
 			<td>
@@ -333,7 +333,7 @@
 					<th>
 						<bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
 					</th>
-					<td class="tdcheck">
+					<td class="valigntop width05em">
 						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showCurrentExecutionCourses" property="showCurrentExecutionCourses" value="true"/>
 					</td>
 					<td>
