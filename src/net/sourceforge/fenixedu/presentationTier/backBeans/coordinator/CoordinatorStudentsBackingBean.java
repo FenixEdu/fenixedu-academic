@@ -200,7 +200,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
             return false;
         }
 
-        final double arithmeticMean = studentCurricularPlan.getRegistration().getArithmeticMean().doubleValue();
+        final double arithmeticMean = studentCurricularPlan.getRegistration().getArithmeticMean();
 
         final Double minGrade = getMinGrade();
         if (minGrade != null && minGrade.doubleValue() > arithmeticMean) {
