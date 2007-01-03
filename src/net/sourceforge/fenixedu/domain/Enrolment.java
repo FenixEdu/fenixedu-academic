@@ -929,5 +929,12 @@ public class Enrolment extends Enrolment_Base {
 	}
 	
     }
+
+
+    @Override
+    public Double getWeigth() {
+	final Double weigth = super.getWeigth();
+	return weigth == null ? getCurricularCourse().getWeigth() : weigth;
+    }
 	
 }

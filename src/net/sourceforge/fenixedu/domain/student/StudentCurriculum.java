@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.GradeType;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 
@@ -396,12 +397,26 @@ public class StudentCurriculum implements Serializable {
 		add(enrolment);
 	    } else if (entry instanceof EquivalentEnrolmentEntry) {
 		final EquivalentEnrolmentEntry equivalentEnrolmentEntry = (EquivalentEnrolmentEntry) entry;
-		add(equivalentEnrolmentEntry);
+		for (final Entry otherEntry : equivalentEnrolmentEntry.getEntries()) {
+		    add(otherEntry);
+		}
 	    }
 	}
 
 	public void add(final Enrolment enrolment) {
 	    // TODO : do some magin here ...
+	    final IGrade grade = enrolment.getGradeFinal();
+	    if (grade != null) {
+		final Object gradeValue = grade.getGrade();
+		if (grade.getGradeType() == GradeType.GRADETWENTY && gradeValue instanceof Integer) {
+		    final double w = enrolment.getWeigth().doubleValue();
+		    p += w;
+		    final int intGrade = ((Integer) gradeValue).intValue();
+		    pc += w * intGrade;
+		}
+	    } else {
+		System.out.println("Shit dude: enrolment: " + enrolment.getIdInternal() + " has null grade.");
+	    }
 	}
     }
 
@@ -409,6 +424,10 @@ public class StudentCurriculum implements Serializable {
 	final AverageCalculator averageCalculator = new AverageCalculator();
 	averageCalculator.add(getCurriculumEntries(executionYear));
 	return averageCalculator.result();
+    }
+
+    public long calculateRoundedAverage(final ExecutionYear executionYear) {
+	return Math.round(calculateAverage(executionYear));
     }
 
 }
