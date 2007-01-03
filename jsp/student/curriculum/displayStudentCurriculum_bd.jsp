@@ -34,9 +34,9 @@
 		</tr>
 
 		<tr>
-			<th><bean:message key="arithmeticMean" bundle="STUDENT_RESOURCES"/>:</th>
+			<th><bean:message key="average" bundle="STUDENT_RESOURCES"/>:</th>
 			<td>
-				<bean:write name="registration" property="arithmeticMean"/>
+				<bean:write name="registration" property="average"/>
 			</td>
 		</tr>
 

@@ -37,10 +37,10 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	final StringBuilder degreeFinalizationGrade = new StringBuilder();
 	if (degreeFinalizationCertificateRequest.getAverage()) {
-	    final Integer finalArithmeticMean = registration.getFinalArithmeticMean();
+	    final Integer finalAverage = registration.getFinalAverage();
 	    degreeFinalizationGrade.append(" ").append(resourceBundle.getString("documents.registration.final.arithmetic.mean"));
-	    degreeFinalizationGrade.append(" ").append(finalArithmeticMean);
-	    degreeFinalizationGrade.append(" (").append(enumerationBundle.getString(finalArithmeticMean.toString()));
+	    degreeFinalizationGrade.append(" ").append(finalAverage);
+	    degreeFinalizationGrade.append(" (").append(enumerationBundle.getString(finalAverage.toString()));
 	    degreeFinalizationGrade.append(") ").append(resourceBundle.getString("values"));
 	} 
 	parameters.put("degreeFinalizationGrade", degreeFinalizationGrade.toString());

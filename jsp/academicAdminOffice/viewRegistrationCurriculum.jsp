@@ -83,11 +83,17 @@
 		request.setAttribute("curriculumEntries", curriculumEntries);
 		final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(executionYear);
 		request.setAttribute("totalEctsCredits", totalEctsCredits);
-		final double average = registration.getArithmeticMean(executionYear);
+		final double average = registration.getAverage(executionYear);
 		request.setAttribute("average", average);
 		final int curricularYear = studentCurriculum.calculateCurricularYear(executionYear);
 		request.setAttribute("curricularYear", curricularYear);
 	%>
+
+	<p style="padding-top: 1em;">
+		<span class="error0">
+			<bean:message key="following.info.refers.to.begin.of.execution.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</span>
+	</p>
 	
 	<table class="tstyle4 thright thlight">
 		<tr>
@@ -117,12 +123,26 @@
 		</tr>
 		<tr>
 			<th>
-				<bean:message key="arithmeticMean" bundle="STUDENT_RESOURCES"/>
+				<bean:message key="average" bundle="STUDENT_RESOURCES"/>
 			</th>
 			<td>
 				<bean:write name="average"/>
 			</td>
 		</tr>
+		<logic:equal name="registration" property="concluded" value="true">
+			<%
+				final int finalAverage = registration.getFinalAverage();
+				request.setAttribute("finalAverage", finalAverage);
+			%>
+			<tr>
+				<th>
+					<bean:message key="final.average" bundle="STUDENT_RESOURCES"/>
+				</th>
+				<td>
+					<bean:write name="finalAverage"/>
+				</td>
+			</tr>
+		</logic:equal>
 		<tr>
 			<th>
 				<bean:message key="label.curricular.year" bundle="STUDENT_RESOURCES"/>
