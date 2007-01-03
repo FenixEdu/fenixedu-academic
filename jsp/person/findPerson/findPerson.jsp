@@ -54,7 +54,7 @@ function check(e,v){
 
 <table class="search mbottom0">
 	<tr>
-		<td class="leftcolumn width10em"><bean:message key="label.type"/>:</td>
+		<td class="leftcolumn width12em"><bean:message key="label.type"/>:</td>
 		<td class="width35em">			<html:form action="/preparePerson" >
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="preparePerson" />
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.countPage" property="countPage" value="1"/>
@@ -133,7 +133,7 @@ function check(e,v){
 			</tr>
 		</logic:present>
 		<tr>
-			<td class="leftcolumn width10em"><bean:message key="label.nameWord" />:</td>
+			<td class="leftcolumn width12em"><bean:message key="label.nameWord" />:</td>
 			<td class="width35em">
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" name="findPersonForm" property="name" size="50"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>
@@ -183,7 +183,10 @@ function check(e,v){
 			<table class="ppid" cellpadding="0" cellspacing="0">
 				<tr>
 					<td width="70%"> 
-						<strong><bean:write name="personalInfo" property="person.nickname"/><br/><bean:write name="personalInfo" property="nome"/> (<bean:write name="personalInfo" property="username"/>)</strong>
+						<strong>
+							<%--<bean:write name="personalInfo" property="person.nickname"/>--%>
+							<bean:write name="personalInfo" property="nome"/>
+						</strong> (<bean:write name="personalInfo" property="username"/>)
 						<bean:size id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size> 
 						<logic:greaterThan name="mainRolesSize" value="0">
 							<logic:iterate id="role" name="personalInfo" property="mainRoles" indexId="i">
