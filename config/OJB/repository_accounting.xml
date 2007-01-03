@@ -47,8 +47,7 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.Event" table="ACCOUNTING_EVENT">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent" />
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent" />
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent" />	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent" />
 </class-descriptor>
@@ -61,20 +60,28 @@
 	</class-descriptor>
 	
 	<!-- ************************************************************************************************************ -->
-	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent -->
 	<!-- ************************************************************************************************************ -->
-	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent" table="ACCOUNTING_EVENT">
-	
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent" table="ACCOUNTING_EVENT">
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent" />
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent" />	
 	</class-descriptor>
 	
-	<!-- ************************************************************************************************************ -->
-	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent -->
-	<!-- ************************************************************************************************************ -->
-	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent" table="ACCOUNTING_EVENT">
-	
-	</class-descriptor>
-	
-	
+		<!-- ************************************************************************************************************ -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent -->
+		<!-- ************************************************************************************************************ -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent" table="ACCOUNTING_EVENT">
+		
+		</class-descriptor>
+		
+		<!-- ************************************************************************************************************ -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent -->
+		<!-- ************************************************************************************************************ -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent" table="ACCOUNTING_EVENT">
+		
+		</class-descriptor>
+		
+		
 	<!-- ************************************************************************************************************ -->
 	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent -->
 	<!-- ************************************************************************************************************ -->

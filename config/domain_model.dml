@@ -252,23 +252,26 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     DateTime eventStateDate;
     Integer keyEmployeeResponsibleForCancel;
     String cancelJustification;
-	Integer keyAcademicServiceRequest;
 }
 
 	class net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-		    Integer keyCandidacy;
-		}
+	    Integer keyCandidacy;
+	}
 		
 	class net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 		Integer keyRegistration;
 	}
 
-	class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+	class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+		Integer keyAcademicServiceRequest;
 	}
-	
-	class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-	}
-	
+
+		class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
+		}
+		
+		class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
+		}
+		
 	class net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 		Integer keyExecutionYear;
 	}
@@ -8276,9 +8279,9 @@ relation AnnualEventExecutionYear {
 	}
 }
 
-relation EventAcademicServiceRequest {
+relation AcademicServiceRequestEventAcademicServiceRequest {
 	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequest;
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole event;
+	net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent playsRole event;
 }
 
 relation RootDomainObjectReceipt {

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -48,13 +47,7 @@ public class DegreeDiploma extends DegreeDiploma_Base {
     }
 
     @Override
-    public Event getEvent() {
-	return null;
-    }
-
-    @Override
     public ExecutionYear getExecutionYear() {
-	// TODO Auto-generated method stub
 	return null;
     }
 

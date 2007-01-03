@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
-import org.joda.time.DateTime;
-
 public class CertificateRequestEvent extends CertificateRequestEvent_Base {
 
     protected CertificateRequestEvent() {

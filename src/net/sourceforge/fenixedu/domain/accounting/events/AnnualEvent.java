@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -9,7 +7,8 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
+
+import org.joda.time.DateTime;
 
 public abstract class AnnualEvent extends AnnualEvent_Base {
 
@@ -23,7 +22,7 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 
     protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
 	    ExecutionYear executionYear) {
-	super.init(administrativeOffice, eventType, person, (AcademicServiceRequest) null);
+	super.init(administrativeOffice, eventType, person);
 	checkParameters(executionYear);
 	super.setExecutionYear(executionYear);
 
