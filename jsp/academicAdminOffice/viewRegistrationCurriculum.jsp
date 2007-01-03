@@ -115,6 +115,17 @@
 		</tr>
 		<tr>
 			<th>
+				<bean:message key="arithmeticMean" bundle="STUDENT_RESOURCES"/>
+			</th>
+			<td>
+				<bean:write name="registration" property="arithmeticMean"/>
+			</td>
+			<td>
+				<em><bean:message key="info.last.execution.year.arithmetic.mean" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+			</td>
+		</tr>
+		<tr>
+			<th>
 				<bean:message key="label.curricular.year" bundle="STUDENT_RESOURCES"/>
 			</th>
 			<td>
