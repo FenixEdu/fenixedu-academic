@@ -633,10 +633,6 @@
 		<put name="body" value="/teacher/executionCourse/uploadScorm.jsp" />
 	</definition>
 	
-	<definition name="search-scorm-content" extends="execution-course-administration">
-		<put name="body" value="/teacher/executionCourse/searchScormContent.jsp" />
-	</definition>
-
     <definition name="manage-execution-course-organizeItems" extends="execution-course-administration">
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body" value="/teacher/executionCourse/organizeItems.jsp" />

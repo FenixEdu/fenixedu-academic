@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -19,9 +21,11 @@ import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGrou
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemCreationBean.EducationalResourceType;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -69,8 +73,14 @@ public class CreateProjectSubmission extends Service {
         final StudentGroup studentGroup = createProjectSubmissionBean.getStudentGroup();
         final String fileToDeleteExternalId = getFileToDeleteExternalId(project, studentGroup);
         final VirtualPath filePath = getVirtualPath(attends.getDisciplinaExecucao(), project, studentGroup);
+      
+        Collection<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
+        metaData.add(FileSetMetaData.createAuthorMeta(attends.getAluno().getPerson().getNome()));
+        metaData.add(FileSetMetaData.createTitleMeta(filename));
+        metaData.add(new FileSetMetaData("type",null,null,EducationalResourceType.PROJECT_SUBMISSION.toString()));
+        
         final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(filePath,
-                filename, (permittedGroup != null) ? true : false, attends.getAluno().getPerson().getNome(), filename, inputStream);
+                filename, (permittedGroup != null) ? true : false, metaData, inputStream);
 
         final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filename,
                 filename, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor

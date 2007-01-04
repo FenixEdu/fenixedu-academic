@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -20,12 +21,20 @@ public class SearchDSpaceBean implements Serializable {
 	DomainReference<ExecutionPeriod> executionPeriod;
 	List<SearchElement> searchElements;
 	List<EducationalResourceType> educationalResourceTypes;
+	List<DomainReference> results;
+	private int page;
+	private int totalItems;
+	private int numberOfPages;
 	
 	public SearchDSpaceBean() {
 		this.setExecutionYear(null);
 		this.setExecutionPeriod(null);
 		this.searchElements = new ArrayList<SearchElement>();
 		this.educationalResourceTypes = new ArrayList<EducationalResourceType>();
+		this.results = null;
+		this.page=1;
+		this.totalItems=0;
+		this.numberOfPages=1;
 	} 
 	
 	public List<EducationalResourceType> getEducationalResourceTypes() {
@@ -56,6 +65,10 @@ public class SearchDSpaceBean implements Serializable {
 		this.executionYear = new DomainReference<ExecutionYear>(executionYear);
 	}
 	
+	public int getSearchElementsSize() {
+		return this.searchElements.size();
+	}
+	
 	public List<SearchElement> getSearchElements() {
 		return searchElements;
 	}
@@ -68,6 +81,9 @@ public class SearchDSpaceBean implements Serializable {
 		this.searchElements.add(SearchElement.emptySearchElement());
 	}
 	
+	public void addSearchElement(Integer index) {
+		this.searchElements.add(index,SearchElement.emptySearchElement());
+	}
 	public void addSearchElement(SearchElement element) {
 		this.searchElements.add(element);
 	}
@@ -102,6 +118,22 @@ public class SearchDSpaceBean implements Serializable {
 		return criteria;
 	}
 		
+	public void setResults(List<DomainObject> results) {
+		this.results = new ArrayList<DomainReference>();
+		for(DomainObject result : results) {
+			this.results.add(new DomainReference(result));
+		}
+	}
+	
+	public List<DomainObject> getResults() {
+		if(this.results==null) return null;
+		List<DomainObject> objects = new ArrayList<DomainObject> ();
+		for(DomainReference reference : this.results) {
+			objects.add(reference.getObject());
+		}
+		return objects;
+	}
+	
 	public static class SearchElement implements Serializable {
 		private SearchField field;
 		private String queryValue;
@@ -145,6 +177,30 @@ public class SearchDSpaceBean implements Serializable {
 		public void setConjunction(ConjunctionType type) {
 			this.conjunction = type;
 		}
+	}
+
+	public int getNumberOfPages() {
+		return numberOfPages;
+	}
+
+	public void setNumberOfPages(int numberOfPages) {
+		this.numberOfPages = numberOfPages;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getTotalItems() {
+		return totalItems;
+	}
+
+	public void setTotalItems(int totalItems) {
+		this.totalItems = totalItems;
 	}
 
 }

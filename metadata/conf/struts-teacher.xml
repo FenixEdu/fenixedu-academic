@@ -937,11 +937,6 @@
    			<forward name="createScorm" path="create-scorm"/>
    			<forward name="uploadScorm" path="upload-scorm"/>
         </action>
-        <action path="/searchScormContent"
-        		parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SearchScormContentAction">	
-				<forward name="search" path="search-scorm-content"/>
-        </action>
         <action path="/createProgram"
         		parameter="method"
         		name="programForm"

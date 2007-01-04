@@ -30,4 +30,18 @@ public class SearchDSpaceCoursesBean extends SearchDSpaceBean{
 	public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
 		this.executionPeriod = new DomainReference<ExecutionPeriod>(executionPeriod);
 	}
+	
+	@Override
+	public String getSearchElementsAsParameters() {
+		String parameters = super.getSearchElementsAsParameters();
+		ExecutionYear executionYear = getExecutionYear();
+		ExecutionPeriod period = getExecutionPeriod();
+		if(executionYear!=null) {
+			parameters += "&amp;executionYearId=" + getExecutionYear().getIdInternal();
+		}
+		if(period!=null) {
+			parameters += "&amp;executionPeriodId=" + getExecutionPeriod().getIdInternal();
+		}
+		return parameters;
+	}
 }

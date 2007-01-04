@@ -82,7 +82,11 @@
 	<tr>
 		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
 		<td>
-	        <fr:edit name="fileItemCreator" slot="educationalLearningResourceType"/>
+	        <fr:edit name="fileItemCreator" slot="educationalLearningResourceType">
+			<fr:layout>
+				<fr:property name="excludedValues" value="PROJECT_SUBMISSION"/>
+			</fr:layout>
+	        </fr:edit>
 		</td>
 	</tr>
 	<tr>

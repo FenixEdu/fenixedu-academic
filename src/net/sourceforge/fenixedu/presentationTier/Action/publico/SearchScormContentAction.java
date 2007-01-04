@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.teacher;
+package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceCoursesBean;
+import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean.SearchElement;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.SearchDSpaceGeneralAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -21,51 +21,54 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
+import pt.utl.ist.fenix.tools.file.FileSearchCriteria.SearchField;
+import pt.utl.ist.fenix.tools.file.FilesetMetadataQuery.ConjunctionType;
 
 public class SearchScormContentAction extends SearchDSpaceGeneralAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ManageExecutionCourseDA.propageContextIds(request);
-		setAttributeItem(request);
-		return super.execute(mapping, actionForm, request, response);
+	public ActionForward execute(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String executionCourseId = request.getParameter("executionCourseID");
+		ExecutionCourse course = (ExecutionCourse) RootDomainObject.readDomainObjectByOID(ExecutionCourse.class, Integer.valueOf(executionCourseId));
+		request.setAttribute("executionCourse", course);
+		
+		return super.execute(mapping, form, request, response);
 	}
-
-	private void setAttributeItem(HttpServletRequest request) {
-		request.setAttribute("item",RootDomainObject.readDomainObjectByOID(Item.class, Integer.valueOf(request.getParameter("itemID"))));
-	}
-
-	protected ActionForward prepareSearchForExecutionCourse(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response, String forwardTo) throws FenixFilterException,
+	
+	public ActionForward prepareSearchForExecutionCourse(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 	
-		String executionCourseId = request.getParameter("executionCourseId");
+		
+		String executionCourseId = request.getParameter("executionCourseID");
 		if(executionCourseId==null) {
 			return prepareSearch(mapping, form, request, response, "search");
 		}
 		
 			ExecutionCourse course = (ExecutionCourse) RootDomainObject.readDomainObjectByOID(ExecutionCourse.class, Integer.valueOf(executionCourseId));			
 			SearchDSpaceBean bean = createNewBean();
+			bean.addSearchElement(new SearchElement(SearchField.COURSE ,course.getNome(), ConjunctionType.AND));
 			bean.setExecutionYear(course.getExecutionYear());
 			bean.setExecutionPeriod(course.getExecutionPeriod());
-		//	bean.setadd(course.getNome());
+			
 			request.setAttribute("bean", bean);
-			String searchType = request.getParameter("searchType");
-			request.setAttribute("searchType", searchType);
 			
 			return mapping.findForward("search");
 			
 	}
 	
-	public ActionForward changeYear(ActionMapping mapping, ActionForm form,
+	public ActionForward changeTimeStamp(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 		
 		SearchDSpaceCoursesBean bean = (SearchDSpaceCoursesBean) RenderUtils.getViewState("search").getMetaObject().getObject();
-		request.setAttribute("bean", bean);
-		String searchType = request.getParameter("searchType");
-		request.setAttribute("searchType", searchType);
 		RenderUtils.invalidateViewState("executionPeriodField");
+		
+		request.setAttribute("bean", bean);
+		request.setAttribute("numberOfPages",bean.getNumberOfPages());
+		request.setAttribute("page",bean.getPage());
+		
 		return mapping.findForward("search");
 	}
 	
@@ -101,12 +104,11 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
 
 		return super.moveIndex(mapping, form, request, response, "search");
 	}
-	
-	
+		
 	@Override
 	protected VirtualPath getSearchPath(HttpServletRequest request) {
 		
-		SearchDSpaceCoursesBean bean = (SearchDSpaceCoursesBean) RenderUtils.getViewState("search").getMetaObject().getObject();
+		SearchDSpaceCoursesBean bean = (SearchDSpaceCoursesBean) getBean(request);
 		final VirtualPath searchPath = new VirtualPath();
 		searchPath.addNode(new VirtualPathNode("Courses", "Courses"));
 		ExecutionYear executionYear =bean.getExecutionYear(); 
@@ -143,17 +145,4 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
 		return bean;
 	}
 	
-//	@Override
-//	protected void putBeanInRequest(HttpServletRequest request, SearchDSpaceBean bean) {
-//		super.putBeanInRequest(request, bean);
-//		SearchDSpaceCoursesBean courseBean = (SearchDSpaceCoursesBean) bean;
-//		ExecutionYear executionYear = courseBean.getExecutionYear();
-//		if(executionYear!=null) {
-//			request.setAttribute("executionYearId",executionYear.getIdInternal());
-//		}
-//		ExecutionPeriod executionPeriod = courseBean.getExecutionPeriod();
-//		if(executionPeriod!=null) {
-//			request.setAttribute("executionPeriodId",executionPeriod.getIdInternal());
-//		}
-//	}
 }

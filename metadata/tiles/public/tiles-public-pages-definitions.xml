@@ -273,4 +273,9 @@
 	</definition>			
 
 
+	<!--  Dspace Search -->
+	<definition name="search-scorm-content" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/searchScormContent.jsp" />
+	</definition>
+
 </tiles-definitions>

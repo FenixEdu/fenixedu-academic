@@ -73,10 +73,19 @@ encoding="multipart/form-data"
 <table class="tstyle5 thright thlight mtop025">
 
 <tr>
-	<th style="width: 130px;"><span class="required">*</span> <bean:message key="label.displayName" bundle="SITE_RESOURCES"/>:</th>
+	<th style="width: 130px;"><span class="required">*</span> <bean:message key="label.teacher.siteAdministration.uploadFile.fileDisplayName"/>:</th>
 	<td style="width: 410px;"><fr:edit name="bean" id="displayName" slot="displayName"/></td>
 </tr>
-
+	<tr>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.AuthorsName"/>:</th>
+		<td>
+	        <fr:edit name="bean" slot="authorsName">
+	            <fr:layout>
+	                <fr:property name="size" value="40"/>
+	            </fr:layout>
+	        </fr:edit>
+		</td>
+	</tr>
 <tr>
 	<th><span class="required">*</span> <bean:message key="label.file" bundle="SITE_RESOURCES"/>:</th>
 	<td>
@@ -89,7 +98,16 @@ encoding="multipart/form-data"
 		</fr:edit>
 	</td>
 </tr>
-  
+	<tr>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
+		<td>
+	        <fr:edit name="bean" slot="educationalLearningResourceType">
+	        <fr:layout>
+      				<fr:property name="excludedValues" value="PROJECT_SUBMISSION"/>
+	        </fr:layout>
+	        </fr:edit>
+		</td>
+	</tr>  
 <tr>
 	<th><span class="required">*</span> <bean:message key="label.permitions" bundle="SITE_RESOURCES"/>:</th>
 	<td>
@@ -107,12 +125,6 @@ encoding="multipart/form-data"
  
 <p class="mbottom025"><strong><bean:message key="label.generalDescription" bundle="SITE_RESOURCES"/></strong></p>
 <table class="tstyle5 thright thlight mtop025">
-
-<tr>
-	<th style="width: 130px;"><span class="required">*</span> <bean:message key="label.generalTitle" bundle="SITE_RESOURCES"/>:</th>
-	<td style="width: 410px;"><fr:edit name="bean" slot="generalTitle" /></td>
-</tr>
-
 
 <tr>
 	<th><span class="required">*</span> <bean:message key="label.generalCatalog" bundle="SITE_RESOURCES"/>:</th>
@@ -143,7 +155,13 @@ encoding="multipart/form-data"
 
 <tr>
 	<th><span class="required">*</span><bean:message key="label.keywords" bundle="SITE_RESOURCES"/>:</th>
-	<td><fr:edit name="bean" slot="keywords"/></td>
+	<td><fr:edit name="bean" slot="keywords">
+		<fr:layout name="longText">
+				<fr:property name="columns" value="50"/>
+				<fr:property name="row" value="1"/>
+		</fr:layout>
+		</fr:edit>
+	</td>
 </tr>
 
 </table>
@@ -193,7 +211,11 @@ encoding="multipart/form-data"
 
 <tr>
 	<th><bean:message key="label.educationalLearningResourceType" bundle="SITE_RESOURCES"/>:</th>
-	<td><fr:edit name="bean" slot="educationalLearningResourceType"/></td>
+	<td> <fr:edit name="bean" slot="educationalLearningResourceType">
+	        <fr:layout>
+      				<fr:property name="excludedValues" value="PROJECT_SUBMISSION"/>
+	        </fr:layout>
+	        </fr:edit></td>
 </tr>
 
 <tr>
@@ -232,7 +254,13 @@ encoding="multipart/form-data"
 
 <tr>
 	<th><bean:message key="label.rightsDescription" bundle="SITE_RESOURCES"/>:</th>
-	<td><fr:edit name="bean" slot="rightsDescription"/></td>
+	<td><fr:edit name="bean" slot="rightsDescription">
+			<fr:layout name="longText">
+				<fr:property name="columns" value="50"/>
+				<fr:property name="row" value="4"/>
+		</fr:layout>
+		</fr:edit>
+	</td>
 </tr>
 
 

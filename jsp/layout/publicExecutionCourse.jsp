@@ -20,7 +20,8 @@
 
 		<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
 		<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
-		
+
+
 		<tiles:insert attribute="rss" ignore="true" />
 		<tiles:insert attribute="keywords" ignore="true" />
 

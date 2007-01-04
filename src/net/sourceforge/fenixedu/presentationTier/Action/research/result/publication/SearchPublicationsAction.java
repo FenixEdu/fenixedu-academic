@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.result.publication;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
@@ -58,7 +61,7 @@ public class SearchPublicationsAction extends SearchDSpaceGeneralAction {
 	}
 
 	@Override
-	protected void putResearchResultsInRequest(HttpServletRequest request, List<FileDescriptor> searchResults) {
+	protected void putResearchResultsInBean(SearchDSpaceBean bean, List<FileDescriptor> searchResults) {
 		Set<ResearchResult> researchResults = new HashSet<ResearchResult>();
 		for (FileDescriptor descriptor : searchResults) {
 			File file = File.readByExternalStorageIdentification(descriptor.getUniqueId());
@@ -68,7 +71,7 @@ public class SearchPublicationsAction extends SearchDSpaceGeneralAction {
 			}
 			
 		}
-		request.setAttribute("searchResult", researchResults);
+		bean.setResults(new ArrayList<DomainObject>(researchResults));
 	}
 
 }
