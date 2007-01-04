@@ -86,7 +86,7 @@
 							</td>
 							<td class="listClasses">
 								&nbsp;
-								<a href=mailto:<%=candidacy.getEmail()%>>
+								<a href="mailto:<%=candidacy.getEmail()%>">
 									<bean:write name="candidacy" property="email"/>
 								</a>
 							</td> 
