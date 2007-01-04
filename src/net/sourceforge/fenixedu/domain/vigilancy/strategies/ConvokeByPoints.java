@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class ConvokeByPoints extends Strategy {
 
@@ -148,8 +147,8 @@ public class ConvokeByPoints extends Strategy {
 			Vigilant v1 = (Vigilant) o1;
 			Vigilant v2 = (Vigilant) o2;
 			
-			Integer c1 = v1.getVigilancyWithCredits().size();
-			Integer c2 = v2.getVigilancyWithCredits().size();
+			Double c1 = v1.getVigilancyWithCredits().size() + (v1.getActiveConvokesAfterCurrentDate().size() * 0.5);
+			Double c2 = v2.getVigilancyWithCredits().size() + (v2.getActiveConvokesAfterCurrentDate().size() * 0.5);
 			
 			return c1.compareTo(c2);
 			
@@ -165,10 +164,6 @@ public class ConvokeByPoints extends Strategy {
 
 			Double p1 = v1.getPoints();
 			Double p2 = v2.getPoints();
-
-			p1 += v1.getActiveConvokesAfterCurrentDate().size();
-			p2 += v2.getActiveConvokesAfterCurrentDate().size();
-			
 			
 			return p1.compareTo(p2); 
 
