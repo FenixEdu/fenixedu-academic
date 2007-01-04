@@ -36,7 +36,7 @@ public class ExecutionCourseAnnouncementManagement extends AnnouncementManagemen
         request.setAttribute("siteView", siteView);
         return super.execute(mapping, actionForm, request, response);
     }
-
+    
     @Override
     protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
         return rootDomainObject.readExecutionCourseByOID(this.getRequestedExecutionCourseId(request)).getBoard();

@@ -1,12 +1,12 @@
 <%@ page language="java" %>
-<%@page import="org.joda.time.YearMonthDay"%>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/messaging.tld" prefix="messaging" %>
+
+<html:xhtml/>
 
 <h2><bean:message key="messaging.menu.announcements.link" bundle="MESSAGING_RESOURCES"/></h2>
 
@@ -20,17 +20,10 @@ String month = request.getParameter("selectedMonth");
 if (month != null && year!=null)
 {
 %>
-
 <p><em style="background: #fff8dd;"><%= new net.sourceforge.fenixedu.util.Mes(Integer.valueOf(month)).toString()%> de <%=year%></em></p>
-<%
-} else if(request.getRequestURI().contains("teacher")) {
-    YearMonthDay currentDate = new YearMonthDay();
-%>
-	<p><em><%= new net.sourceforge.fenixedu.util.Mes(Integer.valueOf(currentDate.getMonthOfYear())).toString()%> de <%= currentDate.getYear() %></em></p>
 <%
 }
 %>
-
 
 <logic:present name="announcements">
 
@@ -51,13 +44,15 @@ if (month != null && year!=null)
 				<!--  <span id="10367">-->
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar"/>
 					<logic:notEmpty name="announcement" property="publicationBegin">
-						Publicado em 
+						<bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.published.in" /> 
 							<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
 						<%
 						if (announcement.getAnnouncementBoard().hasWriter(person)) {
 						%>
 							<logic:notEmpty name="announcement" property="publicationEnd">
-							 	at� 
+								&nbsp;
+								<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.until" />
+								&nbsp;
 								<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
 							</logic:notEmpty>
 						<%
@@ -66,17 +61,19 @@ if (month != null && year!=null)
 					</logic:notEmpty>
 						
 					<logic:empty name="announcement" property="publicationBegin">
-						Publicado em 
+						<bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.published.in" /> 
 						<fr:view name="announcement" property="creationDate" layout="no-time"/>
 					</logic:empty>
 				</span>
 			</p>
 
-		<%-- T�tulo --%>
+		<%-- Title --%>
 			<logic:equal name="announcement" property="visible" value="true">
 				<h3 class="mvert025">
 				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
-					<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></span>
+					<span id="<%="ID_" + announcement.getIdInternal().toString()%>">
+						<fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
+					</span>
 				</html:link> 	 	
 				</h3>
 			</logic:equal>
@@ -85,10 +82,12 @@ if (month != null && year!=null)
 				<p class="mvert025">
 				<h3 class="mvert0 dinline">
 				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
-					<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></span>
+					<span id="<%="ID_" + announcement.getIdInternal().toString()%>">
+						<fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
+					</span>
 				</html:link> 	 	
 				</h3>
-				<em class="warning1">Invis�vel</em>
+				<em class="warning1"><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.invisible" /></em>
 				</p>
 			</logic:equal>
 
@@ -100,7 +99,7 @@ if (month != null && year!=null)
 				 %>				 
 				 	<fr:view name="announcement" property="excerpt"/>
 				 	 <html:link action="<%=contextPrefix + "method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
-						 Continuar a ler...
+				 	 	 <bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.more.information" /> 
 					 </html:link> 
 				 <%				 		
 				 	}
@@ -124,60 +123,38 @@ if (month != null && year!=null)
 			<em class="smalltxt greytxt2" >
 
 		<%-- Board e RSS --%>
-				Canal: 
+				<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board" />: 
 				<html:link action="<%=contextPrefix + extraParameters +"&amp;method=viewAnnouncements&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "#" + announcement.getIdInternal()%>">
 					<fr:view name="announcement" property="announcementBoard.name" type="java.lang.String"/>
 				</html:link>
 				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
 
-		<%-- Gerir --%>
-			<%
-				if (!request.getRequestURI().contains("public") && announcement.getAnnouncementBoard().hasManager(person)) {
-			%>
-				Permiss�es:
-				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=prepareEditAnnouncementBoard" + "&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "&amp;tabularVersion=true" %>">
-				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.manage.link"/>
-				</html:link>
-				 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
-			<%	
-				} else if (!request.getRequestURI().contains("public") && announcement.getAnnouncementBoard().hasWriter(person)) {
-			%>
-				
-				Permiss�es:
-				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=viewAnnouncements" + "&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() %>">
-				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.write.link"/>
-				</html:link>
-				 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
-			<%	
-				}
-			%>		
-
 		<%-- ReferedSubject Date --%>
 		
 			<logic:notEmpty name="announcement" property="referedSubjectBegin">
 				<logic:notEmpty name="announcement" property="referedSubjectEnd">
-			 	 	Evento ocorre de 
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.event.occurs.from" />
 			 		<fr:view name="announcement" property="referedSubjectBegin" type="org.joda.time.DateTime" layout="dataDependent"/>
-			 	 	a 
+			 		 <bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.event.occurs.to" /> 
 			 	 	<fr:view name="announcement" property="referedSubjectEnd" type="org.joda.time.DateTime" layout="dataDependent"/>
 				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
 				</logic:notEmpty>
 						 
 				<logic:empty name="announcement" property="referedSubjectEnd">
-					Evento ocorre a <fr:view name="announcement" property="referedSubjectBegin" type="org.joda.time.DateTime" layout="dataDependent"/>
-				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
+				  <bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.event.occurs.in" /> <fr:view name="announcement" property="referedSubjectBegin" type="org.joda.time.DateTime" layout="dataDependent"/>
+				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
 				</logic:empty>
 			</logic:notEmpty>
 		
 		<%-- Autor --%>
 				<logic:notEmpty name="announcement" property="author">
-					 	Autor: <fr:view name="announcement" property="author"/>
+					  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.author" />: <fr:view name="announcement" property="author"/>
 					  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
 				</logic:notEmpty>
 
 		<%-- Local --%> 
 				 <logic:notEmpty name="announcement" property="place">
-				 	Local: <fr:view name="announcement" property="place"/> - 
+				 	<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.place" />: <fr:view name="announcement" property="place"/> <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
 					  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
 				 </logic:notEmpty>
 				 
@@ -186,21 +163,19 @@ if (month != null && year!=null)
 				if (announcement.wasModifiedSinceCreation())
 				{
 				%>
-					Modificado em:
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.modified.in" /> 
 					<fr:view name="announcement" property="lastModification" type="org.joda.time.DateTime" layout="no-time"/>
 					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
 				<%
 				}
 				%>
-		<%-- Data de Cria��o --%>
+		<%-- CreationDate --%>
 				<%
 				if (announcement.getAnnouncementBoard().hasWriter(person)) {
 				
 				%>
-					Data de cria��o:
-					<span id="<%="ID_" + announcement.getIdInternal().toString()%>">
-						<fr:view name="announcement" property="creationDate" layout="no-time"/>
-					</span>
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.creationDate" />: 
+					<fr:view name="announcement" property="creationDate" layout="no-time"/>					
 				<%
 				}
 				%>
@@ -260,7 +235,6 @@ if (month != null && year!=null)
 		final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
 	    final String module = org.apache.struts.util.ModuleUtils.getInstance().getModuleConfig(request).getPrefix();
 		%>
-
 
 		<div class="aarchives">
 			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + context + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getIdInternal() + "&amp;" + extraParameters + "&amp;" %>"/>	

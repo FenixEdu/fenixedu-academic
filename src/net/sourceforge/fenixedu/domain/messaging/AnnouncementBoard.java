@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.domain.messaging;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.ExpressionGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.Predicate;
@@ -141,9 +141,9 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	setCreationDate(new DateTime());
     }
 
-    public Collection<Announcement> getActiveAnnouncements() {
-	final Collection<Announcement> activeAnnouncements = new ArrayList<Announcement>();
-	for (final Announcement announcement : this.getAnnouncements()) {
+    public List<Announcement> getActiveAnnouncements() {
+	final List<Announcement> activeAnnouncements = new ArrayList<Announcement>();
+	for (final Announcement announcement : getAnnouncementsSet()) {
 	    if (announcement.isActive() && announcement.getVisible()) {
 		activeAnnouncements.add(announcement);
 	    }
@@ -211,6 +211,10 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     
     public boolean hasManager(Person person) {
 	return (isPublicToManage() || getManagers().isMember(person));
+    }
+    
+    public boolean hasReaderOrWriter(Person person) {
+	return hasReader(person) || hasWriter(person);
     }
     
     abstract public String getFullName();

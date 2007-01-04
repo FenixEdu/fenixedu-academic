@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,30 +32,9 @@ import com.thoughtworks.xstream.XStream;
  */
 public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 
-    protected Integer getAnnouncementBoardId(HttpServletRequest request) {
-	return request.getParameter("announcementBoardId") == null ? null : Integer.valueOf(request
-		.getParameter("announcementBoardId"));
-    }
-
-    protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
-	return rootDomainObject.readAnnouncementBoardByOID(this.getAnnouncementBoardId(request));
-    }
-
-    protected String getRequestedLanguageString(HttpServletRequest request) {
-	return request.getParameter("language");
-    }
-
-    protected Language getRequestedLanguage(HttpServletRequest request) {
-	if (this.getRequestedLanguageString(request) == null) {
-	    return Language.pt;
-	} else {
-	    return Language.valueOf(getRequestedLanguageString(request));
-	}
-    }
-
     public ActionForward getAnnouncements(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+
 	String responseCode = SERVICE_NOT_EXECUTED;
 	String responseString = String.valueOf("");
 
@@ -75,15 +53,30 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 
 	return null;
     }
+    
+    protected Integer getAnnouncementBoardId(final HttpServletRequest request) {
+	return getRequestParameterAsInteger(request, "announcementBoardId");
+    }
+
+    protected AnnouncementBoard getRequestedAnnouncementBoard(final HttpServletRequest request) {
+	return rootDomainObject.readAnnouncementBoardByOID(getAnnouncementBoardId(request));
+    }
+
+    protected String getRequestedLanguageString(HttpServletRequest request) {
+	return request.getParameter("language");
+    }
+    
+    protected Language getRequestedLanguage(HttpServletRequest request) {
+	final String language = getRequestedLanguageString(request);
+	return (language == null) ? Language.pt : Language.valueOf(getRequestedLanguageString(request)); 
+    }
 
     private Integer getSelectedMonth(HttpServletRequest request) {
-	return request.getParameter("selectedMonth") == null ? null : Integer.valueOf(request
-		.getParameter("selectedMonth"));
+	return getRequestParameterAsInteger(request, "selectedMonth");
     }
 
     private Integer getSelectedYear(HttpServletRequest request) {
-	return request.getParameter("selectedYear") == null ? null : Integer.valueOf(request
-		.getParameter("selectedYear"));
+	return getRequestParameterAsInteger(request, "selectedYear");
     }
 
     private static final Comparator<Announcement> EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_NEWEST_FIRST = new Comparator<Announcement>() {
@@ -96,54 +89,26 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 	}
     };
 
-    private Collection<AnnouncementDTO> buildDTOCollection(List<Announcement> announcements,
-	    HttpServletRequest request) throws ParseException {
+    private Collection<AnnouncementDTO> buildDTOCollection(final List<Announcement> announcements, final HttpServletRequest request) {
 
 	Collections.sort(announcements, EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_NEWEST_FIRST);
 
+	final Language language = getRequestedLanguage(request);
+	final Integer selectedYear = getSelectedYear(request);
+	final Integer selectedMonth = getSelectedMonth(request);
+
 	final Collection<AnnouncementDTO> result = new ArrayList<AnnouncementDTO>(announcements.size());
-
-	final Language language = this.getRequestedLanguage(request);
-	final String dateFormat = "dd/MM/yyyy HH:mm";
-	final Integer selectedYear = this.getSelectedYear(request);
-	final Integer selectedMonth = this.getSelectedMonth(request);
-
 	for (final Announcement announcement : announcements) {
-
-	    if (selectedYear == null || selectedMonth == null || (announcement.isActiveIn(selectedMonth, selectedYear))) {
-
-		final AnnouncementDTO dto = new AnnouncementDTO();
+	    
+	    if (selectedYear == null || selectedMonth == null || (announcement.isActiveIn(selectedMonth.intValue(), selectedYear.intValue()))) {
 		
-		dto.setCreationDate(announcement.getCreationDate().toString(dateFormat));
-		dto.setLastModification(announcement.getLastModification().toString(dateFormat));
-		
-		dto.setReferedSubjectBegin(announcement.getReferedSubjectBegin() == null ? null : announcement.getReferedSubjectBegin().toString(dateFormat));
-		dto.setReferedSubjectEnd(announcement.getReferedSubjectEnd() == null ? null : announcement.getReferedSubjectEnd().toString(dateFormat));
-		dto.setPublicationBegin(announcement.getPublicationBegin() == null ? null : announcement.getPublicationBegin().toString(dateFormat));
-		dto.setPublicationEnd(announcement.getPublicationEnd() == null ? null : announcement.getPublicationEnd().toString(dateFormat));
-		
-		dto.setAuthor(announcement.getAuthor());
-		dto.setAuthorEmail(announcement.getAuthorEmail());
-		
-		dto.setSubject(announcement.getSubject() == null ? null : announcement.getSubject().hasLanguage(language) ? announcement.getSubject().getContent(language) : announcement.getSubject().getContent());
-		dto.setBody(announcement.getBody().hasLanguage(language) ? announcement.getBody().getContent(language) : announcement.getBody().getContent());
-		dto.setExcerpt(announcement.getExcerpt() == null ? null : announcement.getExcerpt().hasLanguage(language) ? announcement.getExcerpt().getContent(language) : announcement.getExcerpt().getContent(language));
-		dto.setKeywords(announcement.getKeywords() == null ? null : announcement.getKeywords().hasLanguage(language) ? announcement.getKeywords().getContent(language) : announcement.getKeywords().getContent());
-		
-		dto.setPlace(announcement.getPlace());
-		
-		dto.setVisible(announcement.getVisible().toString());
-		dto.setId(announcement.getIdInternal().toString());
-		
-		result.add(dto);
+		result.add(new AnnouncementDTO(announcement, language));
 	    }
 	}
-
 	return result;
     }
-    
 
     private String buildInfo(Collection announcements) {
-        return new XStream().toXML(announcements);
+	return new XStream().toXML(announcements);
     }
 }

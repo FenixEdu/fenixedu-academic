@@ -1,9 +1,11 @@
 <%@ page language="java" %>
+
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+<html:xhtml/>
 
 <em><bean:message key="label.manageChannels" bundle="MESSAGING_RESOURCES"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.add.label"/></h2>
@@ -15,23 +17,23 @@
 <bean:define id="extraParameters" name="extraParameters" />
 <bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
 <bean:define id="announcementBoard" name="announcementBoard"/>
+
 <%							
 	int indexOfLastSlash = contextPrefix.lastIndexOf("/");
 	int indexOfDot = contextPrefix.lastIndexOf(".");
 	String prefix = contextPrefix.substring(0,indexOfLastSlash+1);
 	String suffix = contextPrefix.substring(indexOfDot,contextPrefix.length());
 %>
-
-<bean:define id="action"><%= "method=prepareEditAnnouncementBoard&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
+<bean:define id="method" name="returnMethod" />
+<bean:define id="action"><%= "method=" + method + "&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
 
 <fr:form action="<%=  contextPrefix + action %>">
 
-<h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.add.label"/></h2>
 <p class="mtop2 mbottom025"><strong><bean:message key="messaging.annoucenment.add.label" bundle="MESSAGING_RESOURCES"/>:</strong></p>
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
-<%-- T�tulo --%>
+<%-- Title --%>
 	<tr>
 		<th>
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
@@ -67,7 +69,7 @@
 			<span class="error0"><fr:message for="announcement-body-validated"/></span>
 		</td>
 	</tr>
-<%-- Vis�vel --%>
+<%-- Visible --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:
@@ -142,7 +144,7 @@
 		</td>
 	</tr>
 
-<%-- In�cio do Evento --%>
+<%-- EventBeginDate --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
@@ -153,7 +155,7 @@
 		</td>
 	</tr>
 
-<%-- Fim do Evento --%>
+<%-- EventEndDate --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectEnd.label"/>:
@@ -180,7 +182,7 @@
 
 
 
-<%-- An�ncio dispon�vel apartir... --%>
+<%-- PublicationBegin --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:
@@ -191,7 +193,7 @@
 		</td>
 	</tr>
 
-<%-- An�ncio dispon�vel at�... --%>
+<%-- PublicationEnd --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.label"/>:

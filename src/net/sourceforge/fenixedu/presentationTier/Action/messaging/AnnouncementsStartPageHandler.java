@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +23,6 @@ import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard.AnnouncementPresentationBean;
 import net.sourceforge.fenixedu.util.PeriodState;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -64,16 +62,15 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
     }
 
     private List<AnnouncementBoard> getSortedBookmarkedBoards(HttpServletRequest request) {
-	final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>();
-	result.addAll(getLoggedPerson(request).getBookmarkedBoards());
-	Collections.sort(result, new BeanComparator("name"));
+	final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>(getLoggedPerson(request).getBookmarkedBoards());
+	Collections.sort(result, AnnouncementBoard.BY_NAME);
 	return result;
     }
 
     private Collection<AnnouncementBoard> getCurrentExecutionCoursesAnnouncementBoards(HttpServletRequest request) {
 	final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>(getLoggedPerson(request)
 		.getCurrentExecutionCoursesAnnouncementBoards());
-	Collections.sort(result, new BeanComparator("name"));
+	Collections.sort(result, AnnouncementBoard.BY_NAME);
 	return result;
     }
 
@@ -135,24 +132,36 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         }
         return startDate;
     }
-
+    
     private Collection<Announcement> getAnnouncementsToShow(HttpServletRequest request, ActionForm actionForm) {
+	
 	final AnnouncementsStartPageForm form = (AnnouncementsStartPageForm) actionForm;
 
-        final AnnouncementPresentationBean announcementPresentationBean
-                = new AnnouncementPresentationBean(form.getHowManyAnnouncementsToShow(), Announcement.NEWEST_FIRST);
+        final AnnouncementPresentationBean announcementPresentationBean = new AnnouncementPresentationBean(
+		form.getHowManyAnnouncementsToShow(), Announcement.NEWEST_FIRST);
 
 	if (form.getBoardType().equals("BOOKMARKED")) {
-	    for (final AnnouncementBoard board : getLoggedPerson(request).getBookmarkedBoards()) {
-		addBoardAnnouncements(request, board, announcementPresentationBean);
-	    }
-	} else if (form.getBoardType().equals("INSTITUTIONAL")) {
-	    for (final AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoardsSet()) {
-		addBoardAnnouncements(request, board, announcementPresentationBean);
-	    }
+	    getBookmarkedAnnouncements(request, announcementPresentationBean);
+	} 
+	
+	if (form.getBoardType().equals("INSTITUTIONAL") || announcementPresentationBean.isEmpty()) {
+	    getInstitutionalAnnouncements(request, announcementPresentationBean);
+	    form.setBoardType("INSTITUTIONAL"); // because bean could be empty, must set this value
 	}
 
         return announcementPresentationBean;
+    }
+
+    private void getInstitutionalAnnouncements(HttpServletRequest request, final AnnouncementPresentationBean announcementPresentationBean) {
+	for (final AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoardsSet()) {
+	    addBoardAnnouncements(request, board, announcementPresentationBean);
+	}
+    }
+
+    private void getBookmarkedAnnouncements(HttpServletRequest request, final AnnouncementPresentationBean announcementPresentationBean) {
+	for (final AnnouncementBoard board : getLoggedPerson(request).getBookmarkedBoards()) {
+	    addBoardAnnouncements(request, board, announcementPresentationBean);
+	}
     }
 
     private void addBoardAnnouncements(HttpServletRequest request, final AnnouncementBoard board,
@@ -206,8 +215,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         Collection<ExecutionCourseAnnouncementBoard> executionCourseAnnouncementBoards = new TreeSet<ExecutionCourseAnnouncementBoard>(ExecutionCourseAnnouncementBoard.COMPARE_BY_EXECUTION_PERIOD_AND_NAME);
 
         for (final AnnouncementBoard board : rootDomainObject.getAnnouncementBoards()) {
-            if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request)) ) {
-        	
+            if (board.hasReaderOrWriter(getLoggedPerson(request))) {
                 if (board instanceof UnitAnnouncementBoard) {
                     unitAnnouncementBoards.add((UnitAnnouncementBoard) board);
 
@@ -308,6 +316,13 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
     private String getReturnMethod(HttpServletRequest request) {
 	return (request.getAttribute("returnMethod") != null) ? request.getAttribute("returnMethod")
 		.toString() : request.getParameter("returnMethod");
+    }
+    
+    @Override
+    public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	request.setAttribute("returnMethod", "viewAnnouncements");
+        return super.addAnnouncement(mapping, form, request, response);
     }
 
 }

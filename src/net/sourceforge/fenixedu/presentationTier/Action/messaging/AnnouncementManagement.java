@@ -5,6 +5,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -128,12 +130,12 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
-	if (board == null)
+	if (board == null) {
 	    return this.start(mapping, form, request, response);
-	if (board.getReaders() != null && !board.getReaders().isMember(getLoggedPerson(request))) {
+	}
+	if (! board.hasReader(getLoggedPerson(request))) {
 	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
-		    "error.not.allowed.to.read.board"));
+	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.read.board"));
 	    saveErrors(request, actionMessages);
 	    return this.start(mapping, form, request, response);
 	}
@@ -150,20 +152,32 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return archive;
     }
 
-    private Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board,
-	    HttpServletRequest request) {
-	Collection<Announcement> announcements = board.hasWriter(getLoggedPerson(request)) ? board
-		.getAnnouncements() : board.getActiveAnnouncements();
-	Collection<Announcement> thisMonthAnnouncements = new ArrayList<Announcement>();
-
-	DateTime now = new DateTime();
-	for (Announcement announcement : announcements) {
-	    if (announcement.getCreationDate().getMonthOfYear() == now.getMonthOfYear()
-		    && announcement.getCreationDate().getYear() == now.getYear())
-		thisMonthAnnouncements.add(announcement);
+    private Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
+	
+	final List<Announcement> announcements = board.hasWriter(getLoggedPerson(request)) ? 
+		new ArrayList<Announcement>(board.getAnnouncements()) : board.getActiveAnnouncements();
+		
+	List<Announcement> thisMonthAnnouncements = getThisMonthAnnouncements(announcements);
+	if (thisMonthAnnouncements.isEmpty()) {
+	    thisMonthAnnouncements = getLastSixAnnouncements(announcements);
 	}
-
+	Collections.sort(thisMonthAnnouncements, Announcement.NEWEST_FIRST);
 	return thisMonthAnnouncements;
+    }
+    
+    private List<Announcement> getLastSixAnnouncements(List<Announcement> announcements) {
+	return announcements.subList(0, Math.min(6, announcements.size()));
+    }
+
+    private List<Announcement> getThisMonthAnnouncements(Collection<Announcement> announcements) {
+	final DateTime now = new DateTime();
+	final List<Announcement> result = new ArrayList<Announcement>();
+	for (final Announcement announcement : announcements) {
+	    if (announcement.hasCreationDateFor(now.getYear(), now.getMonthOfYear())) {
+		result.add(announcement);
+	    }
+	}
+	return result;
     }
 
     public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form,

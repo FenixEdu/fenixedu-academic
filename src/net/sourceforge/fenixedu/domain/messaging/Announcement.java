@@ -138,4 +138,8 @@ public class Announcement extends Announcement_Base {
 
         return result;
     }
+
+    public boolean hasCreationDateFor(int year, int monthOfYear) {
+	return getCreationDate().getYear() == year && getCreationDate().getMonthOfYear() == monthOfYear;
+    }
 }

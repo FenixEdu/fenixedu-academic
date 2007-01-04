@@ -1,12 +1,12 @@
 <%@ page language="java" %>
-<%@page import="org.joda.time.YearMonthDay"%>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/messaging.tld" prefix="messaging" %>
+
+<html:xhtml/>
 
 <%
 net.sourceforge.fenixedu.domain.Person person = (net.sourceforge.fenixedu.domain.Person) request.getAttribute("person");
@@ -18,13 +18,7 @@ String month = request.getParameter("selectedMonth");
 if (month != null && year!=null)
 {
 %>
-
 <p><em style="background: #fff8dd;"><%= new net.sourceforge.fenixedu.util.Mes(Integer.valueOf(month)).toString()%> de <%=year%></em></p>
-<%
-} else if (request.getRequestURI().contains("teacher")) {
-    YearMonthDay currentDate = new YearMonthDay();
-%>
-	<p><em><%= new net.sourceforge.fenixedu.util.Mes(Integer.valueOf(currentDate.getMonthOfYear())).toString()%> de <%= currentDate.getYear() %></em></p>
 <%
 }
 %>
@@ -40,7 +34,6 @@ if (month != null && year!=null)
 		<%-- Event Date OR Publication Date --%>
 			<p class="mvert025 smalltxt greytxt2">
 			<span>
-<!--  				<span id="10367">-->
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar"/>
 					<logic:notEmpty name="announcement" property="publicationBegin">
 						Publicado em 
@@ -49,7 +42,7 @@ if (month != null && year!=null)
 						if (announcement.getAnnouncementBoard().hasWriter(person)) {
 						%>
 							<logic:notEmpty name="announcement" property="publicationEnd">
-							 	at� 
+							 	<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.until" /> 
 								<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
 							</logic:notEmpty>
 						<%
@@ -64,7 +57,7 @@ if (month != null && year!=null)
 				</span>
 			</p>
 
-		<%-- T�tulo --%>
+		<%-- Title --%>
 			<logic:equal name="announcement" property="visible" value="true">
 				<h3 class="mtop0 mbottom025">
 				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
@@ -80,7 +73,7 @@ if (month != null && year!=null)
 					<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
-				<em class="warning1">Invis�vel</em>
+				<em class="warning1"><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.invisible" /></em>
 				</p>
 			</logic:equal>
 
@@ -195,7 +188,7 @@ if (month != null && year!=null)
 				<%
 				}
 				%>
-		<%-- Data de Cria��o --%>
+		<%-- CreationDate --%>
 				<%
 				if (announcement.getAnnouncementBoard().hasWriter(person)) {
 				
@@ -209,8 +202,6 @@ if (month != null && year!=null)
 				%>
 				</em>
 			</p>
-			
-			
 			
 			</div>
 			</logic:iterate>
@@ -232,8 +223,6 @@ if (month != null && year!=null)
 		final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
 	    final String module = org.apache.struts.util.ModuleUtils.getInstance().getModuleConfig(request).getPrefix();
 		%>
-
-
 
 		<div class="aarchives">
 			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + context + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getIdInternal() + "&amp;" + extraParameters + "&amp;" %>"/>	

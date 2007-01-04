@@ -7,6 +7,7 @@
 
 <logic:present name="currentExecutionCoursesAnnouncementBoards">	
 	<logic:notEmpty name="currentExecutionCoursesAnnouncementBoards">
+	
 		<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 		<bean:define id="currentExecutionCoursesAnnouncementBoards" name="currentExecutionCoursesAnnouncementBoards" type="java.util.Collection<net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard>"/>
 		<bean:define id="extraParameters" name="extraParameters" />
@@ -23,22 +24,19 @@
 			boolean canManageAtLeastOneBoard = false;
 			boolean atLeastOneBoardIsPublic = false;
 			
-			for(net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard announcementBoard: currentExecutionCoursesAnnouncementBoards)
-			{
-			if (announcementBoard.getReaders() == null)
-				{
+			for(net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard announcementBoard: currentExecutionCoursesAnnouncementBoards) {
+				if (announcementBoard.getReaders() == null) {
 					atLeastOneBoardIsPublic = true;
 					break;
 				}
 			}
-			for(net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard announcementBoard: currentExecutionCoursesAnnouncementBoards)
-			{
-				if (announcementBoard.getManagers() == null || announcementBoard.getManagers().isMember(person))
-				{
+			
+			for(net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard announcementBoard: currentExecutionCoursesAnnouncementBoards) {
+				if (announcementBoard.hasManager(person)) {
 					canManageAtLeastOneBoard = true;
 					break;
 				}
-			}		
+			}
 	
 		%>
 	
@@ -78,24 +76,18 @@
 				%>			
 			</tr>
 			<logic:iterate name="currentExecutionCoursesAnnouncementBoards" id="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
-				<%
-					boolean ableToRead = announcementBoard.getReaders() == null || announcementBoard.getReaders().isMember(person);
-				%>
+
 				<tr>
 					<td style="text-align: left;">
 					<%
-						if (ableToRead)
+						if (announcementBoard.hasReader(person))
 						{
 						%>
 							<html:link title="<%= announcementBoard.getQualifiedName()%>" page="<%= contextPrefix + "method=viewAnnouncements" +"&amp;" +extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal()%>">
 								<bean:write name="announcementBoard" property="name"/>
 							</html:link>
 						<%
-						}					
-						%>
-						<%
-						if (!ableToRead)
-						{
+						} else {
 						%>
 							<bean:write name="announcementBoard" property="name"/>
 						<%
@@ -134,7 +126,7 @@
 					}
 					%>
 					<%
-						if (announcementBoard.getManagers() == null || announcementBoard.getManagers().isMember(person))
+						if (announcementBoard.hasManager(person))
 						{
 						%>
 							<td class="acenter">

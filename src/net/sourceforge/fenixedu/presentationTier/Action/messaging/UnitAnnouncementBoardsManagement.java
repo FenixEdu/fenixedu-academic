@@ -26,6 +26,12 @@ import org.apache.struts.action.ActionMessages;
 public class UnitAnnouncementBoardsManagement
 	extends
 	net.sourceforge.fenixedu.presentationTier.Action.manager.messaging.announcements.UnitAnnouncementBoardsManagement {
+    
+    @Override
+    public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	request.setAttribute("returnMethod", "prepareEditAnnouncementBoard");
+        return super.addAnnouncement(mapping, form, request, response);
+    }
 
     @Override
     public ActionForward deleteAnnouncementBoard(ActionMapping mapping, ActionForm actionForm,
