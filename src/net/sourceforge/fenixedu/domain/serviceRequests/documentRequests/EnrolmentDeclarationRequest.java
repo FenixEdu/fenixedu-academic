@@ -32,7 +32,7 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
 
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         if (!getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {
-            throw new DomainException("error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
+            throw new DomainException("EnrolmentDeclarationRequest.no.enrolments.for.registration.in.given.executionYear");
         }
         super.setExecutionYear(currentExecutionYear);
     }

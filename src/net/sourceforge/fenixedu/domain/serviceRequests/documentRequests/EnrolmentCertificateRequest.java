@@ -52,7 +52,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
 	} else if (!getRegistration().hasAnyEnrolmentsIn(executionYear)) {
 	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
+		    "EnrolmentCertificateRequest.no.enrolments.for.registration.in.given.executionYear");
 	}
     }
 
