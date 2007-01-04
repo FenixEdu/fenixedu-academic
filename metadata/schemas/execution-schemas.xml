@@ -4,6 +4,9 @@
 	<slot name="beginDateYearMonthDay" bundle="MANAGER_RESOURCES" key="label.date.begin"/>
 	<slot name="endDateYearMonthDay" bundle="MANAGER_RESOURCES" key="label.date.end"/>
 </schema>
+<schema name="net.sourceforge.fenixedu.domain.ExecutionYear.view" type="net.sourceforge.fenixedu.domain.ExecutionYear">
+	<slot name="year" key="executionYear"/>
+</schema>
 <schema name="net.sourceforge.fenixedu.domain.ExecutionDegree.annotation" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
 	<slot name="anotation"/>
 </schema>
