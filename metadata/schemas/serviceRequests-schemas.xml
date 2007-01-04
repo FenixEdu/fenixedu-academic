@@ -5,7 +5,11 @@
 	<slot name="campus.name" key="campus" />
 	<slot name="serviceRequestNumber"  />
 	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
-	<slot name="executionYear.year" key="label.serviceRequests.documentRequests.executionYear"/>
+	<slot name="executionYear" layout="null-as-label">
+        <property name="label" value="-"/>
+        <property name="subLayout" value="values"/>
+        <property name="subSchema" value="net.sourceforge.fenixedu.domain.ExecutionYear.view"/>
+	</slot>
 </schema>
 
 <schema name="AcademicServiceRequest.registration"  type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
