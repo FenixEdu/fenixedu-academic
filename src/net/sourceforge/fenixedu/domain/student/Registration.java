@@ -1525,7 +1525,7 @@ public class Registration extends Registration_Base {
 	    if ((academicServiceRequestSituationType == null && academicServiceRequest.isNewRequest())
 		    || academicServiceRequest.getAcademicServiceRequestSituationType() == academicServiceRequestSituationType) {
 		
-		result.add((DocumentRequest) academicServiceRequest);
+		result.add(academicServiceRequest);
 	    }
 	}
 
