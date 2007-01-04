@@ -17,6 +17,7 @@ public abstract class RSSAction extends InformaRSSAction {
     @Override
     protected ChannelIF getRSSChannel(final HttpServletRequest request) throws Exception {
         final ChannelBuilder builder = new ChannelBuilder();
+        
         final ChannelIF channel = builder.createChannel(getFeedTitle(request));
         channel.setDescription(getFeedDescription(request));
         channel.setLocation(new URL(getFeedLink(request)));
@@ -28,7 +29,7 @@ public abstract class RSSAction extends InformaRSSAction {
             item.setCreator(syndEntry.getAuthor());
             item.setDate(syndEntry.getUpdatedDate());
             item.setFound(syndEntry.getPublishedDate());
-            item.setLink(new URL(syndEntry.getLink()));
+            //item.setLink(new URL(syndEntry.getLink()));
             channel.addItem(item);
         }
 

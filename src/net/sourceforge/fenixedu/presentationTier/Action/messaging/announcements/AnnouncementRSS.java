@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,52 +45,28 @@ public class AnnouncementRSS extends RSSAction {
     }
 
     private String getAuthor(Announcement announcement) {
-        final Person person = announcement.getCreator();
-        final String name;
-        final String email;
-        if (person != null) {
-            name = person.getNickname();
-            email = person.getEmail();
-        } else {
-            name = announcement.getAuthor();
-            email = announcement.getAuthorEmail();
-        }
-        return autherString(name, email);
-    }
-
-    private String autherString(final String name, final String email) {
-        if (name == null) {
-            return "";
-        }
-        final StringBuffer buffer = new StringBuffer();
-//        if (email != null && !email.equals("")) {
-//            buffer.append("<a href=\"mailto:");
-//            buffer.append(email);
-//            buffer.append("\">");
-//        }
-        buffer.append(name);
-//        if (email != null && !email.equals("")) {
-//            buffer.append("</a>");
-//        }
-        return buffer.toString();
+	final Person person = announcement.getCreator();
+	return (person != null) ? person.getNickname() : announcement.getAuthor(); 
     }
 
     @Override
     protected List<SyndEntry> getFeedEntries(HttpServletRequest request) throws Exception {
 
-        List<SyndEntry> entries = new ArrayList<SyndEntry>();
+        final List<SyndEntry> entries = new ArrayList<SyndEntry>();
 
-        AnnouncementBoard board = this.getSelectedBoard(request);
-
-        if (board.getReaders() != null)
-        {
+        final AnnouncementBoard board = this.getSelectedBoard(request);
+        if (board.getReaders() != null) {
             throw new FenixActionException("board.does.not.have.rss");
         }
         
-        for (Announcement announcement : board.getActiveAnnouncements()) {
+        final List<Announcement> activeAnnouncements = board.getActiveAnnouncements();
+        Collections.sort(activeAnnouncements, Announcement.NEWEST_FIRST);
+        
+	for (final Announcement announcement : activeAnnouncements) {
+	    
             SyndContent description = new SyndContentImpl();
             description.setType("text/plain");
-            description.setValue(announcement.getShortBody());
+            description.setValue(announcement.getBody().getContent());
 
             SyndEntry entry = new SyndEntryImpl();
             entry.setAuthor(this.getAuthor(announcement));
@@ -174,9 +151,8 @@ public class AnnouncementRSS extends RSSAction {
     }
 
     protected final AnnouncementBoard getSelectedBoard(HttpServletRequest request) {
-        String id = request.getParameter("announcementBoardId");
-        AnnouncementBoard board = rootDomainObject.readAnnouncementBoardByOID(Integer.valueOf(id));
-        return board;
+        final String id = request.getParameter("announcementBoardId");
+        return rootDomainObject.readAnnouncementBoardByOID(Integer.valueOf(id));
     }
 
 }
