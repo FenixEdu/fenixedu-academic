@@ -343,7 +343,7 @@ public class StudentCurriculum implements Serializable {
     private void addExtraCurricularEnrolments(final Collection<Entry> entries,
 	    final StudentCurricularPlan studentCurricularPlan, final Set<Enrolment> approvedEnrolments) {
 	for (final Enrolment enrolment : approvedEnrolments) {
-	    if (enrolment.getStudentCurricularPlan() == studentCurricularPlan) {
+	    if (enrolment.getStudentCurricularPlan().getDegree() == studentCurricularPlan.getDegree()) {
 		entries.add(new ExtraCurricularEnrolmentEntry(enrolment));
 	    }
 	}
