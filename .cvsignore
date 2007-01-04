@@ -1,4 +1,4 @@
-build/*
+build
 src_gen
 src_gen/*
 classes
@@ -29,7 +29,6 @@ buildDavid.xml
 .uml
 javaDocSource
 javaDocTests
-
 Dominio.ucd
 buildToDeploy.properties
 buildToDeployFenix.properties
