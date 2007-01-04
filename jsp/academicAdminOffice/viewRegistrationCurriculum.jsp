@@ -121,6 +121,7 @@
 				<bean:write name="totalEctsCredits"/>
 			</td>
 		</tr>
+<%-- 
 		<tr>
 			<th>
 				<bean:message key="average" bundle="STUDENT_RESOURCES"/>
@@ -151,6 +152,7 @@
 				<bean:write name="curricularYear"/>
 			</td>
 		</tr>
+--%>
 	</table>
 
 	<logic:equal name="curricularEntriesCount" value="0">

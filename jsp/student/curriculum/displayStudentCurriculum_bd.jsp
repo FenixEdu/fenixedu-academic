@@ -25,7 +25,7 @@
 			</td>
 		</tr>
 
- 
+<%-- 
 		<tr>
 			<th><bean:message key="label.curricular.year" bundle="STUDENT_RESOURCES"/>:</th>
 			<td>
@@ -39,7 +39,7 @@
 				<bean:write name="registration" property="average"/>
 			</td>
 		</tr>
-
+--%> 
 		<tr>
 			<th><bean:message key="label.studentCurricularPlan.basic" bundle="STUDENT_RESOURCES" /></th>
 			<td>
