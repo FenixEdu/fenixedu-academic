@@ -216,11 +216,11 @@
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
     </slot>
-    <slot name="nameOfFather">
+    <slot name="nameOfFather" key="label.fatherName">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
 	</slot>
-    <slot name="nameOfMother">
+    <slot name="nameOfMother" key="label.motherName">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
     </slot>          
@@ -262,7 +262,7 @@
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
-    </slot>
+    </slot>        
     <slot name="mobile">
     	<property name="size" value="9"/>
 		<property name="maxLength" value="9"/>
@@ -272,6 +272,13 @@
             <property name="key" value="true"/>
         </validator>
 	</slot>
+	<slot name="workPhone">    	
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="[0-9]*"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+    </slot>
     <slot name="email"  validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredEmailValidator">
     	<property name="size" value="30"/>
 		<property name="maxLength" value="100"/>
