@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -47,7 +46,7 @@ public class InfoEnrolment extends InfoObject {
     }
 
     public String getEnrollmentTypeResourceKey() {
-	if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
+	if (enrolment.isExtraCurricular()) {
             return "option.curricularCourse.extra";
         } else if (enrolment instanceof EnrolmentInOptionalCurricularCourse) {
             return "option.curricularCourse.optional";

@@ -68,8 +68,7 @@
 					<tr>
 						<td class="listClasses">
 							<bean:write name="enrollment" property="curricularCourse.name"/>
-							
-							<% if (enrollment instanceof net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse) { %>
+							<% if (enrollment.isExtraCurricular()) { %>
 								(<bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.extra"/>)
 							<% } else if (enrollment instanceof net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse) { %>
 								(<bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.optional"/>)

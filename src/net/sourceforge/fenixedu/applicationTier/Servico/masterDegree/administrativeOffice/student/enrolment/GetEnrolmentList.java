@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -18,7 +17,7 @@ public class GetEnrolmentList extends Service {
 	final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
 	for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID)
 		.getEnrolmentsByState(enrollmentState)) {
-	    if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
+	    if (enrolment.isExtraCurricular()) {
 		continue;
 	    }
 	    if (!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE)) {
@@ -32,7 +31,7 @@ public class GetEnrolmentList extends Service {
 	final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
 	for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID)
 		.getEnrolments()) {
-	    if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
+	    if (enrolment.isExtraCurricular()) {
 		continue;
 	    }
 	    if (!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE)) {
@@ -53,7 +52,7 @@ public class GetEnrolmentList extends Service {
 
 	for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID)
 		.getEnrolmentsByState(enrollmentState)) {
-	    if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
+	    if (enrolment.isExtraCurricular()) {
 		continue;
 	    }
 	    result.add(InfoEnrolment.newInfoFromDomain(enrolment));

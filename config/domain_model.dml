@@ -1301,6 +1301,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
             EnrollmentCondition enrolmentCondition;
             EnrolmentEvaluationType enrolmentEvaluationType;
        		Double weigth;
+       		Boolean isExtraCurricular;
         }
 
             class net.sourceforge.fenixedu.domain.OptionalEnrolment extends net.sourceforge.fenixedu.domain.Enrolment {
@@ -1312,11 +1313,9 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 		Integer keyCredits;
 	}
 	
+	
 
 	// Isto � da estrutura antiga, faz sentido ainda?
-    class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
-    }
-    
     class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
 

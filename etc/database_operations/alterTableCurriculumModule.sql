@@ -1,0 +1,3 @@
+alter table CURRICULUM_MODULE add column IS_EXTRA_CURRICULAR bit default 0;
+update CURRICULUM_MODULE set CURRICULUM_MODULE.IS_EXTRA_CURRICULAR = 1 where CURRICULUM_MODULE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse';
+update CURRICULUM_MODULE set CURRICULUM_MODULE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.Enrolment' where CURRICULUM_MODULE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse';

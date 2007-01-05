@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrol
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -21,95 +20,96 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 
 public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStrategy implements
-        IMasterDegreeCurricularPlanStrategy {
+	IMasterDegreeCurricularPlanStrategy {
 
     public MasterDegreeCurricularPlanStrategy(DegreeCurricularPlan degreeCurricularPlan) {
-        super(degreeCurricularPlan);
+	super(degreeCurricularPlan);
     }
 
     /**
-     * Checks if the Master Degree Registration has finished his scholar part. <br/>
-     * All his credits are added and compared to the ones required by his Degree
-     * Curricular Plan.
-     * 
-     * @param The
-     *            Registration's Curricular Plan
-     * @return A boolean indicating if he has fineshed it or not.
-     */
+         * Checks if the Master Degree Registration has finished his scholar
+         * part. <br/> All his credits are added and compared to the ones
+         * required by his Degree Curricular Plan.
+         * 
+         * @param The
+         *                Registration's Curricular Plan
+         * @return A boolean indicating if he has fineshed it or not.
+         */
     public boolean checkEndOfScholarship(StudentCurricularPlan studentCurricularPlan)
-            throws ExcepcaoPersistencia {
-        double studentCredits = 0;
+	    throws ExcepcaoPersistencia {
+	double studentCredits = 0;
 
-        DegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
+	DegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
 
-        List enrolments = studentCurricularPlan.getEnrolments();
+	List enrolments = studentCurricularPlan.getEnrolments();
 
-        Iterator iterator = enrolments.iterator();
+	Iterator iterator = enrolments.iterator();
 
-        if (studentCurricularPlan.getGivenCredits() != null) {
-            studentCredits += studentCurricularPlan.getGivenCredits().doubleValue();
-        }
+	if (studentCurricularPlan.getGivenCredits() != null) {
+	    studentCredits += studentCurricularPlan.getGivenCredits().doubleValue();
+	}
 
-        while (iterator.hasNext()) {
-            Enrolment enrolment = (Enrolment) iterator.next();
+	while (iterator.hasNext()) {
+	    Enrolment enrolment = (Enrolment) iterator.next();
 
-            if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
-                    && (!(enrolment instanceof EnrolmentInExtraCurricularCourse))) {
-                studentCredits += enrolment.getCurricularCourse().getCredits().doubleValue();
-            }
-        }
+	    if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
+		    && (!(enrolment.isExtraCurricular()))) {
+		studentCredits += enrolment.getCurricularCourse().getCredits().doubleValue();
+	    }
+	}
 
-        if(degreeCurricularPlan.getNeededCredits() != null){
-            return (studentCredits >= degreeCurricularPlan.getNeededCredits().doubleValue());    
-        }
-        return true;
+	if (degreeCurricularPlan.getNeededCredits() != null) {
+	    return (studentCredits >= degreeCurricularPlan.getNeededCredits().doubleValue());
+	}
+	return true;
     }
 
     public Date dateOfEndOfScholarship(StudentCurricularPlan studentCurricularPlan)
-            throws ExcepcaoPersistencia {
+	    throws ExcepcaoPersistencia {
 
-        Date date = null;
-        InfoEnrolmentEvaluation infoEnrolmentEvaluation = null;
+	Date date = null;
+	InfoEnrolmentEvaluation infoEnrolmentEvaluation = null;
 
-        //		float studentCredits = 0;
-        //		
-        //		DegreeCurricularPlan degreeCurricularPlan =
-        // super.getDegreeCurricularPlan();
+	// float studentCredits = 0;
+	//		
+	// DegreeCurricularPlan degreeCurricularPlan =
+	// super.getDegreeCurricularPlan();
 
-        List enrolments = studentCurricularPlan.getEnrolments();
+	List enrolments = studentCurricularPlan.getEnrolments();
 
-        Iterator iterator = enrolments.iterator();
+	Iterator iterator = enrolments.iterator();
 
-        while (iterator.hasNext()) {
-            Enrolment enrolment = (Enrolment) iterator.next();
-            if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
+	while (iterator.hasNext()) {
+	    Enrolment enrolment = (Enrolment) iterator.next();
+	    if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
 
-                infoEnrolmentEvaluation = new GetEnrolmentGrade().run(enrolment);
+		infoEnrolmentEvaluation = new GetEnrolmentGrade().run(enrolment);
 
-                if (infoEnrolmentEvaluation.getExamDate() == null) {
-                    continue;
-                }
+		if (infoEnrolmentEvaluation.getExamDate() == null) {
+		    continue;
+		}
 
-                if (date == null) {
-                    date = new Date(infoEnrolmentEvaluation.getExamDate().getTime());
-                    continue;
-                }
+		if (date == null) {
+		    date = new Date(infoEnrolmentEvaluation.getExamDate().getTime());
+		    continue;
+		}
 
-                if (infoEnrolmentEvaluation.getExamDate().after(date)) {
-                    date.setTime(infoEnrolmentEvaluation.getExamDate().getTime());
-                }
+		if (infoEnrolmentEvaluation.getExamDate().after(date)) {
+		    date.setTime(infoEnrolmentEvaluation.getExamDate().getTime());
+		}
 
-            }
-        }
-        
-        if(date == null && studentCurricularPlan.getMasterDegreeThesis() != null){
-            MasterDegreeProofVersion proofVersion = studentCurricularPlan.getMasterDegreeThesis().getActiveMasterDegreeProofVersion();
-            if(proofVersion != null){
-        	date = proofVersion.getProofDate();
-            }
-        }
-        
-        return date;
+	    }
+	}
+
+	if (date == null && studentCurricularPlan.getMasterDegreeThesis() != null) {
+	    MasterDegreeProofVersion proofVersion = studentCurricularPlan.getMasterDegreeThesis()
+		    .getActiveMasterDegreeProofVersion();
+	    if (proofVersion != null) {
+		date = proofVersion.getProofDate();
+	    }
+	}
+
+	return date;
     }
 
 }

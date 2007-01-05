@@ -207,7 +207,7 @@
 				
 				<td class="listClasses courses"><bean:write name="enrollmentElem" property="curricularCourse.degreeCurricularPlan.degree.sigla"/></td>
 				
-				<% if (enrollmentElem instanceof net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse) { %>
+				<% if (enrollmentElem.isExtraCurricular()) { %>
 					<td class="listClasses"><bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.extra"/></td>
 					
 				<% } else if (enrollmentElem instanceof net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse) { %>

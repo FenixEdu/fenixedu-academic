@@ -135,7 +135,7 @@
 				<td class="listClasses" style="text-align:left">
 					<bean:write name="curriculumElem" property="curricularCourse.name"/>
 					
-					<% if (curriculumElem instanceof net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse) { %>
+					<% if (curriculumElem.isExtraCurricular()) { %>
 						(<bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.extra"/>)
 					
 					<% } else if (curriculumElem instanceof net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse) { %>

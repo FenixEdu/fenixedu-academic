@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -25,24 +24,25 @@ public class WriteBolonhaEnrolmentsList extends WriteEnrollmentsList {
 	    if (enrollmentClass == null || enrollmentClass.intValue() == 0
 		    || enrollmentClass.intValue() == 1) {
 
-		new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse, executionPeriod,
-			getEnrollmentCondition(enrollmentType), userView.getUtilizador());
+		new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse,
+			executionPeriod, getEnrollmentCondition(enrollmentType), userView
+				.getUtilizador());
 
 	    } else if (enrollmentClass.intValue() == 2) {
 
-		new EnrolmentInOptionalCurricularCourse(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse,
-			executionPeriod, getEnrollmentCondition(enrollmentType), userView
-				.getUtilizador());
+		new EnrolmentInOptionalCurricularCourse(studentCurricularPlan, studentCurricularPlan
+			.getRoot(), curricularCourse, executionPeriod,
+			getEnrollmentCondition(enrollmentType), userView.getUtilizador());
 
 	    } else {
-		new EnrolmentInExtraCurricularCourse(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse,
+		new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse,
 			executionPeriod, getEnrollmentCondition(enrollmentType), userView
-				.getUtilizador());
+				.getUtilizador(), true);
 	    }
 
 	} else {
-	    if (enrollment.getCondition() == EnrollmentCondition.INVISIBLE) {
-		enrollment.setCondition(getEnrollmentCondition(enrollmentType));
+	    if (enrollment.getEnrolmentCondition() == EnrollmentCondition.INVISIBLE) {
+		enrollment.setEnrolmentCondition(getEnrollmentCondition(enrollmentType));
 	    }
 	    if (enrollment.getEnrollmentState() == EnrollmentState.ANNULED) {
 		enrollment.setEnrollmentState(EnrollmentState.ENROLLED);
