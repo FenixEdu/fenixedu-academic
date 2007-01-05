@@ -252,7 +252,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     private boolean canApplyReimbursement(final Money amount) {
-	final Money extraAmount = getEvent().calculateExtraPayedAmount();
+	final Money extraAmount = getEvent().getExtraPayedAmount();
 	return extraAmount.greaterOrEqualThan(amount);
     }
 

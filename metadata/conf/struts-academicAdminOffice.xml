@@ -300,6 +300,8 @@
 		 	    <forward name="otherPartyPayment.confirmCreate" path="payments.management.otherPartyPayment.confirmCreate"/>
 		 	    <forward name="otherPartyPayment.showGuide" path="payments.management.otherPartyPayment.showGuide"/>
 		 	    <forward name="otherPartyPayment.printGuide" path="/payments/otherPartyPayment/printGuideForOtherPartyPayment.jsp"/>
+		 	    
+		 	    <forward name="extract.showPayedEvents" path="payments.management.extract.showPayedEvents" />
 		</action>
 		<!-- End Payments -->
 		

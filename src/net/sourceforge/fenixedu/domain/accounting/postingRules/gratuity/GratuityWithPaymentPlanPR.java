@@ -88,7 +88,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	if (needsTotalAmountEntry(getPaymentPlan(event), result)) {
 	    final Money amountToPay = event.calculateAmountToPay(when);
 	    result.add(new EntryDTO(EntryType.GRATUITY_FEE, event, totalAmount, event
-		    .calculatePayedAmount(), amountToPay, event
+		    .getPayedAmount(), amountToPay, event
 		    .getDescriptionForEntryType(getEntryType()), amountToPay));
 	}
 

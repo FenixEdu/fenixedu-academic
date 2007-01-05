@@ -71,7 +71,7 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
 	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(
-		event, when), event.calculatePayedAmount(), event.calculateAmountToPay(when), event
+		event, when), event.getPayedAmount(), event.calculateAmountToPay(when), event
 		.getDescriptionForEntryType(getEntryType()), event.calculateAmountToPay(when)));
     }
 

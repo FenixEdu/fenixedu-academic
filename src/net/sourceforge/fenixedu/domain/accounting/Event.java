@@ -237,7 +237,7 @@ public abstract class Event extends Event_Base {
 
     }
 
-    public Money calculatePayedAmount() {
+    public Money getPayedAmount() {
 	if (isCancelled()) {
 	    throw new DomainException(
 		    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
@@ -251,9 +251,13 @@ public abstract class Event extends Event_Base {
 	return payedAmount;
     }
 
-    public Money getPayedAmount(final int civilYear) {
+    public Money getPayedAmountFor(final int civilYear) {
+	if (isCancelled()) {
+	    throw new DomainException(
+		    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+	}
+	
 	Money result = Money.ZERO;
-
 	for (final Entry entry : getPayedEntries(civilYear)) {
 	    result = result.add(entry.getAmountWithAdjustment());
 	}
@@ -263,7 +267,6 @@ public abstract class Event extends Event_Base {
 
     private Set<Entry> getPayedEntries(final int civilYear) {
 	final Set<Entry> result = new HashSet<Entry>();
-
 	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
 	    if (accountingTransaction.isPayed(civilYear)) {
 		result.add(accountingTransaction.getToAccountEntry());
@@ -288,7 +291,7 @@ public abstract class Event extends Event_Base {
 
     public Money calculateAmountToPay(DateTime whenRegistered) {
 	final Money totalAmountToPay = calculateTotalAmountToPay(whenRegistered);
-	return totalAmountToPay.isPositive() ? totalAmountToPay.subtract(calculatePayedAmount())
+	return totalAmountToPay.isPositive() ? totalAmountToPay.subtract(getPayedAmount())
 		: Money.ZERO;
 
     }
@@ -331,7 +334,7 @@ public abstract class Event extends Event_Base {
 	    throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
 	}
 
-	if (calculatePayedAmount().isPositive()) {
+	if (getPayedAmount().isPositive()) {
 	    throw new DomainException(
 		    "error.accounting.Event.cannot.cancel.events.with.payed.amount.greater.than.zero");
 	}
@@ -446,9 +449,9 @@ public abstract class Event extends Event_Base {
 	return new YearMonthDay(nextMonth.getYear(), nextMonth.getMonthOfYear(), 1).minusDays(1);
     }
 
-    public Money calculateExtraPayedAmount() {
+    public Money getExtraPayedAmount() {
 	return calculateTotalAmountToPay(getDateToCalculateEventAmount()).subtract(
-		calculatePayedAmount()).abs();
+		getPayedAmount()).abs();
     }
 
     private DateTime getDateToCalculateEventAmount() {

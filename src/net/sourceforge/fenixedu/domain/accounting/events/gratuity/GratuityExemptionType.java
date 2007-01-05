@@ -19,6 +19,10 @@ public enum GratuityExemptionType {
     // PALOP Teachers
     PALOP_TEACHER,
 
+    SON_OF_DECORATED_MILITARY,
+
+    SOCIAL_SHARE_GRANT_OWNER,
+
     // Students teaching classes
     STUDENT_TEACH;
 
@@ -40,7 +44,8 @@ public enum GratuityExemptionType {
 	case BOLONHA_INTEGRATED_MASTER_DEGREE:
 	case BOLONHA_DEGREE:
 	case DEGREE:
-	    return Arrays.asList(new GratuityExemptionType[] { INSTITUTION_GRANT_OWNER });
+	    return Arrays.asList(new GratuityExemptionType[] { SON_OF_DECORATED_MILITARY,
+		    SOCIAL_SHARE_GRANT_OWNER });
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
 	    return Arrays.asList(new GratuityExemptionType[] { INSTITUTION, INSTITUTION_GRANT_OWNER,
 		    OTHER_INSTITUTION, PALOP_TEACHER, STUDENT_TEACH });

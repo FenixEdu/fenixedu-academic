@@ -215,6 +215,11 @@
 		<put name="body" value="/academicAdminOffice/payments/otherPartyPayment/showGuideForOtherPartyPayment.jsp"/>
 	</definition>
 	
+	
+	<definition name="payments.management.extract.showPayedEvents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/extract/showPayedEvents.jsp"/>
+	</definition>
+	
 	<!-- ************* Contributors ************* -->
 	<definition name="contributor.createContributorSuccess" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/contributor/createContributorSuccess.jsp"/>

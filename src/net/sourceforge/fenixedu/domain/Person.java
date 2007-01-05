@@ -1761,6 +1761,17 @@ public class Person extends Person_Base {
 		.isPayableOnAdministrativeOffice(administrativeOffice)));
     }
 
+    public List<Event> getPayedEvents() {
+	final List<Event> result = new ArrayList<Event>();
+	for (final Event event : getEventsSet()) {
+	    if (event.isClosed()) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+    }
+
     public Set<Entry> getPaymentsWithoutReceipt() {
 	return getPaymentsWithoutReceiptByAdministrativeOffice(null);
     }
@@ -2298,7 +2309,7 @@ public class Person extends Person_Base {
     public Money getPayedAmount(final EventType eventType, final int civilYear) {
 	Money result = Money.ZERO;
 	for (final Event event : (Set<Event>) getEventsByEventType(eventType)) {
-	    result = result.add(event.getPayedAmount(civilYear));
+	    result = result.add(event.getPayedAmountFor(civilYear));
 	}
 
 	return result;

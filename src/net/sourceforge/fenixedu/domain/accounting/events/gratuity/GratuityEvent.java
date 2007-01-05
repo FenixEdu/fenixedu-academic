@@ -150,7 +150,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     public boolean canRemoveExemption(final DateTime when) {
 	if (hasGratuityExemption()) {
 	    if (isClosed()) {
-		return calculatePayedAmount().greaterOrEqualThan(
+		return getPayedAmount().greaterOrEqualThan(
 			calculateTotalAmountToPayWithoutDiscount(when));
 	    }
 	}

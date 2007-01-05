@@ -125,6 +125,12 @@
 	<slot name="amountToPay" key="label.net.sourceforge.fenixedu.domain.accounting.Event.amountToPay" />
 </schema>
 
+<schema name="AccountingEvent.view-with-extra-payed-amount" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES">
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.Event.description" />
+	<slot name="payedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.Event.payedAmount" />	
+	<slot name="extraPayedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.Event.extraPayedAmount" />
+</schema>
+
 <schema name="CreateGratuityExemptionBean" type="net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean" bundle="APPLICATION_RESOURCES">
 	<slot name="exemptionType" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.GratuityExemptionTypeByDegreeTypeProvider" />

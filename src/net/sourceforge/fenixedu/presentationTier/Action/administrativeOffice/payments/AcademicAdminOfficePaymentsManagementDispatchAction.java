@@ -248,12 +248,12 @@ public class AcademicAdminOfficePaymentsManagementDispatchAction extends
 	return mapping.findForward("otherPartyPayment.showEvents");
 
     }
-    
-    public ActionForward showOtherPartyPaymentsForEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	
+
+    public ActionForward showOtherPartyPaymentsForEvent(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
 	request.setAttribute("event", getEvent(request));
-		
+
 	return mapping.findForward("otherPartyPayment.showPaymentsForEvent");
     }
 
@@ -271,7 +271,8 @@ public class AcademicAdminOfficePaymentsManagementDispatchAction extends
     public ActionForward confirmCreateOtherPartyPayment(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("createOtherPartyPaymentBean", getCreateOtherPartyBeanFromViewState("createOtherPartyPayment"));
+	request.setAttribute("createOtherPartyPaymentBean",
+		getCreateOtherPartyBeanFromViewState("createOtherPartyPayment"));
 
 	return mapping.findForward("otherPartyPayment.confirmCreate");
 
@@ -288,8 +289,8 @@ public class AcademicAdminOfficePaymentsManagementDispatchAction extends
 	final CreateOtherPartyPaymentBean createOtherPartyPaymentBean = getCreateOtherPartyBeanFromViewState("confirmCreateOtherPartyPayment");
 
 	try {
-	    executeService(request, "CreateOtherPartyPayment",
-		    new Object[] { getUserView(request).getPerson(), createOtherPartyPaymentBean });
+	    executeService(request, "CreateOtherPartyPayment", new Object[] {
+		    getUserView(request).getPerson(), createOtherPartyPaymentBean });
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 
@@ -297,19 +298,18 @@ public class AcademicAdminOfficePaymentsManagementDispatchAction extends
 
 	    return mapping.findForward("otherPartyPayment.prepareCreate");
 	}
-	
+
 	return showEventsForOtherPartyPayment(mapping, form, request, response);
 
     }
 
     private CreateOtherPartyPaymentBean getCreateOtherPartyBeanFromViewState(String name) {
-	return (CreateOtherPartyPaymentBean) RenderUtils.getViewState(name)
-		.getMetaObject().getObject();
+	return (CreateOtherPartyPaymentBean) RenderUtils.getViewState(name).getMetaObject().getObject();
     }
 
     public ActionForward preparePrintGuideForOtherParty(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	
+
 	request.setAttribute("createOtherPartyPayment",
 		getObjectFromViewState("createOtherPartyPayment"));
 	return mapping.findForward("otherPartyPayment.showGuide");
@@ -317,19 +317,28 @@ public class AcademicAdminOfficePaymentsManagementDispatchAction extends
 
     public ActionForward printGuideForOtherParty(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	
+
 	request.setAttribute("currentUnit", getCurrentUnit(request));
 	request.setAttribute("createOtherPartyPayment",
 		getObjectFromViewState("createOtherPartyPayment"));
-	
+
 	return mapping.findForward("otherPartyPayment.printGuide");
     }
-    
-    public ActionForward prepareCreateOtherPartyPaymentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	
-	request.setAttribute("createOtherPartyPaymentBean", getObjectFromViewState("createOtherPartyPayment"));
+
+    public ActionForward prepareCreateOtherPartyPaymentInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("createOtherPartyPaymentBean",
+		getObjectFromViewState("createOtherPartyPayment"));
 	return mapping.findForward("otherPartyPayment.prepareCreate");
+    }
+
+    public ActionForward showPayedEvents(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("person", getPerson(request));
+
+	return mapping.findForward("extract.showPayedEvents");
     }
 
 }
