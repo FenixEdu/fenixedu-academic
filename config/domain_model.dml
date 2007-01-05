@@ -1308,12 +1308,30 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 		    }
         
 
+	class net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
+		Integer keyCredits;
+	}
+	
+
 	// Isto � da estrutura antiga, faz sentido ainda?
     class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
     
     class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
+
+    
+class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	Double givenCredits;
+	Integer keyStudentCurricularPlan;
+}
+
+	class net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence extends net.sourceforge.fenixedu.domain.studentCurriculum.Credits {
+		String givenGrade;
+	}
+
+    
 
 class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyEnrolment;
@@ -5489,6 +5507,32 @@ relation EnrolmentExecutionPeriod {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
+relation EnrolmentCredits {
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits {
+		multiplicity *;
+	}
+}
+
+relation StudentCurricularPlanCredits {
+	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan ;
+	
+	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits {
+		multiplicity *;
+	}
+}
+
+relation CreditsDismissalEquivalence {
+	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits;
+	
+	net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal playsRole dismissals {
+		multiplicity *;
+	}
+}
+
+
 relation EnrolmentPeriodExecutionPeriod {
 	net.sourceforge.fenixedu.domain.EnrolmentPeriod playsRole enrolmentPeriod {
 		multiplicity *;
@@ -8855,6 +8899,14 @@ relation RootDomainObjectCurriculumModule {
 		multiplicity *;
 	}
 }
+
+relation RootDomainObjectCredits {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits {
+		multiplicity *;
+	}
+}
+
 
 relation RootDomainObjectConversationThread {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;

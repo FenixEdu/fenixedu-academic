@@ -77,6 +77,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return this.getDegreeModule().equals(degreeModule);
     }
     
+    public boolean hasCurriculumModule(final CurriculumModule curriculumModule) {
+	return this.equals(curriculumModule);
+    }
+    
     public Set<CurricularRule> getCurricularRules(ExecutionPeriod executionPeriod){
 	Set<CurricularRule> result = null;
 	if(this.getCurriculumGroup() != null) {

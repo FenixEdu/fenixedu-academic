@@ -258,6 +258,19 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    return false;
 	}
     }
+    
+    @Override
+    public boolean hasCurriculumModule(CurriculumModule curriculumModule) {
+        if(super.hasCurriculumModule(curriculumModule)) {
+            return true;
+        }
+        for (CurriculumModule module : getCurriculumModulesSet()) {
+	    if(module.hasCurriculumModule(module)) {
+		return true;
+	    }
+	}
+        return false;
+    }
 
     public Set<CurriculumLine> getCurriculumLines() {
 	Set<CurriculumLine> result = new TreeSet<CurriculumLine>(CurriculumModule.COMPARATOR_BY_NAME);

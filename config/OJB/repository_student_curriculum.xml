@@ -37,10 +37,13 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine" table="CURRICULUM_MODULE">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.Enrolment" />    
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal" />    
+    				
+</class-descriptor>
 
-	
-	
-    	
-    
+<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal" table="CURRICULUM_MODULE"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.Credits" table="CREDITS_DISMISSAL">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence" />    
     				
 </class-descriptor>

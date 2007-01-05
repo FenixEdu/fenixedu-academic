@@ -16,6 +16,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -42,8 +43,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -1920,6 +1923,36 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return null;
     }
     
+    public void createNewCreditsDismissal(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, 
+	    Collection<GenericPair<CurriculumGroup, CurricularCourse>> dismissals, Collection<Enrolment> enrolments, 
+	    Double givenCredits) {
+	if((curriculumGroup == null && (dismissals == null || dismissals.isEmpty())) || 
+		(curriculumGroup != null && dismissals != null && !dismissals.isEmpty())) {
+	    throw new DomainException("");
+	}
+	
+	if(curriculumGroup != null) {
+	    new Credits(this, curriculumGroup, enrolments, givenCredits);
+	} else {
+	    new Credits(this, dismissals, enrolments);
+	}
+    }
+    
+    public void createNewEquivalenceDismissal(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, 
+	    Collection<GenericPair<CurriculumGroup, CurricularCourse>> dismissals, Collection<Enrolment> enrolments, 
+	    Double givenCredits, String givenGrade) {
+	if((curriculumGroup == null && (dismissals == null || dismissals.isEmpty())) || 
+		(curriculumGroup != null && dismissals != null && !dismissals.isEmpty())) {
+	    throw new DomainException("");
+	}
+	
+	if(curriculumGroup != null) {
+	    new Equivalence(this, curriculumGroup, enrolments, givenCredits, givenGrade);
+	} else {
+	    new Equivalence(this, dismissals, enrolments, givenGrade);
+	}
+    }
+    
 
     public void setActive() {
 	getRegistration().getActiveStudentCurricularPlan().setCurrentState(
@@ -1936,7 +1969,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isEnrolable() {
-	return getRegistration().getActiveStateType().equals(RegistrationStateType.REGISTERED)
+	return this.isBolonha() && getRegistration().getActiveStateType().equals(RegistrationStateType.REGISTERED)
 		&& getRegistration().getLastStudentCurricularPlanExceptPast().equals(this);
     }
 

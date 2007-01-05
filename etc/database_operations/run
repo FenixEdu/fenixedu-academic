@@ -27,4 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Dismissal Changes" dismissalChanges.sql
 execute "Update CREDITS_MANAGER portal roles and remove unused portal" UpdatePortalRoles.sql
