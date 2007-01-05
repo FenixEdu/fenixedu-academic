@@ -53,7 +53,7 @@ public class FixedAmountWithPenaltyFromDatePR extends FixedAmountWithPenaltyFrom
 
     @Override
     protected boolean hasPenalty(Event event, DateTime when) {
-	return when.isAfter(getWhenToApplyFixedAmountPenalty().toDateTimeAtMidnight());
+	return when.toYearMonthDay().isAfter(getWhenToApplyFixedAmountPenalty());
     }
 
     @Checked("PostingRulePredicates.editPredicate")
