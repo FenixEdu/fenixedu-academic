@@ -102,14 +102,18 @@
 					<html:link action="<%= contextPrefix + "method=addAnnouncement&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
 						<bean:message key="label.createAnnouncement" bundle="MESSAGING_RESOURCES"/>
 					</html:link>
-				</li>				
+				</li>
 				<%
 					}
 				%>
+				<li>
+					<html:link action="<%= "announcements/announcementsStartPageHandler.do?method=viewAnnouncements&amp;announcementBoardId=" + announcementBoardId %>">
+						<bean:message key="label.board.page" bundle="MESSAGING_RESOURCES"/>
+					</html:link>
+				</li>
 		</ul>
 	
 		<jsp:include page="/messaging/announcements/listAnnouncements.jsp" flush="true"/>
-	
 	</logic:present>
 
 </logic:present>

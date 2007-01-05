@@ -61,13 +61,13 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         return mapping.findForward("startPage");
     }
 
-    private List<AnnouncementBoard> getSortedBookmarkedBoards(HttpServletRequest request) {
+    private List<AnnouncementBoard> getSortedBookmarkedBoards(final HttpServletRequest request) {
 	final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>(getLoggedPerson(request).getBookmarkedBoards());
 	Collections.sort(result, AnnouncementBoard.BY_NAME);
 	return result;
     }
 
-    private Collection<AnnouncementBoard> getCurrentExecutionCoursesAnnouncementBoards(HttpServletRequest request) {
+    private Collection<AnnouncementBoard> getCurrentExecutionCoursesAnnouncementBoards(final HttpServletRequest request) {
 	final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>(getLoggedPerson(request)
 		.getCurrentExecutionCoursesAnnouncementBoards());
 	Collections.sort(result, AnnouncementBoard.BY_NAME);
