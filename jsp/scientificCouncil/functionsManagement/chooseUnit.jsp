@@ -3,26 +3,25 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
-<ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
-
+<ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">	
 	<script language="JavaScript">
-	function check(e,v)
-	{	
-		var contextPath = '<%= request.getContextPath() %>';	
-		if (e.style.display == "none")
-		  {
-		  e.style.display = "";
-		  v.src = contextPath + '/images/toggle_minus10.gif';
-		  }
-		else
-		  {
-		  e.style.display = "none";
-		  v.src = contextPath + '/images/toggle_plus10.gif';
-		  }
-	}
+		function check(e,v)
+		{	
+			var contextPath = '<%= request.getContextPath() %>';	
+			if (e.style.display == "none")
+			  {
+			  e.style.display = "";
+			  v.src = contextPath + '/images/toggle_minus10.gif';
+			  }
+			else
+			  {
+			  e.style.display = "none";
+			  v.src = contextPath + '/images/toggle_plus10.gif';
+			  }
+		}
 	</script>
 
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 	
 	<h:form>
