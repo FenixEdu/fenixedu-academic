@@ -123,8 +123,31 @@ encoding="multipart/form-data"
 </table>
 
 
-<div class="infoop2" style="width: 700px">
-<bean:message key="label.generalDescription.explanation" bundle="SITE_RESOURCES"/>
+
+<p class="mbottom05">
+
+<a href="javascript:switchDisplay('instructions');"><bean:message key="label.instructions" bundle="SITE_RESOURCES"/></a>
+<div id="instructions" class="switchNone">
+	<div class="infoop2 mtop025">
+	<bean:message key="label.generalDescription" bundle="SITE_RESOURCES"/>
+	<ul>
+		<li> <bean:message key="label.generalDescription.explanation.item1" bundle="SITE_RESOURCES"/></li>
+		<li> <bean:message key="label.generalDescription.explanation.item2" bundle="SITE_RESOURCES"/></li>
+		<li> <bean:message key="label.generalDescription.explanation.item3" bundle="SITE_RESOURCES"/></li>
+		<li> <bean:message key="label.generalDescription.explanation.item4" bundle="SITE_RESOURCES"/></li>
+		<li> <bean:message key="label.generalDescription.explanation.item5" bundle="SITE_RESOURCES"/></li>
+	</ul>
+	
+	<p><strong><bean:message key="label.metaMetaDados" bundle="SITE_RESOURCES"/></strong></p>
+	<p><bean:message key="label.metaMetaDados.explanation" bundle="SITE_RESOURCES"/></p>
+	
+	<p><strong><bean:message key="label.educational" bundle="SITE_RESOURCES"/></strong></p>
+	<p><bean:message key="label.educational.explanation" bundle="SITE_RESOURCES"/></p>
+	
+	<p><strong><bean:message key="label.authorRights" bundle="SITE_RESOURCES"/></strong></p>
+	<p><bean:message key="label.authorRights.explanation" bundle="SITE_RESOURCES"/></p>
+	
+	</div>
 </div>
  
 <p class="mbottom025"><strong><bean:message key="label.generalDescription" bundle="SITE_RESOURCES"/></strong></p>
@@ -170,10 +193,6 @@ encoding="multipart/form-data"
 
 </table>
 
-<div class="infoop2" style="width: 700px">
-<bean:message key="label.metaMetaDados.explanation" bundle="SITE_RESOURCES"/>
-</div>
-
 <p class="mbottom025"><strong><bean:message key="label.metaMetaDados" bundle="SITE_RESOURCES"/></strong></p>
 
 <table class="tstyle5 thright thlight mtop025" style="width: 550px">
@@ -206,10 +225,6 @@ encoding="multipart/form-data"
 
 </table>
 
-
-<div class="infoop2" style="width: 700px">
-<bean:message key="label.educational.explanation" bundle="SITE_RESOURCES"/>
-</div>
 <p class="mbottom025"><strong><bean:message key="label.educational" bundle="SITE_RESOURCES"/></strong></p>
 
 <table class="tstyle5 thright thlight mtop025" style="width: 550px">
@@ -225,9 +240,7 @@ encoding="multipart/form-data"
 
 </table>
 
-<div class="infoop2" style="width: 700px">
-<bean:message key="label.authorRights.explanation" bundle="SITE_RESOURCES"/>
-</div>
+
 <p class="mbottom025"><strong><bean:message key="label.authorRights" bundle="SITE_RESOURCES"/></strong></p>
 
 <table class="tstyle5 thright thlight mtop025" style="width: 550px">
@@ -284,3 +297,6 @@ encoding="multipart/form-data"
 	</fr:form>
 </div>
 
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>
