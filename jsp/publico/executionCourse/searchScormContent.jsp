@@ -65,7 +65,7 @@
 			<td>
 				<bean:message key="label.educationalLearningResourceType" bundle="SITE_RESOURCES"/>: 
 				<div id="noType" class="dinline">
-					<input id="noTypeCheckbox" type="checkbox" checked="true" onclick="javascript:uncheckall('typesCheckBoxes')"/>
+					<input id="noTypeCheckbox" type="checkbox" onclick="javascript:uncheckall('typesCheckBoxes')"/>
 					<label for="noTypeCheckbox"><bean:message key="label.notClassified" bundle="SITE_RESOURCES"/></label>
 				</div>
 				<div id="typesCheckBoxes" class="dinline"> 
@@ -110,10 +110,10 @@
 					</fr:layout>
 				</fr:edit>
 
-				 em 
+				<bean:message key="label.in" bundle="APPLICATION_RESOURCES"/>
 				<fr:edit id="<%= "searchTypeField" + index%>" name="searchElement" slot="searchField">
 				<fr:layout>
-					<fr:property name="excludedValues" value="TYPE, PUBLISHER, DATE, KEYWORD, DESCRIPTION"/>
+					<fr:property name="excludedValues" value="TYPE, DATE"/>
 				</fr:layout>
 				</fr:edit>
 

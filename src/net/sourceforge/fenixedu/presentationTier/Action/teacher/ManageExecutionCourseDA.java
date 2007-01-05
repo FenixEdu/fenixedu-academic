@@ -111,9 +111,10 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	public ActionForward uploadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		Item item = selectItem(request);
-		
+
 		FileItemCreationBean bean = new FileItemCreationBean(item);
-		bean.setAuthorsName(((ExecutionCourseSite)item.getSection().getSite()).getExecutionCourse().getNome());
+		bean.setAuthorsName(((ExecutionCourseSite) item.getSection().getSite()).getExecutionCourse()
+				.getNome());
 		request.setAttribute("fileItemCreator", bean);
 
 		return mapping.findForward("uploadFile");
@@ -911,18 +912,68 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
 	public ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		return fileUpload(mapping, form, request, response, "CreateFileItemForItem");
+
+		FileItemCreationBean bean = (FileItemCreationBean) RenderUtils.getViewState("creator")
+				.getMetaObject().getObject();
+		List<String> errors = validationErrors(bean);
+		if (errors.isEmpty()) {
+			return fileUpload(mapping, form, request, response, "CreateFileItemForItem");
+		} else {
+			for (String error : errors) {
+				addActionMessage(request, error,null);
+			}
+			
+			return uploadFile(mapping, form, request, response);
+		}
 	}
-	
+
 	public ActionForward scormFileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		return fileUpload(mapping, form, request, response, "CreateScormPackageForItem");
+
+		FileItemCreationBean bean = (FileItemCreationBean) RenderUtils.getViewState("creator")
+				.getMetaObject().getObject();
+		List<String> errors = validationErrors(bean);
+		if (errors.isEmpty()) {
+			return fileUpload(mapping, form, request, response, "CreateScormPackageForItem");
+		} else {
+			for (String error : errors) {
+				addActionMessage(request, error,null);
+			}
+			return prepareUploadScormFile(mapping, form, request, response);
+		}
+
 	}
 	
+	private List<String> validationErrors(FileItemCreationBean bean) {
+
+		List<String> errors = new ArrayList<String>();
+
+		String filename = bean.getFileName();
+		if (filename == null || filename.length() == 0 || bean.getFileSize() == 0) {
+			errors.add("errors.fileRequired");
+		}
+
+		String displayName = bean.getDisplayName();
+		if (displayName == null || displayName.length() == 0 || displayName.trim().length() == 0) {
+			errors.add("errors.titleRequired");
+		}
+
+		String name = bean.getAuthorsName();
+		if (name == null || name.length() == 0 || name.trim().length() == 0) {
+			errors.add("errors.authorRequired");
+		}
+
+		if (bean.getEducationalLearningResourceType() == null) {
+			errors.add("errors.educationalTypeRequired");
+		}
+
+		return errors;
+	}
+
 	private ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response, String service) throws Exception {
 		final Item item = selectItem(request);
-		
+
 		IViewState viewState = RenderUtils.getViewState("creator");
 		if (viewState == null) {
 			return section(mapping, form, request, response);
@@ -931,28 +982,19 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 		FileItemCreationBean bean = (FileItemCreationBean) viewState.getMetaObject().getObject();
 		RenderUtils.invalidateViewState();
 
-		if (bean.getFileName() == null || bean.getFileName().length() == 0 || bean.getFileSize() == 0) {
-			addErrorMessage(request, "fileRequired", "errors.fileRequired");
-			return uploadFile(mapping, form, request, response);
-		}
-
-		String displayName = bean.getDisplayName();
-		if (displayName == null || displayName.length() == 0 || displayName.trim().length() == 0) {
-			displayName = getFilenameOnly(bean.getFileName());
-		}
-
 		InputStream formFileInputStream = null;
 		try {
 			formFileInputStream = bean.getFile();
 
 			executeService(request, service, new Object[] { item, formFileInputStream, bean.getFileName(),
-					displayName, bean.getPermittedGroup(), getLoggedPerson(request), bean.getEducationalLearningResourceType() });
+					bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request),
+					bean.getEducationalLearningResourceType() });
 		} catch (FileManagerException e) {
 			addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
-			
-			return (service.equalsIgnoreCase("CreateScormPackageForItem") ? 
-					prepareCreateScormFile(mapping, form, request, response) : uploadFile(mapping, form, request, response));
-			
+
+			return (service.equalsIgnoreCase("CreateScormPackageForItem") ? prepareCreateScormFile(mapping,
+					form, request, response) : uploadFile(mapping, form, request, response));
+
 		} finally {
 			if (formFileInputStream != null) {
 				formFileInputStream.close();
@@ -962,42 +1004,53 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 		return mapping.findForward("section");
 	}
 
+	public ActionForward prepareUploadScormFile(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		putScormCreationBeanInRequest(request);
+		return mapping.findForward("uploadScorm");
+	}
+	
 	public ActionForward prepareCreateScormFile(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		putScormCreationBeanInRequest(request);
+		return mapping.findForward("createScorm");
+	}
+
+	private void putScormCreationBeanInRequest(HttpServletRequest request) {
 		Item item = selectItem(request);
 		ScormCreationBean bean = new ScormCreationBean(item);
-		bean.setAuthorsName(((ExecutionCourseSite)item.getSection().getSite()).getExecutionCourse().getNome());
+		bean.setAuthorsName(((ExecutionCourseSite) item.getSection().getSite()).getExecutionCourse()
+				.getNome());
 		ScormCreationBean possibleBean = (ScormCreationBean) getRenderedObject();
 		if (possibleBean != null) {
 			bean.copyValuesFrom(possibleBean);
-		} 
+		}
 		request.setAttribute("bean", bean);
-		
-		return mapping.findForward(request.getParameter("forwardTo"));
 	}
 
-	public ActionForward validateScormForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		
+	public ActionForward validateScormForm(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
 		ScormCreationBean bean = (ScormCreationBean) getRenderedObject("scormPackage");
-		
-		if (bean.isValid()) {
-			return createScormFile(mapping, form, request, response); 
+
+		if (bean.isValid() && validationErrors(bean).isEmpty()) {
+			return createScormFile(mapping, form, request, response);
 		}
-		
+
 		addActionMessage(request, "label.missingRequiredFields", null);
 		return prepareCreateScormFile(mapping, form, request, response);
-		
+
 	}
-	
+
 	public ActionForward createScormFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
 		ScormCreationBean bean = (ScormCreationBean) getRenderedObject("scormPackage");
 
 		Item item = selectItem(request);
-		
+
 		String displayName = bean.getDisplayName();
 		if (displayName == null || displayName.length() == 0 || displayName.trim().length() == 0) {
 			displayName = getFilenameOnly(bean.getFileName());
@@ -1007,21 +1060,23 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 		InputStream formFileInputStream = null;
 
 		Section section = item.getSection();
-		ExecutionCourse executionCourse = ((ExecutionCourseSite)section.getSite()).getExecutionCourse();
-		
-		String resourceLocation = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + ItemProcessor.getItemAbsolutePath(executionCourse, item);
+		ExecutionCourse executionCourse = ((ExecutionCourseSite) section.getSite()).getExecutionCourse();
+
+		String resourceLocation = request.getScheme() + "://" + request.getServerName()
+				+ request.getContextPath() + ItemProcessor.getItemAbsolutePath(executionCourse, item);
 		bean.setTechnicalLocation(resourceLocation);
-		
+
 		try {
-			if(bean.getVirtualCardFilename()!=null && bean.getVirtualCardFilename().length()>0) {
+			if (bean.getVirtualCardFilename() != null && bean.getVirtualCardFilename().length() > 0) {
 				String vcardContent = readContentOfVCard(vcardFile);
 				bean.setVcardContent(vcardContent);
 			}
-		
+
 			formFileInputStream = bean.getFile();
 			final Object[] args = { new CreateScormFileItemForItem.CreateScormFileItemForItemArgs(item,
 					formFileInputStream, bean.getFileName(), displayName, bean.getPermittedGroup(), bean
-							.getMetaInformation(), getLoggedPerson(request),bean.getEducationalLearningResourceType()) };
+							.getMetaInformation(), getLoggedPerson(request), bean
+							.getEducationalLearningResourceType()) };
 
 			executeService(request, "CreateScormFileItemForItem", args);
 

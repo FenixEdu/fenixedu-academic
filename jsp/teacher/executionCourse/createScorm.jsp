@@ -31,13 +31,13 @@
 <span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= "/manageExecutionCourse.do?method=uploadFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal() + "&amp;forwardTo=createScorm"%>">			
+		<html:link page="<%= "/manageExecutionCourse.do?method=uploadFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal()%>">			
 			<bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
 		</html:link>
 	</span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= "/manageExecutionCourse.do?method=prepareCreateScormFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal() + "&amp;forwardTo=uploadScorm"%>">			
+		<html:link page="<%= "/manageExecutionCourse.do?method=prepareUploadScormFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal()%>">			
 		<bean:message key="link.scorm.uploadScormFile" bundle="SITE_RESOURCES"/>
 		</html:link>
 	</span>
@@ -49,7 +49,7 @@
 </p>
 
 
-<div class="infoop2">
+<div class="infoop2" style="width: 700px">
 <p><bean:message key="label.scorm.description" bundle="SITE_RESOURCES"/></p>
 </div>
 
@@ -70,14 +70,14 @@ encoding="multipart/form-data"
 <fr:edit id="scormPackage" name="bean" visible="false"/>
 
 <p class="mbottom025"><strong><bean:message key="label.file" bundle="SITE_RESOURCES"/></strong></p>
-<table class="tstyle5 thright thlight mtop025">
+<table class="tstyle5 thright thlight mtop025" style="width: 550px">
 
 <tr>
 	<th style="width: 130px;"><span class="required">*</span> <bean:message key="label.teacher.siteAdministration.uploadFile.fileDisplayName"/>:</th>
 	<td style="width: 410px;"><fr:edit name="bean" id="displayName" slot="displayName"/></td>
 </tr>
 	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.AuthorsName"/>:</th>
+		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.AuthorsName"/>:</th>
 		<td>
 	        <fr:edit name="bean" slot="authorsName">
 	            <fr:layout>
@@ -87,7 +87,7 @@ encoding="multipart/form-data"
 		</td>
 	</tr>
 <tr>
-	<th><span class="required">*</span> <bean:message key="label.file" bundle="SITE_RESOURCES"/>:</th>
+	<th><span class="required">*</span><bean:message key="label.file" bundle="SITE_RESOURCES"/>:</th>
 	<td>
 		<fr:edit name="bean" slot="file" >
 			<fr:layout>
@@ -99,7 +99,7 @@ encoding="multipart/form-data"
 	</td>
 </tr>
 	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
+		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
 		<td>
 	        <fr:edit name="bean" slot="educationalLearningResourceType">
 	        <fr:layout>
@@ -122,9 +122,13 @@ encoding="multipart/form-data"
 </tr>
 </table>
 
+
+<div class="infoop2" style="width: 700px">
+<bean:message key="label.generalDescription.explanation" bundle="SITE_RESOURCES"/>
+</div>
  
 <p class="mbottom025"><strong><bean:message key="label.generalDescription" bundle="SITE_RESOURCES"/></strong></p>
-<table class="tstyle5 thright thlight mtop025">
+<table class="tstyle5 thright thlight mtop025" style="width: 550px">
 
 <tr>
 	<th><span class="required">*</span> <bean:message key="label.generalCatalog" bundle="SITE_RESOURCES"/>:</th>
@@ -158,7 +162,7 @@ encoding="multipart/form-data"
 	<td><fr:edit name="bean" slot="keywords">
 		<fr:layout name="longText">
 				<fr:property name="columns" value="50"/>
-				<fr:property name="row" value="1"/>
+				<fr:property name="rows" value="1"/>
 		</fr:layout>
 		</fr:edit>
 	</td>
@@ -166,10 +170,13 @@ encoding="multipart/form-data"
 
 </table>
 
+<div class="infoop2" style="width: 700px">
+<bean:message key="label.metaMetaDados.explanation" bundle="SITE_RESOURCES"/>
+</div>
 
 <p class="mbottom025"><strong><bean:message key="label.metaMetaDados" bundle="SITE_RESOURCES"/></strong></p>
 
-<table class="tstyle5 thright thlight mtop025">
+<table class="tstyle5 thright thlight mtop025" style="width: 550px">
 
 <tr>
 	<th style="width: 130px;"><bean:message key="label.contributeRole" bundle="SITE_RESOURCES"/>:</th>
@@ -200,24 +207,17 @@ encoding="multipart/form-data"
 </table>
 
 
+<div class="infoop2" style="width: 700px">
+<bean:message key="label.educational.explanation" bundle="SITE_RESOURCES"/>
+</div>
 <p class="mbottom025"><strong><bean:message key="label.educational" bundle="SITE_RESOURCES"/></strong></p>
 
-<table class="tstyle5 thright thlight mtop025">
+<table class="tstyle5 thright thlight mtop025" style="width: 550px">
 
 <tr>
 	<th style="width: 130px;"><bean:message key="label.educationalInteractivityType" bundle="SITE_RESOURCES"/>:</th>
 	<td style="width: 410px;"><fr:edit name="bean" slot="educationalInteractivityType"/></td>
 </tr>
-
-<tr>
-	<th><bean:message key="label.educationalLearningResourceType" bundle="SITE_RESOURCES"/>:</th>
-	<td> <fr:edit name="bean" slot="educationalLearningResourceType">
-	        <fr:layout>
-      				<fr:property name="excludedValues" value="PROJECT_SUBMISSION"/>
-	        </fr:layout>
-	        </fr:edit></td>
-</tr>
-
 <tr>
 	<th><bean:message key="label.educationalLanguage" bundle="SITE_RESOURCES"/>:</th>
 	<td><fr:edit name="bean" slot="educationalLanguage"/></td>
@@ -225,10 +225,12 @@ encoding="multipart/form-data"
 
 </table>
 
-
+<div class="infoop2" style="width: 700px">
+<bean:message key="label.authorRights.explanation" bundle="SITE_RESOURCES"/>
+</div>
 <p class="mbottom025"><strong><bean:message key="label.authorRights" bundle="SITE_RESOURCES"/></strong></p>
 
-<table class="tstyle5 thright thlight mtop025">
+<table class="tstyle5 thright thlight mtop025" style="width: 550px">
 
 <tr>
 	<th style="width: 130px;"><span class="required">*</span> <bean:message key="label.rightsCost" bundle="SITE_RESOURCES"/>:</th>
@@ -257,7 +259,7 @@ encoding="multipart/form-data"
 	<td><fr:edit name="bean" slot="rightsDescription">
 			<fr:layout name="longText">
 				<fr:property name="columns" value="50"/>
-				<fr:property name="row" value="4"/>
+				<fr:property name="rows" value="4"/>
 		</fr:layout>
 		</fr:edit>
 	</td>

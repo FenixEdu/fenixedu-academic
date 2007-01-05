@@ -30,7 +30,7 @@
 <span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= "/manageExecutionCourse.do?method=uploadFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal() + "&amp;forwardTo=createScorm"%>">			
+		<html:link page="<%= "/manageExecutionCourse.do?method=uploadFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal()%>">			
 			<bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
 		</html:link>
 	</span>
@@ -40,19 +40,19 @@
 	</span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= "/manageExecutionCourse.do?method=prepareCreateScormFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal() + "&amp;forwardTo=createScorm"%>">			
+		<html:link page="<%= "/manageExecutionCourse.do?method=prepareCreateScormFile&amp;itemID=" + item.getIdInternal() + "&amp;executionCourseID=" + executionCourse.getIdInternal() %>">			
 			<bean:message key="link.scorm.createScormFile" bundle="SITE_RESOURCES"/>
 		</html:link>
 	</span>
 </span>
 </p>
 
-<div class="infoop2">
+<div class="infoop2" style="width: 700px">
 <p><bean:message key="label.scorm.description" bundle="SITE_RESOURCES"/></p>
 </div>
 
 <logic:messagesPresent message="true">
-	<html:messages id="messages" message="true" bundle="SITE_RESOURCES">
+	<html:messages id="messages" message="true">
 		<p class="mvert15">
 			<span class="error0"><bean:write name="messages" /></span>
 		</p>
@@ -67,9 +67,9 @@
     <fr:edit id="creator" name="bean" visible="false"/>
 <table class="tstyle5 thright thlight mtop025">
 	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.fileDisplayName"/>:</th>
+		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.fileDisplayName"/>:</th>
 		<td>
-	        <fr:edit name="bean" slot="displayName">
+	        <fr:edit id="displayName" name="bean" slot="displayName">
 	            <fr:layout>
 	                <fr:property name="size" value="40"/>
 	            </fr:layout>
@@ -77,9 +77,9 @@
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.AuthorsName"/>:</th>
+		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.AuthorsName"/>:</th>
 		<td>
-	        <fr:edit name="bean" slot="authorsName">
+	        <fr:edit id="authorsName" name="bean" slot="authorsName">
 	            <fr:layout>
 	                <fr:property name="size" value="40"/>
 	            </fr:layout>
@@ -87,9 +87,9 @@
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
+		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
 		<td>
-	        <fr:edit name="bean" slot="educationalLearningResourceType">
+	        <fr:edit id="educationalLearningResourceType" name="bean" slot="educationalLearningResourceType">
 	        <fr:layout>
       				<fr:property name="excludedValues" value="PROJECT_SUBMISSION"/>
 	        </fr:layout>
@@ -97,9 +97,9 @@
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.file"/>:</th>
+		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.file"/>:</th>
 		<td>
-	    <fr:edit name="bean" slot="file">
+	    <fr:edit id="file" name="bean" slot="file">
 	        <fr:layout>
 	            <fr:property name="size" value="40"/>
 	            <fr:property name="fileNameSlot" value="fileName"/>
@@ -109,9 +109,9 @@
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.permissions"/>:</th>
+		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.permissions"/>:</th>
 		<td>
-	        <fr:edit name="bean" schema="item.file.create" layout="flow">
+	        <fr:edit id="permissions" name="bean" schema="item.file.create" layout="flow">
 	            <fr:layout>
 	                <fr:property name="eachInline" value="true"/>
 	                <fr:property name="labelExcluded" value="true"/>
@@ -120,8 +120,6 @@
 		</td>
 	</tr>
 </table>
-
-
         <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton dinline">
             <bean:message key="button.save"/>
         </html:submit>
@@ -135,3 +133,5 @@
 		</html:cancel>
 	</fr:form>
 </div>
+
+<p><em><bean:message key="label.fieldsWith" bundle="SITE_RESOURCES"/> <span class="required">*</span> <bean:message key="label.areRequired" bundle="SITE_RESOURCES"/></em></p>

@@ -1554,7 +1554,9 @@
         <action path="/fileUpload" name="fileForm" parameter="method" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA" scope="request">
             <forward name="section" path="manage-execution-course-section"/>
-   			<forward name="uploadFile" path="manage-execution-course-uploadFile"/>
+  			<forward name="uploadFile" path="manage-execution-course-uploadFile"/>
+   			<forward name="createScorm" path="create-scorm"/>
+   			<forward name="uploadScorm" path="upload-scorm"/>
         </action>
         <action path="/fileDelete" parameter="method" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" >

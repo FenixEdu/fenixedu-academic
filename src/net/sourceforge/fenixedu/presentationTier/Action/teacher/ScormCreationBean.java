@@ -74,9 +74,11 @@ public class ScormCreationBean extends FileItemCreationBean {
 		scormMetaHasher.put("rights", "copyright", null, getBooleanValue(getRightsCost()));
 		scormMetaHasher.put("subject", null, getGeneralLanguageAsString(), getKeywordsArray());
 		scormMetaHasher.put("description", null, getGeneralLanguageAsString(),getGeneralDescription());
+		scormMetaHasher.put("type",null,getGeneralLanguageAsString(),getLearningResourceAsString());
 		return scormMetaHasher;		
     }
     
+
     private String[] getKeywordsArray() {
     	String[] keys = getKeywords().split(",");
     	for(int i=0;i<keys.length;i++) {
@@ -107,7 +109,7 @@ public class ScormCreationBean extends FileItemCreationBean {
 
 	private String getLearningResourceAsString() {
 		
-		EducationalResourceType type = getEducationalLearningResourceType(); 
+		EducationalResourceType type = super.getEducationalLearningResourceType(); 
 		return (type==null) ? "" : type.getType();
 	}
 
@@ -277,11 +279,11 @@ public class ScormCreationBean extends FileItemCreationBean {
 	}
 
 	public String getGeneralTitle() {
-		return generalTitle;
+		return super.getDisplayName();
 	}
 
 	public void setGeneralTitle(String generalTitle) {
-		this.generalTitle = generalTitle;
+		super.setDisplayName(generalTitle);
 	}
 
 	public Boolean getRightsCopyRightOtherRestrictions() {
@@ -353,7 +355,7 @@ public class ScormCreationBean extends FileItemCreationBean {
 	}
 
 	  public EducationalInteractivityType getEducationalInteractivityType() {
-			return educationalInteractivityType;
+		  return educationalInteractivityType;
 		}
 
 		public void setEducationalInteractivityType(EducationalInteractivityType educationalInteractivityType) {
