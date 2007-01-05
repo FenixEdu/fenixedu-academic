@@ -144,9 +144,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		    currentDate);
 	    closeULTag(buffer);
 	} else {
-	    buffer.append("<ul class='padding1 nobullet'>");
-	    getSubUnitsListToChooseParentUnit(UnitUtils.readInstitutionUnit(), null, buffer, currentDate);
-	    closeULTag(buffer);
+	    
+	    for (Unit unit : UnitUtils.readAllUnitsWithoutParents()) {
+		buffer.append("<ul class='padding1 nobullet'>"); 
+		if(!unit.equals(unit)) {
+		    getSubUnitsListToChooseParentUnit(unit, null, buffer, currentDate);
+		}
+		closeULTag(buffer);
+	    }	   	    
 	}
 	return buffer.toString();
     }
@@ -457,7 +462,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	for (AccountabilityTypeEnum type : AccountabilityTypeEnum.values()) {
 	    if (type.equals(AccountabilityTypeEnum.ACADEMIC_STRUCTURE)
 		    || type.equals(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)
-		    || type.equals(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE)) {
+		    || type.equals(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE)
+		    || type.equals(AccountabilityTypeEnum.GEOGRAPHIC)) {
 		selectItem = new SelectItem();
 		selectItem.setLabel(bundle.getString(type.getName()));
 		selectItem.setValue(type.getName());
