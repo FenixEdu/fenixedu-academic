@@ -82,10 +82,10 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	final Person employee = getEmployee();
 	final Registration registration = getRegistration();
 	final Person student = registration.getStudent().getPerson();
-	final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
 	final ExecutionYear executionYear = getExecutionYear();
-	final int curricularYear = studentCurriculum.calculateCurricularYear(executionYear);
-	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getStudentCurricularPlan(executionYear);
+	final StudentCurriculum studentCurriculum = new StudentCurriculum(registration, executionYear);
+	final int curricularYear = studentCurriculum.getCurricularYear();
+	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getStudentCurricularPlan();
 	final int numberEnrolments = studentCurricularPlan.countEnrolments(executionYear);
 
 	final StringBuilder stringBuilder = new StringBuilder();

@@ -377,11 +377,11 @@ public class Registration extends Registration_Base {
     }
 
     public double getAverage() {
-	return Math.round((new StudentCurriculum(this).calculateAverage(null) * 100)) / 100.0;
+	return new StudentCurriculum(this).getAverage();
     }
 
     public double getAverage(final ExecutionYear executionYear) {
-	return Math.round((new StudentCurriculum(this).calculateAverage(executionYear) * 100)) / 100.0;
+	return new StudentCurriculum(this, executionYear).getAverage();
     }
 
     public int getFinalAverage() {
@@ -390,7 +390,7 @@ public class Registration extends Registration_Base {
 		    "Registration.getting.final.average.mean.from.non.concluded.registration");
 	}
 
-	return new StudentCurriculum(this).calculateRoundedAverage(null);
+	return new StudentCurriculum(this).getRoundedAverage(false).intValue();
     }
 
     public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
@@ -1274,15 +1274,15 @@ public class Registration extends Registration_Base {
     }
 
     public double getEctsCredits() {
-	return new StudentCurriculum(this).getTotalEctsCredits(null);
+	return new StudentCurriculum(this).getTotalEctsCredits();
     }
 
     public int getCurricularYear() {
-	return new StudentCurriculum(this).calculateCurricularYear(null);
+	return new StudentCurriculum(this).getCurricularYear();
     }
 
     public int getCurricularYear(ExecutionYear executionYear) {
-	return new StudentCurriculum(this).calculateCurricularYear(executionYear);
+	return new StudentCurriculum(this, executionYear).getCurricularYear();
     }
 
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {

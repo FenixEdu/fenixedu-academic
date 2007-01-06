@@ -14,14 +14,83 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.curriculum.GradeType;
-import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
-
-import org.joda.time.YearMonthDay;
 
 public class StudentCurriculum implements Serializable {
 
+    /**
+     * Student Curriculum 
+     *
+     */
+    
+    private final DomainReference<Registration> registrationDomainReference;
+    
+    private final DomainReference<ExecutionYear> executionYearDomainReference;
+    
+    private final StudentCurricularPlan studentCurricularPlan;
+    
+    private final Collection<Entry> curriculumEntries;
+
+    private final double totalEctsCredits;
+
+    private final int curricularYear;
+    
+    private final AverageCalculator averageCalculator;
+
+    private final double average;
+    
+    private final double sumPiCi;
+    
+    private final double sumPi;
+
+    public StudentCurriculum(final Registration registration, final ExecutionYear executionYear) {
+        super();
+        
+        if (registration == null) {
+            throw new NullPointerException("error.registration.cannot.be.null");
+        }
+        
+        registrationDomainReference = new DomainReference<Registration>(registration);
+        executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
+        
+        studentCurricularPlan = getRegistration().getStudentCurricularPlan(getExecutionYear());
+        if (studentCurricularPlan == null) {
+            throw new NullPointerException("error.registration.has.no.student.curricular.plan.for.given.execution.year");
+        }
+        
+        curriculumEntries = retrieveCurriculumEntries();
+        
+        totalEctsCredits = calculateTotalEctsCredits();
+        curricularYear = calculateCurricularYear();
+        
+        averageCalculator = new AverageCalculator();
+        average = averageCalculator.result();
+        sumPiCi = averageCalculator.sumPiCi();
+        sumPi = averageCalculator.sumPi();
+    }
+
+    public StudentCurriculum(final Registration registration) {
+        this(registration, null);
+    }
+
+    public Registration getRegistration() {
+        return registrationDomainReference.getObject();
+    }
+
+    public ExecutionYear getExecutionYear() {
+        return executionYearDomainReference.getObject();
+    }
+    
+    public StudentCurricularPlan getStudentCurricularPlan() {
+	return studentCurricularPlan;
+    }
+
+
+    /**
+     * Student Curriculum Data Structures
+     *
+     */
+    
     public static class EnrolmentSet extends TreeSet<Enrolment> {
         private final ExecutionYear executionYear;
 
@@ -56,6 +125,10 @@ public class StudentCurriculum implements Serializable {
 
     public static abstract class Entry implements Serializable {
 	public abstract double getEctsCredits();
+	
+	public abstract double getWeigth();
+	
+	public abstract double getWeigthTimesClassification();
 
 	public boolean isEnrolmentEntry() {
 	    return false;
@@ -80,11 +153,6 @@ public class StudentCurriculum implements Serializable {
 	}
 	public boolean getIsExtraCurricularEnrolmentEntry() {
 	    return isExtraCurricularEnrolmentEntry();
-	}
-
-	protected double ectsCredits(final CurricularCourse curricularCourse) {
-	    final double ectsCredits = curricularCourse.getEctsCredits().doubleValue();
-	    return ectsCredits == 0 ? 6.0 : ectsCredits;
 	}
     }
 
@@ -120,10 +188,19 @@ public class StudentCurriculum implements Serializable {
 
 	@Override
 	public double getEctsCredits() {
-	    final Enrolment enrolment = getEnrolment();
-	    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-	    return ectsCredits(curricularCourse);
+	    return getEnrolment().getCurricularCourse().getEctsCredits().doubleValue();
 	}
+
+	@Override
+	public double getWeigth() {
+	    return getEnrolment().getWeigth().doubleValue();
+	}
+
+	@Override
+	public double getWeigthTimesClassification() {
+	    return getWeigth() * Double.valueOf(getEnrolment().getLatestEnrolmentEvaluation().getGrade());
+	}
+
     }
 
     public static class NotNeedToEnrolEntry extends SimpleEntry {
@@ -145,10 +222,19 @@ public class StudentCurriculum implements Serializable {
 
 	@Override
 	public double getEctsCredits() {
-	    final NotNeedToEnrollInCurricularCourse notNeedToEnroll = getNotNeedToEnrol();
-	    final CurricularCourse curricularCourse = notNeedToEnroll.getCurricularCourse();
-	    return ectsCredits(curricularCourse);
+	    return getNotNeedToEnrol().getCurricularCourse().getEctsCredits().doubleValue();
 	}
+
+	@Override
+	public double getWeigth() {
+	    throw new RuntimeException();
+	}
+	
+	@Override
+	public double getWeigthTimesClassification() {
+	    throw new RuntimeException();
+	}
+
     }
 
     public static class EquivalentEnrolmentEntry extends Entry {
@@ -177,10 +263,34 @@ public class StudentCurriculum implements Serializable {
 	public double getEctsCredits() {
 	    double ectsCredits = 0;
 	    for (final SimpleEntry simpleEntry : getEntries()) {
-		ectsCredits += ectsCredits(simpleEntry.getCurricularCourse());
+		ectsCredits += simpleEntry.getEctsCredits();
 	    }
 	    return ectsCredits;
 	}
+
+	@Override
+	public double getWeigth() {
+	    double result = 0;
+	    for (final SimpleEntry simpleEntry : getEntries()) {
+		if (!simpleEntry.isNotNeedToEnrolEntry()) {
+		    result += simpleEntry.getWeigth();    
+		}
+	    }
+	    return result;
+	}
+	
+	@Override
+	public double getWeigthTimesClassification() {
+	    double result = 0;
+	    for (final SimpleEntry simpleEntry : getEntries()) {
+		if (!simpleEntry.isNotNeedToEnrolEntry()) {
+		    result += simpleEntry.getWeigthTimesClassification();
+		}
+	    }
+	    
+	    return result;
+	}
+
     }
 
     public static class ExtraCurricularEnrolmentEntry extends Entry {
@@ -202,57 +312,60 @@ public class StudentCurriculum implements Serializable {
 
 	@Override
 	public double getEctsCredits() {
-	    final Enrolment enrolment = getEnrolment();
-	    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-	    return ectsCredits(curricularCourse);
+	    return getEnrolment().getCurricularCourse().getEctsCredits().doubleValue();
 	}
+	
+	@Override
+	public double getWeigth() {
+	    return getEnrolment().getWeigth().doubleValue();
+	}
+	
+	@Override
+	public double getWeigthTimesClassification() {
+	    return getWeigth() * Double.valueOf(getEnrolment().getLatestEnrolmentEvaluation().getGrade());
+	}
+
     }
 
-    private final DomainReference<Registration> registrationDomainReference;
 
-    public StudentCurriculum(final Registration registration) {
-        super();
-        if (registration == null) {
-            throw new NullPointerException("error.registration.cannot.be.null");
-        }
-        this.registrationDomainReference = new DomainReference<Registration>(registration);
-    }
-
-    public Registration getRegistration() {
-        return registrationDomainReference.getObject();
-    }
-
-    public Collection<Entry> getCurriculumEntries(final ExecutionYear executionYear) {
-        final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(executionYear);
+    /**
+     * Student Curriculum Entries retrieval 
+     *
+     */
+    
+    private Collection<Entry> retrieveCurriculumEntries() {
+	final StudentCurricularPlan studentCurricularPlan = getRegistration().getStudentCurricularPlan(getExecutionYear());
         if (studentCurricularPlan == null) {
             return null;
         }
 
-        final EnrolmentSet approvedEnrolments = getApprovedEnrolments(executionYear);
+        final EnrolmentSet approvedEnrolments = getApprovedEnrolments();
 
         final Collection<Entry> entries = new HashSet<Entry>();
 
-        addCurricularEnrolments(entries, studentCurricularPlan, approvedEnrolments, executionYear);
+        addCurricularEnrolments(entries, approvedEnrolments);
 
-        addExtraCurricularEnrolments(entries, studentCurricularPlan, approvedEnrolments);
+        addExtraCurricularEnrolments(entries, approvedEnrolments);
 
         return entries;
     }
 
-    public StudentCurricularPlan getStudentCurricularPlan(final ExecutionYear executionYear) {
+    private EnrolmentSet getApprovedEnrolments() {
 	final Registration registration = getRegistration();
-	return executionYear == null ? registration.getStudentCurricularPlan(new YearMonthDay()) : registration.getStudentCurricularPlan(executionYear);
+        final Student student = registration.getStudent();
+        final EnrolmentSet approvedEnrolments = new EnrolmentSet(getExecutionYear());
+        student.addApprovedEnrolments(approvedEnrolments);
+        return approvedEnrolments;
     }
 
-    private void addCurricularEnrolments(final Collection<Entry> entries, final StudentCurricularPlan studentCurricularPlan,
-            final EnrolmentSet approvedEnrolments, final ExecutionYear executionYear) {
+    private void addCurricularEnrolments(final Collection<Entry> entries, final EnrolmentSet approvedEnrolments) {
 
         final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
-            if (curricularCourse.isActive(executionYear)) {
-        	final SimpleEntry simpleEntry = getSimpleEntry(entries, studentCurricularPlan, approvedEnrolments, curricularCourse);
+            if (curricularCourse.isActive(getExecutionYear())) {
+        	final SimpleEntry simpleEntry = getSimpleEntry(entries, approvedEnrolments, curricularCourse);
         	if (simpleEntry == null) {
-        	    final Set<SimpleEntry> simpleEntries = findEquivalentEnrolments(entries, studentCurricularPlan, approvedEnrolments, curricularCourse);
+        	    final Set<SimpleEntry> simpleEntries = findEquivalentEnrolments(entries, approvedEnrolments, curricularCourse);
         	    if (simpleEntries != null && !simpleEntries.isEmpty()) {
         		entries.add(new EquivalentEnrolmentEntry(curricularCourse, simpleEntries));
         		for (final SimpleEntry otherSimpleEntry : simpleEntries) {
@@ -267,15 +380,7 @@ public class StudentCurriculum implements Serializable {
         }
     }
 
-    private void removeProcessedEnrolments(final EnrolmentSet approvedEnrolments, final SimpleEntry simpleEntry) {
-	if (simpleEntry.isEnrolmentEntry()) {
-	    final EnrolmentEntry enrolmentEntry = (EnrolmentEntry) simpleEntry;
-	    approvedEnrolments.remove(enrolmentEntry.getEnrolment());
-	}
-    }
-
-    private SimpleEntry getSimpleEntry(final Collection<Entry> entries, final StudentCurricularPlan studentCurricularPlan,
-	    final EnrolmentSet approvedEnrolments, final CurricularCourse curricularCourse) {
+    private SimpleEntry getSimpleEntry(final Collection<Entry> entries, final EnrolmentSet approvedEnrolments, final CurricularCourse curricularCourse) {
         final Enrolment enrolment = findEnrolmentForSameCompetence(approvedEnrolments, curricularCourse);
         if (enrolment != null) {
             return new EnrolmentEntry(curricularCourse, enrolment);
@@ -283,6 +388,18 @@ public class StudentCurriculum implements Serializable {
             final NotNeedToEnrollInCurricularCourse notNeedToEnrol = studentCurricularPlan.findNotNeddToEnrol(curricularCourse);
             if (notNeedToEnrol != null && !hasBeenProcessed(entries, notNeedToEnrol)) {
         	return new NotNeedToEnrolEntry(curricularCourse, notNeedToEnrol);
+            }
+        }
+        return null;
+    }
+
+    private Enrolment findEnrolmentForSameCompetence(final EnrolmentSet approvedEnrolments, final CurricularCourse curricularCourse) {
+        final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+        for (final Enrolment enrolment : approvedEnrolments) {
+            final CurricularCourse enrolmentCurricularCourse = enrolment.getCurricularCourse();
+            final CompetenceCourse enrolmentCompetenceCourse = enrolmentCurricularCourse.getCompetenceCourse();
+            if (curricularCourse == enrolmentCurricularCourse || (competenceCourse != null && competenceCourse == enrolmentCompetenceCourse)) {
+                return enrolment;
             }
         }
         return null;
@@ -305,14 +422,13 @@ public class StudentCurriculum implements Serializable {
 	return false;
     }
 
-    private Set<SimpleEntry> findEquivalentEnrolments(final Collection<Entry> entries, final StudentCurricularPlan studentCurricularPlan,
-	    final EnrolmentSet approvedEnrolments, final CurricularCourse curricularCourse) {
+    private Set<SimpleEntry> findEquivalentEnrolments(final Collection<Entry> entries, final EnrolmentSet approvedEnrolments, final CurricularCourse curricularCourse) {
         for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalencesSet()) {
             final Set<SimpleEntry> simpleEntries = new HashSet<SimpleEntry>();
             final EnrolmentSet workingApprovedEnrolments = approvedEnrolments.clone();
             final Set<CurricularCourse> oldCurricularCourses = curricularCourseEquivalence.getOldCurricularCoursesSet();
             for (final CurricularCourse oldCurricularCourse : oldCurricularCourses) {
-        	final SimpleEntry simpleEntry = getSimpleEntry(entries, studentCurricularPlan, workingApprovedEnrolments, oldCurricularCourse);
+        	final SimpleEntry simpleEntry = getSimpleEntry(entries, workingApprovedEnrolments, oldCurricularCourse);
         	if (simpleEntry == null) {
         	    break;
         	} else {
@@ -328,58 +444,62 @@ public class StudentCurriculum implements Serializable {
         return null;
     }
 
-    private Enrolment findEnrolmentForSameCompetence(final EnrolmentSet approvedEnrolments, final CurricularCourse curricularCourse) {
-        final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
-        for (final Enrolment enrolment : approvedEnrolments) {
-            final CurricularCourse enrolmentCurricularCourse = enrolment.getCurricularCourse();
-            final CompetenceCourse enrolmentCompetenceCourse = enrolmentCurricularCourse.getCompetenceCourse();
-            if (curricularCourse == enrolmentCurricularCourse || (competenceCourse != null && competenceCourse == enrolmentCompetenceCourse)) {
-                return enrolment;
-            }
-        }
-        return null;
+    private void removeProcessedEnrolments(final EnrolmentSet approvedEnrolments, final SimpleEntry simpleEntry) {
+	if (simpleEntry.isEnrolmentEntry()) {
+	    final EnrolmentEntry enrolmentEntry = (EnrolmentEntry) simpleEntry;
+	    approvedEnrolments.remove(enrolmentEntry.getEnrolment());
+	}
     }
 
-    private void addExtraCurricularEnrolments(final Collection<Entry> entries,
-	    final StudentCurricularPlan studentCurricularPlan, final Set<Enrolment> approvedEnrolments) {
+    private void addExtraCurricularEnrolments(final Collection<Entry> entries, final Set<Enrolment> approvedEnrolments) {
 	for (final Enrolment enrolment : approvedEnrolments) {
-	    if (enrolment.getStudentCurricularPlan().getDegree() == studentCurricularPlan.getDegree()) {
-		entries.add(new ExtraCurricularEnrolmentEntry(enrolment));
+	    if (enrolment.getStudentCurricularPlan().getDegree() == studentCurricularPlan.getDegree() || enrolment.isExtraCurricular()) {
+	    	entries.add(new ExtraCurricularEnrolmentEntry(enrolment));
 	    }
 	}
     }
 
-    private EnrolmentSet getApprovedEnrolments(final ExecutionYear executionYear) {
-	final Registration registration = getRegistration();
-        final Student student = registration.getStudent();
-        final EnrolmentSet approvedEnrolments = new EnrolmentSet(executionYear);
-        student.addApprovedEnrolments(approvedEnrolments);
-        return approvedEnrolments;
-    }
-
-    public double getTotalEctsCredits(final ExecutionYear executionYear) {
+    
+    /**
+     * Student Curriculum calculations
+     * 
+     */
+    
+    private double calculateTotalEctsCredits() {
 	double ectsCredits = 0;
-	for (final Entry entry : getCurriculumEntries(executionYear)) {
+	for (final Entry entry : getCurriculumEntries()) {
 	    ectsCredits += entry.getEctsCredits();
 	}
 	return ectsCredits;
     }
 
-    public int calculateCurricularYear(final ExecutionYear executionYear) {
-	final double ectsCredits = getTotalEctsCredits(executionYear);
-	int degreeCurricularYears = getStudentCurricularPlan(executionYear).getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
+    private int calculateCurricularYear() {
+	final double ectsCredits = getTotalEctsCredits();
+	int degreeCurricularYears = studentCurricularPlan.getDegreeType().getYears();
 	int ectsCreditsCurricularYear = (int) Math.floor((((ectsCredits + 24) / 60) + 1));
 	return Math.min(ectsCreditsCurricularYear, degreeCurricularYears);
     }
 
     private class AverageCalculator {
-	private double pc = 0;
-	private double p = 0;
+	private double sumPiCi = 0;
+	private double sumPi = 0;
 
-	public double result() {
-	    return p == 0 ? 0 : pc / p;
+	public AverageCalculator() {
+	    add(getCurriculumEntries());	    
 	}
-
+	
+	public double sumPiCi() {
+	    return sumPiCi;
+	}
+	
+	public double sumPi() {
+	    return sumPi;
+	}
+	
+	public double result() {
+	    return sumPi == 0 ? 0 : sumPiCi / sumPi;
+	}
+	
 	public void add(final Collection<Entry> entries) {
 	    for (final Entry entry : entries) {
 		add(entry);
@@ -387,47 +507,46 @@ public class StudentCurriculum implements Serializable {
 	}
 
 	public void add(final Entry entry) {
-	    if (entry instanceof EnrolmentEntry) {
-		final EnrolmentEntry enrolmentEntry = (EnrolmentEntry) entry;
-		final Enrolment enrolment = enrolmentEntry.getEnrolment();
-		add(enrolment);
-	    } else if (entry instanceof ExtraCurricularEnrolmentEntry) {
-		final ExtraCurricularEnrolmentEntry extraCurricularEnrolmentEntry = (ExtraCurricularEnrolmentEntry) entry;
-		final Enrolment enrolment = extraCurricularEnrolmentEntry.getEnrolment();
-		add(enrolment);
-	    } else if (entry instanceof EquivalentEnrolmentEntry) {
-		final EquivalentEnrolmentEntry equivalentEnrolmentEntry = (EquivalentEnrolmentEntry) entry;
-		for (final Entry otherEntry : equivalentEnrolmentEntry.getEntries()) {
-		    add(otherEntry);
-		}
+	    if (!entry.isNotNeedToEnrolEntry()) {
+		sumPi += entry.getWeigth();
+		sumPiCi += entry.getWeigthTimesClassification();
 	    }
 	}
 
-	public void add(final Enrolment enrolment) {
-	    // TODO : do some magin here ...
-	    final IGrade grade = enrolment.getGradeFinal();
-	    if (grade != null) {
-		final Object gradeValue = grade.getGrade();
-		if (grade.getGradeType() == GradeType.GRADETWENTY && gradeValue instanceof Integer) {
-		    final double w = enrolment.getWeigth().doubleValue();
-		    p += w;
-		    final int intGrade = ((Integer) gradeValue).intValue();
-		    pc += w * intGrade;
-		}
-	    } else {
-		System.out.println("Shit dude: enrolment: " + enrolment.getIdInternal() + " has null grade.");
-	    }
-	}
     }
+	
 
-    public double calculateAverage(final ExecutionYear executionYear) {
-	final AverageCalculator averageCalculator = new AverageCalculator();
-	averageCalculator.add(getCurriculumEntries(executionYear));
-	return averageCalculator.result();
+    /**
+     * Student Curriculum results
+     * 
+     */
+
+    public Collection<Entry> getCurriculumEntries() {
+	return curriculumEntries;
     }
-
-    public int calculateRoundedAverage(final ExecutionYear executionYear) {
-	return Long.valueOf(Math.round(calculateAverage(executionYear))).intValue();
+    
+    public double getTotalEctsCredits() {
+	return totalEctsCredits ;
     }
-
+    
+    public int getCurricularYear() {
+	return curricularYear;
+    }
+    
+    public double getAverage() {
+	return average;
+    }
+    
+    public Double getRoundedAverage(boolean decimal) {
+	return decimal ? Math.round((average * 100)) / 100.0 : Math.round((average));
+    }
+    
+    public double getSumPiCi() {
+	return sumPiCi;
+    }
+    
+    public double getSumPi() {
+	return sumPi;
+    }
+    
 }
