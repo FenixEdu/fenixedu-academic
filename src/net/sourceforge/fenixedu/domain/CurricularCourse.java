@@ -45,6 +45,8 @@ import org.joda.time.YearMonthDay;
 
 public class CurricularCourse extends CurricularCourse_Base {
 
+    private static final double ECTS_CREDITS_FOR_PRE_BOLONHA = 6;
+    
     public static final Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
@@ -149,19 +151,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public DegreeCurricularPlan getDegreeCurricularPlan() {
 	return getParentDegreeCurricularPlan();
-    }
-
-    @Override
-    public Double getWeigth() {
-	if (isBolonha()) {
-	    if (getCompetenceCourse() != null) {
-		return Double.valueOf(getCompetenceCourse().getEctsCredits());
-	    } else {
-		return null;
-	    }
-	} else {
-	    return super.getWeigth();
-	}
     }
 
     public Degree getDegree() {
@@ -1002,13 +991,20 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public Double getEctsCredits() {
-	Double result = 0.0;
-	if (super.getEctsCredits() != null) {
-	    result = super.getEctsCredits();
-	} else if (this.getCompetenceCourse() != null) {
-	    result = this.getCompetenceCourse().getEctsCredits();
+	if (isBolonha()) {
+	    if (hasCompetenceCourse()) {
+		return getCompetenceCourse().getEctsCredits();
+	    } else {
+		throw new DomainException("CurricularCourse.with.no.ects.credits");
+	    }
+	} else {
+	    final Double ectsCredits = super.getEctsCredits();
+	    if (ectsCredits != null && ectsCredits != 0.0) {
+		return ectsCredits;
+	    } 
+
+	    return ECTS_CREDITS_FOR_PRE_BOLONHA;
 	}
-	return result;
     }
 
     public Double getEctsCredits(CurricularPeriod curricularPeriod) {
@@ -1017,6 +1013,22 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    result = this.getCompetenceCourse().getEctsCredits(curricularPeriod.getOrder());
 	}
 	return result;
+    }
+
+    @Override
+    public Double getWeigth() {
+	if (isBolonha()) {
+	    if (hasCompetenceCourse()) {
+		return getCompetenceCourse().getEctsCredits();
+	    }
+	} else {
+	    final Double weigth = super.getWeigth();
+	    if (weigth != null && weigth != 0.0) {
+		return weigth;
+	    } 
+	}
+	
+	throw new DomainException("CurricularCourse.with.no.weight");
     }
 
     public CurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, Date date) {
@@ -1571,11 +1583,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Integer getSecondTimeEnrolmentStudentNumber(ExecutionPeriod executionPeriod) {
 	return getTotalEnrolmentStudentNumber(executionPeriod)
 		- getFirstTimeEnrolmentStudentNumber(executionPeriod);
-    }
-
-    public double getEctsCreditsForCurricularYearCalculation() {
-        final Double ccEctsCredits = getEctsCredits();
-        return ccEctsCredits == null || ccEctsCredits.doubleValue() == 0 ? 6 : ccEctsCredits;
     }
 
     public List<ExecutionCourse> getMostRecentExecutionCourses() {
