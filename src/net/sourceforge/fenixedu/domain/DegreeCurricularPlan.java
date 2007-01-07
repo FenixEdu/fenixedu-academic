@@ -1362,4 +1362,34 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public boolean isPast(){
 	return getState().equals(DegreeCurricularPlanState.PAST);
     }
+    
+    public net.sourceforge.fenixedu.domain.space.Campus getCampus(final ExecutionYear executionYear) {
+	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+	    if (executionDegree.getExecutionYear() == executionYear) {
+		return executionDegree.getCampus().getSpaceCampus();
+	    }
+	}
+	
+	return null;
+    }
+    
+    public net.sourceforge.fenixedu.domain.space.Campus getCurrentCampus() {
+	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
+	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
+		return executionDegree.getCampus().getSpaceCampus();
+	    }
+	}
+	
+	return null;
+    }
+    
+    public net.sourceforge.fenixedu.domain.space.Campus getLastCampus() {
+	if (hasAnyExecutionDegrees()) {
+	    return getMostRecentExecutionDegree().getCampus().getSpaceCampus();    
+	}
+	
+	return net.sourceforge.fenixedu.domain.space.Campus.readOldestCampus();
+    }
+    
 }
