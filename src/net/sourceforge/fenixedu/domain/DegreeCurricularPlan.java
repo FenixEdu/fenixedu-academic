@@ -1391,5 +1391,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	
 	return net.sourceforge.fenixedu.domain.space.Campus.readOldestCampus();
     }
-    
+
+    @Override
+    public Integer getDegreeDuration() {
+	final Integer degreeDuration = super.getDegreeDuration();
+	return degreeDuration == null ? Integer.valueOf(getDegree().getTipoCurso().getYears()) : degreeDuration;
+    }
+
 }
