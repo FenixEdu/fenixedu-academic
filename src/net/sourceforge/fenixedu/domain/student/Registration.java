@@ -1114,9 +1114,12 @@ public class Registration extends Registration_Base {
     }
 
     public boolean hasAnyEnrolmentsIn(final ExecutionYear executionYear) {
-	final StudentCurricularPlan studentCurricularPlan = getActiveStudentCurricularPlan();
-	if (studentCurricularPlan != null) {
-	    return studentCurricularPlan.hasAnyEnrolmentForExecutionYear(executionYear);
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+		for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+			if (enrolment.getExecutionPeriod().getExecutionYear() == executionYear) {
+				return true;
+			}
+		}
 	}
 	return false;
 
@@ -1446,11 +1449,11 @@ public class Registration extends Registration_Base {
     public boolean isInRegisteredState(ExecutionYear executionYear) {
 	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionYear);
 
-	return registrationStatesTypes.contains(RegistrationStateType.REGISTERED)
-		&& !registrationStatesTypes.contains(RegistrationStateType.CANCELED)
-		&& !registrationStatesTypes.contains(RegistrationStateType.INTERRUPTED)
-		&& !registrationStatesTypes.contains(RegistrationStateType.INTERNAL_ABANDON)
-		&& !registrationStatesTypes.contains(RegistrationStateType.EXTERNAL_ABANDON);
+	return (registrationStatesTypes.contains(RegistrationStateType.REGISTERED) || hasAnyEnrolmentsIn(executionYear))
+		&& (!registrationStatesTypes.contains(RegistrationStateType.CANCELED)
+			&& !registrationStatesTypes.contains(RegistrationStateType.INTERRUPTED)
+			&& !registrationStatesTypes.contains(RegistrationStateType.INTERNAL_ABANDON) 
+			&& !registrationStatesTypes.contains(RegistrationStateType.EXTERNAL_ABANDON));
     }
 
     public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
