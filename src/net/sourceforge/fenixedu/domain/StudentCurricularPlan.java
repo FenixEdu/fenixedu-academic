@@ -1853,18 +1853,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Campus getCurrentCampus() {
-	for (final ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegreesSet()) {
-	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
-	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
-		return executionDegree.getCampus().getSpaceCampus();
-	    }
-	}
-	
-	return null;
+	final Campus currentCampus = getDegreeCurricularPlan().getCurrentCampus();
+	return currentCampus == null ? getLastCampus() : currentCampus;
     }
 
     public Campus getLastCampus() {
-	return getDegreeCurricularPlan().getExecutionDegreeByYear(getLastExecutionYear()).getCampus().getSpaceCampus();
+	final Campus lastScpCampus = getDegreeCurricularPlan().getCampus(getLastExecutionYear());
+	return lastScpCampus == null ? getDegreeCurricularPlan().getLastCampus() : lastScpCampus;
     }
 
     @Override
