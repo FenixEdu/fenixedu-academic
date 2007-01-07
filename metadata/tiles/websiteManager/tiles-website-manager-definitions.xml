@@ -5,7 +5,6 @@
 <tiles-definitions>
 	<definition name="definition.websiteManager.masterPage" extends="df.layout.two-column">
 		<put name="serviceName" value="Gestão WebSite" />
-		<put name="institutionName" value="Instituto Superior Técnico" />
 		<put name="navGeral" value="/webSiteManager/commonNavGeral.jsp" />  
 		<put name="body" value="/commons/blank.jsp" />
 		<put name="navLocal" value="/webSiteManager/navbar.jsp" type="page"/>

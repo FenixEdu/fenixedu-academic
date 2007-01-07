@@ -5,12 +5,10 @@
 <tiles-definitions>
 	<definition name="definition.teacher.one-column" extends="df.layout.one-column">
 		<put name="serviceName" value="Portal Docente" />
-	  	<put name="institutionName" value="Instituto Superior Técnico" />
 	  	<put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	</definition>
 	<definition name="definition.teacher.two-column" extends="df.layout.two-column">
 	  <put name="serviceName" value="Portal Docente" />
-	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	</definition>
 	<definition name="df.teacher.site.administration" extends="definition.teacher.two-column">

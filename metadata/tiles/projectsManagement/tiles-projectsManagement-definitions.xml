@@ -6,7 +6,6 @@
 	<definition name="definition.projectManager.two-column" page="/projectsManagement/reportLayout.jsp">
 	  <put name="title" value="Gestão de Projectos" />
 	  <put name="serviceName" value="Portal Gestor de Projectos" />
-	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	  <put name="navLocal" value="/projectsManagement/navBar.jsp" />
 	  <put name="body-context" value="/commons/blank.jsp"/>

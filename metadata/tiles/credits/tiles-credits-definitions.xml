@@ -5,7 +5,6 @@
 <tiles-definitions>
 	<definition name="definition.credits.two-column" extends="df.layout.two-column">
 	  <put name="serviceName" value="Portal Docente" />
-	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="navGeral" value="/commons/homeLogoutGeneralNavigationBar.jsp" />
 	</definition>
 	<definition name="definition.credits.teacher.management" extends="definition.credits.two-column">

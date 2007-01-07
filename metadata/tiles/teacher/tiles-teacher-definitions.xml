@@ -6,7 +6,6 @@
 	<definition name="definition.teacher.one-column" extends="df.layout.one-column">
 		<put name="title" value="Docente" />
 		<put name="serviceName" value="Portal Docente" />
-	  	<put name="institutionName" value="Instituto Superior Técnico" />
 	  	<put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 		<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
 	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>		
@@ -14,14 +13,12 @@
 	<definition name="definition.teacher.two-column" extends="df.layout.two-column">
 	  <put name="title" value="Docente" />
 	  <put name="serviceName" value="Portal Docente" />
-	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
  	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
 	</definition>
 	<definition name="definition.teacher.testsPage" page="/layout/teacherLayout_2col.jsp">
 	  <put name="serviceName" value="Portal Docente" />	
-	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/onlineTests/testsNavbar.jsp" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
@@ -32,7 +29,6 @@
 	</definition>
 	<definition name="copy.site.execution.course.page" page="/layout/teacherLayout_2col.jsp">
 	  <put name="serviceName" value="Portal Docente" />	
-	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
@@ -43,7 +39,6 @@
 	</definition>	
 	<definition name="definition.teacher.summaryPage" page="/layout/teacherLayout_2col.jsp">
 	  <put name="serviceName" value="Portal Docente" />
-	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" type="page"/>
@@ -123,7 +118,6 @@
 	<!-- =================== View Old Inquiries Teacher's Results ============== -->
 	<definition name="view.old.inquiries.teachers.results.page" page="/layout/teacherLayout_2col.jsp">
 	  <put name="serviceName" value="Portal Docente" />	
-	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
@@ -137,7 +131,6 @@
 	
 	<definition name="definition.teacher.siteAdministration" page="/layout/teacherLayout_2col.jsp">
 	  <put name="serviceName" value="Portal Docente" />	
-	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/sectionsNavbar.jsp"/>
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />

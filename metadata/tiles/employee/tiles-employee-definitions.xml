@@ -6,7 +6,6 @@
 	<definition name="definition.employee.two-column" extends="df.layout.two-column">
 		<put name="title" value="Área de Funcionário" />
 		<put name="serviceName" value="Portal de Funcionário" />
-	  	<put name="institutionName" value="Instituto Superior Técnico" />
 	  	<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
 	  	<put name="navLocal" value="/employee/mainMenu.jsp" />
 	    <put name="footer" value="/copyright.jsp" />
