@@ -5,6 +5,7 @@ import java.text.Collator;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
@@ -128,6 +129,18 @@ public class Campus extends Campus_Base {
 
     public String getName() {
 	return getSpaceInformation().getName();
+    }
+    
+    public static Campus readOldestCampus() {
+	Campus result = null;
+	
+	for (final Campus campus : Space.getAllCampus()) {
+	    if (result == null || result.getCreatedOn().isAfter(campus.getCreatedOn())) {
+		result = campus;
+	    }
+	}
+	
+	return result;
     }
 
 }
