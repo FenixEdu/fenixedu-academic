@@ -23,6 +23,10 @@
 	<slot name="number" />
 </schema>	
 
+<schema name="EditStudentCurricularPlanDomainObject" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" bundle="MANAGER_RESOURCES">
+	<slot name="startDateYearMonthDay" />
+</schema>	
+
 <schema name="EditStudentCandidacyDomainObject" type="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy" bundle="MANAGER_RESOURCES">
 	<slot name="ingression" />
 </schema>
