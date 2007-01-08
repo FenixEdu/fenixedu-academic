@@ -63,7 +63,7 @@
 	 
 <table class="tstyle5 thright thlight mtop025">
 	<tr>
-		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.fileDisplayName"/>:</th>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.fileDisplayName"/>:</th>
 		<td>
 	        <fr:edit id="displayName" name="fileItemCreator" slot="displayName">
 	            <fr:layout>
@@ -73,7 +73,7 @@
 		</td>
 	</tr>
 	<tr>
-		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.AuthorsName"/>:</th>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.AuthorsName"/>:</th>
 		<td>
 	        <fr:edit id="authorsName" name="fileItemCreator" slot="authorsName">
 	            <fr:layout>
@@ -83,7 +83,7 @@
 		</td>
 	</tr>
 	<tr>
-		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
 		<td>
 	        <fr:edit id="educationalLearningResourceType" name="fileItemCreator" slot="educationalLearningResourceType">
 			<fr:layout>
@@ -93,7 +93,7 @@
 		</td>
 	</tr>
 	<tr>
-		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.file"/>:</th>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.file"/>:</th>
 		<td>
 	    <fr:edit id="file" name="fileItemCreator" slot="file">
 	        <fr:layout>
@@ -105,7 +105,7 @@
 		</td>
 	</tr>
 	<tr>
-		<th><span class="required">*</span><bean:message key="label.teacher.siteAdministration.uploadFile.permissions"/>:</th>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.permissions"/>:</th>
 		<td>
 	        <fr:edit id="permissions" name="fileItemCreator" schema="item.file.create" layout="flow">
 	            <fr:layout>
@@ -117,6 +117,8 @@
 	</tr>
 </table>
 
+	<p class="mtop0 mbottom1 smalltxt"><em><bean:message key="label.allFieldsRequired" bundle="SITE_RESOURCES"/></em></p>
+    
         <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton dinline">
             <bean:message key="button.save"/>
         </html:submit>
@@ -130,5 +132,3 @@
 		</html:cancel>
 	</fr:form>
 </div>
-
-<p><em><bean:message key="label.fieldsWith" bundle="SITE_RESOURCES"/> <span class="required">*</span> <bean:message key="label.areRequired" bundle="SITE_RESOURCES"/></em></p>
