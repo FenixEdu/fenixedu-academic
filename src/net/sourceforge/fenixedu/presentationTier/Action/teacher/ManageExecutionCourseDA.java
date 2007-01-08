@@ -919,12 +919,17 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 		if (errors.isEmpty()) {
 			return fileUpload(mapping, form, request, response, "CreateFileItemForItem");
 		} else {
+			bean.setFile(null);
 			RenderUtils.invalidateViewState("file");
+			
 			for (String error : errors) {
 				addActionMessage(request, error,null);
 			}
-			
-			return uploadFile(mapping, form, request, response);
+			selectItem(request);	
+			request.setAttribute("fileItemCreator", bean);
+
+			return mapping.findForward("uploadFile");
+		
 		}
 		
 	}
@@ -938,7 +943,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 		if (errors.isEmpty()) {
 			return fileUpload(mapping, form, request, response, "CreateScormPackageForItem");
 		} else {
-			bean.setFile(null);
+			bean.setFile(null); 
 			RenderUtils.invalidateViewState("file");
 			for (String error : errors) {
 				addActionMessage(request, error,null);
