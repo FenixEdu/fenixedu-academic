@@ -65,7 +65,12 @@
 			<td>
 				<bean:message key="label.educationalLearningResourceType" bundle="SITE_RESOURCES"/>: 
 				<div id="noType" class="dinline">
+					<logic:empty name="bean" property="educationalResourceTypes">  
+					<input id="noTypeCheckbox" type="checkbox" checked="checked" onclick="javascript:uncheckall('typesCheckBoxes')"/>
+					</logic:empty>
+					<logic:notEmpty name="bean" property="educationalResourceTypes">  
 					<input id="noTypeCheckbox" type="checkbox" onclick="javascript:uncheckall('typesCheckBoxes')"/>
+					</logic:notEmpty>
 					<label for="noTypeCheckbox"><bean:message key="label.notClassified" bundle="SITE_RESOURCES"/></label>
 				</div>
 				<div id="typesCheckBoxes" class="dinline"> 
@@ -164,7 +169,7 @@
 <p>
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
-	"/publico/searchScormContent.do?method=moveIndex" + bean.getSearchElementsAsParameters() + 
+	"/publico/searchScormContent.do?method=moveIndex&amp;untyped=" + bean.getSearchElementsAsParameters() + 
 	"&amp;executionCourseID=" + request.getParameter("executionCourseID") %>" 
 	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 </p>

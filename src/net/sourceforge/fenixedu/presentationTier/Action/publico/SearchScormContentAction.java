@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.SearchDSpaceGeneralAction;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemCreationBean.EducationalResourceType;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -47,7 +51,7 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
 		}
 		
 			ExecutionCourse course = (ExecutionCourse) RootDomainObject.readDomainObjectByOID(ExecutionCourse.class, Integer.valueOf(executionCourseId));			
-			SearchDSpaceBean bean = createNewBean();
+			SearchDSpaceCoursesBean bean = (SearchDSpaceCoursesBean) createNewBean();
 			bean.addSearchElement(new SearchElement(SearchField.COURSE ,course.getNome(), ConjunctionType.AND));
 			bean.setExecutionYear(course.getExecutionYear());
 			bean.setExecutionPeriod(course.getExecutionPeriod());
@@ -134,6 +138,13 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
 		SearchDSpaceCoursesBean bean = (SearchDSpaceCoursesBean) super.reconstructBeanFromRequest(request);
 		String executionYearId = request.getParameter("executionYearId");
 		String executionPeriodId = request.getParameter("executionPeriodId");
+		
+		String types[] = request.getParameterValues("type");
+		List<EducationalResourceType> typesList = new ArrayList<EducationalResourceType>();
+		for(int i=0;types!=null && i<types.length;i++) {
+			typesList.add(EducationalResourceType.valueOf(types[i]));
+		}
+		bean.setEducationalResourceTypes(typesList);
 		
 		if(executionYearId!=null && executionYearId.length()>0) {
 			bean.setExecutionYear((ExecutionYear)RootDomainObject.readDomainObjectByOID(ExecutionYear.class, Integer.valueOf(executionYearId)));

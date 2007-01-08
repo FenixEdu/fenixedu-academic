@@ -15,56 +15,27 @@ import pt.utl.ist.fenix.tools.file.FilesetMetadataQuery.ConjunctionType;
 
 public class SearchDSpaceBean implements Serializable {
 	
-	private static final int pageSize=15;
+	protected static final int pageSize=15;
 	
-	DomainReference<ExecutionYear> executionYear;
-	DomainReference<ExecutionPeriod> executionPeriod;
 	List<SearchElement> searchElements;
-	List<EducationalResourceType> educationalResourceTypes;
 	List<DomainReference> results;
+	
 	private int page;
 	private int totalItems;
 	private int numberOfPages;
 	
 	public SearchDSpaceBean() {
-		this.setExecutionYear(null);
-		this.setExecutionPeriod(null);
 		this.searchElements = new ArrayList<SearchElement>();
-		this.educationalResourceTypes = new ArrayList<EducationalResourceType>();
 		this.results = null;
 		this.page=1;
 		this.totalItems=0;
 		this.numberOfPages=1;
 	} 
 	
-	public List<EducationalResourceType> getEducationalResourceTypes() {
-		return educationalResourceTypes;
-	}
-
-	public void setEducationalResourceTypes(List<EducationalResourceType> educationalResourceTypes) {
-		this.educationalResourceTypes = educationalResourceTypes;
-	}
-	
 	public int getPageSize() {
 		return pageSize;
 	}
-	
-	public ExecutionPeriod getExecutionPeriod() {
-		return executionPeriod.getObject();
-	}
-
-	public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-		this.executionPeriod = new DomainReference<ExecutionPeriod>(executionPeriod);
-	}
-
-	public ExecutionYear getExecutionYear() {
-		return executionYear.getObject();
-	}
-
-	public void setExecutionYear(ExecutionYear executionYear) {
-		this.executionYear = new DomainReference<ExecutionYear>(executionYear);
-	}
-	
+		
 	public int getSearchElementsSize() {
 		return this.searchElements.size();
 	}
@@ -94,6 +65,7 @@ public class SearchDSpaceBean implements Serializable {
 	
 	public String getSearchElementsAsParameters() {
 		String parameters ="";
+
 		for(SearchElement element : getSearchElements()) {
 			parameters += "&amp;criteria=" + element.getConjunction() + ":" + element.getSearchField() + ":" + element.getQueryValue();
 		}
@@ -102,22 +74,29 @@ public class SearchDSpaceBean implements Serializable {
 	
 	public FileSearchCriteria getSearchCriteria(int start) {
 		FileSearchCriteria criteria = new FileSearchCriteria(start,pageSize);
+		List<SearchElement> elements = getSearchElements();
 		
-		for(EducationalResourceType type : getEducationalResourceTypes()) {
-			criteria.addOrCriteria(SearchField.TYPE,type.getType());
-		}
+		if(hasSearchElements()) {
 		
-		for(SearchElement element : getSearchElements()) {
-			if(element.getConjunction().equals(ConjunctionType.AND)) {
-				criteria.addAndCriteria(element.getSearchField(), element.getQueryValue());
-			}
-			if(element.getConjunction().equals(ConjunctionType.OR)) {
-				criteria.addOrCriteria(element.getSearchField(), element.getQueryValue());
+			for(SearchElement element : elements) {
+				if(element.getConjunction().equals(ConjunctionType.AND)) {
+					criteria.addAndCriteria(element.getSearchField(), element.getQueryValue());
+				}
+				if(element.getConjunction().equals(ConjunctionType.OR)) {
+					criteria.addOrCriteria(element.getSearchField(), element.getQueryValue());
+				}
 			}
 		}
 		return criteria;
 	}
-		
+	
+	protected boolean hasSearchElements() {
+		for(SearchElement element : getSearchElements()) {
+			if(element.queryValue.length()>0) return true;
+		}
+		return false;
+	}
+	
 	public void setResults(List<DomainObject> results) {
 		this.results = new ArrayList<DomainReference>();
 		for(DomainObject result : results) {
