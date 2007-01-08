@@ -116,7 +116,7 @@ encoding="multipart/form-data"
 		    <fr:property name="eachInline" value="true"/>
 		    <fr:property name="labelExcluded" value="true"/>
 		</fr:layout>
-		<fr:destination name="invalid" path="<%="/manageEgrgertgxecutionCourse.do?method=prepareCreateScormFile&amp;itemID=" + request.getParameter("itemID") + "&amp;executionCourseID=" + request.getParameter("executionCourseID")%>"/>		
+		<fr:destination name="invalid" path="<%="/manageExecutionCourse.do?method=prepareCreateScormFile&amp;itemID=" + request.getParameter("itemID") + "&amp;executionCourseID=" + request.getParameter("executionCourseID")%>"/>		
 	</fr:edit>
 	</td>
 </tr>
