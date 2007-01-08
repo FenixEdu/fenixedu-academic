@@ -304,7 +304,14 @@
 						<td class="acenter"><bean:write name="curriculumEntry" property="enrolment.latestEnrolmentEvaluation.grade"/></td>
 						<td class="acenter">-</td>
 						<td class="acenter"><bean:write name="curriculumEntry" property="weigth"/></td>
-						<td class="acenter"><bean:write name="curriculumEntry" property="weigthTimesClassification"/></td>
+						<td class="acenter">
+							<logic:empty name="curriculumEntry" property="weigthTimesClassification">
+								-
+							</logic:empty>
+							<logic:notEmpty name="curriculumEntry" property="weigthTimesClassification">
+								<bean:write name="curriculumEntry" property="weigthTimesClassification"/>
+							</logic:notEmpty>
+						</td>
 						<td class="acenter">-</td>
 						<td class="acenter"><bean:write name="curriculumEntry" property="ectsCredits"/></td>
 					</tr>
@@ -319,7 +326,14 @@
 						<td class="acenter"><bean:write name="curriculumEntry" property="enrolment.latestEnrolmentEvaluation.grade"/></td>						
 						<td class="acenter">-</td>
 						<td class="acenter"><bean:write name="curriculumEntry" property="weigth"/></td>
-						<td class="acenter"><bean:write name="curriculumEntry" property="weigthTimesClassification"/></td>
+						<td class="acenter">
+							<logic:empty name="curriculumEntry" property="weigthTimesClassification">
+								-
+							</logic:empty>
+							<logic:notEmpty name="curriculumEntry" property="weigthTimesClassification">
+								<bean:write name="curriculumEntry" property="weigthTimesClassification"/>
+							</logic:notEmpty>
+						</td>
 						<td class="acenter">-</td>
 						<td class="acenter"><bean:write name="curriculumEntry" property="ectsCredits"/></td>
 					</tr>
@@ -356,7 +370,14 @@
 								<td class="acenter"><bean:write name="simpleEntry" property="weigth"/></td>
 								<logic:equal name="index" value="0">
 									<td rowspan="<%= numberEntries %>" class="acenter"><bean:write name="curriculumEntry" property="weigth"/></td>			
-									<td rowspan="<%= numberEntries %>" class="acenter"><bean:write name="curriculumEntry" property="weigthTimesClassification"/></td>
+									<td rowspan="<%= numberEntries %>" class="acenter">
+										<logic:empty name="curriculumEntry" property="weigthTimesClassification">
+											-
+										</logic:empty>
+										<logic:notEmpty name="curriculumEntry" property="weigthTimesClassification">
+											<bean:write name="curriculumEntry" property="weigthTimesClassification"/>
+										</logic:notEmpty>
+									</td>
 								</logic:equal>
 								<td class="acenter"><bean:write name="simpleEntry" property="ectsCredits"/></td>
 								<logic:equal name="index" value="0">
